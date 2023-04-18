@@ -1,4 +1,8 @@
 <img src="LOGO.png"></img>
+[![PyPI - Python Version](https://img.shields.io/pypi/v/elevenlabs?style=flat&colorA=black&colorB=black)](https://pypi.org/project/elevenlabs/)
+[![Downloads](https://static.pepy.tech/personalized-badge/elevenlabs?period=total&units=international_system&left_color=black&right_color=black&left_text=Downloads)](https://pepy.tech/project/elevenlabs)
+[![Twitter](https://img.shields.io/twitter/url/https/twitter.com?style=social&label=elevenlabsio)](https://twitter.com/elevenlabsio)
+
 
 The official Python API for [Elevenlabs](https://elevenlabs.io/) text-to-speech software. Eleven brings the most compelling, rich and lifelike voices to creators and developers in just a few lines of code.
 
@@ -8,11 +12,9 @@ The official Python API for [Elevenlabs](https://elevenlabs.io/) text-to-speech 
 ```bash
 pip install elevenlabs
 ```
-[![PyPI - Python Version](https://img.shields.io/pypi/v/elevenlabs?style=flat&colorA=black&colorB=black)](https://pypi.org/project/elevenlabs/)
-[![Downloads](https://static.pepy.tech/personalized-badge/elevenlabs?period=total&units=international_system&left_color=black&right_color=black&left_text=Downloads)](https://pepy.tech/project/elevenlabs)
 
 ## 🗣️ Usage
-
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/gist/flavioschneider/49468d728a816c6538fd2f56b3b50b96/elevenlabs-python.ipynb)
 ```py
 from elevenlabs import generate, play
 
@@ -20,7 +22,6 @@ text = """ Hi! I'm the world's most advanced text-to-speech system, made by elev
 audio = generate(text)
 play(audio)
 ```
-
 
 <details> <summary> Play </summary>
 
