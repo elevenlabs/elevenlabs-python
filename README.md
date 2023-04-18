@@ -103,7 +103,8 @@ stream(audio_stream)
 
 ### 🔑 API Key
 
-The basic API has a limited number of characters. To increase this limit, you can get a free API key from [Elevenlabs](https://elevenlabs.io/) and set is as environment variable `ELEVEN_API_KEY`. Alternatively pass the `api_key` string argument to the `generate` function, or set it programmatically as:
+The basic API has a limited number of characters. To increase this limit, you can get a free API key from [Elevenlabs](https://elevenlabs.io/) ([step-by-step guide here](https://docs.elevenlabs.io/authentication/01-xi-api-key)) and set is as environment variable `ELEVEN_API_KEY`. Alternatively you can provide the `api_key` string argument to the `generate` function, or set it globally in code with:
+
 ```py
 from elevenlabs import set_api_key
 set_api_key("<YOUR_API_KEY>")
