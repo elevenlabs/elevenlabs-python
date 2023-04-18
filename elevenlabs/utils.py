@@ -8,8 +8,21 @@ from pathlib import Path
 from IPython.display import Audio, display
 
 
-def play(audio: bytes, autoplay: bool = True) -> None:
-    display(Audio(audio, rate=44100, autoplay=autoplay))
+def play(audio: bytes, notebook: bool = False) -> None:
+    if notebook:
+        display(Audio(audio, rate=44100, autoplay=True))
+    else:
+        if not is_installed("ffplay"):
+            raise ValueError("ffplay from ffmpeg not found, necessary to play audio.")
+        args = ["ffplay", "-autoexit", "-", "-nodisp"]
+        proc = subprocess.Popen(
+            args=args,
+            stdout=subprocess.PIPE,
+            stdin=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+        out, err = proc.communicate(input=audio)
+        proc.poll()
 
 
 def save(audio: bytes, filename: str) -> None:
@@ -20,21 +33,26 @@ def save(audio: bytes, filename: str) -> None:
         f.writeframes(audio)
 
 
-def is_mpv_installed() -> bool:
-    mpv = shutil.which("mpv")
-    if mpv is None:
+def is_installed(lib_name: str) -> bool:
+    lib = shutil.which(lib_name)
+    if lib is None:
         return False
-    global_path = Path(mpv)
+    global_path = Path(lib)
     # else check if path is valid and has the correct access rights
     return global_path.exists() and os.access(global_path, os.X_OK)
 
 
 def stream(audio_stream: Iterator[bytes]) -> None:
-    if not is_mpv_installed():
+    if not is_installed("mpv"):
         raise ValueError("mpv not found, necessary to stream audio.")
 
     mpv_command = ["mpv", "--no-cache", "--no-terminal", "--", "fd://0"]
-    mpv_process = subprocess.Popen(mpv_command, stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    mpv_process = subprocess.Popen(
+        mpv_command,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
 
     for chunk in audio_stream:
         if chunk is not None:
