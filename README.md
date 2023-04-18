@@ -4,7 +4,7 @@
 [![Twitter](https://img.shields.io/twitter/url/https/twitter.com?style=social&label=elevenlabsio)](https://twitter.com/elevenlabsio)
 
 
-The official Python API for [Elevenlabs](https://elevenlabs.io/) text-to-speech software. Eleven brings the most compelling, rich and lifelike voices to creators and developers in just a few lines of code.
+The official Python API for [ElevenLabs](https://elevenlabs.io/) text-to-speech software. Eleven brings the most compelling, rich and lifelike voices to creators and developers in just a few lines of code.
 
 
 ## ⚙️ Install
