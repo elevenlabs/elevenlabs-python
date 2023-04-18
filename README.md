@@ -1,6 +1,6 @@
 <img src="LOGO.png"></img>
 
-The official Python library to access [Elevenlabs](https://elevenlabs.io/) text-to-speech software. Eleven brings the most compelling, rich and lifelike voices to creators and developers in just a few lines of code.
+The official Python API for [Elevenlabs](https://elevenlabs.io/) text-to-speech software. Eleven brings the most compelling, rich and lifelike voices to creators and developers in just a few lines of code.
 
 
 ## ⚙️ Install
@@ -8,6 +8,8 @@ The official Python library to access [Elevenlabs](https://elevenlabs.io/) text-
 ```bash
 pip install elevenlabs
 ```
+[![PyPI - Python Version](https://img.shields.io/pypi/v/elevenlabs?style=flat&colorA=black&colorB=black)](https://pypi.org/project/elevenlabs/)
+[![Downloads](https://static.pepy.tech/personalized-badge/elevenlabs?period=total&units=international_system&left_color=black&right_color=black&left_text=Downloads)](https://pepy.tech/project/elevenlabs)
 
 ## 🗣️ Usage
 
@@ -101,4 +103,4 @@ set_api_key("<YOUR_API_KEY>")
 
 ## 📖 API & Docs
 
-Learn more about the [python API](API.md), or check out the [HTTP API documentation](https://docs.elevenlabs.io/quickstart).
+Learn more about the [Python API](API.md), or check out the [HTTP API documentation](https://docs.elevenlabs.io/quickstart).
