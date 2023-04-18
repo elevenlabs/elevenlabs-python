@@ -15,11 +15,12 @@ pip install elevenlabs
 
 ## 🗣️ Usage
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/gist/flavioschneider/49468d728a816c6538fd2f56b3b50b96/elevenlabs-python.ipynb)
+
 ```py
 from elevenlabs import generate, play
 
-text = """ Hi! I'm the world's most advanced text-to-speech system, made by elevenlabs. """
-audio = generate(text)
+audio = generate("Hi! I'm the world's most advanced text-to-speech system, made by elevenlabs.")
+
 play(audio)
 ```
 
@@ -36,9 +37,12 @@ play(audio)
 ```py
 from elevenlabs import generate, play
 
-voice = "Adam"
-text = f""" Hi! My name is {voice}, nice to meet you! """
-audio = generate(text, voice=voice)
+voice = "Bella"
+audio = generate(
+  text=f"Hi! My name is {voice}, nice to meet you!",
+  voice=voice
+)
+
 play(audio)
 ```
 
@@ -89,8 +93,11 @@ play(audio)
 ```py
 from elevenlabs import generate, stream
 
-text = """ This is a... streaming voice!! """
-audio_stream = generate(text, stream=True)
+audio_stream = generate(
+  text="This is a... streaming voice!!",
+  stream=True
+)
+
 stream(audio_stream)
 ```
 
