@@ -7,7 +7,7 @@ import requests  # type: ignore
 
 from .utils import *  # noqa F403
 
-API_KEY = os.environ.get("ELEVEN_API_KEY")
+ELEVEN_API_KEY = os.environ.get("ELEVEN_API_KEY")
 
 DEFAULT_VOICES = dict(
     Rachel="21m00Tcm4TlvDq8ikWAM",
@@ -26,10 +26,10 @@ TTS_URL = "https://api.elevenlabs.io/v1/text-to-speech"
 
 def generate(
     text: str,
-    api_key: Optional[str] = API_KEY,
+    api_key: Optional[str] = ELEVEN_API_KEY,
     voice: str = "Rachel",
-    stability: float = 0.0,
-    similarity_boost: float = 0.0,
+    stability: float = 0.3,
+    similarity_boost: float = 0.6,
     stream: bool = False,
     stream_chunk_size: int = 2048,
 ) -> Union[bytes, Iterator[bytes]]:
@@ -52,6 +52,7 @@ def generate(
     def generate_stream():
         url = f"{TTS_URL}/{voice_id}/stream"
         with requests.post(url, json=data, headers=headers, stream=True) as response:
+            response.raise_for_status()
             for chunk in response.iter_content(chunk_size=stream_chunk_size):
                 if chunk:
                     yield chunk
@@ -61,5 +62,5 @@ def generate(
     else:
         url = f"{TTS_URL}/{voice_id}"
         with requests.post(url, json=data, headers=headers) as response:
-            print(response.status_code)
+            response.raise_for_status()  # raise exception if status code is not 200
             return response.content

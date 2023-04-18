@@ -28,7 +28,7 @@ play(audio)
 
 </details>
 
-## 👥 Voices
+### 👥 Voices
 
 ```py
 from elevenlabs import generate, play
@@ -81,7 +81,7 @@ play(audio)
 
 </details>
 
-## Streaming
+### 🚿 Streaming
 
 ```py
 from elevenlabs import generate, stream
@@ -89,4 +89,18 @@ from elevenlabs import generate, stream
 text = """ This is a... streaming voice!! """
 audio_stream = generate(text, stream=True)
 stream(audio_stream)
+```
+
+### API
+
+```py
+generate(
+    text: str,
+    api_key: Optional[str] = ELEVEN_API_KEY,  # Defautls to env variable ELEVEN_API_KEY, or None if not set but quota will be limited
+    voice: str = "Rachel",                    # Rachel, Adam, ..., or an id
+    stability: float = 0.3,                   # 0.0 to 1.0, higher is more consistent but also more monotone
+    similarity_boost: float = 0.6,            # 0.0 to 1.0, higher is more similar to the original voice but can cause artifacts
+    stream: bool = False,                     # If True, returns a generator streaming bytes
+    stream_chunk_size: int = 2048,            # Size of each chunk when streaming
+) -> Union[bytes, Iterator[bytes]]:
 ```
