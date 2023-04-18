@@ -96,11 +96,9 @@ stream(audio_stream)
 ```py
 generate(
     text: str,
-    api_key: Optional[str] = ELEVEN_API_KEY,  # Defautls to env variable ELEVEN_API_KEY, or None if not set but quota will be limited
-    voice: str = "Rachel",                    # Rachel, Adam, ..., or an id
-    stability: float = 0.3,                   # 0.0 to 1.0, higher is more consistent but also more monotone
-    similarity_boost: float = 0.6,            # 0.0 to 1.0, higher is more similar to the original voice but can cause artifacts
-    stream: bool = False,                     # If True, returns a generator streaming bytes
-    stream_chunk_size: int = 2048,            # Size of each chunk when streaming
-) -> Union[bytes, Iterator[bytes]]:
+    api_key: Optional[str] = None,          # Defautls to env variable ELEVEN_API_KEY, or None if not set but quota will be limited
+    voice: Union[str, Voice] = "Bella",    # Either a voice name, voice_id, or Voice object (use voice object to control stability and similarity_boost)
+    stream: bool = False,                   # If True, returns a generator streaming bytes
+    stream_chunk_size: int = 2048,          # Size of each chunk when stream=True
+) -> Union[bytes, Iterator[bytes]]
 ```
