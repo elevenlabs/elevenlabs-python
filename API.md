@@ -18,9 +18,35 @@ generate(
 
 ### `play`
 
+```py
+from elevenlabs import play
+
+play(
+    audio: bytes,               # Audio bytes (returned by generate)
+    notebook: bool = False      # If True, plays audio in notebook (using IPython.display.Audio) else uses ffmpeg
+) -> None
+```
+
 ### `save`
 
+```py
+from elevenlabs import save
+
+save(
+    audio: bytes,               # Audio bytes (returned by generate)
+    filename: str               # Filename to save audio to (e.g. "audio.wav")
+) -> None
+```
+
 ### `stream`
+
+```py
+from elevenlabs import stream
+
+stream(
+    audio_stream: Iterator[bytes]  # Audio stream (returned by generate with stream=True)
+) -> None
+```
 
 
 ## API Objects
