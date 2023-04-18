@@ -42,3 +42,9 @@ class History(API):
         url = f"{api_base_url_v1}/history"
         response = cls.get(url).json()
         return cls(**response)
+
+    def __getitem__(self, idx: int) -> HistoryItem:
+        return self.history[idx]
+
+    def __iter__(self):
+        return iter(self.history)
