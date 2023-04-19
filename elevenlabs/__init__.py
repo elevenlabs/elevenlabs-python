@@ -74,7 +74,8 @@ DEFAULT_VOICES = [
 ]
 
 
-def get_all_voices(api_key: Optional[str] = None) -> List[Voice]:
+def voices(api_key: Optional[str] = None) -> List[Voice]:
+    """Lists all voices in the API, if authenticated for the current user"""
     if api_key:
         set_api_key(api_key)
     api_key = get_api_key()
@@ -98,7 +99,7 @@ def generate(
     # Find first voice with matching name or id if string provided
     if isinstance(voice, str):
         voice_str = voice
-        voice = next((v for v in get_all_voices() if v.name == voice or v.voice_id == voice), None)  # type: ignore # noqa E501
+        voice = next((v for v in voices() if v.name == voice or v.voice_id == voice), None)  # type: ignore # noqa E501
         if not voice:
             raise ValueError(f"Voice '{voice_str}' not found.")
 

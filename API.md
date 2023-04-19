@@ -48,6 +48,48 @@ stream(
 ) -> None
 ```
 
+### `voices`
+
+```py
+from elevenlabs import voices
+
+voices(                             # Lists all voices for the authenticated user, or the default voices if no API key is set
+    api_key: Optional[str] = None
+) -> List[Voice]
+```
+
+### `clone`
+
+This function requires an API key.
+
+```py
+from elevenlabs import clone
+
+clone(
+    name: str,                          # Name of the new voice
+    description: Optional[str],         # Description of the new voice
+    files: List[str],                   # List of audio files to use for cloning
+    labels: Optional[dict[str, str]]    # Optional labels to add to the new voice
+) -> Voice                              # Returns the new voice object
+```
+
+### `set_api_key`
+
+```py
+from elevenlabs import set_api_key
+
+set_api_key(api_key: str) -> None
+```
+
+### `get_api_key`
+
+```py
+from elevenlabs import get_api_key
+
+get_api_key() -> Optional[str]
+```
+
+
 
 ## API Objects
 

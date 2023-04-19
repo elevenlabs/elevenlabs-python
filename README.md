@@ -91,9 +91,9 @@ play(audio)
 ### List
 
 ```py
-from elevenlabs import get_all_voices, generate
+from elevenlabs import voices, generate
 
-voices = get_all_voices()
+voices = voices()
 
 audio = generate(text="Hello there!", voice=voices[0])
 
@@ -186,6 +186,8 @@ Voices(
 
 ### Add Clone
 
+Note that voice cloning requires an API key, see below.
+
 ```py
 from elevenlabs import clone, generate
 
@@ -215,7 +217,7 @@ stream(audio_stream)
 
 ## 🔑 API Key
 
-The basic API has a limited number of characters. To increase this limit, you can get a free API key from [Elevenlabs](https://elevenlabs.io/) ([step-by-step guide here](https://docs.elevenlabs.io/authentication/01-xi-api-key)) and set is as environment variable `ELEVEN_API_KEY`. Alternatively you can provide the `api_key` string argument to the `generate` function, or set it globally in code with:
+The basic API has a limited number of characters. To increase this limit, you can get a free API key from [Elevenlabs](https://elevenlabs.io/) ([step-by-step guide](https://docs.elevenlabs.io/authentication/01-xi-api-key)) and set is as environment variable `ELEVEN_API_KEY`. Alternatively you can provide the `api_key` string argument to the `generate` function, or set it globally in code with:
 
 ```py
 from elevenlabs import set_api_key
