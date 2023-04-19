@@ -3,7 +3,7 @@ import wave
 from collections.abc import Iterator
 from typing import List, Optional, Union
 
-from .api import TTS, Voice, Voices, VoiceSettings
+from .api import TTS, Voice, VoiceClone, Voices, VoiceSettings
 from .utils import *  # noqa F403
 
 
@@ -81,10 +81,14 @@ def get_all_voices(api_key: Optional[str] = None) -> List[Voice]:
     return Voices.from_api() if api_key else DEFAULT_VOICES
 
 
+def clone(**kwargs) -> Voice:
+    return Voice.from_clone(VoiceClone(**kwargs))
+
+
 def generate(
     text: str,
     api_key: Optional[str] = None,
-    voice: Union[str, Voice] = "Bella",
+    voice: Union[str, Voice] = DEFAULT_VOICES[2],  # Bella
     stream: bool = False,
     stream_chunk_size: int = 2048,
 ) -> Union[bytes, Iterator[bytes]]:

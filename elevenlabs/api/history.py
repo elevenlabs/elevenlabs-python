@@ -24,7 +24,7 @@ class HistoryItem(API):
     feedback: Optional[str]
 
     @root_validator
-    def computed(cls, values) -> int:
+    def computed(cls, values):
         # Compute character count field
         change_from = values["character_count_change_from"]
         change_to = values["character_count_change_to"]

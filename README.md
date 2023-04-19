@@ -32,7 +32,7 @@ play(audio)
 
 </details>
 
-### 👥 Voices
+## 👥 Voices
 
 ```py
 from elevenlabs import generate, play
@@ -88,7 +88,119 @@ play(audio)
 
 </details>
 
-### 🚿 Streaming
+### List
+
+```py
+from elevenlabs import get_all_voices, generate
+
+voices = get_all_voices()
+
+audio = generate(text="Hello there!", voice=voices[0])
+
+print(voices)
+```
+
+<details> <summary> Show output </summary>
+
+```py
+Voices(
+    voices=[
+        Voice(
+            voice_id='21m00Tcm4TlvDq8ikWAM',
+            name='Rachel',
+            category='premade',
+            settings=VoiceSettings(stability=0.75, similarity_boost=0.75)
+        ),
+        Voice(
+            voice_id='AZnzlk1XvdvUeBnXmlld',
+            name='Domi',
+            category='premade',
+            settings=VoiceSettings(stability=0.1, similarity_boost=0.75)
+        ),
+        Voice(
+            voice_id='EXAVITQu4vr4xnSDxMaL',
+            name='Bella',
+            category='premade',
+            settings=VoiceSettings(stability=0.245, similarity_boost=0.75)
+        ),
+        Voice(
+            voice_id='ErXwobaYiN019PkySvjV',
+            name='Antoni',
+            category='premade',
+            settings=VoiceSettings(stability=0.195, similarity_boost=0.75)
+        ),
+        Voice(
+            voice_id='MF3mGyEYCl7XYWbV9V6O',
+            name='Elli',
+            category='premade',
+            settings=VoiceSettings(stability=0.755, similarity_boost=0.75)
+        ),
+        Voice(
+            voice_id='TxGEqnHWrfWFTfGW9XjX',
+            name='Josh',
+            category='premade',
+            settings=VoiceSettings(stability=0.15, similarity_boost=0.51)
+        ),
+        Voice(
+            voice_id='VR6AewLTigWG4xSOukaG',
+            name='Arnold',
+            category='premade',
+            settings=VoiceSettings(stability=0.15, similarity_boost=0.75)
+        ),
+        Voice(
+            voice_id='pNInz6obpgDQGcFmaJgB',
+            name='Adam',
+            category='premade',
+            settings=VoiceSettings(stability=0.2, similarity_boost=0.75)
+        ),
+        Voice(
+            voice_id='yoZ06aMxZJJ28mfd3POQ',
+            name='Sam',
+            category='premade',
+            settings=VoiceSettings(stability=0.25, similarity_boost=0.75)
+        ),
+        Voice(
+            voice_id='3KehPe3gxEYqOFSGDzGM',
+            name='test',
+            category='cloned',
+            settings=VoiceSettings(stability=0.75, similarity_boost=0.75)
+        ),
+        Voice(
+            voice_id='duorpit9NOULscUJ2OAp',
+            name='test',
+            category='cloned',
+            settings=VoiceSettings(stability=0.75, similarity_boost=0.75)
+        ),
+        Voice(
+            voice_id='h2rNV1Iql95D2QSSuvLY',
+            name='test',
+            category='cloned',
+            settings=VoiceSettings(stability=0.75, similarity_boost=0.75)
+        )
+    ]
+)
+```
+
+</details>
+
+
+### Add Clone
+
+```py
+from elevenlabs import clone, generate
+
+voice = clone(
+    name="Alex",
+    description="An old American male voice with a slight hoarseness in his throat. Perfect for news", # Optional
+    files=["./sample_0.mp3", "./sample_1.mp3", "./sample_2.mp3"],
+)
+
+audio = generate(text="Hi! I'm a cloned voice!", voice=voice)
+
+play(audio)
+```
+
+## 🚿 Streaming
 
 ```py
 from elevenlabs import generate, stream
@@ -101,7 +213,7 @@ audio_stream = generate(
 stream(audio_stream)
 ```
 
-### 🔑 API Key
+## 🔑 API Key
 
 The basic API has a limited number of characters. To increase this limit, you can get a free API key from [Elevenlabs](https://elevenlabs.io/) ([step-by-step guide here](https://docs.elevenlabs.io/authentication/01-xi-api-key)) and set is as environment variable `ELEVEN_API_KEY`. Alternatively you can provide the `api_key` string argument to the `generate` function, or set it globally in code with:
 

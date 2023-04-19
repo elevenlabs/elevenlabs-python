@@ -8,6 +8,15 @@ from pathlib import Path
 from IPython.display import Audio, display
 
 
+def is_installed(lib_name: str) -> bool:
+    lib = shutil.which(lib_name)
+    if lib is None:
+        return False
+    global_path = Path(lib)
+    # else check if path is valid and has the correct access rights
+    return global_path.exists() and os.access(global_path, os.X_OK)
+
+
 def play(audio: bytes, notebook: bool = False) -> None:
     if notebook:
         display(Audio(audio, rate=44100, autoplay=True))
@@ -31,15 +40,6 @@ def save(audio: bytes, filename: str) -> None:
         f.setsampwidth(2)
         f.setframerate(44100)
         f.writeframes(audio)
-
-
-def is_installed(lib_name: str) -> bool:
-    lib = shutil.which(lib_name)
-    if lib is None:
-        return False
-    global_path = Path(lib)
-    # else check if path is valid and has the correct access rights
-    return global_path.exists() and os.access(global_path, os.X_OK)
 
 
 def stream(audio_stream: Iterator[bytes]) -> None:
