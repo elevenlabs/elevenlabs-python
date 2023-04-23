@@ -25,15 +25,16 @@ class API(BaseModel):
         else:
             raise ValueError(f"Invalid request method {method}")
 
-        # print(response.status_code, response.reason, response.text)
-
         if response.status_code == 401:
             raise SystemExit(
                 "Your quota is exceeded or your API key is invalid, please set a"
                 " valid key: ELEVEN_API_KEY"
             )
 
-        response.raise_for_status()
+        try:
+            response.raise_for_status()
+        except Exception as e:
+            raise type(e)(response.reason, response.text)
         return response
 
     @staticmethod

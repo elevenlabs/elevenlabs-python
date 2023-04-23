@@ -10,7 +10,9 @@ class TTS(API):
     @staticmethod
     def generate(text: str, voice: Voice) -> bytes:
         url = f"{api_base_url_v1}/text-to-speech/{voice.voice_id}"
-        data = dict(text=text, voice_settings=voice.settings.dict())  # type: ignore
+        data = dict(
+            text=text, voice_settings=voice.settings.dict() if voice.settings else None
+        )  # type: ignore
         response = API.post(url, json=data)
         return response.content
 
@@ -19,7 +21,9 @@ class TTS(API):
         text: str, voice: Voice, stream_chunk_size: int = 2048
     ) -> Iterator[bytes]:
         url = f"{api_base_url_v1}/text-to-speech/{voice.voice_id}/stream"
-        data = dict(text=text, voice_settings=voice.settings.dict())  # type: ignore
+        data = dict(
+            text=text, voice_settings=voice.settings.dict() if voice.settings else None
+        )  # type: ignore
         response = API.post(url, json=data, stream=True)
         for chunk in response.iter_content(chunk_size=stream_chunk_size):
             if chunk:

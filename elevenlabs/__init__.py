@@ -1,4 +1,5 @@
 import os
+import re
 import wave
 from collections.abc import Iterator
 from typing import List, Optional, Union
@@ -16,7 +17,7 @@ def get_api_key() -> Optional[str]:
 
 
 # Save default voices to avoid querying the API for unathorized users
-DEFAULT_VOICES = [
+VOICES_CACHE = [
     Voice(
         voice_id="21m00Tcm4TlvDq8ikWAM",
         name="Rachel",
@@ -79,27 +80,41 @@ def voices(api_key: Optional[str] = None) -> List[Voice]:
     if api_key:
         set_api_key(api_key)
     api_key = get_api_key()
-    return Voices.from_api() if api_key else DEFAULT_VOICES
+    global VOICES_CACHE
+    VOICES_CACHE = Voices.from_api() if api_key else VOICES_CACHE
+    return VOICES_CACHE
 
 
 def clone(**kwargs) -> Voice:
     return Voice.from_clone(VoiceClone(**kwargs))
 
 
+def is_voice_id(val: str) -> bool:
+    return bool(re.match(r"^[a-zA-Z0-9]{20}$", val))
+
+
 def generate(
     text: str,
     api_key: Optional[str] = None,
-    voice: Union[str, Voice] = DEFAULT_VOICES[2],  # Bella
+    voice: Union[str, Voice] = VOICES_CACHE[2],  # Bella
     stream: bool = False,
     stream_chunk_size: int = 2048,
 ) -> Union[bytes, Iterator[bytes]]:
     if api_key:
         set_api_key(api_key)
 
-    # Find first voice with matching name or id if string provided
     if isinstance(voice, str):
         voice_str = voice
-        voice = next((v for v in voices() if v.name == voice or v.voice_id == voice), None)  # type: ignore # noqa E501
+        # If voice is valid voice_id, use it
+        if is_voice_id(voice):
+            voice = Voice(voice_id=voice)
+        # Otherwise, search voice by name
+        else:
+            # Check if voice is in cache
+            voice = next((v for v in VOICES_CACHE if v.name == voice), None)  # type: ignore # noqa E501
+            # If not, query API
+            voice = next((v for v in voices() if v.name == voice), None) if not voice else voice  # type: ignore # noqa E501
+        # Raise error if voice not found
         if not voice:
             raise ValueError(f"Voice '{voice_str}' not found.")
 
