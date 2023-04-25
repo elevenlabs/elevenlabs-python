@@ -4,8 +4,6 @@ import subprocess
 from collections.abc import Iterator
 from pathlib import Path
 
-from IPython.display import Audio, display
-
 
 def is_installed(lib_name: str) -> bool:
     lib = shutil.which(lib_name)
@@ -18,6 +16,8 @@ def is_installed(lib_name: str) -> bool:
 
 def play(audio: bytes, notebook: bool = False) -> None:
     if notebook:
+        from IPython.display import Audio, display
+
         display(Audio(audio, rate=44100, autoplay=True))
     else:
         if not is_installed("ffplay"):

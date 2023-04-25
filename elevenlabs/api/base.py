@@ -1,3 +1,4 @@
+import json
 import os
 from typing import Optional
 
@@ -5,6 +6,24 @@ import requests  # type: ignore
 from pydantic import BaseModel
 
 api_base_url_v1 = "https://api.elevenlabs.io/v1"
+
+
+class APIError(Exception):
+    def __init__(self, message: str):
+        super().__init__(message)
+
+
+class QuotaExceededError(APIError):
+    pass
+
+
+class UnauthenticatedQuotaExceededError(APIError):
+    def __init__(self):
+        super().__init__(
+            "Thanks for trying out our speech synthesis! You have reached the limit of"
+            " unauthenticated requests. You can continue, for free, by setting a valid"
+            " API key."
+        )
 
 
 class API(BaseModel):
@@ -26,10 +45,11 @@ class API(BaseModel):
             raise ValueError(f"Invalid request method {method}")
 
         if response.status_code == 401:
-            raise SystemExit(
-                "Your quota is exceeded or your API key is invalid, please set a"
-                " valid key: ELEVEN_API_KEY"
-            )
+            message = json.loads(response.text)["detail"]["message"]
+            if message.startswith("Thanks for trying out our speech synthesis!"):
+                raise UnauthenticatedQuotaExceededError()
+            else:
+                raise QuotaExceededError(message)
 
         try:
             response.raise_for_status()
