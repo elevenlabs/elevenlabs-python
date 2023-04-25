@@ -1,7 +1,6 @@
 import os
 import shutil
 import subprocess
-import wave
 from collections.abc import Iterator
 from pathlib import Path
 
@@ -35,11 +34,8 @@ def play(audio: bytes, notebook: bool = False) -> None:
 
 
 def save(audio: bytes, filename: str) -> None:
-    with wave.open(filename, "w") as f:
-        f.setnchannels(2)
-        f.setsampwidth(2)
-        f.setframerate(44100)
-        f.writeframes(audio)
+    with open(filename, "wb") as f:
+        f.write(audio)
 
 
 def stream(audio_stream: Iterator[bytes]) -> None:
