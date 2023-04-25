@@ -1,29 +1,18 @@
-import json
 import os
 from typing import Optional
 
 import requests  # type: ignore
 from pydantic import BaseModel
 
+from .error import (
+    APIError,
+    AuthorizationError,
+    HTTPError,
+    RateLimitError,
+    UnauthenticatedRateLimitError,
+)
+
 api_base_url_v1 = "https://api.elevenlabs.io/v1"
-
-
-class APIError(Exception):
-    def __init__(self, message: str):
-        super().__init__(message)
-
-
-class QuotaExceededError(APIError):
-    pass
-
-
-class UnauthenticatedQuotaExceededError(APIError):
-    def __init__(self):
-        super().__init__(
-            "Thanks for trying out our speech synthesis! You have reached the limit of"
-            " unauthenticated requests. You can continue, for free, by setting a valid"
-            " API key."
-        )
 
 
 class API(BaseModel):
@@ -35,7 +24,8 @@ class API(BaseModel):
 
     @staticmethod
     def request(url: str, method: str, api_key: Optional[str] = None, **kwargs):
-        headers = {"xi-api-key": api_key or os.environ.get("ELEVEN_API_KEY")}
+        api_key = api_key or os.environ.get("ELEVEN_API_KEY")
+        headers = {"xi-api-key": api_key}
 
         if method == "get":
             response = requests.get(url, headers=headers, **kwargs)
@@ -44,18 +34,23 @@ class API(BaseModel):
         else:
             raise ValueError(f"Invalid request method {method}")
 
-        if response.status_code == 401:
-            message = json.loads(response.text)["detail"]["message"]
-            if message.startswith("Thanks for trying out our speech synthesis!"):
-                raise UnauthenticatedQuotaExceededError()
-            else:
-                raise QuotaExceededError(message)
+        status_code = response.status_code
 
-        try:
-            response.raise_for_status()
-        except Exception as e:
-            raise type(e)(response.reason, response.text)
-        return response
+        if status_code == 200:
+            return response
+
+        error = HTTPError(response)
+
+        if status_code == 401:
+            if error.status == "quota_exceeded":
+                if api_key is None:
+                    raise UnauthenticatedRateLimitError(error)
+                else:
+                    raise RateLimitError(error)
+            elif error.status == "needs_authorization":
+                raise AuthorizationError(error)
+
+        raise APIError(error)
 
     @staticmethod
     def get(url: str, *args, **kwargs):

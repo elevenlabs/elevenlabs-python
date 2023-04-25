@@ -1,12 +1,16 @@
 from __future__ import annotations
 
-from enum import Enum
 from pathlib import Path
 from typing import List, Optional, Tuple
 
 from pydantic import Field, root_validator, validator
 
 from .base import API, api_base_url_v1
+from .error import APIError
+
+
+class UnauthorizedVoiceCloningError(APIError):
+    pass
 
 
 class VoiceSettings(API):
@@ -50,40 +54,18 @@ class Voice(API):
         data["lables"] = str(data.pop("labels"))
         del data["files"]
         files = data.pop("_files_tuple")
-        voice_id = API.post(url, data=data, files=files).json()["voice_id"]
-        return cls.from_id(voice_id)
+        try:
+            voice_id = API.post(url, data=data, files=files).json()["voice_id"]
+        except APIError as e:
+            if e.http_error.status == "can_not_use_instant_voice_cloning":
+                raise UnauthorizedVoiceCloningError(e.http_error)
+            raise
+        return voice_id
 
     @validator("settings")
     def computed_settings(cls, v: VoiceSettings, values) -> VoiceSettings:
         url = f"{api_base_url_v1}/voices/{values['voice_id']}/settings"
         return v if v else VoiceSettings(**cls.get(url).json())
-
-
-class Gender(str, Enum):
-    female = "female"
-    male = "male"
-
-
-class Accent(str, Enum):
-    british = "british"
-    american = "american"
-    african = "african"
-    australian = "australian"
-    indian = "indian"
-
-
-class Age(str, Enum):
-    young = "young"
-    middle_aged = "middle_aged"
-    old = "old"
-
-
-class VoiceDesign(API):
-    text: str = Field(..., max_length=100)
-    gender: Gender
-    accent: Accent
-    accent_strength: float = Field(..., gt=0.3, lt=2.0)
-    age: Age
 
 
 class Voices(API):
