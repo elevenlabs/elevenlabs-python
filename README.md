@@ -86,6 +86,14 @@ audio = generate(
 play(audio)
 ```
 
+<details> <summary> Play </summary>
+
+<i> Don't forget to unmute the player! </i>
+
+[hola.webm](https://user-images.githubusercontent.com/12028621/235474694-584f7103-dab2-4c39-bb9a-8e5f00be85da.webm)
+
+</details>
+
 
 ## 🗣️ Voices
 
