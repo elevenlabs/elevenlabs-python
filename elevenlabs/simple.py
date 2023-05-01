@@ -3,7 +3,7 @@ import re
 from collections.abc import Iterator
 from typing import List, Optional, Union
 
-from .api import TTS, Voice, VoiceClone, Voices, VoiceSettings
+from .api import TTS, Model, Voice, VoiceClone, Voices, VoiceSettings
 
 
 def set_api_key(api_key: str) -> None:
@@ -95,6 +95,7 @@ def generate(
     text: str,
     api_key: Optional[str] = None,
     voice: Union[str, Voice] = VOICES_CACHE[2],  # Bella
+    model: Union[str, Model] = "eleven_monolingual_v1",
     stream: bool = False,
     stream_chunk_size: int = 2048,
 ) -> Union[bytes, Iterator[bytes]]:
@@ -116,9 +117,13 @@ def generate(
         if not voice:
             raise ValueError(f"Voice '{voice_str}' not found.")
 
+    if isinstance(model, str):
+        model = Model(model_id=model)
+
     assert isinstance(voice, Voice)
+    assert isinstance(model, Model)
 
     if stream:
-        return TTS.generate_stream(text, voice, stream_chunk_size)
+        return TTS.generate_stream(text, voice, model, stream_chunk_size)
     else:
-        return TTS.generate(text, voice)
+        return TTS.generate(text, voice, model)

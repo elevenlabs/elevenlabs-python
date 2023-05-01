@@ -11,6 +11,7 @@ generate(
     text: str,
     api_key: Optional[str] = None,          # Defautls to env variable ELEVEN_API_KEY, or None if not set but quota will be limited
     voice: Union[str, Voice] = "Bella",     # Either a voice name, voice_id, or Voice object (use voice object to control stability and similarity_boost)
+    model: Union[str, Model] = "eleven_monolingual_v1",      # Either a model name or Model object
     stream: bool = False,                   # If True, returns a generator streaming bytes
     stream_chunk_size: int = 2048,          # Size of each chunk when stream=True
 ) -> Union[bytes, Iterator[bytes]]
@@ -116,6 +117,48 @@ User(
 
 </details>
 
+### Models
+
+The `Models` API is used to get a list of all available models for the authenticated user. The `Model` contains all the info for a model, and can be passed to the `generate` function as the `model` argument to select the model.
+
+```py
+from elevenlabs.api import Models
+models = Models.from_api()
+print(models[0])
+print(models)
+```
+
+<details> <summary> Show output </summary>
+
+```py
+Model(
+    model_id='eleven_monolingual_v1',
+    name='Eleven Monolingual v1',
+    token_cost_factor=1.0,
+    description='Use our standard English language model to generate speech in a variety of voices, styles and moods.'
+)
+```
+
+```py
+Models(
+    models=[
+        Model(
+            model_id='eleven_monolingual_v1',
+            name='Eleven Monolingual v1',
+            token_cost_factor=1.0,
+            description='Use our standard English language model to generate speech in a variety of voices, styles and moods.'
+        ),
+        Model(
+            model_id='eleven_multilingual_v1',
+            name='Eleven Multilingual v1',
+            token_cost_factor=1.0,
+            description='Generate lifelike speech in multiple languages and create content that resonates with a broader audience. '
+        )
+    ]
+)
+```
+
+</details>
 
 ### Voices
 

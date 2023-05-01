@@ -16,31 +16,14 @@ pip install elevenlabs
 ## 🗣️ Usage
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/gist/flavioschneider/49468d728a816c6538fd2f56b3b50b96/elevenlabs-python.ipynb)
 
-```py
-from elevenlabs import generate, play
-
-audio = generate("Hi! I'm the world's most advanced text-to-speech system, made by elevenlabs.")
-
-play(audio)
-```
-
-<details> <summary> Play </summary>
-
-<i> Don't forget to unmute the player! </i>
-
-[voice.webm](https://user-images.githubusercontent.com/12028621/232730309-e47bc907-78ec-4acf-a73a-0d77ba25fd6b.webm)
-
-</details>
-
-## 👥 Voices
 
 ```py
 from elevenlabs import generate, play
 
-voice = "Bella"
 audio = generate(
-  text=f"Hi! My name is {voice}, nice to meet you!",
-  voice=voice
+  text="Hi! My name is Bella, nice to meet you!",
+  voice="Bella",
+  model="eleven_monolingual_v1"
 )
 
 play(audio)
@@ -88,8 +71,25 @@ play(audio)
 
 </details>
 
-### List
+## 🌎 Multilingual
 
+The `eleven_multilingual_v1` model supports multiple languages, including English, German, Polish, Spanish, Italian, French, Portuguese, and Hindi.
+```py
+from elevenlabs import generate, play
+
+audio = generate(
+    text="¡Hola! Mi nombre es Arnold, encantado de conocerte!",
+    voice="Arnold",
+    model='eleven_multilingual_v1'
+)
+
+play(audio)
+```
+
+
+## 🗣️ Voices
+
+List all your available voices with `voices()`.
 ```py
 from elevenlabs import voices, generate
 
@@ -184,9 +184,9 @@ Voices(
 </details>
 
 
-### Add Clone
+### Clone Voice
 
-Note that voice cloning requires an API key, see below.
+Clone your voice in an instant. Note that voice cloning requires an API key, see below.
 
 ```py
 from elevenlabs import clone, generate
@@ -203,6 +203,8 @@ play(audio)
 ```
 
 ## 🚿 Streaming
+
+Stream audio in real-time, as it's being generated.
 
 ```py
 from elevenlabs import generate, stream
