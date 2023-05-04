@@ -1,5 +1,5 @@
 import json
-from typing import Optional
+from typing import Dict, Optional
 
 import requests  # type: ignore
 
@@ -7,7 +7,7 @@ import requests  # type: ignore
 class HTTPError:
     status: str
     message: str
-    additional_info: Optional[dict] = None
+    additional_info: Optional[Dict] = None
 
     def __init__(self, response: requests.Response):
         detail = json.loads(response.text)["detail"]

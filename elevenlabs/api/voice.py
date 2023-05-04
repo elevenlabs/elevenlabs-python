@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple
 
 from pydantic import Field, root_validator, validator
 
@@ -22,7 +22,7 @@ class VoiceClone(API):
     name: str = Field(..., min_length=1, max_length=100)
     description: str = ""
     files: List[str] = Field(..., min_items=1, max_items=25)
-    labels: Optional[dict[str, str]]
+    labels: Optional[Dict[str, str]]
     _files_tuple: Optional[List[Tuple]] = None
 
     @root_validator
