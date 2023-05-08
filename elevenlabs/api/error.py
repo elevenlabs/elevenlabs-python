@@ -30,7 +30,10 @@ class AuthorizationError(APIError):
 
 
 class RateLimitError(APIError):
-    pass
+    message: str = (
+        "You have reached your subscription limit. Please purchase another plan to continue."
+    )
+
 
 
 class UnauthenticatedRateLimitError(RateLimitError):
