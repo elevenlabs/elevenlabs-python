@@ -17,6 +17,12 @@ class VoiceSettings(API):
     stability: float = Field(..., ge=0.0, le=1.0)
     similarity_boost: float = Field(..., ge=0.0, le=1.0)
 
+class VoiceSample(API):
+    sample_id: str = ""
+    file_name: str = ""
+    mime_type: str = ""
+    size_bytes: int = None
+    hash: str = ""
 
 class VoiceClone(API):
     name: str = Field(..., min_length=1, max_length=100)
@@ -40,6 +46,9 @@ class Voice(API):
     voice_id: str
     name: Optional[str]
     category: Optional[str]
+    description: Optional[str]
+    labels: Optional[Dict[str, str]]
+    samples: Optional[List[VoiceSample]]
     settings: Optional[VoiceSettings]
 
     @classmethod
