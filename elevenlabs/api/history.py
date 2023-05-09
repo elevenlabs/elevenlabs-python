@@ -9,6 +9,17 @@ from .base import API, api_base_url_v1
 from .voice import VoiceSettings
 
 
+class FeedbackItem(API):
+    thumbs_up: bool
+    feedback: str
+    emotions: bool
+    inaccurate_clone: bool
+    glitches: bool
+    audio_quality: bool
+    other: bool
+    review_status: str
+
+
 class HistoryItem(API):
     history_item_id: str
     request_id: Optional[str]
@@ -21,7 +32,7 @@ class HistoryItem(API):
     character_count_change: Optional[int]
     content_type: str
     settings: Optional[VoiceSettings]
-    feedback: Optional[str]
+    feedback: Optional[FeedbackItem]
 
     @root_validator
     def computed(cls, values):
