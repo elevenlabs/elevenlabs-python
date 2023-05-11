@@ -94,7 +94,7 @@ get_api_key() -> Optional[str]
 
 ## API Objects
 
-### User
+### `User`
 The `User` API is used to request the user's subscription information, such as the number of character remaining in the quota. Note that you must set an API key to use this object.
 
 ```py
@@ -117,9 +117,9 @@ User(
 
 </details>
 
-### Models
+### `Models`
 
-The `Models` API is used to get a list of all available models for the authenticated user. The `Model` contains all the info for a model, and can be passed to the `generate` function as the `model` argument to select the model.
+The `Models` API is used to get a list of all available models for the authenticated user. The `Model` contains all the info for a model, and can be passed to the `generate` function as the `model` argument to select the model. Note that you must set an API key to use this object.
 
 ```py
 from elevenlabs.api import Models
@@ -160,7 +160,7 @@ Models(
 
 </details>
 
-### Voices
+### `Voices`
 
 The `Voices` API is used to get a list of all available voices for the authenticated user. The `Voice` contains all the info for a voice, such as the voice's stability and similarity_boost, and can be passed to the `generate` function as the `voice` argument to select the voice. The voice settings can be changed to control the voice behaviour.
 
@@ -256,7 +256,31 @@ text = f""" Hi! My name is {my_voice.name}, nice to meet you! """
 audio = generate(text, voice=my_voice)
 ```
 
-### History
+### `VoiceDesign`
+
+The `VoiceDesign` API is used to get design a voice with a custom gender, accent and age group. Note that you must set an API key to use this object.
+```py
+from elevenlabs import Voice, VoiceDesign, Gender, Age, Accent, play
+
+# Build a voice deisgn object
+design = VoiceDesign(
+    name='Lexa',
+    text="Hello, my name is Lexa. I'm your personal assistant, I can help you with your daily tasks and I can also read you the news.",
+    gender=Gender.female,
+    age=Age.young,
+    accent=Accent.british,
+    accent_strength=1.0,
+)
+
+# Generate audio from the design, and play it to test if it sounds good (optional)
+audio = design.generate()
+play(audio)
+
+# Convert design to usable voice
+voice = Voice.from_design(design)
+```
+
+### `History`
 
 The `History` API is used to get the list of generations of the authenticated user.
 
