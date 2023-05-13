@@ -197,7 +197,7 @@ Voices(
 Clone your voice in an instant. Note that voice cloning requires an API key, see below.
 
 ```py
-from elevenlabs import clone, generate
+from elevenlabs import clone, generate, play
 
 voice = clone(
     name="Alex",
