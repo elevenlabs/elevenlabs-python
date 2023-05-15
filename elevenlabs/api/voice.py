@@ -142,7 +142,7 @@ class Voices(API):
     voices: List[Voice]
 
     @classmethod
-    def from_api(cls):
+    def from_api(cls, api_key: Optional[str] = None):
         url = f"{api_base_url_v1}/voices"
         response = API.get(url).json()
         return cls(**response)

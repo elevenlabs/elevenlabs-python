@@ -72,13 +72,11 @@ VOICES_CACHE = [
 ]
 
 
-def voices(api_key: Optional[str] = None) -> List[Voice]:
+def voices() -> List[Voice]:
     """Lists all voices in the API, if authenticated for the current user"""
-    if api_key:
-        set_api_key(api_key)
     api_key = get_api_key()
     global VOICES_CACHE
-    VOICES_CACHE = Voices.from_api() if api_key else VOICES_CACHE
+    VOICES_CACHE = Voices.from_api(api_key) if api_key else VOICES_CACHE
     return VOICES_CACHE
 
 
@@ -98,8 +96,6 @@ def generate(
     stream: bool = False,
     stream_chunk_size: int = 2048,
 ) -> Union[bytes, Iterator[bytes]]:
-    if api_key:
-        set_api_key(api_key)
 
     if isinstance(voice, str):
         voice_str = voice
@@ -123,6 +119,8 @@ def generate(
     assert isinstance(model, Model)
 
     if stream:
-        return TTS.generate_stream(text, voice, model, stream_chunk_size)
+        return TTS.generate_stream(
+            text, voice, model, stream_chunk_size, api_key=api_key
+        )  # noqa E501
     else:
-        return TTS.generate(text, voice, model)
+        return TTS.generate(text, voice, model, api_key=api_key)
