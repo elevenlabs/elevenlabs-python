@@ -1,7 +1,6 @@
 import os
 import re
-from collections.abc import Iterator
-from typing import List, Optional, Union
+from typing import Iterator, List, Optional, Union
 
 from .api import TTS, Model, Voice, VoiceClone, Voices, VoiceSettings
 

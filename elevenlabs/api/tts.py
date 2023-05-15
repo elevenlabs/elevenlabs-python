@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections.abc import Iterator
+from typing import Iterator
 
 from .base import API, api_base_url_v1
 from .model import Model

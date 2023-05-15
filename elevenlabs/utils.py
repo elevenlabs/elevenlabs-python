@@ -1,8 +1,8 @@
 import os
 import shutil
 import subprocess
-from collections.abc import Iterator
 from pathlib import Path
+from typing import Iterator
 
 
 def is_installed(lib_name: str) -> bool:
@@ -38,7 +38,7 @@ def save(audio: bytes, filename: str) -> None:
         f.write(audio)
 
 
-def stream(audio_stream: Iterator[bytes]) -> None:
+def stream(audio_stream: Iterator[bytes]) -> bytes:
     if not is_installed("mpv"):
         raise ValueError("mpv not found, necessary to stream audio.")
 
@@ -50,11 +50,16 @@ def stream(audio_stream: Iterator[bytes]) -> None:
         stderr=subprocess.DEVNULL,
     )
 
+    audio = b""
+
     for chunk in audio_stream:
         if chunk is not None:
             mpv_process.stdin.write(chunk)  # type: ignore
             mpv_process.stdin.flush()  # type: ignore
+            audio += chunk
 
     if mpv_process.stdin:
         mpv_process.stdin.close()
     mpv_process.wait()
+
+    return audio

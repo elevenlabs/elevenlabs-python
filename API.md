@@ -9,11 +9,11 @@ from elevenlabs import generate
 
 generate(
     text: str,
-    api_key: Optional[str] = None,          # Defautls to env variable ELEVEN_API_KEY, or None if not set but quota will be limited
-    voice: Union[str, Voice] = "Bella",     # Either a voice name, voice_id, or Voice object (use voice object to control stability and similarity_boost)
-    model: Union[str, Model] = "eleven_monolingual_v1",      # Either a model name or Model object
-    stream: bool = False,                   # If True, returns a generator streaming bytes
-    stream_chunk_size: int = 2048,          # Size of each chunk when stream=True
+    api_key: Optional[str] = None,                      # Defautls to env variable ELEVEN_API_KEY, or None if not set but quota will be limited
+    voice: Union[str, Voice] = "Bella",                 # Either a voice name, voice_id, or Voice object (use voice object to control stability and similarity_boost)
+    model: Union[str, Model] = "eleven_monolingual_v1", # Either a model name or Model object
+    stream: bool = False,                               # If True, returns a generator streaming bytes
+    stream_chunk_size: int = 2048,                      # Size of each chunk when stream=True
 ) -> Union[bytes, Iterator[bytes]]
 ```
 
@@ -45,8 +45,8 @@ save(
 from elevenlabs import stream
 
 stream(
-    audio_stream: Iterator[bytes]  # Audio stream (returned by generate with stream=True)
-) -> None
+    audio_stream: Iterator[bytes]   # Audio stream (returned by generate with stream=True)
+) -> bytes                          # Returns the full audio bytes
 ```
 
 ### `voices`
