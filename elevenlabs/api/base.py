@@ -21,6 +21,8 @@ class API(BaseModel):
         use_enum_values = True
         # Validate fields when setting manually
         validate_assignment = True
+        # Allow underscore attributes
+        underscore_attrs_are_private = True
 
     @staticmethod
     def request(url: str, method: str, api_key: Optional[str] = None, **kwargs):
@@ -31,6 +33,8 @@ class API(BaseModel):
             response = requests.get(url, headers=headers, **kwargs)
         elif method == "post":
             response = requests.post(url, headers=headers, **kwargs)
+        elif method == "delete":
+            response = requests.delete(url, headers=headers, **kwargs)
         else:
             raise ValueError(f"Invalid request method {method}")
 
@@ -59,3 +63,7 @@ class API(BaseModel):
     @staticmethod
     def post(url: str, *args, **kwargs):
         return API.request(url, method="post", *args, **kwargs)  # type: ignore
+
+    @staticmethod
+    def delete(url: str, *args, **kwargs):
+        return API.request(url, method="delete", *args, **kwargs)  # type: ignore

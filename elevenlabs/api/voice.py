@@ -96,7 +96,7 @@ class Voice(API):
     @classmethod
     def from_id(cls, voice_id: str):
         url = f"{api_base_url_v1}/voices/{voice_id}?with_settings=true"
-        return cls(**cls.get(url).json())
+        return cls(**API.get(url).json())
 
     @classmethod
     def from_clone(cls, voice_clone: VoiceClone) -> Voice:
@@ -133,6 +133,9 @@ class Voice(API):
     def computed_settings(cls, v: VoiceSettings, values) -> VoiceSettings:
         url = f"{api_base_url_v1}/voices/{values['voice_id']}/settings"
         return v if v else VoiceSettings(**API.get(url).json())
+
+    def delete(self):
+        API.delete(f"{api_base_url_v1}/voices/{self.voice_id}")
 
 
 class Voices(API):

@@ -33,6 +33,7 @@ class HistoryItem(API):
     content_type: str
     settings: Optional[VoiceSettings]
     feedback: Optional[FeedbackItem]
+    _audio: Optional[bytes] = None
 
     @root_validator
     def computed(cls, values):
@@ -44,6 +45,19 @@ class HistoryItem(API):
         values["date"] = datetime.utcfromtimestamp(values["date_unix"])
         return values
 
+    @classmethod
+    def from_id(cls, history_item_id: str) -> HistoryItem:
+        url = f"{api_base_url_v1}/history/{history_item_id}"
+        response = API.get(url).json()
+        return cls(**response)
+
+    @property
+    def audio(self) -> bytes:
+        url = f"{api_base_url_v1}/history/{self.history_item_id}/audio"
+        if self._audio is None:
+            self._audio = API.get(url).content
+        return self._audio
+
 
 class History(API):
     history: List[HistoryItem]
@@ -51,7 +65,7 @@ class History(API):
     @classmethod
     def from_api(cls) -> History:
         url = f"{api_base_url_v1}/history"
-        response = cls.get(url).json()
+        response = API.get(url).json()
         return cls(**response)
 
     def __getitem__(self, idx: int) -> HistoryItem:

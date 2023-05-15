@@ -329,3 +329,9 @@ History(
 ```
 
 </details>
+
+An example of playing the `HistoryItem` audio at index 3:
+```py
+from elevenlabs import play
+play(history[3].audio)
+```
