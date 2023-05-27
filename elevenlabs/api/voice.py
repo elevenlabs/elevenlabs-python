@@ -111,7 +111,7 @@ class Voice(API):
             if e.http_error.status == "can_not_use_instant_voice_cloning":
                 raise UnauthorizedVoiceCloningError(e.http_error)
             raise
-        return voice_id
+        return cls.from_id(voice_id)
 
     @classmethod
     def from_design(cls, voice_design: VoiceDesign):
