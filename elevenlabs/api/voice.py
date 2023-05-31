@@ -167,8 +167,11 @@ class Voice(API):
         url = f"{api_base_url_v1}/voices/{values['voice_id']}/settings"
         return v if v else VoiceSettings(**API.get(url).json())
 
-    def delete(self):
-        API.delete(f"{api_base_url_v1}/voices/{self.voice_id}")
+    @classmethod
+    def delete(cls, voice_id: str):
+        API.delete(f"{api_base_url_v1}/voices/{voice_id}")
+        return "OK"
+        
 
 class Voices(API):
     voices: List[Voice]
