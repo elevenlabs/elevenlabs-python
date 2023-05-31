@@ -171,6 +171,19 @@ class Voice(API):
     def delete(cls, voice_id: str):
         API.delete(f"{api_base_url_v1}/voices/{voice_id}")
         return "OK"
+    
+    @classmethod
+    def get_voice_settings(cls, voice_id: str) -> VoiceSettings:
+        url = f"{api_base_url_v1}/voices/{voice_id}/settings"
+        response = API.get(url).json()
+        return response
+
+    @classmethod
+    def edit_voice_settings(cls, voice_id: str, voice_settings: VoiceSettings) -> VoiceSettings:
+        data = voice_settings.dict()
+        url = f"{api_base_url_v1}/voices/{voice_id}/settings/edit"
+        status = API.post(url, json=data).json()
+        return cls.get_voice_settings(voice_id)
         
 
 class Voices(API):
