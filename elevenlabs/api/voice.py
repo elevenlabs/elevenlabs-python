@@ -44,6 +44,24 @@ class VoiceClone(API):
         values["_files_tuple"] = files_tuple
         return values
 
+class VoiceEdit(API):
+    name: str = Field(..., min_length=1, max_length=100)
+    description: Optional[str] = ""
+    files: Optional[List[str]] = []
+    labels: Optional[Dict[str, str]]
+    _files_tuple: Optional[List[Tuple]] = None
+
+    @root_validator
+    def computed_files_tuple(cls, values) -> List[str]:
+        files_tuple = []
+        if 'files' in values:
+            for filepath in values["files"]:
+                b = open(filepath, "rb")
+                file_tuple = ("files", (f"{Path(filepath).stem}_{id(b)}", b, "audio/mpeg"))
+                files_tuple.append(file_tuple)
+            values["_files_tuple"] = files_tuple
+            return values
+
 
 class Gender(str, Enum):
     female = "female"
@@ -129,6 +147,21 @@ class Voice(API):
         voice.design = voice_design
         return voice
 
+    @classmethod
+    def edit_voice(cls, voice_id: str, voice_clone: VoiceClone) -> Voice:
+        """
+        Args:
+            - voice_id - Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            - voice_clone - VoiceEdit(name='changed', description='changed') 
+        """
+        url = f"{api_base_url_v1}/voices/{voice_id}/edit"
+        data = voice_clone.dict()
+        data["lables"] = str(data.pop("labels"))
+        del data["files"]
+        files = data.pop("_files_tuple")
+        status = API.post(url, data=data, files=files).json()['status']
+        return cls.from_id(voice_id)
+    
     @validator("settings")
     def computed_settings(cls, v: VoiceSettings, values) -> VoiceSettings:
         url = f"{api_base_url_v1}/voices/{values['voice_id']}/settings"
@@ -137,7 +170,6 @@ class Voice(API):
     def delete(self):
         API.delete(f"{api_base_url_v1}/voices/{self.voice_id}")
 
-
 class Voices(API):
     voices: List[Voice]
 
@@ -145,6 +177,7 @@ class Voices(API):
     def from_api(cls, api_key: Optional[str] = None):
         url = f"{api_base_url_v1}/voices"
         response = API.get(url).json()
+        print(response)
         return cls(**response)
 
     def add_clone(self, voice_clone: VoiceClone) -> Voice:
