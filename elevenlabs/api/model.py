@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import List, Optional
 
-from .base import API, api_base_url_v1
+from .base import API, Listable, api_base_url_v1
 
 
 class Model(API):
@@ -12,7 +12,7 @@ class Model(API):
     description: Optional[str]
 
 
-class Models(API):
+class Models(Listable, API):
     models: List[Model]
 
     @classmethod
@@ -21,8 +21,6 @@ class Models(API):
         response = cls.get(url).json()
         return cls(models=response)
 
-    def __getitem__(self, idx: int) -> Model:
-        return self.models[idx]
-
-    def __iter__(self):
-        return iter(self.models)
+    @property
+    def items(self):
+        return self.models

@@ -5,7 +5,7 @@ from typing import List, Optional
 
 from pydantic import root_validator
 
-from .base import API, api_base_url_v1
+from .base import API, Listable, api_base_url_v1
 from .voice import VoiceSettings
 
 
@@ -59,7 +59,7 @@ class HistoryItem(API):
         return self._audio
 
 
-class History(API):
+class History(Listable, API):
     history: List[HistoryItem]
 
     @classmethod
@@ -68,8 +68,6 @@ class History(API):
         response = API.get(url).json()
         return cls(**response)
 
-    def __getitem__(self, idx: int) -> HistoryItem:
-        return self.history[idx]
-
-    def __iter__(self):
-        return iter(self.history)
+    @property
+    def items(self):
+        return self.history

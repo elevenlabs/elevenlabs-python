@@ -6,7 +6,7 @@ from typing import Dict, List, Optional, Tuple
 
 from pydantic import Field, root_validator, validator
 
-from .base import API, api_base_url_v1
+from .base import API, Listable, api_base_url_v1
 from .error import APIError
 
 
@@ -138,7 +138,7 @@ class Voice(API):
         API.delete(f"{api_base_url_v1}/voices/{self.voice_id}")
 
 
-class Voices(API):
+class Voices(Listable, API):
     voices: List[Voice]
 
     @classmethod
@@ -150,8 +150,6 @@ class Voices(API):
     def add_clone(self, voice_clone: VoiceClone) -> Voice:
         pass
 
-    def __getitem__(self, idx: int) -> Voice:
-        return self.voices[idx]
-
-    def __iter__(self):
-        return iter(self.voices)
+    @property
+    def items(self):
+        return self.voices

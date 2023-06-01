@@ -1,5 +1,5 @@
 import os
-from typing import Optional
+from typing import Optional, Sequence
 
 import requests  # type: ignore
 from pydantic import BaseModel
@@ -12,7 +12,7 @@ from .error import (
     UnauthenticatedRateLimitError,
 )
 
-api_base_url_v1 = "https://api.elevenlabs.io/v1"
+api_base_url_v1 = os.environ.get("ELEVEN_BASE_URL", "https://api.elevenlabs.io/v1")
 
 
 class API(BaseModel):
@@ -67,3 +67,18 @@ class API(BaseModel):
     @staticmethod
     def delete(url: str, *args, **kwargs):
         return API.request(url, method="delete", *args, **kwargs)  # type: ignore
+
+
+class Listable:
+    @property
+    def items(self) -> Sequence:
+        raise NotImplementedError
+
+    def __getitem__(self, idx: int):
+        return self.items[idx]
+
+    def __iter__(self):
+        return iter(self.items)
+
+    def __len__(self) -> int:
+        return len(self.items)
