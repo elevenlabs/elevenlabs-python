@@ -60,14 +60,41 @@ class HistoryItem(API):
 
 
 class History(Listable, API):
+    last_history_item_id: Optional[str] = None
     history: List[HistoryItem]
+    has_more: bool
 
     @classmethod
-    def from_api(cls) -> History:
+    def from_api(
+        cls, page_size: int = 100, start_after_history_item_id: Optional[str] = None
+    ) -> History:
+        assert page_size < 1000, (
+            "page_size must be less than 1000, change start_after_history_item_id"
+            " instead."
+        )
+        data = dict(
+            page_size=page_size,
+            start_after_history_item_id=start_after_history_item_id,
+        )
         url = f"{api_base_url_v1}/history"
-        response = API.get(url).json()
+        response = API.get(url, params=data).json()
         return cls(**response)
 
     @property
     def items(self):
         return self.history
+
+    def __iter__(self):
+        """Lazy iterator over history items"""
+        for item in self.history:
+            yield item
+        while self.has_more:
+            history_next = self.from_api(
+                start_after_history_item_id=self.last_history_item_id
+            )
+            self.history.extend(history_next.history)
+            self.has_more = history_next.has_more
+            self.last_history_item_id = history_next.last_history_item_id
+
+            for item in self.history:
+                yield item
