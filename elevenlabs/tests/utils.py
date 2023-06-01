@@ -6,6 +6,8 @@ from typing import Sequence
 
 import requests  # type: ignore
 
+use_play = "PLAY" in os.environ
+
 
 @contextmanager
 def no_api_key():

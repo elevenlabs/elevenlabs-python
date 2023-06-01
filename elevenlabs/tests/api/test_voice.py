@@ -1,3 +1,6 @@
+from ..utils import use_play
+
+
 def test_voice_from_id():
     from elevenlabs import Voice, VoiceSettings
 
@@ -44,7 +47,9 @@ def test_voice_clone():
     )
     assert isinstance(audio, bytes) and len(audio) > 0
     voice.delete()
-    play(audio)
+
+    if use_play:
+        play(audio)
 
 
 def test_voice_design():
@@ -64,7 +69,8 @@ def test_voice_design():
 
     audio = voice_design.generate()
     assert isinstance(audio, bytes) and len(audio) > 0
-    play(audio)
+    if use_play:
+        play(audio)
 
     voice = Voice.from_design(voice_design)
     assert isinstance(voice, Voice)
@@ -75,7 +81,8 @@ def test_voice_design():
     )
     assert isinstance(audio, bytes) and len(audio) > 0
     voice.delete()
-    play(audio)
+    if use_play:
+        play(audio)
 
 
 def test_voices():
