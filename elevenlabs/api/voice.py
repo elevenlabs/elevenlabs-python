@@ -133,36 +133,35 @@ class Voice(API):
     def computed_settings(cls, v: VoiceSettings, values) -> VoiceSettings:
         url = f"{api_base_url_v1}/voices/{values['voice_id']}/settings"
         return v if v else VoiceSettings(**API.get(url).json())
+    
+    @classmethod
+    def default_settings(cls):
+        url = f"{api_base_url_v1}/voices/settings/default"
+        return VoiceSettings(**API.get(url).json())
 
     def delete(self):
         API.delete(f"{api_base_url_v1}/voices/{self.voice_id}")
 
-    def edit_settings(self, stability: float, similarity_boost: float):
+    # def edit_settings(self, stability: float, similarity_boost: float):
+    def edit_settings(self, voice_settings: VoiceSettings):
         url = f"{api_base_url_v1}/voices/{self.voice_id}/settings/edit"
         json = {
-            "stability": stability,
-            "similarity_boost": similarity_boost,
+            "stability": voice_settings.stability,
+            "similarity_boost": voice_settings.similarity_boost,
         }
         API.post(url, json=json)
-
-    def get_settings(self):
-        url = f"{api_base_url_v1}/voices/{self.voice_id}/settings"
-        return VoiceSettings(**API.get(url).json())
     
-    def get_info(self):
-        url = f"{api_base_url_v1}/voices/{self.voice_id}"
-        return Voice(**API.get(url).json())
-    
-    def edit(self, name: str, labels: Optional[str] = None, description: Optional[str] = None):
-        url = f"{api_base_url_v1}/voices/{self.voice_id}/edit"
-        data = {
-            "name": name,
-        }
-        if labels: # Putting it as None will overwrite the labels
-            data["labels"] = labels
-        if description: # Putting it as None will overwrite the description
-            data["description"] = description
-        API.post(url, data=data)
+    def edit(
+        cls,
+        name: Optional[str] = None,
+        labels: Optional[str] = None,
+        description: Optional[str] = None
+    ):
+        url = f"{api_base_url_v1}/voices/{cls.voice_id}/edit"
+        cls.name = name or cls.name
+        cls.labels = labels or cls.labels
+        cls.description = description or cls.description
+        API.post(url, data=dict(name=cls.name, labels=cls.labels, description=cls.description))
 
 class Voices(Listable, API):
     voices: List[Voice]
@@ -172,11 +171,6 @@ class Voices(Listable, API):
         url = f"{api_base_url_v1}/voices"
         response = API.get(url).json()
         return cls(**response)
-    
-    @classmethod
-    def default_settings(cls):
-        url = f"{api_base_url_v1}/voices/settings/default"
-        return VoiceSettings(**API.get(url).json())
 
     def add_clone(self, voice_clone: VoiceClone) -> Voice:
         pass
