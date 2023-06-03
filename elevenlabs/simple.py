@@ -81,6 +81,10 @@ def voices() -> Voices:
     VOICES_CACHE = Voices.from_api(api_key) if api_key else VOICES_CACHE
     return VOICES_CACHE
 
+def default_settings() -> VoiceSettings:
+    """Returns the default voice settings"""
+    return Voices.default_settings()
+
 
 def clone(**kwargs) -> Voice:
     return Voice.from_clone(VoiceClone(**kwargs))
