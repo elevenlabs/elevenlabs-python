@@ -18,6 +18,12 @@ class Subscription(API):
     currency: Optional[str]
     status: str
 
+    @classmethod
+    def from_api(cls) -> Subscription:
+        url = f"{api_base_url_v1}/user/subscription"
+        response = API.get(url).json()
+        return cls(**response)
+
 
 class User(API):
     subscription: Subscription
@@ -26,9 +32,4 @@ class User(API):
     def from_api(cls) -> User:
         url = f"{api_base_url_v1}/user"
         response = cls.get(url).json()
-        return cls(subscription=Subscription(**response.get("subscription", {})))
-    
-    def get_subscription(cls):
-        url = f"{api_base_url_v1}/user/subscription"
-        response = API.get(url).json()
-        return Subscription(**response)
+        return cls(**response)
