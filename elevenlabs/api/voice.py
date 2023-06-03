@@ -148,10 +148,10 @@ class Voice(API):
         return voice
 
     @classmethod
-    def edit_voice(cls, voice_id: str, voice_clone: VoiceClone) -> Voice:
+    def edit(cls, voice_id: str, voice_clone: VoiceClone) -> Voice:
         """
         Args:
-            - voice_id - Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            - voice_id - you can use Voices.from_api() to list all the available voices
             - voice_clone - VoiceEdit(name='changed', description='changed') 
         """
         url = f"{api_base_url_v1}/voices/{voice_id}/edit"
@@ -168,18 +168,20 @@ class Voice(API):
         return v if v else VoiceSettings(**API.get(url).json())
 
     @classmethod
-    def delete(cls, voice_id: str):
-        API.delete(f"{api_base_url_v1}/voices/{voice_id}")
-        return "OK"
+    def delete(cls, voice_id: str) -> bool:
+        res = API.delete(f"{api_base_url_v1}/voices/{voice_id}").json()
+        if res['status'] == 'ok':
+            return True
+        return False
     
     @classmethod
-    def get_voice_settings(cls, voice_id: str) -> VoiceSettings:
+    def get_settings(cls, voice_id: str) -> VoiceSettings:
         url = f"{api_base_url_v1}/voices/{voice_id}/settings"
         response = API.get(url).json()
         return response
 
     @classmethod
-    def edit_voice_settings(cls, voice_id: str, voice_settings: VoiceSettings) -> VoiceSettings:
+    def edit_settings(cls, voice_id: str, voice_settings: VoiceSettings) -> VoiceSettings:
         data = voice_settings.dict()
         url = f"{api_base_url_v1}/voices/{voice_id}/settings/edit"
         status = API.post(url, json=data).json()
@@ -193,7 +195,6 @@ class Voices(API):
     def from_api(cls, api_key: Optional[str] = None):
         url = f"{api_base_url_v1}/voices"
         response = API.get(url).json()
-        print(response)
         return cls(**response)
 
     def add_clone(self, voice_clone: VoiceClone) -> Voice:
