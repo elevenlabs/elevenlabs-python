@@ -133,10 +133,30 @@ class Voice(API):
     def computed_settings(cls, v: VoiceSettings, values) -> VoiceSettings:
         url = f"{api_base_url_v1}/voices/{values['voice_id']}/settings"
         return v if v else VoiceSettings(**API.get(url).json())
+    
+    @classmethod
+    def default_settings(cls):
+        url = f"{api_base_url_v1}/voices/settings/default"
+        return VoiceSettings(**API.get(url).json())
 
     def delete(self):
         API.delete(f"{api_base_url_v1}/voices/{self.voice_id}")
 
+    def edit_settings(self, voice_settings: VoiceSettings):
+        url = f"{api_base_url_v1}/voices/{self.voice_id}/settings/edit"
+        API.post(url, json=voice_settings.dict())
+    
+    def edit(
+        self,
+        name: Optional[str] = None,
+        labels: Optional[str] = None,
+        description: Optional[str] = None
+    ):
+        url = f"{api_base_url_v1}/voices/{self.voice_id}/edit"
+        self.name = name or self.name
+        self.labels = labels or self.labels
+        self.description = description or self.description
+        API.post(url, data=dict(name=self.name, labels=self.labels, description=self.description))
 
 class Voices(Listable, API):
     voices: List[Voice]

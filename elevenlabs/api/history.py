@@ -57,6 +57,9 @@ class HistoryItem(API):
         if self._audio is None:
             self._audio = API.get(url).content
         return self._audio
+    
+    def delete(self):
+        API.delete(f"{api_base_url_v1}/history/{self.history_item_id}")
 
 
 class History(Listable, API):
