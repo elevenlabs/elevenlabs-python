@@ -133,7 +133,7 @@ class Voice(API):
     def computed_settings(cls, v: VoiceSettings, values) -> VoiceSettings:
         url = f"{api_base_url_v1}/voices/{values['voice_id']}/settings"
         return v if v else VoiceSettings(**API.get(url).json())
-    
+
     @classmethod
     def default_settings(cls):
         url = f"{api_base_url_v1}/voices/settings/default"
@@ -142,21 +142,42 @@ class Voice(API):
     def delete(self):
         API.delete(f"{api_base_url_v1}/voices/{self.voice_id}")
 
-    def edit_settings(self, voice_settings: VoiceSettings):
-        url = f"{api_base_url_v1}/voices/{self.voice_id}/settings/edit"
-        API.post(url, json=voice_settings.dict())
-    
-    def edit(
-        self,
+    @classmethod
+    def edit_by_id(
+        cls,
+        voice_id: str,
         name: Optional[str] = None,
-        labels: Optional[str] = None,
-        description: Optional[str] = None
-    ):
-        url = f"{api_base_url_v1}/voices/{self.voice_id}/edit"
-        self.name = name or self.name
-        self.labels = labels or self.labels
-        self.description = description or self.description
-        API.post(url, data=dict(name=self.name, labels=self.labels, description=self.description))
+        labels: Optional[Dict[str, str]] = None,
+        description: Optional[str] = None,
+        voice_settings: Optional[VoiceSettings] = None,
+        voice_clone: Optional[VoiceClone] = None,
+    ) -> Voice:
+        url = f"{api_base_url_v1}/voices/{voice_id}/edit"
+        data = {}
+        data.update(dict(name=name) if name else {})
+        data.update(dict(labels=str(labels)) if labels else {})
+        data.update(dict(description=description) if description else {})
+
+        files = None
+        if voice_clone:
+            clone_data = voice_clone.dict()
+            clone_data["labels"] = str(clone_data.pop("labels"))
+            del clone_data["files"]
+            files = clone_data.pop("_files_tuple")
+
+        if data or files:
+            API.post(url, data=data, files=files)
+
+        if voice_settings:
+            settings_url = f"{api_base_url_v1}/voices/{voice_id}/settings/edit"
+            API.post(settings_url, json=voice_settings.dict())
+
+        return Voice.from_id(voice_id)
+
+    def edit(self, **kwargs):
+        updated_voice = Voice.edit_by_id(voice_id=self.voice_id, **kwargs)
+        self.__dict__.update(updated_voice.dict())
+
 
 class Voices(Listable, API):
     voices: List[Voice]
@@ -166,9 +187,6 @@ class Voices(Listable, API):
         url = f"{api_base_url_v1}/voices"
         response = API.get(url).json()
         return cls(**response)
-
-    def add_clone(self, voice_clone: VoiceClone) -> Voice:
-        pass
 
     @property
     def items(self):

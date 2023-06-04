@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 setup(
     name="elevenlabs",
     packages=find_packages(exclude=[]),
-    version="0.2.17",
+    version="0.2.18",
     description="The official elevenlabs python package.",
     long_description_content_type="text/markdown",
     author="Elevenlabs",
