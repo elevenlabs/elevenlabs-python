@@ -142,26 +142,21 @@ class Voice(API):
     def delete(self):
         API.delete(f"{api_base_url_v1}/voices/{self.voice_id}")
 
-    # def edit_settings(self, stability: float, similarity_boost: float):
     def edit_settings(self, voice_settings: VoiceSettings):
         url = f"{api_base_url_v1}/voices/{self.voice_id}/settings/edit"
-        json = {
-            "stability": voice_settings.stability,
-            "similarity_boost": voice_settings.similarity_boost,
-        }
-        API.post(url, json=json)
+        API.post(url, json=voice_settings.dict())
     
     def edit(
-        cls,
+        self,
         name: Optional[str] = None,
         labels: Optional[str] = None,
         description: Optional[str] = None
     ):
-        url = f"{api_base_url_v1}/voices/{cls.voice_id}/edit"
-        cls.name = name or cls.name
-        cls.labels = labels or cls.labels
-        cls.description = description or cls.description
-        API.post(url, data=dict(name=cls.name, labels=cls.labels, description=cls.description))
+        url = f"{api_base_url_v1}/voices/{self.voice_id}/edit"
+        self.name = name or self.name
+        self.labels = labels or self.labels
+        self.description = description or self.description
+        API.post(url, data=dict(name=self.name, labels=self.labels, description=self.description))
 
 class Voices(Listable, API):
     voices: List[Voice]
