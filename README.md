@@ -104,7 +104,7 @@ from elevenlabs.api.voice import Voice, VoiceSettings
 
 # define custom voice settings for Bella
 voice = Voice(
-    voice_id='21m00Tcm4TlvDq8ikWAM',
+    voice_id='EXAVITQu4vr4xnSDxMaL',
     settings=VoiceSettings(stability=0.5, similarity_boost=0.8)
 )
 
