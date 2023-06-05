@@ -14,7 +14,7 @@ The official Python API for [ElevenLabs](https://elevenlabs.io/) text-to-speech 
 pip install elevenlabs
 ```
 
-## 🗣️ Usage
+## 🗣️ Basic Usage
 [![Open in Spaces](https://img.shields.io/badge/🤗-Open%20in%20Spaces-blue.svg)](https://huggingface.co/spaces/elevenlabs/tts)
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/gist/flavioschneider/49468d728a816c6538fd2f56b3b50b96/elevenlabs-python.ipynb)
 
@@ -96,6 +96,28 @@ play(audio)
 
 </details>
 
+## 🗣️ Advanced Usage: Voice Settings
+
+```py
+from elevenlabs import generate
+from elevenlabs.api.voice import Voice, VoiceSettings
+
+# define custom voice settings for Bella
+voice = Voice(
+    voice_id='21m00Tcm4TlvDq8ikWAM',
+    settings=VoiceSettings(stability=0.5, similarity_boost=0.8)
+)
+
+audio = generate(
+    text="Hi! My name is Bella, nice to meet you!",
+    voice=voice,
+    model="eleven_monolingual_v1",
+)
+
+play(audio)
+```
+
+ 
 
 ## 🗣️ Voices
 
