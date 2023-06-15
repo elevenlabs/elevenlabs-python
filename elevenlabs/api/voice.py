@@ -92,6 +92,7 @@ class Voice(API):
     samples: Optional[List[VoiceSample]]
     settings: Optional[VoiceSettings]
     design: Optional[VoiceDesign]
+    preview_url: Optional[str]
 
     @classmethod
     def from_id(cls, voice_id: str):
