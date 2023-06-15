@@ -34,7 +34,7 @@ class VoiceClone(API):
     labels: Optional[Dict[str, str]]
     _files_tuple: Optional[List[Tuple]] = None
 
-    @root_validator
+    @root_validator(skip_on_failure=True)
     def computed_files_tuple(cls, values) -> List[str]:
         files_tuple = []
         for filepath in values["files"]:

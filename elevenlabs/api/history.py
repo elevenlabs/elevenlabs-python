@@ -35,7 +35,7 @@ class HistoryItem(API):
     feedback: Optional[FeedbackItem]
     _audio: Optional[bytes] = None
 
-    @root_validator
+    @root_validator(skip_on_failure=True)
     def computed(cls, values):
         # Compute character count field
         change_from = values["character_count_change_from"]
