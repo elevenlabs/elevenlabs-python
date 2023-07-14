@@ -7,9 +7,9 @@ from .base import API, Listable, api_base_url_v1
 
 class Model(API):
     model_id: str
-    name: Optional[str]
-    token_cost_factor: Optional[float]
-    description: Optional[str]
+    name: Optional[str] = None
+    token_cost_factor: Optional[float] = None
+    description: Optional[str] = None
 
 
 class Models(Listable, API):

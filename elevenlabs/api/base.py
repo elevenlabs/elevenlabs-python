@@ -21,8 +21,8 @@ class API(BaseModel):
         use_enum_values = True
         # Validate fields when setting manually
         validate_assignment = True
-        # Allow underscore attributes
-        underscore_attrs_are_private = True
+        #
+        protected_namespaces = ()
 
     @staticmethod
     def request(url: str, method: str, api_key: Optional[str] = None, **kwargs):

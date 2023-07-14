@@ -1,7 +1,9 @@
 from __future__ import annotations
+
 from typing import Optional
 
 from .base import API, api_base_url_v1
+
 
 class Subscription(API):
     tier: str
@@ -15,7 +17,7 @@ class Subscription(API):
     can_extend_voice_limit: bool
     can_use_instant_voice_cloning: bool
     can_use_professional_voice_cloning: bool
-    currency: Optional[str]
+    currency: Optional[str] = None
     status: str
 
     @classmethod

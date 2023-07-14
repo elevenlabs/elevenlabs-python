@@ -31,7 +31,7 @@ class VoiceClone(API):
     name: str = Field(..., min_length=1, max_length=100)
     description: str = ""
     files: List[str] = Field(..., min_items=1, max_items=25)
-    labels: Optional[Dict[str, str]]
+    labels: Optional[Dict[str, str]] = None
     _files_tuple: Optional[List[Tuple]] = None
 
     @root_validator(skip_on_failure=True)
@@ -72,8 +72,8 @@ class VoiceDesign(API):
     accent: Accent
     accent_strength: float = Field(..., gt=0.3, lt=2.0)
     # The following fields are populated only after `generate` is called
-    generated_voice_id: Optional[str]
-    audio: Optional[bytes]
+    generated_voice_id: Optional[str] = None
+    audio: Optional[bytes] = None
 
     def generate(self) -> bytes:
         url = f"{api_base_url_v1}/voice-generation/generate-voice"
@@ -85,14 +85,14 @@ class VoiceDesign(API):
 
 class Voice(API):
     voice_id: str
-    name: Optional[str]
-    category: Optional[str]
-    description: Optional[str]
-    labels: Optional[Dict[str, str]]
-    samples: Optional[List[VoiceSample]]
-    settings: Optional[VoiceSettings]
-    design: Optional[VoiceDesign]
-    preview_url: Optional[str]
+    name: Optional[str] = None
+    category: Optional[str] = None
+    description: Optional[str] = None
+    labels: Optional[Dict[str, str]] = None
+    samples: Optional[List[VoiceSample]] = None
+    settings: Optional[VoiceSettings] = None
+    design: Optional[VoiceDesign] = None
+    preview_url: Optional[str] = None
 
     @classmethod
     def from_id(cls, voice_id: str):

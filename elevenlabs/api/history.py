@@ -22,17 +22,17 @@ class FeedbackItem(API):
 
 class HistoryItem(API):
     history_item_id: str
-    request_id: Optional[str]
+    request_id: Optional[str] = None
     voice_id: str
     text: str
-    date: Optional[datetime]
+    date: Optional[datetime] = None
     date_unix: int
     character_count_change_from: int
     character_count_change_to: int
-    character_count_change: Optional[int]
+    character_count_change: Optional[int] = None
     content_type: str
-    settings: Optional[VoiceSettings]
-    feedback: Optional[FeedbackItem]
+    settings: Optional[VoiceSettings] = None
+    feedback: Optional[FeedbackItem] = None
     _audio: Optional[bytes] = None
 
     @root_validator(skip_on_failure=True)
@@ -57,7 +57,7 @@ class HistoryItem(API):
         if self._audio is None:
             self._audio = API.get(url).content
         return self._audio
-    
+
     def delete(self):
         API.delete(f"{api_base_url_v1}/history/{self.history_item_id}")
 
