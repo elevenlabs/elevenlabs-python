@@ -10,10 +10,11 @@ class HTTPError:
     additional_info: Optional[Dict] = None
 
     def __init__(self, response: requests.Response):
-        detail = json.loads(response.text)["detail"]
-        self.message = detail["message"]
-        self.status = detail["status"]
+        detail = json.loads(response.text)[0]
+        self.message = detail.get("msg", "Unknown error")
+        self.status = detail.get("status", 0)
         self.additional_info = detail.get("additional_info", None)
+        super().__init__(self.message)
 
 
 class APIError(Exception):
