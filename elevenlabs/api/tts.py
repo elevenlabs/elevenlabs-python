@@ -21,15 +21,16 @@ class TTS(API):
         response = API.post(url, json=data, api_key=api_key)
         return response.content
 
-    @staticmethod
+   @staticmethod
     def generate_stream(
         text: str,
         voice: Voice,
         model: Model,
         stream_chunk_size: int = 2048,
         api_key: Optional[str] = None,
+        latency: int = 1,
     ) -> Iterator[bytes]:
-        url = f"{api_base_url_v1}/text-to-speech/{voice.voice_id}/stream"
+        url = f"{api_base_url_v1}/text-to-speech/{voice.voice_id}/stream?optimize_streaming_latency={latency}"
         data = dict(
             text=text,
             model_id=model.model_id,
