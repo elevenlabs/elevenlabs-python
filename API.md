@@ -14,17 +14,21 @@ generate(
     model: Union[str, Model] = "eleven_monolingual_v1", # Either a model name or Model object
     stream: bool = False,                               # If True, returns a generator streaming bytes
     stream_chunk_size: int = 2048,                      # Size of each chunk when stream=True
+    latency: int = 1                                    # [1-4] the higher the more optimized for streaming latency (only works with stream=True)
 ) -> Union[bytes, Iterator[bytes]]
 ```
 
 ### `play`
+
+Plays audio bytes returned by generate. Note playing requires [ffmpeg](https://ffmpeg.org/download.html) to be installed (`brew install ffmpeg` on mac), alternatively you can set `use_ffmpeg=False`, this requires sounddevice and soundfile: `pip install sounddevice soundfile`.
 
 ```py
 from elevenlabs import play
 
 play(
     audio: bytes,               # Audio bytes (returned by generate)
-    notebook: bool = False      # If True, plays audio in notebook (using IPython.display.Audio) else uses ffmpeg
+    notebook: bool = False,     # If True, plays audio in notebook (using IPython.display.Audio) else uses ffmpeg
+    use_ffmpeg: bool = True,    # If False, uses sounddevice and soundfile to play audio
 ) -> None
 ```
 
@@ -40,6 +44,8 @@ save(
 ```
 
 ### `stream`
+
+Streams audio bytes returned by generate with `stream=True`. Note that this function requires [mpv](https://mpv.io/installation/) to be installed (`brew install mpv` on mac).
 
 ```py
 from elevenlabs import stream
