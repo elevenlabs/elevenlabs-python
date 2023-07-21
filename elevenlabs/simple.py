@@ -108,9 +108,10 @@ def generate(
         # Otherwise, search voice by name
         else:
             # Check if voice is in cache
-            voice = next((v for v in VOICES_CACHE if v.name == voice), None)  # type: ignore # noqa E501
+            voice = next((v for v in VOICES_CACHE if v.name == voice_str), None)  # type: ignore # noqa E501
             # If not, query API
-            voice = next((v for v in voices() if v.name == voice), None) if not voice else voice  # type: ignore # noqa E501
+            voice = next((v for v in voices() if v.name == voice_str), None) if not voice else voice  # type: ignore # noqa E501
+
         # Raise error if voice not found
         if not voice:
             raise ValueError(f"Voice '{voice_str}' not found.")
