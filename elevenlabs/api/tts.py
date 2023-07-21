@@ -21,7 +21,7 @@ class TTS(API):
         response = API.post(url, json=data, api_key=api_key)
         return response.content
 
-   @staticmethod
+    @staticmethod
     def generate_stream(
         text: str,
         voice: Voice,

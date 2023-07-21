@@ -44,6 +44,22 @@ def test_generate_stream():
         assert isinstance(audio, bytes) and len(audio) > 0
 
 
+def test_generate_stream_optimized():
+    from typing import Iterable
+
+    from elevenlabs import generate, stream
+
+    # Test that we can generate audio stream
+    audio_stream = generate(
+        text="Test voice streaming optimized latency.", stream=True, latency=4
+    )
+    assert isinstance(audio_stream, Iterable)
+
+    if use_play:
+        audio = stream(audio_stream)
+        assert isinstance(audio, bytes) and len(audio) > 0
+
+
 def test_generate_with_voice():
     from elevenlabs import generate, play, voices
 

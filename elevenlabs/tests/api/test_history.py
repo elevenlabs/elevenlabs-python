@@ -20,6 +20,7 @@ def test_history():
 
 
 def test_history_item_delete():
+    import time
     from random import randint
 
     from elevenlabs import History, generate
@@ -27,6 +28,7 @@ def test_history_item_delete():
     # Random text
     text = f"Test {randint(0, 1000)}"
     generate(text=text)  # Generate a history item to delete
+    time.sleep(1)
     history = History.from_api(page_size=1)
     history_item = history[0]
     # Check that item matches

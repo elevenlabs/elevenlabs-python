@@ -1,7 +1,5 @@
-import os
 import shutil
 import subprocess
-from pathlib import Path
 from typing import Iterator
 
 
@@ -9,9 +7,7 @@ def is_installed(lib_name: str) -> bool:
     lib = shutil.which(lib_name)
     if lib is None:
         return False
-    global_path = Path(lib)
-    # else check if path is valid and has the correct access rights
-    return global_path.exists() and os.access(global_path, os.X_OK)
+    return True
 
 
 def play(audio: bytes, notebook: bool = False) -> None:
@@ -21,7 +17,12 @@ def play(audio: bytes, notebook: bool = False) -> None:
         display(Audio(audio, rate=44100, autoplay=True))
     else:
         if not is_installed("ffplay"):
-            raise ValueError("ffplay from ffmpeg not found, necessary to play audio.")
+            message = (
+                "ffplay from ffmpeg not found, necessary to play audio. "
+                "On mac you can install it with 'brew install ffmpeg'. "
+                "On linux and windows you can install it from https://ffmpeg.org/"
+            )
+            raise ValueError(message)
         args = ["ffplay", "-autoexit", "-", "-nodisp"]
         proc = subprocess.Popen(
             args=args,
@@ -40,7 +41,12 @@ def save(audio: bytes, filename: str) -> None:
 
 def stream(audio_stream: Iterator[bytes]) -> bytes:
     if not is_installed("mpv"):
-        raise ValueError("mpv not found, necessary to stream audio.")
+        message = (
+            "mpv not found, necessary to stream audio. "
+            "On mac you can install it with 'brew install mpv'. "
+            "On linux and windows you can install it from https://mpv.io/"
+        )
+        raise ValueError(message)
 
     mpv_command = ["mpv", "--no-cache", "--no-terminal", "--", "fd://0"]
     mpv_process = subprocess.Popen(
