@@ -96,6 +96,7 @@ def generate(
     voice: Union[str, Voice] = VOICES_CACHE[2],  # Bella
     model: Union[str, Model] = "eleven_monolingual_v1",
     stream: bool = False,
+    latency: int = 1,
     stream_chunk_size: int = 2048,
 ) -> Union[bytes, Iterator[bytes]]:
 
@@ -122,7 +123,7 @@ def generate(
 
     if stream:
         return TTS.generate_stream(
-            text, voice, model, stream_chunk_size, api_key=api_key
+            text, voice, model, stream_chunk_size, api_key=api_key, latency=latency
         )  # noqa E501
     else:
         return TTS.generate(text, voice, model, api_key=api_key)
