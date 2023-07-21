@@ -26,10 +26,11 @@ class TTS(API):
         text: str,
         voice: Voice,
         model: Model,
+        latency: int = 1,
         stream_chunk_size: int = 2048,
         api_key: Optional[str] = None,
     ) -> Iterator[bytes]:
-        url = f"{api_base_url_v1}/text-to-speech/{voice.voice_id}/stream"
+        url = f"{api_base_url_v1}/text-to-speech/{voice.voice_id}/stream?optimize_streaming_latency={latency}"
         data = dict(
             text=text,
             model_id=model.model_id,
