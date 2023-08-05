@@ -91,7 +91,7 @@ def is_voice_id(val: str) -> bool:
 
 
 def generate(
-    text: str,
+    text: Union[str, Iterator[str]],
     api_key: Optional[str] = None,
     voice: Union[str, Voice] = VOICES_CACHE[2],  # Bella
     model: Union[str, Model] = "eleven_monolingual_v1",
@@ -123,8 +123,12 @@ def generate(
     assert isinstance(model, Model)
 
     if stream:
-        return TTS.generate_stream(
-            text, voice, model, stream_chunk_size, api_key=api_key, latency=latency
-        )  # noqa E501
+        if isinstance(text, str):
+            return TTS.generate_stream(
+                text, voice, model, stream_chunk_size, api_key=api_key, latency=latency
+            )  # noqa E501
+        elif isinstance(text, Iterator):
+            return TTS.generate_stream_input(text, voice, model, api_key=api_key)
     else:
+        assert isinstance(text, str)
         return TTS.generate(text, voice, model, api_key=api_key)

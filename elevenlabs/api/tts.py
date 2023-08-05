@@ -1,6 +1,12 @@
 from __future__ import annotations
 
+import base64
+import json
+import os
 from typing import Iterator, Optional
+
+import websockets
+from websockets.sync.client import connect
 
 from .base import API, api_base_url_v1
 from .model import Model
@@ -40,3 +46,70 @@ class TTS(API):
         for chunk in response.iter_content(chunk_size=stream_chunk_size):
             if chunk:
                 yield chunk
+
+    @staticmethod
+    def generate_stream_input(
+        text: Iterator[str], voice: Voice, model: Model, api_key: Optional[str] = None
+    ) -> Iterator[bytes]:
+        message = (
+            "Currently input streaming is only supported for eleven_monolingual_v1"
+            " model"
+        )
+        assert (
+            model.model_id == "eleven_monolingual_v1"
+        ), f"{message}, got {model.model_id}"
+
+        BOS = json.dumps(
+            dict(
+                text=" ",
+                try_trigger_generation=True,
+                generation_config=dict(
+                    chunk_length_schedule=[50],
+                    model_id=model.model_id,
+                    voice_settings=voice.settings.dict() if voice.settings else None,
+                ),
+            )
+        )
+        EOS = json.dumps(dict(text=""))
+
+        with connect(
+            f"wss://api.elevenlabs.io/v1/text-to-speech/{voice.voice_id}/stream-input",
+            additional_headers={
+                "xi-api-key": api_key or os.environ.get("ELEVEN_API_KEY"),
+                "model_id": model.model_id,
+            },
+        ) as websocket:
+            # Send beginning of stream
+            websocket.send(BOS)
+
+            # Stream text chunks and receive audio
+            text_block = ""
+            for text_chunk in text:
+
+                text_block += text_chunk
+                if text_block.endswith((".", "!", "?")):
+                    text_block += " "
+                if not text_block.endswith(" "):
+                    continue
+
+                data = dict(text=text_block, try_trigger_generation=True)
+                text_block = ""
+                websocket.send(json.dumps(data))
+                try:
+                    data = json.loads(websocket.recv(1e-4))
+                    if data["audio"]:
+                        yield base64.b64decode(data["audio"])  # type: ignore
+                except TimeoutError:
+                    pass
+
+            # Send end of stream
+            websocket.send(EOS)
+
+            # Receive remaining audio
+            while True:
+                try:
+                    data = json.loads(websocket.recv())
+                    if data["audio"]:
+                        yield base64.b64decode(data["audio"])  # type: ignore
+                except websockets.exceptions.ConnectionClosed:
+                    break
