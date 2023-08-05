@@ -20,7 +20,8 @@ class APIError(Exception):
     message: Optional[str] = None
 
     def __init__(self, http_error: HTTPError):
-        self.message = self.message or http_error.message
+        if self.message is None:
+            self.message = str(http_error)
         self.http_error = http_error
         super().__init__(self.message)
 
