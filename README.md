@@ -227,6 +227,25 @@ audio_stream = generate(
 stream(audio_stream)
 ```
 
+### Input streaming
+Stream text chunks into audio as it's being generated. Note chunks must end with a space or punctuation (" ", ".", "?", "!").
+```py
+from elevenlabs import generate, stream
+
+def text_stream():
+    yield "Hi there, I'm Eleven "
+    yield "I'm a text to speech API "
+
+audio_stream = generate(
+    text=text_stream(),
+    voice="Nicole",
+    model="eleven_monolingual_v1",
+    stream=True
+)
+
+stream(audio_stream)
+```
+
 ## 🔑 API Key
 
 The basic API has a limited number of characters. To increase this limit, you can get a free API key from [Elevenlabs](https://elevenlabs.io/) ([step-by-step guide](https://docs.elevenlabs.io/authentication/01-xi-api-key)) and set is as environment variable `ELEVEN_API_KEY`. Alternatively you can provide the `api_key` string argument to the `generate` function, or set it globally in code with:
