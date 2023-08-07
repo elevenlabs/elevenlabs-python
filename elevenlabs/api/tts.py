@@ -13,6 +13,24 @@ from .model import Model
 from .voice import Voice
 
 
+def text_chunker(chunks: Iterator[str]) -> Iterator[str]:
+    """Used during input streaming to chunk text blocks and set last char to space"""
+    splitters = (".", ",", "?", "!", ";", ":", "—", "-", "(", ")", "[", "]", "}", " ")
+    buffer = ""
+    for text in chunks:
+        if buffer.endswith(splitters):
+            yield buffer if buffer.endswith(" ") else buffer + " "
+            buffer = text
+        elif text.startswith(splitters):
+            output = buffer + text[0]
+            yield output if output.endswith(" ") else output + " "
+            buffer = text[1:]
+        else:
+            buffer += text
+    if buffer != "":
+        yield buffer + " "
+
+
 class TTS(API):
     @staticmethod
     def generate(
@@ -83,17 +101,8 @@ class TTS(API):
             websocket.send(BOS)
 
             # Stream text chunks and receive audio
-            text_block = ""
-            for text_chunk in text:
-
-                text_block += text_chunk
-                if text_block.endswith((".", "!", "?")):
-                    text_block += " "
-                if not text_block.endswith(" "):
-                    continue
-
-                data = dict(text=text_block, try_trigger_generation=True)
-                text_block = ""
+            for text_chunk in text_chunker(text):
+                data = dict(text=text_chunk, try_trigger_generation=True)
                 websocket.send(json.dumps(data))
                 try:
                     data = json.loads(websocket.recv(1e-4))
