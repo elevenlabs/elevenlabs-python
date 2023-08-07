@@ -69,32 +69,22 @@ class TTS(API):
     def generate_stream_input(
         text: Iterator[str], voice: Voice, model: Model, api_key: Optional[str] = None
     ) -> Iterator[bytes]:
-        message = (
-            "Currently input streaming is only supported for eleven_monolingual_v1"
-            " model"
-        )
-        assert (
-            model.model_id == "eleven_monolingual_v1"
-        ), f"{message}, got {model.model_id}"
-
         BOS = json.dumps(
             dict(
                 text=" ",
                 try_trigger_generation=True,
+                voice_settings=voice.settings.dict() if voice.settings else None,
                 generation_config=dict(
                     chunk_length_schedule=[50],
-                    model_id=model.model_id,
-                    voice_settings=voice.settings.dict() if voice.settings else None,
                 ),
             )
         )
         EOS = json.dumps(dict(text=""))
 
         with connect(
-            f"wss://api.elevenlabs.io/v1/text-to-speech/{voice.voice_id}/stream-input",
+            f"wss://api.elevenlabs.io/v1/text-to-speech/{voice.voice_id}/stream-input?model_id={model.model_id}",
             additional_headers={
-                "xi-api-key": api_key or os.environ.get("ELEVEN_API_KEY"),
-                "model_id": model.model_id,
+                "xi-api-key": api_key or os.environ.get("ELEVEN_API_KEY")
             },
         ) as websocket:
             # Send beginning of stream
