@@ -1,5 +1,6 @@
 import os
 from typing import Optional, Sequence
+import httpx
 
 import requests  # type: ignore
 from pydantic import BaseModel
@@ -57,6 +58,39 @@ class API(BaseModel):
         raise APIError(error)
 
     @staticmethod
+    async def arequest(url: str, method: str, api_key: Optional[str] = None, **kwargs):
+        api_key = api_key or os.environ.get("ELEVEN_API_KEY")
+        headers = {"xi-api-key": api_key}
+
+        async with httpx.AsyncClient() as client:
+            if method == "get":
+                response = await client.get(url, headers=headers, **kwargs)
+            elif method == "post":
+                response = await client.post(url, headers=headers, **kwargs)
+            elif method == "delete":
+                response = await client.delete(url, headers=headers, **kwargs)
+            else:
+                raise ValueError(f"Invalid request method {method}")
+
+        status_code = response.status_code
+
+        if status_code == 200:
+            return response
+
+        error = HTTPError(response)
+
+        if status_code == 401:
+            if error.status == "quota_exceeded":
+                if api_key is None:
+                    raise UnauthenticatedRateLimitError(error)
+                else:
+                    raise RateLimitError(error)
+            elif error.status == "needs_authorization":
+                raise AuthorizationError(error)
+
+        raise APIError(error)
+
+    @staticmethod
     def get(url: str, *args, **kwargs):
         return API.request(url, method="get", *args, **kwargs)  # type: ignore
 
@@ -67,6 +101,18 @@ class API(BaseModel):
     @staticmethod
     def delete(url: str, *args, **kwargs):
         return API.request(url, method="delete", *args, **kwargs)  # type: ignore
+
+    @staticmethod
+    async def aget(url: str, *args, **kwargs):
+        return await API.arequest(url, method="get", *args, **kwargs)  # type: ignore
+
+    @staticmethod
+    async def apost(url: str, *args, **kwargs):
+        return await API.arequest(url, method="post", *args, **kwargs)  # type: ignore
+
+    @staticmethod
+    async def adelete(url: str, *args, **kwargs):
+        return await API.arequest(url, method="delete", *args, **kwargs)  # type: ignore
 
 
 class Listable:
