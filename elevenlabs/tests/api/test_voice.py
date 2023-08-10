@@ -1,4 +1,6 @@
 from ..utils import use_play
+import pytest
+import asyncio
 
 
 def test_voice_from_id():
@@ -7,6 +9,21 @@ def test_voice_from_id():
     # Test that we can get a voice from id
     voice_id = "21m00Tcm4TlvDq8ikWAM"
     voice = Voice.from_id(voice_id)
+    assert isinstance(voice, Voice)
+
+    assert voice.voice_id == voice_id
+    assert voice.name == "Rachel"
+    assert voice.category == "premade"
+    assert isinstance(voice.settings, VoiceSettings)
+
+
+@pytest.mark.asyncio
+async def test_voice_afrom_id():
+    from elevenlabs import Voice, VoiceSettings
+
+    # Test that we can get a voice from id
+    voice_id = "21m00Tcm4TlvDq8ikWAM"
+    voice = await Voice.afrom_id(voice_id)
     assert isinstance(voice, Voice)
 
     assert voice.voice_id == voice_id
@@ -90,6 +107,21 @@ def test_voices():
 
     # Test that we can get voices from api
     voices = Voices.from_api()
+
+    assert isinstance(voices, Voices)
+    assert len(voices) > 0
+    assert isinstance(voices[0], Voice)
+
+    for voice in voices:
+        assert isinstance(voice, Voice)
+
+
+@pytest.mark.asyncio
+async def test_avoices():
+    from elevenlabs import Voice, Voices
+
+    # Test that we can get voices from api
+    voices = await Voices.afrom_api()
 
     assert isinstance(voices, Voices)
     assert len(voices) > 0
