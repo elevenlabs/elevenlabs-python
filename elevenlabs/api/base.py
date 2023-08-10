@@ -59,8 +59,20 @@ class API(BaseModel):
 
     @staticmethod
     async def arequest(url: str, method: str, api_key: Optional[str] = None, **kwargs):
+        def remove_none_values(d: dict):
+            """Recursively remove keys with None values inplace."""
+            keys_to_remove = []
+            for key, value in d.items():
+                if isinstance(value, dict):
+                    remove_none_values(value)
+                elif not value:
+                    keys_to_remove.append(key)
+            for key in keys_to_remove:
+                d.pop(key)
+
         api_key = api_key or os.environ.get("ELEVEN_API_KEY")
         headers = {"xi-api-key": api_key}
+        remove_none_values(kwargs)
 
         async with httpx.AsyncClient() as client:
             match method:

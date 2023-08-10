@@ -76,7 +76,7 @@ class HistoryItem(API):
         API.delete(f"{api_base_url_v1}/history/{self.history_item_id}")
 
     async def adelete(self):
-        await self.adelete(f"{api_base_url_v1}/history/{self.history_item_id}")
+        await API.adelete(f"{api_base_url_v1}/history/{self.history_item_id}")
 
 
 class History(Listable, API):
