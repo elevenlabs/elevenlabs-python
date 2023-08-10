@@ -21,6 +21,12 @@ class Models(Listable, API):
         response = cls.get(url).json()
         return cls(models=response)
 
+    @classmethod
+    async def afrom_api(cls) -> Models:
+        url = f"{api_base_url_v1}/models"
+        response = await cls.aget(url)
+        return cls(models=response.json())
+
     @property
     def items(self):
         return self.models

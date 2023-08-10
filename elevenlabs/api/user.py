@@ -26,6 +26,12 @@ class Subscription(API):
         response = API.get(url).json()
         return cls(**response)
 
+    @classmethod
+    async def afrom_api(cls) -> Subscription:
+        url = f"{api_base_url_v1}/user/subscription"
+        response = await cls.aget(url)
+        return cls(**response.json())
+
 
 class User(API):
     subscription: Subscription
@@ -35,3 +41,9 @@ class User(API):
         url = f"{api_base_url_v1}/user"
         response = cls.get(url).json()
         return cls(**response)
+
+    @classmethod
+    async def afrom_api(cls) -> User:
+        url = f"{api_base_url_v1}/user"
+        response = await cls.aget(url)
+        return cls(**response.json())

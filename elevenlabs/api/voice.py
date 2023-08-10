@@ -82,6 +82,13 @@ class VoiceDesign(API):
         self.audio = response.content
         return self.audio  # type: ignore
 
+    async def agenerate(self) -> bytes:
+        url = f"{api_base_url_v1}/voice-generation/generate-voice"
+        response = await API.apost(url, json=self.dict())
+        self.generated_voice_id = response.headers["generated_voice_id"]
+        self.audio = response.content
+        return self.audio  # type: ignore
+
 
 class Voice(API):
     voice_id: str
@@ -100,6 +107,12 @@ class Voice(API):
         return cls(**API.get(url).json())
 
     @classmethod
+    async def afrom_id(cls, voice_id: str):
+        url = f"{api_base_url_v1}/voices/{voice_id}?with_settings=true"
+        response = await API.aget(url)
+        return cls(**response.json())
+
+    @classmethod
     def from_clone(cls, voice_clone: VoiceClone) -> Voice:
         url = f"{api_base_url_v1}/voices/add"
         data = voice_clone.dict()
@@ -113,6 +126,22 @@ class Voice(API):
                 raise UnauthorizedVoiceCloningError(e.http_error)
             raise
         return cls.from_id(voice_id)
+
+    @classmethod
+    async def afrom_clone(cls, voice_clone: VoiceClone) -> Voice:
+        url = f"{api_base_url_v1}/voices/add"
+        data = voice_clone.dict()
+        data["lables"] = str(data.pop("labels"))
+        del data["files"]
+        files = data.pop("_files_tuple")
+        try:
+            response = await API.apost(url, data=data, files=files)
+            voice_id = response.json()["voice_id"]
+        except APIError as e:
+            if e.http_error.status == "can_not_use_instant_voice_cloning":
+                raise UnauthorizedVoiceCloningError(e.http_error)
+            raise
+        return await cls.afrom_id(voice_id)
 
     @classmethod
     def from_design(cls, voice_design: VoiceDesign):
@@ -130,6 +159,22 @@ class Voice(API):
         voice.design = voice_design
         return voice
 
+    @classmethod
+    async def afrom_design(cls, voice_design: VoiceDesign):
+        # If the voice design has not been generated yet, generate it
+        if voice_design.generated_voice_id is None:
+            await voice_design.agenerate()
+        # Create the voice from the voice design
+        url = f"{api_base_url_v1}/voice-generation/create-voice"
+        data = dict(
+            voice_name=voice_design.name,
+            generated_voice_id=voice_design.generated_voice_id,
+        )
+        response = await API.apost(url, json=data)
+        voice = await cls.afrom_id(voice_id=response.json()["voice_id"])
+        voice.design = voice_design
+        return voice
+
     @validator("settings")
     def computed_settings(cls, v: VoiceSettings, values) -> VoiceSettings:
         url = f"{api_base_url_v1}/voices/{values['voice_id']}/settings"
@@ -142,6 +187,9 @@ class Voice(API):
 
     def delete(self):
         API.delete(f"{api_base_url_v1}/voices/{self.voice_id}")
+
+    async def adelete(self):
+        await API.adelete(f"{api_base_url_v1}/voices/{self.voice_id}")
 
     @classmethod
     def edit_by_id(
@@ -175,8 +223,44 @@ class Voice(API):
 
         return Voice.from_id(voice_id)
 
+    @classmethod
+    async def aedit_by_id(
+        cls,
+        voice_id: str,
+        name: Optional[str] = None,
+        labels: Optional[Dict[str, str]] = None,
+        description: Optional[str] = None,
+        voice_settings: Optional[VoiceSettings] = None,
+        voice_clone: Optional[VoiceClone] = None,
+    ) -> Voice:
+        url = f"{api_base_url_v1}/voices/{voice_id}/edit"
+        data = {}
+        data.update(dict(name=name) if name else {})
+        data.update(dict(labels=str(labels)) if labels else {})
+        data.update(dict(description=description) if description else {})
+
+        files = None
+        if voice_clone:
+            clone_data = voice_clone.dict()
+            clone_data["labels"] = str(clone_data.pop("labels"))
+            del clone_data["files"]
+            files = clone_data.pop("_files_tuple")
+
+        if data or files:
+            await API.apost(url, data=data, files=files)
+
+        if voice_settings:
+            settings_url = f"{api_base_url_v1}/voices/{voice_id}/settings/edit"
+            await API.apost(settings_url, json=voice_settings.dict())
+
+        return await Voice.afrom_id(voice_id)
+
     def edit(self, **kwargs):
         updated_voice = Voice.edit_by_id(voice_id=self.voice_id, **kwargs)
+        self.__dict__.update(updated_voice.dict())
+
+    async def aedit(self, **kwargs):
+        updated_voice = await Voice.aedit_by_id(voice_id=self.voice_id, **kwargs)
         self.__dict__.update(updated_voice.dict())
 
 
@@ -188,6 +272,12 @@ class Voices(Listable, API):
         url = f"{api_base_url_v1}/voices"
         response = API.get(url).json()
         return cls(**response)
+
+    @classmethod
+    async def afrom_api(cls, api_key: Optional[str] = None):
+        url = f"{api_base_url_v1}/voices"
+        response = await cls.aget(url)
+        return cls(**response.json())
 
     @property
     def items(self):

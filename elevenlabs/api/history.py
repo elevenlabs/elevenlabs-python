@@ -51,6 +51,12 @@ class HistoryItem(API):
         response = API.get(url).json()
         return cls(**response)
 
+    @classmethod
+    async def afrom_id(cls, history_item_id: str) -> HistoryItem:
+        url = f"{api_base_url_v1}/history/{history_item_id}"
+        response = await cls.aget(url)
+        return cls(**response.json())
+
     @property
     def audio(self) -> bytes:
         url = f"{api_base_url_v1}/history/{self.history_item_id}/audio"
@@ -58,8 +64,19 @@ class HistoryItem(API):
             self._audio = API.get(url).content
         return self._audio
 
+    @property
+    async def aaudio(self) -> bytes:
+        url = f"{api_base_url_v1}/history/{self.history_item_id}/audio"
+        if self._audio is None:
+            response = await API.aget(url)
+            self._audio = response.content
+        return self._audio
+
     def delete(self):
         API.delete(f"{api_base_url_v1}/history/{self.history_item_id}")
+
+    async def adelete(self):
+        await self.adelete(f"{api_base_url_v1}/history/{self.history_item_id}")
 
 
 class History(Listable, API):
@@ -83,6 +100,22 @@ class History(Listable, API):
         response = API.get(url, params=data).json()
         return cls(**response)
 
+    @classmethod
+    async def afrom_api(
+        cls, page_size: int = 100, start_after_history_item_id: Optional[str] = None
+    ) -> History:
+        assert page_size < 1000, (
+            "page_size must be less than 1000, change start_after_history_item_id"
+            " instead."
+        )
+        data = dict(
+            page_size=page_size,
+            start_after_history_item_id=start_after_history_item_id,
+        )
+        url = f"{api_base_url_v1}/history"
+        response = await cls.aget(url, params=data)
+        return cls(**response.json())
+
     @property
     def items(self):
         return self.history
@@ -93,6 +126,21 @@ class History(Listable, API):
             yield item
         while self.has_more:
             history_next = self.from_api(
+                start_after_history_item_id=self.last_history_item_id
+            )
+            self.history.extend(history_next.history)
+            self.has_more = history_next.has_more
+            self.last_history_item_id = history_next.last_history_item_id
+
+            for item in self.history:
+                yield item
+
+    async def __aiter__(self):
+        for item in self.history:
+            yield item
+
+        while self.has_more:
+            history_next = await self.afrom_api(
                 start_after_history_item_id=self.last_history_item_id
             )
             self.history.extend(history_next.history)
