@@ -63,14 +63,13 @@ class API(BaseModel):
         headers = {"xi-api-key": api_key}
 
         async with httpx.AsyncClient() as client:
-            if method == "get":
-                response = await client.get(url, headers=headers, **kwargs)
-            elif method == "post":
-                response = await client.post(url, headers=headers, **kwargs)
-            elif method == "delete":
-                response = await client.delete(url, headers=headers, **kwargs)
-            else:
-                raise ValueError(f"Invalid request method {method}")
+            match method:
+                case "get" | "post" | "delete":
+                    stream = kwargs.pop("stream", False)
+                    req = client.build_request(method, url, headers=headers, **kwargs)
+                    response = await client.send(req, stream=stream)
+                case _:
+                    raise ValueError(f"Invalid request method {method}")
 
         status_code = response.status_code
 
