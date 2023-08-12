@@ -1,4 +1,5 @@
 from .utils import no_api_key, repeat_test_without_api_key, use_play
+import pytest
 
 
 def test_api_key():
@@ -30,6 +31,18 @@ def test_generate():
         play(audio)
 
 
+@pytest.mark.asyncio
+@repeat_test_without_api_key
+async def test_agenerate():
+    from elevenlabs import agenerate, play
+
+    # Test that we can generate audio
+    audio = await agenerate(text="Test voice generation.")
+    assert isinstance(audio, bytes) and len(audio) > 0
+    if use_play:
+        play(audio)
+
+
 def test_generate_stream():
     from typing import Iterable
 
@@ -42,6 +55,25 @@ def test_generate_stream():
     if use_play:
         audio = stream(audio_stream)
         assert isinstance(audio, bytes) and len(audio) > 0
+
+
+@pytest.mark.asyncio
+async def test_agenerate_stream():
+    from typing import AsyncIterator
+
+    from elevenlabs import agenerate, play
+
+    # Test that we can generate audio stream
+    audio_stream = await agenerate(text="Test voice streaming.", stream=True)
+    assert isinstance(audio_stream, AsyncIterator)
+
+    audio = b""
+    async for chunk in audio_stream:
+        audio += chunk
+
+    assert isinstance(audio, bytes) and len(audio) > 0
+    if use_play:
+        play(audio)
 
 
 def test_generate_stream_optimized():
