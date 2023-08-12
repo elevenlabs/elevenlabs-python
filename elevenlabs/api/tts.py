@@ -3,7 +3,7 @@ from __future__ import annotations
 import base64
 import json
 import os
-from typing import Iterator, Optional
+from typing import Iterator, Optional, AsyncIterator
 
 import websockets
 from websockets.sync.client import connect
@@ -86,7 +86,7 @@ class TTS(API):
         stream_chunk_size: int = 2048,
         api_key: Optional[str] = None,
         latency: int = 1,
-    ) -> Iterator[bytes]:
+    ) -> AsyncIterator[bytes]:
         url = f"{api_base_url_v1}/text-to-speech/{voice.voice_id}/stream?optimize_streaming_latency={latency}"
         data = dict(
             text=text,
@@ -97,6 +97,7 @@ class TTS(API):
         async for chunk in response.aiter_bytes(chunk_size=stream_chunk_size):
             if chunk:
                 yield chunk
+        await response.aclose()
 
     @staticmethod
     def generate_stream_input(

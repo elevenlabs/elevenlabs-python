@@ -73,21 +73,31 @@ class API(BaseModel):
         api_key = api_key or os.environ.get("ELEVEN_API_KEY")
         headers = {"xi-api-key": api_key}
         remove_none_values(kwargs)
+        stream = kwargs.pop("stream", False)
 
-        async with httpx.AsyncClient() as client:
-            match method:
-                case "get" | "post" | "delete":
-                    stream = kwargs.pop("stream", False)
-                    req = client.build_request(method, url, headers=headers, **kwargs)
-                    response = await client.send(req, stream=stream)
-                case _:
-                    raise ValueError(f"Invalid request method {method}")
+        if stream:
+            # It is developer's duty to make sure that Response.aclose() is called eventually.
+            # In this particular case, since we are returning the response, it becomes our
+            # responsibility to manually close it once we have obtained all the necessary data.
+            client = httpx.AsyncClient()
+            req = client.build_request(method, url, headers=headers, **kwargs)
+            response = await client.send(req, stream=True)
+        else:
+            async with httpx.AsyncClient() as client:
+                match method:
+                    case "get" | "post" | "delete":
+                        response = await client.request(
+                            method, url, headers=headers, **kwargs
+                        )
+                    case _:
+                        raise ValueError(f"Invalid request method {method}")
 
         status_code = response.status_code
 
         if status_code == 200:
             return response
 
+        await response.aclose()
         error = HTTPError(response)
 
         if status_code == 401:
