@@ -146,3 +146,51 @@ class TTS(API):
                         yield base64.b64decode(data["audio"])  # type: ignore
                 except websockets.exceptions.ConnectionClosed:
                     break
+
+    @staticmethod
+    async def agenerate_stream_input(
+        text: Iterator[str], voice: Voice, model: Model, api_key: Optional[str] = None
+    ) -> AsyncIterator[bytes]:
+        BOS = json.dumps(
+            dict(
+                text=" ",
+                try_trigger_generation=True,
+                voice_settings=voice.settings.dict() if voice.settings else None,
+                generation_config=dict(
+                    chunk_length_schedule=[50],
+                ),
+            )
+        )
+        EOS = json.dumps(dict(text=""))
+
+        async with websockets.connect(
+            f"wss://api.elevenlabs.io/v1/text-to-speech/{voice.voice_id}/stream-input?model_id={model.model_id}",
+            additional_headers={
+                "xi-api-key": api_key or os.environ.get("ELEVEN_API_KEY")
+            },
+        ) as websocket:
+            # Send beginning of stream
+            await websocket.send(BOS)
+
+            # Stream text chunks and receive audio
+            for text_chunk in text_chunker(text):
+                data = dict(text=text_chunk, try_trigger_generation=True)
+                await websocket.send(json.dumps(data))
+                try:
+                    data = json.loads(await websocket.recv(1e-4))
+                    if data["audio"]:
+                        yield base64.b64decode(data["audio"])  # type: ignore
+                except TimeoutError:
+                    pass
+
+            # Send end of stream
+            await websocket.send(EOS)
+
+            # Receive remaining audio
+            while True:
+                try:
+                    data = json.loads(await websocket.recv())
+                    if data["audio"]:
+                        yield base64.b64decode(data["audio"])  # type: ignore
+                except websockets.exceptions.ConnectionClosed:
+                    break
