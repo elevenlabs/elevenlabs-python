@@ -272,7 +272,7 @@ from elevenlabs import Voice, VoiceDesign, Gender, Age, Accent, play
 design = VoiceDesign(
     name='Lexa',
     text="Hello, my name is Lexa. I'm your personal assistant, I can help you with your daily tasks and I can also read you the news.",
-    description="A young british female voice, resembling a secretary. Perfect for the office assistant roles.",
+    description="A young british female voice, resembling a secretary. Perfect for office assistant roles.",
     labels={'accent': 'british', 'gender': 'female', 'age': 'young'},
     gender=Gender.female,
     age=Age.young,
