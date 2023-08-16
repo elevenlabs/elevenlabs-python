@@ -68,6 +68,8 @@ class VoiceDesign(API):
     name: str
     text: str = Field(..., min_length=100)
     gender: Gender
+    description: str
+    labels: dict
     age: Age
     accent: Accent
     accent_strength: float = Field(..., gt=0.3, lt=2.0)
@@ -123,7 +125,9 @@ class Voice(API):
         url = f"{api_base_url_v1}/voice-generation/create-voice"
         data = dict(
             voice_name=voice_design.name,
+            voice_description=voice_design.description,
             generated_voice_id=voice_design.generated_voice_id,
+            labels=voice_design.labels,
         )
         response = API.post(url, json=data)
         voice = cls.from_id(voice_id=response.json()["voice_id"])
