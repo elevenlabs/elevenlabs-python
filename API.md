@@ -341,3 +341,16 @@ An example of playing the `HistoryItem` audio at index 3:
 from elevenlabs import play
 play(history[3].audio)
 ```
+
+
+
+<hr/>
+
+
+
+<details><summary>Logos</summary>
+    
+![IIMultilingualV2](https://github.com/elevenlabs/elevenlabs-python/assets/12028621/4f85c9cf-85b6-435e-ab50-5b8c7c4e9dd2)
+
+</details>
+
