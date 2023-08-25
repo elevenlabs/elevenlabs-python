@@ -17,6 +17,8 @@ class UnauthorizedVoiceCloningError(APIError):
 class VoiceSettings(API):
     stability: float = Field(..., ge=0.0, le=1.0)
     similarity_boost: float = Field(..., ge=0.0, le=1.0)
+    style: float = Field(..., ge=0.0, le=1.0)
+    use_speaker_boost: bool = Field(...)
 
 
 class VoiceSample(API):
