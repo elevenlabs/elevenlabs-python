@@ -61,6 +61,7 @@ def test_voice_design():
             "Hi! My name is Lexa, I'm a voice design test. I should have a middle aged"
             " female voice with a british accent. "
         ),
+        voice_description="Middle aged female with british accent.",
         gender=Gender.female,
         age=Age.middle_aged,
         accent=Accent.british,

@@ -3,14 +3,14 @@ from setuptools import find_packages, setup
 setup(
     name="elevenlabs",
     packages=find_packages(exclude=[]),
-    version="0.2.24",
+    version="0.2.25",
     description="The official elevenlabs python package.",
     long_description_content_type="text/markdown",
     author="Elevenlabs",
     url="https://github.com/elevenlabs/elevenlabs-python",
     keywords=["artificial intelligence", "deep learning"],
     install_requires=[
-        "pydantic>=1.10,<2.0",
+        "pydantic>=2.0",
         "ipython>=7.0",
         "requests>=2.20",
         "websockets>=11.0",

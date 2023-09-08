@@ -168,7 +168,7 @@ Models(
 
 ### `Voices`
 
-The `Voices` API is used to get a list of all available voices for the authenticated user. The `Voice` contains all the info for a voice, such as the voice's stability and similarity_boost, and can be passed to the `generate` function as the `voice` argument to select the voice. The voice settings can be changed to control the voice behaviour.
+The `Voices` API is used to get a list of all available voices for the authenticated user. The `Voice` contains all the info for a voice, and can be passed to the `generate` function as the `voice` argument to select the voice. The voice settings can be changed to control the voice behaviour.
 
 ```py
 from elevenlabs.api import Voices
@@ -184,7 +184,7 @@ Voice(
     voice_id='21m00Tcm4TlvDq8ikWAM',
     name='Rachel',
     category='premade',
-    settings=VoiceSettings(stability=0.75, similarity_boost=0.75)
+    settings=None
 )
 ```
 
@@ -195,72 +195,27 @@ Voices(
             voice_id='21m00Tcm4TlvDq8ikWAM',
             name='Rachel',
             category='premade',
-            settings=VoiceSettings(stability=0.75, similarity_boost=0.75)
+            settings=None
         ),
         Voice(
             voice_id='AZnzlk1XvdvUeBnXmlld',
             name='Domi',
             category='premade',
-            settings=VoiceSettings(stability=0.1, similarity_boost=0.75)
+            settings=None
         ),
         Voice(
             voice_id='EXAVITQu4vr4xnSDxMaL',
             name='Bella',
             category='premade',
-            settings=VoiceSettings(stability=0.245, similarity_boost=0.75)
+            settings=None
         ),
-        Voice(
-            voice_id='ErXwobaYiN019PkySvjV',
-            name='Antoni',
-            category='premade',
-            settings=VoiceSettings(stability=0.195, similarity_boost=0.75)
-        ),
-        Voice(
-            voice_id='MF3mGyEYCl7XYWbV9V6O',
-            name='Elli',
-            category='premade',
-            settings=VoiceSettings(stability=0.755, similarity_boost=0.75)
-        ),
-        Voice(
-            voice_id='TxGEqnHWrfWFTfGW9XjX',
-            name='Josh',
-            category='premade',
-            settings=VoiceSettings(stability=0.15, similarity_boost=0.51)
-        ),
-        Voice(
-            voice_id='VR6AewLTigWG4xSOukaG',
-            name='Arnold',
-            category='premade',
-            settings=VoiceSettings(stability=0.15, similarity_boost=0.75)
-        ),
-        Voice(
-            voice_id='pNInz6obpgDQGcFmaJgB',
-            name='Adam',
-            category='premade',
-            settings=VoiceSettings(stability=0.2, similarity_boost=0.75)
-        ),
-        Voice(
-            voice_id='yoZ06aMxZJJ28mfd3POQ',
-            name='Sam',
-            category='premade',
-            settings=VoiceSettings(stability=0.25, similarity_boost=0.75)
-        )
+        ...
     ]
 )
 ```
 
 </details>
 
-An example of changing the `Voice` object to control the voice behaviour:
-
-```py
-my_voice = voices[0]
-my_voice.settings.stability = 0.1
-my_voice.settings.similarity_boost = 0.75
-
-text = f""" Hi! My name is {my_voice.name}, nice to meet you! """
-audio = generate(text, voice=my_voice)
-```
 
 ### `VoiceDesign`
 
@@ -272,6 +227,7 @@ from elevenlabs import Voice, VoiceDesign, Gender, Age, Accent, play
 design = VoiceDesign(
     name='Lexa',
     text="Hello, my name is Lexa. I'm your personal assistant, I can help you with your daily tasks and I can also read you the news.",
+    voice_description="Calm and soft with a slight British accent.",
     gender=Gender.female,
     age=Age.young,
     accent=Accent.british,

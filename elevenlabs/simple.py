@@ -2,8 +2,15 @@ import os
 import re
 from typing import Iterator, Optional, Union
 
-from .api import TTS, Model, Voice, VoiceClone, Voices
-from .cache import VOICES_CACHE
+from .api import TTS, Model, Voice, VoiceClone, Voices, VoiceSettings
+
+DEFAULT_VOICE = Voice(
+    voice_id="EXAVITQu4vr4xnSDxMaL",
+    name="Bella",
+    settings=VoiceSettings(
+        stability=0.71, similarity_boost=0.5, style=0.0, use_speaker_boost=True
+    ),
+)
 
 
 def set_api_key(api_key: str) -> None:
@@ -15,11 +22,7 @@ def get_api_key() -> Optional[str]:
 
 
 def voices() -> Voices:
-    """Lists all voices in the API, if authenticated for the current user"""
-    api_key = get_api_key()
-    global VOICES_CACHE
-    VOICES_CACHE = Voices.from_api(api_key) if api_key else VOICES_CACHE
-    return VOICES_CACHE
+    return Voices.from_api()
 
 
 def clone(**kwargs) -> Voice:
@@ -33,7 +36,7 @@ def is_voice_id(val: str) -> bool:
 def generate(
     text: Union[str, Iterator[str]],
     api_key: Optional[str] = None,
-    voice: Union[str, Voice] = VOICES_CACHE[2],  # Bella
+    voice: Union[str, Voice] = DEFAULT_VOICE,
     model: Union[str, Model] = "eleven_monolingual_v1",
     stream: bool = False,
     latency: int = 1,
@@ -45,12 +48,8 @@ def generate(
         # If voice is valid voice_id, use it
         if is_voice_id(voice):
             voice = Voice(voice_id=voice)
-        # Otherwise, search voice by name
         else:
-            # Check if voice is in cache
-            voice = next((v for v in VOICES_CACHE if v.name == voice_str), None)  # type: ignore # noqa E501
-            # If not, query API
-            voice = next((v for v in voices() if v.name == voice_str), None) if not voice else voice  # type: ignore # noqa E501
+            voice = next((v for v in voices() if v.name == voice_str), None)  # type: ignore # noqa E501
 
         # Raise error if voice not found
         if not voice:

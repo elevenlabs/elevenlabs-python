@@ -40,7 +40,7 @@ class TTS(API):
         data = dict(
             text=text,
             model_id=model.model_id,
-            voice_settings=voice.settings.dict() if voice.settings else None,
+            voice_settings=voice.settings.model_dump() if voice.settings else None,
         )  # type: ignore
         response = API.post(url, json=data, api_key=api_key)
         return response.content
@@ -58,7 +58,7 @@ class TTS(API):
         data = dict(
             text=text,
             model_id=model.model_id,
-            voice_settings=voice.settings.dict() if voice.settings else None,
+            voice_settings=voice.settings.model_dump() if voice.settings else None,
         )  # type: ignore
         response = API.post(url, json=data, stream=True, api_key=api_key)
         for chunk in response.iter_content(chunk_size=stream_chunk_size):
@@ -73,7 +73,7 @@ class TTS(API):
             dict(
                 text=" ",
                 try_trigger_generation=True,
-                voice_settings=voice.settings.dict() if voice.settings else None,
+                voice_settings=voice.settings.model_dump() if voice.settings else None,
                 generation_config=dict(
                     chunk_length_schedule=[50],
                 ),

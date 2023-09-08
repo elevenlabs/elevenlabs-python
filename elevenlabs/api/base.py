@@ -1,3 +1,4 @@
+import json
 import os
 from typing import Optional, Sequence
 
@@ -7,7 +8,6 @@ from pydantic import BaseModel
 from .error import (
     APIError,
     AuthorizationError,
-    HTTPError,
     RateLimitError,
     UnauthenticatedRateLimitError,
 )
@@ -16,12 +16,12 @@ api_base_url_v1 = os.environ.get("ELEVEN_BASE_URL", "https://api.elevenlabs.io/v
 
 
 class API(BaseModel):
-    class Config:
+    class ConfigDict:
         # Parse enum to strings when converting to dict
         use_enum_values = True
         # Validate fields when setting manually
         validate_assignment = True
-        #
+        # Allows having a field called `model_id` in the class
         protected_namespaces = ()
 
     @staticmethod
@@ -43,18 +43,29 @@ class API(BaseModel):
         if status_code == 200:
             return response
 
-        error = HTTPError(response)
+        # Parse the error message and status
+        error = json.loads(response.text)
+        message, status = "", ""
+        if "detail" in error:
+            detail = error["detail"]
+            if isinstance(error, dict):
+                message = detail.get("message", "")
+                status = detail.get("status", "")
+        else:
+            message = str(error)
+            status = str(response.status_code)
 
+        # Raise the appropriate error
         if status_code == 401:
-            if error.status == "quota_exceeded":
+            if status == "quota_exceeded":
                 if api_key is None:
-                    raise UnauthenticatedRateLimitError(error)
+                    raise UnauthenticatedRateLimitError(message)
                 else:
-                    raise RateLimitError(error)
-            elif error.status == "needs_authorization":
-                raise AuthorizationError(error)
+                    raise RateLimitError(message)
+            elif status == "needs_authorization":
+                raise AuthorizationError(message)
 
-        raise APIError(error)
+        raise APIError(message, status)
 
     @staticmethod
     def get(url: str, *args, **kwargs):

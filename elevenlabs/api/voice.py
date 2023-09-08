@@ -1,10 +1,11 @@
 from __future__ import annotations
 
+import json
 from enum import Enum
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional
 
-from pydantic import Field, root_validator, validator
+from pydantic import Field
 
 from .base import API, Listable, api_base_url_v1
 from .error import APIError
@@ -17,6 +18,18 @@ class UnauthorizedVoiceCloningError(APIError):
 class VoiceSettings(API):
     stability: float = Field(..., ge=0.0, le=1.0)
     similarity_boost: float = Field(..., ge=0.0, le=1.0)
+    style: float = Field(..., ge=0.0, le=1.0)
+    use_speaker_boost: bool
+
+    @classmethod
+    def from_voice_id(cls, voice_id: str) -> VoiceSettings:
+        url = f"{api_base_url_v1}/voices/{voice_id}/settings"
+        return cls(**API.get(url).json())
+
+    @classmethod
+    def from_default(cls) -> VoiceSettings:
+        url = f"{api_base_url_v1}/voices/settings/default"
+        return cls(**API.get(url).json())
 
 
 class VoiceSample(API):
@@ -30,19 +43,17 @@ class VoiceSample(API):
 class VoiceClone(API):
     name: str = Field(..., min_length=1, max_length=100)
     description: str = ""
-    files: List[str] = Field(..., min_items=1, max_items=25)
+    files: List[str] = Field(..., min_length=1, max_length=25)
     labels: Optional[Dict[str, str]] = None
-    _files_tuple: Optional[List[Tuple]] = None
 
-    @root_validator(skip_on_failure=True)
-    def computed_files_tuple(cls, values) -> List[str]:
+    @property
+    def files_tuple(self):
         files_tuple = []
-        for filepath in values["files"]:
+        for filepath in self.files:
             b = open(filepath, "rb")
             file_tuple = ("files", (f"{Path(filepath).stem}_{id(b)}", b, "audio/mpeg"))
             files_tuple.append(file_tuple)
-        values["_files_tuple"] = files_tuple
-        return values
+        return files_tuple
 
 
 class Gender(str, Enum):
@@ -67,6 +78,7 @@ class Accent(str, Enum):
 class VoiceDesign(API):
     name: str
     text: str = Field(..., min_length=100)
+    voice_description: str
     gender: Gender
     age: Age
     accent: Accent
@@ -77,7 +89,7 @@ class VoiceDesign(API):
 
     def generate(self) -> bytes:
         url = f"{api_base_url_v1}/voice-generation/generate-voice"
-        response = API.post(url, json=self.dict())
+        response = API.post(url, json=self.model_dump())
         self.generated_voice_id = response.headers["generated_voice_id"]
         self.audio = response.content
         return self.audio  # type: ignore
@@ -90,9 +102,9 @@ class Voice(API):
     description: Optional[str] = None
     labels: Optional[Dict[str, str]] = None
     samples: Optional[List[VoiceSample]] = None
-    settings: Optional[VoiceSettings] = None
     design: Optional[VoiceDesign] = None
     preview_url: Optional[str] = None
+    settings: Optional[VoiceSettings] = None
 
     @classmethod
     def from_id(cls, voice_id: str):
@@ -102,15 +114,17 @@ class Voice(API):
     @classmethod
     def from_clone(cls, voice_clone: VoiceClone) -> Voice:
         url = f"{api_base_url_v1}/voices/add"
-        data = voice_clone.dict()
-        data["lables"] = str(data.pop("labels"))
-        del data["files"]
-        files = data.pop("_files_tuple")
+        data = dict(
+            name=voice_clone.name,
+            description=voice_clone.description,
+            labels=str(json.dumps(voice_clone.labels or {})),
+        )
+        files = voice_clone.files_tuple
         try:
             voice_id = API.post(url, data=data, files=files).json()["voice_id"]
         except APIError as e:
-            if e.http_error.status == "can_not_use_instant_voice_cloning":
-                raise UnauthorizedVoiceCloningError(e.http_error)
+            if e.status == "can_not_use_instant_voice_cloning":
+                raise UnauthorizedVoiceCloningError(e.message)
             raise
         return cls.from_id(voice_id)
 
@@ -124,21 +138,19 @@ class Voice(API):
         data = dict(
             voice_name=voice_design.name,
             generated_voice_id=voice_design.generated_voice_id,
+            voice_description=voice_design.voice_description,
         )
         response = API.post(url, json=data)
         voice = cls.from_id(voice_id=response.json()["voice_id"])
         voice.design = voice_design
         return voice
 
-    @validator("settings")
-    def computed_settings(cls, v: VoiceSettings, values) -> VoiceSettings:
-        url = f"{api_base_url_v1}/voices/{values['voice_id']}/settings"
-        return v if v else VoiceSettings(**API.get(url).json())
+    def fetch_settings(self):
+        self.settings = VoiceSettings.from_voice_id(self.voice_id)
 
-    @classmethod
-    def default_settings(cls):
-        url = f"{api_base_url_v1}/voices/settings/default"
-        return VoiceSettings(**API.get(url).json())
+    @staticmethod
+    def default_settings() -> VoiceSettings:
+        return VoiceSettings.from_default()
 
     def delete(self):
         API.delete(f"{api_base_url_v1}/voices/{self.voice_id}")
@@ -161,7 +173,7 @@ class Voice(API):
 
         files = None
         if voice_clone:
-            clone_data = voice_clone.dict()
+            clone_data = voice_clone.model_dump()
             clone_data["labels"] = str(clone_data.pop("labels"))
             del clone_data["files"]
             files = clone_data.pop("_files_tuple")
@@ -171,13 +183,13 @@ class Voice(API):
 
         if voice_settings:
             settings_url = f"{api_base_url_v1}/voices/{voice_id}/settings/edit"
-            API.post(settings_url, json=voice_settings.dict())
+            API.post(settings_url, json=voice_settings.model_dump())
 
         return Voice.from_id(voice_id)
 
     def edit(self, **kwargs):
         updated_voice = Voice.edit_by_id(voice_id=self.voice_id, **kwargs)
-        self.__dict__.update(updated_voice.dict())
+        self.__dict__.update(updated_voice.model_dump())
 
 
 class Voices(Listable, API):
