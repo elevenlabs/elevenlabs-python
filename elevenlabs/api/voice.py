@@ -18,8 +18,8 @@ class UnauthorizedVoiceCloningError(APIError):
 class VoiceSettings(API):
     stability: float = Field(..., ge=0.0, le=1.0)
     similarity_boost: float = Field(..., ge=0.0, le=1.0)
-    style: float = Field(..., ge=0.0, le=1.0)
-    use_speaker_boost: bool
+    style: Optional[float] = Field(None, ge=0.0, le=1.0)
+    use_speaker_boost: Optional[bool] = None
 
     @classmethod
     def from_voice_id(cls, voice_id: str) -> VoiceSettings:

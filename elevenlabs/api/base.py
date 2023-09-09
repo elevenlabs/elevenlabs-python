@@ -3,7 +3,7 @@ import os
 from typing import Optional, Sequence
 
 import requests  # type: ignore
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from .error import (
     APIError,
@@ -16,13 +16,12 @@ api_base_url_v1 = os.environ.get("ELEVEN_BASE_URL", "https://api.elevenlabs.io/v
 
 
 class API(BaseModel):
-    class ConfigDict:
+    model_config = ConfigDict(
         # Parse enum to strings when converting to dict
-        use_enum_values = True
-        # Validate fields when setting manually
-        validate_assignment = True
-        # Allows having a field called `model_id` in the class
-        protected_namespaces = ()
+        use_enum_values=True,
+        # Allows `model_id` field
+        protected_namespaces=(),
+    )
 
     @staticmethod
     def request(url: str, method: str, api_key: Optional[str] = None, **kwargs):

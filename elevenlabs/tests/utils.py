@@ -23,6 +23,7 @@ def repeat_test_without_api_key(func):
         # Call the function without API key
         with no_api_key():
             func(*args, **kwargs)
+            # pass
         # Call the function with original arguments
         return func(*args, **kwargs)
 
