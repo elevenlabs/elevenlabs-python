@@ -67,7 +67,7 @@ def generate(
                 text, voice, model, stream_chunk_size, api_key=api_key, latency=latency
             )  # noqa E501
         elif isinstance(text, Iterator):
-            return TTS.generate_stream_input(text, voice, model, api_key=api_key)
+            return TTS.generate_stream_input(text, voice, model, api_key=api_key, latency=latency)
     else:
         assert isinstance(text, str)
         return TTS.generate(text, voice, model, api_key=api_key)

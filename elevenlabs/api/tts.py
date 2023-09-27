@@ -67,7 +67,7 @@ class TTS(API):
 
     @staticmethod
     def generate_stream_input(
-        text: Iterator[str], voice: Voice, model: Model, api_key: Optional[str] = None
+        text: Iterator[str], voice: Voice, model: Model, api_key: Optional[str] = None, latency: int = 1,
     ) -> Iterator[bytes]:
         BOS = json.dumps(
             dict(
@@ -82,7 +82,7 @@ class TTS(API):
         EOS = json.dumps(dict(text=""))
 
         with connect(
-            f"wss://api.elevenlabs.io/v1/text-to-speech/{voice.voice_id}/stream-input?model_id={model.model_id}",
+            f"wss://api.elevenlabs.io/v1/text-to-speech/{voice.voice_id}/stream-input?model_id={model.model_id}&optimize_streaming_latency={latency}",
             additional_headers={
                 "xi-api-key": api_key or os.environ.get("ELEVEN_API_KEY")
             },
