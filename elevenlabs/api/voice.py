@@ -198,7 +198,7 @@ class Voices(Listable, API):
     @classmethod
     def from_api(cls, api_key: Optional[str] = None):
         url = f"{api_base_url_v1}/voices"
-        response = API.get(url).json()
+        response = API.get(url, api_key=api_key).json()
         return cls(**response)
 
     @property
