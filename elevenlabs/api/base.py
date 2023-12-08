@@ -48,8 +48,12 @@ class API(BaseModel):
         if "detail" in error:
             detail = error["detail"]
             if isinstance(error, dict):
-                message = detail.get("message", "")
-                status = detail.get("status", "")
+                if isinstance(detail, list):
+                    message = ', '.join([f"{err.get('loc')[-1]}: {err.get('msg', '')}" for err in detail])
+                    status = str(response.status_code)
+                else:
+                    message = detail.get("message", "")
+                    status = detail.get("status", "")
         else:
             message = str(error)
             status = str(response.status_code)
