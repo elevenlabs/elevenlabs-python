@@ -1,8 +1,8 @@
 import os
 import re
-from typing import Iterator, Literal, Optional, Union
+from typing import Iterator, Optional, Union
 
-from .api import TTS, Model, Voice, VoiceClone, Voices, VoiceSettings
+from .api import TTS, Model, OutputFormat, Voice, VoiceClone, Voices, VoiceSettings
 
 DEFAULT_VOICE = Voice(
     voice_id="EXAVITQu4vr4xnSDxMaL",
@@ -40,7 +40,7 @@ def generate(
     model: Union[str, Model] = "eleven_monolingual_v1",
     stream: bool = False,
     latency: int = 1,
-    output_format: TTS.OutputFormat = "mp3_44100_128",
+    output_format: OutputFormat = "mp3_44100_128",
     stream_chunk_size: int = 2048,
 ) -> Union[bytes, Iterator[bytes]]:
 
@@ -65,10 +65,25 @@ def generate(
     if stream:
         if isinstance(text, str):
             return TTS.generate_stream(
-                text, voice, model, stream_chunk_size, api_key=api_key, latency=latency, output_format=output_format
+                text,
+                voice,
+                model,
+                stream_chunk_size,
+                api_key=api_key,
+                latency=latency,
+                output_format=output_format,
             )  # noqa E501
         elif isinstance(text, Iterator):
-            return TTS.generate_stream_input(text, voice, model, api_key=api_key, output_format=output_format, latency=latency)
+            return TTS.generate_stream_input(
+                text,
+                voice,
+                model,
+                api_key=api_key,
+                output_format=output_format,
+                latency=latency,
+            )
     else:
         assert isinstance(text, str)
-        return TTS.generate(text, voice, model, api_key=api_key, output_format=output_format)
+        return TTS.generate(
+            text, voice, model, api_key=api_key, output_format=output_format
+        )

@@ -31,26 +31,27 @@ def text_chunker(chunks: Iterator[str]) -> Iterator[str]:
         yield buffer + " "
 
 
-class TTS(API):
-    OutputFormat = Literal[
-        "mp3_44100_64",
-        "mp3_44100_96",
-        "mp3_44100_128",
-        "mp3_44100_192",
-        "pcm_16000",
-        "pcm_22050",
-        "pcm_24000",
-        "pcm_44100",
-        "ulaw_8000",
-    ]
+OutputFormat = Literal[
+    "mp3_44100_64",
+    "mp3_44100_96",
+    "mp3_44100_128",
+    "mp3_44100_192",
+    "pcm_16000",
+    "pcm_22050",
+    "pcm_24000",
+    "pcm_44100",
+    "ulaw_8000",
+]
 
+
+class TTS(API):
     @staticmethod
     def generate(
         text: str,
         voice: Voice,
         model: Model,
         api_key: Optional[str] = None,
-        output_format: TTS.OutputFormat = "mp3_44100_128",
+        output_format: OutputFormat = "mp3_44100_128",
     ) -> bytes:
         url = f"{api_base_url_v1}/text-to-speech/{voice.voice_id}?output_format={output_format}"
         data = dict(
@@ -69,7 +70,7 @@ class TTS(API):
         stream_chunk_size: int = 2048,
         api_key: Optional[str] = None,
         latency: int = 1,
-        output_format: TTS.OutputFormat = "mp3_44100_128",
+        output_format: OutputFormat = "mp3_44100_128",
     ) -> Iterator[bytes]:
         url = f"{api_base_url_v1}/text-to-speech/{voice.voice_id}/stream?optimize_streaming_latency={latency}&output_format={output_format}"
         data = dict(
@@ -88,7 +89,7 @@ class TTS(API):
         voice: Voice,
         model: Model,
         api_key: Optional[str] = None,
-        output_format: TTS.OutputFormat = "mp3_44100_128",
+        output_format: OutputFormat = "mp3_44100_128",
         latency: int = 1,
     ) -> Iterator[bytes]:
         BOS = json.dumps(

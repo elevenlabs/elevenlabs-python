@@ -15,12 +15,13 @@ generate(
     stream: bool = False,                               # If True, returns a generator streaming bytes
     stream_chunk_size: int = 2048,                      # Size of each chunk when stream=True
     latency: int = 1                                    # [1-4] the higher the more optimized for streaming latency (only works with stream=True)
+    output_format: str = "mp3_44100_128",               # The output format: mp3_44100_[64,96,128,192], pcm_[16000,22050,24000,44100], ulaw_8000
 ) -> Union[bytes, Iterator[bytes]]
 ```
 
 ### `play`
 
-Plays audio bytes returned by generate. Note playing requires [ffmpeg](https://ffmpeg.org/download.html) to be installed (`brew install ffmpeg` on mac), alternatively you can set `use_ffmpeg=False`, this requires sounddevice and soundfile: `pip install sounddevice soundfile`.
+Plays audio bytes returned by generate. Note playing requires [ffmpeg](https://ffmpeg.org/download.html) to be installed (`brew install ffmpeg` on mac), alternatively you can set `use_ffmpeg=False`, this requires sounddevice and soundfile: `pip install sounddevice soundfile`. The play function only supports `mp3_44100_*` formats.
 
 ```py
 from elevenlabs import play
