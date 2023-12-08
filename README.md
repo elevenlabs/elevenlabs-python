@@ -5,7 +5,7 @@
 [![PyPI - Python Version](https://img.shields.io/pypi/v/elevenlabs?style=flat&colorA=black&colorB=black)](https://pypi.org/project/elevenlabs/)
 [![Downloads](https://static.pepy.tech/personalized-badge/elevenlabs?period=total&units=international_system&left_color=black&right_color=black&left_text=Downloads)](https://pepy.tech/project/elevenlabs)
 
-The official Python API for [ElevenLabs](https://elevenlabs.io/) [text-to-speech software.](https://elevenlabs.io/text-to-speech) Eleven brings the most compelling, rich and lifelike voices to creators and developers in just a few lines of code.
+The official Python API for ElevenLabs [text-to-speech software.](https://elevenlabs.io/) Eleven brings the most compelling, rich and lifelike voices to creators and developers in just a few lines of code.
 
 
 ## ⚙️ Install
@@ -149,7 +149,7 @@ stream(audio_stream)
 
 ## 🔑 API Key
 
-The basic [API](https://elevenlabs.io/api) has a limited number of characters. To increase this limit, you can get a free API key from [Elevenlabs](https://elevenlabs.io/) ([step-by-step guide](https://elevenlabs.io/docs/api-reference)) and set is as environment variable `ELEVEN_API_KEY`. Alternatively, you can provide the `api_key` string argument to the `generate` function, or set it globally in code with:
+The basic [API](https://elevenlabs.io/api) has a limited number of characters. To increase this limit, you can get a free API key from Elevenlabs ([step-by-step guide](https://elevenlabs.io/docs/api-reference)) and set is as environment variable `ELEVEN_API_KEY`. Alternatively, you can provide the `api_key` string argument to the `generate` function, or set it globally in code with:
 
 ```py
 from elevenlabs import set_api_key
