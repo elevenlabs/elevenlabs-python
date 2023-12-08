@@ -89,6 +89,7 @@ class TTS(API):
         model: Model,
         api_key: Optional[str] = None,
         output_format: TTS.OutputFormat = "mp3_44100_128",
+        latency: int = 1,
     ) -> Iterator[bytes]:
         BOS = json.dumps(
             dict(
@@ -103,7 +104,7 @@ class TTS(API):
         EOS = json.dumps(dict(text=""))
 
         with connect(
-            f"wss://api.elevenlabs.io/v1/text-to-speech/{voice.voice_id}/stream-input?model_id={model.model_id}&output_format={output_format}",
+            f"wss://api.elevenlabs.io/v1/text-to-speech/{voice.voice_id}/stream-input?model_id={model.model_id}&output_format={output_format}&optimize_streaming_latency={latency}",
             additional_headers={
                 "xi-api-key": api_key or os.environ.get("ELEVEN_API_KEY")
             },
