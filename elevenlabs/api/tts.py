@@ -3,7 +3,7 @@ from __future__ import annotations
 import base64
 import json
 import os
-from typing import Iterator, Optional
+from typing import Iterator, Literal, Optional
 
 import websockets
 from websockets.sync.client import connect
@@ -32,11 +32,27 @@ def text_chunker(chunks: Iterator[str]) -> Iterator[str]:
 
 
 class TTS(API):
+    OutputFormat = Literal[
+        "mp3_44100_64",
+        "mp3_44100_96",
+        "mp3_44100_128",
+        "mp3_44100_192",
+        "pcm_16000",
+        "pcm_22050",
+        "pcm_24000",
+        "pcm_44100",
+        "ulaw_8000",
+    ]
+
     @staticmethod
     def generate(
-        text: str, voice: Voice, model: Model, api_key: Optional[str] = None
+        text: str,
+        voice: Voice,
+        model: Model,
+        api_key: Optional[str] = None,
+        output_format: TTS.OutputFormat = "mp3_44100_128",
     ) -> bytes:
-        url = f"{api_base_url_v1}/text-to-speech/{voice.voice_id}"
+        url = f"{api_base_url_v1}/text-to-speech/{voice.voice_id}?output_format={output_format}"
         data = dict(
             text=text,
             model_id=model.model_id,
@@ -53,8 +69,9 @@ class TTS(API):
         stream_chunk_size: int = 2048,
         api_key: Optional[str] = None,
         latency: int = 1,
+        output_format: TTS.OutputFormat = "mp3_44100_128",
     ) -> Iterator[bytes]:
-        url = f"{api_base_url_v1}/text-to-speech/{voice.voice_id}/stream?optimize_streaming_latency={latency}"
+        url = f"{api_base_url_v1}/text-to-speech/{voice.voice_id}/stream?optimize_streaming_latency={latency}&output_format={output_format}"
         data = dict(
             text=text,
             model_id=model.model_id,
@@ -67,7 +84,11 @@ class TTS(API):
 
     @staticmethod
     def generate_stream_input(
-        text: Iterator[str], voice: Voice, model: Model, api_key: Optional[str] = None
+        text: Iterator[str],
+        voice: Voice,
+        model: Model,
+        api_key: Optional[str] = None,
+        output_format: TTS.OutputFormat = "mp3_44100_128",
     ) -> Iterator[bytes]:
         BOS = json.dumps(
             dict(
@@ -82,7 +103,7 @@ class TTS(API):
         EOS = json.dumps(dict(text=""))
 
         with connect(
-            f"wss://api.elevenlabs.io/v1/text-to-speech/{voice.voice_id}/stream-input?model_id={model.model_id}",
+            f"wss://api.elevenlabs.io/v1/text-to-speech/{voice.voice_id}/stream-input?model_id={model.model_id}&output_format={output_format}",
             additional_headers={
                 "xi-api-key": api_key or os.environ.get("ELEVEN_API_KEY")
             },

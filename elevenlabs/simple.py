@@ -1,6 +1,6 @@
 import os
 import re
-from typing import Iterator, Optional, Union
+from typing import Iterator, Literal, Optional, Union
 
 from .api import TTS, Model, Voice, VoiceClone, Voices, VoiceSettings
 
@@ -40,6 +40,7 @@ def generate(
     model: Union[str, Model] = "eleven_monolingual_v1",
     stream: bool = False,
     latency: int = 1,
+    output_format: TTS.OutputFormat = "mp3_44100_128",
     stream_chunk_size: int = 2048,
 ) -> Union[bytes, Iterator[bytes]]:
 
@@ -64,10 +65,10 @@ def generate(
     if stream:
         if isinstance(text, str):
             return TTS.generate_stream(
-                text, voice, model, stream_chunk_size, api_key=api_key, latency=latency
+                text, voice, model, stream_chunk_size, api_key=api_key, latency=latency, output_format=output_format
             )  # noqa E501
         elif isinstance(text, Iterator):
-            return TTS.generate_stream_input(text, voice, model, api_key=api_key)
+            return TTS.generate_stream_input(text, voice, model, api_key=api_key, output_format=output_format)
     else:
         assert isinstance(text, str)
-        return TTS.generate(text, voice, model, api_key=api_key)
+        return TTS.generate(text, voice, model, api_key=api_key, output_format=output_format)
