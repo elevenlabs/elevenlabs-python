@@ -10,10 +10,15 @@ def test_history():
     assert isinstance(history, History)
 
     # Test that we can iterate over multiple pages lazily
+    history_item_ids = []
     it = iter(history)
     for i in range(page_size * 3):
         try:
-            assert isinstance(next(it), HistoryItem)
+            item = next(it)
+            assert isinstance(item, HistoryItem)
+            # Assert no duplicate history_item_ids
+            assert item.history_item_id not in history_item_ids
+            history_item_ids.append(item.history_item_id)
         except StopIteration:
             warnings.warn("Warning: not enough history items to test multiple pages.")
             break

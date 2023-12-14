@@ -99,5 +99,5 @@ class History(Listable, API):
             self.has_more = history_next.has_more
             self.last_history_item_id = history_next.last_history_item_id
 
-            for item in self.history:
+            for item in history_next:
                 yield item
