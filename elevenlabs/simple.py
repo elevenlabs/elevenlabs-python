@@ -78,6 +78,7 @@ def generate(
                 text,
                 voice,
                 model,
+                stop_event,
                 api_key=api_key,
                 output_format=output_format,
                 latency=latency,
