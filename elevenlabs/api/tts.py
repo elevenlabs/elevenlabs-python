@@ -88,6 +88,7 @@ class TTS(API):
         text: Iterator[str],
         voice: Voice,
         model: Model,
+        stop_event,
         api_key: Optional[str] = None,
         output_format: OutputFormat = "mp3_44100_128",
         latency: int = 1,
@@ -115,6 +116,9 @@ class TTS(API):
 
             # Stream text chunks and receive audio
             for text_chunk in text_chunker(text):
+                if stop_event.is_set():
+                    websocket.close()
+                    break
                 data = dict(text=text_chunk, try_trigger_generation=True)
                 websocket.send(json.dumps(data))
                 try:
@@ -130,6 +134,9 @@ class TTS(API):
             # Receive remaining audio
             while True:
                 try:
+                    if stop_event.is_set():
+                        websocket.close()
+                        break
                     data = json.loads(websocket.recv())
                     if data["audio"]:
                         yield base64.b64decode(data["audio"])  # type: ignore
