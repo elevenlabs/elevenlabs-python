@@ -119,6 +119,8 @@ class TTS(API):
                 websocket.send(json.dumps(data))
                 try:
                     data = json.loads(websocket.recv(1e-4))
+                    if 'audio' not in data:
+                        raise Exception(data['message'])
                     if data["audio"]:
                         yield base64.b64decode(data["audio"])  # type: ignore
                 except TimeoutError:
@@ -131,6 +133,8 @@ class TTS(API):
             while True:
                 try:
                     data = json.loads(websocket.recv())
+                    if 'audio' not in data:
+                        raise Exception(data['message'])
                     if data["audio"]:
                         yield base64.b64decode(data["audio"])  # type: ignore
                 except websockets.exceptions.ConnectionClosed:
