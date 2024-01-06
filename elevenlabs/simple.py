@@ -61,6 +61,7 @@ def generate(
 
     assert isinstance(voice, Voice)
     assert isinstance(model, Model)
+    assert isinstance(text, str) or isinstance(text, Iterator)
 
     if stream:
         if isinstance(text, str):
