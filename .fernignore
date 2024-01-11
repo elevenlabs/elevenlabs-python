@@ -1,1 +1,14 @@
 # Specify files that shouldn't be modified by Fern
+
+src/elevenlabs/__init__.py
+src/elevenlabs/model.py
+src/elevenlabs/client.py
+src/elevenlabs/play.py
+src/elevenlabs/tts.py
+src/elevenlabs/voice.py
+src/elevenlabs/generate.py
+
+README.md
+assets/
+
+tests/test_client.py
