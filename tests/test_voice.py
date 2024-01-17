@@ -18,7 +18,7 @@ def test_voice_from_id():
 def test_voice_clone():
     from elevenlabs import Voice, clone, generate, play
 
-    from ..utils import as_local_files
+    from .utils import as_local_files
 
     voice_file_urls = [
         "https://user-images.githubusercontent.com/12028621/235474694-584f7103-dab2-4c39-bb9a-8e5f00be85da.webm",
