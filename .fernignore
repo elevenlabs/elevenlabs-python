@@ -7,6 +7,7 @@ src/elevenlabs/play.py
 src/elevenlabs/tts.py
 src/elevenlabs/voice.py
 src/elevenlabs/generate.py
+src/elevenlabs/clone.py
 
 README.md
 assets/

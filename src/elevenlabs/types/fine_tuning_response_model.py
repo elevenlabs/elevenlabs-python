@@ -4,7 +4,7 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
-from .finetuning_state import FinetuningState
+from .fine_tuning_response_model_finetuning_state import FineTuningResponseModelFinetuningState
 from .manual_verification_response_model import ManualVerificationResponseModel
 from .verification_attempt_response_model import VerificationAttemptResponseModel
 
@@ -17,7 +17,7 @@ except ImportError:
 class FineTuningResponseModel(pydantic.BaseModel):
     is_allowed_to_fine_tune: bool
     fine_tuning_requested: bool
-    finetuning_state: FinetuningState
+    finetuning_state: FineTuningResponseModelFinetuningState
     verification_failures: typing.List[str]
     verification_attempts_count: int
     manual_verification_requested: bool

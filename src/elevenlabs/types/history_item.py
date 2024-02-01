@@ -5,8 +5,8 @@ import typing
 
 from ..core.datetime_utils import serialize_datetime
 from .feedback_item import FeedbackItem
-from .item_state import ItemState
-from .voice_category import VoiceCategory
+from .history_item_response_model_state import HistoryItemResponseModelState
+from .history_item_response_model_voice_category import HistoryItemResponseModelVoiceCategory
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -23,10 +23,10 @@ class HistoryItem(pydantic.BaseModel):
     character_count_change_from: int
     character_count_change_to: int
     content_type: str
-    state: ItemState
+    state: HistoryItemResponseModelState
     request_id: typing.Optional[str]
     model_id: typing.Optional[str]
-    voice_category: typing.Optional[VoiceCategory]
+    voice_category: typing.Optional[HistoryItemResponseModelVoiceCategory]
     settings: typing.Optional[typing.Dict[str, typing.Any]]
     feedback: typing.Optional[FeedbackItem]
 

@@ -6,7 +6,7 @@ import typing
 T_Result = typing.TypeVar("T_Result")
 
 
-class VoiceCategory(str, enum.Enum):
+class HistoryItemResponseModelVoiceCategory(str, enum.Enum):
     PREMADE = "premade"
     CLONED = "cloned"
     GENERATED = "generated"
@@ -19,11 +19,11 @@ class VoiceCategory(str, enum.Enum):
         generated: typing.Callable[[], T_Result],
         professional: typing.Callable[[], T_Result],
     ) -> T_Result:
-        if self is VoiceCategory.PREMADE:
+        if self is HistoryItemResponseModelVoiceCategory.PREMADE:
             return premade()
-        if self is VoiceCategory.CLONED:
+        if self is HistoryItemResponseModelVoiceCategory.CLONED:
             return cloned()
-        if self is VoiceCategory.GENERATED:
+        if self is HistoryItemResponseModelVoiceCategory.GENERATED:
             return generated()
-        if self is VoiceCategory.PROFESSIONAL:
+        if self is HistoryItemResponseModelVoiceCategory.PROFESSIONAL:
             return professional()

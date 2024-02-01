@@ -14,24 +14,23 @@ except ImportError:
 
 
 class InvoiceResponseModel(pydantic.BaseModel):
-    tier: str
-    character_count: int
-    character_limit: int
-    can_extend_character_limit: bool
-    allowed_to_extend_character_limit: bool
-    next_character_count_reset_unix: int
-    voice_limit: int
-    max_voice_add_edits: int
-    voice_add_edit_counter: int
-    professional_voice_limit: int
-    can_extend_voice_limit: bool
-    can_use_instant_voice_cloning: bool
-    can_use_professional_voice_cloning: bool
-    status: SubscriptionStatus
+    tier: typing.Optional[str]
+    character_count: typing.Optional[int]
+    character_limit: typing.Optional[int]
+    can_extend_character_limit: typing.Optional[bool]
+    allowed_to_extend_character_limit: typing.Optional[bool]
+    next_character_count_reset_unix: typing.Optional[int]
+    voice_limit: typing.Optional[int]
+    max_voice_add_edits: typing.Optional[int]
+    voice_add_edit_counter: typing.Optional[int]
+    professional_voice_limit: typing.Optional[int]
+    can_extend_voice_limit: typing.Optional[bool]
+    can_use_instant_voice_cloning: typing.Optional[bool]
+    can_use_professional_voice_cloning: typing.Optional[bool]
+    status: typing.Optional[SubscriptionStatus]
     amount_due_cents: int
     next_payment_attempt_unix: int
     currency: typing.Optional[InvoiceResponseModelCurrency]
-    required: typing.Optional[typing.Any]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
