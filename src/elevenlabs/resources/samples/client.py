@@ -31,7 +31,7 @@ class SamplesClient:
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.samples.delete(
             voice_id="string",
@@ -68,7 +68,7 @@ class SamplesClient:
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.samples.get_audio(
             voice_id="string",
@@ -110,7 +110,7 @@ class AsyncSamplesClient:
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         await client.samples.delete(
             voice_id="string",
@@ -147,7 +147,7 @@ class AsyncSamplesClient:
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         await client.samples.get_audio(
             voice_id="string",

@@ -32,7 +32,7 @@ class SnapshotsClient:
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.projects.chapters.snapshots.get_all(
             project_id="string",
@@ -105,7 +105,7 @@ class AsyncSnapshotsClient:
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         await client.projects.chapters.snapshots.get_all(
             project_id="string",

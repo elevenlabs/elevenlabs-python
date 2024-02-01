@@ -28,7 +28,7 @@ class ModelsClient:
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.models.get_all()
         """
@@ -61,7 +61,7 @@ class AsyncModelsClient:
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         await client.models.get_all()
         """

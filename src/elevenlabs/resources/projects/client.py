@@ -38,7 +38,7 @@ class ProjectsClient:
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.projects.get_all()
         """
@@ -144,7 +144,7 @@ class ProjectsClient:
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.projects.get(
             project_id="string",
@@ -176,7 +176,7 @@ class ProjectsClient:
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.projects.delete(
             project_id="string",
@@ -208,7 +208,7 @@ class ProjectsClient:
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.projects.convert(
             project_id="string",
@@ -240,7 +240,7 @@ class ProjectsClient:
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.projects.get_snapshots(
             project_id="string",
@@ -308,7 +308,7 @@ class ProjectsClient:
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.projects.update_pronunciation_dictionaries(
             project_id="string",
@@ -348,7 +348,7 @@ class AsyncProjectsClient:
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         await client.projects.get_all()
         """
@@ -454,7 +454,7 @@ class AsyncProjectsClient:
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         await client.projects.get(
             project_id="string",
@@ -486,7 +486,7 @@ class AsyncProjectsClient:
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         await client.projects.delete(
             project_id="string",
@@ -518,7 +518,7 @@ class AsyncProjectsClient:
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         await client.projects.convert(
             project_id="string",
@@ -550,7 +550,7 @@ class AsyncProjectsClient:
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         await client.projects.get_snapshots(
             project_id="string",
@@ -618,7 +618,7 @@ class AsyncProjectsClient:
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         await client.projects.update_pronunciation_dictionaries(
             project_id="string",

@@ -68,7 +68,7 @@ class PronunciationDictionaryClient:
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.pronunciation_dictionary.get_metadata(
             pronunciation_dictionary_id="string",
@@ -141,7 +141,7 @@ class AsyncPronunciationDictionaryClient:
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         await client.pronunciation_dictionary.get_metadata(
             pronunciation_dictionary_id="string",

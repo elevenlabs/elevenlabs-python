@@ -33,7 +33,7 @@ class ChaptersClient:
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.projects.chapters.get_all(
             project_id="string",
@@ -67,7 +67,7 @@ class ChaptersClient:
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.projects.chapters.get(
             project_id="string",
@@ -104,7 +104,7 @@ class ChaptersClient:
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.projects.chapters.delete(
             project_id="string",
@@ -141,7 +141,7 @@ class ChaptersClient:
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.projects.chapters.convert(
             project_id="string",
@@ -182,7 +182,7 @@ class AsyncChaptersClient:
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         await client.projects.chapters.get_all(
             project_id="string",
@@ -216,7 +216,7 @@ class AsyncChaptersClient:
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         await client.projects.chapters.get(
             project_id="string",
@@ -253,7 +253,7 @@ class AsyncChaptersClient:
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         await client.projects.chapters.delete(
             project_id="string",
@@ -290,7 +290,7 @@ class AsyncChaptersClient:
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         await client.projects.chapters.convert(
             project_id="string",

@@ -36,7 +36,7 @@ class VoicesClient:
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.voices.get_all()
         """
@@ -64,7 +64,7 @@ class VoicesClient:
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.voices.get_default_settings()
         """
@@ -92,7 +92,7 @@ class VoicesClient:
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.voices.get_settings(
             voice_id="string",
@@ -126,7 +126,7 @@ class VoicesClient:
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.voices.get(
             voice_id="string",
@@ -159,7 +159,7 @@ class VoicesClient:
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.voices.delete(
             voice_id="string",
@@ -194,7 +194,7 @@ class VoicesClient:
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.voices.edit_settings(
             voice_id="string",
@@ -296,7 +296,7 @@ class AsyncVoicesClient:
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         await client.voices.get_all()
         """
@@ -324,7 +324,7 @@ class AsyncVoicesClient:
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         await client.voices.get_default_settings()
         """
@@ -352,7 +352,7 @@ class AsyncVoicesClient:
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         await client.voices.get_settings(
             voice_id="string",
@@ -386,7 +386,7 @@ class AsyncVoicesClient:
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         await client.voices.get(
             voice_id="string",
@@ -419,7 +419,7 @@ class AsyncVoicesClient:
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         await client.voices.delete(
             voice_id="string",
@@ -454,7 +454,7 @@ class AsyncVoicesClient:
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         await client.voices.edit_settings(
             voice_id="string",
