@@ -20,11 +20,11 @@ except ImportError:
 OMIT = typing.cast(typing.Any, ...)
 
 
-class AudioClient:
+class AudioNativeClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def native_create(
+    def create(
         self,
         *,
         name: str,
@@ -97,11 +97,11 @@ class AudioClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
-class AsyncAudioClient:
+class AsyncAudioNativeClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def native_create(
+    async def create(
         self,
         *,
         name: str,
