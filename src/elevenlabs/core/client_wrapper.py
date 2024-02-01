@@ -11,11 +11,7 @@ class BaseClientWrapper:
         self._base_url = base_url
 
     def get_headers(self) -> typing.Dict[str, str]:
-        headers: typing.Dict[str, str] = {
-            "X-Fern-Language": "Python",
-            "X-Fern-SDK-Name": "elevenlabs",
-            "X-Fern-SDK-Version": "v0.3.0",
-        }
+        headers: typing.Dict[str, str] = {"X-Fern-Language": "Python"}
         if self._xi_api_key is not None:
             headers["xi-api-key"] = self._xi_api_key
         return headers

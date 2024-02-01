@@ -31,6 +31,7 @@ class InvoiceResponseModel(pydantic.BaseModel):
     amount_due_cents: int
     next_payment_attempt_unix: int
     currency: typing.Optional[InvoiceResponseModelCurrency]
+    required: typing.Optional[typing.Any]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

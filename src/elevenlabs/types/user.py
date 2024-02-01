@@ -12,7 +12,7 @@ except ImportError:
     import pydantic  # type: ignore
 
 
-class UserResponse(pydantic.BaseModel):
+class User(pydantic.BaseModel):
     subscription: SubscriptionResponse
     is_new_user: bool
     xi_api_key: str

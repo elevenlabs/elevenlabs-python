@@ -27,6 +27,16 @@ class SamplesClient:
             - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
             - sample_id: str. Sample ID to be used, you can use GET https://api.elevenlabs.io/v1/voices/{voice_id} to list all the available samples for a voice.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
+        )
+        client.samples.delete(
+            voice_id="string",
+            sample_id="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "DELETE",
@@ -61,8 +71,8 @@ class SamplesClient:
             xi_api_key="YOUR_XI_API_KEY",
         )
         client.samples.get_audio(
-            voice_id="voice-id",
-            sample_id="sample-id",
+            voice_id="string",
+            sample_id="string",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -96,6 +106,16 @@ class AsyncSamplesClient:
             - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
             - sample_id: str. Sample ID to be used, you can use GET https://api.elevenlabs.io/v1/voices/{voice_id} to list all the available samples for a voice.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
+        )
+        await client.samples.delete(
+            voice_id="string",
+            sample_id="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "DELETE",
@@ -130,8 +150,8 @@ class AsyncSamplesClient:
             xi_api_key="YOUR_XI_API_KEY",
         )
         await client.samples.get_audio(
-            voice_id="voice-id",
-            sample_id="sample-id",
+            voice_id="string",
+            sample_id="string",
         )
         """
         _response = await self._client_wrapper.httpx_client.request(

@@ -14,7 +14,7 @@ except ImportError:
     import pydantic  # type: ignore
 
 
-class ExtendedSubscriptionResponseModel(pydantic.BaseModel):
+class Subscription(pydantic.BaseModel):
     tier: str
     character_count: int
     character_limit: int

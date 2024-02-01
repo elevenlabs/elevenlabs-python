@@ -25,6 +25,7 @@ class FineTuningResponseModel(pydantic.BaseModel):
     slice_ids: typing.Optional[typing.List[str]]
     manual_verification: typing.Optional[ManualVerificationResponseModel]
     language: typing.Optional[str]
+    required: typing.Optional[typing.Any]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

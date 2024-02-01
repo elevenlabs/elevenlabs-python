@@ -3,7 +3,7 @@ import pytest
 from elevenlabs import generate, voices, Voice, VoiceSettings, play, stream
 
 
-@pytest.mark.skip(reason="skip in ci")
+# @pytest.mark.skip(reason="skip in ci")
 def test_voices() -> None:
     print("Voices are...", voices())
 

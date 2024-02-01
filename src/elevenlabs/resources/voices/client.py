@@ -59,6 +59,14 @@ class VoicesClient:
     def get_default_settings(self) -> VoiceSettings:
         """
         Gets the default settings for voices. "similarity_boost" corresponds to"Clarity + Similarity Enhancement" in the web app and "stability" corresponds to "Stability" slider in the web app.
+
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
+        )
+        client.voices.get_default_settings()
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -80,6 +88,15 @@ class VoicesClient:
 
         Parameters:
             - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
+        )
+        client.voices.get_settings(
+            voice_id="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -105,6 +122,15 @@ class VoicesClient:
             - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
             - with_settings: typing.Optional[bool]. If set will return settings information corresponding to the voice, requires authorization.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
+        )
+        client.voices.get(
+            voice_id="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -123,12 +149,21 @@ class VoicesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete_v_1_voices(self, voice_id: str) -> typing.Any:
+    def delete(self, voice_id: str) -> typing.Any:
         """
         Deletes a voice by its ID.
 
         Parameters:
             - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
+        )
+        client.voices.delete(
+            voice_id="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "DELETE",
@@ -154,6 +189,20 @@ class VoicesClient:
             - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
             - request: VoiceSettings.
+        ---
+        from elevenlabs import VoiceSettings
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
+        )
+        client.voices.edit_settings(
+            voice_id="string",
+            request=VoiceSettings(
+                stability=1.1,
+                similarity_boost=1.1,
+            ),
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -270,6 +319,14 @@ class AsyncVoicesClient:
     async def get_default_settings(self) -> VoiceSettings:
         """
         Gets the default settings for voices. "similarity_boost" corresponds to"Clarity + Similarity Enhancement" in the web app and "stability" corresponds to "Stability" slider in the web app.
+
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
+        )
+        await client.voices.get_default_settings()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -291,6 +348,15 @@ class AsyncVoicesClient:
 
         Parameters:
             - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
+        )
+        await client.voices.get_settings(
+            voice_id="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -316,6 +382,15 @@ class AsyncVoicesClient:
             - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
             - with_settings: typing.Optional[bool]. If set will return settings information corresponding to the voice, requires authorization.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
+        )
+        await client.voices.get(
+            voice_id="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -334,12 +409,21 @@ class AsyncVoicesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete_v_1_voices(self, voice_id: str) -> typing.Any:
+    async def delete(self, voice_id: str) -> typing.Any:
         """
         Deletes a voice by its ID.
 
         Parameters:
             - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
+        )
+        await client.voices.delete(
+            voice_id="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "DELETE",
@@ -365,6 +449,20 @@ class AsyncVoicesClient:
             - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
             - request: VoiceSettings.
+        ---
+        from elevenlabs import VoiceSettings
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
+        )
+        await client.voices.edit_settings(
+            voice_id="string",
+            request=VoiceSettings(
+                stability=1.1,
+                similarity_boost=1.1,
+            ),
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

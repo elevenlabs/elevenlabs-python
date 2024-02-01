@@ -35,8 +35,8 @@ class SnapshotsClient:
             xi_api_key="YOUR_XI_API_KEY",
         )
         client.projects.chapters.snapshots.get_all(
-            project_id="project-id",
-            chapter_id="chapter-id",
+            project_id="string",
+            chapter_id="string",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -108,8 +108,8 @@ class AsyncSnapshotsClient:
             xi_api_key="YOUR_XI_API_KEY",
         )
         await client.projects.chapters.snapshots.get_all(
-            project_id="project-id",
-            chapter_id="chapter-id",
+            project_id="string",
+            chapter_id="string",
         )
         """
         _response = await self._client_wrapper.httpx_client.request(

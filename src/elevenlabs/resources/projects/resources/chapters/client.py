@@ -36,7 +36,7 @@ class ChaptersClient:
             xi_api_key="YOUR_XI_API_KEY",
         )
         client.projects.chapters.get_all(
-            project_id="project-id",
+            project_id="string",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -63,6 +63,16 @@ class ChaptersClient:
             - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
             - chapter_id: str. The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
+        )
+        client.projects.chapters.get(
+            project_id="string",
+            chapter_id="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -90,6 +100,16 @@ class ChaptersClient:
             - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
             - chapter_id: str. The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
+        )
+        client.projects.chapters.delete(
+            project_id="string",
+            chapter_id="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "DELETE",
@@ -117,6 +137,16 @@ class ChaptersClient:
             - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
             - chapter_id: str. The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
+        )
+        client.projects.chapters.convert(
+            project_id="string",
+            chapter_id="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -155,7 +185,7 @@ class AsyncChaptersClient:
             xi_api_key="YOUR_XI_API_KEY",
         )
         await client.projects.chapters.get_all(
-            project_id="project-id",
+            project_id="string",
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -182,6 +212,16 @@ class AsyncChaptersClient:
             - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
             - chapter_id: str. The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
+        )
+        await client.projects.chapters.get(
+            project_id="string",
+            chapter_id="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -209,6 +249,16 @@ class AsyncChaptersClient:
             - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
             - chapter_id: str. The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
+        )
+        await client.projects.chapters.delete(
+            project_id="string",
+            chapter_id="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "DELETE",
@@ -236,6 +286,16 @@ class AsyncChaptersClient:
             - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
             - chapter_id: str. The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
+        )
+        await client.projects.chapters.convert(
+            project_id="string",
+            chapter_id="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

@@ -12,7 +12,7 @@ except ImportError:
     import pydantic  # type: ignore
 
 
-class GetHistoryResponseModel(pydantic.BaseModel):
+class History(pydantic.BaseModel):
     history: typing.List[HistoryItem]
     has_more: bool
     last_history_item_id: typing.Optional[str]
