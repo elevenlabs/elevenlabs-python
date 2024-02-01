@@ -37,8 +37,6 @@ class ElevenLabs:
             timeout typing.Optional[float]. Defaults to 60 seconds.
             httpx_client typing.Optional[httpx.AsyncClient]. Override the httpx client.
         """
-        if api_key is None:
-            raise ApiError(body="Please pass in api_key or set ELEVEN_API_KEY in your environment.")
         self._client_wrapper = SyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
             xi_api_key=api_key,
@@ -73,8 +71,6 @@ class AsyncElevenLabs:
             timeout typing.Optional[float]. Defaults to 60 seconds.
             httpx_client typing.Optional[httpx.AsyncClient]. Override the httpx client.
         """
-        if api_key is None:
-            raise ApiError(body="Please pass in api_key or set ELEVEN_API_KEY in your environment.")
         self._client_wrapper = AsyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
             xi_api_key=api_key,

@@ -1,12 +1,11 @@
 import re
 
-from typing import Union, Iterator, Optional
+from typing import Iterator, Optional, Union
 
-from .tts import TTS
 from .model import Model
-from .voice import Voice
+from .tts import TTS
 from .types import VoiceSettings
-from .client import voices
+from .voice import Voice, voices
 
 
 DEFAULT_VOICE = Voice(

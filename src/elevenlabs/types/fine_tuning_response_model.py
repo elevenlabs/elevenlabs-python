@@ -15,17 +15,16 @@ except ImportError:
 
 
 class FineTuningResponseModel(pydantic.BaseModel):
-    is_allowed_to_fine_tune: bool
-    fine_tuning_requested: bool
-    finetuning_state: FinetunigState
-    verification_failures: typing.List[str]
-    verification_attempts_count: int
-    manual_verification_requested: bool
+    is_allowed_to_fine_tune: typing.Optional[bool]
+    fine_tuning_requested: typing.Optional[bool]
+    finetuning_state: typing.Optional[FinetunigState]
+    verification_failures: typing.Optional[typing.List[str]]
+    verification_attempts_count: typing.Optional[int]
+    manual_verification_requested: typing.Optional[bool]
     verification_attempts: typing.Optional[typing.List[VerificationAttemptResponseModel]]
     slice_ids: typing.Optional[typing.List[str]]
     manual_verification: typing.Optional[ManualVerificationResponseModel]
     language: typing.Optional[str]
-    required: typing.Optional[typing.Any]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

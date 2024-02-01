@@ -12,4 +12,4 @@ src/elevenlabs/clone.py
 README.md
 assets/
 
-tests/test_client.py
+tests/
