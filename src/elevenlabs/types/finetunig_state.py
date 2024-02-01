@@ -6,7 +6,7 @@ import typing
 T_Result = typing.TypeVar("T_Result")
 
 
-class FineTuningResponseModelFinetuningState(str, enum.Enum):
+class FinetunigState(str, enum.Enum):
     NOT_STARTED = "not_started"
     IS_FINE_TUNING = "is_fine_tuning"
     FINE_TUNED = "fine_tuned"
@@ -17,9 +17,9 @@ class FineTuningResponseModelFinetuningState(str, enum.Enum):
         is_fine_tuning: typing.Callable[[], T_Result],
         fine_tuned: typing.Callable[[], T_Result],
     ) -> T_Result:
-        if self is FineTuningResponseModelFinetuningState.NOT_STARTED:
+        if self is FinetunigState.NOT_STARTED:
             return not_started()
-        if self is FineTuningResponseModelFinetuningState.IS_FINE_TUNING:
+        if self is FinetunigState.IS_FINE_TUNING:
             return is_fine_tuning()
-        if self is FineTuningResponseModelFinetuningState.FINE_TUNED:
+        if self is FinetunigState.FINE_TUNED:
             return fine_tuned()

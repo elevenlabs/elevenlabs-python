@@ -5,7 +5,7 @@ import typing
 
 from ..core.datetime_utils import serialize_datetime
 from .chapter_response_model import ChapterResponseModel
-from .project_extended_response_model_state import ProjectExtendedResponseModelState
+from .project_state import ProjectState
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -21,7 +21,7 @@ class ProjectExtendedResponseModel(pydantic.BaseModel):
     default_paragraph_voice_id: str
     default_model_id: str
     can_be_downloaded: bool
-    state: ProjectExtendedResponseModelState
+    state: ProjectState
     chapters: typing.List[ChapterResponseModel]
     last_conversion_date_unix: typing.Optional[int]
 

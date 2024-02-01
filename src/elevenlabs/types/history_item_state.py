@@ -6,7 +6,7 @@ import typing
 T_Result = typing.TypeVar("T_Result")
 
 
-class HistoryItemResponseModelState(str, enum.Enum):
+class HistoryItemState(str, enum.Enum):
     CREATED = "created"
     DELETED = "deleted"
     PROCESSING = "processing"
@@ -17,9 +17,9 @@ class HistoryItemResponseModelState(str, enum.Enum):
         deleted: typing.Callable[[], T_Result],
         processing: typing.Callable[[], T_Result],
     ) -> T_Result:
-        if self is HistoryItemResponseModelState.CREATED:
+        if self is HistoryItemState.CREATED:
             return created()
-        if self is HistoryItemResponseModelState.DELETED:
+        if self is HistoryItemState.DELETED:
             return deleted()
-        if self is HistoryItemResponseModelState.PROCESSING:
+        if self is HistoryItemState.PROCESSING:
             return processing()

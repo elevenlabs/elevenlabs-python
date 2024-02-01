@@ -16,7 +16,7 @@ from .currency import Currency
 from .extended_subscription_response_model_currency import ExtendedSubscriptionResponseModelCurrency
 from .feedback_item import FeedbackItem
 from .fine_tuning_response_model import FineTuningResponseModel
-from .fine_tuning_response_model_finetuning_state import FineTuningResponseModelFinetuningState
+from .finetunig_state import FinetunigState
 from .gender import Gender
 from .get_chapters_response_model import GetChaptersResponseModel
 from .get_projects_response_model import GetProjectsResponseModel
@@ -24,8 +24,7 @@ from .get_pronunciation_dictionary_metadata_response_model import GetPronunciati
 from .get_voices_response_model import GetVoicesResponseModel
 from .history import History
 from .history_item import HistoryItem
-from .history_item_response_model_state import HistoryItemResponseModelState
-from .history_item_response_model_voice_category import HistoryItemResponseModelVoiceCategory
+from .history_item_state import HistoryItemState
 from .http_validation_error import HttpValidationError
 from .invoice_response_model import InvoiceResponseModel
 from .invoice_response_model_currency import InvoiceResponseModelCurrency
@@ -34,11 +33,10 @@ from .manual_verification_file_response_model import ManualVerificationFileRespo
 from .manual_verification_response_model import ManualVerificationResponseModel
 from .model_response import ModelResponse
 from .project_extended_response_model import ProjectExtendedResponseModel
-from .project_extended_response_model_state import ProjectExtendedResponseModelState
 from .project_response_model import ProjectResponseModel
-from .project_response_model_state import ProjectResponseModelState
 from .project_snapshot_response_model import ProjectSnapshotResponseModel
 from .project_snapshots_response_model import ProjectSnapshotsResponseModel
+from .project_state import ProjectState
 from .pronunciation_dictionary_version_locator_db_model import PronunciationDictionaryVersionLocatorDbModel
 from .recording_response_model import RecordingResponseModel
 from .review_status import ReviewStatus
@@ -50,6 +48,7 @@ from .user import User
 from .validation_error import ValidationError
 from .validation_error_loc_item import ValidationErrorLocItem
 from .verification_attempt_response_model import VerificationAttemptResponseModel
+from .voice_category import VoiceCategory
 from .voice_response import VoiceResponse
 from .voice_settings import VoiceSettings
 from .voice_sharing_response_model import VoiceSharingResponseModel
@@ -72,7 +71,7 @@ __all__ = [
     "ExtendedSubscriptionResponseModelCurrency",
     "FeedbackItem",
     "FineTuningResponseModel",
-    "FineTuningResponseModelFinetuningState",
+    "FinetunigState",
     "Gender",
     "GetChaptersResponseModel",
     "GetProjectsResponseModel",
@@ -80,8 +79,7 @@ __all__ = [
     "GetVoicesResponseModel",
     "History",
     "HistoryItem",
-    "HistoryItemResponseModelState",
-    "HistoryItemResponseModelVoiceCategory",
+    "HistoryItemState",
     "HttpValidationError",
     "InvoiceResponseModel",
     "InvoiceResponseModelCurrency",
@@ -90,11 +88,10 @@ __all__ = [
     "ManualVerificationResponseModel",
     "ModelResponse",
     "ProjectExtendedResponseModel",
-    "ProjectExtendedResponseModelState",
     "ProjectResponseModel",
-    "ProjectResponseModelState",
     "ProjectSnapshotResponseModel",
     "ProjectSnapshotsResponseModel",
+    "ProjectState",
     "PronunciationDictionaryVersionLocatorDbModel",
     "RecordingResponseModel",
     "ReviewStatus",
@@ -106,6 +103,7 @@ __all__ = [
     "ValidationError",
     "ValidationErrorLocItem",
     "VerificationAttemptResponseModel",
+    "VoiceCategory",
     "VoiceResponse",
     "VoiceSettings",
     "VoiceSharingResponseModel",

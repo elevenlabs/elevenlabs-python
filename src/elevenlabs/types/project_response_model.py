@@ -4,7 +4,7 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
-from .project_response_model_state import ProjectResponseModelState
+from .project_state import ProjectState
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -21,7 +21,7 @@ class ProjectResponseModel(pydantic.BaseModel):
     default_model_id: str
     can_be_downloaded: bool
     acx_volume_normalization: bool
-    state: ProjectResponseModelState
+    state: ProjectState
     last_conversion_date_unix: typing.Optional[int]
     title: typing.Optional[str]
     author: typing.Optional[str]
