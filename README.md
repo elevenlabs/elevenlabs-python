@@ -126,6 +126,43 @@ Voices(
 
 </details>
 
+Build a voice object with custom settings to personalize the voice style, or call 
+`client.voices.get_settings("your-voice-id")` to get the default settings for the voice.
+
+```py
+from elevenlabs import Voice, VoiceSettings, generate
+
+audio = generate(
+    text="Hello! My name is Bella.",
+    voice=Voice(
+        voice_id='EXAVITQu4vr4xnSDxMaL',
+        settings=VoiceSettings(stability=0.71, similarity_boost=0.5, style=0.0, use_speaker_boost=True)
+    )
+)
+
+play(audio)
+```
+
+</details>
+
+## Clone Voice
+
+Clone your voice in an instant. Note that voice cloning requires an API key, see below.
+
+```py
+from elevenlabs import clone, generate, play
+
+voice = clone(
+    name="Alex",
+    description="An old American male voice with a slight hoarseness in his throat. Perfect for news", # Optional
+    files=["./sample_0.mp3", "./sample_1.mp3", "./sample_2.mp3"],
+)
+
+audio = generate(text="Hi! I'm a cloned voice!", voice=voice)
+
+play(audio)
+```
+
 ## 🚿 Streaming
 
 Stream audio in real-time, as it's being generated.
