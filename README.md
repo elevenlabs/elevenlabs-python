@@ -24,7 +24,9 @@ pip install elevenlabs
 > The SDK was rewritten in v3 and is now programatically generated from our OpenAPI spec. As part of this release 
 > there are some breaking changes. 
 
-- **Client Instantiation** The SDK now exports a client class that you must instantiate to call various
+
+### Client Instantiation
+The SDK now exports a client class that you must instantiate to call various
 endpoints in our API. 
 
 ```python
@@ -34,22 +36,33 @@ client = ElevenLabs(api_key="...")
 ```
 As part of this change, there is no longer a `set_api_key` and `get_api_key` method exported. 
 
-- **HTTPX** The SDK now uses httpx under the hood. This allows us to export an async client in addition to 
+### HTTPX
+The SDK now uses httpx under the hood. This allows us to export an async client in addition to 
 a synchronous client. Note that you can pass in your own httpx client as well. 
+
 ```python
 from elevenlabs.client import AsyncElevenLabs
 
 client = AsyncElevenLabs(api_key="...", httpx=httpx.AsyncClient(...))
 ```
-- **Static Methods** There are no longer static methods exposed directly on objects. For example, 
+
+### Removing Static Methods
+There are no longer static methods exposed directly on objects. For example, 
 instead of `Models.from_api()` you can now do `client.models.get_all()`. 
 
-`User.from_api()` -> `client.users.get()`
-`Models.from_api()` -> `client.models.get_all()`
-`Voices.from_api()` -> `client.voices.get_all()` 
-`History.from_api()` -> `client.history.get_all()` 
+The renames are specified below: 
 
-- **Helper Methods** The SDK continues to export methods for `generate`, `play`, `clone`, and
+  `User.from_api()` -> `client.users.get()`
+
+  `Models.from_api()` -> `client.models.get_all()`
+
+  `Voices.from_api()` -> `client.voices.get_all()` 
+
+  `History.from_api()` -> `client.history.get_all()` 
+
+
+### Maintaining Helper Methods
+The SDK continues to export methods for `generate`, `play`, `clone`, and
 `voices` which are detailed in the README below. 
 
 ## 🗣️ Usage
