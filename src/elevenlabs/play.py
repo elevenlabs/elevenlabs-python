@@ -76,7 +76,6 @@ def stream(audio_stream: Iterator[bytes]) -> bytes:
             mpv_process.stdin.write(chunk)  # type: ignore
             mpv_process.stdin.flush()  # type: ignore
             audio += chunk
-
     if mpv_process.stdin:
         mpv_process.stdin.close()
     mpv_process.wait()

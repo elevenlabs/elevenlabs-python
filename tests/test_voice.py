@@ -26,7 +26,6 @@ def test_voice_clone():
 
     voice_file_urls = [
         "https://user-images.githubusercontent.com/12028621/235474694-584f7103-dab2-4c39-bb9a-8e5f00be85da.webm",
-        "https://user-images.githubusercontent.com/12028621/235474694-584f7103-dab2-4c39-bb9a-8e5f00be85da.webm",
     ]
 
     with as_local_files(voice_file_urls) as files:
@@ -52,15 +51,17 @@ def test_voice_clone():
     assert isinstance(audio, bytes) and len(audio) > 0
     voice.delete()
 
-    if use_play:
-        play(audio)
+    play(audio)
 
 
 @pytest.mark.skip(reason="skip in ci")
 def test_voice_design():
-    from elevenlabs import Accent, Age, Gender, Voice, VoiceDesign, generate, play
+    from elevenlabs import Accent, Age, Gender, Voice, generate, play
+    from elevenlabs.client import ElevenLabs
 
-    voice_design = VoiceDesign(
+    client = ElevenLabs()
+
+    audio = client.voices.design(
         name="Lexa",
         text=(
             "Hi! My name is Lexa, I'm a voice design test. I should have a middle aged"
@@ -73,34 +74,21 @@ def test_voice_design():
         accent_strength=1.5,
     )
 
-    audio = voice_design.generate()
     assert isinstance(audio, bytes) and len(audio) > 0
-    if use_play:
-        play(audio)
+    play(audio)
 
-    voice = Voice.from_design(voice_design)
-    assert isinstance(voice, Voice)
-
-    audio = generate(
-        text="Voice design test successful.",
-        voice=voice,
-    )
-    assert isinstance(audio, bytes) and len(audio) > 0
-    voice.delete()
-    if use_play:
-        play(audio)
 
 
 @pytest.mark.skip(reason="skip in ci")
 def test_voices():
-    from elevenlabs import Voice, Voices
+    from elevenlabs import voices, Voice
 
     # Test that we can get voices from api
-    voices = Voices.from_api()
+    eleven_voices = voices()
 
-    assert isinstance(voices, Voices)
-    assert len(voices) > 0
-    assert isinstance(voices[0], Voice)
+    assert len(eleven_voices) > 0
+    assert isinstance(eleven_voices[0], Voice)
 
-    for voice in voices:
+    for voice in eleven_voices:
         assert isinstance(voice, Voice)
+        

@@ -17,13 +17,13 @@ except ImportError:
 class HistoryItem(pydantic.BaseModel):
     history_item_id: str
     voice_id: str
-    voice_name: str
+    voice_name: typing.Optional[str]
     text: str
     date_unix: int
     character_count_change_from: int
     character_count_change_to: int
     content_type: str
-    state: HistoryItemState
+    state: typing.Optional[HistoryItemState]
     request_id: typing.Optional[str]
     model_id: typing.Optional[str]
     voice_category: typing.Optional[VoiceCategory]

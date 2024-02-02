@@ -32,7 +32,7 @@ from .types import (
     LanguageResponseModel,
     ManualVerificationFileResponseModel,
     ManualVerificationResponseModel,
-    ModelResponse,
+    Model,
     ProjectExtendedResponseModel,
     ProjectResponseModel,
     ProjectSnapshotResponseModel,
@@ -41,7 +41,6 @@ from .types import (
     PronunciationDictionaryVersionLocatorDbModel,
     RecordingResponseModel,
     ReviewStatus,
-    SampleResponseModel,
     Subscription,
     SubscriptionResponse,
     SubscriptionStatus,
@@ -51,6 +50,7 @@ from .types import (
     VerificationAttemptResponseModel,
     VoiceCategory,
     VoiceResponse,
+    VoiceSample,
     VoiceSettings,
     VoiceSharingResponseModel,
     VoiceSharingState,
@@ -68,9 +68,9 @@ from .resources import (
     voices as voices_client,
 )
 from .environment import ElevenLabsEnvironment
+from .environment import ElevenLabsEnvironment
 from .clone import clone
 from .generate import generate
-from .model import Model
 from .play import play, save, stream
 from .voice import Voice, VoiceClone, voices
 
@@ -84,7 +84,6 @@ __all__ = [
     "Voice",
     "VoiceClone",
     "voices_client",
-    "Accent",
     "Accent",
     "AddProjectResponseModel",
     "AddPronunciationDictionaryResponseModel",
@@ -117,7 +116,7 @@ __all__ = [
     "LanguageResponseModel",
     "ManualVerificationFileResponseModel",
     "ManualVerificationResponseModel",
-    "ModelResponse",
+    "Model",
     "ProjectExtendedResponseModel",
     "ProjectResponseModel",
     "ProjectSnapshotResponseModel",
@@ -126,7 +125,6 @@ __all__ = [
     "PronunciationDictionaryVersionLocatorDbModel",
     "RecordingResponseModel",
     "ReviewStatus",
-    "SampleResponseModel",
     "Subscription",
     "SubscriptionResponse",
     "SubscriptionStatus",
@@ -137,6 +135,7 @@ __all__ = [
     "VerificationAttemptResponseModel",
     "VoiceCategory",
     "VoiceResponse",
+    "VoiceSample",
     "VoiceSettings",
     "VoiceSharingResponseModel",
     "VoiceSharingState",

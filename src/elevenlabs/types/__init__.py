@@ -31,7 +31,7 @@ from .invoice_response_model_currency import InvoiceResponseModelCurrency
 from .language_response_model import LanguageResponseModel
 from .manual_verification_file_response_model import ManualVerificationFileResponseModel
 from .manual_verification_response_model import ManualVerificationResponseModel
-from .model_response import ModelResponse
+from .model import Model
 from .project_extended_response_model import ProjectExtendedResponseModel
 from .project_response_model import ProjectResponseModel
 from .project_snapshot_response_model import ProjectSnapshotResponseModel
@@ -40,7 +40,6 @@ from .project_state import ProjectState
 from .pronunciation_dictionary_version_locator_db_model import PronunciationDictionaryVersionLocatorDbModel
 from .recording_response_model import RecordingResponseModel
 from .review_status import ReviewStatus
-from .sample_response_model import SampleResponseModel
 from .subscription import Subscription
 from .subscription_response import SubscriptionResponse
 from .subscription_status import SubscriptionStatus
@@ -50,6 +49,7 @@ from .validation_error_loc_item import ValidationErrorLocItem
 from .verification_attempt_response_model import VerificationAttemptResponseModel
 from .voice_category import VoiceCategory
 from .voice_response import VoiceResponse
+from .voice_sample import VoiceSample
 from .voice_settings import VoiceSettings
 from .voice_sharing_response_model import VoiceSharingResponseModel
 from .voice_sharing_state import VoiceSharingState
@@ -86,7 +86,7 @@ __all__ = [
     "LanguageResponseModel",
     "ManualVerificationFileResponseModel",
     "ManualVerificationResponseModel",
-    "ModelResponse",
+    "Model",
     "ProjectExtendedResponseModel",
     "ProjectResponseModel",
     "ProjectSnapshotResponseModel",
@@ -95,7 +95,6 @@ __all__ = [
     "PronunciationDictionaryVersionLocatorDbModel",
     "RecordingResponseModel",
     "ReviewStatus",
-    "SampleResponseModel",
     "Subscription",
     "SubscriptionResponse",
     "SubscriptionStatus",
@@ -105,6 +104,7 @@ __all__ = [
     "VerificationAttemptResponseModel",
     "VoiceCategory",
     "VoiceResponse",
+    "VoiceSample",
     "VoiceSettings",
     "VoiceSharingResponseModel",
     "VoiceSharingState",

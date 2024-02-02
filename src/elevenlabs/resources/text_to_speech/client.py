@@ -60,7 +60,6 @@ class TextToSpeechClient:
 
             - voice_settings: typing.Optional[VoiceSettings]. Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
         """
-        print(self._client_wrapper.get_headers())
         _request: typing.Dict[str, typing.Any] = {"text": text}
         if model_id is not OMIT:
             _request["model_id"] = model_id
@@ -73,7 +72,7 @@ class TextToSpeechClient:
                 {"optimize_streaming_latency": optimize_streaming_latency, "output_format": output_format}
             ),
             json=jsonable_encoder(_request),
-            headers={ 'xi-api-key': '9ea39b6927545e1c693bab163801f899' },
+            headers=self._client_wrapper.get_headers(),
             timeout=60,
         ) as _response:
             if 200 <= _response.status_code < 300:

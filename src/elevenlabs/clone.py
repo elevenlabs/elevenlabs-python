@@ -13,12 +13,13 @@ def clone(
     labels: Optional[Dict[str, str]] = dict(),
 ) -> Voice:
     client = ElevenLabs(api_key=api_key)
-    addVoiceResponse = client.voices.add(
-        name=name, description=description, files=files, labels=str(json.dumps(labels))
+    add_voice_response = client.voices.add(
+        name=name,
+        description=description, 
+        files=[open(file, 'rb') for file in files],
+        labels=str(json.dumps(labels or {}))
     )
-    voiceResponse = client.voices.get(voice_id=addVoiceResponse.voice_id)
+    voice = client.voices.get(voice_id=add_voice_response.voice_id)
     return Voice(
-        voice_id=voiceResponse.voice_id,
-        name=voiceResponse.name,
-        settings=voiceResponse.settings,
+        **voice.dict()
     )

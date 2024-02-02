@@ -10,8 +10,9 @@ from websockets.sync.client import connect
 
 from .client import ElevenLabs
 from .voice import Voice
-from .model import Model
+from .types import Model
 from .core.remove_none_from_dict import remove_none_from_dict
+from .core.api_error import ApiError
 
 
 def text_chunker(chunks: Iterator[str]) -> Iterator[str]:
@@ -101,7 +102,7 @@ class TTS():
                 websocket.send(json.dumps(data))
                 try:
                     data = json.loads(websocket.recv(1e-4))
-                    if data["audio"]:
+                    if "audio" in data and data["audio"]:
                         yield base64.b64decode(data["audio"])  # type: ignore
                 except TimeoutError:
                     pass
@@ -112,8 +113,10 @@ class TTS():
             # Receive remaining audio
             while True:
                 try:
-                    data = json.loads(websocket.recv())
-                    if data["audio"]:
+                    data = json.loads(websocket.recv())                   
+                    if "audio" in data and data["audio"]:
                         yield base64.b64decode(data["audio"])  # type: ignore
                 except websockets.exceptions.ConnectionClosed:
+                    if "message" in data:
+                        raise ApiError(body=data)
                     break

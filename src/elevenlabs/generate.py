@@ -2,9 +2,8 @@ import re
 
 from typing import Iterator, Optional, Union
 
-from .model import Model
 from .tts import TTS
-from .types import VoiceSettings
+from .types import VoiceSettings, Model
 from .voice import Voice, voices
 
 
@@ -45,7 +44,7 @@ def generate(
             raise ValueError(f"Voice '{voice_str}' not found.")
 
     if isinstance(model, str):
-        model = Model(model_id=model)
+        model = Model(model_id=model) # type: ignore
 
     if stream:
         if isinstance(text, str):

@@ -22,14 +22,14 @@ class Subscription(pydantic.BaseModel):
     allowed_to_extend_character_limit: bool
     next_character_count_reset_unix: int
     voice_limit: int
-    max_voice_add_edits: int
-    voice_add_edit_counter: int
+    max_voice_add_edits: typing.Optional[int]
+    voice_add_edit_counter: typing.Optional[int]
     professional_voice_limit: int
     can_extend_voice_limit: bool
     can_use_instant_voice_cloning: bool
     can_use_professional_voice_cloning: bool
-    status: SubscriptionStatus
-    has_open_invoices: bool
+    status: typing.Optional[SubscriptionStatus]
+    has_open_invoices: typing.Optional[bool]
     currency: typing.Optional[ExtendedSubscriptionResponseModelCurrency]
     next_invoice: typing.Optional[InvoiceResponseModel]
 
