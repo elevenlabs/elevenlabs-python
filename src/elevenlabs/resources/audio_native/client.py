@@ -9,7 +9,6 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.audio_native_create_project_response_model import AudioNativeCreateProjectResponseModel
-from ...types.audio_native_get_embed_code_response_model import AudioNativeGetEmbedCodeResponseModel
 from ...types.http_validation_error import HttpValidationError
 
 try:
@@ -97,51 +96,6 @@ class AudioNativeClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_embed_code(self) -> AudioNativeGetEmbedCodeResponseModel:
-        """
-        Get the HTML snippet to embed the AudioNative player into a webpage.
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/audio-native/get-embed-code"),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
-        )
-        if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(AudioNativeGetEmbedCodeResponseModel, _response.json())  # type: ignore
-        if _response.status_code == 422:
-            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def get_project_embed_code(self, project_id: str) -> AudioNativeGetEmbedCodeResponseModel:
-        """
-        Get the HTML snippet to embed the AudioNative player into a webpage. The embedded player will not convert content from the webpage but instead play the specified project
-
-        Parameters:
-            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"v1/audio-native/{project_id}/get-embed-code"
-            ),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
-        )
-        if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(AudioNativeGetEmbedCodeResponseModel, _response.json())  # type: ignore
-        if _response.status_code == 422:
-            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
 
 class AsyncAudioNativeClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -211,51 +165,6 @@ class AsyncAudioNativeClient:
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(AudioNativeCreateProjectResponseModel, _response.json())  # type: ignore
-        if _response.status_code == 422:
-            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def get_embed_code(self) -> AudioNativeGetEmbedCodeResponseModel:
-        """
-        Get the HTML snippet to embed the AudioNative player into a webpage.
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/audio-native/get-embed-code"),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
-        )
-        if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(AudioNativeGetEmbedCodeResponseModel, _response.json())  # type: ignore
-        if _response.status_code == 422:
-            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def get_project_embed_code(self, project_id: str) -> AudioNativeGetEmbedCodeResponseModel:
-        """
-        Get the HTML snippet to embed the AudioNative player into a webpage. The embedded player will not convert content from the webpage but instead play the specified project
-
-        Parameters:
-            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"v1/audio-native/{project_id}/get-embed-code"
-            ),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
-        )
-        if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(AudioNativeGetEmbedCodeResponseModel, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:

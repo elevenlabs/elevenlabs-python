@@ -3,7 +3,9 @@
 import typing
 
 import httpx
+import os
 
+from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .environment import ElevenLabsEnvironment
 from .resources.audio_native.client import AsyncAudioNativeClient, AudioNativeClient
@@ -23,13 +25,21 @@ class ElevenLabs:
         *,
         base_url: typing.Optional[str] = None,
         environment: ElevenLabsEnvironment = ElevenLabsEnvironment.PRODUCTION,
-        xi_api_key: typing.Optional[str] = None,
+        api_key: typing.Optional[str] = os.getenv("ELEVEN_API_KEY"),
         timeout: typing.Optional[float] = 60,
         httpx_client: typing.Optional[httpx.Client] = None
     ):
+        """
+        Args:
+            base_url typing.Optional[str]. Override the base URL.
+            environment ElevenLabsEnvironment. Defaults to PRODUCTION.
+            api_key typing.Optional[str]. Defaults to ELEVEN_API_KEY environment variable.
+            timeout typing.Optional[float]. Defaults to 60 seconds.
+            httpx_client typing.Optional[httpx.AsyncClient]. Override the httpx client.
+        """
         self._client_wrapper = SyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
-            xi_api_key=xi_api_key,
+            xi_api_key=api_key,
             httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client,
         )
         self.history = HistoryClient(client_wrapper=self._client_wrapper)
@@ -49,13 +59,21 @@ class AsyncElevenLabs:
         *,
         base_url: typing.Optional[str] = None,
         environment: ElevenLabsEnvironment = ElevenLabsEnvironment.PRODUCTION,
-        xi_api_key: typing.Optional[str] = None,
+        api_key: typing.Optional[str] = os.getenv("ELEVEN_API_KEY"),
         timeout: typing.Optional[float] = 60,
         httpx_client: typing.Optional[httpx.AsyncClient] = None
-    ):
+    ):  
+        """
+        Args:
+            base_url typing.Optional[str]. Override the base URL.
+            environment ElevenLabsEnvironment. Defaults to PRODUCTION.
+            api_key typing.Optional[str]. Defaults to ELEVEN_API_KEY environment variable.
+            timeout typing.Optional[float]. Defaults to 60 seconds.
+            httpx_client typing.Optional[httpx.AsyncClient]. Override the httpx client.
+        """
         self._client_wrapper = AsyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
-            xi_api_key=xi_api_key,
+            xi_api_key=api_key,
             httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client,
         )
         self.history = AsyncHistoryClient(client_wrapper=self._client_wrapper)

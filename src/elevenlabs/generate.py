@@ -1,12 +1,10 @@
 import re
 
-from typing import Union, Iterator, Optional
+from typing import Iterator, Optional, Union
 
 from .tts import TTS
-from .model import Model
-from .voice import Voice
-from .types import VoiceSettings
-from .client import voices
+from .types import VoiceSettings, Model
+from .voice import Voice, voices
 
 
 DEFAULT_VOICE = Voice(
@@ -46,7 +44,7 @@ def generate(
             raise ValueError(f"Voice '{voice_str}' not found.")
 
     if isinstance(model, str):
-        model = Model(model_id=model)
+        model = Model(model_id=model) # type: ignore
 
     if stream:
         if isinstance(text, str):

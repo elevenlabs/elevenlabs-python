@@ -9,7 +9,7 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.remove_none_from_dict import remove_none_from_dict
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
-from ...types.get_history_response_model import GetHistoryResponseModel
+from ...types.history import History
 from ...types.history_item import HistoryItem
 from ...types.http_validation_error import HttpValidationError
 
@@ -28,7 +28,7 @@ class HistoryClient:
 
     def get_all(
         self, *, page_size: typing.Optional[int] = None, start_after_history_item_id: typing.Optional[str] = None
-    ) -> GetHistoryResponseModel:
+    ) -> History:
         """
         Returns metadata about all your generated audio.
 
@@ -36,6 +36,13 @@ class HistoryClient:
             - page_size: typing.Optional[int]. How many history items to return at maximum. Can not exceed 1000, defaults to 100.
 
             - start_after_history_item_id: typing.Optional[str]. After which history_item_id to start fetching, use this parameter to paginate across a large collection of history items. In case this parameter is not provided history items will be fetched starting from the most recently created one ordered descending by their creation date.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.history.get_all()
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -47,7 +54,7 @@ class HistoryClient:
             timeout=60,
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(GetHistoryResponseModel, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(History, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:
@@ -62,6 +69,15 @@ class HistoryClient:
 
         Parameters:
             - history_item_id: str. History item ID to be used, you can use GET https://api.elevenlabs.io/v1/history to receive a list of history items and their IDs.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.history.get(
+            history_item_id="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -85,6 +101,15 @@ class HistoryClient:
 
         Parameters:
             - history_item_id: str. History item ID to be used, you can use GET https://api.elevenlabs.io/v1/history to receive a list of history items and their IDs.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.history.delete(
+            history_item_id="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "DELETE",
@@ -136,7 +161,7 @@ class HistoryClient:
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.history.download(
             history_item_ids=[],
@@ -166,7 +191,7 @@ class AsyncHistoryClient:
 
     async def get_all(
         self, *, page_size: typing.Optional[int] = None, start_after_history_item_id: typing.Optional[str] = None
-    ) -> GetHistoryResponseModel:
+    ) -> History:
         """
         Returns metadata about all your generated audio.
 
@@ -174,6 +199,13 @@ class AsyncHistoryClient:
             - page_size: typing.Optional[int]. How many history items to return at maximum. Can not exceed 1000, defaults to 100.
 
             - start_after_history_item_id: typing.Optional[str]. After which history_item_id to start fetching, use this parameter to paginate across a large collection of history items. In case this parameter is not provided history items will be fetched starting from the most recently created one ordered descending by their creation date.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.history.get_all()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -185,7 +217,7 @@ class AsyncHistoryClient:
             timeout=60,
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(GetHistoryResponseModel, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(History, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:
@@ -200,6 +232,15 @@ class AsyncHistoryClient:
 
         Parameters:
             - history_item_id: str. History item ID to be used, you can use GET https://api.elevenlabs.io/v1/history to receive a list of history items and their IDs.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.history.get(
+            history_item_id="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -223,6 +264,15 @@ class AsyncHistoryClient:
 
         Parameters:
             - history_item_id: str. History item ID to be used, you can use GET https://api.elevenlabs.io/v1/history to receive a list of history items and their IDs.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.history.delete(
+            history_item_id="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "DELETE",
@@ -274,7 +324,7 @@ class AsyncHistoryClient:
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         await client.history.download(
             history_item_ids=[],

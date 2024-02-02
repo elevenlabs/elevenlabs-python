@@ -6,9 +6,9 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
-from ...types.extended_subscription_response_model import ExtendedSubscriptionResponseModel
 from ...types.http_validation_error import HttpValidationError
-from ...types.user_response import UserResponse
+from ...types.subscription import Subscription
+from ...types.user import User
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -20,9 +20,17 @@ class UserClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_subscription(self) -> ExtendedSubscriptionResponseModel:
+    def get_subscription(self) -> Subscription:
         """
         Gets extended information about the users subscription
+
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.user.get_subscription()
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -31,7 +39,7 @@ class UserClient:
             timeout=60,
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(ExtendedSubscriptionResponseModel, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(Subscription, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:
@@ -40,9 +48,17 @@ class UserClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(self) -> UserResponse:
+    def get(self) -> User:
         """
         Gets information about the user
+
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.user.get()
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -51,7 +67,7 @@ class UserClient:
             timeout=60,
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(UserResponse, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(User, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:
@@ -65,9 +81,17 @@ class AsyncUserClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_subscription(self) -> ExtendedSubscriptionResponseModel:
+    async def get_subscription(self) -> Subscription:
         """
         Gets extended information about the users subscription
+
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.user.get_subscription()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -76,7 +100,7 @@ class AsyncUserClient:
             timeout=60,
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(ExtendedSubscriptionResponseModel, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(Subscription, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:
@@ -85,9 +109,17 @@ class AsyncUserClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(self) -> UserResponse:
+    async def get(self) -> User:
         """
         Gets information about the user
+
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.user.get()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -96,7 +128,7 @@ class AsyncUserClient:
             timeout=60,
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(UserResponse, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(User, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:

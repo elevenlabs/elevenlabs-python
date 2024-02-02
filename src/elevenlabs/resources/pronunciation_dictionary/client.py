@@ -64,6 +64,15 @@ class PronunciationDictionaryClient:
 
         Parameters:
             - pronunciation_dictionary_id: str. The id of the pronunciation dictionary
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.pronunciation_dictionary.get_metadata(
+            pronunciation_dictionary_id="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -128,6 +137,15 @@ class AsyncPronunciationDictionaryClient:
 
         Parameters:
             - pronunciation_dictionary_id: str. The id of the pronunciation dictionary
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.pronunciation_dictionary.get_metadata(
+            pronunciation_dictionary_id="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",

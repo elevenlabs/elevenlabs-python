@@ -7,8 +7,10 @@ src/elevenlabs/play.py
 src/elevenlabs/tts.py
 src/elevenlabs/voice.py
 src/elevenlabs/generate.py
+src/elevenlabs/clone.py
+src/elevenlabs/resources/voices/client.py
 
 README.md
 assets/
 
-tests/test_client.py
+tests/

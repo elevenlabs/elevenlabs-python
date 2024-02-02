@@ -4,7 +4,6 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
-from .language_response_model import LanguageResponseModel
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -12,21 +11,12 @@ except ImportError:
     import pydantic  # type: ignore
 
 
-class ModelResponse(pydantic.BaseModel):
-    model_id: str
-    name: str
-    can_be_finetuned: bool
-    can_do_text_to_speech: bool
-    can_do_voice_conversion: bool
-    can_use_style: bool
-    can_use_speaker_boost: bool
-    serves_pro_voices: bool
-    token_cost_factor: float
-    description: str
-    requires_alpha_access: bool
-    max_characters_request_free_user: int
-    max_characters_request_subscribed_user: int
-    languages: typing.List[LanguageResponseModel]
+class VoiceSample(pydantic.BaseModel):
+    sample_id: typing.Optional[str]
+    file_name: typing.Optional[str]
+    mime_type: typing.Optional[str]
+    size_bytes: typing.Optional[int]
+    hash: typing.Optional[str]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

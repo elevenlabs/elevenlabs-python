@@ -8,7 +8,7 @@ from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.http_validation_error import HttpValidationError
-from ...types.model_response import ModelResponse
+from ...types.model import Model
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -20,7 +20,7 @@ class ModelsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_all(self) -> typing.List[ModelResponse]:
+    def get_all(self) -> typing.List[Model]:
         """
         Gets a list of available models.
 
@@ -39,7 +39,7 @@ class ModelsClient:
             timeout=60,
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(typing.List[ModelResponse], _response.json())  # type: ignore
+            return pydantic.parse_obj_as(typing.List[Model], _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:
@@ -53,7 +53,7 @@ class AsyncModelsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_all(self) -> typing.List[ModelResponse]:
+    async def get_all(self) -> typing.List[Model]:
         """
         Gets a list of available models.
 
@@ -72,7 +72,7 @@ class AsyncModelsClient:
             timeout=60,
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(typing.List[ModelResponse], _response.json())  # type: ignore
+            return pydantic.parse_obj_as(typing.List[Model], _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:

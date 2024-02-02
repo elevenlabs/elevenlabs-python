@@ -4,6 +4,7 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
+from .history_item import HistoryItem
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -11,12 +12,10 @@ except ImportError:
     import pydantic  # type: ignore
 
 
-class SampleResponseModel(pydantic.BaseModel):
-    sample_id: str
-    file_name: str
-    mime_type: str
-    size_bytes: int
-    hash: str
+class History(pydantic.BaseModel):
+    history: typing.List[HistoryItem]
+    has_more: bool
+    last_history_item_id: typing.Optional[str]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

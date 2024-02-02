@@ -5,7 +5,7 @@ import typing
 
 from ..core.datetime_utils import serialize_datetime
 from .feedback_item import FeedbackItem
-from .item_state import ItemState
+from .history_item_state import HistoryItemState
 from .voice_category import VoiceCategory
 
 try:
@@ -17,13 +17,13 @@ except ImportError:
 class HistoryItem(pydantic.BaseModel):
     history_item_id: str
     voice_id: str
-    voice_name: str
+    voice_name: typing.Optional[str]
     text: str
     date_unix: int
     character_count_change_from: int
     character_count_change_to: int
     content_type: str
-    state: ItemState
+    state: typing.Optional[HistoryItemState]
     request_id: typing.Optional[str]
     model_id: typing.Optional[str]
     voice_category: typing.Optional[VoiceCategory]

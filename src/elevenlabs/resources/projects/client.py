@@ -38,7 +38,7 @@ class ProjectsClient:
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.projects.get_all()
         """
@@ -140,6 +140,15 @@ class ProjectsClient:
 
         Parameters:
             - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.get(
+            project_id="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -163,6 +172,15 @@ class ProjectsClient:
 
         Parameters:
             - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.delete(
+            project_id="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "DELETE",
@@ -186,6 +204,15 @@ class ProjectsClient:
 
         Parameters:
             - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.convert(
+            project_id="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -213,10 +240,10 @@ class ProjectsClient:
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.projects.get_snapshots(
-            project_id="project-id",
+            project_id="string",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -277,6 +304,16 @@ class ProjectsClient:
             - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
             - pronunciation_dictionary_locators: typing.List[PronunciationDictionaryVersionLocatorDbModel]. A list of pronunciation dictionary locators (id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.update_pronunciation_dictionaries(
+            project_id="string",
+            pronunciation_dictionary_locators=[],
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -311,7 +348,7 @@ class AsyncProjectsClient:
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         await client.projects.get_all()
         """
@@ -413,6 +450,15 @@ class AsyncProjectsClient:
 
         Parameters:
             - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.projects.get(
+            project_id="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -436,6 +482,15 @@ class AsyncProjectsClient:
 
         Parameters:
             - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.projects.delete(
+            project_id="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "DELETE",
@@ -459,6 +514,15 @@ class AsyncProjectsClient:
 
         Parameters:
             - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.projects.convert(
+            project_id="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -486,10 +550,10 @@ class AsyncProjectsClient:
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
-            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         await client.projects.get_snapshots(
-            project_id="project-id",
+            project_id="string",
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -550,6 +614,16 @@ class AsyncProjectsClient:
             - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
             - pronunciation_dictionary_locators: typing.List[PronunciationDictionaryVersionLocatorDbModel]. A list of pronunciation dictionary locators (id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.projects.update_pronunciation_dictionaries(
+            project_id="string",
+            pronunciation_dictionary_locators=[],
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
