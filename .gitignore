@@ -1,7 +1,4 @@
-__pycache__
-.mypy_cache
-.pytest_cache
-.DS_Store
-NOTES.md
-test.py
-*.ipynb
+dist/
+.mypy_cache/
+__pycache__/
+poetry.toml

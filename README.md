@@ -1,18 +1,69 @@
+# ElevenLabs Python Library
+
 ![LOGO](https://github.com/elevenlabs/elevenlabs-python/assets/12028621/21267d89-5e82-4e7e-9c81-caf30b237683)
 
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://buildwithfern.com/?utm_source=fern-elevenlabs/elevenlabs-python/readme)
 [![Discord](https://badgen.net/badge/black/ElevenLabs/icon?icon=discord&label)](https://discord.gg/elevenlabs)
 [![Twitter](https://badgen.net/badge/black/elevenlabsio/icon?icon=twitter&label)](https://twitter.com/elevenlabsio)
 [![PyPI - Python Version](https://img.shields.io/pypi/v/elevenlabs?style=flat&colorA=black&colorB=black)](https://pypi.org/project/elevenlabs/)
 [![Downloads](https://static.pepy.tech/personalized-badge/elevenlabs?period=total&units=international_system&left_color=black&right_color=black&left_text=Downloads)](https://pepy.tech/project/elevenlabs)
 
-The official Python API for ElevenLabs [text-to-speech software.](https://elevenlabs.io/) Eleven brings the most compelling, rich and lifelike voices to creators and developers in just a few lines of code.
+The official Python API for [ElevenLabs](https://elevenlabs.io/) [text-to-speech software.](https://elevenlabs.io/text-to-speech) Eleven brings the most compelling, rich and lifelike voices to creators and developers in just a few lines of code.
 
+## 📖 API & Docs
+
+Check out the [HTTP API documentation](https://elevenlabs.io/docs/api-reference).
 
 ## ⚙️ Install
 
 ```bash
 pip install elevenlabs
 ```
+
+## V3 Migration Guide
+> The SDK was rewritten in v3 and is now programatically generated from our OpenAPI spec. As part of this release 
+> there are some breaking changes. 
+
+
+### Client Instantiation
+The SDK now exports a client class that you must instantiate to call various
+endpoints in our API. 
+
+```python
+from elevenlabs.client import ElevenLabs
+
+client = ElevenLabs(api_key="...")
+```
+As part of this change, there is no longer a `set_api_key` and `get_api_key` method exported. 
+
+### HTTPX
+The SDK now uses httpx under the hood. This allows us to export an async client in addition to 
+a synchronous client. Note that you can pass in your own httpx client as well. 
+
+```python
+from elevenlabs.client import AsyncElevenLabs
+
+client = AsyncElevenLabs(api_key="...", httpx=httpx.AsyncClient(...))
+```
+
+### Removing Static Methods
+There are no longer static methods exposed directly on objects. For example, 
+instead of `Models.from_api()` you can now do `client.models.get_all()`. 
+
+The renames are specified below: 
+
+  `User.from_api()` -> `client.users.get()`
+
+  `Models.from_api()` -> `client.models.get_all()`
+
+  `Voices.from_api()` -> `client.voices.get_all()` 
+
+  `History.from_api()` -> `client.history.get_all()` 
+
+
+### Maintaining Helper Methods
+The SDK continues to export methods for `generate`, `play`, `clone`, and
+`voices` which are detailed in the README below. 
 
 ## 🗣️ Usage
 [![Open in Spaces](https://img.shields.io/badge/🤗-Open%20in%20Spaces-blue.svg)](https://huggingface.co/spaces/elevenlabs/tts)
@@ -37,7 +88,6 @@ play(audio)
 <i> Don't forget to unmute the player! </i>
 
 [audio (3).webm](https://github.com/elevenlabs/elevenlabs-python/assets/12028621/778fd3ed-0a3a-4d66-8f73-faee099dfdd6)
-
 
 </details>
 
@@ -76,7 +126,8 @@ Voices(
 
 </details>
 
-Build a voice object with custom settings to personalize the voice style, or call `voice.fetch_settings()` to get the default settings for the voice.
+Build a voice object with custom settings to personalize the voice style, or call 
+`client.voices.get_settings("your-voice-id")` to get the default settings for the voice.
 
 ```py
 from elevenlabs import Voice, VoiceSettings, generate
@@ -94,8 +145,7 @@ play(audio)
 
 </details>
 
-
-### Clone Voice
+## Clone Voice
 
 Clone your voice in an instant. Note that voice cloning requires an API key, see below.
 
@@ -147,15 +197,51 @@ audio_stream = generate(
 stream(audio_stream)
 ```
 
-## 🔑 API Key
+## HTTP Client
+The SDK also exposes an HTTP client that you can use to query our 
+various endpoints. 
 
-The basic [API](https://elevenlabs.io/api) has a limited number of characters. To increase this limit, you can get a free API key from Elevenlabs ([step-by-step guide](https://elevenlabs.io/docs/api-reference)) and set is as environment variable `ELEVEN_API_KEY`. Alternatively, you can provide the `api_key` string argument to the `generate` function, or set it globally in code with:
+```python
+from elevenlabs.client import ElevenLabs
 
-```py
-from elevenlabs import set_api_key
-set_api_key("<YOUR_API_KEY>")
+eleven = ElevenLabs(
+  api_key="MY_API_KEY" # Defaulsts to ELEVEN_API_KEY
+)
+models = eleven.models.get_all()
 ```
 
-## 📖 API & Docs
+## Async Client 
+Use `AsyncElevenLabs` if you want to make API calls asynchronously. 
 
-Learn more about the [Python API](API.md), or check out the [HTTP API documentation](https://elevenlabs.io/docs/api-reference).
+```python
+import asyncio
+
+from elevenlabs.client import AsyncElevenLabs
+
+eleven = AsyncElevenLabs(
+  api_key="MY_API_KEY" # Defaulsts to ELEVEN_API_KEY
+)
+
+async def print_models() -> None:
+    models = eleven.models.get_all()
+    print(models)
+
+asyncio.run(print_models())
+```
+
+## Elevenlabs module
+All of the ElevenLabs models are nested within the elevenlabs module. 
+
+![Alt text](assets/module.png)
+
+## Languages Supported
+
+We support 29 languages and 100+ accents. Explore [all languages](https://elevenlabs.io/languages).
+
+<img src="https://github.com/fern-elevenlabs/elevenlabs-python/assets/83524670/ea02a0a8-2691-4403-bbb1-ec14993a0adf" width="900">
+
+## Contributing
+
+While we value open-source contributions to this SDK, this library is generated programmatically. Additions made directly to this library would have to be moved over to our generation code, otherwise they would be overwritten upon the next generated release. Feel free to open a PR as a proof of concept, but know that we will not be able to merge it as-is. We suggest opening an issue first to discuss with us! 
+
+On the other hand, contributions to the README are always very welcome!
