@@ -1,8 +1,6 @@
 from elevenlabs.client import ElevenLabs
 from elevenlabs.types.voice_response import VoiceResponse
-from .utils import use_play
-
-import pytest
+from .utils import IN_GITHUB
 
 
 def test_voice_from_id():
@@ -58,7 +56,8 @@ def test_voice_clone():
 
     client.voices.delete(voice.voice_id)
 
-    play(audio)
+    if not IN_GITHUB:
+        play(audio)
 
 
 def test_voice_design():
@@ -81,7 +80,9 @@ def test_voice_design():
     )
 
     assert isinstance(audio, bytes) and len(audio) > 0
-    play(audio)
+    
+    if not IN_GITHUB:
+        play(audio)
 
 
 

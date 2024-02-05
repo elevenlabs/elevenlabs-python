@@ -7,6 +7,7 @@ from typing import Sequence
 import requests  # type: ignore
 
 use_play = "PLAY" in os.environ
+IN_GITHUB = "GITHUB_ACTIONS" in os.environ
 
 
 @contextmanager

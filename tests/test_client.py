@@ -1,6 +1,7 @@
 import pytest
 
 from elevenlabs import generate, voices, Voice, VoiceSettings, play, stream
+from .utils import IN_GITHUB
 
 
 def test_voices() -> None:
@@ -15,7 +16,8 @@ def test_generate() -> None:
             settings=VoiceSettings(stability=0.71, similarity_boost=0.5, style=0.0, use_speaker_boost=True)
         )
     )
-    play(audio)  # type: ignore
+    if not IN_GITHUB:
+        play(audio)  # type: ignore
 
 
 def test_generate_stream() -> None:
@@ -29,8 +31,9 @@ def test_generate_stream() -> None:
         model="eleven_monolingual_v1",
         stream=True
     )
-
-    stream(audio_stream)  # type: ignore
+    
+    if not IN_GITHUB:
+        stream(audio_stream)  # type: ignore
 
 
 def test_generate_with_settings() -> None: 
@@ -44,4 +47,5 @@ def test_generate_with_settings() -> None:
         )
     )
 
-    play(audio)  # type: ignore
+    if not IN_GITHUB:
+        play(audio)  # type: ignore
