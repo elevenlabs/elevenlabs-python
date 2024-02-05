@@ -1,6 +1,5 @@
 from pydoc import cli
-import warnings
-import pytest
+from .utils import IN_GITHUB
 
 
 def test_history():
@@ -25,7 +24,8 @@ def test_history_item_delete():
     # Random text
     text = f"Test {randint(0, 1000)}"
     audio = generate(text=text)  # Generate a history item to delete
-    play(audio)
+    if IN_GITHUB:
+        play(audio)
     time.sleep(1)
 
     client = ElevenLabs()
