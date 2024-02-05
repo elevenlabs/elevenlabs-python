@@ -24,7 +24,7 @@ def test_history_item_delete():
     # Random text
     text = f"Test {randint(0, 1000)}"
     audio = generate(text=text)  # Generate a history item to delete
-    if IN_GITHUB:
+    if not IN_GITHUB:
         play(audio)
     time.sleep(1)
 
