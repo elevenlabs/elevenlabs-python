@@ -34,6 +34,8 @@ jobs:
         run: poetry install
       - name: Test
         run: poetry run pytest .
+        env:
+          ELEVEN_API_KEY: ${{ secrets.TEST_API_KEY }}
 
   publish:
     needs: [compile, test]
