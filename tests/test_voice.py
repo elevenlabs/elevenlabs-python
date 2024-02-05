@@ -3,7 +3,6 @@ from .utils import use_play
 import pytest
 
 
-@pytest.mark.skip(reason="skip in ci")
 def test_voice_from_id():
     from elevenlabs import Voice, VoiceSettings
 
@@ -18,7 +17,6 @@ def test_voice_from_id():
     assert isinstance(voice.settings, VoiceSettings)
 
 
-@pytest.mark.skip(reason="skip in ci")
 def test_voice_clone():
     from elevenlabs import Voice, clone, generate, play
 
@@ -54,7 +52,6 @@ def test_voice_clone():
     play(audio)
 
 
-@pytest.mark.skip(reason="skip in ci")
 def test_voice_design():
     from elevenlabs import Accent, Age, Gender, Voice, generate, play
     from elevenlabs.client import ElevenLabs
@@ -79,7 +76,6 @@ def test_voice_design():
 
 
 
-@pytest.mark.skip(reason="skip in ci")
 def test_voices():
     from elevenlabs import voices, Voice
 

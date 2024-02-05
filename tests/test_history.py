@@ -3,7 +3,6 @@ import warnings
 import pytest
 
 
-@pytest.mark.skip(reason="skip in ci")
 def test_history():
     from elevenlabs import History, HistoryItem
     from elevenlabs.client import ElevenLabs
@@ -16,7 +15,6 @@ def test_history():
     assert isinstance(history, History)
 
 
-@pytest.mark.skip(reason="skip in ci")
 def test_history_item_delete():
     import time
     from random import randint

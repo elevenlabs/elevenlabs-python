@@ -3,12 +3,10 @@ import pytest
 from elevenlabs import generate, voices, Voice, VoiceSettings, play, stream
 
 
-@pytest.mark.skip(reason="skip in ci")
 def test_voices() -> None:
     print("Voices are...", voices())
 
 
-@pytest.mark.skip(reason="skip in ci")
 def test_generate() -> None:
     audio = generate(
         text="Hello! My name is Bella.",
@@ -19,7 +17,6 @@ def test_generate() -> None:
     )
     play(audio)  # type: ignore
 
-@pytest.mark.skip(reason="skip in ci")
 def test_generate_stream() -> None:
     def text_stream():
         yield "Hi there, I'm Eleven "
@@ -34,7 +31,6 @@ def test_generate_stream() -> None:
 
     stream(audio_stream)  # type: ignore
 
-@pytest.mark.skip(reason="skip in ci")
 def test_generate_with_settings() -> None: 
     from elevenlabs import Voice, VoiceSettings, generate
 
