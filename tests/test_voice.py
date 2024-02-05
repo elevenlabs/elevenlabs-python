@@ -8,7 +8,7 @@ def test_voice_from_id():
 
     # Test that we can get a voice from id
     voice_id = "21m00Tcm4TlvDq8ikWAM"
-    voice = Voice(voice_id)
+    voice = Voice.from_id(voice_id)
     assert isinstance(voice, Voice)
 
     assert voice.voice_id == voice_id
