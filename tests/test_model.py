@@ -1,5 +1,6 @@
 import pytest
 
+
 def test_model():
     from elevenlabs import Model
     from elevenlabs.client import ElevenLabs

@@ -15,7 +15,8 @@ def test_generate() -> None:
             settings=VoiceSettings(stability=0.71, similarity_boost=0.5, style=0.0, use_speaker_boost=True)
         )
     )
-    play(audio)  # type: ignore
+    play(audio)
+
 
 def test_generate_stream() -> None:
     def text_stream():
@@ -29,7 +30,8 @@ def test_generate_stream() -> None:
         stream=True
     )
 
-    stream(audio_stream)  # type: ignore
+    stream(audio_stream)
+
 
 def test_generate_with_settings() -> None: 
     from elevenlabs import Voice, VoiceSettings, generate
@@ -42,4 +44,4 @@ def test_generate_with_settings() -> None:
         )
     )
 
-    play(audio)  # type: ignore
+    play(audio)

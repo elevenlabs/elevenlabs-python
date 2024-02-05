@@ -1,4 +1,5 @@
 import re
+import os
 
 from typing import Iterator, Optional, Union
 
@@ -22,7 +23,7 @@ def is_voice_id(val: str) -> bool:
 
 def generate(
     text: Union[str, Iterator[str]],
-    api_key: Optional[str] = None,
+    api_key: Optional[str] = os.getenv("ELEVEN_API_KEY"),
     voice: Union[str, Voice] = DEFAULT_VOICE,
     model: Union[str, Model] = "eleven_monolingual_v1",
     stream: bool = False,
@@ -37,7 +38,7 @@ def generate(
         if is_voice_id(voice):
             voice = Voice(voice_id=voice)
         else:
-            voice = next((v for v in voices().voices if v.name == voice_str), None)  # type: ignore # noqa E501
+            voice = next((v for v in voices() if v.name == voice_str), None)  # type: ignore # noqa E501
 
         # Raise error if voice not found
         if not voice:

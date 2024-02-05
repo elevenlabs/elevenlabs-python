@@ -9,6 +9,7 @@ src/elevenlabs/voice.py
 src/elevenlabs/generate.py
 src/elevenlabs/clone.py
 src/elevenlabs/resources/voices/client.py
+.github/workflows/ci.yml
 
 README.md
 assets/

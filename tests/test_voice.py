@@ -1,3 +1,5 @@
+from elevenlabs.client import ElevenLabs
+from elevenlabs.types.voice_response import VoiceResponse
 from .utils import use_play
 
 import pytest
@@ -5,22 +7,28 @@ import pytest
 
 def test_voice_from_id():
     from elevenlabs import Voice, VoiceSettings
+    from elevenlabs.client import ElevenLabs
 
     # Test that we can get a voice from id
     voice_id = "21m00Tcm4TlvDq8ikWAM"
-    voice = Voice.from_id(voice_id)
-    assert isinstance(voice, Voice)
+
+    client = ElevenLabs()
+    voice = client.voices.get(voice_id)
+    assert isinstance(voice, VoiceResponse)
 
     assert voice.voice_id == voice_id
     assert voice.name == "Rachel"
     assert voice.category == "premade"
-    assert isinstance(voice.settings, VoiceSettings)
+    if voice.settings is not None: 
+        assert isinstance(voice.settings, VoiceSettings)
 
 
 def test_voice_clone():
     from elevenlabs import Voice, clone, generate, play
 
     from .utils import as_local_files
+
+    client = ElevenLabs()
 
     voice_file_urls = [
         "https://user-images.githubusercontent.com/12028621/235474694-584f7103-dab2-4c39-bb9a-8e5f00be85da.webm",
@@ -47,7 +55,8 @@ def test_voice_clone():
         voice=voice,
     )
     assert isinstance(audio, bytes) and len(audio) > 0
-    voice.delete()
+
+    client.voices.delete(voice.voice_id)
 
     play(audio)
 

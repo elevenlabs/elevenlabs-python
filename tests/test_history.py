@@ -4,7 +4,7 @@ import pytest
 
 
 def test_history():
-    from elevenlabs import History, HistoryItem
+    from elevenlabs import History
     from elevenlabs.client import ElevenLabs
     
     client = ElevenLabs()
