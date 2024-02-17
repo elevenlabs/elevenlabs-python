@@ -205,7 +205,7 @@ various endpoints.
 from elevenlabs.client import ElevenLabs
 
 eleven = ElevenLabs(
-  api_key="MY_API_KEY" # Defaulsts to ELEVEN_API_KEY
+  api_key="MY_API_KEY" # Defaults to ELEVEN_API_KEY
 )
 models = eleven.models.get_all()
 ```
