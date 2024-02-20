@@ -75,6 +75,7 @@ We support two main models: the newest `eleven_multilingual_v2`, a single founda
 from elevenlabs import generate, play
 
 audio = generate(
+  # api_key="YOUR_API_KEY", (Defaults to os.getenv(ELEVEN_API_KEY))
   text="Hello! 你好! Hola! नमस्ते! Bonjour! こんにちは! مرحبا! 안녕하세요! Ciao! Cześć! Привіт! வணக்கம்!",
   voice="Rachel",
   model="eleven_multilingual_v2"
@@ -153,6 +154,7 @@ Clone your voice in an instant. Note that voice cloning requires an API key, see
 from elevenlabs import clone, generate, play
 
 voice = clone(
+    # api_key="YOUR_API_KEY", (Defaults to os.getenv(ELEVEN_API_KEY))
     name="Alex",
     description="An old American male voice with a slight hoarseness in his throat. Perfect for news", # Optional
     files=["./sample_0.mp3", "./sample_1.mp3", "./sample_2.mp3"],
@@ -171,6 +173,7 @@ Stream audio in real-time, as it's being generated.
 from elevenlabs import generate, stream
 
 audio_stream = generate(
+  # api_key="YOUR_API_KEY", (Defaults to os.getenv(ELEVEN_API_KEY))
   text="This is a... streaming voice!!",
   stream=True
 )
@@ -188,6 +191,7 @@ def text_stream():
     yield "I'm a text to speech API "
 
 audio_stream = generate(
+    # api_key="YOUR_API_KEY", (Defaults to os.getenv(ELEVEN_API_KEY))
     text=text_stream(),
     voice="Nicole",
     model="eleven_monolingual_v1",
