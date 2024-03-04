@@ -4,7 +4,7 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
-from .finetunig_state import FinetunigState
+from .finetuning_state import FinetuningState
 from .manual_verification_response_model import ManualVerificationResponseModel
 from .verification_attempt_response_model import VerificationAttemptResponseModel
 
@@ -15,16 +15,16 @@ except ImportError:
 
 
 class FineTuningResponseModel(pydantic.BaseModel):
-    is_allowed_to_fine_tune: typing.Optional[bool]
-    fine_tuning_requested: typing.Optional[bool]
-    finetuning_state: typing.Optional[FinetunigState]
-    verification_failures: typing.Optional[typing.List[str]]
-    verification_attempts_count: typing.Optional[int]
-    manual_verification_requested: typing.Optional[bool]
-    verification_attempts: typing.Optional[typing.List[VerificationAttemptResponseModel]]
-    slice_ids: typing.Optional[typing.List[str]]
-    manual_verification: typing.Optional[ManualVerificationResponseModel]
-    language: typing.Optional[str]
+    is_allowed_to_fine_tune: bool
+    fine_tuning_requested: bool
+    finetuning_state: FinetuningState
+    verification_failures: typing.List[str]
+    verification_attempts_count: int
+    manual_verification_requested: bool
+    verification_attempts: typing.Optional[typing.List[VerificationAttemptResponseModel]] = None
+    slice_ids: typing.Optional[typing.List[str]] = None
+    manual_verification: typing.Optional[ManualVerificationResponseModel] = None
+    language: typing.Optional[str] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

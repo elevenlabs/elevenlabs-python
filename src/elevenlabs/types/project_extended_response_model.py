@@ -23,7 +23,7 @@ class ProjectExtendedResponseModel(pydantic.BaseModel):
     can_be_downloaded: bool
     state: ProjectState
     chapters: typing.List[ChapterResponseModel]
-    last_conversion_date_unix: typing.Optional[int]
+    last_conversion_date_unix: typing.Optional[int] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

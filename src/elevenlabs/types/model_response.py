@@ -4,7 +4,7 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
-from .project_state import ProjectState
+from .language_response_model import LanguageResponseModel
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -12,20 +12,21 @@ except ImportError:
     import pydantic  # type: ignore
 
 
-class ProjectResponseModel(pydantic.BaseModel):
-    project_id: str
+class ModelResponse(pydantic.BaseModel):
+    model_id: str
     name: str
-    create_date_unix: int
-    default_title_voice_id: str
-    default_paragraph_voice_id: str
-    default_model_id: str
-    can_be_downloaded: bool
-    acx_volume_normalization: bool
-    state: ProjectState
-    last_conversion_date_unix: typing.Optional[int] = None
-    title: typing.Optional[str] = None
-    author: typing.Optional[str] = None
-    isbn_number: typing.Optional[str] = None
+    can_be_finetuned: bool
+    can_do_text_to_speech: bool
+    can_do_voice_conversion: bool
+    can_use_style: bool
+    can_use_speaker_boost: bool
+    serves_pro_voices: bool
+    token_cost_factor: float
+    description: str
+    requires_alpha_access: bool
+    max_characters_request_free_user: int
+    max_characters_request_subscribed_user: int
+    languages: typing.List[LanguageResponseModel]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

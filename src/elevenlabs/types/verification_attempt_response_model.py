@@ -18,7 +18,7 @@ class VerificationAttemptResponseModel(pydantic.BaseModel):
     accepted: bool
     similarity: float
     levenshtein_distance: float
-    recording: typing.Optional[RecordingResponseModel]
+    recording: typing.Optional[RecordingResponseModel] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
