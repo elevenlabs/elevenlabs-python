@@ -28,7 +28,7 @@ class SubscriptionResponse(pydantic.BaseModel):
     can_use_instant_voice_cloning: bool
     can_use_professional_voice_cloning: bool
     status: SubscriptionStatus
-    currency: typing.Optional[Currency]
+    currency: typing.Optional[Currency] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

@@ -5,7 +5,7 @@ import typing
 
 from ..core.datetime_utils import serialize_datetime
 from .fine_tuning_response_model import FineTuningResponseModel
-from .voice_sample import VoiceSample
+from .sample_response_model import SampleResponseModel
 from .voice_settings import VoiceSettings
 from .voice_sharing_response_model import VoiceSharingResponseModel
 
@@ -22,12 +22,12 @@ class VoiceResponse(pydantic.BaseModel):
     labels: typing.Dict[str, str]
     available_for_tiers: typing.List[str]
     high_quality_base_model_ids: typing.List[str]
-    samples: typing.Optional[typing.List[VoiceSample]]
-    fine_tuning: typing.Optional[FineTuningResponseModel]
-    description: typing.Optional[str]
-    preview_url: typing.Optional[str]
-    settings: typing.Optional[VoiceSettings]
-    sharing: typing.Optional[VoiceSharingResponseModel]
+    samples: typing.Optional[typing.List[SampleResponseModel]] = None
+    fine_tuning: typing.Optional[FineTuningResponseModel] = None
+    description: typing.Optional[str] = None
+    preview_url: typing.Optional[str] = None
+    settings: typing.Optional[VoiceSettings] = None
+    sharing: typing.Optional[VoiceSharingResponseModel] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

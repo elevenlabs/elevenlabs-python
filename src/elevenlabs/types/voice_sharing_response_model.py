@@ -25,9 +25,9 @@ class VoiceSharingResponseModel(pydantic.BaseModel):
     financial_rewards_enabled: bool
     name: str
     labels: typing.Dict[str, str]
-    description: typing.Optional[str]
-    history_item_sample_id: typing.Optional[str]
-    review_message: typing.Optional[str]
+    description: typing.Optional[str] = None
+    history_item_sample_id: typing.Optional[str] = None
+    review_message: typing.Optional[str] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

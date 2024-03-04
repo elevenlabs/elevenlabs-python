@@ -19,7 +19,7 @@ class FeedbackItem(pydantic.BaseModel):
     glitches: bool
     audio_quality: bool
     other: bool
-    review_status: typing.Optional[str]
+    review_status: typing.Optional[str] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

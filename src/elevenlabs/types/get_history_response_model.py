@@ -4,7 +4,7 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
-from .project_state import ProjectState
+from .history_item import HistoryItem
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -12,20 +12,10 @@ except ImportError:
     import pydantic  # type: ignore
 
 
-class ProjectResponseModel(pydantic.BaseModel):
-    project_id: str
-    name: str
-    create_date_unix: int
-    default_title_voice_id: str
-    default_paragraph_voice_id: str
-    default_model_id: str
-    can_be_downloaded: bool
-    acx_volume_normalization: bool
-    state: ProjectState
-    last_conversion_date_unix: typing.Optional[int] = None
-    title: typing.Optional[str] = None
-    author: typing.Optional[str] = None
-    isbn_number: typing.Optional[str] = None
+class GetHistoryResponseModel(pydantic.BaseModel):
+    history: typing.List[HistoryItem]
+    has_more: bool
+    last_history_item_id: typing.Optional[str] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
