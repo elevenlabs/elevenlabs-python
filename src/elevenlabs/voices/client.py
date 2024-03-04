@@ -231,9 +231,7 @@ class VoicesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete_v_1_voices(
-        self, voice_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Any:
+    def delete(self, voice_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
         """
         Deletes a voice by its ID.
 
@@ -247,7 +245,7 @@ class VoicesClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.voices.delete_v_1_voices(
+        client.voices.delete(
             voice_id="voice_id",
         )
         """
@@ -679,9 +677,7 @@ class AsyncVoicesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete_v_1_voices(
-        self, voice_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Any:
+    async def delete(self, voice_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
         """
         Deletes a voice by its ID.
 
@@ -695,7 +691,7 @@ class AsyncVoicesClient:
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        await client.voices.delete_v_1_voices(
+        await client.voices.delete(
             voice_id="voice_id",
         )
         """
