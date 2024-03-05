@@ -26,7 +26,7 @@ class SpeechToSpeechClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def speech_to_speech(
+    def convert(
         self,
         voice_id: str,
         *,
@@ -107,7 +107,7 @@ class SpeechToSpeechClient:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def speech_to_speech_streaming(
+    def convert_as_stream(
         self,
         voice_id: str,
         *,
@@ -192,7 +192,7 @@ class AsyncSpeechToSpeechClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def speech_to_speech(
+    async def convert(
         self,
         voice_id: str,
         *,
@@ -273,7 +273,7 @@ class AsyncSpeechToSpeechClient:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def speech_to_speech_streaming(
+    async def convert_as_stream(
         self,
         voice_id: str,
         *,
