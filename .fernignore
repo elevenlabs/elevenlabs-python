@@ -1,5 +1,6 @@
 # Specify files that shouldn't be modified by Fern
 
+src/elevenlabs/client.py
 src/elevenlabs/play.py
 src/elevenlabs/tts.py
 
