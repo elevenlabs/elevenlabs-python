@@ -10,7 +10,7 @@ from ..core.jsonable_encoder import jsonable_encoder
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
-from ..types.extended_subscription_response_model import ExtendedSubscriptionResponseModel
+from ..types.extended_subscription_response import ExtendedSubscriptionResponse
 from ..types.http_validation_error import HttpValidationError
 from ..types.user_response import UserResponse
 
@@ -26,7 +26,7 @@ class UserClient:
 
     def get_subscription(
         self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ExtendedSubscriptionResponseModel:
+    ) -> ExtendedSubscriptionResponse:
         """
         Gets extended information about the users subscription
 
@@ -61,7 +61,7 @@ class UserClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(ExtendedSubscriptionResponseModel, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(ExtendedSubscriptionResponse, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:
@@ -121,7 +121,7 @@ class AsyncUserClient:
 
     async def get_subscription(
         self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ExtendedSubscriptionResponseModel:
+    ) -> ExtendedSubscriptionResponse:
         """
         Gets extended information about the users subscription
 
@@ -156,7 +156,7 @@ class AsyncUserClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(ExtendedSubscriptionResponseModel, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(ExtendedSubscriptionResponse, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:

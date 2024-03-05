@@ -12,7 +12,6 @@ from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.audio_native_create_project_response_model import AudioNativeCreateProjectResponseModel
-from ..types.audio_native_get_embed_code_response_model import AudioNativeGetEmbedCodeResponseModel
 from ..types.http_validation_error import HttpValidationError
 
 try:
@@ -34,6 +33,7 @@ class AudioNativeClient:
         name: str,
         image: str,
         author: str,
+        title: str,
         small: bool,
         text_color: str,
         background_color: str,
@@ -52,7 +52,9 @@ class AudioNativeClient:
 
             - image: str. Image URL used in the player. If not provided, default image set in the Player settings is used.
 
-            - author: str. Author used in the player. If not provided, default author set in the Player settings is used.
+            - author: str. Author used in the player and inserted at the start of the uploaded article. If not provided, the default author set in the Player settings is used.
+
+            - title: str. Title used in the player and inserted at the top of the uploaded article. If not provided, the default title set in the Player settings is used.
 
             - small: bool. Whether to use small player or not. If not provided, default value set in the Player settings is used.
 
@@ -84,6 +86,7 @@ class AudioNativeClient:
                         "name": name,
                         "image": image,
                         "author": author,
+                        "title": title,
                         "small": small,
                         "text_color": text_color,
                         "background_color": background_color,
@@ -102,6 +105,7 @@ class AudioNativeClient:
                             "name": name,
                             "image": image,
                             "author": author,
+                            "title": title,
                             "small": small,
                             "text_color": text_color,
                             "background_color": background_color,
@@ -131,105 +135,6 @@ class AudioNativeClient:
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(AudioNativeCreateProjectResponseModel, _response.json())  # type: ignore
-        if _response.status_code == 422:
-            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def get_embed_code(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AudioNativeGetEmbedCodeResponseModel:
-        """
-        Get the HTML snippet to embed the AudioNative player into a webpage.
-
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
-        from elevenlabs.client import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.audio_native.get_embed_code()
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/audio-native/get-embed-code"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
-            ),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else 60,
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
-        if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(AudioNativeGetEmbedCodeResponseModel, _response.json())  # type: ignore
-        if _response.status_code == 422:
-            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def get_project_embed_code(
-        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AudioNativeGetEmbedCodeResponseModel:
-        """
-        Get the HTML snippet to embed the AudioNative player into a webpage. The embedded player will not convert content from the webpage but instead play the specified project
-
-        Parameters:
-            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
-
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
-        from elevenlabs.client import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.audio_native.get_project_embed_code(
-            project_id="project_id",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/",
-                f"v1/audio-native/{jsonable_encoder(project_id)}/get-embed-code",
-            ),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
-            ),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else 60,
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
-        if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(AudioNativeGetEmbedCodeResponseModel, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:
@@ -249,6 +154,7 @@ class AsyncAudioNativeClient:
         name: str,
         image: str,
         author: str,
+        title: str,
         small: bool,
         text_color: str,
         background_color: str,
@@ -267,7 +173,9 @@ class AsyncAudioNativeClient:
 
             - image: str. Image URL used in the player. If not provided, default image set in the Player settings is used.
 
-            - author: str. Author used in the player. If not provided, default author set in the Player settings is used.
+            - author: str. Author used in the player and inserted at the start of the uploaded article. If not provided, the default author set in the Player settings is used.
+
+            - title: str. Title used in the player and inserted at the top of the uploaded article. If not provided, the default title set in the Player settings is used.
 
             - small: bool. Whether to use small player or not. If not provided, default value set in the Player settings is used.
 
@@ -299,6 +207,7 @@ class AsyncAudioNativeClient:
                         "name": name,
                         "image": image,
                         "author": author,
+                        "title": title,
                         "small": small,
                         "text_color": text_color,
                         "background_color": background_color,
@@ -317,6 +226,7 @@ class AsyncAudioNativeClient:
                             "name": name,
                             "image": image,
                             "author": author,
+                            "title": title,
                             "small": small,
                             "text_color": text_color,
                             "background_color": background_color,
@@ -346,105 +256,6 @@ class AsyncAudioNativeClient:
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(AudioNativeCreateProjectResponseModel, _response.json())  # type: ignore
-        if _response.status_code == 422:
-            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def get_embed_code(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AudioNativeGetEmbedCodeResponseModel:
-        """
-        Get the HTML snippet to embed the AudioNative player into a webpage.
-
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
-        from elevenlabs.client import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        await client.audio_native.get_embed_code()
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/audio-native/get-embed-code"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
-            ),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else 60,
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
-        if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(AudioNativeGetEmbedCodeResponseModel, _response.json())  # type: ignore
-        if _response.status_code == 422:
-            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def get_project_embed_code(
-        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AudioNativeGetEmbedCodeResponseModel:
-        """
-        Get the HTML snippet to embed the AudioNative player into a webpage. The embedded player will not convert content from the webpage but instead play the specified project
-
-        Parameters:
-            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
-
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
-        from elevenlabs.client import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        await client.audio_native.get_project_embed_code(
-            project_id="project_id",
-        )
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/",
-                f"v1/audio-native/{jsonable_encoder(project_id)}/get-embed-code",
-            ),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
-            ),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else 60,
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
-        if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(AudioNativeGetEmbedCodeResponseModel, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:

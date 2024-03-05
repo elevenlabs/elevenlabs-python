@@ -12,7 +12,8 @@ from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.add_voice_response_model import AddVoiceResponseModel
-from ..types.get_voices_response_model import GetVoicesResponseModel
+from ..types.get_library_voices_response import GetLibraryVoicesResponse
+from ..types.get_voices_response import GetVoicesResponse
 from ..types.http_validation_error import HttpValidationError
 from ..types.voice_response import VoiceResponse
 from ..types.voice_settings import VoiceSettings
@@ -30,7 +31,7 @@ class VoicesClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_all(self, *, request_options: typing.Optional[RequestOptions] = None) -> GetVoicesResponseModel:
+    def get_all(self, *, request_options: typing.Optional[RequestOptions] = None) -> GetVoicesResponse:
         """
         Gets a list of all available voices for a user.
 
@@ -65,7 +66,7 @@ class VoicesClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(GetVoicesResponseModel, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(GetVoicesResponse, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:
@@ -469,12 +470,182 @@ class VoicesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def add_sharing_voice(
+        self,
+        public_user_id: str,
+        voice_id: str,
+        *,
+        new_name: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AddVoiceResponseModel:
+        """
+        Add a sharing voice to your collection of voices in VoiceLab.
+
+        Parameters:
+            - public_user_id: str. Public user ID used to publicly identify ElevenLabs users.
+
+            - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+
+            - new_name: str. The name that identifies this voice. This will be displayed in the dropdown of the website.
+
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.voices.add_sharing_voice(
+            public_user_id="public_user_id",
+            voice_id="voice_id",
+            new_name="new_name",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "POST",
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/",
+                f"v1/voices/add/{jsonable_encoder(public_user_id)}/{jsonable_encoder(voice_id)}",
+            ),
+            params=jsonable_encoder(
+                request_options.get("additional_query_parameters") if request_options is not None else None
+            ),
+            json=jsonable_encoder({"new_name": new_name})
+            if request_options is None or request_options.get("additional_body_parameters") is None
+            else {
+                **jsonable_encoder({"new_name": new_name}),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic.parse_obj_as(AddVoiceResponseModel, _response.json())  # type: ignore
+        if _response.status_code == 422:
+            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get_voices(
+        self,
+        *,
+        page_size: typing.Optional[int] = None,
+        category: typing.Optional[str] = None,
+        gender: typing.Optional[str] = None,
+        age: typing.Optional[str] = None,
+        accent: typing.Optional[str] = None,
+        search: typing.Optional[str] = None,
+        use_cases: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        descriptives: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        sort: typing.Optional[str] = None,
+        featured: typing.Optional[bool] = None,
+        page: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetLibraryVoicesResponse:
+        """
+        Gets a list of shared voices.
+
+        Parameters:
+            - page_size: typing.Optional[int]. How many shared voices to return at maximum. Can not exceed 500, defaults to 30.
+
+            - category: typing.Optional[str]. voice category used for filtering
+
+            - gender: typing.Optional[str]. gender used for filtering
+
+            - age: typing.Optional[str]. age used for filtering
+
+            - accent: typing.Optional[str]. accent used for filtering
+
+            - search: typing.Optional[str]. search term used for filtering
+
+            - use_cases: typing.Optional[typing.Union[str, typing.Sequence[str]]]. use-case used for filtering
+
+            - descriptives: typing.Optional[typing.Union[str, typing.Sequence[str]]]. search term used for filtering
+
+            - sort: typing.Optional[str]. sort criteria
+
+            - featured: typing.Optional[bool]. Filter featured voices
+
+            - page: typing.Optional[int].
+
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.voices.get_voices()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "GET",
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/shared-voices"),
+            params=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "page_size": page_size,
+                        "category": category,
+                        "gender": gender,
+                        "age": age,
+                        "accent": accent,
+                        "search": search,
+                        "use_cases": use_cases,
+                        "descriptives": descriptives,
+                        "sort": sort,
+                        "featured": featured,
+                        "page": page,
+                        **(
+                            request_options.get("additional_query_parameters", {})
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            ),
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic.parse_obj_as(GetLibraryVoicesResponse, _response.json())  # type: ignore
+        if _response.status_code == 422:
+            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
 
 class AsyncVoicesClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_all(self, *, request_options: typing.Optional[RequestOptions] = None) -> GetVoicesResponseModel:
+    async def get_all(self, *, request_options: typing.Optional[RequestOptions] = None) -> GetVoicesResponse:
         """
         Gets a list of all available voices for a user.
 
@@ -509,7 +680,7 @@ class AsyncVoicesClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(GetVoicesResponseModel, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(GetVoicesResponse, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:
@@ -907,6 +1078,176 @@ class AsyncVoicesClient:
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(typing.Any, _response.json())  # type: ignore
+        if _response.status_code == 422:
+            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def add_sharing_voice(
+        self,
+        public_user_id: str,
+        voice_id: str,
+        *,
+        new_name: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AddVoiceResponseModel:
+        """
+        Add a sharing voice to your collection of voices in VoiceLab.
+
+        Parameters:
+            - public_user_id: str. Public user ID used to publicly identify ElevenLabs users.
+
+            - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+
+            - new_name: str. The name that identifies this voice. This will be displayed in the dropdown of the website.
+
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.voices.add_sharing_voice(
+            public_user_id="public_user_id",
+            voice_id="voice_id",
+            new_name="new_name",
+        )
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "POST",
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/",
+                f"v1/voices/add/{jsonable_encoder(public_user_id)}/{jsonable_encoder(voice_id)}",
+            ),
+            params=jsonable_encoder(
+                request_options.get("additional_query_parameters") if request_options is not None else None
+            ),
+            json=jsonable_encoder({"new_name": new_name})
+            if request_options is None or request_options.get("additional_body_parameters") is None
+            else {
+                **jsonable_encoder({"new_name": new_name}),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic.parse_obj_as(AddVoiceResponseModel, _response.json())  # type: ignore
+        if _response.status_code == 422:
+            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_voices(
+        self,
+        *,
+        page_size: typing.Optional[int] = None,
+        category: typing.Optional[str] = None,
+        gender: typing.Optional[str] = None,
+        age: typing.Optional[str] = None,
+        accent: typing.Optional[str] = None,
+        search: typing.Optional[str] = None,
+        use_cases: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        descriptives: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        sort: typing.Optional[str] = None,
+        featured: typing.Optional[bool] = None,
+        page: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetLibraryVoicesResponse:
+        """
+        Gets a list of shared voices.
+
+        Parameters:
+            - page_size: typing.Optional[int]. How many shared voices to return at maximum. Can not exceed 500, defaults to 30.
+
+            - category: typing.Optional[str]. voice category used for filtering
+
+            - gender: typing.Optional[str]. gender used for filtering
+
+            - age: typing.Optional[str]. age used for filtering
+
+            - accent: typing.Optional[str]. accent used for filtering
+
+            - search: typing.Optional[str]. search term used for filtering
+
+            - use_cases: typing.Optional[typing.Union[str, typing.Sequence[str]]]. use-case used for filtering
+
+            - descriptives: typing.Optional[typing.Union[str, typing.Sequence[str]]]. search term used for filtering
+
+            - sort: typing.Optional[str]. sort criteria
+
+            - featured: typing.Optional[bool]. Filter featured voices
+
+            - page: typing.Optional[int].
+
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.voices.get_voices()
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "GET",
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/shared-voices"),
+            params=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "page_size": page_size,
+                        "category": category,
+                        "gender": gender,
+                        "age": age,
+                        "accent": accent,
+                        "search": search,
+                        "use_cases": use_cases,
+                        "descriptives": descriptives,
+                        "sort": sort,
+                        "featured": featured,
+                        "page": page,
+                        **(
+                            request_options.get("additional_query_parameters", {})
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            ),
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else 60,
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic.parse_obj_as(GetLibraryVoicesResponse, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:

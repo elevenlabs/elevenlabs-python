@@ -4,7 +4,7 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
-from .language_response_model import LanguageResponseModel
+from .language_response import LanguageResponse
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -26,7 +26,7 @@ class ModelResponse(pydantic.BaseModel):
     requires_alpha_access: bool
     max_characters_request_free_user: int
     max_characters_request_subscribed_user: int
-    languages: typing.List[LanguageResponseModel]
+    languages: typing.List[LanguageResponse]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

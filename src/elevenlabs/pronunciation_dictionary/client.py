@@ -12,7 +12,7 @@ from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.add_pronunciation_dictionary_response_model import AddPronunciationDictionaryResponseModel
-from ..types.get_pronunciation_dictionary_metadata_response_model import GetPronunciationDictionaryMetadataResponseModel
+from ..types.get_pronunciation_dictionary_metadata_response import GetPronunciationDictionaryMetadataResponse
 from ..types.http_validation_error import HttpValidationError
 
 try:
@@ -89,7 +89,7 @@ class PronunciationDictionaryClient:
 
     def get_metadata(
         self, pronunciation_dictionary_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetPronunciationDictionaryMetadataResponseModel:
+    ) -> GetPronunciationDictionaryMetadataResponse:
         """
         Get metadata for a pronunciation dictionary
 
@@ -131,7 +131,7 @@ class PronunciationDictionaryClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(GetPronunciationDictionaryMetadataResponseModel, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(GetPronunciationDictionaryMetadataResponse, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:
@@ -206,7 +206,7 @@ class AsyncPronunciationDictionaryClient:
 
     async def get_metadata(
         self, pronunciation_dictionary_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetPronunciationDictionaryMetadataResponseModel:
+    ) -> GetPronunciationDictionaryMetadataResponse:
         """
         Get metadata for a pronunciation dictionary
 
@@ -248,7 +248,7 @@ class AsyncPronunciationDictionaryClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(GetPronunciationDictionaryMetadataResponseModel, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(GetPronunciationDictionaryMetadataResponse, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:

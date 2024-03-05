@@ -10,9 +10,9 @@ from ..core.jsonable_encoder import jsonable_encoder
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
-from ..types.get_history_response_model import GetHistoryResponseModel
-from ..types.history_item import HistoryItem
+from ..types.get_speech_history_response import GetSpeechHistoryResponse
 from ..types.http_validation_error import HttpValidationError
+from ..types.speech_history_item_response import SpeechHistoryItemResponse
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -32,15 +32,18 @@ class HistoryClient:
         *,
         page_size: typing.Optional[int] = None,
         start_after_history_item_id: typing.Optional[str] = None,
+        voice_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetHistoryResponseModel:
+    ) -> GetSpeechHistoryResponse:
         """
         Returns metadata about all your generated audio.
 
         Parameters:
             - page_size: typing.Optional[int]. How many history items to return at maximum. Can not exceed 1000, defaults to 100.
 
-            - start_after_history_item_id: typing.Optional[str]. After which history_item_id to start fetching, use this parameter to paginate across a large collection of history items. In case this parameter is not provided history items will be fetched starting from the most recently created one ordered descending by their creation date.
+            - start_after_history_item_id: typing.Optional[str]. After which ID to start fetching, use this parameter to paginate across a large collection of history items. In case this parameter is not provided history items will be fetched starting from the most recently created one ordered descending by their creation date.
+
+            - voice_id: typing.Optional[str]. Voice ID to be filtered for, you can use GET https://api.elevenlabs.io/v1/voices to receive a list of voices and their IDs.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -59,6 +62,7 @@ class HistoryClient:
                     {
                         "page_size": page_size,
                         "start_after_history_item_id": start_after_history_item_id,
+                        "voice_id": voice_id,
                         **(
                             request_options.get("additional_query_parameters", {})
                             if request_options is not None
@@ -82,7 +86,7 @@ class HistoryClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(GetHistoryResponseModel, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(GetSpeechHistoryResponse, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:
@@ -91,7 +95,9 @@ class HistoryClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(self, history_item_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HistoryItem:
+    def get(
+        self, history_item_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> SpeechHistoryItemResponse:
         """
         Returns information about an history item by its ID.
 
@@ -132,7 +138,7 @@ class HistoryClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(HistoryItem, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(SpeechHistoryItemResponse, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:
@@ -301,15 +307,18 @@ class AsyncHistoryClient:
         *,
         page_size: typing.Optional[int] = None,
         start_after_history_item_id: typing.Optional[str] = None,
+        voice_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetHistoryResponseModel:
+    ) -> GetSpeechHistoryResponse:
         """
         Returns metadata about all your generated audio.
 
         Parameters:
             - page_size: typing.Optional[int]. How many history items to return at maximum. Can not exceed 1000, defaults to 100.
 
-            - start_after_history_item_id: typing.Optional[str]. After which history_item_id to start fetching, use this parameter to paginate across a large collection of history items. In case this parameter is not provided history items will be fetched starting from the most recently created one ordered descending by their creation date.
+            - start_after_history_item_id: typing.Optional[str]. After which ID to start fetching, use this parameter to paginate across a large collection of history items. In case this parameter is not provided history items will be fetched starting from the most recently created one ordered descending by their creation date.
+
+            - voice_id: typing.Optional[str]. Voice ID to be filtered for, you can use GET https://api.elevenlabs.io/v1/voices to receive a list of voices and their IDs.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -328,6 +337,7 @@ class AsyncHistoryClient:
                     {
                         "page_size": page_size,
                         "start_after_history_item_id": start_after_history_item_id,
+                        "voice_id": voice_id,
                         **(
                             request_options.get("additional_query_parameters", {})
                             if request_options is not None
@@ -351,7 +361,7 @@ class AsyncHistoryClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(GetHistoryResponseModel, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(GetSpeechHistoryResponse, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:
@@ -362,7 +372,7 @@ class AsyncHistoryClient:
 
     async def get(
         self, history_item_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HistoryItem:
+    ) -> SpeechHistoryItemResponse:
         """
         Returns information about an history item by its ID.
 
@@ -403,7 +413,7 @@ class AsyncHistoryClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(HistoryItem, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(SpeechHistoryItemResponse, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:

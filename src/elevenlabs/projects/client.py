@@ -12,12 +12,11 @@ from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.add_project_response_model import AddProjectResponseModel
-from ..types.get_projects_response_model import GetProjectsResponseModel
+from ..types.get_projects_response import GetProjectsResponse
 from ..types.http_validation_error import HttpValidationError
-from ..types.project_extended_response_model import ProjectExtendedResponseModel
-from ..types.project_snapshots_response_model import ProjectSnapshotsResponseModel
-from ..types.pronunciation_dictionary_version_locator_db_model import PronunciationDictionaryVersionLocatorDbModel
-from .chapters.client import AsyncChaptersClient, ChaptersClient
+from ..types.project_extended_response import ProjectExtendedResponse
+from ..types.project_snapshots_response import ProjectSnapshotsResponse
+from ..types.pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -31,9 +30,8 @@ OMIT = typing.cast(typing.Any, ...)
 class ProjectsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
-        self.chapters = ChaptersClient(client_wrapper=self._client_wrapper)
 
-    def get_all(self, *, request_options: typing.Optional[RequestOptions] = None) -> GetProjectsResponseModel:
+    def get_all(self, *, request_options: typing.Optional[RequestOptions] = None) -> GetProjectsResponse:
         """
         Returns a list of your projects together and its metadata.
 
@@ -68,7 +66,7 @@ class ProjectsClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(GetProjectsResponseModel, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(GetProjectsResponse, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:
@@ -91,7 +89,9 @@ class ProjectsClient:
         author: str,
         isbn_number: str,
         acx_volume_normalization: bool,
+        volume_normalization: bool,
         pronunciation_dictionary_locators: typing.List[str],
+        callback_url: str,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddProjectResponseModel:
         """
@@ -121,9 +121,13 @@ class ProjectsClient:
 
             - isbn_number: str. An optional ISBN number of the project you want to create, this will be added as metadata to the mp3 file on project / chapter download.
 
-            - acx_volume_normalization: bool. When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
+            - acx_volume_normalization: bool. [Deprecated] When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
+
+            - volume_normalization: bool. When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
 
             - pronunciation_dictionary_locators: typing.List[str]. A list of pronunciation dictionary locators (id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody
+
+            - callback_url: str. A url that will be called by our service when the project is converted with a json containing the status of the conversion
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -146,7 +150,9 @@ class ProjectsClient:
                         "author": author,
                         "isbn_number": isbn_number,
                         "acx_volume_normalization": acx_volume_normalization,
+                        "volume_normalization": volume_normalization,
                         "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
+                        "callback_url": callback_url,
                     }
                 )
             )
@@ -165,7 +171,9 @@ class ProjectsClient:
                             "author": author,
                             "isbn_number": isbn_number,
                             "acx_volume_normalization": acx_volume_normalization,
+                            "volume_normalization": volume_normalization,
                             "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
+                            "callback_url": callback_url,
                         }
                     )
                 ),
@@ -198,7 +206,7 @@ class ProjectsClient:
 
     def get(
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ProjectExtendedResponseModel:
+    ) -> ProjectExtendedResponse:
         """
         Returns information about a specific project. This endpoint returns more detailed information about a project than GET api.elevenlabs.io/v1/projects.
 
@@ -239,7 +247,7 @@ class ProjectsClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(ProjectExtendedResponseModel, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(ProjectExtendedResponse, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:
@@ -353,7 +361,7 @@ class ProjectsClient:
 
     def get_snapshots(
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ProjectSnapshotsResponseModel:
+    ) -> ProjectSnapshotsResponse:
         """
         Gets the snapshots of a project.
 
@@ -394,7 +402,7 @@ class ProjectsClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(ProjectSnapshotsResponseModel, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(ProjectSnapshotsResponse, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:
@@ -405,7 +413,7 @@ class ProjectsClient:
 
     def stream_audio(
         self, project_id: str, project_snapshot_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Iterator[bytes]:
+    ) -> None:
         """
         Stream the audio from a project snapshot.
 
@@ -415,8 +423,18 @@ class ProjectsClient:
             - project_snapshot_id: str. The project_snapshot_id of the project snapshot. You can query GET /v1/projects/{project_id}/snapshots to list all available snapshots for a project.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.stream_audio(
+            project_id="project_id",
+            project_snapshot_id="project_snapshot_id",
+        )
         """
-        with self._client_wrapper.httpx_client.stream(
+        _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
@@ -441,23 +459,22 @@ class ProjectsClient:
             else 60,
             retries=0,
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        ) as _response:
-            if 200 <= _response.status_code < 300:
-                for _chunk in _response.iter_bytes():
-                    yield _chunk
-                return
-            _response.read()
-            try:
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+        )
+        if 200 <= _response.status_code < 300:
+            return
+        if _response.status_code == 422:
+            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def update_pronunciation_dictionaries(
         self,
         project_id: str,
         *,
-        pronunciation_dictionary_locators: typing.Sequence[PronunciationDictionaryVersionLocatorDbModel],
+        pronunciation_dictionary_locators: typing.Sequence[PronunciationDictionaryVersionLocator],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Any:
         """
@@ -466,11 +483,11 @@ class ProjectsClient:
         Parameters:
             - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
-            - pronunciation_dictionary_locators: typing.Sequence[PronunciationDictionaryVersionLocatorDbModel]. A list of pronunciation dictionary locators (id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody
+            - pronunciation_dictionary_locators: typing.Sequence[PronunciationDictionaryVersionLocator]. A list of pronunciation dictionary locators (id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
-        from elevenlabs import PronunciationDictionaryVersionLocatorDbModel
+        from elevenlabs import PronunciationDictionaryVersionLocator
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -479,7 +496,7 @@ class ProjectsClient:
         client.projects.update_pronunciation_dictionaries(
             project_id="project_id",
             pronunciation_dictionary_locators=[
-                PronunciationDictionaryVersionLocatorDbModel(
+                PronunciationDictionaryVersionLocator(
                     pronunciation_dictionary_id="pronunciation_dictionary_id",
                     version_id="version_id",
                 )
@@ -529,9 +546,8 @@ class ProjectsClient:
 class AsyncProjectsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
-        self.chapters = AsyncChaptersClient(client_wrapper=self._client_wrapper)
 
-    async def get_all(self, *, request_options: typing.Optional[RequestOptions] = None) -> GetProjectsResponseModel:
+    async def get_all(self, *, request_options: typing.Optional[RequestOptions] = None) -> GetProjectsResponse:
         """
         Returns a list of your projects together and its metadata.
 
@@ -566,7 +582,7 @@ class AsyncProjectsClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(GetProjectsResponseModel, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(GetProjectsResponse, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:
@@ -589,7 +605,9 @@ class AsyncProjectsClient:
         author: str,
         isbn_number: str,
         acx_volume_normalization: bool,
+        volume_normalization: bool,
         pronunciation_dictionary_locators: typing.List[str],
+        callback_url: str,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddProjectResponseModel:
         """
@@ -619,9 +637,13 @@ class AsyncProjectsClient:
 
             - isbn_number: str. An optional ISBN number of the project you want to create, this will be added as metadata to the mp3 file on project / chapter download.
 
-            - acx_volume_normalization: bool. When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
+            - acx_volume_normalization: bool. [Deprecated] When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
+
+            - volume_normalization: bool. When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
 
             - pronunciation_dictionary_locators: typing.List[str]. A list of pronunciation dictionary locators (id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody
+
+            - callback_url: str. A url that will be called by our service when the project is converted with a json containing the status of the conversion
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -644,7 +666,9 @@ class AsyncProjectsClient:
                         "author": author,
                         "isbn_number": isbn_number,
                         "acx_volume_normalization": acx_volume_normalization,
+                        "volume_normalization": volume_normalization,
                         "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
+                        "callback_url": callback_url,
                     }
                 )
             )
@@ -663,7 +687,9 @@ class AsyncProjectsClient:
                             "author": author,
                             "isbn_number": isbn_number,
                             "acx_volume_normalization": acx_volume_normalization,
+                            "volume_normalization": volume_normalization,
                             "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
+                            "callback_url": callback_url,
                         }
                     )
                 ),
@@ -696,7 +722,7 @@ class AsyncProjectsClient:
 
     async def get(
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ProjectExtendedResponseModel:
+    ) -> ProjectExtendedResponse:
         """
         Returns information about a specific project. This endpoint returns more detailed information about a project than GET api.elevenlabs.io/v1/projects.
 
@@ -737,7 +763,7 @@ class AsyncProjectsClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(ProjectExtendedResponseModel, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(ProjectExtendedResponse, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:
@@ -851,7 +877,7 @@ class AsyncProjectsClient:
 
     async def get_snapshots(
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ProjectSnapshotsResponseModel:
+    ) -> ProjectSnapshotsResponse:
         """
         Gets the snapshots of a project.
 
@@ -892,7 +918,7 @@ class AsyncProjectsClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(ProjectSnapshotsResponseModel, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(ProjectSnapshotsResponse, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:
@@ -903,7 +929,7 @@ class AsyncProjectsClient:
 
     async def stream_audio(
         self, project_id: str, project_snapshot_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.AsyncIterator[bytes]:
+    ) -> None:
         """
         Stream the audio from a project snapshot.
 
@@ -913,8 +939,18 @@ class AsyncProjectsClient:
             - project_snapshot_id: str. The project_snapshot_id of the project snapshot. You can query GET /v1/projects/{project_id}/snapshots to list all available snapshots for a project.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.projects.stream_audio(
+            project_id="project_id",
+            project_snapshot_id="project_snapshot_id",
+        )
         """
-        async with self._client_wrapper.httpx_client.stream(
+        _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
@@ -939,23 +975,22 @@ class AsyncProjectsClient:
             else 60,
             retries=0,
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        ) as _response:
-            if 200 <= _response.status_code < 300:
-                async for _chunk in _response.aiter_bytes():
-                    yield _chunk
-                return
-            await _response.aread()
-            try:
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+        )
+        if 200 <= _response.status_code < 300:
+            return
+        if _response.status_code == 422:
+            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def update_pronunciation_dictionaries(
         self,
         project_id: str,
         *,
-        pronunciation_dictionary_locators: typing.Sequence[PronunciationDictionaryVersionLocatorDbModel],
+        pronunciation_dictionary_locators: typing.Sequence[PronunciationDictionaryVersionLocator],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Any:
         """
@@ -964,11 +999,11 @@ class AsyncProjectsClient:
         Parameters:
             - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
-            - pronunciation_dictionary_locators: typing.Sequence[PronunciationDictionaryVersionLocatorDbModel]. A list of pronunciation dictionary locators (id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody
+            - pronunciation_dictionary_locators: typing.Sequence[PronunciationDictionaryVersionLocator]. A list of pronunciation dictionary locators (id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
-        from elevenlabs import PronunciationDictionaryVersionLocatorDbModel
+        from elevenlabs import PronunciationDictionaryVersionLocator
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
@@ -977,7 +1012,7 @@ class AsyncProjectsClient:
         await client.projects.update_pronunciation_dictionaries(
             project_id="project_id",
             pronunciation_dictionary_locators=[
-                PronunciationDictionaryVersionLocatorDbModel(
+                PronunciationDictionaryVersionLocator(
                     pronunciation_dictionary_id="pronunciation_dictionary_id",
                     version_id="version_id",
                 )

@@ -4,10 +4,12 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
-from .fine_tuning_response_model import FineTuningResponseModel
-from .sample_response_model import SampleResponseModel
+from .fine_tuning_response import FineTuningResponse
+from .sample_response import SampleResponse
+from .voice_response_model_safety_control import VoiceResponseModelSafetyControl
 from .voice_settings import VoiceSettings
-from .voice_sharing_response_model import VoiceSharingResponseModel
+from .voice_sharing_response import VoiceSharingResponse
+from .voice_verification_response import VoiceVerificationResponse
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -18,16 +20,18 @@ except ImportError:
 class VoiceResponse(pydantic.BaseModel):
     voice_id: str
     name: str
+    samples: typing.List[SampleResponse]
     category: str
+    fine_tuning: FineTuningResponse
     labels: typing.Dict[str, str]
+    description: str
+    preview_url: str
     available_for_tiers: typing.List[str]
+    settings: VoiceSettings
+    sharing: VoiceSharingResponse
     high_quality_base_model_ids: typing.List[str]
-    samples: typing.Optional[typing.List[SampleResponseModel]] = None
-    fine_tuning: typing.Optional[FineTuningResponseModel] = None
-    description: typing.Optional[str] = None
-    preview_url: typing.Optional[str] = None
-    settings: typing.Optional[VoiceSettings] = None
-    sharing: typing.Optional[VoiceSharingResponseModel] = None
+    safety_control: typing.Optional[VoiceResponseModelSafetyControl] = None
+    voice_verification: typing.Optional[VoiceVerificationResponse] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
