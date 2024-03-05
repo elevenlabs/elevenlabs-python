@@ -29,7 +29,7 @@ class VoiceGenerationClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def voice_generation_parameters(
+    def get_parameters(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> VoiceGenerationParameterResponse:
         """
@@ -43,7 +43,7 @@ class VoiceGenerationClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.voice_generation.voice_generation_parameters()
+        client.voice_generation.get_parameters()
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -224,7 +224,7 @@ class AsyncVoiceGenerationClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def voice_generation_parameters(
+    async def get_parameters(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> VoiceGenerationParameterResponse:
         """
@@ -238,7 +238,7 @@ class AsyncVoiceGenerationClient:
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        await client.voice_generation.voice_generation_parameters()
+        await client.voice_generation.get_parameters()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
