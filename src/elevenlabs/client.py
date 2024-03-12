@@ -1,6 +1,8 @@
 import typing
 import json
 import re
+import os
+import httpx
 
 from typing import Iterator, Optional, Union, \
   Optional, AsyncIterator
@@ -10,6 +12,8 @@ from .base_client import \
 from .core import RequestOptions, ApiError
 from .types import Voice, VoiceSettings, \
   PronunciationDictionaryVersionLocator, Model
+from .environment import ElevenLabsEnvironment
+from .realitme_tts import RealtimeTextToSpeechClient
 
 
 DEFAULT_VOICE = Voice(
@@ -58,6 +62,23 @@ class ElevenLabs(BaseElevenLabs):
         api_key="YOUR_API_KEY",
     )
     """
+    def __init__(
+        self,
+        *,
+        base_url: typing.Optional[str] = None,
+        environment: ElevenLabsEnvironment = ElevenLabsEnvironment.PRODUCTION,
+        api_key: typing.Optional[str] = os.getenv("ELEVEN_API_KEY"),
+        timeout: typing.Optional[float] = 60,
+        httpx_client: typing.Optional[httpx.Client] = None
+    ):
+        super().__init__(
+            base_url=base_url,
+            environment=environment,
+            api_key=api_key,
+            timeout=timeout,
+            httpx_client=httpx_client
+        )
+        self.text_to_speech = RealtimeTextToSpeechClient(client_wrapper=self._client_wrapper)
 
     def clone(
       self,
@@ -187,16 +208,12 @@ class ElevenLabs(BaseElevenLabs):
                     model_id=model_id
                 )
             elif isinstance(text, Iterator):
-                # TODO(fern): Update to WebSocket
-                return self.text_to_speech.convert_as_stream(
+                return self.text_to_speech.convert_realtime(  # type: ignore
                     voice_id=voice_id,
-                    model_id=model_id,
                     voice_settings=voice_settings,
-                    optimize_streaming_latency=optimize_streaming_latency,
-                    output_format=output_format,
                     text=text,
                     request_options=request_options,
-                    pronunciation_dictionary_locators=pronunciation_dictionary_locators
+                    model_id=model_id
                 )
             else: 
                 raise ApiError(body="Text is neither a string nor an iterator.")
@@ -280,7 +297,7 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
     async def generate(
       self,
       *,
-      text: Union[str, Iterator[str]],
+      text: str,
       voice: Union[VoiceId, VoiceName, Voice] = DEFAULT_VOICE,
       voice_settings: typing.Optional[VoiceSettings] = DEFAULT_VOICE.settings,
       model: Union[ModelId, Model] = "eleven_monolingual_v1",
@@ -300,7 +317,7 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
           calls to the `text_to_speech.convert` and`text_to_speech.convert_as_stream`
           functions.
 
-            - text: Union[str, Iterator[str]]. The string or stream of strings that will get converted into speech.
+            - text: str. The string that will get converted into speech. The Async client does not support streaming.
 
             - voice: str. A voice id, name, or voice response. Defaults to the Rachel voice. 
 
@@ -363,31 +380,16 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
             model_id = model.model_id
         
         if stream:
-            if isinstance(text, str):
-                return self.text_to_speech.convert_as_stream(
-                    voice_id=voice_id,
-                    model_id=model_id,
-                    voice_settings=voice_settings,
-                    optimize_streaming_latency=optimize_streaming_latency,
-                    output_format=output_format,
-                    text=text,
-                    request_options=request_options,
-                    pronunciation_dictionary_locators=pronunciation_dictionary_locators
-                )
-            elif isinstance(text, Iterator):
-                # TODO(fern): Update to WebSocket
-                return self.text_to_speech.convert_as_stream(
-                    voice_id=voice_id,
-                    model_id=model_id,
-                    voice_settings=voice_settings,
-                    optimize_streaming_latency=optimize_streaming_latency,
-                    output_format=output_format,
-                    text=text,
-                    request_options=request_options,
-                    pronunciation_dictionary_locators=pronunciation_dictionary_locators
-                )
-            else:
-                raise ApiError(body="Text is neither a string nor an iterator.")
+            return self.text_to_speech.convert_as_stream(
+                voice_id=voice_id,
+                model_id=model_id,
+                voice_settings=voice_settings,
+                optimize_streaming_latency=optimize_streaming_latency,
+                output_format=output_format,
+                text=text,
+                request_options=request_options,
+                pronunciation_dictionary_locators=pronunciation_dictionary_locators
+            )
         else:
             if not isinstance(text, str):
                 raise ApiError(body="Text must be a string when stream is False.")
