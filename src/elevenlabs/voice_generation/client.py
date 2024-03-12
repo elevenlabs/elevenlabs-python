@@ -100,6 +100,19 @@ class VoiceGenerationClient:
             - text: str. Text to generate, text length has to be between 100 and 1000.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.voice_generation.generate(
+            gender="male",
+            accent="string",
+            age="young",
+            accent_strength=1.1,
+            text="string",
+        )
         """
         with self._client_wrapper.httpx_client.stream(
             "POST",
@@ -295,6 +308,19 @@ class AsyncVoiceGenerationClient:
             - text: str. Text to generate, text length has to be between 100 and 1000.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.voice_generation.generate(
+            gender="male",
+            accent="string",
+            age="young",
+            accent_strength=1.1,
+            text="string",
+        )
         """
         async with self._client_wrapper.httpx_client.stream(
             "POST",

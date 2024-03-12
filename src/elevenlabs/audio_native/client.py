@@ -73,6 +73,13 @@ class AudioNativeClient:
             - auto_convert: bool. Whether to auto convert the project to audio or not.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.audio_native.create()
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -194,6 +201,13 @@ class AsyncAudioNativeClient:
             - auto_convert: bool. Whether to auto convert the project to audio or not.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.audio_native.create()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

@@ -207,6 +207,15 @@ class HistoryClient:
             - history_item_id: str. History item ID to be used, you can use GET https://api.elevenlabs.io/v1/history to receive a list of history items and their IDs.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.history.get_audio(
+            history_item_id="string",
+        )
         """
         with self._client_wrapper.httpx_client.stream(
             "GET",
@@ -484,6 +493,15 @@ class AsyncHistoryClient:
             - history_item_id: str. History item ID to be used, you can use GET https://api.elevenlabs.io/v1/history to receive a list of history items and their IDs.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.history.get_audio(
+            history_item_id="string",
+        )
         """
         async with self._client_wrapper.httpx_client.stream(
             "GET",

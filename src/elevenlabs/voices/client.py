@@ -364,6 +364,13 @@ class VoicesClient:
             - labels: str. Serialized labels dictionary for the voice.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.voices.add()
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -427,6 +434,15 @@ class VoicesClient:
             - labels: str. Serialized labels dictionary for the voice.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.voices.edit(
+            voice_id="string",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -977,6 +993,13 @@ class AsyncVoicesClient:
             - labels: str. Serialized labels dictionary for the voice.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.voices.add()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -1040,6 +1063,15 @@ class AsyncVoicesClient:
             - labels: str. Serialized labels dictionary for the voice.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.voices.edit(
+            voice_id="string",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

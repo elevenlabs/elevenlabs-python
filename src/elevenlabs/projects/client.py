@@ -130,6 +130,13 @@ class ProjectsClient:
             - callback_url: str. A url that will be called by our service when the project is converted with a json containing the status of the conversion
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.add()
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -646,6 +653,13 @@ class AsyncProjectsClient:
             - callback_url: str. A url that will be called by our service when the project is converted with a json containing the status of the conversion
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.projects.add()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

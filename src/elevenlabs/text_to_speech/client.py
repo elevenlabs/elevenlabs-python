@@ -9,15 +9,8 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
-from ..errors.unprocessable_entity_error import UnprocessableEntityError
-from ..types.http_validation_error import HttpValidationError
 from ..types.pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
 from ..types.voice_settings import VoiceSettings
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -76,6 +69,32 @@ class TextToSpeechClient:
             - pronunciation_dictionary_locators: typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]. A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs import PronunciationDictionaryVersionLocator, VoiceSettings
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.text_to_speech.convert(
+            voice_id="string",
+            optimize_streaming_latency=1,
+            output_format="string",
+            text="string",
+            model_id="string",
+            voice_settings=VoiceSettings(
+                stability=1.1,
+                similarity_boost=1.1,
+                style=1.1,
+                use_speaker_boost=True,
+            ),
+            pronunciation_dictionary_locators=[
+                PronunciationDictionaryVersionLocator(
+                    pronunciation_dictionary_id="string",
+                    version_id="string",
+                )
+            ],
+        )
         """
         _request: typing.Dict[str, typing.Any] = {"text": text}
         if model_id is not OMIT:
@@ -146,7 +165,7 @@ class TextToSpeechClient:
             typing.Sequence[PronunciationDictionaryVersionLocator]
         ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    ) -> typing.Iterator[bytes]:
         """
         Converts text into speech using a voice of your choice and returns audio as an audio stream.
 
@@ -183,14 +202,30 @@ class TextToSpeechClient:
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
+        from elevenlabs import PronunciationDictionaryVersionLocator, VoiceSettings
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
         client.text_to_speech.convert_as_stream(
-            voice_id="voice_id",
-            text="text",
+            voice_id="string",
+            optimize_streaming_latency=1,
+            output_format="string",
+            text="string",
+            model_id="string",
+            voice_settings=VoiceSettings(
+                stability=1.1,
+                similarity_boost=1.1,
+                style=1.1,
+                use_speaker_boost=True,
+            ),
+            pronunciation_dictionary_locators=[
+                PronunciationDictionaryVersionLocator(
+                    pronunciation_dictionary_id="string",
+                    version_id="string",
+                )
+            ],
         )
         """
         _request: typing.Dict[str, typing.Any] = {"text": text}
@@ -200,7 +235,7 @@ class TextToSpeechClient:
             _request["voice_settings"] = voice_settings
         if pronunciation_dictionary_locators is not OMIT:
             _request["pronunciation_dictionary_locators"] = pronunciation_dictionary_locators
-        _response = self._client_wrapper.httpx_client.request(
+        with self._client_wrapper.httpx_client.stream(
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream"
@@ -237,16 +272,17 @@ class TextToSpeechClient:
             else 60,
             retries=0,
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
-        if 200 <= _response.status_code < 300:
-            return
-        if _response.status_code == 422:
-            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        ) as _response:
+            if 200 <= _response.status_code < 300:
+                for _chunk in _response.iter_bytes():
+                    yield _chunk
+                return
+            _response.read()
+            try:
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
 class AsyncTextToSpeechClient:
@@ -302,6 +338,32 @@ class AsyncTextToSpeechClient:
             - pronunciation_dictionary_locators: typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]. A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs import PronunciationDictionaryVersionLocator, VoiceSettings
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.text_to_speech.convert(
+            voice_id="string",
+            optimize_streaming_latency=1,
+            output_format="string",
+            text="string",
+            model_id="string",
+            voice_settings=VoiceSettings(
+                stability=1.1,
+                similarity_boost=1.1,
+                style=1.1,
+                use_speaker_boost=True,
+            ),
+            pronunciation_dictionary_locators=[
+                PronunciationDictionaryVersionLocator(
+                    pronunciation_dictionary_id="string",
+                    version_id="string",
+                )
+            ],
+        )
         """
         _request: typing.Dict[str, typing.Any] = {"text": text}
         if model_id is not OMIT:
@@ -372,7 +434,7 @@ class AsyncTextToSpeechClient:
             typing.Sequence[PronunciationDictionaryVersionLocator]
         ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    ) -> typing.AsyncIterator[bytes]:
         """
         Converts text into speech using a voice of your choice and returns audio as an audio stream.
 
@@ -409,14 +471,30 @@ class AsyncTextToSpeechClient:
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
+        from elevenlabs import PronunciationDictionaryVersionLocator, VoiceSettings
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
         await client.text_to_speech.convert_as_stream(
-            voice_id="voice_id",
-            text="text",
+            voice_id="string",
+            optimize_streaming_latency=1,
+            output_format="string",
+            text="string",
+            model_id="string",
+            voice_settings=VoiceSettings(
+                stability=1.1,
+                similarity_boost=1.1,
+                style=1.1,
+                use_speaker_boost=True,
+            ),
+            pronunciation_dictionary_locators=[
+                PronunciationDictionaryVersionLocator(
+                    pronunciation_dictionary_id="string",
+                    version_id="string",
+                )
+            ],
         )
         """
         _request: typing.Dict[str, typing.Any] = {"text": text}
@@ -426,7 +504,7 @@ class AsyncTextToSpeechClient:
             _request["voice_settings"] = voice_settings
         if pronunciation_dictionary_locators is not OMIT:
             _request["pronunciation_dictionary_locators"] = pronunciation_dictionary_locators
-        _response = await self._client_wrapper.httpx_client.request(
+        async with self._client_wrapper.httpx_client.stream(
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream"
@@ -463,13 +541,14 @@ class AsyncTextToSpeechClient:
             else 60,
             retries=0,
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
-        if 200 <= _response.status_code < 300:
-            return
-        if _response.status_code == 422:
-            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        ) as _response:
+            if 200 <= _response.status_code < 300:
+                async for _chunk in _response.aiter_bytes():
+                    yield _chunk
+                return
+            await _response.aread()
+            try:
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)

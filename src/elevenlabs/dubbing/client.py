@@ -82,6 +82,13 @@ class DubbingClient:
             - dubbing_studio: bool. Whether to prepare dub for edits in dubbing studio.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.dubbing.dub_a_video_or_an_audio_file()
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -381,6 +388,13 @@ class AsyncDubbingClient:
             - dubbing_studio: bool. Whether to prepare dub for edits in dubbing studio.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.dubbing.dub_a_video_or_an_audio_file()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

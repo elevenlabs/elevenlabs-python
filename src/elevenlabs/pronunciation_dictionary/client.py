@@ -47,6 +47,13 @@ class PronunciationDictionaryClient:
             - description: str. A description of the pronunciation dictionary, used for identification only.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.pronunciation_dictionary.add_from_file()
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -164,6 +171,13 @@ class AsyncPronunciationDictionaryClient:
             - description: str. A description of the pronunciation dictionary, used for identification only.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.pronunciation_dictionary.add_from_file()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
