@@ -1,6 +1,6 @@
 import shutil
 import subprocess
-from typing import Iterator
+from typing import Iterator, Union
 
 
 def is_installed(lib_name: str) -> bool:
@@ -10,7 +10,13 @@ def is_installed(lib_name: str) -> bool:
     return True
 
 
-def play(audio: bytes, notebook: bool = False, use_ffmpeg: bool = True) -> None:
+def play(
+    audio: Union[bytes, Iterator[bytes]], 
+    notebook: bool = False, 
+    use_ffmpeg: bool = True
+) -> None:
+    if isinstance(audio, Iterator):
+        audio = b"".join(audio)
     if notebook:
         from IPython.display import Audio, display  # type: ignore
 

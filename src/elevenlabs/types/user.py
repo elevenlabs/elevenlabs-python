@@ -17,6 +17,8 @@ class User(pydantic.BaseModel):
     is_new_user: bool
     xi_api_key: str
     can_use_delayed_payment_methods: bool
+    is_onboarding_completed: bool
+    first_name: typing.Optional[str] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

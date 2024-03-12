@@ -4,16 +4,22 @@ import typing
 
 import httpx
 
+from .http_client import AsyncHttpClient, HttpClient
+
 
 class BaseClientWrapper:
-    def __init__(self, *, xi_api_key: typing.Optional[str] = None, base_url: str):
-        self._xi_api_key = xi_api_key
+    def __init__(self, *, api_key: typing.Optional[str] = None, base_url: str):
+        self._api_key = api_key
         self._base_url = base_url
 
     def get_headers(self) -> typing.Dict[str, str]:
-        headers: typing.Dict[str, str] = {"X-Fern-Language": "Python"}
-        if self._xi_api_key is not None:
-            headers["xi-api-key"] = self._xi_api_key
+        headers: typing.Dict[str, str] = {
+            "X-Fern-Language": "Python",
+            "X-Fern-SDK-Name": "elevenlabs",
+            "X-Fern-SDK-Version": "0.0.48",
+        }
+        if self._api_key is not None:
+            headers["xi-api-key"] = self._api_key
         return headers
 
     def get_base_url(self) -> str:
@@ -21,12 +27,12 @@ class BaseClientWrapper:
 
 
 class SyncClientWrapper(BaseClientWrapper):
-    def __init__(self, *, xi_api_key: typing.Optional[str] = None, base_url: str, httpx_client: httpx.Client):
-        super().__init__(xi_api_key=xi_api_key, base_url=base_url)
-        self.httpx_client = httpx_client
+    def __init__(self, *, api_key: typing.Optional[str] = None, base_url: str, httpx_client: httpx.Client):
+        super().__init__(api_key=api_key, base_url=base_url)
+        self.httpx_client = HttpClient(httpx_client=httpx_client)
 
 
 class AsyncClientWrapper(BaseClientWrapper):
-    def __init__(self, *, xi_api_key: typing.Optional[str] = None, base_url: str, httpx_client: httpx.AsyncClient):
-        super().__init__(xi_api_key=xi_api_key, base_url=base_url)
-        self.httpx_client = httpx_client
+    def __init__(self, *, api_key: typing.Optional[str] = None, base_url: str, httpx_client: httpx.AsyncClient):
+        super().__init__(api_key=api_key, base_url=base_url)
+        self.httpx_client = AsyncHttpClient(httpx_client=httpx_client)

@@ -12,11 +12,11 @@ except ImportError:
 
 
 class VoiceSample(pydantic.BaseModel):
-    sample_id: typing.Optional[str]
-    file_name: typing.Optional[str]
-    mime_type: typing.Optional[str]
-    size_bytes: typing.Optional[int]
-    hash: typing.Optional[str]
+    sample_id: typing.Optional[str] = None
+    file_name: typing.Optional[str] = None
+    mime_type: typing.Optional[str] = None
+    size_bytes: typing.Optional[int] = None
+    hash: typing.Optional[str] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

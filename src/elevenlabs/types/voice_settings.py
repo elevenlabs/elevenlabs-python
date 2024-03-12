@@ -12,10 +12,10 @@ except ImportError:
 
 
 class VoiceSettings(pydantic.BaseModel):
-    stability: typing.Optional[float]
-    similarity_boost: typing.Optional[float]
-    style: typing.Optional[float]
-    use_speaker_boost: typing.Optional[bool]
+    stability: typing.Optional[float] = None
+    similarity_boost: typing.Optional[float] = None
+    style: typing.Optional[float] = None
+    use_speaker_boost: typing.Optional[bool] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

@@ -4,7 +4,7 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
-from .language_response_model import LanguageResponseModel
+from .language_response import LanguageResponse
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -14,19 +14,19 @@ except ImportError:
 
 class Model(pydantic.BaseModel):
     model_id: str
-    name: typing.Optional[str]
-    can_be_finetuned: typing.Optional[bool]
-    can_do_text_to_speech: typing.Optional[bool]
-    can_do_voice_conversion: typing.Optional[bool]
-    can_use_style: typing.Optional[bool]
-    can_use_speaker_boost: typing.Optional[bool]
-    serves_pro_voices: typing.Optional[bool]
-    token_cost_factor: typing.Optional[float]
-    description: typing.Optional[str]
-    requires_alpha_access: typing.Optional[bool]
-    max_characters_request_free_user: typing.Optional[int]
-    max_characters_request_subscribed_user: typing.Optional[int]
-    languages: typing.Optional[typing.List[LanguageResponseModel]]
+    name: typing.Optional[str] = None
+    can_be_finetuned: typing.Optional[bool] = None
+    can_do_text_to_speech: typing.Optional[bool] = None
+    can_do_voice_conversion: typing.Optional[bool] = None
+    can_use_style: typing.Optional[bool] = None
+    can_use_speaker_boost: typing.Optional[bool] = None
+    serves_pro_voices: typing.Optional[bool] = None
+    token_cost_factor: typing.Optional[float] = None
+    description: typing.Optional[str] = None
+    requires_alpha_access: typing.Optional[bool] = None
+    max_characters_request_free_user: typing.Optional[int] = None
+    max_characters_request_subscribed_user: typing.Optional[int] = None
+    languages: typing.Optional[typing.List[LanguageResponse]] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

@@ -4,7 +4,7 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
-from .chapter_response_model import ChapterResponseModel
+from .chapter_response import ChapterResponse
 from .project_state import ProjectState
 
 try:
@@ -20,10 +20,10 @@ class ProjectExtendedResponseModel(pydantic.BaseModel):
     default_title_voice_id: str
     default_paragraph_voice_id: str
     default_model_id: str
+    last_conversion_date_unix: int
     can_be_downloaded: bool
     state: ProjectState
-    chapters: typing.List[ChapterResponseModel]
-    last_conversion_date_unix: typing.Optional[int]
+    chapters: typing.List[ChapterResponse]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

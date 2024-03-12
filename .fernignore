@@ -1,14 +1,9 @@
 # Specify files that shouldn't be modified by Fern
 
-src/elevenlabs/__init__.py
-src/elevenlabs/model.py
 src/elevenlabs/client.py
 src/elevenlabs/play.py
-src/elevenlabs/tts.py
-src/elevenlabs/voice.py
-src/elevenlabs/generate.py
-src/elevenlabs/clone.py
-src/elevenlabs/resources/voices/client.py
+src/elevenlabs/realtime_tts.py
+
 .github/workflows/ci.yml
 
 README.md

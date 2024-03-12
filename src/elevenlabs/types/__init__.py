@@ -7,52 +7,63 @@ from .add_voice_response_model import AddVoiceResponseModel
 from .age import Age
 from .audio_native_create_project_response_model import AudioNativeCreateProjectResponseModel
 from .audio_native_get_embed_code_response_model import AudioNativeGetEmbedCodeResponseModel
-from .chapter_response_model import ChapterResponseModel
-from .chapter_response_model_state import ChapterResponseModelState
-from .chapter_snapshot_response_model import ChapterSnapshotResponseModel
-from .chapter_snapshots_response_model import ChapterSnapshotsResponseModel
-from .chapter_statistics_response_model import ChapterStatisticsResponseModel
+from .chapter_response import ChapterResponse
+from .chapter_snapshot_response import ChapterSnapshotResponse
+from .chapter_snapshots_response import ChapterSnapshotsResponse
+from .chapter_state import ChapterState
+from .chapter_statistics_response import ChapterStatisticsResponse
 from .currency import Currency
-from .extended_subscription_response_model_currency import ExtendedSubscriptionResponseModelCurrency
+from .do_dubbing_response import DoDubbingResponse
+from .extended_subscription_response_model_billing_period import ExtendedSubscriptionResponseModelBillingPeriod
 from .feedback_item import FeedbackItem
-from .fine_tuning_response_model import FineTuningResponseModel
-from .finetunig_state import FinetunigState
+from .fine_tuning_response import FineTuningResponse
+from .finetuning_state import FinetuningState
 from .gender import Gender
-from .get_chapters_response_model import GetChaptersResponseModel
-from .get_projects_response_model import GetProjectsResponseModel
-from .get_pronunciation_dictionary_metadata_response_model import GetPronunciationDictionaryMetadataResponseModel
-from .get_voices_response_model import GetVoicesResponseModel
+from .get_chapters_response import GetChaptersResponse
+from .get_library_voices_response import GetLibraryVoicesResponse
+from .get_projects_response import GetProjectsResponse
+from .get_pronunciation_dictionary_metadata_response import GetPronunciationDictionaryMetadataResponse
+from .get_speech_history_response import GetSpeechHistoryResponse
+from .get_voices_response import GetVoicesResponse
 from .history import History
 from .history_item import HistoryItem
-from .history_item_state import HistoryItemState
 from .http_validation_error import HttpValidationError
-from .invoice_response_model import InvoiceResponseModel
-from .invoice_response_model_currency import InvoiceResponseModelCurrency
-from .language_response_model import LanguageResponseModel
-from .manual_verification_file_response_model import ManualVerificationFileResponseModel
-from .manual_verification_response_model import ManualVerificationResponseModel
+from .invoice import Invoice
+from .language_response import LanguageResponse
+from .library_voice_response import LibraryVoiceResponse
+from .manual_verification_file_response import ManualVerificationFileResponse
+from .manual_verification_response import ManualVerificationResponse
 from .model import Model
 from .project_extended_response_model import ProjectExtendedResponseModel
-from .project_response_model import ProjectResponseModel
-from .project_snapshot_response_model import ProjectSnapshotResponseModel
-from .project_snapshots_response_model import ProjectSnapshotsResponseModel
+from .project_response import ProjectResponse
+from .project_snapshot_response import ProjectSnapshotResponse
+from .project_snapshots_response import ProjectSnapshotsResponse
 from .project_state import ProjectState
-from .pronunciation_dictionary_version_locator_db_model import PronunciationDictionaryVersionLocatorDbModel
-from .recording_response_model import RecordingResponseModel
+from .pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
+from .recording_response import RecordingResponse
 from .review_status import ReviewStatus
+from .source import Source
+from .speech_history_item_response import SpeechHistoryItemResponse
+from .speech_history_item_response_model_voice_category import SpeechHistoryItemResponseModelVoiceCategory
+from .sso_provider_db_model import SsoProviderDbModel
+from .sso_provider_db_model_provider_type import SsoProviderDbModelProviderType
 from .subscription import Subscription
 from .subscription_response import SubscriptionResponse
+from .subscription_response_model_billing_period import SubscriptionResponseModelBillingPeriod
 from .subscription_status import SubscriptionStatus
 from .user import User
 from .validation_error import ValidationError
 from .validation_error_loc_item import ValidationErrorLocItem
-from .verification_attempt_response_model import VerificationAttemptResponseModel
-from .voice_category import VoiceCategory
-from .voice_response import VoiceResponse
+from .verification_attempt_response import VerificationAttemptResponse
+from .voice import Voice
+from .voice_generation_parameter_option_response import VoiceGenerationParameterOptionResponse
+from .voice_generation_parameter_response import VoiceGenerationParameterResponse
+from .voice_response_model_safety_control import VoiceResponseModelSafetyControl
 from .voice_sample import VoiceSample
 from .voice_settings import VoiceSettings
-from .voice_sharing_response_model import VoiceSharingResponseModel
+from .voice_sharing_response import VoiceSharingResponse
 from .voice_sharing_state import VoiceSharingState
+from .voice_verification_response import VoiceVerificationResponse
 
 __all__ = [
     "Accent",
@@ -62,50 +73,61 @@ __all__ = [
     "Age",
     "AudioNativeCreateProjectResponseModel",
     "AudioNativeGetEmbedCodeResponseModel",
-    "ChapterResponseModel",
-    "ChapterResponseModelState",
-    "ChapterSnapshotResponseModel",
-    "ChapterSnapshotsResponseModel",
-    "ChapterStatisticsResponseModel",
+    "ChapterResponse",
+    "ChapterSnapshotResponse",
+    "ChapterSnapshotsResponse",
+    "ChapterState",
+    "ChapterStatisticsResponse",
     "Currency",
-    "ExtendedSubscriptionResponseModelCurrency",
+    "DoDubbingResponse",
+    "ExtendedSubscriptionResponseModelBillingPeriod",
     "FeedbackItem",
-    "FineTuningResponseModel",
-    "FinetunigState",
+    "FineTuningResponse",
+    "FinetuningState",
     "Gender",
-    "GetChaptersResponseModel",
-    "GetProjectsResponseModel",
-    "GetPronunciationDictionaryMetadataResponseModel",
-    "GetVoicesResponseModel",
+    "GetChaptersResponse",
+    "GetLibraryVoicesResponse",
+    "GetProjectsResponse",
+    "GetPronunciationDictionaryMetadataResponse",
+    "GetSpeechHistoryResponse",
+    "GetVoicesResponse",
     "History",
     "HistoryItem",
-    "HistoryItemState",
     "HttpValidationError",
-    "InvoiceResponseModel",
-    "InvoiceResponseModelCurrency",
-    "LanguageResponseModel",
-    "ManualVerificationFileResponseModel",
-    "ManualVerificationResponseModel",
+    "Invoice",
+    "LanguageResponse",
+    "LibraryVoiceResponse",
+    "ManualVerificationFileResponse",
+    "ManualVerificationResponse",
     "Model",
     "ProjectExtendedResponseModel",
-    "ProjectResponseModel",
-    "ProjectSnapshotResponseModel",
-    "ProjectSnapshotsResponseModel",
+    "ProjectResponse",
+    "ProjectSnapshotResponse",
+    "ProjectSnapshotsResponse",
     "ProjectState",
-    "PronunciationDictionaryVersionLocatorDbModel",
-    "RecordingResponseModel",
+    "PronunciationDictionaryVersionLocator",
+    "RecordingResponse",
     "ReviewStatus",
+    "Source",
+    "SpeechHistoryItemResponse",
+    "SpeechHistoryItemResponseModelVoiceCategory",
+    "SsoProviderDbModel",
+    "SsoProviderDbModelProviderType",
     "Subscription",
     "SubscriptionResponse",
+    "SubscriptionResponseModelBillingPeriod",
     "SubscriptionStatus",
     "User",
     "ValidationError",
     "ValidationErrorLocItem",
-    "VerificationAttemptResponseModel",
-    "VoiceCategory",
-    "VoiceResponse",
+    "VerificationAttemptResponse",
+    "Voice",
+    "VoiceGenerationParameterOptionResponse",
+    "VoiceGenerationParameterResponse",
+    "VoiceResponseModelSafetyControl",
     "VoiceSample",
     "VoiceSettings",
-    "VoiceSharingResponseModel",
+    "VoiceSharingResponse",
     "VoiceSharingState",
+    "VoiceVerificationResponse",
 ]
