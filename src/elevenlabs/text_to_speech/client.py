@@ -133,7 +133,7 @@ class TextToSpeechClient:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def convert_as_stream(
+    def text_to_speech(
         self,
         voice_id: str,
         *,
@@ -188,7 +188,7 @@ class TextToSpeechClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.text_to_speech.convert_as_stream(
+        client.text_to_speech.text_to_speech(
             voice_id="voice_id",
             text="text",
         )
@@ -359,7 +359,7 @@ class AsyncTextToSpeechClient:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def convert_as_stream(
+    async def text_to_speech(
         self,
         voice_id: str,
         *,
@@ -414,7 +414,7 @@ class AsyncTextToSpeechClient:
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        await client.text_to_speech.convert_as_stream(
+        await client.text_to_speech.text_to_speech(
             voice_id="voice_id",
             text="text",
         )

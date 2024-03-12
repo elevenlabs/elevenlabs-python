@@ -301,10 +301,7 @@ class VoicesClient:
         )
         client.voices.edit_settings(
             voice_id="voice_id",
-            request=VoiceSettings(
-                stability=1.1,
-                similarity_boost=1.1,
-            ),
+            request=VoiceSettings(),
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -917,10 +914,7 @@ class AsyncVoicesClient:
         )
         await client.voices.edit_settings(
             voice_id="voice_id",
-            request=VoiceSettings(
-                stability=1.1,
-                similarity_boost=1.1,
-            ),
+            request=VoiceSettings(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(

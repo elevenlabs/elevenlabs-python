@@ -10,11 +10,11 @@ from ..core.jsonable_encoder import jsonable_encoder
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
+from ..types.age import Age
+from ..types.gender import Gender
 from ..types.http_validation_error import HttpValidationError
 from ..types.voice_generation_parameter_response import VoiceGenerationParameterResponse
 from ..types.voice_response import VoiceResponse
-from .types.age import Age
-from .types.gender import Gender
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -29,7 +29,7 @@ class VoiceGenerationClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_parameters(
+    def generate_parameters(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> VoiceGenerationParameterResponse:
         """
@@ -43,7 +43,7 @@ class VoiceGenerationClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.voice_generation.get_parameters()
+        client.voice_generation.generate_parameters()
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -75,7 +75,7 @@ class VoiceGenerationClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def generate_a_random_voice(
+    def generate(
         self,
         *,
         gender: Gender,
@@ -224,7 +224,7 @@ class AsyncVoiceGenerationClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_parameters(
+    async def generate_parameters(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> VoiceGenerationParameterResponse:
         """
@@ -238,7 +238,7 @@ class AsyncVoiceGenerationClient:
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        await client.voice_generation.get_parameters()
+        await client.voice_generation.generate_parameters()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -270,7 +270,7 @@ class AsyncVoiceGenerationClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def generate_a_random_voice(
+    async def generate(
         self,
         *,
         gender: Gender,

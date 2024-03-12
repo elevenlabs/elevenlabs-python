@@ -4,8 +4,8 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
+from .chapter_state import ChapterState
 from .chapter_statistics_response import ChapterStatisticsResponse
-from .state import State
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -19,7 +19,7 @@ class ChapterResponse(pydantic.BaseModel):
     last_conversion_date_unix: int
     conversion_progress: float
     can_be_downloaded: bool
-    state: State
+    state: ChapterState
     statistics: ChapterStatisticsResponse
 
     def json(self, **kwargs: typing.Any) -> str:

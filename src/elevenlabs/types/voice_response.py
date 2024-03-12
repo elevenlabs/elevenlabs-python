@@ -5,8 +5,8 @@ import typing
 
 from ..core.datetime_utils import serialize_datetime
 from .fine_tuning_response import FineTuningResponse
-from .sample_response import SampleResponse
 from .voice_response_model_safety_control import VoiceResponseModelSafetyControl
+from .voice_sample import VoiceSample
 from .voice_settings import VoiceSettings
 from .voice_sharing_response import VoiceSharingResponse
 from .voice_verification_response import VoiceVerificationResponse
@@ -20,7 +20,7 @@ except ImportError:
 class VoiceResponse(pydantic.BaseModel):
     voice_id: str
     name: str
-    samples: typing.List[SampleResponse]
+    samples: typing.List[VoiceSample]
     category: str
     fine_tuning: FineTuningResponse
     labels: typing.Dict[str, str]

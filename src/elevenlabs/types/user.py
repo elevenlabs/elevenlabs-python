@@ -4,7 +4,7 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
-from .chapter_response import ChapterResponse
+from .subscription_response import SubscriptionResponse
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -12,17 +12,13 @@ except ImportError:
     import pydantic  # type: ignore
 
 
-class ProjectExtendedResponse(pydantic.BaseModel):
-    project_id: str
-    name: str
-    create_date_unix: int
-    default_title_voice_id: str
-    default_paragraph_voice_id: str
-    default_model_id: str
-    last_conversion_date_unix: int
-    can_be_downloaded: bool
-    state: typing.Any
-    chapters: typing.List[ChapterResponse]
+class User(pydantic.BaseModel):
+    subscription: SubscriptionResponse
+    is_new_user: bool
+    xi_api_key: str
+    can_use_delayed_payment_methods: bool
+    is_onboarding_completed: bool
+    first_name: typing.Optional[str] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

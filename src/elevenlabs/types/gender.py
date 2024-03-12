@@ -2,4 +2,4 @@
 
 import typing
 
-State = typing.Literal["default", "converting"]
+Gender = typing.Literal["male", "female"]

@@ -14,7 +14,7 @@ from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.add_project_response_model import AddProjectResponseModel
 from ..types.get_projects_response import GetProjectsResponse
 from ..types.http_validation_error import HttpValidationError
-from ..types.project_extended_response import ProjectExtendedResponse
+from ..types.project_extended_response_model import ProjectExtendedResponseModel
 from ..types.project_snapshots_response import ProjectSnapshotsResponse
 from ..types.pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
 
@@ -206,7 +206,7 @@ class ProjectsClient:
 
     def get(
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ProjectExtendedResponse:
+    ) -> ProjectExtendedResponseModel:
         """
         Returns information about a specific project. This endpoint returns more detailed information about a project than GET api.elevenlabs.io/v1/projects.
 
@@ -247,7 +247,7 @@ class ProjectsClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(ProjectExtendedResponse, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(ProjectExtendedResponseModel, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:
@@ -722,7 +722,7 @@ class AsyncProjectsClient:
 
     async def get(
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ProjectExtendedResponse:
+    ) -> ProjectExtendedResponseModel:
         """
         Returns information about a specific project. This endpoint returns more detailed information about a project than GET api.elevenlabs.io/v1/projects.
 
@@ -763,7 +763,7 @@ class AsyncProjectsClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(ProjectExtendedResponse, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(ProjectExtendedResponseModel, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:

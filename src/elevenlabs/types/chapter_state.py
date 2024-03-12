@@ -2,4 +2,4 @@
 
 import typing
 
-Gender = typing.Literal["female", "male"]
+ChapterState = typing.Literal["default", "converting"]

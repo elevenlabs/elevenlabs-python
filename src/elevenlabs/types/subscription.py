@@ -5,7 +5,8 @@ import typing
 
 from ..core.datetime_utils import serialize_datetime
 from .currency import Currency
-from .invoice_response import InvoiceResponse
+from .extended_subscription_response_model_billing_period import ExtendedSubscriptionResponseModelBillingPeriod
+from .invoice import Invoice
 from .subscription_status import SubscriptionStatus
 
 try:
@@ -14,7 +15,7 @@ except ImportError:
     import pydantic  # type: ignore
 
 
-class ExtendedSubscriptionResponse(pydantic.BaseModel):
+class Subscription(pydantic.BaseModel):
     tier: str
     character_count: int
     character_limit: int
@@ -22,16 +23,17 @@ class ExtendedSubscriptionResponse(pydantic.BaseModel):
     allowed_to_extend_character_limit: bool
     next_character_count_reset_unix: int
     voice_limit: int
-    max_voice_add_edits: int
-    voice_add_edit_counter: int
+    max_voice_add_edits: typing.Optional[int] = None
+    voice_add_edit_counter: typing.Optional[int] = None
     professional_voice_limit: int
     can_extend_voice_limit: bool
     can_use_instant_voice_cloning: bool
     can_use_professional_voice_cloning: bool
-    currency: Currency
-    status: SubscriptionStatus
-    next_invoice: InvoiceResponse
-    has_open_invoices: bool
+    currency: typing.Optional[Currency] = None
+    status: typing.Optional[SubscriptionStatus] = None
+    billing_period: typing.Optional[ExtendedSubscriptionResponseModelBillingPeriod] = None
+    next_invoice: typing.Optional[Invoice] = None
+    has_open_invoices: typing.Optional[bool] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

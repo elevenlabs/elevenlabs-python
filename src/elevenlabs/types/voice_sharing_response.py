@@ -4,8 +4,8 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
-from .status import Status
-from .voice_sharing_response_model_review_status import VoiceSharingResponseModelReviewStatus
+from .review_status import ReviewStatus
+from .voice_sharing_state import VoiceSharingState
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -14,7 +14,7 @@ except ImportError:
 
 
 class VoiceSharingResponse(pydantic.BaseModel):
-    status: Status
+    status: VoiceSharingState
     history_item_sample_id: str
     date_unix: int
     whitelisted_emails: typing.List[str]
@@ -38,7 +38,7 @@ class VoiceSharingResponse(pydantic.BaseModel):
     name: str
     description: str
     labels: typing.Dict[str, str]
-    review_status: VoiceSharingResponseModelReviewStatus
+    review_status: ReviewStatus
     review_message: str
     enabled_in_library: bool
 

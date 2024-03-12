@@ -87,7 +87,7 @@ class PronunciationDictionaryClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_metadata(
+    def get_metadata_for_a_pronunciation_dictionary_v_1_pronunciation_dictionaries_pronunciation_dictionary_id_get(
         self, pronunciation_dictionary_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetPronunciationDictionaryMetadataResponse:
         """
@@ -103,7 +103,7 @@ class PronunciationDictionaryClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.pronunciation_dictionary.get_metadata(
+        client.pronunciation_dictionary.get_metadata_for_a_pronunciation_dictionary_v_1_pronunciation_dictionaries_pronunciation_dictionary_id_get(
             pronunciation_dictionary_id="pronunciation_dictionary_id",
         )
         """
@@ -204,7 +204,7 @@ class AsyncPronunciationDictionaryClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_metadata(
+    async def get_metadata_for_a_pronunciation_dictionary_v_1_pronunciation_dictionaries_pronunciation_dictionary_id_get(
         self, pronunciation_dictionary_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetPronunciationDictionaryMetadataResponse:
         """
@@ -220,7 +220,7 @@ class AsyncPronunciationDictionaryClient:
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        await client.pronunciation_dictionary.get_metadata(
+        await client.pronunciation_dictionary.get_metadata_for_a_pronunciation_dictionary_v_1_pronunciation_dictionaries_pronunciation_dictionary_id_get(
             pronunciation_dictionary_id="pronunciation_dictionary_id",
         )
         """

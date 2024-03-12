@@ -12,8 +12,8 @@ except ImportError:
 
 
 class VoiceSettings(pydantic.BaseModel):
-    stability: float
-    similarity_boost: float
+    stability: typing.Optional[float] = None
+    similarity_boost: typing.Optional[float] = None
     style: typing.Optional[float] = None
     use_speaker_boost: typing.Optional[bool] = None
 

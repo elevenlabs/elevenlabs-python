@@ -5,6 +5,7 @@ import typing
 
 from ..core.datetime_utils import serialize_datetime
 from .currency import Currency
+from .subscription_response_model_billing_period import SubscriptionResponseModelBillingPeriod
 from .subscription_status import SubscriptionStatus
 
 try:
@@ -29,6 +30,7 @@ class SubscriptionResponse(pydantic.BaseModel):
     can_use_professional_voice_cloning: bool
     currency: Currency
     status: SubscriptionStatus
+    billing_period: SubscriptionResponseModelBillingPeriod
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

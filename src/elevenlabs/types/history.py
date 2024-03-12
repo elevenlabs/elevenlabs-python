@@ -2,4 +2,4 @@
 
 import typing
 
-Status = typing.Literal["enabled", "disabled", "copied", "copied_disabled"]
+History = typing.Any
