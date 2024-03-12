@@ -13,8 +13,8 @@ from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.age import Age
 from ..types.gender import Gender
 from ..types.http_validation_error import HttpValidationError
+from ..types.voice import Voice
 from ..types.voice_generation_parameter_response import VoiceGenerationParameterResponse
-from ..types.voice_response import VoiceResponse
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -150,7 +150,7 @@ class VoiceGenerationClient:
         generated_voice_id: str,
         labels: typing.Optional[typing.Dict[str, str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> VoiceResponse:
+    ) -> Voice:
         """
         Create a previously generated voice. This endpoint should be called after you fetched a generated_voice_id using /v1/voice-generation/generate-voice.
 
@@ -210,7 +210,7 @@ class VoiceGenerationClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(VoiceResponse, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(Voice, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:
@@ -345,7 +345,7 @@ class AsyncVoiceGenerationClient:
         generated_voice_id: str,
         labels: typing.Optional[typing.Dict[str, str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> VoiceResponse:
+    ) -> Voice:
         """
         Create a previously generated voice. This endpoint should be called after you fetched a generated_voice_id using /v1/voice-generation/generate-voice.
 
@@ -405,7 +405,7 @@ class AsyncVoiceGenerationClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(VoiceResponse, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(Voice, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:

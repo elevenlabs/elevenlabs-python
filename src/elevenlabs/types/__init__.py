@@ -55,9 +55,9 @@ from .user import User
 from .validation_error import ValidationError
 from .validation_error_loc_item import ValidationErrorLocItem
 from .verification_attempt_response import VerificationAttemptResponse
+from .voice import Voice
 from .voice_generation_parameter_option_response import VoiceGenerationParameterOptionResponse
 from .voice_generation_parameter_response import VoiceGenerationParameterResponse
-from .voice_response import VoiceResponse
 from .voice_response_model_safety_control import VoiceResponseModelSafetyControl
 from .voice_sample import VoiceSample
 from .voice_settings import VoiceSettings
@@ -121,9 +121,9 @@ __all__ = [
     "ValidationError",
     "ValidationErrorLocItem",
     "VerificationAttemptResponse",
+    "Voice",
     "VoiceGenerationParameterOptionResponse",
     "VoiceGenerationParameterResponse",
-    "VoiceResponse",
     "VoiceResponseModelSafetyControl",
     "VoiceSample",
     "VoiceSettings",

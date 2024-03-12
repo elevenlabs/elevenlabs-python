@@ -17,19 +17,19 @@ except ImportError:
     import pydantic  # type: ignore
 
 
-class VoiceResponse(pydantic.BaseModel):
+class Voice(pydantic.BaseModel):
     voice_id: str
-    name: str
-    samples: typing.List[VoiceSample]
-    category: str
-    fine_tuning: FineTuningResponse
-    labels: typing.Dict[str, str]
-    description: str
-    preview_url: str
-    available_for_tiers: typing.List[str]
-    settings: VoiceSettings
-    sharing: VoiceSharingResponse
-    high_quality_base_model_ids: typing.List[str]
+    name: typing.Optional[str] = None
+    samples: typing.Optional[typing.List[VoiceSample]] = None
+    category: typing.Optional[str] = None
+    fine_tuning: typing.Optional[FineTuningResponse] = None
+    labels: typing.Optional[typing.Dict[str, str]] = None
+    description: typing.Optional[str] = None
+    preview_url: typing.Optional[str] = None
+    available_for_tiers: typing.Optional[typing.List[str]] = None
+    settings: typing.Optional[VoiceSettings] = None
+    sharing: typing.Optional[VoiceSharingResponse] = None
+    high_quality_base_model_ids: typing.Optional[typing.List[str]] = None
     safety_control: typing.Optional[VoiceResponseModelSafetyControl] = None
     voice_verification: typing.Optional[VoiceVerificationResponse] = None
 

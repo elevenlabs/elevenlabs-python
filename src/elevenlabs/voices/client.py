@@ -15,7 +15,7 @@ from ..types.add_voice_response_model import AddVoiceResponseModel
 from ..types.get_library_voices_response import GetLibraryVoicesResponse
 from ..types.get_voices_response import GetVoicesResponse
 from ..types.http_validation_error import HttpValidationError
-from ..types.voice_response import VoiceResponse
+from ..types.voice import Voice
 from ..types.voice_settings import VoiceSettings
 
 try:
@@ -173,7 +173,7 @@ class VoicesClient:
         *,
         with_settings: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> VoiceResponse:
+    ) -> Voice:
         """
         Returns metadata about a specific voice.
 
@@ -223,7 +223,7 @@ class VoicesClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(VoiceResponse, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(Voice, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:
@@ -786,7 +786,7 @@ class AsyncVoicesClient:
         *,
         with_settings: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> VoiceResponse:
+    ) -> Voice:
         """
         Returns metadata about a specific voice.
 
@@ -836,7 +836,7 @@ class AsyncVoicesClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(VoiceResponse, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(Voice, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:

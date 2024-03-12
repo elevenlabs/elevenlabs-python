@@ -4,7 +4,7 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
-from .voice_response import VoiceResponse
+from .voice import Voice
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -13,7 +13,7 @@ except ImportError:
 
 
 class GetVoicesResponse(pydantic.BaseModel):
-    voices: typing.List[VoiceResponse]
+    voices: typing.List[Voice]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
