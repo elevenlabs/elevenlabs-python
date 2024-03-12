@@ -66,25 +66,25 @@ The renames are specified below:
   `History.from_api()` -> `client.history.get_all()` 
 
 
-### Top-Level Methods
-The SDK no longer exports top level methods `generate`, `clone`, and `voices`. Instead, 
+### Exported functions
+The SDK no longer exports top level functions `generate`, `clone`, and `voices`. Instead, 
 everything is now directly attached to the client instance. 
 
-### `generate` -> `client.generate`
+#### `generate` -> `client.generate`
 
 The generate method is a helper function that makes it easier to consume the 
 text-to-speech APIs. If you'd rather access the raw APIs, simply use `client.text_to_speech`. 
 
-### `clone` -> `client.clone`
+#### `clone` -> `client.clone`
 
 The clone method is a helper function that wraps the voices add and 
 get APIs. If you'd rather access the raw APIs, simply use `client.voices.add()`. 
 
-### `voice` -> `client.voices.get_all()` 
+#### `voice` -> `client.voices.get_all()` 
 
 To get all your voices, use `client.voices.get_all()`. 
 
-### `play` and `stream`
+#### `play` and `stream`
 
 The SDK continues to export the `play` and `stream` methods. Under the hood, these methods
 use ffmpeg and mpv to play audio streams. 
