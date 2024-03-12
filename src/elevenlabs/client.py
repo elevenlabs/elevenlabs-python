@@ -174,9 +174,9 @@ class ElevenLabs(BaseElevenLabs):
             model_id = model.model_id
 
 
-        if not stream:
+        if stream:
             if isinstance(text, str):
-                return self.text_to_speech.convert(
+                return self.text_to_speech.convert_as_stream(
                     voice_id=voice_id,
                     voice_settings=voice_settings,
                     optimize_streaming_latency=optimize_streaming_latency,
@@ -187,6 +187,7 @@ class ElevenLabs(BaseElevenLabs):
                     model_id=model_id
                 )
             elif isinstance(text, Iterator):
+                # TODO(fern): Update to WebSocket
                 return self.text_to_speech.convert_as_stream(
                     voice_id=voice_id,
                     model_id=model_id,
@@ -361,9 +362,9 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
         elif isinstance(model, Model):
             model_id = model.model_id
         
-        if not stream:
+        if stream:
             if isinstance(text, str):
-                return await self.text_to_speech.convert(
+                return self.text_to_speech.convert_as_stream(
                     voice_id=voice_id,
                     model_id=model_id,
                     voice_settings=voice_settings,
@@ -374,7 +375,8 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
                     pronunciation_dictionary_locators=pronunciation_dictionary_locators
                 )
             elif isinstance(text, Iterator):
-                return await self.text_to_speech.convert_as_stream(
+                # TODO(fern): Update to WebSocket
+                return self.text_to_speech.convert_as_stream(
                     voice_id=voice_id,
                     model_id=model_id,
                     voice_settings=voice_settings,
@@ -389,7 +391,7 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
         else:
             if not isinstance(text, str):
                 raise ApiError(body="Text must be a string when stream is False.")
-            return await self.text_to_speech.convert(
+            return self.text_to_speech.convert(
                 voice_id=voice_id,
                 model_id=model_id,
                 voice_settings=voice_settings,
