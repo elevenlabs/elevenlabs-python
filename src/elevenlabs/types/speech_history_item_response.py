@@ -16,21 +16,21 @@ except ImportError:
 
 class SpeechHistoryItemResponse(pydantic.BaseModel):
     history_item_id: str
-    request_id: str
-    voice_id: str
-    model_id: str
-    voice_name: str
-    voice_category: SpeechHistoryItemResponseModelVoiceCategory
-    text: str
-    date_unix: int
-    character_count_change_from: int
-    character_count_change_to: int
-    content_type: str
-    state: typing.Any
-    settings: typing.Dict[str, typing.Any]
-    feedback: FeedbackItem
-    share_link_id: str
-    source: Source
+    request_id: typing.Optional[str] = None
+    voice_id: typing.Optional[str] = None
+    model_id: typing.Optional[str] = None
+    voice_name: typing.Optional[str] = None
+    voice_category: typing.Optional[SpeechHistoryItemResponseModelVoiceCategory] = None
+    text: typing.Optional[str] = None
+    date_unix: typing.Optional[int] = None
+    character_count_change_from: typing.Optional[int] = None
+    character_count_change_to: typing.Optional[int] = None
+    content_type: typing.Optional[str] = None
+    state: typing.Optional[typing.Any] = None
+    settings: typing.Optional[typing.Dict[str, typing.Any]] = None
+    feedback: typing.Optional[FeedbackItem] = None
+    share_link_id: typing.Optional[str] = None
+    source: typing.Optional[Source] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
