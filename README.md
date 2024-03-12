@@ -227,7 +227,7 @@ eleven = AsyncElevenLabs(
 )
 
 async def print_models() -> None:
-    models = eleven.models.get_all()
+    models = await eleven.models.get_all()
     print(models)
 
 asyncio.run(print_models())
