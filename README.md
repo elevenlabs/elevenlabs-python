@@ -124,7 +124,6 @@ play(audio)
 
 List all your available voices with `voices()`.
 ```py
-from elevenlabs import play
 from elevenlabs.client import ElevenLabs
 
 client = ElevenLabs(
@@ -132,7 +131,7 @@ client = ElevenLabs(
 )
 
 response = client.voices.get_all()
-audio = generate(text="Hello there!", voice=response.voices[0])
+audio = client.generate(text="Hello there!", voice=response.voices[0])
 print(voices)
 ```
 
@@ -168,7 +167,7 @@ client = ElevenLabs(
   api_key="YOUR_API_KEY", # Defaults to ELEVEN_API_KEY
 )
 
-audio = generate(
+audio = client.generate(
     text="Hello! My name is Bella.",
     voice=Voice(
         voice_id='EXAVITQu4vr4xnSDxMaL',
