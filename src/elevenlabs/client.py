@@ -13,7 +13,7 @@ from .core import RequestOptions, ApiError
 from .types import Voice, VoiceSettings, \
   PronunciationDictionaryVersionLocator, Model
 from .environment import ElevenLabsEnvironment
-from .realitme_tts import RealtimeTextToSpeechClient
+from .realtime_tts import RealtimeTextToSpeechClient
 
 
 DEFAULT_VOICE = Voice(
