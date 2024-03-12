@@ -64,7 +64,7 @@ class ElevenLabs(BaseElevenLabs):
       name: str,
       files: typing.List[str],
       description: str,
-      labels: typing.Optional[str] = OMIT,
+      labels: typing.Optional[str] = None,
       request_options: typing.Optional[RequestOptions] = None
     ) -> Voice:
         """
@@ -156,6 +156,7 @@ class ElevenLabs(BaseElevenLabs):
             voice_id = voice
         elif isinstance(voice, str):
             voices_response = self.voices.get_all(request_options=request_options)
+            print("voices_response", voices_response)
             voice_id = next((v.voice_id for v in voices_response.voices if v.name == voice), None)
             if not voice_id:
                 raise ApiError(body=f"Voice {voice} not found.")
@@ -163,8 +164,8 @@ class ElevenLabs(BaseElevenLabs):
             voice_id = voice.voice_id
             if voice_settings != DEFAULT_VOICE.settings \
                     and voice.settings is not None:
-                voice = voice.settings
-        else: 
+                voice_settings = voice.settings
+        else:
             voice_id = DEFAULT_VOICE.voice_id
 
         if isinstance(model, str):

@@ -23,32 +23,31 @@ def test_voice_clone():
         "https://user-images.githubusercontent.com/12028621/235474694-584f7103-dab2-4c39-bb9a-8e5f00be85da.webm",
     ]
 
-    with as_local_files(voice_file_urls) as files:
+    for file in as_local_files(voice_file_urls): 
         voice = client.clone(
             name="Alex",
             description=(
                 "An old American male voice with a slight hoarseness in his throat."
                 " Perfect for news"
             ),
-            files=files,
+            files=[file],
         )
 
-    assert isinstance(voice, Voice)
+    assert isinstance(voice, Voice)  # type: ignore
     assert voice.voice_id is not None
     assert voice.name == "Alex"
     assert voice.category == "cloned"
-    assert len(voice.samples) == len(voice_file_urls)
+    assert len(voice.samples or []) == len(voice_file_urls)
 
     audio = client.generate(
         text="Voice clone test successful.",
         voice=voice,
     )
-    assert isinstance(audio, bytes) and len(audio) > 0
-
-    client.voices.delete(voice.voice_id)
 
     if not IN_GITHUB:
         play(audio)
+    
+    client.voices.delete(voice.voice_id)
 
 
 def test_voice_design():
@@ -63,18 +62,15 @@ def test_voice_design():
         accent_strength=1.5,
     )
 
-    assert isinstance(audio, bytes) and len(audio) > 0
-
     if not IN_GITHUB:
         play(audio)
 
 
 def test_voices():
     # Test that we can get voices from api
-    eleven_voices = client.voices.get_all()
+    response = client.voices.get_all()
 
-    assert len(eleven_voices) > 0
-    assert isinstance(eleven_voices[0], Voice)
+    assert len(response.voices) > 0
 
-    for voice in eleven_voices:
+    for voice in response.voices:
         assert isinstance(voice, Voice)

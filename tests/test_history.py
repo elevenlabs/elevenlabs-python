@@ -1,7 +1,7 @@
 import time
 from random import randint
 
-from elevenlabs import History, \
+from elevenlabs import GetSpeechHistoryResponse, \
     play
 
 from .utils import IN_GITHUB, client
@@ -10,7 +10,7 @@ from .utils import IN_GITHUB, client
 def test_history():
     page_size = 5
     history = client.history.get_all(page_size=page_size)
-    assert isinstance(history, History)
+    assert isinstance(history, GetSpeechHistoryResponse)
 
 
 def test_history_item_delete():
