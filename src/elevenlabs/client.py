@@ -5,16 +5,14 @@ import re
 from typing import Iterator, Optional, Union, \
   Optional, AsyncIterator
 
-from elevenlabs.types.model_response import ModelResponse
-
 from .base_client import \
   BaseElevenLabs, AsyncBaseElevenLabs
 from .core import RequestOptions, ApiError
-from .types import VoiceResponse, VoiceSettings, \
-  PronunciationDictionaryVersionLocator
+from .types import Voice, VoiceSettings, \
+  PronunciationDictionaryVersionLocator, Model
 
 
-DEFAULT_VOICE = VoiceResponse(
+DEFAULT_VOICE = Voice(
     voice_id="EXAVITQu4vr4xnSDxMaL",
     name="Rachel",
     settings=VoiceSettings(
@@ -66,9 +64,9 @@ class ElevenLabs(BaseElevenLabs):
       name: str,
       files: typing.List[str],
       description: str,
-      labels: str,
+      labels: typing.Optional[str] = OMIT,
       request_options: typing.Optional[RequestOptions] = None
-    ) -> VoiceResponse:
+    ) -> Voice:
         """
           This is a manually maintained helper function that clones a voice from a set of audio files.
           **NOTE**: This function is a helper function and is simply making 
@@ -100,9 +98,9 @@ class ElevenLabs(BaseElevenLabs):
       self,
       *,
       text: Union[str, Iterator[str]],
-      voice: Union[VoiceId, VoiceName, VoiceResponse] = DEFAULT_VOICE,
+      voice: Union[VoiceId, VoiceName, Voice] = DEFAULT_VOICE,
       voice_settings: typing.Optional[VoiceSettings] = DEFAULT_VOICE.settings,
-      model: Union[ModelId, ModelResponse] = "eleven_monolingual_v1",
+      model: Union[ModelId, Model] = "eleven_monolingual_v1",
       optimize_streaming_latency: typing.Optional[int] = 0,
       stream: bool = False,
       output_format: Optional[str] = "mp3_44100_128",
@@ -161,22 +159,23 @@ class ElevenLabs(BaseElevenLabs):
             voice_id = next((v.voice_id for v in voices_response.voices if v.name == voice), None)
             if not voice_id:
                 raise ApiError(body=f"Voice {voice} not found.")
-        elif isinstance(voice, VoiceResponse):
+        elif isinstance(voice, Voice):
             voice_id = voice.voice_id
-            if voice_settings != DEFAULT_VOICE.settings:
+            if voice_settings != DEFAULT_VOICE.settings \
+                    and voice.settings is not None:
                 voice = voice.settings
         else: 
             voice_id = DEFAULT_VOICE.voice_id
 
         if isinstance(model, str):
             model_id = model
-        elif isinstance(model, ModelResponse):
+        elif isinstance(model, Model):
             model_id = model.model_id
 
 
-        if stream:
+        if not stream:
             if isinstance(text, str):
-                return self.text_to_speech.convert_as_stream(
+                return self.text_to_speech.convert(
                     voice_id=voice_id,
                     voice_settings=voice_settings,
                     optimize_streaming_latency=optimize_streaming_latency,
@@ -187,7 +186,7 @@ class ElevenLabs(BaseElevenLabs):
                     model_id=model_id
                 )
             elif isinstance(text, Iterator):
-                return self.text_to_speech.convert_as_stream_input(
+                return self.text_to_speech.convert_as_stream(
                     voice_id=voice_id,
                     model_id=model_id,
                     voice_settings=voice_settings,
@@ -245,7 +244,7 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
       description: str,
       labels: str,
       request_options: typing.Optional[RequestOptions] = None
-    ) -> VoiceResponse:
+    ) -> Voice:
         """
           This is a manually mnaintained helper function that generates a 
           voice from provided text.
@@ -280,9 +279,9 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
       self,
       *,
       text: Union[str, Iterator[str]],
-      voice: Union[VoiceId, VoiceName, VoiceResponse] = DEFAULT_VOICE,
+      voice: Union[VoiceId, VoiceName, Voice] = DEFAULT_VOICE,
       voice_settings: typing.Optional[VoiceSettings] = DEFAULT_VOICE.settings,
-      model: Union[ModelId, ModelResponse] = "eleven_monolingual_v1",
+      model: Union[ModelId, Model] = "eleven_monolingual_v1",
       optimize_streaming_latency: typing.Optional[int] = 0,
       stream: bool = False,
       output_format: Optional[str] = "mp3_44100_128",
@@ -348,21 +347,22 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
             voice_id = next((v.voice_id for v in voices_response.voices if v.name == voice), None)
             if not voice_id:
                 raise ApiError(body=f"Voice {voice} not found.")
-        elif isinstance(voice, VoiceResponse):
+        elif isinstance(voice, Voice):
             voice_id = voice.voice_id
-            if voice_settings != DEFAULT_VOICE.settings:
+            if voice_settings != DEFAULT_VOICE.settings \
+                    and voice.settings is not None:
                 voice = voice.settings
         else: 
             voice_id = DEFAULT_VOICE.voice_id
 
         if isinstance(model, str):
             model_id = model
-        elif isinstance(model, ModelResponse):
+        elif isinstance(model, Model):
             model_id = model.model_id
         
-        if stream:
+        if not stream:
             if isinstance(text, str):
-                return await self.text_to_speech.convert_as_stream(
+                return await self.text_to_speech.convert(
                     voice_id=voice_id,
                     model_id=model_id,
                     voice_settings=voice_settings,
@@ -373,7 +373,7 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
                     pronunciation_dictionary_locators=pronunciation_dictionary_locators
                 )
             elif isinstance(text, Iterator):
-                return await self.text_to_speech.convert_as_stream_input(
+                return await self.text_to_speech.convert_as_stream(
                     voice_id=voice_id,
                     model_id=model_id,
                     voice_settings=voice_settings,
