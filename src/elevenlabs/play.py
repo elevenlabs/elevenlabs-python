@@ -53,7 +53,9 @@ def play(
         sd.wait()
 
 
-def save(audio: bytes, filename: str) -> None:
+def save(audio: Union[bytes, Iterator[bytes]], filename: str) -> None:
+    if isinstance(audio, Iterator):
+        audio = b"".join(audio)
     with open(filename, "wb") as f:
         f.write(audio)
 

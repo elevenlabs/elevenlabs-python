@@ -84,10 +84,21 @@ get APIs. If you'd rather access the raw APIs, simply use `client.voices.add()`.
 
 To get all your voices, use `client.voices.get_all()`. 
 
-#### `play` and `stream`
+#### `play`, `stream` and `save`
 
-The SDK continues to export the `play` and `stream` methods. Under the hood, these methods
+The SDK continues to export the `play`, `stream` and `save` methods. Under the hood, these methods
 use ffmpeg and mpv to play audio streams. 
+
+```python
+import play, stream, save from elevenlabs
+
+# plays audio using ffmpeg
+play(audio)
+# streams audio using mpv
+stream(audio)
+# saves audio to file
+save(audio, "my-file.mp3")
+```
 
 
 ## 🗣️ Usage
