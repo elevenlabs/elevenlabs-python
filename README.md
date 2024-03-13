@@ -17,7 +17,7 @@ Check out the [HTTP API documentation](https://elevenlabs.io/docs/api-reference)
 ## ⚙️ Install
 
 ```bash
-pip install elevenlabs==v1.0.0b0
+pip install elevenlabs==v1.0.0b1
 ```
 
 ## v0.x to v1.x Migration Guide
