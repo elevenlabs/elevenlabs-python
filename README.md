@@ -47,7 +47,7 @@ from elevenlabs.client import AsyncElevenLabs
 
 client = AsyncElevenLabs(
   api_key="...",  # Defaults to ELEVEN_API_KEY
-  httpx=httpx.AsyncClient(...)
+  httpx_client=httpx.AsyncClient(...)
 )
 ```
 
