@@ -2,4 +2,4 @@
 
 import typing
 
-VoiceSharingState = typing.Literal["enabled", "disabled", "copied", "copied_disabled"]
+VoiceSharingState = typing.Union[typing.AnyStr, typing.Literal["enabled", "disabled", "copied", "copied_disabled"]]

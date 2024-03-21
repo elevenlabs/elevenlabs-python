@@ -33,7 +33,7 @@ class PronunciationDictionaryClient:
         *,
         file: typing.Optional[core.File] = None,
         name: str,
-        description: str,
+        description: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddPronunciationDictionaryResponseModel:
         """
@@ -44,7 +44,7 @@ class PronunciationDictionaryClient:
 
             - name: str. The name of the pronunciation dictionary, used for identification only.
 
-            - description: str. A description of the pronunciation dictionary, used for identification only.
+            - description: typing.Optional[str]. A description of the pronunciation dictionary, used for identification only.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -157,7 +157,7 @@ class AsyncPronunciationDictionaryClient:
         *,
         file: typing.Optional[core.File] = None,
         name: str,
-        description: str,
+        description: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddPronunciationDictionaryResponseModel:
         """
@@ -168,7 +168,7 @@ class AsyncPronunciationDictionaryClient:
 
             - name: str. The name of the pronunciation dictionary, used for identification only.
 
-            - description: str. A description of the pronunciation dictionary, used for identification only.
+            - description: typing.Optional[str]. A description of the pronunciation dictionary, used for identification only.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---

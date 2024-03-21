@@ -2,4 +2,6 @@
 
 import typing
 
-VoiceResponseModelSafetyControl = typing.Literal["NONE", "BAN", "CAPTCHA", "CAPTCHA_AND_MODERATION"]
+VoiceResponseModelSafetyControl = typing.Union[
+    typing.AnyStr, typing.Literal["NONE", "BAN", "CAPTCHA", "CAPTCHA_AND_MODERATION"]
+]

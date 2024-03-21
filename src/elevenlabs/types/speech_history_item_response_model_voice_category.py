@@ -2,4 +2,6 @@
 
 import typing
 
-SpeechHistoryItemResponseModelVoiceCategory = typing.Literal["premade", "cloned", "generated", "professional"]
+SpeechHistoryItemResponseModelVoiceCategory = typing.Union[
+    typing.AnyStr, typing.Literal["premade", "cloned", "generated", "professional"]
+]
