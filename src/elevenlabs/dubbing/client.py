@@ -30,28 +30,28 @@ class DubbingClient:
     def dub_a_video_or_an_audio_file(
         self,
         *,
-        mode: str,
+        mode: typing.Optional[str] = None,
         file: typing.Optional[core.File] = None,
         csv_file: typing.Optional[core.File] = None,
         foreground_audio_file: typing.Optional[core.File] = None,
         background_audio_file: typing.Optional[core.File] = None,
-        name: str,
-        source_url: str,
-        source_lang: str,
+        name: typing.Optional[str] = None,
+        source_url: typing.Optional[str] = None,
+        source_lang: typing.Optional[str] = None,
         target_lang: str,
-        num_speakers: int,
-        watermark: bool,
-        start_time: int,
-        end_time: int,
-        highest_resolution: bool,
-        dubbing_studio: bool,
+        num_speakers: typing.Optional[int] = None,
+        watermark: typing.Optional[bool] = None,
+        start_time: typing.Optional[int] = None,
+        end_time: typing.Optional[int] = None,
+        highest_resolution: typing.Optional[bool] = None,
+        dubbing_studio: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DoDubbingResponse:
         """
         Dubs provided audio or video file into given language.
 
         Parameters:
-            - mode: str. automatic or manual.
+            - mode: typing.Optional[str]. automatic or manual.
 
             - file: typing.Optional[core.File]. See core.File for more documentation
 
@@ -61,25 +61,25 @@ class DubbingClient:
 
             - background_audio_file: typing.Optional[core.File]. See core.File for more documentation
 
-            - name: str. Name of the dubbing project.
+            - name: typing.Optional[str]. Name of the dubbing project.
 
-            - source_url: str. URL of the source video/audio file.
+            - source_url: typing.Optional[str]. URL of the source video/audio file.
 
-            - source_lang: str. Source language.
+            - source_lang: typing.Optional[str]. Source language.
 
             - target_lang: str. Target language.
 
-            - num_speakers: int. Number of speakers to use for the dubbing.
+            - num_speakers: typing.Optional[int]. Number of speakers to use for the dubbing.
 
-            - watermark: bool. Whether to apply watermark to the output video.
+            - watermark: typing.Optional[bool]. Whether to apply watermark to the output video.
 
-            - start_time: int. Start time of the source video/audio file.
+            - start_time: typing.Optional[int]. Start time of the source video/audio file.
 
-            - end_time: int. End time of the source video/audio file.
+            - end_time: typing.Optional[int]. End time of the source video/audio file.
 
-            - highest_resolution: bool. Whether to use the highest resolution available.
+            - highest_resolution: typing.Optional[bool]. Whether to use the highest resolution available.
 
-            - dubbing_studio: bool. Whether to prepare dub for edits in dubbing studio.
+            - dubbing_studio: typing.Optional[bool]. Whether to prepare dub for edits in dubbing studio.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -336,28 +336,28 @@ class AsyncDubbingClient:
     async def dub_a_video_or_an_audio_file(
         self,
         *,
-        mode: str,
+        mode: typing.Optional[str] = None,
         file: typing.Optional[core.File] = None,
         csv_file: typing.Optional[core.File] = None,
         foreground_audio_file: typing.Optional[core.File] = None,
         background_audio_file: typing.Optional[core.File] = None,
-        name: str,
-        source_url: str,
-        source_lang: str,
+        name: typing.Optional[str] = None,
+        source_url: typing.Optional[str] = None,
+        source_lang: typing.Optional[str] = None,
         target_lang: str,
-        num_speakers: int,
-        watermark: bool,
-        start_time: int,
-        end_time: int,
-        highest_resolution: bool,
-        dubbing_studio: bool,
+        num_speakers: typing.Optional[int] = None,
+        watermark: typing.Optional[bool] = None,
+        start_time: typing.Optional[int] = None,
+        end_time: typing.Optional[int] = None,
+        highest_resolution: typing.Optional[bool] = None,
+        dubbing_studio: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DoDubbingResponse:
         """
         Dubs provided audio or video file into given language.
 
         Parameters:
-            - mode: str. automatic or manual.
+            - mode: typing.Optional[str]. automatic or manual.
 
             - file: typing.Optional[core.File]. See core.File for more documentation
 
@@ -367,25 +367,25 @@ class AsyncDubbingClient:
 
             - background_audio_file: typing.Optional[core.File]. See core.File for more documentation
 
-            - name: str. Name of the dubbing project.
+            - name: typing.Optional[str]. Name of the dubbing project.
 
-            - source_url: str. URL of the source video/audio file.
+            - source_url: typing.Optional[str]. URL of the source video/audio file.
 
-            - source_lang: str. Source language.
+            - source_lang: typing.Optional[str]. Source language.
 
             - target_lang: str. Target language.
 
-            - num_speakers: int. Number of speakers to use for the dubbing.
+            - num_speakers: typing.Optional[int]. Number of speakers to use for the dubbing.
 
-            - watermark: bool. Whether to apply watermark to the output video.
+            - watermark: typing.Optional[bool]. Whether to apply watermark to the output video.
 
-            - start_time: int. Start time of the source video/audio file.
+            - start_time: typing.Optional[int]. Start time of the source video/audio file.
 
-            - end_time: int. End time of the source video/audio file.
+            - end_time: typing.Optional[int]. End time of the source video/audio file.
 
-            - highest_resolution: bool. Whether to use the highest resolution available.
+            - highest_resolution: typing.Optional[bool]. Whether to use the highest resolution available.
 
-            - dubbing_studio: bool. Whether to prepare dub for edits in dubbing studio.
+            - dubbing_studio: typing.Optional[bool]. Whether to prepare dub for edits in dubbing studio.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---

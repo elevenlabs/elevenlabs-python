@@ -347,8 +347,8 @@ class VoicesClient:
         *,
         name: str,
         files: typing.List[core.File],
-        description: str,
-        labels: str,
+        description: typing.Optional[str] = None,
+        labels: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddVoiceResponseModel:
         """
@@ -359,9 +359,9 @@ class VoicesClient:
 
             - files: typing.List[core.File]. See core.File for more documentation
 
-            - description: str. How would you describe the voice?
+            - description: typing.Optional[str]. How would you describe the voice?
 
-            - labels: str. Serialized labels dictionary for the voice.
+            - labels: typing.Optional[str]. Serialized labels dictionary for the voice.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -415,8 +415,8 @@ class VoicesClient:
         *,
         name: str,
         files: typing.Optional[typing.List[core.File]] = None,
-        description: str,
-        labels: str,
+        description: typing.Optional[str] = None,
+        labels: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Any:
         """
@@ -429,9 +429,9 @@ class VoicesClient:
 
             - files: typing.Optional[typing.List[core.File]]. See core.File for more documentation
 
-            - description: str. How would you describe the voice?
+            - description: typing.Optional[str]. How would you describe the voice?
 
-            - labels: str. Serialized labels dictionary for the voice.
+            - labels: typing.Optional[str]. Serialized labels dictionary for the voice.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -976,8 +976,8 @@ class AsyncVoicesClient:
         *,
         name: str,
         files: typing.List[core.File],
-        description: str,
-        labels: str,
+        description: typing.Optional[str] = None,
+        labels: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddVoiceResponseModel:
         """
@@ -988,9 +988,9 @@ class AsyncVoicesClient:
 
             - files: typing.List[core.File]. See core.File for more documentation
 
-            - description: str. How would you describe the voice?
+            - description: typing.Optional[str]. How would you describe the voice?
 
-            - labels: str. Serialized labels dictionary for the voice.
+            - labels: typing.Optional[str]. Serialized labels dictionary for the voice.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -1044,8 +1044,8 @@ class AsyncVoicesClient:
         *,
         name: str,
         files: typing.Optional[typing.List[core.File]] = None,
-        description: str,
-        labels: str,
+        description: typing.Optional[str] = None,
+        labels: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Any:
         """
@@ -1058,9 +1058,9 @@ class AsyncVoicesClient:
 
             - files: typing.Optional[typing.List[core.File]]. See core.File for more documentation
 
-            - description: str. How would you describe the voice?
+            - description: typing.Optional[str]. How would you describe the voice?
 
-            - labels: str. Serialized labels dictionary for the voice.
+            - labels: typing.Optional[str]. Serialized labels dictionary for the voice.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---

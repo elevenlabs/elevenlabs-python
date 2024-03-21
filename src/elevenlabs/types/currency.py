@@ -2,4 +2,4 @@
 
 import typing
 
-Currency = typing.Literal["usd", "eur"]
+Currency = typing.Union[typing.AnyStr, typing.Literal["usd", "eur"]]

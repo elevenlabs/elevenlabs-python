@@ -2,4 +2,4 @@
 
 import typing
 
-SubscriptionResponseModelBillingPeriod = typing.Literal["monthly_period", "annual_period"]
+SubscriptionResponseModelBillingPeriod = typing.Union[typing.AnyStr, typing.Literal["monthly_period", "annual_period"]]
