@@ -25,8 +25,8 @@ class SpeechToSpeechClient:
         *,
         optimize_streaming_latency: typing.Optional[int] = None,
         audio: core.File,
-        model_id: str,
-        voice_settings: str,
+        model_id: typing.Optional[str] = None,
+        voice_settings: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -45,21 +45,11 @@ class SpeechToSpeechClient:
                                                                 Defaults to 0.
             - audio: core.File. See core.File for more documentation
 
-            - model_id: str. Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
+            - model_id: typing.Optional[str]. Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
 
-            - voice_settings: str. Voice settings overriding stored setttings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
+            - voice_settings: typing.Optional[str]. Voice settings overriding stored setttings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
-        from elevenlabs.client import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.speech_to_speech.convert(
-            voice_id="string",
-            optimize_streaming_latency=1,
-        )
         """
         with self._client_wrapper.httpx_client.stream(
             "POST",
@@ -116,8 +106,8 @@ class SpeechToSpeechClient:
         *,
         optimize_streaming_latency: typing.Optional[int] = None,
         audio: core.File,
-        model_id: str,
-        voice_settings: str,
+        model_id: typing.Optional[str] = None,
+        voice_settings: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -136,21 +126,11 @@ class SpeechToSpeechClient:
                                                                 Defaults to 0.
             - audio: core.File. See core.File for more documentation
 
-            - model_id: str. Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
+            - model_id: typing.Optional[str]. Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
 
-            - voice_settings: str. Voice settings overriding stored setttings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
+            - voice_settings: typing.Optional[str]. Voice settings overriding stored setttings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
-        from elevenlabs.client import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.speech_to_speech.convert_as_stream(
-            voice_id="string",
-            optimize_streaming_latency=1,
-        )
         """
         with self._client_wrapper.httpx_client.stream(
             "POST",
@@ -212,8 +192,8 @@ class AsyncSpeechToSpeechClient:
         *,
         optimize_streaming_latency: typing.Optional[int] = None,
         audio: core.File,
-        model_id: str,
-        voice_settings: str,
+        model_id: typing.Optional[str] = None,
+        voice_settings: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -232,21 +212,11 @@ class AsyncSpeechToSpeechClient:
                                                                 Defaults to 0.
             - audio: core.File. See core.File for more documentation
 
-            - model_id: str. Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
+            - model_id: typing.Optional[str]. Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
 
-            - voice_settings: str. Voice settings overriding stored setttings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
+            - voice_settings: typing.Optional[str]. Voice settings overriding stored setttings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
-        from elevenlabs.client import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        await client.speech_to_speech.convert(
-            voice_id="string",
-            optimize_streaming_latency=1,
-        )
         """
         async with self._client_wrapper.httpx_client.stream(
             "POST",
@@ -303,8 +273,8 @@ class AsyncSpeechToSpeechClient:
         *,
         optimize_streaming_latency: typing.Optional[int] = None,
         audio: core.File,
-        model_id: str,
-        voice_settings: str,
+        model_id: typing.Optional[str] = None,
+        voice_settings: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -323,21 +293,11 @@ class AsyncSpeechToSpeechClient:
                                                                 Defaults to 0.
             - audio: core.File. See core.File for more documentation
 
-            - model_id: str. Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
+            - model_id: typing.Optional[str]. Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
 
-            - voice_settings: str. Voice settings overriding stored setttings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
+            - voice_settings: typing.Optional[str]. Voice settings overriding stored setttings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
-        from elevenlabs.client import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        await client.speech_to_speech.convert_as_stream(
-            voice_id="string",
-            optimize_streaming_latency=1,
-        )
         """
         async with self._client_wrapper.httpx_client.stream(
             "POST",

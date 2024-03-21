@@ -69,32 +69,6 @@ class TextToSpeechClient:
             - pronunciation_dictionary_locators: typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]. A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
-        from elevenlabs import PronunciationDictionaryVersionLocator, VoiceSettings
-        from elevenlabs.client import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.text_to_speech.convert(
-            voice_id="string",
-            optimize_streaming_latency=1,
-            output_format="string",
-            text="string",
-            model_id="string",
-            voice_settings=VoiceSettings(
-                stability=1.1,
-                similarity_boost=1.1,
-                style=1.1,
-                use_speaker_boost=True,
-            ),
-            pronunciation_dictionary_locators=[
-                PronunciationDictionaryVersionLocator(
-                    pronunciation_dictionary_id="string",
-                    version_id="string",
-                )
-            ],
-        )
         """
         _request: typing.Dict[str, typing.Any] = {"text": text}
         if model_id is not OMIT:
@@ -201,32 +175,6 @@ class TextToSpeechClient:
             - pronunciation_dictionary_locators: typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]. A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
-        from elevenlabs import PronunciationDictionaryVersionLocator, VoiceSettings
-        from elevenlabs.client import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.text_to_speech.convert_as_stream(
-            voice_id="string",
-            optimize_streaming_latency=1,
-            output_format="string",
-            text="string",
-            model_id="string",
-            voice_settings=VoiceSettings(
-                stability=1.1,
-                similarity_boost=1.1,
-                style=1.1,
-                use_speaker_boost=True,
-            ),
-            pronunciation_dictionary_locators=[
-                PronunciationDictionaryVersionLocator(
-                    pronunciation_dictionary_id="string",
-                    version_id="string",
-                )
-            ],
-        )
         """
         _request: typing.Dict[str, typing.Any] = {"text": text}
         if model_id is not OMIT:
@@ -338,32 +286,6 @@ class AsyncTextToSpeechClient:
             - pronunciation_dictionary_locators: typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]. A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
-        from elevenlabs import PronunciationDictionaryVersionLocator, VoiceSettings
-        from elevenlabs.client import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        await client.text_to_speech.convert(
-            voice_id="string",
-            optimize_streaming_latency=1,
-            output_format="string",
-            text="string",
-            model_id="string",
-            voice_settings=VoiceSettings(
-                stability=1.1,
-                similarity_boost=1.1,
-                style=1.1,
-                use_speaker_boost=True,
-            ),
-            pronunciation_dictionary_locators=[
-                PronunciationDictionaryVersionLocator(
-                    pronunciation_dictionary_id="string",
-                    version_id="string",
-                )
-            ],
-        )
         """
         _request: typing.Dict[str, typing.Any] = {"text": text}
         if model_id is not OMIT:
@@ -470,32 +392,6 @@ class AsyncTextToSpeechClient:
             - pronunciation_dictionary_locators: typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]. A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
-        from elevenlabs import PronunciationDictionaryVersionLocator, VoiceSettings
-        from elevenlabs.client import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        await client.text_to_speech.convert_as_stream(
-            voice_id="string",
-            optimize_streaming_latency=1,
-            output_format="string",
-            text="string",
-            model_id="string",
-            voice_settings=VoiceSettings(
-                stability=1.1,
-                similarity_boost=1.1,
-                style=1.1,
-                use_speaker_boost=True,
-            ),
-            pronunciation_dictionary_locators=[
-                PronunciationDictionaryVersionLocator(
-                    pronunciation_dictionary_id="string",
-                    version_id="string",
-                )
-            ],
-        )
         """
         _request: typing.Dict[str, typing.Any] = {"text": text}
         if model_id is not OMIT:

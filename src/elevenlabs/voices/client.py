@@ -347,8 +347,8 @@ class VoicesClient:
         *,
         name: str,
         files: typing.List[core.File],
-        description: str,
-        labels: str,
+        description: typing.Optional[str] = None,
+        labels: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddVoiceResponseModel:
         """
@@ -359,18 +359,11 @@ class VoicesClient:
 
             - files: typing.List[core.File]. See core.File for more documentation
 
-            - description: str. How would you describe the voice?
+            - description: typing.Optional[str]. How would you describe the voice?
 
-            - labels: str. Serialized labels dictionary for the voice.
+            - labels: typing.Optional[str]. Serialized labels dictionary for the voice.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
-        from elevenlabs.client import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.voices.add()
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -415,8 +408,8 @@ class VoicesClient:
         *,
         name: str,
         files: typing.Optional[typing.List[core.File]] = None,
-        description: str,
-        labels: str,
+        description: typing.Optional[str] = None,
+        labels: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Any:
         """
@@ -429,20 +422,11 @@ class VoicesClient:
 
             - files: typing.Optional[typing.List[core.File]]. See core.File for more documentation
 
-            - description: str. How would you describe the voice?
+            - description: typing.Optional[str]. How would you describe the voice?
 
-            - labels: str. Serialized labels dictionary for the voice.
+            - labels: typing.Optional[str]. Serialized labels dictionary for the voice.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
-        from elevenlabs.client import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.voices.edit(
-            voice_id="string",
-        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -976,8 +960,8 @@ class AsyncVoicesClient:
         *,
         name: str,
         files: typing.List[core.File],
-        description: str,
-        labels: str,
+        description: typing.Optional[str] = None,
+        labels: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddVoiceResponseModel:
         """
@@ -988,18 +972,11 @@ class AsyncVoicesClient:
 
             - files: typing.List[core.File]. See core.File for more documentation
 
-            - description: str. How would you describe the voice?
+            - description: typing.Optional[str]. How would you describe the voice?
 
-            - labels: str. Serialized labels dictionary for the voice.
+            - labels: typing.Optional[str]. Serialized labels dictionary for the voice.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
-        from elevenlabs.client import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        await client.voices.add()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -1044,8 +1021,8 @@ class AsyncVoicesClient:
         *,
         name: str,
         files: typing.Optional[typing.List[core.File]] = None,
-        description: str,
-        labels: str,
+        description: typing.Optional[str] = None,
+        labels: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Any:
         """
@@ -1058,20 +1035,11 @@ class AsyncVoicesClient:
 
             - files: typing.Optional[typing.List[core.File]]. See core.File for more documentation
 
-            - description: str. How would you describe the voice?
+            - description: typing.Optional[str]. How would you describe the voice?
 
-            - labels: str. Serialized labels dictionary for the voice.
+            - labels: typing.Optional[str]. Serialized labels dictionary for the voice.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
-        from elevenlabs.client import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        await client.voices.edit(
-            voice_id="string",
-        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
