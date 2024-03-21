@@ -79,19 +79,19 @@ class ProjectsClient:
         self,
         *,
         name: str,
-        from_url: str,
+        from_url: typing.Optional[str] = None,
         from_document: typing.Optional[core.File] = None,
         default_title_voice_id: str,
         default_paragraph_voice_id: str,
         default_model_id: str,
-        quality_preset: str,
-        title: str,
-        author: str,
-        isbn_number: str,
-        acx_volume_normalization: bool,
-        volume_normalization: bool,
+        quality_preset: typing.Optional[str] = None,
+        title: typing.Optional[str] = None,
+        author: typing.Optional[str] = None,
+        isbn_number: typing.Optional[str] = None,
+        acx_volume_normalization: typing.Optional[bool] = None,
+        volume_normalization: typing.Optional[bool] = None,
         pronunciation_dictionary_locators: typing.List[str],
-        callback_url: str,
+        callback_url: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddProjectResponseModel:
         """
@@ -100,7 +100,7 @@ class ProjectsClient:
         Parameters:
             - name: str. The name of the project, used for identification only.
 
-            - from_url: str. An optional URL from which we will extract content to initialize the project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the project as blank.
+            - from_url: typing.Optional[str]. An optional URL from which we will extract content to initialize the project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the project as blank.
 
             - from_document: typing.Optional[core.File]. See core.File for more documentation
 
@@ -110,24 +110,24 @@ class ProjectsClient:
 
             - default_model_id: str. The model_id of the model to be used for this project, you can query GET https://api.elevenlabs.io/v1/models to list all available models.
 
-            - quality_preset: str. Output quality of the generated audio. Must be one of:
-                                   standard - standard output format, 128kbps with 44.1kHz sample rate.
-                                   high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the character cost by 20%.
-                                   ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the character cost by 50%.
+            - quality_preset: typing.Optional[str]. Output quality of the generated audio. Must be one of:
+                                                    standard - standard output format, 128kbps with 44.1kHz sample rate.
+                                                    high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the character cost by 20%.
+                                                    ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the character cost by 50%.
 
-            - title: str. An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
+            - title: typing.Optional[str]. An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
 
-            - author: str. An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
+            - author: typing.Optional[str]. An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
 
-            - isbn_number: str. An optional ISBN number of the project you want to create, this will be added as metadata to the mp3 file on project / chapter download.
+            - isbn_number: typing.Optional[str]. An optional ISBN number of the project you want to create, this will be added as metadata to the mp3 file on project / chapter download.
 
-            - acx_volume_normalization: bool. [Deprecated] When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
+            - acx_volume_normalization: typing.Optional[bool]. [Deprecated] When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
 
-            - volume_normalization: bool. When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
+            - volume_normalization: typing.Optional[bool]. When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
 
             - pronunciation_dictionary_locators: typing.List[str]. A list of pronunciation dictionary locators (id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody
 
-            - callback_url: str. A url that will be called by our service when the project is converted with a json containing the status of the conversion
+            - callback_url: typing.Optional[str]. A url that will be called by our service when the project is converted with a json containing the status of the conversion
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -602,19 +602,19 @@ class AsyncProjectsClient:
         self,
         *,
         name: str,
-        from_url: str,
+        from_url: typing.Optional[str] = None,
         from_document: typing.Optional[core.File] = None,
         default_title_voice_id: str,
         default_paragraph_voice_id: str,
         default_model_id: str,
-        quality_preset: str,
-        title: str,
-        author: str,
-        isbn_number: str,
-        acx_volume_normalization: bool,
-        volume_normalization: bool,
+        quality_preset: typing.Optional[str] = None,
+        title: typing.Optional[str] = None,
+        author: typing.Optional[str] = None,
+        isbn_number: typing.Optional[str] = None,
+        acx_volume_normalization: typing.Optional[bool] = None,
+        volume_normalization: typing.Optional[bool] = None,
         pronunciation_dictionary_locators: typing.List[str],
-        callback_url: str,
+        callback_url: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddProjectResponseModel:
         """
@@ -623,7 +623,7 @@ class AsyncProjectsClient:
         Parameters:
             - name: str. The name of the project, used for identification only.
 
-            - from_url: str. An optional URL from which we will extract content to initialize the project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the project as blank.
+            - from_url: typing.Optional[str]. An optional URL from which we will extract content to initialize the project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the project as blank.
 
             - from_document: typing.Optional[core.File]. See core.File for more documentation
 
@@ -633,24 +633,24 @@ class AsyncProjectsClient:
 
             - default_model_id: str. The model_id of the model to be used for this project, you can query GET https://api.elevenlabs.io/v1/models to list all available models.
 
-            - quality_preset: str. Output quality of the generated audio. Must be one of:
-                                   standard - standard output format, 128kbps with 44.1kHz sample rate.
-                                   high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the character cost by 20%.
-                                   ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the character cost by 50%.
+            - quality_preset: typing.Optional[str]. Output quality of the generated audio. Must be one of:
+                                                    standard - standard output format, 128kbps with 44.1kHz sample rate.
+                                                    high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the character cost by 20%.
+                                                    ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the character cost by 50%.
 
-            - title: str. An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
+            - title: typing.Optional[str]. An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
 
-            - author: str. An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
+            - author: typing.Optional[str]. An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
 
-            - isbn_number: str. An optional ISBN number of the project you want to create, this will be added as metadata to the mp3 file on project / chapter download.
+            - isbn_number: typing.Optional[str]. An optional ISBN number of the project you want to create, this will be added as metadata to the mp3 file on project / chapter download.
 
-            - acx_volume_normalization: bool. [Deprecated] When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
+            - acx_volume_normalization: typing.Optional[bool]. [Deprecated] When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
 
-            - volume_normalization: bool. When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
+            - volume_normalization: typing.Optional[bool]. When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
 
             - pronunciation_dictionary_locators: typing.List[str]. A list of pronunciation dictionary locators (id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody
 
-            - callback_url: str. A url that will be called by our service when the project is converted with a json containing the status of the conversion
+            - callback_url: typing.Optional[str]. A url that will be called by our service when the project is converted with a json containing the status of the conversion
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---

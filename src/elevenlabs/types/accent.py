@@ -2,4 +2,4 @@
 
 import typing
 
-Accent = typing.Literal["british", "american", "african", "australian", "indian"]
+Accent = typing.Union[typing.AnyStr, typing.Literal["british", "american", "african", "australian", "indian"]]
