@@ -1,11 +1,10 @@
 name: Publish SDK
 
 # Only trigger, when the test workflow succeeds
-on:
-workflow_run:
-    workflows: ["Test SDK"]
-    types:
-    - completed
+on: 
+  push: 
+    branches: 
+      - main
 
 jobs:
   publish:
