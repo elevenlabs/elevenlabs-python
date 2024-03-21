@@ -114,7 +114,8 @@ class TextToSpeechClient:
                         "optimize_streaming_latency": optimize_streaming_latency,
                         "output_format": output_format,
                         **(
-                            request_options.get("additional_query_parameters", {})
+                            request_options.get(
+                                "additional_query_parameters", {})
                             if request_options is not None
                             else {}
                         ),
@@ -139,7 +140,8 @@ class TextToSpeechClient:
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
             retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            max_retries=request_options.get(
+                "max_retries") if request_options is not None else 0,  # type: ignore
         ) as _response:
             if 200 <= _response.status_code < 300:
                 for _chunk in _response.iter_bytes():
@@ -149,8 +151,10 @@ class TextToSpeechClient:
             try:
                 _response_json = _response.json()
             except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+                raise ApiError(status_code=_response.status_code,
+                               body=_response.text)
+            raise ApiError(status_code=_response.status_code,
+                           body=_response_json)
 
     def convert_as_stream(
         self,
@@ -246,7 +250,8 @@ class TextToSpeechClient:
                         "optimize_streaming_latency": optimize_streaming_latency,
                         "output_format": output_format,
                         **(
-                            request_options.get("additional_query_parameters", {})
+                            request_options.get(
+                                "additional_query_parameters", {})
                             if request_options is not None
                             else {}
                         ),
@@ -271,7 +276,8 @@ class TextToSpeechClient:
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
             retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            max_retries=request_options.get(
+                "max_retries") if request_options is not None else 0,  # type: ignore
         ) as _response:
             if 200 <= _response.status_code < 300:
                 for _chunk in _response.iter_bytes():
@@ -281,8 +287,10 @@ class TextToSpeechClient:
             try:
                 _response_json = _response.json()
             except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+                raise ApiError(status_code=_response.status_code,
+                               body=_response.text)
+            raise ApiError(status_code=_response.status_code,
+                           body=_response_json)
 
 
 class AsyncTextToSpeechClient:
@@ -372,7 +380,7 @@ class AsyncTextToSpeechClient:
             _request["voice_settings"] = voice_settings
         if pronunciation_dictionary_locators is not OMIT:
             _request["pronunciation_dictionary_locators"] = pronunciation_dictionary_locators
-        async with self._client_wrapper.httpx_client.stream(
+        async with await self._client_wrapper.httpx_client.stream(
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/text-to-speech/{jsonable_encoder(voice_id)}"
@@ -383,7 +391,8 @@ class AsyncTextToSpeechClient:
                         "optimize_streaming_latency": optimize_streaming_latency,
                         "output_format": output_format,
                         **(
-                            request_options.get("additional_query_parameters", {})
+                            request_options.get(
+                                "additional_query_parameters", {})
                             if request_options is not None
                             else {}
                         ),
@@ -408,7 +417,8 @@ class AsyncTextToSpeechClient:
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
             retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            max_retries=request_options.get(
+                "max_retries") if request_options is not None else 0,  # type: ignore
         ) as _response:
             if 200 <= _response.status_code < 300:
                 async for _chunk in _response.aiter_bytes():
@@ -418,8 +428,10 @@ class AsyncTextToSpeechClient:
             try:
                 _response_json = _response.json()
             except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+                raise ApiError(status_code=_response.status_code,
+                               body=_response.text)
+            raise ApiError(status_code=_response.status_code,
+                           body=_response_json)
 
     async def convert_as_stream(
         self,
@@ -504,7 +516,7 @@ class AsyncTextToSpeechClient:
             _request["voice_settings"] = voice_settings
         if pronunciation_dictionary_locators is not OMIT:
             _request["pronunciation_dictionary_locators"] = pronunciation_dictionary_locators
-        async with self._client_wrapper.httpx_client.stream(
+        async with await self._client_wrapper.httpx_client.stream(
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream"
@@ -515,7 +527,8 @@ class AsyncTextToSpeechClient:
                         "optimize_streaming_latency": optimize_streaming_latency,
                         "output_format": output_format,
                         **(
-                            request_options.get("additional_query_parameters", {})
+                            request_options.get(
+                                "additional_query_parameters", {})
                             if request_options is not None
                             else {}
                         ),
@@ -540,7 +553,8 @@ class AsyncTextToSpeechClient:
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else 60,
             retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+            max_retries=request_options.get(
+                "max_retries") if request_options is not None else 0,  # type: ignore
         ) as _response:
             if 200 <= _response.status_code < 300:
                 async for _chunk in _response.aiter_bytes():
@@ -550,5 +564,7 @@ class AsyncTextToSpeechClient:
             try:
                 _response_json = _response.json()
             except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+                raise ApiError(status_code=_response.status_code,
+                               body=_response.text)
+            raise ApiError(status_code=_response.status_code,
+                           body=_response_json)
