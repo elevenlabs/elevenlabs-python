@@ -90,7 +90,7 @@ The SDK continues to export the `play`, `stream` and `save` methods. Under the h
 use ffmpeg and mpv to play audio streams. 
 
 ```python
-import play, stream, save from elevenlabs
+from elevenlabs import play, stream, save
 
 # plays audio using ffmpeg
 play(audio)
