@@ -37,7 +37,5 @@ jobs:
         run: npm install -g fern-api
 
       - name: Test
-        env:
-          ELEVEN_API_KEY: ${{ secrets.TEST_API_KEY }}
         run: |
             poetry run pytest .
