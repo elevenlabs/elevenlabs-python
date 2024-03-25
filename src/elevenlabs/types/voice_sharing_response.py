@@ -14,33 +14,33 @@ except ImportError:
 
 
 class VoiceSharingResponse(pydantic.BaseModel):
-    status: VoiceSharingState
-    history_item_sample_id: str
-    date_unix: int
-    whitelisted_emails: typing.List[str]
-    public_owner_id: str
-    original_voice_id: str
-    financial_rewards_enabled: bool
-    free_users_allowed: bool
-    live_moderation_enabled: bool
-    rate: float
-    notice_period: int
-    disable_at_unix: int
-    voice_mixing_allowed: bool
-    instagram_username: str
-    twitter_username: str
-    youtube_username: str
-    tiktok_username: str
-    featured: bool
-    ban_reason: str
-    liked_by_count: int
-    cloned_by_count: int
-    name: str
-    description: str
-    labels: typing.Dict[str, str]
-    review_status: ReviewStatus
-    review_message: str
-    enabled_in_library: bool
+    status: typing.Optional[VoiceSharingState] = None
+    history_item_sample_id: typing.Optional[str] = None
+    date_unix: typing.Optional[int] = None
+    whitelisted_emails: typing.Optional[typing.List[str]] = None
+    public_owner_id: typing.Optional[str] = None
+    original_voice_id: typing.Optional[str] = None
+    financial_rewards_enabled: typing.Optional[bool] = None
+    free_users_allowed: typing.Optional[bool] = None
+    live_moderation_enabled: typing.Optional[bool] = None
+    rate: typing.Optional[float] = None
+    notice_period: typing.Optional[int] = None
+    disable_at_unix: typing.Optional[int] = None
+    voice_mixing_allowed: typing.Optional[bool] = None
+    instagram_username: typing.Optional[str] = None
+    twitter_username: typing.Optional[str] = None
+    youtube_username: typing.Optional[str] = None
+    tiktok_username: typing.Optional[str] = None
+    featured: typing.Optional[bool] = None
+    ban_reason: typing.Optional[str] = None
+    liked_by_count: typing.Optional[int] = None
+    cloned_by_count: typing.Optional[int] = None
+    name: typing.Optional[str] = None
+    description: typing.Optional[str] = None
+    labels: typing.Optional[typing.Dict[str, str]] = None
+    review_status: typing.Optional[ReviewStatus] = None
+    review_message: typing.Optional[str] = None
+    enabled_in_library: typing.Optional[bool] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
