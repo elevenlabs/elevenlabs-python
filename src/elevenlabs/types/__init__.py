@@ -7,6 +7,7 @@ from .add_voice_response_model import AddVoiceResponseModel
 from .age import Age
 from .audio_native_create_project_response_model import AudioNativeCreateProjectResponseModel
 from .audio_native_get_embed_code_response_model import AudioNativeGetEmbedCodeResponseModel
+from .audio_output import AudioOutput
 from .chapter_response import ChapterResponse
 from .chapter_snapshot_response import ChapterSnapshotResponse
 from .chapter_snapshots_response import ChapterSnapshotsResponse
@@ -19,6 +20,7 @@ from .feedback_item import FeedbackItem
 from .fine_tuning_response import FineTuningResponse
 from .finetuning_state import FinetuningState
 from .gender import Gender
+from .generation_config import GenerationConfig
 from .get_chapters_response import GetChaptersResponse
 from .get_library_voices_response import GetLibraryVoicesResponse
 from .get_projects_response import GetProjectsResponse
@@ -34,14 +36,19 @@ from .library_voice_response import LibraryVoiceResponse
 from .manual_verification_file_response import ManualVerificationFileResponse
 from .manual_verification_response import ManualVerificationResponse
 from .model import Model
+from .normalized_alignment import NormalizedAlignment
+from .optimize_streaming_latency import OptimizeStreamingLatency
+from .output_format import OutputFormat
 from .project_extended_response_model import ProjectExtendedResponseModel
 from .project_response import ProjectResponse
 from .project_snapshot_response import ProjectSnapshotResponse
 from .project_snapshots_response import ProjectSnapshotsResponse
 from .project_state import ProjectState
 from .pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
+from .realtime_voice_settings import RealtimeVoiceSettings
 from .recording_response import RecordingResponse
 from .review_status import ReviewStatus
+from .send_text import SendText
 from .source import Source
 from .speech_history_item_response import SpeechHistoryItemResponse
 from .speech_history_item_response_model_voice_category import SpeechHistoryItemResponseModelVoiceCategory
@@ -73,6 +80,7 @@ __all__ = [
     "Age",
     "AudioNativeCreateProjectResponseModel",
     "AudioNativeGetEmbedCodeResponseModel",
+    "AudioOutput",
     "ChapterResponse",
     "ChapterSnapshotResponse",
     "ChapterSnapshotsResponse",
@@ -85,6 +93,7 @@ __all__ = [
     "FineTuningResponse",
     "FinetuningState",
     "Gender",
+    "GenerationConfig",
     "GetChaptersResponse",
     "GetLibraryVoicesResponse",
     "GetProjectsResponse",
@@ -100,14 +109,19 @@ __all__ = [
     "ManualVerificationFileResponse",
     "ManualVerificationResponse",
     "Model",
+    "NormalizedAlignment",
+    "OptimizeStreamingLatency",
+    "OutputFormat",
     "ProjectExtendedResponseModel",
     "ProjectResponse",
     "ProjectSnapshotResponse",
     "ProjectSnapshotsResponse",
     "ProjectState",
     "PronunciationDictionaryVersionLocator",
+    "RealtimeVoiceSettings",
     "RecordingResponse",
     "ReviewStatus",
+    "SendText",
     "Source",
     "SpeechHistoryItemResponse",
     "SpeechHistoryItemResponseModelVoiceCategory",
