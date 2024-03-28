@@ -503,7 +503,7 @@ class AsyncHistoryClient:
             history_item_id="string",
         )
         """
-        async with self._client_wrapper.httpx_client.stream(
+        async with await self._client_wrapper.httpx_client.stream(
             "GET",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/history/{jsonable_encoder(history_item_id)}/audio"
