@@ -17,7 +17,7 @@ class BaseClientWrapper:
         headers: typing.Dict[str, str] = {
             "X-Fern-Language": "Python",
             "X-Fern-SDK-Name": "elevenlabs",
-            "X-Fern-SDK-Version": "v1.0.2",
+            "X-Fern-SDK-Version": "v1.0.3",
         }
         if self._api_key is not None:
             headers["xi-api-key"] = self._api_key

@@ -248,7 +248,7 @@ class AsyncSpeechToSpeechClient:
             optimize_streaming_latency=1,
         )
         """
-        async with self._client_wrapper.httpx_client.stream(
+        async with await self._client_wrapper.httpx_client.stream(
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/speech-to-speech/{jsonable_encoder(voice_id)}"
@@ -339,7 +339,7 @@ class AsyncSpeechToSpeechClient:
             optimize_streaming_latency=1,
         )
         """
-        async with self._client_wrapper.httpx_client.stream(
+        async with await self._client_wrapper.httpx_client.stream(
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/speech-to-speech/{jsonable_encoder(voice_id)}/stream"
