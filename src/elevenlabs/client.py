@@ -177,7 +177,6 @@ class ElevenLabs(BaseElevenLabs):
             voice_id = voice
         elif isinstance(voice, str):
             voices_response = self.voices.get_all(request_options=request_options)
-            print("voices_response", voices_response)
             maybe_voice_id = next((v.voice_id for v in voices_response.voices if v.name == voice), None)
             if maybe_voice_id is None:
                 raise ApiError(body=f"Voice {voice} not found.")
