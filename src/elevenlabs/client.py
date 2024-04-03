@@ -129,7 +129,7 @@ class ElevenLabs(BaseElevenLabs):
             typing.Sequence[PronunciationDictionaryVersionLocator]
         ] = OMIT,
       request_options: typing.Optional[RequestOptions] = None
-    ) -> Union[bytes, Iterator[bytes]]:
+    ) -> Iterator[bytes]:
         """
             - text: Union[str, Iterator[str]]. The string or stream of strings that will get converted into speech.
 
