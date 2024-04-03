@@ -1,7 +1,7 @@
 import asyncio
 import pytest
 
-from .utils import async_client
+from .utils import IN_GITHUB, async_client
 from elevenlabs import play
 
 def test_async_generation(): 
@@ -14,7 +14,8 @@ def test_async_generation():
         out = b''
         async for value in results:
             out += value
-        play(out)
+        if not IN_GITHUB:
+            play(out)
 
         results = await async_client.generate(
           voice='Rachel',
@@ -25,5 +26,6 @@ def test_async_generation():
         out = b''
         async for value in results:
             out += value
-        play(out)
+        if not IN_GITHUB:
+            play(out)
     asyncio.run(main())
