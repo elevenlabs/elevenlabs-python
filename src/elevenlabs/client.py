@@ -183,7 +183,7 @@ class ElevenLabs(BaseElevenLabs):
             voice_id = maybe_voice_id
         elif isinstance(voice, Voice):
             voice_id = voice.voice_id
-            if voice_settings != DEFAULT_VOICE.settings \
+            if voice_settings == DEFAULT_VOICE.settings \
                     and voice.settings is not None:
                 voice_settings = voice.settings
         else:
@@ -369,7 +369,7 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
             voice_id = maybe_voice_id
         elif isinstance(voice, Voice):
             voice_id = voice.voice_id
-            if voice_settings != DEFAULT_VOICE.settings \
+            if voice_settings == DEFAULT_VOICE.settings \
                     and voice.settings is not None:
                 voice_settings = voice.settings
         else:
