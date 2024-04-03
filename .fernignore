@@ -4,9 +4,6 @@ src/elevenlabs/client.py
 src/elevenlabs/play.py
 src/elevenlabs/realtime_tts.py
 
-# Async TTS
-src/elevenlabs/text_to_speech/client.py
-
 .github/workflows/ci.yml
 .github/workflows/tests.yml
 
