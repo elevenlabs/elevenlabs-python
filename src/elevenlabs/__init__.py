@@ -16,6 +16,7 @@ from .types import (
     ChapterStatisticsResponse,
     Currency,
     DoDubbingResponse,
+    DubbingMetadataResponse,
     ExtendedSubscriptionResponseModelBillingPeriod,
     FeedbackItem,
     FineTuningResponse,
@@ -75,6 +76,7 @@ from .types import (
 )
 from .errors import UnprocessableEntityError
 from . import (
+    admin,
     audio_native,
     chapters,
     dubbing,
@@ -109,6 +111,7 @@ __all__ = [
     "ChapterStatisticsResponse",
     "Currency",
     "DoDubbingResponse",
+    "DubbingMetadataResponse",
     "ElevenLabsEnvironment",
     "ExtendedSubscriptionResponseModelBillingPeriod",
     "FeedbackItem",
@@ -168,6 +171,7 @@ __all__ = [
     "VoiceSharingState",
     "VoiceVerificationResponse",
     "__version__",
+    "admin",
     "audio_native",
     "chapters",
     "dubbing",

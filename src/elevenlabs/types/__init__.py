@@ -15,6 +15,7 @@ from .chapter_state import ChapterState
 from .chapter_statistics_response import ChapterStatisticsResponse
 from .currency import Currency
 from .do_dubbing_response import DoDubbingResponse
+from .dubbing_metadata_response import DubbingMetadataResponse
 from .extended_subscription_response_model_billing_period import ExtendedSubscriptionResponseModelBillingPeriod
 from .feedback_item import FeedbackItem
 from .fine_tuning_response import FineTuningResponse
@@ -88,6 +89,7 @@ __all__ = [
     "ChapterStatisticsResponse",
     "Currency",
     "DoDubbingResponse",
+    "DubbingMetadataResponse",
     "ExtendedSubscriptionResponseModelBillingPeriod",
     "FeedbackItem",
     "FineTuningResponse",

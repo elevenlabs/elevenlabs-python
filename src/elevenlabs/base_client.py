@@ -5,6 +5,7 @@ import typing
 
 import httpx
 
+from .admin.client import AdminClient, AsyncAdminClient
 from .audio_native.client import AsyncAudioNativeClient, AudioNativeClient
 from .chapters.client import AsyncChaptersClient, ChaptersClient
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
@@ -75,6 +76,7 @@ class BaseElevenLabs:
         self.models = ModelsClient(client_wrapper=self._client_wrapper)
         self.audio_native = AudioNativeClient(client_wrapper=self._client_wrapper)
         self.pronunciation_dictionary = PronunciationDictionaryClient(client_wrapper=self._client_wrapper)
+        self.admin = AdminClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncBaseElevenLabs:
@@ -130,6 +132,7 @@ class AsyncBaseElevenLabs:
         self.models = AsyncModelsClient(client_wrapper=self._client_wrapper)
         self.audio_native = AsyncAudioNativeClient(client_wrapper=self._client_wrapper)
         self.pronunciation_dictionary = AsyncPronunciationDictionaryClient(client_wrapper=self._client_wrapper)
+        self.admin = AsyncAdminClient(client_wrapper=self._client_wrapper)
 
 
 def _get_base_url(*, base_url: typing.Optional[str] = None, environment: ElevenLabsEnvironment) -> str:

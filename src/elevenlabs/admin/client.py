@@ -4,15 +4,12 @@ import typing
 import urllib.parse
 from json.decoder import JSONDecodeError
 
-from .. import core
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
-from ..types.do_dubbing_response import DoDubbingResponse
-from ..types.dubbing_metadata_response import DubbingMetadataResponse
 from ..types.http_validation_error import HttpValidationError
 
 try:
@@ -24,63 +21,28 @@ except ImportError:
 OMIT = typing.cast(typing.Any, ...)
 
 
-class DubbingClient:
+class AdminClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def dub_a_video_or_an_audio_file(
+    def edit_vanity_link(
         self,
+        vanity_link_id: str,
         *,
-        mode: typing.Optional[str] = None,
-        file: typing.Optional[core.File] = None,
-        csv_file: typing.Optional[core.File] = None,
-        foreground_audio_file: typing.Optional[core.File] = None,
-        background_audio_file: typing.Optional[core.File] = None,
-        name: typing.Optional[str] = None,
-        source_url: typing.Optional[str] = None,
-        source_lang: typing.Optional[str] = None,
-        target_lang: str,
-        num_speakers: typing.Optional[int] = None,
-        watermark: typing.Optional[bool] = None,
-        start_time: typing.Optional[int] = None,
-        end_time: typing.Optional[int] = None,
-        highest_resolution: typing.Optional[bool] = None,
-        dubbing_studio: typing.Optional[bool] = None,
+        vanity_slug: str,
+        target_url: str,
+        comment: str,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> DoDubbingResponse:
+    ) -> typing.Any:
         """
-        Dubs provided audio or video file into given language.
-
         Parameters:
-            - mode: typing.Optional[str]. automatic or manual.
+            - vanity_link_id: str.
 
-            - file: typing.Optional[core.File]. See core.File for more documentation
+            - vanity_slug: str. The new slug for the vanity link. For example, if you want the vanity link to be /blog/NEW_SLUG, enter NEW_SLUG.
 
-            - csv_file: typing.Optional[core.File]. See core.File for more documentation
+            - target_url: str. The new URL that the vanity link should redirect to.
 
-            - foreground_audio_file: typing.Optional[core.File]. See core.File for more documentation
-
-            - background_audio_file: typing.Optional[core.File]. See core.File for more documentation
-
-            - name: typing.Optional[str]. Name of the dubbing project.
-
-            - source_url: typing.Optional[str]. URL of the source video/audio file.
-
-            - source_lang: typing.Optional[str]. Source language.
-
-            - target_lang: str. Target language.
-
-            - num_speakers: typing.Optional[int]. Number of speakers to use for the dubbing.
-
-            - watermark: typing.Optional[bool]. Whether to apply watermark to the output video.
-
-            - start_time: typing.Optional[int]. Start time of the source video/audio file.
-
-            - end_time: typing.Optional[int]. End time of the source video/audio file.
-
-            - highest_resolution: typing.Optional[bool]. Whether to use the highest resolution available.
-
-            - dubbing_studio: typing.Optional[bool]. Whether to prepare dub for edits in dubbing studio.
+            - comment: str. A new comment or description for the vanity link.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -89,61 +51,123 @@ class DubbingClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.dubbing.dub_a_video_or_an_audio_file()
+        client.admin.edit_vanity_link(
+            vanity_link_id="vanity_link_id",
+            vanity_slug="vanity_slug",
+            target_url="target_url",
+            comment="comment",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/dubbing"),
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/",
+                f"admin/n8enylacgd/vanity-link/{jsonable_encoder(vanity_link_id)}/update",
+            ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
-            data=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "mode": mode,
-                        "name": name,
-                        "source_url": source_url,
-                        "source_lang": source_lang,
-                        "target_lang": target_lang,
-                        "num_speakers": num_speakers,
-                        "watermark": watermark,
-                        "start_time": start_time,
-                        "end_time": end_time,
-                        "highest_resolution": highest_resolution,
-                        "dubbing_studio": dubbing_studio,
-                    }
-                )
-            )
+            json=jsonable_encoder({"vanity_slug": vanity_slug, "target_url": target_url, "comment": comment})
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(
-                    remove_none_from_dict(
-                        {
-                            "mode": mode,
-                            "name": name,
-                            "source_url": source_url,
-                            "source_lang": source_lang,
-                            "target_lang": target_lang,
-                            "num_speakers": num_speakers,
-                            "watermark": watermark,
-                            "start_time": start_time,
-                            "end_time": end_time,
-                            "highest_resolution": highest_resolution,
-                            "dubbing_studio": dubbing_studio,
-                        }
-                    )
-                ),
+                **jsonable_encoder({"vanity_slug": vanity_slug, "target_url": target_url, "comment": comment}),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
-            files=core.convert_file_dict_to_httpx_tuples(
+            headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
-                        "file": file,
-                        "csv_file": csv_file,
-                        "foreground_audio_file": foreground_audio_file,
-                        "background_audio_file": background_audio_file,
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic.parse_obj_as(typing.Any, _response.json())  # type: ignore
+        if _response.status_code == 422:
+            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def delete_vanity_link(
+        self, vanity_link_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Any:
+        """
+        Parameters:
+            - vanity_link_id: str.
+
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.admin.delete_vanity_link(
+            vanity_link_id="vanity_link_id",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "POST",
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/",
+                f"admin/n8enylacgd/vanity-link/{jsonable_encoder(vanity_link_id)}/delete",
+            ),
+            params=jsonable_encoder(
+                request_options.get("additional_query_parameters") if request_options is not None else None
+            ),
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic.parse_obj_as(typing.Any, _response.json())  # type: ignore
+        if _response.status_code == 422:
+            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get_all_vanity_links(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+        """
+        Parameters:
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.admin.get_all_vanity_links()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "GET",
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "admin/n8enylacgd/vanity-links"),
+            params=jsonable_encoder(
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -160,7 +184,7 @@ class DubbingClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(DoDubbingResponse, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(typing.Any, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:
@@ -169,14 +193,10 @@ class DubbingClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_dubbing_project_metadata(
-        self, dubbing_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> DubbingMetadataResponse:
+    def get_vanity_link(self, slug: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
         """
-        Returns metadata about a dubbing project, including whether it's still in progress or not
-
         Parameters:
-            - dubbing_id: str. ID of the dubbing project.
+            - slug: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -185,66 +205,14 @@ class DubbingClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.dubbing.get_dubbing_project_metadata(
-            dubbing_id="dubbing_id",
+        client.admin.get_vanity_link(
+            slug="slug",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"v1/dubbing/{jsonable_encoder(dubbing_id)}"
-            ),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
-            ),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
-        if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(DubbingMetadataResponse, _response.json())  # type: ignore
-        if _response.status_code == 422:
-            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def delete_dubbing_project(
-        self, dubbing_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Any:
-        """
-        Deletes a dubbing project.
-
-        Parameters:
-            - dubbing_id: str. ID of the dubbing project.
-
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
-        from elevenlabs.client import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.dubbing.delete_dubbing_project(
-            dubbing_id="dubbing_id",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "DELETE",
-            urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"v1/dubbing/{jsonable_encoder(dubbing_id)}"
+                f"{self._client_wrapper.get_base_url()}/", f"admin/n8enylacgd/vanity-link/{jsonable_encoder(slug)}"
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
@@ -273,16 +241,10 @@ class DubbingClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_dubbed_file(
-        self, dubbing_id: str, language_code: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    def archive_coupon(self, promocode: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
         """
-        Returns dubbed file as a streamed file. Videos will be returned in MP4 format and audio only dubs will be returned in MP3.
-
         Parameters:
-            - dubbing_id: str. ID of the dubbing project.
-
-            - language_code: str. ID of the language.
+            - promocode: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -291,17 +253,61 @@ class DubbingClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.dubbing.get_dubbed_file(
-            dubbing_id="dubbing_id",
-            language_code="language_code",
+        client.admin.archive_coupon(
+            promocode="promocode",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "GET",
+            "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
-                f"v1/dubbing/{jsonable_encoder(dubbing_id)}/audio/{jsonable_encoder(language_code)}",
+                f"admin/n8enylacgd/coupon/{jsonable_encoder(promocode)}/archive",
             ),
+            params=jsonable_encoder(
+                request_options.get("additional_query_parameters") if request_options is not None else None
+            ),
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic.parse_obj_as(typing.Any, _response.json())  # type: ignore
+        if _response.status_code == 422:
+            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get_all_coupons(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+        """
+        Parameters:
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.admin.get_all_coupons()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "GET",
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "admin/n8enylacgd/coupons"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -320,7 +326,7 @@ class DubbingClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return
+            return pydantic.parse_obj_as(typing.Any, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:
@@ -330,63 +336,28 @@ class DubbingClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
-class AsyncDubbingClient:
+class AsyncAdminClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def dub_a_video_or_an_audio_file(
+    async def edit_vanity_link(
         self,
+        vanity_link_id: str,
         *,
-        mode: typing.Optional[str] = None,
-        file: typing.Optional[core.File] = None,
-        csv_file: typing.Optional[core.File] = None,
-        foreground_audio_file: typing.Optional[core.File] = None,
-        background_audio_file: typing.Optional[core.File] = None,
-        name: typing.Optional[str] = None,
-        source_url: typing.Optional[str] = None,
-        source_lang: typing.Optional[str] = None,
-        target_lang: str,
-        num_speakers: typing.Optional[int] = None,
-        watermark: typing.Optional[bool] = None,
-        start_time: typing.Optional[int] = None,
-        end_time: typing.Optional[int] = None,
-        highest_resolution: typing.Optional[bool] = None,
-        dubbing_studio: typing.Optional[bool] = None,
+        vanity_slug: str,
+        target_url: str,
+        comment: str,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> DoDubbingResponse:
+    ) -> typing.Any:
         """
-        Dubs provided audio or video file into given language.
-
         Parameters:
-            - mode: typing.Optional[str]. automatic or manual.
+            - vanity_link_id: str.
 
-            - file: typing.Optional[core.File]. See core.File for more documentation
+            - vanity_slug: str. The new slug for the vanity link. For example, if you want the vanity link to be /blog/NEW_SLUG, enter NEW_SLUG.
 
-            - csv_file: typing.Optional[core.File]. See core.File for more documentation
+            - target_url: str. The new URL that the vanity link should redirect to.
 
-            - foreground_audio_file: typing.Optional[core.File]. See core.File for more documentation
-
-            - background_audio_file: typing.Optional[core.File]. See core.File for more documentation
-
-            - name: typing.Optional[str]. Name of the dubbing project.
-
-            - source_url: typing.Optional[str]. URL of the source video/audio file.
-
-            - source_lang: typing.Optional[str]. Source language.
-
-            - target_lang: str. Target language.
-
-            - num_speakers: typing.Optional[int]. Number of speakers to use for the dubbing.
-
-            - watermark: typing.Optional[bool]. Whether to apply watermark to the output video.
-
-            - start_time: typing.Optional[int]. Start time of the source video/audio file.
-
-            - end_time: typing.Optional[int]. End time of the source video/audio file.
-
-            - highest_resolution: typing.Optional[bool]. Whether to use the highest resolution available.
-
-            - dubbing_studio: typing.Optional[bool]. Whether to prepare dub for edits in dubbing studio.
+            - comment: str. A new comment or description for the vanity link.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -395,61 +366,123 @@ class AsyncDubbingClient:
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        await client.dubbing.dub_a_video_or_an_audio_file()
+        await client.admin.edit_vanity_link(
+            vanity_link_id="vanity_link_id",
+            vanity_slug="vanity_slug",
+            target_url="target_url",
+            comment="comment",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/dubbing"),
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/",
+                f"admin/n8enylacgd/vanity-link/{jsonable_encoder(vanity_link_id)}/update",
+            ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
-            data=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "mode": mode,
-                        "name": name,
-                        "source_url": source_url,
-                        "source_lang": source_lang,
-                        "target_lang": target_lang,
-                        "num_speakers": num_speakers,
-                        "watermark": watermark,
-                        "start_time": start_time,
-                        "end_time": end_time,
-                        "highest_resolution": highest_resolution,
-                        "dubbing_studio": dubbing_studio,
-                    }
-                )
-            )
+            json=jsonable_encoder({"vanity_slug": vanity_slug, "target_url": target_url, "comment": comment})
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(
-                    remove_none_from_dict(
-                        {
-                            "mode": mode,
-                            "name": name,
-                            "source_url": source_url,
-                            "source_lang": source_lang,
-                            "target_lang": target_lang,
-                            "num_speakers": num_speakers,
-                            "watermark": watermark,
-                            "start_time": start_time,
-                            "end_time": end_time,
-                            "highest_resolution": highest_resolution,
-                            "dubbing_studio": dubbing_studio,
-                        }
-                    )
-                ),
+                **jsonable_encoder({"vanity_slug": vanity_slug, "target_url": target_url, "comment": comment}),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
-            files=core.convert_file_dict_to_httpx_tuples(
+            headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
-                        "file": file,
-                        "csv_file": csv_file,
-                        "foreground_audio_file": foreground_audio_file,
-                        "background_audio_file": background_audio_file,
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic.parse_obj_as(typing.Any, _response.json())  # type: ignore
+        if _response.status_code == 422:
+            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def delete_vanity_link(
+        self, vanity_link_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Any:
+        """
+        Parameters:
+            - vanity_link_id: str.
+
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.admin.delete_vanity_link(
+            vanity_link_id="vanity_link_id",
+        )
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "POST",
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/",
+                f"admin/n8enylacgd/vanity-link/{jsonable_encoder(vanity_link_id)}/delete",
+            ),
+            params=jsonable_encoder(
+                request_options.get("additional_query_parameters") if request_options is not None else None
+            ),
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic.parse_obj_as(typing.Any, _response.json())  # type: ignore
+        if _response.status_code == 422:
+            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_all_vanity_links(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+        """
+        Parameters:
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.admin.get_all_vanity_links()
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "GET",
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "admin/n8enylacgd/vanity-links"),
+            params=jsonable_encoder(
+                request_options.get("additional_query_parameters") if request_options is not None else None
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -466,7 +499,7 @@ class AsyncDubbingClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(DoDubbingResponse, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(typing.Any, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:
@@ -475,14 +508,12 @@ class AsyncDubbingClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_dubbing_project_metadata(
-        self, dubbing_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> DubbingMetadataResponse:
+    async def get_vanity_link(
+        self, slug: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Any:
         """
-        Returns metadata about a dubbing project, including whether it's still in progress or not
-
         Parameters:
-            - dubbing_id: str. ID of the dubbing project.
+            - slug: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -491,66 +522,14 @@ class AsyncDubbingClient:
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        await client.dubbing.get_dubbing_project_metadata(
-            dubbing_id="dubbing_id",
+        await client.admin.get_vanity_link(
+            slug="slug",
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"v1/dubbing/{jsonable_encoder(dubbing_id)}"
-            ),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
-            ),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
-        if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(DubbingMetadataResponse, _response.json())  # type: ignore
-        if _response.status_code == 422:
-            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def delete_dubbing_project(
-        self, dubbing_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Any:
-        """
-        Deletes a dubbing project.
-
-        Parameters:
-            - dubbing_id: str. ID of the dubbing project.
-
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
-        from elevenlabs.client import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        await client.dubbing.delete_dubbing_project(
-            dubbing_id="dubbing_id",
-        )
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "DELETE",
-            urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"v1/dubbing/{jsonable_encoder(dubbing_id)}"
+                f"{self._client_wrapper.get_base_url()}/", f"admin/n8enylacgd/vanity-link/{jsonable_encoder(slug)}"
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
@@ -579,16 +558,12 @@ class AsyncDubbingClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_dubbed_file(
-        self, dubbing_id: str, language_code: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    async def archive_coupon(
+        self, promocode: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Any:
         """
-        Returns dubbed file as a streamed file. Videos will be returned in MP4 format and audio only dubs will be returned in MP3.
-
         Parameters:
-            - dubbing_id: str. ID of the dubbing project.
-
-            - language_code: str. ID of the language.
+            - promocode: str.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -597,17 +572,61 @@ class AsyncDubbingClient:
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        await client.dubbing.get_dubbed_file(
-            dubbing_id="dubbing_id",
-            language_code="language_code",
+        await client.admin.archive_coupon(
+            promocode="promocode",
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "GET",
+            "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
-                f"v1/dubbing/{jsonable_encoder(dubbing_id)}/audio/{jsonable_encoder(language_code)}",
+                f"admin/n8enylacgd/coupon/{jsonable_encoder(promocode)}/archive",
             ),
+            params=jsonable_encoder(
+                request_options.get("additional_query_parameters") if request_options is not None else None
+            ),
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic.parse_obj_as(typing.Any, _response.json())  # type: ignore
+        if _response.status_code == 422:
+            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_all_coupons(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+        """
+        Parameters:
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.admin.get_all_coupons()
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "GET",
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "admin/n8enylacgd/coupons"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -626,7 +645,7 @@ class AsyncDubbingClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return
+            return pydantic.parse_obj_as(typing.Any, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:
