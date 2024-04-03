@@ -3,11 +3,14 @@ import tempfile
 import httpx
 
 from typing import Sequence, Generator
-from elevenlabs.client import ElevenLabs
+from elevenlabs.client import ElevenLabs, \
+    AsyncElevenLabs
 
 IN_GITHUB = "GITHUB_ACTIONS" in os.environ
 
 client = ElevenLabs()
+
+async_client = AsyncElevenLabs()
 
 
 def as_local_files(urls: Sequence[str]) -> Generator[str, None, None]:
