@@ -326,7 +326,7 @@ class AsyncTextToSpeechClient:
             _request["voice_settings"] = voice_settings
         if pronunciation_dictionary_locators is not OMIT:
             _request["pronunciation_dictionary_locators"] = pronunciation_dictionary_locators
-        async with await self._client_wrapper.httpx_client.stream(
+        async with self._client_wrapper.httpx_client.stream(
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/text-to-speech/{jsonable_encoder(voice_id)}"
@@ -442,7 +442,7 @@ class AsyncTextToSpeechClient:
             _request["voice_settings"] = voice_settings
         if pronunciation_dictionary_locators is not OMIT:
             _request["pronunciation_dictionary_locators"] = pronunciation_dictionary_locators
-        async with await self._client_wrapper.httpx_client.stream(
+        async with self._client_wrapper.httpx_client.stream(
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream"

@@ -308,7 +308,7 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
             typing.Sequence[PronunciationDictionaryVersionLocator]
         ] = OMIT,
       request_options: typing.Optional[RequestOptions] = None
-    ) -> Union[bytes, AsyncIterator[bytes]]:
+    ) -> AsyncIterator[bytes]:
         """
           This is a manually mnaintained helper function that generates a 
           voice from provided text.
