@@ -553,7 +553,7 @@ class VoicesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_voices(
+    def get_shared(
         self,
         *,
         page_size: typing.Optional[int] = None,
@@ -602,7 +602,7 @@ class VoicesClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.voices.get_voices()
+        client.voices.get_shared()
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -1182,7 +1182,7 @@ class AsyncVoicesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_voices(
+    async def get_shared(
         self,
         *,
         page_size: typing.Optional[int] = None,
@@ -1231,7 +1231,7 @@ class AsyncVoicesClient:
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        await client.voices.get_voices()
+        await client.voices.get_shared()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
