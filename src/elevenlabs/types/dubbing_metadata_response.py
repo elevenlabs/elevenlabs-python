@@ -11,13 +11,12 @@ except ImportError:
     import pydantic  # type: ignore
 
 
-class GetPronunciationDictionaryMetadataResponse(pydantic.BaseModel):
-    id: str
-    latest_version_id: str
+class DubbingMetadataResponse(pydantic.BaseModel):
+    dubbing_id: str
     name: str
-    created_by: str
-    creation_time_unix: int
-    description: typing.Optional[str] = None
+    status: str
+    error: str
+    target_languages: typing.List[str]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

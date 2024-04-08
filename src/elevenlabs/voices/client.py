@@ -561,6 +561,7 @@ class VoicesClient:
         gender: typing.Optional[str] = None,
         age: typing.Optional[str] = None,
         accent: typing.Optional[str] = None,
+        language: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         use_cases: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         descriptives: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -573,7 +574,7 @@ class VoicesClient:
         Gets a list of shared voices.
 
         Parameters:
-            - page_size: typing.Optional[int]. How many shared voices to return at maximum. Can not exceed 500, defaults to 30.
+            - page_size: typing.Optional[int]. How many shared voices to return at maximum. Can not exceed 100, defaults to 30.
 
             - category: typing.Optional[str]. voice category used for filtering
 
@@ -582,6 +583,8 @@ class VoicesClient:
             - age: typing.Optional[str]. age used for filtering
 
             - accent: typing.Optional[str]. accent used for filtering
+
+            - language: typing.Optional[str]. language used for filtering
 
             - search: typing.Optional[str]. search term used for filtering
 
@@ -615,6 +618,7 @@ class VoicesClient:
                         "gender": gender,
                         "age": age,
                         "accent": accent,
+                        "language": language,
                         "search": search,
                         "use_cases": use_cases,
                         "descriptives": descriptives,
@@ -1190,6 +1194,7 @@ class AsyncVoicesClient:
         gender: typing.Optional[str] = None,
         age: typing.Optional[str] = None,
         accent: typing.Optional[str] = None,
+        language: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         use_cases: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         descriptives: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -1202,7 +1207,7 @@ class AsyncVoicesClient:
         Gets a list of shared voices.
 
         Parameters:
-            - page_size: typing.Optional[int]. How many shared voices to return at maximum. Can not exceed 500, defaults to 30.
+            - page_size: typing.Optional[int]. How many shared voices to return at maximum. Can not exceed 100, defaults to 30.
 
             - category: typing.Optional[str]. voice category used for filtering
 
@@ -1211,6 +1216,8 @@ class AsyncVoicesClient:
             - age: typing.Optional[str]. age used for filtering
 
             - accent: typing.Optional[str]. accent used for filtering
+
+            - language: typing.Optional[str]. language used for filtering
 
             - search: typing.Optional[str]. search term used for filtering
 
@@ -1244,6 +1251,7 @@ class AsyncVoicesClient:
                         "gender": gender,
                         "age": age,
                         "accent": accent,
+                        "language": language,
                         "search": search,
                         "use_cases": use_cases,
                         "descriptives": descriptives,

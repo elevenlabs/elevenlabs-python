@@ -24,6 +24,7 @@ class SpeechToSpeechClient:
         voice_id: str,
         *,
         optimize_streaming_latency: typing.Optional[int] = None,
+        output_format: typing.Optional[str] = None,
         audio: core.File,
         model_id: typing.Optional[str] = None,
         voice_settings: typing.Optional[str] = None,
@@ -43,6 +44,18 @@ class SpeechToSpeechClient:
                                                                 4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
 
                                                                 Defaults to 0.
+            - output_format: typing.Optional[str]. Output format of the generated audio. Must be one of:
+                                                   mp3_22050_32 - output format, mp3 with 22.05kHz sample rate at 32kbps.
+                                                   mp3_44100_32 - output format, mp3 with 44.1kHz sample rate at 32kbps.
+                                                   mp3_44100_64 - output format, mp3 with 44.1kHz sample rate at 64kbps.
+                                                   mp3_44100_96 - output format, mp3 with 44.1kHz sample rate at 96kbps.
+                                                   mp3_44100_128 - default output format, mp3 with 44.1kHz sample rate at 128kbps.
+                                                   mp3_44100_192 - output format, mp3 with 44.1kHz sample rate at 192kbps. Requires you to be subscribed to Creator tier or above.
+                                                   pcm_16000 - PCM format (S16LE) with 16kHz sample rate.
+                                                   pcm_22050 - PCM format (S16LE) with 22.05kHz sample rate.
+                                                   pcm_24000 - PCM format (S16LE) with 24kHz sample rate.
+                                                   pcm_44100 - PCM format (S16LE) with 44.1kHz sample rate. Requires you to be subscribed to Pro tier or above.
+                                                   ulaw_8000 - μ-law format (sometimes written mu-law, often approximated as u-law) with 8kHz sample rate. Note that this format is commonly used for Twilio audio inputs.
             - audio: core.File. See core.File for more documentation
 
             - model_id: typing.Optional[str]. Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
@@ -59,6 +72,7 @@ class SpeechToSpeechClient:
         client.speech_to_speech.convert(
             voice_id="string",
             optimize_streaming_latency=1,
+            output_format="string",
         )
         """
         with self._client_wrapper.httpx_client.stream(
@@ -70,6 +84,7 @@ class SpeechToSpeechClient:
                 remove_none_from_dict(
                     {
                         "optimize_streaming_latency": optimize_streaming_latency,
+                        "output_format": output_format,
                         **(
                             request_options.get("additional_query_parameters", {})
                             if request_options is not None
@@ -115,6 +130,7 @@ class SpeechToSpeechClient:
         voice_id: str,
         *,
         optimize_streaming_latency: typing.Optional[int] = None,
+        output_format: typing.Optional[str] = None,
         audio: core.File,
         model_id: typing.Optional[str] = None,
         voice_settings: typing.Optional[str] = None,
@@ -134,6 +150,18 @@ class SpeechToSpeechClient:
                                                                 4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
 
                                                                 Defaults to 0.
+            - output_format: typing.Optional[str]. Output format of the generated audio. Must be one of:
+                                                   mp3_22050_32 - output format, mp3 with 22.05kHz sample rate at 32kbps.
+                                                   mp3_44100_32 - output format, mp3 with 44.1kHz sample rate at 32kbps.
+                                                   mp3_44100_64 - output format, mp3 with 44.1kHz sample rate at 64kbps.
+                                                   mp3_44100_96 - output format, mp3 with 44.1kHz sample rate at 96kbps.
+                                                   mp3_44100_128 - default output format, mp3 with 44.1kHz sample rate at 128kbps.
+                                                   mp3_44100_192 - output format, mp3 with 44.1kHz sample rate at 192kbps. Requires you to be subscribed to Creator tier or above.
+                                                   pcm_16000 - PCM format (S16LE) with 16kHz sample rate.
+                                                   pcm_22050 - PCM format (S16LE) with 22.05kHz sample rate.
+                                                   pcm_24000 - PCM format (S16LE) with 24kHz sample rate.
+                                                   pcm_44100 - PCM format (S16LE) with 44.1kHz sample rate. Requires you to be subscribed to Pro tier or above.
+                                                   ulaw_8000 - μ-law format (sometimes written mu-law, often approximated as u-law) with 8kHz sample rate. Note that this format is commonly used for Twilio audio inputs.
             - audio: core.File. See core.File for more documentation
 
             - model_id: typing.Optional[str]. Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
@@ -150,6 +178,7 @@ class SpeechToSpeechClient:
         client.speech_to_speech.convert_as_stream(
             voice_id="string",
             optimize_streaming_latency=1,
+            output_format="string",
         )
         """
         with self._client_wrapper.httpx_client.stream(
@@ -161,6 +190,7 @@ class SpeechToSpeechClient:
                 remove_none_from_dict(
                     {
                         "optimize_streaming_latency": optimize_streaming_latency,
+                        "output_format": output_format,
                         **(
                             request_options.get("additional_query_parameters", {})
                             if request_options is not None
@@ -211,6 +241,7 @@ class AsyncSpeechToSpeechClient:
         voice_id: str,
         *,
         optimize_streaming_latency: typing.Optional[int] = None,
+        output_format: typing.Optional[str] = None,
         audio: core.File,
         model_id: typing.Optional[str] = None,
         voice_settings: typing.Optional[str] = None,
@@ -230,6 +261,18 @@ class AsyncSpeechToSpeechClient:
                                                                 4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
 
                                                                 Defaults to 0.
+            - output_format: typing.Optional[str]. Output format of the generated audio. Must be one of:
+                                                   mp3_22050_32 - output format, mp3 with 22.05kHz sample rate at 32kbps.
+                                                   mp3_44100_32 - output format, mp3 with 44.1kHz sample rate at 32kbps.
+                                                   mp3_44100_64 - output format, mp3 with 44.1kHz sample rate at 64kbps.
+                                                   mp3_44100_96 - output format, mp3 with 44.1kHz sample rate at 96kbps.
+                                                   mp3_44100_128 - default output format, mp3 with 44.1kHz sample rate at 128kbps.
+                                                   mp3_44100_192 - output format, mp3 with 44.1kHz sample rate at 192kbps. Requires you to be subscribed to Creator tier or above.
+                                                   pcm_16000 - PCM format (S16LE) with 16kHz sample rate.
+                                                   pcm_22050 - PCM format (S16LE) with 22.05kHz sample rate.
+                                                   pcm_24000 - PCM format (S16LE) with 24kHz sample rate.
+                                                   pcm_44100 - PCM format (S16LE) with 44.1kHz sample rate. Requires you to be subscribed to Pro tier or above.
+                                                   ulaw_8000 - μ-law format (sometimes written mu-law, often approximated as u-law) with 8kHz sample rate. Note that this format is commonly used for Twilio audio inputs.
             - audio: core.File. See core.File for more documentation
 
             - model_id: typing.Optional[str]. Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
@@ -246,9 +289,10 @@ class AsyncSpeechToSpeechClient:
         await client.speech_to_speech.convert(
             voice_id="string",
             optimize_streaming_latency=1,
+            output_format="string",
         )
         """
-        async with await self._client_wrapper.httpx_client.stream(
+        async with self._client_wrapper.httpx_client.stream(
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/speech-to-speech/{jsonable_encoder(voice_id)}"
@@ -257,6 +301,7 @@ class AsyncSpeechToSpeechClient:
                 remove_none_from_dict(
                     {
                         "optimize_streaming_latency": optimize_streaming_latency,
+                        "output_format": output_format,
                         **(
                             request_options.get("additional_query_parameters", {})
                             if request_options is not None
@@ -302,6 +347,7 @@ class AsyncSpeechToSpeechClient:
         voice_id: str,
         *,
         optimize_streaming_latency: typing.Optional[int] = None,
+        output_format: typing.Optional[str] = None,
         audio: core.File,
         model_id: typing.Optional[str] = None,
         voice_settings: typing.Optional[str] = None,
@@ -321,6 +367,18 @@ class AsyncSpeechToSpeechClient:
                                                                 4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
 
                                                                 Defaults to 0.
+            - output_format: typing.Optional[str]. Output format of the generated audio. Must be one of:
+                                                   mp3_22050_32 - output format, mp3 with 22.05kHz sample rate at 32kbps.
+                                                   mp3_44100_32 - output format, mp3 with 44.1kHz sample rate at 32kbps.
+                                                   mp3_44100_64 - output format, mp3 with 44.1kHz sample rate at 64kbps.
+                                                   mp3_44100_96 - output format, mp3 with 44.1kHz sample rate at 96kbps.
+                                                   mp3_44100_128 - default output format, mp3 with 44.1kHz sample rate at 128kbps.
+                                                   mp3_44100_192 - output format, mp3 with 44.1kHz sample rate at 192kbps. Requires you to be subscribed to Creator tier or above.
+                                                   pcm_16000 - PCM format (S16LE) with 16kHz sample rate.
+                                                   pcm_22050 - PCM format (S16LE) with 22.05kHz sample rate.
+                                                   pcm_24000 - PCM format (S16LE) with 24kHz sample rate.
+                                                   pcm_44100 - PCM format (S16LE) with 44.1kHz sample rate. Requires you to be subscribed to Pro tier or above.
+                                                   ulaw_8000 - μ-law format (sometimes written mu-law, often approximated as u-law) with 8kHz sample rate. Note that this format is commonly used for Twilio audio inputs.
             - audio: core.File. See core.File for more documentation
 
             - model_id: typing.Optional[str]. Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
@@ -337,9 +395,10 @@ class AsyncSpeechToSpeechClient:
         await client.speech_to_speech.convert_as_stream(
             voice_id="string",
             optimize_streaming_latency=1,
+            output_format="string",
         )
         """
-        async with await self._client_wrapper.httpx_client.stream(
+        async with self._client_wrapper.httpx_client.stream(
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/speech-to-speech/{jsonable_encoder(voice_id)}/stream"
@@ -348,6 +407,7 @@ class AsyncSpeechToSpeechClient:
                 remove_none_from_dict(
                     {
                         "optimize_streaming_latency": optimize_streaming_latency,
+                        "output_format": output_format,
                         **(
                             request_options.get("additional_query_parameters", {})
                             if request_options is not None

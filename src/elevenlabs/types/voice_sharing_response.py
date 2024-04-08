@@ -27,10 +27,6 @@ class VoiceSharingResponse(pydantic.BaseModel):
     notice_period: typing.Optional[int] = None
     disable_at_unix: typing.Optional[int] = None
     voice_mixing_allowed: typing.Optional[bool] = None
-    instagram_username: typing.Optional[str] = None
-    twitter_username: typing.Optional[str] = None
-    youtube_username: typing.Optional[str] = None
-    tiktok_username: typing.Optional[str] = None
     featured: typing.Optional[bool] = None
     ban_reason: typing.Optional[str] = None
     liked_by_count: typing.Optional[int] = None
@@ -41,6 +37,10 @@ class VoiceSharingResponse(pydantic.BaseModel):
     review_status: typing.Optional[ReviewStatus] = None
     review_message: typing.Optional[str] = None
     enabled_in_library: typing.Optional[bool] = None
+    instagram_username: typing.Optional[str] = None
+    twitter_username: typing.Optional[str] = None
+    youtube_username: typing.Optional[str] = None
+    tiktok_username: typing.Optional[str] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
