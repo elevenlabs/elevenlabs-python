@@ -21,7 +21,7 @@ pip install elevenlabs
 ```
 
 ## v0.x to v1.x Migration Guide
-> The SDK was rewritten in v1 and is now programatically generated from our OpenAPI spec. As part of this release 
+> The SDK was rewritten in v1 and is now programmatically generated from our OpenAPI spec. As part of this release 
 > there are some breaking changes. 
 
 
@@ -143,7 +143,7 @@ client = ElevenLabs(
 
 response = client.voices.get_all()
 audio = client.generate(text="Hello there!", voice=response.voices[0])
-print(voices)
+print(response.voices)
 ```
 
 <details> <summary> Show output </summary>
