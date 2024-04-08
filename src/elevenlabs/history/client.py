@@ -251,13 +251,19 @@ class HistoryClient:
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def download(
-        self, *, history_item_ids: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        history_item_ids: typing.Sequence[str],
+        output_format: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Download one or more history items. If one history item ID is provided, we will return a single audio file. If more than one history item IDs are provided, we will provide the history items packed into a .zip file.
 
         Parameters:
             - history_item_ids: typing.Sequence[str]. A list of history items to download, you can get IDs of history items and other metadata using the GET https://api.elevenlabs.io/v1/history endpoint.
+
+            - output_format: typing.Optional[str]. Output format to transcode the audio file, can be wav or default.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -270,16 +276,19 @@ class HistoryClient:
             history_item_ids=["history_item_ids"],
         )
         """
+        _request: typing.Dict[str, typing.Any] = {"history_item_ids": history_item_ids}
+        if output_format is not OMIT:
+            _request["output_format"] = output_format
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/history/download"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
-            json=jsonable_encoder({"history_item_ids": history_item_ids})
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder({"history_item_ids": history_item_ids}),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -503,7 +512,7 @@ class AsyncHistoryClient:
             history_item_id="string",
         )
         """
-        async with await self._client_wrapper.httpx_client.stream(
+        async with self._client_wrapper.httpx_client.stream(
             "GET",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/history/{jsonable_encoder(history_item_id)}/audio"
@@ -537,13 +546,19 @@ class AsyncHistoryClient:
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def download(
-        self, *, history_item_ids: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        history_item_ids: typing.Sequence[str],
+        output_format: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Download one or more history items. If one history item ID is provided, we will return a single audio file. If more than one history item IDs are provided, we will provide the history items packed into a .zip file.
 
         Parameters:
             - history_item_ids: typing.Sequence[str]. A list of history items to download, you can get IDs of history items and other metadata using the GET https://api.elevenlabs.io/v1/history endpoint.
+
+            - output_format: typing.Optional[str]. Output format to transcode the audio file, can be wav or default.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -556,16 +571,19 @@ class AsyncHistoryClient:
             history_item_ids=["history_item_ids"],
         )
         """
+        _request: typing.Dict[str, typing.Any] = {"history_item_ids": history_item_ids}
+        if output_format is not OMIT:
+            _request["output_format"] = output_format
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/history/download"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
-            json=jsonable_encoder({"history_item_ids": history_item_ids})
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder({"history_item_ids": history_item_ids}),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(

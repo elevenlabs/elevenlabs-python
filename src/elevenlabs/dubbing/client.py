@@ -12,6 +12,7 @@ from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.do_dubbing_response import DoDubbingResponse
+from ..types.dubbing_metadata_response import DubbingMetadataResponse
 from ..types.http_validation_error import HttpValidationError
 
 try:
@@ -170,7 +171,7 @@ class DubbingClient:
 
     def get_dubbing_project_metadata(
         self, dubbing_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Any:
+    ) -> DubbingMetadataResponse:
         """
         Returns metadata about a dubbing project, including whether it's still in progress or not
 
@@ -211,7 +212,7 @@ class DubbingClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(typing.Any, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(DubbingMetadataResponse, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:
@@ -274,9 +275,9 @@ class DubbingClient:
 
     def get_dubbed_file(
         self, dubbing_id: str, language_code: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Any:
+    ) -> None:
         """
-        Returns dubbed file.
+        Returns dubbed file as a streamed file. Videos will be returned in MP4 format and audio only dubs will be returned in MP3.
 
         Parameters:
             - dubbing_id: str. ID of the dubbing project.
@@ -319,7 +320,7 @@ class DubbingClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(typing.Any, _response.json())  # type: ignore
+            return
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:
@@ -476,7 +477,7 @@ class AsyncDubbingClient:
 
     async def get_dubbing_project_metadata(
         self, dubbing_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Any:
+    ) -> DubbingMetadataResponse:
         """
         Returns metadata about a dubbing project, including whether it's still in progress or not
 
@@ -517,7 +518,7 @@ class AsyncDubbingClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(typing.Any, _response.json())  # type: ignore
+            return pydantic.parse_obj_as(DubbingMetadataResponse, _response.json())  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:
@@ -580,9 +581,9 @@ class AsyncDubbingClient:
 
     async def get_dubbed_file(
         self, dubbing_id: str, language_code: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Any:
+    ) -> None:
         """
-        Returns dubbed file.
+        Returns dubbed file as a streamed file. Videos will be returned in MP4 format and audio only dubs will be returned in MP3.
 
         Parameters:
             - dubbing_id: str. ID of the dubbing project.
@@ -625,7 +626,7 @@ class AsyncDubbingClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(typing.Any, _response.json())  # type: ignore
+            return
         if _response.status_code == 422:
             raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
         try:

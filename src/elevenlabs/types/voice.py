@@ -32,6 +32,8 @@ class Voice(pydantic.BaseModel):
     high_quality_base_model_ids: typing.Optional[typing.List[str]] = None
     safety_control: typing.Optional[VoiceResponseModelSafetyControl] = None
     voice_verification: typing.Optional[VoiceVerificationResponse] = None
+    owner_id: typing.Optional[str] = None
+    permission_on_resource: typing.Optional[str] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
