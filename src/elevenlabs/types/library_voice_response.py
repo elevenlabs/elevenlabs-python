@@ -32,11 +32,11 @@ class LibraryVoiceResponse(pydantic.BaseModel):
     free_users_allowed: bool
     live_moderation_enabled: bool
     notice_period: int
-    instagram_username: str
-    twitter_username: str
-    youtube_username: str
-    tiktok_username: str
     featured: bool
+    instagram_username: typing.Optional[str] = None
+    twitter_username: typing.Optional[str] = None
+    youtube_username: typing.Optional[str] = None
+    tiktok_username: typing.Optional[str] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
