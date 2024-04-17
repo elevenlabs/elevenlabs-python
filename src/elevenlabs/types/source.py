@@ -2,4 +2,4 @@
 
 import typing
 
-Source = typing.Union[typing.AnyStr, typing.Literal["TTS", "STS"]]
+Source = typing.Union[typing.Literal["TTS", "STS"], typing.Any]

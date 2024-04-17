@@ -3,6 +3,7 @@
 from .accent import Accent
 from .add_project_response_model import AddProjectResponseModel
 from .add_pronunciation_dictionary_response_model import AddPronunciationDictionaryResponseModel
+from .add_pronunciation_dictionary_rules_response_model import AddPronunciationDictionaryRulesResponseModel
 from .add_voice_response_model import AddVoiceResponseModel
 from .age import Age
 from .audio_native_create_project_response_model import AudioNativeCreateProjectResponseModel
@@ -45,9 +46,12 @@ from .project_response import ProjectResponse
 from .project_snapshot_response import ProjectSnapshotResponse
 from .project_snapshots_response import ProjectSnapshotsResponse
 from .project_state import ProjectState
+from .pronunciation_dictionary_alias_rule_request_model import PronunciationDictionaryAliasRuleRequestModel
+from .pronunciation_dictionary_phoneme_rule_request_model import PronunciationDictionaryPhonemeRuleRequestModel
 from .pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
 from .realtime_voice_settings import RealtimeVoiceSettings
 from .recording_response import RecordingResponse
+from .remove_pronunciation_dictionary_rules_response_model import RemovePronunciationDictionaryRulesResponseModel
 from .review_status import ReviewStatus
 from .send_text import SendText
 from .source import Source
@@ -77,6 +81,7 @@ __all__ = [
     "Accent",
     "AddProjectResponseModel",
     "AddPronunciationDictionaryResponseModel",
+    "AddPronunciationDictionaryRulesResponseModel",
     "AddVoiceResponseModel",
     "Age",
     "AudioNativeCreateProjectResponseModel",
@@ -119,9 +124,12 @@ __all__ = [
     "ProjectSnapshotResponse",
     "ProjectSnapshotsResponse",
     "ProjectState",
+    "PronunciationDictionaryAliasRuleRequestModel",
+    "PronunciationDictionaryPhonemeRuleRequestModel",
     "PronunciationDictionaryVersionLocator",
     "RealtimeVoiceSettings",
     "RecordingResponse",
+    "RemovePronunciationDictionaryRulesResponseModel",
     "ReviewStatus",
     "SendText",
     "Source",

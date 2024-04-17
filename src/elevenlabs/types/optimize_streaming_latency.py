@@ -2,4 +2,4 @@
 
 import typing
 
-OptimizeStreamingLatency = typing.Union[typing.AnyStr, typing.Literal["0", "1", "2", "3", "4"]]
+OptimizeStreamingLatency = typing.Union[typing.Literal["0", "1", "2", "3", "4"], typing.Any]

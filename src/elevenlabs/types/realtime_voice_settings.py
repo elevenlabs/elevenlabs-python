@@ -4,30 +4,27 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ..core.pydantic_utilities import pydantic_v1
+from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class RealtimeVoiceSettings(pydantic.BaseModel):
-    stability: float = pydantic.Field()
+class RealtimeVoiceSettings(UncheckedBaseModel):
+    stability: float = pydantic_v1.Field()
     """
     Defines the stability for voice settings.
     """
 
-    similarity_boost: float = pydantic.Field()
+    similarity_boost: float = pydantic_v1.Field()
     """
     Defines the similarity boost for voice settings.
     """
 
-    style: typing.Optional[float] = pydantic.Field(default=None)
+    style: typing.Optional[float] = pydantic_v1.Field(default=None)
     """
     Defines the style for voice settings. This parameter is available on V2+ models.
     """
 
-    use_speaker_boost: typing.Optional[bool] = pydantic.Field(default=None)
+    use_speaker_boost: typing.Optional[bool] = pydantic_v1.Field(default=None)
     """
     Defines the use speaker boost for voice settings. This parameter is available on V2+ models.
     """
@@ -43,5 +40,5 @@ class RealtimeVoiceSettings(pydantic.BaseModel):
     class Config:
         frozen = True
         smart_union = True
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

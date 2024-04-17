@@ -4,22 +4,19 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
+from ..core.pydantic_utilities import pydantic_v1
+from ..core.unchecked_base_model import UncheckedBaseModel
 from .generation_config import GenerationConfig
 from .realtime_voice_settings import RealtimeVoiceSettings
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class SendText(pydantic.BaseModel):
-    text: str = pydantic.Field()
+class SendText(UncheckedBaseModel):
+    text: str = pydantic_v1.Field()
     """
     Should always end with a single space string `" "`. In the first message, the text should be a space `" "`.
     """
 
-    try_trigger_generation: typing.Optional[bool] = pydantic.Field(default=None)
+    try_trigger_generation: typing.Optional[bool] = pydantic_v1.Field(default=None)
     """
     This is an advanced setting that most users shouldn't need to use. It relates to our generation schedule
     explained [here](#understanding-how-our-websockets-buffer-text).
@@ -36,7 +33,7 @@ class SendText(pydantic.BaseModel):
     """
 
     voice_settings: typing.Optional[RealtimeVoiceSettings] = None
-    generation_config: typing.Optional[GenerationConfig] = pydantic.Field(default=None)
+    generation_config: typing.Optional[GenerationConfig] = pydantic_v1.Field(default=None)
     """
     This property should only be provided in the first message you send.
     """
@@ -52,5 +49,5 @@ class SendText(pydantic.BaseModel):
     class Config:
         frozen = True
         smart_union = True
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

@@ -2,4 +2,4 @@
 
 import typing
 
-SsoProviderDbModelProviderType = typing.Union[typing.AnyStr, typing.Literal["saml", "oidc"]]
+SsoProviderDbModelProviderType = typing.Union[typing.Literal["saml", "oidc"], typing.Any]
