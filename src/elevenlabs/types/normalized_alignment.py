@@ -4,19 +4,16 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ..core.pydantic_utilities import pydantic_v1
+from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class NormalizedAlignment(pydantic.BaseModel):
+class NormalizedAlignment(UncheckedBaseModel):
     """
     Alignment information for the generated audio given the input normalized text sequence.
     """
 
-    char_start_times_ms: typing.Optional[typing.List[int]] = pydantic.Field(default=None)
+    char_start_times_ms: typing.Optional[typing.List[int]] = pydantic_v1.Field(default=None)
     """
     A list of starting times (in milliseconds) for each character in the normalized text as it
     corresponds to the audio. For instance, the character 'H' starts at time 0 ms in the audio.  
@@ -24,7 +21,7 @@ class NormalizedAlignment(pydantic.BaseModel):
     full audio response.
     """
 
-    chars_durations_ms: typing.Optional[typing.List[int]] = pydantic.Field(default=None)
+    chars_durations_ms: typing.Optional[typing.List[int]] = pydantic_v1.Field(default=None)
     """
     A list of durations (in milliseconds) for each character in the normalized text as it
     corresponds to the audio. For instance, the character 'H' lasts for 3 ms in the audio.  
@@ -32,7 +29,7 @@ class NormalizedAlignment(pydantic.BaseModel):
     full audio response.
     """
 
-    chars: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    chars: typing.Optional[typing.List[str]] = pydantic_v1.Field(default=None)
     """
     A list of characters in the normalized text sequence. For instance, the first character is 'H'.
     Note that this list may contain spaces, punctuation, and other special characters.
@@ -50,5 +47,5 @@ class NormalizedAlignment(pydantic.BaseModel):
     class Config:
         frozen = True
         smart_union = True
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

@@ -6,24 +6,12 @@ import typing
 from ..core.datetime_utils import serialize_datetime
 from ..core.pydantic_utilities import pydantic_v1
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .language_response import LanguageResponse
 
 
-class Model(UncheckedBaseModel):
-    model_id: str
-    name: typing.Optional[str] = None
-    can_be_finetuned: typing.Optional[bool] = None
-    can_do_text_to_speech: typing.Optional[bool] = None
-    can_do_voice_conversion: typing.Optional[bool] = None
-    can_use_style: typing.Optional[bool] = None
-    can_use_speaker_boost: typing.Optional[bool] = None
-    serves_pro_voices: typing.Optional[bool] = None
-    token_cost_factor: typing.Optional[float] = None
-    description: typing.Optional[str] = None
-    requires_alpha_access: typing.Optional[bool] = None
-    max_characters_request_free_user: typing.Optional[int] = None
-    max_characters_request_subscribed_user: typing.Optional[int] = None
-    languages: typing.Optional[typing.List[LanguageResponse]] = None
+class PronunciationDictionaryPhonemeRuleRequestModel(UncheckedBaseModel):
+    string_to_replace: str
+    phoneme: str
+    alphabet: str
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

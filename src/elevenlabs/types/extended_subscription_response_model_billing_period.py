@@ -3,5 +3,5 @@
 import typing
 
 ExtendedSubscriptionResponseModelBillingPeriod = typing.Union[
-    typing.AnyStr, typing.Literal["monthly_period", "annual_period"]
+    typing.Literal["monthly_period", "annual_period"], typing.Any
 ]

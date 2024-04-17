@@ -3,7 +3,6 @@
 import typing
 
 OutputFormat = typing.Union[
-    typing.AnyStr,
     typing.Literal[
         "mp3_22050_32",
         "mp3_44100_32",
@@ -17,4 +16,5 @@ OutputFormat = typing.Union[
         "pcm_44100",
         "ulaw_8000",
     ],
+    typing.Any,
 ]

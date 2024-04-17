@@ -4,27 +4,24 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
+from ..core.pydantic_utilities import pydantic_v1
+from ..core.unchecked_base_model import UncheckedBaseModel
 from .normalized_alignment import NormalizedAlignment
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class AudioOutput(pydantic.BaseModel):
-    audio: typing.Optional[str] = pydantic.Field(default=None)
+class AudioOutput(UncheckedBaseModel):
+    audio: typing.Optional[str] = pydantic_v1.Field(default=None)
     """
     A generated partial audio chunk, encoded using the selected output_format, by default this
     is MP3 encoded as a base64 string.
     """
 
-    is_final: typing.Optional[bool] = pydantic.Field(alias="isFinal", default=None)
+    is_final: typing.Optional[bool] = pydantic_v1.Field(alias="isFinal", default=None)
     """
     Indicates if the generation is complete. If set to `True`, `audio` will be null.
     """
 
-    normalized_alignment: typing.Optional[NormalizedAlignment] = pydantic.Field(
+    normalized_alignment: typing.Optional[NormalizedAlignment] = pydantic_v1.Field(
         alias="normalizedAlignment", default=None
     )
 
@@ -41,5 +38,5 @@ class AudioOutput(pydantic.BaseModel):
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

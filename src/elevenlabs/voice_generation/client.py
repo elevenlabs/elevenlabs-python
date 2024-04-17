@@ -9,17 +9,13 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
+from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.age import Age
 from ..types.gender import Gender
 from ..types.http_validation_error import HttpValidationError
 from ..types.voice import Voice
 from ..types.voice_generation_parameter_response import VoiceGenerationParameterResponse
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -68,7 +64,7 @@ class VoiceGenerationClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(VoiceGenerationParameterResponse, _response.json())  # type: ignore
+            return typing.cast(VoiceGenerationParameterResponse, construct_type(type_=VoiceGenerationParameterResponse, object_=_response.json()))  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -223,9 +219,11 @@ class VoiceGenerationClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(Voice, _response.json())  # type: ignore
+            return typing.cast(Voice, construct_type(type_=Voice, object_=_response.json()))  # type: ignore
         if _response.status_code == 422:
-            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
+            raise UnprocessableEntityError(
+                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+            )
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -276,7 +274,7 @@ class AsyncVoiceGenerationClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(VoiceGenerationParameterResponse, _response.json())  # type: ignore
+            return typing.cast(VoiceGenerationParameterResponse, construct_type(type_=VoiceGenerationParameterResponse, object_=_response.json()))  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -431,9 +429,11 @@ class AsyncVoiceGenerationClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(Voice, _response.json())  # type: ignore
+            return typing.cast(Voice, construct_type(type_=Voice, object_=_response.json()))  # type: ignore
         if _response.status_code == 422:
-            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
+            raise UnprocessableEntityError(
+                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+            )
         try:
             _response_json = _response.json()
         except JSONDecodeError:

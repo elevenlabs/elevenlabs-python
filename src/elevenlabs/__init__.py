@@ -4,6 +4,7 @@ from .types import (
     Accent,
     AddProjectResponseModel,
     AddPronunciationDictionaryResponseModel,
+    AddPronunciationDictionaryRulesResponseModel,
     AddVoiceResponseModel,
     Age,
     AudioNativeCreateProjectResponseModel,
@@ -46,9 +47,12 @@ from .types import (
     ProjectSnapshotResponse,
     ProjectSnapshotsResponse,
     ProjectState,
+    PronunciationDictionaryAliasRuleRequestModel,
+    PronunciationDictionaryPhonemeRuleRequestModel,
     PronunciationDictionaryVersionLocator,
     RealtimeVoiceSettings,
     RecordingResponse,
+    RemovePronunciationDictionaryRulesResponseModel,
     ReviewStatus,
     SendText,
     Source,
@@ -92,17 +96,26 @@ from . import (
 )
 from .environment import ElevenLabsEnvironment
 from .play import play, save, stream
+from .pronunciation_dictionary import (
+    BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem,
+    BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem_Alias,
+    BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem_Phoneme,
+)
 from .version import __version__
 
 __all__ = [
     "Accent",
     "AddProjectResponseModel",
     "AddPronunciationDictionaryResponseModel",
+    "AddPronunciationDictionaryRulesResponseModel",
     "AddVoiceResponseModel",
     "Age",
     "AudioNativeCreateProjectResponseModel",
     "AudioNativeGetEmbedCodeResponseModel",
     "AudioOutput",
+    "BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem",
+    "BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem_Alias",
+    "BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem_Phoneme",
     "ChapterResponse",
     "ChapterSnapshotResponse",
     "ChapterSnapshotsResponse",
@@ -141,9 +154,12 @@ __all__ = [
     "ProjectSnapshotResponse",
     "ProjectSnapshotsResponse",
     "ProjectState",
+    "PronunciationDictionaryAliasRuleRequestModel",
+    "PronunciationDictionaryPhonemeRuleRequestModel",
     "PronunciationDictionaryVersionLocator",
     "RealtimeVoiceSettings",
     "RecordingResponse",
+    "RemovePronunciationDictionaryRulesResponseModel",
     "ReviewStatus",
     "SendText",
     "Source",

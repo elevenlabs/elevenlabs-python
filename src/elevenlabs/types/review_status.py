@@ -3,5 +3,5 @@
 import typing
 
 ReviewStatus = typing.Union[
-    typing.AnyStr, typing.Literal["not_requested", "pending", "declined", "allowed", "allowed_with_changes"]
+    typing.Literal["not_requested", "pending", "declined", "allowed", "allowed_with_changes"], typing.Any
 ]

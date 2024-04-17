@@ -4,14 +4,11 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ..core.pydantic_utilities import pydantic_v1
+from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class LibraryVoiceResponse(pydantic.BaseModel):
+class LibraryVoiceResponse(UncheckedBaseModel):
     public_owner_id: str
     voice_id: str
     date_unix: int
@@ -25,18 +22,18 @@ class LibraryVoiceResponse(pydantic.BaseModel):
     language: str
     description: str
     preview_url: str
-    usage_character_count_1_y: int = pydantic.Field(alias="usage_character_count_1y")
-    usage_character_count_7_d: int = pydantic.Field(alias="usage_character_count_7d")
+    usage_character_count_1_y: int = pydantic_v1.Field(alias="usage_character_count_1y")
+    usage_character_count_7_d: int = pydantic_v1.Field(alias="usage_character_count_7d")
     cloned_by_count: int
     rate: float
     free_users_allowed: bool
     live_moderation_enabled: bool
     notice_period: int
-    instagram_username: str
-    twitter_username: str
-    youtube_username: str
-    tiktok_username: str
     featured: bool
+    instagram_username: typing.Optional[str] = None
+    twitter_username: typing.Optional[str] = None
+    youtube_username: typing.Optional[str] = None
+    tiktok_username: typing.Optional[str] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -51,5 +48,5 @@ class LibraryVoiceResponse(pydantic.BaseModel):
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

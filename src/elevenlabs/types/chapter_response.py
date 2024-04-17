@@ -4,16 +4,13 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
+from ..core.pydantic_utilities import pydantic_v1
+from ..core.unchecked_base_model import UncheckedBaseModel
 from .chapter_state import ChapterState
 from .chapter_statistics_response import ChapterStatisticsResponse
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class ChapterResponse(pydantic.BaseModel):
+class ChapterResponse(UncheckedBaseModel):
     chapter_id: str
     name: str
     last_conversion_date_unix: int
@@ -33,5 +30,5 @@ class ChapterResponse(pydantic.BaseModel):
     class Config:
         frozen = True
         smart_union = True
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

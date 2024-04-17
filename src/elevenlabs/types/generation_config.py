@@ -4,15 +4,12 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ..core.pydantic_utilities import pydantic_v1
+from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class GenerationConfig(pydantic.BaseModel):
-    chunk_length_schedule: typing.Optional[typing.List[float]] = pydantic.Field(default=None)
+class GenerationConfig(UncheckedBaseModel):
+    chunk_length_schedule: typing.Optional[typing.List[float]] = pydantic_v1.Field(default=None)
     """
     This is an advanced setting that most users shouldn't need to use. It relates to our
     generation schedule explained [here](https://elevenlabs.io/docs/api-reference/websockets#understanding-how-our-websockets-buffer-text).
@@ -46,5 +43,5 @@ class GenerationConfig(pydantic.BaseModel):
     class Config:
         frozen = True
         smart_union = True
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

@@ -10,15 +10,16 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
+from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.add_pronunciation_dictionary_response_model import AddPronunciationDictionaryResponseModel
+from ..types.add_pronunciation_dictionary_rules_response_model import AddPronunciationDictionaryRulesResponseModel
 from ..types.get_pronunciation_dictionary_metadata_response import GetPronunciationDictionaryMetadataResponse
 from ..types.http_validation_error import HttpValidationError
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ..types.remove_pronunciation_dictionary_rules_response_model import RemovePronunciationDictionaryRulesResponseModel
+from .types.body_add_rules_to_the_pronunciation_dictionary_v_1_pronunciation_dictionaries_pronunciation_dictionary_id_add_rules_post_rules_item import (
+    BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem,
+)
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -85,9 +86,150 @@ class PronunciationDictionaryClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(AddPronunciationDictionaryResponseModel, _response.json())  # type: ignore
+            return typing.cast(AddPronunciationDictionaryResponseModel, construct_type(type_=AddPronunciationDictionaryResponseModel, object_=_response.json()))  # type: ignore
         if _response.status_code == 422:
-            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
+            raise UnprocessableEntityError(
+                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+            )
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def add_rules_to_the_pronunciation_dictionary(
+        self,
+        pronunciation_dictionary_id: str,
+        *,
+        rules: typing.Sequence[
+            BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem
+        ],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AddPronunciationDictionaryRulesResponseModel:
+        """
+        Add rules to the pronunciation dictionary
+
+        Parameters:
+            - pronunciation_dictionary_id: str. The id of the pronunciation dictionary
+
+            - rules: typing.Sequence[BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem]. List of pronunciation rules. Rule can be either:
+                                                                                                                                                             an alias rule: {'string_to_replace': 'a', 'type': 'alias', 'alias': 'b', }
+                                                                                                                                                             or a phoneme rule: {'string_to_replace': 'a', 'type': 'phoneme', 'phoneme': 'b', 'alphabet': 'ipa' }
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.pronunciation_dictionary.add_rules_to_the_pronunciation_dictionary(
+            pronunciation_dictionary_id="pronunciation_dictionary_id",
+            rules=[],
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "POST",
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/",
+                f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}/add-rules",
+            ),
+            params=jsonable_encoder(
+                request_options.get("additional_query_parameters") if request_options is not None else None
+            ),
+            json=jsonable_encoder({"rules": rules})
+            if request_options is None or request_options.get("additional_body_parameters") is None
+            else {
+                **jsonable_encoder({"rules": rules}),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return typing.cast(AddPronunciationDictionaryRulesResponseModel, construct_type(type_=AddPronunciationDictionaryRulesResponseModel, object_=_response.json()))  # type: ignore
+        if _response.status_code == 422:
+            raise UnprocessableEntityError(
+                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+            )
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def remove_rules_from_the_pronunciation_dictionary(
+        self,
+        pronunciation_dictionary_id: str,
+        *,
+        rule_strings: typing.Sequence[str],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> RemovePronunciationDictionaryRulesResponseModel:
+        """
+        Remove rules from the pronunciation dictionary
+
+        Parameters:
+            - pronunciation_dictionary_id: str. The id of the pronunciation dictionary
+
+            - rule_strings: typing.Sequence[str]. List of strings to remove from the pronunciation dictionary.
+
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.pronunciation_dictionary.remove_rules_from_the_pronunciation_dictionary(
+            pronunciation_dictionary_id="pronunciation_dictionary_id",
+            rule_strings=["rule_strings"],
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "POST",
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/",
+                f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}/remove-rules",
+            ),
+            params=jsonable_encoder(
+                request_options.get("additional_query_parameters") if request_options is not None else None
+            ),
+            json=jsonable_encoder({"rule_strings": rule_strings})
+            if request_options is None or request_options.get("additional_body_parameters") is None
+            else {
+                **jsonable_encoder({"rule_strings": rule_strings}),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return typing.cast(RemovePronunciationDictionaryRulesResponseModel, construct_type(type_=RemovePronunciationDictionaryRulesResponseModel, object_=_response.json()))  # type: ignore
+        if _response.status_code == 422:
+            raise UnprocessableEntityError(
+                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+            )
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -141,9 +283,11 @@ class PronunciationDictionaryClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(typing.Any, _response.json())  # type: ignore
+            return typing.cast(typing.Any, construct_type(type_=typing.Any, object_=_response.json()))  # type: ignore
         if _response.status_code == 422:
-            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
+            raise UnprocessableEntityError(
+                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+            )
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -194,9 +338,11 @@ class PronunciationDictionaryClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(GetPronunciationDictionaryMetadataResponse, _response.json())  # type: ignore
+            return typing.cast(GetPronunciationDictionaryMetadataResponse, construct_type(type_=GetPronunciationDictionaryMetadataResponse, object_=_response.json()))  # type: ignore
         if _response.status_code == 422:
-            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
+            raise UnprocessableEntityError(
+                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+            )
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -265,9 +411,150 @@ class AsyncPronunciationDictionaryClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(AddPronunciationDictionaryResponseModel, _response.json())  # type: ignore
+            return typing.cast(AddPronunciationDictionaryResponseModel, construct_type(type_=AddPronunciationDictionaryResponseModel, object_=_response.json()))  # type: ignore
         if _response.status_code == 422:
-            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
+            raise UnprocessableEntityError(
+                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+            )
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def add_rules_to_the_pronunciation_dictionary(
+        self,
+        pronunciation_dictionary_id: str,
+        *,
+        rules: typing.Sequence[
+            BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem
+        ],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AddPronunciationDictionaryRulesResponseModel:
+        """
+        Add rules to the pronunciation dictionary
+
+        Parameters:
+            - pronunciation_dictionary_id: str. The id of the pronunciation dictionary
+
+            - rules: typing.Sequence[BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem]. List of pronunciation rules. Rule can be either:
+                                                                                                                                                             an alias rule: {'string_to_replace': 'a', 'type': 'alias', 'alias': 'b', }
+                                                                                                                                                             or a phoneme rule: {'string_to_replace': 'a', 'type': 'phoneme', 'phoneme': 'b', 'alphabet': 'ipa' }
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.pronunciation_dictionary.add_rules_to_the_pronunciation_dictionary(
+            pronunciation_dictionary_id="pronunciation_dictionary_id",
+            rules=[],
+        )
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "POST",
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/",
+                f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}/add-rules",
+            ),
+            params=jsonable_encoder(
+                request_options.get("additional_query_parameters") if request_options is not None else None
+            ),
+            json=jsonable_encoder({"rules": rules})
+            if request_options is None or request_options.get("additional_body_parameters") is None
+            else {
+                **jsonable_encoder({"rules": rules}),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return typing.cast(AddPronunciationDictionaryRulesResponseModel, construct_type(type_=AddPronunciationDictionaryRulesResponseModel, object_=_response.json()))  # type: ignore
+        if _response.status_code == 422:
+            raise UnprocessableEntityError(
+                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+            )
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def remove_rules_from_the_pronunciation_dictionary(
+        self,
+        pronunciation_dictionary_id: str,
+        *,
+        rule_strings: typing.Sequence[str],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> RemovePronunciationDictionaryRulesResponseModel:
+        """
+        Remove rules from the pronunciation dictionary
+
+        Parameters:
+            - pronunciation_dictionary_id: str. The id of the pronunciation dictionary
+
+            - rule_strings: typing.Sequence[str]. List of strings to remove from the pronunciation dictionary.
+
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.pronunciation_dictionary.remove_rules_from_the_pronunciation_dictionary(
+            pronunciation_dictionary_id="pronunciation_dictionary_id",
+            rule_strings=["rule_strings"],
+        )
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "POST",
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/",
+                f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}/remove-rules",
+            ),
+            params=jsonable_encoder(
+                request_options.get("additional_query_parameters") if request_options is not None else None
+            ),
+            json=jsonable_encoder({"rule_strings": rule_strings})
+            if request_options is None or request_options.get("additional_body_parameters") is None
+            else {
+                **jsonable_encoder({"rule_strings": rule_strings}),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return typing.cast(RemovePronunciationDictionaryRulesResponseModel, construct_type(type_=RemovePronunciationDictionaryRulesResponseModel, object_=_response.json()))  # type: ignore
+        if _response.status_code == 422:
+            raise UnprocessableEntityError(
+                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+            )
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -321,9 +608,11 @@ class AsyncPronunciationDictionaryClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(typing.Any, _response.json())  # type: ignore
+            return typing.cast(typing.Any, construct_type(type_=typing.Any, object_=_response.json()))  # type: ignore
         if _response.status_code == 422:
-            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
+            raise UnprocessableEntityError(
+                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+            )
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -374,9 +663,11 @@ class AsyncPronunciationDictionaryClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(GetPronunciationDictionaryMetadataResponse, _response.json())  # type: ignore
+            return typing.cast(GetPronunciationDictionaryMetadataResponse, construct_type(type_=GetPronunciationDictionaryMetadataResponse, object_=_response.json()))  # type: ignore
         if _response.status_code == 422:
-            raise UnprocessableEntityError(pydantic.parse_obj_as(HttpValidationError, _response.json()))  # type: ignore
+            raise UnprocessableEntityError(
+                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+            )
         try:
             _response_json = _response.json()
         except JSONDecodeError:

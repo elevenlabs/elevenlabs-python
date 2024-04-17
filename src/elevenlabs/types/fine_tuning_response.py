@@ -4,17 +4,14 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
+from ..core.pydantic_utilities import pydantic_v1
+from ..core.unchecked_base_model import UncheckedBaseModel
 from .finetuning_state import FinetuningState
 from .manual_verification_response import ManualVerificationResponse
 from .verification_attempt_response import VerificationAttemptResponse
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class FineTuningResponse(pydantic.BaseModel):
+class FineTuningResponse(UncheckedBaseModel):
     is_allowed_to_fine_tune: typing.Optional[bool] = None
     finetuning_state: typing.Optional[FinetuningState] = None
     verification_failures: typing.Optional[typing.List[str]] = None
@@ -39,5 +36,5 @@ class FineTuningResponse(pydantic.BaseModel):
     class Config:
         frozen = True
         smart_union = True
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

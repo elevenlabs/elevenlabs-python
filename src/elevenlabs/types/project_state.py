@@ -2,4 +2,4 @@
 
 import typing
 
-ProjectState = typing.Union[typing.AnyStr, typing.Literal["default", "converting"]]
+ProjectState = typing.Union[typing.Literal["default", "converting"], typing.Any]

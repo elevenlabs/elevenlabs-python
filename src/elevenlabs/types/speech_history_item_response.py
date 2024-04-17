@@ -4,17 +4,14 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
+from ..core.pydantic_utilities import pydantic_v1
+from ..core.unchecked_base_model import UncheckedBaseModel
 from .feedback_item import FeedbackItem
 from .source import Source
 from .speech_history_item_response_model_voice_category import SpeechHistoryItemResponseModelVoiceCategory
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class SpeechHistoryItemResponse(pydantic.BaseModel):
+class SpeechHistoryItemResponse(UncheckedBaseModel):
     history_item_id: str
     request_id: typing.Optional[str] = None
     voice_id: typing.Optional[str] = None
@@ -43,5 +40,5 @@ class SpeechHistoryItemResponse(pydantic.BaseModel):
     class Config:
         frozen = True
         smart_union = True
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}
