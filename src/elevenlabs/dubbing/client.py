@@ -64,7 +64,7 @@ class DubbingClient:
 
             - source_lang: typing.Optional[str]. Source language.
 
-            - target_lang: str. Target language.
+            - target_lang: str. The Target language to dub the content into. Can be none if dubbing studio editor is enabled and running manual mode
 
             - num_speakers: typing.Optional[int]. Number of speakers to use for the dubbing.
 
@@ -378,7 +378,7 @@ class AsyncDubbingClient:
 
             - source_lang: typing.Optional[str]. Source language.
 
-            - target_lang: str. Target language.
+            - target_lang: str. The Target language to dub the content into. Can be none if dubbing studio editor is enabled and running manual mode
 
             - num_speakers: typing.Optional[int]. Number of speakers to use for the dubbing.
 

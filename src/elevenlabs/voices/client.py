@@ -577,8 +577,10 @@ class VoicesClient:
         search: typing.Optional[str] = None,
         use_cases: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         descriptives: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        sort: typing.Optional[str] = None,
         featured: typing.Optional[bool] = None,
+        reader_app_enabled: typing.Optional[bool] = None,
+        owner_id: typing.Optional[str] = None,
+        sort: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetLibraryVoicesResponse:
@@ -604,9 +606,13 @@ class VoicesClient:
 
             - descriptives: typing.Optional[typing.Union[str, typing.Sequence[str]]]. search term used for filtering
 
-            - sort: typing.Optional[str]. sort criteria
-
             - featured: typing.Optional[bool]. Filter featured voices
+
+            - reader_app_enabled: typing.Optional[bool]. Filter voices that are enabled for the reader app
+
+            - owner_id: typing.Optional[str]. Filter voices by public owner ID
+
+            - sort: typing.Optional[str]. sort criteria
 
             - page: typing.Optional[int].
 
@@ -634,8 +640,10 @@ class VoicesClient:
                         "search": search,
                         "use_cases": use_cases,
                         "descriptives": descriptives,
-                        "sort": sort,
                         "featured": featured,
+                        "reader_app_enabled": reader_app_enabled,
+                        "owner_id": owner_id,
+                        "sort": sort,
                         "page": page,
                         **(
                             request_options.get("additional_query_parameters", {})
@@ -1228,8 +1236,10 @@ class AsyncVoicesClient:
         search: typing.Optional[str] = None,
         use_cases: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         descriptives: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        sort: typing.Optional[str] = None,
         featured: typing.Optional[bool] = None,
+        reader_app_enabled: typing.Optional[bool] = None,
+        owner_id: typing.Optional[str] = None,
+        sort: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetLibraryVoicesResponse:
@@ -1255,9 +1265,13 @@ class AsyncVoicesClient:
 
             - descriptives: typing.Optional[typing.Union[str, typing.Sequence[str]]]. search term used for filtering
 
-            - sort: typing.Optional[str]. sort criteria
-
             - featured: typing.Optional[bool]. Filter featured voices
+
+            - reader_app_enabled: typing.Optional[bool]. Filter voices that are enabled for the reader app
+
+            - owner_id: typing.Optional[str]. Filter voices by public owner ID
+
+            - sort: typing.Optional[str]. sort criteria
 
             - page: typing.Optional[int].
 
@@ -1285,8 +1299,10 @@ class AsyncVoicesClient:
                         "search": search,
                         "use_cases": use_cases,
                         "descriptives": descriptives,
-                        "sort": sort,
                         "featured": featured,
+                        "reader_app_enabled": reader_app_enabled,
+                        "owner_id": owner_id,
+                        "sort": sort,
                         "page": page,
                         **(
                             request_options.get("additional_query_parameters", {})

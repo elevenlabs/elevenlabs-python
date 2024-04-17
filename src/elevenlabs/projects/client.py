@@ -112,6 +112,7 @@ class ProjectsClient:
                                                     standard - standard output format, 128kbps with 44.1kHz sample rate.
                                                     high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the character cost by 20%.
                                                     ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the character cost by 50%.
+                                                    ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the character cost by 100%.
 
             - title: typing.Optional[str]. An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
 
@@ -427,7 +428,12 @@ class ProjectsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def stream_audio(
-        self, project_id: str, project_snapshot_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: str,
+        project_snapshot_id: str,
+        *,
+        convert_to_mpeg: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Stream the audio from a project snapshot.
@@ -436,6 +442,8 @@ class ProjectsClient:
             - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
             - project_snapshot_id: str. The project_snapshot_id of the project snapshot. You can query GET /v1/projects/{project_id}/snapshots to list all available snapshots for a project.
+
+            - convert_to_mpeg: typing.Optional[bool]. Whether to convert the audio to mpeg format.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -449,11 +457,78 @@ class ProjectsClient:
             project_snapshot_id="project_snapshot_id",
         )
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if convert_to_mpeg is not OMIT:
+            _request["convert_to_mpeg"] = convert_to_mpeg
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
                 f"v1/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}/stream",
+            ),
+            params=jsonable_encoder(
+                request_options.get("additional_query_parameters") if request_options is not None else None
+            ),
+            json=jsonable_encoder(_request)
+            if request_options is None or request_options.get("additional_body_parameters") is None
+            else {
+                **jsonable_encoder(_request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return
+        if _response.status_code == 422:
+            raise UnprocessableEntityError(
+                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+            )
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def streams_archive_with_project_audio(
+        self, project_id: str, project_snapshot_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Streams archive with project audio.
+
+        Parameters:
+            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+
+            - project_snapshot_id: str. The project_snapshot_id of the project snapshot. You can query GET /v1/projects/{project_id}/snapshots to list all available snapshots for a project.
+
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.streams_archive_with_project_audio(
+            project_id="project_id",
+            project_snapshot_id="project_snapshot_id",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "POST",
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/",
+                f"v1/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}/archive",
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
@@ -651,6 +726,7 @@ class AsyncProjectsClient:
                                                     standard - standard output format, 128kbps with 44.1kHz sample rate.
                                                     high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the character cost by 20%.
                                                     ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the character cost by 50%.
+                                                    ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the character cost by 100%.
 
             - title: typing.Optional[str]. An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
 
@@ -966,7 +1042,12 @@ class AsyncProjectsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def stream_audio(
-        self, project_id: str, project_snapshot_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: str,
+        project_snapshot_id: str,
+        *,
+        convert_to_mpeg: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Stream the audio from a project snapshot.
@@ -975,6 +1056,8 @@ class AsyncProjectsClient:
             - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
             - project_snapshot_id: str. The project_snapshot_id of the project snapshot. You can query GET /v1/projects/{project_id}/snapshots to list all available snapshots for a project.
+
+            - convert_to_mpeg: typing.Optional[bool]. Whether to convert the audio to mpeg format.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -988,11 +1071,78 @@ class AsyncProjectsClient:
             project_snapshot_id="project_snapshot_id",
         )
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if convert_to_mpeg is not OMIT:
+            _request["convert_to_mpeg"] = convert_to_mpeg
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
                 f"v1/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}/stream",
+            ),
+            params=jsonable_encoder(
+                request_options.get("additional_query_parameters") if request_options is not None else None
+            ),
+            json=jsonable_encoder(_request)
+            if request_options is None or request_options.get("additional_body_parameters") is None
+            else {
+                **jsonable_encoder(_request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return
+        if _response.status_code == 422:
+            raise UnprocessableEntityError(
+                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+            )
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def streams_archive_with_project_audio(
+        self, project_id: str, project_snapshot_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Streams archive with project audio.
+
+        Parameters:
+            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+
+            - project_snapshot_id: str. The project_snapshot_id of the project snapshot. You can query GET /v1/projects/{project_id}/snapshots to list all available snapshots for a project.
+
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.projects.streams_archive_with_project_audio(
+            project_id="project_id",
+            project_snapshot_id="project_snapshot_id",
+        )
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "POST",
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/",
+                f"v1/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}/archive",
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
