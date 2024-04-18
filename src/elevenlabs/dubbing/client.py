@@ -64,7 +64,7 @@ class DubbingClient:
 
             - source_lang: typing.Optional[str]. Source language.
 
-            - target_lang: str. Target language.
+            - target_lang: str. The Target language to dub the content into. Can be none if dubbing studio editor is enabled and running manual mode
 
             - num_speakers: typing.Optional[int]. Number of speakers to use for the dubbing.
 
@@ -85,7 +85,9 @@ class DubbingClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.dubbing.dub_a_video_or_an_audio_file()
+        client.dubbing.dub_a_video_or_an_audio_file(
+            target_lang="target_lang",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -378,7 +380,7 @@ class AsyncDubbingClient:
 
             - source_lang: typing.Optional[str]. Source language.
 
-            - target_lang: str. Target language.
+            - target_lang: str. The Target language to dub the content into. Can be none if dubbing studio editor is enabled and running manual mode
 
             - num_speakers: typing.Optional[int]. Number of speakers to use for the dubbing.
 
@@ -399,7 +401,9 @@ class AsyncDubbingClient:
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        await client.dubbing.dub_a_video_or_an_audio_file()
+        await client.dubbing.dub_a_video_or_an_audio_file(
+            target_lang="target_lang",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
