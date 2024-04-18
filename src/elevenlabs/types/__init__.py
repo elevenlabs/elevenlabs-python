@@ -9,6 +9,7 @@ from .age import Age
 from .audio_native_create_project_response_model import AudioNativeCreateProjectResponseModel
 from .audio_native_get_embed_code_response_model import AudioNativeGetEmbedCodeResponseModel
 from .audio_output import AudioOutput
+from .category import Category
 from .chapter_response import ChapterResponse
 from .chapter_snapshot_response import ChapterSnapshotResponse
 from .chapter_snapshots_response import ChapterSnapshotsResponse
@@ -26,6 +27,7 @@ from .generation_config import GenerationConfig
 from .get_chapters_response import GetChaptersResponse
 from .get_library_voices_response import GetLibraryVoicesResponse
 from .get_projects_response import GetProjectsResponse
+from .get_pronunciation_dictionaries_metadata_response_model import GetPronunciationDictionariesMetadataResponseModel
 from .get_pronunciation_dictionary_metadata_response import GetPronunciationDictionaryMetadataResponse
 from .get_speech_history_response import GetSpeechHistoryResponse
 from .get_voices_response import GetVoicesResponse
@@ -87,6 +89,7 @@ __all__ = [
     "AudioNativeCreateProjectResponseModel",
     "AudioNativeGetEmbedCodeResponseModel",
     "AudioOutput",
+    "Category",
     "ChapterResponse",
     "ChapterSnapshotResponse",
     "ChapterSnapshotsResponse",
@@ -104,6 +107,7 @@ __all__ = [
     "GetChaptersResponse",
     "GetLibraryVoicesResponse",
     "GetProjectsResponse",
+    "GetPronunciationDictionariesMetadataResponseModel",
     "GetPronunciationDictionaryMetadataResponse",
     "GetSpeechHistoryResponse",
     "GetVoicesResponse",

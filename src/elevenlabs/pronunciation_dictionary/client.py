@@ -14,6 +14,9 @@ from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.add_pronunciation_dictionary_response_model import AddPronunciationDictionaryResponseModel
 from ..types.add_pronunciation_dictionary_rules_response_model import AddPronunciationDictionaryRulesResponseModel
+from ..types.get_pronunciation_dictionaries_metadata_response_model import (
+    GetPronunciationDictionariesMetadataResponseModel,
+)
 from ..types.get_pronunciation_dictionary_metadata_response import GetPronunciationDictionaryMetadataResponse
 from ..types.http_validation_error import HttpValidationError
 from ..types.remove_pronunciation_dictionary_rules_response_model import RemovePronunciationDictionaryRulesResponseModel
@@ -54,7 +57,9 @@ class PronunciationDictionaryClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.pronunciation_dictionary.add_from_file()
+        client.pronunciation_dictionary.add_from_file(
+            name="name",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -294,7 +299,7 @@ class PronunciationDictionaryClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_metadata_for_a_pronunciation_dictionary_v_1_pronunciation_dictionaries_pronunciation_dictionary_id_get(
+    def get(
         self, pronunciation_dictionary_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetPronunciationDictionaryMetadataResponse:
         """
@@ -310,7 +315,7 @@ class PronunciationDictionaryClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.pronunciation_dictionary.get_metadata_for_a_pronunciation_dictionary_v_1_pronunciation_dictionaries_pronunciation_dictionary_id_get(
+        client.pronunciation_dictionary.get(
             pronunciation_dictionary_id="pronunciation_dictionary_id",
         )
         """
@@ -339,6 +344,72 @@ class PronunciationDictionaryClient:
         )
         if 200 <= _response.status_code < 300:
             return typing.cast(GetPronunciationDictionaryMetadataResponse, construct_type(type_=GetPronunciationDictionaryMetadataResponse, object_=_response.json()))  # type: ignore
+        if _response.status_code == 422:
+            raise UnprocessableEntityError(
+                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+            )
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get_all(
+        self,
+        *,
+        cursor: typing.Optional[str] = None,
+        page_size: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetPronunciationDictionariesMetadataResponseModel:
+        """
+        Get a list of the pronunciation dictionaries you have access to and their metadata
+
+        Parameters:
+            - cursor: typing.Optional[str]. Used for fetching next page. Cursor is returned in the response.
+
+            - page_size: typing.Optional[int]. How many pronunciation dictionaries to return at maximum. Can not exceed 100, defaults to 30.
+
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.pronunciation_dictionary.get_all()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "GET",
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/pronunciation-dictionaries"),
+            params=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "cursor": cursor,
+                        "page_size": page_size,
+                        **(
+                            request_options.get("additional_query_parameters", {})
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            ),
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return typing.cast(GetPronunciationDictionariesMetadataResponseModel, construct_type(type_=GetPronunciationDictionariesMetadataResponseModel, object_=_response.json()))  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(
                 typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
@@ -379,7 +450,9 @@ class AsyncPronunciationDictionaryClient:
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        await client.pronunciation_dictionary.add_from_file()
+        await client.pronunciation_dictionary.add_from_file(
+            name="name",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -619,7 +692,7 @@ class AsyncPronunciationDictionaryClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_metadata_for_a_pronunciation_dictionary_v_1_pronunciation_dictionaries_pronunciation_dictionary_id_get(
+    async def get(
         self, pronunciation_dictionary_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetPronunciationDictionaryMetadataResponse:
         """
@@ -635,7 +708,7 @@ class AsyncPronunciationDictionaryClient:
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        await client.pronunciation_dictionary.get_metadata_for_a_pronunciation_dictionary_v_1_pronunciation_dictionaries_pronunciation_dictionary_id_get(
+        await client.pronunciation_dictionary.get(
             pronunciation_dictionary_id="pronunciation_dictionary_id",
         )
         """
@@ -664,6 +737,72 @@ class AsyncPronunciationDictionaryClient:
         )
         if 200 <= _response.status_code < 300:
             return typing.cast(GetPronunciationDictionaryMetadataResponse, construct_type(type_=GetPronunciationDictionaryMetadataResponse, object_=_response.json()))  # type: ignore
+        if _response.status_code == 422:
+            raise UnprocessableEntityError(
+                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+            )
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_all(
+        self,
+        *,
+        cursor: typing.Optional[str] = None,
+        page_size: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetPronunciationDictionariesMetadataResponseModel:
+        """
+        Get a list of the pronunciation dictionaries you have access to and their metadata
+
+        Parameters:
+            - cursor: typing.Optional[str]. Used for fetching next page. Cursor is returned in the response.
+
+            - page_size: typing.Optional[int]. How many pronunciation dictionaries to return at maximum. Can not exceed 100, defaults to 30.
+
+            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+        ---
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.pronunciation_dictionary.get_all()
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "GET",
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/pronunciation-dictionaries"),
+            params=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "cursor": cursor,
+                        "page_size": page_size,
+                        **(
+                            request_options.get("additional_query_parameters", {})
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            ),
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return typing.cast(GetPronunciationDictionariesMetadataResponseModel, construct_type(type_=GetPronunciationDictionariesMetadataResponseModel, object_=_response.json()))  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(
                 typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore

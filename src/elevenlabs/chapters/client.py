@@ -16,6 +16,9 @@ from ..types.chapter_snapshots_response import ChapterSnapshotsResponse
 from ..types.get_chapters_response import GetChaptersResponse
 from ..types.http_validation_error import HttpValidationError
 
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
+
 
 class ChaptersClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
@@ -316,10 +319,11 @@ class ChaptersClient:
         chapter_id: str,
         chapter_snapshot_id: str,
         *,
+        convert_to_mpeg: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Stream the audio from a chapter snapshot. Use GET /v1/projects/{project_id}/chapters/{chapter_id}/snapshots to return the chapter snapshots of a chapter.
+        Stream the audio from a chapter snapshot. Use `GET /v1/projects/{project_id}/chapters/{chapter_id}/snapshots` to return the chapter snapshots of a chapter.
 
         Parameters:
             - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
@@ -327,6 +331,8 @@ class ChaptersClient:
             - chapter_id: str. The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
 
             - chapter_snapshot_id: str. The chapter_snapshot_id of the chapter snapshot. You can query GET /v1/projects/{project_id}/chapters/{chapter_id}/snapshots to the all available snapshots for a chapter.
+
+            - convert_to_mpeg: typing.Optional[bool]. Whether to convert the audio to mpeg format.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -341,6 +347,9 @@ class ChaptersClient:
             chapter_snapshot_id="chapter_snapshot_id",
         )
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if convert_to_mpeg is not OMIT:
+            _request["convert_to_mpeg"] = convert_to_mpeg
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
@@ -350,9 +359,12 @@ class ChaptersClient:
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
-            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
-            if request_options is not None
-            else None,
+            json=jsonable_encoder(_request)
+            if request_options is None or request_options.get("additional_body_parameters") is None
+            else {
+                **jsonable_encoder(_request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
+            },
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -679,10 +691,11 @@ class AsyncChaptersClient:
         chapter_id: str,
         chapter_snapshot_id: str,
         *,
+        convert_to_mpeg: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Stream the audio from a chapter snapshot. Use GET /v1/projects/{project_id}/chapters/{chapter_id}/snapshots to return the chapter snapshots of a chapter.
+        Stream the audio from a chapter snapshot. Use `GET /v1/projects/{project_id}/chapters/{chapter_id}/snapshots` to return the chapter snapshots of a chapter.
 
         Parameters:
             - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
@@ -690,6 +703,8 @@ class AsyncChaptersClient:
             - chapter_id: str. The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
 
             - chapter_snapshot_id: str. The chapter_snapshot_id of the chapter snapshot. You can query GET /v1/projects/{project_id}/chapters/{chapter_id}/snapshots to the all available snapshots for a chapter.
+
+            - convert_to_mpeg: typing.Optional[bool]. Whether to convert the audio to mpeg format.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
@@ -704,6 +719,9 @@ class AsyncChaptersClient:
             chapter_snapshot_id="chapter_snapshot_id",
         )
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if convert_to_mpeg is not OMIT:
+            _request["convert_to_mpeg"] = convert_to_mpeg
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
@@ -713,9 +731,12 @@ class AsyncChaptersClient:
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
-            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
-            if request_options is not None
-            else None,
+            json=jsonable_encoder(_request)
+            if request_options is None or request_options.get("additional_body_parameters") is None
+            else {
+                **jsonable_encoder(_request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
+            },
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
