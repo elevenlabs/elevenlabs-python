@@ -6,6 +6,7 @@ import typing
 from ..core.datetime_utils import serialize_datetime
 from ..core.pydantic_utilities import pydantic_v1
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .category import Category
 from .review_status import ReviewStatus
 from .voice_sharing_state import VoiceSharingState
 
@@ -25,6 +26,8 @@ class VoiceSharingResponse(UncheckedBaseModel):
     disable_at_unix: typing.Optional[int] = None
     voice_mixing_allowed: typing.Optional[bool] = None
     featured: typing.Optional[bool] = None
+    category: typing.Optional[Category] = None
+    reader_app_enabled: typing.Optional[bool] = None
     ban_reason: typing.Optional[str] = None
     liked_by_count: typing.Optional[int] = None
     cloned_by_count: typing.Optional[int] = None

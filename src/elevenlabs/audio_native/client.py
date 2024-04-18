@@ -75,7 +75,9 @@ class AudioNativeClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.audio_native.create()
+        client.audio_native.create(
+            name="name",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -205,7 +207,9 @@ class AsyncAudioNativeClient:
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        await client.audio_native.create()
+        await client.audio_native.create(
+            name="name",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
