@@ -28,8 +28,8 @@ class LibraryVoiceResponse(UncheckedBaseModel):
     rate: float
     free_users_allowed: bool
     live_moderation_enabled: bool
-    notice_period: int
     featured: bool
+    notice_period: typing.Optional[int] = None
     instagram_username: typing.Optional[str] = None
     twitter_username: typing.Optional[str] = None
     youtube_username: typing.Optional[str] = None

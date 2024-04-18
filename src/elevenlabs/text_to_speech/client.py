@@ -56,30 +56,16 @@ class TextToSpeechClient:
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
-        from elevenlabs import PronunciationDictionaryVersionLocator, VoiceSettings
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
         client.text_to_speech.convert(
-            voice_id="string",
+            voice_id="voice_id",
             optimize_streaming_latency="0",
             output_format="mp3_22050_32",
-            text="string",
-            model_id="string",
-            voice_settings=VoiceSettings(
-                stability=1.1,
-                similarity_boost=1.1,
-                style=1.1,
-                use_speaker_boost=True,
-            ),
-            pronunciation_dictionary_locators=[
-                PronunciationDictionaryVersionLocator(
-                    pronunciation_dictionary_id="string",
-                    version_id="string",
-                )
-            ],
+            text="text",
         )
         """
         _request: typing.Dict[str, typing.Any] = {"text": text}
@@ -172,30 +158,16 @@ class TextToSpeechClient:
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
-        from elevenlabs import PronunciationDictionaryVersionLocator, VoiceSettings
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
         client.text_to_speech.convert_as_stream(
-            voice_id="string",
+            voice_id="voice_id",
             optimize_streaming_latency="0",
             output_format="mp3_22050_32",
-            text="string",
-            model_id="string",
-            voice_settings=VoiceSettings(
-                stability=1.1,
-                similarity_boost=1.1,
-                style=1.1,
-                use_speaker_boost=True,
-            ),
-            pronunciation_dictionary_locators=[
-                PronunciationDictionaryVersionLocator(
-                    pronunciation_dictionary_id="string",
-                    version_id="string",
-                )
-            ],
+            text="text",
         )
         """
         _request: typing.Dict[str, typing.Any] = {"text": text}
@@ -293,30 +265,16 @@ class AsyncTextToSpeechClient:
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
-        from elevenlabs import PronunciationDictionaryVersionLocator, VoiceSettings
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
         await client.text_to_speech.convert(
-            voice_id="string",
+            voice_id="voice_id",
             optimize_streaming_latency="0",
             output_format="mp3_22050_32",
-            text="string",
-            model_id="string",
-            voice_settings=VoiceSettings(
-                stability=1.1,
-                similarity_boost=1.1,
-                style=1.1,
-                use_speaker_boost=True,
-            ),
-            pronunciation_dictionary_locators=[
-                PronunciationDictionaryVersionLocator(
-                    pronunciation_dictionary_id="string",
-                    version_id="string",
-                )
-            ],
+            text="text",
         )
         """
         _request: typing.Dict[str, typing.Any] = {"text": text}
@@ -409,30 +367,16 @@ class AsyncTextToSpeechClient:
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
-        from elevenlabs import PronunciationDictionaryVersionLocator, VoiceSettings
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
         await client.text_to_speech.convert_as_stream(
-            voice_id="string",
+            voice_id="voice_id",
             optimize_streaming_latency="0",
             output_format="mp3_22050_32",
-            text="string",
-            model_id="string",
-            voice_settings=VoiceSettings(
-                stability=1.1,
-                similarity_boost=1.1,
-                style=1.1,
-                use_speaker_boost=True,
-            ),
-            pronunciation_dictionary_locators=[
-                PronunciationDictionaryVersionLocator(
-                    pronunciation_dictionary_id="string",
-                    version_id="string",
-                )
-            ],
+            text="text",
         )
         """
         _request: typing.Dict[str, typing.Any] = {"text": text}

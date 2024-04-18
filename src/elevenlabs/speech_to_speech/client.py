@@ -70,9 +70,7 @@ class SpeechToSpeechClient:
             api_key="YOUR_API_KEY",
         )
         client.speech_to_speech.convert(
-            voice_id="string",
-            optimize_streaming_latency=1,
-            output_format="string",
+            voice_id="voice_id",
         )
         """
         with self._client_wrapper.httpx_client.stream(
@@ -176,9 +174,7 @@ class SpeechToSpeechClient:
             api_key="YOUR_API_KEY",
         )
         client.speech_to_speech.convert_as_stream(
-            voice_id="string",
-            optimize_streaming_latency=1,
-            output_format="string",
+            voice_id="voice_id",
         )
         """
         with self._client_wrapper.httpx_client.stream(
@@ -287,9 +283,7 @@ class AsyncSpeechToSpeechClient:
             api_key="YOUR_API_KEY",
         )
         await client.speech_to_speech.convert(
-            voice_id="string",
-            optimize_streaming_latency=1,
-            output_format="string",
+            voice_id="voice_id",
         )
         """
         async with self._client_wrapper.httpx_client.stream(
@@ -393,9 +387,7 @@ class AsyncSpeechToSpeechClient:
             api_key="YOUR_API_KEY",
         )
         await client.speech_to_speech.convert_as_stream(
-            voice_id="string",
-            optimize_streaming_latency=1,
-            output_format="string",
+            voice_id="voice_id",
         )
         """
         async with self._client_wrapper.httpx_client.stream(

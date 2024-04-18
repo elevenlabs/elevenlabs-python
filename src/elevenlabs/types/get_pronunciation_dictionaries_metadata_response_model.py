@@ -6,13 +6,13 @@ import typing
 from ..core.datetime_utils import serialize_datetime
 from ..core.pydantic_utilities import pydantic_v1
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .library_voice_response import LibraryVoiceResponse
+from .get_pronunciation_dictionary_metadata_response import GetPronunciationDictionaryMetadataResponse
 
 
-class GetLibraryVoicesResponse(UncheckedBaseModel):
-    voices: typing.List[LibraryVoiceResponse]
+class GetPronunciationDictionariesMetadataResponseModel(UncheckedBaseModel):
+    pronunciation_dictionaries: typing.List[GetPronunciationDictionaryMetadataResponse]
+    next_cursor: str
     has_more: bool
-    last_sort_id: typing.Optional[str] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

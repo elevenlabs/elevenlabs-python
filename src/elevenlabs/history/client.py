@@ -216,7 +216,7 @@ class HistoryClient:
             api_key="YOUR_API_KEY",
         )
         client.history.get_audio(
-            history_item_id="string",
+            history_item_id="history_item_id",
         )
         """
         with self._client_wrapper.httpx_client.stream(
@@ -519,7 +519,7 @@ class AsyncHistoryClient:
             api_key="YOUR_API_KEY",
         )
         await client.history.get_audio(
-            history_item_id="string",
+            history_item_id="history_item_id",
         )
         """
         async with self._client_wrapper.httpx_client.stream(
