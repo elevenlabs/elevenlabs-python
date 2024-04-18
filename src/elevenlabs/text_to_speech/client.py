@@ -26,8 +26,8 @@ class TextToSpeechClient:
         self,
         voice_id: str,
         *,
-        optimize_streaming_latency: OptimizeStreamingLatency,
-        output_format: OutputFormat,
+        optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
+        output_format: typing.Optional[OutputFormat] = None,
         text: str,
         model_id: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
@@ -42,9 +42,9 @@ class TextToSpeechClient:
         Parameters:
             - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
-            - optimize_streaming_latency: OptimizeStreamingLatency. You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+            - optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency]. You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
 
-            - output_format: OutputFormat. The output format of the generated audio.
+            - output_format: typing.Optional[OutputFormat]. The output format of the generated audio.
 
             - text: str. The text that will get converted into speech.
 
@@ -63,8 +63,6 @@ class TextToSpeechClient:
         )
         client.text_to_speech.convert(
             voice_id="voice_id",
-            optimize_streaming_latency="0",
-            output_format="mp3_22050_32",
             text="text",
         )
         """
@@ -128,8 +126,8 @@ class TextToSpeechClient:
         self,
         voice_id: str,
         *,
-        optimize_streaming_latency: OptimizeStreamingLatency,
-        output_format: OutputFormat,
+        optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
+        output_format: typing.Optional[OutputFormat] = None,
         text: str,
         model_id: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
@@ -144,9 +142,9 @@ class TextToSpeechClient:
         Parameters:
             - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
-            - optimize_streaming_latency: OptimizeStreamingLatency. You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+            - optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency]. You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
 
-            - output_format: OutputFormat. The output format of the generated audio.
+            - output_format: typing.Optional[OutputFormat]. The output format of the generated audio.
 
             - text: str. The text that will get converted into speech.
 
@@ -165,8 +163,6 @@ class TextToSpeechClient:
         )
         client.text_to_speech.convert_as_stream(
             voice_id="voice_id",
-            optimize_streaming_latency="0",
-            output_format="mp3_22050_32",
             text="text",
         )
         """
@@ -235,8 +231,8 @@ class AsyncTextToSpeechClient:
         self,
         voice_id: str,
         *,
-        optimize_streaming_latency: OptimizeStreamingLatency,
-        output_format: OutputFormat,
+        optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
+        output_format: typing.Optional[OutputFormat] = None,
         text: str,
         model_id: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
@@ -251,9 +247,9 @@ class AsyncTextToSpeechClient:
         Parameters:
             - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
-            - optimize_streaming_latency: OptimizeStreamingLatency. You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+            - optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency]. You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
 
-            - output_format: OutputFormat. The output format of the generated audio.
+            - output_format: typing.Optional[OutputFormat]. The output format of the generated audio.
 
             - text: str. The text that will get converted into speech.
 
@@ -272,8 +268,6 @@ class AsyncTextToSpeechClient:
         )
         await client.text_to_speech.convert(
             voice_id="voice_id",
-            optimize_streaming_latency="0",
-            output_format="mp3_22050_32",
             text="text",
         )
         """
@@ -337,8 +331,8 @@ class AsyncTextToSpeechClient:
         self,
         voice_id: str,
         *,
-        optimize_streaming_latency: OptimizeStreamingLatency,
-        output_format: OutputFormat,
+        optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
+        output_format: typing.Optional[OutputFormat] = None,
         text: str,
         model_id: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
@@ -353,9 +347,9 @@ class AsyncTextToSpeechClient:
         Parameters:
             - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
-            - optimize_streaming_latency: OptimizeStreamingLatency. You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+            - optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency]. You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
 
-            - output_format: OutputFormat. The output format of the generated audio.
+            - output_format: typing.Optional[OutputFormat]. The output format of the generated audio.
 
             - text: str. The text that will get converted into speech.
 
@@ -374,8 +368,6 @@ class AsyncTextToSpeechClient:
         )
         await client.text_to_speech.convert_as_stream(
             voice_id="voice_id",
-            optimize_streaming_latency="0",
-            output_format="mp3_22050_32",
             text="text",
         )
         """
