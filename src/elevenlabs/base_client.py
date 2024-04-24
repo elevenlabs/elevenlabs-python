@@ -55,7 +55,7 @@ class BaseElevenLabs:
         environment: ElevenLabsEnvironment = ElevenLabsEnvironment.PRODUCTION,
         api_key: typing.Optional[str] = os.getenv("ELEVEN_API_KEY"),
         timeout: typing.Optional[float] = None,
-        follow_redirects: typing.Optional[bool] = None,
+        follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None
     ):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
@@ -117,7 +117,7 @@ class AsyncBaseElevenLabs:
         environment: ElevenLabsEnvironment = ElevenLabsEnvironment.PRODUCTION,
         api_key: typing.Optional[str] = os.getenv("ELEVEN_API_KEY"),
         timeout: typing.Optional[float] = None,
-        follow_redirects: typing.Optional[bool] = None,
+        follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None
     ):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
