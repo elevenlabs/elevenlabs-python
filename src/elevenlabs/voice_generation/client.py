@@ -104,10 +104,10 @@ class VoiceGenerationClient:
         )
         client.voice_generation.generate(
             gender="male",
-            accent="accent",
+            accent="string",
             age="young",
             accent_strength=1.1,
-            text="text",
+            text="string",
         )
         """
         with self._client_wrapper.httpx_client.stream(
@@ -314,10 +314,10 @@ class AsyncVoiceGenerationClient:
         )
         await client.voice_generation.generate(
             gender="male",
-            accent="accent",
+            accent="string",
             age="young",
             accent_strength=1.1,
-            text="text",
+            text="string",
         )
         """
         async with self._client_wrapper.httpx_client.stream(
