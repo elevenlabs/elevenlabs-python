@@ -11,9 +11,7 @@ from ...types.pronunciation_dictionary_alias_rule_request_model import Pronuncia
 from ...types.pronunciation_dictionary_phoneme_rule_request_model import PronunciationDictionaryPhonemeRuleRequestModel
 
 
-class BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem_Alias(
-    PronunciationDictionaryAliasRuleRequestModel
-):
+class PronunciationDictionaryRule_Alias(PronunciationDictionaryAliasRuleRequestModel):
     type: typing.Literal["alias"] = "alias"
 
     class Config:
@@ -23,9 +21,7 @@ class BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunc
         populate_by_name = True
 
 
-class BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem_Phoneme(
-    PronunciationDictionaryPhonemeRuleRequestModel
-):
+class PronunciationDictionaryRule_Phoneme(PronunciationDictionaryPhonemeRuleRequestModel):
     type: typing.Literal["phoneme"] = "phoneme"
 
     class Config:
@@ -35,10 +31,7 @@ class BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunc
         populate_by_name = True
 
 
-BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem = typing_extensions.Annotated[
-    typing.Union[
-        BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem_Alias,
-        BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem_Phoneme,
-    ],
+PronunciationDictionaryRule = typing_extensions.Annotated[
+    typing.Union[PronunciationDictionaryRule_Alias, PronunciationDictionaryRule_Phoneme],
     UnionMetadata(discriminant="type"),
 ]

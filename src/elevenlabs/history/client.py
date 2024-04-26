@@ -51,8 +51,8 @@ class HistoryClient:
         client.history.get_all()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/history"),
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/history"),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -114,8 +114,8 @@ class HistoryClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(
+            method="GET",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/history/{jsonable_encoder(history_item_id)}"
             ),
             params=jsonable_encoder(
@@ -166,8 +166,8 @@ class HistoryClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "DELETE",
-            urllib.parse.urljoin(
+            method="DELETE",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/history/{jsonable_encoder(history_item_id)}"
             ),
             params=jsonable_encoder(
@@ -216,12 +216,12 @@ class HistoryClient:
             api_key="YOUR_API_KEY",
         )
         client.history.get_audio(
-            history_item_id="history_item_id",
+            history_item_id="string",
         )
         """
         with self._client_wrapper.httpx_client.stream(
-            "GET",
-            urllib.parse.urljoin(
+            method="GET",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/history/{jsonable_encoder(history_item_id)}/audio"
             ),
             params=jsonable_encoder(
@@ -246,6 +246,10 @@ class HistoryClient:
                     yield _chunk
                 return
             _response.read()
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
             try:
                 _response_json = _response.json()
             except JSONDecodeError:
@@ -282,8 +286,8 @@ class HistoryClient:
         if output_format is not OMIT:
             _request["output_format"] = output_format
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/history/download"),
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/history/download"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -352,8 +356,8 @@ class AsyncHistoryClient:
         await client.history.get_all()
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/history"),
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/history"),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -415,8 +419,8 @@ class AsyncHistoryClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(
+            method="GET",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/history/{jsonable_encoder(history_item_id)}"
             ),
             params=jsonable_encoder(
@@ -469,8 +473,8 @@ class AsyncHistoryClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "DELETE",
-            urllib.parse.urljoin(
+            method="DELETE",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/history/{jsonable_encoder(history_item_id)}"
             ),
             params=jsonable_encoder(
@@ -519,12 +523,12 @@ class AsyncHistoryClient:
             api_key="YOUR_API_KEY",
         )
         await client.history.get_audio(
-            history_item_id="history_item_id",
+            history_item_id="string",
         )
         """
         async with self._client_wrapper.httpx_client.stream(
-            "GET",
-            urllib.parse.urljoin(
+            method="GET",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/history/{jsonable_encoder(history_item_id)}/audio"
             ),
             params=jsonable_encoder(
@@ -549,6 +553,10 @@ class AsyncHistoryClient:
                     yield _chunk
                 return
             await _response.aread()
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
             try:
                 _response_json = _response.json()
             except JSONDecodeError:
@@ -585,8 +593,8 @@ class AsyncHistoryClient:
         if output_format is not OMIT:
             _request["output_format"] = output_format
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/history/download"),
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/history/download"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
