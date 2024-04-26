@@ -99,9 +99,9 @@ from . import (
 from .environment import ElevenLabsEnvironment
 from .play import play, save, stream
 from .pronunciation_dictionary import (
-    BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem,
-    BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem_Alias,
-    BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem_Phoneme,
+    PronunciationDictionaryRule,
+    PronunciationDictionaryRule_Alias,
+    PronunciationDictionaryRule_Phoneme,
 )
 from .version import __version__
 
@@ -115,9 +115,6 @@ __all__ = [
     "AudioNativeCreateProjectResponseModel",
     "AudioNativeGetEmbedCodeResponseModel",
     "AudioOutput",
-    "BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem",
-    "BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem_Alias",
-    "BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem_Phoneme",
     "Category",
     "ChapterResponse",
     "ChapterSnapshotResponse",
@@ -160,6 +157,9 @@ __all__ = [
     "ProjectState",
     "PronunciationDictionaryAliasRuleRequestModel",
     "PronunciationDictionaryPhonemeRuleRequestModel",
+    "PronunciationDictionaryRule",
+    "PronunciationDictionaryRule_Alias",
+    "PronunciationDictionaryRule_Phoneme",
     "PronunciationDictionaryVersionLocator",
     "RealtimeVoiceSettings",
     "RecordingResponse",

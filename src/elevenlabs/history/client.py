@@ -216,7 +216,7 @@ class HistoryClient:
             api_key="YOUR_API_KEY",
         )
         client.history.get_audio(
-            history_item_id="history_item_id",
+            history_item_id="string",
         )
         """
         with self._client_wrapper.httpx_client.stream(
@@ -246,6 +246,10 @@ class HistoryClient:
                     yield _chunk
                 return
             _response.read()
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
             try:
                 _response_json = _response.json()
             except JSONDecodeError:
@@ -519,7 +523,7 @@ class AsyncHistoryClient:
             api_key="YOUR_API_KEY",
         )
         await client.history.get_audio(
-            history_item_id="history_item_id",
+            history_item_id="string",
         )
         """
         async with self._client_wrapper.httpx_client.stream(
@@ -549,6 +553,10 @@ class AsyncHistoryClient:
                     yield _chunk
                 return
             await _response.aread()
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
             try:
                 _response_json = _response.json()
             except JSONDecodeError:
