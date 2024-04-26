@@ -88,7 +88,7 @@ class ProjectsClient:
         isbn_number: typing.Optional[str] = None,
         acx_volume_normalization: typing.Optional[bool] = None,
         volume_normalization: typing.Optional[bool] = None,
-        pronunciation_dictionary_locators: typing.List[str],
+        pronunciation_dictionary_locators: typing.Optional[typing.List[str]] = None,
         callback_url: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddProjectResponseModel:
@@ -124,7 +124,7 @@ class ProjectsClient:
 
             - volume_normalization: typing.Optional[bool]. When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
 
-            - pronunciation_dictionary_locators: typing.List[str]. A list of pronunciation dictionary locators (id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody
+            - pronunciation_dictionary_locators: typing.Optional[typing.List[str]]. A list of pronunciation dictionary locators (id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody
 
             - callback_url: typing.Optional[str]. A url that will be called by our service when the project is converted with a json containing the status of the conversion
 
@@ -140,7 +140,6 @@ class ProjectsClient:
             default_title_voice_id="default_title_voice_id",
             default_paragraph_voice_id="default_paragraph_voice_id",
             default_model_id="default_model_id",
-            pronunciation_dictionary_locators=["pronunciation_dictionary_locators"],
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -708,7 +707,7 @@ class AsyncProjectsClient:
         isbn_number: typing.Optional[str] = None,
         acx_volume_normalization: typing.Optional[bool] = None,
         volume_normalization: typing.Optional[bool] = None,
-        pronunciation_dictionary_locators: typing.List[str],
+        pronunciation_dictionary_locators: typing.Optional[typing.List[str]] = None,
         callback_url: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddProjectResponseModel:
@@ -744,7 +743,7 @@ class AsyncProjectsClient:
 
             - volume_normalization: typing.Optional[bool]. When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
 
-            - pronunciation_dictionary_locators: typing.List[str]. A list of pronunciation dictionary locators (id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody
+            - pronunciation_dictionary_locators: typing.Optional[typing.List[str]]. A list of pronunciation dictionary locators (id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody
 
             - callback_url: typing.Optional[str]. A url that will be called by our service when the project is converted with a json containing the status of the conversion
 
@@ -760,7 +759,6 @@ class AsyncProjectsClient:
             default_title_voice_id="default_title_voice_id",
             default_paragraph_voice_id="default_paragraph_voice_id",
             default_model_id="default_model_id",
-            pronunciation_dictionary_locators=["pronunciation_dictionary_locators"],
         )
         """
         _response = await self._client_wrapper.httpx_client.request(

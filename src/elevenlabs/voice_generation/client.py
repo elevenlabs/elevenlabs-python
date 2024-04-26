@@ -104,10 +104,10 @@ class VoiceGenerationClient:
         )
         client.voice_generation.generate(
             gender="male",
-            accent="accent",
+            accent="string",
             age="young",
             accent_strength=1.1,
-            text="text",
+            text="string",
         )
         """
         with self._client_wrapper.httpx_client.stream(
@@ -145,6 +145,10 @@ class VoiceGenerationClient:
                     yield _chunk
                 return
             _response.read()
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
             try:
                 _response_json = _response.json()
             except JSONDecodeError:
@@ -314,10 +318,10 @@ class AsyncVoiceGenerationClient:
         )
         await client.voice_generation.generate(
             gender="male",
-            accent="accent",
+            accent="string",
             age="young",
             accent_strength=1.1,
-            text="text",
+            text="string",
         )
         """
         async with self._client_wrapper.httpx_client.stream(
@@ -355,6 +359,10 @@ class AsyncVoiceGenerationClient:
                     yield _chunk
                 return
             await _response.aread()
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
             try:
                 _response_json = _response.json()
             except JSONDecodeError:
