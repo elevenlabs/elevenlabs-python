@@ -10,6 +10,9 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
+from ..core.unchecked_base_model import construct_type
+from ..errors.unprocessable_entity_error import UnprocessableEntityError
+from ..types.http_validation_error import HttpValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -70,12 +73,14 @@ class SpeechToSpeechClient:
             api_key="YOUR_API_KEY",
         )
         client.speech_to_speech.convert(
-            voice_id="voice_id",
+            voice_id="string",
+            optimize_streaming_latency=1,
+            output_format="string",
         )
         """
         with self._client_wrapper.httpx_client.stream(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/speech-to-speech/{jsonable_encoder(voice_id)}"
             ),
             params=jsonable_encoder(
@@ -117,6 +122,10 @@ class SpeechToSpeechClient:
                     yield _chunk
                 return
             _response.read()
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
             try:
                 _response_json = _response.json()
             except JSONDecodeError:
@@ -174,12 +183,14 @@ class SpeechToSpeechClient:
             api_key="YOUR_API_KEY",
         )
         client.speech_to_speech.convert_as_stream(
-            voice_id="voice_id",
+            voice_id="string",
+            optimize_streaming_latency=1,
+            output_format="string",
         )
         """
         with self._client_wrapper.httpx_client.stream(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/speech-to-speech/{jsonable_encoder(voice_id)}/stream"
             ),
             params=jsonable_encoder(
@@ -221,6 +232,10 @@ class SpeechToSpeechClient:
                     yield _chunk
                 return
             _response.read()
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
             try:
                 _response_json = _response.json()
             except JSONDecodeError:
@@ -283,12 +298,14 @@ class AsyncSpeechToSpeechClient:
             api_key="YOUR_API_KEY",
         )
         await client.speech_to_speech.convert(
-            voice_id="voice_id",
+            voice_id="string",
+            optimize_streaming_latency=1,
+            output_format="string",
         )
         """
         async with self._client_wrapper.httpx_client.stream(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/speech-to-speech/{jsonable_encoder(voice_id)}"
             ),
             params=jsonable_encoder(
@@ -330,6 +347,10 @@ class AsyncSpeechToSpeechClient:
                     yield _chunk
                 return
             await _response.aread()
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
             try:
                 _response_json = _response.json()
             except JSONDecodeError:
@@ -387,12 +408,14 @@ class AsyncSpeechToSpeechClient:
             api_key="YOUR_API_KEY",
         )
         await client.speech_to_speech.convert_as_stream(
-            voice_id="voice_id",
+            voice_id="string",
+            optimize_streaming_latency=1,
+            output_format="string",
         )
         """
         async with self._client_wrapper.httpx_client.stream(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/speech-to-speech/{jsonable_encoder(voice_id)}/stream"
             ),
             params=jsonable_encoder(
@@ -434,6 +457,10 @@ class AsyncSpeechToSpeechClient:
                     yield _chunk
                 return
             await _response.aread()
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
             try:
                 _response_json = _response.json()
             except JSONDecodeError:

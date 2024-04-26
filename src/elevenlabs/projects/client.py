@@ -42,8 +42,8 @@ class ProjectsClient:
         client.projects.get_all()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/projects"),
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/projects"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -88,7 +88,7 @@ class ProjectsClient:
         isbn_number: typing.Optional[str] = None,
         acx_volume_normalization: typing.Optional[bool] = None,
         volume_normalization: typing.Optional[bool] = None,
-        pronunciation_dictionary_locators: typing.List[str],
+        pronunciation_dictionary_locators: typing.Optional[typing.List[str]] = None,
         callback_url: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddProjectResponseModel:
@@ -124,7 +124,7 @@ class ProjectsClient:
 
             - volume_normalization: typing.Optional[bool]. When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
 
-            - pronunciation_dictionary_locators: typing.List[str]. A list of pronunciation dictionary locators (id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody
+            - pronunciation_dictionary_locators: typing.Optional[typing.List[str]]. A list of pronunciation dictionary locators (id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody
 
             - callback_url: typing.Optional[str]. A url that will be called by our service when the project is converted with a json containing the status of the conversion
 
@@ -140,12 +140,11 @@ class ProjectsClient:
             default_title_voice_id="default_title_voice_id",
             default_paragraph_voice_id="default_paragraph_voice_id",
             default_model_id="default_model_id",
-            pronunciation_dictionary_locators=["pronunciation_dictionary_locators"],
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/projects/add"),
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/projects/add"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -239,8 +238,8 @@ class ProjectsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(
+            method="GET",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/projects/{jsonable_encoder(project_id)}"
             ),
             params=jsonable_encoder(
@@ -291,8 +290,8 @@ class ProjectsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "DELETE",
-            urllib.parse.urljoin(
+            method="DELETE",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/projects/{jsonable_encoder(project_id)}"
             ),
             params=jsonable_encoder(
@@ -343,8 +342,8 @@ class ProjectsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/projects/{jsonable_encoder(project_id)}/convert"
             ),
             params=jsonable_encoder(
@@ -400,8 +399,8 @@ class ProjectsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(
+            method="GET",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/projects/{jsonable_encoder(project_id)}/snapshots"
             ),
             params=jsonable_encoder(
@@ -467,8 +466,8 @@ class ProjectsClient:
         if convert_to_mpeg is not OMIT:
             _request["convert_to_mpeg"] = convert_to_mpeg
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
                 f"v1/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}/stream",
             ),
@@ -531,8 +530,8 @@ class ProjectsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
                 f"v1/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}/archive",
             ),
@@ -602,8 +601,8 @@ class ProjectsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
                 f"v1/projects/{jsonable_encoder(project_id)}/update-pronunciation-dictionaries",
             ),
@@ -662,8 +661,8 @@ class AsyncProjectsClient:
         await client.projects.get_all()
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/projects"),
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/projects"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -708,7 +707,7 @@ class AsyncProjectsClient:
         isbn_number: typing.Optional[str] = None,
         acx_volume_normalization: typing.Optional[bool] = None,
         volume_normalization: typing.Optional[bool] = None,
-        pronunciation_dictionary_locators: typing.List[str],
+        pronunciation_dictionary_locators: typing.Optional[typing.List[str]] = None,
         callback_url: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddProjectResponseModel:
@@ -744,7 +743,7 @@ class AsyncProjectsClient:
 
             - volume_normalization: typing.Optional[bool]. When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
 
-            - pronunciation_dictionary_locators: typing.List[str]. A list of pronunciation dictionary locators (id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody
+            - pronunciation_dictionary_locators: typing.Optional[typing.List[str]]. A list of pronunciation dictionary locators (id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody
 
             - callback_url: typing.Optional[str]. A url that will be called by our service when the project is converted with a json containing the status of the conversion
 
@@ -760,12 +759,11 @@ class AsyncProjectsClient:
             default_title_voice_id="default_title_voice_id",
             default_paragraph_voice_id="default_paragraph_voice_id",
             default_model_id="default_model_id",
-            pronunciation_dictionary_locators=["pronunciation_dictionary_locators"],
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/projects/add"),
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/projects/add"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -859,8 +857,8 @@ class AsyncProjectsClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(
+            method="GET",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/projects/{jsonable_encoder(project_id)}"
             ),
             params=jsonable_encoder(
@@ -911,8 +909,8 @@ class AsyncProjectsClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "DELETE",
-            urllib.parse.urljoin(
+            method="DELETE",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/projects/{jsonable_encoder(project_id)}"
             ),
             params=jsonable_encoder(
@@ -963,8 +961,8 @@ class AsyncProjectsClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/projects/{jsonable_encoder(project_id)}/convert"
             ),
             params=jsonable_encoder(
@@ -1020,8 +1018,8 @@ class AsyncProjectsClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(
+            method="GET",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/projects/{jsonable_encoder(project_id)}/snapshots"
             ),
             params=jsonable_encoder(
@@ -1087,8 +1085,8 @@ class AsyncProjectsClient:
         if convert_to_mpeg is not OMIT:
             _request["convert_to_mpeg"] = convert_to_mpeg
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
                 f"v1/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}/stream",
             ),
@@ -1151,8 +1149,8 @@ class AsyncProjectsClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
                 f"v1/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}/archive",
             ),
@@ -1222,8 +1220,8 @@ class AsyncProjectsClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
                 f"v1/projects/{jsonable_encoder(project_id)}/update-pronunciation-dictionaries",
             ),

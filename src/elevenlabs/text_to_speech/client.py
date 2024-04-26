@@ -9,6 +9,9 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
+from ..core.unchecked_base_model import construct_type
+from ..errors.unprocessable_entity_error import UnprocessableEntityError
+from ..types.http_validation_error import HttpValidationError
 from ..types.optimize_streaming_latency import OptimizeStreamingLatency
 from ..types.output_format import OutputFormat
 from ..types.pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
@@ -56,14 +59,30 @@ class TextToSpeechClient:
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
+        from elevenlabs import PronunciationDictionaryVersionLocator, VoiceSettings
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
         client.text_to_speech.convert(
-            voice_id="voice_id",
-            text="text",
+            voice_id="string",
+            optimize_streaming_latency="0",
+            output_format="mp3_22050_32",
+            text="string",
+            model_id="string",
+            voice_settings=VoiceSettings(
+                stability=1.1,
+                similarity_boost=1.1,
+                style=1.1,
+                use_speaker_boost=True,
+            ),
+            pronunciation_dictionary_locators=[
+                PronunciationDictionaryVersionLocator(
+                    pronunciation_dictionary_id="string",
+                    version_id="string",
+                )
+            ],
         )
         """
         _request: typing.Dict[str, typing.Any] = {"text": text}
@@ -74,8 +93,8 @@ class TextToSpeechClient:
         if pronunciation_dictionary_locators is not OMIT:
             _request["pronunciation_dictionary_locators"] = pronunciation_dictionary_locators
         with self._client_wrapper.httpx_client.stream(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/text-to-speech/{jsonable_encoder(voice_id)}"
             ),
             params=jsonable_encoder(
@@ -116,6 +135,10 @@ class TextToSpeechClient:
                     yield _chunk
                 return
             _response.read()
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
             try:
                 _response_json = _response.json()
             except JSONDecodeError:
@@ -156,14 +179,30 @@ class TextToSpeechClient:
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
+        from elevenlabs import PronunciationDictionaryVersionLocator, VoiceSettings
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
         client.text_to_speech.convert_as_stream(
-            voice_id="voice_id",
-            text="text",
+            voice_id="string",
+            optimize_streaming_latency="0",
+            output_format="mp3_22050_32",
+            text="string",
+            model_id="string",
+            voice_settings=VoiceSettings(
+                stability=1.1,
+                similarity_boost=1.1,
+                style=1.1,
+                use_speaker_boost=True,
+            ),
+            pronunciation_dictionary_locators=[
+                PronunciationDictionaryVersionLocator(
+                    pronunciation_dictionary_id="string",
+                    version_id="string",
+                )
+            ],
         )
         """
         _request: typing.Dict[str, typing.Any] = {"text": text}
@@ -174,8 +213,8 @@ class TextToSpeechClient:
         if pronunciation_dictionary_locators is not OMIT:
             _request["pronunciation_dictionary_locators"] = pronunciation_dictionary_locators
         with self._client_wrapper.httpx_client.stream(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream"
             ),
             params=jsonable_encoder(
@@ -216,6 +255,10 @@ class TextToSpeechClient:
                     yield _chunk
                 return
             _response.read()
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
             try:
                 _response_json = _response.json()
             except JSONDecodeError:
@@ -261,14 +304,30 @@ class AsyncTextToSpeechClient:
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
+        from elevenlabs import PronunciationDictionaryVersionLocator, VoiceSettings
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
         await client.text_to_speech.convert(
-            voice_id="voice_id",
-            text="text",
+            voice_id="string",
+            optimize_streaming_latency="0",
+            output_format="mp3_22050_32",
+            text="string",
+            model_id="string",
+            voice_settings=VoiceSettings(
+                stability=1.1,
+                similarity_boost=1.1,
+                style=1.1,
+                use_speaker_boost=True,
+            ),
+            pronunciation_dictionary_locators=[
+                PronunciationDictionaryVersionLocator(
+                    pronunciation_dictionary_id="string",
+                    version_id="string",
+                )
+            ],
         )
         """
         _request: typing.Dict[str, typing.Any] = {"text": text}
@@ -279,8 +338,8 @@ class AsyncTextToSpeechClient:
         if pronunciation_dictionary_locators is not OMIT:
             _request["pronunciation_dictionary_locators"] = pronunciation_dictionary_locators
         async with self._client_wrapper.httpx_client.stream(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/text-to-speech/{jsonable_encoder(voice_id)}"
             ),
             params=jsonable_encoder(
@@ -321,6 +380,10 @@ class AsyncTextToSpeechClient:
                     yield _chunk
                 return
             await _response.aread()
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
             try:
                 _response_json = _response.json()
             except JSONDecodeError:
@@ -361,14 +424,30 @@ class AsyncTextToSpeechClient:
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
+        from elevenlabs import PronunciationDictionaryVersionLocator, VoiceSettings
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
         await client.text_to_speech.convert_as_stream(
-            voice_id="voice_id",
-            text="text",
+            voice_id="string",
+            optimize_streaming_latency="0",
+            output_format="mp3_22050_32",
+            text="string",
+            model_id="string",
+            voice_settings=VoiceSettings(
+                stability=1.1,
+                similarity_boost=1.1,
+                style=1.1,
+                use_speaker_boost=True,
+            ),
+            pronunciation_dictionary_locators=[
+                PronunciationDictionaryVersionLocator(
+                    pronunciation_dictionary_id="string",
+                    version_id="string",
+                )
+            ],
         )
         """
         _request: typing.Dict[str, typing.Any] = {"text": text}
@@ -379,8 +458,8 @@ class AsyncTextToSpeechClient:
         if pronunciation_dictionary_locators is not OMIT:
             _request["pronunciation_dictionary_locators"] = pronunciation_dictionary_locators
         async with self._client_wrapper.httpx_client.stream(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream"
             ),
             params=jsonable_encoder(
@@ -421,6 +500,10 @@ class AsyncTextToSpeechClient:
                     yield _chunk
                 return
             await _response.aread()
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
             try:
                 _response_json = _response.json()
             except JSONDecodeError:

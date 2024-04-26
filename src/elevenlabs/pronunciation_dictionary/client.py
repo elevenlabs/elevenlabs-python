@@ -20,9 +20,7 @@ from ..types.get_pronunciation_dictionaries_metadata_response_model import (
 from ..types.get_pronunciation_dictionary_metadata_response import GetPronunciationDictionaryMetadataResponse
 from ..types.http_validation_error import HttpValidationError
 from ..types.remove_pronunciation_dictionary_rules_response_model import RemovePronunciationDictionaryRulesResponseModel
-from .types.body_add_rules_to_the_pronunciation_dictionary_v_1_pronunciation_dictionaries_pronunciation_dictionary_id_add_rules_post_rules_item import (
-    BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem,
-)
+from .types.pronunciation_dictionary_rule import PronunciationDictionaryRule
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -62,8 +60,8 @@ class PronunciationDictionaryClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "v1/pronunciation-dictionaries/add-from-file"
             ),
             params=jsonable_encoder(
@@ -106,9 +104,7 @@ class PronunciationDictionaryClient:
         self,
         pronunciation_dictionary_id: str,
         *,
-        rules: typing.Sequence[
-            BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem
-        ],
+        rules: typing.Sequence[PronunciationDictionaryRule],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddPronunciationDictionaryRulesResponseModel:
         """
@@ -117,9 +113,9 @@ class PronunciationDictionaryClient:
         Parameters:
             - pronunciation_dictionary_id: str. The id of the pronunciation dictionary
 
-            - rules: typing.Sequence[BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem]. List of pronunciation rules. Rule can be either:
-                                                                                                                                                             an alias rule: {'string_to_replace': 'a', 'type': 'alias', 'alias': 'b', }
-                                                                                                                                                             or a phoneme rule: {'string_to_replace': 'a', 'type': 'phoneme', 'phoneme': 'b', 'alphabet': 'ipa' }
+            - rules: typing.Sequence[PronunciationDictionaryRule]. List of pronunciation rules. Rule can be either:
+                                                                       an alias rule: {'string_to_replace': 'a', 'type': 'alias', 'alias': 'b', }
+                                                                       or a phoneme rule: {'string_to_replace': 'a', 'type': 'phoneme', 'phoneme': 'b', 'alphabet': 'ipa' }
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from elevenlabs.client import ElevenLabs
@@ -133,8 +129,8 @@ class PronunciationDictionaryClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
                 f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}/add-rules",
             ),
@@ -201,8 +197,8 @@ class PronunciationDictionaryClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
                 f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}/remove-rules",
             ),
@@ -243,7 +239,7 @@ class PronunciationDictionaryClient:
 
     def get_pls_file_with_a_pronunciation_dictionary_version_rules(
         self, dictionary_id: str, version_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Any:
+    ) -> str:
         """
         Get PLS file with a pronunciation dictionary version rules
 
@@ -260,13 +256,13 @@ class PronunciationDictionaryClient:
             api_key="YOUR_API_KEY",
         )
         client.pronunciation_dictionary.get_pls_file_with_a_pronunciation_dictionary_version_rules(
-            dictionary_id="dictionary_id",
-            version_id="version_id",
+            dictionary_id="string",
+            version_id="string",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(
+            method="GET",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
                 f"v1/pronunciation-dictionaries/{jsonable_encoder(dictionary_id)}/{jsonable_encoder(version_id)}/download",
             ),
@@ -288,7 +284,7 @@ class PronunciationDictionaryClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(typing.Any, construct_type(type_=typing.Any, object_=_response.json()))  # type: ignore
+            return _response.text  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(
                 typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
@@ -320,10 +316,10 @@ class PronunciationDictionaryClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(
+            method="GET",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
-                f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}",
+                f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}/",
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
@@ -379,8 +375,8 @@ class PronunciationDictionaryClient:
         client.pronunciation_dictionary.get_all()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/pronunciation-dictionaries"),
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/pronunciation-dictionaries/"),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -455,8 +451,8 @@ class AsyncPronunciationDictionaryClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "v1/pronunciation-dictionaries/add-from-file"
             ),
             params=jsonable_encoder(
@@ -499,9 +495,7 @@ class AsyncPronunciationDictionaryClient:
         self,
         pronunciation_dictionary_id: str,
         *,
-        rules: typing.Sequence[
-            BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem
-        ],
+        rules: typing.Sequence[PronunciationDictionaryRule],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddPronunciationDictionaryRulesResponseModel:
         """
@@ -510,9 +504,9 @@ class AsyncPronunciationDictionaryClient:
         Parameters:
             - pronunciation_dictionary_id: str. The id of the pronunciation dictionary
 
-            - rules: typing.Sequence[BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem]. List of pronunciation rules. Rule can be either:
-                                                                                                                                                             an alias rule: {'string_to_replace': 'a', 'type': 'alias', 'alias': 'b', }
-                                                                                                                                                             or a phoneme rule: {'string_to_replace': 'a', 'type': 'phoneme', 'phoneme': 'b', 'alphabet': 'ipa' }
+            - rules: typing.Sequence[PronunciationDictionaryRule]. List of pronunciation rules. Rule can be either:
+                                                                       an alias rule: {'string_to_replace': 'a', 'type': 'alias', 'alias': 'b', }
+                                                                       or a phoneme rule: {'string_to_replace': 'a', 'type': 'phoneme', 'phoneme': 'b', 'alphabet': 'ipa' }
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from elevenlabs.client import AsyncElevenLabs
@@ -526,8 +520,8 @@ class AsyncPronunciationDictionaryClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
                 f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}/add-rules",
             ),
@@ -594,8 +588,8 @@ class AsyncPronunciationDictionaryClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
                 f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}/remove-rules",
             ),
@@ -636,7 +630,7 @@ class AsyncPronunciationDictionaryClient:
 
     async def get_pls_file_with_a_pronunciation_dictionary_version_rules(
         self, dictionary_id: str, version_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Any:
+    ) -> str:
         """
         Get PLS file with a pronunciation dictionary version rules
 
@@ -653,13 +647,13 @@ class AsyncPronunciationDictionaryClient:
             api_key="YOUR_API_KEY",
         )
         await client.pronunciation_dictionary.get_pls_file_with_a_pronunciation_dictionary_version_rules(
-            dictionary_id="dictionary_id",
-            version_id="version_id",
+            dictionary_id="string",
+            version_id="string",
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(
+            method="GET",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
                 f"v1/pronunciation-dictionaries/{jsonable_encoder(dictionary_id)}/{jsonable_encoder(version_id)}/download",
             ),
@@ -681,7 +675,7 @@ class AsyncPronunciationDictionaryClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(typing.Any, construct_type(type_=typing.Any, object_=_response.json()))  # type: ignore
+            return _response.text  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(
                 typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
@@ -713,10 +707,10 @@ class AsyncPronunciationDictionaryClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(
+            method="GET",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
-                f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}",
+                f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}/",
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
@@ -772,8 +766,8 @@ class AsyncPronunciationDictionaryClient:
         await client.pronunciation_dictionary.get_all()
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/pronunciation-dictionaries"),
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/pronunciation-dictionaries/"),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {

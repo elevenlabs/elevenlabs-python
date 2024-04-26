@@ -42,8 +42,8 @@ class VoiceGenerationClient:
         client.voice_generation.generate_parameters()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(
+            method="GET",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "v1/voice-generation/generate-voice/parameters"
             ),
             params=jsonable_encoder(
@@ -104,15 +104,15 @@ class VoiceGenerationClient:
         )
         client.voice_generation.generate(
             gender="male",
-            accent="accent",
+            accent="string",
             age="young",
             accent_strength=1.1,
-            text="text",
+            text="string",
         )
         """
         with self._client_wrapper.httpx_client.stream(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/voice-generation/generate-voice"),
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/voice-generation/generate-voice"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -145,6 +145,10 @@ class VoiceGenerationClient:
                     yield _chunk
                 return
             _response.read()
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
             try:
                 _response_json = _response.json()
             except JSONDecodeError:
@@ -193,8 +197,8 @@ class VoiceGenerationClient:
         if labels is not OMIT:
             _request["labels"] = labels
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/voice-generation/create-voice"),
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/voice-generation/create-voice"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -252,8 +256,8 @@ class AsyncVoiceGenerationClient:
         await client.voice_generation.generate_parameters()
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(
+            method="GET",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "v1/voice-generation/generate-voice/parameters"
             ),
             params=jsonable_encoder(
@@ -314,15 +318,15 @@ class AsyncVoiceGenerationClient:
         )
         await client.voice_generation.generate(
             gender="male",
-            accent="accent",
+            accent="string",
             age="young",
             accent_strength=1.1,
-            text="text",
+            text="string",
         )
         """
         async with self._client_wrapper.httpx_client.stream(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/voice-generation/generate-voice"),
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/voice-generation/generate-voice"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -355,6 +359,10 @@ class AsyncVoiceGenerationClient:
                     yield _chunk
                 return
             await _response.aread()
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
             try:
                 _response_json = _response.json()
             except JSONDecodeError:
@@ -403,8 +411,8 @@ class AsyncVoiceGenerationClient:
         if labels is not OMIT:
             _request["labels"] = labels
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/voice-generation/create-voice"),
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/voice-generation/create-voice"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
