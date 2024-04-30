@@ -439,7 +439,7 @@ class ProjectsClient:
         *,
         convert_to_mpeg: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    ) -> typing.Iterator[bytes]:
         """
         Stream the audio from a project snapshot.
 
@@ -458,14 +458,15 @@ class ProjectsClient:
             api_key="YOUR_API_KEY",
         )
         client.projects.stream_audio(
-            project_id="project_id",
-            project_snapshot_id="project_snapshot_id",
+            project_id="string",
+            project_snapshot_id="string",
+            convert_to_mpeg=True,
         )
         """
         _request: typing.Dict[str, typing.Any] = {}
         if convert_to_mpeg is not OMIT:
             _request["convert_to_mpeg"] = convert_to_mpeg
-        _response = self._client_wrapper.httpx_client.request(
+        with self._client_wrapper.httpx_client.stream(
             method="POST",
             url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
@@ -493,18 +494,21 @@ class ProjectsClient:
             else self._client_wrapper.get_timeout(),
             retries=0,
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
-        if 200 <= _response.status_code < 300:
-            return
-        if _response.status_code == 422:
-            raise UnprocessableEntityError(
-                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
-            )
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        ) as _response:
+            if 200 <= _response.status_code < 300:
+                for _chunk in _response.iter_bytes():
+                    yield _chunk
+                return
+            _response.read()
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
+            try:
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def stream_archive(
         self, project_id: str, project_snapshot_id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -1058,7 +1062,7 @@ class AsyncProjectsClient:
         *,
         convert_to_mpeg: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    ) -> typing.AsyncIterator[bytes]:
         """
         Stream the audio from a project snapshot.
 
@@ -1077,14 +1081,15 @@ class AsyncProjectsClient:
             api_key="YOUR_API_KEY",
         )
         await client.projects.stream_audio(
-            project_id="project_id",
-            project_snapshot_id="project_snapshot_id",
+            project_id="string",
+            project_snapshot_id="string",
+            convert_to_mpeg=True,
         )
         """
         _request: typing.Dict[str, typing.Any] = {}
         if convert_to_mpeg is not OMIT:
             _request["convert_to_mpeg"] = convert_to_mpeg
-        _response = await self._client_wrapper.httpx_client.request(
+        async with self._client_wrapper.httpx_client.stream(
             method="POST",
             url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
@@ -1112,18 +1117,21 @@ class AsyncProjectsClient:
             else self._client_wrapper.get_timeout(),
             retries=0,
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
-        if 200 <= _response.status_code < 300:
-            return
-        if _response.status_code == 422:
-            raise UnprocessableEntityError(
-                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
-            )
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        ) as _response:
+            if 200 <= _response.status_code < 300:
+                async for _chunk in _response.aiter_bytes():
+                    yield _chunk
+                return
+            await _response.aread()
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
+            try:
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def stream_archive(
         self, project_id: str, project_snapshot_id: str, *, request_options: typing.Optional[RequestOptions] = None
