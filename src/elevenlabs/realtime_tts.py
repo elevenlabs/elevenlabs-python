@@ -97,36 +97,40 @@ class RealtimeTextToSpeechClient(TextToSpeechClient):
                 )
             )
         ) as socket:
-            socket.send(json.dumps(
-                dict(
-                    text=" ",
-                    try_trigger_generation=True,
-                    voice_settings=voice_settings.dict() if voice_settings else None,
-                    generation_config=dict(
-                        chunk_length_schedule=[50],
-                    ),
-                )
-            ))
+            try:
+                socket.send(json.dumps(
+                    dict(
+                        text=" ",
+                        try_trigger_generation=True,
+                        voice_settings=voice_settings.dict() if voice_settings else None,
+                        generation_config=dict(
+                            chunk_length_schedule=[50],
+                        ),
+                    )
+                ))
+            except websockets.exceptions.ConnectionClosedError as ce:
+                raise ApiError(body=ce.reason, status_code=ce.code)
 
-            for text_chunk in text_chunker(text):
-                data = dict(text=text_chunk, try_trigger_generation=True)
-                socket.send(json.dumps(data))
-                try:
-                    data = json.loads(socket.recv(1e-4))
+            try:
+                for text_chunk in text_chunker(text):
+                    data = dict(text=text_chunk, try_trigger_generation=True)
+                    socket.send(json.dumps(data))
+                    try:
+                        data = json.loads(socket.recv(1e-4))
+                        if "audio" in data and data["audio"]:
+                            yield base64.b64decode(data["audio"])  # type: ignore
+                    except TimeoutError:
+                        pass
+
+                socket.send(json.dumps(dict(text="")))
+
+                while True:
+
+                    data = json.loads(socket.recv())
                     if "audio" in data and data["audio"]:
                         yield base64.b64decode(data["audio"])  # type: ignore
-                except TimeoutError:
-                    pass
-            
-            socket.send(json.dumps(dict(text="")))
-
-            while True:
-                try:
-                    data = json.loads(socket.recv())                   
-                    if "audio" in data and data["audio"]:
-                        yield base64.b64decode(data["audio"])  # type: ignore
-                except websockets.exceptions.ConnectionClosed:
-                    if "message" in data:
-                        raise ApiError(body=data)
-                    break
-
+            except websockets.exceptions.ConnectionClosed as ce:
+                if "message" in data:
+                    raise ApiError(body=data, status_code=ce.code)
+                elif ce.code != 1000:
+                    raise ApiError(body=ce.reason, status_code=ce.code)
