@@ -15,6 +15,7 @@ from .chapter_snapshot_response import ChapterSnapshotResponse
 from .chapter_snapshots_response import ChapterSnapshotsResponse
 from .chapter_state import ChapterState
 from .chapter_statistics_response import ChapterStatisticsResponse
+from .close_connection import CloseConnection
 from .currency import Currency
 from .do_dubbing_response import DoDubbingResponse
 from .dubbing_metadata_response import DubbingMetadataResponse
@@ -34,6 +35,7 @@ from .get_voices_response import GetVoicesResponse
 from .history import History
 from .history_item import HistoryItem
 from .http_validation_error import HttpValidationError
+from .initialize_connection import InitializeConnection
 from .invoice import Invoice
 from .language_response import LanguageResponse
 from .library_voice_response import LibraryVoiceResponse
@@ -95,6 +97,7 @@ __all__ = [
     "ChapterSnapshotsResponse",
     "ChapterState",
     "ChapterStatisticsResponse",
+    "CloseConnection",
     "Currency",
     "DoDubbingResponse",
     "DubbingMetadataResponse",
@@ -114,6 +117,7 @@ __all__ = [
     "History",
     "HistoryItem",
     "HttpValidationError",
+    "InitializeConnection",
     "Invoice",
     "LanguageResponse",
     "LibraryVoiceResponse",

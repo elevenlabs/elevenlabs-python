@@ -31,9 +31,18 @@ class ProjectsClient:
         """
         Returns a list of your projects together and its metadata.
 
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetProjectsResponse
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -77,11 +86,11 @@ class ProjectsClient:
         self,
         *,
         name: str,
-        from_url: typing.Optional[str] = None,
-        from_document: typing.Optional[core.File] = None,
         default_title_voice_id: str,
         default_paragraph_voice_id: str,
         default_model_id: str,
+        from_url: typing.Optional[str] = None,
+        from_document: typing.Optional[core.File] = None,
         quality_preset: typing.Optional[str] = None,
         title: typing.Optional[str] = None,
         author: typing.Optional[str] = None,
@@ -95,41 +104,65 @@ class ProjectsClient:
         """
         Creates a new project, it can be either initialized as blank, from a document or from a URL.
 
-        Parameters:
-            - name: str. The name of the project, used for identification only.
+        Parameters
+        ----------
+        name : str
+            The name of the project, used for identification only.
 
-            - from_url: typing.Optional[str]. An optional URL from which we will extract content to initialize the project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the project as blank.
+        default_title_voice_id : str
+            The voice_id that corresponds to the default voice used for new titles.
 
-            - from_document: typing.Optional[core.File]. See core.File for more documentation
+        default_paragraph_voice_id : str
+            The voice_id that corresponds to the default voice used for new paragraphs.
 
-            - default_title_voice_id: str. The voice_id that corresponds to the default voice used for new titles.
+        default_model_id : str
+            The model_id of the model to be used for this project, you can query GET https://api.elevenlabs.io/v1/models to list all available models.
 
-            - default_paragraph_voice_id: str. The voice_id that corresponds to the default voice used for new paragraphs.
+        from_url : typing.Optional[str]
+            An optional URL from which we will extract content to initialize the project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the project as blank.
 
-            - default_model_id: str. The model_id of the model to be used for this project, you can query GET https://api.elevenlabs.io/v1/models to list all available models.
+        from_document : typing.Optional[core.File]
+            See core.File for more documentation
 
-            - quality_preset: typing.Optional[str]. Output quality of the generated audio. Must be one of:
-                                                    standard - standard output format, 128kbps with 44.1kHz sample rate.
-                                                    high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the character cost by 20%.
-                                                    ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the character cost by 50%.
-                                                    ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the character cost by 100%.
+        quality_preset : typing.Optional[str]
+            Output quality of the generated audio. Must be one of:
+            standard - standard output format, 128kbps with 44.1kHz sample rate.
+            high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the character cost by 20%.
+            ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the character cost by 50%.
+            ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the character cost by 100%.
 
-            - title: typing.Optional[str]. An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
 
-            - author: typing.Optional[str]. An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
+        title : typing.Optional[str]
+            An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
 
-            - isbn_number: typing.Optional[str]. An optional ISBN number of the project you want to create, this will be added as metadata to the mp3 file on project / chapter download.
+        author : typing.Optional[str]
+            An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
 
-            - acx_volume_normalization: typing.Optional[bool]. [Deprecated] When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
+        isbn_number : typing.Optional[str]
+            An optional ISBN number of the project you want to create, this will be added as metadata to the mp3 file on project / chapter download.
 
-            - volume_normalization: typing.Optional[bool]. When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
+        acx_volume_normalization : typing.Optional[bool]
+            [Deprecated] When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
 
-            - pronunciation_dictionary_locators: typing.Optional[typing.List[str]]. A list of pronunciation dictionary locators (id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody
+        volume_normalization : typing.Optional[bool]
+            When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
 
-            - callback_url: typing.Optional[str]. A url that will be called by our service when the project is converted with a json containing the status of the conversion
+        pronunciation_dictionary_locators : typing.Optional[typing.List[str]]
+            A list of pronunciation dictionary locators (id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        callback_url : typing.Optional[str]
+            A url that will be called by our service when the project is converted with a json containing the status of the conversion
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AddProjectResponseModel
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -223,11 +256,21 @@ class ProjectsClient:
         """
         Returns information about a specific project. This endpoint returns more detailed information about a project than GET api.elevenlabs.io/v1/projects.
 
-        Parameters:
-            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ProjectExtendedResponseModel
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -275,11 +318,21 @@ class ProjectsClient:
         """
         Delete a project by its project_id.
 
-        Parameters:
-            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -327,11 +380,21 @@ class ProjectsClient:
         """
         Starts conversion of a project and all of its chapters.
 
-        Parameters:
-            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -384,11 +447,21 @@ class ProjectsClient:
         """
         Gets the snapshots of a project.
 
-        Parameters:
-            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ProjectSnapshotsResponse
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -443,15 +516,27 @@ class ProjectsClient:
         """
         Stream the audio from a project snapshot.
 
-        Parameters:
-            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
-            - project_snapshot_id: str. The project_snapshot_id of the project snapshot. You can query GET /v1/projects/{project_id}/snapshots to list all available snapshots for a project.
+        project_snapshot_id : str
+            The project_snapshot_id of the project snapshot. You can query GET /v1/projects/{project_id}/snapshots to list all available snapshots for a project.
 
-            - convert_to_mpeg: typing.Optional[bool]. Whether to convert the audio to mpeg format.
+        convert_to_mpeg : typing.Optional[bool]
+            Whether to convert the audio to mpeg format.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[bytes]
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -516,13 +601,23 @@ class ProjectsClient:
         """
         Streams archive with project audio.
 
-        Parameters:
-            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
-            - project_snapshot_id: str. The project_snapshot_id of the project snapshot. You can query GET /v1/projects/{project_id}/snapshots to list all available snapshots for a project.
+        project_snapshot_id : str
+            The project_snapshot_id of the project snapshot. You can query GET /v1/projects/{project_id}/snapshots to list all available snapshots for a project.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -581,13 +676,24 @@ class ProjectsClient:
         """
         Updates the set of pronunciation dictionaries acting on a project. This will automatically mark text within this project as requiring reconverting where the new dictionary would apply or the old one no longer does.
 
-        Parameters:
-            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
-            - pronunciation_dictionary_locators: typing.Sequence[PronunciationDictionaryVersionLocator]. A list of pronunciation dictionary locators (id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody
+        pronunciation_dictionary_locators : typing.Sequence[PronunciationDictionaryVersionLocator]
+            A list of pronunciation dictionary locators (id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs import PronunciationDictionaryVersionLocator
         from elevenlabs.client import ElevenLabs
 
@@ -654,9 +760,18 @@ class AsyncProjectsClient:
         """
         Returns a list of your projects together and its metadata.
 
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetProjectsResponse
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
@@ -700,11 +815,11 @@ class AsyncProjectsClient:
         self,
         *,
         name: str,
-        from_url: typing.Optional[str] = None,
-        from_document: typing.Optional[core.File] = None,
         default_title_voice_id: str,
         default_paragraph_voice_id: str,
         default_model_id: str,
+        from_url: typing.Optional[str] = None,
+        from_document: typing.Optional[core.File] = None,
         quality_preset: typing.Optional[str] = None,
         title: typing.Optional[str] = None,
         author: typing.Optional[str] = None,
@@ -718,41 +833,65 @@ class AsyncProjectsClient:
         """
         Creates a new project, it can be either initialized as blank, from a document or from a URL.
 
-        Parameters:
-            - name: str. The name of the project, used for identification only.
+        Parameters
+        ----------
+        name : str
+            The name of the project, used for identification only.
 
-            - from_url: typing.Optional[str]. An optional URL from which we will extract content to initialize the project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the project as blank.
+        default_title_voice_id : str
+            The voice_id that corresponds to the default voice used for new titles.
 
-            - from_document: typing.Optional[core.File]. See core.File for more documentation
+        default_paragraph_voice_id : str
+            The voice_id that corresponds to the default voice used for new paragraphs.
 
-            - default_title_voice_id: str. The voice_id that corresponds to the default voice used for new titles.
+        default_model_id : str
+            The model_id of the model to be used for this project, you can query GET https://api.elevenlabs.io/v1/models to list all available models.
 
-            - default_paragraph_voice_id: str. The voice_id that corresponds to the default voice used for new paragraphs.
+        from_url : typing.Optional[str]
+            An optional URL from which we will extract content to initialize the project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the project as blank.
 
-            - default_model_id: str. The model_id of the model to be used for this project, you can query GET https://api.elevenlabs.io/v1/models to list all available models.
+        from_document : typing.Optional[core.File]
+            See core.File for more documentation
 
-            - quality_preset: typing.Optional[str]. Output quality of the generated audio. Must be one of:
-                                                    standard - standard output format, 128kbps with 44.1kHz sample rate.
-                                                    high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the character cost by 20%.
-                                                    ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the character cost by 50%.
-                                                    ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the character cost by 100%.
+        quality_preset : typing.Optional[str]
+            Output quality of the generated audio. Must be one of:
+            standard - standard output format, 128kbps with 44.1kHz sample rate.
+            high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the character cost by 20%.
+            ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the character cost by 50%.
+            ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the character cost by 100%.
 
-            - title: typing.Optional[str]. An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
 
-            - author: typing.Optional[str]. An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
+        title : typing.Optional[str]
+            An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
 
-            - isbn_number: typing.Optional[str]. An optional ISBN number of the project you want to create, this will be added as metadata to the mp3 file on project / chapter download.
+        author : typing.Optional[str]
+            An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
 
-            - acx_volume_normalization: typing.Optional[bool]. [Deprecated] When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
+        isbn_number : typing.Optional[str]
+            An optional ISBN number of the project you want to create, this will be added as metadata to the mp3 file on project / chapter download.
 
-            - volume_normalization: typing.Optional[bool]. When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
+        acx_volume_normalization : typing.Optional[bool]
+            [Deprecated] When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
 
-            - pronunciation_dictionary_locators: typing.Optional[typing.List[str]]. A list of pronunciation dictionary locators (id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody
+        volume_normalization : typing.Optional[bool]
+            When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
 
-            - callback_url: typing.Optional[str]. A url that will be called by our service when the project is converted with a json containing the status of the conversion
+        pronunciation_dictionary_locators : typing.Optional[typing.List[str]]
+            A list of pronunciation dictionary locators (id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        callback_url : typing.Optional[str]
+            A url that will be called by our service when the project is converted with a json containing the status of the conversion
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AddProjectResponseModel
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
@@ -846,11 +985,21 @@ class AsyncProjectsClient:
         """
         Returns information about a specific project. This endpoint returns more detailed information about a project than GET api.elevenlabs.io/v1/projects.
 
-        Parameters:
-            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ProjectExtendedResponseModel
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
@@ -898,11 +1047,21 @@ class AsyncProjectsClient:
         """
         Delete a project by its project_id.
 
-        Parameters:
-            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
@@ -950,11 +1109,21 @@ class AsyncProjectsClient:
         """
         Starts conversion of a project and all of its chapters.
 
-        Parameters:
-            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
@@ -1007,11 +1176,21 @@ class AsyncProjectsClient:
         """
         Gets the snapshots of a project.
 
-        Parameters:
-            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ProjectSnapshotsResponse
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
@@ -1066,15 +1245,27 @@ class AsyncProjectsClient:
         """
         Stream the audio from a project snapshot.
 
-        Parameters:
-            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
-            - project_snapshot_id: str. The project_snapshot_id of the project snapshot. You can query GET /v1/projects/{project_id}/snapshots to list all available snapshots for a project.
+        project_snapshot_id : str
+            The project_snapshot_id of the project snapshot. You can query GET /v1/projects/{project_id}/snapshots to list all available snapshots for a project.
 
-            - convert_to_mpeg: typing.Optional[bool]. Whether to convert the audio to mpeg format.
+        convert_to_mpeg : typing.Optional[bool]
+            Whether to convert the audio to mpeg format.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[bytes]
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
@@ -1139,13 +1330,23 @@ class AsyncProjectsClient:
         """
         Streams archive with project audio.
 
-        Parameters:
-            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
-            - project_snapshot_id: str. The project_snapshot_id of the project snapshot. You can query GET /v1/projects/{project_id}/snapshots to list all available snapshots for a project.
+        project_snapshot_id : str
+            The project_snapshot_id of the project snapshot. You can query GET /v1/projects/{project_id}/snapshots to list all available snapshots for a project.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
@@ -1204,13 +1405,24 @@ class AsyncProjectsClient:
         """
         Updates the set of pronunciation dictionaries acting on a project. This will automatically mark text within this project as requiring reconverting where the new dictionary would apply or the old one no longer does.
 
-        Parameters:
-            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
-            - pronunciation_dictionary_locators: typing.Sequence[PronunciationDictionaryVersionLocator]. A list of pronunciation dictionary locators (id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody
+        pronunciation_dictionary_locators : typing.Sequence[PronunciationDictionaryVersionLocator]
+            A list of pronunciation dictionary locators (id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs import PronunciationDictionaryVersionLocator
         from elevenlabs.client import AsyncElevenLabs
 

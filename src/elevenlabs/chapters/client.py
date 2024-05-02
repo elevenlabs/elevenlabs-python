@@ -30,11 +30,21 @@ class ChaptersClient:
         """
         Returns a list of your chapters for a project together and its metadata.
 
-        Parameters:
-            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetChaptersResponse
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -84,13 +94,24 @@ class ChaptersClient:
         """
         Returns information about a specific chapter.
 
-        Parameters:
-            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
-            - chapter_id: str. The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
+        chapter_id : str
+            The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ChapterResponse
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -142,13 +163,24 @@ class ChaptersClient:
         """
         Delete a chapter by its chapter_id.
 
-        Parameters:
-            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
-            - chapter_id: str. The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
+        chapter_id : str
+            The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -200,13 +232,24 @@ class ChaptersClient:
         """
         Starts conversion of a specific chapter.
 
-        Parameters:
-            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
-            - chapter_id: str. The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
+        chapter_id : str
+            The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -261,13 +304,24 @@ class ChaptersClient:
         """
         Gets information about all the snapshots of a chapter, each snapshot corresponds can be downloaded as audio. Whenever a chapter is converted a snapshot will be automatically created.
 
-        Parameters:
-            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
-            - chapter_id: str. The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
+        chapter_id : str
+            The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ChapterSnapshotsResponse
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -325,17 +379,29 @@ class ChaptersClient:
         """
         Stream the audio from a chapter snapshot. Use `GET /v1/projects/{project_id}/chapters/{chapter_id}/snapshots` to return the chapter snapshots of a chapter.
 
-        Parameters:
-            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
-            - chapter_id: str. The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
+        chapter_id : str
+            The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
 
-            - chapter_snapshot_id: str. The chapter_snapshot_id of the chapter snapshot. You can query GET /v1/projects/{project_id}/chapters/{chapter_id}/snapshots to the all available snapshots for a chapter.
+        chapter_snapshot_id : str
+            The chapter_snapshot_id of the chapter snapshot. You can query GET /v1/projects/{project_id}/chapters/{chapter_id}/snapshots to the all available snapshots for a chapter.
 
-            - convert_to_mpeg: typing.Optional[bool]. Whether to convert the audio to mpeg format.
+        convert_to_mpeg : typing.Optional[bool]
+            Whether to convert the audio to mpeg format.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -402,11 +468,21 @@ class AsyncChaptersClient:
         """
         Returns a list of your chapters for a project together and its metadata.
 
-        Parameters:
-            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetChaptersResponse
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
@@ -456,13 +532,24 @@ class AsyncChaptersClient:
         """
         Returns information about a specific chapter.
 
-        Parameters:
-            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
-            - chapter_id: str. The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
+        chapter_id : str
+            The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ChapterResponse
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
@@ -514,13 +601,24 @@ class AsyncChaptersClient:
         """
         Delete a chapter by its chapter_id.
 
-        Parameters:
-            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
-            - chapter_id: str. The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
+        chapter_id : str
+            The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
@@ -572,13 +670,24 @@ class AsyncChaptersClient:
         """
         Starts conversion of a specific chapter.
 
-        Parameters:
-            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
-            - chapter_id: str. The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
+        chapter_id : str
+            The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
@@ -633,13 +742,24 @@ class AsyncChaptersClient:
         """
         Gets information about all the snapshots of a chapter, each snapshot corresponds can be downloaded as audio. Whenever a chapter is converted a snapshot will be automatically created.
 
-        Parameters:
-            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
-            - chapter_id: str. The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
+        chapter_id : str
+            The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ChapterSnapshotsResponse
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
@@ -697,17 +817,29 @@ class AsyncChaptersClient:
         """
         Stream the audio from a chapter snapshot. Use `GET /v1/projects/{project_id}/chapters/{chapter_id}/snapshots` to return the chapter snapshots of a chapter.
 
-        Parameters:
-            - project_id: str. The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
-            - chapter_id: str. The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
+        chapter_id : str
+            The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
 
-            - chapter_snapshot_id: str. The chapter_snapshot_id of the chapter snapshot. You can query GET /v1/projects/{project_id}/chapters/{chapter_id}/snapshots to the all available snapshots for a chapter.
+        chapter_snapshot_id : str
+            The chapter_snapshot_id of the chapter snapshot. You can query GET /v1/projects/{project_id}/chapters/{chapter_id}/snapshots to the all available snapshots for a chapter.
 
-            - convert_to_mpeg: typing.Optional[bool]. Whether to convert the audio to mpeg format.
+        convert_to_mpeg : typing.Optional[bool]
+            Whether to convert the audio to mpeg format.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(

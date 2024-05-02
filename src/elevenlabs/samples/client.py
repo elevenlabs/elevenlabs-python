@@ -24,13 +24,24 @@ class SamplesClient:
         """
         Removes a sample by its ID.
 
-        Parameters:
-            - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
-            - sample_id: str. Sample ID to be used, you can use GET https://api.elevenlabs.io/v1/voices/{voice_id} to list all the available samples for a voice.
+        sample_id : str
+            Sample ID to be used, you can use GET https://api.elevenlabs.io/v1/voices/{voice_id} to list all the available samples for a voice.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -82,13 +93,23 @@ class SamplesClient:
         """
         Returns the audio corresponding to a sample attached to a voice.
 
-        Parameters:
-            - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
-            - sample_id: str. Sample ID to be used, you can use GET https://api.elevenlabs.io/v1/voices/{voice_id} to list all the available samples for a voice.
+        sample_id : str
+            Sample ID to be used, you can use GET https://api.elevenlabs.io/v1/voices/{voice_id} to list all the available samples for a voice.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -145,13 +166,24 @@ class AsyncSamplesClient:
         """
         Removes a sample by its ID.
 
-        Parameters:
-            - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
-            - sample_id: str. Sample ID to be used, you can use GET https://api.elevenlabs.io/v1/voices/{voice_id} to list all the available samples for a voice.
+        sample_id : str
+            Sample ID to be used, you can use GET https://api.elevenlabs.io/v1/voices/{voice_id} to list all the available samples for a voice.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
@@ -203,13 +235,23 @@ class AsyncSamplesClient:
         """
         Returns the audio corresponding to a sample attached to a voice.
 
-        Parameters:
-            - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
-            - sample_id: str. Sample ID to be used, you can use GET https://api.elevenlabs.io/v1/voices/{voice_id} to list all the available samples for a voice.
+        sample_id : str
+            Sample ID to be used, you can use GET https://api.elevenlabs.io/v1/voices/{voice_id} to list all the available samples for a voice.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(

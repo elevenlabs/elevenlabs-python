@@ -34,15 +34,27 @@ class HistoryClient:
         """
         Returns metadata about all your generated audio.
 
-        Parameters:
-            - page_size: typing.Optional[int]. How many history items to return at maximum. Can not exceed 1000, defaults to 100.
+        Parameters
+        ----------
+        page_size : typing.Optional[int]
+            How many history items to return at maximum. Can not exceed 1000, defaults to 100.
 
-            - start_after_history_item_id: typing.Optional[str]. After which ID to start fetching, use this parameter to paginate across a large collection of history items. In case this parameter is not provided history items will be fetched starting from the most recently created one ordered descending by their creation date.
+        start_after_history_item_id : typing.Optional[str]
+            After which ID to start fetching, use this parameter to paginate across a large collection of history items. In case this parameter is not provided history items will be fetched starting from the most recently created one ordered descending by their creation date.
 
-            - voice_id: typing.Optional[str]. Voice ID to be filtered for, you can use GET https://api.elevenlabs.io/v1/voices to receive a list of voices and their IDs.
+        voice_id : typing.Optional[str]
+            Voice ID to be filtered for, you can use GET https://api.elevenlabs.io/v1/voices to receive a list of voices and their IDs.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetSpeechHistoryResponse
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -99,11 +111,21 @@ class HistoryClient:
         """
         Returns information about an history item by its ID.
 
-        Parameters:
-            - history_item_id: str. History item ID to be used, you can use GET https://api.elevenlabs.io/v1/history to receive a list of history items and their IDs.
+        Parameters
+        ----------
+        history_item_id : str
+            History item ID to be used, you can use GET https://api.elevenlabs.io/v1/history to receive a list of history items and their IDs.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SpeechHistoryItemResponse
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -151,11 +173,21 @@ class HistoryClient:
         """
         Delete a history item by its ID
 
-        Parameters:
-            - history_item_id: str. History item ID to be used, you can use GET https://api.elevenlabs.io/v1/history to receive a list of history items and their IDs.
+        Parameters
+        ----------
+        history_item_id : str
+            History item ID to be used, you can use GET https://api.elevenlabs.io/v1/history to receive a list of history items and their IDs.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -205,11 +237,21 @@ class HistoryClient:
         """
         Returns the audio of an history item.
 
-        Parameters:
-            - history_item_id: str. History item ID to be used, you can use GET https://api.elevenlabs.io/v1/history to receive a list of history items and their IDs.
+        Parameters
+        ----------
+        history_item_id : str
+            History item ID to be used, you can use GET https://api.elevenlabs.io/v1/history to receive a list of history items and their IDs.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[bytes]
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -266,13 +308,23 @@ class HistoryClient:
         """
         Download one or more history items. If one history item ID is provided, we will return a single audio file. If more than one history item IDs are provided, we will provide the history items packed into a .zip file.
 
-        Parameters:
-            - history_item_ids: typing.Sequence[str]. A list of history items to download, you can get IDs of history items and other metadata using the GET https://api.elevenlabs.io/v1/history endpoint.
+        Parameters
+        ----------
+        history_item_ids : typing.Sequence[str]
+            A list of history items to download, you can get IDs of history items and other metadata using the GET https://api.elevenlabs.io/v1/history endpoint.
 
-            - output_format: typing.Optional[str]. Output format to transcode the audio file, can be wav or default.
+        output_format : typing.Optional[str]
+            Output format to transcode the audio file, can be wav or default.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -339,15 +391,27 @@ class AsyncHistoryClient:
         """
         Returns metadata about all your generated audio.
 
-        Parameters:
-            - page_size: typing.Optional[int]. How many history items to return at maximum. Can not exceed 1000, defaults to 100.
+        Parameters
+        ----------
+        page_size : typing.Optional[int]
+            How many history items to return at maximum. Can not exceed 1000, defaults to 100.
 
-            - start_after_history_item_id: typing.Optional[str]. After which ID to start fetching, use this parameter to paginate across a large collection of history items. In case this parameter is not provided history items will be fetched starting from the most recently created one ordered descending by their creation date.
+        start_after_history_item_id : typing.Optional[str]
+            After which ID to start fetching, use this parameter to paginate across a large collection of history items. In case this parameter is not provided history items will be fetched starting from the most recently created one ordered descending by their creation date.
 
-            - voice_id: typing.Optional[str]. Voice ID to be filtered for, you can use GET https://api.elevenlabs.io/v1/voices to receive a list of voices and their IDs.
+        voice_id : typing.Optional[str]
+            Voice ID to be filtered for, you can use GET https://api.elevenlabs.io/v1/voices to receive a list of voices and their IDs.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetSpeechHistoryResponse
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
@@ -404,11 +468,21 @@ class AsyncHistoryClient:
         """
         Returns information about an history item by its ID.
 
-        Parameters:
-            - history_item_id: str. History item ID to be used, you can use GET https://api.elevenlabs.io/v1/history to receive a list of history items and their IDs.
+        Parameters
+        ----------
+        history_item_id : str
+            History item ID to be used, you can use GET https://api.elevenlabs.io/v1/history to receive a list of history items and their IDs.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SpeechHistoryItemResponse
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
@@ -458,11 +532,21 @@ class AsyncHistoryClient:
         """
         Delete a history item by its ID
 
-        Parameters:
-            - history_item_id: str. History item ID to be used, you can use GET https://api.elevenlabs.io/v1/history to receive a list of history items and their IDs.
+        Parameters
+        ----------
+        history_item_id : str
+            History item ID to be used, you can use GET https://api.elevenlabs.io/v1/history to receive a list of history items and their IDs.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
@@ -512,11 +596,21 @@ class AsyncHistoryClient:
         """
         Returns the audio of an history item.
 
-        Parameters:
-            - history_item_id: str. History item ID to be used, you can use GET https://api.elevenlabs.io/v1/history to receive a list of history items and their IDs.
+        Parameters
+        ----------
+        history_item_id : str
+            History item ID to be used, you can use GET https://api.elevenlabs.io/v1/history to receive a list of history items and their IDs.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[bytes]
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
@@ -573,13 +667,23 @@ class AsyncHistoryClient:
         """
         Download one or more history items. If one history item ID is provided, we will return a single audio file. If more than one history item IDs are provided, we will provide the history items packed into a .zip file.
 
-        Parameters:
-            - history_item_ids: typing.Sequence[str]. A list of history items to download, you can get IDs of history items and other metadata using the GET https://api.elevenlabs.io/v1/history endpoint.
+        Parameters
+        ----------
+        history_item_ids : typing.Sequence[str]
+            A list of history items to download, you can get IDs of history items and other metadata using the GET https://api.elevenlabs.io/v1/history endpoint.
 
-            - output_format: typing.Optional[str]. Output format to transcode the audio file, can be wav or default.
+        output_format : typing.Optional[str]
+            Output format to transcode the audio file, can be wav or default.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
