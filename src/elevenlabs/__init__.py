@@ -16,6 +16,7 @@ from .types import (
     ChapterSnapshotsResponse,
     ChapterState,
     ChapterStatisticsResponse,
+    CloseConnection,
     Currency,
     DoDubbingResponse,
     DubbingMetadataResponse,
@@ -35,6 +36,7 @@ from .types import (
     History,
     HistoryItem,
     HttpValidationError,
+    InitializeConnection,
     Invoice,
     LanguageResponse,
     LibraryVoiceResponse,
@@ -103,6 +105,7 @@ from .pronunciation_dictionary import (
     PronunciationDictionaryRule_Alias,
     PronunciationDictionaryRule_Phoneme,
 )
+from .text_to_speech import SendMessage
 from .version import __version__
 
 __all__ = [
@@ -121,6 +124,7 @@ __all__ = [
     "ChapterSnapshotsResponse",
     "ChapterState",
     "ChapterStatisticsResponse",
+    "CloseConnection",
     "Currency",
     "DoDubbingResponse",
     "DubbingMetadataResponse",
@@ -141,6 +145,7 @@ __all__ = [
     "History",
     "HistoryItem",
     "HttpValidationError",
+    "InitializeConnection",
     "Invoice",
     "LanguageResponse",
     "LibraryVoiceResponse",
@@ -165,6 +170,7 @@ __all__ = [
     "RecordingResponse",
     "RemovePronunciationDictionaryRulesResponseModel",
     "ReviewStatus",
+    "SendMessage",
     "SendText",
     "Source",
     "SpeechHistoryItemResponse",

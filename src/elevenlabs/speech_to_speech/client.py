@@ -13,6 +13,8 @@ from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.http_validation_error import HttpValidationError
+from ..types.optimize_streaming_latency import OptimizeStreamingLatency
+from ..types.output_format import OutputFormat
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -26,9 +28,9 @@ class SpeechToSpeechClient:
         self,
         voice_id: str,
         *,
-        optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[str] = None,
         audio: core.File,
+        optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
+        output_format: typing.Optional[OutputFormat] = None,
         model_id: typing.Optional[str] = None,
         voice_settings: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -36,37 +38,36 @@ class SpeechToSpeechClient:
         """
         Create speech by combining the content and emotion of the uploaded audio with a voice of your choice.
 
-        Parameters:
-            - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
-            - optimize_streaming_latency: typing.Optional[int]. You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
-                                                                0 - default mode (no latency optimizations)
-                                                                1 - normal latency optimizations (about 50% of possible latency improvement of option 3)
-                                                                2 - strong latency optimizations (about 75% of possible latency improvement of option 3)
-                                                                3 - max latency optimizations
-                                                                4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
+        audio : core.File
+            See core.File for more documentation
 
-                                                                Defaults to 0.
-            - output_format: typing.Optional[str]. Output format of the generated audio. Must be one of:
-                                                   mp3_22050_32 - output format, mp3 with 22.05kHz sample rate at 32kbps.
-                                                   mp3_44100_32 - output format, mp3 with 44.1kHz sample rate at 32kbps.
-                                                   mp3_44100_64 - output format, mp3 with 44.1kHz sample rate at 64kbps.
-                                                   mp3_44100_96 - output format, mp3 with 44.1kHz sample rate at 96kbps.
-                                                   mp3_44100_128 - default output format, mp3 with 44.1kHz sample rate at 128kbps.
-                                                   mp3_44100_192 - output format, mp3 with 44.1kHz sample rate at 192kbps. Requires you to be subscribed to Creator tier or above.
-                                                   pcm_16000 - PCM format (S16LE) with 16kHz sample rate.
-                                                   pcm_22050 - PCM format (S16LE) with 22.05kHz sample rate.
-                                                   pcm_24000 - PCM format (S16LE) with 24kHz sample rate.
-                                                   pcm_44100 - PCM format (S16LE) with 44.1kHz sample rate. Requires you to be subscribed to Pro tier or above.
-                                                   ulaw_8000 - μ-law format (sometimes written mu-law, often approximated as u-law) with 8kHz sample rate. Note that this format is commonly used for Twilio audio inputs.
-            - audio: core.File. See core.File for more documentation
+        optimize_streaming_latency : typing.Optional[OptimizeStreamingLatency]
+            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
 
-            - model_id: typing.Optional[str]. Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
+        output_format : typing.Optional[OutputFormat]
+            The output format of the generated audio.
 
-            - voice_settings: typing.Optional[str]. Voice settings overriding stored setttings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
+        model_id : typing.Optional[str]
+            Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        voice_settings : typing.Optional[str]
+            Voice settings overriding stored setttings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[bytes]
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -74,8 +75,8 @@ class SpeechToSpeechClient:
         )
         client.speech_to_speech.convert(
             voice_id="string",
-            optimize_streaming_latency=1,
-            output_format="string",
+            optimize_streaming_latency="0",
+            output_format="mp3_22050_32",
         )
         """
         with self._client_wrapper.httpx_client.stream(
@@ -136,9 +137,9 @@ class SpeechToSpeechClient:
         self,
         voice_id: str,
         *,
-        optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[str] = None,
         audio: core.File,
+        optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
+        output_format: typing.Optional[OutputFormat] = None,
         model_id: typing.Optional[str] = None,
         voice_settings: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -146,37 +147,36 @@ class SpeechToSpeechClient:
         """
         Create speech by combining the content and emotion of the uploaded audio with a voice of your choice and returns an audio stream.
 
-        Parameters:
-            - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
-            - optimize_streaming_latency: typing.Optional[int]. You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
-                                                                0 - default mode (no latency optimizations)
-                                                                1 - normal latency optimizations (about 50% of possible latency improvement of option 3)
-                                                                2 - strong latency optimizations (about 75% of possible latency improvement of option 3)
-                                                                3 - max latency optimizations
-                                                                4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
+        audio : core.File
+            See core.File for more documentation
 
-                                                                Defaults to 0.
-            - output_format: typing.Optional[str]. Output format of the generated audio. Must be one of:
-                                                   mp3_22050_32 - output format, mp3 with 22.05kHz sample rate at 32kbps.
-                                                   mp3_44100_32 - output format, mp3 with 44.1kHz sample rate at 32kbps.
-                                                   mp3_44100_64 - output format, mp3 with 44.1kHz sample rate at 64kbps.
-                                                   mp3_44100_96 - output format, mp3 with 44.1kHz sample rate at 96kbps.
-                                                   mp3_44100_128 - default output format, mp3 with 44.1kHz sample rate at 128kbps.
-                                                   mp3_44100_192 - output format, mp3 with 44.1kHz sample rate at 192kbps. Requires you to be subscribed to Creator tier or above.
-                                                   pcm_16000 - PCM format (S16LE) with 16kHz sample rate.
-                                                   pcm_22050 - PCM format (S16LE) with 22.05kHz sample rate.
-                                                   pcm_24000 - PCM format (S16LE) with 24kHz sample rate.
-                                                   pcm_44100 - PCM format (S16LE) with 44.1kHz sample rate. Requires you to be subscribed to Pro tier or above.
-                                                   ulaw_8000 - μ-law format (sometimes written mu-law, often approximated as u-law) with 8kHz sample rate. Note that this format is commonly used for Twilio audio inputs.
-            - audio: core.File. See core.File for more documentation
+        optimize_streaming_latency : typing.Optional[OptimizeStreamingLatency]
+            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
 
-            - model_id: typing.Optional[str]. Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
+        output_format : typing.Optional[OutputFormat]
+            The output format of the generated audio.
 
-            - voice_settings: typing.Optional[str]. Voice settings overriding stored setttings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
+        model_id : typing.Optional[str]
+            Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        voice_settings : typing.Optional[str]
+            Voice settings overriding stored setttings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[bytes]
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -184,8 +184,8 @@ class SpeechToSpeechClient:
         )
         client.speech_to_speech.convert_as_stream(
             voice_id="string",
-            optimize_streaming_latency=1,
-            output_format="string",
+            optimize_streaming_latency="0",
+            output_format="mp3_22050_32",
         )
         """
         with self._client_wrapper.httpx_client.stream(
@@ -251,9 +251,9 @@ class AsyncSpeechToSpeechClient:
         self,
         voice_id: str,
         *,
-        optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[str] = None,
         audio: core.File,
+        optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
+        output_format: typing.Optional[OutputFormat] = None,
         model_id: typing.Optional[str] = None,
         voice_settings: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -261,37 +261,36 @@ class AsyncSpeechToSpeechClient:
         """
         Create speech by combining the content and emotion of the uploaded audio with a voice of your choice.
 
-        Parameters:
-            - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
-            - optimize_streaming_latency: typing.Optional[int]. You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
-                                                                0 - default mode (no latency optimizations)
-                                                                1 - normal latency optimizations (about 50% of possible latency improvement of option 3)
-                                                                2 - strong latency optimizations (about 75% of possible latency improvement of option 3)
-                                                                3 - max latency optimizations
-                                                                4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
+        audio : core.File
+            See core.File for more documentation
 
-                                                                Defaults to 0.
-            - output_format: typing.Optional[str]. Output format of the generated audio. Must be one of:
-                                                   mp3_22050_32 - output format, mp3 with 22.05kHz sample rate at 32kbps.
-                                                   mp3_44100_32 - output format, mp3 with 44.1kHz sample rate at 32kbps.
-                                                   mp3_44100_64 - output format, mp3 with 44.1kHz sample rate at 64kbps.
-                                                   mp3_44100_96 - output format, mp3 with 44.1kHz sample rate at 96kbps.
-                                                   mp3_44100_128 - default output format, mp3 with 44.1kHz sample rate at 128kbps.
-                                                   mp3_44100_192 - output format, mp3 with 44.1kHz sample rate at 192kbps. Requires you to be subscribed to Creator tier or above.
-                                                   pcm_16000 - PCM format (S16LE) with 16kHz sample rate.
-                                                   pcm_22050 - PCM format (S16LE) with 22.05kHz sample rate.
-                                                   pcm_24000 - PCM format (S16LE) with 24kHz sample rate.
-                                                   pcm_44100 - PCM format (S16LE) with 44.1kHz sample rate. Requires you to be subscribed to Pro tier or above.
-                                                   ulaw_8000 - μ-law format (sometimes written mu-law, often approximated as u-law) with 8kHz sample rate. Note that this format is commonly used for Twilio audio inputs.
-            - audio: core.File. See core.File for more documentation
+        optimize_streaming_latency : typing.Optional[OptimizeStreamingLatency]
+            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
 
-            - model_id: typing.Optional[str]. Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
+        output_format : typing.Optional[OutputFormat]
+            The output format of the generated audio.
 
-            - voice_settings: typing.Optional[str]. Voice settings overriding stored setttings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
+        model_id : typing.Optional[str]
+            Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        voice_settings : typing.Optional[str]
+            Voice settings overriding stored setttings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[bytes]
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
@@ -299,8 +298,8 @@ class AsyncSpeechToSpeechClient:
         )
         await client.speech_to_speech.convert(
             voice_id="string",
-            optimize_streaming_latency=1,
-            output_format="string",
+            optimize_streaming_latency="0",
+            output_format="mp3_22050_32",
         )
         """
         async with self._client_wrapper.httpx_client.stream(
@@ -361,9 +360,9 @@ class AsyncSpeechToSpeechClient:
         self,
         voice_id: str,
         *,
-        optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[str] = None,
         audio: core.File,
+        optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
+        output_format: typing.Optional[OutputFormat] = None,
         model_id: typing.Optional[str] = None,
         voice_settings: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -371,37 +370,36 @@ class AsyncSpeechToSpeechClient:
         """
         Create speech by combining the content and emotion of the uploaded audio with a voice of your choice and returns an audio stream.
 
-        Parameters:
-            - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
-            - optimize_streaming_latency: typing.Optional[int]. You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
-                                                                0 - default mode (no latency optimizations)
-                                                                1 - normal latency optimizations (about 50% of possible latency improvement of option 3)
-                                                                2 - strong latency optimizations (about 75% of possible latency improvement of option 3)
-                                                                3 - max latency optimizations
-                                                                4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
+        audio : core.File
+            See core.File for more documentation
 
-                                                                Defaults to 0.
-            - output_format: typing.Optional[str]. Output format of the generated audio. Must be one of:
-                                                   mp3_22050_32 - output format, mp3 with 22.05kHz sample rate at 32kbps.
-                                                   mp3_44100_32 - output format, mp3 with 44.1kHz sample rate at 32kbps.
-                                                   mp3_44100_64 - output format, mp3 with 44.1kHz sample rate at 64kbps.
-                                                   mp3_44100_96 - output format, mp3 with 44.1kHz sample rate at 96kbps.
-                                                   mp3_44100_128 - default output format, mp3 with 44.1kHz sample rate at 128kbps.
-                                                   mp3_44100_192 - output format, mp3 with 44.1kHz sample rate at 192kbps. Requires you to be subscribed to Creator tier or above.
-                                                   pcm_16000 - PCM format (S16LE) with 16kHz sample rate.
-                                                   pcm_22050 - PCM format (S16LE) with 22.05kHz sample rate.
-                                                   pcm_24000 - PCM format (S16LE) with 24kHz sample rate.
-                                                   pcm_44100 - PCM format (S16LE) with 44.1kHz sample rate. Requires you to be subscribed to Pro tier or above.
-                                                   ulaw_8000 - μ-law format (sometimes written mu-law, often approximated as u-law) with 8kHz sample rate. Note that this format is commonly used for Twilio audio inputs.
-            - audio: core.File. See core.File for more documentation
+        optimize_streaming_latency : typing.Optional[OptimizeStreamingLatency]
+            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
 
-            - model_id: typing.Optional[str]. Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
+        output_format : typing.Optional[OutputFormat]
+            The output format of the generated audio.
 
-            - voice_settings: typing.Optional[str]. Voice settings overriding stored setttings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
+        model_id : typing.Optional[str]
+            Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        voice_settings : typing.Optional[str]
+            Voice settings overriding stored setttings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[bytes]
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
@@ -409,8 +407,8 @@ class AsyncSpeechToSpeechClient:
         )
         await client.speech_to_speech.convert_as_stream(
             voice_id="string",
-            optimize_streaming_latency=1,
-            output_format="string",
+            optimize_streaming_latency="0",
+            output_format="mp3_22050_32",
         )
         """
         async with self._client_wrapper.httpx_client.stream(

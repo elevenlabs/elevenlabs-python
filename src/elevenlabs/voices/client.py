@@ -31,9 +31,18 @@ class VoicesClient:
         """
         Gets a list of all available voices for a user.
 
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetVoicesResponse
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -77,9 +86,18 @@ class VoicesClient:
         """
         Gets the default settings for voices. "similarity_boost" corresponds to"Clarity + Similarity Enhancement" in the web app and "stability" corresponds to "Stability" slider in the web app.
 
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        VoiceSettings
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -119,18 +137,28 @@ class VoicesClient:
         """
         Returns the settings for a specific voice. "similarity_boost" corresponds to"Clarity + Similarity Enhancement" in the web app and "stability" corresponds to "Stability" slider in the web app.
 
-        Parameters:
-            - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        VoiceSettings
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
         client.voices.get_settings(
-            voice_id="voice_id",
+            voice_id="2EiwWnXFnvU5JabPnv8n",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -177,20 +205,31 @@ class VoicesClient:
         """
         Returns metadata about a specific voice.
 
-        Parameters:
-            - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
-            - with_settings: typing.Optional[bool]. If set will return settings information corresponding to the voice, requires authorization.
+        with_settings : typing.Optional[bool]
+            If set will return settings information corresponding to the voice, requires authorization.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Voice
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
         client.voices.get(
-            voice_id="voice_id",
+            voice_id="29vD33N1CtxCmqQRPOHJ",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -240,18 +279,28 @@ class VoicesClient:
         """
         Deletes a voice by its ID.
 
-        Parameters:
-            - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
         client.voices.delete(
-            voice_id="voice_id",
+            voice_id="29vD33N1CtxCmqQRPOHJ",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -294,13 +343,23 @@ class VoicesClient:
         """
         Edit your settings for a specific voice. "similarity_boost" corresponds to"Clarity + Similarity Enhancement" in the web app and "stability" corresponds to "Stability" slider in the web app.
 
-        Parameters:
-            - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
-            - request: VoiceSettings.
+        request : VoiceSettings
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs import VoiceSettings
         from elevenlabs.client import ElevenLabs
 
@@ -308,8 +367,12 @@ class VoicesClient:
             api_key="YOUR_API_KEY",
         )
         client.voices.edit_settings(
-            voice_id="voice_id",
-            request=VoiceSettings(),
+            voice_id="29vD33N1CtxCmqQRPOHJ",
+            request=VoiceSettings(
+                stability=0.1,
+                similarity_boost=0.3,
+                style=0.2,
+            ),
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -364,24 +427,37 @@ class VoicesClient:
         """
         Add a new voice to your collection of voices in VoiceLab.
 
-        Parameters:
-            - name: str. The name that identifies this voice. This will be displayed in the dropdown of the website.
+        Parameters
+        ----------
+        name : str
+            The name that identifies this voice. This will be displayed in the dropdown of the website.
 
-            - files: typing.List[core.File]. See core.File for more documentation
+        files : typing.List[core.File]
+            See core.File for more documentation
 
-            - description: typing.Optional[str]. How would you describe the voice?
+        description : typing.Optional[str]
+            How would you describe the voice?
 
-            - labels: typing.Optional[str]. Serialized labels dictionary for the voice.
+        labels : typing.Optional[str]
+            Serialized labels dictionary for the voice.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AddVoiceResponseModel
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
         client.voices.add(
-            name="name",
+            name="Alex",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -436,27 +512,41 @@ class VoicesClient:
         """
         Edit a voice created by you.
 
-        Parameters:
-            - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
-            - name: str. The name that identifies this voice. This will be displayed in the dropdown of the website.
+        name : str
+            The name that identifies this voice. This will be displayed in the dropdown of the website.
 
-            - files: typing.Optional[typing.List[core.File]]. See core.File for more documentation
+        files : typing.Optional[typing.List[core.File]]
+            See core.File for more documentation
 
-            - description: typing.Optional[str]. How would you describe the voice?
+        description : typing.Optional[str]
+            How would you describe the voice?
 
-            - labels: typing.Optional[str]. Serialized labels dictionary for the voice.
+        labels : typing.Optional[str]
+            Serialized labels dictionary for the voice.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
         client.voices.edit(
-            voice_id="voice_id",
-            name="name",
+            voice_id="JBFqnCBsd6RMkjVDRZzb",
+            name="George",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -511,24 +601,36 @@ class VoicesClient:
         """
         Add a sharing voice to your collection of voices in VoiceLab.
 
-        Parameters:
-            - public_user_id: str. Public user ID used to publicly identify ElevenLabs users.
+        Parameters
+        ----------
+        public_user_id : str
+            Public user ID used to publicly identify ElevenLabs users.
 
-            - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
-            - new_name: str. The name that identifies this voice. This will be displayed in the dropdown of the website.
+        new_name : str
+            The name that identifies this voice. This will be displayed in the dropdown of the website.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AddVoiceResponseModel
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
         client.voices.add_sharing_voice(
-            public_user_id="public_user_id",
-            voice_id="voice_id",
-            new_name="new_name",
+            public_user_id="63e84100a6bf7874ba37a1bab9a31828a379ec94b891b401653b655c5110880f",
+            voice_id="sB1b5zUrxQVAFl2PhZFp",
+            new_name="Alita",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -594,43 +696,69 @@ class VoicesClient:
         """
         Gets a list of shared voices.
 
-        Parameters:
-            - page_size: typing.Optional[int]. How many shared voices to return at maximum. Can not exceed 100, defaults to 30.
+        Parameters
+        ----------
+        page_size : typing.Optional[int]
+            How many shared voices to return at maximum. Can not exceed 100, defaults to 30.
 
-            - category: typing.Optional[str]. voice category used for filtering
+        category : typing.Optional[str]
+            voice category used for filtering
 
-            - gender: typing.Optional[str]. gender used for filtering
+        gender : typing.Optional[str]
+            gender used for filtering
 
-            - age: typing.Optional[str]. age used for filtering
+        age : typing.Optional[str]
+            age used for filtering
 
-            - accent: typing.Optional[str]. accent used for filtering
+        accent : typing.Optional[str]
+            accent used for filtering
 
-            - language: typing.Optional[str]. language used for filtering
+        language : typing.Optional[str]
+            language used for filtering
 
-            - search: typing.Optional[str]. search term used for filtering
+        search : typing.Optional[str]
+            search term used for filtering
 
-            - use_cases: typing.Optional[typing.Union[str, typing.Sequence[str]]]. use-case used for filtering
+        use_cases : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            use-case used for filtering
 
-            - descriptives: typing.Optional[typing.Union[str, typing.Sequence[str]]]. search term used for filtering
+        descriptives : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            search term used for filtering
 
-            - featured: typing.Optional[bool]. Filter featured voices
+        featured : typing.Optional[bool]
+            Filter featured voices
 
-            - reader_app_enabled: typing.Optional[bool]. Filter voices that are enabled for the reader app
+        reader_app_enabled : typing.Optional[bool]
+            Filter voices that are enabled for the reader app
 
-            - owner_id: typing.Optional[str]. Filter voices by public owner ID
+        owner_id : typing.Optional[str]
+            Filter voices by public owner ID
 
-            - sort: typing.Optional[str]. sort criteria
+        sort : typing.Optional[str]
+            sort criteria
 
-            - page: typing.Optional[int].
+        page : typing.Optional[int]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetLibraryVoicesResponse
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.voices.get_shared()
+        client.voices.get_shared(
+            page_size=1,
+            gender="female",
+            language="en",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             method="GET",
@@ -695,9 +823,18 @@ class AsyncVoicesClient:
         """
         Gets a list of all available voices for a user.
 
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetVoicesResponse
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
@@ -741,9 +878,18 @@ class AsyncVoicesClient:
         """
         Gets the default settings for voices. "similarity_boost" corresponds to"Clarity + Similarity Enhancement" in the web app and "stability" corresponds to "Stability" slider in the web app.
 
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        VoiceSettings
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
@@ -785,18 +931,28 @@ class AsyncVoicesClient:
         """
         Returns the settings for a specific voice. "similarity_boost" corresponds to"Clarity + Similarity Enhancement" in the web app and "stability" corresponds to "Stability" slider in the web app.
 
-        Parameters:
-            - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        VoiceSettings
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
         await client.voices.get_settings(
-            voice_id="voice_id",
+            voice_id="2EiwWnXFnvU5JabPnv8n",
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -843,20 +999,31 @@ class AsyncVoicesClient:
         """
         Returns metadata about a specific voice.
 
-        Parameters:
-            - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
-            - with_settings: typing.Optional[bool]. If set will return settings information corresponding to the voice, requires authorization.
+        with_settings : typing.Optional[bool]
+            If set will return settings information corresponding to the voice, requires authorization.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Voice
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
         await client.voices.get(
-            voice_id="voice_id",
+            voice_id="29vD33N1CtxCmqQRPOHJ",
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -906,18 +1073,28 @@ class AsyncVoicesClient:
         """
         Deletes a voice by its ID.
 
-        Parameters:
-            - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
         await client.voices.delete(
-            voice_id="voice_id",
+            voice_id="29vD33N1CtxCmqQRPOHJ",
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -960,13 +1137,23 @@ class AsyncVoicesClient:
         """
         Edit your settings for a specific voice. "similarity_boost" corresponds to"Clarity + Similarity Enhancement" in the web app and "stability" corresponds to "Stability" slider in the web app.
 
-        Parameters:
-            - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
-            - request: VoiceSettings.
+        request : VoiceSettings
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs import VoiceSettings
         from elevenlabs.client import AsyncElevenLabs
 
@@ -974,8 +1161,12 @@ class AsyncVoicesClient:
             api_key="YOUR_API_KEY",
         )
         await client.voices.edit_settings(
-            voice_id="voice_id",
-            request=VoiceSettings(),
+            voice_id="29vD33N1CtxCmqQRPOHJ",
+            request=VoiceSettings(
+                stability=0.1,
+                similarity_boost=0.3,
+                style=0.2,
+            ),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -1030,24 +1221,37 @@ class AsyncVoicesClient:
         """
         Add a new voice to your collection of voices in VoiceLab.
 
-        Parameters:
-            - name: str. The name that identifies this voice. This will be displayed in the dropdown of the website.
+        Parameters
+        ----------
+        name : str
+            The name that identifies this voice. This will be displayed in the dropdown of the website.
 
-            - files: typing.List[core.File]. See core.File for more documentation
+        files : typing.List[core.File]
+            See core.File for more documentation
 
-            - description: typing.Optional[str]. How would you describe the voice?
+        description : typing.Optional[str]
+            How would you describe the voice?
 
-            - labels: typing.Optional[str]. Serialized labels dictionary for the voice.
+        labels : typing.Optional[str]
+            Serialized labels dictionary for the voice.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AddVoiceResponseModel
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
         await client.voices.add(
-            name="name",
+            name="Alex",
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -1102,27 +1306,41 @@ class AsyncVoicesClient:
         """
         Edit a voice created by you.
 
-        Parameters:
-            - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
-            - name: str. The name that identifies this voice. This will be displayed in the dropdown of the website.
+        name : str
+            The name that identifies this voice. This will be displayed in the dropdown of the website.
 
-            - files: typing.Optional[typing.List[core.File]]. See core.File for more documentation
+        files : typing.Optional[typing.List[core.File]]
+            See core.File for more documentation
 
-            - description: typing.Optional[str]. How would you describe the voice?
+        description : typing.Optional[str]
+            How would you describe the voice?
 
-            - labels: typing.Optional[str]. Serialized labels dictionary for the voice.
+        labels : typing.Optional[str]
+            Serialized labels dictionary for the voice.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
         await client.voices.edit(
-            voice_id="voice_id",
-            name="name",
+            voice_id="JBFqnCBsd6RMkjVDRZzb",
+            name="George",
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -1177,24 +1395,36 @@ class AsyncVoicesClient:
         """
         Add a sharing voice to your collection of voices in VoiceLab.
 
-        Parameters:
-            - public_user_id: str. Public user ID used to publicly identify ElevenLabs users.
+        Parameters
+        ----------
+        public_user_id : str
+            Public user ID used to publicly identify ElevenLabs users.
 
-            - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
-            - new_name: str. The name that identifies this voice. This will be displayed in the dropdown of the website.
+        new_name : str
+            The name that identifies this voice. This will be displayed in the dropdown of the website.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AddVoiceResponseModel
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
         await client.voices.add_sharing_voice(
-            public_user_id="public_user_id",
-            voice_id="voice_id",
-            new_name="new_name",
+            public_user_id="63e84100a6bf7874ba37a1bab9a31828a379ec94b891b401653b655c5110880f",
+            voice_id="sB1b5zUrxQVAFl2PhZFp",
+            new_name="Alita",
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -1260,43 +1490,69 @@ class AsyncVoicesClient:
         """
         Gets a list of shared voices.
 
-        Parameters:
-            - page_size: typing.Optional[int]. How many shared voices to return at maximum. Can not exceed 100, defaults to 30.
+        Parameters
+        ----------
+        page_size : typing.Optional[int]
+            How many shared voices to return at maximum. Can not exceed 100, defaults to 30.
 
-            - category: typing.Optional[str]. voice category used for filtering
+        category : typing.Optional[str]
+            voice category used for filtering
 
-            - gender: typing.Optional[str]. gender used for filtering
+        gender : typing.Optional[str]
+            gender used for filtering
 
-            - age: typing.Optional[str]. age used for filtering
+        age : typing.Optional[str]
+            age used for filtering
 
-            - accent: typing.Optional[str]. accent used for filtering
+        accent : typing.Optional[str]
+            accent used for filtering
 
-            - language: typing.Optional[str]. language used for filtering
+        language : typing.Optional[str]
+            language used for filtering
 
-            - search: typing.Optional[str]. search term used for filtering
+        search : typing.Optional[str]
+            search term used for filtering
 
-            - use_cases: typing.Optional[typing.Union[str, typing.Sequence[str]]]. use-case used for filtering
+        use_cases : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            use-case used for filtering
 
-            - descriptives: typing.Optional[typing.Union[str, typing.Sequence[str]]]. search term used for filtering
+        descriptives : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            search term used for filtering
 
-            - featured: typing.Optional[bool]. Filter featured voices
+        featured : typing.Optional[bool]
+            Filter featured voices
 
-            - reader_app_enabled: typing.Optional[bool]. Filter voices that are enabled for the reader app
+        reader_app_enabled : typing.Optional[bool]
+            Filter voices that are enabled for the reader app
 
-            - owner_id: typing.Optional[str]. Filter voices by public owner ID
+        owner_id : typing.Optional[str]
+            Filter voices by public owner ID
 
-            - sort: typing.Optional[str]. sort criteria
+        sort : typing.Optional[str]
+            sort criteria
 
-            - page: typing.Optional[int].
+        page : typing.Optional[int]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetLibraryVoicesResponse
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        await client.voices.get_shared()
+        await client.voices.get_shared(
+            page_size=1,
+            gender="female",
+            language="en",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="GET",

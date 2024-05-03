@@ -27,6 +27,7 @@ class AudioNativeClient:
         self,
         *,
         name: str,
+        file: core.File,
         image: typing.Optional[str] = None,
         author: typing.Optional[str] = None,
         title: typing.Optional[str] = None,
@@ -36,40 +37,60 @@ class AudioNativeClient:
         sessionization: typing.Optional[int] = None,
         voice_id: typing.Optional[str] = None,
         model_id: typing.Optional[str] = None,
-        file: core.File,
         auto_convert: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AudioNativeCreateProjectResponseModel:
         """
         Creates AudioNative enabled project, optionally starts conversion and returns project id and embeddable html snippet.
 
-        Parameters:
-            - name: str. Project name.
+        Parameters
+        ----------
+        name : str
+            Project name.
 
-            - image: typing.Optional[str]. Image URL used in the player. If not provided, default image set in the Player settings is used.
+        file : core.File
+            See core.File for more documentation
 
-            - author: typing.Optional[str]. Author used in the player and inserted at the start of the uploaded article. If not provided, the default author set in the Player settings is used.
+        image : typing.Optional[str]
+            Image URL used in the player. If not provided, default image set in the Player settings is used.
 
-            - title: typing.Optional[str]. Title used in the player and inserted at the top of the uploaded article. If not provided, the default title set in the Player settings is used.
+        author : typing.Optional[str]
+            Author used in the player and inserted at the start of the uploaded article. If not provided, the default author set in the Player settings is used.
 
-            - small: typing.Optional[bool]. Whether to use small player or not. If not provided, default value set in the Player settings is used.
+        title : typing.Optional[str]
+            Title used in the player and inserted at the top of the uploaded article. If not provided, the default title set in the Player settings is used.
 
-            - text_color: typing.Optional[str]. Text color used in the player. If not provided, default text color set in the Player settings is used.
+        small : typing.Optional[bool]
+            Whether to use small player or not. If not provided, default value set in the Player settings is used.
 
-            - background_color: typing.Optional[str]. Background color used in the player. If not provided, default background color set in the Player settings is used.
+        text_color : typing.Optional[str]
+            Text color used in the player. If not provided, default text color set in the Player settings is used.
 
-            - sessionization: typing.Optional[int]. Specifies for how many minutes to persist the session across page reloads. If not provided, default sessionization set in the Player settings is used.
+        background_color : typing.Optional[str]
+            Background color used in the player. If not provided, default background color set in the Player settings is used.
 
-            - voice_id: typing.Optional[str]. Voice ID used to voice the content. If not provided, default voice ID set in the Player settings is used.
+        sessionization : typing.Optional[int]
+            Specifies for how many minutes to persist the session across page reloads. If not provided, default sessionization set in the Player settings is used.
 
-            - model_id: typing.Optional[str]. TTS Model ID used in the player. If not provided, default model ID set in the Player settings is used.
+        voice_id : typing.Optional[str]
+            Voice ID used to voice the content. If not provided, default voice ID set in the Player settings is used.
 
-            - file: core.File. See core.File for more documentation
+        model_id : typing.Optional[str]
+            TTS Model ID used in the player. If not provided, default model ID set in the Player settings is used.
 
-            - auto_convert: typing.Optional[bool]. Whether to auto convert the project to audio or not.
+        auto_convert : typing.Optional[bool]
+            Whether to auto convert the project to audio or not.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AudioNativeCreateProjectResponseModel
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -159,6 +180,7 @@ class AsyncAudioNativeClient:
         self,
         *,
         name: str,
+        file: core.File,
         image: typing.Optional[str] = None,
         author: typing.Optional[str] = None,
         title: typing.Optional[str] = None,
@@ -168,40 +190,60 @@ class AsyncAudioNativeClient:
         sessionization: typing.Optional[int] = None,
         voice_id: typing.Optional[str] = None,
         model_id: typing.Optional[str] = None,
-        file: core.File,
         auto_convert: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AudioNativeCreateProjectResponseModel:
         """
         Creates AudioNative enabled project, optionally starts conversion and returns project id and embeddable html snippet.
 
-        Parameters:
-            - name: str. Project name.
+        Parameters
+        ----------
+        name : str
+            Project name.
 
-            - image: typing.Optional[str]. Image URL used in the player. If not provided, default image set in the Player settings is used.
+        file : core.File
+            See core.File for more documentation
 
-            - author: typing.Optional[str]. Author used in the player and inserted at the start of the uploaded article. If not provided, the default author set in the Player settings is used.
+        image : typing.Optional[str]
+            Image URL used in the player. If not provided, default image set in the Player settings is used.
 
-            - title: typing.Optional[str]. Title used in the player and inserted at the top of the uploaded article. If not provided, the default title set in the Player settings is used.
+        author : typing.Optional[str]
+            Author used in the player and inserted at the start of the uploaded article. If not provided, the default author set in the Player settings is used.
 
-            - small: typing.Optional[bool]. Whether to use small player or not. If not provided, default value set in the Player settings is used.
+        title : typing.Optional[str]
+            Title used in the player and inserted at the top of the uploaded article. If not provided, the default title set in the Player settings is used.
 
-            - text_color: typing.Optional[str]. Text color used in the player. If not provided, default text color set in the Player settings is used.
+        small : typing.Optional[bool]
+            Whether to use small player or not. If not provided, default value set in the Player settings is used.
 
-            - background_color: typing.Optional[str]. Background color used in the player. If not provided, default background color set in the Player settings is used.
+        text_color : typing.Optional[str]
+            Text color used in the player. If not provided, default text color set in the Player settings is used.
 
-            - sessionization: typing.Optional[int]. Specifies for how many minutes to persist the session across page reloads. If not provided, default sessionization set in the Player settings is used.
+        background_color : typing.Optional[str]
+            Background color used in the player. If not provided, default background color set in the Player settings is used.
 
-            - voice_id: typing.Optional[str]. Voice ID used to voice the content. If not provided, default voice ID set in the Player settings is used.
+        sessionization : typing.Optional[int]
+            Specifies for how many minutes to persist the session across page reloads. If not provided, default sessionization set in the Player settings is used.
 
-            - model_id: typing.Optional[str]. TTS Model ID used in the player. If not provided, default model ID set in the Player settings is used.
+        voice_id : typing.Optional[str]
+            Voice ID used to voice the content. If not provided, default voice ID set in the Player settings is used.
 
-            - file: core.File. See core.File for more documentation
+        model_id : typing.Optional[str]
+            TTS Model ID used in the player. If not provided, default model ID set in the Player settings is used.
 
-            - auto_convert: typing.Optional[bool]. Whether to auto convert the project to audio or not.
+        auto_convert : typing.Optional[bool]
+            Whether to auto convert the project to audio or not.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AudioNativeCreateProjectResponseModel
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(

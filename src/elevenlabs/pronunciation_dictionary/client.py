@@ -33,23 +33,35 @@ class PronunciationDictionaryClient:
     def add_from_file(
         self,
         *,
-        file: typing.Optional[core.File] = None,
         name: str,
+        file: typing.Optional[core.File] = None,
         description: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddPronunciationDictionaryResponseModel:
         """
         Creates a new pronunciation dictionary from a lexicon .PLS file
 
-        Parameters:
-            - file: typing.Optional[core.File]. See core.File for more documentation
+        Parameters
+        ----------
+        name : str
+            The name of the pronunciation dictionary, used for identification only.
 
-            - name: str. The name of the pronunciation dictionary, used for identification only.
+        file : typing.Optional[core.File]
+            See core.File for more documentation
 
-            - description: typing.Optional[str]. A description of the pronunciation dictionary, used for identification only.
+        description : typing.Optional[str]
+            A description of the pronunciation dictionary, used for identification only.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AddPronunciationDictionaryResponseModel
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -110,14 +122,26 @@ class PronunciationDictionaryClient:
         """
         Add rules to the pronunciation dictionary
 
-        Parameters:
-            - pronunciation_dictionary_id: str. The id of the pronunciation dictionary
+        Parameters
+        ----------
+        pronunciation_dictionary_id : str
+            The id of the pronunciation dictionary
 
-            - rules: typing.Sequence[PronunciationDictionaryRule]. List of pronunciation rules. Rule can be either:
-                                                                       an alias rule: {'string_to_replace': 'a', 'type': 'alias', 'alias': 'b', }
-                                                                       or a phoneme rule: {'string_to_replace': 'a', 'type': 'phoneme', 'phoneme': 'b', 'alphabet': 'ipa' }
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        rules : typing.Sequence[PronunciationDictionaryRule]
+            List of pronunciation rules. Rule can be either:
+                an alias rule: {'string_to_replace': 'a', 'type': 'alias', 'alias': 'b', }
+                or a phoneme rule: {'string_to_replace': 'a', 'type': 'phoneme', 'phoneme': 'b', 'alphabet': 'ipa' }
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AddPronunciationDictionaryRulesResponseModel
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -179,13 +203,24 @@ class PronunciationDictionaryClient:
         """
         Remove rules from the pronunciation dictionary
 
-        Parameters:
-            - pronunciation_dictionary_id: str. The id of the pronunciation dictionary
+        Parameters
+        ----------
+        pronunciation_dictionary_id : str
+            The id of the pronunciation dictionary
 
-            - rule_strings: typing.Sequence[str]. List of strings to remove from the pronunciation dictionary.
+        rule_strings : typing.Sequence[str]
+            List of strings to remove from the pronunciation dictionary.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RemovePronunciationDictionaryRulesResponseModel
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -237,27 +272,38 @@ class PronunciationDictionaryClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_pls_file_with_a_pronunciation_dictionary_version_rules(
+    def download(
         self, dictionary_id: str, version_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> str:
         """
         Get PLS file with a pronunciation dictionary version rules
 
-        Parameters:
-            - dictionary_id: str. The id of the pronunciation dictionary
+        Parameters
+        ----------
+        dictionary_id : str
+            The id of the pronunciation dictionary
 
-            - version_id: str. The id of the version of the pronunciation dictionary
+        version_id : str
+            The id of the version of the pronunciation dictionary
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.pronunciation_dictionary.get_pls_file_with_a_pronunciation_dictionary_version_rules(
-            dictionary_id="string",
-            version_id="string",
+        client.pronunciation_dictionary.download(
+            dictionary_id="Fm6AvNgS53NXe6Kqxp3e",
+            version_id="KZFyRUq3R6kaqhKI146w",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -301,18 +347,28 @@ class PronunciationDictionaryClient:
         """
         Get metadata for a pronunciation dictionary
 
-        Parameters:
-            - pronunciation_dictionary_id: str. The id of the pronunciation dictionary
+        Parameters
+        ----------
+        pronunciation_dictionary_id : str
+            The id of the pronunciation dictionary
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetPronunciationDictionaryMetadataResponse
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
         client.pronunciation_dictionary.get(
-            pronunciation_dictionary_id="pronunciation_dictionary_id",
+            pronunciation_dictionary_id="Fm6AvNgS53NXe6Kqxp3e",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -360,19 +416,32 @@ class PronunciationDictionaryClient:
         """
         Get a list of the pronunciation dictionaries you have access to and their metadata
 
-        Parameters:
-            - cursor: typing.Optional[str]. Used for fetching next page. Cursor is returned in the response.
+        Parameters
+        ----------
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
 
-            - page_size: typing.Optional[int]. How many pronunciation dictionaries to return at maximum. Can not exceed 100, defaults to 30.
+        page_size : typing.Optional[int]
+            How many pronunciation dictionaries to return at maximum. Can not exceed 100, defaults to 30.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetPronunciationDictionariesMetadataResponseModel
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.pronunciation_dictionary.get_all()
+        client.pronunciation_dictionary.get_all(
+            page_size=1,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             method="GET",
@@ -424,23 +493,35 @@ class AsyncPronunciationDictionaryClient:
     async def add_from_file(
         self,
         *,
-        file: typing.Optional[core.File] = None,
         name: str,
+        file: typing.Optional[core.File] = None,
         description: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddPronunciationDictionaryResponseModel:
         """
         Creates a new pronunciation dictionary from a lexicon .PLS file
 
-        Parameters:
-            - file: typing.Optional[core.File]. See core.File for more documentation
+        Parameters
+        ----------
+        name : str
+            The name of the pronunciation dictionary, used for identification only.
 
-            - name: str. The name of the pronunciation dictionary, used for identification only.
+        file : typing.Optional[core.File]
+            See core.File for more documentation
 
-            - description: typing.Optional[str]. A description of the pronunciation dictionary, used for identification only.
+        description : typing.Optional[str]
+            A description of the pronunciation dictionary, used for identification only.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AddPronunciationDictionaryResponseModel
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
@@ -501,14 +582,26 @@ class AsyncPronunciationDictionaryClient:
         """
         Add rules to the pronunciation dictionary
 
-        Parameters:
-            - pronunciation_dictionary_id: str. The id of the pronunciation dictionary
+        Parameters
+        ----------
+        pronunciation_dictionary_id : str
+            The id of the pronunciation dictionary
 
-            - rules: typing.Sequence[PronunciationDictionaryRule]. List of pronunciation rules. Rule can be either:
-                                                                       an alias rule: {'string_to_replace': 'a', 'type': 'alias', 'alias': 'b', }
-                                                                       or a phoneme rule: {'string_to_replace': 'a', 'type': 'phoneme', 'phoneme': 'b', 'alphabet': 'ipa' }
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        rules : typing.Sequence[PronunciationDictionaryRule]
+            List of pronunciation rules. Rule can be either:
+                an alias rule: {'string_to_replace': 'a', 'type': 'alias', 'alias': 'b', }
+                or a phoneme rule: {'string_to_replace': 'a', 'type': 'phoneme', 'phoneme': 'b', 'alphabet': 'ipa' }
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AddPronunciationDictionaryRulesResponseModel
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
@@ -570,13 +663,24 @@ class AsyncPronunciationDictionaryClient:
         """
         Remove rules from the pronunciation dictionary
 
-        Parameters:
-            - pronunciation_dictionary_id: str. The id of the pronunciation dictionary
+        Parameters
+        ----------
+        pronunciation_dictionary_id : str
+            The id of the pronunciation dictionary
 
-            - rule_strings: typing.Sequence[str]. List of strings to remove from the pronunciation dictionary.
+        rule_strings : typing.Sequence[str]
+            List of strings to remove from the pronunciation dictionary.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RemovePronunciationDictionaryRulesResponseModel
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
@@ -628,27 +732,38 @@ class AsyncPronunciationDictionaryClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_pls_file_with_a_pronunciation_dictionary_version_rules(
+    async def download(
         self, dictionary_id: str, version_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> str:
         """
         Get PLS file with a pronunciation dictionary version rules
 
-        Parameters:
-            - dictionary_id: str. The id of the pronunciation dictionary
+        Parameters
+        ----------
+        dictionary_id : str
+            The id of the pronunciation dictionary
 
-            - version_id: str. The id of the version of the pronunciation dictionary
+        version_id : str
+            The id of the version of the pronunciation dictionary
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        await client.pronunciation_dictionary.get_pls_file_with_a_pronunciation_dictionary_version_rules(
-            dictionary_id="string",
-            version_id="string",
+        await client.pronunciation_dictionary.download(
+            dictionary_id="Fm6AvNgS53NXe6Kqxp3e",
+            version_id="KZFyRUq3R6kaqhKI146w",
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -692,18 +807,28 @@ class AsyncPronunciationDictionaryClient:
         """
         Get metadata for a pronunciation dictionary
 
-        Parameters:
-            - pronunciation_dictionary_id: str. The id of the pronunciation dictionary
+        Parameters
+        ----------
+        pronunciation_dictionary_id : str
+            The id of the pronunciation dictionary
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetPronunciationDictionaryMetadataResponse
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
         await client.pronunciation_dictionary.get(
-            pronunciation_dictionary_id="pronunciation_dictionary_id",
+            pronunciation_dictionary_id="Fm6AvNgS53NXe6Kqxp3e",
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -751,19 +876,32 @@ class AsyncPronunciationDictionaryClient:
         """
         Get a list of the pronunciation dictionaries you have access to and their metadata
 
-        Parameters:
-            - cursor: typing.Optional[str]. Used for fetching next page. Cursor is returned in the response.
+        Parameters
+        ----------
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
 
-            - page_size: typing.Optional[int]. How many pronunciation dictionaries to return at maximum. Can not exceed 100, defaults to 30.
+        page_size : typing.Optional[int]
+            How many pronunciation dictionaries to return at maximum. Can not exceed 100, defaults to 30.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetPronunciationDictionariesMetadataResponseModel
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        await client.pronunciation_dictionary.get_all()
+        await client.pronunciation_dictionary.get_all(
+            page_size=1,
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="GET",
