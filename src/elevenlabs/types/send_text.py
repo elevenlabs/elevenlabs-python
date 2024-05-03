@@ -6,16 +6,10 @@ import typing
 from ..core.datetime_utils import serialize_datetime
 from ..core.pydantic_utilities import pydantic_v1
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .generation_config import GenerationConfig
-from .realtime_voice_settings import RealtimeVoiceSettings
 
 
 class SendText(UncheckedBaseModel):
-    text: str = pydantic_v1.Field()
-    """
-    Should always end with a single space string `" "`. In the first message, the text should be a space `" "`.
-    """
-
+    text: str
     try_trigger_generation: typing.Optional[bool] = pydantic_v1.Field(default=None)
     """
     This is an advanced setting that most users shouldn't need to use. It relates to our generation schedule
@@ -30,12 +24,6 @@ class SendText(UncheckedBaseModel):
     text may result in lower quality audio, therefore, only use this parameter if you
     really need text to be processed immediately. We generally recommend keeping the default value of
     `false` and adjusting the `chunk_length_schedule` in the `generation_config` instead.
-    """
-
-    voice_settings: typing.Optional[RealtimeVoiceSettings] = None
-    generation_config: typing.Optional[GenerationConfig] = pydantic_v1.Field(default=None)
-    """
-    This property should only be provided in the first message you send.
     """
 
     def json(self, **kwargs: typing.Any) -> str:

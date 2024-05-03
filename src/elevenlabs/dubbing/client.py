@@ -27,6 +27,7 @@ class DubbingClient:
     def dub_a_video_or_an_audio_file(
         self,
         *,
+        target_lang: str,
         mode: typing.Optional[str] = None,
         file: typing.Optional[core.File] = None,
         csv_file: typing.Optional[core.File] = None,
@@ -35,7 +36,6 @@ class DubbingClient:
         name: typing.Optional[str] = None,
         source_url: typing.Optional[str] = None,
         source_lang: typing.Optional[str] = None,
-        target_lang: str,
         num_speakers: typing.Optional[int] = None,
         watermark: typing.Optional[bool] = None,
         start_time: typing.Optional[int] = None,
@@ -47,39 +47,63 @@ class DubbingClient:
         """
         Dubs provided audio or video file into given language.
 
-        Parameters:
-            - mode: typing.Optional[str]. automatic or manual.
+        Parameters
+        ----------
+        target_lang : str
+            The Target language to dub the content into. Can be none if dubbing studio editor is enabled and running manual mode
 
-            - file: typing.Optional[core.File]. See core.File for more documentation
+        mode : typing.Optional[str]
+            automatic or manual.
 
-            - csv_file: typing.Optional[core.File]. See core.File for more documentation
+        file : typing.Optional[core.File]
+            See core.File for more documentation
 
-            - foreground_audio_file: typing.Optional[core.File]. See core.File for more documentation
+        csv_file : typing.Optional[core.File]
+            See core.File for more documentation
 
-            - background_audio_file: typing.Optional[core.File]. See core.File for more documentation
+        foreground_audio_file : typing.Optional[core.File]
+            See core.File for more documentation
 
-            - name: typing.Optional[str]. Name of the dubbing project.
+        background_audio_file : typing.Optional[core.File]
+            See core.File for more documentation
 
-            - source_url: typing.Optional[str]. URL of the source video/audio file.
+        name : typing.Optional[str]
+            Name of the dubbing project.
 
-            - source_lang: typing.Optional[str]. Source language.
+        source_url : typing.Optional[str]
+            URL of the source video/audio file.
 
-            - target_lang: str. The Target language to dub the content into. Can be none if dubbing studio editor is enabled and running manual mode
+        source_lang : typing.Optional[str]
+            Source language.
 
-            - num_speakers: typing.Optional[int]. Number of speakers to use for the dubbing.
+        num_speakers : typing.Optional[int]
+            Number of speakers to use for the dubbing.
 
-            - watermark: typing.Optional[bool]. Whether to apply watermark to the output video.
+        watermark : typing.Optional[bool]
+            Whether to apply watermark to the output video.
 
-            - start_time: typing.Optional[int]. Start time of the source video/audio file.
+        start_time : typing.Optional[int]
+            Start time of the source video/audio file.
 
-            - end_time: typing.Optional[int]. End time of the source video/audio file.
+        end_time : typing.Optional[int]
+            End time of the source video/audio file.
 
-            - highest_resolution: typing.Optional[bool]. Whether to use the highest resolution available.
+        highest_resolution : typing.Optional[bool]
+            Whether to use the highest resolution available.
 
-            - dubbing_studio: typing.Optional[bool]. Whether to prepare dub for edits in dubbing studio.
+        dubbing_studio : typing.Optional[bool]
+            Whether to prepare dub for edits in dubbing studio.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DoDubbingResponse
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -175,11 +199,21 @@ class DubbingClient:
         """
         Returns metadata about a dubbing project, including whether it's still in progress or not
 
-        Parameters:
-            - dubbing_id: str. ID of the dubbing project.
+        Parameters
+        ----------
+        dubbing_id : str
+            ID of the dubbing project.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DubbingMetadataResponse
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -229,11 +263,21 @@ class DubbingClient:
         """
         Deletes a dubbing project.
 
-        Parameters:
-            - dubbing_id: str. ID of the dubbing project.
+        Parameters
+        ----------
+        dubbing_id : str
+            ID of the dubbing project.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -283,13 +327,24 @@ class DubbingClient:
         """
         Returns dubbed file as a streamed file. Videos will be returned in MP4 format and audio only dubs will be returned in MP3.
 
-        Parameters:
-            - dubbing_id: str. ID of the dubbing project.
+        Parameters
+        ----------
+        dubbing_id : str
+            ID of the dubbing project.
 
-            - language_code: str. ID of the language.
+        language_code : str
+            ID of the language.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[bytes]
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -346,6 +401,7 @@ class AsyncDubbingClient:
     async def dub_a_video_or_an_audio_file(
         self,
         *,
+        target_lang: str,
         mode: typing.Optional[str] = None,
         file: typing.Optional[core.File] = None,
         csv_file: typing.Optional[core.File] = None,
@@ -354,7 +410,6 @@ class AsyncDubbingClient:
         name: typing.Optional[str] = None,
         source_url: typing.Optional[str] = None,
         source_lang: typing.Optional[str] = None,
-        target_lang: str,
         num_speakers: typing.Optional[int] = None,
         watermark: typing.Optional[bool] = None,
         start_time: typing.Optional[int] = None,
@@ -366,39 +421,63 @@ class AsyncDubbingClient:
         """
         Dubs provided audio or video file into given language.
 
-        Parameters:
-            - mode: typing.Optional[str]. automatic or manual.
+        Parameters
+        ----------
+        target_lang : str
+            The Target language to dub the content into. Can be none if dubbing studio editor is enabled and running manual mode
 
-            - file: typing.Optional[core.File]. See core.File for more documentation
+        mode : typing.Optional[str]
+            automatic or manual.
 
-            - csv_file: typing.Optional[core.File]. See core.File for more documentation
+        file : typing.Optional[core.File]
+            See core.File for more documentation
 
-            - foreground_audio_file: typing.Optional[core.File]. See core.File for more documentation
+        csv_file : typing.Optional[core.File]
+            See core.File for more documentation
 
-            - background_audio_file: typing.Optional[core.File]. See core.File for more documentation
+        foreground_audio_file : typing.Optional[core.File]
+            See core.File for more documentation
 
-            - name: typing.Optional[str]. Name of the dubbing project.
+        background_audio_file : typing.Optional[core.File]
+            See core.File for more documentation
 
-            - source_url: typing.Optional[str]. URL of the source video/audio file.
+        name : typing.Optional[str]
+            Name of the dubbing project.
 
-            - source_lang: typing.Optional[str]. Source language.
+        source_url : typing.Optional[str]
+            URL of the source video/audio file.
 
-            - target_lang: str. The Target language to dub the content into. Can be none if dubbing studio editor is enabled and running manual mode
+        source_lang : typing.Optional[str]
+            Source language.
 
-            - num_speakers: typing.Optional[int]. Number of speakers to use for the dubbing.
+        num_speakers : typing.Optional[int]
+            Number of speakers to use for the dubbing.
 
-            - watermark: typing.Optional[bool]. Whether to apply watermark to the output video.
+        watermark : typing.Optional[bool]
+            Whether to apply watermark to the output video.
 
-            - start_time: typing.Optional[int]. Start time of the source video/audio file.
+        start_time : typing.Optional[int]
+            Start time of the source video/audio file.
 
-            - end_time: typing.Optional[int]. End time of the source video/audio file.
+        end_time : typing.Optional[int]
+            End time of the source video/audio file.
 
-            - highest_resolution: typing.Optional[bool]. Whether to use the highest resolution available.
+        highest_resolution : typing.Optional[bool]
+            Whether to use the highest resolution available.
 
-            - dubbing_studio: typing.Optional[bool]. Whether to prepare dub for edits in dubbing studio.
+        dubbing_studio : typing.Optional[bool]
+            Whether to prepare dub for edits in dubbing studio.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DoDubbingResponse
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
@@ -494,11 +573,21 @@ class AsyncDubbingClient:
         """
         Returns metadata about a dubbing project, including whether it's still in progress or not
 
-        Parameters:
-            - dubbing_id: str. ID of the dubbing project.
+        Parameters
+        ----------
+        dubbing_id : str
+            ID of the dubbing project.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DubbingMetadataResponse
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
@@ -548,11 +637,21 @@ class AsyncDubbingClient:
         """
         Deletes a dubbing project.
 
-        Parameters:
-            - dubbing_id: str. ID of the dubbing project.
+        Parameters
+        ----------
+        dubbing_id : str
+            ID of the dubbing project.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
@@ -602,13 +701,24 @@ class AsyncDubbingClient:
         """
         Returns dubbed file as a streamed file. Videos will be returned in MP4 format and audio only dubs will be returned in MP3.
 
-        Parameters:
-            - dubbing_id: str. ID of the dubbing project.
+        Parameters
+        ----------
+        dubbing_id : str
+            ID of the dubbing project.
 
-            - language_code: str. ID of the language.
+        language_code : str
+            ID of the language.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[bytes]
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(

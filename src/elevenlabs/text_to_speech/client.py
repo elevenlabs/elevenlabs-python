@@ -29,9 +29,9 @@ class TextToSpeechClient:
         self,
         voice_id: str,
         *,
+        text: str,
         optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
         output_format: typing.Optional[OutputFormat] = None,
-        text: str,
         model_id: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[
@@ -42,47 +42,55 @@ class TextToSpeechClient:
         """
         Converts text into speech using a voice of your choice and returns audio.
 
-        Parameters:
-            - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
-            - optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency]. You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+        text : str
+            The text that will get converted into speech.
 
-            - output_format: typing.Optional[OutputFormat]. The output format of the generated audio.
+        optimize_streaming_latency : typing.Optional[OptimizeStreamingLatency]
+            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
 
-            - text: str. The text that will get converted into speech.
+        output_format : typing.Optional[OutputFormat]
+            The output format of the generated audio.
 
-            - model_id: typing.Optional[str]. Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
+        model_id : typing.Optional[str]
+            Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
 
-            - voice_settings: typing.Optional[VoiceSettings]. Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
+        voice_settings : typing.Optional[VoiceSettings]
+            Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
 
-            - pronunciation_dictionary_locators: typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]. A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
+        pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
+            A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
-        from elevenlabs import PronunciationDictionaryVersionLocator, VoiceSettings
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[bytes]
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import VoiceSettings
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
         client.text_to_speech.convert(
-            voice_id="string",
+            voice_id="pMsXgVXv3BLzUgSXRplE",
             optimize_streaming_latency="0",
             output_format="mp3_22050_32",
-            text="string",
-            model_id="string",
+            text="It sure does, Jackie… My mama always said: “In Carolina, the air's so thick you can wear it!”",
             voice_settings=VoiceSettings(
-                stability=1.1,
-                similarity_boost=1.1,
-                style=1.1,
-                use_speaker_boost=True,
+                stability=0.1,
+                similarity_boost=0.3,
+                style=0.2,
             ),
-            pronunciation_dictionary_locators=[
-                PronunciationDictionaryVersionLocator(
-                    pronunciation_dictionary_id="string",
-                    version_id="string",
-                )
-            ],
         )
         """
         _request: typing.Dict[str, typing.Any] = {"text": text}
@@ -149,9 +157,9 @@ class TextToSpeechClient:
         self,
         voice_id: str,
         *,
+        text: str,
         optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
         output_format: typing.Optional[OutputFormat] = None,
-        text: str,
         model_id: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[
@@ -162,47 +170,55 @@ class TextToSpeechClient:
         """
         Converts text into speech using a voice of your choice and returns audio as an audio stream.
 
-        Parameters:
-            - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
-            - optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency]. You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+        text : str
+            The text that will get converted into speech.
 
-            - output_format: typing.Optional[OutputFormat]. The output format of the generated audio.
+        optimize_streaming_latency : typing.Optional[OptimizeStreamingLatency]
+            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
 
-            - text: str. The text that will get converted into speech.
+        output_format : typing.Optional[OutputFormat]
+            The output format of the generated audio.
 
-            - model_id: typing.Optional[str]. Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
+        model_id : typing.Optional[str]
+            Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
 
-            - voice_settings: typing.Optional[VoiceSettings]. Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
+        voice_settings : typing.Optional[VoiceSettings]
+            Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
 
-            - pronunciation_dictionary_locators: typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]. A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
+        pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
+            A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
-        from elevenlabs import PronunciationDictionaryVersionLocator, VoiceSettings
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[bytes]
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import VoiceSettings
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
         client.text_to_speech.convert_as_stream(
-            voice_id="string",
+            voice_id="pMsXgVXv3BLzUgSXRplE",
             optimize_streaming_latency="0",
             output_format="mp3_22050_32",
-            text="string",
-            model_id="string",
+            text="It sure does, Jackie… My mama always said: “In Carolina, the air's so thick you can wear it!”",
             voice_settings=VoiceSettings(
-                stability=1.1,
-                similarity_boost=1.1,
-                style=1.1,
-                use_speaker_boost=True,
+                stability=0.1,
+                similarity_boost=0.3,
+                style=0.2,
             ),
-            pronunciation_dictionary_locators=[
-                PronunciationDictionaryVersionLocator(
-                    pronunciation_dictionary_id="string",
-                    version_id="string",
-                )
-            ],
         )
         """
         _request: typing.Dict[str, typing.Any] = {"text": text}
@@ -274,9 +290,9 @@ class AsyncTextToSpeechClient:
         self,
         voice_id: str,
         *,
+        text: str,
         optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
         output_format: typing.Optional[OutputFormat] = None,
-        text: str,
         model_id: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[
@@ -287,47 +303,55 @@ class AsyncTextToSpeechClient:
         """
         Converts text into speech using a voice of your choice and returns audio.
 
-        Parameters:
-            - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
-            - optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency]. You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+        text : str
+            The text that will get converted into speech.
 
-            - output_format: typing.Optional[OutputFormat]. The output format of the generated audio.
+        optimize_streaming_latency : typing.Optional[OptimizeStreamingLatency]
+            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
 
-            - text: str. The text that will get converted into speech.
+        output_format : typing.Optional[OutputFormat]
+            The output format of the generated audio.
 
-            - model_id: typing.Optional[str]. Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
+        model_id : typing.Optional[str]
+            Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
 
-            - voice_settings: typing.Optional[VoiceSettings]. Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
+        voice_settings : typing.Optional[VoiceSettings]
+            Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
 
-            - pronunciation_dictionary_locators: typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]. A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
+        pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
+            A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
-        from elevenlabs import PronunciationDictionaryVersionLocator, VoiceSettings
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[bytes]
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import VoiceSettings
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
         await client.text_to_speech.convert(
-            voice_id="string",
+            voice_id="pMsXgVXv3BLzUgSXRplE",
             optimize_streaming_latency="0",
             output_format="mp3_22050_32",
-            text="string",
-            model_id="string",
+            text="It sure does, Jackie… My mama always said: “In Carolina, the air's so thick you can wear it!”",
             voice_settings=VoiceSettings(
-                stability=1.1,
-                similarity_boost=1.1,
-                style=1.1,
-                use_speaker_boost=True,
+                stability=0.1,
+                similarity_boost=0.3,
+                style=0.2,
             ),
-            pronunciation_dictionary_locators=[
-                PronunciationDictionaryVersionLocator(
-                    pronunciation_dictionary_id="string",
-                    version_id="string",
-                )
-            ],
         )
         """
         _request: typing.Dict[str, typing.Any] = {"text": text}
@@ -394,9 +418,9 @@ class AsyncTextToSpeechClient:
         self,
         voice_id: str,
         *,
+        text: str,
         optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
         output_format: typing.Optional[OutputFormat] = None,
-        text: str,
         model_id: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[
@@ -407,47 +431,55 @@ class AsyncTextToSpeechClient:
         """
         Converts text into speech using a voice of your choice and returns audio as an audio stream.
 
-        Parameters:
-            - voice_id: str. Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
-            - optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency]. You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+        text : str
+            The text that will get converted into speech.
 
-            - output_format: typing.Optional[OutputFormat]. The output format of the generated audio.
+        optimize_streaming_latency : typing.Optional[OptimizeStreamingLatency]
+            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
 
-            - text: str. The text that will get converted into speech.
+        output_format : typing.Optional[OutputFormat]
+            The output format of the generated audio.
 
-            - model_id: typing.Optional[str]. Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
+        model_id : typing.Optional[str]
+            Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
 
-            - voice_settings: typing.Optional[VoiceSettings]. Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
+        voice_settings : typing.Optional[VoiceSettings]
+            Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
 
-            - pronunciation_dictionary_locators: typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]. A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
+        pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
+            A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
-        from elevenlabs import PronunciationDictionaryVersionLocator, VoiceSettings
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[bytes]
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import VoiceSettings
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
         await client.text_to_speech.convert_as_stream(
-            voice_id="string",
+            voice_id="pMsXgVXv3BLzUgSXRplE",
             optimize_streaming_latency="0",
             output_format="mp3_22050_32",
-            text="string",
-            model_id="string",
+            text="It sure does, Jackie… My mama always said: “In Carolina, the air's so thick you can wear it!”",
             voice_settings=VoiceSettings(
-                stability=1.1,
-                similarity_boost=1.1,
-                style=1.1,
-                use_speaker_boost=True,
+                stability=0.1,
+                similarity_boost=0.3,
+                style=0.2,
             ),
-            pronunciation_dictionary_locators=[
-                PronunciationDictionaryVersionLocator(
-                    pronunciation_dictionary_id="string",
-                    version_id="string",
-                )
-            ],
         )
         """
         _request: typing.Dict[str, typing.Any] = {"text": text}

@@ -23,9 +23,18 @@ class ModelsClient:
         """
         Gets a list of available models.
 
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[Model]
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import ElevenLabs
 
         client = ElevenLabs(
@@ -74,9 +83,18 @@ class AsyncModelsClient:
         """
         Gets a list of available models.
 
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[Model]
+            Successful Response
+
+        Examples
+        --------
         from elevenlabs.client import AsyncElevenLabs
 
         client = AsyncElevenLabs(
