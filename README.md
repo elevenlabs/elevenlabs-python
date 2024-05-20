@@ -274,7 +274,7 @@ import asyncio
 from elevenlabs.client import AsyncElevenLabs
 
 eleven = AsyncElevenLabs(
-  api_key="MY_API_KEY" # Defaulsts to ELEVEN_API_KEY
+  api_key="MY_API_KEY" # Defaults to ELEVEN_API_KEY
 )
 
 async def print_models() -> None:
