@@ -18,7 +18,13 @@ def play(
     if isinstance(audio, Iterator):
         audio = b"".join(audio)
     if notebook:
-        from IPython.display import Audio, display  # type: ignore
+        try:
+            from IPython.display import Audio, display  # type: ignore
+        except ModuleNotFoundError:
+            message = (
+                "`pip install ipython` required when `notebook=False` "
+            )
+            raise ValueError(message)
 
         display(Audio(audio, rate=44100, autoplay=True))
     elif use_ffmpeg:
