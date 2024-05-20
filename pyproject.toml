@@ -11,7 +11,6 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.8"
 httpx = ">=0.21.2"
-ipython = ">=7.0"
 pydantic = ">= 1.9.2"
 requests = ">=2.20"
 typing_extensions = ">= 4.0.0"
