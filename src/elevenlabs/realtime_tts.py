@@ -8,6 +8,7 @@ import websockets
 
 from websockets.sync.client import connect
 
+from . import OutputFormat
 from .core.api_error import ApiError
 from .core.jsonable_encoder import jsonable_encoder
 from .core.remove_none_from_dict import remove_none_from_dict
@@ -40,13 +41,14 @@ def text_chunker(chunks: typing.Iterator[str]) -> typing.Iterator[str]:
 class RealtimeTextToSpeechClient(TextToSpeechClient):
 
     def convert_realtime(
-        self,
-        voice_id: str,
-        *,
-        text: typing.Iterator[str],
-        model_id: typing.Optional[str] = OMIT,
-        voice_settings: typing.Optional[VoiceSettings] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
+            self,
+            voice_id: str,
+            *,
+            text: typing.Iterator[str],
+            model_id: typing.Optional[str] = OMIT,
+            voice_settings: typing.Optional[VoiceSettings] = OMIT,
+            request_options: typing.Optional[RequestOptions] = None,
+            output_format: typing.Optional[OutputFormat] = None,
     ) -> typing.Iterator[bytes]:
         """
         Converts text into speech using a voice of your choice and returns audio.
@@ -61,6 +63,8 @@ class RealtimeTextToSpeechClient(TextToSpeechClient):
             - voice_settings: typing.Optional[VoiceSettings]. Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
+
+            - output_format: typing.Optional[OutputFormat]. The format of the audio file. Default is mp3_44100_128.
         ---
         from elevenlabs import PronunciationDictionaryVersionLocator, VoiceSettings
         from elevenlabs.client import ElevenLabs
@@ -76,6 +80,7 @@ class RealtimeTextToSpeechClient(TextToSpeechClient):
             voice_id="string",
             text=get_text(),
             model_id="string",
+            output_format="mp3_44100_128",
             voice_settings=VoiceSettings(
                 stability=1.1,
                 similarity_boost=1.1,
@@ -85,17 +90,19 @@ class RealtimeTextToSpeechClient(TextToSpeechClient):
         )
         """
         with connect(
-            urllib.parse.urljoin(
-              "wss://api.elevenlabs.io/", f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream-input?model_id={model_id}"
-            ),
-            additional_headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
+                urllib.parse.urljoin(
+                    "wss://api.elevenlabs.io/",
+                    f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream-input"
+                    f"?model_id={model_id}" + f"&output_format={output_format}" if output_format else ""
+                ),
+                additional_headers=jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            **self._client_wrapper.get_headers(),
+                            **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                        }
+                    )
                 )
-            )
         ) as socket:
             try:
                 socket.send(json.dumps(

@@ -1,20 +1,20 @@
-import typing
 import json
-import re
 import os
+import re
+import typing
+from typing import Iterator, Union, \
+    Optional, AsyncIterator
+
 import httpx
 
-from typing import Iterator, Optional, Union, \
-  Optional, AsyncIterator
-
+from . import OutputFormat
 from .base_client import \
-  BaseElevenLabs, AsyncBaseElevenLabs
+    BaseElevenLabs, AsyncBaseElevenLabs
 from .core import RequestOptions, ApiError
-from .types import Voice, VoiceSettings, \
-  PronunciationDictionaryVersionLocator, Model
 from .environment import ElevenLabsEnvironment
 from .realtime_tts import RealtimeTextToSpeechClient
-
+from .types import Voice, VoiceSettings, \
+    PronunciationDictionaryVersionLocator, Model
 
 DEFAULT_VOICE = Voice(
     voice_id="EXAVITQu4vr4xnSDxMaL",
@@ -62,14 +62,15 @@ class ElevenLabs(BaseElevenLabs):
         api_key="YOUR_API_KEY",
     )
     """
+
     def __init__(
-        self,
-        *,
-        base_url: typing.Optional[str] = None,
-        environment: ElevenLabsEnvironment = ElevenLabsEnvironment.PRODUCTION,
-        api_key: typing.Optional[str] = os.getenv("ELEVEN_API_KEY"),
-        timeout: typing.Optional[float] = 60,
-        httpx_client: typing.Optional[httpx.Client] = None
+            self,
+            *,
+            base_url: typing.Optional[str] = None,
+            environment: ElevenLabsEnvironment = ElevenLabsEnvironment.PRODUCTION,
+            api_key: typing.Optional[str] = os.getenv("ELEVEN_API_KEY"),
+            timeout: typing.Optional[float] = 60,
+            httpx_client: typing.Optional[httpx.Client] = None
     ):
         super().__init__(
             base_url=base_url,
@@ -81,12 +82,12 @@ class ElevenLabs(BaseElevenLabs):
         self.text_to_speech = RealtimeTextToSpeechClient(client_wrapper=self._client_wrapper)
 
     def clone(
-      self,
-      name: str,
-      files: typing.List[str],
-      description: str,
-      labels: typing.Optional[str] = None,
-      request_options: typing.Optional[RequestOptions] = None
+            self,
+            name: str,
+            files: typing.List[str],
+            description: str,
+            labels: typing.Optional[str] = None,
+            request_options: typing.Optional[RequestOptions] = None
     ) -> Voice:
         """
           This is a manually maintained helper function that clones a voice from a set of audio files.
@@ -105,30 +106,30 @@ class ElevenLabs(BaseElevenLabs):
               - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         add_voice_response = self.voices.add(
-          name=name,
-          description=description, 
-          files=[open(file, 'rb') for file in files],
-          labels=str(json.dumps(labels or {}))
+            name=name,
+            description=description,
+            files=[open(file, 'rb') for file in files],
+            labels=str(json.dumps(labels or {}))
         )
         return self.voices.get(
-          add_voice_response.voice_id,
-          request_options=request_options
+            add_voice_response.voice_id,
+            request_options=request_options
         )
 
     def generate(
-      self,
-      *,
-      text: Union[str, Iterator[str]],
-      voice: Union[VoiceId, VoiceName, Voice] = DEFAULT_VOICE,
-      voice_settings: typing.Optional[VoiceSettings] = DEFAULT_VOICE.settings,
-      model: Union[ModelId, Model] = "eleven_monolingual_v1",
-      optimize_streaming_latency: typing.Optional[int] = 0,
-      stream: bool = False,
-      output_format: Optional[str] = "mp3_44100_128",
-      pronunciation_dictionary_locators: typing.Optional[
-            typing.Sequence[PronunciationDictionaryVersionLocator]
-        ] = OMIT,
-      request_options: typing.Optional[RequestOptions] = None
+            self,
+            *,
+            text: Union[str, Iterator[str]],
+            voice: Union[VoiceId, VoiceName, Voice] = DEFAULT_VOICE,
+            voice_settings: typing.Optional[VoiceSettings] = DEFAULT_VOICE.settings,
+            model: Union[ModelId, Model] = "eleven_monolingual_v1",
+            optimize_streaming_latency: typing.Optional[int] = 0,
+            stream: bool = False,
+            output_format: Optional[OutputFormat] = "mp3_44100_128",
+            pronunciation_dictionary_locators: typing.Optional[
+                typing.Sequence[PronunciationDictionaryVersionLocator]
+            ] = OMIT,
+            request_options: typing.Optional[RequestOptions] = None
     ) -> Iterator[bytes]:
         """
             - text: Union[str, Iterator[str]]. The string or stream of strings that will get converted into speech.
@@ -194,7 +195,6 @@ class ElevenLabs(BaseElevenLabs):
         elif isinstance(model, Model):
             model_id = model.model_id
 
-
         if stream:
             if isinstance(text, str):
                 return self.text_to_speech.convert_as_stream(
@@ -213,11 +213,12 @@ class ElevenLabs(BaseElevenLabs):
                     voice_settings=voice_settings,
                     text=text,
                     request_options=request_options,
-                    model_id=model_id
+                    model_id=model_id,
+                    output_format=output_format,
                 )
-            else: 
+            else:
                 raise ApiError(body="Text is neither a string nor an iterator.")
-        else: 
+        else:
             if not isinstance(text, str):
                 raise ApiError(body="Text must be a string when stream is False.")
             return self.text_to_speech.convert(
@@ -257,12 +258,12 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
     """
 
     async def clone(
-      self,
-      name: str,
-      files: typing.List[str],
-      description: str,
-      labels: str,
-      request_options: typing.Optional[RequestOptions] = None
+            self,
+            name: str,
+            files: typing.List[str],
+            description: str,
+            labels: str,
+            request_options: typing.Optional[RequestOptions] = None
     ) -> Voice:
         """
           This is a manually mnaintained helper function that generates a 
@@ -284,30 +285,30 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
               - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
         add_voice_response = await self.voices.add(
-          name=name,
-          description=description, 
-          files=[open(file, 'rb') for file in files],
-          labels=str(json.dumps(labels or {}))
+            name=name,
+            description=description,
+            files=[open(file, 'rb') for file in files],
+            labels=str(json.dumps(labels or {}))
         )
         return await self.voices.get(
-          add_voice_response.voice_id,
-          request_options=request_options
+            add_voice_response.voice_id,
+            request_options=request_options
         )
 
     async def generate(
-      self,
-      *,
-      text: str,
-      voice: Union[VoiceId, VoiceName, Voice] = DEFAULT_VOICE,
-      voice_settings: typing.Optional[VoiceSettings] = DEFAULT_VOICE.settings,
-      model: Union[ModelId, Model] = "eleven_monolingual_v1",
-      optimize_streaming_latency: typing.Optional[int] = 0,
-      stream: bool = False,
-      output_format: Optional[str] = "mp3_44100_128",
-      pronunciation_dictionary_locators: typing.Optional[
-            typing.Sequence[PronunciationDictionaryVersionLocator]
-        ] = OMIT,
-      request_options: typing.Optional[RequestOptions] = None
+            self,
+            *,
+            text: str,
+            voice: Union[VoiceId, VoiceName, Voice] = DEFAULT_VOICE,
+            voice_settings: typing.Optional[VoiceSettings] = DEFAULT_VOICE.settings,
+            model: Union[ModelId, Model] = "eleven_monolingual_v1",
+            optimize_streaming_latency: typing.Optional[int] = 0,
+            stream: bool = False,
+            output_format: Optional[str] = "mp3_44100_128",
+            pronunciation_dictionary_locators: typing.Optional[
+                typing.Sequence[PronunciationDictionaryVersionLocator]
+            ] = OMIT,
+            request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncIterator[bytes]:
         """
           This is a manually mnaintained helper function that generates a 
@@ -379,7 +380,7 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
             model_id = model
         elif isinstance(model, Model):
             model_id = model.model_id
-        
+
         if stream:
             return self.text_to_speech.convert_as_stream(
                 voice_id=voice_id,
