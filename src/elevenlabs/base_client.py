@@ -20,6 +20,7 @@ from .text_to_speech.client import AsyncTextToSpeechClient, TextToSpeechClient
 from .user.client import AsyncUserClient, UserClient
 from .voice_generation.client import AsyncVoiceGenerationClient, VoiceGenerationClient
 from .voices.client import AsyncVoicesClient, VoicesClient
+from .workspace.client import AsyncWorkspaceClient, WorkspaceClient
 
 
 class BaseElevenLabs:
@@ -93,6 +94,7 @@ class BaseElevenLabs:
         self.models = ModelsClient(client_wrapper=self._client_wrapper)
         self.audio_native = AudioNativeClient(client_wrapper=self._client_wrapper)
         self.pronunciation_dictionary = PronunciationDictionaryClient(client_wrapper=self._client_wrapper)
+        self.workspace = WorkspaceClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncBaseElevenLabs:
@@ -166,6 +168,7 @@ class AsyncBaseElevenLabs:
         self.models = AsyncModelsClient(client_wrapper=self._client_wrapper)
         self.audio_native = AsyncAudioNativeClient(client_wrapper=self._client_wrapper)
         self.pronunciation_dictionary = AsyncPronunciationDictionaryClient(client_wrapper=self._client_wrapper)
+        self.workspace = AsyncWorkspaceClient(client_wrapper=self._client_wrapper)
 
 
 def _get_base_url(*, base_url: typing.Optional[str] = None, environment: ElevenLabsEnvironment) -> str:

@@ -27,7 +27,6 @@ class AudioNativeClient:
         self,
         *,
         name: str,
-        file: core.File,
         image: typing.Optional[str] = None,
         author: typing.Optional[str] = None,
         title: typing.Optional[str] = None,
@@ -37,6 +36,7 @@ class AudioNativeClient:
         sessionization: typing.Optional[int] = None,
         voice_id: typing.Optional[str] = None,
         model_id: typing.Optional[str] = None,
+        file: typing.Optional[core.File] = None,
         auto_convert: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AudioNativeCreateProjectResponseModel:
@@ -47,9 +47,6 @@ class AudioNativeClient:
         ----------
         name : str
             Project name.
-
-        file : core.File
-            See core.File for more documentation
 
         image : typing.Optional[str]
             Image URL used in the player. If not provided, default image set in the Player settings is used.
@@ -77,6 +74,9 @@ class AudioNativeClient:
 
         model_id : typing.Optional[str]
             TTS Model ID used in the player. If not provided, default model ID set in the Player settings is used.
+
+        file : typing.Optional[core.File]
+            See core.File for more documentation
 
         auto_convert : typing.Optional[bool]
             Whether to auto convert the project to audio or not.
@@ -180,7 +180,6 @@ class AsyncAudioNativeClient:
         self,
         *,
         name: str,
-        file: core.File,
         image: typing.Optional[str] = None,
         author: typing.Optional[str] = None,
         title: typing.Optional[str] = None,
@@ -190,6 +189,7 @@ class AsyncAudioNativeClient:
         sessionization: typing.Optional[int] = None,
         voice_id: typing.Optional[str] = None,
         model_id: typing.Optional[str] = None,
+        file: typing.Optional[core.File] = None,
         auto_convert: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AudioNativeCreateProjectResponseModel:
@@ -200,9 +200,6 @@ class AsyncAudioNativeClient:
         ----------
         name : str
             Project name.
-
-        file : core.File
-            See core.File for more documentation
 
         image : typing.Optional[str]
             Image URL used in the player. If not provided, default image set in the Player settings is used.
@@ -230,6 +227,9 @@ class AsyncAudioNativeClient:
 
         model_id : typing.Optional[str]
             TTS Model ID used in the player. If not provided, default model ID set in the Player settings is used.
+
+        file : typing.Optional[core.File]
+            See core.File for more documentation
 
         auto_convert : typing.Optional[bool]
             Whether to auto convert the project to audio or not.

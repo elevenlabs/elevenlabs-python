@@ -15,7 +15,10 @@ class User(UncheckedBaseModel):
     xi_api_key: str
     can_use_delayed_payment_methods: bool
     is_onboarding_completed: bool
+    is_onboarding_checklist_completed: bool
     first_name: typing.Optional[str] = None
+    is_api_key_hashed: typing.Optional[bool] = None
+    xi_api_key_preview: typing.Optional[str] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

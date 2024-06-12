@@ -53,7 +53,7 @@ class DubbingClient:
             The Target language to dub the content into. Can be none if dubbing studio editor is enabled and running manual mode
 
         mode : typing.Optional[str]
-            automatic or manual.
+            automatic or manual. Manual mode is only supported when creating a dubbing studio project
 
         file : typing.Optional[core.File]
             See core.File for more documentation
@@ -77,7 +77,7 @@ class DubbingClient:
             Source language.
 
         num_speakers : typing.Optional[int]
-            Number of speakers to use for the dubbing.
+            Number of speakers to use for the dubbing. Set to 0 to automatically detect the number of speakers
 
         watermark : typing.Optional[bool]
             Whether to apply watermark to the output video.
@@ -393,6 +393,75 @@ class DubbingClient:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def get_transcript_for_dub(
+        self, dubbing_id: str, language_code: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Any:
+        """
+        Returns transcript for the dub as an SRT file.
+
+        Parameters
+        ----------
+        dubbing_id : str
+            ID of the dubbing project.
+
+        language_code : str
+            ID of the language.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.dubbing.get_transcript_for_dub(
+            dubbing_id="dubbing_id",
+            language_code="language_code",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            method="GET",
+            url=urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/",
+                f"v1/dubbing/{jsonable_encoder(dubbing_id)}/transcript/{jsonable_encoder(language_code)}",
+            ),
+            params=jsonable_encoder(
+                request_options.get("additional_query_parameters") if request_options is not None else None
+            ),
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return typing.cast(typing.Any, construct_type(type_=typing.Any, object_=_response.json()))  # type: ignore
+        if _response.status_code == 422:
+            raise UnprocessableEntityError(
+                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+            )
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
 
 class AsyncDubbingClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -427,7 +496,7 @@ class AsyncDubbingClient:
             The Target language to dub the content into. Can be none if dubbing studio editor is enabled and running manual mode
 
         mode : typing.Optional[str]
-            automatic or manual.
+            automatic or manual. Manual mode is only supported when creating a dubbing studio project
 
         file : typing.Optional[core.File]
             See core.File for more documentation
@@ -451,7 +520,7 @@ class AsyncDubbingClient:
             Source language.
 
         num_speakers : typing.Optional[int]
-            Number of speakers to use for the dubbing.
+            Number of speakers to use for the dubbing. Set to 0 to automatically detect the number of speakers
 
         watermark : typing.Optional[bool]
             Whether to apply watermark to the output video.
@@ -766,3 +835,72 @@ class AsyncDubbingClient:
             except JSONDecodeError:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
             raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_transcript_for_dub(
+        self, dubbing_id: str, language_code: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Any:
+        """
+        Returns transcript for the dub as an SRT file.
+
+        Parameters
+        ----------
+        dubbing_id : str
+            ID of the dubbing project.
+
+        language_code : str
+            ID of the language.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.dubbing.get_transcript_for_dub(
+            dubbing_id="dubbing_id",
+            language_code="language_code",
+        )
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            method="GET",
+            url=urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/",
+                f"v1/dubbing/{jsonable_encoder(dubbing_id)}/transcript/{jsonable_encoder(language_code)}",
+            ),
+            params=jsonable_encoder(
+                request_options.get("additional_query_parameters") if request_options is not None else None
+            ),
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return typing.cast(typing.Any, construct_type(type_=typing.Any, object_=_response.json()))  # type: ignore
+        if _response.status_code == 422:
+            raise UnprocessableEntityError(
+                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+            )
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)

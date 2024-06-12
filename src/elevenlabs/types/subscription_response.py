@@ -8,6 +8,7 @@ from ..core.pydantic_utilities import pydantic_v1
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .currency import Currency
 from .subscription_response_model_billing_period import SubscriptionResponseModelBillingPeriod
+from .subscription_response_model_character_refresh_period import SubscriptionResponseModelCharacterRefreshPeriod
 from .subscription_status import SubscriptionStatus
 
 
@@ -28,6 +29,7 @@ class SubscriptionResponse(UncheckedBaseModel):
     currency: Currency
     status: SubscriptionStatus
     billing_period: SubscriptionResponseModelBillingPeriod
+    character_refresh_period: SubscriptionResponseModelCharacterRefreshPeriod
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

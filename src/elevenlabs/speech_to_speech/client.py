@@ -29,10 +29,12 @@ class SpeechToSpeechClient:
         voice_id: str,
         *,
         audio: core.File,
-        optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
-        output_format: typing.Optional[OutputFormat] = None,
+        enable_logging: typing.Optional[OptimizeStreamingLatency] = None,
+        optimize_streaming_latency: typing.Optional[OutputFormat] = None,
+        output_format: typing.Optional[str] = None,
         model_id: typing.Optional[str] = None,
         voice_settings: typing.Optional[str] = None,
+        seed: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -46,17 +48,34 @@ class SpeechToSpeechClient:
         audio : core.File
             See core.File for more documentation
 
-        optimize_streaming_latency : typing.Optional[OptimizeStreamingLatency]
+        enable_logging : typing.Optional[OptimizeStreamingLatency]
             You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
 
-        output_format : typing.Optional[OutputFormat]
+        optimize_streaming_latency : typing.Optional[OutputFormat]
             The output format of the generated audio.
+
+        output_format : typing.Optional[str]
+            Output format of the generated audio. Must be one of:
+            mp3_22050_32 - output format, mp3 with 22.05kHz sample rate at 32kbps.
+            mp3_44100_32 - output format, mp3 with 44.1kHz sample rate at 32kbps.
+            mp3_44100_64 - output format, mp3 with 44.1kHz sample rate at 64kbps.
+            mp3_44100_96 - output format, mp3 with 44.1kHz sample rate at 96kbps.
+            mp3_44100_128 - default output format, mp3 with 44.1kHz sample rate at 128kbps.
+            mp3_44100_192 - output format, mp3 with 44.1kHz sample rate at 192kbps. Requires you to be subscribed to Creator tier or above.
+            pcm_16000 - PCM format (S16LE) with 16kHz sample rate.
+            pcm_22050 - PCM format (S16LE) with 22.05kHz sample rate.
+            pcm_24000 - PCM format (S16LE) with 24kHz sample rate.
+            pcm_44100 - PCM format (S16LE) with 44.1kHz sample rate. Requires you to be subscribed to Pro tier or above.
+            ulaw_8000 - μ-law format (sometimes written mu-law, often approximated as u-law) with 8kHz sample rate. Note that this format is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
 
         voice_settings : typing.Optional[str]
             Voice settings overriding stored setttings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
+
+        seed : typing.Optional[int]
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -75,8 +94,9 @@ class SpeechToSpeechClient:
         )
         client.speech_to_speech.convert(
             voice_id="string",
-            optimize_streaming_latency="0",
-            output_format="mp3_22050_32",
+            enable_logging="0",
+            optimize_streaming_latency="mp3_22050_32",
+            output_format="string",
         )
         """
         with self._client_wrapper.httpx_client.stream(
@@ -87,6 +107,7 @@ class SpeechToSpeechClient:
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
+                        "enable_logging": enable_logging,
                         "optimize_streaming_latency": optimize_streaming_latency,
                         "output_format": output_format,
                         **(
@@ -97,10 +118,14 @@ class SpeechToSpeechClient:
                     }
                 )
             ),
-            data=jsonable_encoder(remove_none_from_dict({"model_id": model_id, "voice_settings": voice_settings}))
+            data=jsonable_encoder(
+                remove_none_from_dict({"model_id": model_id, "voice_settings": voice_settings, "seed": seed})
+            )
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(remove_none_from_dict({"model_id": model_id, "voice_settings": voice_settings})),
+                **jsonable_encoder(
+                    remove_none_from_dict({"model_id": model_id, "voice_settings": voice_settings, "seed": seed})
+                ),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             files=core.convert_file_dict_to_httpx_tuples(remove_none_from_dict({"audio": audio})),
@@ -138,10 +163,12 @@ class SpeechToSpeechClient:
         voice_id: str,
         *,
         audio: core.File,
-        optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
-        output_format: typing.Optional[OutputFormat] = None,
+        enable_logging: typing.Optional[OptimizeStreamingLatency] = None,
+        optimize_streaming_latency: typing.Optional[OutputFormat] = None,
+        output_format: typing.Optional[str] = None,
         model_id: typing.Optional[str] = None,
         voice_settings: typing.Optional[str] = None,
+        seed: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -155,17 +182,34 @@ class SpeechToSpeechClient:
         audio : core.File
             See core.File for more documentation
 
-        optimize_streaming_latency : typing.Optional[OptimizeStreamingLatency]
+        enable_logging : typing.Optional[OptimizeStreamingLatency]
             You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
 
-        output_format : typing.Optional[OutputFormat]
+        optimize_streaming_latency : typing.Optional[OutputFormat]
             The output format of the generated audio.
+
+        output_format : typing.Optional[str]
+            Output format of the generated audio. Must be one of:
+            mp3_22050_32 - output format, mp3 with 22.05kHz sample rate at 32kbps.
+            mp3_44100_32 - output format, mp3 with 44.1kHz sample rate at 32kbps.
+            mp3_44100_64 - output format, mp3 with 44.1kHz sample rate at 64kbps.
+            mp3_44100_96 - output format, mp3 with 44.1kHz sample rate at 96kbps.
+            mp3_44100_128 - default output format, mp3 with 44.1kHz sample rate at 128kbps.
+            mp3_44100_192 - output format, mp3 with 44.1kHz sample rate at 192kbps. Requires you to be subscribed to Creator tier or above.
+            pcm_16000 - PCM format (S16LE) with 16kHz sample rate.
+            pcm_22050 - PCM format (S16LE) with 22.05kHz sample rate.
+            pcm_24000 - PCM format (S16LE) with 24kHz sample rate.
+            pcm_44100 - PCM format (S16LE) with 44.1kHz sample rate. Requires you to be subscribed to Pro tier or above.
+            ulaw_8000 - μ-law format (sometimes written mu-law, often approximated as u-law) with 8kHz sample rate. Note that this format is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
 
         voice_settings : typing.Optional[str]
             Voice settings overriding stored setttings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
+
+        seed : typing.Optional[int]
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -184,8 +228,9 @@ class SpeechToSpeechClient:
         )
         client.speech_to_speech.convert_as_stream(
             voice_id="string",
-            optimize_streaming_latency="0",
-            output_format="mp3_22050_32",
+            enable_logging="0",
+            optimize_streaming_latency="mp3_22050_32",
+            output_format="string",
         )
         """
         with self._client_wrapper.httpx_client.stream(
@@ -196,6 +241,7 @@ class SpeechToSpeechClient:
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
+                        "enable_logging": enable_logging,
                         "optimize_streaming_latency": optimize_streaming_latency,
                         "output_format": output_format,
                         **(
@@ -206,10 +252,14 @@ class SpeechToSpeechClient:
                     }
                 )
             ),
-            data=jsonable_encoder(remove_none_from_dict({"model_id": model_id, "voice_settings": voice_settings}))
+            data=jsonable_encoder(
+                remove_none_from_dict({"model_id": model_id, "voice_settings": voice_settings, "seed": seed})
+            )
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(remove_none_from_dict({"model_id": model_id, "voice_settings": voice_settings})),
+                **jsonable_encoder(
+                    remove_none_from_dict({"model_id": model_id, "voice_settings": voice_settings, "seed": seed})
+                ),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             files=core.convert_file_dict_to_httpx_tuples(remove_none_from_dict({"audio": audio})),
@@ -252,10 +302,12 @@ class AsyncSpeechToSpeechClient:
         voice_id: str,
         *,
         audio: core.File,
-        optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
-        output_format: typing.Optional[OutputFormat] = None,
+        enable_logging: typing.Optional[OptimizeStreamingLatency] = None,
+        optimize_streaming_latency: typing.Optional[OutputFormat] = None,
+        output_format: typing.Optional[str] = None,
         model_id: typing.Optional[str] = None,
         voice_settings: typing.Optional[str] = None,
+        seed: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -269,17 +321,34 @@ class AsyncSpeechToSpeechClient:
         audio : core.File
             See core.File for more documentation
 
-        optimize_streaming_latency : typing.Optional[OptimizeStreamingLatency]
+        enable_logging : typing.Optional[OptimizeStreamingLatency]
             You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
 
-        output_format : typing.Optional[OutputFormat]
+        optimize_streaming_latency : typing.Optional[OutputFormat]
             The output format of the generated audio.
+
+        output_format : typing.Optional[str]
+            Output format of the generated audio. Must be one of:
+            mp3_22050_32 - output format, mp3 with 22.05kHz sample rate at 32kbps.
+            mp3_44100_32 - output format, mp3 with 44.1kHz sample rate at 32kbps.
+            mp3_44100_64 - output format, mp3 with 44.1kHz sample rate at 64kbps.
+            mp3_44100_96 - output format, mp3 with 44.1kHz sample rate at 96kbps.
+            mp3_44100_128 - default output format, mp3 with 44.1kHz sample rate at 128kbps.
+            mp3_44100_192 - output format, mp3 with 44.1kHz sample rate at 192kbps. Requires you to be subscribed to Creator tier or above.
+            pcm_16000 - PCM format (S16LE) with 16kHz sample rate.
+            pcm_22050 - PCM format (S16LE) with 22.05kHz sample rate.
+            pcm_24000 - PCM format (S16LE) with 24kHz sample rate.
+            pcm_44100 - PCM format (S16LE) with 44.1kHz sample rate. Requires you to be subscribed to Pro tier or above.
+            ulaw_8000 - μ-law format (sometimes written mu-law, often approximated as u-law) with 8kHz sample rate. Note that this format is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
 
         voice_settings : typing.Optional[str]
             Voice settings overriding stored setttings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
+
+        seed : typing.Optional[int]
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -298,8 +367,9 @@ class AsyncSpeechToSpeechClient:
         )
         await client.speech_to_speech.convert(
             voice_id="string",
-            optimize_streaming_latency="0",
-            output_format="mp3_22050_32",
+            enable_logging="0",
+            optimize_streaming_latency="mp3_22050_32",
+            output_format="string",
         )
         """
         async with self._client_wrapper.httpx_client.stream(
@@ -310,6 +380,7 @@ class AsyncSpeechToSpeechClient:
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
+                        "enable_logging": enable_logging,
                         "optimize_streaming_latency": optimize_streaming_latency,
                         "output_format": output_format,
                         **(
@@ -320,10 +391,14 @@ class AsyncSpeechToSpeechClient:
                     }
                 )
             ),
-            data=jsonable_encoder(remove_none_from_dict({"model_id": model_id, "voice_settings": voice_settings}))
+            data=jsonable_encoder(
+                remove_none_from_dict({"model_id": model_id, "voice_settings": voice_settings, "seed": seed})
+            )
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(remove_none_from_dict({"model_id": model_id, "voice_settings": voice_settings})),
+                **jsonable_encoder(
+                    remove_none_from_dict({"model_id": model_id, "voice_settings": voice_settings, "seed": seed})
+                ),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             files=core.convert_file_dict_to_httpx_tuples(remove_none_from_dict({"audio": audio})),
@@ -361,10 +436,12 @@ class AsyncSpeechToSpeechClient:
         voice_id: str,
         *,
         audio: core.File,
-        optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
-        output_format: typing.Optional[OutputFormat] = None,
+        enable_logging: typing.Optional[OptimizeStreamingLatency] = None,
+        optimize_streaming_latency: typing.Optional[OutputFormat] = None,
+        output_format: typing.Optional[str] = None,
         model_id: typing.Optional[str] = None,
         voice_settings: typing.Optional[str] = None,
+        seed: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -378,17 +455,34 @@ class AsyncSpeechToSpeechClient:
         audio : core.File
             See core.File for more documentation
 
-        optimize_streaming_latency : typing.Optional[OptimizeStreamingLatency]
+        enable_logging : typing.Optional[OptimizeStreamingLatency]
             You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
 
-        output_format : typing.Optional[OutputFormat]
+        optimize_streaming_latency : typing.Optional[OutputFormat]
             The output format of the generated audio.
+
+        output_format : typing.Optional[str]
+            Output format of the generated audio. Must be one of:
+            mp3_22050_32 - output format, mp3 with 22.05kHz sample rate at 32kbps.
+            mp3_44100_32 - output format, mp3 with 44.1kHz sample rate at 32kbps.
+            mp3_44100_64 - output format, mp3 with 44.1kHz sample rate at 64kbps.
+            mp3_44100_96 - output format, mp3 with 44.1kHz sample rate at 96kbps.
+            mp3_44100_128 - default output format, mp3 with 44.1kHz sample rate at 128kbps.
+            mp3_44100_192 - output format, mp3 with 44.1kHz sample rate at 192kbps. Requires you to be subscribed to Creator tier or above.
+            pcm_16000 - PCM format (S16LE) with 16kHz sample rate.
+            pcm_22050 - PCM format (S16LE) with 22.05kHz sample rate.
+            pcm_24000 - PCM format (S16LE) with 24kHz sample rate.
+            pcm_44100 - PCM format (S16LE) with 44.1kHz sample rate. Requires you to be subscribed to Pro tier or above.
+            ulaw_8000 - μ-law format (sometimes written mu-law, often approximated as u-law) with 8kHz sample rate. Note that this format is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
 
         voice_settings : typing.Optional[str]
             Voice settings overriding stored setttings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
+
+        seed : typing.Optional[int]
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -407,8 +501,9 @@ class AsyncSpeechToSpeechClient:
         )
         await client.speech_to_speech.convert_as_stream(
             voice_id="string",
-            optimize_streaming_latency="0",
-            output_format="mp3_22050_32",
+            enable_logging="0",
+            optimize_streaming_latency="mp3_22050_32",
+            output_format="string",
         )
         """
         async with self._client_wrapper.httpx_client.stream(
@@ -419,6 +514,7 @@ class AsyncSpeechToSpeechClient:
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
+                        "enable_logging": enable_logging,
                         "optimize_streaming_latency": optimize_streaming_latency,
                         "output_format": output_format,
                         **(
@@ -429,10 +525,14 @@ class AsyncSpeechToSpeechClient:
                     }
                 )
             ),
-            data=jsonable_encoder(remove_none_from_dict({"model_id": model_id, "voice_settings": voice_settings}))
+            data=jsonable_encoder(
+                remove_none_from_dict({"model_id": model_id, "voice_settings": voice_settings, "seed": seed})
+            )
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(remove_none_from_dict({"model_id": model_id, "voice_settings": voice_settings})),
+                **jsonable_encoder(
+                    remove_none_from_dict({"model_id": model_id, "voice_settings": voice_settings, "seed": seed})
+                ),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             files=core.convert_file_dict_to_httpx_tuples(remove_none_from_dict({"audio": audio})),

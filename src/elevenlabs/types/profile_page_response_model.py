@@ -8,12 +8,12 @@ from ..core.pydantic_utilities import pydantic_v1
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class DubbingMetadataResponse(UncheckedBaseModel):
-    dubbing_id: str
+class ProfilePageResponseModel(UncheckedBaseModel):
+    handle: str
+    public_user_id: str
     name: str
-    status: str
-    target_languages: typing.List[str]
-    error: typing.Optional[str] = None
+    bio: str
+    profile_picture: str
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

@@ -8,6 +8,9 @@ from ..core.pydantic_utilities import pydantic_v1
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .currency import Currency
 from .extended_subscription_response_model_billing_period import ExtendedSubscriptionResponseModelBillingPeriod
+from .extended_subscription_response_model_character_refresh_period import (
+    ExtendedSubscriptionResponseModelCharacterRefreshPeriod,
+)
 from .invoice import Invoice
 from .subscription_status import SubscriptionStatus
 
@@ -29,6 +32,7 @@ class Subscription(UncheckedBaseModel):
     currency: typing.Optional[Currency] = None
     status: typing.Optional[SubscriptionStatus] = None
     billing_period: typing.Optional[ExtendedSubscriptionResponseModelBillingPeriod] = None
+    character_refresh_period: typing.Optional[ExtendedSubscriptionResponseModelCharacterRefreshPeriod] = None
     next_invoice: typing.Optional[Invoice] = None
     has_open_invoices: typing.Optional[bool] = None
 

@@ -23,6 +23,7 @@ class Model(UncheckedBaseModel):
     requires_alpha_access: typing.Optional[bool] = None
     max_characters_request_free_user: typing.Optional[int] = None
     max_characters_request_subscribed_user: typing.Optional[int] = None
+    maximum_text_length_per_request: typing.Optional[int] = None
     languages: typing.Optional[typing.List[LanguageResponse]] = None
 
     def json(self, **kwargs: typing.Any) -> str:

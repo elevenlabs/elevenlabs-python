@@ -24,6 +24,7 @@ class LibraryVoiceResponse(UncheckedBaseModel):
     preview_url: str
     usage_character_count_1_y: int = pydantic_v1.Field(alias="usage_character_count_1y")
     usage_character_count_7_d: int = pydantic_v1.Field(alias="usage_character_count_7d")
+    play_api_usage_character_count_1_y: int = pydantic_v1.Field(alias="play_api_usage_character_count_1y")
     cloned_by_count: int
     rate: float
     free_users_allowed: bool
