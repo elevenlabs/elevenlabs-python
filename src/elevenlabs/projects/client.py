@@ -13,6 +13,7 @@ from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.add_project_response_model import AddProjectResponseModel
+from ..types.edit_project_response_model import EditProjectResponseModel
 from ..types.get_projects_response import GetProjectsResponse
 from ..types.http_validation_error import HttpValidationError
 from ..types.project_extended_response_model import ProjectExtendedResponseModel
@@ -148,7 +149,7 @@ class ProjectsClient:
             When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
 
         pronunciation_dictionary_locators : typing.Optional[typing.List[str]]
-            A list of pronunciation dictionary locators (id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody
+            A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
 
         callback_url : typing.Optional[str]
             A url that will be called by our service when the project is converted with a json containing the status of the conversion
@@ -185,10 +186,10 @@ class ProjectsClient:
                 remove_none_from_dict(
                     {
                         "name": name,
-                        "from_url": from_url,
                         "default_title_voice_id": default_title_voice_id,
                         "default_paragraph_voice_id": default_paragraph_voice_id,
                         "default_model_id": default_model_id,
+                        "from_url": from_url,
                         "quality_preset": quality_preset,
                         "title": title,
                         "author": author,
@@ -206,10 +207,10 @@ class ProjectsClient:
                     remove_none_from_dict(
                         {
                             "name": name,
-                            "from_url": from_url,
                             "default_title_voice_id": default_title_voice_id,
                             "default_paragraph_voice_id": default_paragraph_voice_id,
                             "default_model_id": default_model_id,
+                            "from_url": from_url,
                             "quality_preset": quality_preset,
                             "title": title,
                             "author": author,
@@ -304,6 +305,123 @@ class ProjectsClient:
         )
         if 200 <= _response.status_code < 300:
             return typing.cast(ProjectExtendedResponseModel, construct_type(type_=ProjectExtendedResponseModel, object_=_response.json()))  # type: ignore
+        if _response.status_code == 422:
+            raise UnprocessableEntityError(
+                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+            )
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def edit_basic_project_info(
+        self,
+        project_id: str,
+        *,
+        name: str,
+        default_title_voice_id: str,
+        default_paragraph_voice_id: str,
+        title: typing.Optional[str] = OMIT,
+        author: typing.Optional[str] = OMIT,
+        isbn_number: typing.Optional[str] = OMIT,
+        volume_normalization: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> EditProjectResponseModel:
+        """
+        Edits basic project info.
+
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+
+        name : str
+            The name of the project, used for identification only.
+
+        default_title_voice_id : str
+            The voice_id that corresponds to the default voice used for new titles.
+
+        default_paragraph_voice_id : str
+            The voice_id that corresponds to the default voice used for new paragraphs.
+
+        title : typing.Optional[str]
+            An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
+
+        author : typing.Optional[str]
+            An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
+
+        isbn_number : typing.Optional[str]
+            An optional ISBN number of the project you want to create, this will be added as metadata to the mp3 file on project / chapter download.
+
+        volume_normalization : typing.Optional[bool]
+            When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EditProjectResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.edit_basic_project_info(
+            project_id="project_id",
+            name="name",
+            default_title_voice_id="default_title_voice_id",
+            default_paragraph_voice_id="default_paragraph_voice_id",
+        )
+        """
+        _request: typing.Dict[str, typing.Any] = {
+            "name": name,
+            "default_title_voice_id": default_title_voice_id,
+            "default_paragraph_voice_id": default_paragraph_voice_id,
+        }
+        if title is not OMIT:
+            _request["title"] = title
+        if author is not OMIT:
+            _request["author"] = author
+        if isbn_number is not OMIT:
+            _request["isbn_number"] = isbn_number
+        if volume_normalization is not OMIT:
+            _request["volume_normalization"] = volume_normalization
+        _response = self._client_wrapper.httpx_client.request(
+            method="POST",
+            url=urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/", f"v1/projects/{jsonable_encoder(project_id)}"
+            ),
+            params=jsonable_encoder(
+                request_options.get("additional_query_parameters") if request_options is not None else None
+            ),
+            json=jsonable_encoder(_request)
+            if request_options is None or request_options.get("additional_body_parameters") is None
+            else {
+                **jsonable_encoder(_request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return typing.cast(EditProjectResponseModel, construct_type(type_=EditProjectResponseModel, object_=_response.json()))  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(
                 typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
@@ -682,7 +800,7 @@ class ProjectsClient:
             The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
         pronunciation_dictionary_locators : typing.Sequence[PronunciationDictionaryVersionLocator]
-            A list of pronunciation dictionary locators (id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody
+            A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -877,7 +995,7 @@ class AsyncProjectsClient:
             When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
 
         pronunciation_dictionary_locators : typing.Optional[typing.List[str]]
-            A list of pronunciation dictionary locators (id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody
+            A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
 
         callback_url : typing.Optional[str]
             A url that will be called by our service when the project is converted with a json containing the status of the conversion
@@ -914,10 +1032,10 @@ class AsyncProjectsClient:
                 remove_none_from_dict(
                     {
                         "name": name,
-                        "from_url": from_url,
                         "default_title_voice_id": default_title_voice_id,
                         "default_paragraph_voice_id": default_paragraph_voice_id,
                         "default_model_id": default_model_id,
+                        "from_url": from_url,
                         "quality_preset": quality_preset,
                         "title": title,
                         "author": author,
@@ -935,10 +1053,10 @@ class AsyncProjectsClient:
                     remove_none_from_dict(
                         {
                             "name": name,
-                            "from_url": from_url,
                             "default_title_voice_id": default_title_voice_id,
                             "default_paragraph_voice_id": default_paragraph_voice_id,
                             "default_model_id": default_model_id,
+                            "from_url": from_url,
                             "quality_preset": quality_preset,
                             "title": title,
                             "author": author,
@@ -1033,6 +1151,123 @@ class AsyncProjectsClient:
         )
         if 200 <= _response.status_code < 300:
             return typing.cast(ProjectExtendedResponseModel, construct_type(type_=ProjectExtendedResponseModel, object_=_response.json()))  # type: ignore
+        if _response.status_code == 422:
+            raise UnprocessableEntityError(
+                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+            )
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def edit_basic_project_info(
+        self,
+        project_id: str,
+        *,
+        name: str,
+        default_title_voice_id: str,
+        default_paragraph_voice_id: str,
+        title: typing.Optional[str] = OMIT,
+        author: typing.Optional[str] = OMIT,
+        isbn_number: typing.Optional[str] = OMIT,
+        volume_normalization: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> EditProjectResponseModel:
+        """
+        Edits basic project info.
+
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+
+        name : str
+            The name of the project, used for identification only.
+
+        default_title_voice_id : str
+            The voice_id that corresponds to the default voice used for new titles.
+
+        default_paragraph_voice_id : str
+            The voice_id that corresponds to the default voice used for new paragraphs.
+
+        title : typing.Optional[str]
+            An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
+
+        author : typing.Optional[str]
+            An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
+
+        isbn_number : typing.Optional[str]
+            An optional ISBN number of the project you want to create, this will be added as metadata to the mp3 file on project / chapter download.
+
+        volume_normalization : typing.Optional[bool]
+            When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EditProjectResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.projects.edit_basic_project_info(
+            project_id="project_id",
+            name="name",
+            default_title_voice_id="default_title_voice_id",
+            default_paragraph_voice_id="default_paragraph_voice_id",
+        )
+        """
+        _request: typing.Dict[str, typing.Any] = {
+            "name": name,
+            "default_title_voice_id": default_title_voice_id,
+            "default_paragraph_voice_id": default_paragraph_voice_id,
+        }
+        if title is not OMIT:
+            _request["title"] = title
+        if author is not OMIT:
+            _request["author"] = author
+        if isbn_number is not OMIT:
+            _request["isbn_number"] = isbn_number
+        if volume_normalization is not OMIT:
+            _request["volume_normalization"] = volume_normalization
+        _response = await self._client_wrapper.httpx_client.request(
+            method="POST",
+            url=urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/", f"v1/projects/{jsonable_encoder(project_id)}"
+            ),
+            params=jsonable_encoder(
+                request_options.get("additional_query_parameters") if request_options is not None else None
+            ),
+            json=jsonable_encoder(_request)
+            if request_options is None or request_options.get("additional_body_parameters") is None
+            else {
+                **jsonable_encoder(_request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return typing.cast(EditProjectResponseModel, construct_type(type_=EditProjectResponseModel, object_=_response.json()))  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(
                 typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
@@ -1411,7 +1646,7 @@ class AsyncProjectsClient:
             The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
 
         pronunciation_dictionary_locators : typing.Sequence[PronunciationDictionaryVersionLocator]
-            A list of pronunciation dictionary locators (id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody
+            A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

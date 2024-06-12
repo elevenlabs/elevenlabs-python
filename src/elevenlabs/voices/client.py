@@ -16,6 +16,7 @@ from ..types.add_voice_response_model import AddVoiceResponseModel
 from ..types.get_library_voices_response import GetLibraryVoicesResponse
 from ..types.get_voices_response import GetVoicesResponse
 from ..types.http_validation_error import HttpValidationError
+from ..types.profile_page_response_model import ProfilePageResponseModel
 from ..types.voice import Voice
 from ..types.voice_settings import VoiceSettings
 
@@ -814,6 +815,68 @@ class VoicesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def get_a_profile_page(
+        self, handle: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ProfilePageResponseModel:
+        """
+        Gets a profile page based on a handle
+
+        Parameters
+        ----------
+        handle : str
+            Handle for a VA's profile page
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ProfilePageResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.voices.get_a_profile_page(
+            handle="handle",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"profile/{jsonable_encoder(handle)}"),
+            params=jsonable_encoder(
+                request_options.get("additional_query_parameters") if request_options is not None else None
+            ),
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return typing.cast(ProfilePageResponseModel, construct_type(type_=ProfilePageResponseModel, object_=_response.json()))  # type: ignore
+        if _response.status_code == 422:
+            raise UnprocessableEntityError(
+                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+            )
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
 
 class AsyncVoicesClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -1598,6 +1661,68 @@ class AsyncVoicesClient:
         )
         if 200 <= _response.status_code < 300:
             return typing.cast(GetLibraryVoicesResponse, construct_type(type_=GetLibraryVoicesResponse, object_=_response.json()))  # type: ignore
+        if _response.status_code == 422:
+            raise UnprocessableEntityError(
+                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+            )
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_a_profile_page(
+        self, handle: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ProfilePageResponseModel:
+        """
+        Gets a profile page based on a handle
+
+        Parameters
+        ----------
+        handle : str
+            Handle for a VA's profile page
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ProfilePageResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.voices.get_a_profile_page(
+            handle="handle",
+        )
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"profile/{jsonable_encoder(handle)}"),
+            params=jsonable_encoder(
+                request_options.get("additional_query_parameters") if request_options is not None else None
+            ),
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return typing.cast(ProfilePageResponseModel, construct_type(type_=ProfilePageResponseModel, object_=_response.json()))  # type: ignore
         if _response.status_code == 422:
             raise UnprocessableEntityError(
                 typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
