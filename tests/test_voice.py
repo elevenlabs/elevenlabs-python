@@ -1,3 +1,5 @@
+import pytest
+
 from elevenlabs import Voice, \
     VoiceSettings, play
 from .utils import IN_GITHUB, as_local_files, client
@@ -17,7 +19,7 @@ def test_voice_from_id():
     if voice.settings is not None: 
         assert isinstance(voice.settings, VoiceSettings)
 
-
+@pytest.mark.skip(reason="subscription limit reached")
 def test_voice_clone():
     voice_file_urls = [
         "https://user-images.githubusercontent.com/12028621/235474694-584f7103-dab2-4c39-bb9a-8e5f00be85da.webm",
