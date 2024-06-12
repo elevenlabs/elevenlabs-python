@@ -30,6 +30,7 @@ class TextToSpeechClient:
         voice_id: str,
         *,
         text: str,
+        enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
         output_format: typing.Optional[OutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
@@ -37,6 +38,11 @@ class TextToSpeechClient:
         pronunciation_dictionary_locators: typing.Optional[
             typing.Sequence[PronunciationDictionaryVersionLocator]
         ] = OMIT,
+        seed: typing.Optional[int] = OMIT,
+        previous_text: typing.Optional[str] = OMIT,
+        next_text: typing.Optional[str] = OMIT,
+        previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -49,6 +55,9 @@ class TextToSpeechClient:
 
         text : str
             The text that will get converted into speech.
+
+        enable_logging : typing.Optional[bool]
+            When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
 
         optimize_streaming_latency : typing.Optional[OptimizeStreamingLatency]
             You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
@@ -64,6 +73,21 @@ class TextToSpeechClient:
 
         pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
+
+        seed : typing.Optional[int]
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+
+        previous_text : typing.Optional[str]
+            The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+
+        next_text : typing.Optional[str]
+            The text that comes after the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+
+        previous_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+
+        next_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -100,6 +124,16 @@ class TextToSpeechClient:
             _request["voice_settings"] = voice_settings
         if pronunciation_dictionary_locators is not OMIT:
             _request["pronunciation_dictionary_locators"] = pronunciation_dictionary_locators
+        if seed is not OMIT:
+            _request["seed"] = seed
+        if previous_text is not OMIT:
+            _request["previous_text"] = previous_text
+        if next_text is not OMIT:
+            _request["next_text"] = next_text
+        if previous_request_ids is not OMIT:
+            _request["previous_request_ids"] = previous_request_ids
+        if next_request_ids is not OMIT:
+            _request["next_request_ids"] = next_request_ids
         with self._client_wrapper.httpx_client.stream(
             method="POST",
             url=urllib.parse.urljoin(
@@ -108,6 +142,7 @@ class TextToSpeechClient:
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
+                        "enable_logging": enable_logging,
                         "optimize_streaming_latency": optimize_streaming_latency,
                         "output_format": output_format,
                         **(
@@ -153,11 +188,12 @@ class TextToSpeechClient:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def convert_as_stream(
+    def convert_with_timstamps(
         self,
         voice_id: str,
         *,
         text: str,
+        enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
         output_format: typing.Optional[OutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
@@ -165,10 +201,15 @@ class TextToSpeechClient:
         pronunciation_dictionary_locators: typing.Optional[
             typing.Sequence[PronunciationDictionaryVersionLocator]
         ] = OMIT,
+        seed: typing.Optional[int] = OMIT,
+        previous_text: typing.Optional[str] = OMIT,
+        next_text: typing.Optional[str] = OMIT,
+        previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Iterator[bytes]:
+    ) -> typing.Any:
         """
-        Converts text into speech using a voice of your choice and returns audio as an audio stream.
+        Converts text into speech using a voice of your choice and returns JSON containing audio as a base64 encoded string together with information on when which character was spoken.
 
         Parameters
         ----------
@@ -177,6 +218,9 @@ class TextToSpeechClient:
 
         text : str
             The text that will get converted into speech.
+
+        enable_logging : typing.Optional[bool]
+            When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
 
         optimize_streaming_latency : typing.Optional[OptimizeStreamingLatency]
             You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
@@ -192,6 +236,174 @@ class TextToSpeechClient:
 
         pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
+
+        seed : typing.Optional[int]
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+
+        previous_text : typing.Optional[str]
+            The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+
+        next_text : typing.Optional[str]
+            The text that comes after the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+
+        previous_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+
+        next_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.text_to_speech.convert_with_timstamps(
+            voice_id="voice_id",
+            text="text",
+        )
+        """
+        _request: typing.Dict[str, typing.Any] = {"text": text}
+        if model_id is not OMIT:
+            _request["model_id"] = model_id
+        if voice_settings is not OMIT:
+            _request["voice_settings"] = voice_settings
+        if pronunciation_dictionary_locators is not OMIT:
+            _request["pronunciation_dictionary_locators"] = pronunciation_dictionary_locators
+        if seed is not OMIT:
+            _request["seed"] = seed
+        if previous_text is not OMIT:
+            _request["previous_text"] = previous_text
+        if next_text is not OMIT:
+            _request["next_text"] = next_text
+        if previous_request_ids is not OMIT:
+            _request["previous_request_ids"] = previous_request_ids
+        if next_request_ids is not OMIT:
+            _request["next_request_ids"] = next_request_ids
+        _response = self._client_wrapper.httpx_client.request(
+            method="POST",
+            url=urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/",
+                f"v1/text-to-speech/{jsonable_encoder(voice_id)}/with-timestamps",
+            ),
+            params=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "enable_logging": enable_logging,
+                        "optimize_streaming_latency": optimize_streaming_latency,
+                        "output_format": output_format,
+                        **(
+                            request_options.get("additional_query_parameters", {})
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            ),
+            json=jsonable_encoder(_request)
+            if request_options is None or request_options.get("additional_body_parameters") is None
+            else {
+                **jsonable_encoder(_request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return typing.cast(typing.Any, construct_type(type_=typing.Any, object_=_response.json()))  # type: ignore
+        if _response.status_code == 422:
+            raise UnprocessableEntityError(
+                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+            )
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def convert_as_stream(
+        self,
+        voice_id: str,
+        *,
+        text: str,
+        enable_logging: typing.Optional[bool] = None,
+        optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
+        output_format: typing.Optional[OutputFormat] = None,
+        model_id: typing.Optional[str] = OMIT,
+        voice_settings: typing.Optional[VoiceSettings] = OMIT,
+        pronunciation_dictionary_locators: typing.Optional[
+            typing.Sequence[PronunciationDictionaryVersionLocator]
+        ] = OMIT,
+        seed: typing.Optional[int] = OMIT,
+        previous_text: typing.Optional[str] = OMIT,
+        next_text: typing.Optional[str] = OMIT,
+        previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[bytes]:
+        """
+        Converts text into speech using a voice of your choice and returns audio as an audio stream.
+
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+
+        text : str
+            The text that will get converted into speech.
+
+        enable_logging : typing.Optional[bool]
+            When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+
+        optimize_streaming_latency : typing.Optional[OptimizeStreamingLatency]
+            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+
+        output_format : typing.Optional[OutputFormat]
+            The output format of the generated audio.
+
+        model_id : typing.Optional[str]
+            Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
+
+        voice_settings : typing.Optional[VoiceSettings]
+            Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
+
+        pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
+            A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
+
+        seed : typing.Optional[int]
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+
+        previous_text : typing.Optional[str]
+            The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+
+        next_text : typing.Optional[str]
+            The text that comes after the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+
+        previous_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+
+        next_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -228,6 +440,16 @@ class TextToSpeechClient:
             _request["voice_settings"] = voice_settings
         if pronunciation_dictionary_locators is not OMIT:
             _request["pronunciation_dictionary_locators"] = pronunciation_dictionary_locators
+        if seed is not OMIT:
+            _request["seed"] = seed
+        if previous_text is not OMIT:
+            _request["previous_text"] = previous_text
+        if next_text is not OMIT:
+            _request["next_text"] = next_text
+        if previous_request_ids is not OMIT:
+            _request["previous_request_ids"] = previous_request_ids
+        if next_request_ids is not OMIT:
+            _request["next_request_ids"] = next_request_ids
         with self._client_wrapper.httpx_client.stream(
             method="POST",
             url=urllib.parse.urljoin(
@@ -236,6 +458,7 @@ class TextToSpeechClient:
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
+                        "enable_logging": enable_logging,
                         "optimize_streaming_latency": optimize_streaming_latency,
                         "output_format": output_format,
                         **(
@@ -281,16 +504,12 @@ class TextToSpeechClient:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
-
-class AsyncTextToSpeechClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
-
-    async def convert(
+    def stream_with_timestamps(
         self,
         voice_id: str,
         *,
         text: str,
+        enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
         output_format: typing.Optional[OutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
@@ -298,10 +517,15 @@ class AsyncTextToSpeechClient:
         pronunciation_dictionary_locators: typing.Optional[
             typing.Sequence[PronunciationDictionaryVersionLocator]
         ] = OMIT,
+        seed: typing.Optional[int] = OMIT,
+        previous_text: typing.Optional[str] = OMIT,
+        next_text: typing.Optional[str] = OMIT,
+        previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.AsyncIterator[bytes]:
+    ) -> None:
         """
-        Converts text into speech using a voice of your choice and returns audio.
+        Converts text into speech using a voice of your choice and returns a stream of JSONs containing audio as a base64 encoded string together with information on when which character was spoken.
 
         Parameters
         ----------
@@ -310,6 +534,9 @@ class AsyncTextToSpeechClient:
 
         text : str
             The text that will get converted into speech.
+
+        enable_logging : typing.Optional[bool]
+            When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
 
         optimize_streaming_latency : typing.Optional[OptimizeStreamingLatency]
             You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
@@ -325,6 +552,178 @@ class AsyncTextToSpeechClient:
 
         pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
+
+        seed : typing.Optional[int]
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+
+        previous_text : typing.Optional[str]
+            The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+
+        next_text : typing.Optional[str]
+            The text that comes after the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+
+        previous_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+
+        next_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from elevenlabs.client import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.text_to_speech.stream_with_timestamps(
+            voice_id="voice_id",
+            text="text",
+        )
+        """
+        _request: typing.Dict[str, typing.Any] = {"text": text}
+        if model_id is not OMIT:
+            _request["model_id"] = model_id
+        if voice_settings is not OMIT:
+            _request["voice_settings"] = voice_settings
+        if pronunciation_dictionary_locators is not OMIT:
+            _request["pronunciation_dictionary_locators"] = pronunciation_dictionary_locators
+        if seed is not OMIT:
+            _request["seed"] = seed
+        if previous_text is not OMIT:
+            _request["previous_text"] = previous_text
+        if next_text is not OMIT:
+            _request["next_text"] = next_text
+        if previous_request_ids is not OMIT:
+            _request["previous_request_ids"] = previous_request_ids
+        if next_request_ids is not OMIT:
+            _request["next_request_ids"] = next_request_ids
+        _response = self._client_wrapper.httpx_client.request(
+            method="POST",
+            url=urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/",
+                f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream/with-timestamps",
+            ),
+            params=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "enable_logging": enable_logging,
+                        "optimize_streaming_latency": optimize_streaming_latency,
+                        "output_format": output_format,
+                        **(
+                            request_options.get("additional_query_parameters", {})
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            ),
+            json=jsonable_encoder(_request)
+            if request_options is None or request_options.get("additional_body_parameters") is None
+            else {
+                **jsonable_encoder(_request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return
+        if _response.status_code == 422:
+            raise UnprocessableEntityError(
+                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+            )
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+
+class AsyncTextToSpeechClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._client_wrapper = client_wrapper
+
+    async def convert(
+        self,
+        voice_id: str,
+        *,
+        text: str,
+        enable_logging: typing.Optional[bool] = None,
+        optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
+        output_format: typing.Optional[OutputFormat] = None,
+        model_id: typing.Optional[str] = OMIT,
+        voice_settings: typing.Optional[VoiceSettings] = OMIT,
+        pronunciation_dictionary_locators: typing.Optional[
+            typing.Sequence[PronunciationDictionaryVersionLocator]
+        ] = OMIT,
+        seed: typing.Optional[int] = OMIT,
+        previous_text: typing.Optional[str] = OMIT,
+        next_text: typing.Optional[str] = OMIT,
+        previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[bytes]:
+        """
+        Converts text into speech using a voice of your choice and returns audio.
+
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+
+        text : str
+            The text that will get converted into speech.
+
+        enable_logging : typing.Optional[bool]
+            When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+
+        optimize_streaming_latency : typing.Optional[OptimizeStreamingLatency]
+            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+
+        output_format : typing.Optional[OutputFormat]
+            The output format of the generated audio.
+
+        model_id : typing.Optional[str]
+            Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
+
+        voice_settings : typing.Optional[VoiceSettings]
+            Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
+
+        pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
+            A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
+
+        seed : typing.Optional[int]
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+
+        previous_text : typing.Optional[str]
+            The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+
+        next_text : typing.Optional[str]
+            The text that comes after the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+
+        previous_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+
+        next_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -361,6 +760,16 @@ class AsyncTextToSpeechClient:
             _request["voice_settings"] = voice_settings
         if pronunciation_dictionary_locators is not OMIT:
             _request["pronunciation_dictionary_locators"] = pronunciation_dictionary_locators
+        if seed is not OMIT:
+            _request["seed"] = seed
+        if previous_text is not OMIT:
+            _request["previous_text"] = previous_text
+        if next_text is not OMIT:
+            _request["next_text"] = next_text
+        if previous_request_ids is not OMIT:
+            _request["previous_request_ids"] = previous_request_ids
+        if next_request_ids is not OMIT:
+            _request["next_request_ids"] = next_request_ids
         async with self._client_wrapper.httpx_client.stream(
             method="POST",
             url=urllib.parse.urljoin(
@@ -369,6 +778,7 @@ class AsyncTextToSpeechClient:
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
+                        "enable_logging": enable_logging,
                         "optimize_streaming_latency": optimize_streaming_latency,
                         "output_format": output_format,
                         **(
@@ -414,11 +824,12 @@ class AsyncTextToSpeechClient:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def convert_as_stream(
+    async def convert_with_timstamps(
         self,
         voice_id: str,
         *,
         text: str,
+        enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
         output_format: typing.Optional[OutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
@@ -426,10 +837,15 @@ class AsyncTextToSpeechClient:
         pronunciation_dictionary_locators: typing.Optional[
             typing.Sequence[PronunciationDictionaryVersionLocator]
         ] = OMIT,
+        seed: typing.Optional[int] = OMIT,
+        previous_text: typing.Optional[str] = OMIT,
+        next_text: typing.Optional[str] = OMIT,
+        previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.AsyncIterator[bytes]:
+    ) -> typing.Any:
         """
-        Converts text into speech using a voice of your choice and returns audio as an audio stream.
+        Converts text into speech using a voice of your choice and returns JSON containing audio as a base64 encoded string together with information on when which character was spoken.
 
         Parameters
         ----------
@@ -438,6 +854,9 @@ class AsyncTextToSpeechClient:
 
         text : str
             The text that will get converted into speech.
+
+        enable_logging : typing.Optional[bool]
+            When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
 
         optimize_streaming_latency : typing.Optional[OptimizeStreamingLatency]
             You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
@@ -453,6 +872,174 @@ class AsyncTextToSpeechClient:
 
         pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
+
+        seed : typing.Optional[int]
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+
+        previous_text : typing.Optional[str]
+            The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+
+        next_text : typing.Optional[str]
+            The text that comes after the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+
+        previous_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+
+        next_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.text_to_speech.convert_with_timstamps(
+            voice_id="voice_id",
+            text="text",
+        )
+        """
+        _request: typing.Dict[str, typing.Any] = {"text": text}
+        if model_id is not OMIT:
+            _request["model_id"] = model_id
+        if voice_settings is not OMIT:
+            _request["voice_settings"] = voice_settings
+        if pronunciation_dictionary_locators is not OMIT:
+            _request["pronunciation_dictionary_locators"] = pronunciation_dictionary_locators
+        if seed is not OMIT:
+            _request["seed"] = seed
+        if previous_text is not OMIT:
+            _request["previous_text"] = previous_text
+        if next_text is not OMIT:
+            _request["next_text"] = next_text
+        if previous_request_ids is not OMIT:
+            _request["previous_request_ids"] = previous_request_ids
+        if next_request_ids is not OMIT:
+            _request["next_request_ids"] = next_request_ids
+        _response = await self._client_wrapper.httpx_client.request(
+            method="POST",
+            url=urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/",
+                f"v1/text-to-speech/{jsonable_encoder(voice_id)}/with-timestamps",
+            ),
+            params=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "enable_logging": enable_logging,
+                        "optimize_streaming_latency": optimize_streaming_latency,
+                        "output_format": output_format,
+                        **(
+                            request_options.get("additional_query_parameters", {})
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            ),
+            json=jsonable_encoder(_request)
+            if request_options is None or request_options.get("additional_body_parameters") is None
+            else {
+                **jsonable_encoder(_request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return typing.cast(typing.Any, construct_type(type_=typing.Any, object_=_response.json()))  # type: ignore
+        if _response.status_code == 422:
+            raise UnprocessableEntityError(
+                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+            )
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def convert_as_stream(
+        self,
+        voice_id: str,
+        *,
+        text: str,
+        enable_logging: typing.Optional[bool] = None,
+        optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
+        output_format: typing.Optional[OutputFormat] = None,
+        model_id: typing.Optional[str] = OMIT,
+        voice_settings: typing.Optional[VoiceSettings] = OMIT,
+        pronunciation_dictionary_locators: typing.Optional[
+            typing.Sequence[PronunciationDictionaryVersionLocator]
+        ] = OMIT,
+        seed: typing.Optional[int] = OMIT,
+        previous_text: typing.Optional[str] = OMIT,
+        next_text: typing.Optional[str] = OMIT,
+        previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[bytes]:
+        """
+        Converts text into speech using a voice of your choice and returns audio as an audio stream.
+
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+
+        text : str
+            The text that will get converted into speech.
+
+        enable_logging : typing.Optional[bool]
+            When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+
+        optimize_streaming_latency : typing.Optional[OptimizeStreamingLatency]
+            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+
+        output_format : typing.Optional[OutputFormat]
+            The output format of the generated audio.
+
+        model_id : typing.Optional[str]
+            Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
+
+        voice_settings : typing.Optional[VoiceSettings]
+            Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
+
+        pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
+            A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
+
+        seed : typing.Optional[int]
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+
+        previous_text : typing.Optional[str]
+            The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+
+        next_text : typing.Optional[str]
+            The text that comes after the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+
+        previous_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+
+        next_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -489,6 +1076,16 @@ class AsyncTextToSpeechClient:
             _request["voice_settings"] = voice_settings
         if pronunciation_dictionary_locators is not OMIT:
             _request["pronunciation_dictionary_locators"] = pronunciation_dictionary_locators
+        if seed is not OMIT:
+            _request["seed"] = seed
+        if previous_text is not OMIT:
+            _request["previous_text"] = previous_text
+        if next_text is not OMIT:
+            _request["next_text"] = next_text
+        if previous_request_ids is not OMIT:
+            _request["previous_request_ids"] = previous_request_ids
+        if next_request_ids is not OMIT:
+            _request["next_request_ids"] = next_request_ids
         async with self._client_wrapper.httpx_client.stream(
             method="POST",
             url=urllib.parse.urljoin(
@@ -497,6 +1094,7 @@ class AsyncTextToSpeechClient:
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
+                        "enable_logging": enable_logging,
                         "optimize_streaming_latency": optimize_streaming_latency,
                         "output_format": output_format,
                         **(
@@ -541,3 +1139,155 @@ class AsyncTextToSpeechClient:
             except JSONDecodeError:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
             raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def stream_with_timestamps(
+        self,
+        voice_id: str,
+        *,
+        text: str,
+        enable_logging: typing.Optional[bool] = None,
+        optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
+        output_format: typing.Optional[OutputFormat] = None,
+        model_id: typing.Optional[str] = OMIT,
+        voice_settings: typing.Optional[VoiceSettings] = OMIT,
+        pronunciation_dictionary_locators: typing.Optional[
+            typing.Sequence[PronunciationDictionaryVersionLocator]
+        ] = OMIT,
+        seed: typing.Optional[int] = OMIT,
+        previous_text: typing.Optional[str] = OMIT,
+        next_text: typing.Optional[str] = OMIT,
+        previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Converts text into speech using a voice of your choice and returns a stream of JSONs containing audio as a base64 encoded string together with information on when which character was spoken.
+
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+
+        text : str
+            The text that will get converted into speech.
+
+        enable_logging : typing.Optional[bool]
+            When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+
+        optimize_streaming_latency : typing.Optional[OptimizeStreamingLatency]
+            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+
+        output_format : typing.Optional[OutputFormat]
+            The output format of the generated audio.
+
+        model_id : typing.Optional[str]
+            Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
+
+        voice_settings : typing.Optional[VoiceSettings]
+            Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
+
+        pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
+            A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
+
+        seed : typing.Optional[int]
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+
+        previous_text : typing.Optional[str]
+            The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+
+        next_text : typing.Optional[str]
+            The text that comes after the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+
+        previous_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+
+        next_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from elevenlabs.client import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        await client.text_to_speech.stream_with_timestamps(
+            voice_id="voice_id",
+            text="text",
+        )
+        """
+        _request: typing.Dict[str, typing.Any] = {"text": text}
+        if model_id is not OMIT:
+            _request["model_id"] = model_id
+        if voice_settings is not OMIT:
+            _request["voice_settings"] = voice_settings
+        if pronunciation_dictionary_locators is not OMIT:
+            _request["pronunciation_dictionary_locators"] = pronunciation_dictionary_locators
+        if seed is not OMIT:
+            _request["seed"] = seed
+        if previous_text is not OMIT:
+            _request["previous_text"] = previous_text
+        if next_text is not OMIT:
+            _request["next_text"] = next_text
+        if previous_request_ids is not OMIT:
+            _request["previous_request_ids"] = previous_request_ids
+        if next_request_ids is not OMIT:
+            _request["next_request_ids"] = next_request_ids
+        _response = await self._client_wrapper.httpx_client.request(
+            method="POST",
+            url=urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/",
+                f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream/with-timestamps",
+            ),
+            params=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "enable_logging": enable_logging,
+                        "optimize_streaming_latency": optimize_streaming_latency,
+                        "output_format": output_format,
+                        **(
+                            request_options.get("additional_query_parameters", {})
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            ),
+            json=jsonable_encoder(_request)
+            if request_options is None or request_options.get("additional_body_parameters") is None
+            else {
+                **jsonable_encoder(_request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return
+        if _response.status_code == 422:
+            raise UnprocessableEntityError(
+                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+            )
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)

@@ -20,6 +20,9 @@ from ..types.get_pronunciation_dictionaries_metadata_response_model import (
 from ..types.get_pronunciation_dictionary_metadata_response import GetPronunciationDictionaryMetadataResponse
 from ..types.http_validation_error import HttpValidationError
 from ..types.remove_pronunciation_dictionary_rules_response_model import RemovePronunciationDictionaryRulesResponseModel
+from .types.pronunciation_dictionary_add_from_file_request_workspace_access import (
+    PronunciationDictionaryAddFromFileRequestWorkspaceAccess,
+)
 from .types.pronunciation_dictionary_rule import PronunciationDictionaryRule
 
 # this is used as the default value for optional parameters
@@ -36,6 +39,7 @@ class PronunciationDictionaryClient:
         name: str,
         file: typing.Optional[core.File] = None,
         description: typing.Optional[str] = None,
+        workspace_access: typing.Optional[PronunciationDictionaryAddFromFileRequestWorkspaceAccess] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddPronunciationDictionaryResponseModel:
         """
@@ -51,6 +55,9 @@ class PronunciationDictionaryClient:
 
         description : typing.Optional[str]
             A description of the pronunciation dictionary, used for identification only.
+
+        workspace_access : typing.Optional[PronunciationDictionaryAddFromFileRequestWorkspaceAccess]
+            Should be one of 'editor' or 'viewer'. If not provided, defaults to no access.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -79,10 +86,16 @@ class PronunciationDictionaryClient:
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
-            data=jsonable_encoder(remove_none_from_dict({"name": name, "description": description}))
+            data=jsonable_encoder(
+                remove_none_from_dict({"name": name, "description": description, "workspace_access": workspace_access})
+            )
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(remove_none_from_dict({"name": name, "description": description})),
+                **jsonable_encoder(
+                    remove_none_from_dict(
+                        {"name": name, "description": description, "workspace_access": workspace_access}
+                    )
+                ),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             files=core.convert_file_dict_to_httpx_tuples(remove_none_from_dict({"file": file})),
@@ -496,6 +509,7 @@ class AsyncPronunciationDictionaryClient:
         name: str,
         file: typing.Optional[core.File] = None,
         description: typing.Optional[str] = None,
+        workspace_access: typing.Optional[PronunciationDictionaryAddFromFileRequestWorkspaceAccess] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddPronunciationDictionaryResponseModel:
         """
@@ -511,6 +525,9 @@ class AsyncPronunciationDictionaryClient:
 
         description : typing.Optional[str]
             A description of the pronunciation dictionary, used for identification only.
+
+        workspace_access : typing.Optional[PronunciationDictionaryAddFromFileRequestWorkspaceAccess]
+            Should be one of 'editor' or 'viewer'. If not provided, defaults to no access.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -539,10 +556,16 @@ class AsyncPronunciationDictionaryClient:
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
-            data=jsonable_encoder(remove_none_from_dict({"name": name, "description": description}))
+            data=jsonable_encoder(
+                remove_none_from_dict({"name": name, "description": description, "workspace_access": workspace_access})
+            )
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(remove_none_from_dict({"name": name, "description": description})),
+                **jsonable_encoder(
+                    remove_none_from_dict(
+                        {"name": name, "description": description, "workspace_access": workspace_access}
+                    )
+                ),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             files=core.convert_file_dict_to_httpx_tuples(remove_none_from_dict({"file": file})),

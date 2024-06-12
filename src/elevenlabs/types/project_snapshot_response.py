@@ -6,6 +6,7 @@ import typing
 from ..core.datetime_utils import serialize_datetime
 from ..core.pydantic_utilities import pydantic_v1
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .project_snapshot_upload_response_model import ProjectSnapshotUploadResponseModel
 
 
 class ProjectSnapshotResponse(UncheckedBaseModel):
@@ -13,6 +14,8 @@ class ProjectSnapshotResponse(UncheckedBaseModel):
     project_id: str
     created_at_unix: int
     name: str
+    audio_upload: typing.Optional[ProjectSnapshotUploadResponseModel] = None
+    zip_upload: typing.Optional[ProjectSnapshotUploadResponseModel] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "elevenlabs"
-version = "v1.2.2"
+version = "v1.3.0"
 description = ""
 readme = "README.md"
 authors = []
@@ -11,6 +11,7 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.8"
 httpx = ">=0.21.2"
+ipython = ">=7.0"
 pydantic = ">= 1.9.2"
 requests = ">=2.20"
 typing_extensions = ">= 4.0.0"
