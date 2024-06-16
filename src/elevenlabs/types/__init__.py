@@ -64,6 +64,7 @@ from .recording_response import RecordingResponse
 from .remove_pronunciation_dictionary_rules_response_model import RemovePronunciationDictionaryRulesResponseModel
 from .review_status import ReviewStatus
 from .send_text import SendText
+from .sound_generation_settings_response_model import SoundGenerationSettingsResponseModel
 from .source import Source
 from .speech_history_item_response import SpeechHistoryItemResponse
 from .speech_history_item_response_model_voice_category import SpeechHistoryItemResponseModelVoiceCategory
@@ -153,6 +154,7 @@ __all__ = [
     "RemovePronunciationDictionaryRulesResponseModel",
     "ReviewStatus",
     "SendText",
+    "SoundGenerationSettingsResponseModel",
     "Source",
     "SpeechHistoryItemResponse",
     "SpeechHistoryItemResponseModelVoiceCategory",
