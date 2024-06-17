@@ -15,6 +15,9 @@ from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.do_dubbing_response import DoDubbingResponse
 from ..types.dubbing_metadata_response import DubbingMetadataResponse
 from ..types.http_validation_error import HttpValidationError
+from .types.get_transcript_for_dub_v_1_dubbing_dubbing_id_transcript_language_code_get_request_format_type import (
+    GetTranscriptForDubV1DubbingDubbingIdTranscriptLanguageCodeGetRequestFormatType,
+)
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -394,7 +397,14 @@ class DubbingClient:
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_transcript_for_dub(
-        self, dubbing_id: str, language_code: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        dubbing_id: str,
+        language_code: str,
+        *,
+        format_type: typing.Optional[
+            GetTranscriptForDubV1DubbingDubbingIdTranscriptLanguageCodeGetRequestFormatType
+        ] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Any:
         """
         Returns transcript for the dub as an SRT file.
@@ -406,6 +416,9 @@ class DubbingClient:
 
         language_code : str
             ID of the language.
+
+        format_type : typing.Optional[GetTranscriptForDubV1DubbingDubbingIdTranscriptLanguageCodeGetRequestFormatType]
+            Format to use for the subtitle file, either 'srt' or 'webvtt'
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -434,7 +447,16 @@ class DubbingClient:
                 f"v1/dubbing/{jsonable_encoder(dubbing_id)}/transcript/{jsonable_encoder(language_code)}",
             ),
             params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+                remove_none_from_dict(
+                    {
+                        "format_type": format_type,
+                        **(
+                            request_options.get("additional_query_parameters", {})
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -837,7 +859,14 @@ class AsyncDubbingClient:
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_transcript_for_dub(
-        self, dubbing_id: str, language_code: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        dubbing_id: str,
+        language_code: str,
+        *,
+        format_type: typing.Optional[
+            GetTranscriptForDubV1DubbingDubbingIdTranscriptLanguageCodeGetRequestFormatType
+        ] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Any:
         """
         Returns transcript for the dub as an SRT file.
@@ -849,6 +878,9 @@ class AsyncDubbingClient:
 
         language_code : str
             ID of the language.
+
+        format_type : typing.Optional[GetTranscriptForDubV1DubbingDubbingIdTranscriptLanguageCodeGetRequestFormatType]
+            Format to use for the subtitle file, either 'srt' or 'webvtt'
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -877,7 +909,16 @@ class AsyncDubbingClient:
                 f"v1/dubbing/{jsonable_encoder(dubbing_id)}/transcript/{jsonable_encoder(language_code)}",
             ),
             params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+                remove_none_from_dict(
+                    {
+                        "format_type": format_type,
+                        **(
+                            request_options.get("additional_query_parameters", {})
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
