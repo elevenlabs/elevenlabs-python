@@ -16,6 +16,7 @@ from .projects.client import AsyncProjectsClient, ProjectsClient
 from .pronunciation_dictionary.client import AsyncPronunciationDictionaryClient, PronunciationDictionaryClient
 from .samples.client import AsyncSamplesClient, SamplesClient
 from .speech_to_speech.client import AsyncSpeechToSpeechClient, SpeechToSpeechClient
+from .text_to_sound_effects.client import AsyncTextToSoundEffectsClient, TextToSoundEffectsClient
 from .text_to_speech.client import AsyncTextToSpeechClient, TextToSpeechClient
 from .user.client import AsyncUserClient, UserClient
 from .voice_generation.client import AsyncVoiceGenerationClient, VoiceGenerationClient
@@ -82,6 +83,7 @@ class BaseElevenLabs:
             timeout=_defaulted_timeout,
         )
         self.history = HistoryClient(client_wrapper=self._client_wrapper)
+        self.text_to_sound_effects = TextToSoundEffectsClient(client_wrapper=self._client_wrapper)
         self.samples = SamplesClient(client_wrapper=self._client_wrapper)
         self.text_to_speech = TextToSpeechClient(client_wrapper=self._client_wrapper)
         self.speech_to_speech = SpeechToSpeechClient(client_wrapper=self._client_wrapper)
@@ -156,6 +158,7 @@ class AsyncBaseElevenLabs:
             timeout=_defaulted_timeout,
         )
         self.history = AsyncHistoryClient(client_wrapper=self._client_wrapper)
+        self.text_to_sound_effects = AsyncTextToSoundEffectsClient(client_wrapper=self._client_wrapper)
         self.samples = AsyncSamplesClient(client_wrapper=self._client_wrapper)
         self.text_to_speech = AsyncTextToSpeechClient(client_wrapper=self._client_wrapper)
         self.speech_to_speech = AsyncSpeechToSpeechClient(client_wrapper=self._client_wrapper)
