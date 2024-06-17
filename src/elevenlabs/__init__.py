@@ -100,12 +100,14 @@ from . import (
     pronunciation_dictionary,
     samples,
     speech_to_speech,
+    text_to_sound_effects,
     text_to_speech,
     user,
     voice_generation,
     voices,
     workspace,
 )
+from .dubbing import GetTranscriptForDubV1DubbingDubbingIdTranscriptLanguageCodeGetRequestFormatType
 from .environment import ElevenLabsEnvironment
 from .play import play, save, stream
 from .pronunciation_dictionary import (
@@ -154,6 +156,7 @@ __all__ = [
     "GetPronunciationDictionariesMetadataResponseModel",
     "GetPronunciationDictionaryMetadataResponse",
     "GetSpeechHistoryResponse",
+    "GetTranscriptForDubV1DubbingDubbingIdTranscriptLanguageCodeGetRequestFormatType",
     "GetVoicesResponse",
     "History",
     "HistoryItem",
@@ -227,6 +230,7 @@ __all__ = [
     "save",
     "speech_to_speech",
     "stream",
+    "text_to_sound_effects",
     "text_to_speech",
     "user",
     "voice_generation",
