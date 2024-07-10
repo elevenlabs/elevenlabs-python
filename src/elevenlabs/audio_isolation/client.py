@@ -12,7 +12,6 @@ from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
-from ..types.audio_isolation_response_model import AudioIsolationResponseModel
 from ..types.http_validation_error import HttpValidationError
 
 # this is used as the default value for optional parameters
@@ -25,7 +24,7 @@ class AudioIsolationClient:
 
     def audio_isolation(
         self, *, audio: core.File, request_options: typing.Optional[RequestOptions] = None
-    ) -> AudioIsolationResponseModel:
+    ) -> typing.Iterator[bytes]:
         """
         Removes background noise from audio
 
@@ -37,9 +36,9 @@ class AudioIsolationClient:
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
-        Returns
-        -------
-        AudioIsolationResponseModel
+        Yields
+        ------
+        typing.Iterator[bytes]
             Successful Response
 
         Examples
@@ -51,7 +50,7 @@ class AudioIsolationClient:
         )
         client.audio_isolation.audio_isolation()
         """
-        _response = self._client_wrapper.httpx_client.request(
+        with self._client_wrapper.httpx_client.stream(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/audio-isolation"),
             params=jsonable_encoder(
@@ -77,22 +76,25 @@ class AudioIsolationClient:
             else self._client_wrapper.get_timeout(),
             retries=0,
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(AudioIsolationResponseModel, construct_type(type_=AudioIsolationResponseModel, object_=_response.json()))  # type: ignore
-        if _response.status_code == 422:
-            raise UnprocessableEntityError(
-                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
-            )
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        ) as _response:
+            if 200 <= _response.status_code < 300:
+                for _chunk in _response.iter_bytes():
+                    yield _chunk
+                return
+            _response.read()
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
+            try:
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def audio_isolation_stream(
         self, *, audio: core.File, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    ) -> typing.Iterator[bytes]:
         """
         Removes background noise from audio and streams the result
 
@@ -104,9 +106,10 @@ class AudioIsolationClient:
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
-        Returns
-        -------
-        None
+        Yields
+        ------
+        typing.Iterator[bytes]
+            Successful Response
 
         Examples
         --------
@@ -117,7 +120,7 @@ class AudioIsolationClient:
         )
         client.audio_isolation.audio_isolation_stream()
         """
-        _response = self._client_wrapper.httpx_client.request(
+        with self._client_wrapper.httpx_client.stream(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/audio-isolation/stream"),
             params=jsonable_encoder(
@@ -143,18 +146,21 @@ class AudioIsolationClient:
             else self._client_wrapper.get_timeout(),
             retries=0,
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
-        if 200 <= _response.status_code < 300:
-            return
-        if _response.status_code == 422:
-            raise UnprocessableEntityError(
-                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
-            )
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        ) as _response:
+            if 200 <= _response.status_code < 300:
+                for _chunk in _response.iter_bytes():
+                    yield _chunk
+                return
+            _response.read()
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
+            try:
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
 class AsyncAudioIsolationClient:
@@ -163,7 +169,7 @@ class AsyncAudioIsolationClient:
 
     async def audio_isolation(
         self, *, audio: core.File, request_options: typing.Optional[RequestOptions] = None
-    ) -> AudioIsolationResponseModel:
+    ) -> typing.AsyncIterator[bytes]:
         """
         Removes background noise from audio
 
@@ -175,9 +181,9 @@ class AsyncAudioIsolationClient:
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
-        Returns
-        -------
-        AudioIsolationResponseModel
+        Yields
+        ------
+        typing.AsyncIterator[bytes]
             Successful Response
 
         Examples
@@ -189,7 +195,7 @@ class AsyncAudioIsolationClient:
         )
         await client.audio_isolation.audio_isolation()
         """
-        _response = await self._client_wrapper.httpx_client.request(
+        async with self._client_wrapper.httpx_client.stream(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/audio-isolation"),
             params=jsonable_encoder(
@@ -215,22 +221,25 @@ class AsyncAudioIsolationClient:
             else self._client_wrapper.get_timeout(),
             retries=0,
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
-        if 200 <= _response.status_code < 300:
-            return typing.cast(AudioIsolationResponseModel, construct_type(type_=AudioIsolationResponseModel, object_=_response.json()))  # type: ignore
-        if _response.status_code == 422:
-            raise UnprocessableEntityError(
-                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
-            )
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        ) as _response:
+            if 200 <= _response.status_code < 300:
+                async for _chunk in _response.aiter_bytes():
+                    yield _chunk
+                return
+            await _response.aread()
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
+            try:
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def audio_isolation_stream(
         self, *, audio: core.File, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    ) -> typing.AsyncIterator[bytes]:
         """
         Removes background noise from audio and streams the result
 
@@ -242,9 +251,10 @@ class AsyncAudioIsolationClient:
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
-        Returns
-        -------
-        None
+        Yields
+        ------
+        typing.AsyncIterator[bytes]
+            Successful Response
 
         Examples
         --------
@@ -255,7 +265,7 @@ class AsyncAudioIsolationClient:
         )
         await client.audio_isolation.audio_isolation_stream()
         """
-        _response = await self._client_wrapper.httpx_client.request(
+        async with self._client_wrapper.httpx_client.stream(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "v1/audio-isolation/stream"),
             params=jsonable_encoder(
@@ -281,15 +291,18 @@ class AsyncAudioIsolationClient:
             else self._client_wrapper.get_timeout(),
             retries=0,
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
-        if 200 <= _response.status_code < 300:
-            return
-        if _response.status_code == 422:
-            raise UnprocessableEntityError(
-                typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
-            )
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        ) as _response:
+            if 200 <= _response.status_code < 300:
+                async for _chunk in _response.aiter_bytes():
+                    yield _chunk
+                return
+            await _response.aread()
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(HttpValidationError, construct_type(type_=HttpValidationError, object_=_response.json()))  # type: ignore
+                )
+            try:
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)
