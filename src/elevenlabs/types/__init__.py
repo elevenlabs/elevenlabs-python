@@ -6,9 +6,11 @@ from .add_pronunciation_dictionary_response_model import AddPronunciationDiction
 from .add_pronunciation_dictionary_rules_response_model import AddPronunciationDictionaryRulesResponseModel
 from .add_voice_response_model import AddVoiceResponseModel
 from .age import Age
+from .audio_isolation_response_model import AudioIsolationResponseModel
 from .audio_native_create_project_response_model import AudioNativeCreateProjectResponseModel
 from .audio_native_get_embed_code_response_model import AudioNativeGetEmbedCodeResponseModel
 from .audio_output import AudioOutput
+from .audio_response_model import AudioResponseModel
 from .category import Category
 from .chapter_response import ChapterResponse
 from .chapter_snapshot_response import ChapterSnapshotResponse
@@ -97,9 +99,11 @@ __all__ = [
     "AddPronunciationDictionaryRulesResponseModel",
     "AddVoiceResponseModel",
     "Age",
+    "AudioIsolationResponseModel",
     "AudioNativeCreateProjectResponseModel",
     "AudioNativeGetEmbedCodeResponseModel",
     "AudioOutput",
+    "AudioResponseModel",
     "Category",
     "ChapterResponse",
     "ChapterSnapshotResponse",
