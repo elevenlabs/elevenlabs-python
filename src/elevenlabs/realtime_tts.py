@@ -14,6 +14,7 @@ from .core.remove_none_from_dict import remove_none_from_dict
 from .core.request_options import RequestOptions
 from .types.voice_settings import VoiceSettings
 from .text_to_speech.client import TextToSpeechClient
+from .types import OutputFormat
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -45,6 +46,7 @@ class RealtimeTextToSpeechClient(TextToSpeechClient):
         *,
         text: typing.Iterator[str],
         model_id: typing.Optional[str] = OMIT,
+        output_format: typing.Optional[OutputFormat] = "mp3_44100_128",
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
@@ -86,7 +88,8 @@ class RealtimeTextToSpeechClient(TextToSpeechClient):
         """
         with connect(
             urllib.parse.urljoin(
-              "wss://api.elevenlabs.io/", f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream-input?model_id={model_id}"
+              "wss://api.elevenlabs.io/", 
+              f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream-input?model_id={model_id}&output_format={output_format}"
             ),
             additional_headers=jsonable_encoder(
                 remove_none_from_dict(
