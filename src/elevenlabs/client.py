@@ -14,6 +14,7 @@ from .types import Voice, VoiceSettings, \
   PronunciationDictionaryVersionLocator, Model
 from .environment import ElevenLabsEnvironment
 from .realtime_tts import RealtimeTextToSpeechClient
+from .types import OutputFormat
 
 
 DEFAULT_VOICE = Voice(
@@ -124,7 +125,7 @@ class ElevenLabs(BaseElevenLabs):
       model: Union[ModelId, Model] = "eleven_monolingual_v1",
       optimize_streaming_latency: typing.Optional[int] = 0,
       stream: bool = False,
-      output_format: Optional[str] = "mp3_44100_128",
+      output_format: Optional[OutputFormat] = "mp3_44100_128",
       pronunciation_dictionary_locators: typing.Optional[
             typing.Sequence[PronunciationDictionaryVersionLocator]
         ] = OMIT,
@@ -152,7 +153,7 @@ class ElevenLabs(BaseElevenLabs):
 
                             Defaults to False.                                                                
 
-            - output_format: typing.Optional[str]. Output format of the generated audio. Must be one of:
+            - output_format: typing.Optional[OutputFormat]. Output format of the generated audio. Must be one of:
                                                    mp3_22050_32 - output format, mp3 with 22.05kHz sample rate at 32kbps.
                                                    mp3_44100_32 - output format, mp3 with 44.1kHz sample rate at 32kbps.
                                                    mp3_44100_64 - output format, mp3 with 44.1kHz sample rate at 64kbps.
@@ -303,7 +304,7 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
       model: Union[ModelId, Model] = "eleven_monolingual_v1",
       optimize_streaming_latency: typing.Optional[int] = 0,
       stream: bool = False,
-      output_format: Optional[str] = "mp3_44100_128",
+      output_format: Optional[OutputFormat] = "mp3_44100_128",
       pronunciation_dictionary_locators: typing.Optional[
             typing.Sequence[PronunciationDictionaryVersionLocator]
         ] = OMIT,
@@ -338,7 +339,7 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
 
                             Defaults to False.                                                                
 
-            - output_format: typing.Optional[str]. Output format of the generated audio. Must be one of:
+            - output_format: typing.Optional[OutputFormat]. Output format of the generated audio. Must be one of:
                                                    mp3_22050_32 - output format, mp3 with 22.05kHz sample rate at 32kbps.
                                                    mp3_44100_32 - output format, mp3 with 44.1kHz sample rate at 32kbps.
                                                    mp3_44100_64 - output format, mp3 with 44.1kHz sample rate at 64kbps.
