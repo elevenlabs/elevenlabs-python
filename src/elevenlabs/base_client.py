@@ -19,6 +19,7 @@ from .samples.client import AsyncSamplesClient, SamplesClient
 from .speech_to_speech.client import AsyncSpeechToSpeechClient, SpeechToSpeechClient
 from .text_to_sound_effects.client import AsyncTextToSoundEffectsClient, TextToSoundEffectsClient
 from .text_to_speech.client import AsyncTextToSpeechClient, TextToSpeechClient
+from .usage.client import AsyncUsageClient, UsageClient
 from .user.client import AsyncUserClient, UserClient
 from .voice_generation.client import AsyncVoiceGenerationClient, VoiceGenerationClient
 from .voices.client import AsyncVoicesClient, VoicesClient
@@ -27,7 +28,7 @@ from .workspace.client import AsyncWorkspaceClient, WorkspaceClient
 
 class BaseElevenLabs:
     """
-    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
     Parameters
     ----------
@@ -45,7 +46,7 @@ class BaseElevenLabs:
 
     api_key : typing.Optional[str]
     timeout : typing.Optional[float]
-        The timeout to be used, in seconds, for requests by default the timeout is 60 seconds, unless a custom httpx client is used, in which case a default is not set.
+        The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
     follow_redirects : typing.Optional[bool]
         Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
@@ -97,13 +98,14 @@ class BaseElevenLabs:
         self.dubbing = DubbingClient(client_wrapper=self._client_wrapper)
         self.models = ModelsClient(client_wrapper=self._client_wrapper)
         self.audio_native = AudioNativeClient(client_wrapper=self._client_wrapper)
+        self.usage = UsageClient(client_wrapper=self._client_wrapper)
         self.pronunciation_dictionary = PronunciationDictionaryClient(client_wrapper=self._client_wrapper)
         self.workspace = WorkspaceClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncBaseElevenLabs:
     """
-    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
     Parameters
     ----------
@@ -121,7 +123,7 @@ class AsyncBaseElevenLabs:
 
     api_key : typing.Optional[str]
     timeout : typing.Optional[float]
-        The timeout to be used, in seconds, for requests by default the timeout is 60 seconds, unless a custom httpx client is used, in which case a default is not set.
+        The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
     follow_redirects : typing.Optional[bool]
         Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
@@ -173,6 +175,7 @@ class AsyncBaseElevenLabs:
         self.dubbing = AsyncDubbingClient(client_wrapper=self._client_wrapper)
         self.models = AsyncModelsClient(client_wrapper=self._client_wrapper)
         self.audio_native = AsyncAudioNativeClient(client_wrapper=self._client_wrapper)
+        self.usage = AsyncUsageClient(client_wrapper=self._client_wrapper)
         self.pronunciation_dictionary = AsyncPronunciationDictionaryClient(client_wrapper=self._client_wrapper)
         self.workspace = AsyncWorkspaceClient(client_wrapper=self._client_wrapper)
 

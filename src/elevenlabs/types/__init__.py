@@ -26,7 +26,7 @@ from .extended_subscription_response_model_character_refresh_period import (
 )
 from .feedback_item import FeedbackItem
 from .fine_tuning_response import FineTuningResponse
-from .finetuning_state import FinetuningState
+from .fine_tuning_response_model_state_value import FineTuningResponseModelStateValue
 from .gender import Gender
 from .generation_config import GenerationConfig
 from .get_chapters_response import GetChaptersResponse
@@ -37,6 +37,8 @@ from .get_pronunciation_dictionary_metadata_response import GetPronunciationDict
 from .get_speech_history_response import GetSpeechHistoryResponse
 from .get_voices_response import GetVoicesResponse
 from .history import History
+from .history_alignment_response_model import HistoryAlignmentResponseModel
+from .history_alignments_response_model import HistoryAlignmentsResponseModel
 from .history_item import HistoryItem
 from .http_validation_error import HttpValidationError
 from .initialize_connection import InitializeConnection
@@ -68,7 +70,8 @@ from .source import Source
 from .speech_history_item_response import SpeechHistoryItemResponse
 from .speech_history_item_response_model_voice_category import SpeechHistoryItemResponseModelVoiceCategory
 from .sso_provider_db_model import SsoProviderDbModel
-from .sso_provider_db_model_provider_type import SsoProviderDbModelProviderType
+from .sso_provider_response_model import SsoProviderResponseModel
+from .sso_provider_response_model_provider_type import SsoProviderResponseModelProviderType
 from .status import Status
 from .subscription import Subscription
 from .subscription_response import SubscriptionResponse
@@ -76,6 +79,7 @@ from .subscription_response_model_billing_period import SubscriptionResponseMode
 from .subscription_response_model_character_refresh_period import SubscriptionResponseModelCharacterRefreshPeriod
 from .subscription_status import SubscriptionStatus
 from .text_to_speech_as_stream_request import TextToSpeechAsStreamRequest
+from .usage_characters_response_model import UsageCharactersResponseModel
 from .user import User
 from .validation_error import ValidationError
 from .validation_error_loc_item import ValidationErrorLocItem
@@ -115,7 +119,7 @@ __all__ = [
     "ExtendedSubscriptionResponseModelCharacterRefreshPeriod",
     "FeedbackItem",
     "FineTuningResponse",
-    "FinetuningState",
+    "FineTuningResponseModelStateValue",
     "Gender",
     "GenerationConfig",
     "GetChaptersResponse",
@@ -126,6 +130,8 @@ __all__ = [
     "GetSpeechHistoryResponse",
     "GetVoicesResponse",
     "History",
+    "HistoryAlignmentResponseModel",
+    "HistoryAlignmentsResponseModel",
     "HistoryItem",
     "HttpValidationError",
     "InitializeConnection",
@@ -157,7 +163,8 @@ __all__ = [
     "SpeechHistoryItemResponse",
     "SpeechHistoryItemResponseModelVoiceCategory",
     "SsoProviderDbModel",
-    "SsoProviderDbModelProviderType",
+    "SsoProviderResponseModel",
+    "SsoProviderResponseModelProviderType",
     "Status",
     "Subscription",
     "SubscriptionResponse",
@@ -165,6 +172,7 @@ __all__ = [
     "SubscriptionResponseModelCharacterRefreshPeriod",
     "SubscriptionStatus",
     "TextToSpeechAsStreamRequest",
+    "UsageCharactersResponseModel",
     "User",
     "ValidationError",
     "ValidationErrorLocItem",

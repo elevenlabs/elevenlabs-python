@@ -17,7 +17,7 @@ class BaseClientWrapper:
         headers: typing.Dict[str, str] = {
             "X-Fern-Language": "Python",
             "X-Fern-SDK-Name": "elevenlabs",
-            "X-Fern-SDK-Version": "v1.4.1",
+            "X-Fern-SDK-Version": "v1.6.0rc0",
         }
         if self._api_key is not None:
             headers["xi-api-key"] = self._api_key
@@ -40,7 +40,12 @@ class SyncClientWrapper(BaseClientWrapper):
         httpx_client: httpx.Client
     ):
         super().__init__(api_key=api_key, base_url=base_url, timeout=timeout)
-        self.httpx_client = HttpClient(httpx_client=httpx_client)
+        self.httpx_client = HttpClient(
+            httpx_client=httpx_client,
+            base_headers=self.get_headers(),
+            base_timeout=self.get_timeout(),
+            base_url=self.get_base_url(),
+        )
 
 
 class AsyncClientWrapper(BaseClientWrapper):
@@ -53,4 +58,9 @@ class AsyncClientWrapper(BaseClientWrapper):
         httpx_client: httpx.AsyncClient
     ):
         super().__init__(api_key=api_key, base_url=base_url, timeout=timeout)
-        self.httpx_client = AsyncHttpClient(httpx_client=httpx_client)
+        self.httpx_client = AsyncHttpClient(
+            httpx_client=httpx_client,
+            base_headers=self.get_headers(),
+            base_timeout=self.get_timeout(),
+            base_url=self.get_base_url(),
+        )
