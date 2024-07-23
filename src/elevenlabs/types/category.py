@@ -2,4 +2,4 @@
 
 import typing
 
-Category = typing.Union[typing.Literal["generated", "professional", "high_quality"], typing.Any]
+Category = typing.Union[typing.Literal["generated", "professional", "high_quality", "famous"], typing.Any]
