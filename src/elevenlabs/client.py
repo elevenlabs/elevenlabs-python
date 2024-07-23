@@ -177,7 +177,7 @@ class ElevenLabs(BaseElevenLabs):
         if isinstance(voice, str) and is_voice_id(voice):
             voice_id = voice
         elif isinstance(voice, str):
-            voices_response = self.voices.get_all(request_options=request_options)
+            voices_response = self.voices.get_all(request_options=request_options, show_legacy=True)
             maybe_voice_id = next((v.voice_id for v in voices_response.voices if v.name == voice), None)
             if maybe_voice_id is None:
                 raise ApiError(body=f"Voice {voice} not found.")
@@ -363,7 +363,7 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
         if isinstance(voice, str) and is_voice_id(voice):
             voice_id = voice
         elif isinstance(voice, str):
-            voices_response = await self.voices.get_all(request_options=request_options)
+            voices_response = await self.voices.get_all(request_options=request_options, show_legacy=True)
             maybe_voice_id = next((v.voice_id for v in voices_response.voices if v.name == voice), None)
             if not maybe_voice_id:
                 raise ApiError(body=f"Voice {voice} not found.")
