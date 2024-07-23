@@ -2,4 +2,4 @@
 
 import typing
 
-Status = typing.Union[typing.Literal["success", "pending", "failed"], typing.Any]
+Status = typing.Union[typing.Literal["success", "in_queue", "pending", "failed"], typing.Any]
