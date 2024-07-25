@@ -69,7 +69,6 @@ from .send_text import SendText
 from .source import Source
 from .speech_history_item_response import SpeechHistoryItemResponse
 from .speech_history_item_response_model_voice_category import SpeechHistoryItemResponseModelVoiceCategory
-from .sso_provider_db_model import SsoProviderDbModel
 from .sso_provider_response_model import SsoProviderResponseModel
 from .sso_provider_response_model_provider_type import SsoProviderResponseModelProviderType
 from .status import Status
@@ -162,7 +161,6 @@ __all__ = [
     "Source",
     "SpeechHistoryItemResponse",
     "SpeechHistoryItemResponseModelVoiceCategory",
-    "SsoProviderDbModel",
     "SsoProviderResponseModel",
     "SsoProviderResponseModelProviderType",
     "Status",
