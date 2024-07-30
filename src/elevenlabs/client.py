@@ -212,6 +212,7 @@ class ElevenLabs(BaseElevenLabs):
                 return self.text_to_speech.convert_realtime(  # type: ignore
                     voice_id=voice_id,
                     voice_settings=voice_settings,
+                    output_format=output_format,
                     text=text,
                     request_options=request_options,
                     model_id=model_id
