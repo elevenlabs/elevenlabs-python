@@ -948,7 +948,7 @@ client.text_to_speech.convert(
 </dl>
 </details>
 
-<details><summary><code>client.text_to_speech.<a href="src/elevenlabs/text_to_speech/client.py">convert_with_timstamps</a>(...)</code></summary>
+<details><summary><code>client.text_to_speech.<a href="src/elevenlabs/text_to_speech/client.py">convert_with_timestamps</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -980,7 +980,7 @@ from elevenlabs.client import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.text_to_speech.convert_with_timstamps(
+client.text_to_speech.convert_with_timestamps(
     voice_id="21m00Tcm4TlvDq8ikWAM",
     text="text",
 )
