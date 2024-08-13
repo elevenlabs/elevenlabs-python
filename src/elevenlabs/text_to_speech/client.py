@@ -157,7 +157,7 @@ class TextToSpeechClient:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def convert_with_timstamps(
+    def convert_with_timestamps(
         self,
         voice_id: str,
         *,
@@ -240,7 +240,7 @@ class TextToSpeechClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.text_to_speech.convert_with_timstamps(
+        client.text_to_speech.convert_with_timestamps(
             voice_id="21m00Tcm4TlvDq8ikWAM",
             text="text",
         )
@@ -683,7 +683,7 @@ class AsyncTextToSpeechClient:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def convert_with_timstamps(
+    async def convert_with_timestamps(
         self,
         voice_id: str,
         *,
@@ -771,7 +771,7 @@ class AsyncTextToSpeechClient:
 
 
         async def main() -> None:
-            await client.text_to_speech.convert_with_timstamps(
+            await client.text_to_speech.convert_with_timestamps(
                 voice_id="21m00Tcm4TlvDq8ikWAM",
                 text="text",
             )
