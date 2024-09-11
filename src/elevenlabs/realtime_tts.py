@@ -238,7 +238,7 @@ class AsyncRealtimeTextToSpeechClient(AsyncTextToSpeechClient):
                     data = dict(text=text_chunk, try_trigger_generation=True)
                     await socket.send(json.dumps(data))
                     try:
-                        async with asyncio.timeout(1e-4):
+                        async with asyncio.timeout(1e-4): # type: ignore
                             data = json.loads(await socket.recv())
                         if "audio" in data and data["audio"]:
                             yield base64.b64decode(data["audio"])  # type: ignore

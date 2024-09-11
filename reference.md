@@ -1516,9 +1516,9 @@ client = ElevenLabs(
 )
 client.speech_to_speech.convert(
     voice_id="string",
-    enable_logging="0",
-    optimize_streaming_latency="mp3_22050_32",
-    output_format="string",
+    enable_logging=True,
+    optimize_streaming_latency="0",
+    output_format="mp3_22050_32",
 )
 
 ```
@@ -1553,7 +1553,7 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**enable_logging:** `typing.Optional[OptimizeStreamingLatency]` — You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -1561,7 +1561,7 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**optimize_streaming_latency:** `typing.Optional[OutputFormat]` — The output format of the generated audio.
+**optimize_streaming_latency:** `typing.Optional[OptimizeStreamingLatency]` — You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
     
 </dd>
 </dl>
@@ -1569,20 +1569,7 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[str]` 
-
-Output format of the generated audio. Must be one of:
-mp3_22050_32 - output format, mp3 with 22.05kHz sample rate at 32kbps.
-mp3_44100_32 - output format, mp3 with 44.1kHz sample rate at 32kbps.
-mp3_44100_64 - output format, mp3 with 44.1kHz sample rate at 64kbps.
-mp3_44100_96 - output format, mp3 with 44.1kHz sample rate at 96kbps.
-mp3_44100_128 - default output format, mp3 with 44.1kHz sample rate at 128kbps.
-mp3_44100_192 - output format, mp3 with 44.1kHz sample rate at 192kbps. Requires you to be subscribed to Creator tier or above.
-pcm_16000 - PCM format (S16LE) with 16kHz sample rate.
-pcm_22050 - PCM format (S16LE) with 22.05kHz sample rate.
-pcm_24000 - PCM format (S16LE) with 24kHz sample rate.
-pcm_44100 - PCM format (S16LE) with 44.1kHz sample rate. Requires you to be subscribed to Pro tier or above.
-ulaw_8000 - μ-law format (sometimes written mu-law, often approximated as u-law) with 8kHz sample rate. Note that this format is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[OutputFormat]` — The output format of the generated audio.
     
 </dd>
 </dl>
@@ -3434,14 +3421,6 @@ ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate
 <dd>
 
 **pronunciation_dictionary_locators:** `typing.Optional[typing.List[str]]` — A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**callback_url:** `typing.Optional[str]` — A url that will be called by our service when the project is converted with a json containing the status of the conversion
     
 </dd>
 </dl>
