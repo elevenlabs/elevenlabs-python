@@ -80,7 +80,6 @@ class ProjectsClient:
         acx_volume_normalization: typing.Optional[bool] = None,
         volume_normalization: typing.Optional[bool] = None,
         pronunciation_dictionary_locators: typing.Optional[typing.List[str]] = None,
-        callback_url: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddProjectResponseModel:
         """
@@ -132,9 +131,6 @@ class ProjectsClient:
         pronunciation_dictionary_locators : typing.Optional[typing.List[str]]
             A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
 
-        callback_url : typing.Optional[str]
-            A url that will be called by our service when the project is converted with a json containing the status of the conversion
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -173,7 +169,6 @@ class ProjectsClient:
                 "acx_volume_normalization": acx_volume_normalization,
                 "volume_normalization": volume_normalization,
                 "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
-                "callback_url": callback_url,
             },
             files={"from_document": from_document},
             request_options=request_options,
@@ -703,7 +698,6 @@ class AsyncProjectsClient:
         acx_volume_normalization: typing.Optional[bool] = None,
         volume_normalization: typing.Optional[bool] = None,
         pronunciation_dictionary_locators: typing.Optional[typing.List[str]] = None,
-        callback_url: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddProjectResponseModel:
         """
@@ -755,9 +749,6 @@ class AsyncProjectsClient:
         pronunciation_dictionary_locators : typing.Optional[typing.List[str]]
             A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
 
-        callback_url : typing.Optional[str]
-            A url that will be called by our service when the project is converted with a json containing the status of the conversion
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -804,7 +795,6 @@ class AsyncProjectsClient:
                 "acx_volume_normalization": acx_volume_normalization,
                 "volume_normalization": volume_normalization,
                 "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
-                "callback_url": callback_url,
             },
             files={"from_document": from_document},
             request_options=request_options,
