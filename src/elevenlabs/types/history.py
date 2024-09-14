@@ -2,4 +2,4 @@
 
 import typing
 
-History = typing.Any
+History = typing.Optional[typing.Any]

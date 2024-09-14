@@ -112,6 +112,7 @@ from . import (
     voices,
     workspace,
 )
+from .client import AsyncElevenLabs, ElevenLabs
 from .dubbing import GetTranscriptForDubV1DubbingDubbingIdTranscriptLanguageCodeGetRequestFormatType
 from .environment import ElevenLabsEnvironment
 from .play import play, save, stream
@@ -133,6 +134,7 @@ __all__ = [
     "AddPronunciationDictionaryRulesResponseModel",
     "AddVoiceResponseModel",
     "Age",
+    "AsyncElevenLabs",
     "AudioNativeCreateProjectResponseModel",
     "AudioNativeGetEmbedCodeResponseModel",
     "AudioOutput",
@@ -148,6 +150,7 @@ __all__ = [
     "DoDubbingResponse",
     "DubbingMetadataResponse",
     "EditProjectResponseModel",
+    "ElevenLabs",
     "ElevenLabsEnvironment",
     "ExtendedSubscriptionResponseModelBillingPeriod",
     "ExtendedSubscriptionResponseModelCharacterRefreshPeriod",

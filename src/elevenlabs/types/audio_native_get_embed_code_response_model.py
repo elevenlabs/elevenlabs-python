@@ -2,4 +2,4 @@
 
 import typing
 
-AudioNativeGetEmbedCodeResponseModel = typing.Any
+AudioNativeGetEmbedCodeResponseModel = typing.Optional[typing.Any]
