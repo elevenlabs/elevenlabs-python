@@ -27,7 +27,7 @@ Returns metadata about all your generated audio.
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -114,7 +114,7 @@ Returns information about an history item by its ID.
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -184,7 +184,7 @@ Delete a history item by its ID
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -254,7 +254,7 @@ Returns the audio of an history item.
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -324,7 +324,7 @@ Download one or more history items. If one history item ID is provided, we will 
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -403,7 +403,7 @@ Converts a text of your choice into sound
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -492,7 +492,7 @@ Removes background noise from audio
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -562,7 +562,7 @@ Removes background noise from audio and streams the result
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -633,7 +633,7 @@ Removes a sample by its ID.
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -712,7 +712,7 @@ Returns the audio corresponding to a sample attached to a voice.
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -792,8 +792,7 @@ Converts text into speech using a voice of your choice and returns audio.
 <dd>
 
 ```python
-from elevenlabs import VoiceSettings
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs, VoiceSettings
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -975,7 +974,7 @@ Converts text into speech using a voice of your choice and returns JSON containi
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -1150,8 +1149,7 @@ Converts text into speech using a voice of your choice and returns audio as an a
 <dd>
 
 ```python
-from elevenlabs import VoiceSettings
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs, VoiceSettings
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -1333,7 +1331,7 @@ Converts text into speech using a voice of your choice and returns a stream of J
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -1509,7 +1507,7 @@ Create speech by combining the content and emotion of the uploaded audio with a 
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -1640,7 +1638,7 @@ Create speech by combining the content and emotion of the uploaded audio with a 
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -1785,7 +1783,7 @@ Get possible parameters for the /v1/voice-generation/generate-voice endpoint.
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -1845,7 +1843,7 @@ Generate a random voice based on parameters. This method returns a generated_voi
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -1951,7 +1949,7 @@ Create a previously generated voice. This endpoint should be called after you fe
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -2048,7 +2046,7 @@ Gets extended information about the users subscription
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -2108,7 +2106,7 @@ Gets information about the user
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -2169,7 +2167,7 @@ Gets a list of all available voices for a user.
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -2237,7 +2235,7 @@ Gets the default settings for voices. "similarity_boost" corresponds to"Clarity 
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -2297,7 +2295,7 @@ Returns the settings for a specific voice. "similarity_boost" corresponds to"Cla
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -2367,7 +2365,7 @@ Returns metadata about a specific voice.
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -2445,7 +2443,7 @@ Deletes a voice by its ID.
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -2515,8 +2513,7 @@ Edit your settings for a specific voice. "similarity_boost" corresponds to"Clari
 <dd>
 
 ```python
-from elevenlabs import VoiceSettings
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs, VoiceSettings
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -2599,7 +2596,7 @@ Add a new voice to your collection of voices in VoiceLab.
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -2695,7 +2692,7 @@ Edit a voice created by you.
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -2800,7 +2797,7 @@ Add a sharing voice to your collection of voices in VoiceLab.
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -2896,7 +2893,7 @@ Gets a list of shared voices.
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -3072,7 +3069,7 @@ Returns a list of shared voices similar to the provided audio sample. If neither
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -3158,7 +3155,7 @@ Gets a profile page based on a handle
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -3229,7 +3226,7 @@ Returns a list of your projects together and its metadata.
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -3289,7 +3286,7 @@ Creates a new project, it can be either initialized as blank, from a document or
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -3467,7 +3464,7 @@ Returns information about a specific project. This endpoint returns more detaile
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -3537,7 +3534,7 @@ Edits basic project info.
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -3666,7 +3663,7 @@ Delete a project by its project_id.
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -3736,7 +3733,7 @@ Starts conversion of a project and all of its chapters.
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -3806,7 +3803,7 @@ Gets the snapshots of a project.
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -3876,7 +3873,7 @@ Stream the audio from a project snapshot.
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -3964,7 +3961,7 @@ Streams archive with project audio.
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -4043,8 +4040,7 @@ Updates the set of pronunciation dictionaries acting on a project. This will aut
 <dd>
 
 ```python
-from elevenlabs import PronunciationDictionaryVersionLocator
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs, PronunciationDictionaryVersionLocator
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -4129,7 +4125,7 @@ Returns a list of your chapters for a project together and its metadata.
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -4199,7 +4195,7 @@ Returns information about a specific chapter.
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -4278,7 +4274,7 @@ Delete a chapter by its chapter_id.
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -4357,7 +4353,7 @@ Starts conversion of a specific chapter.
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -4436,7 +4432,7 @@ Gets information about all the snapshots of a chapter, each snapshot corresponds
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -4515,7 +4511,7 @@ Stream the audio from a chapter snapshot. Use `GET /v1/projects/{project_id}/cha
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -4612,7 +4608,7 @@ Dubs provided audio or video file into given language.
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -4756,7 +4752,7 @@ Returns metadata about a dubbing project, including whether it's still in progre
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -4826,7 +4822,7 @@ Deletes a dubbing project.
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -4896,7 +4892,7 @@ Returns dubbed file as a streamed file. Videos will be returned in MP4 format an
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -4975,7 +4971,7 @@ Returns transcript for the dub as an SRT file.
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -5065,7 +5061,7 @@ Gets a list of available models.
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -5126,7 +5122,7 @@ Creates AudioNative enabled project, optionally starts conversion and returns pr
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -5287,7 +5283,7 @@ Returns the characters usage metrics for the current user or the entire workspac
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -5383,7 +5379,7 @@ Creates a new pronunciation dictionary from a lexicon .PLS file
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -5479,14 +5475,23 @@ Add rules to the pronunciation dictionary
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
+from elevenlabs.pronunciation_dictionary import (
+    PronunciationDictionaryRule_Phoneme,
+)
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.pronunciation_dictionary.add_rules_to_the_pronunciation_dictionary(
     pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
-    rules=[],
+    rules=[
+        PronunciationDictionaryRule_Phoneme(
+            string_to_replace="rules",
+            phoneme="rules",
+            alphabet="rules",
+        )
+    ],
 )
 
 ```
@@ -5562,7 +5567,7 @@ Remove rules from the pronunciation dictionary
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -5641,7 +5646,7 @@ Get PLS file with a pronunciation dictionary version rules
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -5720,7 +5725,7 @@ Get metadata for a pronunciation dictionary
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -5790,7 +5795,7 @@ Get a list of the pronunciation dictionaries you have access to and their metada
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -5869,7 +5874,7 @@ Sends an email invitation to join your workspace to the provided email. If the u
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -5939,7 +5944,7 @@ Invalidates an existing email invitation. The invitation will still show up in t
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -6009,7 +6014,7 @@ Updates attributes of a workspace member. Apart from the email identifier, all p
 <dd>
 
 ```python
-from elevenlabs.client import ElevenLabs
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
