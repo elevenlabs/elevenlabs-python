@@ -16,6 +16,7 @@ from ..core.jsonable_encoder import jsonable_encoder
 from ..types.edit_project_response_model import EditProjectResponseModel
 from ..types.project_snapshots_response import ProjectSnapshotsResponse
 from ..types.pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
+from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -729,7 +730,11 @@ class ProjectsClient:
             f"v1/projects/{jsonable_encoder(project_id)}/update-pronunciation-dictionaries",
             method="POST",
             json={
-                "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
+                "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
+                    object_=pronunciation_dictionary_locators,
+                    annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
+                    direction="write",
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -1546,7 +1551,11 @@ class AsyncProjectsClient:
             f"v1/projects/{jsonable_encoder(project_id)}/update-pronunciation-dictionaries",
             method="POST",
             json={
-                "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
+                "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
+                    object_=pronunciation_dictionary_locators,
+                    annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
+                    direction="write",
+                ),
             },
             request_options=request_options,
             omit=OMIT,
