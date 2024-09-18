@@ -3,6 +3,8 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 import pydantic
+import typing_extensions
+from ..core.serialization import FieldMetadata
 from .normalized_alignment import NormalizedAlignment
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
@@ -14,14 +16,16 @@ class AudioOutput(UncheckedBaseModel):
     is MP3 encoded as a base64 string.
     """
 
-    is_final: typing.Optional[bool] = pydantic.Field(alias="isFinal", default=None)
+    is_final: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isFinal")] = pydantic.Field(
+        default=None
+    )
     """
     Indicates if the generation is complete. If set to `True`, `audio` will be null.
     """
 
-    normalized_alignment: typing.Optional[NormalizedAlignment] = pydantic.Field(
-        alias="normalizedAlignment", default=None
-    )
+    normalized_alignment: typing_extensions.Annotated[
+        typing.Optional[NormalizedAlignment], FieldMetadata(alias="normalizedAlignment")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

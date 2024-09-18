@@ -5,6 +5,8 @@ import typing
 import pydantic
 from .realtime_voice_settings import RealtimeVoiceSettings
 from .generation_config import GenerationConfig
+import typing_extensions
+from ..core.serialization import FieldMetadata
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -20,7 +22,7 @@ class InitializeConnection(UncheckedBaseModel):
     This property should only be provided in the first message you send.
     """
 
-    xi_api_key: str = pydantic.Field(alias="xi-api-key")
+    xi_api_key: typing_extensions.Annotated[str, FieldMetadata(alias="xi-api-key")] = pydantic.Field()
     """
     Your ElevenLabs API key. This is a required parameter that should be provided in the first message you send.
     You can find your API key in the [API Keys section](https://elevenlabs.io/docs/api-reference/websockets#api-keys).

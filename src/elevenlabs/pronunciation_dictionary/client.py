@@ -16,6 +16,7 @@ from ..core.api_error import ApiError
 from .types.pronunciation_dictionary_rule import PronunciationDictionaryRule
 from ..types.add_pronunciation_dictionary_rules_response_model import AddPronunciationDictionaryRulesResponseModel
 from ..core.jsonable_encoder import jsonable_encoder
+from ..core.serialization import convert_and_respect_annotation_metadata
 from ..types.remove_pronunciation_dictionary_rules_response_model import RemovePronunciationDictionaryRulesResponseModel
 from ..types.get_pronunciation_dictionary_metadata_response import GetPronunciationDictionaryMetadataResponse
 from ..types.get_pronunciation_dictionaries_metadata_response_model import (
@@ -167,7 +168,9 @@ class PronunciationDictionaryClient:
             f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}/add-rules",
             method="POST",
             json={
-                "rules": rules,
+                "rules": convert_and_respect_annotation_metadata(
+                    object_=rules, annotation=typing.Sequence[PronunciationDictionaryRule], direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -610,7 +613,9 @@ class AsyncPronunciationDictionaryClient:
             f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}/add-rules",
             method="POST",
             json={
-                "rules": rules,
+                "rules": convert_and_respect_annotation_metadata(
+                    object_=rules, annotation=typing.Sequence[PronunciationDictionaryRule], direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,

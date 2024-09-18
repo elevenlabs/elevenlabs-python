@@ -8,6 +8,7 @@ from ..types.voice_settings import VoiceSettings
 from ..types.pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
 from ..core.request_options import RequestOptions
 from ..core.jsonable_encoder import jsonable_encoder
+from ..core.serialization import convert_and_respect_annotation_metadata
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.http_validation_error import HttpValidationError
 from ..core.unchecked_base_model import construct_type
@@ -130,8 +131,14 @@ class TextToSpeechClient:
                 "text": text,
                 "model_id": model_id,
                 "language_code": language_code,
-                "voice_settings": voice_settings,
-                "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
+                "voice_settings": convert_and_respect_annotation_metadata(
+                    object_=voice_settings, annotation=VoiceSettings, direction="write"
+                ),
+                "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
+                    object_=pronunciation_dictionary_locators,
+                    annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
+                    direction="write",
+                ),
                 "seed": seed,
                 "previous_text": previous_text,
                 "next_text": next_text,
@@ -262,8 +269,14 @@ class TextToSpeechClient:
                 "text": text,
                 "model_id": model_id,
                 "language_code": language_code,
-                "voice_settings": voice_settings,
-                "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
+                "voice_settings": convert_and_respect_annotation_metadata(
+                    object_=voice_settings, annotation=VoiceSettings, direction="write"
+                ),
+                "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
+                    object_=pronunciation_dictionary_locators,
+                    annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
+                    direction="write",
+                ),
                 "seed": seed,
                 "previous_text": previous_text,
                 "next_text": next_text,
@@ -404,8 +417,14 @@ class TextToSpeechClient:
                 "text": text,
                 "model_id": model_id,
                 "language_code": language_code,
-                "voice_settings": voice_settings,
-                "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
+                "voice_settings": convert_and_respect_annotation_metadata(
+                    object_=voice_settings, annotation=VoiceSettings, direction="write"
+                ),
+                "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
+                    object_=pronunciation_dictionary_locators,
+                    annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
+                    direction="write",
+                ),
                 "seed": seed,
                 "previous_text": previous_text,
                 "next_text": next_text,
@@ -535,8 +554,14 @@ class TextToSpeechClient:
                 "text": text,
                 "model_id": model_id,
                 "language_code": language_code,
-                "voice_settings": voice_settings,
-                "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
+                "voice_settings": convert_and_respect_annotation_metadata(
+                    object_=voice_settings, annotation=VoiceSettings, direction="write"
+                ),
+                "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
+                    object_=pronunciation_dictionary_locators,
+                    annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
+                    direction="write",
+                ),
                 "seed": seed,
                 "previous_text": previous_text,
                 "next_text": next_text,
@@ -684,8 +709,14 @@ class AsyncTextToSpeechClient:
                 "text": text,
                 "model_id": model_id,
                 "language_code": language_code,
-                "voice_settings": voice_settings,
-                "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
+                "voice_settings": convert_and_respect_annotation_metadata(
+                    object_=voice_settings, annotation=VoiceSettings, direction="write"
+                ),
+                "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
+                    object_=pronunciation_dictionary_locators,
+                    annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
+                    direction="write",
+                ),
                 "seed": seed,
                 "previous_text": previous_text,
                 "next_text": next_text,
@@ -824,8 +855,14 @@ class AsyncTextToSpeechClient:
                 "text": text,
                 "model_id": model_id,
                 "language_code": language_code,
-                "voice_settings": voice_settings,
-                "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
+                "voice_settings": convert_and_respect_annotation_metadata(
+                    object_=voice_settings, annotation=VoiceSettings, direction="write"
+                ),
+                "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
+                    object_=pronunciation_dictionary_locators,
+                    annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
+                    direction="write",
+                ),
                 "seed": seed,
                 "previous_text": previous_text,
                 "next_text": next_text,
@@ -974,8 +1011,14 @@ class AsyncTextToSpeechClient:
                 "text": text,
                 "model_id": model_id,
                 "language_code": language_code,
-                "voice_settings": voice_settings,
-                "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
+                "voice_settings": convert_and_respect_annotation_metadata(
+                    object_=voice_settings, annotation=VoiceSettings, direction="write"
+                ),
+                "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
+                    object_=pronunciation_dictionary_locators,
+                    annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
+                    direction="write",
+                ),
                 "seed": seed,
                 "previous_text": previous_text,
                 "next_text": next_text,
@@ -1113,8 +1156,14 @@ class AsyncTextToSpeechClient:
                 "text": text,
                 "model_id": model_id,
                 "language_code": language_code,
-                "voice_settings": voice_settings,
-                "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
+                "voice_settings": convert_and_respect_annotation_metadata(
+                    object_=voice_settings, annotation=VoiceSettings, direction="write"
+                ),
+                "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
+                    object_=pronunciation_dictionary_locators,
+                    annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
+                    direction="write",
+                ),
                 "seed": seed,
                 "previous_text": previous_text,
                 "next_text": next_text,

@@ -12,6 +12,7 @@ from ..core.api_error import ApiError
 from ..types.voice_settings import VoiceSettings
 from ..core.jsonable_encoder import jsonable_encoder
 from ..types.voice import Voice
+from ..core.serialization import convert_and_respect_annotation_metadata
 from .. import core
 from ..types.add_voice_response_model import AddVoiceResponseModel
 from ..types.get_library_voices_response import GetLibraryVoicesResponse
@@ -353,7 +354,7 @@ class VoicesClient:
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}/settings/edit",
             method="POST",
-            json=request,
+            json=convert_and_respect_annotation_metadata(object_=request, annotation=VoiceSettings, direction="write"),
             request_options=request_options,
             omit=OMIT,
         )
@@ -1283,7 +1284,7 @@ class AsyncVoicesClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}/settings/edit",
             method="POST",
-            json=request,
+            json=convert_and_respect_annotation_metadata(object_=request, annotation=VoiceSettings, direction="write"),
             request_options=request_options,
             omit=OMIT,
         )
