@@ -150,7 +150,7 @@ class TextToSpeechClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    for _chunk in _response.iter_bytes():
+                    for _chunk in _response.iter_bytes(chunk_size=1024):
                         yield _chunk
                     return
                 _response.read()
@@ -436,7 +436,7 @@ class TextToSpeechClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    for _chunk in _response.iter_bytes():
+                    for _chunk in _response.iter_bytes(chunk_size=1024):  # 1 MB
                         yield _chunk
                     return
                 _response.read()
@@ -728,7 +728,7 @@ class AsyncTextToSpeechClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    async for _chunk in _response.aiter_bytes():
+                    async for _chunk in _response.aiter_bytes(chunk_size=1024):  # 1 MB
                         yield _chunk
                     return
                 await _response.aread()
@@ -1030,7 +1030,7 @@ class AsyncTextToSpeechClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    async for _chunk in _response.aiter_bytes():
+                    async for _chunk in _response.aiter_bytes(chunk_size=1024):  # 1 MB
                         yield _chunk
                     return
                 await _response.aread()
