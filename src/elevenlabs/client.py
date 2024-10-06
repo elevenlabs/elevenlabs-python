@@ -19,7 +19,7 @@ from .types import OutputFormat
 
 DEFAULT_VOICE = Voice(
     voice_id="EXAVITQu4vr4xnSDxMaL",
-    name="Rachel",
+    name="Sarah",
     settings=VoiceSettings(
         stability=0.71, similarity_boost=0.5, style=0.0, use_speaker_boost=True
     ),
@@ -134,7 +134,7 @@ class ElevenLabs(BaseElevenLabs):
         """
             - text: Union[str, Iterator[str]]. The string or stream of strings that will get converted into speech.
 
-            - voice: str. A voice id, name, or voice response. Defaults to the Rachel voice. 
+            - voice: str. A voice id, name, or voice response. Defaults to the Sarah voice. 
 
             - model: typing.Optional[str]. Identifier of the model that will be used, you can query them using GET /v1/models. 
                                            The model needs to have support for text to speech, you can check this using the 
