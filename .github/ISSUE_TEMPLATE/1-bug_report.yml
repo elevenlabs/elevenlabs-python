@@ -1,0 +1,51 @@
+name: Bug report
+description: Create a bug report for the ElevenLabs Python SDK
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting a bug with the **ElevenLabs Python SDK**. Please fill out the sections below to help us understand and resolve the issue.
+
+        **Note:** The ElevenLabs Python SDK is **auto-generated from [Fern](https://www.buildwithfern.com/)** and is a wrapper around our OpenAPI specification. Direct modifications to the SDK code may be overwritten in future releases.
+
+  - type: textarea
+    attributes:
+      label: Description
+      description: |
+        **Describe the bug in detail and provide clear steps to reproduce it.**
+
+        Include information such as:
+        - What you were trying to achieve.
+        - What happened instead.
+        - Any relevant parameters or configurations.
+      placeholder: |
+        **Steps to reproduce:**
+        1. ...
+        2. ...
+
+        **Expected behavior:**
+
+        **Actual behavior:**
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Code example
+      description: Provide an example code snippet that has the problem
+      placeholder: |
+        ```python
+        from elevenlabs import generate, play
+
+        # Your code here
+        ```
+  - type: textarea
+    attributes:
+      label: Additional context
+      description: |
+        Add any other context or screenshots about the problem here.
+      placeholder: |
+        - Related issues:
+        - Possible workaround:
+        - Logs
+        - ...
