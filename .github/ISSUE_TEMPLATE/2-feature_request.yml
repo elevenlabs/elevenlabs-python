@@ -1,0 +1,52 @@
+name: Feature Request
+description: Propose a new feature for the ElevenLabs Python SDK
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to propose a new feature for the **ElevenLabs Python SDK**. Please provide detailed information below to help us understand your proposal.
+
+        **Note:** The ElevenLabs Python SDK is **auto-generated from [Fern](https://fern.dev)** and is a wrapper around our OpenAPI specification. Additions made directly to the SDK code may be overwritten in future releases. We recommend opening an issue to discuss your feature request so we can explore how it fits into our API.
+
+  - type: textarea
+    attributes:
+      label: Feature Description
+      description: A detailed description of the feature you are proposing for the SDK. Include information such as the problem it solves, how it would work, and any relevant APIs or modules it would involve.
+      placeholder: |
+        **Feature description:**
+
+        - What is the feature?
+        - What problem does it solve?
+        - How do you envision it working?
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Use Case
+      description: Provide one or more use cases where this feature would be beneficial.
+      placeholder: |
+        **Use case:**
+
+        - Describe a scenario where this feature would be useful.
+  - type: textarea
+    attributes:
+      label: Alternatives Considered
+      description: Describe any alternative solutions or features you've considered.
+      placeholder: |
+        **Alternatives considered:**
+
+        - Other ways to solve the problem?
+        - Why do these alternatives fall short?
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Additional Context
+      description: Any extra information, references, or screenshots that might help us understand your feature request.
+      placeholder: |
+        - Related issues or discussions:
+        - Relevant links:
+        - Screenshots or mockups:
+    validations:
+      required: false
