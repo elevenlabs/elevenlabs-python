@@ -36,9 +36,9 @@ class PronunciationDictionaryClient:
         self,
         *,
         name: str,
-        file: typing.Optional[core.File] = None,
-        description: typing.Optional[str] = None,
-        workspace_access: typing.Optional[PronunciationDictionaryAddFromFileRequestWorkspaceAccess] = None,
+        file: typing.Optional[core.File] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        workspace_access: typing.Optional[PronunciationDictionaryAddFromFileRequestWorkspaceAccess] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddPronunciationDictionaryResponseModel:
         """
@@ -465,9 +465,9 @@ class AsyncPronunciationDictionaryClient:
         self,
         *,
         name: str,
-        file: typing.Optional[core.File] = None,
-        description: typing.Optional[str] = None,
-        workspace_access: typing.Optional[PronunciationDictionaryAddFromFileRequestWorkspaceAccess] = None,
+        file: typing.Optional[core.File] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        workspace_access: typing.Optional[PronunciationDictionaryAddFromFileRequestWorkspaceAccess] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddPronunciationDictionaryResponseModel:
         """
