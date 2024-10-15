@@ -5,3 +5,4 @@ import enum
 
 class ElevenLabsEnvironment(enum.Enum):
     PRODUCTION = "https://api.elevenlabs.io"
+    PRODUCTION_US = "https://api.us.elevenlabs.io"

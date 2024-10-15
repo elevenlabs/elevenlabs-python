@@ -30,9 +30,9 @@ class SpeechToSpeechClient:
         enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
         output_format: typing.Optional[OutputFormat] = None,
-        model_id: typing.Optional[str] = None,
-        voice_settings: typing.Optional[str] = None,
-        seed: typing.Optional[int] = None,
+        model_id: typing.Optional[str] = OMIT,
+        voice_settings: typing.Optional[str] = OMIT,
+        seed: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -134,9 +134,9 @@ class SpeechToSpeechClient:
         enable_logging: typing.Optional[OptimizeStreamingLatency] = None,
         optimize_streaming_latency: typing.Optional[OutputFormat] = None,
         output_format: typing.Optional[str] = None,
-        model_id: typing.Optional[str] = None,
-        voice_settings: typing.Optional[str] = None,
-        seed: typing.Optional[int] = None,
+        model_id: typing.Optional[str] = OMIT,
+        voice_settings: typing.Optional[str] = OMIT,
+        seed: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -254,9 +254,9 @@ class AsyncSpeechToSpeechClient:
         enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
         output_format: typing.Optional[OutputFormat] = None,
-        model_id: typing.Optional[str] = None,
-        voice_settings: typing.Optional[str] = None,
-        seed: typing.Optional[int] = None,
+        model_id: typing.Optional[str] = OMIT,
+        voice_settings: typing.Optional[str] = OMIT,
+        seed: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -366,9 +366,9 @@ class AsyncSpeechToSpeechClient:
         enable_logging: typing.Optional[OptimizeStreamingLatency] = None,
         optimize_streaming_latency: typing.Optional[OutputFormat] = None,
         output_format: typing.Optional[str] = None,
-        model_id: typing.Optional[str] = None,
-        voice_settings: typing.Optional[str] = None,
-        seed: typing.Optional[int] = None,
+        model_id: typing.Optional[str] = OMIT,
+        voice_settings: typing.Optional[str] = OMIT,
+        seed: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """

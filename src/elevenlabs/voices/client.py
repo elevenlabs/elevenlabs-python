@@ -387,8 +387,8 @@ class VoicesClient:
         *,
         name: str,
         files: typing.List[core.File],
-        description: typing.Optional[str] = None,
-        labels: typing.Optional[str] = None,
+        description: typing.Optional[str] = OMIT,
+        labels: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddVoiceResponseModel:
         """
@@ -470,9 +470,9 @@ class VoicesClient:
         voice_id: str,
         *,
         name: str,
-        files: typing.Optional[typing.List[core.File]] = None,
-        description: typing.Optional[str] = None,
-        labels: typing.Optional[str] = None,
+        files: typing.Optional[typing.List[core.File]] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        labels: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
@@ -770,9 +770,9 @@ class VoicesClient:
     def get_similar_library_voices(
         self,
         *,
-        audio_file: typing.Optional[core.File] = None,
-        similarity_threshold: typing.Optional[float] = None,
-        top_k: typing.Optional[int] = None,
+        audio_file: typing.Optional[core.File] = OMIT,
+        similarity_threshold: typing.Optional[float] = OMIT,
+        top_k: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetLibraryVoicesResponse:
         """
@@ -1317,8 +1317,8 @@ class AsyncVoicesClient:
         *,
         name: str,
         files: typing.List[core.File],
-        description: typing.Optional[str] = None,
-        labels: typing.Optional[str] = None,
+        description: typing.Optional[str] = OMIT,
+        labels: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddVoiceResponseModel:
         """
@@ -1408,9 +1408,9 @@ class AsyncVoicesClient:
         voice_id: str,
         *,
         name: str,
-        files: typing.Optional[typing.List[core.File]] = None,
-        description: typing.Optional[str] = None,
-        labels: typing.Optional[str] = None,
+        files: typing.Optional[typing.List[core.File]] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        labels: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
@@ -1732,9 +1732,9 @@ class AsyncVoicesClient:
     async def get_similar_library_voices(
         self,
         *,
-        audio_file: typing.Optional[core.File] = None,
-        similarity_threshold: typing.Optional[float] = None,
-        top_k: typing.Optional[int] = None,
+        audio_file: typing.Optional[core.File] = OMIT,
+        similarity_threshold: typing.Optional[float] = OMIT,
+        top_k: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetLibraryVoicesResponse:
         """
