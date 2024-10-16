@@ -32,7 +32,7 @@ body:
   - type: textarea
     attributes:
       label: Code example
-      description: Provide an example code snippet that has the problem
+      description: Provide an example code snippet that has the problem (Make sure to **NOT** upload or expose your API key).
       placeholder: |
         ```python
         from elevenlabs import generate, play
