@@ -105,7 +105,19 @@ save(audio, "my-file.mp3")
 [![Open in Spaces](https://img.shields.io/badge/🤗-Open%20in%20Spaces-blue.svg)](https://huggingface.co/spaces/elevenlabs/tts)
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/gist/flavioschneider/49468d728a816c6538fd2f56b3b50b96/elevenlabs-python.ipynb)
 
-We support two main models: the newest `eleven_multilingual_v2`, a single foundational model supporting 29 languages including English, Chinese, Spanish, Hindi, Portuguese, French, German, Japanese, Arabic, Korean, Indonesian, Italian, Dutch, Turkish, Polish, Swedish, Filipino, Malay, Russian, Romanian, Ukrainian, Greek, Czech, Danish, Finnish, Bulgarian, Croatian, Slovak, and Tamil; and `eleven_monolingual_v1`, a low-latency model specifically trained for English speech.
+### Main Models
+
+1. **Eleven Multilingual v2** (`eleven_multilingual_v2`)
+   - Excels in stability, language diversity, and accent accuracy
+   - Supports 29 languages
+   - Recommended for most use cases
+
+2. **Eleven Turbo v2.5** (`eleven_turbo_v2_5`)
+   - High quality, lowest latency
+   - Ideal for developer use cases where speed is crucial
+   - Supports 32 languages
+
+For more detailed information about these models and others, visit the [ElevenLabs Models documentation](https://elevenlabs.io/docs/speech-synthesis/models).
 
 ```py
 from elevenlabs import play
