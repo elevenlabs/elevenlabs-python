@@ -58,7 +58,7 @@ play(audio)
 
 <details> <summary> Play </summary>
 
- 🎧 **Try it out!** Want to hear our voices in action? Visit the [ElevenLabs Voice Lab](https://elevenlabs.io/voice-lab) to experiment with different voices, languages, and settings.
+🎧 **Try it out!** Want to hear our voices in action? Visit the [ElevenLabs Voice Lab](https://elevenlabs.io/voice-lab) to experiment with different voices, languages, and settings.
 
 </details>
 
@@ -198,12 +198,6 @@ async def print_models() -> None:
 
 asyncio.run(print_models())
 ```
-
-## Elevenlabs Namespace
-
-All of the ElevenLabs models are nested within the elevenlabs module.
-
-<img src="https://github.com/elevenlabs/elevenlabs-js/blob/main/assets/namespace.png" width="900">
 
 ## Languages Supported
 
