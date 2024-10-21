@@ -11,3 +11,6 @@ README.md
 assets/
 
 tests/
+
+.github/ISSUE_TEMPLATE/
+.github/SECURITY.md
