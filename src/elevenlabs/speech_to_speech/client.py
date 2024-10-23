@@ -33,6 +33,7 @@ class SpeechToSpeechClient:
         model_id: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[str] = OMIT,
         seed: typing.Optional[int] = OMIT,
+        remove_background_noise: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -64,8 +65,11 @@ class SpeechToSpeechClient:
         seed : typing.Optional[int]
             If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
 
+        remove_background_noise : typing.Optional[bool]
+            If set will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
+
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
         ------
@@ -98,6 +102,7 @@ class SpeechToSpeechClient:
                 "model_id": model_id,
                 "voice_settings": voice_settings,
                 "seed": seed,
+                "remove_background_noise": remove_background_noise,
             },
             files={
                 "audio": audio,
@@ -107,7 +112,8 @@ class SpeechToSpeechClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    for _chunk in _response.iter_bytes():
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return
                 _response.read()
@@ -137,6 +143,7 @@ class SpeechToSpeechClient:
         model_id: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[str] = OMIT,
         seed: typing.Optional[int] = OMIT,
+        remove_background_noise: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -179,8 +186,11 @@ class SpeechToSpeechClient:
         seed : typing.Optional[int]
             If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
 
+        remove_background_noise : typing.Optional[bool]
+            If set will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
+
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
         ------
@@ -213,6 +223,7 @@ class SpeechToSpeechClient:
                 "model_id": model_id,
                 "voice_settings": voice_settings,
                 "seed": seed,
+                "remove_background_noise": remove_background_noise,
             },
             files={
                 "audio": audio,
@@ -222,7 +233,8 @@ class SpeechToSpeechClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    for _chunk in _response.iter_bytes():
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return
                 _response.read()
@@ -257,6 +269,7 @@ class AsyncSpeechToSpeechClient:
         model_id: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[str] = OMIT,
         seed: typing.Optional[int] = OMIT,
+        remove_background_noise: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -288,8 +301,11 @@ class AsyncSpeechToSpeechClient:
         seed : typing.Optional[int]
             If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
 
+        remove_background_noise : typing.Optional[bool]
+            If set will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
+
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
         ------
@@ -330,6 +346,7 @@ class AsyncSpeechToSpeechClient:
                 "model_id": model_id,
                 "voice_settings": voice_settings,
                 "seed": seed,
+                "remove_background_noise": remove_background_noise,
             },
             files={
                 "audio": audio,
@@ -339,7 +356,8 @@ class AsyncSpeechToSpeechClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    async for _chunk in _response.aiter_bytes():
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return
                 await _response.aread()
@@ -369,6 +387,7 @@ class AsyncSpeechToSpeechClient:
         model_id: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[str] = OMIT,
         seed: typing.Optional[int] = OMIT,
+        remove_background_noise: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -411,8 +430,11 @@ class AsyncSpeechToSpeechClient:
         seed : typing.Optional[int]
             If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
 
+        remove_background_noise : typing.Optional[bool]
+            If set will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
+
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
         ------
@@ -453,6 +475,7 @@ class AsyncSpeechToSpeechClient:
                 "model_id": model_id,
                 "voice_settings": voice_settings,
                 "seed": seed,
+                "remove_background_noise": remove_background_noise,
             },
             files={
                 "audio": audio,
@@ -462,7 +485,8 @@ class AsyncSpeechToSpeechClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    async for _chunk in _response.aiter_bytes():
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return
                 await _response.aread()

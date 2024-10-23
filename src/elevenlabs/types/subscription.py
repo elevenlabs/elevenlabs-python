@@ -2,7 +2,7 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .currency import Currency
+from .extended_subscription_response_model_currency import ExtendedSubscriptionResponseModelCurrency
 from .subscription_status import SubscriptionStatus
 from .extended_subscription_response_model_billing_period import ExtendedSubscriptionResponseModelBillingPeriod
 from .extended_subscription_response_model_character_refresh_period import (
@@ -27,7 +27,7 @@ class Subscription(UncheckedBaseModel):
     can_extend_voice_limit: bool
     can_use_instant_voice_cloning: bool
     can_use_professional_voice_cloning: bool
-    currency: typing.Optional[Currency] = None
+    currency: typing.Optional[ExtendedSubscriptionResponseModelCurrency] = None
     status: typing.Optional[SubscriptionStatus] = None
     billing_period: typing.Optional[ExtendedSubscriptionResponseModelBillingPeriod] = None
     character_refresh_period: typing.Optional[ExtendedSubscriptionResponseModelCharacterRefreshPeriod] = None

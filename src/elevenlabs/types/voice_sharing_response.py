@@ -3,8 +3,9 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 from .voice_sharing_state import VoiceSharingState
-from .category import Category
+from .voice_sharing_response_model_category import VoiceSharingResponseModelCategory
 from .review_status import ReviewStatus
+from .voice_sharing_moderation_check_response_model import VoiceSharingModerationCheckResponseModel
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
@@ -24,7 +25,7 @@ class VoiceSharingResponse(UncheckedBaseModel):
     disable_at_unix: typing.Optional[int] = None
     voice_mixing_allowed: typing.Optional[bool] = None
     featured: typing.Optional[bool] = None
-    category: typing.Optional[Category] = None
+    category: typing.Optional[VoiceSharingResponseModelCategory] = None
     reader_app_enabled: typing.Optional[bool] = None
     image_url: typing.Optional[str] = None
     ban_reason: typing.Optional[str] = None
@@ -40,6 +41,7 @@ class VoiceSharingResponse(UncheckedBaseModel):
     twitter_username: typing.Optional[str] = None
     youtube_username: typing.Optional[str] = None
     tiktok_username: typing.Optional[str] = None
+    moderation_check: typing.Optional[VoiceSharingModerationCheckResponseModel] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

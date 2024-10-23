@@ -38,6 +38,8 @@ class DubbingClient:
         start_time: typing.Optional[int] = OMIT,
         end_time: typing.Optional[int] = OMIT,
         highest_resolution: typing.Optional[bool] = OMIT,
+        drop_background_audio: typing.Optional[bool] = OMIT,
+        use_profanity_filter: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DoDubbingResponse:
         """
@@ -75,6 +77,12 @@ class DubbingClient:
         highest_resolution : typing.Optional[bool]
             Whether to use the highest resolution available.
 
+        drop_background_audio : typing.Optional[bool]
+            An advanced setting. Whether to drop background audio from the final dub. This can improve dub quality where it's known that audio shouldn't have a background track such as for speeches or monologues.
+
+        use_profanity_filter : typing.Optional[bool]
+            [BETA] Whether transcripts should have profanities censored with the words '[censored]'
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -107,6 +115,8 @@ class DubbingClient:
                 "start_time": start_time,
                 "end_time": end_time,
                 "highest_resolution": highest_resolution,
+                "drop_background_audio": drop_background_audio,
+                "use_profanity_filter": use_profanity_filter,
             },
             files={
                 "file": file,
@@ -271,7 +281,7 @@ class DubbingClient:
             ID of the language.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
         ------
@@ -297,7 +307,8 @@ class DubbingClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    for _chunk in _response.iter_bytes():
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return
                 _response.read()
@@ -410,6 +421,8 @@ class AsyncDubbingClient:
         start_time: typing.Optional[int] = OMIT,
         end_time: typing.Optional[int] = OMIT,
         highest_resolution: typing.Optional[bool] = OMIT,
+        drop_background_audio: typing.Optional[bool] = OMIT,
+        use_profanity_filter: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DoDubbingResponse:
         """
@@ -446,6 +459,12 @@ class AsyncDubbingClient:
 
         highest_resolution : typing.Optional[bool]
             Whether to use the highest resolution available.
+
+        drop_background_audio : typing.Optional[bool]
+            An advanced setting. Whether to drop background audio from the final dub. This can improve dub quality where it's known that audio shouldn't have a background track such as for speeches or monologues.
+
+        use_profanity_filter : typing.Optional[bool]
+            [BETA] Whether transcripts should have profanities censored with the words '[censored]'
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -487,6 +506,8 @@ class AsyncDubbingClient:
                 "start_time": start_time,
                 "end_time": end_time,
                 "highest_resolution": highest_resolution,
+                "drop_background_audio": drop_background_audio,
+                "use_profanity_filter": use_profanity_filter,
             },
             files={
                 "file": file,
@@ -667,7 +688,7 @@ class AsyncDubbingClient:
             ID of the language.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
         ------
@@ -701,7 +722,8 @@ class AsyncDubbingClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    async for _chunk in _response.aiter_bytes():
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return
                 await _response.aread()
