@@ -22,6 +22,8 @@ class FineTuningResponse(UncheckedBaseModel):
     verification_attempts: typing.Optional[typing.List[VerificationAttemptResponse]] = None
     slice_ids: typing.Optional[typing.List[str]] = None
     manual_verification: typing.Optional[ManualVerificationResponse] = None
+    max_verification_attempts: typing.Optional[int] = None
+    next_max_verification_attempts_reset_unix_ms: typing.Optional[int] = None
     finetuning_state: typing.Optional[typing.Optional[typing.Any]] = None
 
     if IS_PYDANTIC_V2:
