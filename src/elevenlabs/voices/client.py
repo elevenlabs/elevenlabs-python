@@ -14,6 +14,7 @@ from ..core.jsonable_encoder import jsonable_encoder
 from ..types.voice import Voice
 from ..core.serialization import convert_and_respect_annotation_metadata
 from .. import core
+from ..types.add_voice_ivc_response_model import AddVoiceIvcResponseModel
 from ..types.add_voice_response_model import AddVoiceResponseModel
 from ..types.get_library_voices_response import GetLibraryVoicesResponse
 from ..types.profile_page_response_model import ProfilePageResponseModel
@@ -387,10 +388,11 @@ class VoicesClient:
         *,
         name: str,
         files: typing.List[core.File],
+        remove_background_noise: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
         labels: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AddVoiceResponseModel:
+    ) -> AddVoiceIvcResponseModel:
         """
         Add a new voice to your collection of voices in VoiceLab.
 
@@ -401,6 +403,9 @@ class VoicesClient:
 
         files : typing.List[core.File]
             See core.File for more documentation
+
+        remove_background_noise : typing.Optional[bool]
+            If set will remove background noise for voice samples using our audio isolation model. If the samples do not include background noise, it can make the quality worse.
 
         description : typing.Optional[str]
             How would you describe the voice?
@@ -413,7 +418,7 @@ class VoicesClient:
 
         Returns
         -------
-        AddVoiceResponseModel
+        AddVoiceIvcResponseModel
             Successful Response
 
         Examples
@@ -432,6 +437,7 @@ class VoicesClient:
             method="POST",
             data={
                 "name": name,
+                "remove_background_noise": remove_background_noise,
                 "description": description,
                 "labels": labels,
             },
@@ -444,9 +450,9 @@ class VoicesClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AddVoiceResponseModel,
+                    AddVoiceIvcResponseModel,
                     construct_type(
-                        type_=AddVoiceResponseModel,  # type: ignore
+                        type_=AddVoiceIvcResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -471,6 +477,7 @@ class VoicesClient:
         *,
         name: str,
         files: typing.Optional[typing.List[core.File]] = OMIT,
+        remove_background_noise: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
         labels: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -488,6 +495,9 @@ class VoicesClient:
 
         files : typing.Optional[typing.List[core.File]]
             See core.File for more documentation
+
+        remove_background_noise : typing.Optional[bool]
+            If set will remove background noise for voice samples using our audio isolation model. If the samples do not include background noise, it can make the quality worse.
 
         description : typing.Optional[str]
             How would you describe the voice?
@@ -520,6 +530,7 @@ class VoicesClient:
             method="POST",
             data={
                 "name": name,
+                "remove_background_noise": remove_background_noise,
                 "description": description,
                 "labels": labels,
             },
@@ -559,7 +570,6 @@ class VoicesClient:
         voice_id: str,
         *,
         new_name: str,
-        xi_app_check_token: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddVoiceResponseModel:
         """
@@ -575,9 +585,6 @@ class VoicesClient:
 
         new_name : str
             The name that identifies this voice. This will be displayed in the dropdown of the website.
-
-        xi_app_check_token : typing.Optional[str]
-            Your app check token.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -605,9 +612,6 @@ class VoicesClient:
             method="POST",
             json={
                 "new_name": new_name,
-            },
-            headers={
-                "xi-app-check-token": str(xi_app_check_token) if xi_app_check_token is not None else None,
             },
             request_options=request_options,
             omit=OMIT,
@@ -1317,10 +1321,11 @@ class AsyncVoicesClient:
         *,
         name: str,
         files: typing.List[core.File],
+        remove_background_noise: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
         labels: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AddVoiceResponseModel:
+    ) -> AddVoiceIvcResponseModel:
         """
         Add a new voice to your collection of voices in VoiceLab.
 
@@ -1331,6 +1336,9 @@ class AsyncVoicesClient:
 
         files : typing.List[core.File]
             See core.File for more documentation
+
+        remove_background_noise : typing.Optional[bool]
+            If set will remove background noise for voice samples using our audio isolation model. If the samples do not include background noise, it can make the quality worse.
 
         description : typing.Optional[str]
             How would you describe the voice?
@@ -1343,7 +1351,7 @@ class AsyncVoicesClient:
 
         Returns
         -------
-        AddVoiceResponseModel
+        AddVoiceIvcResponseModel
             Successful Response
 
         Examples
@@ -1370,6 +1378,7 @@ class AsyncVoicesClient:
             method="POST",
             data={
                 "name": name,
+                "remove_background_noise": remove_background_noise,
                 "description": description,
                 "labels": labels,
             },
@@ -1382,9 +1391,9 @@ class AsyncVoicesClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AddVoiceResponseModel,
+                    AddVoiceIvcResponseModel,
                     construct_type(
-                        type_=AddVoiceResponseModel,  # type: ignore
+                        type_=AddVoiceIvcResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1409,6 +1418,7 @@ class AsyncVoicesClient:
         *,
         name: str,
         files: typing.Optional[typing.List[core.File]] = OMIT,
+        remove_background_noise: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
         labels: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -1426,6 +1436,9 @@ class AsyncVoicesClient:
 
         files : typing.Optional[typing.List[core.File]]
             See core.File for more documentation
+
+        remove_background_noise : typing.Optional[bool]
+            If set will remove background noise for voice samples using our audio isolation model. If the samples do not include background noise, it can make the quality worse.
 
         description : typing.Optional[str]
             How would you describe the voice?
@@ -1466,6 +1479,7 @@ class AsyncVoicesClient:
             method="POST",
             data={
                 "name": name,
+                "remove_background_noise": remove_background_noise,
                 "description": description,
                 "labels": labels,
             },
@@ -1505,7 +1519,6 @@ class AsyncVoicesClient:
         voice_id: str,
         *,
         new_name: str,
-        xi_app_check_token: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddVoiceResponseModel:
         """
@@ -1521,9 +1534,6 @@ class AsyncVoicesClient:
 
         new_name : str
             The name that identifies this voice. This will be displayed in the dropdown of the website.
-
-        xi_app_check_token : typing.Optional[str]
-            Your app check token.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1559,9 +1569,6 @@ class AsyncVoicesClient:
             method="POST",
             json={
                 "new_name": new_name,
-            },
-            headers={
-                "xi-app-check-token": str(xi_app_check_token) if xi_app_check_token is not None else None,
             },
             request_options=request_options,
             omit=OMIT,

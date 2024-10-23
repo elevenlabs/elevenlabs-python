@@ -4,7 +4,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 from .speech_history_item_response_model_voice_category import SpeechHistoryItemResponseModelVoiceCategory
 from .feedback_item import FeedbackItem
-from .source import Source
+from .speech_history_item_response_model_source import SpeechHistoryItemResponseModelSource
 from .history_alignments_response_model import HistoryAlignmentsResponseModel
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
@@ -26,7 +26,7 @@ class SpeechHistoryItemResponse(UncheckedBaseModel):
     settings: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
     feedback: typing.Optional[FeedbackItem] = None
     share_link_id: typing.Optional[str] = None
-    source: typing.Optional[Source] = None
+    source: typing.Optional[SpeechHistoryItemResponseModelSource] = None
     alignments: typing.Optional[HistoryAlignmentsResponseModel] = None
 
     if IS_PYDANTIC_V2:

@@ -2,9 +2,7 @@
 
 from ..core.client_wrapper import SyncClientWrapper
 import typing
-from .types.usage_get_characters_usage_metrics_request_breakdown_type import (
-    UsageGetCharactersUsageMetricsRequestBreakdownType,
-)
+from ..types.breakdown_types import BreakdownTypes
 from ..core.request_options import RequestOptions
 from ..types.usage_characters_response_model import UsageCharactersResponseModel
 from ..core.unchecked_base_model import construct_type
@@ -25,11 +23,11 @@ class UsageClient:
         start_unix: int,
         end_unix: int,
         include_workspace_metrics: typing.Optional[bool] = None,
-        breakdown_type: typing.Optional[UsageGetCharactersUsageMetricsRequestBreakdownType] = None,
+        breakdown_type: typing.Optional[BreakdownTypes] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> UsageCharactersResponseModel:
         """
-        Returns the characters usage metrics for the current user or the entire workspace they are part of. The response will return a time axis with unix timestamps for each day and daily usage along that axis. The usage will be broken down by the specified breakdown type. For example, breakdown type "voice" will return the usage of each voice along the time axis.
+        Returns the credit usage metrics for the current user or the entire workspace they are part of. The response will return a time axis with unix timestamps for each day and daily usage along that axis. The usage will be broken down by the specified breakdown type. For example, breakdown type "voice" will return the usage of each voice along the time axis.
 
         Parameters
         ----------
@@ -42,7 +40,7 @@ class UsageClient:
         include_workspace_metrics : typing.Optional[bool]
             Whether or not to include the statistics of the entire workspace.
 
-        breakdown_type : typing.Optional[UsageGetCharactersUsageMetricsRequestBreakdownType]
+        breakdown_type : typing.Optional[BreakdownTypes]
             How to break down the information. Cannot be "user" if include_workspace_metrics is False.
 
         request_options : typing.Optional[RequestOptions]
@@ -111,11 +109,11 @@ class AsyncUsageClient:
         start_unix: int,
         end_unix: int,
         include_workspace_metrics: typing.Optional[bool] = None,
-        breakdown_type: typing.Optional[UsageGetCharactersUsageMetricsRequestBreakdownType] = None,
+        breakdown_type: typing.Optional[BreakdownTypes] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> UsageCharactersResponseModel:
         """
-        Returns the characters usage metrics for the current user or the entire workspace they are part of. The response will return a time axis with unix timestamps for each day and daily usage along that axis. The usage will be broken down by the specified breakdown type. For example, breakdown type "voice" will return the usage of each voice along the time axis.
+        Returns the credit usage metrics for the current user or the entire workspace they are part of. The response will return a time axis with unix timestamps for each day and daily usage along that axis. The usage will be broken down by the specified breakdown type. For example, breakdown type "voice" will return the usage of each voice along the time axis.
 
         Parameters
         ----------
@@ -128,7 +126,7 @@ class AsyncUsageClient:
         include_workspace_metrics : typing.Optional[bool]
             Whether or not to include the statistics of the entire workspace.
 
-        breakdown_type : typing.Optional[UsageGetCharactersUsageMetricsRequestBreakdownType]
+        breakdown_type : typing.Optional[BreakdownTypes]
             How to break down the information. Cannot be "user" if include_workspace_metrics is False.
 
         request_options : typing.Optional[RequestOptions]

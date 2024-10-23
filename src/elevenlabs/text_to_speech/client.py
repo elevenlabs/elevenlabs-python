@@ -43,6 +43,7 @@ class TextToSpeechClient:
         next_text: typing.Optional[str] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -91,6 +92,9 @@ class TextToSpeechClient:
 
         next_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+
+        use_pvc_as_ivc : typing.Optional[bool]
+            If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -144,6 +148,7 @@ class TextToSpeechClient:
                 "next_text": next_text,
                 "previous_request_ids": previous_request_ids,
                 "next_request_ids": next_request_ids,
+                "use_pvc_as_ivc": use_pvc_as_ivc,
             },
             request_options=request_options,
             omit=OMIT,
@@ -188,6 +193,7 @@ class TextToSpeechClient:
         next_text: typing.Optional[str] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
@@ -237,6 +243,9 @@ class TextToSpeechClient:
         next_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
 
+        use_pvc_as_ivc : typing.Optional[bool]
+            If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -282,6 +291,7 @@ class TextToSpeechClient:
                 "next_text": next_text,
                 "previous_request_ids": previous_request_ids,
                 "next_request_ids": next_request_ids,
+                "use_pvc_as_ivc": use_pvc_as_ivc,
             },
             request_options=request_options,
             omit=OMIT,
@@ -329,6 +339,7 @@ class TextToSpeechClient:
         next_text: typing.Optional[str] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -377,6 +388,9 @@ class TextToSpeechClient:
 
         next_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+
+        use_pvc_as_ivc : typing.Optional[bool]
+            If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -430,6 +444,7 @@ class TextToSpeechClient:
                 "next_text": next_text,
                 "previous_request_ids": previous_request_ids,
                 "next_request_ids": next_request_ids,
+                "use_pvc_as_ivc": use_pvc_as_ivc,
             },
             request_options=request_options,
             omit=OMIT,
@@ -474,6 +489,7 @@ class TextToSpeechClient:
         next_text: typing.Optional[str] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -523,6 +539,9 @@ class TextToSpeechClient:
         next_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
 
+        use_pvc_as_ivc : typing.Optional[bool]
+            If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -567,6 +586,7 @@ class TextToSpeechClient:
                 "next_text": next_text,
                 "previous_request_ids": previous_request_ids,
                 "next_request_ids": next_request_ids,
+                "use_pvc_as_ivc": use_pvc_as_ivc,
             },
             request_options=request_options,
             omit=OMIT,
@@ -613,6 +633,7 @@ class AsyncTextToSpeechClient:
         next_text: typing.Optional[str] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -661,6 +682,9 @@ class AsyncTextToSpeechClient:
 
         next_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+
+        use_pvc_as_ivc : typing.Optional[bool]
+            If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -722,6 +746,7 @@ class AsyncTextToSpeechClient:
                 "next_text": next_text,
                 "previous_request_ids": previous_request_ids,
                 "next_request_ids": next_request_ids,
+                "use_pvc_as_ivc": use_pvc_as_ivc,
             },
             request_options=request_options,
             omit=OMIT,
@@ -766,6 +791,7 @@ class AsyncTextToSpeechClient:
         next_text: typing.Optional[str] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
@@ -814,6 +840,9 @@ class AsyncTextToSpeechClient:
 
         next_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+
+        use_pvc_as_ivc : typing.Optional[bool]
+            If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -868,6 +897,7 @@ class AsyncTextToSpeechClient:
                 "next_text": next_text,
                 "previous_request_ids": previous_request_ids,
                 "next_request_ids": next_request_ids,
+                "use_pvc_as_ivc": use_pvc_as_ivc,
             },
             request_options=request_options,
             omit=OMIT,
@@ -915,6 +945,7 @@ class AsyncTextToSpeechClient:
         next_text: typing.Optional[str] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -963,6 +994,9 @@ class AsyncTextToSpeechClient:
 
         next_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+
+        use_pvc_as_ivc : typing.Optional[bool]
+            If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1024,6 +1058,7 @@ class AsyncTextToSpeechClient:
                 "next_text": next_text,
                 "previous_request_ids": previous_request_ids,
                 "next_request_ids": next_request_ids,
+                "use_pvc_as_ivc": use_pvc_as_ivc,
             },
             request_options=request_options,
             omit=OMIT,
@@ -1068,6 +1103,7 @@ class AsyncTextToSpeechClient:
         next_text: typing.Optional[str] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -1116,6 +1152,9 @@ class AsyncTextToSpeechClient:
 
         next_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+
+        use_pvc_as_ivc : typing.Optional[bool]
+            If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1169,6 +1208,7 @@ class AsyncTextToSpeechClient:
                 "next_text": next_text,
                 "previous_request_ids": previous_request_ids,
                 "next_request_ids": next_request_ids,
+                "use_pvc_as_ivc": use_pvc_as_ivc,
             },
             request_options=request_options,
             omit=OMIT,

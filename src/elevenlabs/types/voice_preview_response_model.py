@@ -2,20 +2,14 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .chapter_state import ChapterState
-from .chapter_statistics_response import ChapterStatisticsResponse
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
-class ChapterResponse(UncheckedBaseModel):
-    chapter_id: str
-    name: str
-    last_conversion_date_unix: typing.Optional[int] = None
-    conversion_progress: typing.Optional[float] = None
-    can_be_downloaded: bool
-    state: ChapterState
-    statistics: typing.Optional[ChapterStatisticsResponse] = None
+class VoicePreviewResponseModel(UncheckedBaseModel):
+    audio_base_64: str
+    generated_voice_id: str
+    media_type: typing.Optional[typing.Literal["audio/mpeg"]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

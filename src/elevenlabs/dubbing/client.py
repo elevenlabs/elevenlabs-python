@@ -38,6 +38,8 @@ class DubbingClient:
         start_time: typing.Optional[int] = OMIT,
         end_time: typing.Optional[int] = OMIT,
         highest_resolution: typing.Optional[bool] = OMIT,
+        drop_background_audio: typing.Optional[bool] = OMIT,
+        use_profanity_filter: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DoDubbingResponse:
         """
@@ -75,6 +77,12 @@ class DubbingClient:
         highest_resolution : typing.Optional[bool]
             Whether to use the highest resolution available.
 
+        drop_background_audio : typing.Optional[bool]
+            An advanced setting. Whether to drop background audio from the final dub. This can improve dub quality where it's known that audio shouldn't have a background track such as for speeches or monologues.
+
+        use_profanity_filter : typing.Optional[bool]
+            [BETA] Whether transcripts should have profanities censored with the words '[censored]'
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -107,6 +115,8 @@ class DubbingClient:
                 "start_time": start_time,
                 "end_time": end_time,
                 "highest_resolution": highest_resolution,
+                "drop_background_audio": drop_background_audio,
+                "use_profanity_filter": use_profanity_filter,
             },
             files={
                 "file": file,
@@ -410,6 +420,8 @@ class AsyncDubbingClient:
         start_time: typing.Optional[int] = OMIT,
         end_time: typing.Optional[int] = OMIT,
         highest_resolution: typing.Optional[bool] = OMIT,
+        drop_background_audio: typing.Optional[bool] = OMIT,
+        use_profanity_filter: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DoDubbingResponse:
         """
@@ -446,6 +458,12 @@ class AsyncDubbingClient:
 
         highest_resolution : typing.Optional[bool]
             Whether to use the highest resolution available.
+
+        drop_background_audio : typing.Optional[bool]
+            An advanced setting. Whether to drop background audio from the final dub. This can improve dub quality where it's known that audio shouldn't have a background track such as for speeches or monologues.
+
+        use_profanity_filter : typing.Optional[bool]
+            [BETA] Whether transcripts should have profanities censored with the words '[censored]'
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -487,6 +505,8 @@ class AsyncDubbingClient:
                 "start_time": start_time,
                 "end_time": end_time,
                 "highest_resolution": highest_resolution,
+                "drop_background_audio": drop_background_audio,
+                "use_profanity_filter": use_profanity_filter,
             },
             files={
                 "file": file,
