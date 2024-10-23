@@ -33,6 +33,7 @@ class SpeechToSpeechClient:
         model_id: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[str] = OMIT,
         seed: typing.Optional[int] = OMIT,
+        remove_background_noise: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -63,6 +64,9 @@ class SpeechToSpeechClient:
 
         seed : typing.Optional[int]
             If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+
+        remove_background_noise : typing.Optional[bool]
+            If set will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -98,6 +102,7 @@ class SpeechToSpeechClient:
                 "model_id": model_id,
                 "voice_settings": voice_settings,
                 "seed": seed,
+                "remove_background_noise": remove_background_noise,
             },
             files={
                 "audio": audio,
@@ -137,6 +142,7 @@ class SpeechToSpeechClient:
         model_id: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[str] = OMIT,
         seed: typing.Optional[int] = OMIT,
+        remove_background_noise: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -179,6 +185,9 @@ class SpeechToSpeechClient:
         seed : typing.Optional[int]
             If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
 
+        remove_background_noise : typing.Optional[bool]
+            If set will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -213,6 +222,7 @@ class SpeechToSpeechClient:
                 "model_id": model_id,
                 "voice_settings": voice_settings,
                 "seed": seed,
+                "remove_background_noise": remove_background_noise,
             },
             files={
                 "audio": audio,
@@ -257,6 +267,7 @@ class AsyncSpeechToSpeechClient:
         model_id: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[str] = OMIT,
         seed: typing.Optional[int] = OMIT,
+        remove_background_noise: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -287,6 +298,9 @@ class AsyncSpeechToSpeechClient:
 
         seed : typing.Optional[int]
             If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+
+        remove_background_noise : typing.Optional[bool]
+            If set will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -330,6 +344,7 @@ class AsyncSpeechToSpeechClient:
                 "model_id": model_id,
                 "voice_settings": voice_settings,
                 "seed": seed,
+                "remove_background_noise": remove_background_noise,
             },
             files={
                 "audio": audio,
@@ -369,6 +384,7 @@ class AsyncSpeechToSpeechClient:
         model_id: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[str] = OMIT,
         seed: typing.Optional[int] = OMIT,
+        remove_background_noise: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -410,6 +426,9 @@ class AsyncSpeechToSpeechClient:
 
         seed : typing.Optional[int]
             If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+
+        remove_background_noise : typing.Optional[bool]
+            If set will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -453,6 +472,7 @@ class AsyncSpeechToSpeechClient:
                 "model_id": model_id,
                 "voice_settings": voice_settings,
                 "seed": seed,
+                "remove_background_noise": remove_background_noise,
             },
             files={
                 "audio": audio,

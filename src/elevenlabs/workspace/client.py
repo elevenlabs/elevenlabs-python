@@ -3,6 +3,7 @@
 import typing
 from ..core.client_wrapper import SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.sso_provider_response_model import SsoProviderResponseModel
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.http_validation_error import HttpValidationError
@@ -20,6 +21,65 @@ OMIT = typing.cast(typing.Any, ...)
 class WorkspaceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    def get_sso_provider_admin(
+        self, *, workspace_id: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> SsoProviderResponseModel:
+        """
+        Parameters
+        ----------
+        workspace_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SsoProviderResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.workspace.get_sso_provider_admin(
+            workspace_id="workspace_id",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "admin/n8enylacgd/sso-provider",
+            method="GET",
+            params={
+                "workspace_id": workspace_id,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    SsoProviderResponseModel,
+                    construct_type(
+                        type_=SsoProviderResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def invite_user(
         self, *, email: str, request_options: typing.Optional[RequestOptions] = None
@@ -227,6 +287,73 @@ class WorkspaceClient:
 class AsyncWorkspaceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    async def get_sso_provider_admin(
+        self, *, workspace_id: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> SsoProviderResponseModel:
+        """
+        Parameters
+        ----------
+        workspace_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SsoProviderResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.workspace.get_sso_provider_admin(
+                workspace_id="workspace_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "admin/n8enylacgd/sso-provider",
+            method="GET",
+            params={
+                "workspace_id": workspace_id,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    SsoProviderResponseModel,
+                    construct_type(
+                        type_=SsoProviderResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def invite_user(
         self, *, email: str, request_options: typing.Optional[RequestOptions] = None
