@@ -10,11 +10,13 @@ from ..types.http_validation_error import HttpValidationError
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from .. import core
+from .types.projects_add_request_target_audience import ProjectsAddRequestTargetAudience
 from ..types.add_project_response_model import AddProjectResponseModel
 from ..types.project_extended_response_model import ProjectExtendedResponseModel
 from ..core.jsonable_encoder import jsonable_encoder
 from ..types.edit_project_response_model import EditProjectResponseModel
 from ..types.project_snapshots_response import ProjectSnapshotsResponse
+from ..types.add_chapter_response_model import AddChapterResponseModel
 from ..types.pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.client_wrapper import AsyncClientWrapper
@@ -91,6 +93,13 @@ class ProjectsClient:
         quality_preset: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
         author: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        genres: typing.Optional[typing.List[str]] = OMIT,
+        target_audience: typing.Optional[ProjectsAddRequestTargetAudience] = OMIT,
+        language: typing.Optional[str] = OMIT,
+        content_type: typing.Optional[str] = OMIT,
+        original_publication_date: typing.Optional[str] = OMIT,
+        mature_content: typing.Optional[bool] = OMIT,
         isbn_number: typing.Optional[str] = OMIT,
         acx_volume_normalization: typing.Optional[bool] = OMIT,
         volume_normalization: typing.Optional[bool] = OMIT,
@@ -123,9 +132,9 @@ class ProjectsClient:
         quality_preset : typing.Optional[str]
             Output quality of the generated audio. Must be one of:
             standard - standard output format, 128kbps with 44.1kHz sample rate.
-            high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the character cost by 20%.
-            ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the character cost by 50%.
-            ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the character cost by 100%.
+            high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the credit cost by 20%.
+            ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
+            ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
 
 
         title : typing.Optional[str]
@@ -133,6 +142,27 @@ class ProjectsClient:
 
         author : typing.Optional[str]
             An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
+
+        description : typing.Optional[str]
+            An optional description of the project.
+
+        genres : typing.Optional[typing.List[str]]
+            An optional list of genres associated with the project.
+
+        target_audience : typing.Optional[ProjectsAddRequestTargetAudience]
+            An optional target audience of the project.
+
+        language : typing.Optional[str]
+            An optional language of the project. Two-letter language code (ISO 639-1).
+
+        content_type : typing.Optional[str]
+            An optional content type of the project.
+
+        original_publication_date : typing.Optional[str]
+            An optional original publication date of the project, in the format YYYY-MM-DD or YYYY.
+
+        mature_content : typing.Optional[bool]
+            An optional mature content of the project.
 
         isbn_number : typing.Optional[str]
             An optional ISBN number of the project you want to create, this will be added as metadata to the mp3 file on project / chapter download.
@@ -180,6 +210,13 @@ class ProjectsClient:
                 "quality_preset": quality_preset,
                 "title": title,
                 "author": author,
+                "description": description,
+                "genres": genres,
+                "target_audience": target_audience,
+                "language": language,
+                "content_type": content_type,
+                "original_publication_date": original_publication_date,
+                "mature_content": mature_content,
                 "isbn_number": isbn_number,
                 "acx_volume_normalization": acx_volume_normalization,
                 "volume_normalization": volume_normalization,
@@ -577,7 +614,7 @@ class ProjectsClient:
             Whether to convert the audio to mpeg format.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
         ------
@@ -608,7 +645,8 @@ class ProjectsClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    for _chunk in _response.iter_bytes():
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return
                 _response.read()
@@ -668,6 +706,82 @@ class ProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def add_chapter_to_a_project(
+        self,
+        project_id: str,
+        *,
+        name: str,
+        from_url: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AddChapterResponseModel:
+        """
+        Creates a new chapter either as blank or from a URL.
+
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+
+        name : str
+            The name of the chapter, used for identification only.
+
+        from_url : typing.Optional[str]
+            An optional URL from which we will extract content to initialize the project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the project as blank.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AddChapterResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.add_chapter_to_a_project(
+            project_id="21m00Tcm4TlvDq8ikWAM",
+            name="name",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/projects/{jsonable_encoder(project_id)}/chapters/add",
+            method="POST",
+            json={
+                "name": name,
+                "from_url": from_url,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    AddChapterResponseModel,
+                    construct_type(
+                        type_=AddChapterResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     typing.cast(
@@ -840,6 +954,13 @@ class AsyncProjectsClient:
         quality_preset: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
         author: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        genres: typing.Optional[typing.List[str]] = OMIT,
+        target_audience: typing.Optional[ProjectsAddRequestTargetAudience] = OMIT,
+        language: typing.Optional[str] = OMIT,
+        content_type: typing.Optional[str] = OMIT,
+        original_publication_date: typing.Optional[str] = OMIT,
+        mature_content: typing.Optional[bool] = OMIT,
         isbn_number: typing.Optional[str] = OMIT,
         acx_volume_normalization: typing.Optional[bool] = OMIT,
         volume_normalization: typing.Optional[bool] = OMIT,
@@ -872,9 +993,9 @@ class AsyncProjectsClient:
         quality_preset : typing.Optional[str]
             Output quality of the generated audio. Must be one of:
             standard - standard output format, 128kbps with 44.1kHz sample rate.
-            high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the character cost by 20%.
-            ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the character cost by 50%.
-            ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the character cost by 100%.
+            high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the credit cost by 20%.
+            ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
+            ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
 
 
         title : typing.Optional[str]
@@ -882,6 +1003,27 @@ class AsyncProjectsClient:
 
         author : typing.Optional[str]
             An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
+
+        description : typing.Optional[str]
+            An optional description of the project.
+
+        genres : typing.Optional[typing.List[str]]
+            An optional list of genres associated with the project.
+
+        target_audience : typing.Optional[ProjectsAddRequestTargetAudience]
+            An optional target audience of the project.
+
+        language : typing.Optional[str]
+            An optional language of the project. Two-letter language code (ISO 639-1).
+
+        content_type : typing.Optional[str]
+            An optional content type of the project.
+
+        original_publication_date : typing.Optional[str]
+            An optional original publication date of the project, in the format YYYY-MM-DD or YYYY.
+
+        mature_content : typing.Optional[bool]
+            An optional mature content of the project.
 
         isbn_number : typing.Optional[str]
             An optional ISBN number of the project you want to create, this will be added as metadata to the mp3 file on project / chapter download.
@@ -937,6 +1079,13 @@ class AsyncProjectsClient:
                 "quality_preset": quality_preset,
                 "title": title,
                 "author": author,
+                "description": description,
+                "genres": genres,
+                "target_audience": target_audience,
+                "language": language,
+                "content_type": content_type,
+                "original_publication_date": original_publication_date,
+                "mature_content": mature_content,
                 "isbn_number": isbn_number,
                 "acx_volume_normalization": acx_volume_normalization,
                 "volume_normalization": volume_normalization,
@@ -1374,7 +1523,7 @@ class AsyncProjectsClient:
             Whether to convert the audio to mpeg format.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
         ------
@@ -1413,7 +1562,8 @@ class AsyncProjectsClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    async for _chunk in _response.aiter_bytes():
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return
                 await _response.aread()
@@ -1481,6 +1631,90 @@ class AsyncProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def add_chapter_to_a_project(
+        self,
+        project_id: str,
+        *,
+        name: str,
+        from_url: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AddChapterResponseModel:
+        """
+        Creates a new chapter either as blank or from a URL.
+
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+
+        name : str
+            The name of the chapter, used for identification only.
+
+        from_url : typing.Optional[str]
+            An optional URL from which we will extract content to initialize the project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the project as blank.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AddChapterResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.add_chapter_to_a_project(
+                project_id="21m00Tcm4TlvDq8ikWAM",
+                name="name",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/projects/{jsonable_encoder(project_id)}/chapters/add",
+            method="POST",
+            json={
+                "name": name,
+                "from_url": from_url,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    AddChapterResponseModel,
+                    construct_type(
+                        type_=AddChapterResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     typing.cast(

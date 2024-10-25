@@ -3,6 +3,8 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 from .language_response import LanguageResponse
+from .model_rates_response_model import ModelRatesResponseModel
+from .model_response_model_concurrency_group import ModelResponseModelConcurrencyGroup
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
@@ -23,6 +25,8 @@ class Model(UncheckedBaseModel):
     max_characters_request_subscribed_user: typing.Optional[int] = None
     maximum_text_length_per_request: typing.Optional[int] = None
     languages: typing.Optional[typing.List[LanguageResponse]] = None
+    model_rates: typing.Optional[ModelRatesResponseModel] = None
+    concurrency_group: typing.Optional[ModelResponseModelConcurrencyGroup] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

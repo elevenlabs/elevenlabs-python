@@ -6,6 +6,9 @@ from ..types.optimize_streaming_latency import OptimizeStreamingLatency
 from ..types.output_format import OutputFormat
 from ..types.voice_settings import VoiceSettings
 from ..types.pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
+from .types.body_text_to_speech_v_1_text_to_speech_voice_id_post_apply_text_normalization import (
+    BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization,
+)
 from ..core.request_options import RequestOptions
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.serialization import convert_and_respect_annotation_metadata
@@ -14,6 +17,15 @@ from ..types.http_validation_error import HttpValidationError
 from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
+from .types.body_text_to_speech_with_timestamps_v_1_text_to_speech_voice_id_with_timestamps_post_apply_text_normalization import (
+    BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization,
+)
+from .types.body_text_to_speech_streaming_v_1_text_to_speech_voice_id_stream_post_apply_text_normalization import (
+    BodyTextToSpeechStreamingV1TextToSpeechVoiceIdStreamPostApplyTextNormalization,
+)
+from .types.body_text_to_speech_streaming_with_timestamps_v_1_text_to_speech_voice_id_stream_with_timestamps_post_apply_text_normalization import (
+    BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization,
+)
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -43,6 +55,10 @@ class TextToSpeechClient:
         next_text: typing.Optional[str] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
+        apply_text_normalization: typing.Optional[
+            BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -92,8 +108,14 @@ class TextToSpeechClient:
         next_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
 
+        use_pvc_as_ivc : typing.Optional[bool]
+            If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
+
+        apply_text_normalization : typing.Optional[BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization]
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' model.
+
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
         ------
@@ -144,13 +166,16 @@ class TextToSpeechClient:
                 "next_text": next_text,
                 "previous_request_ids": previous_request_ids,
                 "next_request_ids": next_request_ids,
+                "use_pvc_as_ivc": use_pvc_as_ivc,
+                "apply_text_normalization": apply_text_normalization,
             },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    for _chunk in _response.iter_bytes():
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return
                 _response.read()
@@ -188,6 +213,10 @@ class TextToSpeechClient:
         next_text: typing.Optional[str] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
+        apply_text_normalization: typing.Optional[
+            BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
@@ -237,6 +266,12 @@ class TextToSpeechClient:
         next_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
 
+        use_pvc_as_ivc : typing.Optional[bool]
+            If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
+
+        apply_text_normalization : typing.Optional[BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization]
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' model.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -282,6 +317,8 @@ class TextToSpeechClient:
                 "next_text": next_text,
                 "previous_request_ids": previous_request_ids,
                 "next_request_ids": next_request_ids,
+                "use_pvc_as_ivc": use_pvc_as_ivc,
+                "apply_text_normalization": apply_text_normalization,
             },
             request_options=request_options,
             omit=OMIT,
@@ -329,6 +366,10 @@ class TextToSpeechClient:
         next_text: typing.Optional[str] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
+        apply_text_normalization: typing.Optional[
+            BodyTextToSpeechStreamingV1TextToSpeechVoiceIdStreamPostApplyTextNormalization
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -378,8 +419,14 @@ class TextToSpeechClient:
         next_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
 
+        use_pvc_as_ivc : typing.Optional[bool]
+            If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
+
+        apply_text_normalization : typing.Optional[BodyTextToSpeechStreamingV1TextToSpeechVoiceIdStreamPostApplyTextNormalization]
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' model.
+
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
         ------
@@ -430,13 +477,16 @@ class TextToSpeechClient:
                 "next_text": next_text,
                 "previous_request_ids": previous_request_ids,
                 "next_request_ids": next_request_ids,
+                "use_pvc_as_ivc": use_pvc_as_ivc,
+                "apply_text_normalization": apply_text_normalization,
             },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    for _chunk in _response.iter_bytes():
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return
                 _response.read()
@@ -474,6 +524,10 @@ class TextToSpeechClient:
         next_text: typing.Optional[str] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
+        apply_text_normalization: typing.Optional[
+            BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -523,6 +577,12 @@ class TextToSpeechClient:
         next_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
 
+        use_pvc_as_ivc : typing.Optional[bool]
+            If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
+
+        apply_text_normalization : typing.Optional[BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization]
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' model.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -567,6 +627,8 @@ class TextToSpeechClient:
                 "next_text": next_text,
                 "previous_request_ids": previous_request_ids,
                 "next_request_ids": next_request_ids,
+                "use_pvc_as_ivc": use_pvc_as_ivc,
+                "apply_text_normalization": apply_text_normalization,
             },
             request_options=request_options,
             omit=OMIT,
@@ -613,6 +675,10 @@ class AsyncTextToSpeechClient:
         next_text: typing.Optional[str] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
+        apply_text_normalization: typing.Optional[
+            BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -662,8 +728,14 @@ class AsyncTextToSpeechClient:
         next_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
 
+        use_pvc_as_ivc : typing.Optional[bool]
+            If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
+
+        apply_text_normalization : typing.Optional[BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization]
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' model.
+
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
         ------
@@ -722,13 +794,16 @@ class AsyncTextToSpeechClient:
                 "next_text": next_text,
                 "previous_request_ids": previous_request_ids,
                 "next_request_ids": next_request_ids,
+                "use_pvc_as_ivc": use_pvc_as_ivc,
+                "apply_text_normalization": apply_text_normalization,
             },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    async for _chunk in _response.aiter_bytes():
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return
                 await _response.aread()
@@ -766,6 +841,10 @@ class AsyncTextToSpeechClient:
         next_text: typing.Optional[str] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
+        apply_text_normalization: typing.Optional[
+            BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
@@ -814,6 +893,12 @@ class AsyncTextToSpeechClient:
 
         next_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+
+        use_pvc_as_ivc : typing.Optional[bool]
+            If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
+
+        apply_text_normalization : typing.Optional[BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization]
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' model.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -868,6 +953,8 @@ class AsyncTextToSpeechClient:
                 "next_text": next_text,
                 "previous_request_ids": previous_request_ids,
                 "next_request_ids": next_request_ids,
+                "use_pvc_as_ivc": use_pvc_as_ivc,
+                "apply_text_normalization": apply_text_normalization,
             },
             request_options=request_options,
             omit=OMIT,
@@ -915,6 +1002,10 @@ class AsyncTextToSpeechClient:
         next_text: typing.Optional[str] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
+        apply_text_normalization: typing.Optional[
+            BodyTextToSpeechStreamingV1TextToSpeechVoiceIdStreamPostApplyTextNormalization
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -964,8 +1055,14 @@ class AsyncTextToSpeechClient:
         next_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
 
+        use_pvc_as_ivc : typing.Optional[bool]
+            If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
+
+        apply_text_normalization : typing.Optional[BodyTextToSpeechStreamingV1TextToSpeechVoiceIdStreamPostApplyTextNormalization]
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' model.
+
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
         ------
@@ -1024,13 +1121,16 @@ class AsyncTextToSpeechClient:
                 "next_text": next_text,
                 "previous_request_ids": previous_request_ids,
                 "next_request_ids": next_request_ids,
+                "use_pvc_as_ivc": use_pvc_as_ivc,
+                "apply_text_normalization": apply_text_normalization,
             },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    async for _chunk in _response.aiter_bytes():
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return
                 await _response.aread()
@@ -1068,6 +1168,10 @@ class AsyncTextToSpeechClient:
         next_text: typing.Optional[str] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
+        apply_text_normalization: typing.Optional[
+            BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -1116,6 +1220,12 @@ class AsyncTextToSpeechClient:
 
         next_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+
+        use_pvc_as_ivc : typing.Optional[bool]
+            If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
+
+        apply_text_normalization : typing.Optional[BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization]
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' model.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1169,6 +1279,8 @@ class AsyncTextToSpeechClient:
                 "next_text": next_text,
                 "previous_request_ids": previous_request_ids,
                 "next_request_ids": next_request_ids,
+                "use_pvc_as_ivc": use_pvc_as_ivc,
+                "apply_text_normalization": apply_text_normalization,
             },
             request_options=request_options,
             omit=OMIT,
