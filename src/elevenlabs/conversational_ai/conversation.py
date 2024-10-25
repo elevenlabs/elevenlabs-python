@@ -60,6 +60,7 @@ class Conversation:
 
     audio_interface: AudioInterface
     callback_agent_response: Optional[Callable[[str], None]]
+    callback_agent_response_correction: Optional[Callable[[str, str], None]]
     callback_user_transcript: Optional[Callable[[str], None]]
     callback_latency_measurement: Optional[Callable[[int], None]]
 
@@ -149,6 +150,8 @@ class Conversation:
             while not self._should_stop.is_set():
                 try:
                     message = json.loads(ws.recv(timeout=0.5))
+                    if self._should_stop.is_set():
+                        return
                     self._handle_message(message, ws)
                 except TimeoutError:
                     pass
@@ -171,7 +174,9 @@ class Conversation:
         elif message["type"] == "agent_response_correction":
             if self.callback_agent_response_correction:
                 event = message["agent_response_correction_event"]
-                self.callback_agent_response_correction(event["original_agent_response"].strip(), event["corrected_agent_response"].strip())
+                self.callback_agent_response_correction(
+                    event["original_agent_response"].strip(), event["corrected_agent_response"].strip()
+                )
         elif message["type"] == "user_transcript":
             if self.callback_user_transcript:
                 event = message["user_transcription_event"]

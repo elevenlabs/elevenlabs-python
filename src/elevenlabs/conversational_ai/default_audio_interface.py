@@ -4,8 +4,9 @@ import threading
 
 from .conversation import AudioInterface
 
+
 class DefaultAudioInterface(AudioInterface):
-    INPUT_FRAMES_PER_BUFFER = 4000   # 250ms @ 16kHz
+    INPUT_FRAMES_PER_BUFFER = 4000  # 250ms @ 16kHz
     OUTPUT_FRAMES_PER_BUFFER = 1000  # 62.5ms @ 16kHz
 
     def __init__(self):
