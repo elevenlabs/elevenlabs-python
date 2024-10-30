@@ -1,9 +1,13 @@
 # Specify files that shouldn't be modified by Fern
 
 src/elevenlabs/client.py
-src/elevenlabs/conversation.py
+src/elevenlabs/conversational_ai/conversation.py
+src/elevenlabs/conversational_ai/default_audio_interface.py
 src/elevenlabs/play.py
 src/elevenlabs/realtime_tts.py
+
+pyproject.toml
+poetry.lock
 
 .github/workflows/ci.yml
 .github/workflows/tests.yml
