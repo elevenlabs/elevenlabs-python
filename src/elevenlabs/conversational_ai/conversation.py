@@ -9,17 +9,22 @@ from websockets.sync.client import connect
 from ..base_client import BaseElevenLabs
 
 
+class AudioEncoding(Enum):
+   # 16-bit PCM mono format at 16kHz. Recommended chunk size is 4000 samples (250 milliseconds).
+   PCM_16BIT_16KHZ
+   # TODO comment
+   XMULAW
+
 class AudioInterface(ABC):
     """AudioInterface provides an abstraction for handling audio input and output."""
 
     @abstractmethod
-    def start(self, input_callback: Callable[[bytes], None]):
+    def start(self, input_callback: Callable[[bytes], None], encoding: AudioEncoding):
         """Starts the audio interface.
 
         Called one time before the conversation starts.
         The `input_callback` should be called regularly with input audio chunks from
-        the user. The audio should be in 16-bit PCM mono format at 16kHz. Recommended
-        chunk size is 4000 samples (250 milliseconds).
+        the user. The audio should use `encoding` .
         """
         pass
 
@@ -37,8 +42,8 @@ class AudioInterface(ABC):
     def output(self, audio: bytes):
         """Output audio to the user.
 
-        The `audio` input is in 16-bit PCM mono format at 16kHz. Implementations can
-        choose to do additional buffering. This method should return quickly and not
+        The `audio` input is in the same encoding as `encoding` provided to `start`.
+        Implementations can choose to do additional buffering. This method should return quickly and not
         block the calling thread.
         """
         pass
@@ -52,6 +57,11 @@ class AudioInterface(ABC):
         """
         pass
 
+
+# In the DefaultAudioInterface  implementation
+
+# def start(...)
+#    assert encoding == PCM, "We only support PCM for the default implementation"
 
 class Conversation:
     client: BaseElevenLabs
@@ -76,6 +86,7 @@ class Conversation:
         *,
         requires_auth: bool,
         audio_interface: AudioInterface,
+        audio_encoding: AudioEncoding = AudioEncoding.PCM_16BIT_16KHZ
         callback_agent_response: Optional[Callable[[str], None]] = None,
         callback_agent_response_correction: Optional[Callable[[str, str], None]] = None,
         callback_user_transcript: Optional[Callable[[str], None]] = None,
