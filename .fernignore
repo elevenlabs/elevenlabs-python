@@ -6,9 +6,6 @@ src/elevenlabs/conversational_ai/default_audio_interface.py
 src/elevenlabs/play.py
 src/elevenlabs/realtime_tts.py
 
-pyproject.toml
-poetry.lock
-
 .github/workflows/ci.yml
 .github/workflows/tests.yml
 
