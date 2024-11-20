@@ -59,6 +59,7 @@ class Conversation:
     requires_auth: bool
 
     audio_interface: AudioInterface
+    elevenlabs_extra_body: Optional[dict]
     callback_agent_response: Optional[Callable[[str], None]]
     callback_agent_response_correction: Optional[Callable[[str, str], None]]
     callback_user_transcript: Optional[Callable[[str], None]]
@@ -76,6 +77,7 @@ class Conversation:
         *,
         requires_auth: bool,
         audio_interface: AudioInterface,
+        elevenlabs_extra_body: Optional[dict] = None,
         callback_agent_response: Optional[Callable[[str], None]] = None,
         callback_agent_response_correction: Optional[Callable[[str, str], None]] = None,
         callback_user_transcript: Optional[Callable[[str], None]] = None,
@@ -103,6 +105,7 @@ class Conversation:
         self.requires_auth = requires_auth
 
         self.audio_interface = audio_interface
+        self.elevenlabs_extra_body = elevenlabs_extra_body
         self.callback_agent_response = callback_agent_response
         self.callback_agent_response_correction = callback_agent_response_correction
         self.callback_user_transcript = callback_user_transcript
@@ -161,6 +164,15 @@ class Conversation:
             event = message["conversation_initiation_metadata_event"]
             assert self._conversation_id is None
             self._conversation_id = event["conversation_id"]
+            if self.elevenlabs_extra_body:
+                ws.send(
+                    json.dumps(
+                    {
+                        "type": "conversation_initiation_client_data",
+                        "custom_llm_extra_body": self.elevenlabs_extra_body
+                        }
+                    )
+                )
         elif message["type"] == "audio":
             event = message["audio_event"]
             if int(event["event_id"]) <= self._last_interrupt_id:
