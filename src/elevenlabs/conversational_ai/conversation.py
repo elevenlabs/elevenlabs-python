@@ -59,14 +59,9 @@ class ConversationConfig:
         extra_body: Optional[dict] = None,
         conversation_config_override: Optional[dict] = None,
     ):
-        if extra_body:
-            self.extra_body = extra_body
-        else:
-            self.extra_body = {}
-        if conversation_config_override:
-            self.conversation_config_override = conversation_config_override
-        else:
-            self.conversation_config_override = {}
+        self.extra_body = extra_body or {}
+        self.conversation_config_override = conversation_config_override or {}
+        
 class Conversation:
     client: BaseElevenLabs
     agent_id: str
@@ -153,7 +148,6 @@ class Conversation:
 
     def _run(self, ws_url: str):
         with connect(ws_url) as ws:
-
             if self.config:
                 ws.send(
                     json.dumps(
@@ -227,7 +221,7 @@ class Conversation:
             if self.callback_latency_measurement and event["ping_ms"]:
                 self.callback_latency_measurement(int(event["ping_ms"]))
         else:
-            print(message["type"])  # Ignore all other message types.
+            None  # Ignore all other message types.
 
     def _get_wss_url(self):
         base_url = self.client._client_wrapper._base_url
