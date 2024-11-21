@@ -66,7 +66,7 @@ class Conversation:
     client: BaseElevenLabs
     agent_id: str
     requires_auth: bool
-    config: Optional[ConversationConfig]
+    config: ConversationConfig
     audio_interface: AudioInterface
     callback_agent_response: Optional[Callable[[str], None]]
     callback_agent_response_correction: Optional[Callable[[str, str], None]]
