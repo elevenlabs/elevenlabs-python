@@ -85,7 +85,7 @@ class Conversation:
         *,
         requires_auth: bool,
         audio_interface: AudioInterface,
-        config: Optional[ConversationConfig] = ConversationConfig(),
+        config: Optional[ConversationConfig] = None,
         
         callback_agent_response: Optional[Callable[[str], None]] = None,
         callback_agent_response_correction: Optional[Callable[[str, str], None]] = None,
@@ -115,7 +115,7 @@ class Conversation:
 
         self.audio_interface = audio_interface
         self.callback_agent_response = callback_agent_response
-        self.config = config
+        self.config = config or ConversationConfig()
         self.callback_agent_response_correction = callback_agent_response_correction
         self.callback_user_transcript = callback_user_transcript
         self.callback_latency_measurement = callback_latency_measurement
