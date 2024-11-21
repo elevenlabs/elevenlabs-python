@@ -220,7 +220,7 @@ class Conversation:
             if self.callback_latency_measurement and event["ping_ms"]:
                 self.callback_latency_measurement(int(event["ping_ms"]))
         else:
-            None  # Ignore all other message types.
+            pass  # Ignore all other message types.
 
     def _get_wss_url(self):
         base_url = self.client._client_wrapper._base_url
