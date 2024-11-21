@@ -56,18 +56,17 @@ class ConversationConfig:
     """Configuration options for the Conversation."""
     def __init__(
         self,
-        elevenlabs_extra_body: Optional[dict] = None,
+        extra_body: Optional[dict] = None,
         conversation_config_override: Optional[dict] = None,
     ):
-        if elevenlabs_extra_body:
-            self.elevenlabs_extra_body = elevenlabs_extra_body
+        if extra_body:
+            self.extra_body = extra_body
         else:
-            self.elevenlabs_extra_body = {}
+            self.extra_body = {}
         if conversation_config_override:
             self.conversation_config_override = conversation_config_override
         else:
             self.conversation_config_override = {}
-            
 class Conversation:
     client: BaseElevenLabs
     agent_id: str
@@ -92,7 +91,7 @@ class Conversation:
         requires_auth: bool,
         audio_interface: AudioInterface,
         config: Optional[ConversationConfig] = None,
-
+        
         callback_agent_response: Optional[Callable[[str], None]] = None,
         callback_agent_response_correction: Optional[Callable[[str, str], None]] = None,
         callback_user_transcript: Optional[Callable[[str], None]] = None,
@@ -160,7 +159,7 @@ class Conversation:
                     json.dumps(
                     {
                         "type": "conversation_initiation_client_data",
-                        "custom_llm_extra_body": self.config.elevenlabs_extra_body,
+                        "custom_llm_extra_body": self.config.extra_body,
                         "conversation_config_override": self.config.conversation_config_override,
                         }
                     )
@@ -190,6 +189,7 @@ class Conversation:
             event = message["conversation_initiation_metadata_event"]
             assert self._conversation_id is None
             self._conversation_id = event["conversation_id"]
+
         elif message["type"] == "audio":
             event = message["audio_event"]
             if int(event["event_id"]) <= self._last_interrupt_id:
