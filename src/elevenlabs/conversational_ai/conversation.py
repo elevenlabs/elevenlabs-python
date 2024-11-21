@@ -52,14 +52,28 @@ class AudioInterface(ABC):
         """
         pass
 
-
+class ConversationConfig:
+    """Configuration options for the Conversation."""
+    def __init__(
+        self,
+        elevenlabs_extra_body: Optional[dict] = None,
+        conversation_config_override: Optional[dict] = None,
+    ):
+        if elevenlabs_extra_body:
+            self.elevenlabs_extra_body = elevenlabs_extra_body
+        else:
+            self.elevenlabs_extra_body = {}
+        if conversation_config_override:
+            self.conversation_config_override = conversation_config_override
+        else:
+            self.conversation_config_override = {}
+            
 class Conversation:
     client: BaseElevenLabs
     agent_id: str
     requires_auth: bool
-
+    config: Optional[ConversationConfig]
     audio_interface: AudioInterface
-    elevenlabs_extra_body: Optional[dict]
     callback_agent_response: Optional[Callable[[str], None]]
     callback_agent_response_correction: Optional[Callable[[str, str], None]]
     callback_user_transcript: Optional[Callable[[str], None]]
@@ -77,7 +91,8 @@ class Conversation:
         *,
         requires_auth: bool,
         audio_interface: AudioInterface,
-        elevenlabs_extra_body: Optional[dict] = None,
+        config: Optional[ConversationConfig] = None,
+
         callback_agent_response: Optional[Callable[[str], None]] = None,
         callback_agent_response_correction: Optional[Callable[[str, str], None]] = None,
         callback_user_transcript: Optional[Callable[[str], None]] = None,
@@ -105,8 +120,8 @@ class Conversation:
         self.requires_auth = requires_auth
 
         self.audio_interface = audio_interface
-        self.elevenlabs_extra_body = elevenlabs_extra_body
         self.callback_agent_response = callback_agent_response
+        self.config = config
         self.callback_agent_response_correction = callback_agent_response_correction
         self.callback_user_transcript = callback_user_transcript
         self.callback_latency_measurement = callback_latency_measurement
@@ -140,6 +155,17 @@ class Conversation:
     def _run(self, ws_url: str):
         with connect(ws_url) as ws:
 
+            if self.config:
+                ws.send(
+                    json.dumps(
+                    {
+                        "type": "conversation_initiation_client_data",
+                        "custom_llm_extra_body": self.config.elevenlabs_extra_body,
+                        "conversation_config_override": self.config.conversation_config_override,
+                        }
+                    )
+                )
+
             def input_callback(audio):
                 ws.send(
                     json.dumps(
@@ -164,15 +190,6 @@ class Conversation:
             event = message["conversation_initiation_metadata_event"]
             assert self._conversation_id is None
             self._conversation_id = event["conversation_id"]
-            if self.elevenlabs_extra_body:
-                ws.send(
-                    json.dumps(
-                    {
-                        "type": "conversation_initiation_client_data",
-                        "custom_llm_extra_body": self.elevenlabs_extra_body
-                        }
-                    )
-                )
         elif message["type"] == "audio":
             event = message["audio_event"]
             if int(event["event_id"]) <= self._last_interrupt_id:
@@ -210,7 +227,7 @@ class Conversation:
             if self.callback_latency_measurement and event["ping_ms"]:
                 self.callback_latency_measurement(int(event["ping_ms"]))
         else:
-            pass  # Ignore all other message types.
+            print(message["type"])  # Ignore all other message types.
 
     def _get_wss_url(self):
         base_url = self.client._client_wrapper._base_url
