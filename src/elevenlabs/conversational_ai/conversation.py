@@ -85,7 +85,7 @@ class Conversation:
         *,
         requires_auth: bool,
         audio_interface: AudioInterface,
-        config: Optional[ConversationConfig] = None,
+        config: Optional[ConversationConfig] = ConversationConfig(),
         
         callback_agent_response: Optional[Callable[[str], None]] = None,
         callback_agent_response_correction: Optional[Callable[[str, str], None]] = None,
@@ -148,16 +148,15 @@ class Conversation:
 
     def _run(self, ws_url: str):
         with connect(ws_url) as ws:
-            if self.config:
-                ws.send(
-                    json.dumps(
-                    {
-                        "type": "conversation_initiation_client_data",
-                        "custom_llm_extra_body": self.config.extra_body,
-                        "conversation_config_override": self.config.conversation_config_override,
-                        }
-                    )
+            ws.send(
+                json.dumps(
+                {
+                    "type": "conversation_initiation_client_data",
+                    "custom_llm_extra_body": self.config.extra_body,
+                    "conversation_config_override": self.config.conversation_config_override,
+                    }
                 )
+            )
 
             def input_callback(audio):
                 ws.send(
