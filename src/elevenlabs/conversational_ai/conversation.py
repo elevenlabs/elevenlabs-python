@@ -52,12 +52,21 @@ class AudioInterface(ABC):
         """
         pass
 
-
+class ConversationConfig:
+    """Configuration options for the Conversation."""
+    def __init__(
+        self,
+        extra_body: Optional[dict] = None,
+        conversation_config_override: Optional[dict] = None,
+    ):
+        self.extra_body = extra_body or {}
+        self.conversation_config_override = conversation_config_override or {}
+        
 class Conversation:
     client: BaseElevenLabs
     agent_id: str
     requires_auth: bool
-
+    config: ConversationConfig
     audio_interface: AudioInterface
     callback_agent_response: Optional[Callable[[str], None]]
     callback_agent_response_correction: Optional[Callable[[str, str], None]]
@@ -76,6 +85,8 @@ class Conversation:
         *,
         requires_auth: bool,
         audio_interface: AudioInterface,
+        config: Optional[ConversationConfig] = None,
+        
         callback_agent_response: Optional[Callable[[str], None]] = None,
         callback_agent_response_correction: Optional[Callable[[str, str], None]] = None,
         callback_user_transcript: Optional[Callable[[str], None]] = None,
@@ -104,6 +115,7 @@ class Conversation:
 
         self.audio_interface = audio_interface
         self.callback_agent_response = callback_agent_response
+        self.config = config or ConversationConfig()
         self.callback_agent_response_correction = callback_agent_response_correction
         self.callback_user_transcript = callback_user_transcript
         self.callback_latency_measurement = callback_latency_measurement
@@ -136,6 +148,15 @@ class Conversation:
 
     def _run(self, ws_url: str):
         with connect(ws_url) as ws:
+            ws.send(
+                json.dumps(
+                {
+                    "type": "conversation_initiation_client_data",
+                    "custom_llm_extra_body": self.config.extra_body,
+                    "conversation_config_override": self.config.conversation_config_override,
+                    }
+                )
+            )
 
             def input_callback(audio):
                 ws.send(
@@ -161,6 +182,7 @@ class Conversation:
             event = message["conversation_initiation_metadata_event"]
             assert self._conversation_id is None
             self._conversation_id = event["conversation_id"]
+
         elif message["type"] == "audio":
             event = message["audio_event"]
             if int(event["event_id"]) <= self._last_interrupt_id:
