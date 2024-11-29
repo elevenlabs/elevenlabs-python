@@ -5,6 +5,7 @@ import typing
 from .project_response_model_target_audience import ProjectResponseModelTargetAudience
 from .project_state import ProjectState
 from .project_response_model_access_level import ProjectResponseModelAccessLevel
+from .project_response_model_fiction import ProjectResponseModelFiction
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
@@ -32,6 +33,9 @@ class ProjectResponse(UncheckedBaseModel):
     volume_normalization: bool
     state: ProjectState
     access_level: ProjectResponseModelAccessLevel
+    fiction: typing.Optional[ProjectResponseModelFiction] = None
+    quality_check_on: bool
+    quality_check_on_when_bulk_convert: bool
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

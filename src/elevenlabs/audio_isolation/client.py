@@ -37,15 +37,6 @@ class AudioIsolationClient:
         ------
         typing.Iterator[bytes]
             Successful Response
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.audio_isolation.audio_isolation()
         """
         with self._client_wrapper.httpx_client.stream(
             "v1/audio-isolation",
@@ -97,15 +88,6 @@ class AudioIsolationClient:
         ------
         typing.Iterator[bytes]
             Successful Response
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.audio_isolation.audio_isolation_stream()
         """
         with self._client_wrapper.httpx_client.stream(
             "v1/audio-isolation/stream",
@@ -162,23 +144,6 @@ class AsyncAudioIsolationClient:
         ------
         typing.AsyncIterator[bytes]
             Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.audio_isolation.audio_isolation()
-
-
-        asyncio.run(main())
         """
         async with self._client_wrapper.httpx_client.stream(
             "v1/audio-isolation",
@@ -230,23 +195,6 @@ class AsyncAudioIsolationClient:
         ------
         typing.AsyncIterator[bytes]
             Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.audio_isolation.audio_isolation_stream()
-
-
-        asyncio.run(main())
         """
         async with self._client_wrapper.httpx_client.stream(
             "v1/audio-isolation/stream",

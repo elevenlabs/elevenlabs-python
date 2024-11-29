@@ -85,7 +85,7 @@ class VoiceGenerationClient:
             Category code corresponding to the gender of the generated voice. Possible values: female, male.
 
         accent : str
-            Category code corresponding to the accent of the generated voice. Possible values: american, british, african, australian, indian.
+            Category code corresponding to the accent of the generated voice. Possible values: british, american, african, australian, indian.
 
         age : Age
             Category code corresponding to the age of the generated voice. Possible values: young, middle_aged, old.
@@ -318,7 +318,7 @@ class AsyncVoiceGenerationClient:
             Category code corresponding to the gender of the generated voice. Possible values: female, male.
 
         accent : str
-            Category code corresponding to the accent of the generated voice. Possible values: american, british, african, australian, indian.
+            Category code corresponding to the accent of the generated voice. Possible values: british, american, african, australian, indian.
 
         age : Age
             Category code corresponding to the age of the generated voice. Possible values: young, middle_aged, old.

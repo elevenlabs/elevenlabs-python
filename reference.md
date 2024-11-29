@@ -75,6 +75,22 @@ client.history.get_all(
 <dl>
 <dd>
 
+**search:** `typing.Optional[str]` — search term used for filtering
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**source:** `typing.Optional[HistoryGetAllRequestSource]` — Source of the generated history item
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -376,235 +392,7 @@ client.history.download(
 </details>
 
 ## TextToSoundEffects
-<details><summary><code>client.text_to_sound_effects.<a href="src/elevenlabs/text_to_sound_effects/client.py">convert</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Converts a text of your choice into sound
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.text_to_sound_effects.convert(
-    text="string",
-    duration_seconds=1.1,
-    prompt_influence=1.1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**text:** `str` — The text that will get converted into a sound effect.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**duration_seconds:** `typing.Optional[float]` — The duration of the sound which will be generated in seconds. Must be at least 0.5 and at most 22. If set to None we will guess the optimal duration using the prompt. Defaults to None.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prompt_influence:** `typing.Optional[float]` — A higher prompt influence makes your generation follow the prompt more closely while also making generations less variable. Must be a value between 0 and 1. Defaults to 0.3.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## AudioIsolation
-<details><summary><code>client.audio_isolation.<a href="src/elevenlabs/audio_isolation/client.py">audio_isolation</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Removes background noise from audio
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.audio_isolation.audio_isolation()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**audio:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.audio_isolation.<a href="src/elevenlabs/audio_isolation/client.py">audio_isolation_stream</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Removes background noise from audio and streams the result
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.audio_isolation.audio_isolation_stream()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**audio:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## Samples
 <details><summary><code>client.samples.<a href="src/elevenlabs/samples/client.py">delete</a>(...)</code></summary>
 <dl>
@@ -895,7 +683,7 @@ client.text_to_speech.convert(
 <dl>
 <dd>
 
-**seed:** `typing.Optional[int]` — If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+**seed:** `typing.Optional[int]` — If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
     
 </dd>
 </dl>
@@ -1086,7 +874,7 @@ client.text_to_speech.convert_with_timestamps(
 <dl>
 <dd>
 
-**seed:** `typing.Optional[int]` — If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+**seed:** `typing.Optional[int]` — If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
     
 </dd>
 </dl>
@@ -1286,7 +1074,7 @@ client.text_to_speech.convert_as_stream(
 <dl>
 <dd>
 
-**seed:** `typing.Optional[int]` — If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+**seed:** `typing.Optional[int]` — If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
     
 </dd>
 </dl>
@@ -1479,7 +1267,7 @@ client.text_to_speech.stream_with_timestamps(
 <dl>
 <dd>
 
-**seed:** `typing.Optional[int]` — If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+**seed:** `typing.Optional[int]` — If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
     
 </dd>
 </dl>
@@ -1550,297 +1338,6 @@ client.text_to_speech.stream_with_timestamps(
 </details>
 
 ## SpeechToSpeech
-<details><summary><code>client.speech_to_speech.<a href="src/elevenlabs/speech_to_speech/client.py">convert</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create speech by combining the content and emotion of the uploaded audio with a voice of your choice.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.speech_to_speech.convert(
-    voice_id="string",
-    enable_logging=True,
-    optimize_streaming_latency="0",
-    output_format="mp3_22050_32",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**voice_id:** `str` — Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**audio:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**optimize_streaming_latency:** `typing.Optional[OptimizeStreamingLatency]` — You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**output_format:** `typing.Optional[OutputFormat]` — The output format of the generated audio.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**model_id:** `typing.Optional[str]` — Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**voice_settings:** `typing.Optional[str]` — Voice settings overriding stored setttings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**seed:** `typing.Optional[int]` — If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**remove_background_noise:** `typing.Optional[bool]` — If set will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.speech_to_speech.<a href="src/elevenlabs/speech_to_speech/client.py">convert_as_stream</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create speech by combining the content and emotion of the uploaded audio with a voice of your choice and returns an audio stream.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.speech_to_speech.convert_as_stream(
-    voice_id="string",
-    enable_logging="0",
-    optimize_streaming_latency="mp3_22050_32",
-    output_format="string",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**voice_id:** `str` — Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**audio:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**enable_logging:** `typing.Optional[OptimizeStreamingLatency]` — You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**optimize_streaming_latency:** `typing.Optional[OutputFormat]` — The output format of the generated audio.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**output_format:** `typing.Optional[str]` 
-
-Output format of the generated audio. Must be one of:
-mp3_22050_32 - output format, mp3 with 22.05kHz sample rate at 32kbps.
-mp3_44100_32 - output format, mp3 with 44.1kHz sample rate at 32kbps.
-mp3_44100_64 - output format, mp3 with 44.1kHz sample rate at 64kbps.
-mp3_44100_96 - output format, mp3 with 44.1kHz sample rate at 96kbps.
-mp3_44100_128 - default output format, mp3 with 44.1kHz sample rate at 128kbps.
-mp3_44100_192 - output format, mp3 with 44.1kHz sample rate at 192kbps. Requires you to be subscribed to Creator tier or above.
-pcm_16000 - PCM format (S16LE) with 16kHz sample rate.
-pcm_22050 - PCM format (S16LE) with 22.05kHz sample rate.
-pcm_24000 - PCM format (S16LE) with 24kHz sample rate.
-pcm_44100 - PCM format (S16LE) with 44.1kHz sample rate. Requires you to be subscribed to Pro tier or above.
-ulaw_8000 - μ-law format (sometimes written mu-law, often approximated as u-law) with 8kHz sample rate. Note that this format is commonly used for Twilio audio inputs.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**model_id:** `typing.Optional[str]` — Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**voice_settings:** `typing.Optional[str]` — Voice settings overriding stored setttings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**seed:** `typing.Optional[int]` — If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**remove_background_noise:** `typing.Optional[bool]` — If set will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## VoiceGeneration
 <details><summary><code>client.voice_generation.<a href="src/elevenlabs/voice_generation/client.py">generate_parameters</a>()</code></summary>
 <dl>
@@ -1964,7 +1461,7 @@ client.voice_generation.generate(
 <dl>
 <dd>
 
-**accent:** `str` — Category code corresponding to the accent of the generated voice. Possible values: american, british, african, australian, indian.
+**accent:** `str` — Category code corresponding to the accent of the generated voice. Possible values: british, american, african, australian, indian.
     
 </dd>
 </dl>
@@ -2146,8 +1643,8 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.text_to_voice.create_previews(
-    voice_description="voice_description",
-    text="text",
+    voice_description="A sassy little squeaky mouse",
+    text="Every act of kindness, no matter how small, carries value and can make a difference, as no gesture of goodwill is ever wasted.",
 )
 
 ```
@@ -2173,6 +1670,35 @@ client.text_to_voice.create_previews(
 <dd>
 
 **text:** `str` — Text to generate, text length has to be between 100 and 1000.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**output_format:** `typing.Optional[TextToVoiceCreatePreviewsRequestOutputFormat]` 
+
+Output format of the generated audio. Must be one of:
+mp3_22050_32 - output format, mp3 with 22.05kHz sample rate at 32kbps.
+mp3_44100_32 - output format, mp3 with 44.1kHz sample rate at 32kbps.
+mp3_44100_64 - output format, mp3 with 44.1kHz sample rate at 64kbps.
+mp3_44100_96 - output format, mp3 with 44.1kHz sample rate at 96kbps.
+mp3_44100_128 - default output format, mp3 with 44.1kHz sample rate at 128kbps.
+mp3_44100_192 - output format, mp3 with 44.1kHz sample rate at 192kbps. Requires you to be subscribed to Creator tier or above.
+pcm_16000 - PCM format (S16LE) with 16kHz sample rate.
+pcm_22050 - PCM format (S16LE) with 22.05kHz sample rate.
+pcm_24000 - PCM format (S16LE) with 24kHz sample rate.
+pcm_44100 - PCM format (S16LE) with 44.1kHz sample rate. Requires you to be subscribed to Pro tier or above.
+ulaw_8000 - μ-law format (sometimes written mu-law, often approximated as u-law) with 8kHz sample rate. Note that this format is commonly used for Twilio audio inputs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auto_generate_text:** `typing.Optional[bool]` — Whether to automatically generate a text suitable for the voice description.
     
 </dd>
 </dl>
@@ -2225,9 +1751,9 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.text_to_voice.create_voice_from_preview(
-    voice_name="voice_name",
-    voice_description="voice_description",
-    generated_voice_id="generated_voice_id",
+    voice_name="Little squeaky mouse",
+    voice_description="A sassy little squeaky mouse",
+    generated_voice_id="37HceQefKmEi3bGovXjL",
 )
 
 ```
@@ -3767,6 +3293,22 @@ ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate
 <dl>
 <dd>
 
+**fiction:** `typing.Optional[ProjectsAddRequestFiction]` — An optional fiction of the project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality_check_on:** `typing.Optional[bool]` — Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -3959,6 +3501,14 @@ client.projects.edit_basic_project_info(
 <dd>
 
 **volume_normalization:** `typing.Optional[bool]` — When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality_check_on:** `typing.Optional[bool]` — Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
     
 </dd>
 </dl>
@@ -4177,94 +3727,6 @@ client.projects.get_snapshots(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">stream_audio</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Stream the audio from a project snapshot.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.projects.stream_audio(
-    project_id="string",
-    project_snapshot_id="string",
-    convert_to_mpeg=True,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project_id:** `str` — The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project_snapshot_id:** `str` — The project_snapshot_id of the project snapshot. You can query GET /v1/projects/{project_id}/snapshots to list all available snapshots for a project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**convert_to_mpeg:** `typing.Optional[bool]` — Whether to convert the audio to mpeg format.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
     
 </dd>
 </dl>
@@ -5310,85 +4772,6 @@ client.dubbing.delete_dubbing_project(
 </dl>
 </details>
 
-<details><summary><code>client.dubbing.<a href="src/elevenlabs/dubbing/client.py">get_dubbed_file</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Returns dubbed file as a streamed file. Videos will be returned in MP4 format and audio only dubs will be returned in MP3.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.dubbing.get_dubbed_file(
-    dubbing_id="string",
-    language_code="string",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**dubbing_id:** `str` — ID of the dubbing project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**language_code:** `str` — ID of the language.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.dubbing.<a href="src/elevenlabs/dubbing/client.py">get_transcript_for_dub</a>(...)</code></summary>
 <dl>
 <dd>
@@ -5459,289 +4842,6 @@ client.dubbing.get_transcript_for_dub(
 **format_type:** `typing.Optional[
     GetTranscriptForDubV1DubbingDubbingIdTranscriptLanguageCodeGetRequestFormatType
 ]` — Format to use for the subtitle file, either 'srt' or 'webvtt'
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Workspace
-<details><summary><code>client.workspace.<a href="src/elevenlabs/workspace/client.py">get_sso_provider_admin</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.workspace.get_sso_provider_admin(
-    workspace_id="workspace_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**workspace_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.workspace.<a href="src/elevenlabs/workspace/client.py">invite_user</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Sends an email invitation to join your workspace to the provided email. If the user doesn't have an account they will be prompted to create one. If the user accepts this invite they will be added as a user to your workspace and your subscription using one of your seats. This endpoint may only be called by workspace administrators.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.workspace.invite_user(
-    email="email",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**email:** `str` — Email of the target user.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.workspace.<a href="src/elevenlabs/workspace/client.py">delete_existing_invitation</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Invalidates an existing email invitation. The invitation will still show up in the inbox it has been delivered to, but activating it to join the workspace won't work. This endpoint may only be called by workspace administrators.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.workspace.delete_existing_invitation(
-    email="email",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**email:** `str` — Email of the target user.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.workspace.<a href="src/elevenlabs/workspace/client.py">update_member</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Updates attributes of a workspace member. Apart from the email identifier, all parameters will remain unchanged unless specified. This endpoint may only be called by workspace administrators.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.workspace.update_member(
-    email="email",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**email:** `str` — Email of the target user.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**is_locked:** `typing.Optional[bool]` — Whether to lock or unlock the user account.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**workspace_role:** `typing.Optional[BodyUpdateMemberV1WorkspaceMembersPostWorkspaceRole]` — Role dictating permissions in the workspace.
     
 </dd>
 </dl>
@@ -6555,6 +5655,1437 @@ client.pronunciation_dictionary.get_all(
 <dd>
 
 **page_size:** `typing.Optional[int]` — How many pronunciation dictionaries to return at maximum. Can not exceed 100, defaults to 30.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Workspace
+<details><summary><code>client.workspace.<a href="src/elevenlabs/workspace/client.py">invite_user</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Sends an email invitation to join your workspace to the provided email. If the user doesn't have an account they will be prompted to create one. If the user accepts this invite they will be added as a user to your workspace and your subscription using one of your seats. This endpoint may only be called by workspace administrators.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.workspace.invite_user(
+    email="email",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**email:** `str` — Email of the target user.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workspace.<a href="src/elevenlabs/workspace/client.py">delete_existing_invitation</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Invalidates an existing email invitation. The invitation will still show up in the inbox it has been delivered to, but activating it to join the workspace won't work. This endpoint may only be called by workspace administrators.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.workspace.delete_existing_invitation(
+    email="email",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**email:** `str` — Email of the target user.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workspace.<a href="src/elevenlabs/workspace/client.py">update_member</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates attributes of a workspace member. Apart from the email identifier, all parameters will remain unchanged unless specified. This endpoint may only be called by workspace administrators.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.workspace.update_member(
+    email="email",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**email:** `str` — Email of the target user.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_locked:** `typing.Optional[bool]` — Whether to lock or unlock the user account.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**workspace_role:** `typing.Optional[BodyUpdateMemberV1WorkspaceMembersPostWorkspaceRole]` — Role dictating permissions in the workspace.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_signed_url</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a signed url to start a conversation with an agent with an agent that requires authorization
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_signed_url(
+    agent_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of the agent you're taking the action on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">create_agent</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create an agent from a config object
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ConversationalConfig, ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.create_agent(
+    conversation_config=ConversationalConfig(),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_config:** `ConversationalConfig` — Conversation configuration for an agent
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**platform_settings:** `typing.Optional[AgentPlatformSettings]` — Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — A name to make the agent easier to find
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_agent</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve config for an agent
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_agent(
+    agent_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">delete_agent</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete an agent
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.delete_agent(
+    agent_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">update_agent</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Patches an Agent settings
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.update_agent(
+    agent_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**conversation_config:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Conversation configuration for an agent
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**platform_settings:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**secrets:** `typing.Optional[
+    typing.Sequence[
+        BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchSecretsItem
+    ]
+]` — A list of secrets for the agent. Can be used to add new secrets or update and delete the existing ones
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — A name to make the agent easier to find
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_widget</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the widget configuration for an agent
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_widget(
+    agent_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**conversation_signature:** `typing.Optional[str]` — An expiring token that enables a conversation to start. These can be generated for an agent using the /v1/convai/conversation/get_signed_url endpoint
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_link</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the current link used to share the agent with others
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_link(
+    agent_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">post_avatar</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Sets the avatar for an agent displayed in the widget
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.post_avatar(
+    agent_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**avatar_file:** `from __future__ import annotations
+
+core.File` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_knowledge_base_document</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get details about a specific documentation making up the agent's knowledge base
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_knowledge_base_document(
+    agent_id="21m00Tcm4TlvDq8ikWAM",
+    documentation_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**documentation_id:** `str` — The id of a document from the agent's knowledge base. This is returned on document addition.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">add_agent_secret</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Uploads a file or reference a webpage for the agent to use as part of it's knowledge base
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.add_agent_secret(
+    agent_id="21m00Tcm4TlvDq8ikWAM",
+    name="name",
+    secret_value="secret_value",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `str` — A name to help identify a particular agent secret
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**secret_value:** `str` — A value to be encrypted and used by the agent
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">create_knowledge_base_document</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Uploads a file or reference a webpage for the agent to use as part of it's knowledge base
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.create_knowledge_base_document(
+    agent_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**url:** `typing.Optional[str]` — URL to a page of documentation that the agent will have access to in order to interact with users.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file:** `from __future__ import annotations
+
+typing.Optional[core.File]` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_agents</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a page of your agents and their metadata.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_agents()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many Agents to return at maximum. Can not exceed 100, defaults to 30.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Search by agents name.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_conversations</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all conversations of agents that user owns. With option to restrict to a specific agent.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_conversations(
+    agent_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agent_id:** `typing.Optional[str]` — The id of the agent you're taking the action on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**call_successful:** `typing.Optional[EvaluationSuccessResult]` — The result of the success evaluation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many conversations to return at maximum. Can not exceed 100, defaults to 30.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_conversation</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the details of a particular conversation
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_conversation(
+    conversation_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_id:** `str` — The id of the conversation you're taking the action on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_conversation_audio</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the audio recording of a particular conversation
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_conversation_audio(
+    conversation_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_id:** `str` — The id of the conversation you're taking the action on.
     
 </dd>
 </dl>

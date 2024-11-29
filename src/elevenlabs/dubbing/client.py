@@ -287,18 +287,6 @@ class DubbingClient:
         ------
         typing.Iterator[bytes]
             Successful Response
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.dubbing.get_dubbed_file(
-            dubbing_id="string",
-            language_code="string",
-        )
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}/audio/{jsonable_encoder(language_code)}",
@@ -694,26 +682,6 @@ class AsyncDubbingClient:
         ------
         typing.AsyncIterator[bytes]
             Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.dubbing.get_dubbed_file(
-                dubbing_id="string",
-                language_code="string",
-            )
-
-
-        asyncio.run(main())
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}/audio/{jsonable_encoder(language_code)}",

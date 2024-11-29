@@ -5,9 +5,11 @@ import typing
 from .project_extended_response_model_target_audience import ProjectExtendedResponseModelTargetAudience
 from .project_state import ProjectState
 from .project_extended_response_model_access_level import ProjectExtendedResponseModelAccessLevel
+from .project_extended_response_model_fiction import ProjectExtendedResponseModelFiction
 from .project_extended_response_model_quality_preset import ProjectExtendedResponseModelQualityPreset
 from .chapter_response import ChapterResponse
 from .pronunciation_dictionary_version_response_model import PronunciationDictionaryVersionResponseModel
+from .project_extended_response_model_apply_text_normalization import ProjectExtendedResponseModelApplyTextNormalization
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
@@ -35,9 +37,13 @@ class ProjectExtendedResponseModel(UncheckedBaseModel):
     volume_normalization: bool
     state: ProjectState
     access_level: ProjectExtendedResponseModelAccessLevel
+    fiction: typing.Optional[ProjectExtendedResponseModelFiction] = None
+    quality_check_on: bool
+    quality_check_on_when_bulk_convert: bool
     quality_preset: ProjectExtendedResponseModelQualityPreset
     chapters: typing.List[ChapterResponse]
     pronunciation_dictionary_versions: typing.List[PronunciationDictionaryVersionResponseModel]
+    apply_text_normalization: ProjectExtendedResponseModelApplyTextNormalization
     experimental: typing.Dict[str, typing.Optional[typing.Any]]
 
     if IS_PYDANTIC_V2:
