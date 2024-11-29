@@ -229,9 +229,5 @@ class Conversation:
         return f"{base_ws_url}/v1/convai/conversation?agent_id={self.agent_id}"
 
     def _get_signed_url(self):
-        # TODO: Use generated SDK method once available.
-        response = self.client._client_wrapper.httpx_client.request(
-            f"v1/convai/conversation/get_signed_url?agent_id={self.agent_id}",
-            method="GET",
-        )
-        return response.json()["signed_url"]
+        response = self.client.get_signed_url(agent_id=self.agent_id)
+        return response.signed_url
