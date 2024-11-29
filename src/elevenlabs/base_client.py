@@ -18,11 +18,12 @@ from .voices.client import VoicesClient
 from .projects.client import ProjectsClient
 from .chapters.client import ChaptersClient
 from .dubbing.client import DubbingClient
-from .workspace.client import WorkspaceClient
 from .models.client import ModelsClient
 from .audio_native.client import AudioNativeClient
 from .usage.client import UsageClient
 from .pronunciation_dictionary.client import PronunciationDictionaryClient
+from .workspace.client import WorkspaceClient
+from .conversational_ai.client import ConversationalAiClient
 from .core.client_wrapper import AsyncClientWrapper
 from .history.client import AsyncHistoryClient
 from .text_to_sound_effects.client import AsyncTextToSoundEffectsClient
@@ -37,11 +38,12 @@ from .voices.client import AsyncVoicesClient
 from .projects.client import AsyncProjectsClient
 from .chapters.client import AsyncChaptersClient
 from .dubbing.client import AsyncDubbingClient
-from .workspace.client import AsyncWorkspaceClient
 from .models.client import AsyncModelsClient
 from .audio_native.client import AsyncAudioNativeClient
 from .usage.client import AsyncUsageClient
 from .pronunciation_dictionary.client import AsyncPronunciationDictionaryClient
+from .workspace.client import AsyncWorkspaceClient
+from .conversational_ai.client import AsyncConversationalAiClient
 
 
 class BaseElevenLabs:
@@ -115,11 +117,12 @@ class BaseElevenLabs:
         self.projects = ProjectsClient(client_wrapper=self._client_wrapper)
         self.chapters = ChaptersClient(client_wrapper=self._client_wrapper)
         self.dubbing = DubbingClient(client_wrapper=self._client_wrapper)
-        self.workspace = WorkspaceClient(client_wrapper=self._client_wrapper)
         self.models = ModelsClient(client_wrapper=self._client_wrapper)
         self.audio_native = AudioNativeClient(client_wrapper=self._client_wrapper)
         self.usage = UsageClient(client_wrapper=self._client_wrapper)
         self.pronunciation_dictionary = PronunciationDictionaryClient(client_wrapper=self._client_wrapper)
+        self.workspace = WorkspaceClient(client_wrapper=self._client_wrapper)
+        self.conversational_ai = ConversationalAiClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncBaseElevenLabs:
@@ -193,11 +196,12 @@ class AsyncBaseElevenLabs:
         self.projects = AsyncProjectsClient(client_wrapper=self._client_wrapper)
         self.chapters = AsyncChaptersClient(client_wrapper=self._client_wrapper)
         self.dubbing = AsyncDubbingClient(client_wrapper=self._client_wrapper)
-        self.workspace = AsyncWorkspaceClient(client_wrapper=self._client_wrapper)
         self.models = AsyncModelsClient(client_wrapper=self._client_wrapper)
         self.audio_native = AsyncAudioNativeClient(client_wrapper=self._client_wrapper)
         self.usage = AsyncUsageClient(client_wrapper=self._client_wrapper)
         self.pronunciation_dictionary = AsyncPronunciationDictionaryClient(client_wrapper=self._client_wrapper)
+        self.workspace = AsyncWorkspaceClient(client_wrapper=self._client_wrapper)
+        self.conversational_ai = AsyncConversationalAiClient(client_wrapper=self._client_wrapper)
 
 
 def _get_base_url(*, base_url: typing.Optional[str] = None, environment: ElevenLabsEnvironment) -> str:

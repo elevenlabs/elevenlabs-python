@@ -17,6 +17,8 @@ class User(UncheckedBaseModel):
     first_name: typing.Optional[str] = None
     is_api_key_hashed: typing.Optional[bool] = None
     xi_api_key_preview: typing.Optional[str] = None
+    referral_link_code: typing.Optional[str] = None
+    partnerstack_partner_default_link: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -2,6 +2,7 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .types.history_get_all_request_source import HistoryGetAllRequestSource
 from ..core.request_options import RequestOptions
 from ..types.get_speech_history_response import GetSpeechHistoryResponse
 from ..core.unchecked_base_model import construct_type
@@ -27,6 +28,8 @@ class HistoryClient:
         page_size: typing.Optional[int] = None,
         start_after_history_item_id: typing.Optional[str] = None,
         voice_id: typing.Optional[str] = None,
+        search: typing.Optional[str] = None,
+        source: typing.Optional[HistoryGetAllRequestSource] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSpeechHistoryResponse:
         """
@@ -42,6 +45,12 @@ class HistoryClient:
 
         voice_id : typing.Optional[str]
             Voice ID to be filtered for, you can use GET https://api.elevenlabs.io/v1/voices to receive a list of voices and their IDs.
+
+        search : typing.Optional[str]
+            search term used for filtering
+
+        source : typing.Optional[HistoryGetAllRequestSource]
+            Source of the generated history item
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -70,6 +79,8 @@ class HistoryClient:
                 "page_size": page_size,
                 "start_after_history_item_id": start_after_history_item_id,
                 "voice_id": voice_id,
+                "search": search,
+                "source": source,
             },
             request_options=request_options,
         )
@@ -347,6 +358,8 @@ class AsyncHistoryClient:
         page_size: typing.Optional[int] = None,
         start_after_history_item_id: typing.Optional[str] = None,
         voice_id: typing.Optional[str] = None,
+        search: typing.Optional[str] = None,
+        source: typing.Optional[HistoryGetAllRequestSource] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSpeechHistoryResponse:
         """
@@ -362,6 +375,12 @@ class AsyncHistoryClient:
 
         voice_id : typing.Optional[str]
             Voice ID to be filtered for, you can use GET https://api.elevenlabs.io/v1/voices to receive a list of voices and their IDs.
+
+        search : typing.Optional[str]
+            search term used for filtering
+
+        source : typing.Optional[HistoryGetAllRequestSource]
+            Source of the generated history item
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -398,6 +417,8 @@ class AsyncHistoryClient:
                 "page_size": page_size,
                 "start_after_history_item_id": start_after_history_item_id,
                 "voice_id": voice_id,
+                "search": search,
+                "source": source,
             },
             request_options=request_options,
         )

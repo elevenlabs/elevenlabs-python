@@ -63,7 +63,7 @@ class SpeechToSpeechClient:
             Voice settings overriding stored setttings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
 
         seed : typing.Optional[int]
-            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
 
         remove_background_noise : typing.Optional[bool]
             If set will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
@@ -75,20 +75,6 @@ class SpeechToSpeechClient:
         ------
         typing.Iterator[bytes]
             Successful Response
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.speech_to_speech.convert(
-            voice_id="string",
-            enable_logging=True,
-            optimize_streaming_latency="0",
-            output_format="mp3_22050_32",
-        )
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/speech-to-speech/{jsonable_encoder(voice_id)}",
@@ -184,7 +170,7 @@ class SpeechToSpeechClient:
             Voice settings overriding stored setttings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
 
         seed : typing.Optional[int]
-            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
 
         remove_background_noise : typing.Optional[bool]
             If set will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
@@ -196,20 +182,6 @@ class SpeechToSpeechClient:
         ------
         typing.Iterator[bytes]
             Successful Response
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.speech_to_speech.convert_as_stream(
-            voice_id="string",
-            enable_logging="0",
-            optimize_streaming_latency="mp3_22050_32",
-            output_format="string",
-        )
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/speech-to-speech/{jsonable_encoder(voice_id)}/stream",
@@ -299,7 +271,7 @@ class AsyncSpeechToSpeechClient:
             Voice settings overriding stored setttings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
 
         seed : typing.Optional[int]
-            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
 
         remove_background_noise : typing.Optional[bool]
             If set will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
@@ -311,28 +283,6 @@ class AsyncSpeechToSpeechClient:
         ------
         typing.AsyncIterator[bytes]
             Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.speech_to_speech.convert(
-                voice_id="string",
-                enable_logging=True,
-                optimize_streaming_latency="0",
-                output_format="mp3_22050_32",
-            )
-
-
-        asyncio.run(main())
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/speech-to-speech/{jsonable_encoder(voice_id)}",
@@ -428,7 +378,7 @@ class AsyncSpeechToSpeechClient:
             Voice settings overriding stored setttings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
 
         seed : typing.Optional[int]
-            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
 
         remove_background_noise : typing.Optional[bool]
             If set will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
@@ -440,28 +390,6 @@ class AsyncSpeechToSpeechClient:
         ------
         typing.AsyncIterator[bytes]
             Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.speech_to_speech.convert_as_stream(
-                voice_id="string",
-                enable_logging="0",
-                optimize_streaming_latency="mp3_22050_32",
-                output_format="string",
-            )
-
-
-        asyncio.run(main())
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/speech-to-speech/{jsonable_encoder(voice_id)}/stream",

@@ -11,6 +11,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from .. import core
 from .types.projects_add_request_target_audience import ProjectsAddRequestTargetAudience
+from .types.projects_add_request_fiction import ProjectsAddRequestFiction
 from ..types.add_project_response_model import AddProjectResponseModel
 from ..types.project_extended_response_model import ProjectExtendedResponseModel
 from ..core.jsonable_encoder import jsonable_encoder
@@ -104,6 +105,8 @@ class ProjectsClient:
         acx_volume_normalization: typing.Optional[bool] = OMIT,
         volume_normalization: typing.Optional[bool] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[typing.List[str]] = OMIT,
+        fiction: typing.Optional[ProjectsAddRequestFiction] = OMIT,
+        quality_check_on: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddProjectResponseModel:
         """
@@ -176,6 +179,12 @@ class ProjectsClient:
         pronunciation_dictionary_locators : typing.Optional[typing.List[str]]
             A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
 
+        fiction : typing.Optional[ProjectsAddRequestFiction]
+            An optional fiction of the project.
+
+        quality_check_on : typing.Optional[bool]
+            Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -221,6 +230,8 @@ class ProjectsClient:
                 "acx_volume_normalization": acx_volume_normalization,
                 "volume_normalization": volume_normalization,
                 "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
+                "fiction": fiction,
+                "quality_check_on": quality_check_on,
             },
             files={
                 "from_document": from_document,
@@ -322,6 +333,7 @@ class ProjectsClient:
         author: typing.Optional[str] = OMIT,
         isbn_number: typing.Optional[str] = OMIT,
         volume_normalization: typing.Optional[bool] = OMIT,
+        quality_check_on: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EditProjectResponseModel:
         """
@@ -352,6 +364,9 @@ class ProjectsClient:
 
         volume_normalization : typing.Optional[bool]
             When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
+
+        quality_check_on : typing.Optional[bool]
+            Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -386,6 +401,7 @@ class ProjectsClient:
                 "author": author,
                 "isbn_number": isbn_number,
                 "volume_normalization": volume_normalization,
+                "quality_check_on": quality_check_on,
             },
             request_options=request_options,
             omit=OMIT,
@@ -620,19 +636,6 @@ class ProjectsClient:
         ------
         typing.Iterator[bytes]
             Successful Response
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.projects.stream_audio(
-            project_id="string",
-            project_snapshot_id="string",
-            convert_to_mpeg=True,
-        )
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}/stream",
@@ -965,6 +968,8 @@ class AsyncProjectsClient:
         acx_volume_normalization: typing.Optional[bool] = OMIT,
         volume_normalization: typing.Optional[bool] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[typing.List[str]] = OMIT,
+        fiction: typing.Optional[ProjectsAddRequestFiction] = OMIT,
+        quality_check_on: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddProjectResponseModel:
         """
@@ -1037,6 +1042,12 @@ class AsyncProjectsClient:
         pronunciation_dictionary_locators : typing.Optional[typing.List[str]]
             A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
 
+        fiction : typing.Optional[ProjectsAddRequestFiction]
+            An optional fiction of the project.
+
+        quality_check_on : typing.Optional[bool]
+            Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1090,6 +1101,8 @@ class AsyncProjectsClient:
                 "acx_volume_normalization": acx_volume_normalization,
                 "volume_normalization": volume_normalization,
                 "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
+                "fiction": fiction,
+                "quality_check_on": quality_check_on,
             },
             files={
                 "from_document": from_document,
@@ -1199,6 +1212,7 @@ class AsyncProjectsClient:
         author: typing.Optional[str] = OMIT,
         isbn_number: typing.Optional[str] = OMIT,
         volume_normalization: typing.Optional[bool] = OMIT,
+        quality_check_on: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EditProjectResponseModel:
         """
@@ -1229,6 +1243,9 @@ class AsyncProjectsClient:
 
         volume_normalization : typing.Optional[bool]
             When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
+
+        quality_check_on : typing.Optional[bool]
+            Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1271,6 +1288,7 @@ class AsyncProjectsClient:
                 "author": author,
                 "isbn_number": isbn_number,
                 "volume_normalization": volume_normalization,
+                "quality_check_on": quality_check_on,
             },
             request_options=request_options,
             omit=OMIT,
@@ -1529,27 +1547,6 @@ class AsyncProjectsClient:
         ------
         typing.AsyncIterator[bytes]
             Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.projects.stream_audio(
-                project_id="string",
-                project_snapshot_id="string",
-                convert_to_mpeg=True,
-            )
-
-
-        asyncio.run(main())
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}/stream",

@@ -6,6 +6,7 @@ from .voice_sharing_state import VoiceSharingState
 from .voice_sharing_response_model_category import VoiceSharingResponseModelCategory
 from .review_status import ReviewStatus
 from .voice_sharing_moderation_check_response_model import VoiceSharingModerationCheckResponseModel
+from .reader_resource_response_model import ReaderResourceResponseModel
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
@@ -42,6 +43,7 @@ class VoiceSharingResponse(UncheckedBaseModel):
     youtube_username: typing.Optional[str] = None
     tiktok_username: typing.Optional[str] = None
     moderation_check: typing.Optional[VoiceSharingModerationCheckResponseModel] = None
+    reader_restricted_on: typing.Optional[typing.List[ReaderResourceResponseModel]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

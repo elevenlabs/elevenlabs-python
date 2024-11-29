@@ -16,6 +16,7 @@ class ChapterResponse(UncheckedBaseModel):
     can_be_downloaded: bool
     state: ChapterState
     statistics: typing.Optional[ChapterStatisticsResponse] = None
+    last_conversion_error: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

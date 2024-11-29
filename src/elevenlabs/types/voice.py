@@ -32,6 +32,7 @@ class Voice(UncheckedBaseModel):
     is_owner: typing.Optional[bool] = None
     is_legacy: typing.Optional[bool] = None
     is_mixed: typing.Optional[bool] = None
+    created_at_unix: typing.Optional[int] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
