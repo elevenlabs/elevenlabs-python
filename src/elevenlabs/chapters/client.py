@@ -385,6 +385,9 @@ class ChaptersClient:
             json={
                 "convert_to_mpeg": convert_to_mpeg,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -821,6 +824,9 @@ class AsyncChaptersClient:
             method="POST",
             json={
                 "convert_to_mpeg": convert_to_mpeg,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

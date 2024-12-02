@@ -129,6 +129,9 @@ class VoiceGenerationClient:
                 "accent_strength": accent_strength,
                 "text": text,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
@@ -214,6 +217,9 @@ class VoiceGenerationClient:
                 "generated_voice_id": generated_voice_id,
                 "played_not_selected_voice_ids": played_not_selected_voice_ids,
                 "labels": labels,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -370,6 +376,9 @@ class AsyncVoiceGenerationClient:
                 "accent_strength": accent_strength,
                 "text": text,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
@@ -463,6 +472,9 @@ class AsyncVoiceGenerationClient:
                 "generated_voice_id": generated_voice_id,
                 "played_not_selected_voice_ids": played_not_selected_voice_ids,
                 "labels": labels,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

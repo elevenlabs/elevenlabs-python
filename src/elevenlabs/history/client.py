@@ -326,6 +326,9 @@ class HistoryClient:
                 "history_item_ids": history_item_ids,
                 "output_format": output_format,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -695,6 +698,9 @@ class AsyncHistoryClient:
             json={
                 "history_item_ids": history_item_ids,
                 "output_format": output_format,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

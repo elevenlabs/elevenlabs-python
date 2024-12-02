@@ -154,6 +154,9 @@ class ConversationalAiClient:
                 ),
                 "name": name,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -362,6 +365,9 @@ class ConversationalAiClient:
                     direction="write",
                 ),
                 "name": name,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -692,6 +698,9 @@ class ConversationalAiClient:
             json={
                 "name": name,
                 "secret_value": secret_value,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -1197,6 +1206,9 @@ class AsyncConversationalAiClient:
                 ),
                 "name": name,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -1429,6 +1441,9 @@ class AsyncConversationalAiClient:
                     direction="write",
                 ),
                 "name": name,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -1799,6 +1814,9 @@ class AsyncConversationalAiClient:
             json={
                 "name": name,
                 "secret_value": secret_value,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
