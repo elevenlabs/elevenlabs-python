@@ -172,6 +172,9 @@ class PronunciationDictionaryClient:
                     object_=rules, annotation=typing.Sequence[PronunciationDictionaryRule], direction="write"
                 ),
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -242,6 +245,9 @@ class PronunciationDictionaryClient:
             method="POST",
             json={
                 "rule_strings": rule_strings,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -617,6 +623,9 @@ class AsyncPronunciationDictionaryClient:
                     object_=rules, annotation=typing.Sequence[PronunciationDictionaryRule], direction="write"
                 ),
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -695,6 +704,9 @@ class AsyncPronunciationDictionaryClient:
             method="POST",
             json={
                 "rule_strings": rule_strings,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

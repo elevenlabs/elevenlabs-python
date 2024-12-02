@@ -56,6 +56,9 @@ class TextToSoundEffectsClient:
                 "duration_seconds": duration_seconds,
                 "prompt_influence": prompt_influence,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
@@ -123,6 +126,9 @@ class AsyncTextToSoundEffectsClient:
                 "text": text,
                 "duration_seconds": duration_seconds,
                 "prompt_influence": prompt_influence,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

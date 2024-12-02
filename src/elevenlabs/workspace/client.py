@@ -57,6 +57,9 @@ class WorkspaceClient:
             json={
                 "email": email,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -119,6 +122,9 @@ class WorkspaceClient:
             method="DELETE",
             json={
                 "email": email,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -196,6 +202,9 @@ class WorkspaceClient:
                 "is_locked": is_locked,
                 "workspace_role": workspace_role,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -272,6 +281,9 @@ class AsyncWorkspaceClient:
             json={
                 "email": email,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -342,6 +354,9 @@ class AsyncWorkspaceClient:
             method="DELETE",
             json={
                 "email": email,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -426,6 +441,9 @@ class AsyncWorkspaceClient:
                 "email": email,
                 "is_locked": is_locked,
                 "workspace_role": workspace_role,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

@@ -169,6 +169,9 @@ class TextToSpeechClient:
                 "use_pvc_as_ivc": use_pvc_as_ivc,
                 "apply_text_normalization": apply_text_normalization,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
@@ -319,6 +322,9 @@ class TextToSpeechClient:
                 "next_request_ids": next_request_ids,
                 "use_pvc_as_ivc": use_pvc_as_ivc,
                 "apply_text_normalization": apply_text_normalization,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -480,6 +486,9 @@ class TextToSpeechClient:
                 "use_pvc_as_ivc": use_pvc_as_ivc,
                 "apply_text_normalization": apply_text_normalization,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
@@ -629,6 +638,9 @@ class TextToSpeechClient:
                 "next_request_ids": next_request_ids,
                 "use_pvc_as_ivc": use_pvc_as_ivc,
                 "apply_text_normalization": apply_text_normalization,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -797,6 +809,9 @@ class AsyncTextToSpeechClient:
                 "use_pvc_as_ivc": use_pvc_as_ivc,
                 "apply_text_normalization": apply_text_normalization,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
@@ -955,6 +970,9 @@ class AsyncTextToSpeechClient:
                 "next_request_ids": next_request_ids,
                 "use_pvc_as_ivc": use_pvc_as_ivc,
                 "apply_text_normalization": apply_text_normalization,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -1124,6 +1142,9 @@ class AsyncTextToSpeechClient:
                 "use_pvc_as_ivc": use_pvc_as_ivc,
                 "apply_text_normalization": apply_text_normalization,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
@@ -1281,6 +1302,9 @@ class AsyncTextToSpeechClient:
                 "next_request_ids": next_request_ids,
                 "use_pvc_as_ivc": use_pvc_as_ivc,
                 "apply_text_normalization": apply_text_normalization,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

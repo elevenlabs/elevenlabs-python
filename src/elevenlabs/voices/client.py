@@ -613,6 +613,9 @@ class VoicesClient:
             json={
                 "new_name": new_name,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -1569,6 +1572,9 @@ class AsyncVoicesClient:
             method="POST",
             json={
                 "new_name": new_name,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

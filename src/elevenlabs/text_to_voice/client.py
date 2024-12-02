@@ -89,6 +89,9 @@ class TextToVoiceClient:
                 "text": text,
                 "auto_generate_text": auto_generate_text,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -176,6 +179,9 @@ class TextToVoiceClient:
                 "generated_voice_id": generated_voice_id,
                 "labels": labels,
                 "played_not_selected_voice_ids": played_not_selected_voice_ids,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -285,6 +291,9 @@ class AsyncTextToVoiceClient:
                 "text": text,
                 "auto_generate_text": auto_generate_text,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -380,6 +389,9 @@ class AsyncTextToVoiceClient:
                 "generated_voice_id": generated_voice_id,
                 "labels": labels,
                 "played_not_selected_voice_ids": played_not_selected_voice_ids,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

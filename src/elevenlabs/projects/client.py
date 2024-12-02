@@ -403,6 +403,9 @@ class ProjectsClient:
                 "volume_normalization": volume_normalization,
                 "quality_check_on": quality_check_on,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -643,6 +646,9 @@ class ProjectsClient:
             json={
                 "convert_to_mpeg": convert_to_mpeg,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
@@ -773,6 +779,9 @@ class ProjectsClient:
                 "name": name,
                 "from_url": from_url,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -852,6 +861,9 @@ class ProjectsClient:
                     annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
                     direction="write",
                 ),
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -1290,6 +1302,9 @@ class AsyncProjectsClient:
                 "volume_normalization": volume_normalization,
                 "quality_check_on": quality_check_on,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -1554,6 +1569,9 @@ class AsyncProjectsClient:
             json={
                 "convert_to_mpeg": convert_to_mpeg,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
@@ -1700,6 +1718,9 @@ class AsyncProjectsClient:
                 "name": name,
                 "from_url": from_url,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -1787,6 +1808,9 @@ class AsyncProjectsClient:
                     annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
                     direction="write",
                 ),
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
