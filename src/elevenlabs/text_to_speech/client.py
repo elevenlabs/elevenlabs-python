@@ -26,6 +26,8 @@ from .types.body_text_to_speech_streaming_v_1_text_to_speech_voice_id_stream_pos
 from .types.body_text_to_speech_streaming_with_timestamps_v_1_text_to_speech_voice_id_stream_with_timestamps_post_apply_text_normalization import (
     BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization,
 )
+from .types.text_to_speech_stream_with_timestamps_response import TextToSpeechStreamWithTimestampsResponse
+import json
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -538,7 +540,7 @@ class TextToSpeechClient:
             BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization
         ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    ) -> typing.Iterator[TextToSpeechStreamWithTimestampsResponse]:
         """
         Converts text into speech using a voice of your choice and returns a stream of JSONs containing audio as a base64 encoded string together with information on when which character was spoken.
 
@@ -595,9 +597,10 @@ class TextToSpeechClient:
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
-        Returns
-        -------
-        None
+        Yields
+        ------
+        typing.Iterator[TextToSpeechStreamWithTimestampsResponse]
+            Stream of JSON objects containing audio chunks and character timing information
 
         Examples
         --------
@@ -606,12 +609,14 @@ class TextToSpeechClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.text_to_speech.stream_with_timestamps(
+        response = client.text_to_speech.stream_with_timestamps(
             voice_id="21m00Tcm4TlvDq8ikWAM",
             text="text",
         )
+        for chunk in response:
+            yield chunk
         """
-        _response = self._client_wrapper.httpx_client.request(
+        with self._client_wrapper.httpx_client.stream(
             f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream/with-timestamps",
             method="POST",
             params={
@@ -644,24 +649,38 @@ class TextToSpeechClient:
             },
             request_options=request_options,
             omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
+        ) as _response:
+            try:
+                if 200 <= _response.status_code < 300:
+                    for _text in _response.iter_lines():
+                        try:
+                            if len(_text) == 0:
+                                continue
+                            yield typing.cast(
+                                TextToSpeechStreamWithTimestampsResponse,
+                                construct_type(
+                                    type_=TextToSpeechStreamWithTimestampsResponse,  # type: ignore
+                                    object_=json.loads(_text),
+                                ),
+                            )
+                        except:
+                            pass
+                    return
+                _response.read()
+                if _response.status_code == 422:
+                    raise UnprocessableEntityError(
+                        typing.cast(
+                            HttpValidationError,
+                            construct_type(
+                                type_=HttpValidationError,  # type: ignore
+                                object_=_response.json(),
+                            ),
+                        )
                     )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
 class AsyncTextToSpeechClient:
@@ -1194,7 +1213,7 @@ class AsyncTextToSpeechClient:
             BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization
         ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    ) -> typing.AsyncIterator[TextToSpeechStreamWithTimestampsResponse]:
         """
         Converts text into speech using a voice of your choice and returns a stream of JSONs containing audio as a base64 encoded string together with information on when which character was spoken.
 
@@ -1251,9 +1270,10 @@ class AsyncTextToSpeechClient:
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
-        Returns
-        -------
-        None
+        Yields
+        ------
+        typing.AsyncIterator[TextToSpeechStreamWithTimestampsResponse]
+            Stream of JSON objects containing audio chunks and character timing information
 
         Examples
         --------
@@ -1267,15 +1287,17 @@ class AsyncTextToSpeechClient:
 
 
         async def main() -> None:
-            await client.text_to_speech.stream_with_timestamps(
+            response = await client.text_to_speech.stream_with_timestamps(
                 voice_id="21m00Tcm4TlvDq8ikWAM",
                 text="text",
             )
+            async for chunk in response:
+                yield chunk
 
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
+        async with self._client_wrapper.httpx_client.stream(
             f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream/with-timestamps",
             method="POST",
             params={
@@ -1308,21 +1330,35 @@ class AsyncTextToSpeechClient:
             },
             request_options=request_options,
             omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
+        ) as _response:
+            try:
+                if 200 <= _response.status_code < 300:
+                    async for _text in _response.aiter_lines():
+                        try:
+                            if len(_text) == 0:
+                                continue
+                            yield typing.cast(
+                                TextToSpeechStreamWithTimestampsResponse,
+                                construct_type(
+                                    type_=TextToSpeechStreamWithTimestampsResponse,  # type: ignore
+                                    object_=json.loads(_text),
+                                ),
+                            )
+                        except:
+                            pass
+                    return
+                await _response.aread()
+                if _response.status_code == 422:
+                    raise UnprocessableEntityError(
+                        typing.cast(
+                            HttpValidationError,
+                            construct_type(
+                                type_=HttpValidationError,  # type: ignore
+                                object_=_response.json(),
+                            ),
+                        )
                     )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)

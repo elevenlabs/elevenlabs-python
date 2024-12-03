@@ -3,3 +3,5 @@ dist/
 __pycache__/
 poetry.toml
 .ruff_cache/
+.DS_Store
+.idea/
