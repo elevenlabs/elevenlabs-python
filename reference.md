@@ -1176,10 +1176,12 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.text_to_speech.stream_with_timestamps(
+response = client.text_to_speech.stream_with_timestamps(
     voice_id="21m00Tcm4TlvDq8ikWAM",
     text="text",
 )
+for chunk in response:
+    yield chunk
 
 ```
 </dd>

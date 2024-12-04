@@ -240,6 +240,9 @@ from .text_to_speech import (
     BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization,
     BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization,
     BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization,
+    TextToSpeechStreamWithTimestampsResponse,
+    TextToSpeechStreamWithTimestampsResponseAlignment,
+    TextToSpeechStreamWithTimestampsResponseNormalizedAlignment,
 )
 from .text_to_voice import TextToVoiceCreatePreviewsRequestOutputFormat
 from .version import __version__
@@ -428,6 +431,9 @@ __all__ = [
     "SubscriptionResponseModelCurrency",
     "SubscriptionStatus",
     "TextToSpeechAsStreamRequest",
+    "TextToSpeechStreamWithTimestampsResponse",
+    "TextToSpeechStreamWithTimestampsResponseAlignment",
+    "TextToSpeechStreamWithTimestampsResponseNormalizedAlignment",
     "TextToVoiceCreatePreviewsRequestOutputFormat",
     "TtsConversationalConfig",
     "TtsConversationalConfigOverride",
