@@ -61,12 +61,18 @@ class ConversationConfig:
     ):
         self.extra_body = extra_body or {}
         self.conversation_config_override = conversation_config_override or {}
-        
+
+class ClientTools:
+    """ClientTools provides a way to add custom tools to the conversation."""
+    def __init__(self, client_tools: Optional[dict] = None):
+        self.client_tools = client_tools or {}
+
 class Conversation:
     client: BaseElevenLabs
     agent_id: str
     requires_auth: bool
     config: ConversationConfig
+    client_tools: ClientTools
     audio_interface: AudioInterface
     callback_agent_response: Optional[Callable[[str], None]]
     callback_agent_response_correction: Optional[Callable[[str, str], None]]
@@ -86,7 +92,7 @@ class Conversation:
         requires_auth: bool,
         audio_interface: AudioInterface,
         config: Optional[ConversationConfig] = None,
-        
+        client_tools: Optional[ClientTools] = None,
         callback_agent_response: Optional[Callable[[str], None]] = None,
         callback_agent_response_correction: Optional[Callable[[str, str], None]] = None,
         callback_user_transcript: Optional[Callable[[str], None]] = None,
@@ -112,9 +118,10 @@ class Conversation:
         self.client = client
         self.agent_id = agent_id
         self.requires_auth = requires_auth
-
+        
         self.audio_interface = audio_interface
         self.callback_agent_response = callback_agent_response
+        self.client_tools = client_tools or ClientTools()
         self.config = config or ConversationConfig()
         self.callback_agent_response_correction = callback_agent_response_correction
         self.callback_user_transcript = callback_user_transcript
@@ -219,8 +226,46 @@ class Conversation:
             )
             if self.callback_latency_measurement and event["ping_ms"]:
                 self.callback_latency_measurement(int(event["ping_ms"]))
+        elif message["type"] == "client_tool_call":
+            event = message["client_tool_call_event"]
+            tool_name = event["tool_name"]
+            parameters = event["parameters"]
+            tool_call_id = event["tool_call_id"]
+            # Check if the tool exists in the configured client tools
+            if tool_name in self.config.client_tools:
+                try:
+                    # Execute the tool
+                    result = self.config.client_tools[tool_name](parameters)
+
+                    # Send back the result to the server
+                    ws.send(
+                        json.dumps({
+                            "type": "client_tool_result",
+                            "tool_call_id": tool_call_id,
+                            "result": result,
+                            "is_error": False,
+                        })
+                    )
+                except Exception as e:
+                    # Handle errors gracefully and send an error response
+                    ws.send(
+                        json.dumps({
+                            "type": "client_tool_result",
+                            "tool_call_id": tool_call_id,
+                            "result": f"Error: {str(e)}",
+                            "is_error": True,
+                        })
+                    )
         else:
-            pass  # Ignore all other message types.
+            # Tool not found, send error response
+            ws.send(
+                json.dumps({
+                    "type": "client_tool_result",
+                    "tool_call_id": tool_call_id,
+                    "result": f"Tool '{tool_name}' not found.",
+                    "is_error": True,
+                    })
+                )
 
     def _get_wss_url(self):
         base_url = self.client._client_wrapper._base_url
