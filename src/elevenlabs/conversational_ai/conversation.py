@@ -256,16 +256,18 @@ class Conversation:
                             "is_error": True,
                         })
                     )
+            else:
+                # Tool not found, send error response
+                ws.send(
+                    json.dumps({
+                        "type": "client_tool_result",
+                        "tool_call_id": tool_call_id,
+                        "result": f"Client tool with name '{tool_name}' is not defined on client",
+                        "is_error": True,
+                        })
+                    )
         else:
-            # Tool not found, send error response
-            ws.send(
-                json.dumps({
-                    "type": "client_tool_result",
-                    "tool_call_id": tool_call_id,
-                    "result": f"Tool '{tool_name}' not found.",
-                    "is_error": True,
-                    })
-                )
+            pass  # Ignore all other message types.
 
     def _get_wss_url(self):
         base_url = self.client._client_wrapper._base_url
