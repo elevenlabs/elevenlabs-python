@@ -4,7 +4,8 @@ import json
 import threading
 from typing import Callable, Optional
 
-from websockets.sync.client import connect
+from websockets.sync.client import connect, ClientConnection
+from websockets.exceptions import ConnectionClosedError, ConnectionClosedOK
 
 from ..base_client import BaseElevenLabs
 
@@ -77,6 +78,7 @@ class Conversation:
     _should_stop: threading.Event = threading.Event()
     _conversation_id: Optional[str] = None
     _last_interrupt_id: int = 0
+    _ws: Optional[ClientConnection] = None
 
     def __init__(
         self,
@@ -125,6 +127,8 @@ class Conversation:
 
         Will run in background thread until `end_session` is called.
         """
+        self._conversation_id = None
+        self._should_stop.clear()
         ws_url = self._get_signed_url() if self.requires_auth else self._get_wss_url()
         self._thread = threading.Thread(target=self._run, args=(ws_url,))
         self._thread.start()
@@ -133,6 +137,12 @@ class Conversation:
         """Ends the conversation session."""
         self.audio_interface.stop()
         self._should_stop.set()
+        try:
+            if self._ws:
+                self._ws.close()
+                print("ElevenLabs WebSocket connection closed gracefully")
+        except Exception as e:
+            print(f"Error during WebSocket closure: {e}")
 
     def wait_for_session_end(self) -> Optional[str]:
         """Waits for the conversation session to end.
@@ -147,37 +157,39 @@ class Conversation:
         return self._conversation_id
 
     def _run(self, ws_url: str):
-        with connect(ws_url) as ws:
-            ws.send(
+        self._ws = connect(ws_url)
+        self._ws.send(
+            json.dumps(
+            {
+                "type": "conversation_initiation_client_data",
+                "custom_llm_extra_body": self.config.extra_body,
+                "conversation_config_override": self.config.conversation_config_override,
+                }
+            )
+        )
+
+        def input_callback(audio):
+            self._ws.send(
                 json.dumps(
-                {
-                    "type": "conversation_initiation_client_data",
-                    "custom_llm_extra_body": self.config.extra_body,
-                    "conversation_config_override": self.config.conversation_config_override,
+                    {
+                        "user_audio_chunk": base64.b64encode(audio).decode(),
                     }
                 )
             )
 
-            def input_callback(audio):
-                ws.send(
-                    json.dumps(
-                        {
-                            "user_audio_chunk": base64.b64encode(audio).decode(),
-                        }
-                    )
-                )
+        self.audio_interface.start(input_callback)
+        while not self._should_stop.is_set():
+            try:
+                message = json.loads(self._ws.recv(timeout=0.5))
+                if self._should_stop.is_set():
+                    return
+                self._handle_message(message)
+            except TimeoutError:
+                pass
+            except(ConnectionClosedOK, ConnectionClosedError):
+                break
 
-            self.audio_interface.start(input_callback)
-            while not self._should_stop.is_set():
-                try:
-                    message = json.loads(ws.recv(timeout=0.5))
-                    if self._should_stop.is_set():
-                        return
-                    self._handle_message(message, ws)
-                except TimeoutError:
-                    pass
-
-    def _handle_message(self, message, ws):
+    def _handle_message(self, message):
         if message["type"] == "conversation_initiation_metadata":
             event = message["conversation_initiation_metadata_event"]
             assert self._conversation_id is None
@@ -209,7 +221,7 @@ class Conversation:
             self.audio_interface.interrupt()
         elif message["type"] == "ping":
             event = message["ping_event"]
-            ws.send(
+            self._ws.send(
                 json.dumps(
                     {
                         "type": "pong",
