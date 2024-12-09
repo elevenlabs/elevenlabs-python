@@ -129,6 +129,7 @@ class Conversation:
         """
         self._conversation_id = None
         self._should_stop.clear()
+        self._ws = None
         ws_url = self._get_signed_url() if self.requires_auth else self._get_wss_url()
         self._thread = threading.Thread(target=self._run, args=(ws_url,))
         self._thread.start()
