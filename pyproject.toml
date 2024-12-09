@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "elevenlabs"
-version = "1.13.3"
+version = "0.19.0"
 description = ""
 readme = "README.md"
 authors = []

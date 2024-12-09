@@ -12,9 +12,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..types.dubbing_metadata_response import DubbingMetadataResponse
 from ..core.jsonable_encoder import jsonable_encoder
-from .types.get_transcript_for_dub_v_1_dubbing_dubbing_id_transcript_language_code_get_request_format_type import (
-    GetTranscriptForDubV1DubbingDubbingIdTranscriptLanguageCodeGetRequestFormatType,
-)
+from .types.dubbing_get_dubbing_transcript_request_format_type import DubbingGetDubbingTranscriptRequestFormatType
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -315,14 +313,12 @@ class DubbingClient:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_transcript_for_dub(
+    def get_dubbing_transcript(
         self,
         dubbing_id: str,
         language_code: str,
         *,
-        format_type: typing.Optional[
-            GetTranscriptForDubV1DubbingDubbingIdTranscriptLanguageCodeGetRequestFormatType
-        ] = None,
+        format_type: typing.Optional[DubbingGetDubbingTranscriptRequestFormatType] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
@@ -336,7 +332,7 @@ class DubbingClient:
         language_code : str
             ID of the language.
 
-        format_type : typing.Optional[GetTranscriptForDubV1DubbingDubbingIdTranscriptLanguageCodeGetRequestFormatType]
+        format_type : typing.Optional[DubbingGetDubbingTranscriptRequestFormatType]
             Format to use for the subtitle file, either 'srt' or 'webvtt'
 
         request_options : typing.Optional[RequestOptions]
@@ -354,7 +350,7 @@ class DubbingClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.dubbing.get_transcript_for_dub(
+        client.dubbing.get_dubbing_transcript(
             dubbing_id="dubbing_id",
             language_code="language_code",
         )
@@ -710,14 +706,12 @@ class AsyncDubbingClient:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_transcript_for_dub(
+    async def get_dubbing_transcript(
         self,
         dubbing_id: str,
         language_code: str,
         *,
-        format_type: typing.Optional[
-            GetTranscriptForDubV1DubbingDubbingIdTranscriptLanguageCodeGetRequestFormatType
-        ] = None,
+        format_type: typing.Optional[DubbingGetDubbingTranscriptRequestFormatType] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
@@ -731,7 +725,7 @@ class AsyncDubbingClient:
         language_code : str
             ID of the language.
 
-        format_type : typing.Optional[GetTranscriptForDubV1DubbingDubbingIdTranscriptLanguageCodeGetRequestFormatType]
+        format_type : typing.Optional[DubbingGetDubbingTranscriptRequestFormatType]
             Format to use for the subtitle file, either 'srt' or 'webvtt'
 
         request_options : typing.Optional[RequestOptions]
@@ -754,7 +748,7 @@ class AsyncDubbingClient:
 
 
         async def main() -> None:
-            await client.dubbing.get_transcript_for_dub(
+            await client.dubbing.get_dubbing_transcript(
                 dubbing_id="dubbing_id",
                 language_code="language_code",
             )

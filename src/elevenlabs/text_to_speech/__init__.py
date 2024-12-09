@@ -5,6 +5,9 @@ from .types import (
     BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization,
     BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization,
     BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization,
+    TextToSpeechStreamWithTimestampsResponse,
+    TextToSpeechStreamWithTimestampsResponseAlignment,
+    TextToSpeechStreamWithTimestampsResponseNormalizedAlignment,
 )
 
 __all__ = [
@@ -12,4 +15,7 @@ __all__ = [
     "BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization",
     "BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization",
     "BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization",
+    "TextToSpeechStreamWithTimestampsResponse",
+    "TextToSpeechStreamWithTimestampsResponseAlignment",
+    "TextToSpeechStreamWithTimestampsResponseNormalizedAlignment",
 ]

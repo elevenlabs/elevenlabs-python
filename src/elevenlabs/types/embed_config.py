@@ -4,6 +4,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 from .embed_variant import EmbedVariant
 from .embed_config_avatar import EmbedConfigAvatar
+from .widget_feedback_mode import WidgetFeedbackMode
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
@@ -11,6 +12,7 @@ import pydantic
 class EmbedConfig(UncheckedBaseModel):
     variant: typing.Optional[EmbedVariant] = None
     avatar: typing.Optional[EmbedConfigAvatar] = None
+    feedback_mode: typing.Optional[WidgetFeedbackMode] = None
     custom_avatar_path: typing.Optional[str] = None
     bg_color: typing.Optional[str] = None
     text_color: typing.Optional[str] = None

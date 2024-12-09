@@ -17,7 +17,6 @@ from .. import core
 from ..types.add_voice_ivc_response_model import AddVoiceIvcResponseModel
 from ..types.add_voice_response_model import AddVoiceResponseModel
 from ..types.get_library_voices_response import GetLibraryVoicesResponse
-from ..types.profile_page_response_model import ProfilePageResponseModel
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -832,65 +831,6 @@ class VoicesClient:
                     GetLibraryVoicesResponse,
                     construct_type(
                         type_=GetLibraryVoicesResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def get_a_profile_page(
-        self, handle: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ProfilePageResponseModel:
-        """
-        Gets a profile page based on a handle
-
-        Parameters
-        ----------
-        handle : str
-            Handle for a VA's profile page
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ProfilePageResponseModel
-            Successful Response
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.voices.get_a_profile_page(
-            handle="talexgeorge",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"profile/{jsonable_encoder(handle)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ProfilePageResponseModel,
-                    construct_type(
-                        type_=ProfilePageResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1808,73 +1748,6 @@ class AsyncVoicesClient:
                     GetLibraryVoicesResponse,
                     construct_type(
                         type_=GetLibraryVoicesResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def get_a_profile_page(
-        self, handle: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ProfilePageResponseModel:
-        """
-        Gets a profile page based on a handle
-
-        Parameters
-        ----------
-        handle : str
-            Handle for a VA's profile page
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ProfilePageResponseModel
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.voices.get_a_profile_page(
-                handle="talexgeorge",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"profile/{jsonable_encoder(handle)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ProfilePageResponseModel,
-                    construct_type(
-                        type_=ProfilePageResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

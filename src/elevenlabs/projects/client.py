@@ -17,7 +17,6 @@ from ..types.project_extended_response_model import ProjectExtendedResponseModel
 from ..core.jsonable_encoder import jsonable_encoder
 from ..types.edit_project_response_model import EditProjectResponseModel
 from ..types.project_snapshots_response import ProjectSnapshotsResponse
-from ..types.add_chapter_response_model import AddChapterResponseModel
 from ..types.pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.client_wrapper import AsyncClientWrapper
@@ -715,85 +714,6 @@ class ProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def add_chapter_to_a_project(
-        self,
-        project_id: str,
-        *,
-        name: str,
-        from_url: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AddChapterResponseModel:
-        """
-        Creates a new chapter either as blank or from a URL.
-
-        Parameters
-        ----------
-        project_id : str
-            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
-
-        name : str
-            The name of the chapter, used for identification only.
-
-        from_url : typing.Optional[str]
-            An optional URL from which we will extract content to initialize the project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the project as blank.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AddChapterResponseModel
-            Successful Response
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.projects.add_chapter_to_a_project(
-            project_id="21m00Tcm4TlvDq8ikWAM",
-            name="name",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/chapters/add",
-            method="POST",
-            json={
-                "name": name,
-                "from_url": from_url,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    AddChapterResponseModel,
-                    construct_type(
-                        type_=AddChapterResponseModel,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     typing.cast(
@@ -1646,93 +1566,6 @@ class AsyncProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def add_chapter_to_a_project(
-        self,
-        project_id: str,
-        *,
-        name: str,
-        from_url: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AddChapterResponseModel:
-        """
-        Creates a new chapter either as blank or from a URL.
-
-        Parameters
-        ----------
-        project_id : str
-            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
-
-        name : str
-            The name of the chapter, used for identification only.
-
-        from_url : typing.Optional[str]
-            An optional URL from which we will extract content to initialize the project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the project as blank.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AddChapterResponseModel
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.projects.add_chapter_to_a_project(
-                project_id="21m00Tcm4TlvDq8ikWAM",
-                name="name",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/chapters/add",
-            method="POST",
-            json={
-                "name": name,
-                "from_url": from_url,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    AddChapterResponseModel,
-                    construct_type(
-                        type_=AddChapterResponseModel,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     typing.cast(
