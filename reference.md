@@ -1,4 +1,91 @@
 # Reference
+<details><summary><code>client.<a href="src/elevenlabs/base_client.py">manually_review_a_read_admin_6_rnp_7_bvc_2_t_reads_read_id_review_post</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Manually review a read
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.manually_review_a_read_admin_6_rnp_7_bvc_2_t_reads_read_id_review_post(
+    read_id="read_id",
+    review_status="approved",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**read_id:** `str` — The ID of the read to get the HTML for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**review_status:** `BodyManuallyReviewAReadAdmin6Rnp7Bvc2TReadsReadIdReviewPostReviewStatus` — The review status of the read: 'accepted' or 'rejected'
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**review_comment:** `typing.Optional[str]` — The review comment
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## History
 <details><summary><code>client.history.<a href="src/elevenlabs/history/client.py">get_all</a>(...)</code></summary>
 <dl>
@@ -393,7 +480,7 @@ client.history.download(
 
 ## TextToSoundEffects
 ## AudioIsolation
-## Samples
+## samples
 <details><summary><code>client.samples.<a href="src/elevenlabs/samples/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
@@ -1176,10 +1263,12 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.text_to_speech.stream_with_timestamps(
+response = client.text_to_speech.stream_with_timestamps(
     voice_id="21m00Tcm4TlvDq8ikWAM",
     text="text",
 )
+for chunk in response:
+    yield chunk
 
 ```
 </dd>
@@ -2940,77 +3029,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 </dl>
 </details>
 
-<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">get_a_profile_page</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Gets a profile page based on a handle
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.voices.get_a_profile_page(
-    handle="talexgeorge",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**handle:** `str` — Handle for a VA's profile page
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Projects
+## projects
 <details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">get_all</a>()</code></summary>
 <dl>
 <dd>
@@ -3817,93 +3836,6 @@ client.projects.stream_archive(
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">add_chapter_to_a_project</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Creates a new chapter either as blank or from a URL.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.projects.add_chapter_to_a_project(
-    project_id="21m00Tcm4TlvDq8ikWAM",
-    name="name",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project_id:** `str` — The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `str` — The name of the chapter, used for identification only.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from_url:** `typing.Optional[str]` — An optional URL from which we will extract content to initialize the project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the project as blank.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">update_pronunciation_dictionaries</a>(...)</code></summary>
 <dl>
 <dd>
@@ -4198,6 +4130,93 @@ client.chapters.delete(
 <dd>
 
 **chapter_id:** `str` — The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.chapters.<a href="src/elevenlabs/chapters/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a new chapter either as blank or from a URL.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.chapters.create(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+    name="name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `str` — The name of the chapter, used for identification only.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from_url:** `typing.Optional[str]` — An optional URL from which we will extract content to initialize the project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the project as blank.
     
 </dd>
 </dl>
@@ -4772,7 +4791,7 @@ client.dubbing.delete_dubbing_project(
 </dl>
 </details>
 
-<details><summary><code>client.dubbing.<a href="src/elevenlabs/dubbing/client.py">get_transcript_for_dub</a>(...)</code></summary>
+<details><summary><code>client.dubbing.<a href="src/elevenlabs/dubbing/client.py">get_dubbing_transcript</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -4804,7 +4823,7 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.dubbing.get_transcript_for_dub(
+client.dubbing.get_dubbing_transcript(
     dubbing_id="dubbing_id",
     language_code="language_code",
 )
@@ -4839,9 +4858,7 @@ client.dubbing.get_transcript_for_dub(
 <dl>
 <dd>
 
-**format_type:** `typing.Optional[
-    GetTranscriptForDubV1DubbingDubbingIdTranscriptLanguageCodeGetRequestFormatType
-]` — Format to use for the subtitle file, either 'srt' or 'webvtt'
+**format_type:** `typing.Optional[DubbingGetDubbingTranscriptRequestFormatType]` — Format to use for the subtitle file, either 'srt' or 'webvtt'
     
 </dd>
 </dl>
@@ -4861,7 +4878,7 @@ client.dubbing.get_transcript_for_dub(
 </dl>
 </details>
 
-## Models
+## models
 <details><summary><code>client.models.<a href="src/elevenlabs/models/client.py">get_all</a>()</code></summary>
 <dl>
 <dd>
@@ -5276,7 +5293,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 </dl>
 </details>
 
-<details><summary><code>client.pronunciation_dictionary.<a href="src/elevenlabs/pronunciation_dictionary/client.py">add_rules_to_the_pronunciation_dictionary</a>(...)</code></summary>
+<details><summary><code>client.pronunciation_dictionary.<a href="src/elevenlabs/pronunciation_dictionary/client.py">add_rules</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -5311,7 +5328,7 @@ from elevenlabs.pronunciation_dictionary import (
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.pronunciation_dictionary.add_rules_to_the_pronunciation_dictionary(
+client.pronunciation_dictionary.add_rules(
     pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
     rules=[
         PronunciationDictionaryRule_Phoneme(
@@ -5368,7 +5385,7 @@ List of pronunciation rules. Rule can be either:
 </dl>
 </details>
 
-<details><summary><code>client.pronunciation_dictionary.<a href="src/elevenlabs/pronunciation_dictionary/client.py">remove_rules_from_the_pronunciation_dictionary</a>(...)</code></summary>
+<details><summary><code>client.pronunciation_dictionary.<a href="src/elevenlabs/pronunciation_dictionary/client.py">remove_rules</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -5400,7 +5417,7 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.pronunciation_dictionary.remove_rules_from_the_pronunciation_dictionary(
+client.pronunciation_dictionary.remove_rules(
     pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
     rule_strings=["rule_strings"],
 )
@@ -5901,6 +5918,77 @@ client.workspace.update_member(
 </dl>
 </details>
 
+## Profile
+<details><summary><code>client.profile.<a href="src/elevenlabs/profile/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets a profile page based on a handle
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.profile.get(
+    handle="talexgeorge",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**handle:** `str` — Handle for a VA's profile page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ConversationalAi
 <details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_signed_url</a>(...)</code></summary>
 <dl>
@@ -6304,7 +6392,7 @@ client.conversational_ai.update_agent(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_widget</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_agent_widget</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -6336,7 +6424,7 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.conversational_ai.get_widget(
+client.conversational_ai.get_agent_widget(
     agent_id="21m00Tcm4TlvDq8ikWAM",
 )
 
@@ -6382,7 +6470,7 @@ client.conversational_ai.get_widget(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_link</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_agent_link</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -6414,7 +6502,7 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.conversational_ai.get_link(
+client.conversational_ai.get_agent_link(
     agent_id="21m00Tcm4TlvDq8ikWAM",
 )
 
@@ -6452,7 +6540,7 @@ client.conversational_ai.get_link(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">post_avatar</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">post_agent_avatar</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -6484,7 +6572,7 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.conversational_ai.post_avatar(
+client.conversational_ai.post_agent_avatar(
     agent_id="21m00Tcm4TlvDq8ikWAM",
 )
 
@@ -6532,7 +6620,7 @@ core.File` — See core.File for more documentation
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_knowledge_base_document</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_agent_knowledge_base_document_by_id</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -6564,7 +6652,7 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.conversational_ai.get_knowledge_base_document(
+client.conversational_ai.get_agent_knowledge_base_document_by_id(
     agent_id="21m00Tcm4TlvDq8ikWAM",
     documentation_id="21m00Tcm4TlvDq8ikWAM",
 )
@@ -6699,7 +6787,7 @@ client.conversational_ai.add_agent_secret(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">create_knowledge_base_document</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">add_to_agent_knowledge_base</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -6731,7 +6819,7 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.conversational_ai.create_knowledge_base_document(
+client.conversational_ai.add_to_agent_knowledge_base(
     agent_id="21m00Tcm4TlvDq8ikWAM",
 )
 
@@ -7035,6 +7123,76 @@ client.conversational_ai.get_conversation(
 </dl>
 </details>
 
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">delete_conversation</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a particular conversation
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.delete_conversation(
+    conversation_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_id:** `str` — The id of the conversation you're taking the action on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_conversation_audio</a>(...)</code></summary>
 <dl>
 <dd>
@@ -7086,6 +7244,855 @@ client.conversational_ai.get_conversation_audio(
 <dd>
 
 **conversation_id:** `str` — The id of the conversation you're taking the action on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">post_conversation_feedback</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Send the feedback for the given conversation
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.post_conversation_feedback(
+    conversation_id="21m00Tcm4TlvDq8ikWAM",
+    feedback="like",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_id:** `str` — The id of the conversation you're taking the action on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**feedback:** `UserFeedbackScore` — Either 'like' or 'dislike' to indicate the feedback for the conversation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">create_phone_number</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Import Phone Number from Twilio configuration
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.create_phone_number(
+    phone_number="phone_number",
+    label="label",
+    sid="sid",
+    token="token",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**phone_number:** `str` — Phone number
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**label:** `str` — Label for the phone number
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sid:** `str` — Twilio Account SID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**token:** `str` — Twilio Token
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_phone_number</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve Phone Number details by ID
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_phone_number(
+    phone_number_id="TeaqRRdTcIfIu2i7BYfT",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**phone_number_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">delete_phone_number</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete Phone Number by ID
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.delete_phone_number(
+    phone_number_id="TeaqRRdTcIfIu2i7BYfT",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**phone_number_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">update_phone_number</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update Phone Number details by ID
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.update_phone_number(
+    phone_number_id="TeaqRRdTcIfIu2i7BYfT",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**phone_number_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agent_id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_phone_numbers</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve all Phone Numbers
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_phone_numbers()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ReaderPublisherProfiles
+<details><summary><code>client.reader_publisher_profiles.<a href="src/elevenlabs/reader_publisher_profiles/client.py">get_a_publisher_profile_by_id</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.reader_publisher_profiles.get_a_publisher_profile_by_id(
+    publisher_profile_id="publisher_profile_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**publisher_profile_id:** `str` — The ID of the publisher profile to get
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reader_publisher_profiles.<a href="src/elevenlabs/reader_publisher_profiles/client.py">update_a_publisher_profile</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.reader_publisher_profiles.update_a_publisher_profile(
+    publisher_profile_id="publisher_profile_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**publisher_profile_id:** `str` — The ID of the publisher profile to update
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — The name of the publisher profile
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bio:** `typing.Optional[str]` — The bio of the publisher profile
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**image:** `from __future__ import annotations
+
+typing.Optional[core.File]` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**date_of_birth:** `typing.Optional[str]` — The date of birth of the publisher profile
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**origin:** `typing.Optional[str]` — The origin of the publisher profile
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**website_link:** `typing.Optional[str]` — The website link of the publisher profile
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**social_links:** `typing.Optional[str]` — The social links of the publisher profile
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pen_name:** `typing.Optional[str]` — The pen name of the publisher profile
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reader_publisher_profiles.<a href="src/elevenlabs/reader_publisher_profiles/client.py">get_all_publisher_profiles_by_the_workspace</a>()</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.reader_publisher_profiles.get_all_publisher_profiles_by_the_workspace()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reader_publisher_profiles.<a href="src/elevenlabs/reader_publisher_profiles/client.py">create_an_publisher_profile</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.reader_publisher_profiles.create_an_publisher_profile(
+    name="name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `str` — The name of the publisher profile
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bio:** `typing.Optional[str]` — The bio of the publisher profile
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**image:** `from __future__ import annotations
+
+typing.Optional[core.File]` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**date_of_birth:** `typing.Optional[str]` — The date of birth of the publisher profile
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**origin:** `typing.Optional[str]` — The origin of the publisher profile
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**website_link:** `typing.Optional[str]` — The website link of the publisher profile
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**social_links:** `typing.Optional[str]` — The social links of the publisher profile
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pen_name:** `typing.Optional[str]` — The pen name of the publisher profile
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reader_publisher_profiles.<a href="src/elevenlabs/reader_publisher_profiles/client.py">get_a_publisher_profile_by_read_id</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.reader_publisher_profiles.get_a_publisher_profile_by_read_id(
+    read_id="read_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**read_id:** `str` — Read ID
     
 </dd>
 </dl>

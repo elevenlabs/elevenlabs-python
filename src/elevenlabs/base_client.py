@@ -23,7 +23,19 @@ from .audio_native.client import AudioNativeClient
 from .usage.client import UsageClient
 from .pronunciation_dictionary.client import PronunciationDictionaryClient
 from .workspace.client import WorkspaceClient
+from .profile.client import ProfileClient
 from .conversational_ai.client import ConversationalAiClient
+from .reader_publisher_profiles.client import ReaderPublisherProfilesClient
+from .types.body_manually_review_a_read_admin_6_rnp_7_bvc_2_t_reads_read_id_review_post_review_status import (
+    BodyManuallyReviewAReadAdmin6Rnp7Bvc2TReadsReadIdReviewPostReviewStatus,
+)
+from .core.request_options import RequestOptions
+from .core.jsonable_encoder import jsonable_encoder
+from .core.unchecked_base_model import construct_type
+from .errors.unprocessable_entity_error import UnprocessableEntityError
+from .types.http_validation_error import HttpValidationError
+from json.decoder import JSONDecodeError
+from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper
 from .history.client import AsyncHistoryClient
 from .text_to_sound_effects.client import AsyncTextToSoundEffectsClient
@@ -43,7 +55,12 @@ from .audio_native.client import AsyncAudioNativeClient
 from .usage.client import AsyncUsageClient
 from .pronunciation_dictionary.client import AsyncPronunciationDictionaryClient
 from .workspace.client import AsyncWorkspaceClient
+from .profile.client import AsyncProfileClient
 from .conversational_ai.client import AsyncConversationalAiClient
+from .reader_publisher_profiles.client import AsyncReaderPublisherProfilesClient
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class BaseElevenLabs:
@@ -122,7 +139,88 @@ class BaseElevenLabs:
         self.usage = UsageClient(client_wrapper=self._client_wrapper)
         self.pronunciation_dictionary = PronunciationDictionaryClient(client_wrapper=self._client_wrapper)
         self.workspace = WorkspaceClient(client_wrapper=self._client_wrapper)
+        self.profile = ProfileClient(client_wrapper=self._client_wrapper)
         self.conversational_ai = ConversationalAiClient(client_wrapper=self._client_wrapper)
+        self.reader_publisher_profiles = ReaderPublisherProfilesClient(client_wrapper=self._client_wrapper)
+
+    def manually_review_a_read_admin_6_rnp_7_bvc_2_t_reads_read_id_review_post(
+        self,
+        read_id: str,
+        *,
+        review_status: BodyManuallyReviewAReadAdmin6Rnp7Bvc2TReadsReadIdReviewPostReviewStatus,
+        review_comment: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Optional[typing.Any]:
+        """
+        Manually review a read
+
+        Parameters
+        ----------
+        read_id : str
+            The ID of the read to get the HTML for.
+
+        review_status : BodyManuallyReviewAReadAdmin6Rnp7Bvc2TReadsReadIdReviewPostReviewStatus
+            The review status of the read: 'accepted' or 'rejected'
+
+        review_comment : typing.Optional[str]
+            The review comment
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.manually_review_a_read_admin_6_rnp_7_bvc_2_t_reads_read_id_review_post(
+            read_id="read_id",
+            review_status="approved",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"admin/6rnp7bvc2t/reads/{jsonable_encoder(read_id)}/review",
+            method="POST",
+            json={
+                "review_status": review_status,
+                "review_comment": review_comment,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
 class AsyncBaseElevenLabs:
@@ -201,7 +299,96 @@ class AsyncBaseElevenLabs:
         self.usage = AsyncUsageClient(client_wrapper=self._client_wrapper)
         self.pronunciation_dictionary = AsyncPronunciationDictionaryClient(client_wrapper=self._client_wrapper)
         self.workspace = AsyncWorkspaceClient(client_wrapper=self._client_wrapper)
+        self.profile = AsyncProfileClient(client_wrapper=self._client_wrapper)
         self.conversational_ai = AsyncConversationalAiClient(client_wrapper=self._client_wrapper)
+        self.reader_publisher_profiles = AsyncReaderPublisherProfilesClient(client_wrapper=self._client_wrapper)
+
+    async def manually_review_a_read_admin_6_rnp_7_bvc_2_t_reads_read_id_review_post(
+        self,
+        read_id: str,
+        *,
+        review_status: BodyManuallyReviewAReadAdmin6Rnp7Bvc2TReadsReadIdReviewPostReviewStatus,
+        review_comment: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Optional[typing.Any]:
+        """
+        Manually review a read
+
+        Parameters
+        ----------
+        read_id : str
+            The ID of the read to get the HTML for.
+
+        review_status : BodyManuallyReviewAReadAdmin6Rnp7Bvc2TReadsReadIdReviewPostReviewStatus
+            The review status of the read: 'accepted' or 'rejected'
+
+        review_comment : typing.Optional[str]
+            The review comment
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.manually_review_a_read_admin_6_rnp_7_bvc_2_t_reads_read_id_review_post(
+                read_id="read_id",
+                review_status="approved",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"admin/6rnp7bvc2t/reads/{jsonable_encoder(read_id)}/review",
+            method="POST",
+            json={
+                "review_status": review_status,
+                "review_comment": review_comment,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
 def _get_base_url(*, base_url: typing.Optional[str] = None, environment: ElevenLabsEnvironment) -> str:
