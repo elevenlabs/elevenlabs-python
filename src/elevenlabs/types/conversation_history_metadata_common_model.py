@@ -2,6 +2,7 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
+from .conversation_history_feedback_common_model import ConversationHistoryFeedbackCommonModel
 from .authorization_method import AuthorizationMethod
 from .conversation_charging_common_model import ConversationChargingCommonModel
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
@@ -12,6 +13,7 @@ class ConversationHistoryMetadataCommonModel(UncheckedBaseModel):
     start_time_unix_secs: int
     call_duration_secs: int
     cost: typing.Optional[int] = None
+    feedback: typing.Optional[ConversationHistoryFeedbackCommonModel] = None
     authorization_method: typing.Optional[AuthorizationMethod] = None
     charging: typing.Optional[ConversationChargingCommonModel] = None
 

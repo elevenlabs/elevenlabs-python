@@ -6,6 +6,7 @@ from .project_response_model_target_audience import ProjectResponseModelTargetAu
 from .project_state import ProjectState
 from .project_response_model_access_level import ProjectResponseModelAccessLevel
 from .project_response_model_fiction import ProjectResponseModelFiction
+from .project_creation_meta_response_model import ProjectCreationMetaResponseModel
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
@@ -36,6 +37,7 @@ class ProjectResponse(UncheckedBaseModel):
     fiction: typing.Optional[ProjectResponseModelFiction] = None
     quality_check_on: bool
     quality_check_on_when_bulk_convert: bool
+    creation_meta: typing.Optional[ProjectCreationMetaResponseModel] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
