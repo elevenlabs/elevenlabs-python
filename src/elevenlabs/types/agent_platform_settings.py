@@ -6,7 +6,9 @@ from .auth_settings import AuthSettings
 from .evaluation_settings import EvaluationSettings
 from .embed_config import EmbedConfig
 from .literal_json_schema_property import LiteralJsonSchemaProperty
+from .conversation_initiation_client_data_config import ConversationInitiationClientDataConfig
 from .agent_ban import AgentBan
+from .safety import Safety
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
@@ -16,7 +18,9 @@ class AgentPlatformSettings(UncheckedBaseModel):
     evaluation: typing.Optional[EvaluationSettings] = None
     widget: typing.Optional[EmbedConfig] = None
     data_collection: typing.Optional[typing.Dict[str, LiteralJsonSchemaProperty]] = None
+    overrides: typing.Optional[ConversationInitiationClientDataConfig] = None
     ban: typing.Optional[AgentBan] = None
+    safety: typing.Optional[Safety] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
