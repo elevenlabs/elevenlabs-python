@@ -9,6 +9,7 @@ import websockets
 from websockets.sync.client import connect
 
 from .core.api_error import ApiError
+from .core.client_wrapper import SyncClientWrapper
 from .core.jsonable_encoder import jsonable_encoder
 from .core.remove_none_from_dict import remove_none_from_dict
 from .core.request_options import RequestOptions
@@ -39,6 +40,9 @@ def text_chunker(chunks: typing.Iterator[str]) -> typing.Iterator[str]:
 
 
 class RealtimeTextToSpeechClient(TextToSpeechClient):
+    def __init__(self, *, client_wrapper: SyncClientWrapper):
+        super().__init__(client_wrapper=client_wrapper)
+        self._ws_base_url = urllib.parse.urlparse(self._client_wrapper.get_base_url())._replace(scheme="wss").geturl()
 
     def convert_realtime(
         self,
@@ -88,7 +92,7 @@ class RealtimeTextToSpeechClient(TextToSpeechClient):
         """
         with connect(
             urllib.parse.urljoin(
-              "wss://api.elevenlabs.io/", 
+              self._ws_base_url, 
               f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream-input?model_id={model_id}&output_format={output_format}"
             ),
             additional_headers=jsonable_encoder(
