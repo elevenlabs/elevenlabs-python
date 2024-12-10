@@ -42,8 +42,7 @@ def text_chunker(chunks: typing.Iterator[str]) -> typing.Iterator[str]:
 class RealtimeTextToSpeechClient(TextToSpeechClient):
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         super().__init__(client_wrapper=client_wrapper)
-        parsed = urllib.parse.urlparse(self._client_wrapper.get_base_url())
-        self._ws_base_url = urllib.parse.ParseResult("wss", *parsed[1:]).geturl()
+        self._ws_base_url = urllib.parse.urlparse(self._client_wrapper.get_base_url())._replace(scheme="wss").geturl()
 
     def convert_realtime(
         self,
