@@ -12,9 +12,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..types.dubbing_metadata_response import DubbingMetadataResponse
 from ..core.jsonable_encoder import jsonable_encoder
-from .types.get_transcript_for_dub_v_1_dubbing_dubbing_id_transcript_language_code_get_request_format_type import (
-    GetTranscriptForDubV1DubbingDubbingIdTranscriptLanguageCodeGetRequestFormatType,
-)
+from .types.dubbing_get_transcript_for_dub_request_format_type import DubbingGetTranscriptForDubRequestFormatType
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -320,9 +318,7 @@ class DubbingClient:
         dubbing_id: str,
         language_code: str,
         *,
-        format_type: typing.Optional[
-            GetTranscriptForDubV1DubbingDubbingIdTranscriptLanguageCodeGetRequestFormatType
-        ] = None,
+        format_type: typing.Optional[DubbingGetTranscriptForDubRequestFormatType] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
@@ -336,7 +332,7 @@ class DubbingClient:
         language_code : str
             ID of the language.
 
-        format_type : typing.Optional[GetTranscriptForDubV1DubbingDubbingIdTranscriptLanguageCodeGetRequestFormatType]
+        format_type : typing.Optional[DubbingGetTranscriptForDubRequestFormatType]
             Format to use for the subtitle file, either 'srt' or 'webvtt'
 
         request_options : typing.Optional[RequestOptions]
@@ -715,9 +711,7 @@ class AsyncDubbingClient:
         dubbing_id: str,
         language_code: str,
         *,
-        format_type: typing.Optional[
-            GetTranscriptForDubV1DubbingDubbingIdTranscriptLanguageCodeGetRequestFormatType
-        ] = None,
+        format_type: typing.Optional[DubbingGetTranscriptForDubRequestFormatType] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
@@ -731,7 +725,7 @@ class AsyncDubbingClient:
         language_code : str
             ID of the language.
 
-        format_type : typing.Optional[GetTranscriptForDubV1DubbingDubbingIdTranscriptLanguageCodeGetRequestFormatType]
+        format_type : typing.Optional[DubbingGetTranscriptForDubRequestFormatType]
             Format to use for the subtitle file, either 'srt' or 'webvtt'
 
         request_options : typing.Optional[RequestOptions]

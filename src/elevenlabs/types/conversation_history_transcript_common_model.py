@@ -5,6 +5,7 @@ from .conversation_history_transcript_common_model_role import ConversationHisto
 import typing
 from .conversation_history_transcript_tool_call_common_model import ConversationHistoryTranscriptToolCallCommonModel
 from .conversation_history_transcript_tool_result_common_model import ConversationHistoryTranscriptToolResultCommonModel
+from .user_feedback import UserFeedback
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
@@ -14,7 +15,9 @@ class ConversationHistoryTranscriptCommonModel(UncheckedBaseModel):
     message: typing.Optional[str] = None
     tool_calls: typing.Optional[typing.List[ConversationHistoryTranscriptToolCallCommonModel]] = None
     tool_results: typing.Optional[typing.List[ConversationHistoryTranscriptToolResultCommonModel]] = None
+    feedback: typing.Optional[UserFeedback] = None
     time_in_call_secs: int
+    conversation_turn_metrics: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
