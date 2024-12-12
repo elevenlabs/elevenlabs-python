@@ -9,6 +9,7 @@ import pydantic
 
 class User(UncheckedBaseModel):
     subscription: SubscriptionResponse
+    subscription_extras: typing.Optional[typing.Any] = None
     is_new_user: bool
     xi_api_key: str
     can_use_delayed_payment_methods: bool
