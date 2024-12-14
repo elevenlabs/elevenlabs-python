@@ -13,6 +13,7 @@ from .age import Age
 from .agent_ban import AgentBan
 from .agent_config import AgentConfig
 from .agent_config_override import AgentConfigOverride
+from .agent_config_override_config import AgentConfigOverrideConfig
 from .agent_metadata_response_model import AgentMetadataResponseModel
 from .agent_platform_settings import AgentPlatformSettings
 from .agent_summary_response_model import AgentSummaryResponseModel
@@ -42,16 +43,19 @@ from .conv_ai_stored_secret_config import ConvAiStoredSecretConfig
 from .conversation_charging_common_model import ConversationChargingCommonModel
 from .conversation_config import ConversationConfig
 from .conversation_config_client_override import ConversationConfigClientOverride
+from .conversation_config_client_override_config import ConversationConfigClientOverrideConfig
 from .conversation_history_analysis_common_model import ConversationHistoryAnalysisCommonModel
 from .conversation_history_evaluation_criteria_result_common_model import (
     ConversationHistoryEvaluationCriteriaResultCommonModel,
 )
+from .conversation_history_feedback_common_model import ConversationHistoryFeedbackCommonModel
 from .conversation_history_metadata_common_model import ConversationHistoryMetadataCommonModel
 from .conversation_history_transcript_common_model import ConversationHistoryTranscriptCommonModel
 from .conversation_history_transcript_common_model_role import ConversationHistoryTranscriptCommonModelRole
 from .conversation_history_transcript_tool_call_common_model import ConversationHistoryTranscriptToolCallCommonModel
 from .conversation_history_transcript_tool_result_common_model import ConversationHistoryTranscriptToolResultCommonModel
 from .conversation_initiation_client_data import ConversationInitiationClientData
+from .conversation_initiation_client_data_config import ConversationInitiationClientDataConfig
 from .conversation_signed_url_response_model import ConversationSignedUrlResponseModel
 from .conversation_summary_response_model import ConversationSummaryResponseModel
 from .conversation_summary_response_model_status import ConversationSummaryResponseModelStatus
@@ -59,6 +63,7 @@ from .conversation_token_db_model import ConversationTokenDbModel
 from .conversation_token_purpose import ConversationTokenPurpose
 from .conversational_config import ConversationalConfig
 from .create_agent_response_model import CreateAgentResponseModel
+from .create_phone_number_response_model import CreatePhoneNumberResponseModel
 from .currency import Currency
 from .custom_llm import CustomLlm
 from .data_collection_result_common_model import DataCollectionResultCommonModel
@@ -95,6 +100,7 @@ from .get_conversations_page_response_model import GetConversationsPageResponseM
 from .get_knowledge_base_reponse_model import GetKnowledgeBaseReponseModel
 from .get_knowledge_base_reponse_model_type import GetKnowledgeBaseReponseModelType
 from .get_library_voices_response import GetLibraryVoicesResponse
+from .get_phone_number_response_model import GetPhoneNumberResponseModel
 from .get_projects_response import GetProjectsResponse
 from .get_pronunciation_dictionaries_metadata_response_model import GetPronunciationDictionariesMetadataResponseModel
 from .get_pronunciation_dictionary_metadata_response import GetPronunciationDictionaryMetadataResponse
@@ -120,13 +126,21 @@ from .manual_verification_response import ManualVerificationResponse
 from .model import Model
 from .model_rates_response_model import ModelRatesResponseModel
 from .model_response_model_concurrency_group import ModelResponseModelConcurrencyGroup
+from .moderation_status_response_model import ModerationStatusResponseModel
+from .moderation_status_response_model_safety_status import ModerationStatusResponseModelSafetyStatus
+from .moderation_status_response_model_warning_status import ModerationStatusResponseModelWarningStatus
 from .object_json_schema_property import ObjectJsonSchemaProperty
 from .object_json_schema_property_properties_value import ObjectJsonSchemaPropertyPropertiesValue
 from .optimize_streaming_latency import OptimizeStreamingLatency
 from .orb_avatar import OrbAvatar
 from .output_format import OutputFormat
+from .phone_number_agent_info import PhoneNumberAgentInfo
 from .post_agent_avatar_response_model import PostAgentAvatarResponseModel
+from .privacy_config import PrivacyConfig
 from .profile_page_response_model import ProfilePageResponseModel
+from .project_creation_meta_response_model import ProjectCreationMetaResponseModel
+from .project_creation_meta_response_model_status import ProjectCreationMetaResponseModelStatus
+from .project_creation_meta_response_model_type import ProjectCreationMetaResponseModelType
 from .project_extended_response_model import ProjectExtendedResponseModel
 from .project_extended_response_model_access_level import ProjectExtendedResponseModelAccessLevel
 from .project_extended_response_model_apply_text_normalization import ProjectExtendedResponseModelApplyTextNormalization
@@ -144,6 +158,7 @@ from .project_snapshots_response import ProjectSnapshotsResponse
 from .project_state import ProjectState
 from .prompt_agent import PromptAgent
 from .prompt_agent_override import PromptAgentOverride
+from .prompt_agent_override_config import PromptAgentOverrideConfig
 from .prompt_agent_tools_item import PromptAgentToolsItem, PromptAgentToolsItem_Client, PromptAgentToolsItem_Webhook
 from .prompt_evaluation_criteria import PromptEvaluationCriteria
 from .pronunciation_dictionary_alias_rule_request_model import PronunciationDictionaryAliasRuleRequestModel
@@ -157,6 +172,9 @@ from .reader_resource_response_model_resource_type import ReaderResourceResponse
 from .recording_response import RecordingResponse
 from .remove_pronunciation_dictionary_rules_response_model import RemovePronunciationDictionaryRulesResponseModel
 from .review_status import ReviewStatus
+from .safety import Safety
+from .safety_evaluation import SafetyEvaluation
+from .safety_rule import SafetyRule
 from .speech_history_item_response import SpeechHistoryItemResponse
 from .speech_history_item_response_model_source import SpeechHistoryItemResponseModelSource
 from .speech_history_item_response_model_voice_category import SpeechHistoryItemResponseModelVoiceCategory
@@ -166,9 +184,11 @@ from .subscription_response_model_billing_period import SubscriptionResponseMode
 from .subscription_response_model_character_refresh_period import SubscriptionResponseModelCharacterRefreshPeriod
 from .subscription_response_model_currency import SubscriptionResponseModelCurrency
 from .subscription_status import SubscriptionStatus
+from .telephony_provider import TelephonyProvider
 from .text_to_speech_as_stream_request import TextToSpeechAsStreamRequest
 from .tts_conversational_config import TtsConversationalConfig
 from .tts_conversational_config_override import TtsConversationalConfigOverride
+from .tts_conversational_config_override_config import TtsConversationalConfigOverrideConfig
 from .tts_conversational_model import TtsConversationalModel
 from .tts_optimize_streaming_latency import TtsOptimizeStreamingLatency
 from .tts_output_format import TtsOutputFormat
@@ -177,6 +197,8 @@ from .turn_mode import TurnMode
 from .url_avatar import UrlAvatar
 from .usage_characters_response_model import UsageCharactersResponseModel
 from .user import User
+from .user_feedback import UserFeedback
+from .user_feedback_score import UserFeedbackScore
 from .validation_error import ValidationError
 from .validation_error_loc_item import ValidationErrorLocItem
 from .verification_attempt_response import VerificationAttemptResponse
@@ -198,6 +220,7 @@ from .webhook_tool_api_schema_config import WebhookToolApiSchemaConfig
 from .webhook_tool_api_schema_config_method import WebhookToolApiSchemaConfigMethod
 from .webhook_tool_api_schema_config_request_headers_value import WebhookToolApiSchemaConfigRequestHeadersValue
 from .webhook_tool_config import WebhookToolConfig
+from .widget_feedback_mode import WidgetFeedbackMode
 
 __all__ = [
     "Accent",
@@ -213,6 +236,7 @@ __all__ = [
     "AgentBan",
     "AgentConfig",
     "AgentConfigOverride",
+    "AgentConfigOverrideConfig",
     "AgentMetadataResponseModel",
     "AgentPlatformSettings",
     "AgentSummaryResponseModel",
@@ -242,14 +266,17 @@ __all__ = [
     "ConversationChargingCommonModel",
     "ConversationConfig",
     "ConversationConfigClientOverride",
+    "ConversationConfigClientOverrideConfig",
     "ConversationHistoryAnalysisCommonModel",
     "ConversationHistoryEvaluationCriteriaResultCommonModel",
+    "ConversationHistoryFeedbackCommonModel",
     "ConversationHistoryMetadataCommonModel",
     "ConversationHistoryTranscriptCommonModel",
     "ConversationHistoryTranscriptCommonModelRole",
     "ConversationHistoryTranscriptToolCallCommonModel",
     "ConversationHistoryTranscriptToolResultCommonModel",
     "ConversationInitiationClientData",
+    "ConversationInitiationClientDataConfig",
     "ConversationSignedUrlResponseModel",
     "ConversationSummaryResponseModel",
     "ConversationSummaryResponseModelStatus",
@@ -257,6 +284,7 @@ __all__ = [
     "ConversationTokenPurpose",
     "ConversationalConfig",
     "CreateAgentResponseModel",
+    "CreatePhoneNumberResponseModel",
     "Currency",
     "CustomLlm",
     "DataCollectionResultCommonModel",
@@ -289,6 +317,7 @@ __all__ = [
     "GetKnowledgeBaseReponseModel",
     "GetKnowledgeBaseReponseModelType",
     "GetLibraryVoicesResponse",
+    "GetPhoneNumberResponseModel",
     "GetProjectsResponse",
     "GetPronunciationDictionariesMetadataResponseModel",
     "GetPronunciationDictionaryMetadataResponse",
@@ -314,13 +343,21 @@ __all__ = [
     "Model",
     "ModelRatesResponseModel",
     "ModelResponseModelConcurrencyGroup",
+    "ModerationStatusResponseModel",
+    "ModerationStatusResponseModelSafetyStatus",
+    "ModerationStatusResponseModelWarningStatus",
     "ObjectJsonSchemaProperty",
     "ObjectJsonSchemaPropertyPropertiesValue",
     "OptimizeStreamingLatency",
     "OrbAvatar",
     "OutputFormat",
+    "PhoneNumberAgentInfo",
     "PostAgentAvatarResponseModel",
+    "PrivacyConfig",
     "ProfilePageResponseModel",
+    "ProjectCreationMetaResponseModel",
+    "ProjectCreationMetaResponseModelStatus",
+    "ProjectCreationMetaResponseModelType",
     "ProjectExtendedResponseModel",
     "ProjectExtendedResponseModelAccessLevel",
     "ProjectExtendedResponseModelApplyTextNormalization",
@@ -338,6 +375,7 @@ __all__ = [
     "ProjectState",
     "PromptAgent",
     "PromptAgentOverride",
+    "PromptAgentOverrideConfig",
     "PromptAgentToolsItem",
     "PromptAgentToolsItem_Client",
     "PromptAgentToolsItem_Webhook",
@@ -353,6 +391,9 @@ __all__ = [
     "RecordingResponse",
     "RemovePronunciationDictionaryRulesResponseModel",
     "ReviewStatus",
+    "Safety",
+    "SafetyEvaluation",
+    "SafetyRule",
     "SpeechHistoryItemResponse",
     "SpeechHistoryItemResponseModelSource",
     "SpeechHistoryItemResponseModelVoiceCategory",
@@ -362,9 +403,11 @@ __all__ = [
     "SubscriptionResponseModelCharacterRefreshPeriod",
     "SubscriptionResponseModelCurrency",
     "SubscriptionStatus",
+    "TelephonyProvider",
     "TextToSpeechAsStreamRequest",
     "TtsConversationalConfig",
     "TtsConversationalConfigOverride",
+    "TtsConversationalConfigOverrideConfig",
     "TtsConversationalModel",
     "TtsOptimizeStreamingLatency",
     "TtsOutputFormat",
@@ -373,6 +416,8 @@ __all__ = [
     "UrlAvatar",
     "UsageCharactersResponseModel",
     "User",
+    "UserFeedback",
+    "UserFeedbackScore",
     "ValidationError",
     "ValidationErrorLocItem",
     "VerificationAttemptResponse",
@@ -394,4 +439,5 @@ __all__ = [
     "WebhookToolApiSchemaConfigMethod",
     "WebhookToolApiSchemaConfigRequestHeadersValue",
     "WebhookToolConfig",
+    "WidgetFeedbackMode",
 ]
