@@ -131,7 +131,6 @@ from .moderation_status_response_model_safety_status import ModerationStatusResp
 from .moderation_status_response_model_warning_status import ModerationStatusResponseModelWarningStatus
 from .object_json_schema_property import ObjectJsonSchemaProperty
 from .object_json_schema_property_properties_value import ObjectJsonSchemaPropertyPropertiesValue
-from .optimize_streaming_latency import OptimizeStreamingLatency
 from .orb_avatar import OrbAvatar
 from .output_format import OutputFormat
 from .phone_number_agent_info import PhoneNumberAgentInfo
@@ -348,7 +347,6 @@ __all__ = [
     "ModerationStatusResponseModelWarningStatus",
     "ObjectJsonSchemaProperty",
     "ObjectJsonSchemaPropertyPropertiesValue",
-    "OptimizeStreamingLatency",
     "OrbAvatar",
     "OutputFormat",
     "PhoneNumberAgentInfo",

@@ -580,21 +580,16 @@ Converts text into speech using a voice of your choice and returns audio.
 <dd>
 
 ```python
-from elevenlabs import ElevenLabs, VoiceSettings
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.text_to_speech.convert(
-    voice_id="pMsXgVXv3BLzUgSXRplE",
-    optimize_streaming_latency="0",
-    output_format="mp3_22050_32",
-    text="It sure does, Jackie… My mama always said: “In Carolina, the air's so thick you can wear it!”",
-    voice_settings=VoiceSettings(
-        stability=0.5,
-        similarity_boost=0.75,
-        style=0.0,
-    ),
+    voice_id="JBFqnCBsd6RMkjVDRZzb",
+    output_format="mp3_44100_128",
+    text="Hello! 你好! Hola! नमस्ते! Bonjour! こんにちは! مرحبا! 안녕하세요! Ciao! Cześć! Привіт! வணக்கம்!",
+    model_id="eleven_multilingual_v2",
 )
 
 ```
@@ -635,7 +630,16 @@ client.text_to_speech.convert(
 <dl>
 <dd>
 
-**optimize_streaming_latency:** `typing.Optional[OptimizeStreamingLatency]` — You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+**optimize_streaming_latency:** `typing.Optional[int]` 
+
+You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
+0 - default mode (no latency optimizations)
+1 - normal latency optimizations (about 50% of possible latency improvement of option 3)
+2 - strong latency optimizations (about 75% of possible latency improvement of option 3)
+3 - max latency optimizations
+4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
+
+Defaults to None.
     
 </dd>
 </dl>
@@ -826,7 +830,16 @@ client.text_to_speech.convert_with_timestamps(
 <dl>
 <dd>
 
-**optimize_streaming_latency:** `typing.Optional[OptimizeStreamingLatency]` — You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+**optimize_streaming_latency:** `typing.Optional[int]` 
+
+You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
+0 - default mode (no latency optimizations)
+1 - normal latency optimizations (about 50% of possible latency improvement of option 3)
+2 - strong latency optimizations (about 75% of possible latency improvement of option 3)
+3 - max latency optimizations
+4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
+
+Defaults to None.
     
 </dd>
 </dl>
@@ -971,21 +984,16 @@ Converts text into speech using a voice of your choice and returns audio as an a
 <dd>
 
 ```python
-from elevenlabs import ElevenLabs, VoiceSettings
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.text_to_speech.convert_as_stream(
-    voice_id="pMsXgVXv3BLzUgSXRplE",
-    optimize_streaming_latency="0",
-    output_format="mp3_22050_32",
-    text="It sure does, Jackie… My mama always said: “In Carolina, the air's so thick you can wear it!”",
-    voice_settings=VoiceSettings(
-        stability=0.1,
-        similarity_boost=0.3,
-        style=0.2,
-    ),
+    voice_id="JBFqnCBsd6RMkjVDRZzb",
+    output_format="mp3_44100_128",
+    text="Hello! 你好! Hola! नमस्ते! Bonjour! こんにちは! مرحبا! 안녕하세요! Ciao! Cześć! Привіт! வணக்கம்!",
+    model_id="eleven_multilingual_v2",
 )
 
 ```
@@ -1026,7 +1034,16 @@ client.text_to_speech.convert_as_stream(
 <dl>
 <dd>
 
-**optimize_streaming_latency:** `typing.Optional[OptimizeStreamingLatency]` — You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+**optimize_streaming_latency:** `typing.Optional[int]` 
+
+You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
+0 - default mode (no latency optimizations)
+1 - normal latency optimizations (about 50% of possible latency improvement of option 3)
+2 - strong latency optimizations (about 75% of possible latency improvement of option 3)
+3 - max latency optimizations
+4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
+
+Defaults to None.
     
 </dd>
 </dl>
@@ -1221,7 +1238,16 @@ for chunk in response:
 <dl>
 <dd>
 
-**optimize_streaming_latency:** `typing.Optional[OptimizeStreamingLatency]` — You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+**optimize_streaming_latency:** `typing.Optional[int]` 
+
+You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
+0 - default mode (no latency optimizations)
+1 - normal latency optimizations (about 50% of possible latency improvement of option 3)
+2 - strong latency optimizations (about 75% of possible latency improvement of option 3)
+3 - max latency optimizations
+4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
+
+Defaults to None.
     
 </dd>
 </dl>
