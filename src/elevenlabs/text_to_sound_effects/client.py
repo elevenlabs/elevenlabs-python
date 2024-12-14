@@ -47,6 +47,17 @@ class TextToSoundEffectsClient:
         ------
         typing.Iterator[bytes]
             Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.text_to_sound_effects.convert(
+            text="Spacious braam suitable for high-impact movie trailer moments",
+        )
         """
         with self._client_wrapper.httpx_client.stream(
             "v1/sound-generation",
@@ -118,6 +129,25 @@ class AsyncTextToSoundEffectsClient:
         ------
         typing.AsyncIterator[bytes]
             Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.text_to_sound_effects.convert(
+                text="Spacious braam suitable for high-impact movie trailer moments",
+            )
+
+
+        asyncio.run(main())
         """
         async with self._client_wrapper.httpx_client.stream(
             "v1/sound-generation",

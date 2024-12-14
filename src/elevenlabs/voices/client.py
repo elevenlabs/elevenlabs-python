@@ -155,7 +155,7 @@ class VoicesClient:
             api_key="YOUR_API_KEY",
         )
         client.voices.get_settings(
-            voice_id="2EiwWnXFnvU5JabPnv8n",
+            voice_id="JBFqnCBsd6RMkjVDRZzb",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -221,7 +221,7 @@ class VoicesClient:
             api_key="YOUR_API_KEY",
         )
         client.voices.get(
-            voice_id="29vD33N1CtxCmqQRPOHJ",
+            voice_id="JBFqnCBsd6RMkjVDRZzb",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -283,7 +283,7 @@ class VoicesClient:
             api_key="YOUR_API_KEY",
         )
         client.voices.delete(
-            voice_id="29vD33N1CtxCmqQRPOHJ",
+            voice_id="VOICE_ID",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -344,7 +344,7 @@ class VoicesClient:
             api_key="YOUR_API_KEY",
         )
         client.voices.edit_settings(
-            voice_id="29vD33N1CtxCmqQRPOHJ",
+            voice_id="VOICE_ID",
             request=VoiceSettings(
                 stability=0.1,
                 similarity_boost=0.3,
@@ -521,7 +521,7 @@ class VoicesClient:
             api_key="YOUR_API_KEY",
         )
         client.voices.edit(
-            voice_id="JBFqnCBsd6RMkjVDRZzb",
+            voice_id="VOICE_ID",
             name="George",
         )
         """
@@ -1064,7 +1064,7 @@ class AsyncVoicesClient:
 
         async def main() -> None:
             await client.voices.get_settings(
-                voice_id="2EiwWnXFnvU5JabPnv8n",
+                voice_id="JBFqnCBsd6RMkjVDRZzb",
             )
 
 
@@ -1138,7 +1138,7 @@ class AsyncVoicesClient:
 
         async def main() -> None:
             await client.voices.get(
-                voice_id="29vD33N1CtxCmqQRPOHJ",
+                voice_id="JBFqnCBsd6RMkjVDRZzb",
             )
 
 
@@ -1208,7 +1208,7 @@ class AsyncVoicesClient:
 
         async def main() -> None:
             await client.voices.delete(
-                voice_id="29vD33N1CtxCmqQRPOHJ",
+                voice_id="VOICE_ID",
             )
 
 
@@ -1277,7 +1277,7 @@ class AsyncVoicesClient:
 
         async def main() -> None:
             await client.voices.edit_settings(
-                voice_id="29vD33N1CtxCmqQRPOHJ",
+                voice_id="VOICE_ID",
                 request=VoiceSettings(
                     stability=0.1,
                     similarity_boost=0.3,
@@ -1470,7 +1470,7 @@ class AsyncVoicesClient:
 
         async def main() -> None:
             await client.voices.edit(
-                voice_id="JBFqnCBsd6RMkjVDRZzb",
+                voice_id="VOICE_ID",
                 name="George",
             )
 

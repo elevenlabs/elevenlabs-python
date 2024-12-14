@@ -25,7 +25,6 @@ from .asr_input_format import AsrInputFormat
 from .asr_provider import AsrProvider
 from .asr_quality import AsrQuality
 from .audio_native_create_project_response_model import AudioNativeCreateProjectResponseModel
-from .audio_native_get_embed_code_response_model import AudioNativeGetEmbedCodeResponseModel
 from .auth_settings import AuthSettings
 from .authorization_method import AuthorizationMethod
 from .ban_reason_type import BanReasonType
@@ -106,7 +105,6 @@ from .get_pronunciation_dictionaries_metadata_response_model import GetPronuncia
 from .get_pronunciation_dictionary_metadata_response import GetPronunciationDictionaryMetadataResponse
 from .get_speech_history_response import GetSpeechHistoryResponse
 from .get_voices_response import GetVoicesResponse
-from .history import History
 from .history_alignment_response_model import HistoryAlignmentResponseModel
 from .history_alignments_response_model import HistoryAlignmentsResponseModel
 from .history_item import HistoryItem
@@ -131,7 +129,6 @@ from .moderation_status_response_model_safety_status import ModerationStatusResp
 from .moderation_status_response_model_warning_status import ModerationStatusResponseModelWarningStatus
 from .object_json_schema_property import ObjectJsonSchemaProperty
 from .object_json_schema_property_properties_value import ObjectJsonSchemaPropertyPropertiesValue
-from .optimize_streaming_latency import OptimizeStreamingLatency
 from .orb_avatar import OrbAvatar
 from .output_format import OutputFormat
 from .phone_number_agent_info import PhoneNumberAgentInfo
@@ -248,7 +245,6 @@ __all__ = [
     "AsrProvider",
     "AsrQuality",
     "AudioNativeCreateProjectResponseModel",
-    "AudioNativeGetEmbedCodeResponseModel",
     "AuthSettings",
     "AuthorizationMethod",
     "BanReasonType",
@@ -323,7 +319,6 @@ __all__ = [
     "GetPronunciationDictionaryMetadataResponse",
     "GetSpeechHistoryResponse",
     "GetVoicesResponse",
-    "History",
     "HistoryAlignmentResponseModel",
     "HistoryAlignmentsResponseModel",
     "HistoryItem",
@@ -348,7 +343,6 @@ __all__ = [
     "ModerationStatusResponseModelWarningStatus",
     "ObjectJsonSchemaProperty",
     "ObjectJsonSchemaPropertyPropertiesValue",
-    "OptimizeStreamingLatency",
     "OrbAvatar",
     "OutputFormat",
     "PhoneNumberAgentInfo",
