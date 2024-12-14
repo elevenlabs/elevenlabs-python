@@ -67,10 +67,7 @@ class HistoryClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.history.get_all(
-            page_size=1,
-            voice_id="pMsXgVXv3BLzUgSXRplE",
-        )
+        client.history.get_all()
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/history",
@@ -135,7 +132,7 @@ class HistoryClient:
             api_key="YOUR_API_KEY",
         )
         client.history.get(
-            history_item_id="ja9xsmfGhxYcymxGcOGB",
+            history_item_id="HISTORY_ITEM_ID",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -194,7 +191,7 @@ class HistoryClient:
             api_key="YOUR_API_KEY",
         )
         client.history.delete(
-            history_item_id="ja9xsmfGhxYcymxGcOGB",
+            history_item_id="HISTORY_ITEM_ID",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -253,7 +250,7 @@ class HistoryClient:
             api_key="YOUR_API_KEY",
         )
         client.history.get_audio(
-            history_item_id="ja9xsmfGhxYcymxGcOGB",
+            history_item_id="HISTORY_ITEM_ID",
         )
         """
         with self._client_wrapper.httpx_client.stream(
@@ -316,7 +313,7 @@ class HistoryClient:
             api_key="YOUR_API_KEY",
         )
         client.history.download(
-            history_item_ids=["ja9xsmfGhxYcymxGcOGB"],
+            history_item_ids=["HISTORY_ITEM_ID"],
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -405,10 +402,7 @@ class AsyncHistoryClient:
 
 
         async def main() -> None:
-            await client.history.get_all(
-                page_size=1,
-                voice_id="pMsXgVXv3BLzUgSXRplE",
-            )
+            await client.history.get_all()
 
 
         asyncio.run(main())
@@ -481,7 +475,7 @@ class AsyncHistoryClient:
 
         async def main() -> None:
             await client.history.get(
-                history_item_id="ja9xsmfGhxYcymxGcOGB",
+                history_item_id="HISTORY_ITEM_ID",
             )
 
 
@@ -548,7 +542,7 @@ class AsyncHistoryClient:
 
         async def main() -> None:
             await client.history.delete(
-                history_item_id="ja9xsmfGhxYcymxGcOGB",
+                history_item_id="HISTORY_ITEM_ID",
             )
 
 
@@ -615,7 +609,7 @@ class AsyncHistoryClient:
 
         async def main() -> None:
             await client.history.get_audio(
-                history_item_id="ja9xsmfGhxYcymxGcOGB",
+                history_item_id="HISTORY_ITEM_ID",
             )
 
 
@@ -686,7 +680,7 @@ class AsyncHistoryClient:
 
         async def main() -> None:
             await client.history.download(
-                history_item_ids=["ja9xsmfGhxYcymxGcOGB"],
+                history_item_ids=["HISTORY_ITEM_ID"],
             )
 
 
