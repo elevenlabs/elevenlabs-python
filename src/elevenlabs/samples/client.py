@@ -46,8 +46,8 @@ class SamplesClient:
             api_key="YOUR_API_KEY",
         )
         client.samples.delete(
-            voice_id="ja9xsmfGhxYcymxGcOGB",
-            sample_id="pMsXgVXv3BLzUgSXRplE",
+            voice_id="VOICE_ID",
+            sample_id="SAMPLE_ID",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -109,8 +109,8 @@ class SamplesClient:
             api_key="YOUR_API_KEY",
         )
         client.samples.get_audio(
-            voice_id="ja9xsmfGhxYcymxGcOGB",
-            sample_id="pMsXgVXv3BLzUgSXRplE",
+            voice_id="VOICE_ID",
+            sample_id="SAMPLE_ID",
         )
         """
         with self._client_wrapper.httpx_client.stream(
@@ -180,8 +180,8 @@ class AsyncSamplesClient:
 
         async def main() -> None:
             await client.samples.delete(
-                voice_id="ja9xsmfGhxYcymxGcOGB",
-                sample_id="pMsXgVXv3BLzUgSXRplE",
+                voice_id="VOICE_ID",
+                sample_id="SAMPLE_ID",
             )
 
 
@@ -251,8 +251,8 @@ class AsyncSamplesClient:
 
         async def main() -> None:
             await client.samples.get_audio(
-                voice_id="ja9xsmfGhxYcymxGcOGB",
-                sample_id="pMsXgVXv3BLzUgSXRplE",
+                voice_id="VOICE_ID",
+                sample_id="SAMPLE_ID",
             )
 
 

@@ -3,7 +3,6 @@
 import typing
 from ..core.client_wrapper import SyncClientWrapper
 from .. import core
-from ..types.optimize_streaming_latency import OptimizeStreamingLatency
 from ..types.output_format import OutputFormat
 from ..core.request_options import RequestOptions
 from ..core.jsonable_encoder import jsonable_encoder
@@ -28,7 +27,7 @@ class SpeechToSpeechClient:
         *,
         audio: core.File,
         enable_logging: typing.Optional[bool] = None,
-        optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
+        optimize_streaming_latency: typing.Optional[int] = None,
         output_format: typing.Optional[OutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[str] = OMIT,
@@ -50,8 +49,15 @@ class SpeechToSpeechClient:
         enable_logging : typing.Optional[bool]
             When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
 
-        optimize_streaming_latency : typing.Optional[OptimizeStreamingLatency]
-            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+        optimize_streaming_latency : typing.Optional[int]
+            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
+            0 - default mode (no latency optimizations)
+            1 - normal latency optimizations (about 50% of possible latency improvement of option 3)
+            2 - strong latency optimizations (about 75% of possible latency improvement of option 3)
+            3 - max latency optimizations
+            4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
+
+            Defaults to None.
 
         output_format : typing.Optional[OutputFormat]
             The output format of the generated audio.
@@ -75,6 +81,19 @@ class SpeechToSpeechClient:
         ------
         typing.Iterator[bytes]
             Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.speech_to_speech.convert(
+            voice_id="JBFqnCBsd6RMkjVDRZzb",
+            output_format="mp3_44100_128",
+            model_id="eleven_multilingual_sts_v2",
+        )
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/speech-to-speech/{jsonable_encoder(voice_id)}",
@@ -123,9 +142,9 @@ class SpeechToSpeechClient:
         voice_id: str,
         *,
         audio: core.File,
-        enable_logging: typing.Optional[OptimizeStreamingLatency] = None,
-        optimize_streaming_latency: typing.Optional[OutputFormat] = None,
-        output_format: typing.Optional[str] = None,
+        enable_logging: typing.Optional[bool] = None,
+        optimize_streaming_latency: typing.Optional[int] = None,
+        output_format: typing.Optional[OutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[str] = OMIT,
         seed: typing.Optional[int] = OMIT,
@@ -143,25 +162,21 @@ class SpeechToSpeechClient:
         audio : core.File
             See core.File for more documentation
 
-        enable_logging : typing.Optional[OptimizeStreamingLatency]
-            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+        enable_logging : typing.Optional[bool]
+            When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
 
-        optimize_streaming_latency : typing.Optional[OutputFormat]
+        optimize_streaming_latency : typing.Optional[int]
+            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
+            0 - default mode (no latency optimizations)
+            1 - normal latency optimizations (about 50% of possible latency improvement of option 3)
+            2 - strong latency optimizations (about 75% of possible latency improvement of option 3)
+            3 - max latency optimizations
+            4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
+
+            Defaults to None.
+
+        output_format : typing.Optional[OutputFormat]
             The output format of the generated audio.
-
-        output_format : typing.Optional[str]
-            Output format of the generated audio. Must be one of:
-            mp3_22050_32 - output format, mp3 with 22.05kHz sample rate at 32kbps.
-            mp3_44100_32 - output format, mp3 with 44.1kHz sample rate at 32kbps.
-            mp3_44100_64 - output format, mp3 with 44.1kHz sample rate at 64kbps.
-            mp3_44100_96 - output format, mp3 with 44.1kHz sample rate at 96kbps.
-            mp3_44100_128 - default output format, mp3 with 44.1kHz sample rate at 128kbps.
-            mp3_44100_192 - output format, mp3 with 44.1kHz sample rate at 192kbps. Requires you to be subscribed to Creator tier or above.
-            pcm_16000 - PCM format (S16LE) with 16kHz sample rate.
-            pcm_22050 - PCM format (S16LE) with 22.05kHz sample rate.
-            pcm_24000 - PCM format (S16LE) with 24kHz sample rate.
-            pcm_44100 - PCM format (S16LE) with 44.1kHz sample rate. Requires you to be subscribed to Pro tier or above.
-            ulaw_8000 - μ-law format (sometimes written mu-law, often approximated as u-law) with 8kHz sample rate. Note that this format is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
@@ -182,6 +197,19 @@ class SpeechToSpeechClient:
         ------
         typing.Iterator[bytes]
             Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.speech_to_speech.convert_as_stream(
+            voice_id="JBFqnCBsd6RMkjVDRZzb",
+            output_format="mp3_44100_128",
+            model_id="eleven_multilingual_sts_v2",
+        )
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/speech-to-speech/{jsonable_encoder(voice_id)}/stream",
@@ -236,7 +264,7 @@ class AsyncSpeechToSpeechClient:
         *,
         audio: core.File,
         enable_logging: typing.Optional[bool] = None,
-        optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
+        optimize_streaming_latency: typing.Optional[int] = None,
         output_format: typing.Optional[OutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[str] = OMIT,
@@ -258,8 +286,15 @@ class AsyncSpeechToSpeechClient:
         enable_logging : typing.Optional[bool]
             When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
 
-        optimize_streaming_latency : typing.Optional[OptimizeStreamingLatency]
-            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+        optimize_streaming_latency : typing.Optional[int]
+            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
+            0 - default mode (no latency optimizations)
+            1 - normal latency optimizations (about 50% of possible latency improvement of option 3)
+            2 - strong latency optimizations (about 75% of possible latency improvement of option 3)
+            3 - max latency optimizations
+            4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
+
+            Defaults to None.
 
         output_format : typing.Optional[OutputFormat]
             The output format of the generated audio.
@@ -283,6 +318,27 @@ class AsyncSpeechToSpeechClient:
         ------
         typing.AsyncIterator[bytes]
             Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.speech_to_speech.convert(
+                voice_id="JBFqnCBsd6RMkjVDRZzb",
+                output_format="mp3_44100_128",
+                model_id="eleven_multilingual_sts_v2",
+            )
+
+
+        asyncio.run(main())
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/speech-to-speech/{jsonable_encoder(voice_id)}",
@@ -331,9 +387,9 @@ class AsyncSpeechToSpeechClient:
         voice_id: str,
         *,
         audio: core.File,
-        enable_logging: typing.Optional[OptimizeStreamingLatency] = None,
-        optimize_streaming_latency: typing.Optional[OutputFormat] = None,
-        output_format: typing.Optional[str] = None,
+        enable_logging: typing.Optional[bool] = None,
+        optimize_streaming_latency: typing.Optional[int] = None,
+        output_format: typing.Optional[OutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[str] = OMIT,
         seed: typing.Optional[int] = OMIT,
@@ -351,25 +407,21 @@ class AsyncSpeechToSpeechClient:
         audio : core.File
             See core.File for more documentation
 
-        enable_logging : typing.Optional[OptimizeStreamingLatency]
-            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+        enable_logging : typing.Optional[bool]
+            When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
 
-        optimize_streaming_latency : typing.Optional[OutputFormat]
+        optimize_streaming_latency : typing.Optional[int]
+            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
+            0 - default mode (no latency optimizations)
+            1 - normal latency optimizations (about 50% of possible latency improvement of option 3)
+            2 - strong latency optimizations (about 75% of possible latency improvement of option 3)
+            3 - max latency optimizations
+            4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
+
+            Defaults to None.
+
+        output_format : typing.Optional[OutputFormat]
             The output format of the generated audio.
-
-        output_format : typing.Optional[str]
-            Output format of the generated audio. Must be one of:
-            mp3_22050_32 - output format, mp3 with 22.05kHz sample rate at 32kbps.
-            mp3_44100_32 - output format, mp3 with 44.1kHz sample rate at 32kbps.
-            mp3_44100_64 - output format, mp3 with 44.1kHz sample rate at 64kbps.
-            mp3_44100_96 - output format, mp3 with 44.1kHz sample rate at 96kbps.
-            mp3_44100_128 - default output format, mp3 with 44.1kHz sample rate at 128kbps.
-            mp3_44100_192 - output format, mp3 with 44.1kHz sample rate at 192kbps. Requires you to be subscribed to Creator tier or above.
-            pcm_16000 - PCM format (S16LE) with 16kHz sample rate.
-            pcm_22050 - PCM format (S16LE) with 22.05kHz sample rate.
-            pcm_24000 - PCM format (S16LE) with 24kHz sample rate.
-            pcm_44100 - PCM format (S16LE) with 44.1kHz sample rate. Requires you to be subscribed to Pro tier or above.
-            ulaw_8000 - μ-law format (sometimes written mu-law, often approximated as u-law) with 8kHz sample rate. Note that this format is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
@@ -390,6 +442,27 @@ class AsyncSpeechToSpeechClient:
         ------
         typing.AsyncIterator[bytes]
             Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.speech_to_speech.convert_as_stream(
+                voice_id="JBFqnCBsd6RMkjVDRZzb",
+                output_format="mp3_44100_128",
+                model_id="eleven_multilingual_sts_v2",
+            )
+
+
+        asyncio.run(main())
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/speech-to-speech/{jsonable_encoder(voice_id)}/stream",
