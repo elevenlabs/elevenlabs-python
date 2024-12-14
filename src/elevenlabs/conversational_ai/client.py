@@ -29,6 +29,9 @@ from ..types.get_agents_page_response_model import GetAgentsPageResponseModel
 from ..types.evaluation_success_result import EvaluationSuccessResult
 from ..types.get_conversations_page_response_model import GetConversationsPageResponseModel
 from ..types.get_conversation_response_model import GetConversationResponseModel
+from ..types.user_feedback_score import UserFeedbackScore
+from ..types.create_phone_number_response_model import CreatePhoneNumberResponseModel
+from ..types.get_phone_number_response_model import GetPhoneNumberResponseModel
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -396,7 +399,7 @@ class ConversationalAiClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_widget(
+    def get_agent_widget(
         self,
         agent_id: str,
         *,
@@ -429,7 +432,7 @@ class ConversationalAiClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.conversational_ai.get_widget(
+        client.conversational_ai.get_agent_widget(
             agent_id="21m00Tcm4TlvDq8ikWAM",
         )
         """
@@ -465,7 +468,7 @@ class ConversationalAiClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_link(
+    def get_agent_link(
         self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetAgentLinkResponseModel:
         """
@@ -491,7 +494,7 @@ class ConversationalAiClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.conversational_ai.get_link(
+        client.conversational_ai.get_agent_link(
             agent_id="21m00Tcm4TlvDq8ikWAM",
         )
         """
@@ -524,7 +527,7 @@ class ConversationalAiClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def post_avatar(
+    def post_agent_avatar(
         self, agent_id: str, *, avatar_file: core.File, request_options: typing.Optional[RequestOptions] = None
     ) -> PostAgentAvatarResponseModel:
         """
@@ -553,7 +556,7 @@ class ConversationalAiClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.conversational_ai.post_avatar(
+        client.conversational_ai.post_agent_avatar(
             agent_id="21m00Tcm4TlvDq8ikWAM",
         )
         """
@@ -591,7 +594,7 @@ class ConversationalAiClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_knowledge_base_document(
+    def get_agent_knowledge_base_document_by_id(
         self, agent_id: str, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetKnowledgeBaseReponseModel:
         """
@@ -620,7 +623,7 @@ class ConversationalAiClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.conversational_ai.get_knowledge_base_document(
+        client.conversational_ai.get_agent_knowledge_base_document_by_id(
             agent_id="21m00Tcm4TlvDq8ikWAM",
             documentation_id="21m00Tcm4TlvDq8ikWAM",
         )
@@ -729,7 +732,7 @@ class ConversationalAiClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def create_knowledge_base_document(
+    def add_to_agent_knowledge_base(
         self,
         agent_id: str,
         *,
@@ -766,7 +769,7 @@ class ConversationalAiClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.conversational_ai.create_knowledge_base_document(
+        client.conversational_ai.add_to_agent_knowledge_base(
             agent_id="21m00Tcm4TlvDq8ikWAM",
         )
         """
@@ -1018,6 +1021,65 @@ class ConversationalAiClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def delete_conversation(
+        self, conversation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Optional[typing.Any]:
+        """
+        Delete a particular conversation
+
+        Parameters
+        ----------
+        conversation_id : str
+            The id of the conversation you're taking the action on.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.delete_conversation(
+            conversation_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/convai/conversations/{jsonable_encoder(conversation_id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     def get_conversation_audio(
         self, conversation_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
@@ -1055,6 +1117,412 @@ class ConversationalAiClient:
         try:
             if 200 <= _response.status_code < 300:
                 return
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def post_conversation_feedback(
+        self,
+        conversation_id: str,
+        *,
+        feedback: UserFeedbackScore,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Optional[typing.Any]:
+        """
+        Send the feedback for the given conversation
+
+        Parameters
+        ----------
+        conversation_id : str
+            The id of the conversation you're taking the action on.
+
+        feedback : UserFeedbackScore
+            Either 'like' or 'dislike' to indicate the feedback for the conversation.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.post_conversation_feedback(
+            conversation_id="21m00Tcm4TlvDq8ikWAM",
+            feedback="like",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/convai/conversations/{jsonable_encoder(conversation_id)}/feedback",
+            method="POST",
+            json={
+                "feedback": feedback,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def create_phone_number(
+        self,
+        *,
+        phone_number: str,
+        label: str,
+        sid: str,
+        token: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> CreatePhoneNumberResponseModel:
+        """
+        Import Phone Number from Twilio configuration
+
+        Parameters
+        ----------
+        phone_number : str
+            Phone number
+
+        label : str
+            Label for the phone number
+
+        sid : str
+            Twilio Account SID
+
+        token : str
+            Twilio Token
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CreatePhoneNumberResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.create_phone_number(
+            phone_number="phone_number",
+            label="label",
+            sid="sid",
+            token="token",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/convai/phone-numbers/create",
+            method="POST",
+            json={
+                "phone_number": phone_number,
+                "label": label,
+                "sid": sid,
+                "token": token,
+                "provider": "twilio",
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    CreatePhoneNumberResponseModel,
+                    construct_type(
+                        type_=CreatePhoneNumberResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get_phone_number(
+        self, phone_number_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetPhoneNumberResponseModel:
+        """
+        Retrieve Phone Number details by ID
+
+        Parameters
+        ----------
+        phone_number_id : str
+            The id of an agent. This is returned on agent creation.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetPhoneNumberResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.get_phone_number(
+            phone_number_id="TeaqRRdTcIfIu2i7BYfT",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetPhoneNumberResponseModel,
+                    construct_type(
+                        type_=GetPhoneNumberResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def delete_phone_number(
+        self, phone_number_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Optional[typing.Any]:
+        """
+        Delete Phone Number by ID
+
+        Parameters
+        ----------
+        phone_number_id : str
+            The id of an agent. This is returned on agent creation.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.delete_phone_number(
+            phone_number_id="TeaqRRdTcIfIu2i7BYfT",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def update_phone_number(
+        self,
+        phone_number_id: str,
+        *,
+        agent_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetPhoneNumberResponseModel:
+        """
+        Update Phone Number details by ID
+
+        Parameters
+        ----------
+        phone_number_id : str
+            The id of an agent. This is returned on agent creation.
+
+        agent_id : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetPhoneNumberResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.update_phone_number(
+            phone_number_id="TeaqRRdTcIfIu2i7BYfT",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}",
+            method="PATCH",
+            json={
+                "agent_id": agent_id,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetPhoneNumberResponseModel,
+                    construct_type(
+                        type_=GetPhoneNumberResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get_phone_numbers(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[GetPhoneNumberResponseModel]:
+        """
+        Retrieve all Phone Numbers
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[GetPhoneNumberResponseModel]
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.get_phone_numbers()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/convai/phone-numbers/",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.List[GetPhoneNumberResponseModel],
+                    construct_type(
+                        type_=typing.List[GetPhoneNumberResponseModel],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     typing.cast(
@@ -1472,7 +1940,7 @@ class AsyncConversationalAiClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_widget(
+    async def get_agent_widget(
         self,
         agent_id: str,
         *,
@@ -1510,7 +1978,7 @@ class AsyncConversationalAiClient:
 
 
         async def main() -> None:
-            await client.conversational_ai.get_widget(
+            await client.conversational_ai.get_agent_widget(
                 agent_id="21m00Tcm4TlvDq8ikWAM",
             )
 
@@ -1549,7 +2017,7 @@ class AsyncConversationalAiClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_link(
+    async def get_agent_link(
         self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetAgentLinkResponseModel:
         """
@@ -1580,7 +2048,7 @@ class AsyncConversationalAiClient:
 
 
         async def main() -> None:
-            await client.conversational_ai.get_link(
+            await client.conversational_ai.get_agent_link(
                 agent_id="21m00Tcm4TlvDq8ikWAM",
             )
 
@@ -1616,7 +2084,7 @@ class AsyncConversationalAiClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def post_avatar(
+    async def post_agent_avatar(
         self, agent_id: str, *, avatar_file: core.File, request_options: typing.Optional[RequestOptions] = None
     ) -> PostAgentAvatarResponseModel:
         """
@@ -1650,7 +2118,7 @@ class AsyncConversationalAiClient:
 
 
         async def main() -> None:
-            await client.conversational_ai.post_avatar(
+            await client.conversational_ai.post_agent_avatar(
                 agent_id="21m00Tcm4TlvDq8ikWAM",
             )
 
@@ -1691,7 +2159,7 @@ class AsyncConversationalAiClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_knowledge_base_document(
+    async def get_agent_knowledge_base_document_by_id(
         self, agent_id: str, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetKnowledgeBaseReponseModel:
         """
@@ -1725,7 +2193,7 @@ class AsyncConversationalAiClient:
 
 
         async def main() -> None:
-            await client.conversational_ai.get_knowledge_base_document(
+            await client.conversational_ai.get_agent_knowledge_base_document_by_id(
                 agent_id="21m00Tcm4TlvDq8ikWAM",
                 documentation_id="21m00Tcm4TlvDq8ikWAM",
             )
@@ -1845,7 +2313,7 @@ class AsyncConversationalAiClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def create_knowledge_base_document(
+    async def add_to_agent_knowledge_base(
         self,
         agent_id: str,
         *,
@@ -1887,7 +2355,7 @@ class AsyncConversationalAiClient:
 
 
         async def main() -> None:
-            await client.conversational_ai.create_knowledge_base_document(
+            await client.conversational_ai.add_to_agent_knowledge_base(
                 agent_id="21m00Tcm4TlvDq8ikWAM",
             )
 
@@ -2166,6 +2634,73 @@ class AsyncConversationalAiClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    async def delete_conversation(
+        self, conversation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Optional[typing.Any]:
+        """
+        Delete a particular conversation
+
+        Parameters
+        ----------
+        conversation_id : str
+            The id of the conversation you're taking the action on.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.delete_conversation(
+                conversation_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/convai/conversations/{jsonable_encoder(conversation_id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     async def get_conversation_audio(
         self, conversation_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
@@ -2211,6 +2746,460 @@ class AsyncConversationalAiClient:
         try:
             if 200 <= _response.status_code < 300:
                 return
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def post_conversation_feedback(
+        self,
+        conversation_id: str,
+        *,
+        feedback: UserFeedbackScore,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Optional[typing.Any]:
+        """
+        Send the feedback for the given conversation
+
+        Parameters
+        ----------
+        conversation_id : str
+            The id of the conversation you're taking the action on.
+
+        feedback : UserFeedbackScore
+            Either 'like' or 'dislike' to indicate the feedback for the conversation.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.post_conversation_feedback(
+                conversation_id="21m00Tcm4TlvDq8ikWAM",
+                feedback="like",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/convai/conversations/{jsonable_encoder(conversation_id)}/feedback",
+            method="POST",
+            json={
+                "feedback": feedback,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def create_phone_number(
+        self,
+        *,
+        phone_number: str,
+        label: str,
+        sid: str,
+        token: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> CreatePhoneNumberResponseModel:
+        """
+        Import Phone Number from Twilio configuration
+
+        Parameters
+        ----------
+        phone_number : str
+            Phone number
+
+        label : str
+            Label for the phone number
+
+        sid : str
+            Twilio Account SID
+
+        token : str
+            Twilio Token
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CreatePhoneNumberResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.create_phone_number(
+                phone_number="phone_number",
+                label="label",
+                sid="sid",
+                token="token",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/convai/phone-numbers/create",
+            method="POST",
+            json={
+                "phone_number": phone_number,
+                "label": label,
+                "sid": sid,
+                "token": token,
+                "provider": "twilio",
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    CreatePhoneNumberResponseModel,
+                    construct_type(
+                        type_=CreatePhoneNumberResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_phone_number(
+        self, phone_number_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetPhoneNumberResponseModel:
+        """
+        Retrieve Phone Number details by ID
+
+        Parameters
+        ----------
+        phone_number_id : str
+            The id of an agent. This is returned on agent creation.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetPhoneNumberResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.get_phone_number(
+                phone_number_id="TeaqRRdTcIfIu2i7BYfT",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetPhoneNumberResponseModel,
+                    construct_type(
+                        type_=GetPhoneNumberResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def delete_phone_number(
+        self, phone_number_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Optional[typing.Any]:
+        """
+        Delete Phone Number by ID
+
+        Parameters
+        ----------
+        phone_number_id : str
+            The id of an agent. This is returned on agent creation.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.delete_phone_number(
+                phone_number_id="TeaqRRdTcIfIu2i7BYfT",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def update_phone_number(
+        self,
+        phone_number_id: str,
+        *,
+        agent_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetPhoneNumberResponseModel:
+        """
+        Update Phone Number details by ID
+
+        Parameters
+        ----------
+        phone_number_id : str
+            The id of an agent. This is returned on agent creation.
+
+        agent_id : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetPhoneNumberResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.update_phone_number(
+                phone_number_id="TeaqRRdTcIfIu2i7BYfT",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}",
+            method="PATCH",
+            json={
+                "agent_id": agent_id,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetPhoneNumberResponseModel,
+                    construct_type(
+                        type_=GetPhoneNumberResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_phone_numbers(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[GetPhoneNumberResponseModel]:
+        """
+        Retrieve all Phone Numbers
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[GetPhoneNumberResponseModel]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.get_phone_numbers()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/convai/phone-numbers/",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.List[GetPhoneNumberResponseModel],
+                    construct_type(
+                        type_=typing.List[GetPhoneNumberResponseModel],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     typing.cast(
