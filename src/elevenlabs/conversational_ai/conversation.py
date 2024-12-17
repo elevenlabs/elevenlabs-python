@@ -2,7 +2,9 @@ from abc import ABC, abstractmethod
 import base64
 import json
 import threading
-from typing import Callable, Optional
+from typing import Callable, Optional, Awaitable, Union, Any
+import asyncio
+from concurrent.futures import ThreadPoolExecutor
 
 from websockets.sync.client import connect
 
@@ -52,8 +54,117 @@ class AudioInterface(ABC):
         """
         pass
 
+
+class ClientTools:
+    """Handles registration and execution of client-side tools that can be called by the agent.
+
+    Supports both synchronous and asynchronous tools running in a dedicated event loop,
+    ensuring non-blocking operation of the main conversation thread.
+    """
+
+    def __init__(self):
+        self.tools: dict[str, tuple[Union[Callable[[dict], Any], Callable[[dict], Awaitable[Any]]], bool]] = {}
+        self.lock = threading.Lock()
+        self._loop = None
+        self._thread = None
+        self._running = threading.Event()
+        self.thread_pool = ThreadPoolExecutor()
+
+    def start(self):
+        """Start the event loop in a separate thread for handling async operations."""
+        if self._running.is_set():
+            return
+
+        def run_event_loop():
+            self._loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(self._loop)
+            self._running.set()
+            try:
+                self._loop.run_forever()
+            finally:
+                self._running.clear()
+                self._loop.close()
+                self._loop = None
+
+        self._thread = threading.Thread(target=run_event_loop, daemon=True, name="ClientTools-EventLoop")
+        self._thread.start()
+        # Wait for loop to be ready
+        self._running.wait()
+
+    def stop(self):
+        """Gracefully stop the event loop and clean up resources."""
+        if self._loop and self._running.is_set():
+            self._loop.call_soon_threadsafe(self._loop.stop)
+            self._thread.join()
+            self.thread_pool.shutdown(wait=False)
+
+    def register(
+        self,
+        tool_name: str,
+        handler: Union[Callable[[dict], Any], Callable[[dict], Awaitable[Any]]],
+        is_async: bool = False,
+    ) -> None:
+        """Register a new tool that can be called by the AI agent.
+
+        Args:
+            tool_name: Unique identifier for the tool
+            handler: Function that implements the tool's logic
+            is_async: Whether the handler is an async function
+        """
+        with self.lock:
+            if not callable(handler):
+                raise ValueError("Handler must be callable")
+            if tool_name in self.tools:
+                raise ValueError(f"Tool '{tool_name}' is already registered")
+            self.tools[tool_name] = (handler, is_async)
+
+    async def handle(self, tool_name: str, parameters: dict) -> Any:
+        """Execute a registered tool with the given parameters.
+
+        Returns the result of the tool execution.
+        """
+        with self.lock:
+            if tool_name not in self.tools:
+                raise ValueError(f"Tool '{tool_name}' is not registered")
+            handler, is_async = self.tools[tool_name]
+
+        if is_async:
+            return await handler(parameters)
+        else:
+            return await asyncio.get_event_loop().run_in_executor(self.thread_pool, handler, parameters)
+
+    def execute_tool(self, tool_name: str, parameters: dict, callback: Callable[[dict], None]):
+        """Execute a tool and send its result via the provided callback.
+
+        This method is non-blocking and handles both sync and async tools.
+        """
+        if not self._running.is_set():
+            raise RuntimeError("ClientTools event loop is not running")
+
+        async def _execute_and_callback():
+            try:
+                result = await self.handle(tool_name, parameters)
+                response = {
+                    "type": "client_tool_result",
+                    "tool_call_id": parameters.get("tool_call_id"),
+                    "result": result or f"Client tool: {tool_name} called successfully.",
+                    "is_error": False,
+                }
+            except Exception as e:
+                response = {
+                    "type": "client_tool_result",
+                    "tool_call_id": parameters.get("tool_call_id"),
+                    "result": str(e),
+                    "is_error": True,
+                }
+            callback(response)
+
+        asyncio.run_coroutine_threadsafe(_execute_and_callback(), self._loop)
+
+
 class ConversationConfig:
     """Configuration options for the Conversation."""
+
     def __init__(
         self,
         extra_body: Optional[dict] = None,
@@ -61,13 +172,15 @@ class ConversationConfig:
     ):
         self.extra_body = extra_body or {}
         self.conversation_config_override = conversation_config_override or {}
-        
+
+
 class Conversation:
     client: BaseElevenLabs
     agent_id: str
     requires_auth: bool
     config: ConversationConfig
     audio_interface: AudioInterface
+    client_tools: Optional[ClientTools]
     callback_agent_response: Optional[Callable[[str], None]]
     callback_agent_response_correction: Optional[Callable[[str, str], None]]
     callback_user_transcript: Optional[Callable[[str], None]]
@@ -86,7 +199,7 @@ class Conversation:
         requires_auth: bool,
         audio_interface: AudioInterface,
         config: Optional[ConversationConfig] = None,
-        
+        client_tools: Optional[ClientTools] = None,
         callback_agent_response: Optional[Callable[[str], None]] = None,
         callback_agent_response_correction: Optional[Callable[[str, str], None]] = None,
         callback_user_transcript: Optional[Callable[[str], None]] = None,
@@ -101,6 +214,7 @@ class Conversation:
             agent_id: The ID of the agent to converse with.
             requires_auth: Whether the agent requires authentication.
             audio_interface: The audio interface to use for input and output.
+            client_tools: The client tools to use for the conversation.
             callback_agent_response: Callback for agent responses.
             callback_agent_response_correction: Callback for agent response corrections.
                 First argument is the original response (previously given to
@@ -112,13 +226,15 @@ class Conversation:
         self.client = client
         self.agent_id = agent_id
         self.requires_auth = requires_auth
-
         self.audio_interface = audio_interface
         self.callback_agent_response = callback_agent_response
         self.config = config or ConversationConfig()
+        self.client_tools = client_tools or ClientTools()
         self.callback_agent_response_correction = callback_agent_response_correction
         self.callback_user_transcript = callback_user_transcript
         self.callback_latency_measurement = callback_latency_measurement
+
+        self.client_tools.start()
 
         self._thread = None
         self._should_stop = threading.Event()
@@ -135,8 +251,9 @@ class Conversation:
         self._thread.start()
 
     def end_session(self):
-        """Ends the conversation session."""
+        """Ends the conversation session and cleans up resources."""
         self.audio_interface.stop()
+        self.client_tools.stop()
         self._should_stop.set()
 
     def wait_for_session_end(self) -> Optional[str]:
@@ -155,10 +272,10 @@ class Conversation:
         with connect(ws_url) as ws:
             ws.send(
                 json.dumps(
-                {
-                    "type": "conversation_initiation_client_data",
-                    "custom_llm_extra_body": self.config.extra_body,
-                    "conversation_config_override": self.config.conversation_config_override,
+                    {
+                        "type": "conversation_initiation_client_data",
+                        "custom_llm_extra_body": self.config.extra_body,
+                        "conversation_config_override": self.config.conversation_config_override,
                     }
                 )
             )
@@ -210,7 +327,7 @@ class Conversation:
                 self.callback_user_transcript(event["user_transcript"].strip())
         elif message["type"] == "interruption":
             event = message["interruption_event"]
-            self.last_interrupt_id = int(event["event_id"])
+            self._last_interrupt_id = int(event["event_id"])
             self.audio_interface.interrupt()
         elif message["type"] == "ping":
             event = message["ping_event"]
@@ -224,6 +341,16 @@ class Conversation:
             )
             if self.callback_latency_measurement and event["ping_ms"]:
                 self.callback_latency_measurement(int(event["ping_ms"]))
+        elif message["type"] == "client_tool_call":
+            tool_call = message.get("client_tool_call", {})
+            tool_name = tool_call.get("tool_name")
+            parameters = {"tool_call_id": tool_call["tool_call_id"], **tool_call.get("parameters", {})}
+
+            def send_response(response):
+                if not self._should_stop.is_set():
+                    ws.send(json.dumps(response))
+
+            self.client_tools.execute_tool(tool_name, parameters, send_response)
         else:
             pass  # Ignore all other message types.
 
