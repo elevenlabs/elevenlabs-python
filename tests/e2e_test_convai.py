@@ -4,7 +4,7 @@ import asyncio
 
 import pytest
 from elevenlabs import ElevenLabs
-from elevenlabs.conversational_ai.conversation import Conversation, ClientTools
+from elevenlabs.conversational_ai.conversation import Conversation, ClientTools, ConversationConfig
 from elevenlabs.conversational_ai.default_audio_interface import DefaultAudioInterface
 
 
@@ -48,8 +48,22 @@ def test_live_conversation():
     client_tools.register("test", test)
     client_tools.register("test_async", test_async, is_async=True)
 
+    conversation_override = {
+        "agent": {
+            "prompt": {"prompt": "The customer's bank account balance is."},
+            "first_message": "The customer's bank account balance is.",
+            "language": "en",
+        },
+        "tfts": {
+            "voice_id": "iP95p4xoKVk53GoZ742B"  # Override the voice
+        },
+    }
+
+    config = ConversationConfig(conversation_config_override=conversation_override)
+
     # Initialize conversation
     conversation = Conversation(
+        config=config,
         client=client,
         agent_id=agent_id,
         requires_auth=False,

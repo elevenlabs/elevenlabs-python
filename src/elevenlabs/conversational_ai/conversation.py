@@ -5,6 +5,7 @@ import threading
 from typing import Callable, Optional, Awaitable, Union, Any
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
+from ..types import ConversationConfigClientOverrideConfig
 
 from websockets.sync.client import connect
 
@@ -168,7 +169,7 @@ class ConversationConfig:
     def __init__(
         self,
         extra_body: Optional[dict] = None,
-        conversation_config_override: Optional[dict] = None,
+        conversation_config_override: Optional[ConversationConfigClientOverrideConfig] = None,
     ):
         self.extra_body = extra_body or {}
         self.conversation_config_override = conversation_config_override or {}
