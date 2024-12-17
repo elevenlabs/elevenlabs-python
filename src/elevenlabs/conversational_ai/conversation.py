@@ -73,10 +73,10 @@ class Conversation:
     callback_user_transcript: Optional[Callable[[str], None]]
     callback_latency_measurement: Optional[Callable[[int], None]]
 
-    _thread: Optional[threading.Thread] = None
+    _thread: Optional[threading.Thread]
     _should_stop: threading.Event
-    _conversation_id: Optional[str] = None
-    _last_interrupt_id: int = 0
+    _conversation_id: Optional[str]
+    _last_interrupt_id: int
 
     def __init__(
         self,
@@ -119,7 +119,11 @@ class Conversation:
         self.callback_agent_response_correction = callback_agent_response_correction
         self.callback_user_transcript = callback_user_transcript
         self.callback_latency_measurement = callback_latency_measurement
+
+        self._thread = None
         self._should_stop = threading.Event()
+        self._conversation_id = None
+        self._last_interrupt_id = 0
 
     def start_session(self):
         """Starts the conversation session.
