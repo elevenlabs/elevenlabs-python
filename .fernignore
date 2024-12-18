@@ -12,7 +12,15 @@ src/elevenlabs/realtime_tts.py
 README.md
 assets/
 
+# Ignore custom tests
 tests/
 
 .github/ISSUE_TEMPLATE/
 .github/SECURITY.md
+
+# Ignore manually created Conversational AI wrappers
+src/elevenlabs/conversational_ai/conversation.py
+src/elevenlabs/conversational_ai/default_audio_interface.py
+
+
+
