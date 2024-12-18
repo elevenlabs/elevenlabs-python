@@ -1,13 +1,14 @@
 # Specify files that shouldn't be modified by Fern
 
+# Ignore manually created SDK wrappers
 src/elevenlabs/client.py
 src/elevenlabs/conversational_ai/conversation.py
 src/elevenlabs/conversational_ai/default_audio_interface.py
 src/elevenlabs/play.py
 src/elevenlabs/realtime_tts.py
 
-.github/workflows/ci.yml
-.github/workflows/tests.yml
+# Ignore CI files
+.github/
 
 README.md
 assets/
@@ -15,12 +16,8 @@ assets/
 # Ignore custom tests
 tests/
 
-.github/ISSUE_TEMPLATE/
-.github/SECURITY.md
 
-# Ignore manually created Conversational AI wrappers
-src/elevenlabs/conversational_ai/conversation.py
-src/elevenlabs/conversational_ai/default_audio_interface.py
+
 
 
 
