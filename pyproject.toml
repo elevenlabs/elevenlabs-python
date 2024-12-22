@@ -30,7 +30,7 @@ packages = [
 
 [project.urls]
 Homepage = "https://github.com/elevenlabs/elevenlabs-python"
-Repository = "https://github.com/elevenlabs/elevenlabs-python"
+Repository = "https://github.com/elevenlabs/elevenlabs-python.git"
 Issues = "https://github.com/elevenlabs/elevenlabs-python/issues"
 
 [tool.poetry.dependencies]
