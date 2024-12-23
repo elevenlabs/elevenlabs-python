@@ -1,3 +1,4 @@
+elevenlabs
 httpx>=0.21.2
 pyaudio>=0.2.14
 pydantic>=1.9.2
