@@ -6,3 +6,5 @@ __pycache__/
 poetry.toml
 .ruff_cache/
 .DS_Store
+*.mp3
+.idea/
