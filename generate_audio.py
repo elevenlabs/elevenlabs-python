@@ -11,13 +11,13 @@ def list_voices():
     voices = response.voices
     print("Available voices:")
     for idx, voice in enumerate(voices):
-        print(f"{idx + 1}. {voice['name']}")
+        print(f"{idx + 1}. {voice.name}")
     return voices
 
 # Function to get the user's choice of voice
 def get_voice_choice(voices):
     choice = int(input("Enter the number of the voice you want to use: ")) - 1
-    return voices[choice]['voice_id']
+    return voices[choice].voice_id
 
 # List available voices and get user's choice
 voices = list_voices()
@@ -44,6 +44,7 @@ for line in lines:
         # Save the audio file
         audio_path = f"{filename}.mp3"
         with open(audio_path, 'wb') as audio_file:
-            audio_file.write(audio)
+            for chunk in audio:
+                audio_file.write(chunk)
 
         print(f"Generated audio for '{text}' and saved to '{audio_path}'")

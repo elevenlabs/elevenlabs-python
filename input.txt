@@ -1,0 +1,7 @@
+domain1 = The beginning of the process of establishing an online presence and identity starts with buying a domain name.
+domain2 = You buy them from a domain registrar.
+domain3 = Some choices for that are Porkbun, Namecheap, and Cloudflare.
+domain4 = My favorite is Porkbun. They are a local company, and have great customer service, so I like to support them.
+domain5 = The name of the domain I'll put in here is essentialconcepts dot org. This is where you'll put in the domain name you want to register.
+domain6 = It's available, so let's add it to the cart, and go to checkout.
+domain7 = Go ahead and enter in your payment info and wait for the process to complete.
