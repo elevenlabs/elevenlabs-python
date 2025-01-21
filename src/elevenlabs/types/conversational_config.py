@@ -10,6 +10,7 @@ from .asr_conversational_config import AsrConversationalConfig
 from .turn_config import TurnConfig
 from .tts_conversational_config import TtsConversationalConfig
 from .conversation_config import ConversationConfig
+from .language_preset import LanguagePreset
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from ..core.pydantic_utilities import update_forward_refs
@@ -21,6 +22,7 @@ class ConversationalConfig(UncheckedBaseModel):
     turn: typing.Optional[TurnConfig] = None
     tts: typing.Optional[TtsConversationalConfig] = None
     conversation: typing.Optional[ConversationConfig] = None
+    language_presets: typing.Optional[typing.Dict[str, LanguagePreset]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

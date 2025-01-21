@@ -17,6 +17,7 @@ class SubscriptionResponse(UncheckedBaseModel):
     can_extend_character_limit: bool
     allowed_to_extend_character_limit: bool
     next_character_count_reset_unix: int
+    voice_slots_used: int
     voice_limit: int
     max_voice_add_edits: int
     voice_add_edit_counter: int

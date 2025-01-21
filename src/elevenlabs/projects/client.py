@@ -12,6 +12,7 @@ from ..core.api_error import ApiError
 from .. import core
 from .types.projects_add_request_target_audience import ProjectsAddRequestTargetAudience
 from .types.projects_add_request_fiction import ProjectsAddRequestFiction
+from .types.projects_add_request_apply_text_normalization import ProjectsAddRequestApplyTextNormalization
 from ..types.add_project_response_model import AddProjectResponseModel
 from ..types.project_extended_response_model import ProjectExtendedResponseModel
 from ..core.jsonable_encoder import jsonable_encoder
@@ -106,6 +107,9 @@ class ProjectsClient:
         pronunciation_dictionary_locators: typing.Optional[typing.List[str]] = OMIT,
         fiction: typing.Optional[ProjectsAddRequestFiction] = OMIT,
         quality_check_on: typing.Optional[bool] = OMIT,
+        apply_text_normalization: typing.Optional[ProjectsAddRequestApplyTextNormalization] = OMIT,
+        auto_convert: typing.Optional[bool] = OMIT,
+        auto_assign_voices: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddProjectResponseModel:
         """
@@ -182,7 +186,21 @@ class ProjectsClient:
             An optional fiction of the project.
 
         quality_check_on : typing.Optional[bool]
-            Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
+            [Depracated] Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
+
+        apply_text_normalization : typing.Optional[ProjectsAddRequestApplyTextNormalization]
+
+                This parameter controls text normalization with four modes: 'auto', 'on', 'apply_english' and 'off'.
+                When set to 'auto', the system will automatically decide whether to apply text normalization
+                (e.g., spelling out numbers). With 'on', text normalization will always be applied, while
+                with 'off', it will be skipped. 'apply_english' is the same as 'on' but will assume that text is in English.
+
+
+        auto_convert : typing.Optional[bool]
+            Whether to auto convert the project to audio or not.
+
+        auto_assign_voices : typing.Optional[bool]
+            [Alpha Feature] Whether automatically assign voices to phrases in the create Project.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -231,6 +249,9 @@ class ProjectsClient:
                 "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
                 "fiction": fiction,
                 "quality_check_on": quality_check_on,
+                "apply_text_normalization": apply_text_normalization,
+                "auto_convert": auto_convert,
+                "auto_assign_voices": auto_assign_voices,
             },
             files={
                 "from_document": from_document,
@@ -365,7 +386,7 @@ class ProjectsClient:
             When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
 
         quality_check_on : typing.Optional[bool]
-            Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
+            [Depracated] Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -473,6 +494,88 @@ class ProjectsClient:
                     typing.Optional[typing.Any],
                     construct_type(
                         type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def update_content(
+        self,
+        project_id: str,
+        *,
+        from_url: typing.Optional[str] = OMIT,
+        from_document: typing.Optional[core.File] = OMIT,
+        auto_convert: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> EditProjectResponseModel:
+        """
+        Edits project content.
+
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+
+        from_url : typing.Optional[str]
+            An optional URL from which we will extract content to initialize the project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the project as blank.
+
+        from_document : typing.Optional[core.File]
+            See core.File for more documentation
+
+        auto_convert : typing.Optional[bool]
+            Whether to auto convert the project to audio or not.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EditProjectResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.update_content(
+            project_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/projects/{jsonable_encoder(project_id)}/content",
+            method="POST",
+            data={
+                "from_url": from_url,
+                "auto_convert": auto_convert,
+            },
+            files={
+                "from_document": from_document,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    EditProjectResponseModel,
+                    construct_type(
+                        type_=EditProjectResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -902,6 +1005,9 @@ class AsyncProjectsClient:
         pronunciation_dictionary_locators: typing.Optional[typing.List[str]] = OMIT,
         fiction: typing.Optional[ProjectsAddRequestFiction] = OMIT,
         quality_check_on: typing.Optional[bool] = OMIT,
+        apply_text_normalization: typing.Optional[ProjectsAddRequestApplyTextNormalization] = OMIT,
+        auto_convert: typing.Optional[bool] = OMIT,
+        auto_assign_voices: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddProjectResponseModel:
         """
@@ -978,7 +1084,21 @@ class AsyncProjectsClient:
             An optional fiction of the project.
 
         quality_check_on : typing.Optional[bool]
-            Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
+            [Depracated] Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
+
+        apply_text_normalization : typing.Optional[ProjectsAddRequestApplyTextNormalization]
+
+                This parameter controls text normalization with four modes: 'auto', 'on', 'apply_english' and 'off'.
+                When set to 'auto', the system will automatically decide whether to apply text normalization
+                (e.g., spelling out numbers). With 'on', text normalization will always be applied, while
+                with 'off', it will be skipped. 'apply_english' is the same as 'on' but will assume that text is in English.
+
+
+        auto_convert : typing.Optional[bool]
+            Whether to auto convert the project to audio or not.
+
+        auto_assign_voices : typing.Optional[bool]
+            [Alpha Feature] Whether automatically assign voices to phrases in the create Project.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1035,6 +1155,9 @@ class AsyncProjectsClient:
                 "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
                 "fiction": fiction,
                 "quality_check_on": quality_check_on,
+                "apply_text_normalization": apply_text_normalization,
+                "auto_convert": auto_convert,
+                "auto_assign_voices": auto_assign_voices,
             },
             files={
                 "from_document": from_document,
@@ -1177,7 +1300,7 @@ class AsyncProjectsClient:
             When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
 
         quality_check_on : typing.Optional[bool]
-            Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
+            [Depracated] Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1301,6 +1424,96 @@ class AsyncProjectsClient:
                     typing.Optional[typing.Any],
                     construct_type(
                         type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def update_content(
+        self,
+        project_id: str,
+        *,
+        from_url: typing.Optional[str] = OMIT,
+        from_document: typing.Optional[core.File] = OMIT,
+        auto_convert: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> EditProjectResponseModel:
+        """
+        Edits project content.
+
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+
+        from_url : typing.Optional[str]
+            An optional URL from which we will extract content to initialize the project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the project as blank.
+
+        from_document : typing.Optional[core.File]
+            See core.File for more documentation
+
+        auto_convert : typing.Optional[bool]
+            Whether to auto convert the project to audio or not.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EditProjectResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.update_content(
+                project_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/projects/{jsonable_encoder(project_id)}/content",
+            method="POST",
+            data={
+                "from_url": from_url,
+                "auto_convert": auto_convert,
+            },
+            files={
+                "from_document": from_document,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    EditProjectResponseModel,
+                    construct_type(
+                        type_=EditProjectResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

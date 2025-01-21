@@ -3,17 +3,16 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 from .embed_variant import EmbedVariant
-from .embed_config_avatar import EmbedConfigAvatar
+from .widget_config_avatar import WidgetConfigAvatar
 from .widget_feedback_mode import WidgetFeedbackMode
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
-class EmbedConfig(UncheckedBaseModel):
+class WidgetConfig(UncheckedBaseModel):
     variant: typing.Optional[EmbedVariant] = None
-    avatar: typing.Optional[EmbedConfigAvatar] = None
+    avatar: typing.Optional[WidgetConfigAvatar] = None
     feedback_mode: typing.Optional[WidgetFeedbackMode] = None
-    custom_avatar_path: typing.Optional[str] = None
     bg_color: typing.Optional[str] = None
     text_color: typing.Optional[str] = None
     btn_color: typing.Optional[str] = None
@@ -29,6 +28,11 @@ class EmbedConfig(UncheckedBaseModel):
     listening_text: typing.Optional[str] = None
     speaking_text: typing.Optional[str] = None
     shareable_page_text: typing.Optional[str] = None
+    terms_text: typing.Optional[str] = None
+    terms_html: typing.Optional[str] = None
+    terms_key: typing.Optional[str] = None
+    language_selector: typing.Optional[bool] = None
+    custom_avatar_path: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

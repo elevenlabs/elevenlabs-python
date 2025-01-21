@@ -20,6 +20,7 @@ class Subscription(UncheckedBaseModel):
     can_extend_character_limit: bool
     allowed_to_extend_character_limit: bool
     next_character_count_reset_unix: int
+    voice_slots_used: typing.Optional[int] = None
     voice_limit: int
     max_voice_add_edits: typing.Optional[int] = None
     voice_add_edit_counter: typing.Optional[int] = None
