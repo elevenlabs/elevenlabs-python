@@ -3,6 +3,9 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 from .conversation_config_client_override import ConversationConfigClientOverride
+from .conversation_initiation_client_data_dynamic_variables_value import (
+    ConversationInitiationClientDataDynamicVariablesValue,
+)
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
@@ -10,6 +13,7 @@ import pydantic
 class ConversationInitiationClientData(UncheckedBaseModel):
     conversation_config_override: typing.Optional[ConversationConfigClientOverride] = None
     custom_llm_extra_body: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
+    dynamic_variables: typing.Optional[typing.Dict[str, ConversationInitiationClientDataDynamicVariablesValue]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

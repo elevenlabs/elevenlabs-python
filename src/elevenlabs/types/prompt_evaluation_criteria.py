@@ -15,6 +15,7 @@ class PromptEvaluationCriteria(UncheckedBaseModel):
     name: typing.Optional[str] = None
     type: typing.Optional[typing.Literal["prompt"]] = None
     conversation_goal_prompt: str
+    use_knowledge_base: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

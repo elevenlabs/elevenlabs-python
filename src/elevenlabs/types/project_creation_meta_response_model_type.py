@@ -2,4 +2,6 @@
 
 import typing
 
-ProjectCreationMetaResponseModelType = typing.Union[typing.Literal["blank", "generate_podcast"], typing.Any]
+ProjectCreationMetaResponseModelType = typing.Union[
+    typing.Literal["blank", "generate_podcast", "auto_assign_voices"], typing.Any
+]

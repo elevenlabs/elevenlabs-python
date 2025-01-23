@@ -2,4 +2,6 @@
 
 import typing
 
-ModerationStatusResponseModelSafetyStatus = typing.Union[typing.Literal["appeal_approved", "appeal_denied"], typing.Any]
+ModerationStatusResponseModelSafetyStatus = typing.Union[
+    typing.Literal["appeal_approved", "appeal_denied", "false_positive"], typing.Any
+]

@@ -4,9 +4,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 from .auth_settings import AuthSettings
 from .evaluation_settings import EvaluationSettings
-from .embed_config import EmbedConfig
+from .widget_config import WidgetConfig
 from .literal_json_schema_property import LiteralJsonSchemaProperty
 from .conversation_initiation_client_data_config import ConversationInitiationClientDataConfig
+from .agent_call_limits import AgentCallLimits
 from .agent_ban import AgentBan
 from .safety import Safety
 from .privacy_config import PrivacyConfig
@@ -17,9 +18,10 @@ import pydantic
 class AgentPlatformSettings(UncheckedBaseModel):
     auth: typing.Optional[AuthSettings] = None
     evaluation: typing.Optional[EvaluationSettings] = None
-    widget: typing.Optional[EmbedConfig] = None
+    widget: typing.Optional[WidgetConfig] = None
     data_collection: typing.Optional[typing.Dict[str, LiteralJsonSchemaProperty]] = None
     overrides: typing.Optional[ConversationInitiationClientDataConfig] = None
+    call_limits: typing.Optional[AgentCallLimits] = None
     ban: typing.Optional[AgentBan] = None
     safety: typing.Optional[Safety] = None
     privacy: typing.Optional[PrivacyConfig] = None
