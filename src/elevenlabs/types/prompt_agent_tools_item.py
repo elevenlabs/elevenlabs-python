@@ -47,8 +47,24 @@ class PromptAgentToolsItem_Client(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class PromptAgentToolsItem_System(UncheckedBaseModel):
+    type: typing.Literal["system"] = "system"
+    name: str
+    description: str
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 PromptAgentToolsItem = typing_extensions.Annotated[
-    typing.Union[PromptAgentToolsItem_Webhook, PromptAgentToolsItem_Client], UnionMetadata(discriminant="type")
+    typing.Union[PromptAgentToolsItem_Webhook, PromptAgentToolsItem_Client, PromptAgentToolsItem_System],
+    UnionMetadata(discriminant="type"),
 ]
 update_forward_refs(ArrayJsonSchemaProperty, PromptAgentToolsItem_Webhook=PromptAgentToolsItem_Webhook)
 update_forward_refs(ObjectJsonSchemaProperty, PromptAgentToolsItem_Webhook=PromptAgentToolsItem_Webhook)

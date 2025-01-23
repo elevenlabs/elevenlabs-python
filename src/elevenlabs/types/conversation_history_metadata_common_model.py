@@ -16,6 +16,7 @@ class ConversationHistoryMetadataCommonModel(UncheckedBaseModel):
     feedback: typing.Optional[ConversationHistoryFeedbackCommonModel] = None
     authorization_method: typing.Optional[AuthorizationMethod] = None
     charging: typing.Optional[ConversationChargingCommonModel] = None
+    termination_reason: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

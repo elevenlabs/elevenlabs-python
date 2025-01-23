@@ -8,6 +8,7 @@ import pydantic
 
 
 class User(UncheckedBaseModel):
+    user_id: str
     subscription: SubscriptionResponse
     subscription_extras: typing.Optional[typing.Any] = None
     is_new_user: bool

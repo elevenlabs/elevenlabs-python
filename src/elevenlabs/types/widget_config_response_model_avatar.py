@@ -9,7 +9,7 @@ import typing_extensions
 from ..core.unchecked_base_model import UnionMetadata
 
 
-class EmbedConfigAvatar_Orb(UncheckedBaseModel):
+class WidgetConfigResponseModelAvatar_Orb(UncheckedBaseModel):
     type: typing.Literal["orb"] = "orb"
     color_1: typing.Optional[str] = None
     color_2: typing.Optional[str] = None
@@ -24,7 +24,7 @@ class EmbedConfigAvatar_Orb(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-class EmbedConfigAvatar_Url(UncheckedBaseModel):
+class WidgetConfigResponseModelAvatar_Url(UncheckedBaseModel):
     type: typing.Literal["url"] = "url"
     custom_url: typing.Optional[str] = None
 
@@ -38,7 +38,7 @@ class EmbedConfigAvatar_Url(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-class EmbedConfigAvatar_Image(UncheckedBaseModel):
+class WidgetConfigResponseModelAvatar_Image(UncheckedBaseModel):
     type: typing.Literal["image"] = "image"
     url: typing.Optional[str] = None
 
@@ -52,7 +52,9 @@ class EmbedConfigAvatar_Image(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-EmbedConfigAvatar = typing_extensions.Annotated[
-    typing.Union[EmbedConfigAvatar_Orb, EmbedConfigAvatar_Url, EmbedConfigAvatar_Image],
+WidgetConfigResponseModelAvatar = typing_extensions.Annotated[
+    typing.Union[
+        WidgetConfigResponseModelAvatar_Orb, WidgetConfigResponseModelAvatar_Url, WidgetConfigResponseModelAvatar_Image
+    ],
     UnionMetadata(discriminant="type"),
 ]

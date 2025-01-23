@@ -3,5 +3,5 @@
 import typing
 
 TtsOutputFormat = typing.Union[
-    typing.Literal["pcm_16000", "pcm_22050", "pcm_24000", "pcm_44100", "ulaw_8000"], typing.Any
+    typing.Literal["pcm_8000", "pcm_16000", "pcm_22050", "pcm_24000", "pcm_44100", "ulaw_8000"], typing.Any
 ]

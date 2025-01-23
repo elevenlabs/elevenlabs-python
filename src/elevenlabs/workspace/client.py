@@ -30,7 +30,7 @@ class WorkspaceClient:
         Parameters
         ----------
         email : str
-            Email of the target user.
+            The email of the customer
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -96,7 +96,7 @@ class WorkspaceClient:
         Parameters
         ----------
         email : str
-            Email of the target user.
+            The email of the customer
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -246,7 +246,7 @@ class AsyncWorkspaceClient:
         Parameters
         ----------
         email : str
-            Email of the target user.
+            The email of the customer
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -320,7 +320,7 @@ class AsyncWorkspaceClient:
         Parameters
         ----------
         email : str
-            Email of the target user.
+            The email of the customer
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

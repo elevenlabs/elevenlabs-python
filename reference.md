@@ -3710,7 +3710,38 @@ ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate
 <dl>
 <dd>
 
-**quality_check_on:** `typing.Optional[bool]` — Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
+**quality_check_on:** `typing.Optional[bool]` — [Depracated] Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**apply_text_normalization:** `typing.Optional[ProjectsAddRequestApplyTextNormalization]` 
+
+
+    This parameter controls text normalization with four modes: 'auto', 'on', 'apply_english' and 'off'.
+    When set to 'auto', the system will automatically decide whether to apply text normalization 
+    (e.g., spelling out numbers). With 'on', text normalization will always be applied, while 
+    with 'off', it will be skipped. 'apply_english' is the same as 'on' but will assume that text is in English.
+    
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auto_convert:** `typing.Optional[bool]` — Whether to auto convert the project to audio or not.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auto_assign_voices:** `typing.Optional[bool]` — [Alpha Feature] Whether automatically assign voices to phrases in the create Project.
     
 </dd>
 </dl>
@@ -3917,7 +3948,7 @@ client.projects.edit_basic_project_info(
 <dl>
 <dd>
 
-**quality_check_on:** `typing.Optional[bool]` — Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
+**quality_check_on:** `typing.Optional[bool]` — [Depracated] Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
     
 </dd>
 </dl>
@@ -3988,6 +4019,102 @@ client.projects.delete(
 <dd>
 
 **project_id:** `str` — The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">update_content</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Edits project content.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.projects.update_content(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from_url:** `typing.Optional[str]` — An optional URL from which we will extract content to initialize the project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the project as blank.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from_document:** `from __future__ import annotations
+
+typing.Optional[core.File]` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auto_convert:** `typing.Optional[bool]` — Whether to auto convert the project to audio or not.
     
 </dd>
 </dl>
@@ -5388,7 +5515,7 @@ client.audio_native.create(
 <dl>
 <dd>
 
-**image:** `typing.Optional[str]` — Image URL used in the player. If not provided, default image set in the Player settings is used.
+**image:** `typing.Optional[str]` — (Deprecated) Image URL used in the player. If not provided, default image set in the Player settings is used.
     
 </dd>
 </dl>
@@ -5412,7 +5539,7 @@ client.audio_native.create(
 <dl>
 <dd>
 
-**small:** `typing.Optional[bool]` — Whether to use small player or not. If not provided, default value set in the Player settings is used.
+**small:** `typing.Optional[bool]` — (Deprecated) Whether to use small player or not. If not provided, default value set in the Player settings is used.
     
 </dd>
 </dl>
@@ -5436,7 +5563,7 @@ client.audio_native.create(
 <dl>
 <dd>
 
-**sessionization:** `typing.Optional[int]` — Specifies for how many minutes to persist the session across page reloads. If not provided, default sessionization set in the Player settings is used.
+**sessionization:** `typing.Optional[int]` — (Deprecated) Specifies for how many minutes to persist the session across page reloads. If not provided, default sessionization set in the Player settings is used.
     
 </dd>
 </dl>
@@ -5471,6 +5598,102 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dd>
 
 **auto_convert:** `typing.Optional[bool]` — Whether to auto convert the project to audio or not.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.audio_native.<a href="src/elevenlabs/audio_native/client.py">update_content</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates content for the specific AudioNative Project.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.audio_native.update_content(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file:** `from __future__ import annotations
+
+typing.Optional[core.File]` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auto_convert:** `typing.Optional[bool]` — Whether to auto convert the project to audio or not.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auto_publish:** `typing.Optional[bool]` — Whether to auto publish the new project snapshot after it's converted.
     
 </dd>
 </dl>
@@ -6132,7 +6355,7 @@ client.workspace.invite_user(
 <dl>
 <dd>
 
-**email:** `str` — Email of the target user.
+**email:** `str` — The email of the customer
     
 </dd>
 </dl>
@@ -6202,7 +6425,7 @@ client.workspace.delete_existing_invitation(
 <dl>
 <dd>
 
-**email:** `str` — Email of the target user.
+**email:** `str` — The email of the customer
     
 </dd>
 </dl>
