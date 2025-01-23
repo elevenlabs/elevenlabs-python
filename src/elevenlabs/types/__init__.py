@@ -11,12 +11,14 @@ from .add_voice_ivc_response_model import AddVoiceIvcResponseModel
 from .add_voice_response_model import AddVoiceResponseModel
 from .age import Age
 from .agent_ban import AgentBan
+from .agent_call_limits import AgentCallLimits
 from .agent_config import AgentConfig
 from .agent_config_override import AgentConfigOverride
 from .agent_config_override_config import AgentConfigOverrideConfig
 from .agent_metadata_response_model import AgentMetadataResponseModel
 from .agent_platform_settings import AgentPlatformSettings
 from .agent_summary_response_model import AgentSummaryResponseModel
+from .agent_summary_response_model_access_level import AgentSummaryResponseModelAccessLevel
 from .allowlist_item import AllowlistItem
 from .array_json_schema_property import ArrayJsonSchemaProperty
 from .array_json_schema_property_items import ArrayJsonSchemaPropertyItems
@@ -55,6 +57,9 @@ from .conversation_history_transcript_tool_call_common_model import Conversation
 from .conversation_history_transcript_tool_result_common_model import ConversationHistoryTranscriptToolResultCommonModel
 from .conversation_initiation_client_data import ConversationInitiationClientData
 from .conversation_initiation_client_data_config import ConversationInitiationClientDataConfig
+from .conversation_initiation_client_data_dynamic_variables_value import (
+    ConversationInitiationClientDataDynamicVariablesValue,
+)
 from .conversation_signed_url_response_model import ConversationSignedUrlResponseModel
 from .conversation_summary_response_model import ConversationSummaryResponseModel
 from .conversation_summary_response_model_status import ConversationSummaryResponseModelStatus
@@ -68,14 +73,11 @@ from .custom_llm import CustomLlm
 from .data_collection_result_common_model import DataCollectionResultCommonModel
 from .do_dubbing_response import DoDubbingResponse
 from .dubbing_metadata_response import DubbingMetadataResponse
-from .edit_project_response_model import EditProjectResponseModel
-from .embed_config import EmbedConfig
-from .embed_config_avatar import (
-    EmbedConfigAvatar,
-    EmbedConfigAvatar_Image,
-    EmbedConfigAvatar_Orb,
-    EmbedConfigAvatar_Url,
+from .dynamic_variables_config import DynamicVariablesConfig
+from .dynamic_variables_config_dynamic_variable_placeholders_value import (
+    DynamicVariablesConfigDynamicVariablePlaceholdersValue,
 )
+from .edit_project_response_model import EditProjectResponseModel
 from .embed_variant import EmbedVariant
 from .evaluation_settings import EvaluationSettings
 from .evaluation_success_result import EvaluationSuccessResult
@@ -113,6 +115,8 @@ from .image_avatar import ImageAvatar
 from .invoice import Invoice
 from .knowledge_base_locator import KnowledgeBaseLocator
 from .knowledge_base_locator_type import KnowledgeBaseLocatorType
+from .language_preset import LanguagePreset
+from .language_preset_translation import LanguagePresetTranslation
 from .language_response import LanguageResponse
 from .library_voice_response import LibraryVoiceResponse
 from .library_voice_response_model_category import LibraryVoiceResponseModelCategory
@@ -156,7 +160,12 @@ from .project_state import ProjectState
 from .prompt_agent import PromptAgent
 from .prompt_agent_override import PromptAgentOverride
 from .prompt_agent_override_config import PromptAgentOverrideConfig
-from .prompt_agent_tools_item import PromptAgentToolsItem, PromptAgentToolsItem_Client, PromptAgentToolsItem_Webhook
+from .prompt_agent_tools_item import (
+    PromptAgentToolsItem,
+    PromptAgentToolsItem_Client,
+    PromptAgentToolsItem_System,
+    PromptAgentToolsItem_Webhook,
+)
 from .prompt_evaluation_criteria import PromptEvaluationCriteria
 from .pronunciation_dictionary_alias_rule_request_model import PronunciationDictionaryAliasRuleRequestModel
 from .pronunciation_dictionary_phoneme_rule_request_model import PronunciationDictionaryPhonemeRuleRequestModel
@@ -181,6 +190,7 @@ from .subscription_response_model_billing_period import SubscriptionResponseMode
 from .subscription_response_model_character_refresh_period import SubscriptionResponseModelCharacterRefreshPeriod
 from .subscription_response_model_currency import SubscriptionResponseModelCurrency
 from .subscription_status import SubscriptionStatus
+from .system_tool_config import SystemToolConfig
 from .telephony_provider import TelephonyProvider
 from .text_to_speech_as_stream_request import TextToSpeechAsStreamRequest
 from .tts_conversational_config import TtsConversationalConfig
@@ -217,6 +227,20 @@ from .webhook_tool_api_schema_config import WebhookToolApiSchemaConfig
 from .webhook_tool_api_schema_config_method import WebhookToolApiSchemaConfigMethod
 from .webhook_tool_api_schema_config_request_headers_value import WebhookToolApiSchemaConfigRequestHeadersValue
 from .webhook_tool_config import WebhookToolConfig
+from .widget_config import WidgetConfig
+from .widget_config_avatar import (
+    WidgetConfigAvatar,
+    WidgetConfigAvatar_Image,
+    WidgetConfigAvatar_Orb,
+    WidgetConfigAvatar_Url,
+)
+from .widget_config_response_model import WidgetConfigResponseModel
+from .widget_config_response_model_avatar import (
+    WidgetConfigResponseModelAvatar,
+    WidgetConfigResponseModelAvatar_Image,
+    WidgetConfigResponseModelAvatar_Orb,
+    WidgetConfigResponseModelAvatar_Url,
+)
 from .widget_feedback_mode import WidgetFeedbackMode
 
 __all__ = [
@@ -231,12 +255,14 @@ __all__ = [
     "AddVoiceResponseModel",
     "Age",
     "AgentBan",
+    "AgentCallLimits",
     "AgentConfig",
     "AgentConfigOverride",
     "AgentConfigOverrideConfig",
     "AgentMetadataResponseModel",
     "AgentPlatformSettings",
     "AgentSummaryResponseModel",
+    "AgentSummaryResponseModelAccessLevel",
     "AllowlistItem",
     "ArrayJsonSchemaProperty",
     "ArrayJsonSchemaPropertyItems",
@@ -273,6 +299,7 @@ __all__ = [
     "ConversationHistoryTranscriptToolResultCommonModel",
     "ConversationInitiationClientData",
     "ConversationInitiationClientDataConfig",
+    "ConversationInitiationClientDataDynamicVariablesValue",
     "ConversationSignedUrlResponseModel",
     "ConversationSummaryResponseModel",
     "ConversationSummaryResponseModelStatus",
@@ -286,12 +313,9 @@ __all__ = [
     "DataCollectionResultCommonModel",
     "DoDubbingResponse",
     "DubbingMetadataResponse",
+    "DynamicVariablesConfig",
+    "DynamicVariablesConfigDynamicVariablePlaceholdersValue",
     "EditProjectResponseModel",
-    "EmbedConfig",
-    "EmbedConfigAvatar",
-    "EmbedConfigAvatar_Image",
-    "EmbedConfigAvatar_Orb",
-    "EmbedConfigAvatar_Url",
     "EmbedVariant",
     "EvaluationSettings",
     "EvaluationSuccessResult",
@@ -327,6 +351,8 @@ __all__ = [
     "Invoice",
     "KnowledgeBaseLocator",
     "KnowledgeBaseLocatorType",
+    "LanguagePreset",
+    "LanguagePresetTranslation",
     "LanguageResponse",
     "LibraryVoiceResponse",
     "LibraryVoiceResponseModelCategory",
@@ -372,6 +398,7 @@ __all__ = [
     "PromptAgentOverrideConfig",
     "PromptAgentToolsItem",
     "PromptAgentToolsItem_Client",
+    "PromptAgentToolsItem_System",
     "PromptAgentToolsItem_Webhook",
     "PromptEvaluationCriteria",
     "PronunciationDictionaryAliasRuleRequestModel",
@@ -397,6 +424,7 @@ __all__ = [
     "SubscriptionResponseModelCharacterRefreshPeriod",
     "SubscriptionResponseModelCurrency",
     "SubscriptionStatus",
+    "SystemToolConfig",
     "TelephonyProvider",
     "TextToSpeechAsStreamRequest",
     "TtsConversationalConfig",
@@ -433,5 +461,15 @@ __all__ = [
     "WebhookToolApiSchemaConfigMethod",
     "WebhookToolApiSchemaConfigRequestHeadersValue",
     "WebhookToolConfig",
+    "WidgetConfig",
+    "WidgetConfigAvatar",
+    "WidgetConfigAvatar_Image",
+    "WidgetConfigAvatar_Orb",
+    "WidgetConfigAvatar_Url",
+    "WidgetConfigResponseModel",
+    "WidgetConfigResponseModelAvatar",
+    "WidgetConfigResponseModelAvatar_Image",
+    "WidgetConfigResponseModelAvatar_Orb",
+    "WidgetConfigResponseModelAvatar_Url",
     "WidgetFeedbackMode",
 ]

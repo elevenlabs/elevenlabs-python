@@ -10,6 +10,7 @@ TextToVoiceCreatePreviewsRequestOutputFormat = typing.Union[
         "mp3_44100_96",
         "mp3_44100_128",
         "mp3_44100_192",
+        "pcm_8000",
         "pcm_16000",
         "pcm_22050",
         "pcm_24000",

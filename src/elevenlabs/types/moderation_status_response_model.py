@@ -17,6 +17,7 @@ class ModerationStatusResponseModel(UncheckedBaseModel):
     enterprise_background_moderation_enabled: bool
     safety_status: ModerationStatusResponseModelSafetyStatus
     warning_status: ModerationStatusResponseModelWarningStatus
+    on_watchlist: bool
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
