@@ -41,18 +41,21 @@ pip install elevenlabs
 For more detailed information about these models and others, visit the [ElevenLabs Models documentation](https://elevenlabs.io/docs/speech-synthesis/models).
 
 ```py
-from elevenlabs import play
+from dotenv import load_dotenv
 from elevenlabs.client import ElevenLabs
+from elevenlabs import play
 
-client = ElevenLabs(
-  api_key="YOUR_API_KEY", # Defaults to ELEVEN_API_KEY or ELEVENLABS_API_KEY
+load_dotenv()
+
+client = ElevenLabs()
+
+audio = client.text_to_speech.convert(
+    text="The first move is what sets everything in motion.",
+    voice_id="JBFqnCBsd6RMkjVDRZzb",
+    model_id="eleven_multilingual_v2",
+    output_format="mp3_44100_128",
 )
 
-audio = client.generate(
-  text="Hello! 你好! Hola! नमस्ते! Bonjour! こんにちは! مرحبا! 안녕하세요! Ciao! Cześć! Привіт! வணக்கம்!",
-  voice="Brian",
-  model="eleven_multilingual_v2"
-)
 play(audio)
 ```
 
@@ -70,11 +73,10 @@ List all your available voices with `voices()`.
 from elevenlabs.client import ElevenLabs
 
 client = ElevenLabs(
-  api_key="YOUR_API_KEY", # Defaults to ELEVEN_API_KEY or ELEVENLABS_API_KEY
+  api_key="YOUR_API_KEY",
 )
 
 response = client.voices.get_all()
-audio = client.generate(text="Hello there!", voice=response.voices[0])
 print(response.voices)
 ```
 
@@ -82,25 +84,6 @@ For information about the structure of the voices output, please refer to the [o
 
 Build a voice object with custom settings to personalize the voice style, or call
 `client.voices.get_settings("your-voice-id")` to get the default settings for the voice.
-
-```py
-from elevenlabs import Voice, VoiceSettings, play
-from elevenlabs.client import ElevenLabs
-
-client = ElevenLabs(
-  api_key="YOUR_API_KEY", # Defaults to ELEVEN_API_KEY or ELEVENLABS_API_KEY
-)
-
-audio = client.generate(
-    text="Hello! My name is Brian.",
-    voice=Voice(
-        voice_id='nPczCjzI2devNBz1zQrb',
-        settings=VoiceSettings(stability=0.71, similarity_boost=0.5, style=0.0, use_speaker_boost=True)
-    )
-)
-
-play(audio)
-```
 
 </details>
 
@@ -121,10 +104,6 @@ voice = client.clone(
     description="An old American male voice with a slight hoarseness in his throat. Perfect for news", # Optional
     files=["./sample_0.mp3", "./sample_1.mp3", "./sample_2.mp3"],
 )
-
-audio = client.generate(text="Hi! I'm a cloned voice!", voice=voice)
-
-play(audio)
 ```
 
 ## 🚿 Streaming
@@ -132,23 +111,26 @@ play(audio)
 Stream audio in real-time, as it's being generated.
 
 ```py
-from elevenlabs.client import ElevenLabs
 from elevenlabs import stream
+from elevenlabs.client import ElevenLabs
 
-client = ElevenLabs(
-  api_key="YOUR_API_KEY", # Defaults to ELEVEN_API_KEY or ELEVENLABS_API_KEY
+client = ElevenLabs()
+
+audio_stream = client.text_to_speech.convert_as_stream(
+    text="This is a test",
+    voice_id="JBFqnCBsd6RMkjVDRZzb",
+    model_id="eleven_multilingual_v2"
 )
 
-audio_stream = client.generate(
-  text="This is a... streaming voice!!",
-  stream=True
-)
-
+# option 1: play the streamed audio locally
 stream(audio_stream)
-```
 
-Note that `generate` is a helper function. If you'd like to access
-the raw method, simply use `client.text_to_speech.convert_as_stream`.
+# option 2: process the audio bytes manually
+for chunk in audio_stream:
+    if isinstance(chunk, bytes):
+        print(chunk)
+
+```
 
 ### Input streaming
 
@@ -175,9 +157,6 @@ audio_stream = client.generate(
 
 stream(audio_stream)
 ```
-
-Note that `generate` is a helper function. If you'd like to access
-the raw method, simply use `client.text_to_speech.convert_realtime`.
 
 ## Async Client
 
