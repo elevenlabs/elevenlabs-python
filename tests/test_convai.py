@@ -130,6 +130,7 @@ def test_conversation_with_dynamic_variables():
     # Setup the conversation
     conversation = Conversation(
         client=mock_client,
+        config=config,
         agent_id=TEST_AGENT_ID,
         requires_auth=False,
         audio_interface=MockAudioInterface(),
