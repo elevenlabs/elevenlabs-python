@@ -169,9 +169,11 @@ class ConversationConfig:
         self,
         extra_body: Optional[dict] = None,
         conversation_config_override: Optional[dict] = None,
+        dynamic_variables: Optional[dict] = None,
     ):
         self.extra_body = extra_body or {}
         self.conversation_config_override = conversation_config_override or {}
+        self.dynamic_variables = dynamic_variables or {}
 
 
 class Conversation:
@@ -276,6 +278,7 @@ class Conversation:
                         "type": "conversation_initiation_client_data",
                         "custom_llm_extra_body": self.config.extra_body,
                         "conversation_config_override": self.config.conversation_config_override,
+                        "dynamic_variables": self.config.dynamic_variables,
                     }
                 )
             )
