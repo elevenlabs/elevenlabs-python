@@ -1,5 +1,5 @@
 from unittest.mock import MagicMock, patch
-from elevenlabs.conversational_ai.conversation import Conversation, AudioInterface
+from elevenlabs.conversational_ai.conversation import Conversation, AudioInterface, ConversationConfig
 import json
 import time
 
@@ -81,6 +81,7 @@ def test_conversation_basic_flow():
         "type": "conversation_initiation_client_data",
         "custom_llm_extra_body": {},
         "conversation_config_override": {},
+        "dynamic_variables": {},
     }
     mock_ws.send.assert_any_call(json.dumps(expected_init_message))
     agent_response_callback.assert_called_once_with("Hello there!")
@@ -116,3 +117,48 @@ def test_conversation_with_auth():
 
     # Assertions
     mock_client.conversational_ai.get_signed_url.assert_called_once_with(agent_id=TEST_AGENT_ID)
+
+def test_conversation_with_dynamic_variables():
+    # Mock setup
+    mock_ws = create_mock_websocket()
+    mock_client = MagicMock()
+    agent_response_callback = MagicMock()
+
+    dynamic_variables = {"name": "angelo"}
+    config = ConversationConfig(dynamic_variables=dynamic_variables)
+
+    # Setup the conversation
+    conversation = Conversation(
+        client=mock_client,
+        agent_id=TEST_AGENT_ID,
+        requires_auth=False,
+        audio_interface=MockAudioInterface(),
+        callback_agent_response=agent_response_callback,
+    )
+
+    # Run the test
+    with patch("elevenlabs.conversational_ai.conversation.connect") as mock_connect:
+        mock_connect.return_value.__enter__.return_value = mock_ws
+        conversation.start_session()
+
+        # Add a wait for the callback to be called
+        timeout = 5  # 5 seconds timeout
+        start_time = time.time()
+        while not agent_response_callback.called and time.time() - start_time < timeout:
+            time.sleep(0.1)
+
+        conversation.end_session()
+        conversation.wait_for_session_end()
+
+    # Assertions
+    expected_init_message = {
+        "type": "conversation_initiation_client_data",
+        "custom_llm_extra_body": {},
+        "conversation_config_override": {},
+        "dynamic_variables": {
+            "name": "angelo"
+        },
+    }
+    mock_ws.send.assert_any_call(json.dumps(expected_init_message))
+    agent_response_callback.assert_called_once_with("Hello there!")
+    assert conversation._conversation_id == TEST_CONVERSATION_ID
