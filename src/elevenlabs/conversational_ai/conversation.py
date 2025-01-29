@@ -284,13 +284,16 @@ class Conversation:
             )
 
             def input_callback(audio):
-                ws.send(
-                    json.dumps(
-                        {
-                            "user_audio_chunk": base64.b64encode(audio).decode(),
-                        }
+                try:
+                    ws.send(
+                        json.dumps(
+                            {
+                                "user_audio_chunk": base64.b64encode(audio).decode(),
+                            }
+                        )
                     )
-                )
+                except ws.exceptions.ConnectionClosedOK:
+                    self.end_session()
 
             self.audio_interface.start(input_callback)
             while not self._should_stop.is_set():
@@ -299,6 +302,8 @@ class Conversation:
                     if self._should_stop.is_set():
                         return
                     self._handle_message(message, ws)
+                except ws.exceptions.ConnectionClosedOK as e:
+                    self.end_session()
                 except TimeoutError:
                     pass
 
