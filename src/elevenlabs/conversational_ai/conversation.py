@@ -7,6 +7,7 @@ import asyncio
 from concurrent.futures import ThreadPoolExecutor
 
 from websockets.sync.client import connect
+from websockets.exceptions import ConnectionClosedOK
 
 from ..base_client import BaseElevenLabs
 
@@ -284,13 +285,16 @@ class Conversation:
             )
 
             def input_callback(audio):
-                ws.send(
-                    json.dumps(
-                        {
-                            "user_audio_chunk": base64.b64encode(audio).decode(),
-                        }
+                try:
+                    ws.send(
+                        json.dumps(
+                            {
+                                "user_audio_chunk": base64.b64encode(audio).decode(),
+                            }
+                        )
                     )
-                )
+                except ConnectionClosedOK:
+                    self.end_session()
 
             self.audio_interface.start(input_callback)
             while not self._should_stop.is_set():
@@ -299,6 +303,8 @@ class Conversation:
                     if self._should_stop.is_set():
                         return
                     self._handle_message(message, ws)
+                except ConnectionClosedOK as e:
+                    self.end_session()
                 except TimeoutError:
                     pass
 
