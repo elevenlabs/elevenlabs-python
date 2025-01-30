@@ -295,6 +295,9 @@ class Conversation:
                     )
                 except ConnectionClosedOK:
                     self.end_session()
+                except Exception as e:
+                    print(f"Error sending user audio chunk: {e}")
+                    self.end_session()
 
             self.audio_interface.start(input_callback)
             while not self._should_stop.is_set():
@@ -307,6 +310,9 @@ class Conversation:
                     self.end_session()
                 except TimeoutError:
                     pass
+                except Exception as e:
+                    print(f"Error receiving message: {e}")
+                    self.end_session()
 
     def _handle_message(self, message, ws):
         if message["type"] == "conversation_initiation_metadata":
