@@ -53,7 +53,7 @@ class PromptAgentToolsItem_System(UncheckedBaseModel):
     description: str
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True) 
     else:
 
         class Config:
@@ -70,3 +70,5 @@ update_forward_refs(ArrayJsonSchemaProperty, PromptAgentToolsItem_Webhook=Prompt
 update_forward_refs(ObjectJsonSchemaProperty, PromptAgentToolsItem_Webhook=PromptAgentToolsItem_Webhook)
 update_forward_refs(ArrayJsonSchemaProperty, PromptAgentToolsItem_Client=PromptAgentToolsItem_Client)
 update_forward_refs(ObjectJsonSchemaProperty, PromptAgentToolsItem_Client=PromptAgentToolsItem_Client)
+update_forward_refs(ArrayJsonSchemaProperty, PromptAgentToolsItem_System=PromptAgentToolsItem_System)
+update_forward_refs(ObjectJsonSchemaProperty, PromptAgentToolsItem_System=PromptAgentToolsItem_System)
