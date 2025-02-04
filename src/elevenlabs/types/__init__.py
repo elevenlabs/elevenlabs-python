@@ -27,15 +27,36 @@ from .asr_input_format import AsrInputFormat
 from .asr_provider import AsrProvider
 from .asr_quality import AsrQuality
 from .audio_native_create_project_response_model import AudioNativeCreateProjectResponseModel
+from .audio_native_edit_content_response_model import AudioNativeEditContentResponseModel
 from .auth_settings import AuthSettings
 from .authorization_method import AuthorizationMethod
 from .ban_reason_type import BanReasonType
+from .body_add_to_knowledge_base_v_1_convai_add_to_knowledge_base_post import (
+    BodyAddToKnowledgeBaseV1ConvaiAddToKnowledgeBasePost,
+)
+from .body_add_to_knowledge_base_v_1_convai_agents_agent_id_add_to_knowledge_base_post import (
+    BodyAddToKnowledgeBaseV1ConvaiAgentsAgentIdAddToKnowledgeBasePost,
+)
 from .breakdown_types import BreakdownTypes
+from .chapter_content_block_extendable_node_response_model import ChapterContentBlockExtendableNodeResponseModel
+from .chapter_content_block_input_model import ChapterContentBlockInputModel
+from .chapter_content_block_response_model import ChapterContentBlockResponseModel
+from .chapter_content_block_response_model_nodes_item import (
+    ChapterContentBlockResponseModelNodesItem,
+    ChapterContentBlockResponseModelNodesItem_Other,
+    ChapterContentBlockResponseModelNodesItem_TtsNode,
+)
+from .chapter_content_block_tts_node_response_model import ChapterContentBlockTtsNodeResponseModel
+from .chapter_content_input_model import ChapterContentInputModel
+from .chapter_content_paragraph_tts_node_input_model import ChapterContentParagraphTtsNodeInputModel
+from .chapter_content_response_model import ChapterContentResponseModel
 from .chapter_response import ChapterResponse
 from .chapter_snapshot_response import ChapterSnapshotResponse
 from .chapter_snapshots_response import ChapterSnapshotsResponse
 from .chapter_state import ChapterState
 from .chapter_statistics_response import ChapterStatisticsResponse
+from .chapter_with_content_response_model import ChapterWithContentResponseModel
+from .chapter_with_content_response_model_state import ChapterWithContentResponseModelState
 from .client_event import ClientEvent
 from .client_tool_config import ClientToolConfig
 from .conv_ai_new_secret_config import ConvAiNewSecretConfig
@@ -45,6 +66,7 @@ from .conversation_charging_common_model import ConversationChargingCommonModel
 from .conversation_config import ConversationConfig
 from .conversation_config_client_override import ConversationConfigClientOverride
 from .conversation_config_client_override_config import ConversationConfigClientOverrideConfig
+from .conversation_deletion_settings import ConversationDeletionSettings
 from .conversation_history_analysis_common_model import ConversationHistoryAnalysisCommonModel
 from .conversation_history_evaluation_criteria_result_common_model import (
     ConversationHistoryEvaluationCriteriaResultCommonModel,
@@ -72,11 +94,13 @@ from .currency import Currency
 from .custom_llm import CustomLlm
 from .data_collection_result_common_model import DataCollectionResultCommonModel
 from .do_dubbing_response import DoDubbingResponse
+from .dubbing_media_metadata import DubbingMediaMetadata
 from .dubbing_metadata_response import DubbingMetadataResponse
 from .dynamic_variables_config import DynamicVariablesConfig
 from .dynamic_variables_config_dynamic_variable_placeholders_value import (
     DynamicVariablesConfigDynamicVariablePlaceholdersValue,
 )
+from .edit_chapter_response_model import EditChapterResponseModel
 from .edit_project_response_model import EditProjectResponseModel
 from .embed_variant import EmbedVariant
 from .evaluation_settings import EvaluationSettings
@@ -136,6 +160,13 @@ from .object_json_schema_property_properties_value import ObjectJsonSchemaProper
 from .orb_avatar import OrbAvatar
 from .output_format import OutputFormat
 from .phone_number_agent_info import PhoneNumberAgentInfo
+from .podcast_bulletin_mode import PodcastBulletinMode
+from .podcast_bulletin_mode_data import PodcastBulletinModeData
+from .podcast_conversation_mode import PodcastConversationMode
+from .podcast_conversation_mode_data import PodcastConversationModeData
+from .podcast_project_response_model import PodcastProjectResponseModel
+from .podcast_text_source import PodcastTextSource
+from .podcast_url_source import PodcastUrlSource
 from .post_agent_avatar_response_model import PostAgentAvatarResponseModel
 from .privacy_config import PrivacyConfig
 from .profile_page_response_model import ProfilePageResponseModel
@@ -184,6 +215,9 @@ from .safety_rule import SafetyRule
 from .speech_history_item_response import SpeechHistoryItemResponse
 from .speech_history_item_response_model_source import SpeechHistoryItemResponseModelSource
 from .speech_history_item_response_model_voice_category import SpeechHistoryItemResponseModelVoiceCategory
+from .speech_to_text_chunk_response_model import SpeechToTextChunkResponseModel
+from .speech_to_text_word_response_model import SpeechToTextWordResponseModel
+from .speech_to_text_word_response_model_type import SpeechToTextWordResponseModelType
 from .subscription import Subscription
 from .subscription_response import SubscriptionResponse
 from .subscription_response_model_billing_period import SubscriptionResponseModelBillingPeriod
@@ -193,6 +227,21 @@ from .subscription_status import SubscriptionStatus
 from .system_tool_config import SystemToolConfig
 from .telephony_provider import TelephonyProvider
 from .text_to_speech_as_stream_request import TextToSpeechAsStreamRequest
+from .tool_config_locator import ToolConfigLocator
+from .tool_request_model import ToolRequestModel
+from .tool_request_model_tool_config import (
+    ToolRequestModelToolConfig,
+    ToolRequestModelToolConfig_Client,
+    ToolRequestModelToolConfig_System,
+    ToolRequestModelToolConfig_Webhook,
+)
+from .tool_response_model import ToolResponseModel
+from .tool_response_model_tool_config import (
+    ToolResponseModelToolConfig,
+    ToolResponseModelToolConfig_Client,
+    ToolResponseModelToolConfig_System,
+    ToolResponseModelToolConfig_Webhook,
+)
 from .tts_conversational_config import TtsConversationalConfig
 from .tts_conversational_config_override import TtsConversationalConfigOverride
 from .tts_conversational_config_override_config import TtsConversationalConfigOverrideConfig
@@ -271,15 +320,30 @@ __all__ = [
     "AsrProvider",
     "AsrQuality",
     "AudioNativeCreateProjectResponseModel",
+    "AudioNativeEditContentResponseModel",
     "AuthSettings",
     "AuthorizationMethod",
     "BanReasonType",
+    "BodyAddToKnowledgeBaseV1ConvaiAddToKnowledgeBasePost",
+    "BodyAddToKnowledgeBaseV1ConvaiAgentsAgentIdAddToKnowledgeBasePost",
     "BreakdownTypes",
+    "ChapterContentBlockExtendableNodeResponseModel",
+    "ChapterContentBlockInputModel",
+    "ChapterContentBlockResponseModel",
+    "ChapterContentBlockResponseModelNodesItem",
+    "ChapterContentBlockResponseModelNodesItem_Other",
+    "ChapterContentBlockResponseModelNodesItem_TtsNode",
+    "ChapterContentBlockTtsNodeResponseModel",
+    "ChapterContentInputModel",
+    "ChapterContentParagraphTtsNodeInputModel",
+    "ChapterContentResponseModel",
     "ChapterResponse",
     "ChapterSnapshotResponse",
     "ChapterSnapshotsResponse",
     "ChapterState",
     "ChapterStatisticsResponse",
+    "ChapterWithContentResponseModel",
+    "ChapterWithContentResponseModelState",
     "ClientEvent",
     "ClientToolConfig",
     "ConvAiNewSecretConfig",
@@ -289,6 +353,7 @@ __all__ = [
     "ConversationConfig",
     "ConversationConfigClientOverride",
     "ConversationConfigClientOverrideConfig",
+    "ConversationDeletionSettings",
     "ConversationHistoryAnalysisCommonModel",
     "ConversationHistoryEvaluationCriteriaResultCommonModel",
     "ConversationHistoryFeedbackCommonModel",
@@ -312,9 +377,11 @@ __all__ = [
     "CustomLlm",
     "DataCollectionResultCommonModel",
     "DoDubbingResponse",
+    "DubbingMediaMetadata",
     "DubbingMetadataResponse",
     "DynamicVariablesConfig",
     "DynamicVariablesConfigDynamicVariablePlaceholdersValue",
+    "EditChapterResponseModel",
     "EditProjectResponseModel",
     "EmbedVariant",
     "EvaluationSettings",
@@ -372,6 +439,13 @@ __all__ = [
     "OrbAvatar",
     "OutputFormat",
     "PhoneNumberAgentInfo",
+    "PodcastBulletinMode",
+    "PodcastBulletinModeData",
+    "PodcastConversationMode",
+    "PodcastConversationModeData",
+    "PodcastProjectResponseModel",
+    "PodcastTextSource",
+    "PodcastUrlSource",
     "PostAgentAvatarResponseModel",
     "PrivacyConfig",
     "ProfilePageResponseModel",
@@ -418,6 +492,9 @@ __all__ = [
     "SpeechHistoryItemResponse",
     "SpeechHistoryItemResponseModelSource",
     "SpeechHistoryItemResponseModelVoiceCategory",
+    "SpeechToTextChunkResponseModel",
+    "SpeechToTextWordResponseModel",
+    "SpeechToTextWordResponseModelType",
     "Subscription",
     "SubscriptionResponse",
     "SubscriptionResponseModelBillingPeriod",
@@ -427,6 +504,17 @@ __all__ = [
     "SystemToolConfig",
     "TelephonyProvider",
     "TextToSpeechAsStreamRequest",
+    "ToolConfigLocator",
+    "ToolRequestModel",
+    "ToolRequestModelToolConfig",
+    "ToolRequestModelToolConfig_Client",
+    "ToolRequestModelToolConfig_System",
+    "ToolRequestModelToolConfig_Webhook",
+    "ToolResponseModel",
+    "ToolResponseModelToolConfig",
+    "ToolResponseModelToolConfig_Client",
+    "ToolResponseModelToolConfig_System",
+    "ToolResponseModelToolConfig_Webhook",
     "TtsConversationalConfig",
     "TtsConversationalConfigOverride",
     "TtsConversationalConfigOverrideConfig",

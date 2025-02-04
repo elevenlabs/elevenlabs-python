@@ -10,6 +10,7 @@ from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.http_validation_error import HttpValidationError
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
+from ..types.audio_native_edit_content_response_model import AudioNativeEditContentResponseModel
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.client_wrapper import AsyncClientWrapper
 
@@ -152,7 +153,7 @@ class AudioNativeClient:
         auto_convert: typing.Optional[bool] = OMIT,
         auto_publish: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Optional[typing.Any]:
+    ) -> AudioNativeEditContentResponseModel:
         """
         Updates content for the specific AudioNative Project.
 
@@ -175,7 +176,7 @@ class AudioNativeClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        AudioNativeEditContentResponseModel
             Successful Response
 
         Examples
@@ -205,9 +206,9 @@ class AudioNativeClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    AudioNativeEditContentResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=AudioNativeEditContentResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -370,7 +371,7 @@ class AsyncAudioNativeClient:
         auto_convert: typing.Optional[bool] = OMIT,
         auto_publish: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Optional[typing.Any]:
+    ) -> AudioNativeEditContentResponseModel:
         """
         Updates content for the specific AudioNative Project.
 
@@ -393,7 +394,7 @@ class AsyncAudioNativeClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        AudioNativeEditContentResponseModel
             Successful Response
 
         Examples
@@ -431,9 +432,9 @@ class AsyncAudioNativeClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    AudioNativeEditContentResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=AudioNativeEditContentResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

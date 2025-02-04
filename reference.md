@@ -705,7 +705,7 @@ client.text_to_speech.convert(
 <dl>
 <dd>
 
-**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -746,7 +746,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 supports language enforcement. For other models, an error will be returned if language code is provided.
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 and Flash v2.5 support language enforcement. For other models, an error will be returned if language code is provided.
     
 </dd>
 </dl>
@@ -907,7 +907,7 @@ client.text_to_speech.convert_with_timestamps(
 <dl>
 <dd>
 
-**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -948,7 +948,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 supports language enforcement. For other models, an error will be returned if language code is provided.
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 and Flash v2.5 support language enforcement. For other models, an error will be returned if language code is provided.
     
 </dd>
 </dl>
@@ -1111,7 +1111,7 @@ client.text_to_speech.convert_as_stream(
 <dl>
 <dd>
 
-**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -1152,7 +1152,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 supports language enforcement. For other models, an error will be returned if language code is provided.
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 and Flash v2.5 support language enforcement. For other models, an error will be returned if language code is provided.
     
 </dd>
 </dl>
@@ -1317,7 +1317,7 @@ for chunk in response:
 <dl>
 <dd>
 
-**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -1358,7 +1358,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 supports language enforcement. For other models, an error will be returned if language code is provided.
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 and Flash v2.5 support language enforcement. For other models, an error will be returned if language code is provided.
     
 </dd>
 </dl>
@@ -1523,7 +1523,7 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -1670,7 +1670,7 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -3420,6 +3420,157 @@ client.voices.get_a_profile_page(
 </details>
 
 ## projects
+<details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">create_podcast</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create and auto-convert a podcast project. Currently, the LLM cost is covered by us. In the future, this cost will be passed onto you.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs, PodcastBulletinModeData
+from elevenlabs.projects import (
+    BodyCreatePodcastV1ProjectsPodcastCreatePostMode_Bulletin,
+    BodyCreatePodcastV1ProjectsPodcastCreatePostSource_Url,
+)
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.projects.create_podcast(
+    model_id="model_id",
+    mode=BodyCreatePodcastV1ProjectsPodcastCreatePostMode_Bulletin(
+        bulletin=PodcastBulletinModeData(
+            host_voice_id="host_voice_id",
+        ),
+    ),
+    source=BodyCreatePodcastV1ProjectsPodcastCreatePostSource_Url(
+        url="source",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**model_id:** `str` — The model_id of the model to be used for this project, you can query GET https://api.elevenlabs.io/v1/models to list all available models.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mode:** `BodyCreatePodcastV1ProjectsPodcastCreatePostMode` — The type of podcast to generate
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**source:** `BodyCreatePodcastV1ProjectsPodcastCreatePostSource` — The source content for the Podcast.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality_preset:** `typing.Optional[BodyCreatePodcastV1ProjectsPodcastCreatePostQualityPreset]` 
+
+Output quality of the generated audio. Must be one of:
+standard - standard output format, 128kbps with 44.1kHz sample rate.
+high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the credit cost by 20%.
+ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
+ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
+
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**duration_scale:** `typing.Optional[BodyCreatePodcastV1ProjectsPodcastCreatePostDurationScale]` 
+
+Duration of the generated podcast. Must be one of:
+short - produces podcasts shorter than 3 minutes.
+default - produces podcasts roughly between 3-7 minutes.
+long - prodces podcasts longer than 7 minutes.
+
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language:** `typing.Optional[str]` — An optional language of the project. Two-letter language code (ISO 639-1).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**highlights:** `typing.Optional[typing.Sequence[str]]` — A brief summary or highlights of the project's content, providing key points or themes. This should be between 10 and 70 characters.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**callback_url:** `typing.Optional[str]` — A url that will be called by our service when the project is converted with a json containing the status of the conversion
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">get_all</a>()</code></summary>
 <dl>
 <dd>
@@ -4647,6 +4798,101 @@ client.chapters.delete(
 <dd>
 
 **chapter_id:** `str` — The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.chapters.<a href="src/elevenlabs/chapters/client.py">edit</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Edits a chapter.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.chapters.edit(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+    chapter_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**chapter_id:** `str` — The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — The name of the chapter, used for identification only.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**content:** `typing.Optional[ChapterContentInputModel]` — The chapter content to use.
     
 </dd>
 </dl>
@@ -6317,7 +6563,7 @@ client.pronunciation_dictionary.get_all(
 <dl>
 <dd>
 
-Sends an email invitation to join your workspace to the provided email. If the user doesn't have an account they will be prompted to create one. If the user accepts this invite they will be added as a user to your workspace and your subscription using one of your seats. This endpoint may only be called by workspace administrators.
+Sends an email invitation to join your workspace to the provided email. If the user doesn't have an account they will be prompted to create one. If the user accepts this invite they will be added as a user to your workspace and your subscription using one of your seats. This endpoint may only be called by workspace administrators. If the user is already in the workspace a 400 error will be returned.
 </dd>
 </dl>
 </dd>
@@ -6356,6 +6602,92 @@ client.workspace.invite_user(
 <dd>
 
 **email:** `str` — The email of the customer
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**group_ids:** `typing.Optional[typing.Sequence[str]]` — The group ids of the user
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workspace.<a href="src/elevenlabs/workspace/client.py">invite_multiple_users</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Sends email invitations to join your workspace to the provided emails. Requires all email addresses to be part of a verified domain. If the users don't have an account they will be prompted to create one. If the users accept these invites they will be added as users to your workspace and your subscription using one of your seats. This endpoint may only be called by workspace administrators.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.workspace.invite_multiple_users(
+    emails=["emails"],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**emails:** `typing.Sequence[str]` — The email of the customer
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**group_ids:** `typing.Optional[typing.Sequence[str]]` — The group ids of the user
     
 </dd>
 </dl>
@@ -6512,6 +6844,215 @@ client.workspace.update_member(
 <dd>
 
 **workspace_role:** `typing.Optional[BodyUpdateMemberV1WorkspaceMembersPostWorkspaceRole]` — Role dictating permissions in the workspace.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## SpeechToText
+<details><summary><code>client.speech_to_text.<a href="src/elevenlabs/speech_to_text/client.py">convert</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Transcribe an audio or video file.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.speech_to_text.convert(
+    model_id="model_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**file:** `from __future__ import annotations
+
+core.File` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_id:** `str` — The ID of the model to use for transcription, currently only 'scribe_v1' is available.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language_code:** `typing.Optional[str]` — An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand. Defaults to null, in this case the language is predicted automatically.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tag_audio_events:** `typing.Optional[bool]` — Whether to tag audio events like (laughter), (footsteps), etc. in the transcription.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**num_speakers:** `typing.Optional[int]` — The maximum amount of speakers talking in the uploaded file. Can help with predicting who speaks when. The maximum amount of speakers that can be predicted is 31. Defaults to null, in this case the amount of speakers is set to the maximum value the model supports.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.speech_to_text.<a href="src/elevenlabs/speech_to_text/client.py">convert_as_stream</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Transcribe an audio or video file with a streamed response.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.speech_to_text.convert_as_stream(
+    model_id="model_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**file:** `from __future__ import annotations
+
+core.File` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_id:** `str` — The ID of the model to use for transcription, currently only 'scribe_v1' is available.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language_code:** `typing.Optional[str]` — An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand. Defaults to null, in this case the language is predicted automatically.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tag_audio_events:** `typing.Optional[bool]` — Whether to tag audio events like (laughter), (footsteps), etc. in the transcription.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**num_speakers:** `typing.Optional[int]` — The maximum amount of speakers talking in the uploaded file. Can help with predicting who speaks when. The maximum amount of speakers that can be predicted is 31. Defaults to null, in this case the amount of speakers is set to the maximum value the model supports.
     
 </dd>
 </dl>
@@ -7162,85 +7703,6 @@ core.File` — See core.File for more documentation
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_agent_knowledge_base_document_by_id</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get details about a specific documentation making up the agent's knowledge base
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.conversational_ai.get_agent_knowledge_base_document_by_id(
-    agent_id="21m00Tcm4TlvDq8ikWAM",
-    documentation_id="21m00Tcm4TlvDq8ikWAM",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**agent_id:** `str` — The id of an agent. This is returned on agent creation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**documentation_id:** `str` — The id of a document from the agent's knowledge base. This is returned on document addition.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">add_agent_secret</a>(...)</code></summary>
 <dl>
 <dd>
@@ -7310,94 +7772,6 @@ client.conversational_ai.add_agent_secret(
 <dd>
 
 **secret_value:** `str` — A value to be encrypted and used by the agent
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">add_to_agent_knowledge_base</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Uploads a file or reference a webpage for the agent to use as part of it's knowledge base
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.conversational_ai.add_to_agent_knowledge_base(
-    agent_id="21m00Tcm4TlvDq8ikWAM",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**agent_id:** `str` — The id of an agent. This is returned on agent creation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**url:** `typing.Optional[str]` — URL to a page of documentation that the agent will have access to in order to interact with users.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**file:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
     
 </dd>
 </dl>
@@ -8232,6 +8606,521 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.get_phone_numbers()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">add_to_knowledge_base</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Uploads a file or reference a webpage to use as part of the shared knowledge base
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.add_to_knowledge_base()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**url:** `typing.Optional[str]` — URL to a page of documentation that the agent will have access to in order to interact with users.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file:** `from __future__ import annotations
+
+typing.Optional[core.File]` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_knowledge_base_document_by_id</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get details about a specific documentation making up the agent's knowledge base
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_knowledge_base_document_by_id(
+    documentation_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**documentation_id:** `str` — The id of a document from the knowledge base. This is returned on document addition.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">add_tool</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Add a new tool to the available tools in the workspace.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import (
+    ElevenLabs,
+    ToolRequestModel,
+    ToolRequestModelToolConfig_System,
+)
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.add_tool(
+    request=ToolRequestModel(
+        tool_config=ToolRequestModelToolConfig_System(
+            name="tool_config",
+            description="tool_config",
+        ),
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ToolRequestModel` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_tool</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get tool that is available in the workspace.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_tool(
+    tool_id="tool_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tool_id:** `str` — ID of the requested tool.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">remove_tool</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete tool from the workspace.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.remove_tool(
+    tool_id="tool_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tool_id:** `str` — ID of the requested tool.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">update_tool</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update tool that is available in the workspace.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import (
+    ElevenLabs,
+    ToolRequestModel,
+    ToolRequestModelToolConfig_System,
+)
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.update_tool(
+    tool_id="tool_id",
+    request=ToolRequestModel(
+        tool_config=ToolRequestModelToolConfig_System(
+            name="tool_config",
+            description="tool_config",
+        ),
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tool_id:** `str` — ID of the requested tool.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `ToolRequestModel` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_tools</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all available tools available in the workspace.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_tools()
 
 ```
 </dd>

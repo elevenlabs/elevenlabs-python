@@ -8,6 +8,10 @@ import pydantic
 
 class PrivacyConfig(UncheckedBaseModel):
     record_voice: typing.Optional[bool] = None
+    retention_days: typing.Optional[int] = None
+    delete_transcript_and_pii: typing.Optional[bool] = None
+    delete_audio: typing.Optional[bool] = None
+    apply_to_existing_conversations: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

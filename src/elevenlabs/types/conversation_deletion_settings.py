@@ -2,18 +2,17 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .dubbing_media_metadata import DubbingMediaMetadata
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
-class DubbingMetadataResponse(UncheckedBaseModel):
-    dubbing_id: str
-    name: str
-    status: str
-    target_languages: typing.List[str]
-    media_metadata: typing.Optional[DubbingMediaMetadata] = None
-    error: typing.Optional[str] = None
+class ConversationDeletionSettings(UncheckedBaseModel):
+    deletion_time_unix_secs: typing.Optional[int] = None
+    deleted_logs_at_time_unix_secs: typing.Optional[int] = None
+    deleted_audio_at_time_unix_secs: typing.Optional[int] = None
+    deleted_transcript_at_time_unix_secs: typing.Optional[int] = None
+    delete_transcript_and_pii: typing.Optional[bool] = None
+    delete_audio: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

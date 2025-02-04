@@ -47,7 +47,7 @@ class SpeechToSpeechClient:
             See core.File for more documentation
 
         enable_logging : typing.Optional[bool]
-            When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
 
         optimize_streaming_latency : typing.Optional[int]
             You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
@@ -163,7 +163,7 @@ class SpeechToSpeechClient:
             See core.File for more documentation
 
         enable_logging : typing.Optional[bool]
-            When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
 
         optimize_streaming_latency : typing.Optional[int]
             You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
@@ -284,7 +284,7 @@ class AsyncSpeechToSpeechClient:
             See core.File for more documentation
 
         enable_logging : typing.Optional[bool]
-            When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
 
         optimize_streaming_latency : typing.Optional[int]
             You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
@@ -408,7 +408,7 @@ class AsyncSpeechToSpeechClient:
             See core.File for more documentation
 
         enable_logging : typing.Optional[bool]
-            When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
 
         optimize_streaming_latency : typing.Optional[int]
             You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:

@@ -2,13 +2,27 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .types.body_create_podcast_v_1_projects_podcast_create_post_mode import (
+    BodyCreatePodcastV1ProjectsPodcastCreatePostMode,
+)
+from .types.body_create_podcast_v_1_projects_podcast_create_post_source import (
+    BodyCreatePodcastV1ProjectsPodcastCreatePostSource,
+)
+from .types.body_create_podcast_v_1_projects_podcast_create_post_quality_preset import (
+    BodyCreatePodcastV1ProjectsPodcastCreatePostQualityPreset,
+)
+from .types.body_create_podcast_v_1_projects_podcast_create_post_duration_scale import (
+    BodyCreatePodcastV1ProjectsPodcastCreatePostDurationScale,
+)
 from ..core.request_options import RequestOptions
-from ..types.get_projects_response import GetProjectsResponse
+from ..types.podcast_project_response_model import PodcastProjectResponseModel
+from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.http_validation_error import HttpValidationError
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
+from ..types.get_projects_response import GetProjectsResponse
 from .. import core
 from .types.projects_add_request_target_audience import ProjectsAddRequestTargetAudience
 from .types.projects_add_request_fiction import ProjectsAddRequestFiction
@@ -19,7 +33,6 @@ from ..core.jsonable_encoder import jsonable_encoder
 from ..types.edit_project_response_model import EditProjectResponseModel
 from ..types.project_snapshots_response import ProjectSnapshotsResponse
 from ..types.pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
-from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -29,6 +42,135 @@ OMIT = typing.cast(typing.Any, ...)
 class ProjectsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    def create_podcast(
+        self,
+        *,
+        model_id: str,
+        mode: BodyCreatePodcastV1ProjectsPodcastCreatePostMode,
+        source: BodyCreatePodcastV1ProjectsPodcastCreatePostSource,
+        quality_preset: typing.Optional[BodyCreatePodcastV1ProjectsPodcastCreatePostQualityPreset] = OMIT,
+        duration_scale: typing.Optional[BodyCreatePodcastV1ProjectsPodcastCreatePostDurationScale] = OMIT,
+        language: typing.Optional[str] = OMIT,
+        highlights: typing.Optional[typing.Sequence[str]] = OMIT,
+        callback_url: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PodcastProjectResponseModel:
+        """
+        Create and auto-convert a podcast project. Currently, the LLM cost is covered by us. In the future, this cost will be passed onto you.
+
+        Parameters
+        ----------
+        model_id : str
+            The model_id of the model to be used for this project, you can query GET https://api.elevenlabs.io/v1/models to list all available models.
+
+        mode : BodyCreatePodcastV1ProjectsPodcastCreatePostMode
+            The type of podcast to generate
+
+        source : BodyCreatePodcastV1ProjectsPodcastCreatePostSource
+            The source content for the Podcast.
+
+        quality_preset : typing.Optional[BodyCreatePodcastV1ProjectsPodcastCreatePostQualityPreset]
+            Output quality of the generated audio. Must be one of:
+            standard - standard output format, 128kbps with 44.1kHz sample rate.
+            high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the credit cost by 20%.
+            ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
+            ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
+
+
+        duration_scale : typing.Optional[BodyCreatePodcastV1ProjectsPodcastCreatePostDurationScale]
+            Duration of the generated podcast. Must be one of:
+            short - produces podcasts shorter than 3 minutes.
+            default - produces podcasts roughly between 3-7 minutes.
+            long - prodces podcasts longer than 7 minutes.
+
+
+        language : typing.Optional[str]
+            An optional language of the project. Two-letter language code (ISO 639-1).
+
+        highlights : typing.Optional[typing.Sequence[str]]
+            A brief summary or highlights of the project's content, providing key points or themes. This should be between 10 and 70 characters.
+
+        callback_url : typing.Optional[str]
+            A url that will be called by our service when the project is converted with a json containing the status of the conversion
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PodcastProjectResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs, PodcastBulletinModeData
+        from elevenlabs.projects import (
+            BodyCreatePodcastV1ProjectsPodcastCreatePostMode_Bulletin,
+            BodyCreatePodcastV1ProjectsPodcastCreatePostSource_Url,
+        )
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.create_podcast(
+            model_id="model_id",
+            mode=BodyCreatePodcastV1ProjectsPodcastCreatePostMode_Bulletin(
+                bulletin=PodcastBulletinModeData(
+                    host_voice_id="host_voice_id",
+                ),
+            ),
+            source=BodyCreatePodcastV1ProjectsPodcastCreatePostSource_Url(
+                url="source",
+            ),
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/projects/podcast/create",
+            method="POST",
+            json={
+                "model_id": model_id,
+                "mode": convert_and_respect_annotation_metadata(
+                    object_=mode, annotation=BodyCreatePodcastV1ProjectsPodcastCreatePostMode, direction="write"
+                ),
+                "source": convert_and_respect_annotation_metadata(
+                    object_=source, annotation=BodyCreatePodcastV1ProjectsPodcastCreatePostSource, direction="write"
+                ),
+                "quality_preset": quality_preset,
+                "duration_scale": duration_scale,
+                "language": language,
+                "highlights": highlights,
+                "callback_url": callback_url,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    PodcastProjectResponseModel,
+                    construct_type(
+                        type_=PodcastProjectResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_all(self, *, request_options: typing.Optional[RequestOptions] = None) -> GetProjectsResponse:
         """
@@ -919,6 +1061,143 @@ class ProjectsClient:
 class AsyncProjectsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    async def create_podcast(
+        self,
+        *,
+        model_id: str,
+        mode: BodyCreatePodcastV1ProjectsPodcastCreatePostMode,
+        source: BodyCreatePodcastV1ProjectsPodcastCreatePostSource,
+        quality_preset: typing.Optional[BodyCreatePodcastV1ProjectsPodcastCreatePostQualityPreset] = OMIT,
+        duration_scale: typing.Optional[BodyCreatePodcastV1ProjectsPodcastCreatePostDurationScale] = OMIT,
+        language: typing.Optional[str] = OMIT,
+        highlights: typing.Optional[typing.Sequence[str]] = OMIT,
+        callback_url: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PodcastProjectResponseModel:
+        """
+        Create and auto-convert a podcast project. Currently, the LLM cost is covered by us. In the future, this cost will be passed onto you.
+
+        Parameters
+        ----------
+        model_id : str
+            The model_id of the model to be used for this project, you can query GET https://api.elevenlabs.io/v1/models to list all available models.
+
+        mode : BodyCreatePodcastV1ProjectsPodcastCreatePostMode
+            The type of podcast to generate
+
+        source : BodyCreatePodcastV1ProjectsPodcastCreatePostSource
+            The source content for the Podcast.
+
+        quality_preset : typing.Optional[BodyCreatePodcastV1ProjectsPodcastCreatePostQualityPreset]
+            Output quality of the generated audio. Must be one of:
+            standard - standard output format, 128kbps with 44.1kHz sample rate.
+            high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the credit cost by 20%.
+            ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
+            ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
+
+
+        duration_scale : typing.Optional[BodyCreatePodcastV1ProjectsPodcastCreatePostDurationScale]
+            Duration of the generated podcast. Must be one of:
+            short - produces podcasts shorter than 3 minutes.
+            default - produces podcasts roughly between 3-7 minutes.
+            long - prodces podcasts longer than 7 minutes.
+
+
+        language : typing.Optional[str]
+            An optional language of the project. Two-letter language code (ISO 639-1).
+
+        highlights : typing.Optional[typing.Sequence[str]]
+            A brief summary or highlights of the project's content, providing key points or themes. This should be between 10 and 70 characters.
+
+        callback_url : typing.Optional[str]
+            A url that will be called by our service when the project is converted with a json containing the status of the conversion
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PodcastProjectResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs, PodcastBulletinModeData
+        from elevenlabs.projects import (
+            BodyCreatePodcastV1ProjectsPodcastCreatePostMode_Bulletin,
+            BodyCreatePodcastV1ProjectsPodcastCreatePostSource_Url,
+        )
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.create_podcast(
+                model_id="model_id",
+                mode=BodyCreatePodcastV1ProjectsPodcastCreatePostMode_Bulletin(
+                    bulletin=PodcastBulletinModeData(
+                        host_voice_id="host_voice_id",
+                    ),
+                ),
+                source=BodyCreatePodcastV1ProjectsPodcastCreatePostSource_Url(
+                    url="source",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/projects/podcast/create",
+            method="POST",
+            json={
+                "model_id": model_id,
+                "mode": convert_and_respect_annotation_metadata(
+                    object_=mode, annotation=BodyCreatePodcastV1ProjectsPodcastCreatePostMode, direction="write"
+                ),
+                "source": convert_and_respect_annotation_metadata(
+                    object_=source, annotation=BodyCreatePodcastV1ProjectsPodcastCreatePostSource, direction="write"
+                ),
+                "quality_preset": quality_preset,
+                "duration_scale": duration_scale,
+                "language": language,
+                "highlights": highlights,
+                "callback_url": callback_url,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    PodcastProjectResponseModel,
+                    construct_type(
+                        type_=PodcastProjectResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_all(self, *, request_options: typing.Optional[RequestOptions] = None) -> GetProjectsResponse:
         """

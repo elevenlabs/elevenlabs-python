@@ -23,6 +23,7 @@ from .audio_native.client import AudioNativeClient
 from .usage.client import UsageClient
 from .pronunciation_dictionary.client import PronunciationDictionaryClient
 from .workspace.client import WorkspaceClient
+from .speech_to_text.client import SpeechToTextClient
 from .conversational_ai.client import ConversationalAiClient
 from .core.client_wrapper import AsyncClientWrapper
 from .history.client import AsyncHistoryClient
@@ -43,6 +44,7 @@ from .audio_native.client import AsyncAudioNativeClient
 from .usage.client import AsyncUsageClient
 from .pronunciation_dictionary.client import AsyncPronunciationDictionaryClient
 from .workspace.client import AsyncWorkspaceClient
+from .speech_to_text.client import AsyncSpeechToTextClient
 from .conversational_ai.client import AsyncConversationalAiClient
 
 
@@ -88,7 +90,7 @@ class BaseElevenLabs:
         *,
         base_url: typing.Optional[str] = None,
         environment: ElevenLabsEnvironment = ElevenLabsEnvironment.PRODUCTION,
-        api_key: typing.Optional[str] = os.getenv("ELEVEN_API_KEY"),
+        api_key: typing.Optional[str] = os.getenv("ELEVENLABS_API_KEY"),
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
@@ -122,6 +124,7 @@ class BaseElevenLabs:
         self.usage = UsageClient(client_wrapper=self._client_wrapper)
         self.pronunciation_dictionary = PronunciationDictionaryClient(client_wrapper=self._client_wrapper)
         self.workspace = WorkspaceClient(client_wrapper=self._client_wrapper)
+        self.speech_to_text = SpeechToTextClient(client_wrapper=self._client_wrapper)
         self.conversational_ai = ConversationalAiClient(client_wrapper=self._client_wrapper)
 
 
@@ -167,7 +170,7 @@ class AsyncBaseElevenLabs:
         *,
         base_url: typing.Optional[str] = None,
         environment: ElevenLabsEnvironment = ElevenLabsEnvironment.PRODUCTION,
-        api_key: typing.Optional[str] = os.getenv("ELEVEN_API_KEY"),
+        api_key: typing.Optional[str] = os.getenv("ELEVENLABS_API_KEY"),
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
@@ -201,6 +204,7 @@ class AsyncBaseElevenLabs:
         self.usage = AsyncUsageClient(client_wrapper=self._client_wrapper)
         self.pronunciation_dictionary = AsyncPronunciationDictionaryClient(client_wrapper=self._client_wrapper)
         self.workspace = AsyncWorkspaceClient(client_wrapper=self._client_wrapper)
+        self.speech_to_text = AsyncSpeechToTextClient(client_wrapper=self._client_wrapper)
         self.conversational_ai = AsyncConversationalAiClient(client_wrapper=self._client_wrapper)
 
 
