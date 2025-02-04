@@ -144,8 +144,9 @@ class TextToSpeechClient:
             model_id="eleven_multilingual_v2",
         )
         """
-        with self._client_wrapper.httpx_client.post(
+        with self._client_wrapper.httpx_client.request(
             f"v1/text-to-speech/{jsonable_encoder(voice_id)}",
+            method="POST",
             params={
                 "enable_logging": enable_logging,
                 "optimize_streaming_latency": optimize_streaming_latency,
@@ -820,8 +821,9 @@ class AsyncTextToSpeechClient:
 
         asyncio.run(main())
         """
-        async with self._client_wrapper.httpx_client.post(
+        async with self._client_wrapper.httpx_client.request(
             f"v1/text-to-speech/{jsonable_encoder(voice_id)}",
+            method="POST",
             params={
                 "enable_logging": enable_logging,
                 "optimize_streaming_latency": optimize_streaming_latency,
