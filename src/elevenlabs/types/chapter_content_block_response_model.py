@@ -2,18 +2,14 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .dubbing_media_metadata import DubbingMediaMetadata
+from .chapter_content_block_response_model_nodes_item import ChapterContentBlockResponseModelNodesItem
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
-class DubbingMetadataResponse(UncheckedBaseModel):
-    dubbing_id: str
-    name: str
-    status: str
-    target_languages: typing.List[str]
-    media_metadata: typing.Optional[DubbingMediaMetadata] = None
-    error: typing.Optional[str] = None
+class ChapterContentBlockResponseModel(UncheckedBaseModel):
+    block_id: str
+    nodes: typing.List[ChapterContentBlockResponseModelNodesItem]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

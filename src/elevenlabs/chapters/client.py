@@ -10,7 +10,10 @@ from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.http_validation_error import HttpValidationError
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from ..types.chapter_response import ChapterResponse
+from ..types.chapter_with_content_response_model import ChapterWithContentResponseModel
+from ..types.chapter_content_input_model import ChapterContentInputModel
+from ..types.edit_chapter_response_model import EditChapterResponseModel
+from ..core.serialization import convert_and_respect_annotation_metadata
 from ..types.add_chapter_response_model import AddChapterResponseModel
 from ..types.chapter_snapshots_response import ChapterSnapshotsResponse
 from ..core.client_wrapper import AsyncClientWrapper
@@ -84,7 +87,7 @@ class ChaptersClient:
 
     def get(
         self, project_id: str, chapter_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ChapterResponse:
+    ) -> ChapterWithContentResponseModel:
         """
         Returns information about a specific chapter.
 
@@ -101,7 +104,7 @@ class ChaptersClient:
 
         Returns
         -------
-        ChapterResponse
+        ChapterWithContentResponseModel
             Successful Response
 
         Examples
@@ -124,9 +127,9 @@ class ChaptersClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ChapterResponse,
+                    ChapterWithContentResponseModel,
                     construct_type(
-                        type_=ChapterResponse,  # type: ignore
+                        type_=ChapterWithContentResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -190,6 +193,91 @@ class ChaptersClient:
                     typing.Optional[typing.Any],
                     construct_type(
                         type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def edit(
+        self,
+        project_id: str,
+        chapter_id: str,
+        *,
+        name: typing.Optional[str] = OMIT,
+        content: typing.Optional[ChapterContentInputModel] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> EditChapterResponseModel:
+        """
+        Edits a chapter.
+
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+
+        chapter_id : str
+            The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
+
+        name : typing.Optional[str]
+            The name of the chapter, used for identification only.
+
+        content : typing.Optional[ChapterContentInputModel]
+            The chapter content to use.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EditChapterResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.chapters.edit(
+            project_id="21m00Tcm4TlvDq8ikWAM",
+            chapter_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
+            method="PATCH",
+            json={
+                "name": name,
+                "content": convert_and_respect_annotation_metadata(
+                    object_=content, annotation=ChapterContentInputModel, direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    EditChapterResponseModel,
+                    construct_type(
+                        type_=EditChapterResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -563,7 +651,7 @@ class AsyncChaptersClient:
 
     async def get(
         self, project_id: str, chapter_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ChapterResponse:
+    ) -> ChapterWithContentResponseModel:
         """
         Returns information about a specific chapter.
 
@@ -580,7 +668,7 @@ class AsyncChaptersClient:
 
         Returns
         -------
-        ChapterResponse
+        ChapterWithContentResponseModel
             Successful Response
 
         Examples
@@ -611,9 +699,9 @@ class AsyncChaptersClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ChapterResponse,
+                    ChapterWithContentResponseModel,
                     construct_type(
-                        type_=ChapterResponse,  # type: ignore
+                        type_=ChapterWithContentResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -685,6 +773,99 @@ class AsyncChaptersClient:
                     typing.Optional[typing.Any],
                     construct_type(
                         type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def edit(
+        self,
+        project_id: str,
+        chapter_id: str,
+        *,
+        name: typing.Optional[str] = OMIT,
+        content: typing.Optional[ChapterContentInputModel] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> EditChapterResponseModel:
+        """
+        Edits a chapter.
+
+        Parameters
+        ----------
+        project_id : str
+            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+
+        chapter_id : str
+            The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
+
+        name : typing.Optional[str]
+            The name of the chapter, used for identification only.
+
+        content : typing.Optional[ChapterContentInputModel]
+            The chapter content to use.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EditChapterResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.chapters.edit(
+                project_id="21m00Tcm4TlvDq8ikWAM",
+                chapter_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
+            method="PATCH",
+            json={
+                "name": name,
+                "content": convert_and_respect_annotation_metadata(
+                    object_=content, annotation=ChapterContentInputModel, direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    EditChapterResponseModel,
+                    construct_type(
+                        type_=EditChapterResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

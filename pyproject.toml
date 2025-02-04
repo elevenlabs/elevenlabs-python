@@ -3,13 +3,12 @@ name = "elevenlabs"
 
 [tool.poetry]
 name = "elevenlabs"
-version = "1.50.6"
+version = "1.50.7"
 description = ""
 readme = "README.md"
 authors = []
 keywords = []
 license = "MIT"
-repository = 'https://github.com/elevenlabs/elevenlabs-python'
 classifiers = [
     "Intended Audience :: Developers",
     "Programming Language :: Python",
@@ -31,6 +30,9 @@ classifiers = [
 packages = [
     { include = "elevenlabs", from = "src"}
 ]
+
+[project.urls]
+Repository = 'https://github.com/elevenlabs/elevenlabs-python'
 
 [tool.poetry.dependencies]
 python = "^3.8"

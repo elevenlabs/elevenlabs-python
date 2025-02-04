@@ -74,7 +74,7 @@ class TextToSpeechClient:
             The text that will get converted into speech.
 
         enable_logging : typing.Optional[bool]
-            When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
 
         optimize_streaming_latency : typing.Optional[int]
             You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
@@ -93,7 +93,7 @@ class TextToSpeechClient:
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
 
         language_code : typing.Optional[str]
-            Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 supports language enforcement. For other models, an error will be returned if language code is provided.
+            Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 and Flash v2.5 support language enforcement. For other models, an error will be returned if language code is provided.
 
         voice_settings : typing.Optional[VoiceSettings]
             Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
@@ -237,7 +237,7 @@ class TextToSpeechClient:
             The text that will get converted into speech.
 
         enable_logging : typing.Optional[bool]
-            When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
 
         optimize_streaming_latency : typing.Optional[int]
             You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
@@ -256,7 +256,7 @@ class TextToSpeechClient:
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
 
         language_code : typing.Optional[str]
-            Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 supports language enforcement. For other models, an error will be returned if language code is provided.
+            Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 and Flash v2.5 support language enforcement. For other models, an error will be returned if language code is provided.
 
         voice_settings : typing.Optional[VoiceSettings]
             Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
@@ -402,7 +402,7 @@ class TextToSpeechClient:
             The text that will get converted into speech.
 
         enable_logging : typing.Optional[bool]
-            When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
 
         optimize_streaming_latency : typing.Optional[int]
             You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
@@ -421,7 +421,7 @@ class TextToSpeechClient:
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
 
         language_code : typing.Optional[str]
-            Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 supports language enforcement. For other models, an error will be returned if language code is provided.
+            Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 and Flash v2.5 support language enforcement. For other models, an error will be returned if language code is provided.
 
         voice_settings : typing.Optional[VoiceSettings]
             Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
@@ -565,7 +565,7 @@ class TextToSpeechClient:
             The text that will get converted into speech.
 
         enable_logging : typing.Optional[bool]
-            When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
 
         optimize_streaming_latency : typing.Optional[int]
             You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
@@ -584,7 +584,7 @@ class TextToSpeechClient:
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
 
         language_code : typing.Optional[str]
-            Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 supports language enforcement. For other models, an error will be returned if language code is provided.
+            Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 and Flash v2.5 support language enforcement. For other models, an error will be returned if language code is provided.
 
         voice_settings : typing.Optional[VoiceSettings]
             Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
@@ -745,7 +745,7 @@ class AsyncTextToSpeechClient:
             The text that will get converted into speech.
 
         enable_logging : typing.Optional[bool]
-            When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
 
         optimize_streaming_latency : typing.Optional[int]
             You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
@@ -764,7 +764,7 @@ class AsyncTextToSpeechClient:
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
 
         language_code : typing.Optional[str]
-            Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 supports language enforcement. For other models, an error will be returned if language code is provided.
+            Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 and Flash v2.5 support language enforcement. For other models, an error will be returned if language code is provided.
 
         voice_settings : typing.Optional[VoiceSettings]
             Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
@@ -916,7 +916,7 @@ class AsyncTextToSpeechClient:
             The text that will get converted into speech.
 
         enable_logging : typing.Optional[bool]
-            When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
 
         optimize_streaming_latency : typing.Optional[int]
             You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
@@ -935,7 +935,7 @@ class AsyncTextToSpeechClient:
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
 
         language_code : typing.Optional[str]
-            Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 supports language enforcement. For other models, an error will be returned if language code is provided.
+            Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 and Flash v2.5 support language enforcement. For other models, an error will be returned if language code is provided.
 
         voice_settings : typing.Optional[VoiceSettings]
             Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
@@ -1089,7 +1089,7 @@ class AsyncTextToSpeechClient:
             The text that will get converted into speech.
 
         enable_logging : typing.Optional[bool]
-            When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
 
         optimize_streaming_latency : typing.Optional[int]
             You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
@@ -1108,7 +1108,7 @@ class AsyncTextToSpeechClient:
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
 
         language_code : typing.Optional[str]
-            Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 supports language enforcement. For other models, an error will be returned if language code is provided.
+            Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 and Flash v2.5 support language enforcement. For other models, an error will be returned if language code is provided.
 
         voice_settings : typing.Optional[VoiceSettings]
             Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
@@ -1260,7 +1260,7 @@ class AsyncTextToSpeechClient:
             The text that will get converted into speech.
 
         enable_logging : typing.Optional[bool]
-            When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
 
         optimize_streaming_latency : typing.Optional[int]
             You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
@@ -1279,7 +1279,7 @@ class AsyncTextToSpeechClient:
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
 
         language_code : typing.Optional[str]
-            Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 supports language enforcement. For other models, an error will be returned if language code is provided.
+            Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 and Flash v2.5 support language enforcement. For other models, an error will be returned if language code is provided.
 
         voice_settings : typing.Optional[VoiceSettings]
             Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
