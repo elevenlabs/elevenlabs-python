@@ -144,7 +144,7 @@ class TextToSpeechClient:
             model_id="eleven_multilingual_v2",
         )
         """
-        with self._client_wrapper.httpx_client.request(
+        _response = self._client_wrapper.httpx_client.request(
             f"v1/text-to-speech/{jsonable_encoder(voice_id)}",
             method="POST",
             params={
@@ -177,25 +177,24 @@ class TextToSpeechClient:
             },
             request_options=request_options,
             omit=OMIT,
-        ) as _response:
-            try:
-                if 200 <= _response.status_code < 300:
-                    return _response.read()
-                _response.read()
-                if _response.status_code == 422:
-                    raise UnprocessableEntityError(
-                        typing.cast(
-                            HttpValidationError,
-                            construct_type(
-                                type_=HttpValidationError,  # type: ignore
-                                object_=_response.json(),
-                            ),
-                        )
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return _response.read()
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
                     )
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def convert_with_timestamps(
         self,
@@ -857,19 +856,18 @@ class AsyncTextToSpeechClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    return _response.read()
-                _response.read()
+                    return typing.cast(bytes, await _response.read())
                 if _response.status_code == 422:
                     raise UnprocessableEntityError(
                         typing.cast(
                             HttpValidationError,
                             construct_type(
                                 type_=HttpValidationError,  # type: ignore
-                                object_=_response.json(),
+                                object_=await _response.json(),
                             ),
                         )
                     )
-                _response_json = _response.json()
+                _response_json = await _response.json()
             except JSONDecodeError:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
             raise ApiError(status_code=_response.status_code, body=_response_json)
