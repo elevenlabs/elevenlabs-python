@@ -9,6 +9,7 @@ readme = "README.md"
 authors = []
 keywords = []
 license = "MIT"
+repository = 'https://github.com/elevenlabs/elevenlabs-python'
 classifiers = [
     "Intended Audience :: Developers",
     "Programming Language :: Python",
@@ -30,9 +31,6 @@ classifiers = [
 packages = [
     { include = "elevenlabs", from = "src"}
 ]
-
-[project.urls]
-Repository = 'https://github.com/elevenlabs/elevenlabs-python'
 
 [tool.poetry.dependencies]
 python = "^3.8"
