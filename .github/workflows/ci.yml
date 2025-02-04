@@ -36,7 +36,7 @@ jobs:
       - name: Test
         run: poetry run pytest .
         env:
-          ELEVEN_API_KEY: ${{ secrets.TEST_API_KEY }}
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
 
   publish:
     needs: [compile, test]

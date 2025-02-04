@@ -68,7 +68,7 @@ class ElevenLabs(BaseElevenLabs):
         *,
         base_url: typing.Optional[str] = None,
         environment: ElevenLabsEnvironment = ElevenLabsEnvironment.PRODUCTION,
-        api_key: typing.Optional[str] = os.getenv("ELEVENLABS_API_KEY") or os.getenv("ELEVEN_API_KEY"),
+        api_key: typing.Optional[str] = os.getenv("ELEVENLABS_API_KEY"),
         timeout: typing.Optional[float] = 60,
         httpx_client: typing.Optional[httpx.Client] = None
     ):

@@ -96,7 +96,7 @@ from elevenlabs.client import ElevenLabs
 from elevenlabs import play
 
 client = ElevenLabs(
-  api_key="YOUR_API_KEY", # Defaults to ELEVEN_API_KEY or ELEVENLABS_API_KEY
+  api_key="YOUR_API_KEY", # Defaults ELEVENLABS_API_KEY
 )
 
 voice = client.clone(
@@ -141,7 +141,7 @@ from elevenlabs.client import ElevenLabs
 from elevenlabs import stream
 
 client = ElevenLabs(
-  api_key="YOUR_API_KEY", # Defaults to ELEVEN_API_KEY or ELEVENLABS_API_KEY
+  api_key="YOUR_API_KEY", # Defaults to ELEVENLABS_API_KEY
 )
 
 def text_stream():
@@ -168,7 +168,7 @@ import asyncio
 from elevenlabs.client import AsyncElevenLabs
 
 eleven = AsyncElevenLabs(
-  api_key="MY_API_KEY" # Defaults to ELEVEN_API_KEY or ELEVENLABS_API_KEY
+  api_key="MY_API_KEY" # Defaults to ELEVENLABS_API_KEY
 )
 
 async def print_models() -> None:

@@ -38,6 +38,6 @@ jobs:
 
       - name: Test
         env:
-          ELEVEN_API_KEY: ${{ secrets.TEST_API_KEY }}
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
         run: |
-            poetry run pytest .
+          poetry run pytest .
