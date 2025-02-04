@@ -820,7 +820,7 @@ class AsyncTextToSpeechClient:
 
         asyncio.run(main())
         """
-        async with self._client_wrapper.httpx_client.request(
+        _response = await self._client_wrapper.httpx_client.request(
             f"v1/text-to-speech/{jsonable_encoder(voice_id)}",
             method="POST",
             params={
@@ -853,24 +853,24 @@ class AsyncTextToSpeechClient:
             },
             request_options=request_options,
             omit=OMIT,
-        ) as _response:
-            try:
-                if 200 <= _response.status_code < 300:
-                    return typing.cast(bytes, await _response.read())
-                if _response.status_code == 422:
-                    raise UnprocessableEntityError(
-                        typing.cast(
-                            HttpValidationError,
-                            construct_type(
-                                type_=HttpValidationError,  # type: ignore
-                                object_=await _response.json(),
-                            ),
-                        )
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return await _response.aread()
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
                     )
-                _response_json = await _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def convert_with_timestamps(
         self,
