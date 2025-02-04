@@ -1,4 +1,5 @@
 import asyncio
+from typing import Iterator
 
 from elevenlabs import VoiceSettings, play, Voice
 from elevenlabs.client import AsyncElevenLabs, ElevenLabs
@@ -10,17 +11,16 @@ import base64
 def test_tts_generate() -> None:
     """Test basic text-to-speech generation w/ custom generate."""
     client = ElevenLabs()
-    audio_generator = client.generate(text=DEFAULT_TEXT, voice="Brian", model=DEFAULT_MODEL)
-    audio = b"".join(audio_generator)
-    assert isinstance(audio, bytes), "TTS should return bytes"
+    audio_bytes = client.generate(text=DEFAULT_TEXT, voice="Brian", model=DEFAULT_MODEL)
+    assert isinstance(audio_bytes, bytes), "TTS should return bytes"
     if not IN_GITHUB:
-        play(audio)
+        play(audio_bytes)
 
 
 def test_tts_generate_with_voice_settings() -> None:
     """Test basic text-to-speech generation."""
     client = ElevenLabs()
-    audio_generator = client.generate(
+    audio_bytes = client.generate(
         text=DEFAULT_TEXT,
         model=DEFAULT_MODEL,
         voice=Voice(
@@ -28,10 +28,9 @@ def test_tts_generate_with_voice_settings() -> None:
             settings=VoiceSettings(stability=0.71, similarity_boost=0.5, style=0.0, use_speaker_boost=True),
         ),
     )
-    audio = b"".join(audio_generator)
-    assert isinstance(audio, bytes), "TTS should return bytes"
+    assert isinstance(audio_bytes, bytes), "TTS should return bytes"
     if not IN_GITHUB:
-        play(audio)
+        play(audio_bytes)
 
 
 def test_tts_generate_stream() -> None:
@@ -42,6 +41,7 @@ def test_tts_generate_stream() -> None:
         text=DEFAULT_TEXT,
         model=DEFAULT_MODEL,
     )
+    assert isinstance(audio_generator, Iterator), "TTS should return an iterator"
     audio = b"".join(audio_generator)
     assert isinstance(audio, bytes), "TTS should return bytes"
     if not IN_GITHUB:
