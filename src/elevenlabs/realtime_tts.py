@@ -123,7 +123,7 @@ class RealtimeTextToSpeechClient(TextToSpeechClient):
                     data = dict(text=text_chunk, try_trigger_generation=True)
                     socket.send(json.dumps(data))
                     try:
-                        data = json.loads(socket.recv(1e-4))
+                        data = json.loads(socket.recv(1e-2))
                         if "audio" in data and data["audio"]:
                             yield base64.b64decode(data["audio"])  # type: ignore
                     except TimeoutError:
