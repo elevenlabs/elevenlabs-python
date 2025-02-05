@@ -5,7 +5,7 @@ import os
 import httpx
 
 from typing import Iterator, Optional, Union, \
-  Optional, AsyncIterator
+  Optional, AsyncIterable, AsyncIterator
 
 from .base_client import \
   BaseElevenLabs, AsyncBaseElevenLabs
@@ -13,7 +13,7 @@ from .core import RequestOptions, ApiError
 from .types import Voice, VoiceSettings, \
   PronunciationDictionaryVersionLocator, Model
 from .environment import ElevenLabsEnvironment
-from .realtime_tts import RealtimeTextToSpeechClient
+from .realtime_tts import RealtimeTextToSpeechClient, AsyncRealtimeTextToSpeechClient
 from .types import OutputFormat
 
 
@@ -257,6 +257,25 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
         api_key="YOUR_API_KEY",
     )
     """
+    def __init__(
+        self,
+        *,
+        base_url: typing.Optional[str] = None,
+        environment: ElevenLabsEnvironment = ElevenLabsEnvironment.PRODUCTION,
+        api_key: typing.Optional[str] = os.getenv("ELEVENLABS_API_KEY"),
+        timeout: typing.Optional[float] = None,
+        follow_redirects: typing.Optional[bool] = True,
+        httpx_client: typing.Optional[httpx.AsyncClient] = None
+    ):
+        super().__init__(
+            base_url=base_url,
+            environment=environment,
+            api_key=api_key,
+            timeout=timeout,
+            follow_redirects=follow_redirects,
+            httpx_client=httpx_client,
+        )
+        self.text_to_speech = AsyncRealtimeTextToSpeechClient(client_wrapper=self._client_wrapper)
 
     async def clone(
       self,
@@ -299,7 +318,7 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
     async def generate(
       self,
       *,
-      text: str,
+      text: Union[str, AsyncIterable[str]],
       voice: Union[VoiceId, VoiceName, Voice] = DEFAULT_VOICE,
       voice_settings: typing.Optional[VoiceSettings] = DEFAULT_VOICE.settings,
       model: Union[ModelId, Model] = "eleven_multilingual_v2",
@@ -383,16 +402,28 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
             model_id = model.model_id
         
         if stream:
-            return self.text_to_speech.convert_as_stream(
-                voice_id=voice_id,
-                model_id=model_id,
-                voice_settings=voice_settings,
-                optimize_streaming_latency=optimize_streaming_latency,
-                output_format=output_format,
-                text=text,
-                request_options=request_options,
-                pronunciation_dictionary_locators=pronunciation_dictionary_locators
-            )
+            if isinstance(text, AsyncIterable):
+                return self.text_to_speech.convert_realtime(  # type: ignore
+                    voice_id=voice_id,
+                    voice_settings=voice_settings,
+                    output_format=output_format,
+                    text=text,
+                    request_options=request_options,
+                    model_id=model_id
+                )
+            elif isinstance(text, str):
+                return self.text_to_speech.convert_as_stream(
+                    voice_id=voice_id,
+                    model_id=model_id,
+                    voice_settings=voice_settings,
+                    optimize_streaming_latency=optimize_streaming_latency,
+                    output_format=output_format,
+                    text=text,
+                    request_options=request_options,
+                    pronunciation_dictionary_locators=pronunciation_dictionary_locators
+                )       
+            else: 
+                raise ApiError(body="Text is neither a string nor an iterator.")
         else:
             if not isinstance(text, str):
                 raise ApiError(body="Text must be a string when stream is False.")
