@@ -28,6 +28,7 @@ from .types.body_text_to_speech_streaming_with_timestamps_v_1_text_to_speech_voi
 from .types.text_to_speech_stream_with_timestamps_response import TextToSpeechStreamWithTimestampsResponse
 import json
 from ..core.client_wrapper import AsyncClientWrapper
+from typing import Tuple
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -236,7 +237,7 @@ class TextToSpeechClient:
             BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization
         ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Optional[typing.Any]:
+    ) -> Tuple[str, typing.Optional[typing.Any]]:
         """
         Converts text into speech using a voice of your choice and returns JSON containing audio as a base64 encoded string together with information on when which character was spoken.
 
@@ -401,7 +402,7 @@ class TextToSpeechClient:
             BodyTextToSpeechStreamingV1TextToSpeechVoiceIdStreamPostApplyTextNormalization
         ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Iterator[bytes]:
+    ) -> Tuple[str, typing.Iterator[bytes]]:
         """
         Converts text into speech using a voice of your choice and returns audio as an audio stream.
 
@@ -520,10 +521,20 @@ class TextToSpeechClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
-                    for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
-                        yield _chunk
-                    return
+                    request_id = _response.headers.get('request-id')
+                    if not request_id:
+                        raise ApiError(
+                            status_code=_response.status_code,
+                            body="Missing request-id in response headers."
+                        )
+
+                    def audio_iterator():
+                        _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                        for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
+                            yield _chunk
+
+                    return request_id, audio_iterator()
+
                 _response.read()
                 if _response.status_code == 422:
                     raise UnprocessableEntityError(
@@ -564,7 +575,7 @@ class TextToSpeechClient:
             BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization
         ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Iterator[TextToSpeechStreamWithTimestampsResponse]:
+    ) -> Tuple[str, typing.Iterator[TextToSpeechStreamWithTimestampsResponse]]:
         """
         Converts text into speech using a voice of your choice and returns a stream of JSONs containing audio as a base64 encoded string together with information on when which character was spoken.
 
@@ -685,20 +696,30 @@ class TextToSpeechClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    for _text in _response.iter_lines():
-                        try:
-                            if len(_text) == 0:
-                                continue
-                            yield typing.cast(
-                                TextToSpeechStreamWithTimestampsResponse,
-                                construct_type(
-                                    type_=TextToSpeechStreamWithTimestampsResponse,  # type: ignore
-                                    object_=json.loads(_text),
-                                ),
-                            )
-                        except:
-                            pass
-                    return
+                    request_id = _response.headers.get('request-id')
+                    if not request_id:
+                        raise ApiError(
+                            status_code=_response.status_code,
+                            body="Missing request-id in response headers."
+                        )
+
+                    def response_iterator():
+                        for _text in _response.iter_lines():
+                            try:
+                                if len(_text) == 0:
+                                    continue
+                                yield typing.cast(
+                                    TextToSpeechStreamWithTimestampsResponse,
+                                    construct_type(
+                                        type_=TextToSpeechStreamWithTimestampsResponse,  # type: ignore
+                                        object_=json.loads(_text),
+                                    ),
+                                )
+                            except:
+                                pass
+
+                    return request_id, response_iterator()
+
                 _response.read()
                 if _response.status_code == 422:
                     raise UnprocessableEntityError(
@@ -927,7 +948,7 @@ class AsyncTextToSpeechClient:
             BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization
         ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Optional[typing.Any]:
+    ) -> Tuple[str, typing.Optional[typing.Any]]:
         """
         Converts text into speech using a voice of your choice and returns JSON containing audio as a base64 encoded string together with information on when which character was spoken.
 
@@ -1054,7 +1075,14 @@ class AsyncTextToSpeechClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
+                request_id = _response.headers.get('request-id')
+                if not request_id:
+                    raise ApiError(
+                        status_code=_response.status_code,
+                        body="Missing request-id in response headers."
+                    )
+
+                return request_id, typing.cast(
                     typing.Optional[typing.Any],
                     construct_type(
                         type_=typing.Optional[typing.Any],  # type: ignore
@@ -1100,7 +1128,7 @@ class AsyncTextToSpeechClient:
             BodyTextToSpeechStreamingV1TextToSpeechVoiceIdStreamPostApplyTextNormalization
         ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.AsyncIterator[bytes]:
+    ) -> Tuple[str, typing.AsyncIterator[bytes]]:
         """
         Converts text into speech using a voice of your choice and returns audio as an audio stream.
 
@@ -1227,10 +1255,20 @@ class AsyncTextToSpeechClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
-                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
-                        yield _chunk
-                    return
+                    request_id = _response.headers.get('request-id')
+                    if not request_id:
+                        raise ApiError(
+                            status_code=_response.status_code,
+                            body="Missing request-id in response headers."
+                        )
+
+                    async def audio_iterator():
+                        _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                        async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
+                            yield _chunk
+
+                    return request_id, audio_iterator()
+
                 await _response.aread()
                 if _response.status_code == 422:
                     raise UnprocessableEntityError(
@@ -1271,7 +1309,7 @@ class AsyncTextToSpeechClient:
             BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization
         ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.AsyncIterator[TextToSpeechStreamWithTimestampsResponse]:
+    ) -> Tuple[str,typing.AsyncIterator[TextToSpeechStreamWithTimestampsResponse]]:
         """
         Converts text into speech using a voice of your choice and returns a stream of JSONs containing audio as a base64 encoded string together with information on when which character was spoken.
 
@@ -1400,20 +1438,29 @@ class AsyncTextToSpeechClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    async for _text in _response.aiter_lines():
-                        try:
-                            if len(_text) == 0:
-                                continue
-                            yield typing.cast(
-                                TextToSpeechStreamWithTimestampsResponse,
-                                construct_type(
-                                    type_=TextToSpeechStreamWithTimestampsResponse,  # type: ignore
-                                    object_=json.loads(_text),
-                                ),
-                            )
-                        except:
-                            pass
-                    return
+                    request_id = _response.headers.get('request-id')
+                    if not request_id:
+                        raise ApiError(
+                            status_code=_response.status_code,
+                            body="Missing request-id in response headers."
+                        )
+
+                    async def response_iterator():
+                        async for _text in _response.aiter_lines():
+                            try:
+                                if len(_text) == 0:
+                                    continue
+                                yield typing.cast(
+                                    TextToSpeechStreamWithTimestampsResponse,
+                                    construct_type(
+                                        type_=TextToSpeechStreamWithTimestampsResponse,  # type: ignore
+                                        object_=json.loads(_text),
+                                    ),
+                                )
+                            except:
+                                pass
+
+                    return request_id, response_iterator()
                 await _response.aread()
                 if _response.status_code == 422:
                     raise UnprocessableEntityError(

@@ -10,7 +10,7 @@ import base64
 def test_tts_generate() -> None:
     """Test basic text-to-speech generation w/ custom generate."""
     client = ElevenLabs()
-    audio_generator = client.generate(text=DEFAULT_TEXT, voice="Brian", model=DEFAULT_MODEL)
+    req_id, audio_generator = client.generate(text=DEFAULT_TEXT, voice="Brian", model=DEFAULT_MODEL)
     audio = b"".join(audio_generator)
     assert isinstance(audio, bytes), "TTS should return bytes"
     if not IN_GITHUB:
@@ -20,7 +20,7 @@ def test_tts_generate() -> None:
 def test_tts_generate_with_voice_settings() -> None:
     """Test basic text-to-speech generation."""
     client = ElevenLabs()
-    audio_generator = client.generate(
+    req_id, audio_generator = client.generate(
         text=DEFAULT_TEXT,
         model=DEFAULT_MODEL,
         voice=Voice(
@@ -37,7 +37,7 @@ def test_tts_generate_with_voice_settings() -> None:
 def test_tts_generate_stream() -> None:
     """Test streaming text-to-speech generation."""
     client = ElevenLabs()
-    audio_generator = client.generate(
+    req_id, audio_generator = client.generate(
         stream=True,
         text=DEFAULT_TEXT,
         model=DEFAULT_MODEL,
@@ -51,7 +51,7 @@ def test_tts_generate_stream() -> None:
 def test_tts_convert() -> None:
     """Test basic text-to-speech generation."""
     client = ElevenLabs()
-    audio_generator = client.text_to_speech.convert(text=DEFAULT_TEXT, voice_id=DEFAULT_VOICE, model_id=DEFAULT_MODEL)
+    req_id, audio_generator = client.text_to_speech.convert(text=DEFAULT_TEXT, voice_id=DEFAULT_VOICE, model_id=DEFAULT_MODEL)
     audio = b"".join(audio_generator)
     assert isinstance(audio, bytes), "TTS should return bytes"
     if not IN_GITHUB:
@@ -61,7 +61,7 @@ def test_tts_convert() -> None:
 def test_tts_convert_with_voice_settings() -> None:
     """Test TTS with custom voice settings."""
     client = ElevenLabs()
-    audio_generator = client.text_to_speech.convert(
+    req_id, audio_generator = client.text_to_speech.convert(
         text=DEFAULT_TEXT,
         voice_id=DEFAULT_VOICE,
         model_id=DEFAULT_MODEL,

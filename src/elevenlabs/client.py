@@ -5,7 +5,7 @@ import os
 import httpx
 
 from typing import Iterator, Optional, Union, \
-  Optional, AsyncIterator
+  Optional, AsyncIterator, Tuple
 
 from .base_client import \
   BaseElevenLabs, AsyncBaseElevenLabs
@@ -130,7 +130,7 @@ class ElevenLabs(BaseElevenLabs):
             typing.Sequence[PronunciationDictionaryVersionLocator]
         ] = OMIT,
       request_options: typing.Optional[RequestOptions] = None
-    ) -> Iterator[bytes]:
+    ) -> Tuple[str, Iterator[bytes]]:
         """
             - text: Union[str, Iterator[str]]. The string or stream of strings that will get converted into speech.
 
@@ -310,7 +310,7 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
             typing.Sequence[PronunciationDictionaryVersionLocator]
         ] = OMIT,
       request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncIterator[bytes]:
+    ) -> Tuple[str, AsyncIterator[bytes]]:
         """
           This is a manually mnaintained helper function that generates a 
           voice from provided text.
@@ -383,7 +383,7 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
             model_id = model.model_id
         
         if stream:
-            return self.text_to_speech.convert_as_stream(
+            return await self.text_to_speech.convert_as_stream(
                 voice_id=voice_id,
                 model_id=model_id,
                 voice_settings=voice_settings,
@@ -396,7 +396,7 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
         else:
             if not isinstance(text, str):
                 raise ApiError(body="Text must be a string when stream is False.")
-            return self.text_to_speech.convert(
+            return await self.text_to_speech.convert(
                 voice_id=voice_id,
                 model_id=model_id,
                 voice_settings=voice_settings,
