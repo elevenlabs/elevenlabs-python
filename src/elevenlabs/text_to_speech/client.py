@@ -61,9 +61,9 @@ class TextToSpeechClient:
             BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization
         ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Iterator[bytes]:
+    ) -> tuple[str, typing.Iterator[bytes]]:
         """
-        Converts text into speech using a voice of your choice and returns audio.
+        Converts text into speech using a voice of your choice and returns the request ID and audio stream.
 
         Parameters
         ----------
@@ -126,9 +126,11 @@ class TextToSpeechClient:
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
-        ------
-        typing.Iterator[bytes]
-            Successful Response
+        -------
+        tuple[str, typing.Iterator[bytes]]
+            A tuple containing:
+            - request_id: The ID of the request
+            - audio_stream: Iterator of audio bytes chunks
 
         Examples
         --------
@@ -180,10 +182,20 @@ class TextToSpeechClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
-                    for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
-                        yield _chunk
-                    return
+                    request_id = _response.headers.get('request-id')
+                    if not request_id:
+                        raise ApiError(
+                            status_code=_response.status_code,
+                            body="Missing request-id in response headers."
+                        )
+
+                    def audio_iterator():
+                        _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                        for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
+                            yield _chunk
+
+                    return request_id, audio_iterator()
+
                 _response.read()
                 if _response.status_code == 422:
                     raise UnprocessableEntityError(
@@ -732,9 +744,9 @@ class AsyncTextToSpeechClient:
             BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization
         ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.AsyncIterator[bytes]:
+    ) -> tuple[str, typing.AsyncIterator[bytes]]:
         """
-        Converts text into speech using a voice of your choice and returns audio.
+        Converts text into speech using a voice of your choice and returns the request ID and audio stream.
 
         Parameters
         ----------
@@ -798,9 +810,11 @@ class AsyncTextToSpeechClient:
 
         Yields
         ------
-        typing.AsyncIterator[bytes]
-            Successful Response
-
+        tuple[str, typing.AsyncIterator[bytes]]
+            A tuple containing:
+            - request_id: The ID of the request
+            - audio_stream: Iterator of audio bytes chunks
+        
         Examples
         --------
         import asyncio
@@ -859,10 +873,20 @@ class AsyncTextToSpeechClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
-                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
-                        yield _chunk
-                    return
+                    request_id = _response.headers.get('request-id')
+                    if not request_id:
+                        raise ApiError(
+                            status_code=_response.status_code,
+                            body="Missing request-id in response headers."
+                        )
+
+                    async def audio_iterator():
+                        _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                        async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
+                            yield _chunk
+
+                    return request_id, audio_iterator()
+
                 await _response.aread()
                 if _response.status_code == 422:
                     raise UnprocessableEntityError(
