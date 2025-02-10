@@ -62,7 +62,7 @@ class TextToSpeechClient:
             BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization
         ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> tuple[str, typing.Iterator[bytes]]:
+    ) -> Tuple[str, typing.Iterator[bytes]]:
         """
         Converts text into speech using a voice of your choice and returns the request ID and audio stream.
 
@@ -765,7 +765,7 @@ class AsyncTextToSpeechClient:
             BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization
         ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> tuple[str, typing.AsyncIterator[bytes]]:
+    ) -> Tuple[str, typing.AsyncIterator[bytes]]:
         """
         Converts text into speech using a voice of your choice and returns the request ID and audio stream.
 
