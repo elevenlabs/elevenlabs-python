@@ -76,7 +76,7 @@ def test_tts_convert_with_voice_settings() -> None:
 def test_tts_convert_as_stream():
     async def main():
         async_client = AsyncElevenLabs()
-        req_id, results = async_client.text_to_speech.convert_as_stream(
+        req_id, results = await async_client.text_to_speech.convert_as_stream(
             text=DEFAULT_TEXT, voice_id=DEFAULT_VOICE, model_id=DEFAULT_MODEL
         )
         out = b""
@@ -108,7 +108,7 @@ def test_tts_stream_with_timestamps():
     async def main():
         async_client = AsyncElevenLabs()
         audio_data = b""
-        req_id, async_stream = async_client.text_to_speech.stream_with_timestamps(
+        req_id, async_stream = await async_client.text_to_speech.stream_with_timestamps(
             voice_id=DEFAULT_VOICE,
             text=DEFAULT_TEXT,
             model_id=DEFAULT_MODEL,
