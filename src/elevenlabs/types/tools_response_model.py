@@ -4,18 +4,15 @@ from __future__ import annotations
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .array_json_schema_property import ArrayJsonSchemaProperty
 from .object_json_schema_property import ObjectJsonSchemaProperty
-from .tool_response_model_tool_config import ToolResponseModelToolConfig
 import typing
-from .tool_response_model_dependent_agents_item import ToolResponseModelDependentAgentsItem
+from .tool_response_model import ToolResponseModel
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from ..core.pydantic_utilities import update_forward_refs
 
 
-class ToolResponseModel(UncheckedBaseModel):
-    id: str
-    tool_config: ToolResponseModelToolConfig
-    dependent_agents: typing.List[ToolResponseModelDependentAgentsItem]
+class ToolsResponseModel(UncheckedBaseModel):
+    tools: typing.List[ToolResponseModel]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -27,5 +24,5 @@ class ToolResponseModel(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-update_forward_refs(ArrayJsonSchemaProperty, ToolResponseModel=ToolResponseModel)
-update_forward_refs(ObjectJsonSchemaProperty, ToolResponseModel=ToolResponseModel)
+update_forward_refs(ArrayJsonSchemaProperty, ToolsResponseModel=ToolsResponseModel)
+update_forward_refs(ObjectJsonSchemaProperty, ToolsResponseModel=ToolsResponseModel)

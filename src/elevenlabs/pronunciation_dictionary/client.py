@@ -147,7 +147,7 @@ class PronunciationDictionaryClient:
         --------
         from elevenlabs import ElevenLabs
         from elevenlabs.pronunciation_dictionary import (
-            PronunciationDictionaryRule_Phoneme,
+            PronunciationDictionaryRule_Alias,
         )
 
         client = ElevenLabs(
@@ -156,10 +156,9 @@ class PronunciationDictionaryClient:
         client.pronunciation_dictionary.add_rules(
             pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
             rules=[
-                PronunciationDictionaryRule_Phoneme(
-                    string_to_replace="rules",
-                    phoneme="rules",
-                    alphabet="rules",
+                PronunciationDictionaryRule_Alias(
+                    string_to_replace="string_to_replace",
+                    alias="alias",
                 )
             ],
         )
@@ -592,7 +591,7 @@ class AsyncPronunciationDictionaryClient:
 
         from elevenlabs import AsyncElevenLabs
         from elevenlabs.pronunciation_dictionary import (
-            PronunciationDictionaryRule_Phoneme,
+            PronunciationDictionaryRule_Alias,
         )
 
         client = AsyncElevenLabs(
@@ -604,10 +603,9 @@ class AsyncPronunciationDictionaryClient:
             await client.pronunciation_dictionary.add_rules(
                 pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
                 rules=[
-                    PronunciationDictionaryRule_Phoneme(
-                        string_to_replace="rules",
-                        phoneme="rules",
-                        alphabet="rules",
+                    PronunciationDictionaryRule_Alias(
+                        string_to_replace="string_to_replace",
+                        alias="alias",
                     )
                 ],
             )

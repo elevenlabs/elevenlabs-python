@@ -32,7 +32,7 @@ class SpeechToTextWordResponseModel(UncheckedBaseModel):
     The type of the word or sound. 'audio_event' is used for non-word sounds like laughter or footsteps.
     """
 
-    speaker_id: str = pydantic.Field()
+    speaker_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     Unique identifier for the speaker of this word.
     """

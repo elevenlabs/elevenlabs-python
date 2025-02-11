@@ -30,8 +30,11 @@ from ..types.get_conversation_response_model import GetConversationResponseModel
 from ..types.user_feedback_score import UserFeedbackScore
 from ..types.create_phone_number_response_model import CreatePhoneNumberResponseModel
 from ..types.get_phone_number_response_model import GetPhoneNumberResponseModel
+from ..types.get_knowledge_base_list_response_model import GetKnowledgeBaseListResponseModel
 from ..types.add_knowledge_base_response_model import AddKnowledgeBaseResponseModel
-from ..types.get_knowledge_base_reponse_model import GetKnowledgeBaseReponseModel
+from ..types.get_knowledge_base_response_model import GetKnowledgeBaseResponseModel
+from ..types.get_knowledge_base_dependent_agents_response_model import GetKnowledgeBaseDependentAgentsResponseModel
+from ..types.tools_response_model import ToolsResponseModel
 from ..types.tool_request_model import ToolRequestModel
 from ..types.tool_response_model import ToolResponseModel
 from ..core.client_wrapper import AsyncClientWrapper
@@ -110,6 +113,7 @@ class ConversationalAiClient:
         self,
         *,
         conversation_config: ConversationalConfig,
+        use_tool_ids: typing.Optional[bool] = None,
         platform_settings: typing.Optional[AgentPlatformSettings] = OMIT,
         name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -121,6 +125,9 @@ class ConversationalAiClient:
         ----------
         conversation_config : ConversationalConfig
             Conversation configuration for an agent
+
+        use_tool_ids : typing.Optional[bool]
+            Use tool ids instead of tools specs from request payload.
 
         platform_settings : typing.Optional[AgentPlatformSettings]
             Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
@@ -150,6 +157,9 @@ class ConversationalAiClient:
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/agents/create",
             method="POST",
+            params={
+                "use_tool_ids": use_tool_ids,
+            },
             json={
                 "conversation_config": convert_and_respect_annotation_metadata(
                     object_=conversation_config, annotation=ConversationalConfig, direction="write"
@@ -250,7 +260,7 @@ class ConversationalAiClient:
 
     def delete_agent(
         self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Dict[str, str]:
+    ) -> typing.Optional[typing.Any]:
         """
         Delete an agent
 
@@ -264,7 +274,7 @@ class ConversationalAiClient:
 
         Returns
         -------
-        typing.Dict[str, str]
+        typing.Optional[typing.Any]
             Successful Response
 
         Examples
@@ -286,9 +296,9 @@ class ConversationalAiClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Dict[str, str],
+                    typing.Optional[typing.Any],
                     construct_type(
-                        type_=typing.Dict[str, str],  # type: ignore
+                        type_=typing.Optional[typing.Any],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -311,6 +321,7 @@ class ConversationalAiClient:
         self,
         agent_id: str,
         *,
+        use_tool_ids: typing.Optional[bool] = None,
         conversation_config: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         platform_settings: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         secrets: typing.Optional[
@@ -326,6 +337,9 @@ class ConversationalAiClient:
         ----------
         agent_id : str
             The id of an agent. This is returned on agent creation.
+
+        use_tool_ids : typing.Optional[bool]
+            Use tool ids instead of tools specs from request payload.
 
         conversation_config : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Conversation configuration for an agent
@@ -361,6 +375,9 @@ class ConversationalAiClient:
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
             method="PATCH",
+            params={
+                "use_tool_ids": use_tool_ids,
+            },
             json={
                 "conversation_config": conversation_config,
                 "platform_settings": platform_settings,
@@ -1400,6 +1417,74 @@ class ConversationalAiClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def get_knowledge_base_list(
+        self,
+        *,
+        cursor: typing.Optional[str] = None,
+        page_size: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetKnowledgeBaseListResponseModel:
+        """
+        Get a list of available knowledge base documents
+
+        Parameters
+        ----------
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        page_size : typing.Optional[int]
+            How many documents to return at maximum. Can not exceed 100, defaults to 30.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetKnowledgeBaseListResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.get_knowledge_base_list()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/convai/knowledge-base",
+            method="GET",
+            params={
+                "cursor": cursor,
+                "page_size": page_size,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetKnowledgeBaseListResponseModel,
+                    construct_type(
+                        type_=GetKnowledgeBaseListResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     def add_to_knowledge_base(
         self,
         *,
@@ -1473,7 +1558,7 @@ class ConversationalAiClient:
 
     def get_knowledge_base_document_by_id(
         self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetKnowledgeBaseReponseModel:
+    ) -> GetKnowledgeBaseResponseModel:
         """
         Get details about a specific documentation making up the agent's knowledge base
 
@@ -1487,7 +1572,7 @@ class ConversationalAiClient:
 
         Returns
         -------
-        GetKnowledgeBaseReponseModel
+        GetKnowledgeBaseResponseModel
             Successful Response
 
         Examples
@@ -1509,9 +1594,194 @@ class ConversationalAiClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetKnowledgeBaseReponseModel,
+                    GetKnowledgeBaseResponseModel,
                     construct_type(
-                        type_=GetKnowledgeBaseReponseModel,  # type: ignore
+                        type_=GetKnowledgeBaseResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def delete_knowledge_base_document(
+        self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Optional[typing.Any]:
+        """
+        Delete a document from the knowledge base
+
+        Parameters
+        ----------
+        documentation_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.delete_knowledge_base_document(
+            documentation_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get_dependent_agents(
+        self,
+        documentation_id: str,
+        *,
+        cursor: typing.Optional[str] = None,
+        page_size: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetKnowledgeBaseDependentAgentsResponseModel:
+        """
+        Get a list of agents depending on this knowledge base document
+
+        Parameters
+        ----------
+        documentation_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        page_size : typing.Optional[int]
+            How many documents to return at maximum. Can not exceed 100, defaults to 30.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetKnowledgeBaseDependentAgentsResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.get_dependent_agents(
+            documentation_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/dependent-agents",
+            method="GET",
+            params={
+                "cursor": cursor,
+                "page_size": page_size,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetKnowledgeBaseDependentAgentsResponseModel,
+                    construct_type(
+                        type_=GetKnowledgeBaseDependentAgentsResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get_tools(self, *, request_options: typing.Optional[RequestOptions] = None) -> ToolsResponseModel:
+        """
+        Get all available tools available in the workspace.
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ToolsResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.get_tools()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/convai/tools",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ToolsResponseModel,
+                    construct_type(
+                        type_=ToolsResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1553,7 +1823,8 @@ class ConversationalAiClient:
         from elevenlabs import (
             ElevenLabs,
             ToolRequestModel,
-            ToolRequestModelToolConfig_System,
+            ToolRequestModelToolConfig_Webhook,
+            WebhookToolApiSchemaConfig,
         )
 
         client = ElevenLabs(
@@ -1561,15 +1832,18 @@ class ConversationalAiClient:
         )
         client.conversational_ai.add_tool(
             request=ToolRequestModel(
-                tool_config=ToolRequestModelToolConfig_System(
-                    name="tool_config",
-                    description="tool_config",
+                tool_config=ToolRequestModelToolConfig_Webhook(
+                    name="name",
+                    description="description",
+                    api_schema=WebhookToolApiSchemaConfig(
+                        url="url",
+                    ),
                 ),
             ),
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v1/convai/add-tool",
+            "v1/convai/tools",
             method="POST",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=ToolRequestModel, direction="write"
@@ -1743,7 +2017,8 @@ class ConversationalAiClient:
         from elevenlabs import (
             ElevenLabs,
             ToolRequestModel,
-            ToolRequestModelToolConfig_System,
+            ToolRequestModelToolConfig_Webhook,
+            WebhookToolApiSchemaConfig,
         )
 
         client = ElevenLabs(
@@ -1752,9 +2027,12 @@ class ConversationalAiClient:
         client.conversational_ai.update_tool(
             tool_id="tool_id",
             request=ToolRequestModel(
-                tool_config=ToolRequestModelToolConfig_System(
-                    name="tool_config",
-                    description="tool_config",
+                tool_config=ToolRequestModelToolConfig_Webhook(
+                    name="name",
+                    description="description",
+                    api_schema=WebhookToolApiSchemaConfig(
+                        url="url",
+                    ),
                 ),
             ),
         )
@@ -1774,58 +2052,6 @@ class ConversationalAiClient:
                     ToolResponseModel,
                     construct_type(
                         type_=ToolResponseModel,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def get_tools(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[ToolResponseModel]:
-        """
-        Get all available tools available in the workspace.
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        typing.List[ToolResponseModel]
-            Successful Response
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.conversational_ai.get_tools()
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "v1/convai/tools",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.List[ToolResponseModel],
-                    construct_type(
-                        type_=typing.List[ToolResponseModel],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1923,6 +2149,7 @@ class AsyncConversationalAiClient:
         self,
         *,
         conversation_config: ConversationalConfig,
+        use_tool_ids: typing.Optional[bool] = None,
         platform_settings: typing.Optional[AgentPlatformSettings] = OMIT,
         name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -1934,6 +2161,9 @@ class AsyncConversationalAiClient:
         ----------
         conversation_config : ConversationalConfig
             Conversation configuration for an agent
+
+        use_tool_ids : typing.Optional[bool]
+            Use tool ids instead of tools specs from request payload.
 
         platform_settings : typing.Optional[AgentPlatformSettings]
             Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
@@ -1971,6 +2201,9 @@ class AsyncConversationalAiClient:
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/agents/create",
             method="POST",
+            params={
+                "use_tool_ids": use_tool_ids,
+            },
             json={
                 "conversation_config": convert_and_respect_annotation_metadata(
                     object_=conversation_config, annotation=ConversationalConfig, direction="write"
@@ -2079,7 +2312,7 @@ class AsyncConversationalAiClient:
 
     async def delete_agent(
         self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Dict[str, str]:
+    ) -> typing.Optional[typing.Any]:
         """
         Delete an agent
 
@@ -2093,7 +2326,7 @@ class AsyncConversationalAiClient:
 
         Returns
         -------
-        typing.Dict[str, str]
+        typing.Optional[typing.Any]
             Successful Response
 
         Examples
@@ -2123,9 +2356,9 @@ class AsyncConversationalAiClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Dict[str, str],
+                    typing.Optional[typing.Any],
                     construct_type(
-                        type_=typing.Dict[str, str],  # type: ignore
+                        type_=typing.Optional[typing.Any],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -2148,6 +2381,7 @@ class AsyncConversationalAiClient:
         self,
         agent_id: str,
         *,
+        use_tool_ids: typing.Optional[bool] = None,
         conversation_config: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         platform_settings: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         secrets: typing.Optional[
@@ -2163,6 +2397,9 @@ class AsyncConversationalAiClient:
         ----------
         agent_id : str
             The id of an agent. This is returned on agent creation.
+
+        use_tool_ids : typing.Optional[bool]
+            Use tool ids instead of tools specs from request payload.
 
         conversation_config : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Conversation configuration for an agent
@@ -2206,6 +2443,9 @@ class AsyncConversationalAiClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
             method="PATCH",
+            params={
+                "use_tool_ids": use_tool_ids,
+            },
             json={
                 "conversation_config": conversation_config,
                 "platform_settings": platform_settings,
@@ -3365,6 +3605,82 @@ class AsyncConversationalAiClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    async def get_knowledge_base_list(
+        self,
+        *,
+        cursor: typing.Optional[str] = None,
+        page_size: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetKnowledgeBaseListResponseModel:
+        """
+        Get a list of available knowledge base documents
+
+        Parameters
+        ----------
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        page_size : typing.Optional[int]
+            How many documents to return at maximum. Can not exceed 100, defaults to 30.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetKnowledgeBaseListResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.get_knowledge_base_list()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/convai/knowledge-base",
+            method="GET",
+            params={
+                "cursor": cursor,
+                "page_size": page_size,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetKnowledgeBaseListResponseModel,
+                    construct_type(
+                        type_=GetKnowledgeBaseListResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     async def add_to_knowledge_base(
         self,
         *,
@@ -3446,7 +3762,7 @@ class AsyncConversationalAiClient:
 
     async def get_knowledge_base_document_by_id(
         self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetKnowledgeBaseReponseModel:
+    ) -> GetKnowledgeBaseResponseModel:
         """
         Get details about a specific documentation making up the agent's knowledge base
 
@@ -3460,7 +3776,7 @@ class AsyncConversationalAiClient:
 
         Returns
         -------
-        GetKnowledgeBaseReponseModel
+        GetKnowledgeBaseResponseModel
             Successful Response
 
         Examples
@@ -3490,9 +3806,218 @@ class AsyncConversationalAiClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetKnowledgeBaseReponseModel,
+                    GetKnowledgeBaseResponseModel,
                     construct_type(
-                        type_=GetKnowledgeBaseReponseModel,  # type: ignore
+                        type_=GetKnowledgeBaseResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def delete_knowledge_base_document(
+        self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Optional[typing.Any]:
+        """
+        Delete a document from the knowledge base
+
+        Parameters
+        ----------
+        documentation_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.delete_knowledge_base_document(
+                documentation_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_dependent_agents(
+        self,
+        documentation_id: str,
+        *,
+        cursor: typing.Optional[str] = None,
+        page_size: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetKnowledgeBaseDependentAgentsResponseModel:
+        """
+        Get a list of agents depending on this knowledge base document
+
+        Parameters
+        ----------
+        documentation_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        page_size : typing.Optional[int]
+            How many documents to return at maximum. Can not exceed 100, defaults to 30.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetKnowledgeBaseDependentAgentsResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.get_dependent_agents(
+                documentation_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/dependent-agents",
+            method="GET",
+            params={
+                "cursor": cursor,
+                "page_size": page_size,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetKnowledgeBaseDependentAgentsResponseModel,
+                    construct_type(
+                        type_=GetKnowledgeBaseDependentAgentsResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_tools(self, *, request_options: typing.Optional[RequestOptions] = None) -> ToolsResponseModel:
+        """
+        Get all available tools available in the workspace.
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ToolsResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.get_tools()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/convai/tools",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ToolsResponseModel,
+                    construct_type(
+                        type_=ToolsResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -3536,7 +4061,8 @@ class AsyncConversationalAiClient:
         from elevenlabs import (
             AsyncElevenLabs,
             ToolRequestModel,
-            ToolRequestModelToolConfig_System,
+            ToolRequestModelToolConfig_Webhook,
+            WebhookToolApiSchemaConfig,
         )
 
         client = AsyncElevenLabs(
@@ -3547,9 +4073,12 @@ class AsyncConversationalAiClient:
         async def main() -> None:
             await client.conversational_ai.add_tool(
                 request=ToolRequestModel(
-                    tool_config=ToolRequestModelToolConfig_System(
-                        name="tool_config",
-                        description="tool_config",
+                    tool_config=ToolRequestModelToolConfig_Webhook(
+                        name="name",
+                        description="description",
+                        api_schema=WebhookToolApiSchemaConfig(
+                            url="url",
+                        ),
                     ),
                 ),
             )
@@ -3558,7 +4087,7 @@ class AsyncConversationalAiClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v1/convai/add-tool",
+            "v1/convai/tools",
             method="POST",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=ToolRequestModel, direction="write"
@@ -3752,7 +4281,8 @@ class AsyncConversationalAiClient:
         from elevenlabs import (
             AsyncElevenLabs,
             ToolRequestModel,
-            ToolRequestModelToolConfig_System,
+            ToolRequestModelToolConfig_Webhook,
+            WebhookToolApiSchemaConfig,
         )
 
         client = AsyncElevenLabs(
@@ -3764,9 +4294,12 @@ class AsyncConversationalAiClient:
             await client.conversational_ai.update_tool(
                 tool_id="tool_id",
                 request=ToolRequestModel(
-                    tool_config=ToolRequestModelToolConfig_System(
-                        name="tool_config",
-                        description="tool_config",
+                    tool_config=ToolRequestModelToolConfig_Webhook(
+                        name="name",
+                        description="description",
+                        api_schema=WebhookToolApiSchemaConfig(
+                            url="url",
+                        ),
                     ),
                 ),
             )
@@ -3789,68 +4322,6 @@ class AsyncConversationalAiClient:
                     ToolResponseModel,
                     construct_type(
                         type_=ToolResponseModel,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def get_tools(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[ToolResponseModel]:
-        """
-        Get all available tools available in the workspace.
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        typing.List[ToolResponseModel]
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.conversational_ai.get_tools()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "v1/convai/tools",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.List[ToolResponseModel],
-                    construct_type(
-                        type_=typing.List[ToolResponseModel],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
