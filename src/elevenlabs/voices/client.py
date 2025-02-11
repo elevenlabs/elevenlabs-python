@@ -203,7 +203,7 @@ class VoicesClient:
             Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
         with_settings : typing.Optional[bool]
-            If set will return settings information corresponding to the voice, requires authorization.
+            This parameter is now deprecated. It is ignored and will be removed in a future version.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1115,7 +1115,7 @@ class AsyncVoicesClient:
             Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
         with_settings : typing.Optional[bool]
-            If set will return settings information corresponding to the voice, requires authorization.
+            This parameter is now deprecated. It is ignored and will be removed in a future version.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

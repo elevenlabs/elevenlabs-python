@@ -160,7 +160,7 @@ class AudioNativeClient:
         Parameters
         ----------
         project_id : str
-            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+            The ID of the Studio project.
 
         file : typing.Optional[core.File]
             See core.File for more documentation
@@ -378,7 +378,7 @@ class AsyncAudioNativeClient:
         Parameters
         ----------
         project_id : str
-            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+            The ID of the Studio project.
 
         file : typing.Optional[core.File]
             See core.File for more documentation

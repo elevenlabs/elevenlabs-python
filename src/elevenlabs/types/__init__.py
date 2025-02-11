@@ -93,6 +93,9 @@ from .create_phone_number_response_model import CreatePhoneNumberResponseModel
 from .currency import Currency
 from .custom_llm import CustomLlm
 from .data_collection_result_common_model import DataCollectionResultCommonModel
+from .dependent_available_agent_identifier import DependentAvailableAgentIdentifier
+from .dependent_available_agent_identifier_access_level import DependentAvailableAgentIdentifierAccessLevel
+from .dependent_unknown_agent_identifier import DependentUnknownAgentIdentifier
 from .do_dubbing_response import DoDubbingResponse
 from .dubbing_media_metadata import DubbingMediaMetadata
 from .dubbing_metadata_response import DubbingMetadataResponse
@@ -122,8 +125,24 @@ from .get_chapters_response import GetChaptersResponse
 from .get_conversation_response_model import GetConversationResponseModel
 from .get_conversation_response_model_status import GetConversationResponseModelStatus
 from .get_conversations_page_response_model import GetConversationsPageResponseModel
-from .get_knowledge_base_reponse_model import GetKnowledgeBaseReponseModel
-from .get_knowledge_base_reponse_model_type import GetKnowledgeBaseReponseModelType
+from .get_knowledge_base_dependent_agents_response_model import GetKnowledgeBaseDependentAgentsResponseModel
+from .get_knowledge_base_dependent_agents_response_model_agents_item import (
+    GetKnowledgeBaseDependentAgentsResponseModelAgentsItem,
+    GetKnowledgeBaseDependentAgentsResponseModelAgentsItem_Available,
+    GetKnowledgeBaseDependentAgentsResponseModelAgentsItem_Unknown,
+)
+from .get_knowledge_base_list_response_model import GetKnowledgeBaseListResponseModel
+from .get_knowledge_base_response_model import GetKnowledgeBaseResponseModel
+from .get_knowledge_base_response_model_access_level import GetKnowledgeBaseResponseModelAccessLevel
+from .get_knowledge_base_response_model_type import GetKnowledgeBaseResponseModelType
+from .get_knowledge_base_summary_response_model import GetKnowledgeBaseSummaryResponseModel
+from .get_knowledge_base_summary_response_model_access_level import GetKnowledgeBaseSummaryResponseModelAccessLevel
+from .get_knowledge_base_summary_response_model_dependent_agents_item import (
+    GetKnowledgeBaseSummaryResponseModelDependentAgentsItem,
+    GetKnowledgeBaseSummaryResponseModelDependentAgentsItem_Available,
+    GetKnowledgeBaseSummaryResponseModelDependentAgentsItem_Unknown,
+)
+from .get_knowledge_base_summary_response_model_type import GetKnowledgeBaseSummaryResponseModelType
 from .get_library_voices_response import GetLibraryVoicesResponse
 from .get_phone_number_response_model import GetPhoneNumberResponseModel
 from .get_projects_response import GetProjectsResponse
@@ -216,6 +235,7 @@ from .speech_history_item_response import SpeechHistoryItemResponse
 from .speech_history_item_response_model_source import SpeechHistoryItemResponseModelSource
 from .speech_history_item_response_model_voice_category import SpeechHistoryItemResponseModelVoiceCategory
 from .speech_to_text_chunk_response_model import SpeechToTextChunkResponseModel
+from .speech_to_text_stream_response_model import SpeechToTextStreamResponseModel
 from .speech_to_text_word_response_model import SpeechToTextWordResponseModel
 from .speech_to_text_word_response_model_type import SpeechToTextWordResponseModelType
 from .subscription import Subscription
@@ -227,7 +247,6 @@ from .subscription_status import SubscriptionStatus
 from .system_tool_config import SystemToolConfig
 from .telephony_provider import TelephonyProvider
 from .text_to_speech_as_stream_request import TextToSpeechAsStreamRequest
-from .tool_config_locator import ToolConfigLocator
 from .tool_request_model import ToolRequestModel
 from .tool_request_model_tool_config import (
     ToolRequestModelToolConfig,
@@ -236,12 +255,18 @@ from .tool_request_model_tool_config import (
     ToolRequestModelToolConfig_Webhook,
 )
 from .tool_response_model import ToolResponseModel
+from .tool_response_model_dependent_agents_item import (
+    ToolResponseModelDependentAgentsItem,
+    ToolResponseModelDependentAgentsItem_Available,
+    ToolResponseModelDependentAgentsItem_Unknown,
+)
 from .tool_response_model_tool_config import (
     ToolResponseModelToolConfig,
     ToolResponseModelToolConfig_Client,
     ToolResponseModelToolConfig_System,
     ToolResponseModelToolConfig_Webhook,
 )
+from .tools_response_model import ToolsResponseModel
 from .tts_conversational_config import TtsConversationalConfig
 from .tts_conversational_config_override import TtsConversationalConfigOverride
 from .tts_conversational_config_override_config import TtsConversationalConfigOverrideConfig
@@ -291,6 +316,7 @@ from .widget_config_response_model_avatar import (
     WidgetConfigResponseModelAvatar_Url,
 )
 from .widget_feedback_mode import WidgetFeedbackMode
+from .workspace_group_by_name_response_model import WorkspaceGroupByNameResponseModel
 
 __all__ = [
     "Accent",
@@ -376,6 +402,9 @@ __all__ = [
     "Currency",
     "CustomLlm",
     "DataCollectionResultCommonModel",
+    "DependentAvailableAgentIdentifier",
+    "DependentAvailableAgentIdentifierAccessLevel",
+    "DependentUnknownAgentIdentifier",
     "DoDubbingResponse",
     "DubbingMediaMetadata",
     "DubbingMetadataResponse",
@@ -401,8 +430,20 @@ __all__ = [
     "GetConversationResponseModel",
     "GetConversationResponseModelStatus",
     "GetConversationsPageResponseModel",
-    "GetKnowledgeBaseReponseModel",
-    "GetKnowledgeBaseReponseModelType",
+    "GetKnowledgeBaseDependentAgentsResponseModel",
+    "GetKnowledgeBaseDependentAgentsResponseModelAgentsItem",
+    "GetKnowledgeBaseDependentAgentsResponseModelAgentsItem_Available",
+    "GetKnowledgeBaseDependentAgentsResponseModelAgentsItem_Unknown",
+    "GetKnowledgeBaseListResponseModel",
+    "GetKnowledgeBaseResponseModel",
+    "GetKnowledgeBaseResponseModelAccessLevel",
+    "GetKnowledgeBaseResponseModelType",
+    "GetKnowledgeBaseSummaryResponseModel",
+    "GetKnowledgeBaseSummaryResponseModelAccessLevel",
+    "GetKnowledgeBaseSummaryResponseModelDependentAgentsItem",
+    "GetKnowledgeBaseSummaryResponseModelDependentAgentsItem_Available",
+    "GetKnowledgeBaseSummaryResponseModelDependentAgentsItem_Unknown",
+    "GetKnowledgeBaseSummaryResponseModelType",
     "GetLibraryVoicesResponse",
     "GetPhoneNumberResponseModel",
     "GetProjectsResponse",
@@ -493,6 +534,7 @@ __all__ = [
     "SpeechHistoryItemResponseModelSource",
     "SpeechHistoryItemResponseModelVoiceCategory",
     "SpeechToTextChunkResponseModel",
+    "SpeechToTextStreamResponseModel",
     "SpeechToTextWordResponseModel",
     "SpeechToTextWordResponseModelType",
     "Subscription",
@@ -504,17 +546,20 @@ __all__ = [
     "SystemToolConfig",
     "TelephonyProvider",
     "TextToSpeechAsStreamRequest",
-    "ToolConfigLocator",
     "ToolRequestModel",
     "ToolRequestModelToolConfig",
     "ToolRequestModelToolConfig_Client",
     "ToolRequestModelToolConfig_System",
     "ToolRequestModelToolConfig_Webhook",
     "ToolResponseModel",
+    "ToolResponseModelDependentAgentsItem",
+    "ToolResponseModelDependentAgentsItem_Available",
+    "ToolResponseModelDependentAgentsItem_Unknown",
     "ToolResponseModelToolConfig",
     "ToolResponseModelToolConfig_Client",
     "ToolResponseModelToolConfig_System",
     "ToolResponseModelToolConfig_Webhook",
+    "ToolsResponseModel",
     "TtsConversationalConfig",
     "TtsConversationalConfigOverride",
     "TtsConversationalConfigOverrideConfig",
@@ -560,4 +605,5 @@ __all__ = [
     "WidgetConfigResponseModelAvatar_Orb",
     "WidgetConfigResponseModelAvatar_Url",
     "WidgetFeedbackMode",
+    "WorkspaceGroupByNameResponseModel",
 ]

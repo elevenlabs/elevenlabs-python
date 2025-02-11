@@ -15,8 +15,8 @@ from .voice_generation.client import VoiceGenerationClient
 from .text_to_voice.client import TextToVoiceClient
 from .user.client import UserClient
 from .voices.client import VoicesClient
+from .studio.client import StudioClient
 from .projects.client import ProjectsClient
-from .chapters.client import ChaptersClient
 from .dubbing.client import DubbingClient
 from .models.client import ModelsClient
 from .audio_native.client import AudioNativeClient
@@ -36,8 +36,8 @@ from .voice_generation.client import AsyncVoiceGenerationClient
 from .text_to_voice.client import AsyncTextToVoiceClient
 from .user.client import AsyncUserClient
 from .voices.client import AsyncVoicesClient
+from .studio.client import AsyncStudioClient
 from .projects.client import AsyncProjectsClient
-from .chapters.client import AsyncChaptersClient
 from .dubbing.client import AsyncDubbingClient
 from .models.client import AsyncModelsClient
 from .audio_native.client import AsyncAudioNativeClient
@@ -116,8 +116,8 @@ class BaseElevenLabs:
         self.text_to_voice = TextToVoiceClient(client_wrapper=self._client_wrapper)
         self.user = UserClient(client_wrapper=self._client_wrapper)
         self.voices = VoicesClient(client_wrapper=self._client_wrapper)
+        self.studio = StudioClient(client_wrapper=self._client_wrapper)
         self.projects = ProjectsClient(client_wrapper=self._client_wrapper)
-        self.chapters = ChaptersClient(client_wrapper=self._client_wrapper)
         self.dubbing = DubbingClient(client_wrapper=self._client_wrapper)
         self.models = ModelsClient(client_wrapper=self._client_wrapper)
         self.audio_native = AudioNativeClient(client_wrapper=self._client_wrapper)
@@ -196,8 +196,8 @@ class AsyncBaseElevenLabs:
         self.text_to_voice = AsyncTextToVoiceClient(client_wrapper=self._client_wrapper)
         self.user = AsyncUserClient(client_wrapper=self._client_wrapper)
         self.voices = AsyncVoicesClient(client_wrapper=self._client_wrapper)
+        self.studio = AsyncStudioClient(client_wrapper=self._client_wrapper)
         self.projects = AsyncProjectsClient(client_wrapper=self._client_wrapper)
-        self.chapters = AsyncChaptersClient(client_wrapper=self._client_wrapper)
         self.dubbing = AsyncDubbingClient(client_wrapper=self._client_wrapper)
         self.models = AsyncModelsClient(client_wrapper=self._client_wrapper)
         self.audio_native = AsyncAudioNativeClient(client_wrapper=self._client_wrapper)

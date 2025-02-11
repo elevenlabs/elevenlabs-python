@@ -10,6 +10,9 @@ from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.http_validation_error import HttpValidationError
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
+from ..types.speech_to_text_stream_response_model import SpeechToTextStreamResponseModel
+import json
+from ..errors.bad_request_error import BadRequestError
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -23,8 +26,8 @@ class SpeechToTextClient:
     def convert(
         self,
         *,
-        file: core.File,
         model_id: str,
+        file: typing.Optional[core.File] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         tag_audio_events: typing.Optional[bool] = OMIT,
         num_speakers: typing.Optional[int] = OMIT,
@@ -35,11 +38,11 @@ class SpeechToTextClient:
 
         Parameters
         ----------
-        file : core.File
-            See core.File for more documentation
-
         model_id : str
             The ID of the model to use for transcription, currently only 'scribe_v1' is available.
+
+        file : typing.Optional[core.File]
+            See core.File for more documentation
 
         language_code : typing.Optional[str]
             An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand. Defaults to null, in this case the language is predicted automatically.
@@ -111,23 +114,23 @@ class SpeechToTextClient:
     def convert_as_stream(
         self,
         *,
-        file: core.File,
         model_id: str,
+        file: typing.Optional[core.File] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         tag_audio_events: typing.Optional[bool] = OMIT,
         num_speakers: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    ) -> typing.Iterator[SpeechToTextStreamResponseModel]:
         """
-        Transcribe an audio or video file with a streamed response.
+        Transcribe an audio or video file with streaming response. Returns chunks of transcription as they become available, with each chunk separated by double newlines (\n\n).
 
         Parameters
         ----------
-        file : core.File
-            See core.File for more documentation
-
         model_id : str
             The ID of the model to use for transcription, currently only 'scribe_v1' is available.
+
+        file : typing.Optional[core.File]
+            See core.File for more documentation
 
         language_code : typing.Optional[str]
             An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand. Defaults to null, in this case the language is predicted automatically.
@@ -141,9 +144,10 @@ class SpeechToTextClient:
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
-        Returns
-        -------
-        None
+        Yields
+        ------
+        typing.Iterator[SpeechToTextStreamResponseModel]
+            Stream of transcription chunks
 
         Examples
         --------
@@ -152,11 +156,13 @@ class SpeechToTextClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.speech_to_text.convert_as_stream(
+        response = client.speech_to_text.convert_as_stream(
             model_id="model_id",
         )
+        for chunk in response:
+            yield chunk
         """
-        _response = self._client_wrapper.httpx_client.request(
+        with self._client_wrapper.httpx_client.stream(
             "v1/speech-to-text/stream",
             method="POST",
             data={
@@ -170,24 +176,48 @@ class SpeechToTextClient:
             },
             request_options=request_options,
             omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
+        ) as _response:
+            try:
+                if 200 <= _response.status_code < 300:
+                    for _text in _response.iter_lines():
+                        try:
+                            if len(_text) == 0:
+                                continue
+                            yield typing.cast(
+                                SpeechToTextStreamResponseModel,
+                                construct_type(
+                                    type_=SpeechToTextStreamResponseModel,  # type: ignore
+                                    object_=json.loads(_text),
+                                ),
+                            )
+                        except:
+                            pass
+                    return
+                _response.read()
+                if _response.status_code == 400:
+                    raise BadRequestError(
+                        typing.cast(
+                            typing.Optional[typing.Any],
+                            construct_type(
+                                type_=typing.Optional[typing.Any],  # type: ignore
+                                object_=_response.json(),
+                            ),
+                        )
                     )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+                if _response.status_code == 422:
+                    raise UnprocessableEntityError(
+                        typing.cast(
+                            HttpValidationError,
+                            construct_type(
+                                type_=HttpValidationError,  # type: ignore
+                                object_=_response.json(),
+                            ),
+                        )
+                    )
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
 class AsyncSpeechToTextClient:
@@ -197,8 +227,8 @@ class AsyncSpeechToTextClient:
     async def convert(
         self,
         *,
-        file: core.File,
         model_id: str,
+        file: typing.Optional[core.File] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         tag_audio_events: typing.Optional[bool] = OMIT,
         num_speakers: typing.Optional[int] = OMIT,
@@ -209,11 +239,11 @@ class AsyncSpeechToTextClient:
 
         Parameters
         ----------
-        file : core.File
-            See core.File for more documentation
-
         model_id : str
             The ID of the model to use for transcription, currently only 'scribe_v1' is available.
+
+        file : typing.Optional[core.File]
+            See core.File for more documentation
 
         language_code : typing.Optional[str]
             An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand. Defaults to null, in this case the language is predicted automatically.
@@ -293,23 +323,23 @@ class AsyncSpeechToTextClient:
     async def convert_as_stream(
         self,
         *,
-        file: core.File,
         model_id: str,
+        file: typing.Optional[core.File] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         tag_audio_events: typing.Optional[bool] = OMIT,
         num_speakers: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    ) -> typing.AsyncIterator[SpeechToTextStreamResponseModel]:
         """
-        Transcribe an audio or video file with a streamed response.
+        Transcribe an audio or video file with streaming response. Returns chunks of transcription as they become available, with each chunk separated by double newlines (\n\n).
 
         Parameters
         ----------
-        file : core.File
-            See core.File for more documentation
-
         model_id : str
             The ID of the model to use for transcription, currently only 'scribe_v1' is available.
+
+        file : typing.Optional[core.File]
+            See core.File for more documentation
 
         language_code : typing.Optional[str]
             An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand. Defaults to null, in this case the language is predicted automatically.
@@ -323,9 +353,10 @@ class AsyncSpeechToTextClient:
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
-        Returns
-        -------
-        None
+        Yields
+        ------
+        typing.AsyncIterator[SpeechToTextStreamResponseModel]
+            Stream of transcription chunks
 
         Examples
         --------
@@ -339,14 +370,16 @@ class AsyncSpeechToTextClient:
 
 
         async def main() -> None:
-            await client.speech_to_text.convert_as_stream(
+            response = await client.speech_to_text.convert_as_stream(
                 model_id="model_id",
             )
+            async for chunk in response:
+                yield chunk
 
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
+        async with self._client_wrapper.httpx_client.stream(
             "v1/speech-to-text/stream",
             method="POST",
             data={
@@ -360,21 +393,45 @@ class AsyncSpeechToTextClient:
             },
             request_options=request_options,
             omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
+        ) as _response:
+            try:
+                if 200 <= _response.status_code < 300:
+                    async for _text in _response.aiter_lines():
+                        try:
+                            if len(_text) == 0:
+                                continue
+                            yield typing.cast(
+                                SpeechToTextStreamResponseModel,
+                                construct_type(
+                                    type_=SpeechToTextStreamResponseModel,  # type: ignore
+                                    object_=json.loads(_text),
+                                ),
+                            )
+                        except:
+                            pass
+                    return
+                await _response.aread()
+                if _response.status_code == 400:
+                    raise BadRequestError(
+                        typing.cast(
+                            typing.Optional[typing.Any],
+                            construct_type(
+                                type_=typing.Optional[typing.Any],  # type: ignore
+                                object_=_response.json(),
+                            ),
+                        )
                     )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+                if _response.status_code == 422:
+                    raise UnprocessableEntityError(
+                        typing.cast(
+                            HttpValidationError,
+                            construct_type(
+                                type_=HttpValidationError,  # type: ignore
+                                object_=_response.json(),
+                            ),
+                        )
+                    )
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)
