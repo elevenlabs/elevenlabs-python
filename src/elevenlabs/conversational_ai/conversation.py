@@ -272,7 +272,7 @@ class Conversation:
         return self._conversation_id
 
     def _run(self, ws_url: str):
-        with connect(ws_url) as ws:
+        with connect(ws_url, max_size=16 * 1024 * 1024) as ws:
             ws.send(
                 json.dumps(
                     {
