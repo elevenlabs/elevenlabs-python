@@ -61,14 +61,14 @@ class TextToSpeechClient:
             BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization
         ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Iterator[bytes]:
+    ) -> bytes:
         """
-        Converts text into speech using a voice of your choice and returns audio.
+        Converts text into speech using a voice of your choice and returns complete audio data.
 
         Parameters
         ----------
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            Voice ID to be used. Use the Get https://api.elevenlabs.io/v1/voices endpoint to list all available voices.
 
         text : str
             The text that will get converted into speech.
@@ -125,10 +125,10 @@ class TextToSpeechClient:
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
-        Yields
-        ------
-        typing.Iterator[bytes]
-            Successful Response
+        Returns
+        -------
+        bytes
+            The complete audio data.
 
         Examples
         --------
@@ -144,7 +144,7 @@ class TextToSpeechClient:
             model_id="eleven_multilingual_v2",
         )
         """
-        with self._client_wrapper.httpx_client.stream(
+        _response = self._client_wrapper.httpx_client.request(
             f"v1/text-to-speech/{jsonable_encoder(voice_id)}",
             method="POST",
             params={
@@ -177,28 +177,24 @@ class TextToSpeechClient:
             },
             request_options=request_options,
             omit=OMIT,
-        ) as _response:
-            try:
-                if 200 <= _response.status_code < 300:
-                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
-                    for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
-                        yield _chunk
-                    return
-                _response.read()
-                if _response.status_code == 422:
-                    raise UnprocessableEntityError(
-                        typing.cast(
-                            HttpValidationError,
-                            construct_type(
-                                type_=HttpValidationError,  # type: ignore
-                                object_=_response.json(),
-                            ),
-                        )
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return _response.read()
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
                     )
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def convert_with_timestamps(
         self,
@@ -732,14 +728,14 @@ class AsyncTextToSpeechClient:
             BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization
         ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.AsyncIterator[bytes]:
+    ) -> bytes:
         """
-        Converts text into speech using a voice of your choice and returns audio.
+        Converts text into speech using a voice of your choice and returns complete audio data.
 
         Parameters
         ----------
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            Voice ID to be used. Use the Get https://api.elevenlabs.io/v1/voices endpoint to list all available voices.
 
         text : str
             The text that will get converted into speech.
@@ -796,11 +792,12 @@ class AsyncTextToSpeechClient:
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
-        Yields
-        ------
-        typing.AsyncIterator[bytes]
-            Successful Response
+        Returns
+        -------
+        bytes
+            The complete audio data.
 
+        
         Examples
         --------
         import asyncio
@@ -823,7 +820,7 @@ class AsyncTextToSpeechClient:
 
         asyncio.run(main())
         """
-        async with self._client_wrapper.httpx_client.stream(
+        _response = await self._client_wrapper.httpx_client.request(
             f"v1/text-to-speech/{jsonable_encoder(voice_id)}",
             method="POST",
             params={
@@ -856,28 +853,24 @@ class AsyncTextToSpeechClient:
             },
             request_options=request_options,
             omit=OMIT,
-        ) as _response:
-            try:
-                if 200 <= _response.status_code < 300:
-                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
-                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
-                        yield _chunk
-                    return
-                await _response.aread()
-                if _response.status_code == 422:
-                    raise UnprocessableEntityError(
-                        typing.cast(
-                            HttpValidationError,
-                            construct_type(
-                                type_=HttpValidationError,  # type: ignore
-                                object_=_response.json(),
-                            ),
-                        )
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return await _response.aread()
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
                     )
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def convert_with_timestamps(
         self,
@@ -974,25 +967,17 @@ class AsyncTextToSpeechClient:
 
         Examples
         --------
-        import asyncio
+        from elevenlabs import ElevenLabs
 
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
+        client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-
-
-        async def main() -> None:
-            await client.text_to_speech.convert_with_timestamps(
-                voice_id="JBFqnCBsd6RMkjVDRZzb",
-                output_format="mp3_44100_128",
-                text="The first move is what sets everything in motion.",
-                model_id="eleven_multilingual_v2",
-            )
-
-
-        asyncio.run(main())
+        client.text_to_speech.convert_with_timestamps(
+            voice_id="JBFqnCBsd6RMkjVDRZzb",
+            output_format="mp3_44100_128",
+            text="The first move is what sets everything in motion.",
+            model_id="eleven_multilingual_v2",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/text-to-speech/{jsonable_encoder(voice_id)}/with-timestamps",
@@ -1147,25 +1132,17 @@ class AsyncTextToSpeechClient:
 
         Examples
         --------
-        import asyncio
+        from elevenlabs import ElevenLabs
 
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
+        client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-
-
-        async def main() -> None:
-            await client.text_to_speech.convert_as_stream(
-                voice_id="JBFqnCBsd6RMkjVDRZzb",
-                output_format="mp3_44100_128",
-                text="The first move is what sets everything in motion.",
-                model_id="eleven_multilingual_v2",
-            )
-
-
-        asyncio.run(main())
+        client.text_to_speech.convert_as_stream(
+            voice_id="JBFqnCBsd6RMkjVDRZzb",
+            output_format="mp3_44100_128",
+            text="The first move is what sets everything in motion.",
+            model_id="eleven_multilingual_v2",
+        )
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream",
@@ -1318,27 +1295,19 @@ class AsyncTextToSpeechClient:
 
         Examples
         --------
-        import asyncio
+        from elevenlabs import ElevenLabs
 
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
+        client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-
-
-        async def main() -> None:
-            response = await client.text_to_speech.stream_with_timestamps(
-                voice_id="JBFqnCBsd6RMkjVDRZzb",
-                output_format="mp3_44100_128",
-                text="The first move is what sets everything in motion.",
-                model_id="eleven_multilingual_v2",
-            )
-            async for chunk in response:
-                yield chunk
-
-
-        asyncio.run(main())
+        response = await client.text_to_speech.stream_with_timestamps(
+            voice_id="JBFqnCBsd6RMkjVDRZzb",
+            output_format="mp3_44100_128",
+            text="The first move is what sets everything in motion.",
+            model_id="eleven_multilingual_v2",
+        )
+        async for chunk in response:
+            yield chunk
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream/with-timestamps",
