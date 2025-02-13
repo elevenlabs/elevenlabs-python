@@ -163,7 +163,7 @@ class ClientTools:
         asyncio.run_coroutine_threadsafe(_execute_and_callback(), self._loop)
 
 
-class ConversationConfig:
+class ConversationInitiationData:
     """Configuration options for the Conversation."""
 
     def __init__(
@@ -181,7 +181,7 @@ class Conversation:
     client: BaseElevenLabs
     agent_id: str
     requires_auth: bool
-    config: ConversationConfig
+    config: ConversationInitiationData
     audio_interface: AudioInterface
     client_tools: Optional[ClientTools]
     callback_agent_response: Optional[Callable[[str], None]]
@@ -201,7 +201,7 @@ class Conversation:
         *,
         requires_auth: bool,
         audio_interface: AudioInterface,
-        config: Optional[ConversationConfig] = None,
+        config: Optional[ConversationInitiationData] = None,
         client_tools: Optional[ClientTools] = None,
         callback_agent_response: Optional[Callable[[str], None]] = None,
         callback_agent_response_correction: Optional[Callable[[str, str], None]] = None,
@@ -231,7 +231,7 @@ class Conversation:
         self.requires_auth = requires_auth
         self.audio_interface = audio_interface
         self.callback_agent_response = callback_agent_response
-        self.config = config or ConversationConfig()
+        self.config = config or ConversationInitiationData()
         self.client_tools = client_tools or ClientTools()
         self.callback_agent_response_correction = callback_agent_response_correction
         self.callback_user_transcript = callback_user_transcript
