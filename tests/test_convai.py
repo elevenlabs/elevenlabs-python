@@ -1,5 +1,5 @@
 from unittest.mock import MagicMock, patch
-from elevenlabs.conversational_ai.conversation import Conversation, AudioInterface, ConversationConfig
+from elevenlabs.conversational_ai.conversation import Conversation, AudioInterface, ConversationInitiationData
 import json
 import time
 
@@ -125,7 +125,7 @@ def test_conversation_with_dynamic_variables():
     agent_response_callback = MagicMock()
 
     dynamic_variables = {"name": "angelo"}
-    config = ConversationConfig(dynamic_variables=dynamic_variables)
+    config = ConversationInitiationData(dynamic_variables=dynamic_variables)
 
     # Setup the conversation
     conversation = Conversation(
