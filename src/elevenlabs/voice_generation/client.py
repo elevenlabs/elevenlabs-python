@@ -75,9 +75,11 @@ class VoiceGenerationClient:
         accent_strength: float,
         text: str,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Iterator[bytes]:
+    ) -> typing.Tuple[str, typing.Iterator[bytes]]:
         """
-        Generate a random voice based on parameters. This method returns a generated_voice_id in the response header, and a sample of the voice in the body. If you like the generated voice call /v1/voice-generation/create-voice with the generated_voice_id to create the voice.
+        Generate a random voice based on parameters. This method returns a generated_voice_id
+        and an iterator of the voice bytes. If you like the generated voice, call
+        /v1/voice-generation/create-voice with the generated_voice_id to create the voice.
 
         Parameters
         ----------
@@ -99,10 +101,10 @@ class VoiceGenerationClient:
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
-        Yields
-        ------
-        typing.Iterator[bytes]
-            Successful Response
+        Returns
+        -------
+        typing.Tuple[str, typing.Iterator[bytes]]
+            A tuple containing the generated_voice_id and an iterator of the voice bytes.
 
         Examples
         --------
@@ -111,7 +113,7 @@ class VoiceGenerationClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.voice_generation.generate(
+        generated_voice_id, voice_iterator = client.voice_generation.generate(
             gender="female",
             accent="american",
             age="middle_aged",
@@ -137,10 +139,24 @@ class VoiceGenerationClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
-                    for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
-                        yield _chunk
-                    return
+                    generated_voice_id = _response.headers.get('generated_voice_id')
+                    if not generated_voice_id:
+                        raise ApiError(
+                            status_code=_response.status_code,
+                            body="Missing generated_voice_id in response headers."
+                        )
+
+                    def voice_iterator():
+                        _chunk_size = (
+                            request_options.get("chunk_size", 1024)
+                            if request_options is not None
+                            else 1024
+                        )
+                        for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
+                            yield _chunk
+
+                    return generated_voice_id, voice_iterator()
+                
                 _response.read()
                 if _response.status_code == 422:
                     raise UnprocessableEntityError(
