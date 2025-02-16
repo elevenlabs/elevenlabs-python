@@ -4,8 +4,7 @@ import re
 import os
 import httpx
 
-from typing import Iterator, Optional, Union, \
-  Optional, AsyncIterator
+from typing import Any, Iterator, Optional, Union, AsyncIterator, Coroutine
 
 from .base_client import \
   BaseElevenLabs, AsyncBaseElevenLabs
@@ -130,7 +129,7 @@ class ElevenLabs(BaseElevenLabs):
             typing.Sequence[PronunciationDictionaryVersionLocator]
         ] = OMIT,
       request_options: typing.Optional[RequestOptions] = None
-    ) -> Iterator[bytes]:
+    ) -> Union[bytes, Iterator[bytes]]:
         """
             - text: Union[str, Iterator[str]]. The string or stream of strings that will get converted into speech.
 
@@ -310,7 +309,7 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
             typing.Sequence[PronunciationDictionaryVersionLocator]
         ] = OMIT,
       request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncIterator[bytes]:
+    ) -> Union[AsyncIterator[bytes], Coroutine[Any, Any, bytes]]:
         """
           This is a manually mnaintained helper function that generates a 
           voice from provided text.
