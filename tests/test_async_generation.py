@@ -1,8 +1,11 @@
 import asyncio
 import pytest
 
-from .utils import IN_GITHUB, async_client
+from .utils import IN_GITHUB
+from elevenlabs import AsyncElevenLabs
 from elevenlabs import play
+
+async_client = AsyncElevenLabs()
 
 def test_generate_stream() -> None:
     async def main():

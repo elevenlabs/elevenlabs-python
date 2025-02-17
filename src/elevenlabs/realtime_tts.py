@@ -41,7 +41,7 @@ def text_chunker(chunks: typing.Iterator[str]) -> typing.Iterator[str]:
         yield buffer + " "
 
 
-async def async_text_chunker(chunks: typing.AsyncIterator[str]) -> typing.AsyncIterator[str]:
+async def async_text_chunker(chunks: typing.AsyncIterable[str]) -> typing.AsyncIterable[str]:
     """Used during input streaming to chunk text blocks and set last char to space"""
     splitters = (".", ",", "?", "!", ";", ":", "—", "-", "(", ")", "[", "]", "}", " ")
     buffer = ""
