@@ -108,7 +108,7 @@ class StudioClient:
             api_key="YOUR_API_KEY",
         )
         client.studio.create_podcast(
-            model_id="model_id",
+            model_id="21m00Tcm4TlvDq8ikWAM",
             mode=BodyCreatePodcastV1StudioPodcastsPostMode_Conversation(
                 conversation=PodcastConversationModeData(
                     host_voice_id="host_voice_id",
@@ -253,7 +253,7 @@ class AsyncStudioClient:
 
         async def main() -> None:
             await client.studio.create_podcast(
-                model_id="model_id",
+                model_id="21m00Tcm4TlvDq8ikWAM",
                 mode=BodyCreatePodcastV1StudioPodcastsPostMode_Conversation(
                     conversation=PodcastConversationModeData(
                         host_voice_id="host_voice_id",

@@ -96,11 +96,17 @@ def test_tts_convert_with_timestamps() -> None:
         text=DEFAULT_TEXT, voice_id=DEFAULT_VOICE, model_id=DEFAULT_MODEL
     )
 
-    assert "alignment" in result  # type: ignore
-    assert "characters" in result["alignment"]  # type: ignore
+    # Check that the alignment data exists and has the expected structure
+    assert hasattr(result, 'alignment')
+    assert hasattr(result, 'audio_base_64')
+
+    # Verify alignment contains timing data
+    assert result.alignment is not None
+    assert len(result.alignment.character_start_times_seconds) > 0
+    assert len(result.alignment.character_end_times_seconds) > 0
 
     if not IN_GITHUB:
-        audio_bytes = base64.b64decode(result["audio_base64"])  # type: ignore
+        audio_bytes = base64.b64decode(result.audio_base_64)
         play(audio_bytes)
 
 

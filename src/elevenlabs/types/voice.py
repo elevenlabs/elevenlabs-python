@@ -7,6 +7,7 @@ from .voice_response_model_category import VoiceResponseModelCategory
 from .fine_tuning_response import FineTuningResponse
 from .voice_settings import VoiceSettings
 from .voice_sharing_response import VoiceSharingResponse
+from .verified_voice_language_response_model import VerifiedVoiceLanguageResponseModel
 from .voice_response_model_safety_control import VoiceResponseModelSafetyControl
 from .voice_verification_response import VoiceVerificationResponse
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
@@ -26,6 +27,7 @@ class Voice(UncheckedBaseModel):
     settings: typing.Optional[VoiceSettings] = None
     sharing: typing.Optional[VoiceSharingResponse] = None
     high_quality_base_model_ids: typing.Optional[typing.List[str]] = None
+    verified_languages: typing.Optional[typing.List[VerifiedVoiceLanguageResponseModel]] = None
     safety_control: typing.Optional[VoiceResponseModelSafetyControl] = None
     voice_verification: typing.Optional[VoiceVerificationResponse] = None
     permission_on_resource: typing.Optional[str] = None

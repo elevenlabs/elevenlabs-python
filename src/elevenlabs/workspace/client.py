@@ -259,7 +259,7 @@ class WorkspaceClient:
             api_key="YOUR_API_KEY",
         )
         client.workspace.invite_user(
-            email="email",
+            email="john.doe@testmail.com",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -400,7 +400,7 @@ class WorkspaceClient:
             api_key="YOUR_API_KEY",
         )
         client.workspace.delete_existing_invitation(
-            email="email",
+            email="john.doe@testmail.com",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -788,7 +788,7 @@ class AsyncWorkspaceClient:
 
         async def main() -> None:
             await client.workspace.invite_user(
-                email="email",
+                email="john.doe@testmail.com",
             )
 
 
@@ -945,7 +945,7 @@ class AsyncWorkspaceClient:
 
         async def main() -> None:
             await client.workspace.delete_existing_invitation(
-                email="email",
+                email="john.doe@testmail.com",
             )
 
 

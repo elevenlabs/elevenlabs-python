@@ -4,6 +4,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 import pydantic
 import typing
 from .speech_to_text_word_response_model_type import SpeechToTextWordResponseModelType
+from .speech_to_text_character_response_model import SpeechToTextCharacterResponseModel
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -35,6 +36,11 @@ class SpeechToTextWordResponseModel(UncheckedBaseModel):
     speaker_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     Unique identifier for the speaker of this word.
+    """
+
+    characters: typing.Optional[typing.List[SpeechToTextCharacterResponseModel]] = pydantic.Field(default=None)
+    """
+    The characters that make up the word and their timing information.
     """
 
     if IS_PYDANTIC_V2:

@@ -124,7 +124,7 @@ class ChaptersClient:
         )
         client.studio.chapters.create(
             project_id="21m00Tcm4TlvDq8ikWAM",
-            name="name",
+            name="Chapter 1",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -693,7 +693,7 @@ class AsyncChaptersClient:
         async def main() -> None:
             await client.studio.chapters.create(
                 project_id="21m00Tcm4TlvDq8ikWAM",
-                name="name",
+                name="Chapter 1",
             )
 
 

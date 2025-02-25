@@ -9,13 +9,13 @@ from .literal_json_schema_property import LiteralJsonSchemaProperty
 from .conversation_initiation_client_data_config import ConversationInitiationClientDataConfig
 from .agent_call_limits import AgentCallLimits
 from .agent_ban import AgentBan
-from .safety import Safety
 from .privacy_config import PrivacyConfig
+from .safety_response_model import SafetyResponseModel
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
-class AgentPlatformSettings(UncheckedBaseModel):
+class AgentPlatformSettingsResponseModel(UncheckedBaseModel):
     auth: typing.Optional[AuthSettings] = None
     evaluation: typing.Optional[EvaluationSettings] = None
     widget: typing.Optional[WidgetConfig] = None
@@ -23,8 +23,8 @@ class AgentPlatformSettings(UncheckedBaseModel):
     overrides: typing.Optional[ConversationInitiationClientDataConfig] = None
     call_limits: typing.Optional[AgentCallLimits] = None
     ban: typing.Optional[AgentBan] = None
-    safety: typing.Optional[Safety] = None
     privacy: typing.Optional[PrivacyConfig] = None
+    safety: typing.Optional[SafetyResponseModel] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

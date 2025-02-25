@@ -656,6 +656,7 @@ class VoicesClient:
         use_cases: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         descriptives: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         featured: typing.Optional[bool] = None,
+        min_notice_period_days: typing.Optional[int] = None,
         reader_app_enabled: typing.Optional[bool] = None,
         owner_id: typing.Optional[str] = None,
         sort: typing.Optional[str] = None,
@@ -696,6 +697,9 @@ class VoicesClient:
 
         featured : typing.Optional[bool]
             Filter featured voices
+
+        min_notice_period_days : typing.Optional[int]
+            Filter voices with a minimum notice period of the given number of days.
 
         reader_app_enabled : typing.Optional[bool]
             Filter voices that are enabled for the reader app
@@ -743,6 +747,7 @@ class VoicesClient:
                 "use_cases": use_cases,
                 "descriptives": descriptives,
                 "featured": featured,
+                "min_notice_period_days": min_notice_period_days,
                 "reader_app_enabled": reader_app_enabled,
                 "owner_id": owner_id,
                 "sort": sort,
@@ -1616,6 +1621,7 @@ class AsyncVoicesClient:
         use_cases: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         descriptives: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         featured: typing.Optional[bool] = None,
+        min_notice_period_days: typing.Optional[int] = None,
         reader_app_enabled: typing.Optional[bool] = None,
         owner_id: typing.Optional[str] = None,
         sort: typing.Optional[str] = None,
@@ -1656,6 +1662,9 @@ class AsyncVoicesClient:
 
         featured : typing.Optional[bool]
             Filter featured voices
+
+        min_notice_period_days : typing.Optional[int]
+            Filter voices with a minimum notice period of the given number of days.
 
         reader_app_enabled : typing.Optional[bool]
             Filter voices that are enabled for the reader app
@@ -1711,6 +1720,7 @@ class AsyncVoicesClient:
                 "use_cases": use_cases,
                 "descriptives": descriptives,
                 "featured": featured,
+                "min_notice_period_days": min_notice_period_days,
                 "reader_app_enabled": reader_app_enabled,
                 "owner_id": owner_id,
                 "sort": sort,

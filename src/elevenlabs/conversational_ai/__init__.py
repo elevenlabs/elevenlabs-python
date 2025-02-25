@@ -4,10 +4,16 @@ from .types import (
     BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchSecretsItem,
     BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchSecretsItem_New,
     BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchSecretsItem_Stored,
+    PatchConvaiSettingsRequestSecretsItem,
+    PatchConvaiSettingsRequestSecretsItem_New,
+    PatchConvaiSettingsRequestSecretsItem_Stored,
 )
 
 __all__ = [
     "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchSecretsItem",
     "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchSecretsItem_New",
     "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchSecretsItem_Stored",
+    "PatchConvaiSettingsRequestSecretsItem",
+    "PatchConvaiSettingsRequestSecretsItem_New",
+    "PatchConvaiSettingsRequestSecretsItem_Stored",
 ]

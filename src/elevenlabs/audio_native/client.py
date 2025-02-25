@@ -10,8 +10,9 @@ from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.http_validation_error import HttpValidationError
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from ..types.audio_native_edit_content_response_model import AudioNativeEditContentResponseModel
+from ..types.get_audio_native_project_settings_response_model import GetAudioNativeProjectSettingsResponseModel
 from ..core.jsonable_encoder import jsonable_encoder
+from ..types.audio_native_edit_content_response_model import AudioNativeEditContentResponseModel
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -127,6 +128,65 @@ class AudioNativeClient:
                     AudioNativeCreateProjectResponseModel,
                     construct_type(
                         type_=AudioNativeCreateProjectResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get_settings(
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetAudioNativeProjectSettingsResponseModel:
+        """
+        Get player settings for the specific project.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetAudioNativeProjectSettingsResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.audio_native.get_settings(
+            project_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/audio-native/{jsonable_encoder(project_id)}/settings",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetAudioNativeProjectSettingsResponseModel,
+                    construct_type(
+                        type_=GetAudioNativeProjectSettingsResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -345,6 +405,73 @@ class AsyncAudioNativeClient:
                     AudioNativeCreateProjectResponseModel,
                     construct_type(
                         type_=AudioNativeCreateProjectResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_settings(
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetAudioNativeProjectSettingsResponseModel:
+        """
+        Get player settings for the specific project.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetAudioNativeProjectSettingsResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.audio_native.get_settings(
+                project_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/audio-native/{jsonable_encoder(project_id)}/settings",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetAudioNativeProjectSettingsResponseModel,
+                    construct_type(
+                        type_=GetAudioNativeProjectSettingsResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
