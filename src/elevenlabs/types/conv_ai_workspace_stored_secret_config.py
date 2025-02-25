@@ -2,18 +2,16 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .safety_evaluation import SafetyEvaluation
+from .conv_ai_stored_secret_dependencies import ConvAiStoredSecretDependencies
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
-class Safety(UncheckedBaseModel):
-    """
-    Safety object that has the information of safety evaluations based on used voice.
-    """
-
-    ivc: typing.Optional[SafetyEvaluation] = None
-    non_ivc: typing.Optional[SafetyEvaluation] = None
+class ConvAiWorkspaceStoredSecretConfig(UncheckedBaseModel):
+    type: typing.Literal["stored"] = "stored"
+    secret_id: str
+    name: str
+    used_by: ConvAiStoredSecretDependencies
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -10,6 +10,7 @@ import pydantic
 class ConversationInitiationClientDataConfig(UncheckedBaseModel):
     conversation_config_override: typing.Optional[ConversationConfigClientOverrideConfig] = None
     custom_llm_extra_body: typing.Optional[bool] = None
+    enable_conversation_initiation_client_data_from_webhook: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

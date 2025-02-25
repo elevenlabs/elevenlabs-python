@@ -5,9 +5,17 @@ from .body_patches_an_agent_settings_v_1_convai_agents_agent_id_patch_secrets_it
     BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchSecretsItem_New,
     BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchSecretsItem_Stored,
 )
+from .patch_convai_settings_request_secrets_item import (
+    PatchConvaiSettingsRequestSecretsItem,
+    PatchConvaiSettingsRequestSecretsItem_New,
+    PatchConvaiSettingsRequestSecretsItem_Stored,
+)
 
 __all__ = [
     "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchSecretsItem",
     "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchSecretsItem_New",
     "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchSecretsItem_Stored",
+    "PatchConvaiSettingsRequestSecretsItem",
+    "PatchConvaiSettingsRequestSecretsItem_New",
+    "PatchConvaiSettingsRequestSecretsItem_Stored",
 ]

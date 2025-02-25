@@ -19,13 +19,14 @@ from ..core.api_error import ApiError
 from .types.body_text_to_speech_with_timestamps_v_1_text_to_speech_voice_id_with_timestamps_post_apply_text_normalization import (
     BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization,
 )
+from ..types.audio_with_timestamps_response_model import AudioWithTimestampsResponseModel
 from .types.body_text_to_speech_streaming_v_1_text_to_speech_voice_id_stream_post_apply_text_normalization import (
     BodyTextToSpeechStreamingV1TextToSpeechVoiceIdStreamPostApplyTextNormalization,
 )
 from .types.body_text_to_speech_streaming_with_timestamps_v_1_text_to_speech_voice_id_stream_with_timestamps_post_apply_text_normalization import (
     BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization,
 )
-from .types.text_to_speech_stream_with_timestamps_response import TextToSpeechStreamWithTimestampsResponse
+from ..types.streaming_audio_chunk_with_timestamps_response_model import StreamingAudioChunkWithTimestampsResponseModel
 import json
 from ..core.client_wrapper import AsyncClientWrapper
 
@@ -105,16 +106,16 @@ class TextToSpeechClient:
             If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
 
         previous_text : typing.Optional[str]
-            The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+            The text that came before the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
 
         next_text : typing.Optional[str]
-            The text that comes after the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+            The text that comes after the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
 
         previous_request_ids : typing.Optional[typing.Sequence[str]]
-            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+            A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
 
         next_request_ids : typing.Optional[typing.Sequence[str]]
-            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+            A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
 
         use_pvc_as_ivc : typing.Optional[bool]
             If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
@@ -128,7 +129,7 @@ class TextToSpeechClient:
         Yields
         ------
         typing.Iterator[bytes]
-            Successful Response
+            The generated audio file
 
         Examples
         --------
@@ -224,9 +225,9 @@ class TextToSpeechClient:
             BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization
         ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Optional[typing.Any]:
+    ) -> AudioWithTimestampsResponseModel:
         """
-        Converts text into speech using a voice of your choice and returns JSON containing audio as a base64 encoded string together with information on when which character was spoken.
+        Generate speech from text with precise character-level timing information for audio-text synchronization.
 
         Parameters
         ----------
@@ -268,16 +269,16 @@ class TextToSpeechClient:
             If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
 
         previous_text : typing.Optional[str]
-            The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+            The text that came before the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
 
         next_text : typing.Optional[str]
-            The text that comes after the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+            The text that comes after the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
 
         previous_request_ids : typing.Optional[typing.Sequence[str]]
-            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+            A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
 
         next_request_ids : typing.Optional[typing.Sequence[str]]
-            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+            A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
 
         use_pvc_as_ivc : typing.Optional[bool]
             If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
@@ -290,7 +291,7 @@ class TextToSpeechClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        AudioWithTimestampsResponseModel
             Successful Response
 
         Examples
@@ -301,10 +302,8 @@ class TextToSpeechClient:
             api_key="YOUR_API_KEY",
         )
         client.text_to_speech.convert_with_timestamps(
-            voice_id="JBFqnCBsd6RMkjVDRZzb",
-            output_format="mp3_44100_128",
-            text="The first move is what sets everything in motion.",
-            model_id="eleven_multilingual_v2",
+            voice_id="21m00Tcm4TlvDq8ikWAM",
+            text="This is a test for the API of ElevenLabs.",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -344,9 +343,9 @@ class TextToSpeechClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    AudioWithTimestampsResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=AudioWithTimestampsResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -433,16 +432,16 @@ class TextToSpeechClient:
             If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
 
         previous_text : typing.Optional[str]
-            The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+            The text that came before the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
 
         next_text : typing.Optional[str]
-            The text that comes after the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+            The text that comes after the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
 
         previous_request_ids : typing.Optional[typing.Sequence[str]]
-            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+            A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
 
         next_request_ids : typing.Optional[typing.Sequence[str]]
-            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+            A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
 
         use_pvc_as_ivc : typing.Optional[bool]
             If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
@@ -456,7 +455,7 @@ class TextToSpeechClient:
         Yields
         ------
         typing.Iterator[bytes]
-            Successful Response
+            Streaming audio data
 
         Examples
         --------
@@ -552,7 +551,7 @@ class TextToSpeechClient:
             BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization
         ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Iterator[TextToSpeechStreamWithTimestampsResponse]:
+    ) -> typing.Iterator[StreamingAudioChunkWithTimestampsResponseModel]:
         """
         Converts text into speech using a voice of your choice and returns a stream of JSONs containing audio as a base64 encoded string together with information on when which character was spoken.
 
@@ -596,16 +595,16 @@ class TextToSpeechClient:
             If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
 
         previous_text : typing.Optional[str]
-            The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+            The text that came before the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
 
         next_text : typing.Optional[str]
-            The text that comes after the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+            The text that comes after the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
 
         previous_request_ids : typing.Optional[typing.Sequence[str]]
-            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+            A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
 
         next_request_ids : typing.Optional[typing.Sequence[str]]
-            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+            A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
 
         use_pvc_as_ivc : typing.Optional[bool]
             If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
@@ -618,7 +617,7 @@ class TextToSpeechClient:
 
         Yields
         ------
-        typing.Iterator[TextToSpeechStreamWithTimestampsResponse]
+        typing.Iterator[StreamingAudioChunkWithTimestampsResponseModel]
             Stream of JSON objects containing audio chunks and character timing information
 
         Examples
@@ -678,9 +677,9 @@ class TextToSpeechClient:
                             if len(_text) == 0:
                                 continue
                             yield typing.cast(
-                                TextToSpeechStreamWithTimestampsResponse,
+                                StreamingAudioChunkWithTimestampsResponseModel,
                                 construct_type(
-                                    type_=TextToSpeechStreamWithTimestampsResponse,  # type: ignore
+                                    type_=StreamingAudioChunkWithTimestampsResponseModel,  # type: ignore
                                     object_=json.loads(_text),
                                 ),
                             )
@@ -776,16 +775,16 @@ class AsyncTextToSpeechClient:
             If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
 
         previous_text : typing.Optional[str]
-            The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+            The text that came before the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
 
         next_text : typing.Optional[str]
-            The text that comes after the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+            The text that comes after the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
 
         previous_request_ids : typing.Optional[typing.Sequence[str]]
-            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+            A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
 
         next_request_ids : typing.Optional[typing.Sequence[str]]
-            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+            A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
 
         use_pvc_as_ivc : typing.Optional[bool]
             If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
@@ -799,7 +798,7 @@ class AsyncTextToSpeechClient:
         Yields
         ------
         typing.AsyncIterator[bytes]
-            Successful Response
+            The generated audio file
 
         Examples
         --------
@@ -903,9 +902,9 @@ class AsyncTextToSpeechClient:
             BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization
         ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Optional[typing.Any]:
+    ) -> AudioWithTimestampsResponseModel:
         """
-        Converts text into speech using a voice of your choice and returns JSON containing audio as a base64 encoded string together with information on when which character was spoken.
+        Generate speech from text with precise character-level timing information for audio-text synchronization.
 
         Parameters
         ----------
@@ -947,16 +946,16 @@ class AsyncTextToSpeechClient:
             If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
 
         previous_text : typing.Optional[str]
-            The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+            The text that came before the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
 
         next_text : typing.Optional[str]
-            The text that comes after the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+            The text that comes after the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
 
         previous_request_ids : typing.Optional[typing.Sequence[str]]
-            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+            A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
 
         next_request_ids : typing.Optional[typing.Sequence[str]]
-            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+            A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
 
         use_pvc_as_ivc : typing.Optional[bool]
             If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
@@ -969,7 +968,7 @@ class AsyncTextToSpeechClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        AudioWithTimestampsResponseModel
             Successful Response
 
         Examples
@@ -985,10 +984,8 @@ class AsyncTextToSpeechClient:
 
         async def main() -> None:
             await client.text_to_speech.convert_with_timestamps(
-                voice_id="JBFqnCBsd6RMkjVDRZzb",
-                output_format="mp3_44100_128",
-                text="The first move is what sets everything in motion.",
-                model_id="eleven_multilingual_v2",
+                voice_id="21m00Tcm4TlvDq8ikWAM",
+                text="This is a test for the API of ElevenLabs.",
             )
 
 
@@ -1031,9 +1028,9 @@ class AsyncTextToSpeechClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    AudioWithTimestampsResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=AudioWithTimestampsResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1120,16 +1117,16 @@ class AsyncTextToSpeechClient:
             If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
 
         previous_text : typing.Optional[str]
-            The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+            The text that came before the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
 
         next_text : typing.Optional[str]
-            The text that comes after the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+            The text that comes after the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
 
         previous_request_ids : typing.Optional[typing.Sequence[str]]
-            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+            A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
 
         next_request_ids : typing.Optional[typing.Sequence[str]]
-            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+            A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
 
         use_pvc_as_ivc : typing.Optional[bool]
             If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
@@ -1143,7 +1140,7 @@ class AsyncTextToSpeechClient:
         Yields
         ------
         typing.AsyncIterator[bytes]
-            Successful Response
+            Streaming audio data
 
         Examples
         --------
@@ -1247,7 +1244,7 @@ class AsyncTextToSpeechClient:
             BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization
         ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.AsyncIterator[TextToSpeechStreamWithTimestampsResponse]:
+    ) -> typing.AsyncIterator[StreamingAudioChunkWithTimestampsResponseModel]:
         """
         Converts text into speech using a voice of your choice and returns a stream of JSONs containing audio as a base64 encoded string together with information on when which character was spoken.
 
@@ -1291,16 +1288,16 @@ class AsyncTextToSpeechClient:
             If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
 
         previous_text : typing.Optional[str]
-            The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+            The text that came before the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
 
         next_text : typing.Optional[str]
-            The text that comes after the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+            The text that comes after the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
 
         previous_request_ids : typing.Optional[typing.Sequence[str]]
-            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+            A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
 
         next_request_ids : typing.Optional[typing.Sequence[str]]
-            A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+            A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
 
         use_pvc_as_ivc : typing.Optional[bool]
             If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
@@ -1313,7 +1310,7 @@ class AsyncTextToSpeechClient:
 
         Yields
         ------
-        typing.AsyncIterator[TextToSpeechStreamWithTimestampsResponse]
+        typing.AsyncIterator[StreamingAudioChunkWithTimestampsResponseModel]
             Stream of JSON objects containing audio chunks and character timing information
 
         Examples
@@ -1381,9 +1378,9 @@ class AsyncTextToSpeechClient:
                             if len(_text) == 0:
                                 continue
                             yield typing.cast(
-                                TextToSpeechStreamWithTimestampsResponse,
+                                StreamingAudioChunkWithTimestampsResponseModel,
                                 construct_type(
-                                    type_=TextToSpeechStreamWithTimestampsResponse,  # type: ignore
+                                    type_=StreamingAudioChunkWithTimestampsResponseModel,  # type: ignore
                                     object_=json.loads(_text),
                                 ),
                             )

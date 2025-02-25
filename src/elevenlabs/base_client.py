@@ -25,6 +25,18 @@ from .pronunciation_dictionary.client import PronunciationDictionaryClient
 from .workspace.client import WorkspaceClient
 from .speech_to_text.client import SpeechToTextClient
 from .conversational_ai.client import ConversationalAiClient
+from .core.request_options import RequestOptions
+from .core.jsonable_encoder import jsonable_encoder
+from .core.unchecked_base_model import construct_type
+from .errors.unprocessable_entity_error import UnprocessableEntityError
+from .types.http_validation_error import HttpValidationError
+from json.decoder import JSONDecodeError
+from .core.api_error import ApiError
+from .types.tag_model import TagModel
+from .core.serialization import convert_and_respect_annotation_metadata
+from .types.paginated_listed_review_task_instance_model import PaginatedListedReviewTaskInstanceModel
+from .types.quote_request_model import QuoteRequestModel
+from .types.quote_response_model import QuoteResponseModel
 from .core.client_wrapper import AsyncClientWrapper
 from .history.client import AsyncHistoryClient
 from .text_to_sound_effects.client import AsyncTextToSoundEffectsClient
@@ -46,6 +58,9 @@ from .pronunciation_dictionary.client import AsyncPronunciationDictionaryClient
 from .workspace.client import AsyncWorkspaceClient
 from .speech_to_text.client import AsyncSpeechToTextClient
 from .conversational_ai.client import AsyncConversationalAiClient
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class BaseElevenLabs:
@@ -127,6 +142,354 @@ class BaseElevenLabs:
         self.speech_to_text = SpeechToTextClient(client_wrapper=self._client_wrapper)
         self.conversational_ai = ConversationalAiClient(client_wrapper=self._client_wrapper)
 
+    def claim_a_task_v_1_speech_to_text_reviews_tasks_task_id_claim_post(
+        self, task_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Optional[typing.Any]:
+        """
+        Parameters
+        ----------
+        task_id : str
+            The ID task to claim.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.claim_a_task_v_1_speech_to_text_reviews_tasks_task_id_claim_post(
+            task_id="task_id",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/speech-to-text/reviews/tasks/{jsonable_encoder(task_id)}/claim",
+            method="POST",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def submit_a_completed_task_v_1_speech_to_text_reviews_producers_user_id_tasks_task_id_submit_put(
+        self, user_id: str, task_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Optional[typing.Any]:
+        """
+        Parameters
+        ----------
+        user_id : str
+
+        task_id : str
+            The ID task review to claim.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.submit_a_completed_task_v_1_speech_to_text_reviews_producers_user_id_tasks_task_id_submit_put(
+            user_id="user_id",
+            task_id="task_id",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/speech-to-text/reviews/producers/{jsonable_encoder(user_id)}/tasks/{jsonable_encoder(task_id)}/submit",
+            method="PUT",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def list_unclaimed_reviews_v_1_speech_to_text_reviews_tasks_post(
+        self,
+        *,
+        tags: typing.Sequence[typing.Sequence[TagModel]],
+        page_size: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        unclaimed_only: typing.Optional[bool] = OMIT,
+        include_instances: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Optional[typing.Any]:
+        """
+        Parameters
+        ----------
+        tags : typing.Sequence[typing.Sequence[TagModel]]
+
+        page_size : typing.Optional[int]
+            The number of tasks to return per page.
+
+        cursor : typing.Optional[str]
+            Cursor for pagination, using the cursor from the previous page.
+
+        unclaimed_only : typing.Optional[bool]
+
+        include_instances : typing.Optional[bool]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs, TagModel
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.list_unclaimed_reviews_v_1_speech_to_text_reviews_tasks_post(
+            tags=[
+                [
+                    TagModel(
+                        kind="lang",
+                        value="value",
+                    )
+                ]
+            ],
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/speech-to-text/reviews/tasks",
+            method="POST",
+            params={
+                "page_size": page_size,
+                "cursor": cursor,
+            },
+            json={
+                "tags": convert_and_respect_annotation_metadata(
+                    object_=tags, annotation=typing.Sequence[typing.Sequence[TagModel]], direction="write"
+                ),
+                "unclaimed_only": unclaimed_only,
+                "include_instances": include_instances,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def list_tasks_instances_for_a_user_v_1_speech_to_text_reviews_producers_user_id_tasks_get(
+        self,
+        user_id: str,
+        *,
+        page_size: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PaginatedListedReviewTaskInstanceModel:
+        """
+        Parameters
+        ----------
+        user_id : str
+
+        page_size : typing.Optional[int]
+            The number of tasks to return per page.
+
+        cursor : typing.Optional[str]
+            Cursor for pagination, using the cursor from the previous page.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PaginatedListedReviewTaskInstanceModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.list_tasks_instances_for_a_user_v_1_speech_to_text_reviews_producers_user_id_tasks_get(
+            user_id="user_id",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/speech-to-text/reviews/producers/{jsonable_encoder(user_id)}/tasks",
+            method="GET",
+            params={
+                "page_size": page_size,
+                "cursor": cursor,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    PaginatedListedReviewTaskInstanceModel,
+                    construct_type(
+                        type_=PaginatedListedReviewTaskInstanceModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def compute_a_quote_for_a_asr_transcription_review_task_v_1_speech_to_text_reviews_get_quote_post(
+        self, *, request: QuoteRequestModel, request_options: typing.Optional[RequestOptions] = None
+    ) -> QuoteResponseModel:
+        """
+        Parameters
+        ----------
+        request : QuoteRequestModel
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        QuoteResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs, QuoteRequestModel
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.compute_a_quote_for_a_asr_transcription_review_task_v_1_speech_to_text_reviews_get_quote_post(
+            request=QuoteRequestModel(
+                content_hash="content_hash",
+                duration_s=1.1,
+                speaker_count=1,
+                language="language",
+            ),
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/speech-to-text/reviews/get-quote",
+            method="POST",
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=QuoteRequestModel, direction="write"
+            ),
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    QuoteResponseModel,
+                    construct_type(
+                        type_=QuoteResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
 
 class AsyncBaseElevenLabs:
     """
@@ -206,6 +569,394 @@ class AsyncBaseElevenLabs:
         self.workspace = AsyncWorkspaceClient(client_wrapper=self._client_wrapper)
         self.speech_to_text = AsyncSpeechToTextClient(client_wrapper=self._client_wrapper)
         self.conversational_ai = AsyncConversationalAiClient(client_wrapper=self._client_wrapper)
+
+    async def claim_a_task_v_1_speech_to_text_reviews_tasks_task_id_claim_post(
+        self, task_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Optional[typing.Any]:
+        """
+        Parameters
+        ----------
+        task_id : str
+            The ID task to claim.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.claim_a_task_v_1_speech_to_text_reviews_tasks_task_id_claim_post(
+                task_id="task_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/speech-to-text/reviews/tasks/{jsonable_encoder(task_id)}/claim",
+            method="POST",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def submit_a_completed_task_v_1_speech_to_text_reviews_producers_user_id_tasks_task_id_submit_put(
+        self, user_id: str, task_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Optional[typing.Any]:
+        """
+        Parameters
+        ----------
+        user_id : str
+
+        task_id : str
+            The ID task review to claim.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.submit_a_completed_task_v_1_speech_to_text_reviews_producers_user_id_tasks_task_id_submit_put(
+                user_id="user_id",
+                task_id="task_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/speech-to-text/reviews/producers/{jsonable_encoder(user_id)}/tasks/{jsonable_encoder(task_id)}/submit",
+            method="PUT",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def list_unclaimed_reviews_v_1_speech_to_text_reviews_tasks_post(
+        self,
+        *,
+        tags: typing.Sequence[typing.Sequence[TagModel]],
+        page_size: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        unclaimed_only: typing.Optional[bool] = OMIT,
+        include_instances: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Optional[typing.Any]:
+        """
+        Parameters
+        ----------
+        tags : typing.Sequence[typing.Sequence[TagModel]]
+
+        page_size : typing.Optional[int]
+            The number of tasks to return per page.
+
+        cursor : typing.Optional[str]
+            Cursor for pagination, using the cursor from the previous page.
+
+        unclaimed_only : typing.Optional[bool]
+
+        include_instances : typing.Optional[bool]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs, TagModel
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.list_unclaimed_reviews_v_1_speech_to_text_reviews_tasks_post(
+                tags=[
+                    [
+                        TagModel(
+                            kind="lang",
+                            value="value",
+                        )
+                    ]
+                ],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/speech-to-text/reviews/tasks",
+            method="POST",
+            params={
+                "page_size": page_size,
+                "cursor": cursor,
+            },
+            json={
+                "tags": convert_and_respect_annotation_metadata(
+                    object_=tags, annotation=typing.Sequence[typing.Sequence[TagModel]], direction="write"
+                ),
+                "unclaimed_only": unclaimed_only,
+                "include_instances": include_instances,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def list_tasks_instances_for_a_user_v_1_speech_to_text_reviews_producers_user_id_tasks_get(
+        self,
+        user_id: str,
+        *,
+        page_size: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PaginatedListedReviewTaskInstanceModel:
+        """
+        Parameters
+        ----------
+        user_id : str
+
+        page_size : typing.Optional[int]
+            The number of tasks to return per page.
+
+        cursor : typing.Optional[str]
+            Cursor for pagination, using the cursor from the previous page.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PaginatedListedReviewTaskInstanceModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.list_tasks_instances_for_a_user_v_1_speech_to_text_reviews_producers_user_id_tasks_get(
+                user_id="user_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/speech-to-text/reviews/producers/{jsonable_encoder(user_id)}/tasks",
+            method="GET",
+            params={
+                "page_size": page_size,
+                "cursor": cursor,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    PaginatedListedReviewTaskInstanceModel,
+                    construct_type(
+                        type_=PaginatedListedReviewTaskInstanceModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def compute_a_quote_for_a_asr_transcription_review_task_v_1_speech_to_text_reviews_get_quote_post(
+        self, *, request: QuoteRequestModel, request_options: typing.Optional[RequestOptions] = None
+    ) -> QuoteResponseModel:
+        """
+        Parameters
+        ----------
+        request : QuoteRequestModel
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        QuoteResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs, QuoteRequestModel
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.compute_a_quote_for_a_asr_transcription_review_task_v_1_speech_to_text_reviews_get_quote_post(
+                request=QuoteRequestModel(
+                    content_hash="content_hash",
+                    duration_s=1.1,
+                    speaker_count=1,
+                    language="language",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/speech-to-text/reviews/get-quote",
+            method="POST",
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=QuoteRequestModel, direction="write"
+            ),
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    QuoteResponseModel,
+                    construct_type(
+                        type_=QuoteResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
 def _get_base_url(*, base_url: typing.Optional[str] = None, environment: ElevenLabsEnvironment) -> str:
