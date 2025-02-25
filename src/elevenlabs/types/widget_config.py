@@ -3,14 +3,16 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 from .embed_variant import EmbedVariant
+from .widget_expandable import WidgetExpandable
 from .widget_config_avatar import WidgetConfigAvatar
 from .widget_feedback_mode import WidgetFeedbackMode
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class WidgetConfig(UncheckedBaseModel):
     variant: typing.Optional[EmbedVariant] = None
+    expandable: typing.Optional[WidgetExpandable] = None
     avatar: typing.Optional[WidgetConfigAvatar] = None
     feedback_mode: typing.Optional[WidgetFeedbackMode] = None
     bg_color: typing.Optional[str] = None
@@ -31,6 +33,12 @@ class WidgetConfig(UncheckedBaseModel):
     terms_text: typing.Optional[str] = None
     terms_html: typing.Optional[str] = None
     terms_key: typing.Optional[str] = None
+    show_avatar_when_collapsed: typing.Optional[bool] = None
+    disable_banner: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to disable the ConvAI widget banner
+    """
+
     language_selector: typing.Optional[bool] = None
     custom_avatar_path: typing.Optional[str] = None
 

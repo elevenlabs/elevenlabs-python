@@ -3,6 +3,7 @@
 import typing
 from ..core.client_wrapper import SyncClientWrapper
 from .. import core
+from .types.speech_to_text_convert_request_timestamps_granularity import SpeechToTextConvertRequestTimestampsGranularity
 from ..core.request_options import RequestOptions
 from ..types.speech_to_text_chunk_response_model import SpeechToTextChunkResponseModel
 from ..core.unchecked_base_model import construct_type
@@ -10,9 +11,6 @@ from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.http_validation_error import HttpValidationError
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from ..types.speech_to_text_stream_response_model import SpeechToTextStreamResponseModel
-import json
-from ..errors.bad_request_error import BadRequestError
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -27,10 +25,12 @@ class SpeechToTextClient:
         self,
         *,
         model_id: str,
-        file: typing.Optional[core.File] = OMIT,
+        file: core.File,
         language_code: typing.Optional[str] = OMIT,
         tag_audio_events: typing.Optional[bool] = OMIT,
         num_speakers: typing.Optional[int] = OMIT,
+        timestamps_granularity: typing.Optional[SpeechToTextConvertRequestTimestampsGranularity] = OMIT,
+        diarize: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SpeechToTextChunkResponseModel:
         """
@@ -41,7 +41,7 @@ class SpeechToTextClient:
         model_id : str
             The ID of the model to use for transcription, currently only 'scribe_v1' is available.
 
-        file : typing.Optional[core.File]
+        file : core.File
             See core.File for more documentation
 
         language_code : typing.Optional[str]
@@ -51,7 +51,13 @@ class SpeechToTextClient:
             Whether to tag audio events like (laughter), (footsteps), etc. in the transcription.
 
         num_speakers : typing.Optional[int]
-            The maximum amount of speakers talking in the uploaded file. Can help with predicting who speaks when. The maximum amount of speakers that can be predicted is 31. Defaults to null, in this case the amount of speakers is set to the maximum value the model supports.
+            The maximum amount of speakers talking in the uploaded file. Can help with predicting who speaks when. The maximum amount of speakers that can be predicted is 32. Defaults to null, in this case the amount of speakers is set to the maximum value the model supports.
+
+        timestamps_granularity : typing.Optional[SpeechToTextConvertRequestTimestampsGranularity]
+            The granularity of the timestamps in the transcription. 'word' provides word-level timestamps and 'character' provides character-level timestamps per word.
+
+        diarize : typing.Optional[bool]
+            Whether to annotate which speaker is currently talking in the uploaded file. Enabling this will limit the maximum duration of your inputs to 8 minutes.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -80,6 +86,8 @@ class SpeechToTextClient:
                 "language_code": language_code,
                 "tag_audio_events": tag_audio_events,
                 "num_speakers": num_speakers,
+                "timestamps_granularity": timestamps_granularity,
+                "diarize": diarize,
             },
             files={
                 "file": file,
@@ -111,114 +119,6 @@ class SpeechToTextClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def convert_as_stream(
-        self,
-        *,
-        model_id: str,
-        file: typing.Optional[core.File] = OMIT,
-        language_code: typing.Optional[str] = OMIT,
-        tag_audio_events: typing.Optional[bool] = OMIT,
-        num_speakers: typing.Optional[int] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Iterator[SpeechToTextStreamResponseModel]:
-        """
-        Transcribe an audio or video file with streaming response. Returns chunks of transcription as they become available, with each chunk separated by double newlines (\n\n).
-
-        Parameters
-        ----------
-        model_id : str
-            The ID of the model to use for transcription, currently only 'scribe_v1' is available.
-
-        file : typing.Optional[core.File]
-            See core.File for more documentation
-
-        language_code : typing.Optional[str]
-            An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand. Defaults to null, in this case the language is predicted automatically.
-
-        tag_audio_events : typing.Optional[bool]
-            Whether to tag audio events like (laughter), (footsteps), etc. in the transcription.
-
-        num_speakers : typing.Optional[int]
-            The maximum amount of speakers talking in the uploaded file. Can help with predicting who speaks when. The maximum amount of speakers that can be predicted is 31. Defaults to null, in this case the amount of speakers is set to the maximum value the model supports.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Yields
-        ------
-        typing.Iterator[SpeechToTextStreamResponseModel]
-            Stream of transcription chunks
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        response = client.speech_to_text.convert_as_stream(
-            model_id="model_id",
-        )
-        for chunk in response:
-            yield chunk
-        """
-        with self._client_wrapper.httpx_client.stream(
-            "v1/speech-to-text/stream",
-            method="POST",
-            data={
-                "model_id": model_id,
-                "language_code": language_code,
-                "tag_audio_events": tag_audio_events,
-                "num_speakers": num_speakers,
-            },
-            files={
-                "file": file,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        ) as _response:
-            try:
-                if 200 <= _response.status_code < 300:
-                    for _text in _response.iter_lines():
-                        try:
-                            if len(_text) == 0:
-                                continue
-                            yield typing.cast(
-                                SpeechToTextStreamResponseModel,
-                                construct_type(
-                                    type_=SpeechToTextStreamResponseModel,  # type: ignore
-                                    object_=json.loads(_text),
-                                ),
-                            )
-                        except:
-                            pass
-                    return
-                _response.read()
-                if _response.status_code == 400:
-                    raise BadRequestError(
-                        typing.cast(
-                            typing.Optional[typing.Any],
-                            construct_type(
-                                type_=typing.Optional[typing.Any],  # type: ignore
-                                object_=_response.json(),
-                            ),
-                        )
-                    )
-                if _response.status_code == 422:
-                    raise UnprocessableEntityError(
-                        typing.cast(
-                            HttpValidationError,
-                            construct_type(
-                                type_=HttpValidationError,  # type: ignore
-                                object_=_response.json(),
-                            ),
-                        )
-                    )
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
-
 
 class AsyncSpeechToTextClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -228,10 +128,12 @@ class AsyncSpeechToTextClient:
         self,
         *,
         model_id: str,
-        file: typing.Optional[core.File] = OMIT,
+        file: core.File,
         language_code: typing.Optional[str] = OMIT,
         tag_audio_events: typing.Optional[bool] = OMIT,
         num_speakers: typing.Optional[int] = OMIT,
+        timestamps_granularity: typing.Optional[SpeechToTextConvertRequestTimestampsGranularity] = OMIT,
+        diarize: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SpeechToTextChunkResponseModel:
         """
@@ -242,7 +144,7 @@ class AsyncSpeechToTextClient:
         model_id : str
             The ID of the model to use for transcription, currently only 'scribe_v1' is available.
 
-        file : typing.Optional[core.File]
+        file : core.File
             See core.File for more documentation
 
         language_code : typing.Optional[str]
@@ -252,7 +154,13 @@ class AsyncSpeechToTextClient:
             Whether to tag audio events like (laughter), (footsteps), etc. in the transcription.
 
         num_speakers : typing.Optional[int]
-            The maximum amount of speakers talking in the uploaded file. Can help with predicting who speaks when. The maximum amount of speakers that can be predicted is 31. Defaults to null, in this case the amount of speakers is set to the maximum value the model supports.
+            The maximum amount of speakers talking in the uploaded file. Can help with predicting who speaks when. The maximum amount of speakers that can be predicted is 32. Defaults to null, in this case the amount of speakers is set to the maximum value the model supports.
+
+        timestamps_granularity : typing.Optional[SpeechToTextConvertRequestTimestampsGranularity]
+            The granularity of the timestamps in the transcription. 'word' provides word-level timestamps and 'character' provides character-level timestamps per word.
+
+        diarize : typing.Optional[bool]
+            Whether to annotate which speaker is currently talking in the uploaded file. Enabling this will limit the maximum duration of your inputs to 8 minutes.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -289,6 +197,8 @@ class AsyncSpeechToTextClient:
                 "language_code": language_code,
                 "tag_audio_events": tag_audio_events,
                 "num_speakers": num_speakers,
+                "timestamps_granularity": timestamps_granularity,
+                "diarize": diarize,
             },
             files={
                 "file": file,
@@ -319,119 +229,3 @@ class AsyncSpeechToTextClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def convert_as_stream(
-        self,
-        *,
-        model_id: str,
-        file: typing.Optional[core.File] = OMIT,
-        language_code: typing.Optional[str] = OMIT,
-        tag_audio_events: typing.Optional[bool] = OMIT,
-        num_speakers: typing.Optional[int] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.AsyncIterator[SpeechToTextStreamResponseModel]:
-        """
-        Transcribe an audio or video file with streaming response. Returns chunks of transcription as they become available, with each chunk separated by double newlines (\n\n).
-
-        Parameters
-        ----------
-        model_id : str
-            The ID of the model to use for transcription, currently only 'scribe_v1' is available.
-
-        file : typing.Optional[core.File]
-            See core.File for more documentation
-
-        language_code : typing.Optional[str]
-            An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand. Defaults to null, in this case the language is predicted automatically.
-
-        tag_audio_events : typing.Optional[bool]
-            Whether to tag audio events like (laughter), (footsteps), etc. in the transcription.
-
-        num_speakers : typing.Optional[int]
-            The maximum amount of speakers talking in the uploaded file. Can help with predicting who speaks when. The maximum amount of speakers that can be predicted is 31. Defaults to null, in this case the amount of speakers is set to the maximum value the model supports.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Yields
-        ------
-        typing.AsyncIterator[SpeechToTextStreamResponseModel]
-            Stream of transcription chunks
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            response = await client.speech_to_text.convert_as_stream(
-                model_id="model_id",
-            )
-            async for chunk in response:
-                yield chunk
-
-
-        asyncio.run(main())
-        """
-        async with self._client_wrapper.httpx_client.stream(
-            "v1/speech-to-text/stream",
-            method="POST",
-            data={
-                "model_id": model_id,
-                "language_code": language_code,
-                "tag_audio_events": tag_audio_events,
-                "num_speakers": num_speakers,
-            },
-            files={
-                "file": file,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        ) as _response:
-            try:
-                if 200 <= _response.status_code < 300:
-                    async for _text in _response.aiter_lines():
-                        try:
-                            if len(_text) == 0:
-                                continue
-                            yield typing.cast(
-                                SpeechToTextStreamResponseModel,
-                                construct_type(
-                                    type_=SpeechToTextStreamResponseModel,  # type: ignore
-                                    object_=json.loads(_text),
-                                ),
-                            )
-                        except:
-                            pass
-                    return
-                await _response.aread()
-                if _response.status_code == 400:
-                    raise BadRequestError(
-                        typing.cast(
-                            typing.Optional[typing.Any],
-                            construct_type(
-                                type_=typing.Optional[typing.Any],  # type: ignore
-                                object_=_response.json(),
-                            ),
-                        )
-                    )
-                if _response.status_code == 422:
-                    raise UnprocessableEntityError(
-                        typing.cast(
-                            HttpValidationError,
-                            construct_type(
-                                type_=HttpValidationError,  # type: ignore
-                                object_=_response.json(),
-                            ),
-                        )
-                    )
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)

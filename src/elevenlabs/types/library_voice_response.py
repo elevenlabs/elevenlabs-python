@@ -5,6 +5,7 @@ from .library_voice_response_model_category import LibraryVoiceResponseModelCate
 import typing_extensions
 from ..core.serialization import FieldMetadata
 import typing
+from .verified_voice_language_response_model import VerifiedVoiceLanguageResponseModel
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
@@ -33,12 +34,14 @@ class LibraryVoiceResponse(UncheckedBaseModel):
     free_users_allowed: bool
     live_moderation_enabled: bool
     featured: bool
+    verified_languages: typing.Optional[typing.List[VerifiedVoiceLanguageResponseModel]] = None
     notice_period: typing.Optional[int] = None
     instagram_username: typing.Optional[str] = None
     twitter_username: typing.Optional[str] = None
     youtube_username: typing.Optional[str] = None
     tiktok_username: typing.Optional[str] = None
     image_url: typing.Optional[str] = None
+    is_added_by_user: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

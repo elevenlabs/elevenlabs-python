@@ -36,7 +36,7 @@ class SpeechToSpeechClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
-        Create speech by combining the content and emotion of the uploaded audio with a voice of your choice.
+        Transform audio from one voice to another. Maintain full control over emotion, timing and delivery.
 
         Parameters
         ----------
@@ -80,7 +80,7 @@ class SpeechToSpeechClient:
         Yields
         ------
         typing.Iterator[bytes]
-            Successful Response
+            The generated audio file
 
         Examples
         --------
@@ -152,7 +152,7 @@ class SpeechToSpeechClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
-        Create speech by combining the content and emotion of the uploaded audio with a voice of your choice and returns an audio stream.
+        Stream audio from one voice to another. Maintain full control over emotion, timing and delivery.
 
         Parameters
         ----------
@@ -196,7 +196,7 @@ class SpeechToSpeechClient:
         Yields
         ------
         typing.Iterator[bytes]
-            Successful Response
+            Streaming audio data
 
         Examples
         --------
@@ -273,7 +273,7 @@ class AsyncSpeechToSpeechClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
-        Create speech by combining the content and emotion of the uploaded audio with a voice of your choice.
+        Transform audio from one voice to another. Maintain full control over emotion, timing and delivery.
 
         Parameters
         ----------
@@ -317,7 +317,7 @@ class AsyncSpeechToSpeechClient:
         Yields
         ------
         typing.AsyncIterator[bytes]
-            Successful Response
+            The generated audio file
 
         Examples
         --------
@@ -397,7 +397,7 @@ class AsyncSpeechToSpeechClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
-        Create speech by combining the content and emotion of the uploaded audio with a voice of your choice and returns an audio stream.
+        Stream audio from one voice to another. Maintain full control over emotion, timing and delivery.
 
         Parameters
         ----------
@@ -441,7 +441,7 @@ class AsyncSpeechToSpeechClient:
         Yields
         ------
         typing.AsyncIterator[bytes]
-            Successful Response
+            Streaming audio data
 
         Examples
         --------

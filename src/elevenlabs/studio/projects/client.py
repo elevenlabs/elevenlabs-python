@@ -107,7 +107,6 @@ class ProjectsClient:
         pronunciation_dictionary_locators: typing.Optional[typing.List[str]] = OMIT,
         callback_url: typing.Optional[str] = OMIT,
         fiction: typing.Optional[ProjectsAddRequestFiction] = OMIT,
-        quality_check_on: typing.Optional[bool] = OMIT,
         apply_text_normalization: typing.Optional[ProjectsAddRequestApplyTextNormalization] = OMIT,
         auto_convert: typing.Optional[bool] = OMIT,
         auto_assign_voices: typing.Optional[bool] = OMIT,
@@ -189,9 +188,6 @@ class ProjectsClient:
         fiction : typing.Optional[ProjectsAddRequestFiction]
             An optional specification of whether the content of this Studio project is fiction.
 
-        quality_check_on : typing.Optional[bool]
-            [Depracated] Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
-
         apply_text_normalization : typing.Optional[ProjectsAddRequestApplyTextNormalization]
 
                 This parameter controls text normalization with four modes: 'auto', 'on', 'apply_english' and 'off'.
@@ -253,7 +249,6 @@ class ProjectsClient:
                 "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
                 "callback_url": callback_url,
                 "fiction": fiction,
-                "quality_check_on": quality_check_on,
                 "apply_text_normalization": apply_text_normalization,
                 "auto_convert": auto_convert,
                 "auto_assign_voices": auto_assign_voices,
@@ -358,7 +353,6 @@ class ProjectsClient:
         author: typing.Optional[str] = OMIT,
         isbn_number: typing.Optional[str] = OMIT,
         volume_normalization: typing.Optional[bool] = OMIT,
-        quality_check_on: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EditProjectResponseModel:
         """
@@ -390,9 +384,6 @@ class ProjectsClient:
         volume_normalization : typing.Optional[bool]
             When the Studio project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
 
-        quality_check_on : typing.Optional[bool]
-            [Depracated] Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -410,9 +401,9 @@ class ProjectsClient:
         )
         client.studio.projects.update_metadata(
             project_id="21m00Tcm4TlvDq8ikWAM",
-            name="name",
-            default_title_voice_id="default_title_voice_id",
-            default_paragraph_voice_id="default_paragraph_voice_id",
+            name="Project 1",
+            default_title_voice_id="21m00Tcm4TlvDq8ikWAM",
+            default_paragraph_voice_id="21m00Tcm4TlvDq8ikWAM",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -426,7 +417,6 @@ class ProjectsClient:
                 "author": author,
                 "isbn_number": isbn_number,
                 "volume_normalization": volume_normalization,
-                "quality_check_on": quality_check_on,
             },
             headers={
                 "content-type": "application/json",
@@ -849,6 +839,7 @@ class ProjectsClient:
         project_id: str,
         *,
         pronunciation_dictionary_locators: typing.Sequence[PronunciationDictionaryVersionLocator],
+        invalidate_affected_text: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
@@ -861,6 +852,9 @@ class ProjectsClient:
 
         pronunciation_dictionary_locators : typing.Sequence[PronunciationDictionaryVersionLocator]
             A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text. A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
+
+        invalidate_affected_text : typing.Optional[bool]
+            This will automatically mark text in this project for reconversion when the new dictionary applies or the old one no longer does.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -896,6 +890,7 @@ class ProjectsClient:
                     annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
                     direction="write",
                 ),
+                "invalidate_affected_text": invalidate_affected_text,
             },
             headers={
                 "content-type": "application/json",
@@ -1017,7 +1012,6 @@ class AsyncProjectsClient:
         pronunciation_dictionary_locators: typing.Optional[typing.List[str]] = OMIT,
         callback_url: typing.Optional[str] = OMIT,
         fiction: typing.Optional[ProjectsAddRequestFiction] = OMIT,
-        quality_check_on: typing.Optional[bool] = OMIT,
         apply_text_normalization: typing.Optional[ProjectsAddRequestApplyTextNormalization] = OMIT,
         auto_convert: typing.Optional[bool] = OMIT,
         auto_assign_voices: typing.Optional[bool] = OMIT,
@@ -1099,9 +1093,6 @@ class AsyncProjectsClient:
         fiction : typing.Optional[ProjectsAddRequestFiction]
             An optional specification of whether the content of this Studio project is fiction.
 
-        quality_check_on : typing.Optional[bool]
-            [Depracated] Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
-
         apply_text_normalization : typing.Optional[ProjectsAddRequestApplyTextNormalization]
 
                 This parameter controls text normalization with four modes: 'auto', 'on', 'apply_english' and 'off'.
@@ -1171,7 +1162,6 @@ class AsyncProjectsClient:
                 "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
                 "callback_url": callback_url,
                 "fiction": fiction,
-                "quality_check_on": quality_check_on,
                 "apply_text_normalization": apply_text_normalization,
                 "auto_convert": auto_convert,
                 "auto_assign_voices": auto_assign_voices,
@@ -1284,7 +1274,6 @@ class AsyncProjectsClient:
         author: typing.Optional[str] = OMIT,
         isbn_number: typing.Optional[str] = OMIT,
         volume_normalization: typing.Optional[bool] = OMIT,
-        quality_check_on: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EditProjectResponseModel:
         """
@@ -1316,9 +1305,6 @@ class AsyncProjectsClient:
         volume_normalization : typing.Optional[bool]
             When the Studio project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
 
-        quality_check_on : typing.Optional[bool]
-            [Depracated] Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1341,9 +1327,9 @@ class AsyncProjectsClient:
         async def main() -> None:
             await client.studio.projects.update_metadata(
                 project_id="21m00Tcm4TlvDq8ikWAM",
-                name="name",
-                default_title_voice_id="default_title_voice_id",
-                default_paragraph_voice_id="default_paragraph_voice_id",
+                name="Project 1",
+                default_title_voice_id="21m00Tcm4TlvDq8ikWAM",
+                default_paragraph_voice_id="21m00Tcm4TlvDq8ikWAM",
             )
 
 
@@ -1360,7 +1346,6 @@ class AsyncProjectsClient:
                 "author": author,
                 "isbn_number": isbn_number,
                 "volume_normalization": volume_normalization,
-                "quality_check_on": quality_check_on,
             },
             headers={
                 "content-type": "application/json",
@@ -1831,6 +1816,7 @@ class AsyncProjectsClient:
         project_id: str,
         *,
         pronunciation_dictionary_locators: typing.Sequence[PronunciationDictionaryVersionLocator],
+        invalidate_affected_text: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
@@ -1843,6 +1829,9 @@ class AsyncProjectsClient:
 
         pronunciation_dictionary_locators : typing.Sequence[PronunciationDictionaryVersionLocator]
             A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text. A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
+
+        invalidate_affected_text : typing.Optional[bool]
+            This will automatically mark text in this project for reconversion when the new dictionary applies or the old one no longer does.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1886,6 +1875,7 @@ class AsyncProjectsClient:
                     annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
                     direction="write",
                 ),
+                "invalidate_affected_text": invalidate_affected_text,
             },
             headers={
                 "content-type": "application/json",

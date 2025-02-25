@@ -1,4 +1,353 @@
 # Reference
+<details><summary><code>client.<a href="src/elevenlabs/base_client.py">claim_a_task_v_1_speech_to_text_reviews_tasks_task_id_claim_post</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.claim_a_task_v_1_speech_to_text_reviews_tasks_task_id_claim_post(
+    task_id="task_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**task_id:** `str` — The ID task to claim.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/elevenlabs/base_client.py">submit_a_completed_task_v_1_speech_to_text_reviews_producers_user_id_tasks_task_id_submit_put</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.submit_a_completed_task_v_1_speech_to_text_reviews_producers_user_id_tasks_task_id_submit_put(
+    user_id="user_id",
+    task_id="task_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**user_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**task_id:** `str` — The ID task review to claim.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/elevenlabs/base_client.py">list_unclaimed_reviews_v_1_speech_to_text_reviews_tasks_post</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs, TagModel
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.list_unclaimed_reviews_v_1_speech_to_text_reviews_tasks_post(
+    tags=[
+        [
+            TagModel(
+                kind="lang",
+                value="value",
+            )
+        ]
+    ],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tags:** `typing.Sequence[typing.Sequence[TagModel]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — The number of tasks to return per page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Cursor for pagination, using the cursor from the previous page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**unclaimed_only:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_instances:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/elevenlabs/base_client.py">list_tasks_instances_for_a_user_v_1_speech_to_text_reviews_producers_user_id_tasks_get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.list_tasks_instances_for_a_user_v_1_speech_to_text_reviews_producers_user_id_tasks_get(
+    user_id="user_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**user_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — The number of tasks to return per page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Cursor for pagination, using the cursor from the previous page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/elevenlabs/base_client.py">compute_a_quote_for_a_asr_transcription_review_task_v_1_speech_to_text_reviews_get_quote_post</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs, QuoteRequestModel
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.compute_a_quote_for_a_asr_transcription_review_task_v_1_speech_to_text_reviews_get_quote_post(
+    request=QuoteRequestModel(
+        content_hash="content_hash",
+        duration_s=1.1,
+        speaker_count=1,
+        language="language",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `QuoteRequestModel` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## History
 <details><summary><code>client.history.<a href="src/elevenlabs/history/client.py">get_all</a>(...)</code></summary>
 <dl>
@@ -778,7 +1127,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**previous_text:** `typing.Optional[str]` — The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+**previous_text:** `typing.Optional[str]` — The text that came before the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
     
 </dd>
 </dl>
@@ -786,7 +1135,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**next_text:** `typing.Optional[str]` — The text that comes after the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+**next_text:** `typing.Optional[str]` — The text that comes after the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
     
 </dd>
 </dl>
@@ -794,7 +1143,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**previous_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+**previous_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
     
 </dd>
 </dl>
@@ -802,7 +1151,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**next_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+**next_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
     
 </dd>
 </dl>
@@ -850,7 +1199,7 @@ Defaults to None.
 <dl>
 <dd>
 
-Converts text into speech using a voice of your choice and returns JSON containing audio as a base64 encoded string together with information on when which character was spoken.
+Generate speech from text with precise character-level timing information for audio-text synchronization.
 </dd>
 </dl>
 </dd>
@@ -871,10 +1220,8 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.text_to_speech.convert_with_timestamps(
-    voice_id="JBFqnCBsd6RMkjVDRZzb",
-    output_format="mp3_44100_128",
-    text="The first move is what sets everything in motion.",
-    model_id="eleven_multilingual_v2",
+    voice_id="21m00Tcm4TlvDq8ikWAM",
+    text="This is a test for the API of ElevenLabs.",
 )
 
 ```
@@ -980,7 +1327,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**previous_text:** `typing.Optional[str]` — The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+**previous_text:** `typing.Optional[str]` — The text that came before the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
     
 </dd>
 </dl>
@@ -988,7 +1335,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**next_text:** `typing.Optional[str]` — The text that comes after the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+**next_text:** `typing.Optional[str]` — The text that comes after the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
     
 </dd>
 </dl>
@@ -996,7 +1343,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**previous_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+**previous_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
     
 </dd>
 </dl>
@@ -1004,7 +1351,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**next_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+**next_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
     
 </dd>
 </dl>
@@ -1184,7 +1531,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**previous_text:** `typing.Optional[str]` — The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+**previous_text:** `typing.Optional[str]` — The text that came before the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
     
 </dd>
 </dl>
@@ -1192,7 +1539,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**next_text:** `typing.Optional[str]` — The text that comes after the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+**next_text:** `typing.Optional[str]` — The text that comes after the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
     
 </dd>
 </dl>
@@ -1200,7 +1547,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**previous_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+**previous_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
     
 </dd>
 </dl>
@@ -1208,7 +1555,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**next_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+**next_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
     
 </dd>
 </dl>
@@ -1390,7 +1737,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**previous_text:** `typing.Optional[str]` — The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+**previous_text:** `typing.Optional[str]` — The text that came before the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
     
 </dd>
 </dl>
@@ -1398,7 +1745,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**next_text:** `typing.Optional[str]` — The text that comes after the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+**next_text:** `typing.Optional[str]` — The text that comes after the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
     
 </dd>
 </dl>
@@ -1406,7 +1753,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**previous_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+**previous_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
     
 </dd>
 </dl>
@@ -1414,7 +1761,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**next_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+**next_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
     
 </dd>
 </dl>
@@ -1465,7 +1812,7 @@ Defaults to None.
 <dl>
 <dd>
 
-Create speech by combining the content and emotion of the uploaded audio with a voice of your choice.
+Transform audio from one voice to another. Maintain full control over emotion, timing and delivery.
 </dd>
 </dl>
 </dd>
@@ -1612,7 +1959,7 @@ Defaults to None.
 <dl>
 <dd>
 
-Create speech by combining the content and emotion of the uploaded audio with a voice of your choice and returns an audio stream.
+Stream audio from one voice to another. Maintain full control over emotion, timing and delivery.
 </dd>
 </dl>
 </dd>
@@ -3219,6 +3566,14 @@ client.voices.get_shared(
 <dl>
 <dd>
 
+**min_notice_period_days:** `typing.Optional[int]` — Filter voices with a minimum notice period of the given number of days.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **reader_app_enabled:** `typing.Optional[bool]` — Filter voices that are enabled for the reader app
     
 </dd>
@@ -3460,7 +3815,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.studio.create_podcast(
-    model_id="model_id",
+    model_id="21m00Tcm4TlvDq8ikWAM",
     mode=BodyCreatePodcastV1StudioPodcastsPostMode_Conversation(
         conversation=PodcastConversationModeData(
             host_voice_id="host_voice_id",
@@ -3616,7 +3971,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.projects.create_podcast(
-    model_id="model_id",
+    model_id="21m00Tcm4TlvDq8ikWAM",
     mode=BodyCreatePodcastV1ProjectsPodcastCreatePostMode_Conversation(
         conversation=PodcastConversationModeData(
             host_voice_id="host_voice_id",
@@ -4021,14 +4376,6 @@ ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate
 <dl>
 <dd>
 
-**quality_check_on:** `typing.Optional[bool]` — [Depracated] Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **apply_text_normalization:** `typing.Optional[AddProjectV1ProjectsAddPostRequestApplyTextNormalization]` 
 
 
@@ -4176,9 +4523,9 @@ client = ElevenLabs(
 )
 client.projects.edit_basic_project_info(
     project_id="21m00Tcm4TlvDq8ikWAM",
-    name="name",
-    default_title_voice_id="default_title_voice_id",
-    default_paragraph_voice_id="default_paragraph_voice_id",
+    name="Project 1",
+    default_title_voice_id="21m00Tcm4TlvDq8ikWAM",
+    default_paragraph_voice_id="21m00Tcm4TlvDq8ikWAM",
 )
 
 ```
@@ -4252,14 +4599,6 @@ client.projects.edit_basic_project_info(
 <dd>
 
 **volume_normalization:** `typing.Optional[bool]` — When the Studio project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**quality_check_on:** `typing.Optional[bool]` — [Depracated] Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
     
 </dd>
 </dl>
@@ -5021,7 +5360,7 @@ client = ElevenLabs(
 )
 client.projects.add_chapter_to_a_project(
     project_id="21m00Tcm4TlvDq8ikWAM",
-    name="name",
+    name="Chapter 1",
 )
 
 ```
@@ -5393,6 +5732,14 @@ client.projects.update_pronunciation_dictionaries(
 <dd>
 
 **pronunciation_dictionary_locators:** `typing.Sequence[PronunciationDictionaryVersionLocator]` — A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text. A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**invalidate_affected_text:** `typing.Optional[bool]` — This will automatically mark text in this project for reconversion when the new dictionary applies or the old one no longer does.
     
 </dd>
 </dl>
@@ -6003,6 +6350,76 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dd>
 
 **auto_convert:** `typing.Optional[bool]` — Whether to auto convert the project to audio or not.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.audio_native.<a href="src/elevenlabs/audio_native/client.py">get_settings</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get player settings for the specific project.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.audio_native.get_settings(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
     
 </dd>
 </dl>
@@ -6970,7 +7387,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.workspace.invite_user(
-    email="email",
+    email="john.doe@testmail.com",
 )
 
 ```
@@ -7126,7 +7543,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.workspace.delete_existing_invitation(
-    email="email",
+    email="john.doe@testmail.com",
 )
 
 ```
@@ -7310,7 +7727,7 @@ client.speech_to_text.convert(
 
 **file:** `from __future__ import annotations
 
-typing.Optional[core.File]` — See core.File for more documentation
+core.File` — See core.File for more documentation
     
 </dd>
 </dl>
@@ -7334,7 +7751,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**num_speakers:** `typing.Optional[int]` — The maximum amount of speakers talking in the uploaded file. Can help with predicting who speaks when. The maximum amount of speakers that can be predicted is 31. Defaults to null, in this case the amount of speakers is set to the maximum value the model supports.
+**num_speakers:** `typing.Optional[int]` — The maximum amount of speakers talking in the uploaded file. Can help with predicting who speaks when. The maximum amount of speakers that can be predicted is 32. Defaults to null, in this case the amount of speakers is set to the maximum value the model supports.
     
 </dd>
 </dl>
@@ -7342,71 +7759,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.speech_to_text.<a href="src/elevenlabs/speech_to_text/client.py">convert_as_stream</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Transcribe an audio or video file with streaming response. Returns chunks of transcription as they become available, with each chunk separated by double newlines (\n\n).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-response = client.speech_to_text.convert_as_stream(
-    model_id="model_id",
-)
-for chunk in response:
-    yield chunk
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**model_id:** `str` — The ID of the model to use for transcription, currently only 'scribe_v1' is available.
+**timestamps_granularity:** `typing.Optional[SpeechToTextConvertRequestTimestampsGranularity]` — The granularity of the timestamps in the transcription. 'word' provides word-level timestamps and 'character' provides character-level timestamps per word.
     
 </dd>
 </dl>
@@ -7414,33 +7767,7 @@ for chunk in response:
 <dl>
 <dd>
 
-**file:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**language_code:** `typing.Optional[str]` — An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand. Defaults to null, in this case the language is predicted automatically.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tag_audio_events:** `typing.Optional[bool]` — Whether to tag audio events like (laughter), (footsteps), etc. in the transcription.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**num_speakers:** `typing.Optional[int]` — The maximum amount of speakers talking in the uploaded file. Can help with predicting who speaks when. The maximum amount of speakers that can be predicted is 31. Defaults to null, in this case the amount of speakers is set to the maximum value the model supports.
+**diarize:** `typing.Optional[bool]` — Whether to annotate which speaker is currently talking in the uploaded file. Enabling this will limit the maximum duration of your inputs to 8 minutes.
     
 </dd>
 </dl>
@@ -7597,7 +7924,7 @@ client.conversational_ai.create_agent(
 <dl>
 <dd>
 
-**platform_settings:** `typing.Optional[AgentPlatformSettings]` — Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
+**platform_settings:** `typing.Optional[AgentPlatformSettingsRequestModel]` — Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
     
 </dd>
 </dl>
@@ -8141,8 +8468,8 @@ client = ElevenLabs(
 )
 client.conversational_ai.add_agent_secret(
     agent_id="21m00Tcm4TlvDq8ikWAM",
-    name="name",
-    secret_value="secret_value",
+    name="MY API KEY",
+    secret_value="sk_api_12354abc",
 )
 
 ```
@@ -9101,6 +9428,30 @@ client.conversational_ai.get_knowledge_base_list()
 <dl>
 <dd>
 
+**search:** `typing.Optional[str]` — If specified, the endpoint returns only such knowledge base documents whose names start with this string.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**show_only_owned_documents:** `typing.Optional[bool]` — If set to true, the endpoint will return only documents owned by you (and not shared from somebody else).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_typesense:** `typing.Optional[bool]` — If set to true, the endpoint will use typesense DB to search for the documents).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -9792,6 +10143,299 @@ client.conversational_ai.update_tool(
 </dl>
 </details>
 
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_settings</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve Convai settings for the workspace
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_settings()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">update_settings</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update Convai settings for the workspace
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.conversational_ai import (
+    PatchConvaiSettingsRequestSecretsItem_New,
+)
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.update_settings(
+    secrets=[
+        PatchConvaiSettingsRequestSecretsItem_New(
+            name="name",
+            value="value",
+        )
+    ],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**secrets:** `typing.Sequence[PatchConvaiSettingsRequestSecretsItem]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**conversation_initiation_client_data_webhook:** `typing.Optional[ConversationInitiationClientDataWebhook]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhooks:** `typing.Optional[ConvAiWebhooks]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_secrets</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all secrets for the workspace
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_secrets()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">create_secret</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new secret for the workspace
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.create_secret(
+    name="name",
+    value="value",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**value:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Studio Projects
 <details><summary><code>client.studio.projects.<a href="src/elevenlabs/studio/projects/client.py">get_all</a>()</code></summary>
 <dl>
@@ -10091,14 +10735,6 @@ ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate
 <dl>
 <dd>
 
-**quality_check_on:** `typing.Optional[bool]` — [Depracated] Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **apply_text_normalization:** `typing.Optional[ProjectsAddRequestApplyTextNormalization]` 
 
 
@@ -10246,9 +10882,9 @@ client = ElevenLabs(
 )
 client.studio.projects.update_metadata(
     project_id="21m00Tcm4TlvDq8ikWAM",
-    name="name",
-    default_title_voice_id="default_title_voice_id",
-    default_paragraph_voice_id="default_paragraph_voice_id",
+    name="Project 1",
+    default_title_voice_id="21m00Tcm4TlvDq8ikWAM",
+    default_paragraph_voice_id="21m00Tcm4TlvDq8ikWAM",
 )
 
 ```
@@ -10322,14 +10958,6 @@ client.studio.projects.update_metadata(
 <dd>
 
 **volume_normalization:** `typing.Optional[bool]` — When the Studio project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**quality_check_on:** `typing.Optional[bool]` — [Depracated] Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
     
 </dd>
 </dl>
@@ -10893,6 +11521,14 @@ client.studio.projects.update_pronunciation_dictionaries(
 <dl>
 <dd>
 
+**invalidate_affected_text:** `typing.Optional[bool]` — This will automatically mark text in this project for reconversion when the new dictionary applies or the old one no longer does.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -11010,7 +11646,7 @@ client = ElevenLabs(
 )
 client.studio.chapters.create(
     project_id="21m00Tcm4TlvDq8ikWAM",
-    name="name",
+    name="Chapter 1",
 )
 
 ```

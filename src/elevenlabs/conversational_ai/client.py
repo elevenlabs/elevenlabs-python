@@ -10,7 +10,7 @@ from ..types.http_validation_error import HttpValidationError
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..types.conversational_config import ConversationalConfig
-from ..types.agent_platform_settings import AgentPlatformSettings
+from ..types.agent_platform_settings_request_model import AgentPlatformSettingsRequestModel
 from ..types.create_agent_response_model import CreateAgentResponseModel
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..types.get_agent_response_model import GetAgentResponseModel
@@ -37,6 +37,12 @@ from ..types.get_knowledge_base_dependent_agents_response_model import GetKnowle
 from ..types.tools_response_model import ToolsResponseModel
 from ..types.tool_request_model import ToolRequestModel
 from ..types.tool_response_model import ToolResponseModel
+from ..types.get_convai_settings_response_model import GetConvaiSettingsResponseModel
+from .types.patch_convai_settings_request_secrets_item import PatchConvaiSettingsRequestSecretsItem
+from ..types.conversation_initiation_client_data_webhook import ConversationInitiationClientDataWebhook
+from ..types.conv_ai_webhooks import ConvAiWebhooks
+from ..types.get_workspace_secrets_response_model import GetWorkspaceSecretsResponseModel
+from ..types.post_workspace_secret_response_model import PostWorkspaceSecretResponseModel
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -114,7 +120,7 @@ class ConversationalAiClient:
         *,
         conversation_config: ConversationalConfig,
         use_tool_ids: typing.Optional[bool] = None,
-        platform_settings: typing.Optional[AgentPlatformSettings] = OMIT,
+        platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateAgentResponseModel:
@@ -129,7 +135,7 @@ class ConversationalAiClient:
         use_tool_ids : typing.Optional[bool]
             Use tool ids instead of tools specs from request payload.
 
-        platform_settings : typing.Optional[AgentPlatformSettings]
+        platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
             Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
 
         name : typing.Optional[str]
@@ -165,7 +171,7 @@ class ConversationalAiClient:
                     object_=conversation_config, annotation=ConversationalConfig, direction="write"
                 ),
                 "platform_settings": convert_and_respect_annotation_metadata(
-                    object_=platform_settings, annotation=AgentPlatformSettings, direction="write"
+                    object_=platform_settings, annotation=AgentPlatformSettingsRequestModel, direction="write"
                 ),
                 "name": name,
             },
@@ -647,8 +653,8 @@ class ConversationalAiClient:
         )
         client.conversational_ai.add_agent_secret(
             agent_id="21m00Tcm4TlvDq8ikWAM",
-            name="name",
-            secret_value="secret_value",
+            name="MY API KEY",
+            secret_value="sk_api_12354abc",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -1422,6 +1428,9 @@ class ConversationalAiClient:
         *,
         cursor: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
+        show_only_owned_documents: typing.Optional[bool] = None,
+        use_typesense: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetKnowledgeBaseListResponseModel:
         """
@@ -1434,6 +1443,15 @@ class ConversationalAiClient:
 
         page_size : typing.Optional[int]
             How many documents to return at maximum. Can not exceed 100, defaults to 30.
+
+        search : typing.Optional[str]
+            If specified, the endpoint returns only such knowledge base documents whose names start with this string.
+
+        show_only_owned_documents : typing.Optional[bool]
+            If set to true, the endpoint will return only documents owned by you (and not shared from somebody else).
+
+        use_typesense : typing.Optional[bool]
+            If set to true, the endpoint will use typesense DB to search for the documents).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1458,6 +1476,9 @@ class ConversationalAiClient:
             params={
                 "cursor": cursor,
                 "page_size": page_size,
+                "search": search,
+                "show_only_owned_documents": show_only_owned_documents,
+                "use_typesense": use_typesense,
             },
             request_options=request_options,
         )
@@ -2070,6 +2091,278 @@ class ConversationalAiClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def get_settings(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetConvaiSettingsResponseModel:
+        """
+        Retrieve Convai settings for the workspace
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetConvaiSettingsResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.get_settings()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/convai/settings",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetConvaiSettingsResponseModel,
+                    construct_type(
+                        type_=GetConvaiSettingsResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def update_settings(
+        self,
+        *,
+        secrets: typing.Sequence[PatchConvaiSettingsRequestSecretsItem],
+        conversation_initiation_client_data_webhook: typing.Optional[ConversationInitiationClientDataWebhook] = OMIT,
+        webhooks: typing.Optional[ConvAiWebhooks] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetConvaiSettingsResponseModel:
+        """
+        Update Convai settings for the workspace
+
+        Parameters
+        ----------
+        secrets : typing.Sequence[PatchConvaiSettingsRequestSecretsItem]
+
+        conversation_initiation_client_data_webhook : typing.Optional[ConversationInitiationClientDataWebhook]
+
+        webhooks : typing.Optional[ConvAiWebhooks]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetConvaiSettingsResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+        from elevenlabs.conversational_ai import (
+            PatchConvaiSettingsRequestSecretsItem_New,
+        )
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.update_settings(
+            secrets=[
+                PatchConvaiSettingsRequestSecretsItem_New(
+                    name="name",
+                    value="value",
+                )
+            ],
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/convai/settings",
+            method="PATCH",
+            json={
+                "conversation_initiation_client_data_webhook": convert_and_respect_annotation_metadata(
+                    object_=conversation_initiation_client_data_webhook,
+                    annotation=ConversationInitiationClientDataWebhook,
+                    direction="write",
+                ),
+                "webhooks": convert_and_respect_annotation_metadata(
+                    object_=webhooks, annotation=ConvAiWebhooks, direction="write"
+                ),
+                "secrets": convert_and_respect_annotation_metadata(
+                    object_=secrets,
+                    annotation=typing.Sequence[PatchConvaiSettingsRequestSecretsItem],
+                    direction="write",
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetConvaiSettingsResponseModel,
+                    construct_type(
+                        type_=GetConvaiSettingsResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get_secrets(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetWorkspaceSecretsResponseModel:
+        """
+        Get all secrets for the workspace
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetWorkspaceSecretsResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.get_secrets()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/convai/secrets",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetWorkspaceSecretsResponseModel,
+                    construct_type(
+                        type_=GetWorkspaceSecretsResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def create_secret(
+        self, *, name: str, value: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> PostWorkspaceSecretResponseModel:
+        """
+        Create a new secret for the workspace
+
+        Parameters
+        ----------
+        name : str
+
+        value : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PostWorkspaceSecretResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.create_secret(
+            name="name",
+            value="value",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/convai/secrets",
+            method="POST",
+            json={
+                "name": name,
+                "value": value,
+                "type": "new",
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    PostWorkspaceSecretResponseModel,
+                    construct_type(
+                        type_=PostWorkspaceSecretResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
 
 class AsyncConversationalAiClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -2150,7 +2443,7 @@ class AsyncConversationalAiClient:
         *,
         conversation_config: ConversationalConfig,
         use_tool_ids: typing.Optional[bool] = None,
-        platform_settings: typing.Optional[AgentPlatformSettings] = OMIT,
+        platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateAgentResponseModel:
@@ -2165,7 +2458,7 @@ class AsyncConversationalAiClient:
         use_tool_ids : typing.Optional[bool]
             Use tool ids instead of tools specs from request payload.
 
-        platform_settings : typing.Optional[AgentPlatformSettings]
+        platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
             Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
 
         name : typing.Optional[str]
@@ -2209,7 +2502,7 @@ class AsyncConversationalAiClient:
                     object_=conversation_config, annotation=ConversationalConfig, direction="write"
                 ),
                 "platform_settings": convert_and_respect_annotation_metadata(
-                    object_=platform_settings, annotation=AgentPlatformSettings, direction="write"
+                    object_=platform_settings, annotation=AgentPlatformSettingsRequestModel, direction="write"
                 ),
                 "name": name,
             },
@@ -2744,8 +3037,8 @@ class AsyncConversationalAiClient:
         async def main() -> None:
             await client.conversational_ai.add_agent_secret(
                 agent_id="21m00Tcm4TlvDq8ikWAM",
-                name="name",
-                secret_value="secret_value",
+                name="MY API KEY",
+                secret_value="sk_api_12354abc",
             )
 
 
@@ -3610,6 +3903,9 @@ class AsyncConversationalAiClient:
         *,
         cursor: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
+        show_only_owned_documents: typing.Optional[bool] = None,
+        use_typesense: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetKnowledgeBaseListResponseModel:
         """
@@ -3622,6 +3918,15 @@ class AsyncConversationalAiClient:
 
         page_size : typing.Optional[int]
             How many documents to return at maximum. Can not exceed 100, defaults to 30.
+
+        search : typing.Optional[str]
+            If specified, the endpoint returns only such knowledge base documents whose names start with this string.
+
+        show_only_owned_documents : typing.Optional[bool]
+            If set to true, the endpoint will return only documents owned by you (and not shared from somebody else).
+
+        use_typesense : typing.Optional[bool]
+            If set to true, the endpoint will use typesense DB to search for the documents).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -3654,6 +3959,9 @@ class AsyncConversationalAiClient:
             params={
                 "cursor": cursor,
                 "page_size": page_size,
+                "search": search,
+                "show_only_owned_documents": show_only_owned_documents,
+                "use_typesense": use_typesense,
             },
             request_options=request_options,
         )
@@ -4322,6 +4630,310 @@ class AsyncConversationalAiClient:
                     ToolResponseModel,
                     construct_type(
                         type_=ToolResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_settings(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetConvaiSettingsResponseModel:
+        """
+        Retrieve Convai settings for the workspace
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetConvaiSettingsResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.get_settings()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/convai/settings",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetConvaiSettingsResponseModel,
+                    construct_type(
+                        type_=GetConvaiSettingsResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def update_settings(
+        self,
+        *,
+        secrets: typing.Sequence[PatchConvaiSettingsRequestSecretsItem],
+        conversation_initiation_client_data_webhook: typing.Optional[ConversationInitiationClientDataWebhook] = OMIT,
+        webhooks: typing.Optional[ConvAiWebhooks] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetConvaiSettingsResponseModel:
+        """
+        Update Convai settings for the workspace
+
+        Parameters
+        ----------
+        secrets : typing.Sequence[PatchConvaiSettingsRequestSecretsItem]
+
+        conversation_initiation_client_data_webhook : typing.Optional[ConversationInitiationClientDataWebhook]
+
+        webhooks : typing.Optional[ConvAiWebhooks]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetConvaiSettingsResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+        from elevenlabs.conversational_ai import (
+            PatchConvaiSettingsRequestSecretsItem_New,
+        )
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.update_settings(
+                secrets=[
+                    PatchConvaiSettingsRequestSecretsItem_New(
+                        name="name",
+                        value="value",
+                    )
+                ],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/convai/settings",
+            method="PATCH",
+            json={
+                "conversation_initiation_client_data_webhook": convert_and_respect_annotation_metadata(
+                    object_=conversation_initiation_client_data_webhook,
+                    annotation=ConversationInitiationClientDataWebhook,
+                    direction="write",
+                ),
+                "webhooks": convert_and_respect_annotation_metadata(
+                    object_=webhooks, annotation=ConvAiWebhooks, direction="write"
+                ),
+                "secrets": convert_and_respect_annotation_metadata(
+                    object_=secrets,
+                    annotation=typing.Sequence[PatchConvaiSettingsRequestSecretsItem],
+                    direction="write",
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetConvaiSettingsResponseModel,
+                    construct_type(
+                        type_=GetConvaiSettingsResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_secrets(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetWorkspaceSecretsResponseModel:
+        """
+        Get all secrets for the workspace
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetWorkspaceSecretsResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.get_secrets()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/convai/secrets",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetWorkspaceSecretsResponseModel,
+                    construct_type(
+                        type_=GetWorkspaceSecretsResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def create_secret(
+        self, *, name: str, value: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> PostWorkspaceSecretResponseModel:
+        """
+        Create a new secret for the workspace
+
+        Parameters
+        ----------
+        name : str
+
+        value : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PostWorkspaceSecretResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.create_secret(
+                name="name",
+                value="value",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/convai/secrets",
+            method="POST",
+            json={
+                "name": name,
+                "value": value,
+                "type": "new",
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    PostWorkspaceSecretResponseModel,
+                    construct_type(
+                        type_=PostWorkspaceSecretResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

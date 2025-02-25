@@ -11,6 +11,7 @@ class VoiceSettings(UncheckedBaseModel):
     similarity_boost: typing.Optional[float] = None
     style: typing.Optional[float] = None
     use_speaker_boost: typing.Optional[bool] = None
+    speed: typing.Optional[float] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
