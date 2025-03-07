@@ -4,11 +4,10 @@ from __future__ import annotations
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .array_json_schema_property import ArrayJsonSchemaProperty
 from .object_json_schema_property import ObjectJsonSchemaProperty
-from .conversational_config import ConversationalConfig
+from .conversational_config_api_model import ConversationalConfigApiModel
 from .agent_metadata_response_model import AgentMetadataResponseModel
 import typing
 from .agent_platform_settings_response_model import AgentPlatformSettingsResponseModel
-from .conv_ai_stored_secret_config import ConvAiStoredSecretConfig
 from .get_phone_number_response_model import GetPhoneNumberResponseModel
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
@@ -18,10 +17,9 @@ from ..core.pydantic_utilities import update_forward_refs
 class GetAgentResponseModel(UncheckedBaseModel):
     agent_id: str
     name: str
-    conversation_config: ConversationalConfig
+    conversation_config: ConversationalConfigApiModel
     metadata: AgentMetadataResponseModel
     platform_settings: typing.Optional[AgentPlatformSettingsResponseModel] = None
-    secrets: typing.List[ConvAiStoredSecretConfig]
     phone_numbers: typing.Optional[typing.List[GetPhoneNumberResponseModel]] = None
 
     if IS_PYDANTIC_V2:

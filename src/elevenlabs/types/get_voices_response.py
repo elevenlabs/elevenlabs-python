@@ -3,12 +3,15 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 from .voice import Voice
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class GetVoicesResponse(UncheckedBaseModel):
-    voices: typing.List[Voice]
+    voices: typing.List[Voice] = pydantic.Field()
+    """
+    A list of available voices.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

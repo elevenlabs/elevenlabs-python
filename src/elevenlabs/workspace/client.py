@@ -9,10 +9,15 @@ from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.http_validation_error import HttpValidationError
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
+from ..types.delete_workspace_group_member_response_model import DeleteWorkspaceGroupMemberResponseModel
 from ..core.jsonable_encoder import jsonable_encoder
+from ..types.add_workspace_group_member_response_model import AddWorkspaceGroupMemberResponseModel
+from ..types.add_workspace_invite_response_model import AddWorkspaceInviteResponseModel
+from ..types.delete_workspace_invite_response_model import DeleteWorkspaceInviteResponseModel
 from .types.body_update_member_v_1_workspace_members_post_workspace_role import (
     BodyUpdateMemberV1WorkspaceMembersPostWorkspaceRole,
 )
+from ..types.update_workspace_member_response_model import UpdateWorkspaceMemberResponseModel
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -87,7 +92,7 @@ class WorkspaceClient:
 
     def delete_member_from_user_group(
         self, group_id: str, *, email: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
+    ) -> DeleteWorkspaceGroupMemberResponseModel:
         """
         Removes a member from the specified group. This endpoint may only be called by workspace administrators.
 
@@ -104,7 +109,7 @@ class WorkspaceClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        DeleteWorkspaceGroupMemberResponseModel
             Successful Response
 
         Examples
@@ -134,9 +139,9 @@ class WorkspaceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    DeleteWorkspaceGroupMemberResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=DeleteWorkspaceGroupMemberResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -157,7 +162,7 @@ class WorkspaceClient:
 
     def add_member_to_user_group(
         self, group_id: str, *, email: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
+    ) -> AddWorkspaceGroupMemberResponseModel:
         """
         Adds a member of your workspace to the specified group. This endpoint may only be called by workspace administrators.
 
@@ -174,7 +179,7 @@ class WorkspaceClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        AddWorkspaceGroupMemberResponseModel
             Successful Response
 
         Examples
@@ -204,9 +209,9 @@ class WorkspaceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    AddWorkspaceGroupMemberResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=AddWorkspaceGroupMemberResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -231,7 +236,7 @@ class WorkspaceClient:
         email: str,
         group_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Optional[typing.Any]:
+    ) -> AddWorkspaceInviteResponseModel:
         """
         Sends an email invitation to join your workspace to the provided email. If the user doesn't have an account they will be prompted to create one. If the user accepts this invite they will be added as a user to your workspace and your subscription using one of your seats. This endpoint may only be called by workspace administrators. If the user is already in the workspace a 400 error will be returned.
 
@@ -248,7 +253,7 @@ class WorkspaceClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        AddWorkspaceInviteResponseModel
             Successful Response
 
         Examples
@@ -278,9 +283,9 @@ class WorkspaceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    AddWorkspaceInviteResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=AddWorkspaceInviteResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -305,7 +310,7 @@ class WorkspaceClient:
         emails: typing.Sequence[str],
         group_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Optional[typing.Any]:
+    ) -> AddWorkspaceInviteResponseModel:
         """
         Sends email invitations to join your workspace to the provided emails. Requires all email addresses to be part of a verified domain. If the users don't have an account they will be prompted to create one. If the users accept these invites they will be added as users to your workspace and your subscription using one of your seats. This endpoint may only be called by workspace administrators.
 
@@ -322,7 +327,7 @@ class WorkspaceClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        AddWorkspaceInviteResponseModel
             Successful Response
 
         Examples
@@ -352,9 +357,9 @@ class WorkspaceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    AddWorkspaceInviteResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=AddWorkspaceInviteResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -375,7 +380,7 @@ class WorkspaceClient:
 
     def delete_existing_invitation(
         self, *, email: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
+    ) -> DeleteWorkspaceInviteResponseModel:
         """
         Invalidates an existing email invitation. The invitation will still show up in the inbox it has been delivered to, but activating it to join the workspace won't work. This endpoint may only be called by workspace administrators.
 
@@ -389,7 +394,7 @@ class WorkspaceClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        DeleteWorkspaceInviteResponseModel
             Successful Response
 
         Examples
@@ -418,9 +423,9 @@ class WorkspaceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    DeleteWorkspaceInviteResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=DeleteWorkspaceInviteResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -446,7 +451,7 @@ class WorkspaceClient:
         is_locked: typing.Optional[bool] = OMIT,
         workspace_role: typing.Optional[BodyUpdateMemberV1WorkspaceMembersPostWorkspaceRole] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Optional[typing.Any]:
+    ) -> UpdateWorkspaceMemberResponseModel:
         """
         Updates attributes of a workspace member. Apart from the email identifier, all parameters will remain unchanged unless specified. This endpoint may only be called by workspace administrators.
 
@@ -466,7 +471,7 @@ class WorkspaceClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        UpdateWorkspaceMemberResponseModel
             Successful Response
 
         Examples
@@ -497,9 +502,9 @@ class WorkspaceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    UpdateWorkspaceMemberResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=UpdateWorkspaceMemberResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -595,7 +600,7 @@ class AsyncWorkspaceClient:
 
     async def delete_member_from_user_group(
         self, group_id: str, *, email: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
+    ) -> DeleteWorkspaceGroupMemberResponseModel:
         """
         Removes a member from the specified group. This endpoint may only be called by workspace administrators.
 
@@ -612,7 +617,7 @@ class AsyncWorkspaceClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        DeleteWorkspaceGroupMemberResponseModel
             Successful Response
 
         Examples
@@ -650,9 +655,9 @@ class AsyncWorkspaceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    DeleteWorkspaceGroupMemberResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=DeleteWorkspaceGroupMemberResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -673,7 +678,7 @@ class AsyncWorkspaceClient:
 
     async def add_member_to_user_group(
         self, group_id: str, *, email: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
+    ) -> AddWorkspaceGroupMemberResponseModel:
         """
         Adds a member of your workspace to the specified group. This endpoint may only be called by workspace administrators.
 
@@ -690,7 +695,7 @@ class AsyncWorkspaceClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        AddWorkspaceGroupMemberResponseModel
             Successful Response
 
         Examples
@@ -728,9 +733,9 @@ class AsyncWorkspaceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    AddWorkspaceGroupMemberResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=AddWorkspaceGroupMemberResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -755,7 +760,7 @@ class AsyncWorkspaceClient:
         email: str,
         group_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Optional[typing.Any]:
+    ) -> AddWorkspaceInviteResponseModel:
         """
         Sends an email invitation to join your workspace to the provided email. If the user doesn't have an account they will be prompted to create one. If the user accepts this invite they will be added as a user to your workspace and your subscription using one of your seats. This endpoint may only be called by workspace administrators. If the user is already in the workspace a 400 error will be returned.
 
@@ -772,7 +777,7 @@ class AsyncWorkspaceClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        AddWorkspaceInviteResponseModel
             Successful Response
 
         Examples
@@ -810,9 +815,9 @@ class AsyncWorkspaceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    AddWorkspaceInviteResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=AddWorkspaceInviteResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -837,7 +842,7 @@ class AsyncWorkspaceClient:
         emails: typing.Sequence[str],
         group_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Optional[typing.Any]:
+    ) -> AddWorkspaceInviteResponseModel:
         """
         Sends email invitations to join your workspace to the provided emails. Requires all email addresses to be part of a verified domain. If the users don't have an account they will be prompted to create one. If the users accept these invites they will be added as users to your workspace and your subscription using one of your seats. This endpoint may only be called by workspace administrators.
 
@@ -854,7 +859,7 @@ class AsyncWorkspaceClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        AddWorkspaceInviteResponseModel
             Successful Response
 
         Examples
@@ -892,9 +897,9 @@ class AsyncWorkspaceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    AddWorkspaceInviteResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=AddWorkspaceInviteResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -915,7 +920,7 @@ class AsyncWorkspaceClient:
 
     async def delete_existing_invitation(
         self, *, email: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
+    ) -> DeleteWorkspaceInviteResponseModel:
         """
         Invalidates an existing email invitation. The invitation will still show up in the inbox it has been delivered to, but activating it to join the workspace won't work. This endpoint may only be called by workspace administrators.
 
@@ -929,7 +934,7 @@ class AsyncWorkspaceClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        DeleteWorkspaceInviteResponseModel
             Successful Response
 
         Examples
@@ -966,9 +971,9 @@ class AsyncWorkspaceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    DeleteWorkspaceInviteResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=DeleteWorkspaceInviteResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -994,7 +999,7 @@ class AsyncWorkspaceClient:
         is_locked: typing.Optional[bool] = OMIT,
         workspace_role: typing.Optional[BodyUpdateMemberV1WorkspaceMembersPostWorkspaceRole] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Optional[typing.Any]:
+    ) -> UpdateWorkspaceMemberResponseModel:
         """
         Updates attributes of a workspace member. Apart from the email identifier, all parameters will remain unchanged unless specified. This endpoint may only be called by workspace administrators.
 
@@ -1014,7 +1019,7 @@ class AsyncWorkspaceClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        UpdateWorkspaceMemberResponseModel
             Successful Response
 
         Examples
@@ -1053,9 +1058,9 @@ class AsyncWorkspaceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    UpdateWorkspaceMemberResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=UpdateWorkspaceMemberResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

@@ -66,13 +66,13 @@ class SpeechToSpeechClient:
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
 
         voice_settings : typing.Optional[str]
-            Voice settings overriding stored setttings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
+            Voice settings overriding stored settings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
 
         seed : typing.Optional[int]
             If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
 
         remove_background_noise : typing.Optional[bool]
-            If set will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
+            If set, will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -182,13 +182,13 @@ class SpeechToSpeechClient:
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
 
         voice_settings : typing.Optional[str]
-            Voice settings overriding stored setttings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
+            Voice settings overriding stored settings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
 
         seed : typing.Optional[int]
             If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
 
         remove_background_noise : typing.Optional[bool]
-            If set will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
+            If set, will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -303,13 +303,13 @@ class AsyncSpeechToSpeechClient:
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
 
         voice_settings : typing.Optional[str]
-            Voice settings overriding stored setttings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
+            Voice settings overriding stored settings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
 
         seed : typing.Optional[int]
             If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
 
         remove_background_noise : typing.Optional[bool]
-            If set will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
+            If set, will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -427,13 +427,13 @@ class AsyncSpeechToSpeechClient:
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
 
         voice_settings : typing.Optional[str]
-            Voice settings overriding stored setttings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
+            Voice settings overriding stored settings for the given voice. They are applied only on the given request. Needs to be send as a JSON encoded string.
 
         seed : typing.Optional[int]
             If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
 
         remove_background_noise : typing.Optional[bool]
-            If set will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
+            If set, will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.

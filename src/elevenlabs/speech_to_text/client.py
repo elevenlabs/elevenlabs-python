@@ -26,6 +26,7 @@ class SpeechToTextClient:
         *,
         model_id: str,
         file: core.File,
+        enable_logging: typing.Optional[bool] = None,
         language_code: typing.Optional[str] = OMIT,
         tag_audio_events: typing.Optional[bool] = OMIT,
         num_speakers: typing.Optional[int] = OMIT,
@@ -44,6 +45,9 @@ class SpeechToTextClient:
         file : core.File
             See core.File for more documentation
 
+        enable_logging : typing.Optional[bool]
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
+
         language_code : typing.Optional[str]
             An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand. Defaults to null, in this case the language is predicted automatically.
 
@@ -57,7 +61,7 @@ class SpeechToTextClient:
             The granularity of the timestamps in the transcription. 'word' provides word-level timestamps and 'character' provides character-level timestamps per word.
 
         diarize : typing.Optional[bool]
-            Whether to annotate which speaker is currently talking in the uploaded file. Enabling this will limit the maximum duration of your inputs to 8 minutes.
+            Whether to annotate which speaker is currently talking in the uploaded file.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -81,6 +85,9 @@ class SpeechToTextClient:
         _response = self._client_wrapper.httpx_client.request(
             "v1/speech-to-text",
             method="POST",
+            params={
+                "enable_logging": enable_logging,
+            },
             data={
                 "model_id": model_id,
                 "language_code": language_code,
@@ -129,6 +136,7 @@ class AsyncSpeechToTextClient:
         *,
         model_id: str,
         file: core.File,
+        enable_logging: typing.Optional[bool] = None,
         language_code: typing.Optional[str] = OMIT,
         tag_audio_events: typing.Optional[bool] = OMIT,
         num_speakers: typing.Optional[int] = OMIT,
@@ -147,6 +155,9 @@ class AsyncSpeechToTextClient:
         file : core.File
             See core.File for more documentation
 
+        enable_logging : typing.Optional[bool]
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
+
         language_code : typing.Optional[str]
             An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand. Defaults to null, in this case the language is predicted automatically.
 
@@ -160,7 +171,7 @@ class AsyncSpeechToTextClient:
             The granularity of the timestamps in the transcription. 'word' provides word-level timestamps and 'character' provides character-level timestamps per word.
 
         diarize : typing.Optional[bool]
-            Whether to annotate which speaker is currently talking in the uploaded file. Enabling this will limit the maximum duration of your inputs to 8 minutes.
+            Whether to annotate which speaker is currently talking in the uploaded file.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -192,6 +203,9 @@ class AsyncSpeechToTextClient:
         _response = await self._client_wrapper.httpx_client.request(
             "v1/speech-to-text",
             method="POST",
+            params={
+                "enable_logging": enable_logging,
+            },
             data={
                 "model_id": model_id,
                 "language_code": language_code,

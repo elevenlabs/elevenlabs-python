@@ -179,7 +179,7 @@ class VoiceGenerationClient:
             Description to use for the created voice.
 
         generated_voice_id : str
-            The generated_voice_id to create, call POST /v1/voice-generation/generate-voice and fetch the generated_voice_id from the response header if don't have one yet.
+            The generated_voice_id to create, call POST /v1/text-to-voice/create-previews and fetch the generated_voice_id from the response header if don't have one yet.
 
         played_not_selected_voice_ids : typing.Optional[typing.Sequence[str]]
             List of voice ids that the user has played but not selected. Used for RLHF.
@@ -426,7 +426,7 @@ class AsyncVoiceGenerationClient:
             Description to use for the created voice.
 
         generated_voice_id : str
-            The generated_voice_id to create, call POST /v1/voice-generation/generate-voice and fetch the generated_voice_id from the response header if don't have one yet.
+            The generated_voice_id to create, call POST /v1/text-to-voice/create-previews and fetch the generated_voice_id from the response header if don't have one yet.
 
         played_not_selected_voice_ids : typing.Optional[typing.Sequence[str]]
             List of voice ids that the user has played but not selected. Used for RLHF.

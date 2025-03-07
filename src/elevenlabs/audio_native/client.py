@@ -41,7 +41,7 @@ class AudioNativeClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AudioNativeCreateProjectResponseModel:
         """
-        Creates AudioNative enabled project, optionally starts conversion and returns project id and embeddable html snippet.
+        Creates Audio Native enabled project, optionally starts conversion and returns project ID and embeddable HTML snippet.
 
         Parameters
         ----------
@@ -310,7 +310,7 @@ class AsyncAudioNativeClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AudioNativeCreateProjectResponseModel:
         """
-        Creates AudioNative enabled project, optionally starts conversion and returns project id and embeddable html snippet.
+        Creates Audio Native enabled project, optionally starts conversion and returns project ID and embeddable HTML snippet.
 
         Parameters
         ----------

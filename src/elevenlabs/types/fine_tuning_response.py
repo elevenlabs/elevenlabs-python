@@ -2,28 +2,84 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
+import pydantic
 from .fine_tuning_response_model_state_value import FineTuningResponseModelStateValue
 from .verification_attempt_response import VerificationAttemptResponse
 from .manual_verification_response import ManualVerificationResponse
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
-import pydantic
 
 
 class FineTuningResponse(UncheckedBaseModel):
-    is_allowed_to_fine_tune: typing.Optional[bool] = None
-    state: typing.Optional[typing.Dict[str, FineTuningResponseModelStateValue]] = None
-    verification_failures: typing.Optional[typing.List[str]] = None
-    verification_attempts_count: typing.Optional[int] = None
-    manual_verification_requested: typing.Optional[bool] = None
-    language: typing.Optional[str] = None
-    progress: typing.Optional[typing.Dict[str, float]] = None
-    message: typing.Optional[typing.Dict[str, str]] = None
-    dataset_duration_seconds: typing.Optional[float] = None
-    verification_attempts: typing.Optional[typing.List[VerificationAttemptResponse]] = None
-    slice_ids: typing.Optional[typing.List[str]] = None
-    manual_verification: typing.Optional[ManualVerificationResponse] = None
-    max_verification_attempts: typing.Optional[int] = None
-    next_max_verification_attempts_reset_unix_ms: typing.Optional[int] = None
+    is_allowed_to_fine_tune: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the user is allowed to fine-tune the voice.
+    """
+
+    state: typing.Optional[typing.Dict[str, FineTuningResponseModelStateValue]] = pydantic.Field(default=None)
+    """
+    The state of the fine-tuning process for each model.
+    """
+
+    verification_failures: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    List of verification failures in the fine-tuning process.
+    """
+
+    verification_attempts_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The number of verification attempts in the fine-tuning process.
+    """
+
+    manual_verification_requested: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether a manual verification was requested for the fine-tuning process.
+    """
+
+    language: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The language of the fine-tuning process.
+    """
+
+    progress: typing.Optional[typing.Dict[str, float]] = pydantic.Field(default=None)
+    """
+    The progress of the fine-tuning process.
+    """
+
+    message: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
+    """
+    The message of the fine-tuning process.
+    """
+
+    dataset_duration_seconds: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    The duration of the dataset in seconds.
+    """
+
+    verification_attempts: typing.Optional[typing.List[VerificationAttemptResponse]] = pydantic.Field(default=None)
+    """
+    The number of verification attempts.
+    """
+
+    slice_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    List of slice IDs.
+    """
+
+    manual_verification: typing.Optional[ManualVerificationResponse] = pydantic.Field(default=None)
+    """
+    The manual verification of the fine-tuning process.
+    """
+
+    max_verification_attempts: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The maximum number of verification attempts.
+    """
+
+    next_max_verification_attempts_reset_unix_ms: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The next maximum verification attempts reset time in Unix milliseconds.
+    """
+
     finetuning_state: typing.Optional[typing.Optional[typing.Any]] = None
 
     if IS_PYDANTIC_V2:

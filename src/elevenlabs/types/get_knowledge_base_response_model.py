@@ -2,6 +2,7 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .get_knowledge_base_response_model_type import GetKnowledgeBaseResponseModelType
+from .knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
 from .get_knowledge_base_response_model_access_level import GetKnowledgeBaseResponseModelAccessLevel
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
@@ -12,7 +13,9 @@ class GetKnowledgeBaseResponseModel(UncheckedBaseModel):
     id: str
     name: str
     type: GetKnowledgeBaseResponseModelType
+    metadata: KnowledgeBaseDocumentMetadataResponseModel
     extracted_inner_html: str
+    prompt_injectable: bool
     access_level: GetKnowledgeBaseResponseModelAccessLevel
 
     if IS_PYDANTIC_V2:

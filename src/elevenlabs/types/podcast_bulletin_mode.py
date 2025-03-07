@@ -2,13 +2,16 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .podcast_bulletin_mode_data import PodcastBulletinModeData
+import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
-import pydantic
 
 
 class PodcastBulletinMode(UncheckedBaseModel):
-    bulletin: PodcastBulletinModeData
+    bulletin: PodcastBulletinModeData = pydantic.Field()
+    """
+    The voice settings for the bulletin.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -3,14 +3,25 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 from .get_pronunciation_dictionary_metadata_response import GetPronunciationDictionaryMetadataResponse
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class GetPronunciationDictionariesMetadataResponseModel(UncheckedBaseModel):
-    pronunciation_dictionaries: typing.List[GetPronunciationDictionaryMetadataResponse]
-    next_cursor: str
-    has_more: bool
+    pronunciation_dictionaries: typing.List[GetPronunciationDictionaryMetadataResponse] = pydantic.Field()
+    """
+    A list of pronunciation dictionaries and their metadata.
+    """
+
+    next_cursor: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The next cursor to use for pagination.
+    """
+
+    has_more: bool = pydantic.Field()
+    """
+    Whether there are more pronunciation dictionaries to fetch.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

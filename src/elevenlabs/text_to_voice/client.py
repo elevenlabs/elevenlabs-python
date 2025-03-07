@@ -42,18 +42,7 @@ class TextToVoiceClient:
             Text to generate, text length has to be between 100 and 1000.
 
         output_format : typing.Optional[TextToVoiceCreatePreviewsRequestOutputFormat]
-            Output format of the generated audio. Must be one of:
-            mp3_22050_32 - output format, mp3 with 22.05kHz sample rate at 32kbps.
-            mp3_44100_32 - output format, mp3 with 44.1kHz sample rate at 32kbps.
-            mp3_44100_64 - output format, mp3 with 44.1kHz sample rate at 64kbps.
-            mp3_44100_96 - output format, mp3 with 44.1kHz sample rate at 96kbps.
-            mp3_44100_128 - default output format, mp3 with 44.1kHz sample rate at 128kbps.
-            mp3_44100_192 - output format, mp3 with 44.1kHz sample rate at 192kbps. Requires you to be subscribed to Creator tier or above.
-            pcm_16000 - PCM format (S16LE) with 16kHz sample rate.
-            pcm_22050 - PCM format (S16LE) with 22.05kHz sample rate.
-            pcm_24000 - PCM format (S16LE) with 24kHz sample rate.
-            pcm_44100 - PCM format (S16LE) with 44.1kHz sample rate. Requires you to be subscribed to Pro tier or above.
-            ulaw_8000 - μ-law format (sometimes written mu-law, often approximated as u-law) with 8kHz sample rate. Note that this format is commonly used for Twilio audio inputs.
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         auto_generate_text : typing.Optional[bool]
             Whether to automatically generate a text suitable for the voice description.
@@ -74,7 +63,7 @@ class TextToVoiceClient:
             api_key="YOUR_API_KEY",
         )
         client.text_to_voice.create_previews(
-            voice_description="A sassy little squeaky mouse",
+            voice_description="A sassy squeaky mouse",
             text="Every act of kindness, no matter how small, carries value and can make a difference, as no gesture of goodwill is ever wasted.",
         )
         """
@@ -130,7 +119,7 @@ class TextToVoiceClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Voice:
         """
-        Create a voice from previously generated voice preview. This endpoint should be called after you fetched a generated_voice_id using /v1/text-to-voice/create-previews.
+        Create a voice from previously generated voice preview. This endpoint should be called after you fetched a generated_voice_id using POST /v1/text-to-voice/create-previews.
 
         Parameters
         ----------
@@ -141,7 +130,7 @@ class TextToVoiceClient:
             Description to use for the created voice.
 
         generated_voice_id : str
-            The generated_voice_id to create, call POST /v1/voice-generation/generate-voice and fetch the generated_voice_id from the response header if don't have one yet.
+            The generated_voice_id to create, call POST /v1/text-to-voice/create-previews and fetch the generated_voice_id from the response header if don't have one yet.
 
         labels : typing.Optional[typing.Dict[str, str]]
             Optional, metadata to add to the created voice. Defaults to None.
@@ -165,8 +154,8 @@ class TextToVoiceClient:
             api_key="YOUR_API_KEY",
         )
         client.text_to_voice.create_voice_from_preview(
-            voice_name="Little squeaky mouse",
-            voice_description="A sassy little squeaky mouse",
+            voice_name="Sassy squeaky mouse",
+            voice_description="A sassy squeaky mouse",
             generated_voice_id="37HceQefKmEi3bGovXjL",
         )
         """
@@ -236,18 +225,7 @@ class AsyncTextToVoiceClient:
             Text to generate, text length has to be between 100 and 1000.
 
         output_format : typing.Optional[TextToVoiceCreatePreviewsRequestOutputFormat]
-            Output format of the generated audio. Must be one of:
-            mp3_22050_32 - output format, mp3 with 22.05kHz sample rate at 32kbps.
-            mp3_44100_32 - output format, mp3 with 44.1kHz sample rate at 32kbps.
-            mp3_44100_64 - output format, mp3 with 44.1kHz sample rate at 64kbps.
-            mp3_44100_96 - output format, mp3 with 44.1kHz sample rate at 96kbps.
-            mp3_44100_128 - default output format, mp3 with 44.1kHz sample rate at 128kbps.
-            mp3_44100_192 - output format, mp3 with 44.1kHz sample rate at 192kbps. Requires you to be subscribed to Creator tier or above.
-            pcm_16000 - PCM format (S16LE) with 16kHz sample rate.
-            pcm_22050 - PCM format (S16LE) with 22.05kHz sample rate.
-            pcm_24000 - PCM format (S16LE) with 24kHz sample rate.
-            pcm_44100 - PCM format (S16LE) with 44.1kHz sample rate. Requires you to be subscribed to Pro tier or above.
-            ulaw_8000 - μ-law format (sometimes written mu-law, often approximated as u-law) with 8kHz sample rate. Note that this format is commonly used for Twilio audio inputs.
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         auto_generate_text : typing.Optional[bool]
             Whether to automatically generate a text suitable for the voice description.
@@ -273,7 +251,7 @@ class AsyncTextToVoiceClient:
 
         async def main() -> None:
             await client.text_to_voice.create_previews(
-                voice_description="A sassy little squeaky mouse",
+                voice_description="A sassy squeaky mouse",
                 text="Every act of kindness, no matter how small, carries value and can make a difference, as no gesture of goodwill is ever wasted.",
             )
 
@@ -332,7 +310,7 @@ class AsyncTextToVoiceClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Voice:
         """
-        Create a voice from previously generated voice preview. This endpoint should be called after you fetched a generated_voice_id using /v1/text-to-voice/create-previews.
+        Create a voice from previously generated voice preview. This endpoint should be called after you fetched a generated_voice_id using POST /v1/text-to-voice/create-previews.
 
         Parameters
         ----------
@@ -343,7 +321,7 @@ class AsyncTextToVoiceClient:
             Description to use for the created voice.
 
         generated_voice_id : str
-            The generated_voice_id to create, call POST /v1/voice-generation/generate-voice and fetch the generated_voice_id from the response header if don't have one yet.
+            The generated_voice_id to create, call POST /v1/text-to-voice/create-previews and fetch the generated_voice_id from the response header if don't have one yet.
 
         labels : typing.Optional[typing.Dict[str, str]]
             Optional, metadata to add to the created voice. Defaults to None.
@@ -372,8 +350,8 @@ class AsyncTextToVoiceClient:
 
         async def main() -> None:
             await client.text_to_voice.create_voice_from_preview(
-                voice_name="Little squeaky mouse",
-                voice_description="A sassy little squeaky mouse",
+                voice_name="Sassy squeaky mouse",
+                voice_description="A sassy squeaky mouse",
                 generated_voice_id="37HceQefKmEi3bGovXjL",
             )
 

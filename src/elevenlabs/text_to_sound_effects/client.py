@@ -2,6 +2,7 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .types.text_to_sound_effects_convert_request_output_format import TextToSoundEffectsConvertRequestOutputFormat
 from ..core.request_options import RequestOptions
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.http_validation_error import HttpValidationError
@@ -22,17 +23,21 @@ class TextToSoundEffectsClient:
         self,
         *,
         text: str,
+        output_format: typing.Optional[TextToSoundEffectsConvertRequestOutputFormat] = None,
         duration_seconds: typing.Optional[float] = OMIT,
         prompt_influence: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
-        Converts a text of your choice into sound
+        Turn text into sound effects for your videos, voice-overs or video games using the most advanced sound effects model in the world.
 
         Parameters
         ----------
         text : str
             The text that will get converted into a sound effect.
+
+        output_format : typing.Optional[TextToSoundEffectsConvertRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         duration_seconds : typing.Optional[float]
             The duration of the sound which will be generated in seconds. Must be at least 0.5 and at most 22. If set to None we will guess the optimal duration using the prompt. Defaults to None.
@@ -46,7 +51,7 @@ class TextToSoundEffectsClient:
         Yields
         ------
         typing.Iterator[bytes]
-            Successful Response
+            The generated sound effect as an MP3 file
 
         Examples
         --------
@@ -62,6 +67,9 @@ class TextToSoundEffectsClient:
         with self._client_wrapper.httpx_client.stream(
             "v1/sound-generation",
             method="POST",
+            params={
+                "output_format": output_format,
+            },
             json={
                 "text": text,
                 "duration_seconds": duration_seconds,
@@ -104,17 +112,21 @@ class AsyncTextToSoundEffectsClient:
         self,
         *,
         text: str,
+        output_format: typing.Optional[TextToSoundEffectsConvertRequestOutputFormat] = None,
         duration_seconds: typing.Optional[float] = OMIT,
         prompt_influence: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
-        Converts a text of your choice into sound
+        Turn text into sound effects for your videos, voice-overs or video games using the most advanced sound effects model in the world.
 
         Parameters
         ----------
         text : str
             The text that will get converted into a sound effect.
+
+        output_format : typing.Optional[TextToSoundEffectsConvertRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         duration_seconds : typing.Optional[float]
             The duration of the sound which will be generated in seconds. Must be at least 0.5 and at most 22. If set to None we will guess the optimal duration using the prompt. Defaults to None.
@@ -128,7 +140,7 @@ class AsyncTextToSoundEffectsClient:
         Yields
         ------
         typing.AsyncIterator[bytes]
-            Successful Response
+            The generated sound effect as an MP3 file
 
         Examples
         --------
@@ -152,6 +164,9 @@ class AsyncTextToSoundEffectsClient:
         async with self._client_wrapper.httpx_client.stream(
             "v1/sound-generation",
             method="POST",
+            params={
+                "output_format": output_format,
+            },
             json={
                 "text": text,
                 "duration_seconds": duration_seconds,

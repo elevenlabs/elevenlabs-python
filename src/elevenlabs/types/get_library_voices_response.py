@@ -3,13 +3,21 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 from .library_voice_response import LibraryVoiceResponse
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class GetLibraryVoicesResponse(UncheckedBaseModel):
-    voices: typing.List[LibraryVoiceResponse]
-    has_more: bool
+    voices: typing.List[LibraryVoiceResponse] = pydantic.Field()
+    """
+    The list of shared voices
+    """
+
+    has_more: bool = pydantic.Field()
+    """
+    Whether there are more shared voices in subsequent pages.
+    """
+
     last_sort_id: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

@@ -2,16 +2,35 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class VoiceSample(UncheckedBaseModel):
-    sample_id: typing.Optional[str] = None
-    file_name: typing.Optional[str] = None
-    mime_type: typing.Optional[str] = None
-    size_bytes: typing.Optional[int] = None
-    hash: typing.Optional[str] = None
+    sample_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ID of the sample.
+    """
+
+    file_name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The name of the sample file.
+    """
+
+    mime_type: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The MIME type of the sample file.
+    """
+
+    size_bytes: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The size of the sample file in bytes.
+    """
+
+    hash: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The hash of the sample file.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

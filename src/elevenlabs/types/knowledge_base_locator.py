@@ -2,8 +2,9 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .knowledge_base_locator_type import KnowledgeBaseLocatorType
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
+from .document_usage_mode_enum import DocumentUsageModeEnum
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
@@ -11,6 +12,7 @@ class KnowledgeBaseLocator(UncheckedBaseModel):
     type: KnowledgeBaseLocatorType
     name: str
     id: str
+    usage_mode: typing.Optional[DocumentUsageModeEnum] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

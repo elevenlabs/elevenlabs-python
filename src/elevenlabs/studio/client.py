@@ -56,7 +56,7 @@ class StudioClient:
             The ID of the model to be used for this Studio project, you can query GET /v1/models to list all available models.
 
         mode : BodyCreatePodcastV1StudioPodcastsPostMode
-            The type of podcast to generate
+            The type of podcast to generate. Can be 'conversation', an interaction between two voices, or 'bulletin', a monologue.
 
         source : BodyCreatePodcastV1StudioPodcastsPostSource
             The source content for the Podcast.
@@ -111,12 +111,12 @@ class StudioClient:
             model_id="21m00Tcm4TlvDq8ikWAM",
             mode=BodyCreatePodcastV1StudioPodcastsPostMode_Conversation(
                 conversation=PodcastConversationModeData(
-                    host_voice_id="host_voice_id",
-                    guest_voice_id="guest_voice_id",
+                    host_voice_id="aw1NgEzBg83R7vgmiJt6",
+                    guest_voice_id="aw1NgEzBg83R7vgmiJt7",
                 ),
             ),
             source=PodcastTextSource(
-                text="text",
+                text="This is a test podcast.",
             ),
         )
         """
@@ -196,7 +196,7 @@ class AsyncStudioClient:
             The ID of the model to be used for this Studio project, you can query GET /v1/models to list all available models.
 
         mode : BodyCreatePodcastV1StudioPodcastsPostMode
-            The type of podcast to generate
+            The type of podcast to generate. Can be 'conversation', an interaction between two voices, or 'bulletin', a monologue.
 
         source : BodyCreatePodcastV1StudioPodcastsPostSource
             The source content for the Podcast.
@@ -256,12 +256,12 @@ class AsyncStudioClient:
                 model_id="21m00Tcm4TlvDq8ikWAM",
                 mode=BodyCreatePodcastV1StudioPodcastsPostMode_Conversation(
                     conversation=PodcastConversationModeData(
-                        host_voice_id="host_voice_id",
-                        guest_voice_id="guest_voice_id",
+                        host_voice_id="aw1NgEzBg83R7vgmiJt6",
+                        guest_voice_id="aw1NgEzBg83R7vgmiJt7",
                     ),
                 ),
                 source=PodcastTextSource(
-                    text="text",
+                    text="This is a test podcast.",
                 ),
             )
 

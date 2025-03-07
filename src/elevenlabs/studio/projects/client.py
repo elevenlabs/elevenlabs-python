@@ -17,8 +17,12 @@ from ...types.add_project_response_model import AddProjectResponseModel
 from ...types.project_extended_response_model import ProjectExtendedResponseModel
 from ...core.jsonable_encoder import jsonable_encoder
 from ...types.edit_project_response_model import EditProjectResponseModel
+from ...types.delete_project_response_model import DeleteProjectResponseModel
+from ...types.convert_project_response_model import ConvertProjectResponseModel
 from ...types.project_snapshots_response import ProjectSnapshotsResponse
+from ...types.project_snapshot_extended_response_model import ProjectSnapshotExtendedResponseModel
 from ...types.pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
+from ...types.create_pronunciation_dictionary_response_model import CreatePronunciationDictionaryResponseModel
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.client_wrapper import AsyncClientWrapper
 
@@ -356,7 +360,7 @@ class ProjectsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EditProjectResponseModel:
         """
-        Updates Studio project metadata.
+        Updates the specified Studio project by setting the values of the parameters passed.
 
         Parameters
         ----------
@@ -450,7 +454,7 @@ class ProjectsClient:
 
     def delete(
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
+    ) -> DeleteProjectResponseModel:
         """
         Deletes a Studio project.
 
@@ -464,7 +468,7 @@ class ProjectsClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        DeleteProjectResponseModel
             Successful Response
 
         Examples
@@ -486,9 +490,9 @@ class ProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    DeleteProjectResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=DeleteProjectResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -591,7 +595,7 @@ class ProjectsClient:
 
     def convert(
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
+    ) -> ConvertProjectResponseModel:
         """
         Starts conversion of a Studio project and all of its chapters.
 
@@ -605,7 +609,7 @@ class ProjectsClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        ConvertProjectResponseModel
             Successful Response
 
         Examples
@@ -627,9 +631,9 @@ class ProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    ConvertProjectResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=ConvertProjectResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -652,7 +656,7 @@ class ProjectsClient:
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ProjectSnapshotsResponse:
         """
-        Gets the snapshots of a Studio project.
+        Retrieves a list of snapshots for a Studio project.
 
         Parameters
         ----------
@@ -689,6 +693,69 @@ class ProjectsClient:
                     ProjectSnapshotsResponse,
                     construct_type(
                         type_=ProjectSnapshotsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get_project_snapshot(
+        self, project_id: str, project_snapshot_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ProjectSnapshotExtendedResponseModel:
+        """
+        Returns the project snapshot.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        project_snapshot_id : str
+            The ID of the Studio project snapshot.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ProjectSnapshotExtendedResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.studio.projects.get_project_snapshot(
+            project_id="21m00Tcm4TlvDq8ikWAM",
+            project_snapshot_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/studio/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ProjectSnapshotExtendedResponseModel,
+                    construct_type(
+                        type_=ProjectSnapshotExtendedResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -780,7 +847,7 @@ class ProjectsClient:
 
     def stream_archive(
         self, project_id: str, project_snapshot_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    ) -> typing.Iterator[bytes]:
         """
         Returns a compressed archive of the Studio project's audio.
 
@@ -793,46 +860,39 @@ class ProjectsClient:
             The ID of the Studio project snapshot.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.studio.projects.stream_archive(
-            project_id="21m00Tcm4TlvDq8ikWAM",
-            project_snapshot_id="21m00Tcm4TlvDq8ikWAM",
-        )
+        Yields
+        ------
+        typing.Iterator[bytes]
+            Streaming archive data
         """
-        _response = self._client_wrapper.httpx_client.request(
+        with self._client_wrapper.httpx_client.stream(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}/archive",
             method="POST",
             request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
+        ) as _response:
+            try:
+                if 200 <= _response.status_code < 300:
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
+                        yield _chunk
+                    return
+                _response.read()
+                if _response.status_code == 422:
+                    raise UnprocessableEntityError(
+                        typing.cast(
+                            HttpValidationError,
+                            construct_type(
+                                type_=HttpValidationError,  # type: ignore
+                                object_=_response.json(),
+                            ),
+                        )
                     )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def update_pronunciation_dictionaries(
         self,
@@ -841,7 +901,7 @@ class ProjectsClient:
         pronunciation_dictionary_locators: typing.Sequence[PronunciationDictionaryVersionLocator],
         invalidate_affected_text: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Optional[typing.Any]:
+    ) -> CreatePronunciationDictionaryResponseModel:
         """
         Create a set of pronunciation dictionaries acting on a project. This will automatically mark text within this project as requiring reconverting where the new dictionary would apply or the old one no longer does.
 
@@ -861,7 +921,7 @@ class ProjectsClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        CreatePronunciationDictionaryResponseModel
             Successful Response
 
         Examples
@@ -901,9 +961,9 @@ class ProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    CreatePronunciationDictionaryResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=CreatePronunciationDictionaryResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1277,7 +1337,7 @@ class AsyncProjectsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EditProjectResponseModel:
         """
-        Updates Studio project metadata.
+        Updates the specified Studio project by setting the values of the parameters passed.
 
         Parameters
         ----------
@@ -1379,7 +1439,7 @@ class AsyncProjectsClient:
 
     async def delete(
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
+    ) -> DeleteProjectResponseModel:
         """
         Deletes a Studio project.
 
@@ -1393,7 +1453,7 @@ class AsyncProjectsClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        DeleteProjectResponseModel
             Successful Response
 
         Examples
@@ -1423,9 +1483,9 @@ class AsyncProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    DeleteProjectResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=DeleteProjectResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1536,7 +1596,7 @@ class AsyncProjectsClient:
 
     async def convert(
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
+    ) -> ConvertProjectResponseModel:
         """
         Starts conversion of a Studio project and all of its chapters.
 
@@ -1550,7 +1610,7 @@ class AsyncProjectsClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        ConvertProjectResponseModel
             Successful Response
 
         Examples
@@ -1580,9 +1640,9 @@ class AsyncProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    ConvertProjectResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=ConvertProjectResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1605,7 +1665,7 @@ class AsyncProjectsClient:
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ProjectSnapshotsResponse:
         """
-        Gets the snapshots of a Studio project.
+        Retrieves a list of snapshots for a Studio project.
 
         Parameters
         ----------
@@ -1650,6 +1710,77 @@ class AsyncProjectsClient:
                     ProjectSnapshotsResponse,
                     construct_type(
                         type_=ProjectSnapshotsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_project_snapshot(
+        self, project_id: str, project_snapshot_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ProjectSnapshotExtendedResponseModel:
+        """
+        Returns the project snapshot.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        project_snapshot_id : str
+            The ID of the Studio project snapshot.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ProjectSnapshotExtendedResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.studio.projects.get_project_snapshot(
+                project_id="21m00Tcm4TlvDq8ikWAM",
+                project_snapshot_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/studio/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ProjectSnapshotExtendedResponseModel,
+                    construct_type(
+                        type_=ProjectSnapshotExtendedResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1749,7 +1880,7 @@ class AsyncProjectsClient:
 
     async def stream_archive(
         self, project_id: str, project_snapshot_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    ) -> typing.AsyncIterator[bytes]:
         """
         Returns a compressed archive of the Studio project's audio.
 
@@ -1762,54 +1893,39 @@ class AsyncProjectsClient:
             The ID of the Studio project snapshot.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.studio.projects.stream_archive(
-                project_id="21m00Tcm4TlvDq8ikWAM",
-                project_snapshot_id="21m00Tcm4TlvDq8ikWAM",
-            )
-
-
-        asyncio.run(main())
+        Yields
+        ------
+        typing.AsyncIterator[bytes]
+            Streaming archive data
         """
-        _response = await self._client_wrapper.httpx_client.request(
+        async with self._client_wrapper.httpx_client.stream(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}/archive",
             method="POST",
             request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
+        ) as _response:
+            try:
+                if 200 <= _response.status_code < 300:
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
+                        yield _chunk
+                    return
+                await _response.aread()
+                if _response.status_code == 422:
+                    raise UnprocessableEntityError(
+                        typing.cast(
+                            HttpValidationError,
+                            construct_type(
+                                type_=HttpValidationError,  # type: ignore
+                                object_=_response.json(),
+                            ),
+                        )
                     )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def update_pronunciation_dictionaries(
         self,
@@ -1818,7 +1934,7 @@ class AsyncProjectsClient:
         pronunciation_dictionary_locators: typing.Sequence[PronunciationDictionaryVersionLocator],
         invalidate_affected_text: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Optional[typing.Any]:
+    ) -> CreatePronunciationDictionaryResponseModel:
         """
         Create a set of pronunciation dictionaries acting on a project. This will automatically mark text within this project as requiring reconverting where the new dictionary would apply or the old one no longer does.
 
@@ -1838,7 +1954,7 @@ class AsyncProjectsClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        CreatePronunciationDictionaryResponseModel
             Successful Response
 
         Examples
@@ -1886,9 +2002,9 @@ class AsyncProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    CreatePronunciationDictionaryResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=CreatePronunciationDictionaryResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

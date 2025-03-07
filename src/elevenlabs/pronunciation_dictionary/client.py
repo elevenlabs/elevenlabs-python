@@ -56,7 +56,7 @@ class PronunciationDictionaryClient:
             A description of the pronunciation dictionary, used for identification only.
 
         workspace_access : typing.Optional[PronunciationDictionaryAddFromFileRequestWorkspaceAccess]
-            Should be one of 'editor' or 'viewer'. If not provided, defaults to no access.
+            Should be one of 'admin', 'editor' or 'viewer'. If not provided, defaults to no access.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -157,8 +157,8 @@ class PronunciationDictionaryClient:
             pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
             rules=[
                 PronunciationDictionaryRule_Alias(
-                    string_to_replace="string_to_replace",
-                    alias="alias",
+                    string_to_replace="Thailand",
+                    alias="tie-land",
                 )
             ],
         )
@@ -277,9 +277,9 @@ class PronunciationDictionaryClient:
 
     def download(
         self, dictionary_id: str, version_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> str:
+    ) -> typing.Iterator[bytes]:
         """
-        Get PLS file with a pronunciation dictionary version rules
+        Get a PLS file with a pronunciation dictionary version rules
 
         Parameters
         ----------
@@ -290,12 +290,12 @@ class PronunciationDictionaryClient:
             The id of the version of the pronunciation dictionary
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
-        Returns
-        -------
-        str
-            Successful Response
+        Yields
+        ------
+        typing.Iterator[bytes]
+            The PLS file containing pronunciation dictionary rules
 
         Examples
         --------
@@ -309,28 +309,32 @@ class PronunciationDictionaryClient:
             version_id="KZFyRUq3R6kaqhKI146w",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
+        with self._client_wrapper.httpx_client.stream(
             f"v1/pronunciation-dictionaries/{jsonable_encoder(dictionary_id)}/{jsonable_encoder(version_id)}/download",
             method="GET",
             request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return _response.text  # type: ignore
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
+        ) as _response:
+            try:
+                if 200 <= _response.status_code < 300:
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
+                        yield _chunk
+                    return
+                _response.read()
+                if _response.status_code == 422:
+                    raise UnprocessableEntityError(
+                        typing.cast(
+                            HttpValidationError,
+                            construct_type(
+                                type_=HttpValidationError,  # type: ignore
+                                object_=_response.json(),
+                            ),
+                        )
                     )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get(
         self, pronunciation_dictionary_id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -490,7 +494,7 @@ class AsyncPronunciationDictionaryClient:
             A description of the pronunciation dictionary, used for identification only.
 
         workspace_access : typing.Optional[PronunciationDictionaryAddFromFileRequestWorkspaceAccess]
-            Should be one of 'editor' or 'viewer'. If not provided, defaults to no access.
+            Should be one of 'admin', 'editor' or 'viewer'. If not provided, defaults to no access.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -604,8 +608,8 @@ class AsyncPronunciationDictionaryClient:
                 pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
                 rules=[
                     PronunciationDictionaryRule_Alias(
-                        string_to_replace="string_to_replace",
-                        alias="alias",
+                        string_to_replace="Thailand",
+                        alias="tie-land",
                     )
                 ],
             )
@@ -735,9 +739,9 @@ class AsyncPronunciationDictionaryClient:
 
     async def download(
         self, dictionary_id: str, version_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> str:
+    ) -> typing.AsyncIterator[bytes]:
         """
-        Get PLS file with a pronunciation dictionary version rules
+        Get a PLS file with a pronunciation dictionary version rules
 
         Parameters
         ----------
@@ -748,12 +752,12 @@ class AsyncPronunciationDictionaryClient:
             The id of the version of the pronunciation dictionary
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
-        Returns
-        -------
-        str
-            Successful Response
+        Yields
+        ------
+        typing.AsyncIterator[bytes]
+            The PLS file containing pronunciation dictionary rules
 
         Examples
         --------
@@ -775,28 +779,32 @@ class AsyncPronunciationDictionaryClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
+        async with self._client_wrapper.httpx_client.stream(
             f"v1/pronunciation-dictionaries/{jsonable_encoder(dictionary_id)}/{jsonable_encoder(version_id)}/download",
             method="GET",
             request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return _response.text  # type: ignore
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
+        ) as _response:
+            try:
+                if 200 <= _response.status_code < 300:
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
+                        yield _chunk
+                    return
+                await _response.aread()
+                if _response.status_code == 422:
+                    raise UnprocessableEntityError(
+                        typing.cast(
+                            HttpValidationError,
+                            construct_type(
+                                type_=HttpValidationError,  # type: ignore
+                                object_=_response.json(),
+                            ),
+                        )
                     )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get(
         self, pronunciation_dictionary_id: str, *, request_options: typing.Optional[RequestOptions] = None
