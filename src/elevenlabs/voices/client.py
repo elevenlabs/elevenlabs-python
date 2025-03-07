@@ -12,10 +12,14 @@ from ..core.api_error import ApiError
 from ..types.voice_settings import VoiceSettings
 from ..core.jsonable_encoder import jsonable_encoder
 from ..types.voice import Voice
+from ..types.delete_voice_response_model import DeleteVoiceResponseModel
+from ..types.edit_voice_settings_response_model import EditVoiceSettingsResponseModel
 from ..core.serialization import convert_and_respect_annotation_metadata
 from .. import core
 from ..types.add_voice_ivc_response_model import AddVoiceIvcResponseModel
+from ..types.edit_voice_response_model import EditVoiceResponseModel
 from ..types.add_voice_response_model import AddVoiceResponseModel
+from .types.voices_get_shared_request_category import VoicesGetSharedRequestCategory
 from ..types.get_library_voices_response import GetLibraryVoicesResponse
 from ..types.profile_page_response_model import ProfilePageResponseModel
 from ..core.client_wrapper import AsyncClientWrapper
@@ -32,7 +36,7 @@ class VoicesClient:
         self, *, show_legacy: typing.Optional[bool] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> GetVoicesResponse:
         """
-        Gets a list of all available voices for a user.
+        Returns a list of all available voices for a user.
 
         Parameters
         ----------
@@ -258,7 +262,7 @@ class VoicesClient:
 
     def delete(
         self, voice_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
+    ) -> DeleteVoiceResponseModel:
         """
         Deletes a voice by its ID.
 
@@ -272,7 +276,7 @@ class VoicesClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        DeleteVoiceResponseModel
             Successful Response
 
         Examples
@@ -294,9 +298,9 @@ class VoicesClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    DeleteVoiceResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=DeleteVoiceResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -317,9 +321,9 @@ class VoicesClient:
 
     def edit_settings(
         self, voice_id: str, *, request: VoiceSettings, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
+    ) -> EditVoiceSettingsResponseModel:
         """
-        Edit your settings for a specific voice. "similarity_boost" corresponds to"Clarity + Similarity Enhancement" in the web app and "stability" corresponds to "Stability" slider in the web app.
+        Edit your settings for a specific voice. "similarity_boost" corresponds to "Clarity + Similarity Enhancement" in the web app and "stability" corresponds to "Stability" slider in the web app.
 
         Parameters
         ----------
@@ -333,7 +337,7 @@ class VoicesClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        EditVoiceSettingsResponseModel
             Successful Response
 
         Examples
@@ -362,9 +366,9 @@ class VoicesClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    EditVoiceSettingsResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=EditVoiceSettingsResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -408,7 +412,7 @@ class VoicesClient:
             If set will remove background noise for voice samples using our audio isolation model. If the samples do not include background noise, it can make the quality worse.
 
         description : typing.Optional[str]
-            How would you describe the voice?
+            A description of the voice.
 
         labels : typing.Optional[str]
             Serialized labels dictionary for the voice.
@@ -481,7 +485,7 @@ class VoicesClient:
         description: typing.Optional[str] = OMIT,
         labels: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Optional[typing.Any]:
+    ) -> EditVoiceResponseModel:
         """
         Edit a voice created by you.
 
@@ -500,7 +504,7 @@ class VoicesClient:
             If set will remove background noise for voice samples using our audio isolation model. If the samples do not include background noise, it can make the quality worse.
 
         description : typing.Optional[str]
-            How would you describe the voice?
+            A description of the voice.
 
         labels : typing.Optional[str]
             Serialized labels dictionary for the voice.
@@ -510,7 +514,7 @@ class VoicesClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        EditVoiceResponseModel
             Successful Response
 
         Examples
@@ -543,9 +547,9 @@ class VoicesClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    EditVoiceResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=EditVoiceResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -573,7 +577,7 @@ class VoicesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddVoiceResponseModel:
         """
-        Add a sharing voice to your collection of voices in VoiceLab.
+        Add a shared voice to your collection of voices.
 
         Parameters
         ----------
@@ -647,7 +651,7 @@ class VoicesClient:
         self,
         *,
         page_size: typing.Optional[int] = None,
-        category: typing.Optional[str] = None,
+        category: typing.Optional[VoicesGetSharedRequestCategory] = None,
         gender: typing.Optional[str] = None,
         age: typing.Optional[str] = None,
         accent: typing.Optional[str] = None,
@@ -664,36 +668,36 @@ class VoicesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetLibraryVoicesResponse:
         """
-        Gets a list of shared voices.
+        Retrieves a list of shared voices.
 
         Parameters
         ----------
         page_size : typing.Optional[int]
             How many shared voices to return at maximum. Can not exceed 100, defaults to 30.
 
-        category : typing.Optional[str]
-            voice category used for filtering
+        category : typing.Optional[VoicesGetSharedRequestCategory]
+            Voice category used for filtering
 
         gender : typing.Optional[str]
-            gender used for filtering
+            Gender used for filtering
 
         age : typing.Optional[str]
-            age used for filtering
+            Age used for filtering
 
         accent : typing.Optional[str]
-            accent used for filtering
+            Accent used for filtering
 
         language : typing.Optional[str]
-            language used for filtering
+            Language used for filtering
 
         search : typing.Optional[str]
-            search term used for filtering
+            Search term used for filtering
 
         use_cases : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            use-case used for filtering
+            Use-case used for filtering
 
         descriptives : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            search term used for filtering
+            Search term used for filtering
 
         featured : typing.Optional[bool]
             Filter featured voices
@@ -708,7 +712,7 @@ class VoicesClient:
             Filter voices by public owner ID
 
         sort : typing.Optional[str]
-            sort criteria
+            Sort criteria
 
         page : typing.Optional[int]
 
@@ -796,10 +800,10 @@ class VoicesClient:
             See core.File for more documentation
 
         similarity_threshold : typing.Optional[float]
-            Threshold for voice similarity between provided sample and library voices. Must be in range <0, 2>. The smaller the value the more similar voices will be returned.
+            Threshold for voice similarity between provided sample and library voices. Values range from 0 to 2. The smaller the value the more similar voices will be returned.
 
         top_k : typing.Optional[int]
-            Number of most similar voices to return. If similarity_threshold is provided, less than this number of voices may be returned. Must be in range <1, 100>.
+            Number of most similar voices to return. If similarity_threshold is provided, less than this number of voices may be returned. Values range from 1 to 100.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -923,7 +927,7 @@ class AsyncVoicesClient:
         self, *, show_legacy: typing.Optional[bool] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> GetVoicesResponse:
         """
-        Gets a list of all available voices for a user.
+        Returns a list of all available voices for a user.
 
         Parameters
         ----------
@@ -1183,7 +1187,7 @@ class AsyncVoicesClient:
 
     async def delete(
         self, voice_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
+    ) -> DeleteVoiceResponseModel:
         """
         Deletes a voice by its ID.
 
@@ -1197,7 +1201,7 @@ class AsyncVoicesClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        DeleteVoiceResponseModel
             Successful Response
 
         Examples
@@ -1227,9 +1231,9 @@ class AsyncVoicesClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    DeleteVoiceResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=DeleteVoiceResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1250,9 +1254,9 @@ class AsyncVoicesClient:
 
     async def edit_settings(
         self, voice_id: str, *, request: VoiceSettings, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
+    ) -> EditVoiceSettingsResponseModel:
         """
-        Edit your settings for a specific voice. "similarity_boost" corresponds to"Clarity + Similarity Enhancement" in the web app and "stability" corresponds to "Stability" slider in the web app.
+        Edit your settings for a specific voice. "similarity_boost" corresponds to "Clarity + Similarity Enhancement" in the web app and "stability" corresponds to "Stability" slider in the web app.
 
         Parameters
         ----------
@@ -1266,7 +1270,7 @@ class AsyncVoicesClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        EditVoiceSettingsResponseModel
             Successful Response
 
         Examples
@@ -1303,9 +1307,9 @@ class AsyncVoicesClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    EditVoiceSettingsResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=EditVoiceSettingsResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1349,7 +1353,7 @@ class AsyncVoicesClient:
             If set will remove background noise for voice samples using our audio isolation model. If the samples do not include background noise, it can make the quality worse.
 
         description : typing.Optional[str]
-            How would you describe the voice?
+            A description of the voice.
 
         labels : typing.Optional[str]
             Serialized labels dictionary for the voice.
@@ -1430,7 +1434,7 @@ class AsyncVoicesClient:
         description: typing.Optional[str] = OMIT,
         labels: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Optional[typing.Any]:
+    ) -> EditVoiceResponseModel:
         """
         Edit a voice created by you.
 
@@ -1449,7 +1453,7 @@ class AsyncVoicesClient:
             If set will remove background noise for voice samples using our audio isolation model. If the samples do not include background noise, it can make the quality worse.
 
         description : typing.Optional[str]
-            How would you describe the voice?
+            A description of the voice.
 
         labels : typing.Optional[str]
             Serialized labels dictionary for the voice.
@@ -1459,7 +1463,7 @@ class AsyncVoicesClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        EditVoiceResponseModel
             Successful Response
 
         Examples
@@ -1500,9 +1504,9 @@ class AsyncVoicesClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    EditVoiceResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=EditVoiceResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1530,7 +1534,7 @@ class AsyncVoicesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddVoiceResponseModel:
         """
-        Add a sharing voice to your collection of voices in VoiceLab.
+        Add a shared voice to your collection of voices.
 
         Parameters
         ----------
@@ -1612,7 +1616,7 @@ class AsyncVoicesClient:
         self,
         *,
         page_size: typing.Optional[int] = None,
-        category: typing.Optional[str] = None,
+        category: typing.Optional[VoicesGetSharedRequestCategory] = None,
         gender: typing.Optional[str] = None,
         age: typing.Optional[str] = None,
         accent: typing.Optional[str] = None,
@@ -1629,36 +1633,36 @@ class AsyncVoicesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetLibraryVoicesResponse:
         """
-        Gets a list of shared voices.
+        Retrieves a list of shared voices.
 
         Parameters
         ----------
         page_size : typing.Optional[int]
             How many shared voices to return at maximum. Can not exceed 100, defaults to 30.
 
-        category : typing.Optional[str]
-            voice category used for filtering
+        category : typing.Optional[VoicesGetSharedRequestCategory]
+            Voice category used for filtering
 
         gender : typing.Optional[str]
-            gender used for filtering
+            Gender used for filtering
 
         age : typing.Optional[str]
-            age used for filtering
+            Age used for filtering
 
         accent : typing.Optional[str]
-            accent used for filtering
+            Accent used for filtering
 
         language : typing.Optional[str]
-            language used for filtering
+            Language used for filtering
 
         search : typing.Optional[str]
-            search term used for filtering
+            Search term used for filtering
 
         use_cases : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            use-case used for filtering
+            Use-case used for filtering
 
         descriptives : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            search term used for filtering
+            Search term used for filtering
 
         featured : typing.Optional[bool]
             Filter featured voices
@@ -1673,7 +1677,7 @@ class AsyncVoicesClient:
             Filter voices by public owner ID
 
         sort : typing.Optional[str]
-            sort criteria
+            Sort criteria
 
         page : typing.Optional[int]
 
@@ -1769,10 +1773,10 @@ class AsyncVoicesClient:
             See core.File for more documentation
 
         similarity_threshold : typing.Optional[float]
-            Threshold for voice similarity between provided sample and library voices. Must be in range <0, 2>. The smaller the value the more similar voices will be returned.
+            Threshold for voice similarity between provided sample and library voices. Values range from 0 to 2. The smaller the value the more similar voices will be returned.
 
         top_k : typing.Optional[int]
-            Number of most similar voices to return. If similarity_threshold is provided, less than this number of voices may be returned. Must be in range <1, 100>.
+            Number of most similar voices to return. If similarity_threshold is provided, less than this number of voices may be returned. Values range from 1 to 100.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

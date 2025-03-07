@@ -30,6 +30,7 @@ class WidgetConfig(UncheckedBaseModel):
     listening_text: typing.Optional[str] = None
     speaking_text: typing.Optional[str] = None
     shareable_page_text: typing.Optional[str] = None
+    shareable_page_show_terms: typing.Optional[bool] = None
     terms_text: typing.Optional[str] = None
     terms_html: typing.Optional[str] = None
     terms_key: typing.Optional[str] = None

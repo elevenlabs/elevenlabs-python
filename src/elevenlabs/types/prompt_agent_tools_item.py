@@ -6,6 +6,7 @@ from .array_json_schema_property import ArrayJsonSchemaProperty
 from .object_json_schema_property import ObjectJsonSchemaProperty
 import typing
 from .webhook_tool_api_schema_config import WebhookToolApiSchemaConfig
+from .dynamic_variables_config import DynamicVariablesConfig
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 import typing_extensions
@@ -18,6 +19,7 @@ class PromptAgentToolsItem_Webhook(UncheckedBaseModel):
     name: str
     description: str
     api_schema: WebhookToolApiSchemaConfig
+    dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -36,6 +38,7 @@ class PromptAgentToolsItem_Client(UncheckedBaseModel):
     parameters: typing.Optional[ObjectJsonSchemaProperty] = None
     expects_response: typing.Optional[bool] = None
     response_timeout_secs: typing.Optional[int] = None
+    dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

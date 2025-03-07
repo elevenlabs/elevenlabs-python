@@ -9,6 +9,7 @@ from .llm import Llm
 from .prompt_agent_tools_item import PromptAgentToolsItem
 from .knowledge_base_locator import KnowledgeBaseLocator
 from .custom_llm import CustomLlm
+from .rag_config import RagConfig
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from ..core.pydantic_utilities import update_forward_refs
@@ -22,8 +23,8 @@ class PromptAgent(UncheckedBaseModel):
     tools: typing.Optional[typing.List[PromptAgentToolsItem]] = None
     tool_ids: typing.Optional[typing.List[str]] = None
     knowledge_base: typing.Optional[typing.List[KnowledgeBaseLocator]] = None
-    knowledge_base_document_ids: typing.Optional[typing.List[str]] = None
     custom_llm: typing.Optional[CustomLlm] = None
+    rag: typing.Optional[RagConfig] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

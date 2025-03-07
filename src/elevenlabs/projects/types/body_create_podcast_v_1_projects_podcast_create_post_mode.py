@@ -13,7 +13,7 @@ from ...core.unchecked_base_model import UnionMetadata
 
 class BodyCreatePodcastV1ProjectsPodcastCreatePostMode_Conversation(UncheckedBaseModel):
     """
-    The type of podcast to generate
+    The type of podcast to generate. Can be 'conversation', an interaction between two voices, or 'bulletin', a monologue.
     """
 
     type: typing.Literal["conversation"] = "conversation"
@@ -31,7 +31,7 @@ class BodyCreatePodcastV1ProjectsPodcastCreatePostMode_Conversation(UncheckedBas
 
 class BodyCreatePodcastV1ProjectsPodcastCreatePostMode_Bulletin(UncheckedBaseModel):
     """
-    The type of podcast to generate
+    The type of podcast to generate. Can be 'conversation', an interaction between two voices, or 'bulletin', a monologue.
     """
 
     type: typing.Literal["bulletin"] = "bulletin"

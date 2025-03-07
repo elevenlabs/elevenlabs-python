@@ -16,6 +16,7 @@ class TtsConversationalConfig(UncheckedBaseModel):
     agent_output_audio_format: typing.Optional[TtsOutputFormat] = None
     optimize_streaming_latency: typing.Optional[TtsOptimizeStreamingLatency] = None
     stability: typing.Optional[float] = None
+    speed: typing.Optional[float] = None
     similarity_boost: typing.Optional[float] = None
     pronunciation_dictionary_locators: typing.Optional[typing.List[PydanticPronunciationDictionaryVersionLocator]] = (
         None

@@ -2,4 +2,4 @@
 
 import typing
 
-SpeechToTextConvertRequestTimestampsGranularity = typing.Union[typing.Literal["word", "character"], typing.Any]
+SpeechToTextConvertRequestTimestampsGranularity = typing.Union[typing.Literal["none", "word", "character"], typing.Any]

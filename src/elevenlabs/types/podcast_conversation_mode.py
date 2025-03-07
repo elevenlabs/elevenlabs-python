@@ -2,13 +2,16 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .podcast_conversation_mode_data import PodcastConversationModeData
+import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
-import pydantic
 
 
 class PodcastConversationMode(UncheckedBaseModel):
-    conversation: PodcastConversationModeData
+    conversation: PodcastConversationModeData = pydantic.Field()
+    """
+    The voice settings for the conversation.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

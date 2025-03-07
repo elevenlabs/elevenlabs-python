@@ -3,12 +3,15 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 from .project_response import ProjectResponse
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class GetProjectsResponse(UncheckedBaseModel):
-    projects: typing.List[ProjectResponse]
+    projects: typing.List[ProjectResponse] = pydantic.Field()
+    """
+    A list of projects with their metadata.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

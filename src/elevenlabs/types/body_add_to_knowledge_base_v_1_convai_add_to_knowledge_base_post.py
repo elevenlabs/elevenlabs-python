@@ -7,6 +7,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class BodyAddToKnowledgeBaseV1ConvaiAddToKnowledgeBasePost(UncheckedBaseModel):
+    name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    A custom, human-readable name for the document.
+    """
+
     url: typing.Optional[str] = pydantic.Field(default=None)
     """
     URL to a page of documentation that the agent will have access to in order to interact with users.

@@ -2,8 +2,8 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class SpeechToTextCharacterResponseModel(UncheckedBaseModel):
@@ -12,12 +12,12 @@ class SpeechToTextCharacterResponseModel(UncheckedBaseModel):
     The character that was transcribed.
     """
 
-    start: float = pydantic.Field()
+    start: typing.Optional[float] = pydantic.Field(default=None)
     """
     The start time of the character in seconds.
     """
 
-    end: float = pydantic.Field()
+    end: typing.Optional[float] = pydantic.Field(default=None)
     """
     The end time of the character in seconds.
     """

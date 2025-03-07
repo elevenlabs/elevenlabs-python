@@ -75,7 +75,7 @@ class ProjectsClient:
             The ID of the model to be used for this Studio project, you can query GET /v1/models to list all available models.
 
         mode : BodyCreatePodcastV1ProjectsPodcastCreatePostMode
-            The type of podcast to generate
+            The type of podcast to generate. Can be 'conversation', an interaction between two voices, or 'bulletin', a monologue.
 
         source : BodyCreatePodcastV1ProjectsPodcastCreatePostSource
             The source content for the Podcast.
@@ -130,12 +130,12 @@ class ProjectsClient:
             model_id="21m00Tcm4TlvDq8ikWAM",
             mode=BodyCreatePodcastV1ProjectsPodcastCreatePostMode_Conversation(
                 conversation=PodcastConversationModeData(
-                    host_voice_id="host_voice_id",
-                    guest_voice_id="guest_voice_id",
+                    host_voice_id="aw1NgEzBg83R7vgmiJt6",
+                    guest_voice_id="aw1NgEzBg83R7vgmiJt7",
                 ),
             ),
             source=PodcastTextSource(
-                text="text",
+                text="This is a test podcast.",
             ),
         )
         """
@@ -1394,7 +1394,7 @@ class ProjectsClient:
         self, project_id: str, chapter_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ChapterSnapshotsResponse:
         """
-        Gets information about all the snapshots of a chapter, each snapshot corresponds can be downloaded as audio. Whenever a chapter is converted a snapshot will be automatically created.
+        Gets information about all the snapshots of a chapter. Each snapshot can be downloaded as audio. Whenever a chapter is converted a snapshot will automatically be created.
 
         Parameters
         ----------
@@ -1644,7 +1644,7 @@ class AsyncProjectsClient:
             The ID of the model to be used for this Studio project, you can query GET /v1/models to list all available models.
 
         mode : BodyCreatePodcastV1ProjectsPodcastCreatePostMode
-            The type of podcast to generate
+            The type of podcast to generate. Can be 'conversation', an interaction between two voices, or 'bulletin', a monologue.
 
         source : BodyCreatePodcastV1ProjectsPodcastCreatePostSource
             The source content for the Podcast.
@@ -1704,12 +1704,12 @@ class AsyncProjectsClient:
                 model_id="21m00Tcm4TlvDq8ikWAM",
                 mode=BodyCreatePodcastV1ProjectsPodcastCreatePostMode_Conversation(
                     conversation=PodcastConversationModeData(
-                        host_voice_id="host_voice_id",
-                        guest_voice_id="guest_voice_id",
+                        host_voice_id="aw1NgEzBg83R7vgmiJt6",
+                        guest_voice_id="aw1NgEzBg83R7vgmiJt7",
                     ),
                 ),
                 source=PodcastTextSource(
-                    text="text",
+                    text="This is a test podcast.",
                 ),
             )
 
@@ -3091,7 +3091,7 @@ class AsyncProjectsClient:
         self, project_id: str, chapter_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ChapterSnapshotsResponse:
         """
-        Gets information about all the snapshots of a chapter, each snapshot corresponds can be downloaded as audio. Whenever a chapter is converted a snapshot will be automatically created.
+        Gets information about all the snapshots of a chapter. Each snapshot can be downloaded as audio. Whenever a chapter is converted a snapshot will automatically be created.
 
         Parameters
         ----------

@@ -2,6 +2,7 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .get_knowledge_base_summary_response_model_type import GetKnowledgeBaseSummaryResponseModelType
+from .knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
 import typing
 from .get_knowledge_base_summary_response_model_dependent_agents_item import (
     GetKnowledgeBaseSummaryResponseModelDependentAgentsItem,
@@ -15,6 +16,8 @@ class GetKnowledgeBaseSummaryResponseModel(UncheckedBaseModel):
     id: str
     name: str
     type: GetKnowledgeBaseSummaryResponseModelType
+    metadata: KnowledgeBaseDocumentMetadataResponseModel
+    prompt_injectable: bool
     dependent_agents: typing.List[GetKnowledgeBaseSummaryResponseModelDependentAgentsItem]
     access_level: GetKnowledgeBaseSummaryResponseModelAccessLevel
 

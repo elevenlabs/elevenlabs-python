@@ -97,7 +97,7 @@ class TextToSpeechClient:
             Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 and Flash v2.5 support language enforcement. For other models, an error will be returned if language code is provided.
 
         voice_settings : typing.Optional[VoiceSettings]
-            Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
+            Voice settings overriding stored settings for the given voice. They are applied only on the given request.
 
         pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
@@ -260,7 +260,7 @@ class TextToSpeechClient:
             Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 and Flash v2.5 support language enforcement. For other models, an error will be returned if language code is provided.
 
         voice_settings : typing.Optional[VoiceSettings]
-            Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
+            Voice settings overriding stored settings for the given voice. They are applied only on the given request.
 
         pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
@@ -423,7 +423,7 @@ class TextToSpeechClient:
             Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 and Flash v2.5 support language enforcement. For other models, an error will be returned if language code is provided.
 
         voice_settings : typing.Optional[VoiceSettings]
-            Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
+            Voice settings overriding stored settings for the given voice. They are applied only on the given request.
 
         pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
@@ -586,7 +586,7 @@ class TextToSpeechClient:
             Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 and Flash v2.5 support language enforcement. For other models, an error will be returned if language code is provided.
 
         voice_settings : typing.Optional[VoiceSettings]
-            Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
+            Voice settings overriding stored settings for the given voice. They are applied only on the given request.
 
         pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
@@ -766,7 +766,7 @@ class AsyncTextToSpeechClient:
             Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 and Flash v2.5 support language enforcement. For other models, an error will be returned if language code is provided.
 
         voice_settings : typing.Optional[VoiceSettings]
-            Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
+            Voice settings overriding stored settings for the given voice. They are applied only on the given request.
 
         pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
@@ -937,7 +937,7 @@ class AsyncTextToSpeechClient:
             Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 and Flash v2.5 support language enforcement. For other models, an error will be returned if language code is provided.
 
         voice_settings : typing.Optional[VoiceSettings]
-            Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
+            Voice settings overriding stored settings for the given voice. They are applied only on the given request.
 
         pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
@@ -1108,7 +1108,7 @@ class AsyncTextToSpeechClient:
             Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 and Flash v2.5 support language enforcement. For other models, an error will be returned if language code is provided.
 
         voice_settings : typing.Optional[VoiceSettings]
-            Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
+            Voice settings overriding stored settings for the given voice. They are applied only on the given request.
 
         pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
@@ -1279,7 +1279,7 @@ class AsyncTextToSpeechClient:
             Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 and Flash v2.5 support language enforcement. For other models, an error will be returned if language code is provided.
 
         voice_settings : typing.Optional[VoiceSettings]
-            Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
+            Voice settings overriding stored settings for the given voice. They are applied only on the given request.
 
         pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request

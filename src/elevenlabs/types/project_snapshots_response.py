@@ -3,12 +3,15 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 from .project_snapshot_response import ProjectSnapshotResponse
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ProjectSnapshotsResponse(UncheckedBaseModel):
-    snapshots: typing.List[ProjectSnapshotResponse]
+    snapshots: typing.List[ProjectSnapshotResponse] = pydantic.Field()
+    """
+    List of project snapshots.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

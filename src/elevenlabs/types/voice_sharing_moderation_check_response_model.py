@@ -2,20 +2,55 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class VoiceSharingModerationCheckResponseModel(UncheckedBaseModel):
-    date_checked_unix: typing.Optional[int] = None
-    name_value: typing.Optional[str] = None
-    name_check: typing.Optional[bool] = None
-    description_value: typing.Optional[str] = None
-    description_check: typing.Optional[bool] = None
-    sample_ids: typing.Optional[typing.List[str]] = None
-    sample_checks: typing.Optional[typing.List[float]] = None
-    captcha_ids: typing.Optional[typing.List[str]] = None
-    captcha_checks: typing.Optional[typing.List[float]] = None
+    date_checked_unix: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The date the moderation check was made in Unix time.
+    """
+
+    name_value: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The name value of the voice.
+    """
+
+    name_check: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the name check was successful.
+    """
+
+    description_value: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The description value of the voice.
+    """
+
+    description_check: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the description check was successful.
+    """
+
+    sample_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    A list of sample IDs.
+    """
+
+    sample_checks: typing.Optional[typing.List[float]] = pydantic.Field(default=None)
+    """
+    A list of sample checks.
+    """
+
+    captcha_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    A list of captcha IDs.
+    """
+
+    captcha_checks: typing.Optional[typing.List[float]] = pydantic.Field(default=None)
+    """
+    A list of CAPTCHA check values.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

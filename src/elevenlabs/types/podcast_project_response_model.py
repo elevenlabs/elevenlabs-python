@@ -2,13 +2,16 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .project_response import ProjectResponse
+import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
-import pydantic
 
 
 class PodcastProjectResponseModel(UncheckedBaseModel):
-    project: ProjectResponse
+    project: ProjectResponse = pydantic.Field()
+    """
+    The project associated with the created podcast.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

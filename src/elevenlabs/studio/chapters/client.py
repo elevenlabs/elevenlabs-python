@@ -15,7 +15,10 @@ from ...types.chapter_with_content_response_model import ChapterWithContentRespo
 from ...types.chapter_content_input_model import ChapterContentInputModel
 from ...types.edit_chapter_response_model import EditChapterResponseModel
 from ...core.serialization import convert_and_respect_annotation_metadata
+from ...types.delete_chapter_response_model import DeleteChapterResponseModel
+from ...types.convert_chapter_response_model import ConvertChapterResponseModel
 from ...types.chapter_snapshots_response import ChapterSnapshotsResponse
+from ...types.chapter_snapshot_extended_response_model import ChapterSnapshotExtendedResponseModel
 from ...core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -314,7 +317,7 @@ class ChaptersClient:
 
     def delete(
         self, project_id: str, chapter_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
+    ) -> DeleteChapterResponseModel:
         """
         Deletes a chapter.
 
@@ -331,7 +334,7 @@ class ChaptersClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        DeleteChapterResponseModel
             Successful Response
 
         Examples
@@ -354,9 +357,9 @@ class ChaptersClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    DeleteChapterResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=DeleteChapterResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -377,7 +380,7 @@ class ChaptersClient:
 
     def convert(
         self, project_id: str, chapter_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
+    ) -> ConvertChapterResponseModel:
         """
         Starts conversion of a specific chapter.
 
@@ -394,7 +397,7 @@ class ChaptersClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        ConvertChapterResponseModel
             Successful Response
 
         Examples
@@ -417,9 +420,9 @@ class ChaptersClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    ConvertChapterResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=ConvertChapterResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -442,7 +445,7 @@ class ChaptersClient:
         self, project_id: str, chapter_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ChapterSnapshotsResponse:
         """
-        Gets information about all the snapshots of a chapter, each snapshot corresponds can be downloaded as audio. Whenever a chapter is converted a snapshot will be automatically created.
+        Gets information about all the snapshots of a chapter. Each snapshot can be downloaded as audio. Whenever a chapter is converted a snapshot will automatically be created.
 
         Parameters
         ----------
@@ -501,6 +504,78 @@ class ChaptersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def get_chapter_snapshot(
+        self,
+        project_id: str,
+        chapter_id: str,
+        chapter_snapshot_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ChapterSnapshotExtendedResponseModel:
+        """
+        Returns the chapter snapshot.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        chapter_id : str
+            The ID of the chapter.
+
+        chapter_snapshot_id : str
+            The ID of the chapter snapshot.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ChapterSnapshotExtendedResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.studio.chapters.get_chapter_snapshot(
+            project_id="21m00Tcm4TlvDq8ikWAM",
+            chapter_id="21m00Tcm4TlvDq8ikWAM",
+            chapter_snapshot_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/snapshots/{jsonable_encoder(chapter_snapshot_id)}",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ChapterSnapshotExtendedResponseModel,
+                    construct_type(
+                        type_=ChapterSnapshotExtendedResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     def stream_snapshot(
         self,
         project_id: str,
@@ -509,7 +584,7 @@ class ChaptersClient:
         *,
         convert_to_mpeg: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    ) -> typing.Iterator[bytes]:
         """
         Stream the audio from a chapter snapshot. Use `GET /v1/studio/projects/{project_id}/chapters/{chapter_id}/snapshots` to return the snapshots of a chapter.
 
@@ -528,26 +603,14 @@ class ChaptersClient:
             Whether to convert the audio to mpeg format.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.studio.chapters.stream_snapshot(
-            project_id="21m00Tcm4TlvDq8ikWAM",
-            chapter_id="21m00Tcm4TlvDq8ikWAM",
-            chapter_snapshot_id="21m00Tcm4TlvDq8ikWAM",
-        )
+        Yields
+        ------
+        typing.Iterator[bytes]
+            Streaming audio data
         """
-        _response = self._client_wrapper.httpx_client.request(
+        with self._client_wrapper.httpx_client.stream(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/snapshots/{jsonable_encoder(chapter_snapshot_id)}/stream",
             method="POST",
             json={
@@ -558,24 +621,28 @@ class ChaptersClient:
             },
             request_options=request_options,
             omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
+        ) as _response:
+            try:
+                if 200 <= _response.status_code < 300:
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
+                        yield _chunk
+                    return
+                _response.read()
+                if _response.status_code == 422:
+                    raise UnprocessableEntityError(
+                        typing.cast(
+                            HttpValidationError,
+                            construct_type(
+                                type_=HttpValidationError,  # type: ignore
+                                object_=_response.json(),
+                            ),
+                        )
                     )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
 class AsyncChaptersClient:
@@ -902,7 +969,7 @@ class AsyncChaptersClient:
 
     async def delete(
         self, project_id: str, chapter_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
+    ) -> DeleteChapterResponseModel:
         """
         Deletes a chapter.
 
@@ -919,7 +986,7 @@ class AsyncChaptersClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        DeleteChapterResponseModel
             Successful Response
 
         Examples
@@ -950,9 +1017,9 @@ class AsyncChaptersClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    DeleteChapterResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=DeleteChapterResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -973,7 +1040,7 @@ class AsyncChaptersClient:
 
     async def convert(
         self, project_id: str, chapter_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
+    ) -> ConvertChapterResponseModel:
         """
         Starts conversion of a specific chapter.
 
@@ -990,7 +1057,7 @@ class AsyncChaptersClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        ConvertChapterResponseModel
             Successful Response
 
         Examples
@@ -1021,9 +1088,9 @@ class AsyncChaptersClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    ConvertChapterResponseModel,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=ConvertChapterResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1046,7 +1113,7 @@ class AsyncChaptersClient:
         self, project_id: str, chapter_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ChapterSnapshotsResponse:
         """
-        Gets information about all the snapshots of a chapter, each snapshot corresponds can be downloaded as audio. Whenever a chapter is converted a snapshot will be automatically created.
+        Gets information about all the snapshots of a chapter. Each snapshot can be downloaded as audio. Whenever a chapter is converted a snapshot will automatically be created.
 
         Parameters
         ----------
@@ -1113,6 +1180,86 @@ class AsyncChaptersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    async def get_chapter_snapshot(
+        self,
+        project_id: str,
+        chapter_id: str,
+        chapter_snapshot_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ChapterSnapshotExtendedResponseModel:
+        """
+        Returns the chapter snapshot.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        chapter_id : str
+            The ID of the chapter.
+
+        chapter_snapshot_id : str
+            The ID of the chapter snapshot.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ChapterSnapshotExtendedResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.studio.chapters.get_chapter_snapshot(
+                project_id="21m00Tcm4TlvDq8ikWAM",
+                chapter_id="21m00Tcm4TlvDq8ikWAM",
+                chapter_snapshot_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/snapshots/{jsonable_encoder(chapter_snapshot_id)}",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ChapterSnapshotExtendedResponseModel,
+                    construct_type(
+                        type_=ChapterSnapshotExtendedResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     async def stream_snapshot(
         self,
         project_id: str,
@@ -1121,7 +1268,7 @@ class AsyncChaptersClient:
         *,
         convert_to_mpeg: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    ) -> typing.AsyncIterator[bytes]:
         """
         Stream the audio from a chapter snapshot. Use `GET /v1/studio/projects/{project_id}/chapters/{chapter_id}/snapshots` to return the snapshots of a chapter.
 
@@ -1140,34 +1287,14 @@ class AsyncChaptersClient:
             Whether to convert the audio to mpeg format.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.studio.chapters.stream_snapshot(
-                project_id="21m00Tcm4TlvDq8ikWAM",
-                chapter_id="21m00Tcm4TlvDq8ikWAM",
-                chapter_snapshot_id="21m00Tcm4TlvDq8ikWAM",
-            )
-
-
-        asyncio.run(main())
+        Yields
+        ------
+        typing.AsyncIterator[bytes]
+            Streaming audio data
         """
-        _response = await self._client_wrapper.httpx_client.request(
+        async with self._client_wrapper.httpx_client.stream(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/snapshots/{jsonable_encoder(chapter_snapshot_id)}/stream",
             method="POST",
             json={
@@ -1178,21 +1305,25 @@ class AsyncChaptersClient:
             },
             request_options=request_options,
             omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
+        ) as _response:
+            try:
+                if 200 <= _response.status_code < 300:
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
+                        yield _chunk
+                    return
+                await _response.aread()
+                if _response.status_code == 422:
+                    raise UnprocessableEntityError(
+                        typing.cast(
+                            HttpValidationError,
+                            construct_type(
+                                type_=HttpValidationError,  # type: ignore
+                                object_=_response.json(),
+                            ),
+                        )
                     )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)

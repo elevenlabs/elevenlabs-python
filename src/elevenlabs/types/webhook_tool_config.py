@@ -5,8 +5,9 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .array_json_schema_property import ArrayJsonSchemaProperty
 from .object_json_schema_property import ObjectJsonSchemaProperty
 from .webhook_tool_api_schema_config import WebhookToolApiSchemaConfig
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
+from .dynamic_variables_config import DynamicVariablesConfig
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from ..core.pydantic_utilities import update_forward_refs
 
@@ -19,6 +20,7 @@ class WebhookToolConfig(UncheckedBaseModel):
     name: str
     description: str
     api_schema: WebhookToolApiSchemaConfig
+    dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

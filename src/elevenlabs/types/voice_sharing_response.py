@@ -3,47 +3,174 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 from .voice_sharing_state import VoiceSharingState
+import pydantic
 from .voice_sharing_response_model_category import VoiceSharingResponseModelCategory
 from .review_status import ReviewStatus
 from .voice_sharing_moderation_check_response_model import VoiceSharingModerationCheckResponseModel
 from .reader_resource_response_model import ReaderResourceResponseModel
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
-import pydantic
 
 
 class VoiceSharingResponse(UncheckedBaseModel):
-    status: typing.Optional[VoiceSharingState] = None
-    history_item_sample_id: typing.Optional[str] = None
-    date_unix: typing.Optional[int] = None
-    whitelisted_emails: typing.Optional[typing.List[str]] = None
-    public_owner_id: typing.Optional[str] = None
-    original_voice_id: typing.Optional[str] = None
-    financial_rewards_enabled: typing.Optional[bool] = None
-    free_users_allowed: typing.Optional[bool] = None
-    live_moderation_enabled: typing.Optional[bool] = None
-    rate: typing.Optional[float] = None
-    notice_period: typing.Optional[int] = None
-    disable_at_unix: typing.Optional[int] = None
-    voice_mixing_allowed: typing.Optional[bool] = None
-    featured: typing.Optional[bool] = None
-    category: typing.Optional[VoiceSharingResponseModelCategory] = None
-    reader_app_enabled: typing.Optional[bool] = None
-    image_url: typing.Optional[str] = None
-    ban_reason: typing.Optional[str] = None
-    liked_by_count: typing.Optional[int] = None
-    cloned_by_count: typing.Optional[int] = None
-    name: typing.Optional[str] = None
-    description: typing.Optional[str] = None
-    labels: typing.Optional[typing.Dict[str, str]] = None
-    review_status: typing.Optional[ReviewStatus] = None
-    review_message: typing.Optional[str] = None
-    enabled_in_library: typing.Optional[bool] = None
-    instagram_username: typing.Optional[str] = None
-    twitter_username: typing.Optional[str] = None
-    youtube_username: typing.Optional[str] = None
-    tiktok_username: typing.Optional[str] = None
-    moderation_check: typing.Optional[VoiceSharingModerationCheckResponseModel] = None
-    reader_restricted_on: typing.Optional[typing.List[ReaderResourceResponseModel]] = None
+    status: typing.Optional[VoiceSharingState] = pydantic.Field(default=None)
+    """
+    The status of the voice sharing.
+    """
+
+    history_item_sample_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The sample ID of the history item.
+    """
+
+    date_unix: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The date of the voice sharing in Unix time.
+    """
+
+    whitelisted_emails: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    A list of whitelisted emails.
+    """
+
+    public_owner_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ID of the public owner.
+    """
+
+    original_voice_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ID of the original voice.
+    """
+
+    financial_rewards_enabled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether financial rewards are enabled.
+    """
+
+    free_users_allowed: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether free users are allowed.
+    """
+
+    live_moderation_enabled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether live moderation is enabled.
+    """
+
+    rate: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    The rate of the voice sharing.
+    """
+
+    notice_period: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The notice period of the voice sharing.
+    """
+
+    disable_at_unix: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The date of the voice sharing in Unix time.
+    """
+
+    voice_mixing_allowed: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether voice mixing is allowed.
+    """
+
+    featured: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the voice is featured.
+    """
+
+    category: typing.Optional[VoiceSharingResponseModelCategory] = pydantic.Field(default=None)
+    """
+    The category of the voice.
+    """
+
+    reader_app_enabled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the reader app is enabled.
+    """
+
+    image_url: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The image URL of the voice.
+    """
+
+    ban_reason: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ban reason of the voice.
+    """
+
+    liked_by_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The number of likes on the voice.
+    """
+
+    cloned_by_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The number of clones on the voice.
+    """
+
+    name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The name of the voice.
+    """
+
+    description: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The description of the voice.
+    """
+
+    labels: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
+    """
+    The labels of the voice.
+    """
+
+    review_status: typing.Optional[ReviewStatus] = pydantic.Field(default=None)
+    """
+    The review status of the voice.
+    """
+
+    review_message: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The review message of the voice.
+    """
+
+    enabled_in_library: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the voice is enabled in the library.
+    """
+
+    instagram_username: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The Instagram username of the voice.
+    """
+
+    twitter_username: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The Twitter/X username of the voice.
+    """
+
+    youtube_username: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The YouTube username of the voice.
+    """
+
+    tiktok_username: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The TikTok username of the voice.
+    """
+
+    moderation_check: typing.Optional[VoiceSharingModerationCheckResponseModel] = pydantic.Field(default=None)
+    """
+    The moderation check of the voice.
+    """
+
+    reader_restricted_on: typing.Optional[typing.List[ReaderResourceResponseModel]] = pydantic.Field(default=None)
+    """
+    The reader restricted on of the voice.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

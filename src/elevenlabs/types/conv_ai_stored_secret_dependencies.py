@@ -3,16 +3,18 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 from .conv_ai_stored_secret_dependencies_tools_item import ConvAiStoredSecretDependenciesToolsItem
-from .conv_ai_stored_secret_dependencies_agents_item import ConvAiStoredSecretDependenciesAgentsItem
+from .conv_ai_stored_secret_dependencies_agent_tools_item import ConvAiStoredSecretDependenciesAgentToolsItem
 from .secret_dependency_type import SecretDependencyType
+from .dependent_phone_number_identifier import DependentPhoneNumberIdentifier
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
 class ConvAiStoredSecretDependencies(UncheckedBaseModel):
     tools: typing.List[ConvAiStoredSecretDependenciesToolsItem]
-    agents: typing.List[ConvAiStoredSecretDependenciesAgentsItem]
+    agent_tools: typing.List[ConvAiStoredSecretDependenciesAgentToolsItem]
     others: typing.List[SecretDependencyType]
+    phone_numbers: typing.Optional[typing.List[DependentPhoneNumberIdentifier]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

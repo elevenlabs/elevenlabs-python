@@ -2,14 +2,21 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .reader_resource_response_model_resource_type import ReaderResourceResponseModelResourceType
+import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
-import pydantic
 
 
 class ReaderResourceResponseModel(UncheckedBaseModel):
-    resource_type: ReaderResourceResponseModelResourceType
-    resource_id: str
+    resource_type: ReaderResourceResponseModelResourceType = pydantic.Field()
+    """
+    The type of resource.
+    """
+
+    resource_id: str = pydantic.Field()
+    """
+    The ID of the resource.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
