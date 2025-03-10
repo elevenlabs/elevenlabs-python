@@ -107,6 +107,7 @@ from .types import (
     DataCollectionResultCommonModel,
     DeleteChapterResponseModel,
     DeleteDubbingResponseModel,
+    DeleteHistoryItemResponse,
     DeleteProjectResponseModel,
     DeleteSampleResponseModel,
     DeleteVoiceResponseModel,
@@ -346,7 +347,7 @@ from .types import (
     WidgetFeedbackMode,
     WorkspaceGroupByNameResponseModel,
 )
-from .errors import ForbiddenError, NotFoundError, TooEarlyError, UnprocessableEntityError
+from .errors import BadRequestError, ForbiddenError, NotFoundError, TooEarlyError, UnprocessableEntityError
 from . import (
     audio_isolation,
     audio_native,
@@ -458,6 +459,7 @@ __all__ = [
     "AudioWithTimestampsResponseModel",
     "AuthSettings",
     "AuthorizationMethod",
+    "BadRequestError",
     "BanReasonType",
     "BodyAddToKnowledgeBaseV1ConvaiAddToKnowledgeBasePost",
     "BodyAddToKnowledgeBaseV1ConvaiAgentsAgentIdAddToKnowledgeBasePost",
@@ -552,6 +554,7 @@ __all__ = [
     "DataCollectionResultCommonModel",
     "DeleteChapterResponseModel",
     "DeleteDubbingResponseModel",
+    "DeleteHistoryItemResponse",
     "DeleteProjectResponseModel",
     "DeleteSampleResponseModel",
     "DeleteVoiceResponseModel",

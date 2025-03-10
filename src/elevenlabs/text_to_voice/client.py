@@ -28,6 +28,10 @@ class TextToVoiceClient:
         text: str,
         output_format: typing.Optional[TextToVoiceCreatePreviewsRequestOutputFormat] = None,
         auto_generate_text: typing.Optional[bool] = OMIT,
+        loudness: typing.Optional[float] = OMIT,
+        quality: typing.Optional[float] = OMIT,
+        seed: typing.Optional[int] = OMIT,
+        guidance_scale: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> VoicePreviewsResponseModel:
         """
@@ -46,6 +50,18 @@ class TextToVoiceClient:
 
         auto_generate_text : typing.Optional[bool]
             Whether to automatically generate a text suitable for the voice description.
+
+        loudness : typing.Optional[float]
+            Controls the volume level of the generated voice. -1 is quietest, 1 is loudest, 0 corresponds to roughly -24 LUFS.
+
+        quality : typing.Optional[float]
+            Higher quality results in better voice output but less variety.
+
+        seed : typing.Optional[int]
+            Random number that controls the voice generation. Same seed with same inputs produces same voice.
+
+        guidance_scale : typing.Optional[float]
+            Controls how closely the AI follows the prompt. Lower numbers give the AI more freedom to be creative, while higher numbers force it to stick more to the prompt. High numbers can cause voice to sound artificial or robotic. We recommend to use longer, more detailed prompts at lower Guidance Scale.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -77,6 +93,10 @@ class TextToVoiceClient:
                 "voice_description": voice_description,
                 "text": text,
                 "auto_generate_text": auto_generate_text,
+                "loudness": loudness,
+                "quality": quality,
+                "seed": seed,
+                "guidance_scale": guidance_scale,
             },
             headers={
                 "content-type": "application/json",
@@ -211,6 +231,10 @@ class AsyncTextToVoiceClient:
         text: str,
         output_format: typing.Optional[TextToVoiceCreatePreviewsRequestOutputFormat] = None,
         auto_generate_text: typing.Optional[bool] = OMIT,
+        loudness: typing.Optional[float] = OMIT,
+        quality: typing.Optional[float] = OMIT,
+        seed: typing.Optional[int] = OMIT,
+        guidance_scale: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> VoicePreviewsResponseModel:
         """
@@ -229,6 +253,18 @@ class AsyncTextToVoiceClient:
 
         auto_generate_text : typing.Optional[bool]
             Whether to automatically generate a text suitable for the voice description.
+
+        loudness : typing.Optional[float]
+            Controls the volume level of the generated voice. -1 is quietest, 1 is loudest, 0 corresponds to roughly -24 LUFS.
+
+        quality : typing.Optional[float]
+            Higher quality results in better voice output but less variety.
+
+        seed : typing.Optional[int]
+            Random number that controls the voice generation. Same seed with same inputs produces same voice.
+
+        guidance_scale : typing.Optional[float]
+            Controls how closely the AI follows the prompt. Lower numbers give the AI more freedom to be creative, while higher numbers force it to stick more to the prompt. High numbers can cause voice to sound artificial or robotic. We recommend to use longer, more detailed prompts at lower Guidance Scale.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -268,6 +304,10 @@ class AsyncTextToVoiceClient:
                 "voice_description": voice_description,
                 "text": text,
                 "auto_generate_text": auto_generate_text,
+                "loudness": loudness,
+                "quality": quality,
+                "seed": seed,
+                "guidance_scale": guidance_scale,
             },
             headers={
                 "content-type": "application/json",

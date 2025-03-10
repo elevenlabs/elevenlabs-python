@@ -3,14 +3,25 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 from .speech_history_item_response import SpeechHistoryItemResponse
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class GetSpeechHistoryResponse(UncheckedBaseModel):
-    history: typing.List[SpeechHistoryItemResponse]
-    last_history_item_id: str
-    has_more: bool
+    history: typing.List[SpeechHistoryItemResponse] = pydantic.Field()
+    """
+    A list of speech history items.
+    """
+
+    last_history_item_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ID of the last history item.
+    """
+
+    has_more: bool = pydantic.Field()
+    """
+    Whether there are more history items to fetch.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

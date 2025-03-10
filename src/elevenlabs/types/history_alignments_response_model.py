@@ -2,14 +2,21 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .history_alignment_response_model import HistoryAlignmentResponseModel
+import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
-import pydantic
 
 
 class HistoryAlignmentsResponseModel(UncheckedBaseModel):
-    alignment: HistoryAlignmentResponseModel
-    normalized_alignment: HistoryAlignmentResponseModel
+    alignment: HistoryAlignmentResponseModel = pydantic.Field()
+    """
+    The alignment of the text.
+    """
+
+    normalized_alignment: HistoryAlignmentResponseModel = pydantic.Field()
+    """
+    The normalized alignment of the text.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
