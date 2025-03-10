@@ -122,6 +122,7 @@ from .custom_llm import CustomLlm
 from .data_collection_result_common_model import DataCollectionResultCommonModel
 from .delete_chapter_response_model import DeleteChapterResponseModel
 from .delete_dubbing_response_model import DeleteDubbingResponseModel
+from .delete_history_item_response import DeleteHistoryItemResponse
 from .delete_project_response_model import DeleteProjectResponseModel
 from .delete_sample_response_model import DeleteSampleResponseModel
 from .delete_voice_response_model import DeleteVoiceResponseModel
@@ -482,6 +483,7 @@ __all__ = [
     "DataCollectionResultCommonModel",
     "DeleteChapterResponseModel",
     "DeleteDubbingResponseModel",
+    "DeleteHistoryItemResponse",
     "DeleteProjectResponseModel",
     "DeleteSampleResponseModel",
     "DeleteVoiceResponseModel",

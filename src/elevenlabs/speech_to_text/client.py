@@ -32,6 +32,7 @@ class SpeechToTextClient:
         num_speakers: typing.Optional[int] = OMIT,
         timestamps_granularity: typing.Optional[SpeechToTextConvertRequestTimestampsGranularity] = OMIT,
         diarize: typing.Optional[bool] = OMIT,
+        biased_keywords: typing.Optional[typing.List[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SpeechToTextChunkResponseModel:
         """
@@ -62,6 +63,9 @@ class SpeechToTextClient:
 
         diarize : typing.Optional[bool]
             Whether to annotate which speaker is currently talking in the uploaded file.
+
+        biased_keywords : typing.Optional[typing.List[str]]
+            A list of keywords and their biases.          The keywords are the words that you want to bias the transcription towards.           The biases decide how much the model should boost or suppress the keyword.           The biases should be numbers between -10 and 10. The number of keywords cannot exceed 100.          The length of each keyword must be less than 50 characters.          Each keyword-bias pair must be separated by a colon.          For example ["keyword_a:0.42", "keyword_b:-0.5"]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -95,6 +99,7 @@ class SpeechToTextClient:
                 "num_speakers": num_speakers,
                 "timestamps_granularity": timestamps_granularity,
                 "diarize": diarize,
+                "biased_keywords": biased_keywords,
             },
             files={
                 "file": file,
@@ -142,6 +147,7 @@ class AsyncSpeechToTextClient:
         num_speakers: typing.Optional[int] = OMIT,
         timestamps_granularity: typing.Optional[SpeechToTextConvertRequestTimestampsGranularity] = OMIT,
         diarize: typing.Optional[bool] = OMIT,
+        biased_keywords: typing.Optional[typing.List[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SpeechToTextChunkResponseModel:
         """
@@ -172,6 +178,9 @@ class AsyncSpeechToTextClient:
 
         diarize : typing.Optional[bool]
             Whether to annotate which speaker is currently talking in the uploaded file.
+
+        biased_keywords : typing.Optional[typing.List[str]]
+            A list of keywords and their biases.          The keywords are the words that you want to bias the transcription towards.           The biases decide how much the model should boost or suppress the keyword.           The biases should be numbers between -10 and 10. The number of keywords cannot exceed 100.          The length of each keyword must be less than 50 characters.          Each keyword-bias pair must be separated by a colon.          For example ["keyword_a:0.42", "keyword_b:-0.5"]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -213,6 +222,7 @@ class AsyncSpeechToTextClient:
                 "num_speakers": num_speakers,
                 "timestamps_granularity": timestamps_granularity,
                 "diarize": diarize,
+                "biased_keywords": biased_keywords,
             },
             files={
                 "file": file,

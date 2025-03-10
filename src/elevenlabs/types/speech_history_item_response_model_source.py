@@ -2,4 +2,4 @@
 
 import typing
 
-SpeechHistoryItemResponseModelSource = typing.Union[typing.Literal["TTS", "STS"], typing.Any]
+SpeechHistoryItemResponseModelSource = typing.Union[typing.Literal["TTS", "STS", "STT"], typing.Any]

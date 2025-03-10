@@ -2,14 +2,25 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class HistoryAlignmentResponseModel(UncheckedBaseModel):
-    characters: typing.List[str]
-    character_start_times_seconds: typing.List[float]
-    character_end_times_seconds: typing.List[float]
+    characters: typing.List[str] = pydantic.Field()
+    """
+    The characters in the alignment.
+    """
+
+    character_start_times_seconds: typing.List[float] = pydantic.Field()
+    """
+    The start times of the characters in seconds.
+    """
+
+    character_end_times_seconds: typing.List[float] = pydantic.Field()
+    """
+    The end times of the characters in seconds.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

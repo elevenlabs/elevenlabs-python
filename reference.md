@@ -12,7 +12,7 @@
 <dl>
 <dd>
 
-Returns metadata about all your generated audio.
+Returns a list of your generated audio.
 </dd>
 </dl>
 </dd>
@@ -112,7 +112,7 @@ client.history.get_all()
 <dl>
 <dd>
 
-Returns information about an history item by its ID.
+Retrieves a history item.
 </dd>
 </dl>
 </dd>
@@ -376,7 +376,7 @@ client.history.download(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
     
 </dd>
 </dl>
@@ -2101,6 +2101,38 @@ client.text_to_voice.create_previews(
 <dd>
 
 **auto_generate_text:** `typing.Optional[bool]` — Whether to automatically generate a text suitable for the voice description.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**loudness:** `typing.Optional[float]` — Controls the volume level of the generated voice. -1 is quietest, 1 is loudest, 0 corresponds to roughly -24 LUFS.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality:** `typing.Optional[float]` — Higher quality results in better voice output but less variety.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**seed:** `typing.Optional[int]` — Random number that controls the voice generation. Same seed with same inputs produces same voice.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**guidance_scale:** `typing.Optional[float]` — Controls how closely the AI follows the prompt. Lower numbers give the AI more freedom to be creative, while higher numbers force it to stick more to the prompt. High numbers can cause voice to sound artificial or robotic. We recommend to use longer, more detailed prompts at lower Guidance Scale.
     
 </dd>
 </dl>
@@ -8130,6 +8162,14 @@ core.File` — See core.File for more documentation
 <dd>
 
 **diarize:** `typing.Optional[bool]` — Whether to annotate which speaker is currently talking in the uploaded file.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**biased_keywords:** `typing.Optional[typing.List[str]]` — A list of keywords and their biases.          The keywords are the words that you want to bias the transcription towards.           The biases decide how much the model should boost or suppress the keyword.           The biases should be numbers between -10 and 10. The number of keywords cannot exceed 100.          The length of each keyword must be less than 50 characters.          Each keyword-bias pair must be separated by a colon.          For example ["keyword_a:0.42", "keyword_b:-0.5"]
     
 </dd>
 </dl>
