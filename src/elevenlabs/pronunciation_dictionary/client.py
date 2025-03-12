@@ -79,6 +79,7 @@ class PronunciationDictionaryClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/pronunciation-dictionaries/add-from-file",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -165,6 +166,7 @@ class PronunciationDictionaryClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}/add-rules",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "rules": convert_and_respect_annotation_metadata(
@@ -241,6 +243,7 @@ class PronunciationDictionaryClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}/remove-rules",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "rule_strings": rule_strings,
@@ -311,6 +314,7 @@ class PronunciationDictionaryClient:
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/pronunciation-dictionaries/{jsonable_encoder(dictionary_id)}/{jsonable_encoder(version_id)}/download",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         ) as _response:
@@ -368,6 +372,7 @@ class PronunciationDictionaryClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}/",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -434,6 +439,7 @@ class PronunciationDictionaryClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/pronunciation-dictionaries/",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -525,6 +531,7 @@ class AsyncPronunciationDictionaryClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/pronunciation-dictionaries/add-from-file",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -619,6 +626,7 @@ class AsyncPronunciationDictionaryClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}/add-rules",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "rules": convert_and_respect_annotation_metadata(
@@ -703,6 +711,7 @@ class AsyncPronunciationDictionaryClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}/remove-rules",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "rule_strings": rule_strings,
@@ -781,6 +790,7 @@ class AsyncPronunciationDictionaryClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/pronunciation-dictionaries/{jsonable_encoder(dictionary_id)}/{jsonable_encoder(version_id)}/download",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         ) as _response:
@@ -846,6 +856,7 @@ class AsyncPronunciationDictionaryClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}/",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -920,6 +931,7 @@ class AsyncPronunciationDictionaryClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/pronunciation-dictionaries/",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,

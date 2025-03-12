@@ -32,6 +32,7 @@ from .asr_quality import AsrQuality
 from .audio_native_create_project_response_model import AudioNativeCreateProjectResponseModel
 from .audio_native_edit_content_response_model import AudioNativeEditContentResponseModel
 from .audio_native_project_settings_response_model import AudioNativeProjectSettingsResponseModel
+from .audio_output import AudioOutput
 from .audio_with_timestamps_response_model import AudioWithTimestampsResponseModel
 from .auth_settings import AuthSettings
 from .authorization_method import AuthorizationMethod
@@ -67,6 +68,7 @@ from .character_alignment_model import CharacterAlignmentModel
 from .character_alignment_response_model import CharacterAlignmentResponseModel
 from .client_event import ClientEvent
 from .client_tool_config import ClientToolConfig
+from .close_connection import CloseConnection
 from .conv_ai_secret_locator import ConvAiSecretLocator
 from .conv_ai_stored_secret_dependencies import ConvAiStoredSecretDependencies
 from .conv_ai_stored_secret_dependencies_agent_tools_item import (
@@ -166,6 +168,7 @@ from .feedback_item import FeedbackItem
 from .fine_tuning_response import FineTuningResponse
 from .fine_tuning_response_model_state_value import FineTuningResponseModelStateValue
 from .gender import Gender
+from .generation_config import GenerationConfig
 from .get_agent_embed_response_model import GetAgentEmbedResponseModel
 from .get_agent_link_response_model import GetAgentLinkResponseModel
 from .get_agent_response_model import GetAgentResponseModel
@@ -207,6 +210,7 @@ from .history_alignments_response_model import HistoryAlignmentsResponseModel
 from .history_item import HistoryItem
 from .http_validation_error import HttpValidationError
 from .image_avatar import ImageAvatar
+from .initialize_connection import InitializeConnection
 from .invoice import Invoice
 from .knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
 from .knowledge_base_locator import KnowledgeBaseLocator
@@ -228,6 +232,7 @@ from .model_response_model_concurrency_group import ModelResponseModelConcurrenc
 from .moderation_status_response_model import ModerationStatusResponseModel
 from .moderation_status_response_model_safety_status import ModerationStatusResponseModelSafetyStatus
 from .moderation_status_response_model_warning_status import ModerationStatusResponseModelWarningStatus
+from .normalized_alignment import NormalizedAlignment
 from .object_json_schema_property import ObjectJsonSchemaProperty
 from .object_json_schema_property_properties_value import ObjectJsonSchemaPropertyPropertiesValue
 from .orb_avatar import OrbAvatar
@@ -286,6 +291,7 @@ from .rag_index_response_model import RagIndexResponseModel
 from .rag_index_status import RagIndexStatus
 from .reader_resource_response_model import ReaderResourceResponseModel
 from .reader_resource_response_model_resource_type import ReaderResourceResponseModelResourceType
+from .realtime_voice_settings import RealtimeVoiceSettings
 from .recording_response import RecordingResponse
 from .remove_pronunciation_dictionary_rules_response_model import RemovePronunciationDictionaryRulesResponseModel
 from .resource_access_info import ResourceAccessInfo
@@ -302,6 +308,7 @@ from .segment_dub_response import SegmentDubResponse
 from .segment_transcription_response import SegmentTranscriptionResponse
 from .segment_translation_response import SegmentTranslationResponse
 from .segment_update_response import SegmentUpdateResponse
+from .send_text import SendText
 from .speaker_segment import SpeakerSegment
 from .speaker_track import SpeakerTrack
 from .speech_history_item_response import SpeechHistoryItemResponse
@@ -409,6 +416,7 @@ __all__ = [
     "AudioNativeCreateProjectResponseModel",
     "AudioNativeEditContentResponseModel",
     "AudioNativeProjectSettingsResponseModel",
+    "AudioOutput",
     "AudioWithTimestampsResponseModel",
     "AuthSettings",
     "AuthorizationMethod",
@@ -438,6 +446,7 @@ __all__ = [
     "CharacterAlignmentResponseModel",
     "ClientEvent",
     "ClientToolConfig",
+    "CloseConnection",
     "ConvAiSecretLocator",
     "ConvAiStoredSecretDependencies",
     "ConvAiStoredSecretDependenciesAgentToolsItem",
@@ -523,6 +532,7 @@ __all__ = [
     "FineTuningResponse",
     "FineTuningResponseModelStateValue",
     "Gender",
+    "GenerationConfig",
     "GetAgentEmbedResponseModel",
     "GetAgentLinkResponseModel",
     "GetAgentResponseModel",
@@ -560,6 +570,7 @@ __all__ = [
     "HistoryItem",
     "HttpValidationError",
     "ImageAvatar",
+    "InitializeConnection",
     "Invoice",
     "KnowledgeBaseDocumentMetadataResponseModel",
     "KnowledgeBaseLocator",
@@ -581,6 +592,7 @@ __all__ = [
     "ModerationStatusResponseModel",
     "ModerationStatusResponseModelSafetyStatus",
     "ModerationStatusResponseModelWarningStatus",
+    "NormalizedAlignment",
     "ObjectJsonSchemaProperty",
     "ObjectJsonSchemaPropertyPropertiesValue",
     "OrbAvatar",
@@ -637,6 +649,7 @@ __all__ = [
     "RagIndexStatus",
     "ReaderResourceResponseModel",
     "ReaderResourceResponseModelResourceType",
+    "RealtimeVoiceSettings",
     "RecordingResponse",
     "RemovePronunciationDictionaryRulesResponseModel",
     "ResourceAccessInfo",
@@ -653,6 +666,7 @@ __all__ = [
     "SegmentTranscriptionResponse",
     "SegmentTranslationResponse",
     "SegmentUpdateResponse",
+    "SendText",
     "SpeakerSegment",
     "SpeakerTrack",
     "SpeechHistoryItemResponse",

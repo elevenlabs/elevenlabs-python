@@ -11,7 +11,6 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 import typing_extensions
 from ..core.unchecked_base_model import UnionMetadata
-from ..core.pydantic_utilities import update_forward_refs
 
 
 class PromptAgentToolsItem_Webhook(UncheckedBaseModel):
@@ -69,7 +68,3 @@ PromptAgentToolsItem = typing_extensions.Annotated[
     typing.Union[PromptAgentToolsItem_Webhook, PromptAgentToolsItem_Client, PromptAgentToolsItem_System],
     UnionMetadata(discriminant="type"),
 ]
-update_forward_refs(ArrayJsonSchemaProperty, PromptAgentToolsItem_Webhook=PromptAgentToolsItem_Webhook)
-update_forward_refs(ObjectJsonSchemaProperty, PromptAgentToolsItem_Webhook=PromptAgentToolsItem_Webhook)
-update_forward_refs(ArrayJsonSchemaProperty, PromptAgentToolsItem_Client=PromptAgentToolsItem_Client)
-update_forward_refs(ObjectJsonSchemaProperty, PromptAgentToolsItem_Client=PromptAgentToolsItem_Client)

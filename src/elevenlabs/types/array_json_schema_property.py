@@ -26,5 +26,4 @@ class ArrayJsonSchemaProperty(UncheckedBaseModel):
 from .object_json_schema_property import ObjectJsonSchemaProperty  # noqa: E402
 from .array_json_schema_property_items import ArrayJsonSchemaPropertyItems  # noqa: E402
 
-update_forward_refs(ObjectJsonSchemaProperty, ArrayJsonSchemaProperty=ArrayJsonSchemaProperty)
 update_forward_refs(ArrayJsonSchemaProperty)

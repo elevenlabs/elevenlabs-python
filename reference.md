@@ -3550,7 +3550,6 @@ standard - standard output format, 128kbps with 44.1kHz sample rate.
 high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the credit cost by 20%.
 ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
 ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
-
     
 </dd>
 </dl>
@@ -3564,7 +3563,6 @@ Duration of the generated podcast. Must be one of:
 short - produces podcasts shorter than 3 minutes.
 default - produces podcasts roughly between 3-7 minutes.
 long - prodces podcasts longer than 7 minutes.
-
     
 </dd>
 </dl>
@@ -3706,7 +3704,6 @@ standard - standard output format, 128kbps with 44.1kHz sample rate.
 high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the credit cost by 20%.
 ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
 ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
-
     
 </dd>
 </dl>
@@ -3720,7 +3717,6 @@ Duration of the generated podcast. Must be one of:
 short - produces podcasts shorter than 3 minutes.
 default - produces podcasts roughly between 3-7 minutes.
 long - prodces podcasts longer than 7 minutes.
-
     
 </dd>
 </dl>
@@ -3934,7 +3930,6 @@ standard - standard output format, 128kbps with 44.1kHz sample rate.
 high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the credit cost by 20%.
 ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
 ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
-
     
 </dd>
 </dl>
@@ -10769,7 +10764,6 @@ standard - standard output format, 128kbps with 44.1kHz sample rate.
 high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the credit cost by 20%.
 ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
 ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
-
     
 </dd>
 </dl>

@@ -49,6 +49,7 @@ class VoiceGenerationClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/voice-generation/generate-voice/parameters",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -121,6 +122,7 @@ class VoiceGenerationClient:
         """
         with self._client_wrapper.httpx_client.stream(
             "v1/voice-generation/generate-voice",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "gender": gender,
@@ -210,6 +212,7 @@ class VoiceGenerationClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/voice-generation/create-voice",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "voice_name": voice_name,
@@ -288,6 +291,7 @@ class AsyncVoiceGenerationClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/voice-generation/generate-voice/parameters",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -368,6 +372,7 @@ class AsyncVoiceGenerationClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             "v1/voice-generation/generate-voice",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "gender": gender,
@@ -465,6 +470,7 @@ class AsyncVoiceGenerationClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/voice-generation/create-voice",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "voice_name": voice_name,

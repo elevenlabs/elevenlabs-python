@@ -40,6 +40,7 @@ class AudioIsolationClient:
         """
         with self._client_wrapper.httpx_client.stream(
             "v1/audio-isolation",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={},
             files={
@@ -91,6 +92,7 @@ class AudioIsolationClient:
         """
         with self._client_wrapper.httpx_client.stream(
             "v1/audio-isolation/stream",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={},
             files={
@@ -147,6 +149,7 @@ class AsyncAudioIsolationClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             "v1/audio-isolation",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={},
             files={
@@ -198,6 +201,7 @@ class AsyncAudioIsolationClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             "v1/audio-isolation/stream",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={},
             files={

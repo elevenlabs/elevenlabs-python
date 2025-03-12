@@ -67,6 +67,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -130,6 +131,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/language",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "language": language,
@@ -215,6 +217,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/speaker/{jsonable_encoder(speaker_id)}/segment",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "start_time": start_time,
@@ -305,6 +308,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/segment/{jsonable_encoder(segment_id)}/{jsonable_encoder(language)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "start_time": start_time,
@@ -377,6 +381,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/segment/{jsonable_encoder(segment_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -444,6 +449,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/transcribe",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "segments": segments,
@@ -523,6 +529,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/translate",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "segments": segments,
@@ -603,6 +610,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/dub",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "segments": segments,
@@ -721,6 +729,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/dubbing",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -798,6 +807,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -857,6 +867,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -908,6 +919,7 @@ class DubbingClient:
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}/audio/{jsonable_encoder(language_code)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         ) as _response:
@@ -1007,6 +1019,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}/transcript/{jsonable_encoder(language_code)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "format_type": format_type,
@@ -1112,6 +1125,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1183,6 +1197,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/language",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "language": language,
@@ -1276,6 +1291,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/speaker/{jsonable_encoder(speaker_id)}/segment",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "start_time": start_time,
@@ -1374,6 +1390,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/segment/{jsonable_encoder(segment_id)}/{jsonable_encoder(language)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "start_time": start_time,
@@ -1454,6 +1471,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/segment/{jsonable_encoder(segment_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -1529,6 +1547,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/transcribe",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "segments": segments,
@@ -1616,6 +1635,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/translate",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "segments": segments,
@@ -1704,6 +1724,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/dub",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "segments": segments,
@@ -1830,6 +1851,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/dubbing",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -1915,6 +1937,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1982,6 +2005,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -2033,6 +2057,7 @@ class AsyncDubbingClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}/audio/{jsonable_encoder(language_code)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         ) as _response:
@@ -2140,6 +2165,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}/transcript/{jsonable_encoder(language_code)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "format_type": format_type,

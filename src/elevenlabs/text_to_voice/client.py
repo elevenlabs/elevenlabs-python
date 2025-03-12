@@ -85,6 +85,7 @@ class TextToVoiceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/text-to-voice/create-previews",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "output_format": output_format,
@@ -181,6 +182,7 @@ class TextToVoiceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/text-to-voice/create-voice-from-preview",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "voice_name": voice_name,
@@ -296,6 +298,7 @@ class AsyncTextToVoiceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/text-to-voice/create-previews",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "output_format": output_format,
@@ -400,6 +403,7 @@ class AsyncTextToVoiceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/text-to-voice/create-voice-from-preview",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "voice_name": voice_name,

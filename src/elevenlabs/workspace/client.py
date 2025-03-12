@@ -60,6 +60,7 @@ class WorkspaceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/workspace/groups/search",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "name": name,
@@ -126,6 +127,7 @@ class WorkspaceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/workspace/groups/{jsonable_encoder(group_id)}/members/remove",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,
@@ -196,6 +198,7 @@ class WorkspaceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/workspace/groups/{jsonable_encoder(group_id)}/members",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,
@@ -269,6 +272,7 @@ class WorkspaceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/workspace/invites/add",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,
@@ -343,6 +347,7 @@ class WorkspaceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/workspace/invites/add-bulk",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "emails": emails,
@@ -410,6 +415,7 @@ class WorkspaceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/workspace/invites",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             json={
                 "email": email,
@@ -487,6 +493,7 @@ class WorkspaceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/workspace/members",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,
@@ -568,6 +575,7 @@ class AsyncWorkspaceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/workspace/groups/search",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "name": name,
@@ -642,6 +650,7 @@ class AsyncWorkspaceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/workspace/groups/{jsonable_encoder(group_id)}/members/remove",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,
@@ -720,6 +729,7 @@ class AsyncWorkspaceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/workspace/groups/{jsonable_encoder(group_id)}/members",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,
@@ -801,6 +811,7 @@ class AsyncWorkspaceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/workspace/invites/add",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,
@@ -883,6 +894,7 @@ class AsyncWorkspaceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/workspace/invites/add-bulk",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "emails": emails,
@@ -958,6 +970,7 @@ class AsyncWorkspaceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/workspace/invites",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             json={
                 "email": email,
@@ -1043,6 +1056,7 @@ class AsyncWorkspaceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/workspace/members",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,

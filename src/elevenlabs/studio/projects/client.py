@@ -59,6 +59,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/studio/projects",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -146,7 +147,6 @@ class ProjectsClient:
             ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
             ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
 
-
         title : typing.Optional[str]
             An optional name of the author of the Studio project, this will be added as metadata to the mp3 file on Studio project or chapter download.
 
@@ -230,6 +230,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/studio/projects",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -319,6 +320,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -412,6 +414,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -484,6 +487,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -558,6 +562,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/content",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "from_url": from_url,
@@ -625,6 +630,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/convert",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             request_options=request_options,
         )
@@ -684,6 +690,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/snapshots",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -747,6 +754,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -817,6 +825,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}/stream",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "convert_to_mpeg": convert_to_mpeg,
@@ -869,6 +878,7 @@ class ProjectsClient:
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}/archive",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             request_options=request_options,
         ) as _response:
@@ -943,6 +953,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/pronunciation-dictionaries",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
@@ -1020,6 +1031,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/studio/projects",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1106,7 +1118,6 @@ class AsyncProjectsClient:
             high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the credit cost by 20%.
             ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
             ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
-
 
         title : typing.Optional[str]
             An optional name of the author of the Studio project, this will be added as metadata to the mp3 file on Studio project or chapter download.
@@ -1199,6 +1210,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/studio/projects",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -1296,6 +1308,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1397,6 +1410,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -1477,6 +1491,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -1559,6 +1574,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/content",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "from_url": from_url,
@@ -1634,6 +1650,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/convert",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             request_options=request_options,
         )
@@ -1701,6 +1718,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/snapshots",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1772,6 +1790,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1850,6 +1869,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}/stream",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "convert_to_mpeg": convert_to_mpeg,
@@ -1902,6 +1922,7 @@ class AsyncProjectsClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}/archive",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             request_options=request_options,
         ) as _response:
@@ -1984,6 +2005,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/pronunciation-dictionaries",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(

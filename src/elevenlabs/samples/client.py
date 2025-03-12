@@ -53,6 +53,7 @@ class SamplesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}/samples/{jsonable_encoder(sample_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -116,6 +117,7 @@ class SamplesClient:
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/voices/{jsonable_encoder(voice_id)}/samples/{jsonable_encoder(sample_id)}/audio",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         ) as _response:
@@ -190,6 +192,7 @@ class AsyncSamplesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}/samples/{jsonable_encoder(sample_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -261,6 +264,7 @@ class AsyncSamplesClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/voices/{jsonable_encoder(voice_id)}/samples/{jsonable_encoder(sample_id)}/audio",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         ) as _response:

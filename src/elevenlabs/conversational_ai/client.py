@@ -80,6 +80,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/conversation/get_signed_url",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "agent_id": agent_id,
@@ -157,6 +158,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/agents/create",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "use_tool_ids": use_tool_ids,
@@ -232,6 +234,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -291,6 +294,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -369,6 +373,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             params={
                 "use_tool_ids": use_tool_ids,
@@ -447,6 +452,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/widget",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "conversation_signature": conversation_signature,
@@ -509,6 +515,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/link",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -571,6 +578,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/avatar",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={},
             files={
@@ -643,6 +651,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/add-secret",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -719,6 +728,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/agents",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -798,6 +808,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/conversations",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -863,6 +874,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -922,6 +934,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -980,6 +993,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}/audio",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1041,6 +1055,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}/feedback",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "feedback": feedback,
@@ -1125,6 +1140,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/phone-numbers/create",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "phone_number": phone_number,
@@ -1195,6 +1211,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1254,6 +1271,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -1319,6 +1337,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "agent_id": agent_id,
@@ -1380,6 +1399,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/phone-numbers/",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1456,6 +1476,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/knowledge-base",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -1531,6 +1552,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/knowledge-base",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -1609,6 +1631,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/rag-index",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "force_reindex": force_reindex,
@@ -1678,6 +1701,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1737,6 +1761,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -1807,6 +1832,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/dependent-agents",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -1865,6 +1891,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/settings",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1927,6 +1954,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/settings",
+            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "conversation_initiation_client_data_webhook": convert_and_respect_annotation_metadata(
@@ -1995,6 +2023,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/secrets",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -2056,6 +2085,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/secrets",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -2120,6 +2150,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/secrets/{jsonable_encoder(secret_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -2186,6 +2217,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/conversation/get_signed_url",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "agent_id": agent_id,
@@ -2271,6 +2303,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/agents/create",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "use_tool_ids": use_tool_ids,
@@ -2354,6 +2387,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -2421,6 +2455,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -2507,6 +2542,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             params={
                 "use_tool_ids": use_tool_ids,
@@ -2593,6 +2629,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/widget",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "conversation_signature": conversation_signature,
@@ -2663,6 +2700,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/link",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -2733,6 +2771,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/avatar",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={},
             files={
@@ -2813,6 +2852,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/add-secret",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -2897,6 +2937,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/agents",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -2984,6 +3025,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/conversations",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -3057,6 +3099,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -3124,6 +3167,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -3190,6 +3234,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}/audio",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -3259,6 +3304,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}/feedback",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "feedback": feedback,
@@ -3351,6 +3397,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/phone-numbers/create",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "phone_number": phone_number,
@@ -3429,6 +3476,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -3496,6 +3544,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -3569,6 +3618,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "agent_id": agent_id,
@@ -3638,6 +3688,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/phone-numbers/",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -3722,6 +3773,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/knowledge-base",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -3805,6 +3857,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/knowledge-base",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -3891,6 +3944,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/rag-index",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "force_reindex": force_reindex,
@@ -3968,6 +4022,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -4035,6 +4090,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -4113,6 +4169,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/dependent-agents",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -4179,6 +4236,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/settings",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -4249,6 +4307,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/settings",
+            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "conversation_initiation_client_data_webhook": convert_and_respect_annotation_metadata(
@@ -4325,6 +4384,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/secrets",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -4394,6 +4454,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/secrets",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -4466,6 +4527,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/secrets/{jsonable_encoder(secret_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )

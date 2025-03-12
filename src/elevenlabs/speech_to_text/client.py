@@ -88,6 +88,7 @@ class SpeechToTextClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/speech-to-text",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -211,6 +212,7 @@ class AsyncSpeechToTextClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/speech-to-text",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,
