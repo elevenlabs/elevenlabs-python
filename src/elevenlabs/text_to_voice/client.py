@@ -10,7 +10,7 @@ from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.http_validation_error import HttpValidationError
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from ..types.voice import Voice
+from ..types.voice_response_model import VoiceResponseModel
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -35,7 +35,7 @@ class TextToVoiceClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> VoicePreviewsResponseModel:
         """
-        Generate a custom voice based on voice description. This method returns a list of voice previews. Each preview has a generated_voice_id and a sample of the voice as base64 encoded mp3 audio. If you like the a voice previewand want to create the voice call /v1/text-to-voice/create-voice-from-preview with the generated_voice_id to create the voice.
+        Create a voice from a text prompt.
 
         Parameters
         ----------
@@ -46,7 +46,7 @@ class TextToVoiceClient:
             Text to generate, text length has to be between 100 and 1000.
 
         output_format : typing.Optional[TextToVoiceCreatePreviewsRequestOutputFormat]
-            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+            The output format of the generated audio.
 
         auto_generate_text : typing.Optional[bool]
             Whether to automatically generate a text suitable for the voice description.
@@ -76,6 +76,7 @@ class TextToVoiceClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.text_to_voice.create_previews(
@@ -85,6 +86,7 @@ class TextToVoiceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/text-to-voice/create-previews",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "output_format": output_format,
@@ -137,9 +139,9 @@ class TextToVoiceClient:
         labels: typing.Optional[typing.Dict[str, str]] = OMIT,
         played_not_selected_voice_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Voice:
+    ) -> VoiceResponseModel:
         """
-        Create a voice from previously generated voice preview. This endpoint should be called after you fetched a generated_voice_id using POST /v1/text-to-voice/create-previews.
+        Add a generated voice to the voice library.
 
         Parameters
         ----------
@@ -163,7 +165,7 @@ class TextToVoiceClient:
 
         Returns
         -------
-        Voice
+        VoiceResponseModel
             Successful Response
 
         Examples
@@ -171,6 +173,7 @@ class TextToVoiceClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.text_to_voice.create_voice_from_preview(
@@ -181,6 +184,7 @@ class TextToVoiceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/text-to-voice/create-voice-from-preview",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "voice_name": voice_name,
@@ -198,9 +202,9 @@ class TextToVoiceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Voice,
+                    VoiceResponseModel,
                     construct_type(
-                        type_=Voice,  # type: ignore
+                        type_=VoiceResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -238,7 +242,7 @@ class AsyncTextToVoiceClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> VoicePreviewsResponseModel:
         """
-        Generate a custom voice based on voice description. This method returns a list of voice previews. Each preview has a generated_voice_id and a sample of the voice as base64 encoded mp3 audio. If you like the a voice previewand want to create the voice call /v1/text-to-voice/create-voice-from-preview with the generated_voice_id to create the voice.
+        Create a voice from a text prompt.
 
         Parameters
         ----------
@@ -249,7 +253,7 @@ class AsyncTextToVoiceClient:
             Text to generate, text length has to be between 100 and 1000.
 
         output_format : typing.Optional[TextToVoiceCreatePreviewsRequestOutputFormat]
-            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+            The output format of the generated audio.
 
         auto_generate_text : typing.Optional[bool]
             Whether to automatically generate a text suitable for the voice description.
@@ -281,6 +285,7 @@ class AsyncTextToVoiceClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -296,6 +301,7 @@ class AsyncTextToVoiceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/text-to-voice/create-previews",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "output_format": output_format,
@@ -348,9 +354,9 @@ class AsyncTextToVoiceClient:
         labels: typing.Optional[typing.Dict[str, str]] = OMIT,
         played_not_selected_voice_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Voice:
+    ) -> VoiceResponseModel:
         """
-        Create a voice from previously generated voice preview. This endpoint should be called after you fetched a generated_voice_id using POST /v1/text-to-voice/create-previews.
+        Add a generated voice to the voice library.
 
         Parameters
         ----------
@@ -374,7 +380,7 @@ class AsyncTextToVoiceClient:
 
         Returns
         -------
-        Voice
+        VoiceResponseModel
             Successful Response
 
         Examples
@@ -384,6 +390,7 @@ class AsyncTextToVoiceClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -400,6 +407,7 @@ class AsyncTextToVoiceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/text-to-voice/create-voice-from-preview",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "voice_name": voice_name,
@@ -417,9 +425,9 @@ class AsyncTextToVoiceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Voice,
+                    VoiceResponseModel,
                     construct_type(
-                        type_=Voice,  # type: ignore
+                        type_=VoiceResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

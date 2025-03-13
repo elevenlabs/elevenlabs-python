@@ -3,13 +3,13 @@
 from ..core.client_wrapper import SyncClientWrapper
 import typing
 from ..core.request_options import RequestOptions
-from ..types.subscription import Subscription
+from ..types.extended_subscription_response_model import ExtendedSubscriptionResponseModel
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.http_validation_error import HttpValidationError
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from ..types.user import User
+from ..types.user_response_model import UserResponseModel
 from ..core.client_wrapper import AsyncClientWrapper
 
 
@@ -17,7 +17,9 @@ class UserClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_subscription(self, *, request_options: typing.Optional[RequestOptions] = None) -> Subscription:
+    def get_subscription(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ExtendedSubscriptionResponseModel:
         """
         Gets extended information about the users subscription
 
@@ -28,7 +30,7 @@ class UserClient:
 
         Returns
         -------
-        Subscription
+        ExtendedSubscriptionResponseModel
             Successful Response
 
         Examples
@@ -36,21 +38,23 @@ class UserClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.user.get_subscription()
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/user/subscription",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Subscription,
+                    ExtendedSubscriptionResponseModel,
                     construct_type(
-                        type_=Subscription,  # type: ignore
+                        type_=ExtendedSubscriptionResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -69,7 +73,7 @@ class UserClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> User:
+    def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> UserResponseModel:
         """
         Gets information about the user
 
@@ -80,7 +84,7 @@ class UserClient:
 
         Returns
         -------
-        User
+        UserResponseModel
             Successful Response
 
         Examples
@@ -88,21 +92,23 @@ class UserClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.user.get()
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/user",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    User,
+                    UserResponseModel,
                     construct_type(
-                        type_=User,  # type: ignore
+                        type_=UserResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -126,7 +132,9 @@ class AsyncUserClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_subscription(self, *, request_options: typing.Optional[RequestOptions] = None) -> Subscription:
+    async def get_subscription(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ExtendedSubscriptionResponseModel:
         """
         Gets extended information about the users subscription
 
@@ -137,7 +145,7 @@ class AsyncUserClient:
 
         Returns
         -------
-        Subscription
+        ExtendedSubscriptionResponseModel
             Successful Response
 
         Examples
@@ -147,6 +155,7 @@ class AsyncUserClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -159,15 +168,16 @@ class AsyncUserClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/user/subscription",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Subscription,
+                    ExtendedSubscriptionResponseModel,
                     construct_type(
-                        type_=Subscription,  # type: ignore
+                        type_=ExtendedSubscriptionResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -186,7 +196,7 @@ class AsyncUserClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> User:
+    async def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> UserResponseModel:
         """
         Gets information about the user
 
@@ -197,7 +207,7 @@ class AsyncUserClient:
 
         Returns
         -------
-        User
+        UserResponseModel
             Successful Response
 
         Examples
@@ -207,6 +217,7 @@ class AsyncUserClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -219,15 +230,16 @@ class AsyncUserClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/user",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    User,
+                    UserResponseModel,
                     construct_type(
-                        type_=User,  # type: ignore
+                        type_=UserResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

@@ -23,7 +23,7 @@ class AudioIsolationClient:
         self, *, audio: core.File, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Iterator[bytes]:
         """
-        Removes background noise from audio
+        Removes background noise from audio.
 
         Parameters
         ----------
@@ -40,6 +40,7 @@ class AudioIsolationClient:
         """
         with self._client_wrapper.httpx_client.stream(
             "v1/audio-isolation",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={},
             files={
@@ -74,7 +75,7 @@ class AudioIsolationClient:
         self, *, audio: core.File, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Iterator[bytes]:
         """
-        Removes background noise from audio and streams the result
+        Removes background noise from audio.
 
         Parameters
         ----------
@@ -91,6 +92,7 @@ class AudioIsolationClient:
         """
         with self._client_wrapper.httpx_client.stream(
             "v1/audio-isolation/stream",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={},
             files={
@@ -130,7 +132,7 @@ class AsyncAudioIsolationClient:
         self, *, audio: core.File, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.AsyncIterator[bytes]:
         """
-        Removes background noise from audio
+        Removes background noise from audio.
 
         Parameters
         ----------
@@ -147,6 +149,7 @@ class AsyncAudioIsolationClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             "v1/audio-isolation",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={},
             files={
@@ -181,7 +184,7 @@ class AsyncAudioIsolationClient:
         self, *, audio: core.File, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.AsyncIterator[bytes]:
         """
-        Removes background noise from audio and streams the result
+        Removes background noise from audio.
 
         Parameters
         ----------
@@ -198,6 +201,7 @@ class AsyncAudioIsolationClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             "v1/audio-isolation/stream",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={},
             files={

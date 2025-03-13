@@ -5,6 +5,10 @@ from .types import (
     BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization,
     BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization,
     BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization,
+    TextToSpeechConvertAsStreamRequestOutputFormat,
+    TextToSpeechConvertRequestOutputFormat,
+    TextToSpeechConvertWithTimestampsRequestOutputFormat,
+    TextToSpeechStreamWithTimestampsRequestOutputFormat,
 )
 
 __all__ = [
@@ -12,4 +16,8 @@ __all__ = [
     "BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization",
     "BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization",
     "BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization",
+    "TextToSpeechConvertAsStreamRequestOutputFormat",
+    "TextToSpeechConvertRequestOutputFormat",
+    "TextToSpeechConvertWithTimestampsRequestOutputFormat",
+    "TextToSpeechStreamWithTimestampsRequestOutputFormat",
 ]

@@ -3,15 +3,15 @@
 import typing
 from ..core.client_wrapper import SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.get_voices_response import GetVoicesResponse
+from ..types.get_voices_response_model import GetVoicesResponseModel
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.http_validation_error import HttpValidationError
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from ..types.voice_settings import VoiceSettings
+from ..types.voice_settings_response_model import VoiceSettingsResponseModel
 from ..core.jsonable_encoder import jsonable_encoder
-from ..types.voice import Voice
+from ..types.voice_response_model import VoiceResponseModel
 from ..types.delete_voice_response_model import DeleteVoiceResponseModel
 from ..types.edit_voice_settings_response_model import EditVoiceSettingsResponseModel
 from ..core.serialization import convert_and_respect_annotation_metadata
@@ -20,7 +20,7 @@ from ..types.add_voice_ivc_response_model import AddVoiceIvcResponseModel
 from ..types.edit_voice_response_model import EditVoiceResponseModel
 from ..types.add_voice_response_model import AddVoiceResponseModel
 from .types.voices_get_shared_request_category import VoicesGetSharedRequestCategory
-from ..types.get_library_voices_response import GetLibraryVoicesResponse
+from ..types.get_library_voices_response_model import GetLibraryVoicesResponseModel
 from ..types.profile_page_response_model import ProfilePageResponseModel
 from ..core.client_wrapper import AsyncClientWrapper
 
@@ -34,7 +34,7 @@ class VoicesClient:
 
     def get_all(
         self, *, show_legacy: typing.Optional[bool] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetVoicesResponse:
+    ) -> GetVoicesResponseModel:
         """
         Returns a list of all available voices for a user.
 
@@ -48,7 +48,7 @@ class VoicesClient:
 
         Returns
         -------
-        GetVoicesResponse
+        GetVoicesResponseModel
             Successful Response
 
         Examples
@@ -56,12 +56,16 @@ class VoicesClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
-        client.voices.get_all()
+        client.voices.get_all(
+            show_legacy=True,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/voices",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "show_legacy": show_legacy,
@@ -71,9 +75,9 @@ class VoicesClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetVoicesResponse,
+                    GetVoicesResponseModel,
                     construct_type(
-                        type_=GetVoicesResponse,  # type: ignore
+                        type_=GetVoicesResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -92,7 +96,9 @@ class VoicesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_default_settings(self, *, request_options: typing.Optional[RequestOptions] = None) -> VoiceSettings:
+    def get_default_settings(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> VoiceSettingsResponseModel:
         """
         Gets the default settings for voices. "similarity_boost" corresponds to"Clarity + Similarity Enhancement" in the web app and "stability" corresponds to "Stability" slider in the web app.
 
@@ -103,7 +109,7 @@ class VoicesClient:
 
         Returns
         -------
-        VoiceSettings
+        VoiceSettingsResponseModel
             Successful Response
 
         Examples
@@ -111,21 +117,23 @@ class VoicesClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.voices.get_default_settings()
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/voices/settings/default",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    VoiceSettings,
+                    VoiceSettingsResponseModel,
                     construct_type(
-                        type_=VoiceSettings,  # type: ignore
+                        type_=VoiceSettingsResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -134,7 +142,9 @@ class VoicesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_settings(self, voice_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> VoiceSettings:
+    def get_settings(
+        self, voice_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> VoiceSettingsResponseModel:
         """
         Returns the settings for a specific voice. "similarity_boost" corresponds to"Clarity + Similarity Enhancement" in the web app and "stability" corresponds to "Stability" slider in the web app.
 
@@ -148,7 +158,7 @@ class VoicesClient:
 
         Returns
         -------
-        VoiceSettings
+        VoiceSettingsResponseModel
             Successful Response
 
         Examples
@@ -156,23 +166,25 @@ class VoicesClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.voices.get_settings(
-            voice_id="JBFqnCBsd6RMkjVDRZzb",
+            voice_id="21m00Tcm4TlvDq8ikWAM",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}/settings",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    VoiceSettings,
+                    VoiceSettingsResponseModel,
                     construct_type(
-                        type_=VoiceSettings,  # type: ignore
+                        type_=VoiceSettingsResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -197,14 +209,14 @@ class VoicesClient:
         *,
         with_settings: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Voice:
+    ) -> VoiceResponseModel:
         """
         Returns metadata about a specific voice.
 
         Parameters
         ----------
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/get-all) endpoint list all the available voices.
 
         with_settings : typing.Optional[bool]
             This parameter is now deprecated. It is ignored and will be removed in a future version.
@@ -214,7 +226,7 @@ class VoicesClient:
 
         Returns
         -------
-        Voice
+        VoiceResponseModel
             Successful Response
 
         Examples
@@ -222,14 +234,16 @@ class VoicesClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.voices.get(
-            voice_id="JBFqnCBsd6RMkjVDRZzb",
+            voice_id="21m00Tcm4TlvDq8ikWAM",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "with_settings": with_settings,
@@ -239,9 +253,9 @@ class VoicesClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Voice,
+                    VoiceResponseModel,
                     construct_type(
-                        type_=Voice,  # type: ignore
+                        type_=VoiceResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -269,7 +283,7 @@ class VoicesClient:
         Parameters
         ----------
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/get-all) endpoint list all the available voices.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -284,14 +298,16 @@ class VoicesClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.voices.delete(
-            voice_id="VOICE_ID",
+            voice_id="21m00Tcm4TlvDq8ikWAM",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -320,7 +336,11 @@ class VoicesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def edit_settings(
-        self, voice_id: str, *, request: VoiceSettings, request_options: typing.Optional[RequestOptions] = None
+        self,
+        voice_id: str,
+        *,
+        request: VoiceSettingsResponseModel,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> EditVoiceSettingsResponseModel:
         """
         Edit your settings for a specific voice. "similarity_boost" corresponds to "Clarity + Similarity Enhancement" in the web app and "stability" corresponds to "Stability" slider in the web app.
@@ -328,9 +348,9 @@ class VoicesClient:
         Parameters
         ----------
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/get-all) endpoint list all the available voices.
 
-        request : VoiceSettings
+        request : VoiceSettingsResponseModel
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -342,24 +362,30 @@ class VoicesClient:
 
         Examples
         --------
-        from elevenlabs import ElevenLabs, VoiceSettings
+        from elevenlabs import ElevenLabs, VoiceSettingsResponseModel
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.voices.edit_settings(
-            voice_id="VOICE_ID",
-            request=VoiceSettings(
-                stability=0.1,
-                similarity_boost=0.3,
-                style=0.2,
+            voice_id="21m00Tcm4TlvDq8ikWAM",
+            request=VoiceSettingsResponseModel(
+                stability=1.0,
+                similarity_boost=1.0,
+                style=0.0,
+                use_speaker_boost=True,
+                speed=1.0,
             ),
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}/settings/edit",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
-            json=convert_and_respect_annotation_metadata(object_=request, annotation=VoiceSettings, direction="write"),
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=VoiceSettingsResponseModel, direction="write"
+            ),
             request_options=request_options,
             omit=OMIT,
         )
@@ -398,7 +424,7 @@ class VoicesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddVoiceIvcResponseModel:
         """
-        Add a new voice to your collection of voices in VoiceLab.
+        Create a voice clone and add it to your Voices
 
         Parameters
         ----------
@@ -430,14 +456,16 @@ class VoicesClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.voices.add(
-            name="Alex",
+            name="name",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/voices/add",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -492,7 +520,7 @@ class VoicesClient:
         Parameters
         ----------
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/get-all) endpoint list all the available voices.
 
         name : str
             The name that identifies this voice. This will be displayed in the dropdown of the website.
@@ -522,15 +550,17 @@ class VoicesClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.voices.edit(
-            voice_id="VOICE_ID",
-            name="George",
+            voice_id="21m00Tcm4TlvDq8ikWAM",
+            name="name",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}/edit",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -577,7 +607,7 @@ class VoicesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddVoiceResponseModel:
         """
-        Add a shared voice to your collection of voices.
+        Add a shared voice to your collection of Voices
 
         Parameters
         ----------
@@ -585,7 +615,7 @@ class VoicesClient:
             Public user ID used to publicly identify ElevenLabs users.
 
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/get-all) endpoint list all the available voices.
 
         new_name : str
             The name that identifies this voice. This will be displayed in the dropdown of the website.
@@ -603,16 +633,18 @@ class VoicesClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.voices.add_sharing_voice(
-            public_user_id="63e84100a6bf7874ba37a1bab9a31828a379ec94b891b401653b655c5110880f",
-            voice_id="sB1b5zUrxQVAFl2PhZFp",
-            new_name="Alita",
+            public_user_id="63e06b7e7cafdc46be4d2e0b3f045940231ae058d508589653d74d1265a574ca",
+            voice_id="21m00Tcm4TlvDq8ikWAM",
+            new_name="John Smith",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/add/{jsonable_encoder(public_user_id)}/{jsonable_encoder(voice_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "new_name": new_name,
@@ -666,7 +698,7 @@ class VoicesClient:
         sort: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetLibraryVoicesResponse:
+    ) -> GetLibraryVoicesResponseModel:
         """
         Retrieves a list of shared voices.
 
@@ -721,7 +753,7 @@ class VoicesClient:
 
         Returns
         -------
-        GetLibraryVoicesResponse
+        GetLibraryVoicesResponseModel
             Successful Response
 
         Examples
@@ -729,16 +761,25 @@ class VoicesClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.voices.get_shared(
-            page_size=1,
-            gender="female",
+            gender="male",
+            age="young",
+            accent="american",
             language="en",
+            search="tiktok",
+            featured=True,
+            min_notice_period_days=30,
+            reader_app_enabled=True,
+            owner_id="7c9fab611d9a0e1fb2e7448a0c294a8804efc2bcc324b0a366a5d5232b7d1532",
+            sort="created_date",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/shared-voices",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "page_size": page_size,
@@ -762,9 +803,9 @@ class VoicesClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetLibraryVoicesResponse,
+                    GetLibraryVoicesResponseModel,
                     construct_type(
-                        type_=GetLibraryVoicesResponse,  # type: ignore
+                        type_=GetLibraryVoicesResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -790,7 +831,7 @@ class VoicesClient:
         similarity_threshold: typing.Optional[float] = OMIT,
         top_k: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetLibraryVoicesResponse:
+    ) -> GetLibraryVoicesResponseModel:
         """
         Returns a list of shared voices similar to the provided audio sample. If neither similarity_threshold nor top_k is provided, we will apply default values.
 
@@ -810,7 +851,7 @@ class VoicesClient:
 
         Returns
         -------
-        GetLibraryVoicesResponse
+        GetLibraryVoicesResponseModel
             Successful Response
 
         Examples
@@ -818,12 +859,14 @@ class VoicesClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.voices.get_similar_library_voices()
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/similar-voices",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "similarity_threshold": similarity_threshold,
@@ -838,9 +881,9 @@ class VoicesClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetLibraryVoicesResponse,
+                    GetLibraryVoicesResponseModel,
                     construct_type(
-                        type_=GetLibraryVoicesResponse,  # type: ignore
+                        type_=GetLibraryVoicesResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -883,6 +926,7 @@ class VoicesClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.voices.get_a_profile_page(
@@ -891,6 +935,7 @@ class VoicesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"profile/{jsonable_encoder(handle)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -925,7 +970,7 @@ class AsyncVoicesClient:
 
     async def get_all(
         self, *, show_legacy: typing.Optional[bool] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetVoicesResponse:
+    ) -> GetVoicesResponseModel:
         """
         Returns a list of all available voices for a user.
 
@@ -939,7 +984,7 @@ class AsyncVoicesClient:
 
         Returns
         -------
-        GetVoicesResponse
+        GetVoicesResponseModel
             Successful Response
 
         Examples
@@ -949,18 +994,22 @@ class AsyncVoicesClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
 
         async def main() -> None:
-            await client.voices.get_all()
+            await client.voices.get_all(
+                show_legacy=True,
+            )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/voices",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "show_legacy": show_legacy,
@@ -970,9 +1019,9 @@ class AsyncVoicesClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetVoicesResponse,
+                    GetVoicesResponseModel,
                     construct_type(
-                        type_=GetVoicesResponse,  # type: ignore
+                        type_=GetVoicesResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -991,7 +1040,9 @@ class AsyncVoicesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_default_settings(self, *, request_options: typing.Optional[RequestOptions] = None) -> VoiceSettings:
+    async def get_default_settings(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> VoiceSettingsResponseModel:
         """
         Gets the default settings for voices. "similarity_boost" corresponds to"Clarity + Similarity Enhancement" in the web app and "stability" corresponds to "Stability" slider in the web app.
 
@@ -1002,7 +1053,7 @@ class AsyncVoicesClient:
 
         Returns
         -------
-        VoiceSettings
+        VoiceSettingsResponseModel
             Successful Response
 
         Examples
@@ -1012,6 +1063,7 @@ class AsyncVoicesClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -1024,15 +1076,16 @@ class AsyncVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/voices/settings/default",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    VoiceSettings,
+                    VoiceSettingsResponseModel,
                     construct_type(
-                        type_=VoiceSettings,  # type: ignore
+                        type_=VoiceSettingsResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1043,7 +1096,7 @@ class AsyncVoicesClient:
 
     async def get_settings(
         self, voice_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> VoiceSettings:
+    ) -> VoiceSettingsResponseModel:
         """
         Returns the settings for a specific voice. "similarity_boost" corresponds to"Clarity + Similarity Enhancement" in the web app and "stability" corresponds to "Stability" slider in the web app.
 
@@ -1057,7 +1110,7 @@ class AsyncVoicesClient:
 
         Returns
         -------
-        VoiceSettings
+        VoiceSettingsResponseModel
             Successful Response
 
         Examples
@@ -1067,13 +1120,14 @@ class AsyncVoicesClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
 
         async def main() -> None:
             await client.voices.get_settings(
-                voice_id="JBFqnCBsd6RMkjVDRZzb",
+                voice_id="21m00Tcm4TlvDq8ikWAM",
             )
 
 
@@ -1081,15 +1135,16 @@ class AsyncVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}/settings",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    VoiceSettings,
+                    VoiceSettingsResponseModel,
                     construct_type(
-                        type_=VoiceSettings,  # type: ignore
+                        type_=VoiceSettingsResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1114,14 +1169,14 @@ class AsyncVoicesClient:
         *,
         with_settings: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Voice:
+    ) -> VoiceResponseModel:
         """
         Returns metadata about a specific voice.
 
         Parameters
         ----------
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/get-all) endpoint list all the available voices.
 
         with_settings : typing.Optional[bool]
             This parameter is now deprecated. It is ignored and will be removed in a future version.
@@ -1131,7 +1186,7 @@ class AsyncVoicesClient:
 
         Returns
         -------
-        Voice
+        VoiceResponseModel
             Successful Response
 
         Examples
@@ -1141,13 +1196,14 @@ class AsyncVoicesClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
 
         async def main() -> None:
             await client.voices.get(
-                voice_id="JBFqnCBsd6RMkjVDRZzb",
+                voice_id="21m00Tcm4TlvDq8ikWAM",
             )
 
 
@@ -1155,6 +1211,7 @@ class AsyncVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "with_settings": with_settings,
@@ -1164,9 +1221,9 @@ class AsyncVoicesClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Voice,
+                    VoiceResponseModel,
                     construct_type(
-                        type_=Voice,  # type: ignore
+                        type_=VoiceResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1194,7 +1251,7 @@ class AsyncVoicesClient:
         Parameters
         ----------
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/get-all) endpoint list all the available voices.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1211,13 +1268,14 @@ class AsyncVoicesClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
 
         async def main() -> None:
             await client.voices.delete(
-                voice_id="VOICE_ID",
+                voice_id="21m00Tcm4TlvDq8ikWAM",
             )
 
 
@@ -1225,6 +1283,7 @@ class AsyncVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -1253,7 +1312,11 @@ class AsyncVoicesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def edit_settings(
-        self, voice_id: str, *, request: VoiceSettings, request_options: typing.Optional[RequestOptions] = None
+        self,
+        voice_id: str,
+        *,
+        request: VoiceSettingsResponseModel,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> EditVoiceSettingsResponseModel:
         """
         Edit your settings for a specific voice. "similarity_boost" corresponds to "Clarity + Similarity Enhancement" in the web app and "stability" corresponds to "Stability" slider in the web app.
@@ -1261,9 +1324,9 @@ class AsyncVoicesClient:
         Parameters
         ----------
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/get-all) endpoint list all the available voices.
 
-        request : VoiceSettings
+        request : VoiceSettingsResponseModel
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1277,20 +1340,23 @@ class AsyncVoicesClient:
         --------
         import asyncio
 
-        from elevenlabs import AsyncElevenLabs, VoiceSettings
+        from elevenlabs import AsyncElevenLabs, VoiceSettingsResponseModel
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
 
         async def main() -> None:
             await client.voices.edit_settings(
-                voice_id="VOICE_ID",
-                request=VoiceSettings(
-                    stability=0.1,
-                    similarity_boost=0.3,
-                    style=0.2,
+                voice_id="21m00Tcm4TlvDq8ikWAM",
+                request=VoiceSettingsResponseModel(
+                    stability=1.0,
+                    similarity_boost=1.0,
+                    style=0.0,
+                    use_speaker_boost=True,
+                    speed=1.0,
                 ),
             )
 
@@ -1299,8 +1365,11 @@ class AsyncVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}/settings/edit",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
-            json=convert_and_respect_annotation_metadata(object_=request, annotation=VoiceSettings, direction="write"),
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=VoiceSettingsResponseModel, direction="write"
+            ),
             request_options=request_options,
             omit=OMIT,
         )
@@ -1339,7 +1408,7 @@ class AsyncVoicesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddVoiceIvcResponseModel:
         """
-        Add a new voice to your collection of voices in VoiceLab.
+        Create a voice clone and add it to your Voices
 
         Parameters
         ----------
@@ -1373,13 +1442,14 @@ class AsyncVoicesClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
 
         async def main() -> None:
             await client.voices.add(
-                name="Alex",
+                name="name",
             )
 
 
@@ -1387,6 +1457,7 @@ class AsyncVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/voices/add",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -1441,7 +1512,7 @@ class AsyncVoicesClient:
         Parameters
         ----------
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/get-all) endpoint list all the available voices.
 
         name : str
             The name that identifies this voice. This will be displayed in the dropdown of the website.
@@ -1473,14 +1544,15 @@ class AsyncVoicesClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
 
         async def main() -> None:
             await client.voices.edit(
-                voice_id="VOICE_ID",
-                name="George",
+                voice_id="21m00Tcm4TlvDq8ikWAM",
+                name="name",
             )
 
 
@@ -1488,6 +1560,7 @@ class AsyncVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}/edit",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -1534,7 +1607,7 @@ class AsyncVoicesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddVoiceResponseModel:
         """
-        Add a shared voice to your collection of voices.
+        Add a shared voice to your collection of Voices
 
         Parameters
         ----------
@@ -1542,7 +1615,7 @@ class AsyncVoicesClient:
             Public user ID used to publicly identify ElevenLabs users.
 
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/get-all) endpoint list all the available voices.
 
         new_name : str
             The name that identifies this voice. This will be displayed in the dropdown of the website.
@@ -1562,15 +1635,16 @@ class AsyncVoicesClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
 
         async def main() -> None:
             await client.voices.add_sharing_voice(
-                public_user_id="63e84100a6bf7874ba37a1bab9a31828a379ec94b891b401653b655c5110880f",
-                voice_id="sB1b5zUrxQVAFl2PhZFp",
-                new_name="Alita",
+                public_user_id="63e06b7e7cafdc46be4d2e0b3f045940231ae058d508589653d74d1265a574ca",
+                voice_id="21m00Tcm4TlvDq8ikWAM",
+                new_name="John Smith",
             )
 
 
@@ -1578,6 +1652,7 @@ class AsyncVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/add/{jsonable_encoder(public_user_id)}/{jsonable_encoder(voice_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "new_name": new_name,
@@ -1631,7 +1706,7 @@ class AsyncVoicesClient:
         sort: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetLibraryVoicesResponse:
+    ) -> GetLibraryVoicesResponseModel:
         """
         Retrieves a list of shared voices.
 
@@ -1686,7 +1761,7 @@ class AsyncVoicesClient:
 
         Returns
         -------
-        GetLibraryVoicesResponse
+        GetLibraryVoicesResponseModel
             Successful Response
 
         Examples
@@ -1696,15 +1771,23 @@ class AsyncVoicesClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
 
         async def main() -> None:
             await client.voices.get_shared(
-                page_size=1,
-                gender="female",
+                gender="male",
+                age="young",
+                accent="american",
                 language="en",
+                search="tiktok",
+                featured=True,
+                min_notice_period_days=30,
+                reader_app_enabled=True,
+                owner_id="7c9fab611d9a0e1fb2e7448a0c294a8804efc2bcc324b0a366a5d5232b7d1532",
+                sort="created_date",
             )
 
 
@@ -1712,6 +1795,7 @@ class AsyncVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/shared-voices",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "page_size": page_size,
@@ -1735,9 +1819,9 @@ class AsyncVoicesClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetLibraryVoicesResponse,
+                    GetLibraryVoicesResponseModel,
                     construct_type(
-                        type_=GetLibraryVoicesResponse,  # type: ignore
+                        type_=GetLibraryVoicesResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1763,7 +1847,7 @@ class AsyncVoicesClient:
         similarity_threshold: typing.Optional[float] = OMIT,
         top_k: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetLibraryVoicesResponse:
+    ) -> GetLibraryVoicesResponseModel:
         """
         Returns a list of shared voices similar to the provided audio sample. If neither similarity_threshold nor top_k is provided, we will apply default values.
 
@@ -1783,7 +1867,7 @@ class AsyncVoicesClient:
 
         Returns
         -------
-        GetLibraryVoicesResponse
+        GetLibraryVoicesResponseModel
             Successful Response
 
         Examples
@@ -1793,6 +1877,7 @@ class AsyncVoicesClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -1805,6 +1890,7 @@ class AsyncVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/similar-voices",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "similarity_threshold": similarity_threshold,
@@ -1819,9 +1905,9 @@ class AsyncVoicesClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetLibraryVoicesResponse,
+                    GetLibraryVoicesResponseModel,
                     construct_type(
-                        type_=GetLibraryVoicesResponse,  # type: ignore
+                        type_=GetLibraryVoicesResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1866,6 +1952,7 @@ class AsyncVoicesClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -1880,6 +1967,7 @@ class AsyncVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"profile/{jsonable_encoder(handle)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )

@@ -22,7 +22,7 @@ from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.http_validation_error import HttpValidationError
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from ..types.get_projects_response import GetProjectsResponse
+from ..types.get_projects_response_model import GetProjectsResponseModel
 from .. import core
 from .types.add_project_v_1_projects_add_post_request_target_audience import (
     AddProjectV1ProjectsAddPostRequestTargetAudience,
@@ -35,14 +35,14 @@ from ..types.add_project_response_model import AddProjectResponseModel
 from ..types.project_extended_response_model import ProjectExtendedResponseModel
 from ..core.jsonable_encoder import jsonable_encoder
 from ..types.edit_project_response_model import EditProjectResponseModel
-from ..types.project_snapshots_response import ProjectSnapshotsResponse
-from ..types.get_chapters_response import GetChaptersResponse
+from ..types.project_snapshots_response_model import ProjectSnapshotsResponseModel
+from ..types.get_chapters_response_model import GetChaptersResponseModel
 from ..types.chapter_with_content_response_model import ChapterWithContentResponseModel
 from ..types.chapter_content_input_model import ChapterContentInputModel
 from ..types.edit_chapter_response_model import EditChapterResponseModel
 from ..types.add_chapter_response_model import AddChapterResponseModel
-from ..types.chapter_snapshots_response import ChapterSnapshotsResponse
-from ..types.pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
+from ..types.chapter_snapshots_response_model import ChapterSnapshotsResponseModel
+from ..types.pronunciation_dictionary_version_locator_db_model import PronunciationDictionaryVersionLocatorDbModel
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -87,13 +87,11 @@ class ProjectsClient:
             ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
             ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
 
-
         duration_scale : typing.Optional[BodyCreatePodcastV1ProjectsPodcastCreatePostDurationScale]
             Duration of the generated podcast. Must be one of:
             short - produces podcasts shorter than 3 minutes.
             default - produces podcasts roughly between 3-7 minutes.
             long - prodces podcasts longer than 7 minutes.
-
 
         language : typing.Optional[str]
             An optional language of the Studio project. Two-letter language code (ISO 639-1).
@@ -124,6 +122,7 @@ class ProjectsClient:
         )
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.projects.create_podcast(
@@ -141,6 +140,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/projects/podcast/create",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "model_id": model_id,
@@ -186,7 +186,7 @@ class ProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_projects(self, *, request_options: typing.Optional[RequestOptions] = None) -> GetProjectsResponse:
+    def get_projects(self, *, request_options: typing.Optional[RequestOptions] = None) -> GetProjectsResponseModel:
         """
         Returns a list of your projects together and its metadata.
 
@@ -197,7 +197,7 @@ class ProjectsClient:
 
         Returns
         -------
-        GetProjectsResponse
+        GetProjectsResponseModel
             Successful Response
 
         Examples
@@ -205,21 +205,23 @@ class ProjectsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.projects.get_projects()
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/projects",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetProjectsResponse,
+                    GetProjectsResponseModel,
                     construct_type(
-                        type_=GetProjectsResponse,  # type: ignore
+                        type_=GetProjectsResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -261,6 +263,7 @@ class ProjectsClient:
         acx_volume_normalization: typing.Optional[bool] = OMIT,
         volume_normalization: typing.Optional[bool] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[typing.List[str]] = OMIT,
+        callback_url: typing.Optional[str] = OMIT,
         fiction: typing.Optional[AddProjectV1ProjectsAddPostRequestFiction] = OMIT,
         apply_text_normalization: typing.Optional[AddProjectV1ProjectsAddPostRequestApplyTextNormalization] = OMIT,
         auto_convert: typing.Optional[bool] = OMIT,
@@ -296,7 +299,6 @@ class ProjectsClient:
             high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the credit cost by 20%.
             ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
             ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
-
 
         title : typing.Optional[str]
             An optional name of the author of the Studio project, this will be added as metadata to the mp3 file on Studio project or chapter download.
@@ -337,6 +339,9 @@ class ProjectsClient:
         pronunciation_dictionary_locators : typing.Optional[typing.List[str]]
             A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text. A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
 
+        callback_url : typing.Optional[str]
+            A url that will be called by our service when the Studio project is converted. Request will contain a json blob containing the status of the conversion
+
         fiction : typing.Optional[AddProjectV1ProjectsAddPostRequestFiction]
             An optional specification of whether the content of this Studio project is fiction.
 
@@ -367,6 +372,7 @@ class ProjectsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.projects.add_project(
@@ -378,6 +384,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/projects/add",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -399,6 +406,7 @@ class ProjectsClient:
                 "acx_volume_normalization": acx_volume_normalization,
                 "volume_normalization": volume_normalization,
                 "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
+                "callback_url": callback_url,
                 "fiction": fiction,
                 "apply_text_normalization": apply_text_normalization,
                 "auto_convert": auto_convert,
@@ -458,6 +466,7 @@ class ProjectsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.projects.get_project_by_id(
@@ -466,6 +475,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -548,6 +558,7 @@ class ProjectsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.projects.edit_basic_project_info(
@@ -559,6 +570,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -623,6 +635,7 @@ class ProjectsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.projects.delete_project(
@@ -631,6 +644,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -697,6 +711,7 @@ class ProjectsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.projects.edit_project_content(
@@ -705,6 +720,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/content",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "from_url": from_url,
@@ -764,6 +780,7 @@ class ProjectsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.projects.convert_project(
@@ -772,6 +789,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/convert",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             request_options=request_options,
         )
@@ -801,7 +819,7 @@ class ProjectsClient:
 
     def get_project_snapshots(
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ProjectSnapshotsResponse:
+    ) -> ProjectSnapshotsResponseModel:
         """
         Gets the snapshots of a project.
 
@@ -815,7 +833,7 @@ class ProjectsClient:
 
         Returns
         -------
-        ProjectSnapshotsResponse
+        ProjectSnapshotsResponseModel
             Successful Response
 
         Examples
@@ -823,6 +841,7 @@ class ProjectsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.projects.get_project_snapshots(
@@ -831,15 +850,16 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/snapshots",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ProjectSnapshotsResponse,
+                    ProjectSnapshotsResponseModel,
                     construct_type(
-                        type_=ProjectSnapshotsResponse,  # type: ignore
+                        type_=ProjectSnapshotsResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -865,7 +885,7 @@ class ProjectsClient:
         *,
         convert_to_mpeg: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Iterator[bytes]:
+    ) -> None:
         """
         Stream the audio from a project snapshot.
 
@@ -881,15 +901,28 @@ class ProjectsClient:
             Whether to convert the audio to mpeg format.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+            Request-specific configuration.
 
-        Yields
-        ------
-        typing.Iterator[bytes]
-            Successful Response
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.stream_project_audio(
+            project_id="21m00Tcm4TlvDq8ikWAM",
+            project_snapshot_id="21m00Tcm4TlvDq8ikWAM",
+        )
         """
-        with self._client_wrapper.httpx_client.stream(
+        _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}/stream",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "convert_to_mpeg": convert_to_mpeg,
@@ -899,28 +932,24 @@ class ProjectsClient:
             },
             request_options=request_options,
             omit=OMIT,
-        ) as _response:
-            try:
-                if 200 <= _response.status_code < 300:
-                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
-                    for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
-                        yield _chunk
-                    return
-                _response.read()
-                if _response.status_code == 422:
-                    raise UnprocessableEntityError(
-                        typing.cast(
-                            HttpValidationError,
-                            construct_type(
-                                type_=HttpValidationError,  # type: ignore
-                                object_=_response.json(),
-                            ),
-                        )
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
                     )
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def streams_archive_with_project_audio(
         self, project_id: str, project_snapshot_id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -948,6 +977,7 @@ class ProjectsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.projects.streams_archive_with_project_audio(
@@ -957,6 +987,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}/archive",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             request_options=request_options,
         )
@@ -980,7 +1011,7 @@ class ProjectsClient:
 
     def get_chapters(
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetChaptersResponse:
+    ) -> GetChaptersResponseModel:
         """
         Returns a list of your chapters for a project together and its metadata.
 
@@ -994,7 +1025,7 @@ class ProjectsClient:
 
         Returns
         -------
-        GetChaptersResponse
+        GetChaptersResponseModel
             Successful Response
 
         Examples
@@ -1002,6 +1033,7 @@ class ProjectsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.projects.get_chapters(
@@ -1010,15 +1042,16 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/chapters",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetChaptersResponse,
+                    GetChaptersResponseModel,
                     construct_type(
-                        type_=GetChaptersResponse,  # type: ignore
+                        type_=GetChaptersResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1064,6 +1097,7 @@ class ProjectsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.projects.get_chapter_by_id(
@@ -1073,6 +1107,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1127,6 +1162,7 @@ class ProjectsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.projects.delete_chapter(
@@ -1136,6 +1172,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -1202,6 +1239,7 @@ class ProjectsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.projects.edit_chapter(
@@ -1211,6 +1249,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "name": name,
@@ -1283,6 +1322,7 @@ class ProjectsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.projects.add_chapter_to_a_project(
@@ -1292,6 +1332,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/chapters/add",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -1354,6 +1395,7 @@ class ProjectsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.projects.convert_chapter(
@@ -1363,6 +1405,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/convert",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             request_options=request_options,
         )
@@ -1392,7 +1435,7 @@ class ProjectsClient:
 
     def list_chapter_snapshots(
         self, project_id: str, chapter_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ChapterSnapshotsResponse:
+    ) -> ChapterSnapshotsResponseModel:
         """
         Gets information about all the snapshots of a chapter. Each snapshot can be downloaded as audio. Whenever a chapter is converted a snapshot will automatically be created.
 
@@ -1409,7 +1452,7 @@ class ProjectsClient:
 
         Returns
         -------
-        ChapterSnapshotsResponse
+        ChapterSnapshotsResponseModel
             Successful Response
 
         Examples
@@ -1417,6 +1460,7 @@ class ProjectsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.projects.list_chapter_snapshots(
@@ -1426,15 +1470,16 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/snapshots",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ChapterSnapshotsResponse,
+                    ChapterSnapshotsResponseModel,
                     construct_type(
-                        type_=ChapterSnapshotsResponse,  # type: ignore
+                        type_=ChapterSnapshotsResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1491,6 +1536,7 @@ class ProjectsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.projects.stream_chapter_audio(
@@ -1501,6 +1547,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/snapshots/{jsonable_encoder(chapter_snapshot_id)}/stream",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "convert_to_mpeg": convert_to_mpeg,
@@ -1533,7 +1580,7 @@ class ProjectsClient:
         self,
         project_id: str,
         *,
-        pronunciation_dictionary_locators: typing.Sequence[PronunciationDictionaryVersionLocator],
+        pronunciation_dictionary_locators: typing.Sequence[PronunciationDictionaryVersionLocatorDbModel],
         invalidate_affected_text: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
@@ -1545,7 +1592,7 @@ class ProjectsClient:
         project_id : str
             The ID of the Studio project.
 
-        pronunciation_dictionary_locators : typing.Sequence[PronunciationDictionaryVersionLocator]
+        pronunciation_dictionary_locators : typing.Sequence[PronunciationDictionaryVersionLocatorDbModel]
             A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text. A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
 
         invalidate_affected_text : typing.Optional[bool]
@@ -1561,15 +1608,16 @@ class ProjectsClient:
 
         Examples
         --------
-        from elevenlabs import ElevenLabs, PronunciationDictionaryVersionLocator
+        from elevenlabs import ElevenLabs, PronunciationDictionaryVersionLocatorDbModel
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.projects.update_pronunciation_dictionaries(
             project_id="21m00Tcm4TlvDq8ikWAM",
             pronunciation_dictionary_locators=[
-                PronunciationDictionaryVersionLocator(
+                PronunciationDictionaryVersionLocatorDbModel(
                     pronunciation_dictionary_id="pronunciation_dictionary_id",
                     version_id="version_id",
                 )
@@ -1578,11 +1626,12 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/update-pronunciation-dictionaries",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
                     object_=pronunciation_dictionary_locators,
-                    annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
+                    annotation=typing.Sequence[PronunciationDictionaryVersionLocatorDbModel],
                     direction="write",
                 ),
                 "invalidate_affected_text": invalidate_affected_text,
@@ -1656,13 +1705,11 @@ class AsyncProjectsClient:
             ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
             ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
 
-
         duration_scale : typing.Optional[BodyCreatePodcastV1ProjectsPodcastCreatePostDurationScale]
             Duration of the generated podcast. Must be one of:
             short - produces podcasts shorter than 3 minutes.
             default - produces podcasts roughly between 3-7 minutes.
             long - prodces podcasts longer than 7 minutes.
-
 
         language : typing.Optional[str]
             An optional language of the Studio project. Two-letter language code (ISO 639-1).
@@ -1695,6 +1742,7 @@ class AsyncProjectsClient:
         )
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -1718,6 +1766,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/projects/podcast/create",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "model_id": model_id,
@@ -1763,7 +1812,9 @@ class AsyncProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_projects(self, *, request_options: typing.Optional[RequestOptions] = None) -> GetProjectsResponse:
+    async def get_projects(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetProjectsResponseModel:
         """
         Returns a list of your projects together and its metadata.
 
@@ -1774,7 +1825,7 @@ class AsyncProjectsClient:
 
         Returns
         -------
-        GetProjectsResponse
+        GetProjectsResponseModel
             Successful Response
 
         Examples
@@ -1784,6 +1835,7 @@ class AsyncProjectsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -1796,15 +1848,16 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/projects",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetProjectsResponse,
+                    GetProjectsResponseModel,
                     construct_type(
-                        type_=GetProjectsResponse,  # type: ignore
+                        type_=GetProjectsResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1846,6 +1899,7 @@ class AsyncProjectsClient:
         acx_volume_normalization: typing.Optional[bool] = OMIT,
         volume_normalization: typing.Optional[bool] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[typing.List[str]] = OMIT,
+        callback_url: typing.Optional[str] = OMIT,
         fiction: typing.Optional[AddProjectV1ProjectsAddPostRequestFiction] = OMIT,
         apply_text_normalization: typing.Optional[AddProjectV1ProjectsAddPostRequestApplyTextNormalization] = OMIT,
         auto_convert: typing.Optional[bool] = OMIT,
@@ -1881,7 +1935,6 @@ class AsyncProjectsClient:
             high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the credit cost by 20%.
             ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
             ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
-
 
         title : typing.Optional[str]
             An optional name of the author of the Studio project, this will be added as metadata to the mp3 file on Studio project or chapter download.
@@ -1922,6 +1975,9 @@ class AsyncProjectsClient:
         pronunciation_dictionary_locators : typing.Optional[typing.List[str]]
             A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text. A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
 
+        callback_url : typing.Optional[str]
+            A url that will be called by our service when the Studio project is converted. Request will contain a json blob containing the status of the conversion
+
         fiction : typing.Optional[AddProjectV1ProjectsAddPostRequestFiction]
             An optional specification of whether the content of this Studio project is fiction.
 
@@ -1954,6 +2010,7 @@ class AsyncProjectsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -1971,6 +2028,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/projects/add",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -1992,6 +2050,7 @@ class AsyncProjectsClient:
                 "acx_volume_normalization": acx_volume_normalization,
                 "volume_normalization": volume_normalization,
                 "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
+                "callback_url": callback_url,
                 "fiction": fiction,
                 "apply_text_normalization": apply_text_normalization,
                 "auto_convert": auto_convert,
@@ -2053,6 +2112,7 @@ class AsyncProjectsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -2067,6 +2127,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -2151,6 +2212,7 @@ class AsyncProjectsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -2168,6 +2230,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -2234,6 +2297,7 @@ class AsyncProjectsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -2248,6 +2312,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -2316,6 +2381,7 @@ class AsyncProjectsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -2330,6 +2396,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/content",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "from_url": from_url,
@@ -2391,6 +2458,7 @@ class AsyncProjectsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -2405,6 +2473,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/convert",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             request_options=request_options,
         )
@@ -2434,7 +2503,7 @@ class AsyncProjectsClient:
 
     async def get_project_snapshots(
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ProjectSnapshotsResponse:
+    ) -> ProjectSnapshotsResponseModel:
         """
         Gets the snapshots of a project.
 
@@ -2448,7 +2517,7 @@ class AsyncProjectsClient:
 
         Returns
         -------
-        ProjectSnapshotsResponse
+        ProjectSnapshotsResponseModel
             Successful Response
 
         Examples
@@ -2458,6 +2527,7 @@ class AsyncProjectsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -2472,15 +2542,16 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/snapshots",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ProjectSnapshotsResponse,
+                    ProjectSnapshotsResponseModel,
                     construct_type(
-                        type_=ProjectSnapshotsResponse,  # type: ignore
+                        type_=ProjectSnapshotsResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -2506,7 +2577,7 @@ class AsyncProjectsClient:
         *,
         convert_to_mpeg: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.AsyncIterator[bytes]:
+    ) -> None:
         """
         Stream the audio from a project snapshot.
 
@@ -2522,15 +2593,36 @@ class AsyncProjectsClient:
             Whether to convert the audio to mpeg format.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+            Request-specific configuration.
 
-        Yields
-        ------
-        typing.AsyncIterator[bytes]
-            Successful Response
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.stream_project_audio(
+                project_id="21m00Tcm4TlvDq8ikWAM",
+                project_snapshot_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
         """
-        async with self._client_wrapper.httpx_client.stream(
+        _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}/stream",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "convert_to_mpeg": convert_to_mpeg,
@@ -2540,28 +2632,24 @@ class AsyncProjectsClient:
             },
             request_options=request_options,
             omit=OMIT,
-        ) as _response:
-            try:
-                if 200 <= _response.status_code < 300:
-                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
-                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
-                        yield _chunk
-                    return
-                await _response.aread()
-                if _response.status_code == 422:
-                    raise UnprocessableEntityError(
-                        typing.cast(
-                            HttpValidationError,
-                            construct_type(
-                                type_=HttpValidationError,  # type: ignore
-                                object_=_response.json(),
-                            ),
-                        )
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
                     )
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def streams_archive_with_project_audio(
         self, project_id: str, project_snapshot_id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -2591,6 +2679,7 @@ class AsyncProjectsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -2606,6 +2695,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}/archive",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             request_options=request_options,
         )
@@ -2629,7 +2719,7 @@ class AsyncProjectsClient:
 
     async def get_chapters(
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetChaptersResponse:
+    ) -> GetChaptersResponseModel:
         """
         Returns a list of your chapters for a project together and its metadata.
 
@@ -2643,7 +2733,7 @@ class AsyncProjectsClient:
 
         Returns
         -------
-        GetChaptersResponse
+        GetChaptersResponseModel
             Successful Response
 
         Examples
@@ -2653,6 +2743,7 @@ class AsyncProjectsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -2667,15 +2758,16 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/chapters",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetChaptersResponse,
+                    GetChaptersResponseModel,
                     construct_type(
-                        type_=GetChaptersResponse,  # type: ignore
+                        type_=GetChaptersResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -2723,6 +2815,7 @@ class AsyncProjectsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -2738,6 +2831,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -2794,6 +2888,7 @@ class AsyncProjectsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -2809,6 +2904,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -2877,6 +2973,7 @@ class AsyncProjectsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -2892,6 +2989,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "name": name,
@@ -2966,6 +3064,7 @@ class AsyncProjectsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -2981,6 +3080,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/chapters/add",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -3045,6 +3145,7 @@ class AsyncProjectsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -3060,6 +3161,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/convert",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             request_options=request_options,
         )
@@ -3089,7 +3191,7 @@ class AsyncProjectsClient:
 
     async def list_chapter_snapshots(
         self, project_id: str, chapter_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ChapterSnapshotsResponse:
+    ) -> ChapterSnapshotsResponseModel:
         """
         Gets information about all the snapshots of a chapter. Each snapshot can be downloaded as audio. Whenever a chapter is converted a snapshot will automatically be created.
 
@@ -3106,7 +3208,7 @@ class AsyncProjectsClient:
 
         Returns
         -------
-        ChapterSnapshotsResponse
+        ChapterSnapshotsResponseModel
             Successful Response
 
         Examples
@@ -3116,6 +3218,7 @@ class AsyncProjectsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -3131,15 +3234,16 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/snapshots",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ChapterSnapshotsResponse,
+                    ChapterSnapshotsResponseModel,
                     construct_type(
-                        type_=ChapterSnapshotsResponse,  # type: ignore
+                        type_=ChapterSnapshotsResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -3198,6 +3302,7 @@ class AsyncProjectsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -3214,6 +3319,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/snapshots/{jsonable_encoder(chapter_snapshot_id)}/stream",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "convert_to_mpeg": convert_to_mpeg,
@@ -3246,7 +3352,7 @@ class AsyncProjectsClient:
         self,
         project_id: str,
         *,
-        pronunciation_dictionary_locators: typing.Sequence[PronunciationDictionaryVersionLocator],
+        pronunciation_dictionary_locators: typing.Sequence[PronunciationDictionaryVersionLocatorDbModel],
         invalidate_affected_text: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
@@ -3258,7 +3364,7 @@ class AsyncProjectsClient:
         project_id : str
             The ID of the Studio project.
 
-        pronunciation_dictionary_locators : typing.Sequence[PronunciationDictionaryVersionLocator]
+        pronunciation_dictionary_locators : typing.Sequence[PronunciationDictionaryVersionLocatorDbModel]
             A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text. A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
 
         invalidate_affected_text : typing.Optional[bool]
@@ -3276,9 +3382,13 @@ class AsyncProjectsClient:
         --------
         import asyncio
 
-        from elevenlabs import AsyncElevenLabs, PronunciationDictionaryVersionLocator
+        from elevenlabs import (
+            AsyncElevenLabs,
+            PronunciationDictionaryVersionLocatorDbModel,
+        )
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -3287,7 +3397,7 @@ class AsyncProjectsClient:
             await client.projects.update_pronunciation_dictionaries(
                 project_id="21m00Tcm4TlvDq8ikWAM",
                 pronunciation_dictionary_locators=[
-                    PronunciationDictionaryVersionLocator(
+                    PronunciationDictionaryVersionLocatorDbModel(
                         pronunciation_dictionary_id="pronunciation_dictionary_id",
                         version_id="version_id",
                     )
@@ -3299,11 +3409,12 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/update-pronunciation-dictionaries",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
                     object_=pronunciation_dictionary_locators,
-                    annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
+                    annotation=typing.Sequence[PronunciationDictionaryVersionLocatorDbModel],
                     direction="write",
                 ),
                 "invalidate_affected_text": invalidate_affected_text,

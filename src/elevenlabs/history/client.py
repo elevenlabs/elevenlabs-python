@@ -4,13 +4,13 @@ import typing
 from ..core.client_wrapper import SyncClientWrapper
 from .types.history_get_all_request_source import HistoryGetAllRequestSource
 from ..core.request_options import RequestOptions
-from ..types.get_speech_history_response import GetSpeechHistoryResponse
+from ..types.get_speech_history_response_model import GetSpeechHistoryResponseModel
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.http_validation_error import HttpValidationError
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from ..types.speech_history_item_response import SpeechHistoryItemResponse
+from ..types.speech_history_item_response_model import SpeechHistoryItemResponseModel
 from ..core.jsonable_encoder import jsonable_encoder
 from ..types.delete_history_item_response import DeleteHistoryItemResponse
 from ..errors.bad_request_error import BadRequestError
@@ -33,7 +33,7 @@ class HistoryClient:
         search: typing.Optional[str] = None,
         source: typing.Optional[HistoryGetAllRequestSource] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetSpeechHistoryResponse:
+    ) -> GetSpeechHistoryResponseModel:
         """
         Returns a list of your generated audio.
 
@@ -46,10 +46,10 @@ class HistoryClient:
             After which ID to start fetching, use this parameter to paginate across a large collection of history items. In case this parameter is not provided history items will be fetched starting from the most recently created one ordered descending by their creation date.
 
         voice_id : typing.Optional[str]
-            Voice ID to be filtered for, you can use GET https://api.elevenlabs.io/v1/voices to receive a list of voices and their IDs.
+            ID of the voice to be filtered for. You can use the [Get voices](/docs/api-reference/voices/get-all) endpoint list all the available voices.
 
         search : typing.Optional[str]
-            search term used for filtering
+            Search term used for filtering history items. If provided, source becomes required.
 
         source : typing.Optional[HistoryGetAllRequestSource]
             Source of the generated history item
@@ -59,7 +59,7 @@ class HistoryClient:
 
         Returns
         -------
-        GetSpeechHistoryResponse
+        GetSpeechHistoryResponseModel
             Successful Response
 
         Examples
@@ -67,12 +67,16 @@ class HistoryClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
-        client.history.get_all()
+        client.history.get_all(
+            search="In the land far far away",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/history",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "page_size": page_size,
@@ -86,9 +90,9 @@ class HistoryClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetSpeechHistoryResponse,
+                    GetSpeechHistoryResponseModel,
                     construct_type(
-                        type_=GetSpeechHistoryResponse,  # type: ignore
+                        type_=GetSpeechHistoryResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -109,21 +113,21 @@ class HistoryClient:
 
     def get(
         self, history_item_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> SpeechHistoryItemResponse:
+    ) -> SpeechHistoryItemResponseModel:
         """
         Retrieves a history item.
 
         Parameters
         ----------
         history_item_id : str
-            History item ID to be used, you can use GET https://api.elevenlabs.io/v1/history to receive a list of history items and their IDs.
+            ID of the history item to be used. You can use the [Get generated items](/docs/api-reference/history/get-all) endpoint to retrieve a list of history items.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        SpeechHistoryItemResponse
+        SpeechHistoryItemResponseModel
             Successful Response
 
         Examples
@@ -131,23 +135,25 @@ class HistoryClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.history.get(
-            history_item_id="HISTORY_ITEM_ID",
+            history_item_id="VW7YKqPnjY4h39yTbx2L",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/history/{jsonable_encoder(history_item_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    SpeechHistoryItemResponse,
+                    SpeechHistoryItemResponseModel,
                     construct_type(
-                        type_=SpeechHistoryItemResponse,  # type: ignore
+                        type_=SpeechHistoryItemResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -175,7 +181,7 @@ class HistoryClient:
         Parameters
         ----------
         history_item_id : str
-            History item ID to be used, you can use GET https://api.elevenlabs.io/v1/history to receive a list of history items and their IDs.
+            ID of the history item to be used. You can use the [Get generated items](/docs/api-reference/history/get-all) endpoint to retrieve a list of history items.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -190,14 +196,16 @@ class HistoryClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.history.delete(
-            history_item_id="HISTORY_ITEM_ID",
+            history_item_id="VW7YKqPnjY4h39yTbx2L",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/history/{jsonable_encoder(history_item_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -234,7 +242,7 @@ class HistoryClient:
         Parameters
         ----------
         history_item_id : str
-            History item ID to be used, you can use GET https://api.elevenlabs.io/v1/history to receive a list of history items and their IDs.
+            ID of the history item to be used. You can use the [Get generated items](/docs/api-reference/history/get-all) endpoint to retrieve a list of history items.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -243,20 +251,10 @@ class HistoryClient:
         ------
         typing.Iterator[bytes]
             The audio file of the history item.
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.history.get_audio(
-            history_item_id="HISTORY_ITEM_ID",
-        )
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/history/{jsonable_encoder(history_item_id)}/audio",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         ) as _response:
@@ -307,20 +305,10 @@ class HistoryClient:
         ------
         typing.Iterator[bytes]
             The requested audio file, or a zip file containing multiple audio files when multiple history items are requested.
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.history.download(
-            history_item_ids=["HISTORY_ITEM_ID"],
-        )
         """
         with self._client_wrapper.httpx_client.stream(
             "v1/history/download",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "history_item_ids": history_item_ids,
@@ -378,7 +366,7 @@ class AsyncHistoryClient:
         search: typing.Optional[str] = None,
         source: typing.Optional[HistoryGetAllRequestSource] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetSpeechHistoryResponse:
+    ) -> GetSpeechHistoryResponseModel:
         """
         Returns a list of your generated audio.
 
@@ -391,10 +379,10 @@ class AsyncHistoryClient:
             After which ID to start fetching, use this parameter to paginate across a large collection of history items. In case this parameter is not provided history items will be fetched starting from the most recently created one ordered descending by their creation date.
 
         voice_id : typing.Optional[str]
-            Voice ID to be filtered for, you can use GET https://api.elevenlabs.io/v1/voices to receive a list of voices and their IDs.
+            ID of the voice to be filtered for. You can use the [Get voices](/docs/api-reference/voices/get-all) endpoint list all the available voices.
 
         search : typing.Optional[str]
-            search term used for filtering
+            Search term used for filtering history items. If provided, source becomes required.
 
         source : typing.Optional[HistoryGetAllRequestSource]
             Source of the generated history item
@@ -404,7 +392,7 @@ class AsyncHistoryClient:
 
         Returns
         -------
-        GetSpeechHistoryResponse
+        GetSpeechHistoryResponseModel
             Successful Response
 
         Examples
@@ -414,18 +402,22 @@ class AsyncHistoryClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
 
         async def main() -> None:
-            await client.history.get_all()
+            await client.history.get_all(
+                search="In the land far far away",
+            )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/history",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "page_size": page_size,
@@ -439,9 +431,9 @@ class AsyncHistoryClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetSpeechHistoryResponse,
+                    GetSpeechHistoryResponseModel,
                     construct_type(
-                        type_=GetSpeechHistoryResponse,  # type: ignore
+                        type_=GetSpeechHistoryResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -462,21 +454,21 @@ class AsyncHistoryClient:
 
     async def get(
         self, history_item_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> SpeechHistoryItemResponse:
+    ) -> SpeechHistoryItemResponseModel:
         """
         Retrieves a history item.
 
         Parameters
         ----------
         history_item_id : str
-            History item ID to be used, you can use GET https://api.elevenlabs.io/v1/history to receive a list of history items and their IDs.
+            ID of the history item to be used. You can use the [Get generated items](/docs/api-reference/history/get-all) endpoint to retrieve a list of history items.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        SpeechHistoryItemResponse
+        SpeechHistoryItemResponseModel
             Successful Response
 
         Examples
@@ -486,13 +478,14 @@ class AsyncHistoryClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
 
         async def main() -> None:
             await client.history.get(
-                history_item_id="HISTORY_ITEM_ID",
+                history_item_id="VW7YKqPnjY4h39yTbx2L",
             )
 
 
@@ -500,15 +493,16 @@ class AsyncHistoryClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/history/{jsonable_encoder(history_item_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    SpeechHistoryItemResponse,
+                    SpeechHistoryItemResponseModel,
                     construct_type(
-                        type_=SpeechHistoryItemResponse,  # type: ignore
+                        type_=SpeechHistoryItemResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -536,7 +530,7 @@ class AsyncHistoryClient:
         Parameters
         ----------
         history_item_id : str
-            History item ID to be used, you can use GET https://api.elevenlabs.io/v1/history to receive a list of history items and their IDs.
+            ID of the history item to be used. You can use the [Get generated items](/docs/api-reference/history/get-all) endpoint to retrieve a list of history items.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -553,13 +547,14 @@ class AsyncHistoryClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
 
         async def main() -> None:
             await client.history.delete(
-                history_item_id="HISTORY_ITEM_ID",
+                history_item_id="VW7YKqPnjY4h39yTbx2L",
             )
 
 
@@ -567,6 +562,7 @@ class AsyncHistoryClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/history/{jsonable_encoder(history_item_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -603,7 +599,7 @@ class AsyncHistoryClient:
         Parameters
         ----------
         history_item_id : str
-            History item ID to be used, you can use GET https://api.elevenlabs.io/v1/history to receive a list of history items and their IDs.
+            ID of the history item to be used. You can use the [Get generated items](/docs/api-reference/history/get-all) endpoint to retrieve a list of history items.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -612,28 +608,10 @@ class AsyncHistoryClient:
         ------
         typing.AsyncIterator[bytes]
             The audio file of the history item.
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.history.get_audio(
-                history_item_id="HISTORY_ITEM_ID",
-            )
-
-
-        asyncio.run(main())
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/history/{jsonable_encoder(history_item_id)}/audio",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         ) as _response:
@@ -684,28 +662,10 @@ class AsyncHistoryClient:
         ------
         typing.AsyncIterator[bytes]
             The requested audio file, or a zip file containing multiple audio files when multiple history items are requested.
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.history.download(
-                history_item_ids=["HISTORY_ITEM_ID"],
-            )
-
-
-        asyncio.run(main())
         """
         async with self._client_wrapper.httpx_client.stream(
             "v1/history/download",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "history_item_ids": history_item_ids,

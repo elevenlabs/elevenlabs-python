@@ -94,6 +94,7 @@ class AudioNativeClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.audio_native.create(
@@ -102,6 +103,7 @@ class AudioNativeClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/audio-native",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -170,6 +172,7 @@ class AudioNativeClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.audio_native.get_settings(
@@ -178,6 +181,7 @@ class AudioNativeClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/audio-native/{jsonable_encoder(project_id)}/settings",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -220,7 +224,7 @@ class AudioNativeClient:
         Parameters
         ----------
         project_id : str
-            The ID of the Studio project.
+            The ID of the project to be used. You can use the [List projects](/docs/api-reference/projects/get-projects) endpoint to list all the available projects.
 
         file : typing.Optional[core.File]
             See core.File for more documentation
@@ -244,6 +248,7 @@ class AudioNativeClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.audio_native.update_content(
@@ -252,6 +257,7 @@ class AudioNativeClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/audio-native/{jsonable_encoder(project_id)}/content",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "auto_convert": auto_convert,
@@ -365,6 +371,7 @@ class AsyncAudioNativeClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -379,6 +386,7 @@ class AsyncAudioNativeClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/audio-native",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -449,6 +457,7 @@ class AsyncAudioNativeClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -463,6 +472,7 @@ class AsyncAudioNativeClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/audio-native/{jsonable_encoder(project_id)}/settings",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -505,7 +515,7 @@ class AsyncAudioNativeClient:
         Parameters
         ----------
         project_id : str
-            The ID of the Studio project.
+            The ID of the project to be used. You can use the [List projects](/docs/api-reference/projects/get-projects) endpoint to list all the available projects.
 
         file : typing.Optional[core.File]
             See core.File for more documentation
@@ -531,6 +541,7 @@ class AsyncAudioNativeClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -545,6 +556,7 @@ class AsyncAudioNativeClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/audio-native/{jsonable_encoder(project_id)}/content",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "auto_convert": auto_convert,

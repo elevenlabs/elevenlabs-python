@@ -52,6 +52,7 @@ class WorkspaceClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.workspace.search_user_groups(
@@ -60,6 +61,7 @@ class WorkspaceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/workspace/groups/search",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "name": name,
@@ -117,6 +119,7 @@ class WorkspaceClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.workspace.delete_member_from_user_group(
@@ -126,6 +129,7 @@ class WorkspaceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/workspace/groups/{jsonable_encoder(group_id)}/members/remove",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,
@@ -187,6 +191,7 @@ class WorkspaceClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.workspace.add_member_to_user_group(
@@ -196,6 +201,7 @@ class WorkspaceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/workspace/groups/{jsonable_encoder(group_id)}/members",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,
@@ -261,6 +267,7 @@ class WorkspaceClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.workspace.invite_user(
@@ -269,6 +276,7 @@ class WorkspaceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/workspace/invites/add",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,
@@ -335,6 +343,7 @@ class WorkspaceClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.workspace.invite_multiple_users(
@@ -343,6 +352,7 @@ class WorkspaceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/workspace/invites/add-bulk",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "emails": emails,
@@ -402,6 +412,7 @@ class WorkspaceClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.workspace.delete_existing_invitation(
@@ -410,6 +421,7 @@ class WorkspaceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/workspace/invites",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             json={
                 "email": email,
@@ -479,6 +491,7 @@ class WorkspaceClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.workspace.update_member(
@@ -487,6 +500,7 @@ class WorkspaceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/workspace/members",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,
@@ -554,6 +568,7 @@ class AsyncWorkspaceClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -568,6 +583,7 @@ class AsyncWorkspaceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/workspace/groups/search",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "name": name,
@@ -627,6 +643,7 @@ class AsyncWorkspaceClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -642,6 +659,7 @@ class AsyncWorkspaceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/workspace/groups/{jsonable_encoder(group_id)}/members/remove",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,
@@ -705,6 +723,7 @@ class AsyncWorkspaceClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -720,6 +739,7 @@ class AsyncWorkspaceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/workspace/groups/{jsonable_encoder(group_id)}/members",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,
@@ -787,6 +807,7 @@ class AsyncWorkspaceClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -801,6 +822,7 @@ class AsyncWorkspaceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/workspace/invites/add",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,
@@ -869,6 +891,7 @@ class AsyncWorkspaceClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -883,6 +906,7 @@ class AsyncWorkspaceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/workspace/invites/add-bulk",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "emails": emails,
@@ -944,6 +968,7 @@ class AsyncWorkspaceClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -958,6 +983,7 @@ class AsyncWorkspaceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/workspace/invites",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             json={
                 "email": email,
@@ -1029,6 +1055,7 @@ class AsyncWorkspaceClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -1043,6 +1070,7 @@ class AsyncWorkspaceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/workspace/members",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,

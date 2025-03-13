@@ -3,7 +3,7 @@
 from ..core.client_wrapper import SyncClientWrapper
 import typing
 from ..core.request_options import RequestOptions
-from ..types.model import Model
+from ..types.model_response_model import ModelResponseModel
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.http_validation_error import HttpValidationError
@@ -16,7 +16,7 @@ class ModelsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_all(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Model]:
+    def get_all(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[ModelResponseModel]:
         """
         Gets a list of available models.
 
@@ -27,7 +27,7 @@ class ModelsClient:
 
         Returns
         -------
-        typing.List[Model]
+        typing.List[ModelResponseModel]
             Successful Response
 
         Examples
@@ -35,21 +35,23 @@ class ModelsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.models.get_all()
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/models",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[Model],
+                    typing.List[ModelResponseModel],
                     construct_type(
-                        type_=typing.List[Model],  # type: ignore
+                        type_=typing.List[ModelResponseModel],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -73,7 +75,9 @@ class AsyncModelsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_all(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Model]:
+    async def get_all(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[ModelResponseModel]:
         """
         Gets a list of available models.
 
@@ -84,7 +88,7 @@ class AsyncModelsClient:
 
         Returns
         -------
-        typing.List[Model]
+        typing.List[ModelResponseModel]
             Successful Response
 
         Examples
@@ -94,6 +98,7 @@ class AsyncModelsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -106,15 +111,16 @@ class AsyncModelsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/models",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[Model],
+                    typing.List[ModelResponseModel],
                     construct_type(
-                        type_=typing.List[Model],  # type: ignore
+                        type_=typing.List[ModelResponseModel],  # type: ignore
                         object_=_response.json(),
                     ),
                 )

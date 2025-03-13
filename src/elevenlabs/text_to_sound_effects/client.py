@@ -58,6 +58,7 @@ class TextToSoundEffectsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.text_to_sound_effects.convert(
@@ -66,6 +67,7 @@ class TextToSoundEffectsClient:
         """
         with self._client_wrapper.httpx_client.stream(
             "v1/sound-generation",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "output_format": output_format,
@@ -149,6 +151,7 @@ class AsyncTextToSoundEffectsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -163,6 +166,7 @@ class AsyncTextToSoundEffectsClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             "v1/sound-generation",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "output_format": output_format,
