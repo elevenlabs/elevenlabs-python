@@ -36,6 +36,10 @@ def is_voice_id(val: str) -> bool:
     return bool(re.match(r"^[a-zA-Z0-9]{20}$", val))
 
 
+def get_base_url_host(base_url: str) -> str:
+    return httpx.URL(base_url).host
+
+
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
@@ -73,8 +77,12 @@ class ElevenLabs(BaseElevenLabs):
         httpx_client: typing.Optional[httpx.Client] = None
     ):
         super().__init__(
-            base_url=base_url,
-            environment=environment,
+            environment=base_url
+            and ElevenLabsEnvironment(
+                base=f"https://{get_base_url_host(base_url)}",
+                wss=f"wss://{get_base_url_host(base_url)}",
+            )
+            or environment,
             api_key=api_key,
             timeout=timeout,
             httpx_client=httpx_client
