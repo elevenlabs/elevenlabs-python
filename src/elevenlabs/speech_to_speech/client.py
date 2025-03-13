@@ -3,7 +3,7 @@
 import typing
 from ..core.client_wrapper import SyncClientWrapper
 from .. import core
-from ..types.output_format import OutputFormat
+from .types.speech_to_speech_convert_request_output_format import SpeechToSpeechConvertRequestOutputFormat
 from ..core.request_options import RequestOptions
 from ..core.jsonable_encoder import jsonable_encoder
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
@@ -11,6 +11,9 @@ from ..types.http_validation_error import HttpValidationError
 from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
+from .types.speech_to_speech_convert_as_stream_request_output_format import (
+    SpeechToSpeechConvertAsStreamRequestOutputFormat,
+)
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -28,7 +31,7 @@ class SpeechToSpeechClient:
         audio: core.File,
         enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[OutputFormat] = None,
+        output_format: typing.Optional[SpeechToSpeechConvertRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[str] = OMIT,
         seed: typing.Optional[int] = OMIT,
@@ -41,7 +44,7 @@ class SpeechToSpeechClient:
         Parameters
         ----------
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            ID of the voice to be used. Use the [Get voices](/docs/api-reference/voices/get-all) endpoint list all the available voices.
 
         audio : core.File
             See core.File for more documentation
@@ -59,8 +62,8 @@ class SpeechToSpeechClient:
 
             Defaults to None.
 
-        output_format : typing.Optional[OutputFormat]
-            The output format of the generated audio.
+        output_format : typing.Optional[SpeechToSpeechConvertRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
@@ -87,6 +90,7 @@ class SpeechToSpeechClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.speech_to_speech.convert(
@@ -97,6 +101,7 @@ class SpeechToSpeechClient:
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/speech-to-speech/{jsonable_encoder(voice_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -144,7 +149,7 @@ class SpeechToSpeechClient:
         audio: core.File,
         enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[OutputFormat] = None,
+        output_format: typing.Optional[SpeechToSpeechConvertAsStreamRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[str] = OMIT,
         seed: typing.Optional[int] = OMIT,
@@ -157,7 +162,7 @@ class SpeechToSpeechClient:
         Parameters
         ----------
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            ID of the voice to be used. Use the [Get voices](/docs/api-reference/voices/get-all) endpoint list all the available voices.
 
         audio : core.File
             See core.File for more documentation
@@ -175,8 +180,8 @@ class SpeechToSpeechClient:
 
             Defaults to None.
 
-        output_format : typing.Optional[OutputFormat]
-            The output format of the generated audio.
+        output_format : typing.Optional[SpeechToSpeechConvertAsStreamRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
@@ -203,6 +208,7 @@ class SpeechToSpeechClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.speech_to_speech.convert_as_stream(
@@ -213,6 +219,7 @@ class SpeechToSpeechClient:
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/speech-to-speech/{jsonable_encoder(voice_id)}/stream",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -265,7 +272,7 @@ class AsyncSpeechToSpeechClient:
         audio: core.File,
         enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[OutputFormat] = None,
+        output_format: typing.Optional[SpeechToSpeechConvertRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[str] = OMIT,
         seed: typing.Optional[int] = OMIT,
@@ -278,7 +285,7 @@ class AsyncSpeechToSpeechClient:
         Parameters
         ----------
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            ID of the voice to be used. Use the [Get voices](/docs/api-reference/voices/get-all) endpoint list all the available voices.
 
         audio : core.File
             See core.File for more documentation
@@ -296,8 +303,8 @@ class AsyncSpeechToSpeechClient:
 
             Defaults to None.
 
-        output_format : typing.Optional[OutputFormat]
-            The output format of the generated audio.
+        output_format : typing.Optional[SpeechToSpeechConvertRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
@@ -326,6 +333,7 @@ class AsyncSpeechToSpeechClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -342,6 +350,7 @@ class AsyncSpeechToSpeechClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/speech-to-speech/{jsonable_encoder(voice_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -389,7 +398,7 @@ class AsyncSpeechToSpeechClient:
         audio: core.File,
         enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[OutputFormat] = None,
+        output_format: typing.Optional[SpeechToSpeechConvertAsStreamRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[str] = OMIT,
         seed: typing.Optional[int] = OMIT,
@@ -402,7 +411,7 @@ class AsyncSpeechToSpeechClient:
         Parameters
         ----------
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            ID of the voice to be used. Use the [Get voices](/docs/api-reference/voices/get-all) endpoint list all the available voices.
 
         audio : core.File
             See core.File for more documentation
@@ -420,8 +429,8 @@ class AsyncSpeechToSpeechClient:
 
             Defaults to None.
 
-        output_format : typing.Optional[OutputFormat]
-            The output format of the generated audio.
+        output_format : typing.Optional[SpeechToSpeechConvertAsStreamRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for speech to speech, you can check this using the can_do_voice_conversion property.
@@ -450,6 +459,7 @@ class AsyncSpeechToSpeechClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -466,6 +476,7 @@ class AsyncSpeechToSpeechClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/speech-to-speech/{jsonable_encoder(voice_id)}/stream",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,

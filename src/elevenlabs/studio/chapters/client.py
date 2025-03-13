@@ -3,7 +3,7 @@
 import typing
 from ...core.client_wrapper import SyncClientWrapper
 from ...core.request_options import RequestOptions
-from ...types.get_chapters_response import GetChaptersResponse
+from ...types.get_chapters_response_model import GetChaptersResponseModel
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
@@ -17,7 +17,7 @@ from ...types.edit_chapter_response_model import EditChapterResponseModel
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...types.delete_chapter_response_model import DeleteChapterResponseModel
 from ...types.convert_chapter_response_model import ConvertChapterResponseModel
-from ...types.chapter_snapshots_response import ChapterSnapshotsResponse
+from ...types.chapter_snapshots_response_model import ChapterSnapshotsResponseModel
 from ...types.chapter_snapshot_extended_response_model import ChapterSnapshotExtendedResponseModel
 from ...core.client_wrapper import AsyncClientWrapper
 
@@ -31,7 +31,7 @@ class ChaptersClient:
 
     def get_all(
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetChaptersResponse:
+    ) -> GetChaptersResponseModel:
         """
         Returns a list of a Studio project's chapters.
 
@@ -45,7 +45,7 @@ class ChaptersClient:
 
         Returns
         -------
-        GetChaptersResponse
+        GetChaptersResponseModel
             Successful Response
 
         Examples
@@ -53,6 +53,7 @@ class ChaptersClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.studio.chapters.get_all(
@@ -61,15 +62,16 @@ class ChaptersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetChaptersResponse,
+                    GetChaptersResponseModel,
                     construct_type(
-                        type_=GetChaptersResponse,  # type: ignore
+                        type_=GetChaptersResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -123,6 +125,7 @@ class ChaptersClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.studio.chapters.create(
@@ -132,6 +135,7 @@ class ChaptersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -176,10 +180,10 @@ class ChaptersClient:
         Parameters
         ----------
         project_id : str
-            The ID of the Studio project.
+            The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
 
         chapter_id : str
-            The ID of the chapter.
+            The ID of the chapter to be used. You can use the [List project chapters](/docs/api-reference/studio/get-chapters) endpoint to list all the available chapters.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -194,6 +198,7 @@ class ChaptersClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.studio.chapters.get(
@@ -203,6 +208,7 @@ class ChaptersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -245,10 +251,10 @@ class ChaptersClient:
         Parameters
         ----------
         project_id : str
-            The ID of the Studio project.
+            The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
 
         chapter_id : str
-            The ID of the chapter.
+            The ID of the chapter to be used. You can use the [List project chapters](/docs/api-reference/studio/get-chapters) endpoint to list all the available chapters.
 
         name : typing.Optional[str]
             The name of the chapter, used for identification only.
@@ -269,6 +275,7 @@ class ChaptersClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.studio.chapters.edit(
@@ -278,6 +285,7 @@ class ChaptersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -324,10 +332,10 @@ class ChaptersClient:
         Parameters
         ----------
         project_id : str
-            The ID of the Studio project.
+            The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
 
         chapter_id : str
-            The ID of the chapter.
+            The ID of the chapter to be used. You can use the [List project chapters](/docs/api-reference/studio/get-chapters) endpoint to list all the available chapters.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -342,6 +350,7 @@ class ChaptersClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.studio.chapters.delete(
@@ -351,6 +360,7 @@ class ChaptersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -387,10 +397,10 @@ class ChaptersClient:
         Parameters
         ----------
         project_id : str
-            The ID of the Studio project.
+            The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
 
         chapter_id : str
-            The ID of the chapter.
+            The ID of the chapter to be used. You can use the [List project chapters](/docs/api-reference/studio/get-chapters) endpoint to list all the available chapters.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -405,6 +415,7 @@ class ChaptersClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.studio.chapters.convert(
@@ -414,6 +425,7 @@ class ChaptersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/convert",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             request_options=request_options,
         )
@@ -443,24 +455,24 @@ class ChaptersClient:
 
     def get_all_snapshots(
         self, project_id: str, chapter_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ChapterSnapshotsResponse:
+    ) -> ChapterSnapshotsResponseModel:
         """
         Gets information about all the snapshots of a chapter. Each snapshot can be downloaded as audio. Whenever a chapter is converted a snapshot will automatically be created.
 
         Parameters
         ----------
         project_id : str
-            The ID of the Studio project.
+            The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
 
         chapter_id : str
-            The ID of the chapter.
+            The ID of the chapter to be used. You can use the [List project chapters](/docs/api-reference/studio/get-chapters) endpoint to list all the available chapters.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        ChapterSnapshotsResponse
+        ChapterSnapshotsResponseModel
             Successful Response
 
         Examples
@@ -468,6 +480,7 @@ class ChaptersClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.studio.chapters.get_all_snapshots(
@@ -477,15 +490,16 @@ class ChaptersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/snapshots",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ChapterSnapshotsResponse,
+                    ChapterSnapshotsResponseModel,
                     construct_type(
-                        type_=ChapterSnapshotsResponse,  # type: ignore
+                        type_=ChapterSnapshotsResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -539,6 +553,7 @@ class ChaptersClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.studio.chapters.get_chapter_snapshot(
@@ -549,6 +564,7 @@ class ChaptersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/snapshots/{jsonable_encoder(chapter_snapshot_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -591,13 +607,13 @@ class ChaptersClient:
         Parameters
         ----------
         project_id : str
-            The ID of the Studio project.
+            The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
 
         chapter_id : str
-            The ID of the chapter.
+            The ID of the chapter to be used. You can use the [List project chapters](/docs/api-reference/studio/get-chapters) endpoint to list all the available chapters.
 
         chapter_snapshot_id : str
-            The ID of the chapter snapshot.
+            The ID of the chapter snapshot to be used. You can use the [List project chapter snapshots](/docs/api-reference/studio/get-snapshots) endpoint to list all the available snapshots.
 
         convert_to_mpeg : typing.Optional[bool]
             Whether to convert the audio to mpeg format.
@@ -612,6 +628,7 @@ class ChaptersClient:
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/snapshots/{jsonable_encoder(chapter_snapshot_id)}/stream",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "convert_to_mpeg": convert_to_mpeg,
@@ -651,7 +668,7 @@ class AsyncChaptersClient:
 
     async def get_all(
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetChaptersResponse:
+    ) -> GetChaptersResponseModel:
         """
         Returns a list of a Studio project's chapters.
 
@@ -665,7 +682,7 @@ class AsyncChaptersClient:
 
         Returns
         -------
-        GetChaptersResponse
+        GetChaptersResponseModel
             Successful Response
 
         Examples
@@ -675,6 +692,7 @@ class AsyncChaptersClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -689,15 +707,16 @@ class AsyncChaptersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetChaptersResponse,
+                    GetChaptersResponseModel,
                     construct_type(
-                        type_=GetChaptersResponse,  # type: ignore
+                        type_=GetChaptersResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -753,6 +772,7 @@ class AsyncChaptersClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -768,6 +788,7 @@ class AsyncChaptersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -812,10 +833,10 @@ class AsyncChaptersClient:
         Parameters
         ----------
         project_id : str
-            The ID of the Studio project.
+            The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
 
         chapter_id : str
-            The ID of the chapter.
+            The ID of the chapter to be used. You can use the [List project chapters](/docs/api-reference/studio/get-chapters) endpoint to list all the available chapters.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -832,6 +853,7 @@ class AsyncChaptersClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -847,6 +869,7 @@ class AsyncChaptersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -889,10 +912,10 @@ class AsyncChaptersClient:
         Parameters
         ----------
         project_id : str
-            The ID of the Studio project.
+            The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
 
         chapter_id : str
-            The ID of the chapter.
+            The ID of the chapter to be used. You can use the [List project chapters](/docs/api-reference/studio/get-chapters) endpoint to list all the available chapters.
 
         name : typing.Optional[str]
             The name of the chapter, used for identification only.
@@ -915,6 +938,7 @@ class AsyncChaptersClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -930,6 +954,7 @@ class AsyncChaptersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -976,10 +1001,10 @@ class AsyncChaptersClient:
         Parameters
         ----------
         project_id : str
-            The ID of the Studio project.
+            The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
 
         chapter_id : str
-            The ID of the chapter.
+            The ID of the chapter to be used. You can use the [List project chapters](/docs/api-reference/studio/get-chapters) endpoint to list all the available chapters.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -996,6 +1021,7 @@ class AsyncChaptersClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -1011,6 +1037,7 @@ class AsyncChaptersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -1047,10 +1074,10 @@ class AsyncChaptersClient:
         Parameters
         ----------
         project_id : str
-            The ID of the Studio project.
+            The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
 
         chapter_id : str
-            The ID of the chapter.
+            The ID of the chapter to be used. You can use the [List project chapters](/docs/api-reference/studio/get-chapters) endpoint to list all the available chapters.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1067,6 +1094,7 @@ class AsyncChaptersClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -1082,6 +1110,7 @@ class AsyncChaptersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/convert",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             request_options=request_options,
         )
@@ -1111,24 +1140,24 @@ class AsyncChaptersClient:
 
     async def get_all_snapshots(
         self, project_id: str, chapter_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ChapterSnapshotsResponse:
+    ) -> ChapterSnapshotsResponseModel:
         """
         Gets information about all the snapshots of a chapter. Each snapshot can be downloaded as audio. Whenever a chapter is converted a snapshot will automatically be created.
 
         Parameters
         ----------
         project_id : str
-            The ID of the Studio project.
+            The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
 
         chapter_id : str
-            The ID of the chapter.
+            The ID of the chapter to be used. You can use the [List project chapters](/docs/api-reference/studio/get-chapters) endpoint to list all the available chapters.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        ChapterSnapshotsResponse
+        ChapterSnapshotsResponseModel
             Successful Response
 
         Examples
@@ -1138,6 +1167,7 @@ class AsyncChaptersClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -1153,15 +1183,16 @@ class AsyncChaptersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/snapshots",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ChapterSnapshotsResponse,
+                    ChapterSnapshotsResponseModel,
                     construct_type(
-                        type_=ChapterSnapshotsResponse,  # type: ignore
+                        type_=ChapterSnapshotsResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1217,6 +1248,7 @@ class AsyncChaptersClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -1233,6 +1265,7 @@ class AsyncChaptersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/snapshots/{jsonable_encoder(chapter_snapshot_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1275,13 +1308,13 @@ class AsyncChaptersClient:
         Parameters
         ----------
         project_id : str
-            The ID of the Studio project.
+            The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
 
         chapter_id : str
-            The ID of the chapter.
+            The ID of the chapter to be used. You can use the [List project chapters](/docs/api-reference/studio/get-chapters) endpoint to list all the available chapters.
 
         chapter_snapshot_id : str
-            The ID of the chapter snapshot.
+            The ID of the chapter snapshot to be used. You can use the [List project chapter snapshots](/docs/api-reference/studio/get-snapshots) endpoint to list all the available snapshots.
 
         convert_to_mpeg : typing.Optional[bool]
             Whether to convert the audio to mpeg format.
@@ -1296,6 +1329,7 @@ class AsyncChaptersClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/snapshots/{jsonable_encoder(chapter_snapshot_id)}/stream",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "convert_to_mpeg": convert_to_mpeg,

@@ -56,6 +56,7 @@ class UsageClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.usage.get_characters_usage_metrics(
@@ -65,6 +66,7 @@ class UsageClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/usage/character-stats",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "start_unix": start_unix,
@@ -144,6 +146,7 @@ class AsyncUsageClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -159,6 +162,7 @@ class AsyncUsageClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/usage/character-stats",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "start_unix": start_unix,

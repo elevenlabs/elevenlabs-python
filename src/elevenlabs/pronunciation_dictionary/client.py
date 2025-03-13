@@ -13,12 +13,14 @@ from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.http_validation_error import HttpValidationError
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from .types.pronunciation_dictionary_rule import PronunciationDictionaryRule
+from .types.body_add_rules_to_the_pronunciation_dictionary_v_1_pronunciation_dictionaries_pronunciation_dictionary_id_add_rules_post_rules_item import (
+    BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem,
+)
 from ..types.add_pronunciation_dictionary_rules_response_model import AddPronunciationDictionaryRulesResponseModel
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..types.remove_pronunciation_dictionary_rules_response_model import RemovePronunciationDictionaryRulesResponseModel
-from ..types.get_pronunciation_dictionary_metadata_response import GetPronunciationDictionaryMetadataResponse
+from ..types.get_pronunciation_dictionary_metadata_response_model import GetPronunciationDictionaryMetadataResponseModel
 from ..types.get_pronunciation_dictionaries_metadata_response_model import (
     GetPronunciationDictionariesMetadataResponseModel,
 )
@@ -71,6 +73,7 @@ class PronunciationDictionaryClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.pronunciation_dictionary.add_from_file(
@@ -79,6 +82,7 @@ class PronunciationDictionaryClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/pronunciation-dictionaries/add-from-file",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -119,7 +123,9 @@ class PronunciationDictionaryClient:
         self,
         pronunciation_dictionary_id: str,
         *,
-        rules: typing.Sequence[PronunciationDictionaryRule],
+        rules: typing.Sequence[
+            BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem
+        ],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddPronunciationDictionaryRulesResponseModel:
         """
@@ -130,7 +136,7 @@ class PronunciationDictionaryClient:
         pronunciation_dictionary_id : str
             The id of the pronunciation dictionary
 
-        rules : typing.Sequence[PronunciationDictionaryRule]
+        rules : typing.Sequence[BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem]
             List of pronunciation rules. Rule can be either:
                 an alias rule: {'string_to_replace': 'a', 'type': 'alias', 'alias': 'b', }
                 or a phoneme rule: {'string_to_replace': 'a', 'type': 'phoneme', 'phoneme': 'b', 'alphabet': 'ipa' }
@@ -147,16 +153,17 @@ class PronunciationDictionaryClient:
         --------
         from elevenlabs import ElevenLabs
         from elevenlabs.pronunciation_dictionary import (
-            PronunciationDictionaryRule_Alias,
+            BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem_Alias,
         )
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.pronunciation_dictionary.add_rules(
             pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
             rules=[
-                PronunciationDictionaryRule_Alias(
+                BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem_Alias(
                     string_to_replace="Thailand",
                     alias="tie-land",
                 )
@@ -165,10 +172,15 @@ class PronunciationDictionaryClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}/add-rules",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "rules": convert_and_respect_annotation_metadata(
-                    object_=rules, annotation=typing.Sequence[PronunciationDictionaryRule], direction="write"
+                    object_=rules,
+                    annotation=typing.Sequence[
+                        BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem
+                    ],
+                    direction="write",
                 ),
             },
             headers={
@@ -232,6 +244,7 @@ class PronunciationDictionaryClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.pronunciation_dictionary.remove_rules(
@@ -241,6 +254,7 @@ class PronunciationDictionaryClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}/remove-rules",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "rule_strings": rule_strings,
@@ -296,21 +310,10 @@ class PronunciationDictionaryClient:
         ------
         typing.Iterator[bytes]
             The PLS file containing pronunciation dictionary rules
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.pronunciation_dictionary.download(
-            dictionary_id="Fm6AvNgS53NXe6Kqxp3e",
-            version_id="KZFyRUq3R6kaqhKI146w",
-        )
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/pronunciation-dictionaries/{jsonable_encoder(dictionary_id)}/{jsonable_encoder(version_id)}/download",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         ) as _response:
@@ -338,7 +341,7 @@ class PronunciationDictionaryClient:
 
     def get(
         self, pronunciation_dictionary_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetPronunciationDictionaryMetadataResponse:
+    ) -> GetPronunciationDictionaryMetadataResponseModel:
         """
         Get metadata for a pronunciation dictionary
 
@@ -352,7 +355,7 @@ class PronunciationDictionaryClient:
 
         Returns
         -------
-        GetPronunciationDictionaryMetadataResponse
+        GetPronunciationDictionaryMetadataResponseModel
             Successful Response
 
         Examples
@@ -360,23 +363,25 @@ class PronunciationDictionaryClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.pronunciation_dictionary.get(
-            pronunciation_dictionary_id="Fm6AvNgS53NXe6Kqxp3e",
+            pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}/",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetPronunciationDictionaryMetadataResponse,
+                    GetPronunciationDictionaryMetadataResponseModel,
                     construct_type(
-                        type_=GetPronunciationDictionaryMetadataResponse,  # type: ignore
+                        type_=GetPronunciationDictionaryMetadataResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -426,14 +431,14 @@ class PronunciationDictionaryClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
-        client.pronunciation_dictionary.get_all(
-            page_size=1,
-        )
+        client.pronunciation_dictionary.get_all()
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/pronunciation-dictionaries/",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -511,6 +516,7 @@ class AsyncPronunciationDictionaryClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -525,6 +531,7 @@ class AsyncPronunciationDictionaryClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/pronunciation-dictionaries/add-from-file",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -565,7 +572,9 @@ class AsyncPronunciationDictionaryClient:
         self,
         pronunciation_dictionary_id: str,
         *,
-        rules: typing.Sequence[PronunciationDictionaryRule],
+        rules: typing.Sequence[
+            BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem
+        ],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddPronunciationDictionaryRulesResponseModel:
         """
@@ -576,7 +585,7 @@ class AsyncPronunciationDictionaryClient:
         pronunciation_dictionary_id : str
             The id of the pronunciation dictionary
 
-        rules : typing.Sequence[PronunciationDictionaryRule]
+        rules : typing.Sequence[BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem]
             List of pronunciation rules. Rule can be either:
                 an alias rule: {'string_to_replace': 'a', 'type': 'alias', 'alias': 'b', }
                 or a phoneme rule: {'string_to_replace': 'a', 'type': 'phoneme', 'phoneme': 'b', 'alphabet': 'ipa' }
@@ -595,10 +604,11 @@ class AsyncPronunciationDictionaryClient:
 
         from elevenlabs import AsyncElevenLabs
         from elevenlabs.pronunciation_dictionary import (
-            PronunciationDictionaryRule_Alias,
+            BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem_Alias,
         )
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -607,7 +617,7 @@ class AsyncPronunciationDictionaryClient:
             await client.pronunciation_dictionary.add_rules(
                 pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
                 rules=[
-                    PronunciationDictionaryRule_Alias(
+                    BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem_Alias(
                         string_to_replace="Thailand",
                         alias="tie-land",
                     )
@@ -619,10 +629,15 @@ class AsyncPronunciationDictionaryClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}/add-rules",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "rules": convert_and_respect_annotation_metadata(
-                    object_=rules, annotation=typing.Sequence[PronunciationDictionaryRule], direction="write"
+                    object_=rules,
+                    annotation=typing.Sequence[
+                        BodyAddRulesToThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdAddRulesPostRulesItem
+                    ],
+                    direction="write",
                 ),
             },
             headers={
@@ -688,6 +703,7 @@ class AsyncPronunciationDictionaryClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -703,6 +719,7 @@ class AsyncPronunciationDictionaryClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}/remove-rules",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "rule_strings": rule_strings,
@@ -758,29 +775,10 @@ class AsyncPronunciationDictionaryClient:
         ------
         typing.AsyncIterator[bytes]
             The PLS file containing pronunciation dictionary rules
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.pronunciation_dictionary.download(
-                dictionary_id="Fm6AvNgS53NXe6Kqxp3e",
-                version_id="KZFyRUq3R6kaqhKI146w",
-            )
-
-
-        asyncio.run(main())
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/pronunciation-dictionaries/{jsonable_encoder(dictionary_id)}/{jsonable_encoder(version_id)}/download",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         ) as _response:
@@ -808,7 +806,7 @@ class AsyncPronunciationDictionaryClient:
 
     async def get(
         self, pronunciation_dictionary_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetPronunciationDictionaryMetadataResponse:
+    ) -> GetPronunciationDictionaryMetadataResponseModel:
         """
         Get metadata for a pronunciation dictionary
 
@@ -822,7 +820,7 @@ class AsyncPronunciationDictionaryClient:
 
         Returns
         -------
-        GetPronunciationDictionaryMetadataResponse
+        GetPronunciationDictionaryMetadataResponseModel
             Successful Response
 
         Examples
@@ -832,13 +830,14 @@ class AsyncPronunciationDictionaryClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
 
         async def main() -> None:
             await client.pronunciation_dictionary.get(
-                pronunciation_dictionary_id="Fm6AvNgS53NXe6Kqxp3e",
+                pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
             )
 
 
@@ -846,15 +845,16 @@ class AsyncPronunciationDictionaryClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}/",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetPronunciationDictionaryMetadataResponse,
+                    GetPronunciationDictionaryMetadataResponseModel,
                     construct_type(
-                        type_=GetPronunciationDictionaryMetadataResponse,  # type: ignore
+                        type_=GetPronunciationDictionaryMetadataResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -906,20 +906,20 @@ class AsyncPronunciationDictionaryClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
 
         async def main() -> None:
-            await client.pronunciation_dictionary.get_all(
-                page_size=1,
-            )
+            await client.pronunciation_dictionary.get_all()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/pronunciation-dictionaries/",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,

@@ -4,13 +4,13 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 import pydantic
 import typing
 from .project_extended_response_model_target_audience import ProjectExtendedResponseModelTargetAudience
-from .project_state import ProjectState
+from .project_extended_response_model_state import ProjectExtendedResponseModelState
 from .project_extended_response_model_access_level import ProjectExtendedResponseModelAccessLevel
 from .project_extended_response_model_fiction import ProjectExtendedResponseModelFiction
 from .project_creation_meta_response_model import ProjectCreationMetaResponseModel
 from .project_extended_response_model_source_type import ProjectExtendedResponseModelSourceType
 from .project_extended_response_model_quality_preset import ProjectExtendedResponseModelQualityPreset
-from .chapter_response import ChapterResponse
+from .chapter_response_model import ChapterResponseModel
 from .pronunciation_dictionary_version_response_model import PronunciationDictionaryVersionResponseModel
 from .project_extended_response_model_apply_text_normalization import ProjectExtendedResponseModelApplyTextNormalization
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
@@ -117,7 +117,7 @@ class ProjectExtendedResponseModel(UncheckedBaseModel):
     Whether the project uses volume normalization.
     """
 
-    state: ProjectState = pydantic.Field()
+    state: ProjectExtendedResponseModelState = pydantic.Field()
     """
     The state of the project.
     """
@@ -157,7 +157,7 @@ class ProjectExtendedResponseModel(UncheckedBaseModel):
     The quality preset level of the project.
     """
 
-    chapters: typing.List[ChapterResponse] = pydantic.Field()
+    chapters: typing.List[ChapterResponseModel] = pydantic.Field()
     """
     List of chapters of the project and their metadata.
     """

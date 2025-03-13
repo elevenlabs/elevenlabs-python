@@ -19,7 +19,6 @@ from ..types.get_agent_embed_response_model import GetAgentEmbedResponseModel
 from ..types.get_agent_link_response_model import GetAgentLinkResponseModel
 from .. import core
 from ..types.post_agent_avatar_response_model import PostAgentAvatarResponseModel
-from ..types.add_agent_secret_response_model import AddAgentSecretResponseModel
 from ..types.get_agents_page_response_model import GetAgentsPageResponseModel
 from ..types.evaluation_success_result import EvaluationSuccessResult
 from ..types.get_conversations_page_response_model import GetConversationsPageResponseModel
@@ -72,6 +71,7 @@ class ConversationalAiClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.get_signed_url(
@@ -80,6 +80,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/conversation/get_signed_url",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "agent_id": agent_id,
@@ -149,6 +150,7 @@ class ConversationalAiClient:
         from elevenlabs import ConversationalConfigApiModel, ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.create_agent(
@@ -157,6 +159,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/agents/create",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "use_tool_ids": use_tool_ids,
@@ -224,6 +227,7 @@ class ConversationalAiClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.get_agent(
@@ -232,6 +236,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -283,6 +288,7 @@ class ConversationalAiClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.delete_agent(
@@ -291,6 +297,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -323,8 +330,8 @@ class ConversationalAiClient:
         agent_id: str,
         *,
         use_tool_ids: typing.Optional[bool] = None,
-        conversation_config: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        platform_settings: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        conversation_config: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        platform_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetAgentResponseModel:
@@ -339,11 +346,9 @@ class ConversationalAiClient:
         use_tool_ids : typing.Optional[bool]
             Use tool ids instead of tools specs from request payload.
 
-        conversation_config : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Conversation configuration for an agent
+        conversation_config : typing.Optional[typing.Optional[typing.Any]]
 
-        platform_settings : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
+        platform_settings : typing.Optional[typing.Optional[typing.Any]]
 
         name : typing.Optional[str]
             A name to make the agent easier to find
@@ -361,6 +366,7 @@ class ConversationalAiClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.update_agent(
@@ -369,6 +375,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             params={
                 "use_tool_ids": use_tool_ids,
@@ -439,6 +446,7 @@ class ConversationalAiClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.get_agent_widget(
@@ -447,6 +455,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/widget",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "conversation_signature": conversation_signature,
@@ -501,6 +510,7 @@ class ConversationalAiClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.get_agent_link(
@@ -509,6 +519,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/link",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -563,6 +574,7 @@ class ConversationalAiClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.post_agent_avatar(
@@ -571,6 +583,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/avatar",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={},
             files={
@@ -585,81 +598,6 @@ class ConversationalAiClient:
                     PostAgentAvatarResponseModel,
                     construct_type(
                         type_=PostAgentAvatarResponseModel,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def add_agent_secret(
-        self, agent_id: str, *, name: str, secret_value: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> AddAgentSecretResponseModel:
-        """
-        Uploads a file or reference a webpage for the agent to use as part of it's knowledge base
-
-        Parameters
-        ----------
-        agent_id : str
-            The id of an agent. This is returned on agent creation.
-
-        name : str
-            A name to help identify a particular agent secret
-
-        secret_value : str
-            A value to be encrypted and used by the agent
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AddAgentSecretResponseModel
-            Successful Response
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.conversational_ai.add_agent_secret(
-            agent_id="21m00Tcm4TlvDq8ikWAM",
-            name="MY API KEY",
-            secret_value="sk_api_12354abc",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"v1/convai/agents/{jsonable_encoder(agent_id)}/add-secret",
-            method="POST",
-            json={
-                "name": name,
-                "secret_value": secret_value,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    AddAgentSecretResponseModel,
-                    construct_type(
-                        type_=AddAgentSecretResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -713,12 +651,14 @@ class ConversationalAiClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.get_agents()
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/agents",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -790,6 +730,7 @@ class ConversationalAiClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.get_conversations(
@@ -798,6 +739,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/conversations",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -855,14 +797,16 @@ class ConversationalAiClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.get_conversation(
-            conversation_id="21m00Tcm4TlvDq8ikWAM",
+            conversation_id="123",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -914,6 +858,7 @@ class ConversationalAiClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.delete_conversation(
@@ -922,6 +867,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -972,6 +918,7 @@ class ConversationalAiClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.get_conversation_audio(
@@ -980,6 +927,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}/audio",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1032,6 +980,7 @@ class ConversationalAiClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.post_conversation_feedback(
@@ -1041,6 +990,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}/feedback",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "feedback": feedback,
@@ -1114,6 +1064,7 @@ class ConversationalAiClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.create_phone_number(
@@ -1125,6 +1076,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/phone-numbers/create",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "phone_number": phone_number,
@@ -1187,6 +1139,7 @@ class ConversationalAiClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.get_phone_number(
@@ -1195,6 +1148,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1246,6 +1200,7 @@ class ConversationalAiClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.delete_phone_number(
@@ -1254,6 +1209,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -1311,6 +1267,7 @@ class ConversationalAiClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.update_phone_number(
@@ -1319,6 +1276,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "agent_id": agent_id,
@@ -1374,12 +1332,14 @@ class ConversationalAiClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.get_phone_numbers()
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/phone-numbers/",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1450,12 +1410,14 @@ class ConversationalAiClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.get_knowledge_base_list()
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/knowledge-base",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -1499,7 +1461,7 @@ class ConversationalAiClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddKnowledgeBaseResponseModel:
         """
-        Uploads a file or reference a webpage to use as part of the shared knowledge base
+        Upload a file or webpage URL to create a knowledge base document. <br> <Note> After creating the document, update the agent's knowledge base by calling [Update agent](/docs/conversational-ai/api-reference/agents/update-agent). </Note>
 
         Parameters
         ----------
@@ -1525,12 +1487,14 @@ class ConversationalAiClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.add_to_knowledge_base()
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/knowledge-base",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -1600,6 +1564,7 @@ class ConversationalAiClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.rag_index_status(
@@ -1609,6 +1574,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/rag-index",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "force_reindex": force_reindex,
@@ -1670,6 +1636,7 @@ class ConversationalAiClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.get_knowledge_base_document_by_id(
@@ -1678,6 +1645,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1729,6 +1697,7 @@ class ConversationalAiClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.delete_knowledge_base_document(
@@ -1737,6 +1706,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -1799,6 +1769,7 @@ class ConversationalAiClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.get_dependent_agents(
@@ -1807,6 +1778,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/dependent-agents",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -1859,12 +1831,14 @@ class ConversationalAiClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.get_settings()
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/settings",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1921,12 +1895,14 @@ class ConversationalAiClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.update_settings()
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/settings",
+            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "conversation_initiation_client_data_webhook": convert_and_respect_annotation_metadata(
@@ -1989,12 +1965,14 @@ class ConversationalAiClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.get_secrets()
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/secrets",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -2047,6 +2025,7 @@ class ConversationalAiClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.create_secret(
@@ -2056,6 +2035,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/secrets",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -2112,6 +2092,7 @@ class ConversationalAiClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.delete_secret(
@@ -2120,6 +2101,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/secrets/{jsonable_encoder(secret_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -2172,6 +2154,7 @@ class AsyncConversationalAiClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -2186,6 +2169,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/conversation/get_signed_url",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "agent_id": agent_id,
@@ -2257,6 +2241,7 @@ class AsyncConversationalAiClient:
         from elevenlabs import AsyncElevenLabs, ConversationalConfigApiModel
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -2271,6 +2256,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/agents/create",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "use_tool_ids": use_tool_ids,
@@ -2340,6 +2326,7 @@ class AsyncConversationalAiClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -2354,6 +2341,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -2407,6 +2395,7 @@ class AsyncConversationalAiClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -2421,6 +2410,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -2453,8 +2443,8 @@ class AsyncConversationalAiClient:
         agent_id: str,
         *,
         use_tool_ids: typing.Optional[bool] = None,
-        conversation_config: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        platform_settings: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        conversation_config: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        platform_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetAgentResponseModel:
@@ -2469,11 +2459,9 @@ class AsyncConversationalAiClient:
         use_tool_ids : typing.Optional[bool]
             Use tool ids instead of tools specs from request payload.
 
-        conversation_config : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Conversation configuration for an agent
+        conversation_config : typing.Optional[typing.Optional[typing.Any]]
 
-        platform_settings : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
+        platform_settings : typing.Optional[typing.Optional[typing.Any]]
 
         name : typing.Optional[str]
             A name to make the agent easier to find
@@ -2493,6 +2481,7 @@ class AsyncConversationalAiClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -2507,6 +2496,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             params={
                 "use_tool_ids": use_tool_ids,
@@ -2579,6 +2569,7 @@ class AsyncConversationalAiClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -2593,6 +2584,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/widget",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "conversation_signature": conversation_signature,
@@ -2649,6 +2641,7 @@ class AsyncConversationalAiClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -2663,6 +2656,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/link",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -2719,6 +2713,7 @@ class AsyncConversationalAiClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -2733,6 +2728,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/avatar",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={},
             files={
@@ -2747,89 +2743,6 @@ class AsyncConversationalAiClient:
                     PostAgentAvatarResponseModel,
                     construct_type(
                         type_=PostAgentAvatarResponseModel,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def add_agent_secret(
-        self, agent_id: str, *, name: str, secret_value: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> AddAgentSecretResponseModel:
-        """
-        Uploads a file or reference a webpage for the agent to use as part of it's knowledge base
-
-        Parameters
-        ----------
-        agent_id : str
-            The id of an agent. This is returned on agent creation.
-
-        name : str
-            A name to help identify a particular agent secret
-
-        secret_value : str
-            A value to be encrypted and used by the agent
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AddAgentSecretResponseModel
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.conversational_ai.add_agent_secret(
-                agent_id="21m00Tcm4TlvDq8ikWAM",
-                name="MY API KEY",
-                secret_value="sk_api_12354abc",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"v1/convai/agents/{jsonable_encoder(agent_id)}/add-secret",
-            method="POST",
-            json={
-                "name": name,
-                "secret_value": secret_value,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    AddAgentSecretResponseModel,
-                    construct_type(
-                        type_=AddAgentSecretResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -2885,6 +2798,7 @@ class AsyncConversationalAiClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -2897,6 +2811,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/agents",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -2970,6 +2885,7 @@ class AsyncConversationalAiClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -2984,6 +2900,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/conversations",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -3043,13 +2960,14 @@ class AsyncConversationalAiClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
 
         async def main() -> None:
             await client.conversational_ai.get_conversation(
-                conversation_id="21m00Tcm4TlvDq8ikWAM",
+                conversation_id="123",
             )
 
 
@@ -3057,6 +2975,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -3110,6 +3029,7 @@ class AsyncConversationalAiClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -3124,6 +3044,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -3176,6 +3097,7 @@ class AsyncConversationalAiClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -3190,6 +3112,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}/audio",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -3244,6 +3167,7 @@ class AsyncConversationalAiClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -3259,6 +3183,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}/feedback",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "feedback": feedback,
@@ -3334,6 +3259,7 @@ class AsyncConversationalAiClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -3351,6 +3277,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/phone-numbers/create",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "phone_number": phone_number,
@@ -3415,6 +3342,7 @@ class AsyncConversationalAiClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -3429,6 +3357,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -3482,6 +3411,7 @@ class AsyncConversationalAiClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -3496,6 +3426,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -3555,6 +3486,7 @@ class AsyncConversationalAiClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -3569,6 +3501,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "agent_id": agent_id,
@@ -3626,6 +3559,7 @@ class AsyncConversationalAiClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -3638,6 +3572,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/phone-numbers/",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -3710,6 +3645,7 @@ class AsyncConversationalAiClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -3722,6 +3658,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/knowledge-base",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -3765,7 +3702,7 @@ class AsyncConversationalAiClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddKnowledgeBaseResponseModel:
         """
-        Uploads a file or reference a webpage to use as part of the shared knowledge base
+        Upload a file or webpage URL to create a knowledge base document. <br> <Note> After creating the document, update the agent's knowledge base by calling [Update agent](/docs/conversational-ai/api-reference/agents/update-agent). </Note>
 
         Parameters
         ----------
@@ -3793,6 +3730,7 @@ class AsyncConversationalAiClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -3805,6 +3743,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/knowledge-base",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -3876,6 +3815,7 @@ class AsyncConversationalAiClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -3891,6 +3831,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/rag-index",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "force_reindex": force_reindex,
@@ -3954,6 +3895,7 @@ class AsyncConversationalAiClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -3968,6 +3910,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -4021,6 +3964,7 @@ class AsyncConversationalAiClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -4035,6 +3979,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -4099,6 +4044,7 @@ class AsyncConversationalAiClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -4113,6 +4059,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/dependent-agents",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -4167,6 +4114,7 @@ class AsyncConversationalAiClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -4179,6 +4127,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/settings",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -4237,6 +4186,7 @@ class AsyncConversationalAiClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -4249,6 +4199,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/settings",
+            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "conversation_initiation_client_data_webhook": convert_and_respect_annotation_metadata(
@@ -4313,6 +4264,7 @@ class AsyncConversationalAiClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -4325,6 +4277,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/secrets",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -4379,6 +4332,7 @@ class AsyncConversationalAiClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -4394,6 +4348,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/secrets",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -4452,6 +4407,7 @@ class AsyncConversationalAiClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -4466,6 +4422,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/secrets/{jsonable_encoder(secret_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )

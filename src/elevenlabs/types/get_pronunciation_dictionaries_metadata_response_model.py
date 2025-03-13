@@ -2,13 +2,13 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .get_pronunciation_dictionary_metadata_response import GetPronunciationDictionaryMetadataResponse
+from .get_pronunciation_dictionary_metadata_response_model import GetPronunciationDictionaryMetadataResponseModel
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class GetPronunciationDictionariesMetadataResponseModel(UncheckedBaseModel):
-    pronunciation_dictionaries: typing.List[GetPronunciationDictionaryMetadataResponse] = pydantic.Field()
+    pronunciation_dictionaries: typing.List[GetPronunciationDictionaryMetadataResponseModel] = pydantic.Field()
     """
     A list of pronunciation dictionaries and their metadata.
     """

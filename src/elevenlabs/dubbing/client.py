@@ -18,7 +18,7 @@ from ..types.segment_transcription_response import SegmentTranscriptionResponse
 from ..types.segment_translation_response import SegmentTranslationResponse
 from ..types.segment_dub_response import SegmentDubResponse
 from .. import core
-from ..types.do_dubbing_response import DoDubbingResponse
+from ..types.do_dubbing_response_model import DoDubbingResponseModel
 from ..types.dubbing_metadata_response import DubbingMetadataResponse
 from ..types.delete_dubbing_response_model import DeleteDubbingResponseModel
 from ..errors.forbidden_error import ForbiddenError
@@ -59,6 +59,7 @@ class DubbingClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.dubbing.get_dubbing_resource(
@@ -67,6 +68,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -121,6 +123,7 @@ class DubbingClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.dubbing.add_language_to_resource(
@@ -130,6 +133,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/language",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "language": language,
@@ -204,6 +208,7 @@ class DubbingClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.dubbing.create_segment_for_speaker(
@@ -215,6 +220,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/speaker/{jsonable_encoder(speaker_id)}/segment",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "start_time": start_time,
@@ -295,6 +301,7 @@ class DubbingClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.dubbing.update_segment_language(
@@ -305,6 +312,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/segment/{jsonable_encoder(segment_id)}/{jsonable_encoder(language)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "start_time": start_time,
@@ -368,6 +376,7 @@ class DubbingClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.dubbing.delete_segment(
@@ -377,6 +386,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/segment/{jsonable_encoder(segment_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -435,6 +445,7 @@ class DubbingClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.dubbing.transcribe_segments(
@@ -444,6 +455,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/transcribe",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "segments": segments,
@@ -513,6 +525,7 @@ class DubbingClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.dubbing.translate_segments(
@@ -523,6 +536,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/translate",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "segments": segments,
@@ -593,6 +607,7 @@ class DubbingClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.dubbing.dub_segments(
@@ -603,6 +618,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/dub",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "segments": segments,
@@ -641,11 +657,11 @@ class DubbingClient:
     def dub_a_video_or_an_audio_file(
         self,
         *,
-        target_lang: str,
         file: typing.Optional[core.File] = OMIT,
         name: typing.Optional[str] = OMIT,
         source_url: typing.Optional[str] = OMIT,
         source_lang: typing.Optional[str] = OMIT,
+        target_lang: typing.Optional[str] = OMIT,
         num_speakers: typing.Optional[int] = OMIT,
         watermark: typing.Optional[bool] = OMIT,
         start_time: typing.Optional[int] = OMIT,
@@ -655,15 +671,12 @@ class DubbingClient:
         use_profanity_filter: typing.Optional[bool] = OMIT,
         dubbing_studio: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> DoDubbingResponse:
+    ) -> DoDubbingResponseModel:
         """
         Dubs a provided audio or video file into given language.
 
         Parameters
         ----------
-        target_lang : str
-            The Target language to dub the content into.
-
         file : typing.Optional[core.File]
             See core.File for more documentation
 
@@ -675,6 +688,9 @@ class DubbingClient:
 
         source_lang : typing.Optional[str]
             Source language.
+
+        target_lang : typing.Optional[str]
+            The Target language to dub the content into.
 
         num_speakers : typing.Optional[int]
             Number of speakers to use for the dubbing. Set to 0 to automatically detect the number of speakers
@@ -705,7 +721,7 @@ class DubbingClient:
 
         Returns
         -------
-        DoDubbingResponse
+        DoDubbingResponseModel
             Successful Response
 
         Examples
@@ -713,14 +729,14 @@ class DubbingClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
-        client.dubbing.dub_a_video_or_an_audio_file(
-            target_lang="target_lang",
-        )
+        client.dubbing.dub_a_video_or_an_audio_file()
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/dubbing",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -745,9 +761,9 @@ class DubbingClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    DoDubbingResponse,
+                    DoDubbingResponseModel,
                     construct_type(
-                        type_=DoDubbingResponse,  # type: ignore
+                        type_=DoDubbingResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -790,6 +806,7 @@ class DubbingClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.dubbing.get_dubbing_project_metadata(
@@ -798,6 +815,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -849,6 +867,7 @@ class DubbingClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.dubbing.delete_dubbing_project(
@@ -857,6 +876,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -908,6 +928,7 @@ class DubbingClient:
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}/audio/{jsonable_encoder(language_code)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         ) as _response:
@@ -998,6 +1019,7 @@ class DubbingClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.dubbing.get_transcript_for_dub(
@@ -1007,6 +1029,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}/transcript/{jsonable_encoder(language_code)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "format_type": format_type,
@@ -1098,6 +1121,7 @@ class AsyncDubbingClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -1112,6 +1136,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1168,6 +1193,7 @@ class AsyncDubbingClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -1183,6 +1209,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/language",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "language": language,
@@ -1259,6 +1286,7 @@ class AsyncDubbingClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -1276,6 +1304,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/speaker/{jsonable_encoder(speaker_id)}/segment",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "start_time": start_time,
@@ -1358,6 +1387,7 @@ class AsyncDubbingClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -1374,6 +1404,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/segment/{jsonable_encoder(segment_id)}/{jsonable_encoder(language)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "start_time": start_time,
@@ -1439,6 +1470,7 @@ class AsyncDubbingClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -1454,6 +1486,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/segment/{jsonable_encoder(segment_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -1514,6 +1547,7 @@ class AsyncDubbingClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -1529,6 +1563,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/transcribe",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "segments": segments,
@@ -1600,6 +1635,7 @@ class AsyncDubbingClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -1616,6 +1652,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/translate",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "segments": segments,
@@ -1688,6 +1725,7 @@ class AsyncDubbingClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -1704,6 +1742,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/dub",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "segments": segments,
@@ -1742,11 +1781,11 @@ class AsyncDubbingClient:
     async def dub_a_video_or_an_audio_file(
         self,
         *,
-        target_lang: str,
         file: typing.Optional[core.File] = OMIT,
         name: typing.Optional[str] = OMIT,
         source_url: typing.Optional[str] = OMIT,
         source_lang: typing.Optional[str] = OMIT,
+        target_lang: typing.Optional[str] = OMIT,
         num_speakers: typing.Optional[int] = OMIT,
         watermark: typing.Optional[bool] = OMIT,
         start_time: typing.Optional[int] = OMIT,
@@ -1756,15 +1795,12 @@ class AsyncDubbingClient:
         use_profanity_filter: typing.Optional[bool] = OMIT,
         dubbing_studio: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> DoDubbingResponse:
+    ) -> DoDubbingResponseModel:
         """
         Dubs a provided audio or video file into given language.
 
         Parameters
         ----------
-        target_lang : str
-            The Target language to dub the content into.
-
         file : typing.Optional[core.File]
             See core.File for more documentation
 
@@ -1776,6 +1812,9 @@ class AsyncDubbingClient:
 
         source_lang : typing.Optional[str]
             Source language.
+
+        target_lang : typing.Optional[str]
+            The Target language to dub the content into.
 
         num_speakers : typing.Optional[int]
             Number of speakers to use for the dubbing. Set to 0 to automatically detect the number of speakers
@@ -1806,7 +1845,7 @@ class AsyncDubbingClient:
 
         Returns
         -------
-        DoDubbingResponse
+        DoDubbingResponseModel
             Successful Response
 
         Examples
@@ -1816,20 +1855,20 @@ class AsyncDubbingClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
 
         async def main() -> None:
-            await client.dubbing.dub_a_video_or_an_audio_file(
-                target_lang="target_lang",
-            )
+            await client.dubbing.dub_a_video_or_an_audio_file()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/dubbing",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -1854,9 +1893,9 @@ class AsyncDubbingClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    DoDubbingResponse,
+                    DoDubbingResponseModel,
                     construct_type(
-                        type_=DoDubbingResponse,  # type: ignore
+                        type_=DoDubbingResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1901,6 +1940,7 @@ class AsyncDubbingClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -1915,6 +1955,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1968,6 +2009,7 @@ class AsyncDubbingClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -1982,6 +2024,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -2033,6 +2076,7 @@ class AsyncDubbingClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}/audio/{jsonable_encoder(language_code)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         ) as _response:
@@ -2125,6 +2169,7 @@ class AsyncDubbingClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -2140,6 +2185,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}/transcript/{jsonable_encoder(language_code)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "format_type": format_type,

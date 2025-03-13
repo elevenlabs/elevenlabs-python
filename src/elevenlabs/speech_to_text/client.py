@@ -80,6 +80,7 @@ class SpeechToTextClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.speech_to_text.convert(
@@ -88,6 +89,7 @@ class SpeechToTextClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/speech-to-text",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -197,6 +199,7 @@ class AsyncSpeechToTextClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            xi_api_key="YOUR_XI_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -211,6 +214,7 @@ class AsyncSpeechToTextClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/speech-to-text",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,
