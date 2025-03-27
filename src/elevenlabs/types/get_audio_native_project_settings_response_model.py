@@ -3,7 +3,9 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import pydantic
 import typing
-from .audio_native_project_settings_response_model import AudioNativeProjectSettingsResponseModel
+from .audio_native_project_settings_response_model import (
+    AudioNativeProjectSettingsResponseModel,
+)
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 

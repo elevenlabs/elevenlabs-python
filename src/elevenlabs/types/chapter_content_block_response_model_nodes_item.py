@@ -38,6 +38,9 @@ class ChapterContentBlockResponseModelNodesItem_Other(UncheckedBaseModel):
 
 
 ChapterContentBlockResponseModelNodesItem = typing_extensions.Annotated[
-    typing.Union[ChapterContentBlockResponseModelNodesItem_TtsNode, ChapterContentBlockResponseModelNodesItem_Other],
+    typing.Union[
+        ChapterContentBlockResponseModelNodesItem_TtsNode,
+        ChapterContentBlockResponseModelNodesItem_Other,
+    ],
     UnionMetadata(discriminant="type"),
 ]

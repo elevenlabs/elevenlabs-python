@@ -2,12 +2,15 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class UrlAvatar(UncheckedBaseModel):
-    custom_url: typing.Optional[str] = None
+    custom_url: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The custom URL of the avatar
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -2,16 +2,35 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class PrivacyConfig(UncheckedBaseModel):
-    record_voice: typing.Optional[bool] = None
-    retention_days: typing.Optional[int] = None
-    delete_transcript_and_pii: typing.Optional[bool] = None
-    delete_audio: typing.Optional[bool] = None
-    apply_to_existing_conversations: typing.Optional[bool] = None
+    record_voice: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to record the conversation
+    """
+
+    retention_days: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The number of days to retain the conversation. -1 indicates there is no retention limit
+    """
+
+    delete_transcript_and_pii: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to delete the transcript and PII
+    """
+
+    delete_audio: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to delete the audio
+    """
+
+    apply_to_existing_conversations: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to apply the privacy settings to existing conversations
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -3,27 +3,61 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 from .auth_settings import AuthSettings
+import pydantic
 from .evaluation_settings import EvaluationSettings
 from .widget_config import WidgetConfig
 from .literal_json_schema_property import LiteralJsonSchemaProperty
-from .conversation_initiation_client_data_config import ConversationInitiationClientDataConfig
+from .conversation_initiation_client_data_config_output import (
+    ConversationInitiationClientDataConfigOutput,
+)
 from .agent_call_limits import AgentCallLimits
-from .agent_ban import AgentBan
 from .privacy_config import PrivacyConfig
+from .agent_workspace_overrides_output import AgentWorkspaceOverridesOutput
 from .safety_response_model import SafetyResponseModel
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
-import pydantic
 
 
 class AgentPlatformSettingsResponseModel(UncheckedBaseModel):
-    auth: typing.Optional[AuthSettings] = None
-    evaluation: typing.Optional[EvaluationSettings] = None
-    widget: typing.Optional[WidgetConfig] = None
-    data_collection: typing.Optional[typing.Dict[str, LiteralJsonSchemaProperty]] = None
-    overrides: typing.Optional[ConversationInitiationClientDataConfig] = None
-    call_limits: typing.Optional[AgentCallLimits] = None
-    ban: typing.Optional[AgentBan] = None
-    privacy: typing.Optional[PrivacyConfig] = None
+    auth: typing.Optional[AuthSettings] = pydantic.Field(default=None)
+    """
+    Settings for authentication
+    """
+
+    evaluation: typing.Optional[EvaluationSettings] = pydantic.Field(default=None)
+    """
+    Settings for evaluation
+    """
+
+    widget: typing.Optional[WidgetConfig] = pydantic.Field(default=None)
+    """
+    Configuration for the widget
+    """
+
+    data_collection: typing.Optional[typing.Dict[str, LiteralJsonSchemaProperty]] = pydantic.Field(default=None)
+    """
+    Data collection settings
+    """
+
+    overrides: typing.Optional[ConversationInitiationClientDataConfigOutput] = pydantic.Field(default=None)
+    """
+    Additional overrides for the agent during conversation initiation
+    """
+
+    call_limits: typing.Optional[AgentCallLimits] = pydantic.Field(default=None)
+    """
+    Call limits for the agent
+    """
+
+    privacy: typing.Optional[PrivacyConfig] = pydantic.Field(default=None)
+    """
+    Privacy settings for the agent
+    """
+
+    workspace_overrides: typing.Optional[AgentWorkspaceOverridesOutput] = pydantic.Field(default=None)
+    """
+    Workspace overrides for the agent
+    """
+
     safety: typing.Optional[SafetyResponseModel] = None
 
     if IS_PYDANTIC_V2:

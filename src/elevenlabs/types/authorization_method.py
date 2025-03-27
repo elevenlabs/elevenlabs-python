@@ -3,5 +3,6 @@
 import typing
 
 AuthorizationMethod = typing.Union[
-    typing.Literal["public", "authorization_header", "signed_url", "shareable_link"], typing.Any
+    typing.Literal["public", "authorization_header", "signed_url", "shareable_link"],
+    typing.Any,
 ]

@@ -2,12 +2,15 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class PromptAgentOverrideConfig(UncheckedBaseModel):
-    prompt: typing.Optional[bool] = None
+    prompt: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to allow prompt overriding
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

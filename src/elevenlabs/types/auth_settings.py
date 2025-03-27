@@ -2,15 +2,26 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
+import pydantic
 from .allowlist_item import AllowlistItem
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
-import pydantic
 
 
 class AuthSettings(UncheckedBaseModel):
-    enable_auth: typing.Optional[bool] = None
-    allowlist: typing.Optional[typing.List[AllowlistItem]] = None
-    shareable_token: typing.Optional[str] = None
+    enable_auth: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If set to true, starting a conversation with an agent will require a signed token
+    """
+
+    allowlist: typing.Optional[typing.List[AllowlistItem]] = pydantic.Field(default=None)
+    """
+    A list of hosts that are allowed to start conversations with the agent
+    """
+
+    shareable_token: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    A shareable token that can be used to start a conversation with the agent
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

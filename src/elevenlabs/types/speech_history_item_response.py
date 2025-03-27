@@ -3,9 +3,13 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import pydantic
 import typing
-from .speech_history_item_response_model_voice_category import SpeechHistoryItemResponseModelVoiceCategory
+from .speech_history_item_response_model_voice_category import (
+    SpeechHistoryItemResponseModelVoiceCategory,
+)
 from .feedback_item import FeedbackItem
-from .speech_history_item_response_model_source import SpeechHistoryItemResponseModelSource
+from .speech_history_item_response_model_source import (
+    SpeechHistoryItemResponseModelSource,
+)
 from .history_alignments_response_model import HistoryAlignmentsResponseModel
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 

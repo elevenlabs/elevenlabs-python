@@ -49,6 +49,7 @@ class VoiceGenerationClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/voice-generation/generate-voice/parameters",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -121,6 +122,7 @@ class VoiceGenerationClient:
         """
         with self._client_wrapper.httpx_client.stream(
             "v1/voice-generation/generate-voice",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "gender": gender,
@@ -164,7 +166,7 @@ class VoiceGenerationClient:
         voice_description: str,
         generated_voice_id: str,
         played_not_selected_voice_ids: typing.Optional[typing.Sequence[str]] = OMIT,
-        labels: typing.Optional[typing.Dict[str, str]] = OMIT,
+        labels: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Voice:
         """
@@ -184,7 +186,7 @@ class VoiceGenerationClient:
         played_not_selected_voice_ids : typing.Optional[typing.Sequence[str]]
             List of voice ids that the user has played but not selected. Used for RLHF.
 
-        labels : typing.Optional[typing.Dict[str, str]]
+        labels : typing.Optional[typing.Dict[str, typing.Optional[str]]]
             Optional, metadata to add to the created voice. Defaults to None.
 
         request_options : typing.Optional[RequestOptions]
@@ -210,6 +212,7 @@ class VoiceGenerationClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/voice-generation/create-voice",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "voice_name": voice_name,
@@ -288,6 +291,7 @@ class AsyncVoiceGenerationClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/voice-generation/generate-voice/parameters",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -368,6 +372,7 @@ class AsyncVoiceGenerationClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             "v1/voice-generation/generate-voice",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "gender": gender,
@@ -411,7 +416,7 @@ class AsyncVoiceGenerationClient:
         voice_description: str,
         generated_voice_id: str,
         played_not_selected_voice_ids: typing.Optional[typing.Sequence[str]] = OMIT,
-        labels: typing.Optional[typing.Dict[str, str]] = OMIT,
+        labels: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Voice:
         """
@@ -431,7 +436,7 @@ class AsyncVoiceGenerationClient:
         played_not_selected_voice_ids : typing.Optional[typing.Sequence[str]]
             List of voice ids that the user has played but not selected. Used for RLHF.
 
-        labels : typing.Optional[typing.Dict[str, str]]
+        labels : typing.Optional[typing.Dict[str, typing.Optional[str]]]
             Optional, metadata to add to the created voice. Defaults to None.
 
         request_options : typing.Optional[RequestOptions]
@@ -465,6 +470,7 @@ class AsyncVoiceGenerationClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/voice-generation/create-voice",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "voice_name": voice_name,

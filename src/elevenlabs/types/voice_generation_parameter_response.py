@@ -2,7 +2,9 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .voice_generation_parameter_option_response import VoiceGenerationParameterOptionResponse
+from .voice_generation_parameter_option_response import (
+    VoiceGenerationParameterOptionResponse,
+)
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 

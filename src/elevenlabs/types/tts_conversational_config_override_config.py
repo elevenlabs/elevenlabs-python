@@ -2,12 +2,15 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class TtsConversationalConfigOverrideConfig(UncheckedBaseModel):
-    voice_id: typing.Optional[bool] = None
+    voice_id: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to allow overriding the voice ID
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

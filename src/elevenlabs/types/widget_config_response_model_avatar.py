@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UnionMetadata
 
 
 class WidgetConfigResponseModelAvatar_Orb(UncheckedBaseModel):
+    """
+    The avatar of the widget
+    """
+
     type: typing.Literal["orb"] = "orb"
     color_1: typing.Optional[str] = None
     color_2: typing.Optional[str] = None
@@ -25,6 +29,10 @@ class WidgetConfigResponseModelAvatar_Orb(UncheckedBaseModel):
 
 
 class WidgetConfigResponseModelAvatar_Url(UncheckedBaseModel):
+    """
+    The avatar of the widget
+    """
+
     type: typing.Literal["url"] = "url"
     custom_url: typing.Optional[str] = None
 
@@ -39,6 +47,10 @@ class WidgetConfigResponseModelAvatar_Url(UncheckedBaseModel):
 
 
 class WidgetConfigResponseModelAvatar_Image(UncheckedBaseModel):
+    """
+    The avatar of the widget
+    """
+
     type: typing.Literal["image"] = "image"
     url: typing.Optional[str] = None
 
@@ -54,7 +66,9 @@ class WidgetConfigResponseModelAvatar_Image(UncheckedBaseModel):
 
 WidgetConfigResponseModelAvatar = typing_extensions.Annotated[
     typing.Union[
-        WidgetConfigResponseModelAvatar_Orb, WidgetConfigResponseModelAvatar_Url, WidgetConfigResponseModelAvatar_Image
+        WidgetConfigResponseModelAvatar_Orb,
+        WidgetConfigResponseModelAvatar_Url,
+        WidgetConfigResponseModelAvatar_Image,
     ],
     UnionMetadata(discriminant="type"),
 ]

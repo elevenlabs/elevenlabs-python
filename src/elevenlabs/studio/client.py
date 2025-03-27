@@ -4,8 +4,12 @@ import typing
 from ..core.client_wrapper import SyncClientWrapper
 from .projects.client import ProjectsClient
 from .chapters.client import ChaptersClient
-from .types.body_create_podcast_v_1_studio_podcasts_post_mode import BodyCreatePodcastV1StudioPodcastsPostMode
-from .types.body_create_podcast_v_1_studio_podcasts_post_source import BodyCreatePodcastV1StudioPodcastsPostSource
+from .types.body_create_podcast_v_1_studio_podcasts_post_mode import (
+    BodyCreatePodcastV1StudioPodcastsPostMode,
+)
+from .types.body_create_podcast_v_1_studio_podcasts_post_source import (
+    BodyCreatePodcastV1StudioPodcastsPostSource,
+)
 from .types.body_create_podcast_v_1_studio_podcasts_post_quality_preset import (
     BodyCreatePodcastV1StudioPodcastsPostQualityPreset,
 )
@@ -68,13 +72,11 @@ class StudioClient:
             ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
             ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
 
-
         duration_scale : typing.Optional[BodyCreatePodcastV1StudioPodcastsPostDurationScale]
             Duration of the generated podcast. Must be one of:
             short - produces podcasts shorter than 3 minutes.
             default - produces podcasts roughly between 3-7 minutes.
             long - prodces podcasts longer than 7 minutes.
-
 
         language : typing.Optional[str]
             An optional language of the Studio project. Two-letter language code (ISO 639-1).
@@ -122,14 +124,19 @@ class StudioClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/studio/podcasts",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "model_id": model_id,
                 "mode": convert_and_respect_annotation_metadata(
-                    object_=mode, annotation=BodyCreatePodcastV1StudioPodcastsPostMode, direction="write"
+                    object_=mode,
+                    annotation=BodyCreatePodcastV1StudioPodcastsPostMode,
+                    direction="write",
                 ),
                 "source": convert_and_respect_annotation_metadata(
-                    object_=source, annotation=BodyCreatePodcastV1StudioPodcastsPostSource, direction="write"
+                    object_=source,
+                    annotation=BodyCreatePodcastV1StudioPodcastsPostSource,
+                    direction="write",
                 ),
                 "quality_preset": quality_preset,
                 "duration_scale": duration_scale,
@@ -208,13 +215,11 @@ class AsyncStudioClient:
             ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
             ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
 
-
         duration_scale : typing.Optional[BodyCreatePodcastV1StudioPodcastsPostDurationScale]
             Duration of the generated podcast. Must be one of:
             short - produces podcasts shorter than 3 minutes.
             default - produces podcasts roughly between 3-7 minutes.
             long - prodces podcasts longer than 7 minutes.
-
 
         language : typing.Optional[str]
             An optional language of the Studio project. Two-letter language code (ISO 639-1).
@@ -270,14 +275,19 @@ class AsyncStudioClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/studio/podcasts",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "model_id": model_id,
                 "mode": convert_and_respect_annotation_metadata(
-                    object_=mode, annotation=BodyCreatePodcastV1StudioPodcastsPostMode, direction="write"
+                    object_=mode,
+                    annotation=BodyCreatePodcastV1StudioPodcastsPostMode,
+                    direction="write",
                 ),
                 "source": convert_and_respect_annotation_metadata(
-                    object_=source, annotation=BodyCreatePodcastV1StudioPodcastsPostSource, direction="write"
+                    object_=source,
+                    annotation=BodyCreatePodcastV1StudioPodcastsPostSource,
+                    direction="write",
                 ),
                 "quality_preset": quality_preset,
                 "duration_scale": duration_scale,

@@ -3,7 +3,9 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import pydantic
 import typing
-from .chapter_with_content_response_model_state import ChapterWithContentResponseModelState
+from .chapter_with_content_response_model_state import (
+    ChapterWithContentResponseModelState,
+)
 from .chapter_statistics_response import ChapterStatisticsResponse
 from .chapter_content_response_model import ChapterContentResponseModel
 from ..core.pydantic_utilities import IS_PYDANTIC_V2

@@ -73,6 +73,7 @@ class HistoryClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/history",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "page_size": page_size,
@@ -108,7 +109,10 @@ class HistoryClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get(
-        self, history_item_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        history_item_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> SpeechHistoryItemResponse:
         """
         Retrieves a history item.
@@ -139,6 +143,7 @@ class HistoryClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/history/{jsonable_encoder(history_item_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -167,7 +172,10 @@ class HistoryClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete(
-        self, history_item_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        history_item_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> DeleteHistoryItemResponse:
         """
         Delete a history item by its ID
@@ -198,6 +206,7 @@ class HistoryClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/history/{jsonable_encoder(history_item_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -226,8 +235,11 @@ class HistoryClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_audio(
-        self, history_item_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Iterator[bytes]:
+        self,
+        history_item_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> bytes:
         """
         Returns the audio of an history item.
 
@@ -237,12 +249,11 @@ class HistoryClient:
             History item ID to be used, you can use GET https://api.elevenlabs.io/v1/history to receive a list of history items and their IDs.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+            Request-specific configuration.
 
-        Yields
-        ------
-        typing.Iterator[bytes]
-            The audio file of the history item.
+        Returns
+        -------
+        bytes
 
         Examples
         --------
@@ -255,32 +266,29 @@ class HistoryClient:
             history_item_id="HISTORY_ITEM_ID",
         )
         """
-        with self._client_wrapper.httpx_client.stream(
+        _response = self._client_wrapper.httpx_client.request(
             f"v1/history/{jsonable_encoder(history_item_id)}/audio",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
-        ) as _response:
-            try:
-                if 200 <= _response.status_code < 300:
-                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
-                    for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
-                        yield _chunk
-                    return
-                _response.read()
-                if _response.status_code == 422:
-                    raise UnprocessableEntityError(
-                        typing.cast(
-                            HttpValidationError,
-                            construct_type(
-                                type_=HttpValidationError,  # type: ignore
-                                object_=_response.json(),
-                            ),
-                        )
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return _response.read()  # type: ignore
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
                     )
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def download(
         self,
@@ -288,7 +296,7 @@ class HistoryClient:
         history_item_ids: typing.Sequence[str],
         output_format: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Iterator[bytes]:
+    ) -> bytes:
         """
         Download one or more history items. If one history item ID is provided, we will return a single audio file. If more than one history item IDs are provided, we will provide the history items packed into a .zip file.
 
@@ -301,12 +309,11 @@ class HistoryClient:
             Output format to transcode the audio file, can be wav or default.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+            Request-specific configuration.
 
-        Yields
-        ------
-        typing.Iterator[bytes]
-            The requested audio file, or a zip file containing multiple audio files when multiple history items are requested.
+        Returns
+        -------
+        bytes
 
         Examples
         --------
@@ -319,8 +326,9 @@ class HistoryClient:
             history_item_ids=["HISTORY_ITEM_ID"],
         )
         """
-        with self._client_wrapper.httpx_client.stream(
+        _response = self._client_wrapper.httpx_client.request(
             "v1/history/download",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "history_item_ids": history_item_ids,
@@ -331,38 +339,34 @@ class HistoryClient:
             },
             request_options=request_options,
             omit=OMIT,
-        ) as _response:
-            try:
-                if 200 <= _response.status_code < 300:
-                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
-                    for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
-                        yield _chunk
-                    return
-                _response.read()
-                if _response.status_code == 400:
-                    raise BadRequestError(
-                        typing.cast(
-                            typing.Optional[typing.Any],
-                            construct_type(
-                                type_=typing.Optional[typing.Any],  # type: ignore
-                                object_=_response.json(),
-                            ),
-                        )
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return _response.read()  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
                     )
-                if _response.status_code == 422:
-                    raise UnprocessableEntityError(
-                        typing.cast(
-                            HttpValidationError,
-                            construct_type(
-                                type_=HttpValidationError,  # type: ignore
-                                object_=_response.json(),
-                            ),
-                        )
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
                     )
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
 class AsyncHistoryClient:
@@ -426,6 +430,7 @@ class AsyncHistoryClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/history",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "page_size": page_size,
@@ -461,7 +466,10 @@ class AsyncHistoryClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get(
-        self, history_item_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        history_item_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> SpeechHistoryItemResponse:
         """
         Retrieves a history item.
@@ -500,6 +508,7 @@ class AsyncHistoryClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/history/{jsonable_encoder(history_item_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -528,7 +537,10 @@ class AsyncHistoryClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete(
-        self, history_item_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        history_item_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> DeleteHistoryItemResponse:
         """
         Delete a history item by its ID
@@ -567,6 +579,7 @@ class AsyncHistoryClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/history/{jsonable_encoder(history_item_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -595,8 +608,11 @@ class AsyncHistoryClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_audio(
-        self, history_item_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.AsyncIterator[bytes]:
+        self,
+        history_item_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> bytes:
         """
         Returns the audio of an history item.
 
@@ -606,12 +622,11 @@ class AsyncHistoryClient:
             History item ID to be used, you can use GET https://api.elevenlabs.io/v1/history to receive a list of history items and their IDs.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+            Request-specific configuration.
 
-        Yields
-        ------
-        typing.AsyncIterator[bytes]
-            The audio file of the history item.
+        Returns
+        -------
+        bytes
 
         Examples
         --------
@@ -632,32 +647,29 @@ class AsyncHistoryClient:
 
         asyncio.run(main())
         """
-        async with self._client_wrapper.httpx_client.stream(
+        _response = await self._client_wrapper.httpx_client.request(
             f"v1/history/{jsonable_encoder(history_item_id)}/audio",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
-        ) as _response:
-            try:
-                if 200 <= _response.status_code < 300:
-                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
-                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
-                        yield _chunk
-                    return
-                await _response.aread()
-                if _response.status_code == 422:
-                    raise UnprocessableEntityError(
-                        typing.cast(
-                            HttpValidationError,
-                            construct_type(
-                                type_=HttpValidationError,  # type: ignore
-                                object_=_response.json(),
-                            ),
-                        )
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return _response.read()  # type: ignore
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
                     )
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def download(
         self,
@@ -665,7 +677,7 @@ class AsyncHistoryClient:
         history_item_ids: typing.Sequence[str],
         output_format: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.AsyncIterator[bytes]:
+    ) -> bytes:
         """
         Download one or more history items. If one history item ID is provided, we will return a single audio file. If more than one history item IDs are provided, we will provide the history items packed into a .zip file.
 
@@ -678,12 +690,11 @@ class AsyncHistoryClient:
             Output format to transcode the audio file, can be wav or default.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+            Request-specific configuration.
 
-        Yields
-        ------
-        typing.AsyncIterator[bytes]
-            The requested audio file, or a zip file containing multiple audio files when multiple history items are requested.
+        Returns
+        -------
+        bytes
 
         Examples
         --------
@@ -704,8 +715,9 @@ class AsyncHistoryClient:
 
         asyncio.run(main())
         """
-        async with self._client_wrapper.httpx_client.stream(
+        _response = await self._client_wrapper.httpx_client.request(
             "v1/history/download",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "history_item_ids": history_item_ids,
@@ -716,35 +728,31 @@ class AsyncHistoryClient:
             },
             request_options=request_options,
             omit=OMIT,
-        ) as _response:
-            try:
-                if 200 <= _response.status_code < 300:
-                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
-                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
-                        yield _chunk
-                    return
-                await _response.aread()
-                if _response.status_code == 400:
-                    raise BadRequestError(
-                        typing.cast(
-                            typing.Optional[typing.Any],
-                            construct_type(
-                                type_=typing.Optional[typing.Any],  # type: ignore
-                                object_=_response.json(),
-                            ),
-                        )
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return _response.read()  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
                     )
-                if _response.status_code == 422:
-                    raise UnprocessableEntityError(
-                        typing.cast(
-                            HttpValidationError,
-                            construct_type(
-                                type_=HttpValidationError,  # type: ignore
-                                object_=_response.json(),
-                            ),
-                        )
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
                     )
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)

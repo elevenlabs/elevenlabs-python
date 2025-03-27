@@ -3,9 +3,13 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import pydantic
 import typing
-from .extended_subscription_response_model_currency import ExtendedSubscriptionResponseModelCurrency
+from .extended_subscription_response_model_currency import (
+    ExtendedSubscriptionResponseModelCurrency,
+)
 from .subscription_status import SubscriptionStatus
-from .extended_subscription_response_model_billing_period import ExtendedSubscriptionResponseModelBillingPeriod
+from .extended_subscription_response_model_billing_period import (
+    ExtendedSubscriptionResponseModelBillingPeriod,
+)
 from .extended_subscription_response_model_character_refresh_period import (
     ExtendedSubscriptionResponseModelCharacterRefreshPeriod,
 )
@@ -39,7 +43,7 @@ class Subscription(UncheckedBaseModel):
     Whether the user is allowed to extend their character limit.
     """
 
-    next_character_count_reset_unix: int = pydantic.Field()
+    next_character_count_reset_unix: typing.Optional[int] = pydantic.Field(default=None)
     """
     The Unix timestamp of the next character count reset.
     """

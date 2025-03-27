@@ -3,8 +3,8 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 from .prompt_evaluation_criteria import PromptEvaluationCriteria
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class EvaluationSettings(UncheckedBaseModel):
@@ -13,7 +13,10 @@ class EvaluationSettings(UncheckedBaseModel):
     Agents are evaluated against a set of criteria, with success being defined as meeting some combination of those criteria.
     """
 
-    criteria: typing.Optional[typing.List[PromptEvaluationCriteria]] = None
+    criteria: typing.Optional[typing.List[PromptEvaluationCriteria]] = pydantic.Field(default=None)
+    """
+    Individual criteria that the agent should be evaluated against
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

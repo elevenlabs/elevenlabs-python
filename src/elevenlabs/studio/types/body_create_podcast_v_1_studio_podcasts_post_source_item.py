@@ -39,7 +39,8 @@ class BodyCreatePodcastV1StudioPodcastsPostSourceItem_Url(UncheckedBaseModel):
 
 BodyCreatePodcastV1StudioPodcastsPostSourceItem = typing_extensions.Annotated[
     typing.Union[
-        BodyCreatePodcastV1StudioPodcastsPostSourceItem_Text, BodyCreatePodcastV1StudioPodcastsPostSourceItem_Url
+        BodyCreatePodcastV1StudioPodcastsPostSourceItem_Text,
+        BodyCreatePodcastV1StudioPodcastsPostSourceItem_Url,
     ],
     UnionMetadata(discriminant="type"),
 ]

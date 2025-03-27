@@ -18,7 +18,9 @@ from ...core.serialization import convert_and_respect_annotation_metadata
 from ...types.delete_chapter_response_model import DeleteChapterResponseModel
 from ...types.convert_chapter_response_model import ConvertChapterResponseModel
 from ...types.chapter_snapshots_response import ChapterSnapshotsResponse
-from ...types.chapter_snapshot_extended_response_model import ChapterSnapshotExtendedResponseModel
+from ...types.chapter_snapshot_extended_response_model import (
+    ChapterSnapshotExtendedResponseModel,
+)
 from ...core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -30,7 +32,10 @@ class ChaptersClient:
         self._client_wrapper = client_wrapper
 
     def get_all(
-        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> GetChaptersResponse:
         """
         Returns a list of a Studio project's chapters.
@@ -61,6 +66,7 @@ class ChaptersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -132,6 +138,7 @@ class ChaptersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -168,7 +175,11 @@ class ChaptersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get(
-        self, project_id: str, chapter_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: str,
+        chapter_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ChapterWithContentResponseModel:
         """
         Returns information about a specific chapter.
@@ -203,6 +214,7 @@ class ChaptersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -278,11 +290,14 @@ class ChaptersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
                 "content": convert_and_respect_annotation_metadata(
-                    object_=content, annotation=ChapterContentInputModel, direction="write"
+                    object_=content,
+                    annotation=ChapterContentInputModel,
+                    direction="write",
                 ),
             },
             headers={
@@ -316,7 +331,11 @@ class ChaptersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete(
-        self, project_id: str, chapter_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: str,
+        chapter_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> DeleteChapterResponseModel:
         """
         Deletes a chapter.
@@ -351,6 +370,7 @@ class ChaptersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -379,7 +399,11 @@ class ChaptersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def convert(
-        self, project_id: str, chapter_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: str,
+        chapter_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ConvertChapterResponseModel:
         """
         Starts conversion of a specific chapter.
@@ -414,6 +438,7 @@ class ChaptersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/convert",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             request_options=request_options,
         )
@@ -442,7 +467,11 @@ class ChaptersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_all_snapshots(
-        self, project_id: str, chapter_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: str,
+        chapter_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ChapterSnapshotsResponse:
         """
         Gets information about all the snapshots of a chapter. Each snapshot can be downloaded as audio. Whenever a chapter is converted a snapshot will automatically be created.
@@ -477,6 +506,7 @@ class ChaptersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/snapshots",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -549,6 +579,7 @@ class ChaptersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/snapshots/{jsonable_encoder(chapter_snapshot_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -612,6 +643,7 @@ class ChaptersClient:
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/snapshots/{jsonable_encoder(chapter_snapshot_id)}/stream",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "convert_to_mpeg": convert_to_mpeg,
@@ -650,7 +682,10 @@ class AsyncChaptersClient:
         self._client_wrapper = client_wrapper
 
     async def get_all(
-        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> GetChaptersResponse:
         """
         Returns a list of a Studio project's chapters.
@@ -689,6 +724,7 @@ class AsyncChaptersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -768,6 +804,7 @@ class AsyncChaptersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -804,7 +841,11 @@ class AsyncChaptersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get(
-        self, project_id: str, chapter_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: str,
+        chapter_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ChapterWithContentResponseModel:
         """
         Returns information about a specific chapter.
@@ -847,6 +888,7 @@ class AsyncChaptersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -930,11 +972,14 @@ class AsyncChaptersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
                 "content": convert_and_respect_annotation_metadata(
-                    object_=content, annotation=ChapterContentInputModel, direction="write"
+                    object_=content,
+                    annotation=ChapterContentInputModel,
+                    direction="write",
                 ),
             },
             headers={
@@ -968,7 +1013,11 @@ class AsyncChaptersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete(
-        self, project_id: str, chapter_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: str,
+        chapter_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> DeleteChapterResponseModel:
         """
         Deletes a chapter.
@@ -1011,6 +1060,7 @@ class AsyncChaptersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -1039,7 +1089,11 @@ class AsyncChaptersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def convert(
-        self, project_id: str, chapter_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: str,
+        chapter_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ConvertChapterResponseModel:
         """
         Starts conversion of a specific chapter.
@@ -1082,6 +1136,7 @@ class AsyncChaptersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/convert",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             request_options=request_options,
         )
@@ -1110,7 +1165,11 @@ class AsyncChaptersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_all_snapshots(
-        self, project_id: str, chapter_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: str,
+        chapter_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ChapterSnapshotsResponse:
         """
         Gets information about all the snapshots of a chapter. Each snapshot can be downloaded as audio. Whenever a chapter is converted a snapshot will automatically be created.
@@ -1153,6 +1212,7 @@ class AsyncChaptersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/snapshots",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1233,6 +1293,7 @@ class AsyncChaptersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/snapshots/{jsonable_encoder(chapter_snapshot_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1296,6 +1357,7 @@ class AsyncChaptersClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/snapshots/{jsonable_encoder(chapter_snapshot_id)}/stream",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "convert_to_mpeg": convert_to_mpeg,

@@ -3,6 +3,7 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 import pydantic
+from .speaker_separation_response_model import SpeakerSeparationResponseModel
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -31,6 +32,12 @@ class VoiceSample(UncheckedBaseModel):
     """
     The hash of the sample file.
     """
+
+    duration_secs: typing.Optional[float] = None
+    remove_background_noise: typing.Optional[bool] = None
+    has_isolated_audio: typing.Optional[bool] = None
+    has_isolated_audio_preview: typing.Optional[bool] = None
+    speaker_separation: typing.Optional[SpeakerSeparationResponseModel] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

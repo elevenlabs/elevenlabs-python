@@ -148,6 +148,11 @@ class ProjectResponse(UncheckedBaseModel):
     The source type of the project.
     """
 
+    chapters_enabled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether chapters are enabled for the project.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
