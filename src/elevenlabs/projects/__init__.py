@@ -3,6 +3,7 @@
 from .types import (
     AddProjectV1ProjectsAddPostRequestApplyTextNormalization,
     AddProjectV1ProjectsAddPostRequestFiction,
+    AddProjectV1ProjectsAddPostRequestSourceType,
     AddProjectV1ProjectsAddPostRequestTargetAudience,
     BodyCreatePodcastV1ProjectsPodcastCreatePostDurationScale,
     BodyCreatePodcastV1ProjectsPodcastCreatePostMode,
@@ -18,6 +19,7 @@ from .types import (
 __all__ = [
     "AddProjectV1ProjectsAddPostRequestApplyTextNormalization",
     "AddProjectV1ProjectsAddPostRequestFiction",
+    "AddProjectV1ProjectsAddPostRequestSourceType",
     "AddProjectV1ProjectsAddPostRequestTargetAudience",
     "BodyCreatePodcastV1ProjectsPodcastCreatePostDurationScale",
     "BodyCreatePodcastV1ProjectsPodcastCreatePostMode",

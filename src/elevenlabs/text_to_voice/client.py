@@ -25,8 +25,8 @@ class TextToVoiceClient:
         self,
         *,
         voice_description: str,
-        text: str,
         output_format: typing.Optional[TextToVoiceCreatePreviewsRequestOutputFormat] = None,
+        text: typing.Optional[str] = OMIT,
         auto_generate_text: typing.Optional[bool] = OMIT,
         loudness: typing.Optional[float] = OMIT,
         quality: typing.Optional[float] = OMIT,
@@ -42,11 +42,11 @@ class TextToVoiceClient:
         voice_description : str
             Description to use for the created voice.
 
-        text : str
-            Text to generate, text length has to be between 100 and 1000.
-
         output_format : typing.Optional[TextToVoiceCreatePreviewsRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        text : typing.Optional[str]
+            Text to generate, text length has to be between 100 and 1000.
 
         auto_generate_text : typing.Optional[bool]
             Whether to automatically generate a text suitable for the voice description.
@@ -80,11 +80,11 @@ class TextToVoiceClient:
         )
         client.text_to_voice.create_previews(
             voice_description="A sassy squeaky mouse",
-            text="Every act of kindness, no matter how small, carries value and can make a difference, as no gesture of goodwill is ever wasted.",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/text-to-voice/create-previews",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "output_format": output_format,
@@ -134,7 +134,7 @@ class TextToVoiceClient:
         voice_name: str,
         voice_description: str,
         generated_voice_id: str,
-        labels: typing.Optional[typing.Dict[str, str]] = OMIT,
+        labels: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
         played_not_selected_voice_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Voice:
@@ -152,7 +152,7 @@ class TextToVoiceClient:
         generated_voice_id : str
             The generated_voice_id to create, call POST /v1/text-to-voice/create-previews and fetch the generated_voice_id from the response header if don't have one yet.
 
-        labels : typing.Optional[typing.Dict[str, str]]
+        labels : typing.Optional[typing.Dict[str, typing.Optional[str]]]
             Optional, metadata to add to the created voice. Defaults to None.
 
         played_not_selected_voice_ids : typing.Optional[typing.Sequence[str]]
@@ -181,6 +181,7 @@ class TextToVoiceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/text-to-voice/create-voice-from-preview",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "voice_name": voice_name,
@@ -228,8 +229,8 @@ class AsyncTextToVoiceClient:
         self,
         *,
         voice_description: str,
-        text: str,
         output_format: typing.Optional[TextToVoiceCreatePreviewsRequestOutputFormat] = None,
+        text: typing.Optional[str] = OMIT,
         auto_generate_text: typing.Optional[bool] = OMIT,
         loudness: typing.Optional[float] = OMIT,
         quality: typing.Optional[float] = OMIT,
@@ -245,11 +246,11 @@ class AsyncTextToVoiceClient:
         voice_description : str
             Description to use for the created voice.
 
-        text : str
-            Text to generate, text length has to be between 100 and 1000.
-
         output_format : typing.Optional[TextToVoiceCreatePreviewsRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        text : typing.Optional[str]
+            Text to generate, text length has to be between 100 and 1000.
 
         auto_generate_text : typing.Optional[bool]
             Whether to automatically generate a text suitable for the voice description.
@@ -288,7 +289,6 @@ class AsyncTextToVoiceClient:
         async def main() -> None:
             await client.text_to_voice.create_previews(
                 voice_description="A sassy squeaky mouse",
-                text="Every act of kindness, no matter how small, carries value and can make a difference, as no gesture of goodwill is ever wasted.",
             )
 
 
@@ -296,6 +296,7 @@ class AsyncTextToVoiceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/text-to-voice/create-previews",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "output_format": output_format,
@@ -345,7 +346,7 @@ class AsyncTextToVoiceClient:
         voice_name: str,
         voice_description: str,
         generated_voice_id: str,
-        labels: typing.Optional[typing.Dict[str, str]] = OMIT,
+        labels: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
         played_not_selected_voice_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Voice:
@@ -363,7 +364,7 @@ class AsyncTextToVoiceClient:
         generated_voice_id : str
             The generated_voice_id to create, call POST /v1/text-to-voice/create-previews and fetch the generated_voice_id from the response header if don't have one yet.
 
-        labels : typing.Optional[typing.Dict[str, str]]
+        labels : typing.Optional[typing.Dict[str, typing.Optional[str]]]
             Optional, metadata to add to the created voice. Defaults to None.
 
         played_not_selected_voice_ids : typing.Optional[typing.Sequence[str]]
@@ -400,6 +401,7 @@ class AsyncTextToVoiceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/text-to-voice/create-voice-from-preview",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "voice_name": voice_name,

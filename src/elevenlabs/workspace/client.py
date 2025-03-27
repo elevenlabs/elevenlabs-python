@@ -18,6 +18,11 @@ from .types.body_update_member_v_1_workspace_members_post_workspace_role import 
     BodyUpdateMemberV1WorkspaceMembersPostWorkspaceRole,
 )
 from ..types.update_workspace_member_response_model import UpdateWorkspaceMemberResponseModel
+from ..types.workspace_resource_type import WorkspaceResourceType
+from ..types.resource_metadata_response_model import ResourceMetadataResponseModel
+from .types.body_share_workspace_resource_v_1_workspace_resources_resource_id_share_post_role import (
+    BodyShareWorkspaceResourceV1WorkspaceResourcesResourceIdSharePostRole,
+)
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -37,7 +42,7 @@ class WorkspaceClient:
         Parameters
         ----------
         name : str
-            Name of the group to find.
+            Name of the target group.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -60,6 +65,7 @@ class WorkspaceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/workspace/groups/search",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "name": name,
@@ -126,6 +132,7 @@ class WorkspaceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/workspace/groups/{jsonable_encoder(group_id)}/members/remove",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,
@@ -196,6 +203,7 @@ class WorkspaceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/workspace/groups/{jsonable_encoder(group_id)}/members",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,
@@ -269,6 +277,7 @@ class WorkspaceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/workspace/invites/add",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,
@@ -343,6 +352,7 @@ class WorkspaceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/workspace/invites/add-bulk",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "emails": emails,
@@ -410,6 +420,7 @@ class WorkspaceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/workspace/invites",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             json={
                 "email": email,
@@ -487,6 +498,7 @@ class WorkspaceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/workspace/members",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,
@@ -523,6 +535,263 @@ class WorkspaceClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def get_resource(
+        self,
+        resource_id: str,
+        *,
+        resource_type: WorkspaceResourceType,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ResourceMetadataResponseModel:
+        """
+        Gets the metadata of a resource by ID.
+
+        Parameters
+        ----------
+        resource_id : str
+            The ID of the target resource.
+
+        resource_type : WorkspaceResourceType
+            Resource type of the target resource.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ResourceMetadataResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.workspace.get_resource(
+            resource_id="resource_id",
+            resource_type="voice",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/workspace/resources/{jsonable_encoder(resource_id)}",
+            base_url=self._client_wrapper.get_environment().base,
+            method="GET",
+            params={
+                "resource_type": resource_type,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ResourceMetadataResponseModel,
+                    construct_type(
+                        type_=ResourceMetadataResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def share_workspace_resource(
+        self,
+        resource_id: str,
+        *,
+        role: BodyShareWorkspaceResourceV1WorkspaceResourcesResourceIdSharePostRole,
+        resource_type: WorkspaceResourceType,
+        user_email: typing.Optional[str] = OMIT,
+        group_id: typing.Optional[str] = OMIT,
+        workspace_api_key_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Optional[typing.Any]:
+        """
+        Grants a role on a workspace resource to a user or a group. It overrides any existing role this user/group/workspace api key has on the resource. To target a user, pass only the user email. The user must be in your workspace. To target a group, pass only the group id. To target a workspace api key, pass the api key id. You must have admin access to the resource to share it.
+
+        Parameters
+        ----------
+        resource_id : str
+            The ID of the target resource.
+
+        role : BodyShareWorkspaceResourceV1WorkspaceResourcesResourceIdSharePostRole
+            Role to update the target principal with.
+
+        resource_type : WorkspaceResourceType
+            Resource type of the target resource.
+
+        user_email : typing.Optional[str]
+            The email of the user
+
+        group_id : typing.Optional[str]
+            The ID of the target group. To target the permissions principals have by default on this resource, use the value 'default'.
+
+        workspace_api_key_id : typing.Optional[str]
+            The ID of the target workspace API key. This isn't the same as the key itself that would you pass in the header for authentication. Workspace admins can find this in the workspace settings UI.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.workspace.share_workspace_resource(
+            resource_id="resource_id",
+            role="admin",
+            resource_type="voice",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/workspace/resources/{jsonable_encoder(resource_id)}/share",
+            base_url=self._client_wrapper.get_environment().base,
+            method="POST",
+            json={
+                "role": role,
+                "resource_type": resource_type,
+                "user_email": user_email,
+                "group_id": group_id,
+                "workspace_api_key_id": workspace_api_key_id,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def unshare_workspace_resource(
+        self,
+        resource_id: str,
+        *,
+        resource_type: WorkspaceResourceType,
+        user_email: typing.Optional[str] = OMIT,
+        group_id: typing.Optional[str] = OMIT,
+        workspace_api_key_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Optional[typing.Any]:
+        """
+        Removes any existing role on a workspace resource from a user or a group. To target a user, pass only the user email. The user must be in your workspace. To target a group, pass only the group id. To target a workspace api key, pass the api key id. You must have admin access to the resource to unshare it. You cannot remove permissions from the user who created the resource.
+
+        Parameters
+        ----------
+        resource_id : str
+            The ID of the target resource.
+
+        resource_type : WorkspaceResourceType
+            Resource type of the target resource.
+
+        user_email : typing.Optional[str]
+            The email of the user
+
+        group_id : typing.Optional[str]
+            The ID of the target group. To target the permissions principals have by default on this resource, use the value 'default'.
+
+        workspace_api_key_id : typing.Optional[str]
+            The ID of the target workspace API key. This isn't the same as the key itself that would you pass in the header for authentication. Workspace admins can find this in the workspace settings UI.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.workspace.unshare_workspace_resource(
+            resource_id="resource_id",
+            resource_type="voice",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/workspace/resources/{jsonable_encoder(resource_id)}/unshare",
+            base_url=self._client_wrapper.get_environment().base,
+            method="POST",
+            json={
+                "resource_type": resource_type,
+                "user_email": user_email,
+                "group_id": group_id,
+                "workspace_api_key_id": workspace_api_key_id,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
 
 class AsyncWorkspaceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -537,7 +806,7 @@ class AsyncWorkspaceClient:
         Parameters
         ----------
         name : str
-            Name of the group to find.
+            Name of the target group.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -568,6 +837,7 @@ class AsyncWorkspaceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/workspace/groups/search",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "name": name,
@@ -642,6 +912,7 @@ class AsyncWorkspaceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/workspace/groups/{jsonable_encoder(group_id)}/members/remove",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,
@@ -720,6 +991,7 @@ class AsyncWorkspaceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/workspace/groups/{jsonable_encoder(group_id)}/members",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,
@@ -801,6 +1073,7 @@ class AsyncWorkspaceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/workspace/invites/add",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,
@@ -883,6 +1156,7 @@ class AsyncWorkspaceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/workspace/invites/add-bulk",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "emails": emails,
@@ -958,6 +1232,7 @@ class AsyncWorkspaceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/workspace/invites",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             json={
                 "email": email,
@@ -1043,6 +1318,7 @@ class AsyncWorkspaceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/workspace/members",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,
@@ -1061,6 +1337,287 @@ class AsyncWorkspaceClient:
                     UpdateWorkspaceMemberResponseModel,
                     construct_type(
                         type_=UpdateWorkspaceMemberResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_resource(
+        self,
+        resource_id: str,
+        *,
+        resource_type: WorkspaceResourceType,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ResourceMetadataResponseModel:
+        """
+        Gets the metadata of a resource by ID.
+
+        Parameters
+        ----------
+        resource_id : str
+            The ID of the target resource.
+
+        resource_type : WorkspaceResourceType
+            Resource type of the target resource.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ResourceMetadataResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.workspace.get_resource(
+                resource_id="resource_id",
+                resource_type="voice",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/workspace/resources/{jsonable_encoder(resource_id)}",
+            base_url=self._client_wrapper.get_environment().base,
+            method="GET",
+            params={
+                "resource_type": resource_type,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ResourceMetadataResponseModel,
+                    construct_type(
+                        type_=ResourceMetadataResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def share_workspace_resource(
+        self,
+        resource_id: str,
+        *,
+        role: BodyShareWorkspaceResourceV1WorkspaceResourcesResourceIdSharePostRole,
+        resource_type: WorkspaceResourceType,
+        user_email: typing.Optional[str] = OMIT,
+        group_id: typing.Optional[str] = OMIT,
+        workspace_api_key_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Optional[typing.Any]:
+        """
+        Grants a role on a workspace resource to a user or a group. It overrides any existing role this user/group/workspace api key has on the resource. To target a user, pass only the user email. The user must be in your workspace. To target a group, pass only the group id. To target a workspace api key, pass the api key id. You must have admin access to the resource to share it.
+
+        Parameters
+        ----------
+        resource_id : str
+            The ID of the target resource.
+
+        role : BodyShareWorkspaceResourceV1WorkspaceResourcesResourceIdSharePostRole
+            Role to update the target principal with.
+
+        resource_type : WorkspaceResourceType
+            Resource type of the target resource.
+
+        user_email : typing.Optional[str]
+            The email of the user
+
+        group_id : typing.Optional[str]
+            The ID of the target group. To target the permissions principals have by default on this resource, use the value 'default'.
+
+        workspace_api_key_id : typing.Optional[str]
+            The ID of the target workspace API key. This isn't the same as the key itself that would you pass in the header for authentication. Workspace admins can find this in the workspace settings UI.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.workspace.share_workspace_resource(
+                resource_id="resource_id",
+                role="admin",
+                resource_type="voice",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/workspace/resources/{jsonable_encoder(resource_id)}/share",
+            base_url=self._client_wrapper.get_environment().base,
+            method="POST",
+            json={
+                "role": role,
+                "resource_type": resource_type,
+                "user_email": user_email,
+                "group_id": group_id,
+                "workspace_api_key_id": workspace_api_key_id,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def unshare_workspace_resource(
+        self,
+        resource_id: str,
+        *,
+        resource_type: WorkspaceResourceType,
+        user_email: typing.Optional[str] = OMIT,
+        group_id: typing.Optional[str] = OMIT,
+        workspace_api_key_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Optional[typing.Any]:
+        """
+        Removes any existing role on a workspace resource from a user or a group. To target a user, pass only the user email. The user must be in your workspace. To target a group, pass only the group id. To target a workspace api key, pass the api key id. You must have admin access to the resource to unshare it. You cannot remove permissions from the user who created the resource.
+
+        Parameters
+        ----------
+        resource_id : str
+            The ID of the target resource.
+
+        resource_type : WorkspaceResourceType
+            Resource type of the target resource.
+
+        user_email : typing.Optional[str]
+            The email of the user
+
+        group_id : typing.Optional[str]
+            The ID of the target group. To target the permissions principals have by default on this resource, use the value 'default'.
+
+        workspace_api_key_id : typing.Optional[str]
+            The ID of the target workspace API key. This isn't the same as the key itself that would you pass in the header for authentication. Workspace admins can find this in the workspace settings UI.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.workspace.unshare_workspace_resource(
+                resource_id="resource_id",
+                resource_type="voice",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/workspace/resources/{jsonable_encoder(resource_id)}/unshare",
+            base_url=self._client_wrapper.get_environment().base,
+            method="POST",
+            json={
+                "resource_type": resource_type,
+                "user_email": user_email,
+                "group_id": group_id,
+                "workspace_api_key_id": workspace_api_key_id,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
                         object_=_response.json(),
                     ),
                 )

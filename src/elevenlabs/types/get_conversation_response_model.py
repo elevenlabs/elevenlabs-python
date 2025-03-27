@@ -6,7 +6,7 @@ import typing
 from .conversation_history_transcript_common_model import ConversationHistoryTranscriptCommonModel
 from .conversation_history_metadata_common_model import ConversationHistoryMetadataCommonModel
 from .conversation_history_analysis_common_model import ConversationHistoryAnalysisCommonModel
-from .conversation_initiation_client_data import ConversationInitiationClientData
+from .conversation_initiation_client_data_request_output import ConversationInitiationClientDataRequestOutput
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
@@ -18,7 +18,7 @@ class GetConversationResponseModel(UncheckedBaseModel):
     transcript: typing.List[ConversationHistoryTranscriptCommonModel]
     metadata: ConversationHistoryMetadataCommonModel
     analysis: typing.Optional[ConversationHistoryAnalysisCommonModel] = None
-    conversation_initiation_client_data: typing.Optional[ConversationInitiationClientData] = None
+    conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestOutput] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

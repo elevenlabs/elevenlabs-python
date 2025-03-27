@@ -2,4 +2,4 @@
 
 import typing
 
-TelephonyProvider = typing.Literal["twilio"]
+TelephonyProvider = typing.Union[typing.Literal["twilio", "sip_trunk"], typing.Any]

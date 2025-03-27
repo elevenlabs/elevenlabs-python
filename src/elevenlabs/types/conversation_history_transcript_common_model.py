@@ -6,6 +6,8 @@ import typing
 from .conversation_history_transcript_tool_call_common_model import ConversationHistoryTranscriptToolCallCommonModel
 from .conversation_history_transcript_tool_result_common_model import ConversationHistoryTranscriptToolResultCommonModel
 from .user_feedback import UserFeedback
+from .conversation_turn_metrics import ConversationTurnMetrics
+from .rag_retrieval_info import RagRetrievalInfo
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
@@ -16,8 +18,10 @@ class ConversationHistoryTranscriptCommonModel(UncheckedBaseModel):
     tool_calls: typing.Optional[typing.List[ConversationHistoryTranscriptToolCallCommonModel]] = None
     tool_results: typing.Optional[typing.List[ConversationHistoryTranscriptToolResultCommonModel]] = None
     feedback: typing.Optional[UserFeedback] = None
+    llm_override: typing.Optional[str] = None
     time_in_call_secs: int
-    conversation_turn_metrics: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
+    conversation_turn_metrics: typing.Optional[ConversationTurnMetrics] = None
+    rag_retrieval_info: typing.Optional[RagRetrievalInfo] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -9,6 +9,7 @@ from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.http_validation_error import HttpValidationError
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
+from ..types.get_voices_v_2_response_model import GetVoicesV2ResponseModel
 from ..types.voice_settings import VoiceSettings
 from ..core.jsonable_encoder import jsonable_encoder
 from ..types.voice import Voice
@@ -62,6 +63,7 @@ class VoicesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/voices",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "show_legacy": show_legacy,
@@ -74,6 +76,112 @@ class VoicesClient:
                     GetVoicesResponse,
                     construct_type(
                         type_=GetVoicesResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def search(
+        self,
+        *,
+        next_page_token: typing.Optional[str] = None,
+        page_size: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
+        sort: typing.Optional[str] = None,
+        sort_direction: typing.Optional[str] = None,
+        voice_type: typing.Optional[str] = None,
+        category: typing.Optional[str] = None,
+        fine_tuning_state: typing.Optional[str] = None,
+        include_total_count: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetVoicesV2ResponseModel:
+        """
+        Gets a list of all available voices for a user with search, filtering and pagination.
+
+        Parameters
+        ----------
+        next_page_token : typing.Optional[str]
+            The next page token to use for pagination. Returned from the previous request.
+
+        page_size : typing.Optional[int]
+            How many voices to return at maximum. Can not exceed 100, defaults to 10. Page 0 may include more voices due to default voices being included.
+
+        search : typing.Optional[str]
+            Search term to filter voices by. Searches in name, description, labels, category.
+
+        sort : typing.Optional[str]
+            Which field to sort by, one of 'created_at_unix' or 'name'. 'created_at_unix' may not be available for older voices.
+
+        sort_direction : typing.Optional[str]
+            Which direction to sort the voices in. 'asc' or 'desc'.
+
+        voice_type : typing.Optional[str]
+            Type of the voice to filter by. One of 'personal', 'community', 'default', 'workspace'.
+
+        category : typing.Optional[str]
+            Category of the voice to filter by. One of 'premade', 'cloned', 'generated', 'professional'
+
+        fine_tuning_state : typing.Optional[str]
+            State of the voice's fine tuning to filter by. Applicable only to professional voices clones. One of 'draft', 'not_verified', 'not_started', 'queued', 'fine_tuning', 'fine_tuned', 'failed', 'delayed'
+
+        include_total_count : typing.Optional[bool]
+            Whether to include the total count of voices found in the response. Incurs a performance cost.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetVoicesV2ResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.voices.search(
+            include_total_count=True,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v2/voices",
+            base_url=self._client_wrapper.get_environment().base,
+            method="GET",
+            params={
+                "next_page_token": next_page_token,
+                "page_size": page_size,
+                "search": search,
+                "sort": sort,
+                "sort_direction": sort_direction,
+                "voice_type": voice_type,
+                "category": category,
+                "fine_tuning_state": fine_tuning_state,
+                "include_total_count": include_total_count,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetVoicesV2ResponseModel,
+                    construct_type(
+                        type_=GetVoicesV2ResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -117,6 +225,7 @@ class VoicesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/voices/settings/default",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -164,6 +273,7 @@ class VoicesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}/settings",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -230,6 +340,7 @@ class VoicesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "with_settings": with_settings,
@@ -292,6 +403,7 @@ class VoicesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -358,6 +470,7 @@ class VoicesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}/settings/edit",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json=convert_and_respect_annotation_metadata(object_=request, annotation=VoiceSettings, direction="write"),
             request_options=request_options,
@@ -438,6 +551,7 @@ class VoicesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/voices/add",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -531,6 +645,7 @@ class VoicesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}/edit",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -613,6 +728,7 @@ class VoicesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/add/{jsonable_encoder(public_user_id)}/{jsonable_encoder(voice_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "new_name": new_name,
@@ -656,6 +772,7 @@ class VoicesClient:
         age: typing.Optional[str] = None,
         accent: typing.Optional[str] = None,
         language: typing.Optional[str] = None,
+        locale: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         use_cases: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         descriptives: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -689,6 +806,9 @@ class VoicesClient:
 
         language : typing.Optional[str]
             Language used for filtering
+
+        locale : typing.Optional[str]
+            Locale used for filtering
 
         search : typing.Optional[str]
             Search term used for filtering
@@ -739,6 +859,7 @@ class VoicesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/shared-voices",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "page_size": page_size,
@@ -747,6 +868,7 @@ class VoicesClient:
                 "age": age,
                 "accent": accent,
                 "language": language,
+                "locale": locale,
                 "search": search,
                 "use_cases": use_cases,
                 "descriptives": descriptives,
@@ -824,6 +946,7 @@ class VoicesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/similar-voices",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "similarity_threshold": similarity_threshold,
@@ -891,6 +1014,7 @@ class VoicesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"profile/{jsonable_encoder(handle)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -961,6 +1085,7 @@ class AsyncVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/voices",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "show_legacy": show_legacy,
@@ -973,6 +1098,120 @@ class AsyncVoicesClient:
                     GetVoicesResponse,
                     construct_type(
                         type_=GetVoicesResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def search(
+        self,
+        *,
+        next_page_token: typing.Optional[str] = None,
+        page_size: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
+        sort: typing.Optional[str] = None,
+        sort_direction: typing.Optional[str] = None,
+        voice_type: typing.Optional[str] = None,
+        category: typing.Optional[str] = None,
+        fine_tuning_state: typing.Optional[str] = None,
+        include_total_count: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetVoicesV2ResponseModel:
+        """
+        Gets a list of all available voices for a user with search, filtering and pagination.
+
+        Parameters
+        ----------
+        next_page_token : typing.Optional[str]
+            The next page token to use for pagination. Returned from the previous request.
+
+        page_size : typing.Optional[int]
+            How many voices to return at maximum. Can not exceed 100, defaults to 10. Page 0 may include more voices due to default voices being included.
+
+        search : typing.Optional[str]
+            Search term to filter voices by. Searches in name, description, labels, category.
+
+        sort : typing.Optional[str]
+            Which field to sort by, one of 'created_at_unix' or 'name'. 'created_at_unix' may not be available for older voices.
+
+        sort_direction : typing.Optional[str]
+            Which direction to sort the voices in. 'asc' or 'desc'.
+
+        voice_type : typing.Optional[str]
+            Type of the voice to filter by. One of 'personal', 'community', 'default', 'workspace'.
+
+        category : typing.Optional[str]
+            Category of the voice to filter by. One of 'premade', 'cloned', 'generated', 'professional'
+
+        fine_tuning_state : typing.Optional[str]
+            State of the voice's fine tuning to filter by. Applicable only to professional voices clones. One of 'draft', 'not_verified', 'not_started', 'queued', 'fine_tuning', 'fine_tuned', 'failed', 'delayed'
+
+        include_total_count : typing.Optional[bool]
+            Whether to include the total count of voices found in the response. Incurs a performance cost.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetVoicesV2ResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.voices.search(
+                include_total_count=True,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v2/voices",
+            base_url=self._client_wrapper.get_environment().base,
+            method="GET",
+            params={
+                "next_page_token": next_page_token,
+                "page_size": page_size,
+                "search": search,
+                "sort": sort,
+                "sort_direction": sort_direction,
+                "voice_type": voice_type,
+                "category": category,
+                "fine_tuning_state": fine_tuning_state,
+                "include_total_count": include_total_count,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetVoicesV2ResponseModel,
+                    construct_type(
+                        type_=GetVoicesV2ResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1024,6 +1263,7 @@ class AsyncVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/voices/settings/default",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1081,6 +1321,7 @@ class AsyncVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}/settings",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1155,6 +1396,7 @@ class AsyncVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "with_settings": with_settings,
@@ -1225,6 +1467,7 @@ class AsyncVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -1299,6 +1542,7 @@ class AsyncVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}/settings/edit",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json=convert_and_respect_annotation_metadata(object_=request, annotation=VoiceSettings, direction="write"),
             request_options=request_options,
@@ -1387,6 +1631,7 @@ class AsyncVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/voices/add",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -1488,6 +1733,7 @@ class AsyncVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}/edit",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -1578,6 +1824,7 @@ class AsyncVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/add/{jsonable_encoder(public_user_id)}/{jsonable_encoder(voice_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "new_name": new_name,
@@ -1621,6 +1868,7 @@ class AsyncVoicesClient:
         age: typing.Optional[str] = None,
         accent: typing.Optional[str] = None,
         language: typing.Optional[str] = None,
+        locale: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
         use_cases: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         descriptives: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -1654,6 +1902,9 @@ class AsyncVoicesClient:
 
         language : typing.Optional[str]
             Language used for filtering
+
+        locale : typing.Optional[str]
+            Locale used for filtering
 
         search : typing.Optional[str]
             Search term used for filtering
@@ -1712,6 +1963,7 @@ class AsyncVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/shared-voices",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "page_size": page_size,
@@ -1720,6 +1972,7 @@ class AsyncVoicesClient:
                 "age": age,
                 "accent": accent,
                 "language": language,
+                "locale": locale,
                 "search": search,
                 "use_cases": use_cases,
                 "descriptives": descriptives,
@@ -1805,6 +2058,7 @@ class AsyncVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/similar-voices",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "similarity_threshold": similarity_threshold,
@@ -1880,6 +2134,7 @@ class AsyncVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"profile/{jsonable_encoder(handle)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )

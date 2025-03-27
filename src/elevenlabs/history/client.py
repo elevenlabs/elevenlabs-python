@@ -73,6 +73,7 @@ class HistoryClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/history",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "page_size": page_size,
@@ -139,6 +140,7 @@ class HistoryClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/history/{jsonable_encoder(history_item_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -198,6 +200,7 @@ class HistoryClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/history/{jsonable_encoder(history_item_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -257,6 +260,7 @@ class HistoryClient:
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/history/{jsonable_encoder(history_item_id)}/audio",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         ) as _response:
@@ -321,6 +325,7 @@ class HistoryClient:
         """
         with self._client_wrapper.httpx_client.stream(
             "v1/history/download",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "history_item_ids": history_item_ids,
@@ -426,6 +431,7 @@ class AsyncHistoryClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/history",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "page_size": page_size,
@@ -500,6 +506,7 @@ class AsyncHistoryClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/history/{jsonable_encoder(history_item_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -567,6 +574,7 @@ class AsyncHistoryClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/history/{jsonable_encoder(history_item_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -634,6 +642,7 @@ class AsyncHistoryClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/history/{jsonable_encoder(history_item_id)}/audio",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         ) as _response:
@@ -706,6 +715,7 @@ class AsyncHistoryClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             "v1/history/download",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "history_item_ids": history_item_ids,

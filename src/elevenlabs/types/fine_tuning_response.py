@@ -40,12 +40,12 @@ class FineTuningResponse(UncheckedBaseModel):
     The language of the fine-tuning process.
     """
 
-    progress: typing.Optional[typing.Dict[str, float]] = pydantic.Field(default=None)
+    progress: typing.Optional[typing.Dict[str, typing.Optional[float]]] = pydantic.Field(default=None)
     """
     The progress of the fine-tuning process.
     """
 
-    message: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
+    message: typing.Optional[typing.Dict[str, typing.Optional[str]]] = pydantic.Field(default=None)
     """
     The message of the fine-tuning process.
     """

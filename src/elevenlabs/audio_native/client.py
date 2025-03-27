@@ -102,6 +102,7 @@ class AudioNativeClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/audio-native",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -178,6 +179,7 @@ class AudioNativeClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/audio-native/{jsonable_encoder(project_id)}/settings",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -252,6 +254,7 @@ class AudioNativeClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/audio-native/{jsonable_encoder(project_id)}/content",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "auto_convert": auto_convert,
@@ -379,6 +382,7 @@ class AsyncAudioNativeClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/audio-native",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -463,6 +467,7 @@ class AsyncAudioNativeClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/audio-native/{jsonable_encoder(project_id)}/settings",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -545,6 +550,7 @@ class AsyncAudioNativeClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/audio-native/{jsonable_encoder(project_id)}/content",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "auto_convert": auto_convert,

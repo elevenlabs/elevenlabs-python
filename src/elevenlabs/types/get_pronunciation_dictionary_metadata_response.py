@@ -17,6 +17,11 @@ class GetPronunciationDictionaryMetadataResponse(UncheckedBaseModel):
     The ID of the latest version of the pronunciation dictionary.
     """
 
+    latest_version_rules_num: int = pydantic.Field()
+    """
+    The number of rules in the latest version of the pronunciation dictionary.
+    """
+
     name: str = pydantic.Field()
     """
     The name of the pronunciation dictionary.
@@ -30,6 +35,11 @@ class GetPronunciationDictionaryMetadataResponse(UncheckedBaseModel):
     creation_time_unix: int = pydantic.Field()
     """
     The creation time of the pronunciation dictionary in Unix timestamp.
+    """
+
+    archived_time_unix: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The archive time of the pronunciation dictionary in Unix timestamp.
     """
 
     description: typing.Optional[str] = pydantic.Field(default=None)

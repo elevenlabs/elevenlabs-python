@@ -39,7 +39,7 @@ class Subscription(UncheckedBaseModel):
     Whether the user is allowed to extend their character limit.
     """
 
-    next_character_count_reset_unix: int = pydantic.Field()
+    next_character_count_reset_unix: typing.Optional[int] = pydantic.Field(default=None)
     """
     The Unix timestamp of the next character count reset.
     """

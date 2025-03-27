@@ -4,6 +4,7 @@ from .add_project_v_1_projects_add_post_request_apply_text_normalization import 
     AddProjectV1ProjectsAddPostRequestApplyTextNormalization,
 )
 from .add_project_v_1_projects_add_post_request_fiction import AddProjectV1ProjectsAddPostRequestFiction
+from .add_project_v_1_projects_add_post_request_source_type import AddProjectV1ProjectsAddPostRequestSourceType
 from .add_project_v_1_projects_add_post_request_target_audience import AddProjectV1ProjectsAddPostRequestTargetAudience
 from .body_create_podcast_v_1_projects_podcast_create_post_duration_scale import (
     BodyCreatePodcastV1ProjectsPodcastCreatePostDurationScale,
@@ -28,6 +29,7 @@ from .body_create_podcast_v_1_projects_podcast_create_post_source_item import (
 __all__ = [
     "AddProjectV1ProjectsAddPostRequestApplyTextNormalization",
     "AddProjectV1ProjectsAddPostRequestFiction",
+    "AddProjectV1ProjectsAddPostRequestSourceType",
     "AddProjectV1ProjectsAddPostRequestTargetAudience",
     "BodyCreatePodcastV1ProjectsPodcastCreatePostDurationScale",
     "BodyCreatePodcastV1ProjectsPodcastCreatePostMode",

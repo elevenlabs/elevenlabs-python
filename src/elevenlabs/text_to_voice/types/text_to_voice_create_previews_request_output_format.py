@@ -16,6 +16,11 @@ TextToVoiceCreatePreviewsRequestOutputFormat = typing.Union[
         "pcm_24000",
         "pcm_44100",
         "ulaw_8000",
+        "opus_48000_32",
+        "opus_48000_64",
+        "opus_48000_96",
+        "opus_48000_128",
+        "opus_48000_192",
     ],
     typing.Any,
 ]

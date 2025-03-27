@@ -2,13 +2,20 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class AgentCallLimits(UncheckedBaseModel):
-    agent_concurrency_limit: typing.Optional[int] = None
-    daily_limit: typing.Optional[int] = None
+    agent_concurrency_limit: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The maximum number of concurrent conversations. -1 indicates that there is no maximum
+    """
+
+    daily_limit: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The maximum number of conversations per day
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

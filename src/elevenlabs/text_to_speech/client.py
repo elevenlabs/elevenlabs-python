@@ -61,6 +61,7 @@ class TextToSpeechClient:
         apply_text_normalization: typing.Optional[
             BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization
         ] = OMIT,
+        apply_language_text_normalization: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -121,7 +122,10 @@ class TextToSpeechClient:
             If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
 
         apply_text_normalization : typing.Optional[BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization]
-            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' model.
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' or 'eleven_flash_v2_5' models.
+
+        apply_language_text_normalization : typing.Optional[bool]
+            This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -147,6 +151,7 @@ class TextToSpeechClient:
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/text-to-speech/{jsonable_encoder(voice_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -172,6 +177,7 @@ class TextToSpeechClient:
                 "next_request_ids": next_request_ids,
                 "use_pvc_as_ivc": use_pvc_as_ivc,
                 "apply_text_normalization": apply_text_normalization,
+                "apply_language_text_normalization": apply_language_text_normalization,
             },
             headers={
                 "content-type": "application/json",
@@ -224,6 +230,7 @@ class TextToSpeechClient:
         apply_text_normalization: typing.Optional[
             BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization
         ] = OMIT,
+        apply_language_text_normalization: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AudioWithTimestampsResponseModel:
         """
@@ -284,7 +291,10 @@ class TextToSpeechClient:
             If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
 
         apply_text_normalization : typing.Optional[BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization]
-            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' model.
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' or 'eleven_flash_v2_5' models.
+
+        apply_language_text_normalization : typing.Optional[bool]
+            This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -308,6 +318,7 @@ class TextToSpeechClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/text-to-speech/{jsonable_encoder(voice_id)}/with-timestamps",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -333,6 +344,7 @@ class TextToSpeechClient:
                 "next_request_ids": next_request_ids,
                 "use_pvc_as_ivc": use_pvc_as_ivc,
                 "apply_text_normalization": apply_text_normalization,
+                "apply_language_text_normalization": apply_language_text_normalization,
             },
             headers={
                 "content-type": "application/json",
@@ -387,6 +399,7 @@ class TextToSpeechClient:
         apply_text_normalization: typing.Optional[
             BodyTextToSpeechStreamingV1TextToSpeechVoiceIdStreamPostApplyTextNormalization
         ] = OMIT,
+        apply_language_text_normalization: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -447,7 +460,10 @@ class TextToSpeechClient:
             If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
 
         apply_text_normalization : typing.Optional[BodyTextToSpeechStreamingV1TextToSpeechVoiceIdStreamPostApplyTextNormalization]
-            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' model.
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' or 'eleven_flash_v2_5' models.
+
+        apply_language_text_normalization : typing.Optional[bool]
+            This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -473,6 +489,7 @@ class TextToSpeechClient:
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -498,6 +515,7 @@ class TextToSpeechClient:
                 "next_request_ids": next_request_ids,
                 "use_pvc_as_ivc": use_pvc_as_ivc,
                 "apply_text_normalization": apply_text_normalization,
+                "apply_language_text_normalization": apply_language_text_normalization,
             },
             headers={
                 "content-type": "application/json",
@@ -550,6 +568,7 @@ class TextToSpeechClient:
         apply_text_normalization: typing.Optional[
             BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization
         ] = OMIT,
+        apply_language_text_normalization: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[StreamingAudioChunkWithTimestampsResponseModel]:
         """
@@ -610,7 +629,10 @@ class TextToSpeechClient:
             If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
 
         apply_text_normalization : typing.Optional[BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization]
-            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' model.
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' or 'eleven_flash_v2_5' models.
+
+        apply_language_text_normalization : typing.Optional[bool]
+            This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -638,6 +660,7 @@ class TextToSpeechClient:
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream/with-timestamps",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -663,6 +686,7 @@ class TextToSpeechClient:
                 "next_request_ids": next_request_ids,
                 "use_pvc_as_ivc": use_pvc_as_ivc,
                 "apply_text_normalization": apply_text_normalization,
+                "apply_language_text_normalization": apply_language_text_normalization,
             },
             headers={
                 "content-type": "application/json",
@@ -683,7 +707,7 @@ class TextToSpeechClient:
                                     object_=json.loads(_text),
                                 ),
                             )
-                        except:
+                        except Exception:
                             pass
                     return
                 _response.read()
@@ -730,6 +754,7 @@ class AsyncTextToSpeechClient:
         apply_text_normalization: typing.Optional[
             BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization
         ] = OMIT,
+        apply_language_text_normalization: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -790,7 +815,10 @@ class AsyncTextToSpeechClient:
             If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
 
         apply_text_normalization : typing.Optional[BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization]
-            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' model.
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' or 'eleven_flash_v2_5' models.
+
+        apply_language_text_normalization : typing.Optional[bool]
+            This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -824,6 +852,7 @@ class AsyncTextToSpeechClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/text-to-speech/{jsonable_encoder(voice_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -849,6 +878,7 @@ class AsyncTextToSpeechClient:
                 "next_request_ids": next_request_ids,
                 "use_pvc_as_ivc": use_pvc_as_ivc,
                 "apply_text_normalization": apply_text_normalization,
+                "apply_language_text_normalization": apply_language_text_normalization,
             },
             headers={
                 "content-type": "application/json",
@@ -901,6 +931,7 @@ class AsyncTextToSpeechClient:
         apply_text_normalization: typing.Optional[
             BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization
         ] = OMIT,
+        apply_language_text_normalization: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AudioWithTimestampsResponseModel:
         """
@@ -961,7 +992,10 @@ class AsyncTextToSpeechClient:
             If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
 
         apply_text_normalization : typing.Optional[BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization]
-            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' model.
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' or 'eleven_flash_v2_5' models.
+
+        apply_language_text_normalization : typing.Optional[bool]
+            This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -993,6 +1027,7 @@ class AsyncTextToSpeechClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/text-to-speech/{jsonable_encoder(voice_id)}/with-timestamps",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -1018,6 +1053,7 @@ class AsyncTextToSpeechClient:
                 "next_request_ids": next_request_ids,
                 "use_pvc_as_ivc": use_pvc_as_ivc,
                 "apply_text_normalization": apply_text_normalization,
+                "apply_language_text_normalization": apply_language_text_normalization,
             },
             headers={
                 "content-type": "application/json",
@@ -1072,6 +1108,7 @@ class AsyncTextToSpeechClient:
         apply_text_normalization: typing.Optional[
             BodyTextToSpeechStreamingV1TextToSpeechVoiceIdStreamPostApplyTextNormalization
         ] = OMIT,
+        apply_language_text_normalization: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -1132,7 +1169,10 @@ class AsyncTextToSpeechClient:
             If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
 
         apply_text_normalization : typing.Optional[BodyTextToSpeechStreamingV1TextToSpeechVoiceIdStreamPostApplyTextNormalization]
-            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' model.
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' or 'eleven_flash_v2_5' models.
+
+        apply_language_text_normalization : typing.Optional[bool]
+            This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -1166,6 +1206,7 @@ class AsyncTextToSpeechClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -1191,6 +1232,7 @@ class AsyncTextToSpeechClient:
                 "next_request_ids": next_request_ids,
                 "use_pvc_as_ivc": use_pvc_as_ivc,
                 "apply_text_normalization": apply_text_normalization,
+                "apply_language_text_normalization": apply_language_text_normalization,
             },
             headers={
                 "content-type": "application/json",
@@ -1243,6 +1285,7 @@ class AsyncTextToSpeechClient:
         apply_text_normalization: typing.Optional[
             BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization
         ] = OMIT,
+        apply_language_text_normalization: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[StreamingAudioChunkWithTimestampsResponseModel]:
         """
@@ -1303,7 +1346,10 @@ class AsyncTextToSpeechClient:
             If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
 
         apply_text_normalization : typing.Optional[BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization]
-            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' model.
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' or 'eleven_flash_v2_5' models.
+
+        apply_language_text_normalization : typing.Optional[bool]
+            This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1339,6 +1385,7 @@ class AsyncTextToSpeechClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream/with-timestamps",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -1364,6 +1411,7 @@ class AsyncTextToSpeechClient:
                 "next_request_ids": next_request_ids,
                 "use_pvc_as_ivc": use_pvc_as_ivc,
                 "apply_text_normalization": apply_text_normalization,
+                "apply_language_text_normalization": apply_language_text_normalization,
             },
             headers={
                 "content-type": "application/json",
@@ -1384,7 +1432,7 @@ class AsyncTextToSpeechClient:
                                     object_=json.loads(_text),
                                 ),
                             )
-                        except:
+                        except Exception:
                             pass
                     return
                 await _response.aread()

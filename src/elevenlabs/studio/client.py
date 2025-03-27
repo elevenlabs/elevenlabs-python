@@ -68,13 +68,11 @@ class StudioClient:
             ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
             ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
 
-
         duration_scale : typing.Optional[BodyCreatePodcastV1StudioPodcastsPostDurationScale]
             Duration of the generated podcast. Must be one of:
             short - produces podcasts shorter than 3 minutes.
             default - produces podcasts roughly between 3-7 minutes.
             long - prodces podcasts longer than 7 minutes.
-
 
         language : typing.Optional[str]
             An optional language of the Studio project. Two-letter language code (ISO 639-1).
@@ -122,6 +120,7 @@ class StudioClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/studio/podcasts",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "model_id": model_id,
@@ -208,13 +207,11 @@ class AsyncStudioClient:
             ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
             ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
 
-
         duration_scale : typing.Optional[BodyCreatePodcastV1StudioPodcastsPostDurationScale]
             Duration of the generated podcast. Must be one of:
             short - produces podcasts shorter than 3 minutes.
             default - produces podcasts roughly between 3-7 minutes.
             long - prodces podcasts longer than 7 minutes.
-
 
         language : typing.Optional[str]
             An optional language of the Studio project. Two-letter language code (ISO 639-1).
@@ -270,6 +267,7 @@ class AsyncStudioClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/studio/podcasts",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "model_id": model_id,

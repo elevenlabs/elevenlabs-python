@@ -152,6 +152,11 @@ class ProjectExtendedResponseModel(UncheckedBaseModel):
     The source type of the project.
     """
 
+    chapters_enabled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether chapters are enabled for the project.
+    """
+
     quality_preset: ProjectExtendedResponseModelQualityPreset = pydantic.Field()
     """
     The quality preset level of the project.
