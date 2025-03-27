@@ -73,6 +73,7 @@ class HistoryClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/history",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "page_size": page_size,
@@ -108,7 +109,10 @@ class HistoryClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get(
-        self, history_item_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        history_item_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> SpeechHistoryItemResponse:
         """
         Retrieves a history item.
@@ -139,6 +143,7 @@ class HistoryClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/history/{jsonable_encoder(history_item_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -167,7 +172,10 @@ class HistoryClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete(
-        self, history_item_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        history_item_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> DeleteHistoryItemResponse:
         """
         Delete a history item by its ID
@@ -198,6 +206,7 @@ class HistoryClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/history/{jsonable_encoder(history_item_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -226,7 +235,10 @@ class HistoryClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_audio(
-        self, history_item_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        history_item_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
         Returns the audio of an history item.
@@ -257,6 +269,7 @@ class HistoryClient:
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/history/{jsonable_encoder(history_item_id)}/audio",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         ) as _response:
@@ -321,6 +334,7 @@ class HistoryClient:
         """
         with self._client_wrapper.httpx_client.stream(
             "v1/history/download",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "history_item_ids": history_item_ids,
@@ -426,6 +440,7 @@ class AsyncHistoryClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/history",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "page_size": page_size,
@@ -461,7 +476,10 @@ class AsyncHistoryClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get(
-        self, history_item_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        history_item_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> SpeechHistoryItemResponse:
         """
         Retrieves a history item.
@@ -500,6 +518,7 @@ class AsyncHistoryClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/history/{jsonable_encoder(history_item_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -528,7 +547,10 @@ class AsyncHistoryClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete(
-        self, history_item_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        history_item_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> DeleteHistoryItemResponse:
         """
         Delete a history item by its ID
@@ -567,6 +589,7 @@ class AsyncHistoryClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/history/{jsonable_encoder(history_item_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -595,7 +618,10 @@ class AsyncHistoryClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_audio(
-        self, history_item_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        history_item_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
         Returns the audio of an history item.
@@ -634,6 +660,7 @@ class AsyncHistoryClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/history/{jsonable_encoder(history_item_id)}/audio",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         ) as _response:
@@ -706,6 +733,7 @@ class AsyncHistoryClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             "v1/history/download",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "history_item_ids": history_item_ids,

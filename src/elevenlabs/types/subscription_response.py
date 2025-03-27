@@ -5,8 +5,12 @@ import pydantic
 import typing
 from .subscription_response_model_currency import SubscriptionResponseModelCurrency
 from .subscription_status import SubscriptionStatus
-from .subscription_response_model_billing_period import SubscriptionResponseModelBillingPeriod
-from .subscription_response_model_character_refresh_period import SubscriptionResponseModelCharacterRefreshPeriod
+from .subscription_response_model_billing_period import (
+    SubscriptionResponseModelBillingPeriod,
+)
+from .subscription_response_model_character_refresh_period import (
+    SubscriptionResponseModelCharacterRefreshPeriod,
+)
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 

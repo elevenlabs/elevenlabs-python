@@ -3,16 +3,26 @@
 import typing
 from ..core.client_wrapper import SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.conversation_signed_url_response_model import ConversationSignedUrlResponseModel
+from ..types.conversation_signed_url_response_model import (
+    ConversationSignedUrlResponseModel,
+)
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.http_validation_error import HttpValidationError
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from ..types.conversational_config_api_model import ConversationalConfigApiModel
-from ..types.agent_platform_settings_request_model import AgentPlatformSettingsRequestModel
-from ..types.create_agent_response_model import CreateAgentResponseModel
+from ..types.conversation_initiation_client_data_request_input import (
+    ConversationInitiationClientDataRequestInput,
+)
+from ..types.twilio_outbound_call_response import TwilioOutboundCallResponse
 from ..core.serialization import convert_and_respect_annotation_metadata
+from ..types.conversational_config_api_model_input import (
+    ConversationalConfigApiModelInput,
+)
+from ..types.agent_platform_settings_request_model import (
+    AgentPlatformSettingsRequestModel,
+)
+from ..types.create_agent_response_model import CreateAgentResponseModel
 from ..types.get_agent_response_model import GetAgentResponseModel
 from ..core.jsonable_encoder import jsonable_encoder
 from ..types.get_agent_embed_response_model import GetAgentEmbedResponseModel
@@ -22,22 +32,42 @@ from ..types.post_agent_avatar_response_model import PostAgentAvatarResponseMode
 from ..types.add_agent_secret_response_model import AddAgentSecretResponseModel
 from ..types.get_agents_page_response_model import GetAgentsPageResponseModel
 from ..types.evaluation_success_result import EvaluationSuccessResult
-from ..types.get_conversations_page_response_model import GetConversationsPageResponseModel
+from ..types.get_conversations_page_response_model import (
+    GetConversationsPageResponseModel,
+)
 from ..types.get_conversation_response_model import GetConversationResponseModel
 from ..types.user_feedback_score import UserFeedbackScore
+from .types.conversational_ai_create_phone_number_request_body import (
+    ConversationalAiCreatePhoneNumberRequestBody,
+)
 from ..types.create_phone_number_response_model import CreatePhoneNumberResponseModel
 from ..types.get_phone_number_response_model import GetPhoneNumberResponseModel
-from ..types.get_knowledge_base_list_response_model import GetKnowledgeBaseListResponseModel
+from ..types.get_knowledge_base_list_response_model import (
+    GetKnowledgeBaseListResponseModel,
+)
 from ..types.add_knowledge_base_response_model import AddKnowledgeBaseResponseModel
 from ..types.embedding_model_enum import EmbeddingModelEnum
 from ..types.rag_index_response_model import RagIndexResponseModel
-from ..types.get_knowledge_base_response_model import GetKnowledgeBaseResponseModel
-from ..types.get_knowledge_base_dependent_agents_response_model import GetKnowledgeBaseDependentAgentsResponseModel
+from .types.conversational_ai_get_knowledge_base_document_by_id_response import (
+    ConversationalAiGetKnowledgeBaseDocumentByIdResponse,
+)
+from ..types.get_knowledge_base_dependent_agents_response_model import (
+    GetKnowledgeBaseDependentAgentsResponseModel,
+)
+from ..types.knowledge_base_document_chunk_response_model import (
+    KnowledgeBaseDocumentChunkResponseModel,
+)
 from ..types.get_conv_ai_settings_response_model import GetConvAiSettingsResponseModel
-from ..types.conversation_initiation_client_data_webhook import ConversationInitiationClientDataWebhook
+from ..types.conversation_initiation_client_data_webhook import (
+    ConversationInitiationClientDataWebhook,
+)
 from ..types.conv_ai_webhooks import ConvAiWebhooks
-from ..types.get_workspace_secrets_response_model import GetWorkspaceSecretsResponseModel
-from ..types.post_workspace_secret_response_model import PostWorkspaceSecretResponseModel
+from ..types.get_workspace_secrets_response_model import (
+    GetWorkspaceSecretsResponseModel,
+)
+from ..types.post_workspace_secret_response_model import (
+    PostWorkspaceSecretResponseModel,
+)
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -80,6 +110,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/conversation/get_signed_url",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "agent_id": agent_id,
@@ -110,10 +141,97 @@ class ConversationalAiClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def twilio_outbound_call(
+        self,
+        *,
+        agent_id: str,
+        agent_phone_number_id: str,
+        to_number: str,
+        conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> TwilioOutboundCallResponse:
+        """
+        Handle an outbound call via Twilio
+
+        Parameters
+        ----------
+        agent_id : str
+
+        agent_phone_number_id : str
+
+        to_number : str
+
+        conversation_initiation_client_data : typing.Optional[ConversationInitiationClientDataRequestInput]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TwilioOutboundCallResponse
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.twilio_outbound_call(
+            agent_id="agent_id",
+            agent_phone_number_id="agent_phone_number_id",
+            to_number="to_number",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/convai/twilio/outbound_call",
+            base_url=self._client_wrapper.get_environment().base,
+            method="POST",
+            json={
+                "agent_id": agent_id,
+                "agent_phone_number_id": agent_phone_number_id,
+                "to_number": to_number,
+                "conversation_initiation_client_data": convert_and_respect_annotation_metadata(
+                    object_=conversation_initiation_client_data,
+                    annotation=ConversationInitiationClientDataRequestInput,
+                    direction="write",
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    TwilioOutboundCallResponse,
+                    construct_type(
+                        type_=TwilioOutboundCallResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     def create_agent(
         self,
         *,
-        conversation_config: ConversationalConfigApiModel,
+        conversation_config: ConversationalConfigApiModelInput,
         use_tool_ids: typing.Optional[bool] = None,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
@@ -124,7 +242,7 @@ class ConversationalAiClient:
 
         Parameters
         ----------
-        conversation_config : ConversationalConfigApiModel
+        conversation_config : ConversationalConfigApiModelInput
             Conversation configuration for an agent
 
         use_tool_ids : typing.Optional[bool]
@@ -146,27 +264,32 @@ class ConversationalAiClient:
 
         Examples
         --------
-        from elevenlabs import ConversationalConfigApiModel, ElevenLabs
+        from elevenlabs import ConversationalConfigApiModelInput, ElevenLabs
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.create_agent(
-            conversation_config=ConversationalConfigApiModel(),
+            conversation_config=ConversationalConfigApiModelInput(),
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/agents/create",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "use_tool_ids": use_tool_ids,
             },
             json={
                 "conversation_config": convert_and_respect_annotation_metadata(
-                    object_=conversation_config, annotation=ConversationalConfigApiModel, direction="write"
+                    object_=conversation_config,
+                    annotation=ConversationalConfigApiModelInput,
+                    direction="write",
                 ),
                 "platform_settings": convert_and_respect_annotation_metadata(
-                    object_=platform_settings, annotation=AgentPlatformSettingsRequestModel, direction="write"
+                    object_=platform_settings,
+                    annotation=AgentPlatformSettingsRequestModel,
+                    direction="write",
                 ),
                 "name": name,
             },
@@ -232,6 +355,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -259,9 +383,7 @@ class ConversationalAiClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete_agent(
-        self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
+    def delete_agent(self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete an agent
 
@@ -275,8 +397,7 @@ class ConversationalAiClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
-            Successful Response
+        None
 
         Examples
         --------
@@ -291,18 +412,13 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.Optional[typing.Any],
-                    construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
+                return
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     typing.cast(
@@ -369,6 +485,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             params={
                 "use_tool_ids": use_tool_ids,
@@ -447,6 +564,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/widget",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "conversation_signature": conversation_signature,
@@ -509,6 +627,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/link",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -537,7 +656,11 @@ class ConversationalAiClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def post_agent_avatar(
-        self, agent_id: str, *, avatar_file: core.File, request_options: typing.Optional[RequestOptions] = None
+        self,
+        agent_id: str,
+        *,
+        avatar_file: core.File,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> PostAgentAvatarResponseModel:
         """
         Sets the avatar for an agent displayed in the widget
@@ -571,6 +694,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/avatar",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={},
             files={
@@ -604,7 +728,12 @@ class ConversationalAiClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def add_agent_secret(
-        self, agent_id: str, *, name: str, secret_value: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        agent_id: str,
+        *,
+        name: str,
+        secret_value: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AddAgentSecretResponseModel:
         """
         Uploads a file or reference a webpage for the agent to use as part of it's knowledge base
@@ -643,6 +772,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/add-secret",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -687,7 +817,7 @@ class ConversationalAiClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetAgentsPageResponseModel:
         """
-        Returns a page of your agents and their metadata.
+        Returns a list of your agents and their metadata.
 
         Parameters
         ----------
@@ -719,6 +849,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/agents",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -792,12 +923,11 @@ class ConversationalAiClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.conversational_ai.get_conversations(
-            agent_id="21m00Tcm4TlvDq8ikWAM",
-        )
+        client.conversational_ai.get_conversations()
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/conversations",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -832,7 +962,10 @@ class ConversationalAiClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_conversation(
-        self, conversation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        conversation_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationResponseModel:
         """
         Get the details of a particular conversation
@@ -863,6 +996,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -891,7 +1025,10 @@ class ConversationalAiClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete_conversation(
-        self, conversation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        conversation_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
         Delete a particular conversation
@@ -922,6 +1059,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -950,7 +1088,10 @@ class ConversationalAiClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_conversation_audio(
-        self, conversation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        conversation_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Get the audio recording of a particular conversation
@@ -980,6 +1121,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}/audio",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1041,6 +1183,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}/feedback",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "feedback": feedback,
@@ -1078,28 +1221,15 @@ class ConversationalAiClient:
     def create_phone_number(
         self,
         *,
-        phone_number: str,
-        label: str,
-        sid: str,
-        token: str,
+        request: ConversationalAiCreatePhoneNumberRequestBody,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreatePhoneNumberResponseModel:
         """
-        Import Phone Number from Twilio configuration
+        Import Phone Number from provider configuration (Twilio or SIP trunk)
 
         Parameters
         ----------
-        phone_number : str
-            Phone number
-
-        label : str
-            Label for the phone number
-
-        sid : str
-            Twilio Account SID
-
-        token : str
-            Twilio Auth Token
+        request : ConversationalAiCreatePhoneNumberRequestBody
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1111,31 +1241,29 @@ class ConversationalAiClient:
 
         Examples
         --------
-        from elevenlabs import ElevenLabs
+        from elevenlabs import CreateTwilioPhoneNumberRequest, ElevenLabs
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.create_phone_number(
-            phone_number="phone_number",
-            label="label",
-            sid="sid",
-            token="token",
+            request=CreateTwilioPhoneNumberRequest(
+                phone_number="phone_number",
+                label="label",
+                sid="sid",
+                token="token",
+            ),
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/phone-numbers/create",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
-            json={
-                "phone_number": phone_number,
-                "label": label,
-                "sid": sid,
-                "token": token,
-                "provider": "twilio",
-            },
-            headers={
-                "content-type": "application/json",
-            },
+            json=convert_and_respect_annotation_metadata(
+                object_=request,
+                annotation=ConversationalAiCreatePhoneNumberRequestBody,
+                direction="write",
+            ),
             request_options=request_options,
             omit=OMIT,
         )
@@ -1164,7 +1292,10 @@ class ConversationalAiClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_phone_number(
-        self, phone_number_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        phone_number_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> GetPhoneNumberResponseModel:
         """
         Retrieve Phone Number details by ID
@@ -1195,6 +1326,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1223,7 +1355,10 @@ class ConversationalAiClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete_phone_number(
-        self, phone_number_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        phone_number_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
         Delete Phone Number by ID
@@ -1254,6 +1389,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -1319,6 +1455,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "agent_id": agent_id,
@@ -1380,6 +1517,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/phone-numbers/",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1456,6 +1594,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/knowledge-base",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -1531,6 +1670,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/knowledge-base",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -1571,7 +1711,6 @@ class ConversationalAiClient:
         documentation_id: str,
         *,
         model: EmbeddingModelEnum,
-        force_reindex: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RagIndexResponseModel:
         """
@@ -1583,9 +1722,6 @@ class ConversationalAiClient:
             The id of a document from the knowledge base. This is returned on document addition.
 
         model : EmbeddingModelEnum
-
-        force_reindex : typing.Optional[bool]
-            In case the document is indexed and for some reason you want to reindex it, set this param as true.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1609,10 +1745,8 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/rag-index",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
-            params={
-                "force_reindex": force_reindex,
-            },
             json={
                 "model": model,
             },
@@ -1647,8 +1781,11 @@ class ConversationalAiClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_knowledge_base_document_by_id(
-        self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetKnowledgeBaseResponseModel:
+        self,
+        documentation_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ConversationalAiGetKnowledgeBaseDocumentByIdResponse:
         """
         Get details about a specific documentation making up the agent's knowledge base
 
@@ -1662,7 +1799,7 @@ class ConversationalAiClient:
 
         Returns
         -------
-        GetKnowledgeBaseResponseModel
+        ConversationalAiGetKnowledgeBaseDocumentByIdResponse
             Successful Response
 
         Examples
@@ -1678,15 +1815,16 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetKnowledgeBaseResponseModel,
+                    ConversationalAiGetKnowledgeBaseDocumentByIdResponse,
                     construct_type(
-                        type_=GetKnowledgeBaseResponseModel,  # type: ignore
+                        type_=ConversationalAiGetKnowledgeBaseDocumentByIdResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1706,7 +1844,10 @@ class ConversationalAiClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete_knowledge_base_document(
-        self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        documentation_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
         Delete a document from the knowledge base
@@ -1737,6 +1878,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -1807,6 +1949,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/dependent-agents",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -1820,6 +1963,130 @@ class ConversationalAiClient:
                     GetKnowledgeBaseDependentAgentsResponseModel,
                     construct_type(
                         type_=GetKnowledgeBaseDependentAgentsResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get_knowledge_base_document_content(
+        self,
+        documentation_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Get the entire content of a document from the knowledge base
+
+        Parameters
+        ----------
+        documentation_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.get_knowledge_base_document_content(
+            documentation_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/content",
+            base_url=self._client_wrapper.get_environment().base,
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get_knowledge_base_document_part_by_id(
+        self,
+        documentation_id: str,
+        chunk_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> KnowledgeBaseDocumentChunkResponseModel:
+        """
+        Get details about a specific documentation part used by RAG.
+
+        Parameters
+        ----------
+        documentation_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        chunk_id : str
+            The id of a document RAG chunk from the knowledge base.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        KnowledgeBaseDocumentChunkResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.get_knowledge_base_document_part_by_id(
+            documentation_id="21m00Tcm4TlvDq8ikWAM",
+            chunk_id="chunk_id",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/chunk/{jsonable_encoder(chunk_id)}",
+            base_url=self._client_wrapper.get_environment().base,
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    KnowledgeBaseDocumentChunkResponseModel,
+                    construct_type(
+                        type_=KnowledgeBaseDocumentChunkResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1865,6 +2132,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/settings",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1927,6 +2195,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/settings",
+            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "conversation_initiation_client_data_webhook": convert_and_respect_annotation_metadata(
@@ -1995,6 +2264,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/secrets",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -2023,7 +2293,11 @@ class ConversationalAiClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def create_secret(
-        self, *, name: str, value: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        name: str,
+        value: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> PostWorkspaceSecretResponseModel:
         """
         Create a new secret for the workspace
@@ -2056,6 +2330,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/secrets",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -2120,6 +2395,7 @@ class ConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/secrets/{jsonable_encoder(secret_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -2186,6 +2462,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/conversation/get_signed_url",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "agent_id": agent_id,
@@ -2216,10 +2493,105 @@ class AsyncConversationalAiClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    async def twilio_outbound_call(
+        self,
+        *,
+        agent_id: str,
+        agent_phone_number_id: str,
+        to_number: str,
+        conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> TwilioOutboundCallResponse:
+        """
+        Handle an outbound call via Twilio
+
+        Parameters
+        ----------
+        agent_id : str
+
+        agent_phone_number_id : str
+
+        to_number : str
+
+        conversation_initiation_client_data : typing.Optional[ConversationInitiationClientDataRequestInput]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TwilioOutboundCallResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.twilio_outbound_call(
+                agent_id="agent_id",
+                agent_phone_number_id="agent_phone_number_id",
+                to_number="to_number",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/convai/twilio/outbound_call",
+            base_url=self._client_wrapper.get_environment().base,
+            method="POST",
+            json={
+                "agent_id": agent_id,
+                "agent_phone_number_id": agent_phone_number_id,
+                "to_number": to_number,
+                "conversation_initiation_client_data": convert_and_respect_annotation_metadata(
+                    object_=conversation_initiation_client_data,
+                    annotation=ConversationInitiationClientDataRequestInput,
+                    direction="write",
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    TwilioOutboundCallResponse,
+                    construct_type(
+                        type_=TwilioOutboundCallResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     async def create_agent(
         self,
         *,
-        conversation_config: ConversationalConfigApiModel,
+        conversation_config: ConversationalConfigApiModelInput,
         use_tool_ids: typing.Optional[bool] = None,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
@@ -2230,7 +2602,7 @@ class AsyncConversationalAiClient:
 
         Parameters
         ----------
-        conversation_config : ConversationalConfigApiModel
+        conversation_config : ConversationalConfigApiModelInput
             Conversation configuration for an agent
 
         use_tool_ids : typing.Optional[bool]
@@ -2254,7 +2626,7 @@ class AsyncConversationalAiClient:
         --------
         import asyncio
 
-        from elevenlabs import AsyncElevenLabs, ConversationalConfigApiModel
+        from elevenlabs import AsyncElevenLabs, ConversationalConfigApiModelInput
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
@@ -2263,7 +2635,7 @@ class AsyncConversationalAiClient:
 
         async def main() -> None:
             await client.conversational_ai.create_agent(
-                conversation_config=ConversationalConfigApiModel(),
+                conversation_config=ConversationalConfigApiModelInput(),
             )
 
 
@@ -2271,16 +2643,21 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/agents/create",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "use_tool_ids": use_tool_ids,
             },
             json={
                 "conversation_config": convert_and_respect_annotation_metadata(
-                    object_=conversation_config, annotation=ConversationalConfigApiModel, direction="write"
+                    object_=conversation_config,
+                    annotation=ConversationalConfigApiModelInput,
+                    direction="write",
                 ),
                 "platform_settings": convert_and_respect_annotation_metadata(
-                    object_=platform_settings, annotation=AgentPlatformSettingsRequestModel, direction="write"
+                    object_=platform_settings,
+                    annotation=AgentPlatformSettingsRequestModel,
+                    direction="write",
                 ),
                 "name": name,
             },
@@ -2354,6 +2731,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -2381,9 +2759,7 @@ class AsyncConversationalAiClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete_agent(
-        self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
+    async def delete_agent(self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete an agent
 
@@ -2397,8 +2773,7 @@ class AsyncConversationalAiClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
-            Successful Response
+        None
 
         Examples
         --------
@@ -2421,18 +2796,13 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.Optional[typing.Any],
-                    construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
+                return
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     typing.cast(
@@ -2507,6 +2877,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             params={
                 "use_tool_ids": use_tool_ids,
@@ -2593,6 +2964,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/widget",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "conversation_signature": conversation_signature,
@@ -2663,6 +3035,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/link",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -2691,7 +3064,11 @@ class AsyncConversationalAiClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def post_agent_avatar(
-        self, agent_id: str, *, avatar_file: core.File, request_options: typing.Optional[RequestOptions] = None
+        self,
+        agent_id: str,
+        *,
+        avatar_file: core.File,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> PostAgentAvatarResponseModel:
         """
         Sets the avatar for an agent displayed in the widget
@@ -2733,6 +3110,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/avatar",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={},
             files={
@@ -2766,7 +3144,12 @@ class AsyncConversationalAiClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def add_agent_secret(
-        self, agent_id: str, *, name: str, secret_value: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        agent_id: str,
+        *,
+        name: str,
+        secret_value: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AddAgentSecretResponseModel:
         """
         Uploads a file or reference a webpage for the agent to use as part of it's knowledge base
@@ -2813,6 +3196,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/add-secret",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -2857,7 +3241,7 @@ class AsyncConversationalAiClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetAgentsPageResponseModel:
         """
-        Returns a page of your agents and their metadata.
+        Returns a list of your agents and their metadata.
 
         Parameters
         ----------
@@ -2897,6 +3281,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/agents",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -2975,15 +3360,14 @@ class AsyncConversationalAiClient:
 
 
         async def main() -> None:
-            await client.conversational_ai.get_conversations(
-                agent_id="21m00Tcm4TlvDq8ikWAM",
-            )
+            await client.conversational_ai.get_conversations()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/conversations",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -3018,7 +3402,10 @@ class AsyncConversationalAiClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_conversation(
-        self, conversation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        conversation_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationResponseModel:
         """
         Get the details of a particular conversation
@@ -3057,6 +3444,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -3085,7 +3473,10 @@ class AsyncConversationalAiClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete_conversation(
-        self, conversation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        conversation_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
         Delete a particular conversation
@@ -3124,6 +3515,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -3152,7 +3544,10 @@ class AsyncConversationalAiClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_conversation_audio(
-        self, conversation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        conversation_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Get the audio recording of a particular conversation
@@ -3190,6 +3585,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}/audio",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -3259,6 +3655,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}/feedback",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "feedback": feedback,
@@ -3296,28 +3693,15 @@ class AsyncConversationalAiClient:
     async def create_phone_number(
         self,
         *,
-        phone_number: str,
-        label: str,
-        sid: str,
-        token: str,
+        request: ConversationalAiCreatePhoneNumberRequestBody,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreatePhoneNumberResponseModel:
         """
-        Import Phone Number from Twilio configuration
+        Import Phone Number from provider configuration (Twilio or SIP trunk)
 
         Parameters
         ----------
-        phone_number : str
-            Phone number
-
-        label : str
-            Label for the phone number
-
-        sid : str
-            Twilio Account SID
-
-        token : str
-            Twilio Auth Token
+        request : ConversationalAiCreatePhoneNumberRequestBody
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -3331,7 +3715,7 @@ class AsyncConversationalAiClient:
         --------
         import asyncio
 
-        from elevenlabs import AsyncElevenLabs
+        from elevenlabs import AsyncElevenLabs, CreateTwilioPhoneNumberRequest
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
@@ -3340,10 +3724,12 @@ class AsyncConversationalAiClient:
 
         async def main() -> None:
             await client.conversational_ai.create_phone_number(
-                phone_number="phone_number",
-                label="label",
-                sid="sid",
-                token="token",
+                request=CreateTwilioPhoneNumberRequest(
+                    phone_number="phone_number",
+                    label="label",
+                    sid="sid",
+                    token="token",
+                ),
             )
 
 
@@ -3351,17 +3737,13 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/phone-numbers/create",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
-            json={
-                "phone_number": phone_number,
-                "label": label,
-                "sid": sid,
-                "token": token,
-                "provider": "twilio",
-            },
-            headers={
-                "content-type": "application/json",
-            },
+            json=convert_and_respect_annotation_metadata(
+                object_=request,
+                annotation=ConversationalAiCreatePhoneNumberRequestBody,
+                direction="write",
+            ),
             request_options=request_options,
             omit=OMIT,
         )
@@ -3390,7 +3772,10 @@ class AsyncConversationalAiClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_phone_number(
-        self, phone_number_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        phone_number_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> GetPhoneNumberResponseModel:
         """
         Retrieve Phone Number details by ID
@@ -3429,6 +3814,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -3457,7 +3843,10 @@ class AsyncConversationalAiClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete_phone_number(
-        self, phone_number_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        phone_number_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
         Delete Phone Number by ID
@@ -3496,6 +3885,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -3569,6 +3959,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "agent_id": agent_id,
@@ -3638,6 +4029,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/phone-numbers/",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -3722,6 +4114,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/knowledge-base",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -3805,6 +4198,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/knowledge-base",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -3845,7 +4239,6 @@ class AsyncConversationalAiClient:
         documentation_id: str,
         *,
         model: EmbeddingModelEnum,
-        force_reindex: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RagIndexResponseModel:
         """
@@ -3857,9 +4250,6 @@ class AsyncConversationalAiClient:
             The id of a document from the knowledge base. This is returned on document addition.
 
         model : EmbeddingModelEnum
-
-        force_reindex : typing.Optional[bool]
-            In case the document is indexed and for some reason you want to reindex it, set this param as true.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -3891,10 +4281,8 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/rag-index",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
-            params={
-                "force_reindex": force_reindex,
-            },
             json={
                 "model": model,
             },
@@ -3929,8 +4317,11 @@ class AsyncConversationalAiClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_knowledge_base_document_by_id(
-        self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetKnowledgeBaseResponseModel:
+        self,
+        documentation_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ConversationalAiGetKnowledgeBaseDocumentByIdResponse:
         """
         Get details about a specific documentation making up the agent's knowledge base
 
@@ -3944,7 +4335,7 @@ class AsyncConversationalAiClient:
 
         Returns
         -------
-        GetKnowledgeBaseResponseModel
+        ConversationalAiGetKnowledgeBaseDocumentByIdResponse
             Successful Response
 
         Examples
@@ -3968,15 +4359,16 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetKnowledgeBaseResponseModel,
+                    ConversationalAiGetKnowledgeBaseDocumentByIdResponse,
                     construct_type(
-                        type_=GetKnowledgeBaseResponseModel,  # type: ignore
+                        type_=ConversationalAiGetKnowledgeBaseDocumentByIdResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -3996,7 +4388,10 @@ class AsyncConversationalAiClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete_knowledge_base_document(
-        self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        documentation_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
         Delete a document from the knowledge base
@@ -4035,6 +4430,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -4113,6 +4509,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/dependent-agents",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -4126,6 +4523,146 @@ class AsyncConversationalAiClient:
                     GetKnowledgeBaseDependentAgentsResponseModel,
                     construct_type(
                         type_=GetKnowledgeBaseDependentAgentsResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_knowledge_base_document_content(
+        self,
+        documentation_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Get the entire content of a document from the knowledge base
+
+        Parameters
+        ----------
+        documentation_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.get_knowledge_base_document_content(
+                documentation_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/content",
+            base_url=self._client_wrapper.get_environment().base,
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_knowledge_base_document_part_by_id(
+        self,
+        documentation_id: str,
+        chunk_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> KnowledgeBaseDocumentChunkResponseModel:
+        """
+        Get details about a specific documentation part used by RAG.
+
+        Parameters
+        ----------
+        documentation_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        chunk_id : str
+            The id of a document RAG chunk from the knowledge base.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        KnowledgeBaseDocumentChunkResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.get_knowledge_base_document_part_by_id(
+                documentation_id="21m00Tcm4TlvDq8ikWAM",
+                chunk_id="chunk_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/chunk/{jsonable_encoder(chunk_id)}",
+            base_url=self._client_wrapper.get_environment().base,
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    KnowledgeBaseDocumentChunkResponseModel,
+                    construct_type(
+                        type_=KnowledgeBaseDocumentChunkResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -4179,6 +4716,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/settings",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -4249,6 +4787,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/settings",
+            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "conversation_initiation_client_data_webhook": convert_and_respect_annotation_metadata(
@@ -4325,6 +4864,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/secrets",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -4353,7 +4893,11 @@ class AsyncConversationalAiClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def create_secret(
-        self, *, name: str, value: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        name: str,
+        value: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> PostWorkspaceSecretResponseModel:
         """
         Create a new secret for the workspace
@@ -4394,6 +4938,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/secrets",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -4466,6 +5011,7 @@ class AsyncConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/secrets/{jsonable_encoder(secret_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )

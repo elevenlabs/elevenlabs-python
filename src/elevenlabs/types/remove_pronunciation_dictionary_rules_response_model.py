@@ -17,6 +17,11 @@ class RemovePronunciationDictionaryRulesResponseModel(UncheckedBaseModel):
     The version ID of the pronunciation dictionary.
     """
 
+    version_rules_num: int = pydantic.Field()
+    """
+    The number of rules in the version of the pronunciation dictionary.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

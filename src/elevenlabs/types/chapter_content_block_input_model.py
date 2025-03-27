@@ -2,7 +2,9 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .chapter_content_paragraph_tts_node_input_model import ChapterContentParagraphTtsNodeInputModel
+from .chapter_content_paragraph_tts_node_input_model import (
+    ChapterContentParagraphTtsNodeInputModel,
+)
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 

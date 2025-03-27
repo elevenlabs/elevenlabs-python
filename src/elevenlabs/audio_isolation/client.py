@@ -20,7 +20,10 @@ class AudioIsolationClient:
         self._client_wrapper = client_wrapper
 
     def audio_isolation(
-        self, *, audio: core.File, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        audio: core.File,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
         Removes background noise from audio
@@ -40,6 +43,7 @@ class AudioIsolationClient:
         """
         with self._client_wrapper.httpx_client.stream(
             "v1/audio-isolation",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={},
             files={
@@ -71,7 +75,10 @@ class AudioIsolationClient:
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def audio_isolation_stream(
-        self, *, audio: core.File, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        audio: core.File,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
         Removes background noise from audio and streams the result
@@ -91,6 +98,7 @@ class AudioIsolationClient:
         """
         with self._client_wrapper.httpx_client.stream(
             "v1/audio-isolation/stream",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={},
             files={
@@ -127,7 +135,10 @@ class AsyncAudioIsolationClient:
         self._client_wrapper = client_wrapper
 
     async def audio_isolation(
-        self, *, audio: core.File, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        audio: core.File,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
         Removes background noise from audio
@@ -147,6 +158,7 @@ class AsyncAudioIsolationClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             "v1/audio-isolation",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={},
             files={
@@ -178,7 +190,10 @@ class AsyncAudioIsolationClient:
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def audio_isolation_stream(
-        self, *, audio: core.File, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        audio: core.File,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
         Removes background noise from audio and streams the result
@@ -198,6 +213,7 @@ class AsyncAudioIsolationClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             "v1/audio-isolation/stream",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={},
             files={

@@ -2,7 +2,9 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .chapter_content_block_response_model_nodes_item import ChapterContentBlockResponseModelNodesItem
+from .chapter_content_block_response_model_nodes_item import (
+    ChapterContentBlockResponseModelNodesItem,
+)
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 

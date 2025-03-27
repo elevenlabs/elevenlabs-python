@@ -9,7 +9,7 @@ import typing
 class CreatePhoneNumberResponseModel(UncheckedBaseModel):
     phone_number_id: str = pydantic.Field()
     """
-    Phone entity id
+    Phone entity ID
     """
 
     if IS_PYDANTIC_V2:

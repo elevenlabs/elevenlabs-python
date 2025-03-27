@@ -14,7 +14,7 @@ class GetPhoneNumberResponseModel(UncheckedBaseModel):
     Phone number
     """
 
-    provider: TelephonyProvider = pydantic.Field(default="twilio")
+    provider: TelephonyProvider = pydantic.Field()
     """
     Phone provider
     """
@@ -24,8 +24,15 @@ class GetPhoneNumberResponseModel(UncheckedBaseModel):
     Label for the phone number
     """
 
-    phone_number_id: str
-    assigned_agent: typing.Optional[PhoneNumberAgentInfo] = None
+    phone_number_id: str = pydantic.Field()
+    """
+    The ID of the phone number
+    """
+
+    assigned_agent: typing.Optional[PhoneNumberAgentInfo] = pydantic.Field(default=None)
+    """
+    The agent that is assigned to the phone number
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

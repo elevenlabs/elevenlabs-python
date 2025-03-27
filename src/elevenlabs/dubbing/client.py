@@ -17,14 +17,15 @@ from ..types.segment_delete_response import SegmentDeleteResponse
 from ..types.segment_transcription_response import SegmentTranscriptionResponse
 from ..types.segment_translation_response import SegmentTranslationResponse
 from ..types.segment_dub_response import SegmentDubResponse
-from .. import core
 from ..types.do_dubbing_response import DoDubbingResponse
 from ..types.dubbing_metadata_response import DubbingMetadataResponse
 from ..types.delete_dubbing_response_model import DeleteDubbingResponseModel
 from ..errors.forbidden_error import ForbiddenError
 from ..errors.not_found_error import NotFoundError
 from ..errors.too_early_error import TooEarlyError
-from .types.dubbing_get_transcript_for_dub_request_format_type import DubbingGetTranscriptForDubRequestFormatType
+from .types.dubbing_get_transcript_for_dub_request_format_type import (
+    DubbingGetTranscriptForDubRequestFormatType,
+)
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -36,7 +37,10 @@ class DubbingClient:
         self._client_wrapper = client_wrapper
 
     def get_dubbing_resource(
-        self, dubbing_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        dubbing_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingResource:
         """
         Given a dubbing ID generated from the '/v1/dubbing' endpoint with studio enabled, returns the dubbing resource.
@@ -67,6 +71,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -95,7 +100,11 @@ class DubbingClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def add_language_to_resource(
-        self, dubbing_id: str, *, language: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        dubbing_id: str,
+        *,
+        language: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> LanguageAddedResponse:
         """
         Adds the given ElevenLab Turbo V2/V2.5 language code to the resource. Does not automatically generate transcripts/translations/audio.
@@ -105,7 +114,7 @@ class DubbingClient:
         dubbing_id : str
             ID of the dubbing project.
 
-        language : str
+        language : typing.Optional[str]
             The Target language.
 
         request_options : typing.Optional[RequestOptions]
@@ -125,11 +134,11 @@ class DubbingClient:
         )
         client.dubbing.add_language_to_resource(
             dubbing_id="dubbing_id",
-            language="language",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/language",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "language": language,
@@ -215,6 +224,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/speaker/{jsonable_encoder(speaker_id)}/segment",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "start_time": start_time,
@@ -305,6 +315,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/segment/{jsonable_encoder(segment_id)}/{jsonable_encoder(language)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "start_time": start_time,
@@ -342,7 +353,11 @@ class DubbingClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete_segment(
-        self, dubbing_id: str, segment_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        dubbing_id: str,
+        segment_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> SegmentDeleteResponse:
         """
         Deletes a single segment from the dubbing.
@@ -377,6 +392,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/segment/{jsonable_encoder(segment_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -444,6 +460,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/transcribe",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "segments": segments,
@@ -483,7 +500,7 @@ class DubbingClient:
         dubbing_id: str,
         *,
         segments: typing.Sequence[str],
-        languages: typing.Sequence[str],
+        languages: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SegmentTranslationResponse:
         """
@@ -497,7 +514,7 @@ class DubbingClient:
         segments : typing.Sequence[str]
             Translate only this list of segments.
 
-        languages : typing.Sequence[str]
+        languages : typing.Optional[typing.Sequence[str]]
             Translate only these languages for each segment.
 
         request_options : typing.Optional[RequestOptions]
@@ -518,11 +535,11 @@ class DubbingClient:
         client.dubbing.translate_segments(
             dubbing_id="dubbing_id",
             segments=["segments"],
-            languages=["languages"],
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/translate",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "segments": segments,
@@ -563,7 +580,7 @@ class DubbingClient:
         dubbing_id: str,
         *,
         segments: typing.Sequence[str],
-        languages: typing.Sequence[str],
+        languages: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SegmentDubResponse:
         """
@@ -577,7 +594,7 @@ class DubbingClient:
         segments : typing.Sequence[str]
             Dub only this list of segments.
 
-        languages : typing.Sequence[str]
+        languages : typing.Optional[typing.Sequence[str]]
             Dub only these languages for each segment.
 
         request_options : typing.Optional[RequestOptions]
@@ -598,11 +615,11 @@ class DubbingClient:
         client.dubbing.dub_segments(
             dubbing_id="dubbing_id",
             segments=["segments"],
-            languages=["languages"],
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/dub",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "segments": segments,
@@ -641,11 +658,14 @@ class DubbingClient:
     def dub_a_video_or_an_audio_file(
         self,
         *,
-        target_lang: str,
-        file: typing.Optional[core.File] = OMIT,
+        file: typing.Optional[str] = OMIT,
+        csv_file: typing.Optional[str] = OMIT,
+        foreground_audio_file: typing.Optional[str] = OMIT,
+        background_audio_file: typing.Optional[str] = OMIT,
         name: typing.Optional[str] = OMIT,
         source_url: typing.Optional[str] = OMIT,
         source_lang: typing.Optional[str] = OMIT,
+        target_lang: typing.Optional[str] = OMIT,
         num_speakers: typing.Optional[int] = OMIT,
         watermark: typing.Optional[bool] = OMIT,
         start_time: typing.Optional[int] = OMIT,
@@ -654,6 +674,8 @@ class DubbingClient:
         drop_background_audio: typing.Optional[bool] = OMIT,
         use_profanity_filter: typing.Optional[bool] = OMIT,
         dubbing_studio: typing.Optional[bool] = OMIT,
+        disable_voice_cloning: typing.Optional[bool] = OMIT,
+        mode: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DoDubbingResponse:
         """
@@ -661,11 +683,17 @@ class DubbingClient:
 
         Parameters
         ----------
-        target_lang : str
-            The Target language to dub the content into.
+        file : typing.Optional[str]
+            A list of file paths to audio recordings intended for voice cloning
 
-        file : typing.Optional[core.File]
-            See core.File for more documentation
+        csv_file : typing.Optional[str]
+            CSV file containing transcription/translation metadata
+
+        foreground_audio_file : typing.Optional[str]
+            For use only with csv input
+
+        background_audio_file : typing.Optional[str]
+            For use only with csv input
 
         name : typing.Optional[str]
             Name of the dubbing project.
@@ -675,6 +703,9 @@ class DubbingClient:
 
         source_lang : typing.Optional[str]
             Source language.
+
+        target_lang : typing.Optional[str]
+            The Target language to dub the content into.
 
         num_speakers : typing.Optional[int]
             Number of speakers to use for the dubbing. Set to 0 to automatically detect the number of speakers
@@ -700,6 +731,12 @@ class DubbingClient:
         dubbing_studio : typing.Optional[bool]
             Whether to prepare dub for edits in dubbing studio or edits as a dubbing resource.
 
+        disable_voice_cloning : typing.Optional[bool]
+            [BETA] Instead of using a voice clone in dubbing, use a similar voice from the ElevenLabs Voice Library.
+
+        mode : typing.Optional[str]
+            automatic or manual. Manual mode is only supported when creating a dubbing studio project
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -715,14 +752,17 @@ class DubbingClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.dubbing.dub_a_video_or_an_audio_file(
-            target_lang="target_lang",
-        )
+        client.dubbing.dub_a_video_or_an_audio_file()
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/dubbing",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
+                "file": file,
+                "csv_file": csv_file,
+                "foreground_audio_file": foreground_audio_file,
+                "background_audio_file": background_audio_file,
                 "name": name,
                 "source_url": source_url,
                 "source_lang": source_lang,
@@ -735,10 +775,10 @@ class DubbingClient:
                 "drop_background_audio": drop_background_audio,
                 "use_profanity_filter": use_profanity_filter,
                 "dubbing_studio": dubbing_studio,
+                "disable_voice_cloning": disable_voice_cloning,
+                "mode": mode,
             },
-            files={
-                "file": file,
-            },
+            files={},
             request_options=request_options,
             omit=OMIT,
         )
@@ -767,7 +807,10 @@ class DubbingClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_dubbing_project_metadata(
-        self, dubbing_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        dubbing_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingMetadataResponse:
         """
         Returns metadata about a dubbing project, including whether it's still in progress or not
@@ -798,6 +841,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -826,7 +870,10 @@ class DubbingClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete_dubbing_project(
-        self, dubbing_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        dubbing_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> DeleteDubbingResponseModel:
         """
         Deletes a dubbing project.
@@ -857,6 +904,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -885,7 +933,11 @@ class DubbingClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_dubbed_file(
-        self, dubbing_id: str, language_code: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        dubbing_id: str,
+        language_code: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
         Returns dubbed file as a streamed file. Videos will be returned in MP4 format and audio only dubs will be returned in MP3.
@@ -908,6 +960,7 @@ class DubbingClient:
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}/audio/{jsonable_encoder(language_code)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         ) as _response:
@@ -1007,6 +1060,7 @@ class DubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}/transcript/{jsonable_encoder(language_code)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "format_type": format_type,
@@ -1073,7 +1127,10 @@ class AsyncDubbingClient:
         self._client_wrapper = client_wrapper
 
     async def get_dubbing_resource(
-        self, dubbing_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        dubbing_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingResource:
         """
         Given a dubbing ID generated from the '/v1/dubbing' endpoint with studio enabled, returns the dubbing resource.
@@ -1112,6 +1169,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1140,7 +1198,11 @@ class AsyncDubbingClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def add_language_to_resource(
-        self, dubbing_id: str, *, language: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        dubbing_id: str,
+        *,
+        language: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> LanguageAddedResponse:
         """
         Adds the given ElevenLab Turbo V2/V2.5 language code to the resource. Does not automatically generate transcripts/translations/audio.
@@ -1150,7 +1212,7 @@ class AsyncDubbingClient:
         dubbing_id : str
             ID of the dubbing project.
 
-        language : str
+        language : typing.Optional[str]
             The Target language.
 
         request_options : typing.Optional[RequestOptions]
@@ -1175,7 +1237,6 @@ class AsyncDubbingClient:
         async def main() -> None:
             await client.dubbing.add_language_to_resource(
                 dubbing_id="dubbing_id",
-                language="language",
             )
 
 
@@ -1183,6 +1244,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/language",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "language": language,
@@ -1276,6 +1338,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/speaker/{jsonable_encoder(speaker_id)}/segment",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "start_time": start_time,
@@ -1374,6 +1437,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/segment/{jsonable_encoder(segment_id)}/{jsonable_encoder(language)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "start_time": start_time,
@@ -1411,7 +1475,11 @@ class AsyncDubbingClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete_segment(
-        self, dubbing_id: str, segment_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        dubbing_id: str,
+        segment_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> SegmentDeleteResponse:
         """
         Deletes a single segment from the dubbing.
@@ -1454,6 +1522,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/segment/{jsonable_encoder(segment_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -1529,6 +1598,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/transcribe",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "segments": segments,
@@ -1568,7 +1638,7 @@ class AsyncDubbingClient:
         dubbing_id: str,
         *,
         segments: typing.Sequence[str],
-        languages: typing.Sequence[str],
+        languages: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SegmentTranslationResponse:
         """
@@ -1582,7 +1652,7 @@ class AsyncDubbingClient:
         segments : typing.Sequence[str]
             Translate only this list of segments.
 
-        languages : typing.Sequence[str]
+        languages : typing.Optional[typing.Sequence[str]]
             Translate only these languages for each segment.
 
         request_options : typing.Optional[RequestOptions]
@@ -1608,7 +1678,6 @@ class AsyncDubbingClient:
             await client.dubbing.translate_segments(
                 dubbing_id="dubbing_id",
                 segments=["segments"],
-                languages=["languages"],
             )
 
 
@@ -1616,6 +1685,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/translate",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "segments": segments,
@@ -1656,7 +1726,7 @@ class AsyncDubbingClient:
         dubbing_id: str,
         *,
         segments: typing.Sequence[str],
-        languages: typing.Sequence[str],
+        languages: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SegmentDubResponse:
         """
@@ -1670,7 +1740,7 @@ class AsyncDubbingClient:
         segments : typing.Sequence[str]
             Dub only this list of segments.
 
-        languages : typing.Sequence[str]
+        languages : typing.Optional[typing.Sequence[str]]
             Dub only these languages for each segment.
 
         request_options : typing.Optional[RequestOptions]
@@ -1696,7 +1766,6 @@ class AsyncDubbingClient:
             await client.dubbing.dub_segments(
                 dubbing_id="dubbing_id",
                 segments=["segments"],
-                languages=["languages"],
             )
 
 
@@ -1704,6 +1773,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/dub",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "segments": segments,
@@ -1742,11 +1812,14 @@ class AsyncDubbingClient:
     async def dub_a_video_or_an_audio_file(
         self,
         *,
-        target_lang: str,
-        file: typing.Optional[core.File] = OMIT,
+        file: typing.Optional[str] = OMIT,
+        csv_file: typing.Optional[str] = OMIT,
+        foreground_audio_file: typing.Optional[str] = OMIT,
+        background_audio_file: typing.Optional[str] = OMIT,
         name: typing.Optional[str] = OMIT,
         source_url: typing.Optional[str] = OMIT,
         source_lang: typing.Optional[str] = OMIT,
+        target_lang: typing.Optional[str] = OMIT,
         num_speakers: typing.Optional[int] = OMIT,
         watermark: typing.Optional[bool] = OMIT,
         start_time: typing.Optional[int] = OMIT,
@@ -1755,6 +1828,8 @@ class AsyncDubbingClient:
         drop_background_audio: typing.Optional[bool] = OMIT,
         use_profanity_filter: typing.Optional[bool] = OMIT,
         dubbing_studio: typing.Optional[bool] = OMIT,
+        disable_voice_cloning: typing.Optional[bool] = OMIT,
+        mode: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DoDubbingResponse:
         """
@@ -1762,11 +1837,17 @@ class AsyncDubbingClient:
 
         Parameters
         ----------
-        target_lang : str
-            The Target language to dub the content into.
+        file : typing.Optional[str]
+            A list of file paths to audio recordings intended for voice cloning
 
-        file : typing.Optional[core.File]
-            See core.File for more documentation
+        csv_file : typing.Optional[str]
+            CSV file containing transcription/translation metadata
+
+        foreground_audio_file : typing.Optional[str]
+            For use only with csv input
+
+        background_audio_file : typing.Optional[str]
+            For use only with csv input
 
         name : typing.Optional[str]
             Name of the dubbing project.
@@ -1776,6 +1857,9 @@ class AsyncDubbingClient:
 
         source_lang : typing.Optional[str]
             Source language.
+
+        target_lang : typing.Optional[str]
+            The Target language to dub the content into.
 
         num_speakers : typing.Optional[int]
             Number of speakers to use for the dubbing. Set to 0 to automatically detect the number of speakers
@@ -1801,6 +1885,12 @@ class AsyncDubbingClient:
         dubbing_studio : typing.Optional[bool]
             Whether to prepare dub for edits in dubbing studio or edits as a dubbing resource.
 
+        disable_voice_cloning : typing.Optional[bool]
+            [BETA] Instead of using a voice clone in dubbing, use a similar voice from the ElevenLabs Voice Library.
+
+        mode : typing.Optional[str]
+            automatic or manual. Manual mode is only supported when creating a dubbing studio project
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1821,17 +1911,20 @@ class AsyncDubbingClient:
 
 
         async def main() -> None:
-            await client.dubbing.dub_a_video_or_an_audio_file(
-                target_lang="target_lang",
-            )
+            await client.dubbing.dub_a_video_or_an_audio_file()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/dubbing",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
+                "file": file,
+                "csv_file": csv_file,
+                "foreground_audio_file": foreground_audio_file,
+                "background_audio_file": background_audio_file,
                 "name": name,
                 "source_url": source_url,
                 "source_lang": source_lang,
@@ -1844,10 +1937,10 @@ class AsyncDubbingClient:
                 "drop_background_audio": drop_background_audio,
                 "use_profanity_filter": use_profanity_filter,
                 "dubbing_studio": dubbing_studio,
+                "disable_voice_cloning": disable_voice_cloning,
+                "mode": mode,
             },
-            files={
-                "file": file,
-            },
+            files={},
             request_options=request_options,
             omit=OMIT,
         )
@@ -1876,7 +1969,10 @@ class AsyncDubbingClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_dubbing_project_metadata(
-        self, dubbing_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        dubbing_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingMetadataResponse:
         """
         Returns metadata about a dubbing project, including whether it's still in progress or not
@@ -1915,6 +2011,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1943,7 +2040,10 @@ class AsyncDubbingClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete_dubbing_project(
-        self, dubbing_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        dubbing_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> DeleteDubbingResponseModel:
         """
         Deletes a dubbing project.
@@ -1982,6 +2082,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -2010,7 +2111,11 @@ class AsyncDubbingClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_dubbed_file(
-        self, dubbing_id: str, language_code: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        dubbing_id: str,
+        language_code: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
         Returns dubbed file as a streamed file. Videos will be returned in MP4 format and audio only dubs will be returned in MP3.
@@ -2033,6 +2138,7 @@ class AsyncDubbingClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}/audio/{jsonable_encoder(language_code)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         ) as _response:
@@ -2140,6 +2246,7 @@ class AsyncDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}/transcript/{jsonable_encoder(language_code)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "format_type": format_type,
