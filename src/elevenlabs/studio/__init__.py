@@ -15,6 +15,7 @@ from . import chapters, projects
 from .projects import (
     ProjectsAddRequestApplyTextNormalization,
     ProjectsAddRequestFiction,
+    ProjectsAddRequestSourceType,
     ProjectsAddRequestTargetAudience,
 )
 
@@ -30,6 +31,7 @@ __all__ = [
     "BodyCreatePodcastV1StudioPodcastsPostSourceItem_Url",
     "ProjectsAddRequestApplyTextNormalization",
     "ProjectsAddRequestFiction",
+    "ProjectsAddRequestSourceType",
     "ProjectsAddRequestTargetAudience",
     "chapters",
     "projects",

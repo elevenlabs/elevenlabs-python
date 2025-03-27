@@ -2,17 +2,32 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .knowledge_base_locator_type import KnowledgeBaseLocatorType
+import pydantic
 import typing
 from .document_usage_mode_enum import DocumentUsageModeEnum
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
-import pydantic
 
 
 class KnowledgeBaseLocator(UncheckedBaseModel):
-    type: KnowledgeBaseLocatorType
-    name: str
-    id: str
-    usage_mode: typing.Optional[DocumentUsageModeEnum] = None
+    type: KnowledgeBaseLocatorType = pydantic.Field()
+    """
+    The type of the knowledge base
+    """
+
+    name: str = pydantic.Field()
+    """
+    The name of the knowledge base
+    """
+
+    id: str = pydantic.Field()
+    """
+    The ID of the knowledge base
+    """
+
+    usage_mode: typing.Optional[DocumentUsageModeEnum] = pydantic.Field(default=None)
+    """
+    The usage mode of the knowledge base
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

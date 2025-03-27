@@ -49,7 +49,8 @@ class BodyCreatePodcastV1StudioPodcastsPostMode_Bulletin(UncheckedBaseModel):
 
 BodyCreatePodcastV1StudioPodcastsPostMode = typing_extensions.Annotated[
     typing.Union[
-        BodyCreatePodcastV1StudioPodcastsPostMode_Conversation, BodyCreatePodcastV1StudioPodcastsPostMode_Bulletin
+        BodyCreatePodcastV1StudioPodcastsPostMode_Conversation,
+        BodyCreatePodcastV1StudioPodcastsPostMode_Bulletin,
     ],
     UnionMetadata(discriminant="type"),
 ]

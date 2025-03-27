@@ -18,7 +18,11 @@ class User(UncheckedBaseModel):
     Details of the user's subscription.
     """
 
-    subscription_extras: typing.Optional[typing.Optional[typing.Any]] = None
+    subscription_extras: typing.Optional[typing.Optional[typing.Any]] = pydantic.Field(default=None)
+    """
+    Optional additional details about the user's subscription.
+    """
+
     is_new_user: bool = pydantic.Field()
     """
     Whether the user is new.

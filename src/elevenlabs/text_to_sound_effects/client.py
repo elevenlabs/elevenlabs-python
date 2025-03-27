@@ -2,7 +2,9 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
-from .types.text_to_sound_effects_convert_request_output_format import TextToSoundEffectsConvertRequestOutputFormat
+from .types.text_to_sound_effects_convert_request_output_format import (
+    TextToSoundEffectsConvertRequestOutputFormat,
+)
 from ..core.request_options import RequestOptions
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.http_validation_error import HttpValidationError
@@ -66,6 +68,7 @@ class TextToSoundEffectsClient:
         """
         with self._client_wrapper.httpx_client.stream(
             "v1/sound-generation",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "output_format": output_format,
@@ -163,6 +166,7 @@ class AsyncTextToSoundEffectsClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             "v1/sound-generation",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "output_format": output_format,

@@ -2,14 +2,21 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
+import pydantic
 from .client_event import ClientEvent
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
-import pydantic
 
 
 class ConversationConfig(UncheckedBaseModel):
-    max_duration_seconds: typing.Optional[int] = None
-    client_events: typing.Optional[typing.List[ClientEvent]] = None
+    max_duration_seconds: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The maximum duration of a conversation in seconds
+    """
+
+    client_events: typing.Optional[typing.List[ClientEvent]] = pydantic.Field(default=None)
+    """
+    The events that will be sent to the client
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

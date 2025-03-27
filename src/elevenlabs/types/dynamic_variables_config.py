@@ -5,14 +5,17 @@ import typing
 from .dynamic_variables_config_dynamic_variable_placeholders_value import (
     DynamicVariablesConfigDynamicVariablePlaceholdersValue,
 )
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class DynamicVariablesConfig(UncheckedBaseModel):
     dynamic_variable_placeholders: typing.Optional[
         typing.Dict[str, DynamicVariablesConfigDynamicVariablePlaceholdersValue]
-    ] = None
+    ] = pydantic.Field(default=None)
+    """
+    A dictionary of dynamic variable placeholders and their values
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -18,7 +18,11 @@ class SamplesClient:
         self._client_wrapper = client_wrapper
 
     def delete(
-        self, voice_id: str, sample_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        voice_id: str,
+        sample_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> DeleteSampleResponseModel:
         """
         Removes a sample by its ID.
@@ -53,6 +57,7 @@ class SamplesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}/samples/{jsonable_encoder(sample_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -81,7 +86,11 @@ class SamplesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_audio(
-        self, voice_id: str, sample_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        voice_id: str,
+        sample_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
         Returns the audio corresponding to a sample attached to a voice.
@@ -116,6 +125,7 @@ class SamplesClient:
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/voices/{jsonable_encoder(voice_id)}/samples/{jsonable_encoder(sample_id)}/audio",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         ) as _response:
@@ -147,7 +157,11 @@ class AsyncSamplesClient:
         self._client_wrapper = client_wrapper
 
     async def delete(
-        self, voice_id: str, sample_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        voice_id: str,
+        sample_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> DeleteSampleResponseModel:
         """
         Removes a sample by its ID.
@@ -190,6 +204,7 @@ class AsyncSamplesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}/samples/{jsonable_encoder(sample_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -218,7 +233,11 @@ class AsyncSamplesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_audio(
-        self, voice_id: str, sample_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        voice_id: str,
+        sample_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
         Returns the audio corresponding to a sample attached to a voice.
@@ -261,6 +280,7 @@ class AsyncSamplesClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/voices/{jsonable_encoder(voice_id)}/samples/{jsonable_encoder(sample_id)}/audio",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         ) as _response:

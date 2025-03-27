@@ -8,5 +8,7 @@ from .body_create_podcast_v_1_projects_podcast_create_post_source_item import (
 )
 
 BodyCreatePodcastV1ProjectsPodcastCreatePostSource = typing.Union[
-    PodcastTextSource, PodcastUrlSource, typing.List[BodyCreatePodcastV1ProjectsPodcastCreatePostSourceItem]
+    PodcastTextSource,
+    PodcastUrlSource,
+    typing.List[BodyCreatePodcastV1ProjectsPodcastCreatePostSourceItem],
 ]

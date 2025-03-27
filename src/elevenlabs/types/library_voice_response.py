@@ -66,6 +66,11 @@ class LibraryVoiceResponse(UncheckedBaseModel):
     The language of the voice.
     """
 
+    locale: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The locale of the voice.
+    """
+
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
     The description of the voice.

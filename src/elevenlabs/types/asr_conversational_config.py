@@ -3,17 +3,32 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 from .asr_quality import AsrQuality
+import pydantic
 from .asr_provider import AsrProvider
 from .asr_input_format import AsrInputFormat
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
-import pydantic
 
 
 class AsrConversationalConfig(UncheckedBaseModel):
-    quality: typing.Optional[AsrQuality] = None
-    provider: typing.Optional[AsrProvider] = None
-    user_input_audio_format: typing.Optional[AsrInputFormat] = None
-    keywords: typing.Optional[typing.List[str]] = None
+    quality: typing.Optional[AsrQuality] = pydantic.Field(default=None)
+    """
+    The quality of the transcription
+    """
+
+    provider: typing.Optional[AsrProvider] = pydantic.Field(default=None)
+    """
+    The provider of the transcription service
+    """
+
+    user_input_audio_format: typing.Optional[AsrInputFormat] = pydantic.Field(default=None)
+    """
+    The format of the audio to be transcribed
+    """
+
+    keywords: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Keywords to boost prediction probability for
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

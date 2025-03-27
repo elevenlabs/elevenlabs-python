@@ -4,15 +4,21 @@ import typing
 from ..core.client_wrapper import SyncClientWrapper
 from .. import core
 from ..core.request_options import RequestOptions
-from ..types.audio_native_create_project_response_model import AudioNativeCreateProjectResponseModel
+from ..types.audio_native_create_project_response_model import (
+    AudioNativeCreateProjectResponseModel,
+)
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.http_validation_error import HttpValidationError
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from ..types.get_audio_native_project_settings_response_model import GetAudioNativeProjectSettingsResponseModel
+from ..types.get_audio_native_project_settings_response_model import (
+    GetAudioNativeProjectSettingsResponseModel,
+)
 from ..core.jsonable_encoder import jsonable_encoder
-from ..types.audio_native_edit_content_response_model import AudioNativeEditContentResponseModel
+from ..types.audio_native_edit_content_response_model import (
+    AudioNativeEditContentResponseModel,
+)
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -102,6 +108,7 @@ class AudioNativeClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/audio-native",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -147,7 +154,10 @@ class AudioNativeClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_settings(
-        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> GetAudioNativeProjectSettingsResponseModel:
         """
         Get player settings for the specific project.
@@ -178,6 +188,7 @@ class AudioNativeClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/audio-native/{jsonable_encoder(project_id)}/settings",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -252,6 +263,7 @@ class AudioNativeClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/audio-native/{jsonable_encoder(project_id)}/content",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "auto_convert": auto_convert,
@@ -379,6 +391,7 @@ class AsyncAudioNativeClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/audio-native",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -424,7 +437,10 @@ class AsyncAudioNativeClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_settings(
-        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> GetAudioNativeProjectSettingsResponseModel:
         """
         Get player settings for the specific project.
@@ -463,6 +479,7 @@ class AsyncAudioNativeClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/audio-native/{jsonable_encoder(project_id)}/settings",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -545,6 +562,7 @@ class AsyncAudioNativeClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/audio-native/{jsonable_encoder(project_id)}/content",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "auto_convert": auto_convert,

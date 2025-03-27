@@ -2,7 +2,9 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .conversation_summary_response_model_status import ConversationSummaryResponseModelStatus
+from .conversation_summary_response_model_status import (
+    ConversationSummaryResponseModelStatus,
+)
 from .evaluation_success_result import EvaluationSuccessResult
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
