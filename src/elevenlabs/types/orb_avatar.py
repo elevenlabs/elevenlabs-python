@@ -2,13 +2,20 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class OrbAvatar(UncheckedBaseModel):
-    color_1: typing.Optional[str] = None
-    color_2: typing.Optional[str] = None
+    color_1: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The first color of the avatar
+    """
+
+    color_2: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The second color of the avatar
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

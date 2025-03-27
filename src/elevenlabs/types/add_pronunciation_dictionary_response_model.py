@@ -32,6 +32,11 @@ class AddPronunciationDictionaryResponseModel(UncheckedBaseModel):
     The ID of the created pronunciation dictionary version.
     """
 
+    version_rules_num: int = pydantic.Field()
+    """
+    The number of rules in the version of the pronunciation dictionary.
+    """
+
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
     The description of the pronunciation dictionary.

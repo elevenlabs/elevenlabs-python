@@ -34,7 +34,7 @@ class SpeechToSpeechClient:
         seed: typing.Optional[int] = OMIT,
         remove_background_noise: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Iterator[bytes]:
+    ) -> bytes:
         """
         Transform audio from one voice to another. Maintain full control over emotion, timing and delivery.
 
@@ -75,12 +75,11 @@ class SpeechToSpeechClient:
             If set, will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+            Request-specific configuration.
 
-        Yields
-        ------
-        typing.Iterator[bytes]
-            The generated audio file
+        Returns
+        -------
+        bytes
 
         Examples
         --------
@@ -95,8 +94,9 @@ class SpeechToSpeechClient:
             model_id="eleven_multilingual_sts_v2",
         )
         """
-        with self._client_wrapper.httpx_client.stream(
+        _response = self._client_wrapper.httpx_client.request(
             f"v1/speech-to-speech/{jsonable_encoder(voice_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -114,28 +114,24 @@ class SpeechToSpeechClient:
             },
             request_options=request_options,
             omit=OMIT,
-        ) as _response:
-            try:
-                if 200 <= _response.status_code < 300:
-                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
-                    for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
-                        yield _chunk
-                    return
-                _response.read()
-                if _response.status_code == 422:
-                    raise UnprocessableEntityError(
-                        typing.cast(
-                            HttpValidationError,
-                            construct_type(
-                                type_=HttpValidationError,  # type: ignore
-                                object_=_response.json(),
-                            ),
-                        )
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return _response.read()  # type: ignore
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
                     )
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def convert_as_stream(
         self,
@@ -213,6 +209,7 @@ class SpeechToSpeechClient:
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/speech-to-speech/{jsonable_encoder(voice_id)}/stream",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -271,7 +268,7 @@ class AsyncSpeechToSpeechClient:
         seed: typing.Optional[int] = OMIT,
         remove_background_noise: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.AsyncIterator[bytes]:
+    ) -> bytes:
         """
         Transform audio from one voice to another. Maintain full control over emotion, timing and delivery.
 
@@ -312,12 +309,11 @@ class AsyncSpeechToSpeechClient:
             If set, will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+            Request-specific configuration.
 
-        Yields
-        ------
-        typing.AsyncIterator[bytes]
-            The generated audio file
+        Returns
+        -------
+        bytes
 
         Examples
         --------
@@ -340,8 +336,9 @@ class AsyncSpeechToSpeechClient:
 
         asyncio.run(main())
         """
-        async with self._client_wrapper.httpx_client.stream(
+        _response = await self._client_wrapper.httpx_client.request(
             f"v1/speech-to-speech/{jsonable_encoder(voice_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -359,28 +356,24 @@ class AsyncSpeechToSpeechClient:
             },
             request_options=request_options,
             omit=OMIT,
-        ) as _response:
-            try:
-                if 200 <= _response.status_code < 300:
-                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
-                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
-                        yield _chunk
-                    return
-                await _response.aread()
-                if _response.status_code == 422:
-                    raise UnprocessableEntityError(
-                        typing.cast(
-                            HttpValidationError,
-                            construct_type(
-                                type_=HttpValidationError,  # type: ignore
-                                object_=_response.json(),
-                            ),
-                        )
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return _response.read()  # type: ignore
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
                     )
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def convert_as_stream(
         self,
@@ -466,6 +459,7 @@ class AsyncSpeechToSpeechClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/speech-to-speech/{jsonable_encoder(voice_id)}/stream",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,

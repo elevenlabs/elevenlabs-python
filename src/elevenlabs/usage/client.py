@@ -65,6 +65,7 @@ class UsageClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/usage/character-stats",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "start_unix": start_unix,
@@ -159,6 +160,7 @@ class AsyncUsageClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/usage/character-stats",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "start_unix": start_unix,

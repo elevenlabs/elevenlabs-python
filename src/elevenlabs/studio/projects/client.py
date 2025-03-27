@@ -9,10 +9,12 @@ from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.http_validation_error import HttpValidationError
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
-from ... import core
 from .types.projects_add_request_target_audience import ProjectsAddRequestTargetAudience
 from .types.projects_add_request_fiction import ProjectsAddRequestFiction
-from .types.projects_add_request_apply_text_normalization import ProjectsAddRequestApplyTextNormalization
+from .types.projects_add_request_apply_text_normalization import (
+    ProjectsAddRequestApplyTextNormalization,
+)
+from .types.projects_add_request_source_type import ProjectsAddRequestSourceType
 from ...types.add_project_response_model import AddProjectResponseModel
 from ...types.project_extended_response_model import ProjectExtendedResponseModel
 from ...core.jsonable_encoder import jsonable_encoder
@@ -20,9 +22,15 @@ from ...types.edit_project_response_model import EditProjectResponseModel
 from ...types.delete_project_response_model import DeleteProjectResponseModel
 from ...types.convert_project_response_model import ConvertProjectResponseModel
 from ...types.project_snapshots_response import ProjectSnapshotsResponse
-from ...types.project_snapshot_extended_response_model import ProjectSnapshotExtendedResponseModel
-from ...types.pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
-from ...types.create_pronunciation_dictionary_response_model import CreatePronunciationDictionaryResponseModel
+from ...types.project_snapshot_extended_response_model import (
+    ProjectSnapshotExtendedResponseModel,
+)
+from ...types.pronunciation_dictionary_version_locator import (
+    PronunciationDictionaryVersionLocator,
+)
+from ...types.create_pronunciation_dictionary_response_model import (
+    CreatePronunciationDictionaryResponseModel,
+)
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.client_wrapper import AsyncClientWrapper
 
@@ -59,6 +67,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/studio/projects",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -94,7 +103,7 @@ class ProjectsClient:
         default_paragraph_voice_id: str,
         default_model_id: str,
         from_url: typing.Optional[str] = OMIT,
-        from_document: typing.Optional[core.File] = OMIT,
+        from_document: typing.Optional[str] = OMIT,
         quality_preset: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
         author: typing.Optional[str] = OMIT,
@@ -114,6 +123,7 @@ class ProjectsClient:
         apply_text_normalization: typing.Optional[ProjectsAddRequestApplyTextNormalization] = OMIT,
         auto_convert: typing.Optional[bool] = OMIT,
         auto_assign_voices: typing.Optional[bool] = OMIT,
+        source_type: typing.Optional[ProjectsAddRequestSourceType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddProjectResponseModel:
         """
@@ -136,8 +146,8 @@ class ProjectsClient:
         from_url : typing.Optional[str]
             An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
 
-        from_document : typing.Optional[core.File]
-            See core.File for more documentation
+        from_document : typing.Optional[str]
+            An optional .epub, .pdf, .txt or similar file can be provided. If provided, we will initialize the Studio project with its content. If this is set, 'from_url' must be null.  If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
 
         quality_preset : typing.Optional[str]
             Output quality of the generated audio. Must be one of:
@@ -145,7 +155,6 @@ class ProjectsClient:
             high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the credit cost by 20%.
             ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
             ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
-
 
         title : typing.Optional[str]
             An optional name of the author of the Studio project, this will be added as metadata to the mp3 file on Studio project or chapter download.
@@ -206,6 +215,9 @@ class ProjectsClient:
         auto_assign_voices : typing.Optional[bool]
             [Alpha Feature] Whether automatically assign voices to phrases in the create Project.
 
+        source_type : typing.Optional[ProjectsAddRequestSourceType]
+            The type of Studio project to create.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -230,6 +242,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/studio/projects",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -237,6 +250,7 @@ class ProjectsClient:
                 "default_paragraph_voice_id": default_paragraph_voice_id,
                 "default_model_id": default_model_id,
                 "from_url": from_url,
+                "from_document": from_document,
                 "quality_preset": quality_preset,
                 "title": title,
                 "author": author,
@@ -256,10 +270,9 @@ class ProjectsClient:
                 "apply_text_normalization": apply_text_normalization,
                 "auto_convert": auto_convert,
                 "auto_assign_voices": auto_assign_voices,
+                "source_type": source_type,
             },
-            files={
-                "from_document": from_document,
-            },
+            files={},
             request_options=request_options,
             omit=OMIT,
         )
@@ -288,7 +301,10 @@ class ProjectsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get(
-        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectExtendedResponseModel:
         """
         Returns information about a specific Studio project. This endpoint returns more detailed information about a project than `GET /v1/studio`.
@@ -319,6 +335,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -412,6 +429,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -453,7 +471,10 @@ class ProjectsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete(
-        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> DeleteProjectResponseModel:
         """
         Deletes a Studio project.
@@ -484,6 +505,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -516,7 +538,7 @@ class ProjectsClient:
         project_id: str,
         *,
         from_url: typing.Optional[str] = OMIT,
-        from_document: typing.Optional[core.File] = OMIT,
+        from_document: typing.Optional[str] = OMIT,
         auto_convert: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EditProjectResponseModel:
@@ -531,8 +553,8 @@ class ProjectsClient:
         from_url : typing.Optional[str]
             An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
 
-        from_document : typing.Optional[core.File]
-            See core.File for more documentation
+        from_document : typing.Optional[str]
+            An optional .epub, .pdf, .txt or similar file can be provided. If provided, we will initialize the Studio project with its content. If this is set, 'from_url' must be null.  If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
 
         auto_convert : typing.Optional[bool]
             Whether to auto convert the Studio project to audio or not.
@@ -558,14 +580,14 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/content",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "from_url": from_url,
+                "from_document": from_document,
                 "auto_convert": auto_convert,
             },
-            files={
-                "from_document": from_document,
-            },
+            files={},
             request_options=request_options,
             omit=OMIT,
         )
@@ -594,7 +616,10 @@ class ProjectsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def convert(
-        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ConvertProjectResponseModel:
         """
         Starts conversion of a Studio project and all of its chapters.
@@ -625,6 +650,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/convert",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             request_options=request_options,
         )
@@ -653,7 +679,10 @@ class ProjectsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_snapshots(
-        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectSnapshotsResponse:
         """
         Retrieves a list of snapshots for a Studio project.
@@ -684,6 +713,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/snapshots",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -712,7 +742,11 @@ class ProjectsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_project_snapshot(
-        self, project_id: str, project_snapshot_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: str,
+        project_snapshot_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectSnapshotExtendedResponseModel:
         """
         Returns the project snapshot.
@@ -747,6 +781,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -817,6 +852,7 @@ class ProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}/stream",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "convert_to_mpeg": convert_to_mpeg,
@@ -846,8 +882,12 @@ class ProjectsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def stream_archive(
-        self, project_id: str, project_snapshot_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Iterator[bytes]:
+        self,
+        project_id: str,
+        project_snapshot_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> bytes:
         """
         Returns a compressed archive of the Studio project's audio.
 
@@ -860,39 +900,35 @@ class ProjectsClient:
             The ID of the Studio project snapshot.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+            Request-specific configuration.
 
-        Yields
-        ------
-        typing.Iterator[bytes]
-            Streaming archive data
+        Returns
+        -------
+        bytes
         """
-        with self._client_wrapper.httpx_client.stream(
+        _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}/archive",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             request_options=request_options,
-        ) as _response:
-            try:
-                if 200 <= _response.status_code < 300:
-                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
-                    for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
-                        yield _chunk
-                    return
-                _response.read()
-                if _response.status_code == 422:
-                    raise UnprocessableEntityError(
-                        typing.cast(
-                            HttpValidationError,
-                            construct_type(
-                                type_=HttpValidationError,  # type: ignore
-                                object_=_response.json(),
-                            ),
-                        )
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return _response.read()  # type: ignore
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
                     )
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def update_pronunciation_dictionaries(
         self,
@@ -936,13 +972,13 @@ class ProjectsClient:
             pronunciation_dictionary_locators=[
                 PronunciationDictionaryVersionLocator(
                     pronunciation_dictionary_id="pronunciation_dictionary_id",
-                    version_id="version_id",
                 )
             ],
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/pronunciation-dictionaries",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
@@ -1020,6 +1056,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/studio/projects",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1055,7 +1092,7 @@ class AsyncProjectsClient:
         default_paragraph_voice_id: str,
         default_model_id: str,
         from_url: typing.Optional[str] = OMIT,
-        from_document: typing.Optional[core.File] = OMIT,
+        from_document: typing.Optional[str] = OMIT,
         quality_preset: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
         author: typing.Optional[str] = OMIT,
@@ -1075,6 +1112,7 @@ class AsyncProjectsClient:
         apply_text_normalization: typing.Optional[ProjectsAddRequestApplyTextNormalization] = OMIT,
         auto_convert: typing.Optional[bool] = OMIT,
         auto_assign_voices: typing.Optional[bool] = OMIT,
+        source_type: typing.Optional[ProjectsAddRequestSourceType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddProjectResponseModel:
         """
@@ -1097,8 +1135,8 @@ class AsyncProjectsClient:
         from_url : typing.Optional[str]
             An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
 
-        from_document : typing.Optional[core.File]
-            See core.File for more documentation
+        from_document : typing.Optional[str]
+            An optional .epub, .pdf, .txt or similar file can be provided. If provided, we will initialize the Studio project with its content. If this is set, 'from_url' must be null.  If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
 
         quality_preset : typing.Optional[str]
             Output quality of the generated audio. Must be one of:
@@ -1106,7 +1144,6 @@ class AsyncProjectsClient:
             high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the credit cost by 20%.
             ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
             ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
-
 
         title : typing.Optional[str]
             An optional name of the author of the Studio project, this will be added as metadata to the mp3 file on Studio project or chapter download.
@@ -1167,6 +1204,9 @@ class AsyncProjectsClient:
         auto_assign_voices : typing.Optional[bool]
             [Alpha Feature] Whether automatically assign voices to phrases in the create Project.
 
+        source_type : typing.Optional[ProjectsAddRequestSourceType]
+            The type of Studio project to create.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1199,6 +1239,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/studio/projects",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -1206,6 +1247,7 @@ class AsyncProjectsClient:
                 "default_paragraph_voice_id": default_paragraph_voice_id,
                 "default_model_id": default_model_id,
                 "from_url": from_url,
+                "from_document": from_document,
                 "quality_preset": quality_preset,
                 "title": title,
                 "author": author,
@@ -1225,10 +1267,9 @@ class AsyncProjectsClient:
                 "apply_text_normalization": apply_text_normalization,
                 "auto_convert": auto_convert,
                 "auto_assign_voices": auto_assign_voices,
+                "source_type": source_type,
             },
-            files={
-                "from_document": from_document,
-            },
+            files={},
             request_options=request_options,
             omit=OMIT,
         )
@@ -1257,7 +1298,10 @@ class AsyncProjectsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get(
-        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectExtendedResponseModel:
         """
         Returns information about a specific Studio project. This endpoint returns more detailed information about a project than `GET /v1/studio`.
@@ -1296,6 +1340,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1397,6 +1442,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -1438,7 +1484,10 @@ class AsyncProjectsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete(
-        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> DeleteProjectResponseModel:
         """
         Deletes a Studio project.
@@ -1477,6 +1526,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -1509,7 +1559,7 @@ class AsyncProjectsClient:
         project_id: str,
         *,
         from_url: typing.Optional[str] = OMIT,
-        from_document: typing.Optional[core.File] = OMIT,
+        from_document: typing.Optional[str] = OMIT,
         auto_convert: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EditProjectResponseModel:
@@ -1524,8 +1574,8 @@ class AsyncProjectsClient:
         from_url : typing.Optional[str]
             An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
 
-        from_document : typing.Optional[core.File]
-            See core.File for more documentation
+        from_document : typing.Optional[str]
+            An optional .epub, .pdf, .txt or similar file can be provided. If provided, we will initialize the Studio project with its content. If this is set, 'from_url' must be null.  If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
 
         auto_convert : typing.Optional[bool]
             Whether to auto convert the Studio project to audio or not.
@@ -1559,14 +1609,14 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/content",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "from_url": from_url,
+                "from_document": from_document,
                 "auto_convert": auto_convert,
             },
-            files={
-                "from_document": from_document,
-            },
+            files={},
             request_options=request_options,
             omit=OMIT,
         )
@@ -1595,7 +1645,10 @@ class AsyncProjectsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def convert(
-        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ConvertProjectResponseModel:
         """
         Starts conversion of a Studio project and all of its chapters.
@@ -1634,6 +1687,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/convert",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             request_options=request_options,
         )
@@ -1662,7 +1716,10 @@ class AsyncProjectsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_snapshots(
-        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectSnapshotsResponse:
         """
         Retrieves a list of snapshots for a Studio project.
@@ -1701,6 +1758,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/snapshots",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1729,7 +1787,11 @@ class AsyncProjectsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_project_snapshot(
-        self, project_id: str, project_snapshot_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: str,
+        project_snapshot_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectSnapshotExtendedResponseModel:
         """
         Returns the project snapshot.
@@ -1772,6 +1834,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -1850,6 +1913,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}/stream",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "convert_to_mpeg": convert_to_mpeg,
@@ -1879,8 +1943,12 @@ class AsyncProjectsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def stream_archive(
-        self, project_id: str, project_snapshot_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.AsyncIterator[bytes]:
+        self,
+        project_id: str,
+        project_snapshot_id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> bytes:
         """
         Returns a compressed archive of the Studio project's audio.
 
@@ -1893,39 +1961,35 @@ class AsyncProjectsClient:
             The ID of the Studio project snapshot.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+            Request-specific configuration.
 
-        Yields
-        ------
-        typing.AsyncIterator[bytes]
-            Streaming archive data
+        Returns
+        -------
+        bytes
         """
-        async with self._client_wrapper.httpx_client.stream(
+        _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}/archive",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             request_options=request_options,
-        ) as _response:
-            try:
-                if 200 <= _response.status_code < 300:
-                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
-                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
-                        yield _chunk
-                    return
-                await _response.aread()
-                if _response.status_code == 422:
-                    raise UnprocessableEntityError(
-                        typing.cast(
-                            HttpValidationError,
-                            construct_type(
-                                type_=HttpValidationError,  # type: ignore
-                                object_=_response.json(),
-                            ),
-                        )
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return _response.read()  # type: ignore
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
                     )
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def update_pronunciation_dictionaries(
         self,
@@ -1974,7 +2038,6 @@ class AsyncProjectsClient:
                 pronunciation_dictionary_locators=[
                     PronunciationDictionaryVersionLocator(
                         pronunciation_dictionary_id="pronunciation_dictionary_id",
-                        version_id="version_id",
                     )
                 ],
             )
@@ -1984,6 +2047,7 @@ class AsyncProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/pronunciation-dictionaries",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(

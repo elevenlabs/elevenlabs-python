@@ -2,13 +2,15 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .get_knowledge_base_summary_response_model import GetKnowledgeBaseSummaryResponseModel
+from .get_knowledge_base_list_response_model_documents_item import (
+    GetKnowledgeBaseListResponseModelDocumentsItem,
+)
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
 class GetKnowledgeBaseListResponseModel(UncheckedBaseModel):
-    documents: typing.List[GetKnowledgeBaseSummaryResponseModel]
+    documents: typing.List[GetKnowledgeBaseListResponseModelDocumentsItem]
     next_cursor: typing.Optional[str] = None
     has_more: bool
 

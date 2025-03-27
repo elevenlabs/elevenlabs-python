@@ -15,16 +15,21 @@ from .add_workspace_invite_response_model import AddWorkspaceInviteResponseModel
 from .age import Age
 from .agent_ban import AgentBan
 from .agent_call_limits import AgentCallLimits
-from .agent_config_api_model import AgentConfigApiModel
+from .agent_config_api_model_input import AgentConfigApiModelInput
+from .agent_config_api_model_output import AgentConfigApiModelOutput
 from .agent_config_override import AgentConfigOverride
 from .agent_config_override_config import AgentConfigOverrideConfig
 from .agent_metadata_response_model import AgentMetadataResponseModel
 from .agent_platform_settings_request_model import AgentPlatformSettingsRequestModel
 from .agent_platform_settings_response_model import AgentPlatformSettingsResponseModel
 from .agent_summary_response_model import AgentSummaryResponseModel
+from .agent_workspace_overrides_input import AgentWorkspaceOverridesInput
+from .agent_workspace_overrides_output import AgentWorkspaceOverridesOutput
 from .allowlist_item import AllowlistItem
-from .array_json_schema_property import ArrayJsonSchemaProperty
-from .array_json_schema_property_items import ArrayJsonSchemaPropertyItems
+from .array_json_schema_property_input import ArrayJsonSchemaPropertyInput
+from .array_json_schema_property_input_items import ArrayJsonSchemaPropertyInputItems
+from .array_json_schema_property_output import ArrayJsonSchemaPropertyOutput
+from .array_json_schema_property_output_items import ArrayJsonSchemaPropertyOutputItems
 from .asr_conversational_config import AsrConversationalConfig
 from .asr_input_format import AsrInputFormat
 from .asr_provider import AsrProvider
@@ -32,6 +37,7 @@ from .asr_quality import AsrQuality
 from .audio_native_create_project_response_model import AudioNativeCreateProjectResponseModel
 from .audio_native_edit_content_response_model import AudioNativeEditContentResponseModel
 from .audio_native_project_settings_response_model import AudioNativeProjectSettingsResponseModel
+from .audio_output import AudioOutput
 from .audio_with_timestamps_response_model import AudioWithTimestampsResponseModel
 from .auth_settings import AuthSettings
 from .authorization_method import AuthorizationMethod
@@ -66,7 +72,9 @@ from .chapter_with_content_response_model_state import ChapterWithContentRespons
 from .character_alignment_model import CharacterAlignmentModel
 from .character_alignment_response_model import CharacterAlignmentResponseModel
 from .client_event import ClientEvent
-from .client_tool_config import ClientToolConfig
+from .client_tool_config_input import ClientToolConfigInput
+from .client_tool_config_output import ClientToolConfigOutput
+from .close_connection import CloseConnection
 from .conv_ai_secret_locator import ConvAiSecretLocator
 from .conv_ai_stored_secret_dependencies import ConvAiStoredSecretDependencies
 from .conv_ai_stored_secret_dependencies_agent_tools_item import (
@@ -83,8 +91,10 @@ from .conv_ai_webhooks import ConvAiWebhooks
 from .conv_ai_workspace_stored_secret_config import ConvAiWorkspaceStoredSecretConfig
 from .conversation_charging_common_model import ConversationChargingCommonModel
 from .conversation_config import ConversationConfig
-from .conversation_config_client_override import ConversationConfigClientOverride
-from .conversation_config_client_override_config import ConversationConfigClientOverrideConfig
+from .conversation_config_client_override_config_input import ConversationConfigClientOverrideConfigInput
+from .conversation_config_client_override_config_output import ConversationConfigClientOverrideConfigOutput
+from .conversation_config_client_override_input import ConversationConfigClientOverrideInput
+from .conversation_config_client_override_output import ConversationConfigClientOverrideOutput
 from .conversation_deletion_settings import ConversationDeletionSettings
 from .conversation_history_analysis_common_model import ConversationHistoryAnalysisCommonModel
 from .conversation_history_evaluation_criteria_result_common_model import (
@@ -92,14 +102,25 @@ from .conversation_history_evaluation_criteria_result_common_model import (
 )
 from .conversation_history_feedback_common_model import ConversationHistoryFeedbackCommonModel
 from .conversation_history_metadata_common_model import ConversationHistoryMetadataCommonModel
+from .conversation_history_metadata_common_model_phone_call import (
+    ConversationHistoryMetadataCommonModelPhoneCall,
+    ConversationHistoryMetadataCommonModelPhoneCall_Twilio,
+)
 from .conversation_history_transcript_common_model import ConversationHistoryTranscriptCommonModel
 from .conversation_history_transcript_common_model_role import ConversationHistoryTranscriptCommonModelRole
 from .conversation_history_transcript_tool_call_common_model import ConversationHistoryTranscriptToolCallCommonModel
 from .conversation_history_transcript_tool_result_common_model import ConversationHistoryTranscriptToolResultCommonModel
-from .conversation_initiation_client_data import ConversationInitiationClientData
-from .conversation_initiation_client_data_config import ConversationInitiationClientDataConfig
-from .conversation_initiation_client_data_dynamic_variables_value import (
-    ConversationInitiationClientDataDynamicVariablesValue,
+from .conversation_history_twilio_phone_call_model import ConversationHistoryTwilioPhoneCallModel
+from .conversation_history_twilio_phone_call_model_direction import ConversationHistoryTwilioPhoneCallModelDirection
+from .conversation_initiation_client_data_config_input import ConversationInitiationClientDataConfigInput
+from .conversation_initiation_client_data_config_output import ConversationInitiationClientDataConfigOutput
+from .conversation_initiation_client_data_request_input import ConversationInitiationClientDataRequestInput
+from .conversation_initiation_client_data_request_input_dynamic_variables_value import (
+    ConversationInitiationClientDataRequestInputDynamicVariablesValue,
+)
+from .conversation_initiation_client_data_request_output import ConversationInitiationClientDataRequestOutput
+from .conversation_initiation_client_data_request_output_dynamic_variables_value import (
+    ConversationInitiationClientDataRequestOutputDynamicVariablesValue,
 )
 from .conversation_initiation_client_data_webhook import ConversationInitiationClientDataWebhook
 from .conversation_initiation_client_data_webhook_request_headers_value import (
@@ -110,13 +131,17 @@ from .conversation_summary_response_model import ConversationSummaryResponseMode
 from .conversation_summary_response_model_status import ConversationSummaryResponseModelStatus
 from .conversation_token_db_model import ConversationTokenDbModel
 from .conversation_token_purpose import ConversationTokenPurpose
-from .conversational_config_api_model import ConversationalConfigApiModel
+from .conversation_turn_metrics import ConversationTurnMetrics
+from .conversational_config_api_model_input import ConversationalConfigApiModelInput
+from .conversational_config_api_model_output import ConversationalConfigApiModelOutput
 from .convert_chapter_response_model import ConvertChapterResponseModel
 from .convert_project_response_model import ConvertProjectResponseModel
 from .create_agent_response_model import CreateAgentResponseModel
 from .create_audio_native_project_request import CreateAudioNativeProjectRequest
 from .create_phone_number_response_model import CreatePhoneNumberResponseModel
 from .create_pronunciation_dictionary_response_model import CreatePronunciationDictionaryResponseModel
+from .create_sip_trunk_phone_number_request import CreateSipTrunkPhoneNumberRequest
+from .create_twilio_phone_number_request import CreateTwilioPhoneNumberRequest
 from .currency import Currency
 from .custom_llm import CustomLlm
 from .data_collection_result_common_model import DataCollectionResultCommonModel
@@ -166,6 +191,7 @@ from .feedback_item import FeedbackItem
 from .fine_tuning_response import FineTuningResponse
 from .fine_tuning_response_model_state_value import FineTuningResponseModelStateValue
 from .gender import Gender
+from .generation_config import GenerationConfig
 from .get_agent_embed_response_model import GetAgentEmbedResponseModel
 from .get_agent_link_response_model import GetAgentLinkResponseModel
 from .get_agent_response_model import GetAgentResponseModel
@@ -182,18 +208,26 @@ from .get_knowledge_base_dependent_agents_response_model_agents_item import (
     GetKnowledgeBaseDependentAgentsResponseModelAgentsItem_Available,
     GetKnowledgeBaseDependentAgentsResponseModelAgentsItem_Unknown,
 )
+from .get_knowledge_base_file_response_model import GetKnowledgeBaseFileResponseModel
 from .get_knowledge_base_list_response_model import GetKnowledgeBaseListResponseModel
-from .get_knowledge_base_response_model import GetKnowledgeBaseResponseModel
-from .get_knowledge_base_response_model_access_level import GetKnowledgeBaseResponseModelAccessLevel
-from .get_knowledge_base_response_model_type import GetKnowledgeBaseResponseModelType
-from .get_knowledge_base_summary_response_model import GetKnowledgeBaseSummaryResponseModel
-from .get_knowledge_base_summary_response_model_access_level import GetKnowledgeBaseSummaryResponseModelAccessLevel
-from .get_knowledge_base_summary_response_model_dependent_agents_item import (
-    GetKnowledgeBaseSummaryResponseModelDependentAgentsItem,
-    GetKnowledgeBaseSummaryResponseModelDependentAgentsItem_Available,
-    GetKnowledgeBaseSummaryResponseModelDependentAgentsItem_Unknown,
+from .get_knowledge_base_list_response_model_documents_item import (
+    GetKnowledgeBaseListResponseModelDocumentsItem,
+    GetKnowledgeBaseListResponseModelDocumentsItem_File,
+    GetKnowledgeBaseListResponseModelDocumentsItem_Url,
 )
-from .get_knowledge_base_summary_response_model_type import GetKnowledgeBaseSummaryResponseModelType
+from .get_knowledge_base_summary_file_response_model import GetKnowledgeBaseSummaryFileResponseModel
+from .get_knowledge_base_summary_file_response_model_dependent_agents_item import (
+    GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem,
+    GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem_Available,
+    GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem_Unknown,
+)
+from .get_knowledge_base_summary_url_response_model import GetKnowledgeBaseSummaryUrlResponseModel
+from .get_knowledge_base_summary_url_response_model_dependent_agents_item import (
+    GetKnowledgeBaseSummaryUrlResponseModelDependentAgentsItem,
+    GetKnowledgeBaseSummaryUrlResponseModelDependentAgentsItem_Available,
+    GetKnowledgeBaseSummaryUrlResponseModelDependentAgentsItem_Unknown,
+)
+from .get_knowledge_base_url_response_model import GetKnowledgeBaseUrlResponseModel
 from .get_library_voices_response import GetLibraryVoicesResponse
 from .get_phone_number_response_model import GetPhoneNumberResponseModel
 from .get_projects_response import GetProjectsResponse
@@ -201,35 +235,44 @@ from .get_pronunciation_dictionaries_metadata_response_model import GetPronuncia
 from .get_pronunciation_dictionary_metadata_response import GetPronunciationDictionaryMetadataResponse
 from .get_speech_history_response import GetSpeechHistoryResponse
 from .get_voices_response import GetVoicesResponse
+from .get_voices_v_2_response_model import GetVoicesV2ResponseModel
 from .get_workspace_secrets_response_model import GetWorkspaceSecretsResponseModel
 from .history_alignment_response_model import HistoryAlignmentResponseModel
 from .history_alignments_response_model import HistoryAlignmentsResponseModel
 from .history_item import HistoryItem
 from .http_validation_error import HttpValidationError
 from .image_avatar import ImageAvatar
+from .initialize_connection import InitializeConnection
 from .invoice import Invoice
+from .knowledge_base_document_chunk_response_model import KnowledgeBaseDocumentChunkResponseModel
 from .knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
 from .knowledge_base_locator import KnowledgeBaseLocator
 from .knowledge_base_locator_type import KnowledgeBaseLocatorType
 from .language_added_response import LanguageAddedResponse
-from .language_preset import LanguagePreset
+from .language_preset_input import LanguagePresetInput
+from .language_preset_output import LanguagePresetOutput
 from .language_preset_translation import LanguagePresetTranslation
 from .language_response import LanguageResponse
 from .library_voice_response import LibraryVoiceResponse
 from .library_voice_response_model_category import LibraryVoiceResponseModelCategory
 from .literal_json_schema_property import LiteralJsonSchemaProperty
+from .literal_json_schema_property_constant_value import LiteralJsonSchemaPropertyConstantValue
 from .literal_json_schema_property_type import LiteralJsonSchemaPropertyType
 from .llm import Llm
 from .manual_verification_file_response import ManualVerificationFileResponse
 from .manual_verification_response import ManualVerificationResponse
+from .metric_record import MetricRecord
 from .model import Model
 from .model_rates_response_model import ModelRatesResponseModel
 from .model_response_model_concurrency_group import ModelResponseModelConcurrencyGroup
 from .moderation_status_response_model import ModerationStatusResponseModel
 from .moderation_status_response_model_safety_status import ModerationStatusResponseModelSafetyStatus
 from .moderation_status_response_model_warning_status import ModerationStatusResponseModelWarningStatus
-from .object_json_schema_property import ObjectJsonSchemaProperty
-from .object_json_schema_property_properties_value import ObjectJsonSchemaPropertyPropertiesValue
+from .normalized_alignment import NormalizedAlignment
+from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput
+from .object_json_schema_property_input_properties_value import ObjectJsonSchemaPropertyInputPropertiesValue
+from .object_json_schema_property_output import ObjectJsonSchemaPropertyOutput
+from .object_json_schema_property_output_properties_value import ObjectJsonSchemaPropertyOutputPropertiesValue
 from .orb_avatar import OrbAvatar
 from .output_format import OutputFormat
 from .phone_number_agent_info import PhoneNumberAgentInfo
@@ -261,19 +304,24 @@ from .project_response_model_source_type import ProjectResponseModelSourceType
 from .project_response_model_target_audience import ProjectResponseModelTargetAudience
 from .project_snapshot_extended_response_model import ProjectSnapshotExtendedResponseModel
 from .project_snapshot_response import ProjectSnapshotResponse
-from .project_snapshot_upload_response_model import ProjectSnapshotUploadResponseModel
-from .project_snapshot_upload_response_model_status import ProjectSnapshotUploadResponseModelStatus
 from .project_snapshots_response import ProjectSnapshotsResponse
 from .project_state import ProjectState
-from .prompt_agent import PromptAgent
+from .prompt_agent_input import PromptAgentInput
+from .prompt_agent_input_tools_item import (
+    PromptAgentInputToolsItem,
+    PromptAgentInputToolsItem_Client,
+    PromptAgentInputToolsItem_System,
+    PromptAgentInputToolsItem_Webhook,
+)
+from .prompt_agent_output import PromptAgentOutput
+from .prompt_agent_output_tools_item import (
+    PromptAgentOutputToolsItem,
+    PromptAgentOutputToolsItem_Client,
+    PromptAgentOutputToolsItem_System,
+    PromptAgentOutputToolsItem_Webhook,
+)
 from .prompt_agent_override import PromptAgentOverride
 from .prompt_agent_override_config import PromptAgentOverrideConfig
-from .prompt_agent_tools_item import (
-    PromptAgentToolsItem,
-    PromptAgentToolsItem_Client,
-    PromptAgentToolsItem_System,
-    PromptAgentToolsItem_Webhook,
-)
 from .prompt_evaluation_criteria import PromptEvaluationCriteria
 from .pronunciation_dictionary_alias_rule_request_model import PronunciationDictionaryAliasRuleRequestModel
 from .pronunciation_dictionary_phoneme_rule_request_model import PronunciationDictionaryPhonemeRuleRequestModel
@@ -281,15 +329,19 @@ from .pronunciation_dictionary_version_locator import PronunciationDictionaryVer
 from .pronunciation_dictionary_version_response_model import PronunciationDictionaryVersionResponseModel
 from .pydantic_pronunciation_dictionary_version_locator import PydanticPronunciationDictionaryVersionLocator
 from .query_params_json_schema import QueryParamsJsonSchema
+from .rag_chunk_metadata import RagChunkMetadata
 from .rag_config import RagConfig
 from .rag_index_response_model import RagIndexResponseModel
 from .rag_index_status import RagIndexStatus
+from .rag_retrieval_info import RagRetrievalInfo
 from .reader_resource_response_model import ReaderResourceResponseModel
 from .reader_resource_response_model_resource_type import ReaderResourceResponseModelResourceType
+from .realtime_voice_settings import RealtimeVoiceSettings
 from .recording_response import RecordingResponse
 from .remove_pronunciation_dictionary_rules_response_model import RemovePronunciationDictionaryRulesResponseModel
 from .resource_access_info import ResourceAccessInfo
 from .resource_access_info_role import ResourceAccessInfoRole
+from .resource_metadata_response_model import ResourceMetadataResponseModel
 from .review_status import ReviewStatus
 from .safety_common_model import SafetyCommonModel
 from .safety_evaluation import SafetyEvaluation
@@ -302,7 +354,14 @@ from .segment_dub_response import SegmentDubResponse
 from .segment_transcription_response import SegmentTranscriptionResponse
 from .segment_translation_response import SegmentTranslationResponse
 from .segment_update_response import SegmentUpdateResponse
+from .send_text import SendText
+from .share_option_response_model import ShareOptionResponseModel
+from .share_option_response_model_type import ShareOptionResponseModelType
+from .sip_trunk_credentials import SipTrunkCredentials
+from .speaker_response_model import SpeakerResponseModel
 from .speaker_segment import SpeakerSegment
+from .speaker_separation_response_model import SpeakerSeparationResponseModel
+from .speaker_separation_response_model_status import SpeakerSeparationResponseModelStatus
 from .speaker_track import SpeakerTrack
 from .speech_history_item_response import SpeechHistoryItemResponse
 from .speech_history_item_response_model_source import SpeechHistoryItemResponseModelSource
@@ -330,12 +389,14 @@ from .tts_optimize_streaming_latency import TtsOptimizeStreamingLatency
 from .tts_output_format import TtsOutputFormat
 from .turn_config import TurnConfig
 from .turn_mode import TurnMode
+from .twilio_outbound_call_response import TwilioOutboundCallResponse
 from .update_workspace_member_response_model import UpdateWorkspaceMemberResponseModel
 from .url_avatar import UrlAvatar
 from .usage_characters_response_model import UsageCharactersResponseModel
 from .user import User
 from .user_feedback import UserFeedback
 from .user_feedback_score import UserFeedbackScore
+from .utterance_response_model import UtteranceResponseModel
 from .validation_error import ValidationError
 from .validation_error_loc_item import ValidationErrorLocItem
 from .verification_attempt_response import VerificationAttemptResponse
@@ -354,10 +415,18 @@ from .voice_sharing_response import VoiceSharingResponse
 from .voice_sharing_response_model_category import VoiceSharingResponseModelCategory
 from .voice_sharing_state import VoiceSharingState
 from .voice_verification_response import VoiceVerificationResponse
-from .webhook_tool_api_schema_config import WebhookToolApiSchemaConfig
-from .webhook_tool_api_schema_config_method import WebhookToolApiSchemaConfigMethod
-from .webhook_tool_api_schema_config_request_headers_value import WebhookToolApiSchemaConfigRequestHeadersValue
-from .webhook_tool_config import WebhookToolConfig
+from .webhook_tool_api_schema_config_input import WebhookToolApiSchemaConfigInput
+from .webhook_tool_api_schema_config_input_method import WebhookToolApiSchemaConfigInputMethod
+from .webhook_tool_api_schema_config_input_request_headers_value import (
+    WebhookToolApiSchemaConfigInputRequestHeadersValue,
+)
+from .webhook_tool_api_schema_config_output import WebhookToolApiSchemaConfigOutput
+from .webhook_tool_api_schema_config_output_method import WebhookToolApiSchemaConfigOutputMethod
+from .webhook_tool_api_schema_config_output_request_headers_value import (
+    WebhookToolApiSchemaConfigOutputRequestHeadersValue,
+)
+from .webhook_tool_config_input import WebhookToolConfigInput
+from .webhook_tool_config_output import WebhookToolConfigOutput
 from .widget_config import WidgetConfig
 from .widget_config_avatar import (
     WidgetConfigAvatar,
@@ -375,6 +444,7 @@ from .widget_config_response_model_avatar import (
 from .widget_expandable import WidgetExpandable
 from .widget_feedback_mode import WidgetFeedbackMode
 from .workspace_group_by_name_response_model import WorkspaceGroupByNameResponseModel
+from .workspace_resource_type import WorkspaceResourceType
 
 __all__ = [
     "Accent",
@@ -392,16 +462,21 @@ __all__ = [
     "Age",
     "AgentBan",
     "AgentCallLimits",
-    "AgentConfigApiModel",
+    "AgentConfigApiModelInput",
+    "AgentConfigApiModelOutput",
     "AgentConfigOverride",
     "AgentConfigOverrideConfig",
     "AgentMetadataResponseModel",
     "AgentPlatformSettingsRequestModel",
     "AgentPlatformSettingsResponseModel",
     "AgentSummaryResponseModel",
+    "AgentWorkspaceOverridesInput",
+    "AgentWorkspaceOverridesOutput",
     "AllowlistItem",
-    "ArrayJsonSchemaProperty",
-    "ArrayJsonSchemaPropertyItems",
+    "ArrayJsonSchemaPropertyInput",
+    "ArrayJsonSchemaPropertyInputItems",
+    "ArrayJsonSchemaPropertyOutput",
+    "ArrayJsonSchemaPropertyOutputItems",
     "AsrConversationalConfig",
     "AsrInputFormat",
     "AsrProvider",
@@ -409,6 +484,7 @@ __all__ = [
     "AudioNativeCreateProjectResponseModel",
     "AudioNativeEditContentResponseModel",
     "AudioNativeProjectSettingsResponseModel",
+    "AudioOutput",
     "AudioWithTimestampsResponseModel",
     "AuthSettings",
     "AuthorizationMethod",
@@ -437,7 +513,9 @@ __all__ = [
     "CharacterAlignmentModel",
     "CharacterAlignmentResponseModel",
     "ClientEvent",
-    "ClientToolConfig",
+    "ClientToolConfigInput",
+    "ClientToolConfigOutput",
+    "CloseConnection",
     "ConvAiSecretLocator",
     "ConvAiStoredSecretDependencies",
     "ConvAiStoredSecretDependenciesAgentToolsItem",
@@ -450,20 +528,29 @@ __all__ = [
     "ConvAiWorkspaceStoredSecretConfig",
     "ConversationChargingCommonModel",
     "ConversationConfig",
-    "ConversationConfigClientOverride",
-    "ConversationConfigClientOverrideConfig",
+    "ConversationConfigClientOverrideConfigInput",
+    "ConversationConfigClientOverrideConfigOutput",
+    "ConversationConfigClientOverrideInput",
+    "ConversationConfigClientOverrideOutput",
     "ConversationDeletionSettings",
     "ConversationHistoryAnalysisCommonModel",
     "ConversationHistoryEvaluationCriteriaResultCommonModel",
     "ConversationHistoryFeedbackCommonModel",
     "ConversationHistoryMetadataCommonModel",
+    "ConversationHistoryMetadataCommonModelPhoneCall",
+    "ConversationHistoryMetadataCommonModelPhoneCall_Twilio",
     "ConversationHistoryTranscriptCommonModel",
     "ConversationHistoryTranscriptCommonModelRole",
     "ConversationHistoryTranscriptToolCallCommonModel",
     "ConversationHistoryTranscriptToolResultCommonModel",
-    "ConversationInitiationClientData",
-    "ConversationInitiationClientDataConfig",
-    "ConversationInitiationClientDataDynamicVariablesValue",
+    "ConversationHistoryTwilioPhoneCallModel",
+    "ConversationHistoryTwilioPhoneCallModelDirection",
+    "ConversationInitiationClientDataConfigInput",
+    "ConversationInitiationClientDataConfigOutput",
+    "ConversationInitiationClientDataRequestInput",
+    "ConversationInitiationClientDataRequestInputDynamicVariablesValue",
+    "ConversationInitiationClientDataRequestOutput",
+    "ConversationInitiationClientDataRequestOutputDynamicVariablesValue",
     "ConversationInitiationClientDataWebhook",
     "ConversationInitiationClientDataWebhookRequestHeadersValue",
     "ConversationSignedUrlResponseModel",
@@ -471,13 +558,17 @@ __all__ = [
     "ConversationSummaryResponseModelStatus",
     "ConversationTokenDbModel",
     "ConversationTokenPurpose",
-    "ConversationalConfigApiModel",
+    "ConversationTurnMetrics",
+    "ConversationalConfigApiModelInput",
+    "ConversationalConfigApiModelOutput",
     "ConvertChapterResponseModel",
     "ConvertProjectResponseModel",
     "CreateAgentResponseModel",
     "CreateAudioNativeProjectRequest",
     "CreatePhoneNumberResponseModel",
     "CreatePronunciationDictionaryResponseModel",
+    "CreateSipTrunkPhoneNumberRequest",
+    "CreateTwilioPhoneNumberRequest",
     "Currency",
     "CustomLlm",
     "DataCollectionResultCommonModel",
@@ -523,6 +614,7 @@ __all__ = [
     "FineTuningResponse",
     "FineTuningResponseModelStateValue",
     "Gender",
+    "GenerationConfig",
     "GetAgentEmbedResponseModel",
     "GetAgentLinkResponseModel",
     "GetAgentResponseModel",
@@ -537,16 +629,20 @@ __all__ = [
     "GetKnowledgeBaseDependentAgentsResponseModelAgentsItem",
     "GetKnowledgeBaseDependentAgentsResponseModelAgentsItem_Available",
     "GetKnowledgeBaseDependentAgentsResponseModelAgentsItem_Unknown",
+    "GetKnowledgeBaseFileResponseModel",
     "GetKnowledgeBaseListResponseModel",
-    "GetKnowledgeBaseResponseModel",
-    "GetKnowledgeBaseResponseModelAccessLevel",
-    "GetKnowledgeBaseResponseModelType",
-    "GetKnowledgeBaseSummaryResponseModel",
-    "GetKnowledgeBaseSummaryResponseModelAccessLevel",
-    "GetKnowledgeBaseSummaryResponseModelDependentAgentsItem",
-    "GetKnowledgeBaseSummaryResponseModelDependentAgentsItem_Available",
-    "GetKnowledgeBaseSummaryResponseModelDependentAgentsItem_Unknown",
-    "GetKnowledgeBaseSummaryResponseModelType",
+    "GetKnowledgeBaseListResponseModelDocumentsItem",
+    "GetKnowledgeBaseListResponseModelDocumentsItem_File",
+    "GetKnowledgeBaseListResponseModelDocumentsItem_Url",
+    "GetKnowledgeBaseSummaryFileResponseModel",
+    "GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem",
+    "GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem_Available",
+    "GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem_Unknown",
+    "GetKnowledgeBaseSummaryUrlResponseModel",
+    "GetKnowledgeBaseSummaryUrlResponseModelDependentAgentsItem",
+    "GetKnowledgeBaseSummaryUrlResponseModelDependentAgentsItem_Available",
+    "GetKnowledgeBaseSummaryUrlResponseModelDependentAgentsItem_Unknown",
+    "GetKnowledgeBaseUrlResponseModel",
     "GetLibraryVoicesResponse",
     "GetPhoneNumberResponseModel",
     "GetProjectsResponse",
@@ -554,35 +650,44 @@ __all__ = [
     "GetPronunciationDictionaryMetadataResponse",
     "GetSpeechHistoryResponse",
     "GetVoicesResponse",
+    "GetVoicesV2ResponseModel",
     "GetWorkspaceSecretsResponseModel",
     "HistoryAlignmentResponseModel",
     "HistoryAlignmentsResponseModel",
     "HistoryItem",
     "HttpValidationError",
     "ImageAvatar",
+    "InitializeConnection",
     "Invoice",
+    "KnowledgeBaseDocumentChunkResponseModel",
     "KnowledgeBaseDocumentMetadataResponseModel",
     "KnowledgeBaseLocator",
     "KnowledgeBaseLocatorType",
     "LanguageAddedResponse",
-    "LanguagePreset",
+    "LanguagePresetInput",
+    "LanguagePresetOutput",
     "LanguagePresetTranslation",
     "LanguageResponse",
     "LibraryVoiceResponse",
     "LibraryVoiceResponseModelCategory",
     "LiteralJsonSchemaProperty",
+    "LiteralJsonSchemaPropertyConstantValue",
     "LiteralJsonSchemaPropertyType",
     "Llm",
     "ManualVerificationFileResponse",
     "ManualVerificationResponse",
+    "MetricRecord",
     "Model",
     "ModelRatesResponseModel",
     "ModelResponseModelConcurrencyGroup",
     "ModerationStatusResponseModel",
     "ModerationStatusResponseModelSafetyStatus",
     "ModerationStatusResponseModelWarningStatus",
-    "ObjectJsonSchemaProperty",
-    "ObjectJsonSchemaPropertyPropertiesValue",
+    "NormalizedAlignment",
+    "ObjectJsonSchemaPropertyInput",
+    "ObjectJsonSchemaPropertyInputPropertiesValue",
+    "ObjectJsonSchemaPropertyOutput",
+    "ObjectJsonSchemaPropertyOutputPropertiesValue",
     "OrbAvatar",
     "OutputFormat",
     "PhoneNumberAgentInfo",
@@ -614,17 +719,20 @@ __all__ = [
     "ProjectResponseModelTargetAudience",
     "ProjectSnapshotExtendedResponseModel",
     "ProjectSnapshotResponse",
-    "ProjectSnapshotUploadResponseModel",
-    "ProjectSnapshotUploadResponseModelStatus",
     "ProjectSnapshotsResponse",
     "ProjectState",
-    "PromptAgent",
+    "PromptAgentInput",
+    "PromptAgentInputToolsItem",
+    "PromptAgentInputToolsItem_Client",
+    "PromptAgentInputToolsItem_System",
+    "PromptAgentInputToolsItem_Webhook",
+    "PromptAgentOutput",
+    "PromptAgentOutputToolsItem",
+    "PromptAgentOutputToolsItem_Client",
+    "PromptAgentOutputToolsItem_System",
+    "PromptAgentOutputToolsItem_Webhook",
     "PromptAgentOverride",
     "PromptAgentOverrideConfig",
-    "PromptAgentToolsItem",
-    "PromptAgentToolsItem_Client",
-    "PromptAgentToolsItem_System",
-    "PromptAgentToolsItem_Webhook",
     "PromptEvaluationCriteria",
     "PronunciationDictionaryAliasRuleRequestModel",
     "PronunciationDictionaryPhonemeRuleRequestModel",
@@ -632,15 +740,19 @@ __all__ = [
     "PronunciationDictionaryVersionResponseModel",
     "PydanticPronunciationDictionaryVersionLocator",
     "QueryParamsJsonSchema",
+    "RagChunkMetadata",
     "RagConfig",
     "RagIndexResponseModel",
     "RagIndexStatus",
+    "RagRetrievalInfo",
     "ReaderResourceResponseModel",
     "ReaderResourceResponseModelResourceType",
+    "RealtimeVoiceSettings",
     "RecordingResponse",
     "RemovePronunciationDictionaryRulesResponseModel",
     "ResourceAccessInfo",
     "ResourceAccessInfoRole",
+    "ResourceMetadataResponseModel",
     "ReviewStatus",
     "SafetyCommonModel",
     "SafetyEvaluation",
@@ -653,7 +765,14 @@ __all__ = [
     "SegmentTranscriptionResponse",
     "SegmentTranslationResponse",
     "SegmentUpdateResponse",
+    "SendText",
+    "ShareOptionResponseModel",
+    "ShareOptionResponseModelType",
+    "SipTrunkCredentials",
+    "SpeakerResponseModel",
     "SpeakerSegment",
+    "SpeakerSeparationResponseModel",
+    "SpeakerSeparationResponseModelStatus",
     "SpeakerTrack",
     "SpeechHistoryItemResponse",
     "SpeechHistoryItemResponseModelSource",
@@ -681,12 +800,14 @@ __all__ = [
     "TtsOutputFormat",
     "TurnConfig",
     "TurnMode",
+    "TwilioOutboundCallResponse",
     "UpdateWorkspaceMemberResponseModel",
     "UrlAvatar",
     "UsageCharactersResponseModel",
     "User",
     "UserFeedback",
     "UserFeedbackScore",
+    "UtteranceResponseModel",
     "ValidationError",
     "ValidationErrorLocItem",
     "VerificationAttemptResponse",
@@ -705,10 +826,14 @@ __all__ = [
     "VoiceSharingResponseModelCategory",
     "VoiceSharingState",
     "VoiceVerificationResponse",
-    "WebhookToolApiSchemaConfig",
-    "WebhookToolApiSchemaConfigMethod",
-    "WebhookToolApiSchemaConfigRequestHeadersValue",
-    "WebhookToolConfig",
+    "WebhookToolApiSchemaConfigInput",
+    "WebhookToolApiSchemaConfigInputMethod",
+    "WebhookToolApiSchemaConfigInputRequestHeadersValue",
+    "WebhookToolApiSchemaConfigOutput",
+    "WebhookToolApiSchemaConfigOutputMethod",
+    "WebhookToolApiSchemaConfigOutputRequestHeadersValue",
+    "WebhookToolConfigInput",
+    "WebhookToolConfigOutput",
     "WidgetConfig",
     "WidgetConfigAvatar",
     "WidgetConfigAvatar_Image",
@@ -722,4 +847,5 @@ __all__ = [
     "WidgetExpandable",
     "WidgetFeedbackMode",
     "WorkspaceGroupByNameResponseModel",
+    "WorkspaceResourceType",
 ]

@@ -3,14 +3,25 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 from .agent_summary_response_model import AgentSummaryResponseModel
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class GetAgentsPageResponseModel(UncheckedBaseModel):
-    agents: typing.List[AgentSummaryResponseModel]
-    next_cursor: typing.Optional[str] = None
-    has_more: bool
+    agents: typing.List[AgentSummaryResponseModel] = pydantic.Field()
+    """
+    A list of agents and their metadata
+    """
+
+    next_cursor: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The next cursor to paginate through the agents
+    """
+
+    has_more: bool = pydantic.Field()
+    """
+    Whether there are more agents to paginate through
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

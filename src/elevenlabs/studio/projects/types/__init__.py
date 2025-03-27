@@ -2,6 +2,12 @@
 
 from .projects_add_request_apply_text_normalization import ProjectsAddRequestApplyTextNormalization
 from .projects_add_request_fiction import ProjectsAddRequestFiction
+from .projects_add_request_source_type import ProjectsAddRequestSourceType
 from .projects_add_request_target_audience import ProjectsAddRequestTargetAudience
 
-__all__ = ["ProjectsAddRequestApplyTextNormalization", "ProjectsAddRequestFiction", "ProjectsAddRequestTargetAudience"]
+__all__ = [
+    "ProjectsAddRequestApplyTextNormalization",
+    "ProjectsAddRequestFiction",
+    "ProjectsAddRequestSourceType",
+    "ProjectsAddRequestTargetAudience",
+]

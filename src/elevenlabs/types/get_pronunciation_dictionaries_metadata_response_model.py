@@ -2,7 +2,9 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .get_pronunciation_dictionary_metadata_response import GetPronunciationDictionaryMetadataResponse
+from .get_pronunciation_dictionary_metadata_response import (
+    GetPronunciationDictionaryMetadataResponse,
+)
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 

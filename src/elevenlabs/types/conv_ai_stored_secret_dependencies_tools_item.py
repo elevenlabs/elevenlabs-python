@@ -3,7 +3,9 @@
 from __future__ import annotations
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .dependent_available_tool_identifier_access_level import DependentAvailableToolIdentifierAccessLevel
+from .dependent_available_tool_identifier_access_level import (
+    DependentAvailableToolIdentifierAccessLevel,
+)
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 import typing_extensions
@@ -41,6 +43,9 @@ class ConvAiStoredSecretDependenciesToolsItem_Unknown(UncheckedBaseModel):
 
 
 ConvAiStoredSecretDependenciesToolsItem = typing_extensions.Annotated[
-    typing.Union[ConvAiStoredSecretDependenciesToolsItem_Available, ConvAiStoredSecretDependenciesToolsItem_Unknown],
+    typing.Union[
+        ConvAiStoredSecretDependenciesToolsItem_Available,
+        ConvAiStoredSecretDependenciesToolsItem_Unknown,
+    ],
     UnionMetadata(discriminant="type"),
 ]

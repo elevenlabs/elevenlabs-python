@@ -3,16 +3,28 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import pydantic
 import typing
-from .project_extended_response_model_target_audience import ProjectExtendedResponseModelTargetAudience
+from .project_extended_response_model_target_audience import (
+    ProjectExtendedResponseModelTargetAudience,
+)
 from .project_state import ProjectState
-from .project_extended_response_model_access_level import ProjectExtendedResponseModelAccessLevel
+from .project_extended_response_model_access_level import (
+    ProjectExtendedResponseModelAccessLevel,
+)
 from .project_extended_response_model_fiction import ProjectExtendedResponseModelFiction
 from .project_creation_meta_response_model import ProjectCreationMetaResponseModel
-from .project_extended_response_model_source_type import ProjectExtendedResponseModelSourceType
-from .project_extended_response_model_quality_preset import ProjectExtendedResponseModelQualityPreset
+from .project_extended_response_model_source_type import (
+    ProjectExtendedResponseModelSourceType,
+)
+from .project_extended_response_model_quality_preset import (
+    ProjectExtendedResponseModelQualityPreset,
+)
 from .chapter_response import ChapterResponse
-from .pronunciation_dictionary_version_response_model import PronunciationDictionaryVersionResponseModel
-from .project_extended_response_model_apply_text_normalization import ProjectExtendedResponseModelApplyTextNormalization
+from .pronunciation_dictionary_version_response_model import (
+    PronunciationDictionaryVersionResponseModel,
+)
+from .project_extended_response_model_apply_text_normalization import (
+    ProjectExtendedResponseModelApplyTextNormalization,
+)
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -150,6 +162,11 @@ class ProjectExtendedResponseModel(UncheckedBaseModel):
     source_type: typing.Optional[ProjectExtendedResponseModelSourceType] = pydantic.Field(default=None)
     """
     The source type of the project.
+    """
+
+    chapters_enabled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether chapters are enabled for the project.
     """
 
     quality_preset: ProjectExtendedResponseModelQualityPreset = pydantic.Field()

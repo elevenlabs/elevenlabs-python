@@ -2,14 +2,21 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
+import pydantic
 from .turn_mode import TurnMode
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
-import pydantic
 
 
 class TurnConfig(UncheckedBaseModel):
-    turn_timeout: typing.Optional[float] = None
-    mode: typing.Optional[TurnMode] = None
+    turn_timeout: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Maximum wait time for the user’s reply before re-engaging the user
+    """
+
+    mode: typing.Optional[TurnMode] = pydantic.Field(default=None)
+    """
+    The mode of turn detection
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

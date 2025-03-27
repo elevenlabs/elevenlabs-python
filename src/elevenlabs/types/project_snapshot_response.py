@@ -3,7 +3,6 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import pydantic
 import typing
-from .project_snapshot_upload_response_model import ProjectSnapshotUploadResponseModel
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -28,14 +27,14 @@ class ProjectSnapshotResponse(UncheckedBaseModel):
     The name of the project snapshot.
     """
 
-    audio_upload: typing.Optional[ProjectSnapshotUploadResponseModel] = pydantic.Field(default=None)
+    audio_upload: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
     """
-    The audio upload of the project snapshot.
+    (Deprecated)
     """
 
-    zip_upload: typing.Optional[ProjectSnapshotUploadResponseModel] = pydantic.Field(default=None)
+    zip_upload: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
     """
-    The zip upload of the project snapshot.
+    (Deprecated)
     """
 
     if IS_PYDANTIC_V2:
