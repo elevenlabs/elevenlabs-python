@@ -36,6 +36,10 @@ def is_voice_id(val: str) -> bool:
     return bool(re.match(r"^[a-zA-Z0-9]{20}$", val))
 
 
+def get_base_url_host(base_url: str) -> str:
+    return httpx.URL(base_url).host
+
+
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
@@ -73,8 +77,12 @@ class ElevenLabs(BaseElevenLabs):
         httpx_client: typing.Optional[httpx.Client] = None
     ):
         super().__init__(
-            base_url=base_url,
-            environment=environment,
+            environment=base_url
+            and ElevenLabsEnvironment(
+                base=f"https://{get_base_url_host(base_url)}",
+                wss=f"wss://{get_base_url_host(base_url)}",
+            )
+            or environment,
             api_key=api_key,
             timeout=timeout,
             httpx_client=httpx_client
@@ -91,7 +99,7 @@ class ElevenLabs(BaseElevenLabs):
     ) -> Voice:
         """
           This is a manually maintained helper function that clones a voice from a set of audio files.
-          **NOTE**: This function is a helper function and is simply making 
+          **NOTE**: This function is a helper function and is simply making
           calls to the `add` and `get` functions of the `voices` endpoint.
 
           Parameters:
@@ -107,7 +115,7 @@ class ElevenLabs(BaseElevenLabs):
         """
         add_voice_response = self.voices.add(
           name=name,
-          description=description, 
+          description=description,
           files=[open(file, 'rb') for file in files],
           labels=str(json.dumps(labels or {}))
         )
@@ -134,11 +142,11 @@ class ElevenLabs(BaseElevenLabs):
         """
             - text: Union[str, Iterator[str]]. The string or stream of strings that will get converted into speech.
 
-            - voice: str. A voice id, name, or voice response. Defaults to the Sarah voice. 
+            - voice: str. A voice id, name, or voice response. Defaults to the Sarah voice.
 
-            - model: typing.Optional[str]. Identifier of the model that will be used, you can query them using GET /v1/models. 
-                                           The model needs to have support for text to speech, you can check this using the 
-                                           can_do_text_to_speech property.                                                                
+            - model: typing.Optional[str]. Identifier of the model that will be used, you can query them using GET /v1/models.
+                                           The model needs to have support for text to speech, you can check this using the
+                                           can_do_text_to_speech property.
 
             - optimize_streaming_latency: typing.Optional[int]. You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
                                                                 0 - default mode (no latency optimizations)
@@ -148,10 +156,10 @@ class ElevenLabs(BaseElevenLabs):
                                                                 4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
 
                                                                 Defaults to 0.
-            
-            - stream: bool. If true, the function will return a generator that will yield the audio in chunks.    
 
-                            Defaults to False.                                                                
+            - stream: bool. If true, the function will return a generator that will yield the audio in chunks.
+
+                            Defaults to False.
 
             - output_format: typing.Optional[OutputFormat]. Output format of the generated audio. Must be one of:
                                                    mp3_22050_32 - output format, mp3 with 22.05kHz sample rate at 32kbps.
@@ -167,10 +175,10 @@ class ElevenLabs(BaseElevenLabs):
                                                    ulaw_8000 - μ-law format (sometimes written mu-law, often approximated as u-law) with 8kHz sample rate. Note that this format is commonly used for Twilio audio inputs.
 
                                                     Defaults to mp3_44100_128.
-            
+
             - voice_settings: typing.Optional[VoiceSettings]. Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
 
-            - pronunciation_dictionary_locators: typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]. A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request                                                    
+            - pronunciation_dictionary_locators: typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]. A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -217,9 +225,9 @@ class ElevenLabs(BaseElevenLabs):
                     request_options=request_options,
                     model_id=model_id
                 )
-            else: 
+            else:
                 raise ApiError(body="Text is neither a string nor an iterator.")
-        else: 
+        else:
             if not isinstance(text, str):
                 raise ApiError(body="Text must be a string when stream is False.")
             return self.text_to_speech.convert(
@@ -267,10 +275,10 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
       request_options: typing.Optional[RequestOptions] = None
     ) -> Voice:
         """
-          This is a manually mnaintained helper function that generates a 
+          This is a manually mnaintained helper function that generates a
           voice from provided text.
 
-          **NOTE**: This function is a helper function and is simply making 
+          **NOTE**: This function is a helper function and is simply making
           calls to the `text_to_speech.convert` and`text_to_speech.convert_as_stream`
           functions.
 
@@ -287,7 +295,7 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
         """
         add_voice_response = await self.voices.add(
           name=name,
-          description=description, 
+          description=description,
           files=[open(file, 'rb') for file in files],
           labels=str(json.dumps(labels or {}))
         )
@@ -312,20 +320,20 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
       request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncIterator[bytes]:
         """
-          This is a manually mnaintained helper function that generates a 
+          This is a manually mnaintained helper function that generates a
           voice from provided text.
 
-          **NOTE**: This function is a helper function and is simply making 
+          **NOTE**: This function is a helper function and is simply making
           calls to the `text_to_speech.convert` and`text_to_speech.convert_as_stream`
           functions.
 
             - text: str. The string that will get converted into speech. The Async client does not support streaming.
 
-            - voice: str. A voice id, name, or voice response. Defaults to the Rachel voice. 
+            - voice: str. A voice id, name, or voice response. Defaults to the Rachel voice.
 
-            - model: typing.Optional[str]. Identifier of the model that will be used, you can query them using GET /v1/models. 
-                                           The model needs to have support for text to speech, you can check this using the 
-                                           can_do_text_to_speech property.                                                                
+            - model: typing.Optional[str]. Identifier of the model that will be used, you can query them using GET /v1/models.
+                                           The model needs to have support for text to speech, you can check this using the
+                                           can_do_text_to_speech property.
 
             - optimize_streaming_latency: typing.Optional[int]. You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
                                                                 0 - default mode (no latency optimizations)
@@ -335,10 +343,10 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
                                                                 4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
 
                                                                 Defaults to 0.
-            
-            - stream: bool. If true, the function will return a generator that will yield the audio in chunks.    
 
-                            Defaults to False.                                                                
+            - stream: bool. If true, the function will return a generator that will yield the audio in chunks.
+
+                            Defaults to False.
 
             - output_format: typing.Optional[OutputFormat]. Output format of the generated audio. Must be one of:
                                                    mp3_22050_32 - output format, mp3 with 22.05kHz sample rate at 32kbps.
@@ -354,10 +362,10 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
                                                    ulaw_8000 - μ-law format (sometimes written mu-law, often approximated as u-law) with 8kHz sample rate. Note that this format is commonly used for Twilio audio inputs.
 
                                                     Defaults to mp3_44100_128.
-            
+
             - voice_settings: typing.Optional[VoiceSettings]. Voice settings overriding stored setttings for the given voice. They are applied only on the given request.
 
-            - pronunciation_dictionary_locators: typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]. A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request                                                    
+            - pronunciation_dictionary_locators: typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]. A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
 
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         """
@@ -381,7 +389,7 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
             model_id = model
         elif isinstance(model, Model):
             model_id = model.model_id
-        
+
         if stream:
             return self.text_to_speech.convert_as_stream(
                 voice_id=voice_id,
