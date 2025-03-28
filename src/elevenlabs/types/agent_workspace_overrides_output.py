@@ -6,6 +6,7 @@ from .conversation_initiation_client_data_webhook import (
     ConversationInitiationClientDataWebhook,
 )
 import pydantic
+from .conv_ai_webhooks import ConvAiWebhooks
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -16,6 +17,8 @@ class AgentWorkspaceOverridesOutput(UncheckedBaseModel):
     """
     The webhook to send conversation initiation client data to
     """
+
+    webhooks: typing.Optional[ConvAiWebhooks] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
