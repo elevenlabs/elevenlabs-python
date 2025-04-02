@@ -52,10 +52,30 @@ class ConversationalAiGetKnowledgeBaseDocumentByIdResponse_File(UncheckedBaseMod
             extra = pydantic.Extra.allow
 
 
+class ConversationalAiGetKnowledgeBaseDocumentByIdResponse_Text(UncheckedBaseModel):
+    type: typing.Literal["text"] = "text"
+    id: str
+    name: str
+    metadata: KnowledgeBaseDocumentMetadataResponseModel
+    prompt_injectable: bool
+    access_info: ResourceAccessInfo
+    extracted_inner_html: str
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 ConversationalAiGetKnowledgeBaseDocumentByIdResponse = typing_extensions.Annotated[
     typing.Union[
         ConversationalAiGetKnowledgeBaseDocumentByIdResponse_Url,
         ConversationalAiGetKnowledgeBaseDocumentByIdResponse_File,
+        ConversationalAiGetKnowledgeBaseDocumentByIdResponse_Text,
     ],
     UnionMetadata(discriminant="type"),
 ]

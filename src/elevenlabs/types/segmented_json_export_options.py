@@ -6,12 +6,10 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
-class ConversationHistoryTranscriptToolCallCommonModel(UncheckedBaseModel):
-    type: typing.Optional[str] = None
-    request_id: str
-    tool_name: str
-    params_as_json: str
-    tool_has_been_called: bool
+class SegmentedJsonExportOptions(UncheckedBaseModel):
+    segment_on_silence_longer_than_s: typing.Optional[float] = None
+    max_segment_duration_s: typing.Optional[float] = None
+    max_segment_chars: typing.Optional[int] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

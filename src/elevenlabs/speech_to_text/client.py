@@ -6,6 +6,7 @@ from .. import core
 from .types.speech_to_text_convert_request_timestamps_granularity import (
     SpeechToTextConvertRequestTimestampsGranularity,
 )
+from ..types.additional_formats import AdditionalFormats
 from ..core.request_options import RequestOptions
 from ..types.speech_to_text_chunk_response_model import SpeechToTextChunkResponseModel
 from ..core.unchecked_base_model import construct_type
@@ -34,6 +35,7 @@ class SpeechToTextClient:
         num_speakers: typing.Optional[int] = OMIT,
         timestamps_granularity: typing.Optional[SpeechToTextConvertRequestTimestampsGranularity] = OMIT,
         diarize: typing.Optional[bool] = OMIT,
+        additional_formats: typing.Optional[AdditionalFormats] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SpeechToTextChunkResponseModel:
         """
@@ -64,6 +66,9 @@ class SpeechToTextClient:
 
         diarize : typing.Optional[bool]
             Whether to annotate which speaker is currently talking in the uploaded file.
+
+        additional_formats : typing.Optional[AdditionalFormats]
+            A list of additional formats to export the transcript to.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -98,6 +103,7 @@ class SpeechToTextClient:
                 "num_speakers": num_speakers,
                 "timestamps_granularity": timestamps_granularity,
                 "diarize": diarize,
+                "additional_formats": additional_formats,
             },
             files={
                 "file": file,
@@ -145,6 +151,7 @@ class AsyncSpeechToTextClient:
         num_speakers: typing.Optional[int] = OMIT,
         timestamps_granularity: typing.Optional[SpeechToTextConvertRequestTimestampsGranularity] = OMIT,
         diarize: typing.Optional[bool] = OMIT,
+        additional_formats: typing.Optional[AdditionalFormats] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SpeechToTextChunkResponseModel:
         """
@@ -175,6 +182,9 @@ class AsyncSpeechToTextClient:
 
         diarize : typing.Optional[bool]
             Whether to annotate which speaker is currently talking in the uploaded file.
+
+        additional_formats : typing.Optional[AdditionalFormats]
+            A list of additional formats to export the transcript to.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -217,6 +227,7 @@ class AsyncSpeechToTextClient:
                 "num_speakers": num_speakers,
                 "timestamps_granularity": timestamps_granularity,
                 "diarize": diarize,
+                "additional_formats": additional_formats,
             },
             files={
                 "file": file,

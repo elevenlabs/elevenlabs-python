@@ -22,6 +22,11 @@ class VerifiedVoiceLanguageResponseModel(UncheckedBaseModel):
     The voice's accent, if applicable.
     """
 
+    locale: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The voice's locale, if applicable.
+    """
+
     preview_url: typing.Optional[str] = pydantic.Field(default=None)
     """
     The voice's preview URL, if applicable.

@@ -4,6 +4,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 import pydantic
 import typing
 from .speech_to_text_word_response_model import SpeechToTextWordResponseModel
+from .additional_format_response_model import AdditionalFormatResponseModel
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -30,6 +31,13 @@ class SpeechToTextChunkResponseModel(UncheckedBaseModel):
     words: typing.List[SpeechToTextWordResponseModel] = pydantic.Field()
     """
     List of words with their timing information.
+    """
+
+    additional_formats: typing.Optional[typing.List[typing.Optional[AdditionalFormatResponseModel]]] = pydantic.Field(
+        default=None
+    )
+    """
+    Requested additional formats of the transcript.
     """
 
     if IS_PYDANTIC_V2:
