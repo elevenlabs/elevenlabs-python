@@ -7,14 +7,14 @@ class ElevenLabsEnvironment:
     PRODUCTION: ElevenLabsEnvironment
     PRODUCTION_US: ElevenLabsEnvironment
 
-    def __init__(self, *, base: str, wss: str):
+    def __init__(self, *, base: str, api: str):
         self.base = base
-        self.wss = wss
+        self.api = api
 
 
 ElevenLabsEnvironment.PRODUCTION = ElevenLabsEnvironment(
-    base="https://api.elevenlabs.io", wss="wss://api.elevenlabs.io"
+    base="https://api.elevenlabs.io", api="wss://api.elevenlabs.io"
 )
 ElevenLabsEnvironment.PRODUCTION_US = ElevenLabsEnvironment(
-    base="https://api.us.elevenlabs.io", wss="wss://api.elevenlabs.io"
+    base="https://api.us.elevenlabs.io", api="wss://api.elevenlabs.io"
 )
