@@ -80,7 +80,7 @@ class ElevenLabs(BaseElevenLabs):
             environment=base_url
             and ElevenLabsEnvironment(
                 base=f"https://{get_base_url_host(base_url)}",
-                wss=f"wss://{get_base_url_host(base_url)}",
+                api=f"wss://{get_base_url_host(base_url)}",
             )
             or environment,
             api_key=api_key,
