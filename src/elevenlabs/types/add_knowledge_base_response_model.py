@@ -8,6 +8,7 @@ import pydantic
 
 class AddKnowledgeBaseResponseModel(UncheckedBaseModel):
     id: str
+    name: str
     prompt_injectable: bool
 
     if IS_PYDANTIC_V2:

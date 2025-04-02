@@ -4,6 +4,7 @@ from .types import (
     ConversationalAiCreatePhoneNumberRequestBody,
     ConversationalAiGetKnowledgeBaseDocumentByIdResponse,
     ConversationalAiGetKnowledgeBaseDocumentByIdResponse_File,
+    ConversationalAiGetKnowledgeBaseDocumentByIdResponse_Text,
     ConversationalAiGetKnowledgeBaseDocumentByIdResponse_Url,
 )
 
@@ -11,5 +12,6 @@ __all__ = [
     "ConversationalAiCreatePhoneNumberRequestBody",
     "ConversationalAiGetKnowledgeBaseDocumentByIdResponse",
     "ConversationalAiGetKnowledgeBaseDocumentByIdResponse_File",
+    "ConversationalAiGetKnowledgeBaseDocumentByIdResponse_Text",
     "ConversationalAiGetKnowledgeBaseDocumentByIdResponse_Url",
 ]

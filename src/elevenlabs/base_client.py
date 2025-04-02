@@ -24,6 +24,7 @@ from .usage.client import UsageClient
 from .pronunciation_dictionary.client import PronunciationDictionaryClient
 from .workspace.client import WorkspaceClient
 from .speech_to_text.client import SpeechToTextClient
+from .forced_alignment.client import ForcedAlignmentClient
 from .conversational_ai.client import ConversationalAiClient
 from .core.client_wrapper import AsyncClientWrapper
 from .history.client import AsyncHistoryClient
@@ -45,6 +46,7 @@ from .usage.client import AsyncUsageClient
 from .pronunciation_dictionary.client import AsyncPronunciationDictionaryClient
 from .workspace.client import AsyncWorkspaceClient
 from .speech_to_text.client import AsyncSpeechToTextClient
+from .forced_alignment.client import AsyncForcedAlignmentClient
 from .conversational_ai.client import AsyncConversationalAiClient
 
 
@@ -123,6 +125,7 @@ class BaseElevenLabs:
         self.pronunciation_dictionary = PronunciationDictionaryClient(client_wrapper=self._client_wrapper)
         self.workspace = WorkspaceClient(client_wrapper=self._client_wrapper)
         self.speech_to_text = SpeechToTextClient(client_wrapper=self._client_wrapper)
+        self.forced_alignment = ForcedAlignmentClient(client_wrapper=self._client_wrapper)
         self.conversational_ai = ConversationalAiClient(client_wrapper=self._client_wrapper)
 
 
@@ -201,4 +204,5 @@ class AsyncBaseElevenLabs:
         self.pronunciation_dictionary = AsyncPronunciationDictionaryClient(client_wrapper=self._client_wrapper)
         self.workspace = AsyncWorkspaceClient(client_wrapper=self._client_wrapper)
         self.speech_to_text = AsyncSpeechToTextClient(client_wrapper=self._client_wrapper)
+        self.forced_alignment = AsyncForcedAlignmentClient(client_wrapper=self._client_wrapper)
         self.conversational_ai = AsyncConversationalAiClient(client_wrapper=self._client_wrapper)

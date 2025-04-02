@@ -4,6 +4,7 @@ from .conversational_ai_create_phone_number_request_body import ConversationalAi
 from .conversational_ai_get_knowledge_base_document_by_id_response import (
     ConversationalAiGetKnowledgeBaseDocumentByIdResponse,
     ConversationalAiGetKnowledgeBaseDocumentByIdResponse_File,
+    ConversationalAiGetKnowledgeBaseDocumentByIdResponse_Text,
     ConversationalAiGetKnowledgeBaseDocumentByIdResponse_Url,
 )
 
@@ -11,5 +12,6 @@ __all__ = [
     "ConversationalAiCreatePhoneNumberRequestBody",
     "ConversationalAiGetKnowledgeBaseDocumentByIdResponse",
     "ConversationalAiGetKnowledgeBaseDocumentByIdResponse_File",
+    "ConversationalAiGetKnowledgeBaseDocumentByIdResponse_Text",
     "ConversationalAiGetKnowledgeBaseDocumentByIdResponse_Url",
 ]

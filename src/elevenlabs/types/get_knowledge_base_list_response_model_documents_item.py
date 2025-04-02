@@ -12,6 +12,9 @@ from .get_knowledge_base_summary_file_response_model_dependent_agents_item impor
 )
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from .get_knowledge_base_summary_text_response_model_dependent_agents_item import (
+    GetKnowledgeBaseSummaryTextResponseModelDependentAgentsItem,
+)
 from .get_knowledge_base_summary_url_response_model_dependent_agents_item import (
     GetKnowledgeBaseSummaryUrlResponseModelDependentAgentsItem,
 )
@@ -27,6 +30,25 @@ class GetKnowledgeBaseListResponseModelDocumentsItem_File(UncheckedBaseModel):
     prompt_injectable: bool
     access_info: ResourceAccessInfo
     dependent_agents: typing.List[GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem]
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class GetKnowledgeBaseListResponseModelDocumentsItem_Text(UncheckedBaseModel):
+    type: typing.Literal["text"] = "text"
+    id: str
+    name: str
+    metadata: KnowledgeBaseDocumentMetadataResponseModel
+    prompt_injectable: bool
+    access_info: ResourceAccessInfo
+    dependent_agents: typing.List[GetKnowledgeBaseSummaryTextResponseModelDependentAgentsItem]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -61,6 +83,7 @@ class GetKnowledgeBaseListResponseModelDocumentsItem_Url(UncheckedBaseModel):
 GetKnowledgeBaseListResponseModelDocumentsItem = typing_extensions.Annotated[
     typing.Union[
         GetKnowledgeBaseListResponseModelDocumentsItem_File,
+        GetKnowledgeBaseListResponseModelDocumentsItem_Text,
         GetKnowledgeBaseListResponseModelDocumentsItem_Url,
     ],
     UnionMetadata(discriminant="type"),

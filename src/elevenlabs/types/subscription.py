@@ -33,6 +33,11 @@ class Subscription(UncheckedBaseModel):
     The maximum number of characters allowed in the current billing period.
     """
 
+    max_character_limit_extension: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Maximum number of characters that the character limit can be exceeded by. Managed by the workspace admin.
+    """
+
     can_extend_character_limit: bool = pydantic.Field()
     """
     Whether the user can extend their character limit.
@@ -51,6 +56,11 @@ class Subscription(UncheckedBaseModel):
     voice_slots_used: typing.Optional[int] = pydantic.Field(default=None)
     """
     The number of voice slots used by the user.
+    """
+
+    professional_voice_slots_used: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The number of professional voice slots used by the workspace/user if single seat.
     """
 
     voice_limit: int = pydantic.Field()
