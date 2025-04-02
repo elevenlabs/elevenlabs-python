@@ -1,21 +1,17 @@
-import typing
 import json
-import re
 import os
+import re
+import typing
+from typing import AsyncIterator, Iterator, Optional, Union
+
 import httpx
 
-from typing import Iterator, Optional, Union, \
-  Optional, AsyncIterator
-
-from .base_client import \
-  BaseElevenLabs, AsyncBaseElevenLabs
-from .core import RequestOptions, ApiError
-from .types import Voice, VoiceSettings, \
-  PronunciationDictionaryVersionLocator, Model
+from .base_client import AsyncBaseElevenLabs, BaseElevenLabs
+from .core import ApiError, RequestOptions
 from .environment import ElevenLabsEnvironment
 from .realtime_tts import RealtimeTextToSpeechClient
-from .types import OutputFormat
-
+from .types import (Model, OutputFormat, PronunciationDictionaryVersionLocator,
+                    Voice, VoiceSettings)
 
 DEFAULT_VOICE = Voice(
     voice_id="EXAVITQu4vr4xnSDxMaL",
@@ -80,7 +76,7 @@ class ElevenLabs(BaseElevenLabs):
             environment=base_url
             and ElevenLabsEnvironment(
                 base=f"https://{get_base_url_host(base_url)}",
-                wss=f"wss://{get_base_url_host(base_url)}",
+                api=f"wss://{get_base_url_host(base_url)}",
             )
             or environment,
             api_key=api_key,
