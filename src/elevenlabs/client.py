@@ -128,6 +128,8 @@ class ElevenLabs(BaseElevenLabs):
       self,
       *,
       text: Union[str, Iterator[str]],
+      previous_text: typing.Optional[str] = '',
+      next_text: typing.Optional[str] = '',
       voice: Union[VoiceId, VoiceName, Voice] = DEFAULT_VOICE,
       voice_settings: typing.Optional[VoiceSettings] = DEFAULT_VOICE.settings,
       model: Union[ModelId, Model] = "eleven_multilingual_v2",
@@ -212,6 +214,8 @@ class ElevenLabs(BaseElevenLabs):
                     optimize_streaming_latency=optimize_streaming_latency,
                     output_format=output_format,
                     text=text,
+                    previous_text=previous_text,
+                    next_text=next_text,
                     request_options=request_options,
                     pronunciation_dictionary_locators=pronunciation_dictionary_locators,
                     model_id=model_id
@@ -222,6 +226,8 @@ class ElevenLabs(BaseElevenLabs):
                     voice_settings=voice_settings,
                     output_format=output_format,
                     text=text,
+                    previous_text=previous_text,
+                    next_text=next_text,
                     request_options=request_options,
                     model_id=model_id
                 )
@@ -237,6 +243,8 @@ class ElevenLabs(BaseElevenLabs):
                 optimize_streaming_latency=optimize_streaming_latency,
                 output_format=output_format,
                 text=text,
+                previous_text=previous_text,
+                next_text=next_text,
                 request_options=request_options,
                 pronunciation_dictionary_locators=pronunciation_dictionary_locators
             )
