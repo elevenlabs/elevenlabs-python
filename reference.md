@@ -1626,6 +1626,14 @@ Defaults to None.
 <dl>
 <dd>
 
+**file_format:** `typing.Optional[SpeechToSpeechConvertRequestFileFormat]` — The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
     
 </dd>
@@ -1766,6 +1774,14 @@ Defaults to None.
 <dd>
 
 **remove_background_noise:** `typing.Optional[bool]` — If set, will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file_format:** `typing.Optional[SpeechToSpeechConvertAsStreamRequestFileFormat]` — The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
     
 </dd>
 </dl>
@@ -2584,6 +2600,14 @@ client.voices.search(
 <dd>
 
 **fine_tuning_state:** `typing.Optional[str]` — State of the voice's fine tuning to filter by. Applicable only to professional voices clones. One of 'draft', 'not_verified', 'not_started', 'queued', 'fine_tuning', 'fine_tuned', 'failed', 'delayed'
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**collection_id:** `typing.Optional[str]` — Collection ID to filter voices by.
     
 </dd>
 </dl>
@@ -6306,6 +6330,94 @@ client.dubbing.dub_segments(
 </dl>
 </details>
 
+<details><summary><code>client.dubbing.<a href="src/elevenlabs/dubbing/client.py">render_dub</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Regenerate the dubs for either the entire resource or the specified segments/languages. Will automatically transcribe and translate any missing transcriptions and translations.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.dubbing.render_dub(
+    dubbing_id="dubbing_id",
+    language="language",
+    render_type="mp4",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**dubbing_id:** `str` — ID of the dubbing project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language:** `str` — Render this language
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**render_type:** `RenderType` — The type of the render. One of ['mp4', 'aac', 'mp3', 'wav', 'aaf', 'tracks_zip', 'clips_zip']
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.dubbing.<a href="src/elevenlabs/dubbing/client.py">dub_a_video_or_an_audio_file</a>(...)</code></summary>
 <dl>
 <dd>
@@ -8645,17 +8757,7 @@ client.speech_to_text.convert(
 <dl>
 <dd>
 
-**model_id:** `str` — The ID of the model to use for transcription, currently only 'scribe_v1' is available.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**file:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
+**model_id:** `str` — The ID of the model to use for transcription, currently only 'scribe_v1' and 'scribe_v1_experimental' are available.
     
 </dd>
 </dl>
@@ -8664,6 +8766,14 @@ core.File` — See core.File for more documentation
 <dd>
 
 **enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file:** `typing.Optional[str]` — The file to transcribe. All major audio and video formats are supported. Exactly one of the file or cloud_storage_url parameters must be provided. The file size must be less than 1GB.
     
 </dd>
 </dl>
@@ -8712,6 +8822,22 @@ core.File` — See core.File for more documentation
 <dd>
 
 **additional_formats:** `typing.Optional[AdditionalFormats]` — A list of additional formats to export the transcript to.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file_format:** `typing.Optional[SpeechToTextConvertRequestFileFormat]` — The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cloud_storage_url:** `typing.Optional[str]` — The valid AWS S3 or Google Cloud Storage URL of the file to transcribe. Exactly one of the file or cloud_storage_url parameters must be provided. The file must be a valid publicly accessible cloud storage URL. The file size must be less than 2GB. URL can be pre-signed.
     
 </dd>
 </dl>
@@ -8792,7 +8918,7 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**text:** `str` — The text to align with the audio or video. The input text can be in any format, however diarization is not supported at this time.
+**text:** `str` — The text to align with the audio. The input text can be in any format, however diarization is not supported at this time.
     
 </dd>
 </dl>
@@ -9037,14 +9163,6 @@ client.conversational_ai.create_agent(
 <dl>
 <dd>
 
-**use_tool_ids:** `typing.Optional[bool]` — Use tool ids instead of tools specs from request payload.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **platform_settings:** `typing.Optional[AgentPlatformSettingsRequestModel]` — Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
     
 </dd>
@@ -9264,14 +9382,6 @@ client.conversational_ai.update_agent(
 <dd>
 
 **agent_id:** `str` — The id of an agent. This is returned on agent creation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_tool_ids:** `typing.Optional[bool]` — Use tool ids instead of tools specs from request payload.
     
 </dd>
 </dl>
@@ -10364,6 +10474,18 @@ client.conversational_ai.get_knowledge_base_list()
 <dd>
 
 **show_only_owned_documents:** `typing.Optional[bool]` — If set to true, the endpoint will return only documents owned by you (and not shared from somebody else).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**types:** `typing.Optional[
+    typing.Union[
+        KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]
+    ]
+]` — If present, the endpoint will return only documents of the given types.
     
 </dd>
 </dl>

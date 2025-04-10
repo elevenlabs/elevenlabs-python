@@ -3,9 +3,9 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .array_json_schema_property_input import ArrayJsonSchemaPropertyInput
 from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput
+import typing
 from .webhook_tool_api_schema_config_input import WebhookToolApiSchemaConfigInput
 import pydantic
-import typing
 from .dynamic_variables_config import DynamicVariablesConfig
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
@@ -15,6 +15,7 @@ class WebhookToolConfigInput(UncheckedBaseModel):
     A webhook tool is a tool that calls an external webhook from our server
     """
 
+    id: typing.Optional[str] = None
     name: str
     description: str
     api_schema: WebhookToolApiSchemaConfigInput = pydantic.Field()

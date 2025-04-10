@@ -5,6 +5,7 @@ import typing
 WorkspaceResourceType = typing.Union[
     typing.Literal[
         "voice",
+        "voice_collection",
         "pronunciation_dictionary",
         "dubbing",
         "project",

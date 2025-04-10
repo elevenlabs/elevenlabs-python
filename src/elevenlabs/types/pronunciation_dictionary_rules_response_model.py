@@ -6,7 +6,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 
 
-class RemovePronunciationDictionaryRulesResponseModel(UncheckedBaseModel):
+class PronunciationDictionaryRulesResponseModel(UncheckedBaseModel):
     id: str = pydantic.Field()
     """
     The ID of the pronunciation dictionary.

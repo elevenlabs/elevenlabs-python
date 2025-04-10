@@ -36,7 +36,7 @@ class ForcedAlignmentClient:
             See core.File for more documentation
 
         text : str
-            The text to align with the audio or video. The input text can be in any format, however diarization is not supported at this time.
+            The text to align with the audio. The input text can be in any format, however diarization is not supported at this time.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -115,7 +115,7 @@ class AsyncForcedAlignmentClient:
             See core.File for more documentation
 
         text : str
-            The text to align with the audio or video. The input text can be in any format, however diarization is not supported at this time.
+            The text to align with the audio. The input text can be in any format, however diarization is not supported at this time.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
