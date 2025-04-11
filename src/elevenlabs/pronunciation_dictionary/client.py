@@ -22,13 +22,10 @@ from .types.body_add_a_pronunciation_dictionary_v_1_pronunciation_dictionaries_a
 )
 from ..core.serialization import convert_and_respect_annotation_metadata
 from .types.pronunciation_dictionary_rule import PronunciationDictionaryRule
-from ..types.add_pronunciation_dictionary_rules_response_model import (
-    AddPronunciationDictionaryRulesResponseModel,
+from ..types.pronunciation_dictionary_rules_response_model import (
+    PronunciationDictionaryRulesResponseModel,
 )
 from ..core.jsonable_encoder import jsonable_encoder
-from ..types.remove_pronunciation_dictionary_rules_response_model import (
-    RemovePronunciationDictionaryRulesResponseModel,
-)
 from ..types.get_pronunciation_dictionary_metadata_response import (
     GetPronunciationDictionaryMetadataResponse,
 )
@@ -241,7 +238,7 @@ class PronunciationDictionaryClient:
         *,
         rules: typing.Sequence[PronunciationDictionaryRule],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AddPronunciationDictionaryRulesResponseModel:
+    ) -> PronunciationDictionaryRulesResponseModel:
         """
         Add rules to the pronunciation dictionary
 
@@ -260,7 +257,7 @@ class PronunciationDictionaryClient:
 
         Returns
         -------
-        AddPronunciationDictionaryRulesResponseModel
+        PronunciationDictionaryRulesResponseModel
             Successful Response
 
         Examples
@@ -303,9 +300,9 @@ class PronunciationDictionaryClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AddPronunciationDictionaryRulesResponseModel,
+                    PronunciationDictionaryRulesResponseModel,
                     construct_type(
-                        type_=AddPronunciationDictionaryRulesResponseModel,  # type: ignore
+                        type_=PronunciationDictionaryRulesResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -330,7 +327,7 @@ class PronunciationDictionaryClient:
         *,
         rule_strings: typing.Sequence[str],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> RemovePronunciationDictionaryRulesResponseModel:
+    ) -> PronunciationDictionaryRulesResponseModel:
         """
         Remove rules from the pronunciation dictionary
 
@@ -347,7 +344,7 @@ class PronunciationDictionaryClient:
 
         Returns
         -------
-        RemovePronunciationDictionaryRulesResponseModel
+        PronunciationDictionaryRulesResponseModel
             Successful Response
 
         Examples
@@ -378,9 +375,9 @@ class PronunciationDictionaryClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    RemovePronunciationDictionaryRulesResponseModel,
+                    PronunciationDictionaryRulesResponseModel,
                     construct_type(
-                        type_=RemovePronunciationDictionaryRulesResponseModel,  # type: ignore
+                        type_=PronunciationDictionaryRulesResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -809,7 +806,7 @@ class AsyncPronunciationDictionaryClient:
         *,
         rules: typing.Sequence[PronunciationDictionaryRule],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AddPronunciationDictionaryRulesResponseModel:
+    ) -> PronunciationDictionaryRulesResponseModel:
         """
         Add rules to the pronunciation dictionary
 
@@ -828,7 +825,7 @@ class AsyncPronunciationDictionaryClient:
 
         Returns
         -------
-        AddPronunciationDictionaryRulesResponseModel
+        PronunciationDictionaryRulesResponseModel
             Successful Response
 
         Examples
@@ -879,9 +876,9 @@ class AsyncPronunciationDictionaryClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AddPronunciationDictionaryRulesResponseModel,
+                    PronunciationDictionaryRulesResponseModel,
                     construct_type(
-                        type_=AddPronunciationDictionaryRulesResponseModel,  # type: ignore
+                        type_=PronunciationDictionaryRulesResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -906,7 +903,7 @@ class AsyncPronunciationDictionaryClient:
         *,
         rule_strings: typing.Sequence[str],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> RemovePronunciationDictionaryRulesResponseModel:
+    ) -> PronunciationDictionaryRulesResponseModel:
         """
         Remove rules from the pronunciation dictionary
 
@@ -923,7 +920,7 @@ class AsyncPronunciationDictionaryClient:
 
         Returns
         -------
-        RemovePronunciationDictionaryRulesResponseModel
+        PronunciationDictionaryRulesResponseModel
             Successful Response
 
         Examples
@@ -962,9 +959,9 @@ class AsyncPronunciationDictionaryClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    RemovePronunciationDictionaryRulesResponseModel,
+                    PronunciationDictionaryRulesResponseModel,
                     construct_type(
-                        type_=RemovePronunciationDictionaryRulesResponseModel,  # type: ignore
+                        type_=PronunciationDictionaryRulesResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

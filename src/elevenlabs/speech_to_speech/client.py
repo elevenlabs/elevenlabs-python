@@ -4,6 +4,9 @@ import typing
 from ..core.client_wrapper import SyncClientWrapper
 from .. import core
 from ..types.output_format import OutputFormat
+from .types.speech_to_speech_convert_request_file_format import (
+    SpeechToSpeechConvertRequestFileFormat,
+)
 from ..core.request_options import RequestOptions
 from ..core.jsonable_encoder import jsonable_encoder
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
@@ -11,6 +14,9 @@ from ..types.http_validation_error import HttpValidationError
 from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
+from .types.speech_to_speech_convert_as_stream_request_file_format import (
+    SpeechToSpeechConvertAsStreamRequestFileFormat,
+)
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -33,6 +39,7 @@ class SpeechToSpeechClient:
         voice_settings: typing.Optional[str] = OMIT,
         seed: typing.Optional[int] = OMIT,
         remove_background_noise: typing.Optional[bool] = OMIT,
+        file_format: typing.Optional[SpeechToSpeechConvertRequestFileFormat] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -74,6 +81,9 @@ class SpeechToSpeechClient:
         remove_background_noise : typing.Optional[bool]
             If set, will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
 
+        file_format : typing.Optional[SpeechToSpeechConvertRequestFileFormat]
+            The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -109,6 +119,7 @@ class SpeechToSpeechClient:
                 "voice_settings": voice_settings,
                 "seed": seed,
                 "remove_background_noise": remove_background_noise,
+                "file_format": file_format,
             },
             files={
                 "audio": audio,
@@ -150,6 +161,7 @@ class SpeechToSpeechClient:
         voice_settings: typing.Optional[str] = OMIT,
         seed: typing.Optional[int] = OMIT,
         remove_background_noise: typing.Optional[bool] = OMIT,
+        file_format: typing.Optional[SpeechToSpeechConvertAsStreamRequestFileFormat] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -191,6 +203,9 @@ class SpeechToSpeechClient:
         remove_background_noise : typing.Optional[bool]
             If set, will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
 
+        file_format : typing.Optional[SpeechToSpeechConvertAsStreamRequestFileFormat]
+            The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -226,6 +241,7 @@ class SpeechToSpeechClient:
                 "voice_settings": voice_settings,
                 "seed": seed,
                 "remove_background_noise": remove_background_noise,
+                "file_format": file_format,
             },
             files={
                 "audio": audio,
@@ -272,6 +288,7 @@ class AsyncSpeechToSpeechClient:
         voice_settings: typing.Optional[str] = OMIT,
         seed: typing.Optional[int] = OMIT,
         remove_background_noise: typing.Optional[bool] = OMIT,
+        file_format: typing.Optional[SpeechToSpeechConvertRequestFileFormat] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -312,6 +329,9 @@ class AsyncSpeechToSpeechClient:
 
         remove_background_noise : typing.Optional[bool]
             If set, will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
+
+        file_format : typing.Optional[SpeechToSpeechConvertRequestFileFormat]
+            The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -356,6 +376,7 @@ class AsyncSpeechToSpeechClient:
                 "voice_settings": voice_settings,
                 "seed": seed,
                 "remove_background_noise": remove_background_noise,
+                "file_format": file_format,
             },
             files={
                 "audio": audio,
@@ -397,6 +418,7 @@ class AsyncSpeechToSpeechClient:
         voice_settings: typing.Optional[str] = OMIT,
         seed: typing.Optional[int] = OMIT,
         remove_background_noise: typing.Optional[bool] = OMIT,
+        file_format: typing.Optional[SpeechToSpeechConvertAsStreamRequestFileFormat] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -437,6 +459,9 @@ class AsyncSpeechToSpeechClient:
 
         remove_background_noise : typing.Optional[bool]
             If set, will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
+
+        file_format : typing.Optional[SpeechToSpeechConvertAsStreamRequestFileFormat]
+            The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -481,6 +506,7 @@ class AsyncSpeechToSpeechClient:
                 "voice_settings": voice_settings,
                 "seed": seed,
                 "remove_background_noise": remove_background_noise,
+                "file_format": file_format,
             },
             files={
                 "audio": audio,

@@ -2,13 +2,13 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
+from .transfer import Transfer
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
-class ConversationChargingCommonModel(UncheckedBaseModel):
-    dev_discount: typing.Optional[bool] = None
-    tier: typing.Optional[str] = None
+class TransferToAgentToolConfig(UncheckedBaseModel):
+    transfers: typing.List[Transfer]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

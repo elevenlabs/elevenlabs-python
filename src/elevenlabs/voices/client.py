@@ -108,6 +108,7 @@ class VoicesClient:
         voice_type: typing.Optional[str] = None,
         category: typing.Optional[str] = None,
         fine_tuning_state: typing.Optional[str] = None,
+        collection_id: typing.Optional[str] = None,
         include_total_count: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetVoicesV2ResponseModel:
@@ -139,6 +140,9 @@ class VoicesClient:
 
         fine_tuning_state : typing.Optional[str]
             State of the voice's fine tuning to filter by. Applicable only to professional voices clones. One of 'draft', 'not_verified', 'not_started', 'queued', 'fine_tuning', 'fine_tuned', 'failed', 'delayed'
+
+        collection_id : typing.Optional[str]
+            Collection ID to filter voices by.
 
         include_total_count : typing.Optional[bool]
             Whether to include the total count of voices found in the response. Incurs a performance cost.
@@ -175,6 +179,7 @@ class VoicesClient:
                 "voice_type": voice_type,
                 "category": category,
                 "fine_tuning_state": fine_tuning_state,
+                "collection_id": collection_id,
                 "include_total_count": include_total_count,
             },
             request_options=request_options,
@@ -1137,6 +1142,7 @@ class AsyncVoicesClient:
         voice_type: typing.Optional[str] = None,
         category: typing.Optional[str] = None,
         fine_tuning_state: typing.Optional[str] = None,
+        collection_id: typing.Optional[str] = None,
         include_total_count: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetVoicesV2ResponseModel:
@@ -1168,6 +1174,9 @@ class AsyncVoicesClient:
 
         fine_tuning_state : typing.Optional[str]
             State of the voice's fine tuning to filter by. Applicable only to professional voices clones. One of 'draft', 'not_verified', 'not_started', 'queued', 'fine_tuning', 'fine_tuned', 'failed', 'delayed'
+
+        collection_id : typing.Optional[str]
+            Collection ID to filter voices by.
 
         include_total_count : typing.Optional[bool]
             Whether to include the total count of voices found in the response. Incurs a performance cost.
@@ -1212,6 +1221,7 @@ class AsyncVoicesClient:
                 "voice_type": voice_type,
                 "category": category,
                 "fine_tuning_state": fine_tuning_state,
+                "collection_id": collection_id,
                 "include_total_count": include_total_count,
             },
             request_options=request_options,
