@@ -5,7 +5,9 @@ from .add_chapter_response_model import AddChapterResponseModel
 from .add_knowledge_base_response_model import AddKnowledgeBaseResponseModel
 from .add_project_response_model import AddProjectResponseModel
 from .add_pronunciation_dictionary_response_model import AddPronunciationDictionaryResponseModel
-from .add_pronunciation_dictionary_rules_response_model import AddPronunciationDictionaryRulesResponseModel
+from .add_pronunciation_dictionary_response_model_permission_on_resource import (
+    AddPronunciationDictionaryResponseModelPermissionOnResource,
+)
 from .add_sharing_voice_request import AddSharingVoiceRequest
 from .add_voice_ivc_response_model import AddVoiceIvcResponseModel
 from .add_voice_response_model import AddVoiceResponseModel
@@ -38,6 +40,7 @@ from .asr_quality import AsrQuality
 from .audio_native_create_project_response_model import AudioNativeCreateProjectResponseModel
 from .audio_native_edit_content_response_model import AudioNativeEditContentResponseModel
 from .audio_native_project_settings_response_model import AudioNativeProjectSettingsResponseModel
+from .audio_native_project_settings_response_model_status import AudioNativeProjectSettingsResponseModelStatus
 from .audio_output import AudioOutput
 from .audio_with_timestamps_response_model import AudioWithTimestampsResponseModel
 from .auth_settings import AuthSettings
@@ -98,6 +101,7 @@ from .conversation_config_client_override_input import ConversationConfigClientO
 from .conversation_config_client_override_output import ConversationConfigClientOverrideOutput
 from .conversation_deletion_settings import ConversationDeletionSettings
 from .conversation_history_analysis_common_model import ConversationHistoryAnalysisCommonModel
+from .conversation_history_error_common_model import ConversationHistoryErrorCommonModel
 from .conversation_history_evaluation_criteria_result_common_model import (
     ConversationHistoryEvaluationCriteriaResultCommonModel,
 )
@@ -107,6 +111,7 @@ from .conversation_history_metadata_common_model_phone_call import (
     ConversationHistoryMetadataCommonModelPhoneCall,
     ConversationHistoryMetadataCommonModelPhoneCall_Twilio,
 )
+from .conversation_history_rag_usage_common_model import ConversationHistoryRagUsageCommonModel
 from .conversation_history_transcript_common_model import ConversationHistoryTranscriptCommonModel
 from .conversation_history_transcript_common_model_role import ConversationHistoryTranscriptCommonModelRole
 from .conversation_history_transcript_tool_call_common_model import ConversationHistoryTranscriptToolCallCommonModel
@@ -171,6 +176,7 @@ from .dubbed_segment import DubbedSegment
 from .dubbing_media_metadata import DubbingMediaMetadata
 from .dubbing_media_reference import DubbingMediaReference
 from .dubbing_metadata_response import DubbingMetadataResponse
+from .dubbing_render_response_model import DubbingRenderResponseModel
 from .dubbing_resource import DubbingResource
 from .dynamic_variables_config import DynamicVariablesConfig
 from .dynamic_variables_config_dynamic_variable_placeholders_value import (
@@ -182,6 +188,7 @@ from .edit_voice_response_model import EditVoiceResponseModel
 from .edit_voice_settings_response_model import EditVoiceSettingsResponseModel
 from .embed_variant import EmbedVariant
 from .embedding_model_enum import EmbeddingModelEnum
+from .end_call_tool_config import EndCallToolConfig
 from .evaluation_settings import EvaluationSettings
 from .evaluation_success_result import EvaluationSuccessResult
 from .export_options import (
@@ -255,6 +262,9 @@ from .get_phone_number_response_model import GetPhoneNumberResponseModel
 from .get_projects_response import GetProjectsResponse
 from .get_pronunciation_dictionaries_metadata_response_model import GetPronunciationDictionariesMetadataResponseModel
 from .get_pronunciation_dictionary_metadata_response import GetPronunciationDictionaryMetadataResponse
+from .get_pronunciation_dictionary_metadata_response_model_permission_on_resource import (
+    GetPronunciationDictionaryMetadataResponseModelPermissionOnResource,
+)
 from .get_speech_history_response import GetSpeechHistoryResponse
 from .get_voices_response import GetVoicesResponse
 from .get_voices_v_2_response_model import GetVoicesV2ResponseModel
@@ -272,6 +282,7 @@ from .knowledge_base_document_metadata_response_model import KnowledgeBaseDocume
 from .knowledge_base_document_type import KnowledgeBaseDocumentType
 from .knowledge_base_locator import KnowledgeBaseLocator
 from .language_added_response import LanguageAddedResponse
+from .language_detection_tool_config import LanguageDetectionToolConfig
 from .language_preset_input import LanguagePresetInput
 from .language_preset_output import LanguagePresetOutput
 from .language_preset_translation import LanguagePresetTranslation
@@ -349,8 +360,12 @@ from .prompt_agent_override_config import PromptAgentOverrideConfig
 from .prompt_evaluation_criteria import PromptEvaluationCriteria
 from .pronunciation_dictionary_alias_rule_request_model import PronunciationDictionaryAliasRuleRequestModel
 from .pronunciation_dictionary_phoneme_rule_request_model import PronunciationDictionaryPhonemeRuleRequestModel
+from .pronunciation_dictionary_rules_response_model import PronunciationDictionaryRulesResponseModel
 from .pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
 from .pronunciation_dictionary_version_response_model import PronunciationDictionaryVersionResponseModel
+from .pronunciation_dictionary_version_response_model_permission_on_resource import (
+    PronunciationDictionaryVersionResponseModelPermissionOnResource,
+)
 from .pydantic_pronunciation_dictionary_version_locator import PydanticPronunciationDictionaryVersionLocator
 from .query_params_json_schema import QueryParamsJsonSchema
 from .rag_chunk_metadata import RagChunkMetadata
@@ -362,7 +377,8 @@ from .reader_resource_response_model import ReaderResourceResponseModel
 from .reader_resource_response_model_resource_type import ReaderResourceResponseModelResourceType
 from .realtime_voice_settings import RealtimeVoiceSettings
 from .recording_response import RecordingResponse
-from .remove_pronunciation_dictionary_rules_response_model import RemovePronunciationDictionaryRulesResponseModel
+from .render import Render
+from .render_type import RenderType
 from .resource_access_info import ResourceAccessInfo
 from .resource_access_info_role import ResourceAccessInfoRole
 from .resource_metadata_response_model import ResourceMetadataResponseModel
@@ -404,9 +420,24 @@ from .subscription_response_model_character_refresh_period import SubscriptionRe
 from .subscription_response_model_currency import SubscriptionResponseModelCurrency
 from .subscription_status import SubscriptionStatus
 from .subscription_usage_response_model import SubscriptionUsageResponseModel
-from .system_tool_config import SystemToolConfig
+from .system_tool_config_input import SystemToolConfigInput
+from .system_tool_config_input_params import (
+    SystemToolConfigInputParams,
+    SystemToolConfigInputParams_EndCall,
+    SystemToolConfigInputParams_LanguageDetection,
+    SystemToolConfigInputParams_TransferToAgent,
+)
+from .system_tool_config_output import SystemToolConfigOutput
+from .system_tool_config_output_params import (
+    SystemToolConfigOutputParams,
+    SystemToolConfigOutputParams_EndCall,
+    SystemToolConfigOutputParams_LanguageDetection,
+    SystemToolConfigOutputParams_TransferToAgent,
+)
 from .telephony_provider import TelephonyProvider
 from .text_to_speech_as_stream_request import TextToSpeechAsStreamRequest
+from .transfer import Transfer
+from .transfer_to_agent_tool_config import TransferToAgentToolConfig
 from .tts_conversational_config import TtsConversationalConfig
 from .tts_conversational_config_override import TtsConversationalConfigOverride
 from .tts_conversational_config_override_config import TtsConversationalConfigOverrideConfig
@@ -479,7 +510,7 @@ __all__ = [
     "AddKnowledgeBaseResponseModel",
     "AddProjectResponseModel",
     "AddPronunciationDictionaryResponseModel",
-    "AddPronunciationDictionaryRulesResponseModel",
+    "AddPronunciationDictionaryResponseModelPermissionOnResource",
     "AddSharingVoiceRequest",
     "AddVoiceIvcResponseModel",
     "AddVoiceResponseModel",
@@ -512,6 +543,7 @@ __all__ = [
     "AudioNativeCreateProjectResponseModel",
     "AudioNativeEditContentResponseModel",
     "AudioNativeProjectSettingsResponseModel",
+    "AudioNativeProjectSettingsResponseModelStatus",
     "AudioOutput",
     "AudioWithTimestampsResponseModel",
     "AuthSettings",
@@ -562,11 +594,13 @@ __all__ = [
     "ConversationConfigClientOverrideOutput",
     "ConversationDeletionSettings",
     "ConversationHistoryAnalysisCommonModel",
+    "ConversationHistoryErrorCommonModel",
     "ConversationHistoryEvaluationCriteriaResultCommonModel",
     "ConversationHistoryFeedbackCommonModel",
     "ConversationHistoryMetadataCommonModel",
     "ConversationHistoryMetadataCommonModelPhoneCall",
     "ConversationHistoryMetadataCommonModelPhoneCall_Twilio",
+    "ConversationHistoryRagUsageCommonModel",
     "ConversationHistoryTranscriptCommonModel",
     "ConversationHistoryTranscriptCommonModelRole",
     "ConversationHistoryTranscriptToolCallCommonModel",
@@ -625,6 +659,7 @@ __all__ = [
     "DubbingMediaMetadata",
     "DubbingMediaReference",
     "DubbingMetadataResponse",
+    "DubbingRenderResponseModel",
     "DubbingResource",
     "DynamicVariablesConfig",
     "DynamicVariablesConfigDynamicVariablePlaceholdersValue",
@@ -634,6 +669,7 @@ __all__ = [
     "EditVoiceSettingsResponseModel",
     "EmbedVariant",
     "EmbeddingModelEnum",
+    "EndCallToolConfig",
     "EvaluationSettings",
     "EvaluationSuccessResult",
     "ExportOptions",
@@ -693,6 +729,7 @@ __all__ = [
     "GetProjectsResponse",
     "GetPronunciationDictionariesMetadataResponseModel",
     "GetPronunciationDictionaryMetadataResponse",
+    "GetPronunciationDictionaryMetadataResponseModelPermissionOnResource",
     "GetSpeechHistoryResponse",
     "GetVoicesResponse",
     "GetVoicesV2ResponseModel",
@@ -710,6 +747,7 @@ __all__ = [
     "KnowledgeBaseDocumentType",
     "KnowledgeBaseLocator",
     "LanguageAddedResponse",
+    "LanguageDetectionToolConfig",
     "LanguagePresetInput",
     "LanguagePresetOutput",
     "LanguagePresetTranslation",
@@ -783,8 +821,10 @@ __all__ = [
     "PromptEvaluationCriteria",
     "PronunciationDictionaryAliasRuleRequestModel",
     "PronunciationDictionaryPhonemeRuleRequestModel",
+    "PronunciationDictionaryRulesResponseModel",
     "PronunciationDictionaryVersionLocator",
     "PronunciationDictionaryVersionResponseModel",
+    "PronunciationDictionaryVersionResponseModelPermissionOnResource",
     "PydanticPronunciationDictionaryVersionLocator",
     "QueryParamsJsonSchema",
     "RagChunkMetadata",
@@ -796,7 +836,8 @@ __all__ = [
     "ReaderResourceResponseModelResourceType",
     "RealtimeVoiceSettings",
     "RecordingResponse",
-    "RemovePronunciationDictionaryRulesResponseModel",
+    "Render",
+    "RenderType",
     "ResourceAccessInfo",
     "ResourceAccessInfoRole",
     "ResourceMetadataResponseModel",
@@ -838,9 +879,20 @@ __all__ = [
     "SubscriptionResponseModelCurrency",
     "SubscriptionStatus",
     "SubscriptionUsageResponseModel",
-    "SystemToolConfig",
+    "SystemToolConfigInput",
+    "SystemToolConfigInputParams",
+    "SystemToolConfigInputParams_EndCall",
+    "SystemToolConfigInputParams_LanguageDetection",
+    "SystemToolConfigInputParams_TransferToAgent",
+    "SystemToolConfigOutput",
+    "SystemToolConfigOutputParams",
+    "SystemToolConfigOutputParams_EndCall",
+    "SystemToolConfigOutputParams_LanguageDetection",
+    "SystemToolConfigOutputParams_TransferToAgent",
     "TelephonyProvider",
     "TextToSpeechAsStreamRequest",
+    "Transfer",
+    "TransferToAgentToolConfig",
     "TtsConversationalConfig",
     "TtsConversationalConfigOverride",
     "TtsConversationalConfigOverrideConfig",

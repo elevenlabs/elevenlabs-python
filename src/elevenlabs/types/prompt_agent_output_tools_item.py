@@ -8,6 +8,7 @@ import typing
 from .dynamic_variables_config import DynamicVariablesConfig
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from .system_tool_config_output_params import SystemToolConfigOutputParams
 from .webhook_tool_api_schema_config_output import WebhookToolApiSchemaConfigOutput
 import typing_extensions
 from ..core.unchecked_base_model import UnionMetadata
@@ -19,6 +20,7 @@ class PromptAgentOutputToolsItem_Client(UncheckedBaseModel):
     """
 
     type: typing.Literal["client"] = "client"
+    id: typing.Optional[str] = None
     name: str
     description: str
     parameters: typing.Optional[ObjectJsonSchemaPropertyOutput] = None
@@ -42,8 +44,10 @@ class PromptAgentOutputToolsItem_System(UncheckedBaseModel):
     """
 
     type: typing.Literal["system"] = "system"
+    id: typing.Optional[str] = None
     name: str
     description: str
+    params: SystemToolConfigOutputParams
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -61,6 +65,7 @@ class PromptAgentOutputToolsItem_Webhook(UncheckedBaseModel):
     """
 
     type: typing.Literal["webhook"] = "webhook"
+    id: typing.Optional[str] = None
     name: str
     description: str
     api_schema: WebhookToolApiSchemaConfigOutput

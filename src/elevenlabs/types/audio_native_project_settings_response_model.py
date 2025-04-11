@@ -3,6 +3,9 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import pydantic
 import typing
+from .audio_native_project_settings_response_model_status import (
+    AudioNativeProjectSettingsResponseModelStatus,
+)
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -50,6 +53,11 @@ class AudioNativeProjectSettingsResponseModel(UncheckedBaseModel):
     audio_url: typing.Optional[str] = pydantic.Field(default=None)
     """
     The URL of the audio file.
+    """
+
+    status: typing.Optional[AudioNativeProjectSettingsResponseModelStatus] = pydantic.Field(default=None)
+    """
+    Current state of the project
     """
 
     if IS_PYDANTIC_V2:

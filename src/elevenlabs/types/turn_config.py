@@ -13,6 +13,11 @@ class TurnConfig(UncheckedBaseModel):
     Maximum wait time for the user’s reply before re-engaging the user
     """
 
+    silence_end_call_timeout: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Maximum wait time since the user last spoke before terminating the call
+    """
+
     mode: typing.Optional[TurnMode] = pydantic.Field(default=None)
     """
     The mode of turn detection

@@ -17,6 +17,8 @@ from ..types.segment_delete_response import SegmentDeleteResponse
 from ..types.segment_transcription_response import SegmentTranscriptionResponse
 from ..types.segment_translation_response import SegmentTranslationResponse
 from ..types.segment_dub_response import SegmentDubResponse
+from ..types.render_type import RenderType
+from ..types.dubbing_render_response_model import DubbingRenderResponseModel
 from ..types.do_dubbing_response import DoDubbingResponse
 from ..types.dubbing_metadata_response import DubbingMetadataResponse
 from ..types.delete_dubbing_response_model import DeleteDubbingResponseModel
@@ -637,6 +639,86 @@ class DubbingClient:
                     SegmentDubResponse,
                     construct_type(
                         type_=SegmentDubResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def render_dub(
+        self,
+        dubbing_id: str,
+        language: str,
+        *,
+        render_type: RenderType,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> DubbingRenderResponseModel:
+        """
+        Regenerate the dubs for either the entire resource or the specified segments/languages. Will automatically transcribe and translate any missing transcriptions and translations.
+
+        Parameters
+        ----------
+        dubbing_id : str
+            ID of the dubbing project.
+
+        language : str
+            Render this language
+
+        render_type : RenderType
+            The type of the render. One of ['mp4', 'aac', 'mp3', 'wav', 'aaf', 'tracks_zip', 'clips_zip']
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DubbingRenderResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.dubbing.render_dub(
+            dubbing_id="dubbing_id",
+            language="language",
+            render_type="mp4",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/render/{jsonable_encoder(language)}",
+            base_url=self._client_wrapper.get_environment().base,
+            method="POST",
+            json={
+                "render_type": render_type,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    DubbingRenderResponseModel,
+                    construct_type(
+                        type_=DubbingRenderResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1791,6 +1873,94 @@ class AsyncDubbingClient:
                     SegmentDubResponse,
                     construct_type(
                         type_=SegmentDubResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def render_dub(
+        self,
+        dubbing_id: str,
+        language: str,
+        *,
+        render_type: RenderType,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> DubbingRenderResponseModel:
+        """
+        Regenerate the dubs for either the entire resource or the specified segments/languages. Will automatically transcribe and translate any missing transcriptions and translations.
+
+        Parameters
+        ----------
+        dubbing_id : str
+            ID of the dubbing project.
+
+        language : str
+            Render this language
+
+        render_type : RenderType
+            The type of the render. One of ['mp4', 'aac', 'mp3', 'wav', 'aaf', 'tracks_zip', 'clips_zip']
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DubbingRenderResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.dubbing.render_dub(
+                dubbing_id="dubbing_id",
+                language="language",
+                render_type="mp4",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/render/{jsonable_encoder(language)}",
+            base_url=self._client_wrapper.get_environment().base,
+            method="POST",
+            json={
+                "render_type": render_type,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    DubbingRenderResponseModel,
+                    construct_type(
+                        type_=DubbingRenderResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
