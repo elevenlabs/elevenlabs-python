@@ -163,3 +163,33 @@ def test_conversation_with_dynamic_variables():
     mock_ws.send.assert_any_call(json.dumps(expected_init_message))
     agent_response_callback.assert_called_once_with("Hello there!")
     assert conversation._conversation_id == TEST_CONVERSATION_ID
+
+def test_wss_url_construction():
+    
+    mock_client = MagicMock()
+
+    # Create a mock for _client_wrapper
+    mock_client_wrapper = MagicMock()
+    mock_client._client_wrapper = mock_client_wrapper
+
+    # Create a mock environment with a real string for 'base'
+    mock_environment = MagicMock()
+    mock_environment.base = "https://api.elevenlabs.io"
+    mock_client_wrapper.get_environment.return_value = mock_environment
+
+    # Create a Conversation instance
+    conversation = Conversation(
+        client=mock_client,
+        agent_id=TEST_AGENT_ID,
+        requires_auth=False,
+        audio_interface=MockAudioInterface(),
+    )
+
+    # HTTPS should become WSS
+    wss_url = conversation._get_wss_url()
+    assert wss_url == "wss://api.elevenlabs.io/v1/convai/conversation?agent_id=test_agent"
+
+    # Switch mock to an HTTP URL
+    mock_environment.base = "http://api.elevenlabs.io"
+    wss_url = conversation._get_wss_url()
+    assert wss_url == "ws://api.elevenlabs.io/v1/convai/conversation?agent_id=test_agent"

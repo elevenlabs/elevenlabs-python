@@ -370,7 +370,7 @@ class Conversation:
             pass  # Ignore all other message types.
 
     def _get_wss_url(self):
-        base_url = self.client._client_wrapper._base_url
+        base_url = self.client._client_wrapper.get_environment().base
         # Replace http(s) with ws(s).
         base_ws_url = base_url.replace("http", "ws", 1)  # First occurrence only.
         return f"{base_ws_url}/v1/convai/conversation?agent_id={self.agent_id}"
