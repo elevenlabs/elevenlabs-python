@@ -5,6 +5,7 @@ import typing
 WorkspaceResourceType = typing.Union[
     typing.Literal[
         "voice",
+        "voice_collection",
         "pronunciation_dictionary",
         "dubbing",
         "project",
@@ -15,6 +16,7 @@ WorkspaceResourceType = typing.Union[
         "convai_secrets",
         "music_latent",
         "convai_phone_numbers",
+        "convai_batch_calls",
     ],
     typing.Any,
 ]

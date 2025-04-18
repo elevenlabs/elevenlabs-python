@@ -3,6 +3,9 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import pydantic
 import typing
+from .add_pronunciation_dictionary_response_model_permission_on_resource import (
+    AddPronunciationDictionaryResponseModelPermissionOnResource,
+)
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -40,6 +43,13 @@ class AddPronunciationDictionaryResponseModel(UncheckedBaseModel):
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
     The description of the pronunciation dictionary.
+    """
+
+    permission_on_resource: typing.Optional[AddPronunciationDictionaryResponseModelPermissionOnResource] = (
+        pydantic.Field(default=None)
+    )
+    """
+    The permission on the resource of the pronunciation dictionary.
     """
 
     if IS_PYDANTIC_V2:

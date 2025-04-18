@@ -6,20 +6,10 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 
 
-class AddPronunciationDictionaryRulesResponseModel(UncheckedBaseModel):
-    id: str = pydantic.Field()
+class VerifyPvcVoiceCaptchaResponseModel(UncheckedBaseModel):
+    status: str = pydantic.Field()
     """
-    The ID of the pronunciation dictionary.
-    """
-
-    version_id: str = pydantic.Field()
-    """
-    The version ID of the pronunciation dictionary.
-    """
-
-    version_rules_num: int = pydantic.Field()
-    """
-    The number of rules in the version of the pronunciation dictionary.
+    The status of the verify PVC captcha request. If the request was successful, the status will be 'ok'. Otherwise an error message with status 500 will be returned.
     """
 
     if IS_PYDANTIC_V2:

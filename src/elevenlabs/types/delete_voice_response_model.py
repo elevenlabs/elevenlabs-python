@@ -9,7 +9,7 @@ import typing
 class DeleteVoiceResponseModel(UncheckedBaseModel):
     status: str = pydantic.Field()
     """
-    The status of the voice deletion. If the request was successful, the status will be 'ok'. Otherwise an error message with status 500 will be returned.
+    The status of the voice deletion request. If the request was successful, the status will be 'ok'. Otherwise an error message with status 500 will be returned.
     """
 
     if IS_PYDANTIC_V2:

@@ -27,6 +27,9 @@ class GetConversationResponseModel(UncheckedBaseModel):
     metadata: ConversationHistoryMetadataCommonModel
     analysis: typing.Optional[ConversationHistoryAnalysisCommonModel] = None
     conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestOutput] = None
+    has_audio: bool
+    has_user_audio: bool
+    has_response_audio: bool
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

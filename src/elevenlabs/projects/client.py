@@ -23,6 +23,7 @@ from ..types.http_validation_error import HttpValidationError
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..types.get_projects_response import GetProjectsResponse
+from .. import core
 from .types.add_project_v_1_projects_add_post_request_target_audience import (
     AddProjectV1ProjectsAddPostRequestTargetAudience,
 )
@@ -256,7 +257,7 @@ class ProjectsClient:
         default_paragraph_voice_id: str,
         default_model_id: str,
         from_url: typing.Optional[str] = OMIT,
-        from_document: typing.Optional[str] = OMIT,
+        from_document: typing.Optional[core.File] = OMIT,
         quality_preset: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
         author: typing.Optional[str] = OMIT,
@@ -298,8 +299,8 @@ class ProjectsClient:
         from_url : typing.Optional[str]
             An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
 
-        from_document : typing.Optional[str]
-            An optional .epub, .pdf, .txt or similar file can be provided. If provided, we will initialize the Studio project with its content. If this is set, 'from_url' must be null.  If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
+        from_document : typing.Optional[core.File]
+            See core.File for more documentation
 
         quality_preset : typing.Optional[str]
             Output quality of the generated audio. Must be one of:
@@ -399,7 +400,6 @@ class ProjectsClient:
                 "default_paragraph_voice_id": default_paragraph_voice_id,
                 "default_model_id": default_model_id,
                 "from_url": from_url,
-                "from_document": from_document,
                 "quality_preset": quality_preset,
                 "title": title,
                 "author": author,
@@ -420,7 +420,9 @@ class ProjectsClient:
                 "auto_assign_voices": auto_assign_voices,
                 "source_type": source_type,
             },
-            files={},
+            files={
+                "from_document": from_document,
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -686,7 +688,7 @@ class ProjectsClient:
         project_id: str,
         *,
         from_url: typing.Optional[str] = OMIT,
-        from_document: typing.Optional[str] = OMIT,
+        from_document: typing.Optional[core.File] = OMIT,
         auto_convert: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EditProjectResponseModel:
@@ -701,8 +703,8 @@ class ProjectsClient:
         from_url : typing.Optional[str]
             An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
 
-        from_document : typing.Optional[str]
-            An optional .epub, .pdf, .txt or similar file can be provided. If provided, we will initialize the Studio project with its content. If this is set, 'from_url' must be null.  If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
+        from_document : typing.Optional[core.File]
+            See core.File for more documentation
 
         auto_convert : typing.Optional[bool]
             Whether to auto convert the Studio project to audio or not.
@@ -732,10 +734,11 @@ class ProjectsClient:
             method="POST",
             data={
                 "from_url": from_url,
-                "from_document": from_document,
                 "auto_convert": auto_convert,
             },
-            files={},
+            files={
+                "from_document": from_document,
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -1901,7 +1904,7 @@ class AsyncProjectsClient:
         default_paragraph_voice_id: str,
         default_model_id: str,
         from_url: typing.Optional[str] = OMIT,
-        from_document: typing.Optional[str] = OMIT,
+        from_document: typing.Optional[core.File] = OMIT,
         quality_preset: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
         author: typing.Optional[str] = OMIT,
@@ -1943,8 +1946,8 @@ class AsyncProjectsClient:
         from_url : typing.Optional[str]
             An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
 
-        from_document : typing.Optional[str]
-            An optional .epub, .pdf, .txt or similar file can be provided. If provided, we will initialize the Studio project with its content. If this is set, 'from_url' must be null.  If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
+        from_document : typing.Optional[core.File]
+            See core.File for more documentation
 
         quality_preset : typing.Optional[str]
             Output quality of the generated audio. Must be one of:
@@ -2052,7 +2055,6 @@ class AsyncProjectsClient:
                 "default_paragraph_voice_id": default_paragraph_voice_id,
                 "default_model_id": default_model_id,
                 "from_url": from_url,
-                "from_document": from_document,
                 "quality_preset": quality_preset,
                 "title": title,
                 "author": author,
@@ -2073,7 +2075,9 @@ class AsyncProjectsClient:
                 "auto_assign_voices": auto_assign_voices,
                 "source_type": source_type,
             },
-            files={},
+            files={
+                "from_document": from_document,
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -2363,7 +2367,7 @@ class AsyncProjectsClient:
         project_id: str,
         *,
         from_url: typing.Optional[str] = OMIT,
-        from_document: typing.Optional[str] = OMIT,
+        from_document: typing.Optional[core.File] = OMIT,
         auto_convert: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EditProjectResponseModel:
@@ -2378,8 +2382,8 @@ class AsyncProjectsClient:
         from_url : typing.Optional[str]
             An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
 
-        from_document : typing.Optional[str]
-            An optional .epub, .pdf, .txt or similar file can be provided. If provided, we will initialize the Studio project with its content. If this is set, 'from_url' must be null.  If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
+        from_document : typing.Optional[core.File]
+            See core.File for more documentation
 
         auto_convert : typing.Optional[bool]
             Whether to auto convert the Studio project to audio or not.
@@ -2417,10 +2421,11 @@ class AsyncProjectsClient:
             method="POST",
             data={
                 "from_url": from_url,
-                "from_document": from_document,
                 "auto_convert": auto_convert,
             },
-            files={},
+            files={
+                "from_document": from_document,
+            },
             request_options=request_options,
             omit=OMIT,
         )

@@ -3,12 +3,18 @@
 import typing
 from ..core.client_wrapper import SyncClientWrapper
 from .. import core
+from .types.audio_isolation_audio_isolation_request_file_format import (
+    AudioIsolationAudioIsolationRequestFileFormat,
+)
 from ..core.request_options import RequestOptions
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.http_validation_error import HttpValidationError
 from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
+from .types.audio_isolation_audio_isolation_stream_request_file_format import (
+    AudioIsolationAudioIsolationStreamRequestFileFormat,
+)
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -23,6 +29,7 @@ class AudioIsolationClient:
         self,
         *,
         audio: core.File,
+        file_format: typing.Optional[AudioIsolationAudioIsolationRequestFileFormat] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -32,6 +39,9 @@ class AudioIsolationClient:
         ----------
         audio : core.File
             See core.File for more documentation
+
+        file_format : typing.Optional[AudioIsolationAudioIsolationRequestFileFormat]
+            The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -45,7 +55,9 @@ class AudioIsolationClient:
             "v1/audio-isolation",
             base_url=self._client_wrapper.get_environment().base,
             method="POST",
-            data={},
+            data={
+                "file_format": file_format,
+            },
             files={
                 "audio": audio,
             },
@@ -78,6 +90,7 @@ class AudioIsolationClient:
         self,
         *,
         audio: core.File,
+        file_format: typing.Optional[AudioIsolationAudioIsolationStreamRequestFileFormat] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -87,6 +100,9 @@ class AudioIsolationClient:
         ----------
         audio : core.File
             See core.File for more documentation
+
+        file_format : typing.Optional[AudioIsolationAudioIsolationStreamRequestFileFormat]
+            The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -100,7 +116,9 @@ class AudioIsolationClient:
             "v1/audio-isolation/stream",
             base_url=self._client_wrapper.get_environment().base,
             method="POST",
-            data={},
+            data={
+                "file_format": file_format,
+            },
             files={
                 "audio": audio,
             },
@@ -138,6 +156,7 @@ class AsyncAudioIsolationClient:
         self,
         *,
         audio: core.File,
+        file_format: typing.Optional[AudioIsolationAudioIsolationRequestFileFormat] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -147,6 +166,9 @@ class AsyncAudioIsolationClient:
         ----------
         audio : core.File
             See core.File for more documentation
+
+        file_format : typing.Optional[AudioIsolationAudioIsolationRequestFileFormat]
+            The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -160,7 +182,9 @@ class AsyncAudioIsolationClient:
             "v1/audio-isolation",
             base_url=self._client_wrapper.get_environment().base,
             method="POST",
-            data={},
+            data={
+                "file_format": file_format,
+            },
             files={
                 "audio": audio,
             },
@@ -193,6 +217,7 @@ class AsyncAudioIsolationClient:
         self,
         *,
         audio: core.File,
+        file_format: typing.Optional[AudioIsolationAudioIsolationStreamRequestFileFormat] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -202,6 +227,9 @@ class AsyncAudioIsolationClient:
         ----------
         audio : core.File
             See core.File for more documentation
+
+        file_format : typing.Optional[AudioIsolationAudioIsolationStreamRequestFileFormat]
+            The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -215,7 +243,9 @@ class AsyncAudioIsolationClient:
             "v1/audio-isolation/stream",
             base_url=self._client_wrapper.get_environment().base,
             method="POST",
-            data={},
+            data={
+                "file_format": file_format,
+            },
             files={
                 "audio": audio,
             },

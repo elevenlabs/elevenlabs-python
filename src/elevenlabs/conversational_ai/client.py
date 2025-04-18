@@ -41,6 +41,7 @@ from .types.conversational_ai_create_phone_number_request_body import (
 )
 from ..types.create_phone_number_response_model import CreatePhoneNumberResponseModel
 from ..types.get_phone_number_response_model import GetPhoneNumberResponseModel
+from ..types.knowledge_base_document_type import KnowledgeBaseDocumentType
 from ..types.get_knowledge_base_list_response_model import (
     GetKnowledgeBaseListResponseModel,
 )
@@ -231,7 +232,6 @@ class ConversationalAiClient:
         self,
         *,
         conversation_config: ConversationalConfigApiModelInput,
-        use_tool_ids: typing.Optional[bool] = None,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -243,9 +243,6 @@ class ConversationalAiClient:
         ----------
         conversation_config : ConversationalConfigApiModelInput
             Conversation configuration for an agent
-
-        use_tool_ids : typing.Optional[bool]
-            Use tool ids instead of tools specs from request payload.
 
         platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
             Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
@@ -276,9 +273,6 @@ class ConversationalAiClient:
             "v1/convai/agents/create",
             base_url=self._client_wrapper.get_environment().base,
             method="POST",
-            params={
-                "use_tool_ids": use_tool_ids,
-            },
             json={
                 "conversation_config": convert_and_respect_annotation_metadata(
                     object_=conversation_config,
@@ -437,7 +431,6 @@ class ConversationalAiClient:
         self,
         agent_id: str,
         *,
-        use_tool_ids: typing.Optional[bool] = None,
         conversation_config: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         platform_settings: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         name: typing.Optional[str] = OMIT,
@@ -450,9 +443,6 @@ class ConversationalAiClient:
         ----------
         agent_id : str
             The id of an agent. This is returned on agent creation.
-
-        use_tool_ids : typing.Optional[bool]
-            Use tool ids instead of tools specs from request payload.
 
         conversation_config : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Conversation configuration for an agent
@@ -486,9 +476,6 @@ class ConversationalAiClient:
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
             base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
-            params={
-                "use_tool_ids": use_tool_ids,
-            },
             json={
                 "conversation_config": conversation_config,
                 "platform_settings": platform_settings,
@@ -1464,6 +1451,9 @@ class ConversationalAiClient:
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         show_only_owned_documents: typing.Optional[bool] = None,
+        types: typing.Optional[
+            typing.Union[KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]]
+        ] = None,
         use_typesense: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetKnowledgeBaseListResponseModel:
@@ -1483,6 +1473,9 @@ class ConversationalAiClient:
 
         show_only_owned_documents : typing.Optional[bool]
             If set to true, the endpoint will return only documents owned by you (and not shared from somebody else).
+
+        types : typing.Optional[typing.Union[KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]]]
+            If present, the endpoint will return only documents of the given types.
 
         use_typesense : typing.Optional[bool]
             If set to true, the endpoint will use typesense DB to search for the documents).
@@ -1513,6 +1506,7 @@ class ConversationalAiClient:
                 "page_size": page_size,
                 "search": search,
                 "show_only_owned_documents": show_only_owned_documents,
+                "types": types,
                 "use_typesense": use_typesense,
             },
             request_options=request_options,
@@ -2726,7 +2720,6 @@ class AsyncConversationalAiClient:
         self,
         *,
         conversation_config: ConversationalConfigApiModelInput,
-        use_tool_ids: typing.Optional[bool] = None,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -2738,9 +2731,6 @@ class AsyncConversationalAiClient:
         ----------
         conversation_config : ConversationalConfigApiModelInput
             Conversation configuration for an agent
-
-        use_tool_ids : typing.Optional[bool]
-            Use tool ids instead of tools specs from request payload.
 
         platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
             Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
@@ -2779,9 +2769,6 @@ class AsyncConversationalAiClient:
             "v1/convai/agents/create",
             base_url=self._client_wrapper.get_environment().base,
             method="POST",
-            params={
-                "use_tool_ids": use_tool_ids,
-            },
             json={
                 "conversation_config": convert_and_respect_annotation_metadata(
                     object_=conversation_config,
@@ -2956,7 +2943,6 @@ class AsyncConversationalAiClient:
         self,
         agent_id: str,
         *,
-        use_tool_ids: typing.Optional[bool] = None,
         conversation_config: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         platform_settings: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         name: typing.Optional[str] = OMIT,
@@ -2969,9 +2955,6 @@ class AsyncConversationalAiClient:
         ----------
         agent_id : str
             The id of an agent. This is returned on agent creation.
-
-        use_tool_ids : typing.Optional[bool]
-            Use tool ids instead of tools specs from request payload.
 
         conversation_config : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Conversation configuration for an agent
@@ -3013,9 +2996,6 @@ class AsyncConversationalAiClient:
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
             base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
-            params={
-                "use_tool_ids": use_tool_ids,
-            },
             json={
                 "conversation_config": conversation_config,
                 "platform_settings": platform_settings,
@@ -4095,6 +4075,9 @@ class AsyncConversationalAiClient:
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         show_only_owned_documents: typing.Optional[bool] = None,
+        types: typing.Optional[
+            typing.Union[KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]]
+        ] = None,
         use_typesense: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetKnowledgeBaseListResponseModel:
@@ -4114,6 +4097,9 @@ class AsyncConversationalAiClient:
 
         show_only_owned_documents : typing.Optional[bool]
             If set to true, the endpoint will return only documents owned by you (and not shared from somebody else).
+
+        types : typing.Optional[typing.Union[KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]]]
+            If present, the endpoint will return only documents of the given types.
 
         use_typesense : typing.Optional[bool]
             If set to true, the endpoint will use typesense DB to search for the documents).
@@ -4152,6 +4138,7 @@ class AsyncConversationalAiClient:
                 "page_size": page_size,
                 "search": search,
                 "show_only_owned_documents": show_only_owned_documents,
+                "types": types,
                 "use_typesense": use_typesense,
             },
             request_options=request_options,

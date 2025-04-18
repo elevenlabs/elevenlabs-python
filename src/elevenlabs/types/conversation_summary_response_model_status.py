@@ -2,4 +2,6 @@
 
 import typing
 
-ConversationSummaryResponseModelStatus = typing.Union[typing.Literal["processing", "done", "failed"], typing.Any]
+ConversationSummaryResponseModelStatus = typing.Union[
+    typing.Literal["in-progress", "processing", "done", "failed"], typing.Any
+]

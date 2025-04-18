@@ -38,6 +38,8 @@ class VoiceSample(UncheckedBaseModel):
     has_isolated_audio: typing.Optional[bool] = None
     has_isolated_audio_preview: typing.Optional[bool] = None
     speaker_separation: typing.Optional[SpeakerSeparationResponseModel] = None
+    trim_start: typing.Optional[int] = None
+    trim_end: typing.Optional[int] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

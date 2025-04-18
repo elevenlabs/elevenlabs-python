@@ -65,6 +65,8 @@ class ExportOptions_Pdf(UncheckedBaseModel):
 
 class ExportOptions_SegmentedJson(UncheckedBaseModel):
     format: typing.Literal["segmented_json"] = "segmented_json"
+    include_speakers: typing.Optional[bool] = None
+    include_timestamps: typing.Optional[bool] = None
     segment_on_silence_longer_than_s: typing.Optional[float] = None
     max_segment_duration_s: typing.Optional[float] = None
     max_segment_chars: typing.Optional[int] = None
