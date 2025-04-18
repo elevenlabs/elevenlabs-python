@@ -1626,6 +1626,14 @@ Defaults to None.
 <dl>
 <dd>
 
+**file_format:** `typing.Optional[SpeechToSpeechConvertRequestFileFormat]` — The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
     
 </dd>
@@ -1766,6 +1774,14 @@ Defaults to None.
 <dd>
 
 **remove_background_noise:** `typing.Optional[bool]` — If set, will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file_format:** `typing.Optional[SpeechToSpeechConvertAsStreamRequestFileFormat]` — The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
     
 </dd>
 </dl>
@@ -2584,6 +2600,14 @@ client.voices.search(
 <dd>
 
 **fine_tuning_state:** `typing.Optional[str]` — State of the voice's fine tuning to filter by. Applicable only to professional voices clones. One of 'draft', 'not_verified', 'not_started', 'queued', 'fine_tuning', 'fine_tuned', 'failed', 'delayed'
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**collection_id:** `typing.Optional[str]` — Collection ID to filter voices by.
     
 </dd>
 </dl>
@@ -6306,6 +6330,94 @@ client.dubbing.dub_segments(
 </dl>
 </details>
 
+<details><summary><code>client.dubbing.<a href="src/elevenlabs/dubbing/client.py">render_dub</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Regenerate the dubs for either the entire resource or the specified segments/languages. Will automatically transcribe and translate any missing transcriptions and translations.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.dubbing.render_dub(
+    dubbing_id="dubbing_id",
+    language="language",
+    render_type="mp4",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**dubbing_id:** `str` — ID of the dubbing project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language:** `str` — Render this language
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**render_type:** `RenderType` — The type of the render. One of ['mp4', 'aac', 'mp3', 'wav', 'aaf', 'tracks_zip', 'clips_zip']
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.dubbing.<a href="src/elevenlabs/dubbing/client.py">dub_a_video_or_an_audio_file</a>(...)</code></summary>
 <dl>
 <dd>
@@ -8300,6 +8412,76 @@ client.workspace.update_member(
 </dl>
 </details>
 
+<details><summary><code>client.workspace.<a href="src/elevenlabs/workspace/client.py">delete_member</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes a workspace member. This endpoint may only be called by workspace administrators.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.workspace.delete_member(
+    email="email",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**email:** `str` — Email of the target user.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.workspace.<a href="src/elevenlabs/workspace/client.py">get_resource</a>(...)</code></summary>
 <dl>
 <dd>
@@ -8645,17 +8827,7 @@ client.speech_to_text.convert(
 <dl>
 <dd>
 
-**model_id:** `str` — The ID of the model to use for transcription, currently only 'scribe_v1' is available.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**file:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
+**model_id:** `str` — The ID of the model to use for transcription, currently only 'scribe_v1' and 'scribe_v1_experimental' are available.
     
 </dd>
 </dl>
@@ -8664,6 +8836,14 @@ core.File` — See core.File for more documentation
 <dd>
 
 **enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file:** `typing.Optional[str]` — The file to transcribe. All major audio and video formats are supported. Exactly one of the file or cloud_storage_url parameters must be provided. The file size must be less than 1GB.
     
 </dd>
 </dl>
@@ -8712,6 +8892,22 @@ core.File` — See core.File for more documentation
 <dd>
 
 **additional_formats:** `typing.Optional[AdditionalFormats]` — A list of additional formats to export the transcript to.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file_format:** `typing.Optional[SpeechToTextConvertRequestFileFormat]` — The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cloud_storage_url:** `typing.Optional[str]` — The valid AWS S3, Cloudflare R2 or Google Cloud Storage URL of the file to transcribe. Exactly one of the file or cloud_storage_url parameters must be provided. The file must be a valid publicly accessible cloud storage URL. The file size must be less than 2GB. URL can be pre-signed.
     
 </dd>
 </dl>
@@ -8792,7 +8988,15 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**text:** `str` — The text to align with the audio or video. The input text can be in any format, however diarization is not supported at this time.
+**text:** `str` — The text to align with the audio. The input text can be in any format, however diarization is not supported at this time.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enabled_spooled_file:** `typing.Optional[bool]` — If true, the file will be streamed to the server and processed in chunks. This is useful for large files that cannot be loaded into memory. The default is false.
     
 </dd>
 </dl>
@@ -9037,14 +9241,6 @@ client.conversational_ai.create_agent(
 <dl>
 <dd>
 
-**use_tool_ids:** `typing.Optional[bool]` — Use tool ids instead of tools specs from request payload.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **platform_settings:** `typing.Optional[AgentPlatformSettingsRequestModel]` — Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
     
 </dd>
@@ -9264,14 +9460,6 @@ client.conversational_ai.update_agent(
 <dd>
 
 **agent_id:** `str` — The id of an agent. This is returned on agent creation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_tool_ids:** `typing.Optional[bool]` — Use tool ids instead of tools specs from request payload.
     
 </dd>
 </dl>
@@ -10364,6 +10552,18 @@ client.conversational_ai.get_knowledge_base_list()
 <dd>
 
 **show_only_owned_documents:** `typing.Optional[bool]` — If set to true, the endpoint will return only documents owned by you (and not shared from somebody else).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**types:** `typing.Optional[
+    typing.Union[
+        KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]
+    ]
+]` — If present, the endpoint will return only documents of the given types.
     
 </dd>
 </dl>
@@ -13255,6 +13455,1209 @@ client.studio.chapters.get_chapter_snapshot(
 <dd>
 
 **chapter_snapshot_id:** `str` — The ID of the chapter snapshot.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Voices Pvc
+<details><summary><code>client.voices.pvc.<a href="src/elevenlabs/voices/pvc/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a new PVC voice with metadata but no samples
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.voices.pvc.create(
+    name="John Smith",
+    language="en",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `str` — The name that identifies this voice. This will be displayed in the dropdown of the website.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language:** `str` — Language used in the samples.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Description to use for the created voice.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**labels:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` — Serialized labels dictionary for the voice.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.voices.pvc.<a href="src/elevenlabs/voices/pvc/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Edit PVC voice metadata
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.voices.pvc.update(
+    voice_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**voice_id:** `str` — Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — The name that identifies this voice. This will be displayed in the dropdown of the website.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language:** `typing.Optional[str]` — Language used in the samples.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Description to use for the created voice.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**labels:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` — Serialized labels dictionary for the voice.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.voices.pvc.<a href="src/elevenlabs/voices/pvc/client.py">train</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Start PVC training process for a voice.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.voices.pvc.train(
+    voice_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**voice_id:** `str` — Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_id:** `typing.Optional[str]` — The model ID to use for the conversion.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Voices Pvc Samples
+<details><summary><code>client.voices.pvc.samples.<a href="src/elevenlabs/voices/pvc/samples/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Add audio samples to a PVC voice
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.voices.pvc.samples.create(
+    voice_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**voice_id:** `str` — Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**files:** `from __future__ import annotations
+
+typing.List[core.File]` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**remove_background_noise:** `typing.Optional[bool]` — If set will remove background noise for voice samples using our audio isolation model. If the samples do not include background noise, it can make the quality worse.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.voices.pvc.samples.<a href="src/elevenlabs/voices/pvc/samples/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a PVC voice sample - apply noise removal, or select speaker.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.voices.pvc.samples.update(
+    voice_id="21m00Tcm4TlvDq8ikWAM",
+    sample_id="VW7YKqPnjY4h39yTbx2L",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**voice_id:** `str` — Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sample_id:** `str` — Sample ID to be used
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**remove_background_noise:** `typing.Optional[bool]` — If set will remove background noise for voice samples using our audio isolation model. If the samples do not include background noise, it can make the quality worse.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**selected_speaker_ids:** `typing.Optional[typing.Sequence[str]]` — Speaker IDs to be used for PVC training. Make sure you send all the speaker IDs you want to use for PVC training in one request because the last request will override the previous ones.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**trim_start_time:** `typing.Optional[int]` — The start time of the audio to be used for PVC training. Time should be in milliseconds
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**trim_end_time:** `typing.Optional[int]` — The end time of the audio to be used for PVC training. Time should be in milliseconds
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.voices.pvc.samples.<a href="src/elevenlabs/voices/pvc/samples/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a sample from a PVC voice.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.voices.pvc.samples.delete(
+    voice_id="21m00Tcm4TlvDq8ikWAM",
+    sample_id="VW7YKqPnjY4h39yTbx2L",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**voice_id:** `str` — Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sample_id:** `str` — Sample ID to be used
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Voices Pvc Verification
+<details><summary><code>client.voices.pvc.verification.<a href="src/elevenlabs/voices/pvc/verification/client.py">request</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Request manual verification for a PVC voice.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.voices.pvc.verification.request(
+    voice_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**voice_id:** `str` — Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**files:** `from __future__ import annotations
+
+typing.List[core.File]` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**extra_text:** `typing.Optional[str]` — Extra text to be used in the manual verification process.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Voices Pvc Samples Audio
+<details><summary><code>client.voices.pvc.samples.audio.<a href="src/elevenlabs/voices/pvc/samples/audio/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the first 30 seconds of voice sample audio with or without noise removal.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.voices.pvc.samples.audio.get(
+    voice_id="21m00Tcm4TlvDq8ikWAM",
+    sample_id="VW7YKqPnjY4h39yTbx2L",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**voice_id:** `str` — Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sample_id:** `str` — Sample ID to be used
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Voices Pvc Samples Waveform
+<details><summary><code>client.voices.pvc.samples.waveform.<a href="src/elevenlabs/voices/pvc/samples/waveform/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the visual waveform of a voice sample.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.voices.pvc.samples.waveform.get(
+    voice_id="21m00Tcm4TlvDq8ikWAM",
+    sample_id="VW7YKqPnjY4h39yTbx2L",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**voice_id:** `str` — Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sample_id:** `str` — Sample ID to be used
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Voices Pvc Samples Speakers
+<details><summary><code>client.voices.pvc.samples.speakers.<a href="src/elevenlabs/voices/pvc/samples/speakers/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the status of the speaker separation process and the list of detected speakers if complete.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.voices.pvc.samples.speakers.get(
+    voice_id="21m00Tcm4TlvDq8ikWAM",
+    sample_id="VW7YKqPnjY4h39yTbx2L",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**voice_id:** `str` — Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sample_id:** `str` — Sample ID to be used
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.voices.pvc.samples.speakers.<a href="src/elevenlabs/voices/pvc/samples/speakers/client.py">separate</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Start speaker separation process for a sample
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.voices.pvc.samples.speakers.separate(
+    voice_id="21m00Tcm4TlvDq8ikWAM",
+    sample_id="VW7YKqPnjY4h39yTbx2L",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**voice_id:** `str` — Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sample_id:** `str` — Sample ID to be used
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Voices Pvc Samples Speakers Audio
+<details><summary><code>client.voices.pvc.samples.speakers.audio.<a href="src/elevenlabs/voices/pvc/samples/speakers/audio/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the separated audio for a specific speaker.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.voices.pvc.samples.speakers.audio.get(
+    voice_id="21m00Tcm4TlvDq8ikWAM",
+    sample_id="VW7YKqPnjY4h39yTbx2L",
+    speaker_id="VW7YKqPnjY4h39yTbx2L",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**voice_id:** `str` — Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sample_id:** `str` — Sample ID to be used
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**speaker_id:** `str` — Speaker ID to be used, you can use GET https://api.elevenlabs.io/v1/voices/{voice_id}/samples/{sample_id}/speakers to list all the available speakers for a sample.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Voices Pvc Verification Captcha
+<details><summary><code>client.voices.pvc.verification.captcha.<a href="src/elevenlabs/voices/pvc/verification/captcha/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get captcha for PVC voice verification.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.voices.pvc.verification.captcha.get(
+    voice_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**voice_id:** `str` — Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.voices.pvc.verification.captcha.<a href="src/elevenlabs/voices/pvc/verification/captcha/client.py">verify</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Submit captcha verification for PVC voice.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.voices.pvc.verification.captcha.verify(
+    voice_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**voice_id:** `str` — Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recording:** `from __future__ import annotations
+
+core.File` — See core.File for more documentation
     
 </dd>
 </dl>

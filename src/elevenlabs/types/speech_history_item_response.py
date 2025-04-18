@@ -88,7 +88,7 @@ class SpeechHistoryItemResponse(UncheckedBaseModel):
 
     source: typing.Optional[SpeechHistoryItemResponseModelSource] = pydantic.Field(default=None)
     """
-    The source of the history item. Either TTS (text to speech), STS (speech to text) or STT (speech to text).
+    The source of the history item. Either TTS (text to speech), STS (speech to text), AN (audio native), Projects, Dubbing or PlayAPI.
     """
 
     alignments: typing.Optional[HistoryAlignmentsResponseModel] = pydantic.Field(default=None)

@@ -10,7 +10,12 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 class TurnConfig(UncheckedBaseModel):
     turn_timeout: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Maximum wait time for the user’s reply before re-engaging the user
+    Maximum wait time for the user's reply before re-engaging the user
+    """
+
+    silence_end_call_timeout: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Maximum wait time since the user last spoke before terminating the call
     """
 
     mode: typing.Optional[TurnMode] = pydantic.Field(default=None)
