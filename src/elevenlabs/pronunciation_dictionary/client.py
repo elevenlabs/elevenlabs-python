@@ -2,6 +2,7 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .. import core
 from .types.pronunciation_dictionary_add_from_file_request_workspace_access import (
     PronunciationDictionaryAddFromFileRequestWorkspaceAccess,
 )
@@ -22,13 +23,10 @@ from .types.body_add_a_pronunciation_dictionary_v_1_pronunciation_dictionaries_a
 )
 from ..core.serialization import convert_and_respect_annotation_metadata
 from .types.pronunciation_dictionary_rule import PronunciationDictionaryRule
-from ..types.add_pronunciation_dictionary_rules_response_model import (
-    AddPronunciationDictionaryRulesResponseModel,
+from ..types.pronunciation_dictionary_rules_response_model import (
+    PronunciationDictionaryRulesResponseModel,
 )
 from ..core.jsonable_encoder import jsonable_encoder
-from ..types.remove_pronunciation_dictionary_rules_response_model import (
-    RemovePronunciationDictionaryRulesResponseModel,
-)
 from ..types.get_pronunciation_dictionary_metadata_response import (
     GetPronunciationDictionaryMetadataResponse,
 )
@@ -52,7 +50,7 @@ class PronunciationDictionaryClient:
         self,
         *,
         name: str,
-        file: typing.Optional[str] = OMIT,
+        file: typing.Optional[core.File] = OMIT,
         description: typing.Optional[str] = OMIT,
         workspace_access: typing.Optional[PronunciationDictionaryAddFromFileRequestWorkspaceAccess] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -65,8 +63,8 @@ class PronunciationDictionaryClient:
         name : str
             The name of the pronunciation dictionary, used for identification only.
 
-        file : typing.Optional[str]
-            A lexicon .pls file which we will use to initialize the project with.
+        file : typing.Optional[core.File]
+            See core.File for more documentation
 
         description : typing.Optional[str]
             A description of the pronunciation dictionary, used for identification only.
@@ -99,11 +97,12 @@ class PronunciationDictionaryClient:
             method="POST",
             data={
                 "name": name,
-                "file": file,
                 "description": description,
                 "workspace_access": workspace_access,
             },
-            files={},
+            files={
+                "file": file,
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -241,7 +240,7 @@ class PronunciationDictionaryClient:
         *,
         rules: typing.Sequence[PronunciationDictionaryRule],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AddPronunciationDictionaryRulesResponseModel:
+    ) -> PronunciationDictionaryRulesResponseModel:
         """
         Add rules to the pronunciation dictionary
 
@@ -260,7 +259,7 @@ class PronunciationDictionaryClient:
 
         Returns
         -------
-        AddPronunciationDictionaryRulesResponseModel
+        PronunciationDictionaryRulesResponseModel
             Successful Response
 
         Examples
@@ -303,9 +302,9 @@ class PronunciationDictionaryClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AddPronunciationDictionaryRulesResponseModel,
+                    PronunciationDictionaryRulesResponseModel,
                     construct_type(
-                        type_=AddPronunciationDictionaryRulesResponseModel,  # type: ignore
+                        type_=PronunciationDictionaryRulesResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -330,7 +329,7 @@ class PronunciationDictionaryClient:
         *,
         rule_strings: typing.Sequence[str],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> RemovePronunciationDictionaryRulesResponseModel:
+    ) -> PronunciationDictionaryRulesResponseModel:
         """
         Remove rules from the pronunciation dictionary
 
@@ -347,7 +346,7 @@ class PronunciationDictionaryClient:
 
         Returns
         -------
-        RemovePronunciationDictionaryRulesResponseModel
+        PronunciationDictionaryRulesResponseModel
             Successful Response
 
         Examples
@@ -378,9 +377,9 @@ class PronunciationDictionaryClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    RemovePronunciationDictionaryRulesResponseModel,
+                    PronunciationDictionaryRulesResponseModel,
                     construct_type(
-                        type_=RemovePronunciationDictionaryRulesResponseModel,  # type: ignore
+                        type_=PronunciationDictionaryRulesResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -604,7 +603,7 @@ class AsyncPronunciationDictionaryClient:
         self,
         *,
         name: str,
-        file: typing.Optional[str] = OMIT,
+        file: typing.Optional[core.File] = OMIT,
         description: typing.Optional[str] = OMIT,
         workspace_access: typing.Optional[PronunciationDictionaryAddFromFileRequestWorkspaceAccess] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -617,8 +616,8 @@ class AsyncPronunciationDictionaryClient:
         name : str
             The name of the pronunciation dictionary, used for identification only.
 
-        file : typing.Optional[str]
-            A lexicon .pls file which we will use to initialize the project with.
+        file : typing.Optional[core.File]
+            See core.File for more documentation
 
         description : typing.Optional[str]
             A description of the pronunciation dictionary, used for identification only.
@@ -659,11 +658,12 @@ class AsyncPronunciationDictionaryClient:
             method="POST",
             data={
                 "name": name,
-                "file": file,
                 "description": description,
                 "workspace_access": workspace_access,
             },
-            files={},
+            files={
+                "file": file,
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -809,7 +809,7 @@ class AsyncPronunciationDictionaryClient:
         *,
         rules: typing.Sequence[PronunciationDictionaryRule],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AddPronunciationDictionaryRulesResponseModel:
+    ) -> PronunciationDictionaryRulesResponseModel:
         """
         Add rules to the pronunciation dictionary
 
@@ -828,7 +828,7 @@ class AsyncPronunciationDictionaryClient:
 
         Returns
         -------
-        AddPronunciationDictionaryRulesResponseModel
+        PronunciationDictionaryRulesResponseModel
             Successful Response
 
         Examples
@@ -879,9 +879,9 @@ class AsyncPronunciationDictionaryClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AddPronunciationDictionaryRulesResponseModel,
+                    PronunciationDictionaryRulesResponseModel,
                     construct_type(
-                        type_=AddPronunciationDictionaryRulesResponseModel,  # type: ignore
+                        type_=PronunciationDictionaryRulesResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -906,7 +906,7 @@ class AsyncPronunciationDictionaryClient:
         *,
         rule_strings: typing.Sequence[str],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> RemovePronunciationDictionaryRulesResponseModel:
+    ) -> PronunciationDictionaryRulesResponseModel:
         """
         Remove rules from the pronunciation dictionary
 
@@ -923,7 +923,7 @@ class AsyncPronunciationDictionaryClient:
 
         Returns
         -------
-        RemovePronunciationDictionaryRulesResponseModel
+        PronunciationDictionaryRulesResponseModel
             Successful Response
 
         Examples
@@ -962,9 +962,9 @@ class AsyncPronunciationDictionaryClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    RemovePronunciationDictionaryRulesResponseModel,
+                    PronunciationDictionaryRulesResponseModel,
                     construct_type(
-                        type_=RemovePronunciationDictionaryRulesResponseModel,  # type: ignore
+                        type_=PronunciationDictionaryRulesResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

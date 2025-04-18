@@ -11,12 +11,17 @@ from .conversation_charging_common_model import ConversationChargingCommonModel
 from .conversation_history_metadata_common_model_phone_call import (
     ConversationHistoryMetadataCommonModelPhoneCall,
 )
+from .conversation_history_error_common_model import ConversationHistoryErrorCommonModel
+from .conversation_history_rag_usage_common_model import (
+    ConversationHistoryRagUsageCommonModel,
+)
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
 class ConversationHistoryMetadataCommonModel(UncheckedBaseModel):
     start_time_unix_secs: int
+    accepted_time_unix_secs: typing.Optional[int] = None
     call_duration_secs: int
     cost: typing.Optional[int] = None
     deletion_settings: typing.Optional[ConversationDeletionSettings] = None
@@ -25,6 +30,9 @@ class ConversationHistoryMetadataCommonModel(UncheckedBaseModel):
     charging: typing.Optional[ConversationChargingCommonModel] = None
     phone_call: typing.Optional[ConversationHistoryMetadataCommonModelPhoneCall] = None
     termination_reason: typing.Optional[str] = None
+    error: typing.Optional[ConversationHistoryErrorCommonModel] = None
+    main_language: typing.Optional[str] = None
+    rag_usage: typing.Optional[ConversationHistoryRagUsageCommonModel] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -7,6 +7,9 @@ from .types.speech_to_text_convert_request_timestamps_granularity import (
     SpeechToTextConvertRequestTimestampsGranularity,
 )
 from ..types.additional_formats import AdditionalFormats
+from .types.speech_to_text_convert_request_file_format import (
+    SpeechToTextConvertRequestFileFormat,
+)
 from ..core.request_options import RequestOptions
 from ..types.speech_to_text_chunk_response_model import SpeechToTextChunkResponseModel
 from ..core.unchecked_base_model import construct_type
@@ -28,14 +31,16 @@ class SpeechToTextClient:
         self,
         *,
         model_id: str,
-        file: core.File,
         enable_logging: typing.Optional[bool] = None,
+        file: typing.Optional[core.File] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         tag_audio_events: typing.Optional[bool] = OMIT,
         num_speakers: typing.Optional[int] = OMIT,
         timestamps_granularity: typing.Optional[SpeechToTextConvertRequestTimestampsGranularity] = OMIT,
         diarize: typing.Optional[bool] = OMIT,
         additional_formats: typing.Optional[AdditionalFormats] = OMIT,
+        file_format: typing.Optional[SpeechToTextConvertRequestFileFormat] = OMIT,
+        cloud_storage_url: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SpeechToTextChunkResponseModel:
         """
@@ -44,13 +49,13 @@ class SpeechToTextClient:
         Parameters
         ----------
         model_id : str
-            The ID of the model to use for transcription, currently only 'scribe_v1' is available.
-
-        file : core.File
-            See core.File for more documentation
+            The ID of the model to use for transcription, currently only 'scribe_v1' and 'scribe_v1_experimental' are available.
 
         enable_logging : typing.Optional[bool]
             When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
+
+        file : typing.Optional[core.File]
+            See core.File for more documentation
 
         language_code : typing.Optional[str]
             An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand. Defaults to null, in this case the language is predicted automatically.
@@ -69,6 +74,12 @@ class SpeechToTextClient:
 
         additional_formats : typing.Optional[AdditionalFormats]
             A list of additional formats to export the transcript to.
+
+        file_format : typing.Optional[SpeechToTextConvertRequestFileFormat]
+            The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
+
+        cloud_storage_url : typing.Optional[str]
+            The valid AWS S3, Cloudflare R2 or Google Cloud Storage URL of the file to transcribe. Exactly one of the file or cloud_storage_url parameters must be provided. The file must be a valid publicly accessible cloud storage URL. The file size must be less than 2GB. URL can be pre-signed.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -104,6 +115,8 @@ class SpeechToTextClient:
                 "timestamps_granularity": timestamps_granularity,
                 "diarize": diarize,
                 "additional_formats": additional_formats,
+                "file_format": file_format,
+                "cloud_storage_url": cloud_storage_url,
             },
             files={
                 "file": file,
@@ -144,14 +157,16 @@ class AsyncSpeechToTextClient:
         self,
         *,
         model_id: str,
-        file: core.File,
         enable_logging: typing.Optional[bool] = None,
+        file: typing.Optional[core.File] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         tag_audio_events: typing.Optional[bool] = OMIT,
         num_speakers: typing.Optional[int] = OMIT,
         timestamps_granularity: typing.Optional[SpeechToTextConvertRequestTimestampsGranularity] = OMIT,
         diarize: typing.Optional[bool] = OMIT,
         additional_formats: typing.Optional[AdditionalFormats] = OMIT,
+        file_format: typing.Optional[SpeechToTextConvertRequestFileFormat] = OMIT,
+        cloud_storage_url: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SpeechToTextChunkResponseModel:
         """
@@ -160,13 +175,13 @@ class AsyncSpeechToTextClient:
         Parameters
         ----------
         model_id : str
-            The ID of the model to use for transcription, currently only 'scribe_v1' is available.
-
-        file : core.File
-            See core.File for more documentation
+            The ID of the model to use for transcription, currently only 'scribe_v1' and 'scribe_v1_experimental' are available.
 
         enable_logging : typing.Optional[bool]
             When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
+
+        file : typing.Optional[core.File]
+            See core.File for more documentation
 
         language_code : typing.Optional[str]
             An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand. Defaults to null, in this case the language is predicted automatically.
@@ -185,6 +200,12 @@ class AsyncSpeechToTextClient:
 
         additional_formats : typing.Optional[AdditionalFormats]
             A list of additional formats to export the transcript to.
+
+        file_format : typing.Optional[SpeechToTextConvertRequestFileFormat]
+            The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
+
+        cloud_storage_url : typing.Optional[str]
+            The valid AWS S3, Cloudflare R2 or Google Cloud Storage URL of the file to transcribe. Exactly one of the file or cloud_storage_url parameters must be provided. The file must be a valid publicly accessible cloud storage URL. The file size must be less than 2GB. URL can be pre-signed.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -228,6 +249,8 @@ class AsyncSpeechToTextClient:
                 "timestamps_granularity": timestamps_granularity,
                 "diarize": diarize,
                 "additional_formats": additional_formats,
+                "file_format": file_format,
+                "cloud_storage_url": cloud_storage_url,
             },
             files={
                 "file": file,

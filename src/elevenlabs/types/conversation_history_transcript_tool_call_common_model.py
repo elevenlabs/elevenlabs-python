@@ -2,6 +2,9 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
+from .conversation_history_transcript_tool_call_common_model_tool_details import (
+    ConversationHistoryTranscriptToolCallCommonModelToolDetails,
+)
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
@@ -12,6 +15,7 @@ class ConversationHistoryTranscriptToolCallCommonModel(UncheckedBaseModel):
     tool_name: str
     params_as_json: str
     tool_has_been_called: bool
+    tool_details: typing.Optional[ConversationHistoryTranscriptToolCallCommonModelToolDetails] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

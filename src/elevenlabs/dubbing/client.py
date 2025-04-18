@@ -17,6 +17,9 @@ from ..types.segment_delete_response import SegmentDeleteResponse
 from ..types.segment_transcription_response import SegmentTranscriptionResponse
 from ..types.segment_translation_response import SegmentTranslationResponse
 from ..types.segment_dub_response import SegmentDubResponse
+from ..types.render_type import RenderType
+from ..types.dubbing_render_response_model import DubbingRenderResponseModel
+from .. import core
 from ..types.do_dubbing_response import DoDubbingResponse
 from ..types.dubbing_metadata_response import DubbingMetadataResponse
 from ..types.delete_dubbing_response_model import DeleteDubbingResponseModel
@@ -655,13 +658,93 @@ class DubbingClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def render_dub(
+        self,
+        dubbing_id: str,
+        language: str,
+        *,
+        render_type: RenderType,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> DubbingRenderResponseModel:
+        """
+        Regenerate the dubs for either the entire resource or the specified segments/languages. Will automatically transcribe and translate any missing transcriptions and translations.
+
+        Parameters
+        ----------
+        dubbing_id : str
+            ID of the dubbing project.
+
+        language : str
+            Render this language
+
+        render_type : RenderType
+            The type of the render. One of ['mp4', 'aac', 'mp3', 'wav', 'aaf', 'tracks_zip', 'clips_zip']
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DubbingRenderResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.dubbing.render_dub(
+            dubbing_id="dubbing_id",
+            language="language",
+            render_type="mp4",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/render/{jsonable_encoder(language)}",
+            base_url=self._client_wrapper.get_environment().base,
+            method="POST",
+            json={
+                "render_type": render_type,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    DubbingRenderResponseModel,
+                    construct_type(
+                        type_=DubbingRenderResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     def dub_a_video_or_an_audio_file(
         self,
         *,
-        file: typing.Optional[str] = OMIT,
-        csv_file: typing.Optional[str] = OMIT,
-        foreground_audio_file: typing.Optional[str] = OMIT,
-        background_audio_file: typing.Optional[str] = OMIT,
+        file: typing.Optional[core.File] = OMIT,
+        csv_file: typing.Optional[core.File] = OMIT,
+        foreground_audio_file: typing.Optional[core.File] = OMIT,
+        background_audio_file: typing.Optional[core.File] = OMIT,
         name: typing.Optional[str] = OMIT,
         source_url: typing.Optional[str] = OMIT,
         source_lang: typing.Optional[str] = OMIT,
@@ -683,17 +766,17 @@ class DubbingClient:
 
         Parameters
         ----------
-        file : typing.Optional[str]
-            A list of file paths to audio recordings intended for voice cloning
+        file : typing.Optional[core.File]
+            See core.File for more documentation
 
-        csv_file : typing.Optional[str]
-            CSV file containing transcription/translation metadata
+        csv_file : typing.Optional[core.File]
+            See core.File for more documentation
 
-        foreground_audio_file : typing.Optional[str]
-            For use only with csv input
+        foreground_audio_file : typing.Optional[core.File]
+            See core.File for more documentation
 
-        background_audio_file : typing.Optional[str]
-            For use only with csv input
+        background_audio_file : typing.Optional[core.File]
+            See core.File for more documentation
 
         name : typing.Optional[str]
             Name of the dubbing project.
@@ -759,10 +842,6 @@ class DubbingClient:
             base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
-                "file": file,
-                "csv_file": csv_file,
-                "foreground_audio_file": foreground_audio_file,
-                "background_audio_file": background_audio_file,
                 "name": name,
                 "source_url": source_url,
                 "source_lang": source_lang,
@@ -778,7 +857,12 @@ class DubbingClient:
                 "disable_voice_cloning": disable_voice_cloning,
                 "mode": mode,
             },
-            files={},
+            files={
+                "file": file,
+                "csv_file": csv_file,
+                "foreground_audio_file": foreground_audio_file,
+                "background_audio_file": background_audio_file,
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -1069,13 +1153,7 @@ class DubbingClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    str,
-                    construct_type(
-                        type_=str,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
+                return _response.text  # type: ignore
             if _response.status_code == 403:
                 raise ForbiddenError(
                     typing.cast(
@@ -1809,13 +1887,101 @@ class AsyncDubbingClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    async def render_dub(
+        self,
+        dubbing_id: str,
+        language: str,
+        *,
+        render_type: RenderType,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> DubbingRenderResponseModel:
+        """
+        Regenerate the dubs for either the entire resource or the specified segments/languages. Will automatically transcribe and translate any missing transcriptions and translations.
+
+        Parameters
+        ----------
+        dubbing_id : str
+            ID of the dubbing project.
+
+        language : str
+            Render this language
+
+        render_type : RenderType
+            The type of the render. One of ['mp4', 'aac', 'mp3', 'wav', 'aaf', 'tracks_zip', 'clips_zip']
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DubbingRenderResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.dubbing.render_dub(
+                dubbing_id="dubbing_id",
+                language="language",
+                render_type="mp4",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/render/{jsonable_encoder(language)}",
+            base_url=self._client_wrapper.get_environment().base,
+            method="POST",
+            json={
+                "render_type": render_type,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    DubbingRenderResponseModel,
+                    construct_type(
+                        type_=DubbingRenderResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     async def dub_a_video_or_an_audio_file(
         self,
         *,
-        file: typing.Optional[str] = OMIT,
-        csv_file: typing.Optional[str] = OMIT,
-        foreground_audio_file: typing.Optional[str] = OMIT,
-        background_audio_file: typing.Optional[str] = OMIT,
+        file: typing.Optional[core.File] = OMIT,
+        csv_file: typing.Optional[core.File] = OMIT,
+        foreground_audio_file: typing.Optional[core.File] = OMIT,
+        background_audio_file: typing.Optional[core.File] = OMIT,
         name: typing.Optional[str] = OMIT,
         source_url: typing.Optional[str] = OMIT,
         source_lang: typing.Optional[str] = OMIT,
@@ -1837,17 +2003,17 @@ class AsyncDubbingClient:
 
         Parameters
         ----------
-        file : typing.Optional[str]
-            A list of file paths to audio recordings intended for voice cloning
+        file : typing.Optional[core.File]
+            See core.File for more documentation
 
-        csv_file : typing.Optional[str]
-            CSV file containing transcription/translation metadata
+        csv_file : typing.Optional[core.File]
+            See core.File for more documentation
 
-        foreground_audio_file : typing.Optional[str]
-            For use only with csv input
+        foreground_audio_file : typing.Optional[core.File]
+            See core.File for more documentation
 
-        background_audio_file : typing.Optional[str]
-            For use only with csv input
+        background_audio_file : typing.Optional[core.File]
+            See core.File for more documentation
 
         name : typing.Optional[str]
             Name of the dubbing project.
@@ -1921,10 +2087,6 @@ class AsyncDubbingClient:
             base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
-                "file": file,
-                "csv_file": csv_file,
-                "foreground_audio_file": foreground_audio_file,
-                "background_audio_file": background_audio_file,
                 "name": name,
                 "source_url": source_url,
                 "source_lang": source_lang,
@@ -1940,7 +2102,12 @@ class AsyncDubbingClient:
                 "disable_voice_cloning": disable_voice_cloning,
                 "mode": mode,
             },
-            files={},
+            files={
+                "file": file,
+                "csv_file": csv_file,
+                "foreground_audio_file": foreground_audio_file,
+                "background_audio_file": background_audio_file,
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -2255,13 +2422,7 @@ class AsyncDubbingClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    str,
-                    construct_type(
-                        type_=str,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
+                return _response.text  # type: ignore
             if _response.status_code == 403:
                 raise ForbiddenError(
                     typing.cast(

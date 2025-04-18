@@ -9,6 +9,7 @@ import pydantic
 class SafetyResponseModel(UncheckedBaseModel):
     is_blocked_ivc: typing.Optional[bool] = None
     is_blocked_non_ivc: typing.Optional[bool] = None
+    ignore_safety_evaluation: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
