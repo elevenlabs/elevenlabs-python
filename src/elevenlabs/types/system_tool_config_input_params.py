@@ -5,7 +5,8 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
-from .transfer import Transfer
+from .agent_transfer import AgentTransfer
+from .phone_number_transfer import PhoneNumberTransfer
 import typing_extensions
 from ..core.unchecked_base_model import UnionMetadata
 
@@ -38,7 +39,21 @@ class SystemToolConfigInputParams_LanguageDetection(UncheckedBaseModel):
 
 class SystemToolConfigInputParams_TransferToAgent(UncheckedBaseModel):
     system_tool_type: typing.Literal["transfer_to_agent"] = "transfer_to_agent"
-    transfers: typing.List[Transfer]
+    transfers: typing.List[AgentTransfer]
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class SystemToolConfigInputParams_TransferToNumber(UncheckedBaseModel):
+    system_tool_type: typing.Literal["transfer_to_number"] = "transfer_to_number"
+    transfers: typing.List[PhoneNumberTransfer]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -55,6 +70,7 @@ SystemToolConfigInputParams = typing_extensions.Annotated[
         SystemToolConfigInputParams_EndCall,
         SystemToolConfigInputParams_LanguageDetection,
         SystemToolConfigInputParams_TransferToAgent,
+        SystemToolConfigInputParams_TransferToNumber,
     ],
     UnionMetadata(discriminant="system_tool_type"),
 ]

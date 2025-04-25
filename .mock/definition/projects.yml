@@ -1,0 +1,1351 @@
+imports:
+  root: __package__.yml
+types:
+  BodyCreatePodcastV1ProjectsPodcastCreatePostMode:
+    discriminant: type
+    base-properties: {}
+    docs: >-
+      The type of podcast to generate. Can be 'conversation', an interaction
+      between two voices, or 'bulletin', a monologue.
+    union:
+      conversation:
+        type: root.PodcastConversationMode
+      bulletin:
+        type: root.PodcastBulletinMode
+    source:
+      openapi: ../openapi.json
+  BodyCreatePodcastV1ProjectsPodcastCreatePostSourceItem:
+    discriminant: type
+    base-properties: {}
+    union:
+      text:
+        type: root.PodcastTextSource
+      url:
+        type: root.PodcastUrlSource
+    source:
+      openapi: ../openapi.json
+  BodyCreatePodcastV1ProjectsPodcastCreatePostSource:
+    discriminated: false
+    docs: The source content for the Podcast.
+    union:
+      - type: root.PodcastTextSource
+      - type: root.PodcastUrlSource
+      - list<BodyCreatePodcastV1ProjectsPodcastCreatePostSourceItem>
+    source:
+      openapi: ../openapi.json
+    inline: true
+  BodyCreatePodcastV1ProjectsPodcastCreatePostQualityPreset:
+    enum:
+      - standard
+      - high
+      - highest
+      - ultra
+      - ultra_lossless
+    docs: >
+      Output quality of the generated audio. Must be one of:
+
+      standard - standard output format, 128kbps with 44.1kHz sample rate.
+
+      high - high quality output format, 192kbps with 44.1kHz sample rate and
+      major improvements on our side. Using this setting increases the credit
+      cost by 20%.
+
+      ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and
+      highest improvements on our side. Using this setting increases the credit
+      cost by 50%.
+
+      ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz
+      sample rate and highest improvements on our side in a fully lossless
+      format. Using this setting increases the credit cost by 100%.
+    default: standard
+    inline: true
+    source:
+      openapi: ../openapi.json
+  BodyCreatePodcastV1ProjectsPodcastCreatePostDurationScale:
+    enum:
+      - short
+      - default
+      - long
+    docs: |
+      Duration of the generated podcast. Must be one of:
+      short - produces podcasts shorter than 3 minutes.
+      default - produces podcasts roughly between 3-7 minutes.
+      long - prodces podcasts longer than 7 minutes.
+    default: default
+    inline: true
+    source:
+      openapi: ../openapi.json
+  AddProjectV1ProjectsAddPostRequestTargetAudience:
+    enum:
+      - children
+      - value: young adult
+        name: YoungAdult
+      - adult
+      - value: all ages
+        name: AllAges
+    inline: true
+    source:
+      openapi: ../openapi.json
+  AddProjectV1ProjectsAddPostRequestFiction:
+    enum:
+      - fiction
+      - value: non-fiction
+        name: NonFiction
+    inline: true
+    source:
+      openapi: ../openapi.json
+  AddProjectV1ProjectsAddPostRequestApplyTextNormalization:
+    enum:
+      - auto
+      - 'on'
+      - 'off'
+      - apply_english
+    inline: true
+    source:
+      openapi: ../openapi.json
+  AddProjectV1ProjectsAddPostRequestSourceType:
+    enum:
+      - blank
+      - book
+      - article
+      - genfm
+    inline: true
+    source:
+      openapi: ../openapi.json
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    createPodcast:
+      path: /v1/projects/podcast/create
+      method: POST
+      auth: false
+      docs: >-
+        Create and auto-convert a podcast project. Currently, the LLM cost is
+        covered by us but you will still be charged for the audio generation. In
+        the future, you will be charged for both the LLM and audio generation
+        costs.
+      source:
+        openapi: ../openapi.json
+      display-name: Create Podcast
+      request:
+        name: BodyCreatePodcastV1ProjectsPodcastCreatePost
+        body:
+          properties:
+            model_id:
+              type: string
+              docs: >-
+                The ID of the model to be used for this Studio project, you can
+                query GET /v1/models to list all available models.
+            mode:
+              display-name: Mode
+              type: BodyCreatePodcastV1ProjectsPodcastCreatePostMode
+              docs: >-
+                The type of podcast to generate. Can be 'conversation', an
+                interaction between two voices, or 'bulletin', a monologue.
+            source:
+              display-name: Source
+              type: BodyCreatePodcastV1ProjectsPodcastCreatePostSource
+              docs: The source content for the Podcast.
+            quality_preset:
+              type: >-
+                optional<BodyCreatePodcastV1ProjectsPodcastCreatePostQualityPreset>
+              docs: >
+                Output quality of the generated audio. Must be one of:
+
+                standard - standard output format, 128kbps with 44.1kHz sample
+                rate.
+
+                high - high quality output format, 192kbps with 44.1kHz sample
+                rate and major improvements on our side. Using this setting
+                increases the credit cost by 20%.
+
+                ultra - ultra quality output format, 192kbps with 44.1kHz sample
+                rate and highest improvements on our side. Using this setting
+                increases the credit cost by 50%.
+
+                ultra lossless - ultra quality output format, 705.6kbps with
+                44.1kHz sample rate and highest improvements on our side in a
+                fully lossless format. Using this setting increases the credit
+                cost by 100%.
+              default: standard
+            duration_scale:
+              type: >-
+                optional<BodyCreatePodcastV1ProjectsPodcastCreatePostDurationScale>
+              docs: |
+                Duration of the generated podcast. Must be one of:
+                short - produces podcasts shorter than 3 minutes.
+                default - produces podcasts roughly between 3-7 minutes.
+                long - prodces podcasts longer than 7 minutes.
+              default: default
+            language:
+              type: optional<string>
+              docs: >-
+                An optional language of the Studio project. Two-letter language
+                code (ISO 639-1).
+              validation:
+                minLength: 2
+                maxLength: 2
+            highlights:
+              type: optional<list<string>>
+              docs: >-
+                A brief summary or highlights of the Studio project's content,
+                providing key points or themes. This should be between 10 and 70
+                characters.
+            callback_url:
+              type: optional<string>
+              docs: >-
+                A url that will be called by our service when the Studio project
+                is converted. Request will contain a json blob containing the
+                status of the conversion
+        content-type: application/json
+      response:
+        docs: Successful Response
+        type: root.PodcastProjectResponseModel
+        status-code: 200
+      availability: deprecated
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - request:
+            model_id: 21m00Tcm4TlvDq8ikWAM
+            mode:
+              conversation:
+                host_voice_id: aw1NgEzBg83R7vgmiJt6
+                guest_voice_id: aw1NgEzBg83R7vgmiJt7
+              type: conversation
+            source:
+              text: This is a test podcast.
+          response:
+            body:
+              project:
+                project_id: aw1NgEzBg83R7vgmiJt6
+                name: My Project
+                create_date_unix: 1714204800
+                default_title_voice_id: JBFqnCBsd6RMkjVDRZzb
+                default_paragraph_voice_id: JBFqnCBsd6RMkjVDRZzb
+                default_model_id: eleven_multilingual_v2
+                last_conversion_date_unix: 1714204800
+                can_be_downloaded: true
+                title: My Project
+                author: John Doe
+                description: This is a description of my project.
+                genres:
+                  - Novel
+                  - Short Story
+                cover_image_url: https://example.com/cover.jpg
+                target_audience: children
+                language: en
+                content_type: Novel
+                original_publication_date: '2025-01-01'
+                mature_content: false
+                isbn_number: 978-90-274-3964-2
+                volume_normalization: true
+                state: default
+                access_level: viewer
+                fiction: fiction
+                quality_check_on: false
+                quality_check_on_when_bulk_convert: false
+                creation_meta:
+                  creation_progress: 0.5
+                  status: pending
+                  type: blank
+                source_type: blank
+                chapters_enabled: true
+    getProjects:
+      path: /v1/projects
+      method: GET
+      auth: false
+      docs: Returns a list of your projects together and its metadata.
+      source:
+        openapi: ../openapi.json
+      display-name: Get Projects
+      response:
+        docs: Successful Response
+        type: root.GetProjectsResponse
+        status-code: 200
+      availability: deprecated
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - response:
+            body:
+              projects:
+                - project_id: aw1NgEzBg83R7vgmiJt6
+                  name: My Project
+                  create_date_unix: 1714204800
+                  default_title_voice_id: JBFqnCBsd6RMkjVDRZzb
+                  default_paragraph_voice_id: JBFqnCBsd6RMkjVDRZzb
+                  default_model_id: eleven_multilingual_v2
+                  last_conversion_date_unix: 1714204800
+                  can_be_downloaded: true
+                  title: My Project
+                  author: John Doe
+                  description: This is a description of my project.
+                  genres:
+                    - Novel
+                    - Short Story
+                  cover_image_url: https://example.com/cover.jpg
+                  target_audience: children
+                  language: en
+                  content_type: Novel
+                  original_publication_date: '2025-01-01'
+                  mature_content: false
+                  isbn_number: 978-90-274-3964-2
+                  volume_normalization: true
+                  state: default
+                  access_level: viewer
+                  fiction: fiction
+                  quality_check_on: false
+                  quality_check_on_when_bulk_convert: false
+                  creation_meta:
+                    creation_progress: 0.5
+                    status: pending
+                    type: blank
+                  source_type: blank
+                  chapters_enabled: true
+    addProject:
+      path: /v1/projects/add
+      method: POST
+      auth: false
+      docs: >-
+        Creates a new project, it can be either initialized as blank, from a
+        document or from a URL.
+      source:
+        openapi: ../openapi.json
+      display-name: Add Project
+      request:
+        name: Body_Add_project_v1_projects_add_post
+        body:
+          properties:
+            name:
+              type: string
+              docs: The name of the Studio project, used for identification only.
+            default_title_voice_id:
+              type: string
+              docs: >-
+                The voice_id that corresponds to the default voice used for new
+                titles.
+            default_paragraph_voice_id:
+              type: string
+              docs: >-
+                The voice_id that corresponds to the default voice used for new
+                paragraphs.
+            default_model_id:
+              type: string
+              docs: >-
+                The ID of the model to be used for this Studio project, you can
+                query GET /v1/models to list all available models.
+            from_url:
+              type: optional<string>
+              docs: >-
+                An optional URL from which we will extract content to initialize
+                the Studio project. If this is set, 'from_url' must be null. If
+                neither 'from_url' or 'from_document' are provided we will
+                initialize the Studio project as blank.
+            from_document:
+              type: optional<file>
+              docs: >-
+                An optional .epub, .pdf, .txt or similar file can be provided.
+                If provided, we will initialize the Studio project with its
+                content. If this is set, 'from_url' must be null.  If neither
+                'from_url' or 'from_document' are provided we will initialize
+                the Studio project as blank.
+            quality_preset:
+              type: optional<string>
+              docs: >
+                Output quality of the generated audio. Must be one of:
+
+                standard - standard output format, 128kbps with 44.1kHz sample
+                rate.
+
+                high - high quality output format, 192kbps with 44.1kHz sample
+                rate and major improvements on our side. Using this setting
+                increases the credit cost by 20%.
+
+                ultra - ultra quality output format, 192kbps with 44.1kHz sample
+                rate and highest improvements on our side. Using this setting
+                increases the credit cost by 50%.
+
+                ultra lossless - ultra quality output format, 705.6kbps with
+                44.1kHz sample rate and highest improvements on our side in a
+                fully lossless format. Using this setting increases the credit
+                cost by 100%.
+              default: standard
+            title:
+              type: optional<string>
+              docs: >-
+                An optional name of the author of the Studio project, this will
+                be added as metadata to the mp3 file on Studio project or
+                chapter download.
+            author:
+              type: optional<string>
+              docs: >-
+                An optional name of the author of the Studio project, this will
+                be added as metadata to the mp3 file on Studio project or
+                chapter download.
+            description:
+              type: optional<string>
+              docs: An optional description of the Studio project.
+            genres:
+              type: optional<list<string>>
+              docs: An optional list of genres associated with the Studio project.
+            target_audience:
+              type: optional<AddProjectV1ProjectsAddPostRequestTargetAudience>
+              docs: An optional target audience of the Studio project.
+            language:
+              type: optional<string>
+              docs: >-
+                An optional language of the Studio project. Two-letter language
+                code (ISO 639-1).
+              validation:
+                minLength: 2
+                maxLength: 2
+            content_type:
+              type: optional<string>
+              docs: An optional content type of the Studio project.
+            original_publication_date:
+              type: optional<string>
+              docs: >-
+                An optional original publication date of the Studio project, in
+                the format YYYY-MM-DD or YYYY.
+              validation:
+                pattern: ^\d{4}-\d{2}-\d{2}$|^\d{4}$
+            mature_content:
+              type: optional<boolean>
+              docs: >-
+                An optional specification of whether this Studio project
+                contains mature content.
+            isbn_number:
+              type: optional<string>
+              docs: >-
+                An optional ISBN number of the Studio project you want to
+                create, this will be added as metadata to the mp3 file on Studio
+                project or chapter download.
+            acx_volume_normalization:
+              type: optional<boolean>
+              docs: >-
+                [Deprecated] When the Studio project is downloaded, should the
+                returned audio have postprocessing in order to make it compliant
+                with audiobook normalized volume requirements
+              default: false
+            volume_normalization:
+              type: optional<boolean>
+              docs: >-
+                When the Studio project is downloaded, should the returned audio
+                have postprocessing in order to make it compliant with audiobook
+                normalized volume requirements
+              default: false
+            pronunciation_dictionary_locators:
+              type: optional<list<string>>
+              docs: >-
+                A list of pronunciation dictionary locators
+                (pronunciation_dictionary_id, version_id) encoded as a list of
+                JSON strings for pronunciation dictionaries to be applied to the
+                text. A list of json encoded strings is required as adding
+                projects may occur through formData as opposed to jsonBody. To
+                specify multiple dictionaries use multiple --form lines in your
+                curl, such as --form
+                'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"'
+                --form
+                'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'.
+                Note that multiple dictionaries are not currently supported by
+                our UI which will only show the first.
+            fiction:
+              type: optional<AddProjectV1ProjectsAddPostRequestFiction>
+              docs: >-
+                An optional specification of whether the content of this Studio
+                project is fiction.
+            apply_text_normalization:
+              type: >-
+                optional<AddProjectV1ProjectsAddPostRequestApplyTextNormalization>
+              docs: |2-
+
+                    This parameter controls text normalization with four modes: 'auto', 'on', 'apply_english' and 'off'.
+                    When set to 'auto', the system will automatically decide whether to apply text normalization
+                    (e.g., spelling out numbers). With 'on', text normalization will always be applied, while
+                    with 'off', it will be skipped. 'apply_english' is the same as 'on' but will assume that text is in English.
+                    
+            auto_convert:
+              type: optional<boolean>
+              docs: Whether to auto convert the Studio project to audio or not.
+              default: false
+            auto_assign_voices:
+              type: optional<boolean>
+              docs: >-
+                [Alpha Feature] Whether automatically assign voices to phrases
+                in the create Project.
+            source_type:
+              type: optional<AddProjectV1ProjectsAddPostRequestSourceType>
+              docs: The type of Studio project to create.
+        content-type: multipart/form-data
+      response:
+        docs: Successful Response
+        type: root.AddProjectResponseModel
+        status-code: 200
+      availability: deprecated
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - request:
+            name: name
+            default_title_voice_id: default_title_voice_id
+            default_paragraph_voice_id: default_paragraph_voice_id
+            default_model_id: default_model_id
+          response:
+            body:
+              project:
+                project_id: aw1NgEzBg83R7vgmiJt6
+                name: My Project
+                create_date_unix: 1714204800
+                default_title_voice_id: JBFqnCBsd6RMkjVDRZzb
+                default_paragraph_voice_id: JBFqnCBsd6RMkjVDRZzb
+                default_model_id: eleven_multilingual_v2
+                last_conversion_date_unix: 1714204800
+                can_be_downloaded: true
+                title: My Project
+                author: John Doe
+                description: This is a description of my project.
+                genres:
+                  - Novel
+                  - Short Story
+                cover_image_url: https://example.com/cover.jpg
+                target_audience: children
+                language: en
+                content_type: Novel
+                original_publication_date: '2025-01-01'
+                mature_content: false
+                isbn_number: 978-90-274-3964-2
+                volume_normalization: true
+                state: default
+                access_level: viewer
+                fiction: fiction
+                quality_check_on: false
+                quality_check_on_when_bulk_convert: false
+                creation_meta:
+                  creation_progress: 0.5
+                  status: pending
+                  type: blank
+                source_type: blank
+                chapters_enabled: true
+    getProjectById:
+      path: /v1/projects/{project_id}
+      method: GET
+      auth: false
+      docs: >-
+        Returns information about a specific project. This endpoint returns more
+        detailed information about a project than `GET /v1/projects`.
+      source:
+        openapi: ../openapi.json
+      path-parameters:
+        project_id:
+          type: string
+          docs: The ID of the Studio project.
+      display-name: Get Project By Id
+      response:
+        docs: Successful Response
+        type: root.ProjectExtendedResponseModel
+        status-code: 200
+      availability: deprecated
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            project_id: 21m00Tcm4TlvDq8ikWAM
+          response:
+            body:
+              project_id: aw1NgEzBg83R7vgmiJt6
+              name: My Project
+              create_date_unix: 1714204800
+              default_title_voice_id: JBFqnCBsd6RMkjVDRZzb
+              default_paragraph_voice_id: JBFqnCBsd6RMkjVDRZzb
+              default_model_id: eleven_multilingual_v2
+              last_conversion_date_unix: 1714204800
+              can_be_downloaded: true
+              title: My Project
+              author: John Doe
+              description: This is a description of my project.
+              genres:
+                - Novel
+                - Short Story
+              cover_image_url: https://example.com/cover.jpg
+              target_audience: children
+              language: en
+              content_type: Novel
+              original_publication_date: '2025-01-01'
+              mature_content: false
+              isbn_number: 978-90-274-3964-2
+              volume_normalization: true
+              state: default
+              access_level: viewer
+              fiction: fiction
+              quality_check_on: false
+              quality_check_on_when_bulk_convert: false
+              creation_meta:
+                creation_progress: 0.5
+                status: pending
+                type: blank
+              source_type: blank
+              chapters_enabled: true
+              quality_preset: standard
+              chapters:
+                - chapter_id: aw1NgEzBg83R7vgmiJt6
+                  name: Chapter 1
+                  last_conversion_date_unix: 1714204800
+                  conversion_progress: 0.5
+                  can_be_downloaded: true
+                  state: converting
+                  statistics:
+                    characters_unconverted: 1000
+                    characters_converted: 500
+                    paragraphs_converted: 20
+                    paragraphs_unconverted: 10
+                  last_conversion_error: Error message
+              pronunciation_dictionary_versions:
+                - version_id: version_id
+                  version_rules_num: 1
+                  pronunciation_dictionary_id: pronunciation_dictionary_id
+                  dictionary_name: dictionary_name
+                  version_name: version_name
+                  permission_on_resource: admin
+                  created_by: created_by
+                  creation_time_unix: 1
+                  archived_time_unix: 1
+              pronunciation_dictionary_locators:
+                - pronunciation_dictionary_id: pronunciation_dictionary_id
+                  version_id: version_id
+              apply_text_normalization: auto
+              experimental:
+                key: value
+    editBasicProjectInfo:
+      path: /v1/projects/{project_id}
+      method: POST
+      auth: false
+      docs: Edits basic project info.
+      source:
+        openapi: ../openapi.json
+      path-parameters:
+        project_id:
+          type: string
+          docs: The ID of the Studio project.
+      display-name: Edit Basic Project Info
+      request:
+        name: BodyEditBasicProjectInfoV1ProjectsProjectIdPost
+        body:
+          properties:
+            name:
+              type: string
+              docs: The name of the Studio project, used for identification only.
+            default_title_voice_id:
+              type: string
+              docs: >-
+                The voice_id that corresponds to the default voice used for new
+                titles.
+            default_paragraph_voice_id:
+              type: string
+              docs: >-
+                The voice_id that corresponds to the default voice used for new
+                paragraphs.
+            title:
+              type: optional<string>
+              docs: >-
+                An optional name of the author of the Studio project, this will
+                be added as metadata to the mp3 file on Studio project or
+                chapter download.
+            author:
+              type: optional<string>
+              docs: >-
+                An optional name of the author of the Studio project, this will
+                be added as metadata to the mp3 file on Studio project or
+                chapter download.
+            isbn_number:
+              type: optional<string>
+              docs: >-
+                An optional ISBN number of the Studio project you want to
+                create, this will be added as metadata to the mp3 file on Studio
+                project or chapter download.
+            volume_normalization:
+              type: optional<boolean>
+              docs: >-
+                When the Studio project is downloaded, should the returned audio
+                have postprocessing in order to make it compliant with audiobook
+                normalized volume requirements
+              default: false
+        content-type: application/json
+      response:
+        docs: Successful Response
+        type: root.EditProjectResponseModel
+        status-code: 200
+      availability: deprecated
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            project_id: 21m00Tcm4TlvDq8ikWAM
+          request:
+            name: Project 1
+            default_title_voice_id: 21m00Tcm4TlvDq8ikWAM
+            default_paragraph_voice_id: 21m00Tcm4TlvDq8ikWAM
+          response:
+            body:
+              project:
+                project_id: aw1NgEzBg83R7vgmiJt6
+                name: My Project
+                create_date_unix: 1714204800
+                default_title_voice_id: JBFqnCBsd6RMkjVDRZzb
+                default_paragraph_voice_id: JBFqnCBsd6RMkjVDRZzb
+                default_model_id: eleven_multilingual_v2
+                last_conversion_date_unix: 1714204800
+                can_be_downloaded: true
+                title: My Project
+                author: John Doe
+                description: This is a description of my project.
+                genres:
+                  - Novel
+                  - Short Story
+                cover_image_url: https://example.com/cover.jpg
+                target_audience: children
+                language: en
+                content_type: Novel
+                original_publication_date: '2025-01-01'
+                mature_content: false
+                isbn_number: 978-90-274-3964-2
+                volume_normalization: true
+                state: default
+                access_level: viewer
+                fiction: fiction
+                quality_check_on: false
+                quality_check_on_when_bulk_convert: false
+                creation_meta:
+                  creation_progress: 0.5
+                  status: pending
+                  type: blank
+                source_type: blank
+                chapters_enabled: true
+    deleteProject:
+      path: /v1/projects/{project_id}
+      method: DELETE
+      auth: false
+      docs: Deletes a project.
+      source:
+        openapi: ../openapi.json
+      path-parameters:
+        project_id:
+          type: string
+          docs: The ID of the Studio project.
+      display-name: Delete Project
+      response:
+        docs: Successful Response
+        type: unknown
+        status-code: 200
+      availability: deprecated
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            project_id: 21m00Tcm4TlvDq8ikWAM
+          response:
+            body:
+              key: value
+    editProjectContent:
+      path: /v1/projects/{project_id}/content
+      method: POST
+      auth: false
+      docs: Edits project content.
+      source:
+        openapi: ../openapi.json
+      path-parameters:
+        project_id:
+          type: string
+          docs: The ID of the Studio project.
+      display-name: Edit Project Content
+      request:
+        name: Body_Edit_project_content_v1_projects__project_id__content_post
+        body:
+          properties:
+            from_url:
+              type: optional<string>
+              docs: >-
+                An optional URL from which we will extract content to initialize
+                the Studio project. If this is set, 'from_url' must be null. If
+                neither 'from_url' or 'from_document' are provided we will
+                initialize the Studio project as blank.
+            from_document:
+              type: optional<file>
+              docs: >-
+                An optional .epub, .pdf, .txt or similar file can be provided.
+                If provided, we will initialize the Studio project with its
+                content. If this is set, 'from_url' must be null.  If neither
+                'from_url' or 'from_document' are provided we will initialize
+                the Studio project as blank.
+            auto_convert:
+              type: optional<boolean>
+              docs: Whether to auto convert the Studio project to audio or not.
+              default: false
+        content-type: multipart/form-data
+      response:
+        docs: Successful Response
+        type: root.EditProjectResponseModel
+        status-code: 200
+      availability: deprecated
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            project_id: 21m00Tcm4TlvDq8ikWAM
+          request: {}
+          response:
+            body:
+              project:
+                project_id: aw1NgEzBg83R7vgmiJt6
+                name: My Project
+                create_date_unix: 1714204800
+                default_title_voice_id: JBFqnCBsd6RMkjVDRZzb
+                default_paragraph_voice_id: JBFqnCBsd6RMkjVDRZzb
+                default_model_id: eleven_multilingual_v2
+                last_conversion_date_unix: 1714204800
+                can_be_downloaded: true
+                title: My Project
+                author: John Doe
+                description: This is a description of my project.
+                genres:
+                  - Novel
+                  - Short Story
+                cover_image_url: https://example.com/cover.jpg
+                target_audience: children
+                language: en
+                content_type: Novel
+                original_publication_date: '2025-01-01'
+                mature_content: false
+                isbn_number: 978-90-274-3964-2
+                volume_normalization: true
+                state: default
+                access_level: viewer
+                fiction: fiction
+                quality_check_on: false
+                quality_check_on_when_bulk_convert: false
+                creation_meta:
+                  creation_progress: 0.5
+                  status: pending
+                  type: blank
+                source_type: blank
+                chapters_enabled: true
+    convertProject:
+      path: /v1/projects/{project_id}/convert
+      method: POST
+      auth: false
+      docs: Starts conversion of a project and all of its chapters.
+      source:
+        openapi: ../openapi.json
+      path-parameters:
+        project_id:
+          type: string
+          docs: The ID of the Studio project.
+      display-name: Convert Project
+      response:
+        docs: Successful Response
+        type: unknown
+        status-code: 200
+      availability: deprecated
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            project_id: 21m00Tcm4TlvDq8ikWAM
+          response:
+            body:
+              key: value
+    getProjectSnapshots:
+      path: /v1/projects/{project_id}/snapshots
+      method: GET
+      auth: false
+      docs: Gets the snapshots of a project.
+      source:
+        openapi: ../openapi.json
+      path-parameters:
+        project_id:
+          type: string
+          docs: The ID of the Studio project.
+      display-name: Get Project Snapshots
+      response:
+        docs: Successful Response
+        type: root.ProjectSnapshotsResponse
+        status-code: 200
+      availability: deprecated
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            project_id: 21m00Tcm4TlvDq8ikWAM
+          response:
+            body:
+              snapshots:
+                - project_snapshot_id: aw1NgEzBg83R7vgmiJt6
+                  project_id: aw1NgEzBg83R7vgmiJt6
+                  created_at_unix: 1714204800
+                  name: My Project Snapshot
+                  audio_upload:
+                    key: value
+                  zip_upload:
+                    key: value
+    streamProjectAudio:
+      path: /v1/projects/{project_id}/snapshots/{project_snapshot_id}/stream
+      method: POST
+      auth: false
+      docs: Stream the audio from a project snapshot.
+      source:
+        openapi: ../openapi.json
+      path-parameters:
+        project_id:
+          type: string
+          docs: The ID of the Studio project.
+        project_snapshot_id:
+          type: string
+          docs: The ID of the Studio project snapshot.
+      display-name: Stream Project Audio
+      request:
+        name: >-
+          BodyStreamProjectAudioV1ProjectsProjectIdSnapshotsProjectSnapshotIdStreamPost
+        body:
+          properties:
+            convert_to_mpeg:
+              type: optional<boolean>
+              docs: Whether to convert the audio to mpeg format.
+              default: false
+        content-type: application/json
+      response:
+        docs: Successful Response
+        type: file
+        status-code: 200
+      availability: deprecated
+      errors:
+        - root.UnprocessableEntityError
+    streamsArchiveWithProjectAudio:
+      path: /v1/projects/{project_id}/snapshots/{project_snapshot_id}/archive
+      method: POST
+      auth: false
+      docs: Streams archive with project audio.
+      source:
+        openapi: ../openapi.json
+      path-parameters:
+        project_id:
+          type: string
+          docs: The ID of the Studio project.
+        project_snapshot_id:
+          type: string
+          docs: The ID of the Studio project snapshot.
+      display-name: Streams Archive With Project Audio
+      availability: deprecated
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            project_id: 21m00Tcm4TlvDq8ikWAM
+            project_snapshot_id: 21m00Tcm4TlvDq8ikWAM
+    getChapters:
+      path: /v1/projects/{project_id}/chapters
+      method: GET
+      auth: false
+      docs: Returns a list of your chapters for a project together and its metadata.
+      source:
+        openapi: ../openapi.json
+      path-parameters:
+        project_id:
+          type: string
+          docs: The ID of the Studio project.
+      display-name: Get Chapters
+      response:
+        docs: Successful Response
+        type: root.GetChaptersResponse
+        status-code: 200
+      availability: deprecated
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            project_id: 21m00Tcm4TlvDq8ikWAM
+          response:
+            body:
+              chapters:
+                - chapter_id: aw1NgEzBg83R7vgmiJt6
+                  name: Chapter 1
+                  last_conversion_date_unix: 1714204800
+                  conversion_progress: 0.5
+                  can_be_downloaded: true
+                  state: converting
+                  statistics:
+                    characters_unconverted: 1000
+                    characters_converted: 500
+                    paragraphs_converted: 20
+                    paragraphs_unconverted: 10
+                  last_conversion_error: Error message
+    getChapterById:
+      path: /v1/projects/{project_id}/chapters/{chapter_id}
+      method: GET
+      auth: false
+      docs: Returns information about a specific chapter.
+      source:
+        openapi: ../openapi.json
+      path-parameters:
+        project_id:
+          type: string
+          docs: The ID of the Studio project.
+        chapter_id:
+          type: string
+          docs: The ID of the chapter.
+      display-name: Get Chapter By Id
+      response:
+        docs: Successful Response
+        type: root.ChapterWithContentResponseModel
+        status-code: 200
+      availability: deprecated
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            project_id: 21m00Tcm4TlvDq8ikWAM
+            chapter_id: 21m00Tcm4TlvDq8ikWAM
+          response:
+            body:
+              chapter_id: aw1NgEzBg83R7vgmiJt6
+              name: Chapter 1
+              last_conversion_date_unix: 1714204800
+              conversion_progress: 0.5
+              can_be_downloaded: true
+              state: converting
+              statistics:
+                characters_unconverted: 1000
+                characters_converted: 500
+                paragraphs_converted: 20
+                paragraphs_unconverted: 10
+              last_conversion_error: Error message
+              content:
+                blocks:
+                  - block_id: block_id
+                    nodes:
+                      - voice_id: voice_id
+                        text: text
+                        type: tts_node
+    deleteChapter:
+      path: /v1/projects/{project_id}/chapters/{chapter_id}
+      method: DELETE
+      auth: false
+      docs: Deletes a chapter.
+      source:
+        openapi: ../openapi.json
+      path-parameters:
+        project_id:
+          type: string
+          docs: The ID of the Studio project.
+        chapter_id:
+          type: string
+          docs: The ID of the chapter.
+      display-name: Delete Chapter
+      response:
+        docs: Successful Response
+        type: unknown
+        status-code: 200
+      availability: deprecated
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            project_id: 21m00Tcm4TlvDq8ikWAM
+            chapter_id: 21m00Tcm4TlvDq8ikWAM
+          response:
+            body:
+              key: value
+    editChapter:
+      path: /v1/projects/{project_id}/chapters/{chapter_id}
+      method: PATCH
+      auth: false
+      docs: Edits a chapter.
+      source:
+        openapi: ../openapi.json
+      path-parameters:
+        project_id:
+          type: string
+          docs: The ID of the Studio project.
+        chapter_id:
+          type: string
+          docs: The ID of the chapter.
+      display-name: Edit Chapter
+      request:
+        name: BodyEditChapterV1ProjectsProjectIdChaptersChapterIdPatch
+        body:
+          properties:
+            name:
+              type: optional<string>
+              docs: The name of the chapter, used for identification only.
+            content:
+              type: optional<root.ChapterContentInputModel>
+              docs: The chapter content to use.
+        content-type: application/json
+      response:
+        docs: Successful Response
+        type: root.EditChapterResponseModel
+        status-code: 200
+      availability: deprecated
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            project_id: 21m00Tcm4TlvDq8ikWAM
+            chapter_id: 21m00Tcm4TlvDq8ikWAM
+          request: {}
+          response:
+            body:
+              chapter:
+                chapter_id: aw1NgEzBg83R7vgmiJt6
+                name: Chapter 1
+                last_conversion_date_unix: 1714204800
+                conversion_progress: 0.5
+                can_be_downloaded: true
+                state: converting
+                statistics:
+                  characters_unconverted: 1000
+                  characters_converted: 500
+                  paragraphs_converted: 20
+                  paragraphs_unconverted: 10
+                last_conversion_error: Error message
+                content:
+                  blocks:
+                    - block_id: block_id
+                      nodes:
+                        - voice_id: voice_id
+                          text: text
+                          type: tts_node
+    addChapterToAProject:
+      path: /v1/projects/{project_id}/chapters/add
+      method: POST
+      auth: false
+      docs: Creates a new chapter either as blank or from a URL.
+      source:
+        openapi: ../openapi.json
+      path-parameters:
+        project_id:
+          type: string
+          docs: The ID of the Studio project.
+      display-name: Add Chapter To A Project
+      request:
+        name: BodyAddChapterToAProjectV1ProjectsProjectIdChaptersAddPost
+        body:
+          properties:
+            name:
+              type: string
+              docs: The name of the chapter, used for identification only.
+            from_url:
+              type: optional<string>
+              docs: >-
+                An optional URL from which we will extract content to initialize
+                the Studio project. If this is set, 'from_url' must be null. If
+                neither 'from_url' or 'from_document' are provided we will
+                initialize the Studio project as blank.
+        content-type: application/json
+      response:
+        docs: Successful Response
+        type: root.AddChapterResponseModel
+        status-code: 200
+      availability: deprecated
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            project_id: 21m00Tcm4TlvDq8ikWAM
+          request:
+            name: Chapter 1
+          response:
+            body:
+              chapter:
+                chapter_id: aw1NgEzBg83R7vgmiJt6
+                name: Chapter 1
+                last_conversion_date_unix: 1714204800
+                conversion_progress: 0.5
+                can_be_downloaded: true
+                state: converting
+                statistics:
+                  characters_unconverted: 1000
+                  characters_converted: 500
+                  paragraphs_converted: 20
+                  paragraphs_unconverted: 10
+                last_conversion_error: Error message
+                content:
+                  blocks:
+                    - block_id: block_id
+                      nodes:
+                        - voice_id: voice_id
+                          text: text
+                          type: tts_node
+    convertChapter:
+      path: /v1/projects/{project_id}/chapters/{chapter_id}/convert
+      method: POST
+      auth: false
+      docs: Starts conversion of a specific chapter.
+      source:
+        openapi: ../openapi.json
+      path-parameters:
+        project_id:
+          type: string
+          docs: The ID of the Studio project.
+        chapter_id:
+          type: string
+          docs: The ID of the chapter.
+      display-name: Convert Chapter
+      response:
+        docs: Successful Response
+        type: unknown
+        status-code: 200
+      availability: deprecated
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            project_id: 21m00Tcm4TlvDq8ikWAM
+            chapter_id: 21m00Tcm4TlvDq8ikWAM
+          response:
+            body:
+              key: value
+    listChapterSnapshots:
+      path: /v1/projects/{project_id}/chapters/{chapter_id}/snapshots
+      method: GET
+      auth: false
+      docs: >-
+        Gets information about all the snapshots of a chapter. Each snapshot can
+        be downloaded as audio. Whenever a chapter is converted a snapshot will
+        automatically be created.
+      source:
+        openapi: ../openapi.json
+      path-parameters:
+        project_id:
+          type: string
+          docs: The ID of the Studio project.
+        chapter_id:
+          type: string
+          docs: The ID of the chapter.
+      display-name: List Chapter Snapshots
+      response:
+        docs: Successful Response
+        type: root.ChapterSnapshotsResponse
+        status-code: 200
+      availability: deprecated
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            project_id: 21m00Tcm4TlvDq8ikWAM
+            chapter_id: 21m00Tcm4TlvDq8ikWAM
+          response:
+            body:
+              snapshots:
+                - chapter_snapshot_id: aw1NgEzBg83R7vgmiJt1
+                  project_id: aw1NgEzBg83R7vgmiJt2
+                  chapter_id: aw1NgEzBg83R7vgmiJt3
+                  created_at_unix: 1714204800
+                  name: My Chapter Snapshot
+    streamChapterAudio:
+      path: >-
+        /v1/projects/{project_id}/chapters/{chapter_id}/snapshots/{chapter_snapshot_id}/stream
+      method: POST
+      auth: false
+      docs: >-
+        Stream the audio from a chapter snapshot. Use `GET
+        /v1/projects/{project_id}/chapters/{chapter_id}/snapshots` to return the
+        chapter snapshots of a chapter.
+      source:
+        openapi: ../openapi.json
+      path-parameters:
+        project_id:
+          type: string
+          docs: The ID of the Studio project.
+        chapter_id:
+          type: string
+          docs: The ID of the chapter.
+        chapter_snapshot_id:
+          type: string
+          docs: The ID of the chapter snapshot.
+      display-name: Stream Chapter Audio
+      request:
+        name: >-
+          BodyStreamChapterAudioV1ProjectsProjectIdChaptersChapterIdSnapshotsChapterSnapshotIdStreamPost
+        body:
+          properties:
+            convert_to_mpeg:
+              type: optional<boolean>
+              docs: Whether to convert the audio to mpeg format.
+              default: false
+        content-type: application/json
+      availability: deprecated
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            project_id: 21m00Tcm4TlvDq8ikWAM
+            chapter_id: 21m00Tcm4TlvDq8ikWAM
+            chapter_snapshot_id: 21m00Tcm4TlvDq8ikWAM
+          request: {}
+    updatePronunciationDictionaries:
+      path: /v1/projects/{project_id}/update-pronunciation-dictionaries
+      method: POST
+      auth: false
+      docs: >-
+        Updates the set of pronunciation dictionaries acting on a project. This
+        will automatically mark text within this project as requiring
+        reconverting where the new dictionary would apply or the old one no
+        longer does.
+      source:
+        openapi: ../openapi.json
+      path-parameters:
+        project_id:
+          type: string
+          docs: The ID of the Studio project.
+      display-name: Update Pronunciation Dictionaries
+      request:
+        name: UpdatePronunciationDictionariesRequest
+        body:
+          properties:
+            pronunciation_dictionary_locators:
+              docs: >-
+                A list of pronunciation dictionary locators
+                (pronunciation_dictionary_id, version_id) encoded as a list of
+                JSON strings for pronunciation dictionaries to be applied to the
+                text. A list of json encoded strings is required as adding
+                projects may occur through formData as opposed to jsonBody. To
+                specify multiple dictionaries use multiple --form lines in your
+                curl, such as --form
+                'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"'
+                --form
+                'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'.
+                Note that multiple dictionaries are not currently supported by
+                our UI which will only show the first.
+              type: list<root.PronunciationDictionaryVersionLocator>
+            invalidate_affected_text:
+              type: optional<boolean>
+              docs: >-
+                This will automatically mark text in this project for
+                reconversion when the new dictionary applies or the old one no
+                longer does.
+              default: true
+        content-type: application/json
+      response:
+        docs: Successful Response
+        type: unknown
+        status-code: 200
+      availability: deprecated
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            project_id: 21m00Tcm4TlvDq8ikWAM
+          request:
+            pronunciation_dictionary_locators:
+              - pronunciation_dictionary_id: pronunciation_dictionary_id
+          response:
+            body:
+              key: value
+  source:
+    openapi: ../openapi.json
+  display-name: projects
+docs: >-
+  Access, create and convert Projects programmatically, only specifically
+  whitelisted accounts can access the Projects API. If you need access please
+  contact our sales team.

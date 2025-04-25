@@ -3,6 +3,8 @@
 from ..core.client_wrapper import SyncClientWrapper
 import typing
 from ..types.breakdown_types import BreakdownTypes
+from ..types.usage_aggregation_interval import UsageAggregationInterval
+from ..types.metric_type import MetricType
 from ..core.request_options import RequestOptions
 from ..types.usage_characters_response_model import UsageCharactersResponseModel
 from ..core.unchecked_base_model import construct_type
@@ -24,6 +26,8 @@ class UsageClient:
         end_unix: int,
         include_workspace_metrics: typing.Optional[bool] = None,
         breakdown_type: typing.Optional[BreakdownTypes] = None,
+        aggregation_interval: typing.Optional[UsageAggregationInterval] = None,
+        metric: typing.Optional[MetricType] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> UsageCharactersResponseModel:
         """
@@ -42,6 +46,12 @@ class UsageClient:
 
         breakdown_type : typing.Optional[BreakdownTypes]
             How to break down the information. Cannot be "user" if include_workspace_metrics is False.
+
+        aggregation_interval : typing.Optional[UsageAggregationInterval]
+            How to aggregate usage data over time. Can be "hour", "day", "week", "month", or "cumulative".
+
+        metric : typing.Optional[MetricType]
+            Which metric to aggregate.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -72,6 +82,8 @@ class UsageClient:
                 "end_unix": end_unix,
                 "include_workspace_metrics": include_workspace_metrics,
                 "breakdown_type": breakdown_type,
+                "aggregation_interval": aggregation_interval,
+                "metric": metric,
             },
             request_options=request_options,
         )
@@ -111,6 +123,8 @@ class AsyncUsageClient:
         end_unix: int,
         include_workspace_metrics: typing.Optional[bool] = None,
         breakdown_type: typing.Optional[BreakdownTypes] = None,
+        aggregation_interval: typing.Optional[UsageAggregationInterval] = None,
+        metric: typing.Optional[MetricType] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> UsageCharactersResponseModel:
         """
@@ -129,6 +143,12 @@ class AsyncUsageClient:
 
         breakdown_type : typing.Optional[BreakdownTypes]
             How to break down the information. Cannot be "user" if include_workspace_metrics is False.
+
+        aggregation_interval : typing.Optional[UsageAggregationInterval]
+            How to aggregate usage data over time. Can be "hour", "day", "week", "month", or "cumulative".
+
+        metric : typing.Optional[MetricType]
+            Which metric to aggregate.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -167,6 +187,8 @@ class AsyncUsageClient:
                 "end_unix": end_unix,
                 "include_workspace_metrics": include_workspace_metrics,
                 "breakdown_type": breakdown_type,
+                "aggregation_interval": aggregation_interval,
+                "metric": metric,
             },
             request_options=request_options,
         )

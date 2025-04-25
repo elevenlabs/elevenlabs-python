@@ -13,6 +13,7 @@ class ConversationHistoryTranscriptToolResultCommonModel(UncheckedBaseModel):
     result_value: str
     is_error: bool
     tool_has_been_called: bool
+    tool_latency_secs: typing.Optional[float] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -22,6 +22,9 @@ from .chapter_response import ChapterResponse
 from .pronunciation_dictionary_version_response_model import (
     PronunciationDictionaryVersionResponseModel,
 )
+from .pronunciation_dictionary_locator_response_model import (
+    PronunciationDictionaryLocatorResponseModel,
+)
 from .project_extended_response_model_apply_text_normalization import (
     ProjectExtendedResponseModelApplyTextNormalization,
 )
@@ -182,6 +185,11 @@ class ProjectExtendedResponseModel(UncheckedBaseModel):
     pronunciation_dictionary_versions: typing.List[PronunciationDictionaryVersionResponseModel] = pydantic.Field()
     """
     List of pronunciation dictionary versions of the project and their metadata.
+    """
+
+    pronunciation_dictionary_locators: typing.List[PronunciationDictionaryLocatorResponseModel] = pydantic.Field()
+    """
+    List of pronunciation dictionary locators.
     """
 
     apply_text_normalization: ProjectExtendedResponseModelApplyTextNormalization = pydantic.Field()

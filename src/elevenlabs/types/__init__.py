@@ -26,6 +26,7 @@ from .agent_metadata_response_model import AgentMetadataResponseModel
 from .agent_platform_settings_request_model import AgentPlatformSettingsRequestModel
 from .agent_platform_settings_response_model import AgentPlatformSettingsResponseModel
 from .agent_summary_response_model import AgentSummaryResponseModel
+from .agent_transfer import AgentTransfer
 from .agent_workspace_overrides_input import AgentWorkspaceOverridesInput
 from .agent_workspace_overrides_output import AgentWorkspaceOverridesOutput
 from .allowlist_item import AllowlistItem
@@ -162,6 +163,8 @@ from .create_sip_trunk_phone_number_request import CreateSipTrunkPhoneNumberRequ
 from .create_twilio_phone_number_request import CreateTwilioPhoneNumberRequest
 from .currency import Currency
 from .custom_llm import CustomLlm
+from .dashboard_call_success_chart_model import DashboardCallSuccessChartModel
+from .dashboard_criteria_chart_model import DashboardCriteriaChartModel
 from .data_collection_result_common_model import DataCollectionResultCommonModel
 from .delete_chapter_response_model import DeleteChapterResponseModel
 from .delete_dubbing_response_model import DeleteDubbingResponseModel
@@ -233,6 +236,12 @@ from .get_agent_response_model import GetAgentResponseModel
 from .get_agents_page_response_model import GetAgentsPageResponseModel
 from .get_audio_native_project_settings_response_model import GetAudioNativeProjectSettingsResponseModel
 from .get_chapters_response import GetChaptersResponse
+from .get_conv_ai_dashboard_settings_response_model import GetConvAiDashboardSettingsResponseModel
+from .get_conv_ai_dashboard_settings_response_model_charts_item import (
+    GetConvAiDashboardSettingsResponseModelChartsItem,
+    GetConvAiDashboardSettingsResponseModelChartsItem_CallSuccess,
+    GetConvAiDashboardSettingsResponseModelChartsItem_Criteria,
+)
 from .get_conv_ai_settings_response_model import GetConvAiSettingsResponseModel
 from .get_conversation_response_model import GetConversationResponseModel
 from .get_conversation_response_model_status import GetConversationResponseModelStatus
@@ -310,6 +319,7 @@ from .llm import Llm
 from .manual_verification_file_response import ManualVerificationFileResponse
 from .manual_verification_response import ManualVerificationResponse
 from .metric_record import MetricRecord
+from .metric_type import MetricType
 from .model import Model
 from .model_rates_response_model import ModelRatesResponseModel
 from .model_response_model_concurrency_group import ModelResponseModelConcurrencyGroup
@@ -325,6 +335,7 @@ from .orb_avatar import OrbAvatar
 from .output_format import OutputFormat
 from .pdf_export_options import PdfExportOptions
 from .phone_number_agent_info import PhoneNumberAgentInfo
+from .phone_number_transfer import PhoneNumberTransfer
 from .podcast_bulletin_mode import PodcastBulletinMode
 from .podcast_bulletin_mode_data import PodcastBulletinModeData
 from .podcast_conversation_mode import PodcastConversationMode
@@ -336,6 +347,12 @@ from .post_agent_avatar_response_model import PostAgentAvatarResponseModel
 from .post_workspace_secret_response_model import PostWorkspaceSecretResponseModel
 from .privacy_config import PrivacyConfig
 from .profile_page_response_model import ProfilePageResponseModel
+from .project_content_item import ProjectContentItem
+from .project_content_item_data import (
+    ProjectContentItemData,
+    ProjectContentItemData_Subproject,
+    ProjectContentItemData_TaskDescription,
+)
 from .project_creation_meta_response_model import ProjectCreationMetaResponseModel
 from .project_creation_meta_response_model_status import ProjectCreationMetaResponseModelStatus
 from .project_creation_meta_response_model_type import ProjectCreationMetaResponseModelType
@@ -346,6 +363,8 @@ from .project_extended_response_model_fiction import ProjectExtendedResponseMode
 from .project_extended_response_model_quality_preset import ProjectExtendedResponseModelQualityPreset
 from .project_extended_response_model_source_type import ProjectExtendedResponseModelSourceType
 from .project_extended_response_model_target_audience import ProjectExtendedResponseModelTargetAudience
+from .project_list import ProjectList
+from .project_model import ProjectModel
 from .project_response import ProjectResponse
 from .project_response_model_access_level import ProjectResponseModelAccessLevel
 from .project_response_model_fiction import ProjectResponseModelFiction
@@ -373,6 +392,7 @@ from .prompt_agent_override import PromptAgentOverride
 from .prompt_agent_override_config import PromptAgentOverrideConfig
 from .prompt_evaluation_criteria import PromptEvaluationCriteria
 from .pronunciation_dictionary_alias_rule_request_model import PronunciationDictionaryAliasRuleRequestModel
+from .pronunciation_dictionary_locator_response_model import PronunciationDictionaryLocatorResponseModel
 from .pronunciation_dictionary_phoneme_rule_request_model import PronunciationDictionaryPhonemeRuleRequestModel
 from .pronunciation_dictionary_rules_response_model import PronunciationDictionaryRulesResponseModel
 from .pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
@@ -432,6 +452,7 @@ from .srt_export_options import SrtExportOptions
 from .start_pvc_voice_training_response_model import StartPvcVoiceTrainingResponseModel
 from .start_speaker_separation_response_model import StartSpeakerSeparationResponseModel
 from .streaming_audio_chunk_with_timestamps_response_model import StreamingAudioChunkWithTimestampsResponseModel
+from .subproject_content_item import SubprojectContentItem
 from .subscription import Subscription
 from .subscription_response import SubscriptionResponse
 from .subscription_response_model_billing_period import SubscriptionResponseModelBillingPeriod
@@ -445,6 +466,7 @@ from .system_tool_config_input_params import (
     SystemToolConfigInputParams_EndCall,
     SystemToolConfigInputParams_LanguageDetection,
     SystemToolConfigInputParams_TransferToAgent,
+    SystemToolConfigInputParams_TransferToNumber,
 )
 from .system_tool_config_output import SystemToolConfigOutput
 from .system_tool_config_output_params import (
@@ -452,11 +474,13 @@ from .system_tool_config_output_params import (
     SystemToolConfigOutputParams_EndCall,
     SystemToolConfigOutputParams_LanguageDetection,
     SystemToolConfigOutputParams_TransferToAgent,
+    SystemToolConfigOutputParams_TransferToNumber,
 )
+from .task_description_content_item import TaskDescriptionContentItem
 from .telephony_provider import TelephonyProvider
 from .text_to_speech_as_stream_request import TextToSpeechAsStreamRequest
-from .transfer import Transfer
 from .transfer_to_agent_tool_config import TransferToAgentToolConfig
+from .transfer_to_number_tool_config import TransferToNumberToolConfig
 from .tts_conversational_config import TtsConversationalConfig
 from .tts_conversational_config_override import TtsConversationalConfigOverride
 from .tts_conversational_config_override_config import TtsConversationalConfigOverrideConfig
@@ -469,6 +493,7 @@ from .twilio_outbound_call_response import TwilioOutboundCallResponse
 from .txt_export_options import TxtExportOptions
 from .update_workspace_member_response_model import UpdateWorkspaceMemberResponseModel
 from .url_avatar import UrlAvatar
+from .usage_aggregation_interval import UsageAggregationInterval
 from .usage_characters_response_model import UsageCharactersResponseModel
 from .user import User
 from .user_feedback import UserFeedback
@@ -551,6 +576,7 @@ __all__ = [
     "AgentPlatformSettingsRequestModel",
     "AgentPlatformSettingsResponseModel",
     "AgentSummaryResponseModel",
+    "AgentTransfer",
     "AgentWorkspaceOverridesInput",
     "AgentWorkspaceOverridesOutput",
     "AllowlistItem",
@@ -661,6 +687,8 @@ __all__ = [
     "CreateTwilioPhoneNumberRequest",
     "Currency",
     "CustomLlm",
+    "DashboardCallSuccessChartModel",
+    "DashboardCriteriaChartModel",
     "DataCollectionResultCommonModel",
     "DeleteChapterResponseModel",
     "DeleteDubbingResponseModel",
@@ -726,6 +754,10 @@ __all__ = [
     "GetAgentsPageResponseModel",
     "GetAudioNativeProjectSettingsResponseModel",
     "GetChaptersResponse",
+    "GetConvAiDashboardSettingsResponseModel",
+    "GetConvAiDashboardSettingsResponseModelChartsItem",
+    "GetConvAiDashboardSettingsResponseModelChartsItem_CallSuccess",
+    "GetConvAiDashboardSettingsResponseModelChartsItem_Criteria",
     "GetConvAiSettingsResponseModel",
     "GetConversationResponseModel",
     "GetConversationResponseModelStatus",
@@ -791,6 +823,7 @@ __all__ = [
     "ManualVerificationFileResponse",
     "ManualVerificationResponse",
     "MetricRecord",
+    "MetricType",
     "Model",
     "ModelRatesResponseModel",
     "ModelResponseModelConcurrencyGroup",
@@ -806,6 +839,7 @@ __all__ = [
     "OutputFormat",
     "PdfExportOptions",
     "PhoneNumberAgentInfo",
+    "PhoneNumberTransfer",
     "PodcastBulletinMode",
     "PodcastBulletinModeData",
     "PodcastConversationMode",
@@ -817,6 +851,10 @@ __all__ = [
     "PostWorkspaceSecretResponseModel",
     "PrivacyConfig",
     "ProfilePageResponseModel",
+    "ProjectContentItem",
+    "ProjectContentItemData",
+    "ProjectContentItemData_Subproject",
+    "ProjectContentItemData_TaskDescription",
     "ProjectCreationMetaResponseModel",
     "ProjectCreationMetaResponseModelStatus",
     "ProjectCreationMetaResponseModelType",
@@ -827,6 +865,8 @@ __all__ = [
     "ProjectExtendedResponseModelQualityPreset",
     "ProjectExtendedResponseModelSourceType",
     "ProjectExtendedResponseModelTargetAudience",
+    "ProjectList",
+    "ProjectModel",
     "ProjectResponse",
     "ProjectResponseModelAccessLevel",
     "ProjectResponseModelFiction",
@@ -850,6 +890,7 @@ __all__ = [
     "PromptAgentOverrideConfig",
     "PromptEvaluationCriteria",
     "PronunciationDictionaryAliasRuleRequestModel",
+    "PronunciationDictionaryLocatorResponseModel",
     "PronunciationDictionaryPhonemeRuleRequestModel",
     "PronunciationDictionaryRulesResponseModel",
     "PronunciationDictionaryVersionLocator",
@@ -907,6 +948,7 @@ __all__ = [
     "StartPvcVoiceTrainingResponseModel",
     "StartSpeakerSeparationResponseModel",
     "StreamingAudioChunkWithTimestampsResponseModel",
+    "SubprojectContentItem",
     "Subscription",
     "SubscriptionResponse",
     "SubscriptionResponseModelBillingPeriod",
@@ -919,15 +961,18 @@ __all__ = [
     "SystemToolConfigInputParams_EndCall",
     "SystemToolConfigInputParams_LanguageDetection",
     "SystemToolConfigInputParams_TransferToAgent",
+    "SystemToolConfigInputParams_TransferToNumber",
     "SystemToolConfigOutput",
     "SystemToolConfigOutputParams",
     "SystemToolConfigOutputParams_EndCall",
     "SystemToolConfigOutputParams_LanguageDetection",
     "SystemToolConfigOutputParams_TransferToAgent",
+    "SystemToolConfigOutputParams_TransferToNumber",
+    "TaskDescriptionContentItem",
     "TelephonyProvider",
     "TextToSpeechAsStreamRequest",
-    "Transfer",
     "TransferToAgentToolConfig",
+    "TransferToNumberToolConfig",
     "TtsConversationalConfig",
     "TtsConversationalConfigOverride",
     "TtsConversationalConfigOverrideConfig",
@@ -940,6 +985,7 @@ __all__ = [
     "TxtExportOptions",
     "UpdateWorkspaceMemberResponseModel",
     "UrlAvatar",
+    "UsageAggregationInterval",
     "UsageCharactersResponseModel",
     "User",
     "UserFeedback",

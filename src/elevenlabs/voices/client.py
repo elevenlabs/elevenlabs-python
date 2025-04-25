@@ -136,7 +136,7 @@ class VoicesClient:
             Which direction to sort the voices in. 'asc' or 'desc'.
 
         voice_type : typing.Optional[str]
-            Type of the voice to filter by. One of 'personal', 'community', 'default', 'workspace'.
+            Type of the voice to filter by. One of 'personal', 'community', 'default', 'workspace', 'non-default'. 'non-default' is equal to 'personal' plus 'community'.
 
         category : typing.Optional[str]
             Category of the voice to filter by. One of 'premade', 'cloned', 'generated', 'professional'
@@ -1171,7 +1171,7 @@ class AsyncVoicesClient:
             Which direction to sort the voices in. 'asc' or 'desc'.
 
         voice_type : typing.Optional[str]
-            Type of the voice to filter by. One of 'personal', 'community', 'default', 'workspace'.
+            Type of the voice to filter by. One of 'personal', 'community', 'default', 'workspace', 'non-default'. 'non-default' is equal to 'personal' plus 'community'.
 
         category : typing.Optional[str]
             Category of the voice to filter by. One of 'premade', 'cloned', 'generated', 'professional'

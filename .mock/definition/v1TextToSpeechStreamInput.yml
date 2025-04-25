@@ -1,0 +1,71 @@
+channel:
+  path: /v1/text-to-speech/stream-input
+  url: WSS
+  auth: false
+  docs: >
+    The Text-to-Speech Websockets API is designed to generate audio from partial
+    text input 
+
+    while ensuring consistency throughout the generated audio. Although highly
+    flexible, 
+
+    the Websockets API isn't a one-size-fits-all solution. It's well-suited for
+    scenarios where:
+      * The input text is being streamed or generated in chunks.
+      * Word-to-audio alignment information is required.
+
+    However, it may not be the best choice when:
+      * The entire input text is available upfront. Given that the generations are partial, 
+        some buffering is involved, which could potentially result in slightly higher latency compared 
+        to a standard HTTP request.
+      * You want to quickly experiment or prototype. Working with Websockets can be harder and more 
+        complex than using a standard HTTP API, which might slow down rapid development and testing.
+  query-parameters:
+    model_id:
+      type: optional<string>
+      docs: The model ID to use
+  headers:
+    xi-api-key:
+      type: optional<string>
+      name: xiApiKey
+      docs: ElevenLabs API key
+  messages:
+    publish:
+      origin: client
+      body:
+        type: sendMessage
+        docs: Send messages to the WebSocket
+    subscribe:
+      origin: server
+      body: root.AudioOutput
+  examples:
+    - messages:
+        - type: publish
+          body:
+            text: ' '
+            voice_settings:
+              stability: 0.5
+              similarity_boost: 0.8
+            xi-api-key: xi-api-key
+        - type: publish
+          body:
+            text: Hello World
+            try_trigger_generation: true
+        - type: publish
+          body:
+            text: ''
+        - type: subscribe
+          body:
+            audio: Y3VyaW91cyBtaW5kcyB0aGluayBhbGlrZSA6KQ==
+imports:
+  root: __package__.yml
+types:
+  sendMessage:
+    discriminated: false
+    docs: Send messages to the WebSocket
+    union:
+      - root.InitializeConnection
+      - root.SendText
+      - root.CloseConnection
+    source:
+      openapi: ../asyncapi.yml
