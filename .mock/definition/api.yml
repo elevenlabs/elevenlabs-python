@@ -1,0 +1,29 @@
+name: api
+error-discrimination:
+  strategy: status-code
+display-name: ElevenLabs API Documentation
+environments:
+  Production:
+    urls:
+      Base: https://api.elevenlabs.io/
+      API: wss://api.elevenlabs.io
+  Production US:
+    urls:
+      Base: https://api.us.elevenlabs.io/
+      API: wss://api.elevenlabs.io
+default-environment: Production
+default-url: Base
+headers:
+  xi-api-key:
+    type: optional<string>
+    name: xiApiKey
+    docs: >-
+      Your API key. This is required by most endpoints to access our API
+      programatically. You can view your xi-api-key using the 'Profile' tab on
+      the website.
+auth-schemes:
+  api-key:
+    header: xi-api-key
+    name: apiKey
+    type: string
+auth: api-key
