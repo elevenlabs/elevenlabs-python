@@ -5,6 +5,7 @@ import typing
 import pydantic
 from .realtime_voice_settings import RealtimeVoiceSettings
 from .generation_config import GenerationConfig
+from .pronunciation_dictionary_locator import PronunciationDictionaryLocator
 import typing_extensions
 from ..core.serialization import FieldMetadata
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
@@ -17,15 +18,27 @@ class InitializeConnection(UncheckedBaseModel):
     """
 
     voice_settings: typing.Optional[RealtimeVoiceSettings] = None
-    generation_config: typing.Optional[GenerationConfig] = pydantic.Field(default=None)
+    generation_config: typing.Optional[GenerationConfig] = None
+    pronunciation_dictionary_locators: typing.Optional[typing.List[PronunciationDictionaryLocator]] = pydantic.Field(
+        default=None
+    )
     """
-    This property should only be provided in the first message you send. 
+    Optional list of pronunciation dictionary locators. If provided, these dictionaries will be used to
+    modify pronunciation of matching text. Must only be provided in the first message.
+    
+    Note: Pronunciation dictionary matches will only be respected within a provided chunk.
     """
 
-    xi_api_key: typing_extensions.Annotated[str, FieldMetadata(alias="xi-api-key")] = pydantic.Field()
+    xi_api_key: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="xi-api-key")] = pydantic.Field(
+        default=None
+    )
     """
-    Your ElevenLabs API key. This is a required parameter that should be provided in the first message you send. 
-    You can find your API key in the [API Keys section](https://elevenlabs.io/docs/api-reference/websockets#api-keys).
+    Your ElevenLabs API key. This can only be included in the first message and is not needed if present in the header.
+    """
+
+    authorization: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Your authorization bearer token. This can only be included in the first message and is not needed if present in the header.
     """
 
     if IS_PYDANTIC_V2:

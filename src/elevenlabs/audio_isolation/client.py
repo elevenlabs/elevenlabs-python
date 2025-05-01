@@ -33,7 +33,7 @@ class AudioIsolationClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
-        Removes background noise from audio
+        Removes background noise from audio.
 
         Parameters
         ----------
@@ -94,7 +94,7 @@ class AudioIsolationClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
-        Removes background noise from audio and streams the result
+        Removes background noise from audio.
 
         Parameters
         ----------
@@ -160,7 +160,7 @@ class AsyncAudioIsolationClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
-        Removes background noise from audio
+        Removes background noise from audio.
 
         Parameters
         ----------
@@ -221,7 +221,7 @@ class AsyncAudioIsolationClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
-        Removes background noise from audio and streams the result
+        Removes background noise from audio.
 
         Parameters
         ----------

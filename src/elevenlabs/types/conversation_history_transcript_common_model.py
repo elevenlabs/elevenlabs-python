@@ -14,6 +14,7 @@ from .conversation_history_transcript_tool_result_common_model import (
 from .user_feedback import UserFeedback
 from .conversation_turn_metrics import ConversationTurnMetrics
 from .rag_retrieval_info import RagRetrievalInfo
+from .llm_usage import LlmUsage
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
@@ -28,6 +29,7 @@ class ConversationHistoryTranscriptCommonModel(UncheckedBaseModel):
     time_in_call_secs: int
     conversation_turn_metrics: typing.Optional[ConversationTurnMetrics] = None
     rag_retrieval_info: typing.Optional[RagRetrievalInfo] = None
+    llm_usage: typing.Optional[LlmUsage] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

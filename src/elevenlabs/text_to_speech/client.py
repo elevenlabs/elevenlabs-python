@@ -2,7 +2,9 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
-from ..types.output_format import OutputFormat
+from .types.text_to_speech_convert_request_output_format import (
+    TextToSpeechConvertRequestOutputFormat,
+)
 from ..types.voice_settings import VoiceSettings
 from ..types.pronunciation_dictionary_version_locator import (
     PronunciationDictionaryVersionLocator,
@@ -18,14 +20,23 @@ from ..types.http_validation_error import HttpValidationError
 from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
+from .types.text_to_speech_convert_with_timestamps_request_output_format import (
+    TextToSpeechConvertWithTimestampsRequestOutputFormat,
+)
 from .types.body_text_to_speech_with_timestamps_v_1_text_to_speech_voice_id_with_timestamps_post_apply_text_normalization import (
     BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization,
 )
 from ..types.audio_with_timestamps_response_model import (
     AudioWithTimestampsResponseModel,
 )
+from .types.text_to_speech_convert_as_stream_request_output_format import (
+    TextToSpeechConvertAsStreamRequestOutputFormat,
+)
 from .types.body_text_to_speech_streaming_v_1_text_to_speech_voice_id_stream_post_apply_text_normalization import (
     BodyTextToSpeechStreamingV1TextToSpeechVoiceIdStreamPostApplyTextNormalization,
+)
+from .types.text_to_speech_stream_with_timestamps_request_output_format import (
+    TextToSpeechStreamWithTimestampsRequestOutputFormat,
 )
 from .types.body_text_to_speech_streaming_with_timestamps_v_1_text_to_speech_voice_id_stream_with_timestamps_post_apply_text_normalization import (
     BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization,
@@ -51,7 +62,7 @@ class TextToSpeechClient:
         text: str,
         enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[OutputFormat] = None,
+        output_format: typing.Optional[TextToSpeechConvertRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
@@ -76,7 +87,7 @@ class TextToSpeechClient:
         Parameters
         ----------
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            ID of the voice to be used. Use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
 
         text : str
             The text that will get converted into speech.
@@ -94,8 +105,8 @@ class TextToSpeechClient:
 
             Defaults to None.
 
-        output_format : typing.Optional[OutputFormat]
-            The output format of the generated audio.
+        output_format : typing.Optional[TextToSpeechConvertRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
@@ -220,7 +231,7 @@ class TextToSpeechClient:
         text: str,
         enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[OutputFormat] = None,
+        output_format: typing.Optional[TextToSpeechConvertWithTimestampsRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
@@ -263,8 +274,8 @@ class TextToSpeechClient:
 
             Defaults to None.
 
-        output_format : typing.Optional[OutputFormat]
-            The output format of the generated audio.
+        output_format : typing.Optional[TextToSpeechConvertWithTimestampsRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
@@ -389,7 +400,7 @@ class TextToSpeechClient:
         text: str,
         enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[OutputFormat] = None,
+        output_format: typing.Optional[TextToSpeechConvertAsStreamRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
@@ -414,7 +425,7 @@ class TextToSpeechClient:
         Parameters
         ----------
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            ID of the voice to be used. Use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
 
         text : str
             The text that will get converted into speech.
@@ -432,8 +443,8 @@ class TextToSpeechClient:
 
             Defaults to None.
 
-        output_format : typing.Optional[OutputFormat]
-            The output format of the generated audio.
+        output_format : typing.Optional[TextToSpeechConvertAsStreamRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
@@ -558,7 +569,7 @@ class TextToSpeechClient:
         text: str,
         enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[OutputFormat] = None,
+        output_format: typing.Optional[TextToSpeechStreamWithTimestampsRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
@@ -583,7 +594,7 @@ class TextToSpeechClient:
         Parameters
         ----------
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            ID of the voice to be used. Use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
 
         text : str
             The text that will get converted into speech.
@@ -601,8 +612,8 @@ class TextToSpeechClient:
 
             Defaults to None.
 
-        output_format : typing.Optional[OutputFormat]
-            The output format of the generated audio.
+        output_format : typing.Optional[TextToSpeechStreamWithTimestampsRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
@@ -646,7 +657,7 @@ class TextToSpeechClient:
         Yields
         ------
         typing.Iterator[StreamingAudioChunkWithTimestampsResponseModel]
-            Stream of JSON objects containing audio chunks and character timing information
+            Stream of transcription chunks
 
         Examples
         --------
@@ -744,7 +755,7 @@ class AsyncTextToSpeechClient:
         text: str,
         enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[OutputFormat] = None,
+        output_format: typing.Optional[TextToSpeechConvertRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
@@ -769,7 +780,7 @@ class AsyncTextToSpeechClient:
         Parameters
         ----------
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            ID of the voice to be used. Use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
 
         text : str
             The text that will get converted into speech.
@@ -787,8 +798,8 @@ class AsyncTextToSpeechClient:
 
             Defaults to None.
 
-        output_format : typing.Optional[OutputFormat]
-            The output format of the generated audio.
+        output_format : typing.Optional[TextToSpeechConvertRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
@@ -921,7 +932,7 @@ class AsyncTextToSpeechClient:
         text: str,
         enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[OutputFormat] = None,
+        output_format: typing.Optional[TextToSpeechConvertWithTimestampsRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
@@ -964,8 +975,8 @@ class AsyncTextToSpeechClient:
 
             Defaults to None.
 
-        output_format : typing.Optional[OutputFormat]
-            The output format of the generated audio.
+        output_format : typing.Optional[TextToSpeechConvertWithTimestampsRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
@@ -1098,7 +1109,7 @@ class AsyncTextToSpeechClient:
         text: str,
         enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[OutputFormat] = None,
+        output_format: typing.Optional[TextToSpeechConvertAsStreamRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
@@ -1123,7 +1134,7 @@ class AsyncTextToSpeechClient:
         Parameters
         ----------
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            ID of the voice to be used. Use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
 
         text : str
             The text that will get converted into speech.
@@ -1141,8 +1152,8 @@ class AsyncTextToSpeechClient:
 
             Defaults to None.
 
-        output_format : typing.Optional[OutputFormat]
-            The output format of the generated audio.
+        output_format : typing.Optional[TextToSpeechConvertAsStreamRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
@@ -1275,7 +1286,7 @@ class AsyncTextToSpeechClient:
         text: str,
         enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[OutputFormat] = None,
+        output_format: typing.Optional[TextToSpeechStreamWithTimestampsRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
@@ -1300,7 +1311,7 @@ class AsyncTextToSpeechClient:
         Parameters
         ----------
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            ID of the voice to be used. Use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
 
         text : str
             The text that will get converted into speech.
@@ -1318,8 +1329,8 @@ class AsyncTextToSpeechClient:
 
             Defaults to None.
 
-        output_format : typing.Optional[OutputFormat]
-            The output format of the generated audio.
+        output_format : typing.Optional[TextToSpeechStreamWithTimestampsRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
@@ -1363,7 +1374,7 @@ class AsyncTextToSpeechClient:
         Yields
         ------
         typing.AsyncIterator[StreamingAudioChunkWithTimestampsResponseModel]
-            Stream of JSON objects containing audio chunks and character timing information
+            Stream of transcription chunks
 
         Examples
         --------

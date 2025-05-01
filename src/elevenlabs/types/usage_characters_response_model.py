@@ -12,7 +12,7 @@ class UsageCharactersResponseModel(UncheckedBaseModel):
     The time axis with unix timestamps for each day.
     """
 
-    usage: typing.Dict[str, typing.List[int]] = pydantic.Field()
+    usage: typing.Dict[str, typing.List[float]] = pydantic.Field()
     """
     The usage of each breakdown type along the time axis.
     """

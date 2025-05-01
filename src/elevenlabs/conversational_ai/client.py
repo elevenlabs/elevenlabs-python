@@ -62,6 +62,12 @@ from ..types.conversation_initiation_client_data_webhook import (
     ConversationInitiationClientDataWebhook,
 )
 from ..types.conv_ai_webhooks import ConvAiWebhooks
+from ..types.get_conv_ai_dashboard_settings_response_model import (
+    GetConvAiDashboardSettingsResponseModel,
+)
+from .types.patch_conv_ai_dashboard_settings_request_charts_item import (
+    PatchConvAiDashboardSettingsRequestChartsItem,
+)
 from ..types.get_workspace_secrets_response_model import (
     GetWorkspaceSecretsResponseModel,
 )
@@ -431,8 +437,8 @@ class ConversationalAiClient:
         self,
         agent_id: str,
         *,
-        conversation_config: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        platform_settings: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        conversation_config: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        platform_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetAgentResponseModel:
@@ -444,11 +450,9 @@ class ConversationalAiClient:
         agent_id : str
             The id of an agent. This is returned on agent creation.
 
-        conversation_config : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Conversation configuration for an agent
+        conversation_config : typing.Optional[typing.Optional[typing.Any]]
 
-        platform_settings : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
+        platform_settings : typing.Optional[typing.Optional[typing.Any]]
 
         name : typing.Optional[str]
             A name to make the agent easier to find
@@ -793,6 +797,7 @@ class ConversationalAiClient:
         cursor: typing.Optional[str] = None,
         agent_id: typing.Optional[str] = None,
         call_successful: typing.Optional[EvaluationSuccessResult] = None,
+        call_start_before_unix: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationsPageResponseModel:
@@ -809,6 +814,9 @@ class ConversationalAiClient:
 
         call_successful : typing.Optional[EvaluationSuccessResult]
             The result of the success evaluation
+
+        call_start_before_unix : typing.Optional[int]
+            Unix timestamp (in seconds) to filter conversations up to this start date.
 
         page_size : typing.Optional[int]
             How many conversations to return at maximum. Can not exceed 100, defaults to 30.
@@ -838,6 +846,7 @@ class ConversationalAiClient:
                 "cursor": cursor,
                 "agent_id": agent_id,
                 "call_successful": call_successful,
+                "call_start_before_unix": call_start_before_unix,
                 "page_size": page_size,
             },
             request_options=request_options,
@@ -896,7 +905,7 @@ class ConversationalAiClient:
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.get_conversation(
-            conversation_id="21m00Tcm4TlvDq8ikWAM",
+            conversation_id="123",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -1544,7 +1553,7 @@ class ConversationalAiClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddKnowledgeBaseResponseModel:
         """
-        Uploads a file or reference a webpage to use as part of the shared knowledge base
+        Upload a file or webpage URL to create a knowledge base document. <br> <Note> After creating the document, update the agent's knowledge base by calling [Update agent](/docs/conversational-ai/api-reference/agents/update-agent). </Note>
 
         Parameters
         ----------
@@ -2365,6 +2374,132 @@ class ConversationalAiClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def get_dashboard_settings(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetConvAiDashboardSettingsResponseModel:
+        """
+        Retrieve Convai dashboard settings for the workspace
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetConvAiDashboardSettingsResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.get_dashboard_settings()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/convai/settings/dashboard",
+            base_url=self._client_wrapper.get_environment().base,
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetConvAiDashboardSettingsResponseModel,
+                    construct_type(
+                        type_=GetConvAiDashboardSettingsResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def update_dashboard_settings(
+        self,
+        *,
+        charts: typing.Optional[typing.Sequence[PatchConvAiDashboardSettingsRequestChartsItem]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetConvAiDashboardSettingsResponseModel:
+        """
+        Update Convai dashboard settings for the workspace
+
+        Parameters
+        ----------
+        charts : typing.Optional[typing.Sequence[PatchConvAiDashboardSettingsRequestChartsItem]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetConvAiDashboardSettingsResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.update_dashboard_settings()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/convai/settings/dashboard",
+            base_url=self._client_wrapper.get_environment().base,
+            method="PATCH",
+            json={
+                "charts": convert_and_respect_annotation_metadata(
+                    object_=charts,
+                    annotation=typing.Sequence[PatchConvAiDashboardSettingsRequestChartsItem],
+                    direction="write",
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetConvAiDashboardSettingsResponseModel,
+                    construct_type(
+                        type_=GetConvAiDashboardSettingsResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     def get_secrets(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetWorkspaceSecretsResponseModel:
@@ -2943,8 +3078,8 @@ class AsyncConversationalAiClient:
         self,
         agent_id: str,
         *,
-        conversation_config: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        platform_settings: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        conversation_config: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        platform_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetAgentResponseModel:
@@ -2956,11 +3091,9 @@ class AsyncConversationalAiClient:
         agent_id : str
             The id of an agent. This is returned on agent creation.
 
-        conversation_config : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Conversation configuration for an agent
+        conversation_config : typing.Optional[typing.Optional[typing.Any]]
 
-        platform_settings : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
+        platform_settings : typing.Optional[typing.Optional[typing.Any]]
 
         name : typing.Optional[str]
             A name to make the agent easier to find
@@ -3345,6 +3478,7 @@ class AsyncConversationalAiClient:
         cursor: typing.Optional[str] = None,
         agent_id: typing.Optional[str] = None,
         call_successful: typing.Optional[EvaluationSuccessResult] = None,
+        call_start_before_unix: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationsPageResponseModel:
@@ -3361,6 +3495,9 @@ class AsyncConversationalAiClient:
 
         call_successful : typing.Optional[EvaluationSuccessResult]
             The result of the success evaluation
+
+        call_start_before_unix : typing.Optional[int]
+            Unix timestamp (in seconds) to filter conversations up to this start date.
 
         page_size : typing.Optional[int]
             How many conversations to return at maximum. Can not exceed 100, defaults to 30.
@@ -3398,6 +3535,7 @@ class AsyncConversationalAiClient:
                 "cursor": cursor,
                 "agent_id": agent_id,
                 "call_successful": call_successful,
+                "call_start_before_unix": call_start_before_unix,
                 "page_size": page_size,
             },
             request_options=request_options,
@@ -3461,7 +3599,7 @@ class AsyncConversationalAiClient:
 
         async def main() -> None:
             await client.conversational_ai.get_conversation(
-                conversation_id="21m00Tcm4TlvDq8ikWAM",
+                conversation_id="123",
             )
 
 
@@ -4176,7 +4314,7 @@ class AsyncConversationalAiClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddKnowledgeBaseResponseModel:
         """
-        Uploads a file or reference a webpage to use as part of the shared knowledge base
+        Upload a file or webpage URL to create a knowledge base document. <br> <Note> After creating the document, update the agent's knowledge base by calling [Update agent](/docs/conversational-ai/api-reference/agents/update-agent). </Note>
 
         Parameters
         ----------
@@ -5075,6 +5213,148 @@ class AsyncConversationalAiClient:
                     GetConvAiSettingsResponseModel,
                     construct_type(
                         type_=GetConvAiSettingsResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_dashboard_settings(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetConvAiDashboardSettingsResponseModel:
+        """
+        Retrieve Convai dashboard settings for the workspace
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetConvAiDashboardSettingsResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.get_dashboard_settings()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/convai/settings/dashboard",
+            base_url=self._client_wrapper.get_environment().base,
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetConvAiDashboardSettingsResponseModel,
+                    construct_type(
+                        type_=GetConvAiDashboardSettingsResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def update_dashboard_settings(
+        self,
+        *,
+        charts: typing.Optional[typing.Sequence[PatchConvAiDashboardSettingsRequestChartsItem]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetConvAiDashboardSettingsResponseModel:
+        """
+        Update Convai dashboard settings for the workspace
+
+        Parameters
+        ----------
+        charts : typing.Optional[typing.Sequence[PatchConvAiDashboardSettingsRequestChartsItem]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetConvAiDashboardSettingsResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.update_dashboard_settings()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/convai/settings/dashboard",
+            base_url=self._client_wrapper.get_environment().base,
+            method="PATCH",
+            json={
+                "charts": convert_and_respect_annotation_metadata(
+                    object_=charts,
+                    annotation=typing.Sequence[PatchConvAiDashboardSettingsRequestChartsItem],
+                    direction="write",
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetConvAiDashboardSettingsResponseModel,
+                    construct_type(
+                        type_=GetConvAiDashboardSettingsResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

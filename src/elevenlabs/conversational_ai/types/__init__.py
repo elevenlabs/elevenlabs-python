@@ -7,6 +7,11 @@ from .conversational_ai_get_knowledge_base_document_by_id_response import (
     ConversationalAiGetKnowledgeBaseDocumentByIdResponse_Text,
     ConversationalAiGetKnowledgeBaseDocumentByIdResponse_Url,
 )
+from .patch_conv_ai_dashboard_settings_request_charts_item import (
+    PatchConvAiDashboardSettingsRequestChartsItem,
+    PatchConvAiDashboardSettingsRequestChartsItem_CallSuccess,
+    PatchConvAiDashboardSettingsRequestChartsItem_Criteria,
+)
 
 __all__ = [
     "ConversationalAiCreatePhoneNumberRequestBody",
@@ -14,4 +19,7 @@ __all__ = [
     "ConversationalAiGetKnowledgeBaseDocumentByIdResponse_File",
     "ConversationalAiGetKnowledgeBaseDocumentByIdResponse_Text",
     "ConversationalAiGetKnowledgeBaseDocumentByIdResponse_Url",
+    "PatchConvAiDashboardSettingsRequestChartsItem",
+    "PatchConvAiDashboardSettingsRequestChartsItem_CallSuccess",
+    "PatchConvAiDashboardSettingsRequestChartsItem_Criteria",
 ]

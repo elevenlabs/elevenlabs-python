@@ -6,6 +6,9 @@ from .types import (
     ConversationalAiGetKnowledgeBaseDocumentByIdResponse_File,
     ConversationalAiGetKnowledgeBaseDocumentByIdResponse_Text,
     ConversationalAiGetKnowledgeBaseDocumentByIdResponse_Url,
+    PatchConvAiDashboardSettingsRequestChartsItem,
+    PatchConvAiDashboardSettingsRequestChartsItem_CallSuccess,
+    PatchConvAiDashboardSettingsRequestChartsItem_Criteria,
 )
 
 __all__ = [
@@ -14,4 +17,7 @@ __all__ = [
     "ConversationalAiGetKnowledgeBaseDocumentByIdResponse_File",
     "ConversationalAiGetKnowledgeBaseDocumentByIdResponse_Text",
     "ConversationalAiGetKnowledgeBaseDocumentByIdResponse_Url",
+    "PatchConvAiDashboardSettingsRequestChartsItem",
+    "PatchConvAiDashboardSettingsRequestChartsItem_CallSuccess",
+    "PatchConvAiDashboardSettingsRequestChartsItem_Criteria",
 ]
