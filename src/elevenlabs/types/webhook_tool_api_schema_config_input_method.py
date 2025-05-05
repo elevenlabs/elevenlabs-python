@@ -2,4 +2,6 @@
 
 import typing
 
-WebhookToolApiSchemaConfigInputMethod = typing.Union[typing.Literal["GET", "POST", "PATCH", "DELETE"], typing.Any]
+WebhookToolApiSchemaConfigInputMethod = typing.Union[
+    typing.Literal["GET", "POST", "PUT", "PATCH", "DELETE"], typing.Any
+]

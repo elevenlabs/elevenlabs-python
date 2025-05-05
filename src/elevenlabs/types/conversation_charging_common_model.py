@@ -2,6 +2,7 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
+from .llm_category_usage import LlmCategoryUsage
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
@@ -9,6 +10,8 @@ import pydantic
 class ConversationChargingCommonModel(UncheckedBaseModel):
     dev_discount: typing.Optional[bool] = None
     tier: typing.Optional[str] = None
+    llm_usage: typing.Optional[LlmCategoryUsage] = None
+    llm_price: typing.Optional[float] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

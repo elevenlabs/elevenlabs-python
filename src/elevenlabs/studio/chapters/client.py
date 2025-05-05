@@ -187,10 +187,10 @@ class ChaptersClient:
         Parameters
         ----------
         project_id : str
-            The ID of the Studio project.
+            The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
 
         chapter_id : str
-            The ID of the chapter.
+            The ID of the chapter to be used. You can use the [List project chapters](/docs/api-reference/studio/get-chapters) endpoint to list all the available chapters.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -257,10 +257,10 @@ class ChaptersClient:
         Parameters
         ----------
         project_id : str
-            The ID of the Studio project.
+            The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
 
         chapter_id : str
-            The ID of the chapter.
+            The ID of the chapter to be used. You can use the [List project chapters](/docs/api-reference/studio/get-chapters) endpoint to list all the available chapters.
 
         name : typing.Optional[str]
             The name of the chapter, used for identification only.
@@ -343,10 +343,10 @@ class ChaptersClient:
         Parameters
         ----------
         project_id : str
-            The ID of the Studio project.
+            The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
 
         chapter_id : str
-            The ID of the chapter.
+            The ID of the chapter to be used. You can use the [List project chapters](/docs/api-reference/studio/get-chapters) endpoint to list all the available chapters.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -411,10 +411,10 @@ class ChaptersClient:
         Parameters
         ----------
         project_id : str
-            The ID of the Studio project.
+            The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
 
         chapter_id : str
-            The ID of the chapter.
+            The ID of the chapter to be used. You can use the [List project chapters](/docs/api-reference/studio/get-chapters) endpoint to list all the available chapters.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -479,10 +479,10 @@ class ChaptersClient:
         Parameters
         ----------
         project_id : str
-            The ID of the Studio project.
+            The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
 
         chapter_id : str
-            The ID of the chapter.
+            The ID of the chapter to be used. You can use the [List project chapters](/docs/api-reference/studio/get-chapters) endpoint to list all the available chapters.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -622,13 +622,13 @@ class ChaptersClient:
         Parameters
         ----------
         project_id : str
-            The ID of the Studio project.
+            The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
 
         chapter_id : str
-            The ID of the chapter.
+            The ID of the chapter to be used. You can use the [List project chapters](/docs/api-reference/studio/get-chapters) endpoint to list all the available chapters.
 
         chapter_snapshot_id : str
-            The ID of the chapter snapshot.
+            The ID of the chapter snapshot to be used. You can use the [List project chapter snapshots](/docs/api-reference/studio/get-snapshots) endpoint to list all the available snapshots.
 
         convert_to_mpeg : typing.Optional[bool]
             Whether to convert the audio to mpeg format.
@@ -853,10 +853,10 @@ class AsyncChaptersClient:
         Parameters
         ----------
         project_id : str
-            The ID of the Studio project.
+            The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
 
         chapter_id : str
-            The ID of the chapter.
+            The ID of the chapter to be used. You can use the [List project chapters](/docs/api-reference/studio/get-chapters) endpoint to list all the available chapters.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -931,10 +931,10 @@ class AsyncChaptersClient:
         Parameters
         ----------
         project_id : str
-            The ID of the Studio project.
+            The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
 
         chapter_id : str
-            The ID of the chapter.
+            The ID of the chapter to be used. You can use the [List project chapters](/docs/api-reference/studio/get-chapters) endpoint to list all the available chapters.
 
         name : typing.Optional[str]
             The name of the chapter, used for identification only.
@@ -1025,10 +1025,10 @@ class AsyncChaptersClient:
         Parameters
         ----------
         project_id : str
-            The ID of the Studio project.
+            The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
 
         chapter_id : str
-            The ID of the chapter.
+            The ID of the chapter to be used. You can use the [List project chapters](/docs/api-reference/studio/get-chapters) endpoint to list all the available chapters.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1101,10 +1101,10 @@ class AsyncChaptersClient:
         Parameters
         ----------
         project_id : str
-            The ID of the Studio project.
+            The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
 
         chapter_id : str
-            The ID of the chapter.
+            The ID of the chapter to be used. You can use the [List project chapters](/docs/api-reference/studio/get-chapters) endpoint to list all the available chapters.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1177,10 +1177,10 @@ class AsyncChaptersClient:
         Parameters
         ----------
         project_id : str
-            The ID of the Studio project.
+            The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
 
         chapter_id : str
-            The ID of the chapter.
+            The ID of the chapter to be used. You can use the [List project chapters](/docs/api-reference/studio/get-chapters) endpoint to list all the available chapters.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1336,13 +1336,13 @@ class AsyncChaptersClient:
         Parameters
         ----------
         project_id : str
-            The ID of the Studio project.
+            The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
 
         chapter_id : str
-            The ID of the chapter.
+            The ID of the chapter to be used. You can use the [List project chapters](/docs/api-reference/studio/get-chapters) endpoint to list all the available chapters.
 
         chapter_snapshot_id : str
-            The ID of the chapter snapshot.
+            The ID of the chapter snapshot to be used. You can use the [List project chapter snapshots](/docs/api-reference/studio/get-snapshots) endpoint to list all the available snapshots.
 
         convert_to_mpeg : typing.Optional[bool]
             Whether to convert the audio to mpeg format.

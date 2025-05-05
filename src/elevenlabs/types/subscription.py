@@ -53,12 +53,12 @@ class Subscription(UncheckedBaseModel):
     The Unix timestamp of the next character count reset.
     """
 
-    voice_slots_used: typing.Optional[int] = pydantic.Field(default=None)
+    voice_slots_used: int = pydantic.Field()
     """
     The number of voice slots used by the user.
     """
 
-    professional_voice_slots_used: typing.Optional[int] = pydantic.Field(default=None)
+    professional_voice_slots_used: int = pydantic.Field()
     """
     The number of professional voice slots used by the workspace/user if single seat.
     """
@@ -73,7 +73,7 @@ class Subscription(UncheckedBaseModel):
     The maximum number of voice add/edits allowed for the user.
     """
 
-    voice_add_edit_counter: typing.Optional[int] = pydantic.Field(default=None)
+    voice_add_edit_counter: int = pydantic.Field()
     """
     The number of voice add/edits used by the user.
     """
@@ -103,7 +103,7 @@ class Subscription(UncheckedBaseModel):
     The currency of the user's subscription.
     """
 
-    status: typing.Optional[SubscriptionStatus] = pydantic.Field(default=None)
+    status: SubscriptionStatus = pydantic.Field()
     """
     The status of the user's subscription.
     """
@@ -125,7 +125,7 @@ class Subscription(UncheckedBaseModel):
     The next invoice for the user.
     """
 
-    has_open_invoices: typing.Optional[bool] = pydantic.Field(default=None)
+    has_open_invoices: bool = pydantic.Field()
     """
     Whether the user has open invoices.
     """

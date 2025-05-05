@@ -2,4 +2,4 @@
 
 import typing
 
-Age = typing.Union[typing.Literal["young", "middle_aged", "old"], typing.Any]
+Age = typing.Optional[typing.Any]

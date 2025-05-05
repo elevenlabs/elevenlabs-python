@@ -136,7 +136,7 @@ class VoicesClient:
             Which direction to sort the voices in. 'asc' or 'desc'.
 
         voice_type : typing.Optional[str]
-            Type of the voice to filter by. One of 'personal', 'community', 'default', 'workspace'.
+            Type of the voice to filter by. One of 'personal', 'community', 'default', 'workspace', 'non-default'. 'non-default' is equal to 'personal' plus 'community'.
 
         category : typing.Optional[str]
             Category of the voice to filter by. One of 'premade', 'cloned', 'generated', 'professional'
@@ -279,7 +279,7 @@ class VoicesClient:
             api_key="YOUR_API_KEY",
         )
         client.voices.get_settings(
-            voice_id="JBFqnCBsd6RMkjVDRZzb",
+            voice_id="21m00Tcm4TlvDq8ikWAM",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -325,7 +325,7 @@ class VoicesClient:
         Parameters
         ----------
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
 
         with_settings : typing.Optional[bool]
             This parameter is now deprecated. It is ignored and will be removed in a future version.
@@ -346,7 +346,7 @@ class VoicesClient:
             api_key="YOUR_API_KEY",
         )
         client.voices.get(
-            voice_id="JBFqnCBsd6RMkjVDRZzb",
+            voice_id="21m00Tcm4TlvDq8ikWAM",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -391,7 +391,7 @@ class VoicesClient:
         Parameters
         ----------
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -409,7 +409,7 @@ class VoicesClient:
             api_key="YOUR_API_KEY",
         )
         client.voices.delete(
-            voice_id="VOICE_ID",
+            voice_id="21m00Tcm4TlvDq8ikWAM",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -455,7 +455,7 @@ class VoicesClient:
         Parameters
         ----------
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
 
         request : VoiceSettings
 
@@ -475,11 +475,13 @@ class VoicesClient:
             api_key="YOUR_API_KEY",
         )
         client.voices.edit_settings(
-            voice_id="VOICE_ID",
+            voice_id="21m00Tcm4TlvDq8ikWAM",
             request=VoiceSettings(
-                stability=0.1,
-                similarity_boost=0.3,
-                style=0.2,
+                stability=1.0,
+                similarity_boost=1.0,
+                style=0.0,
+                use_speaker_boost=True,
+                speed=1.0,
             ),
         )
         """
@@ -526,7 +528,7 @@ class VoicesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddVoiceIvcResponseModel:
         """
-        Add a new voice to your collection of voices in VoiceLab.
+        Create a voice clone and add it to your Voices
 
         Parameters
         ----------
@@ -561,7 +563,7 @@ class VoicesClient:
             api_key="YOUR_API_KEY",
         )
         client.voices.add(
-            name="Alex",
+            name="name",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -621,7 +623,7 @@ class VoicesClient:
         Parameters
         ----------
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
 
         name : str
             The name that identifies this voice. This will be displayed in the dropdown of the website.
@@ -654,8 +656,8 @@ class VoicesClient:
             api_key="YOUR_API_KEY",
         )
         client.voices.edit(
-            voice_id="VOICE_ID",
-            name="George",
+            voice_id="21m00Tcm4TlvDq8ikWAM",
+            name="name",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -707,7 +709,7 @@ class VoicesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddVoiceResponseModel:
         """
-        Add a shared voice to your collection of voices.
+        Add a shared voice to your collection of Voices
 
         Parameters
         ----------
@@ -715,7 +717,7 @@ class VoicesClient:
             Public user ID used to publicly identify ElevenLabs users.
 
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
 
         new_name : str
             The name that identifies this voice. This will be displayed in the dropdown of the website.
@@ -736,9 +738,9 @@ class VoicesClient:
             api_key="YOUR_API_KEY",
         )
         client.voices.add_sharing_voice(
-            public_user_id="63e84100a6bf7874ba37a1bab9a31828a379ec94b891b401653b655c5110880f",
-            voice_id="sB1b5zUrxQVAFl2PhZFp",
-            new_name="Alita",
+            public_user_id="63e06b7e7cafdc46be4d2e0b3f045940231ae058d508589653d74d1265a574ca",
+            voice_id="21m00Tcm4TlvDq8ikWAM",
+            new_name="John Smith",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -867,9 +869,8 @@ class VoicesClient:
             api_key="YOUR_API_KEY",
         )
         client.voices.get_shared(
-            page_size=1,
-            gender="female",
-            language="en",
+            featured=True,
+            reader_app_enabled=True,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -1171,7 +1172,7 @@ class AsyncVoicesClient:
             Which direction to sort the voices in. 'asc' or 'desc'.
 
         voice_type : typing.Optional[str]
-            Type of the voice to filter by. One of 'personal', 'community', 'default', 'workspace'.
+            Type of the voice to filter by. One of 'personal', 'community', 'default', 'workspace', 'non-default'. 'non-default' is equal to 'personal' plus 'community'.
 
         category : typing.Optional[str]
             Category of the voice to filter by. One of 'premade', 'cloned', 'generated', 'professional'
@@ -1337,7 +1338,7 @@ class AsyncVoicesClient:
 
         async def main() -> None:
             await client.voices.get_settings(
-                voice_id="JBFqnCBsd6RMkjVDRZzb",
+                voice_id="21m00Tcm4TlvDq8ikWAM",
             )
 
 
@@ -1386,7 +1387,7 @@ class AsyncVoicesClient:
         Parameters
         ----------
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
 
         with_settings : typing.Optional[bool]
             This parameter is now deprecated. It is ignored and will be removed in a future version.
@@ -1412,7 +1413,7 @@ class AsyncVoicesClient:
 
         async def main() -> None:
             await client.voices.get(
-                voice_id="JBFqnCBsd6RMkjVDRZzb",
+                voice_id="21m00Tcm4TlvDq8ikWAM",
             )
 
 
@@ -1460,7 +1461,7 @@ class AsyncVoicesClient:
         Parameters
         ----------
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1483,7 +1484,7 @@ class AsyncVoicesClient:
 
         async def main() -> None:
             await client.voices.delete(
-                voice_id="VOICE_ID",
+                voice_id="21m00Tcm4TlvDq8ikWAM",
             )
 
 
@@ -1532,7 +1533,7 @@ class AsyncVoicesClient:
         Parameters
         ----------
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
 
         request : VoiceSettings
 
@@ -1557,11 +1558,13 @@ class AsyncVoicesClient:
 
         async def main() -> None:
             await client.voices.edit_settings(
-                voice_id="VOICE_ID",
+                voice_id="21m00Tcm4TlvDq8ikWAM",
                 request=VoiceSettings(
-                    stability=0.1,
-                    similarity_boost=0.3,
-                    style=0.2,
+                    stability=1.0,
+                    similarity_boost=1.0,
+                    style=0.0,
+                    use_speaker_boost=True,
+                    speed=1.0,
                 ),
             )
 
@@ -1611,7 +1614,7 @@ class AsyncVoicesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddVoiceIvcResponseModel:
         """
-        Add a new voice to your collection of voices in VoiceLab.
+        Create a voice clone and add it to your Voices
 
         Parameters
         ----------
@@ -1651,7 +1654,7 @@ class AsyncVoicesClient:
 
         async def main() -> None:
             await client.voices.add(
-                name="Alex",
+                name="name",
             )
 
 
@@ -1714,7 +1717,7 @@ class AsyncVoicesClient:
         Parameters
         ----------
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
 
         name : str
             The name that identifies this voice. This will be displayed in the dropdown of the website.
@@ -1752,8 +1755,8 @@ class AsyncVoicesClient:
 
         async def main() -> None:
             await client.voices.edit(
-                voice_id="VOICE_ID",
-                name="George",
+                voice_id="21m00Tcm4TlvDq8ikWAM",
+                name="name",
             )
 
 
@@ -1808,7 +1811,7 @@ class AsyncVoicesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddVoiceResponseModel:
         """
-        Add a shared voice to your collection of voices.
+        Add a shared voice to your collection of Voices
 
         Parameters
         ----------
@@ -1816,7 +1819,7 @@ class AsyncVoicesClient:
             Public user ID used to publicly identify ElevenLabs users.
 
         voice_id : str
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
 
         new_name : str
             The name that identifies this voice. This will be displayed in the dropdown of the website.
@@ -1842,9 +1845,9 @@ class AsyncVoicesClient:
 
         async def main() -> None:
             await client.voices.add_sharing_voice(
-                public_user_id="63e84100a6bf7874ba37a1bab9a31828a379ec94b891b401653b655c5110880f",
-                voice_id="sB1b5zUrxQVAFl2PhZFp",
-                new_name="Alita",
+                public_user_id="63e06b7e7cafdc46be4d2e0b3f045940231ae058d508589653d74d1265a574ca",
+                voice_id="21m00Tcm4TlvDq8ikWAM",
+                new_name="John Smith",
             )
 
 
@@ -1981,9 +1984,8 @@ class AsyncVoicesClient:
 
         async def main() -> None:
             await client.voices.get_shared(
-                page_size=1,
-                gender="female",
-                language="en",
+                featured=True,
+                reader_app_enabled=True,
             )
 
 

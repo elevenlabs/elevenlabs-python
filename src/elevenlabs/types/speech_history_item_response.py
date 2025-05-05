@@ -25,7 +25,7 @@ class SpeechHistoryItemResponse(UncheckedBaseModel):
     The ID of the request.
     """
 
-    voice_id: typing.Optional[str] = pydantic.Field(default=None)
+    voice_id: str = pydantic.Field()
     """
     The ID of the voice used.
     """
@@ -35,7 +35,7 @@ class SpeechHistoryItemResponse(UncheckedBaseModel):
     The ID of the model.
     """
 
-    voice_name: typing.Optional[str] = pydantic.Field(default=None)
+    voice_name: str = pydantic.Field()
     """
     The name of the voice.
     """
@@ -45,32 +45,32 @@ class SpeechHistoryItemResponse(UncheckedBaseModel):
     The category of the voice. Either 'premade', 'cloned', 'generated' or 'professional'.
     """
 
-    text: typing.Optional[str] = pydantic.Field(default=None)
+    text: str = pydantic.Field()
     """
     The text used to generate the audio item.
     """
 
-    date_unix: typing.Optional[int] = pydantic.Field(default=None)
+    date_unix: int = pydantic.Field()
     """
     Unix timestamp of when the item was created.
     """
 
-    character_count_change_from: typing.Optional[int] = pydantic.Field(default=None)
+    character_count_change_from: int = pydantic.Field()
     """
     The character count change from.
     """
 
-    character_count_change_to: typing.Optional[int] = pydantic.Field(default=None)
+    character_count_change_to: int = pydantic.Field()
     """
     The character count change to.
     """
 
-    content_type: typing.Optional[str] = pydantic.Field(default=None)
+    content_type: str = pydantic.Field()
     """
     The content type of the generated item.
     """
 
-    state: typing.Optional[typing.Optional[typing.Any]] = None
+    state: typing.Optional[typing.Any] = None
     settings: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
     """
     The settings of the history item.

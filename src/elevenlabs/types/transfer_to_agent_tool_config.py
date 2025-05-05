@@ -2,13 +2,13 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .transfer import Transfer
+from .agent_transfer import AgentTransfer
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
 class TransferToAgentToolConfig(UncheckedBaseModel):
-    transfers: typing.List[Transfer]
+    transfers: typing.List[AgentTransfer]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

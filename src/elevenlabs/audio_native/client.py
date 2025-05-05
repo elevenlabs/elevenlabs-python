@@ -231,7 +231,7 @@ class AudioNativeClient:
         Parameters
         ----------
         project_id : str
-            The ID of the Studio project.
+            The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
 
         file : typing.Optional[core.File]
             See core.File for more documentation
@@ -522,7 +522,7 @@ class AsyncAudioNativeClient:
         Parameters
         ----------
         project_id : str
-            The ID of the Studio project.
+            The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
 
         file : typing.Optional[core.File]
             See core.File for more documentation
