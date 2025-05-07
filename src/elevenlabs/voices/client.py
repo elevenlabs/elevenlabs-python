@@ -10,7 +10,7 @@ from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.http_validation_error import HttpValidationError
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from ..types.get_voices_v_2_response_model import GetVoicesV2ResponseModel
+from ..types.get_voices_v_2_response import GetVoicesV2Response
 from ..types.voice_settings import VoiceSettings
 from ..core.jsonable_encoder import jsonable_encoder
 from ..types.voice import Voice
@@ -114,7 +114,7 @@ class VoicesClient:
         collection_id: typing.Optional[str] = None,
         include_total_count: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetVoicesV2ResponseModel:
+    ) -> GetVoicesV2Response:
         """
         Gets a list of all available voices for a user with search, filtering and pagination.
 
@@ -155,7 +155,7 @@ class VoicesClient:
 
         Returns
         -------
-        GetVoicesV2ResponseModel
+        GetVoicesV2Response
             Successful Response
 
         Examples
@@ -190,9 +190,9 @@ class VoicesClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetVoicesV2ResponseModel,
+                    GetVoicesV2Response,
                     construct_type(
-                        type_=GetVoicesV2ResponseModel,  # type: ignore
+                        type_=GetVoicesV2Response,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1150,7 +1150,7 @@ class AsyncVoicesClient:
         collection_id: typing.Optional[str] = None,
         include_total_count: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetVoicesV2ResponseModel:
+    ) -> GetVoicesV2Response:
         """
         Gets a list of all available voices for a user with search, filtering and pagination.
 
@@ -1191,7 +1191,7 @@ class AsyncVoicesClient:
 
         Returns
         -------
-        GetVoicesV2ResponseModel
+        GetVoicesV2Response
             Successful Response
 
         Examples
@@ -1234,9 +1234,9 @@ class AsyncVoicesClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    GetVoicesV2ResponseModel,
+                    GetVoicesV2Response,
                     construct_type(
-                        type_=GetVoicesV2ResponseModel,  # type: ignore
+                        type_=GetVoicesV2Response,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

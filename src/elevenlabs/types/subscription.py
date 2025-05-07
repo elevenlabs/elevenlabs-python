@@ -6,14 +6,16 @@ import typing
 from .extended_subscription_response_model_currency import (
     ExtendedSubscriptionResponseModelCurrency,
 )
-from .subscription_status import SubscriptionStatus
+from .extended_subscription_response_model_status import (
+    ExtendedSubscriptionResponseModelStatus,
+)
 from .extended_subscription_response_model_billing_period import (
     ExtendedSubscriptionResponseModelBillingPeriod,
 )
 from .extended_subscription_response_model_character_refresh_period import (
     ExtendedSubscriptionResponseModelCharacterRefreshPeriod,
 )
-from .invoice import Invoice
+from .invoice_response import InvoiceResponse
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -103,7 +105,7 @@ class Subscription(UncheckedBaseModel):
     The currency of the user's subscription.
     """
 
-    status: SubscriptionStatus = pydantic.Field()
+    status: ExtendedSubscriptionResponseModelStatus = pydantic.Field()
     """
     The status of the user's subscription.
     """
@@ -120,7 +122,7 @@ class Subscription(UncheckedBaseModel):
     The character refresh period of the user's subscription.
     """
 
-    next_invoice: typing.Optional[Invoice] = pydantic.Field(default=None)
+    next_invoice: typing.Optional[InvoiceResponse] = pydantic.Field(default=None)
     """
     The next invoice for the user.
     """

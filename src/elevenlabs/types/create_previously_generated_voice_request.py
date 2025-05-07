@@ -6,7 +6,7 @@ import typing
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
-class CreatePreviouslyGenertedVoiceRequest(UncheckedBaseModel):
+class CreatePreviouslyGeneratedVoiceRequest(UncheckedBaseModel):
     voice_name: str = pydantic.Field()
     """
     Name to use for the created voice.

@@ -20,7 +20,7 @@ class ShareOptionResponseModel(UncheckedBaseModel):
 
     type: ShareOptionResponseModelType = pydantic.Field()
     """
-    The type of the principal: user, group, or workspace api key.
+    The type of the principal: user, group, or service account (under 'key').
     """
 
     if IS_PYDANTIC_V2:

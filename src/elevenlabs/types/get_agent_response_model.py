@@ -2,7 +2,7 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import pydantic
-from .conversational_config_api_model_output import ConversationalConfigApiModelOutput
+from .conversational_config import ConversationalConfig
 from .agent_metadata_response_model import AgentMetadataResponseModel
 import typing
 from .agent_platform_settings_response_model import AgentPlatformSettingsResponseModel
@@ -21,7 +21,7 @@ class GetAgentResponseModel(UncheckedBaseModel):
     The name of the agent
     """
 
-    conversation_config: ConversationalConfigApiModelOutput = pydantic.Field()
+    conversation_config: ConversationalConfig = pydantic.Field()
     """
     The conversation configuration of the agent
     """

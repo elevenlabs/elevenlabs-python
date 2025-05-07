@@ -9322,7 +9322,7 @@
       "post": {
         "operationId": "Share_workspace_resource_v1_workspace_resources__resource_id__share_post",
         "summary": "Share Workspace Resource",
-        "description": "Grants a role on a workspace resource to a user or a group. It overrides any existing role this user/group/workspace api key has on the resource. To target a user, pass only the user email. The user must be in your workspace. To target a group, pass only the group id. To target a workspace api key, pass the api key id. You must have admin access to the resource to share it.",
+        "description": "Grants a role on a workspace resource to a user or a group. It overrides any existing role this user/service account/group/workspace api key has on the resource. To target a user or service account, pass only the user email. The user must be in your workspace. To target a group, pass only the group id. To target a workspace api key, pass the api key id. The resource will be shared with the service account associated with the api key. You must have admin access to the resource to share it.",
         "parameters": [
           {
             "name": "resource_id",
@@ -9393,7 +9393,7 @@
       "post": {
         "operationId": "Unshare_workspace_resource_v1_workspace_resources__resource_id__unshare_post",
         "summary": "Unshare Workspace Resource",
-        "description": "Removes any existing role on a workspace resource from a user or a group. To target a user, pass only the user email. The user must be in your workspace. To target a group, pass only the group id. To target a workspace api key, pass the api key id. You must have admin access to the resource to unshare it. You cannot remove permissions from the user who created the resource.",
+        "description": "Removes any existing role on a workspace resource from a user, service account, group or workspace api key. To target a user or service account, pass only the user email. The user must be in your workspace. To target a group, pass only the group id. To target a workspace api key, pass the api key id. The resource will be unshared from the service account associated with the api key. You must have admin access to the resource to unshare it. You cannot remove permissions from the user who created the resource.",
         "parameters": [
           {
             "name": "resource_id",
@@ -10475,6 +10475,24 @@
                 }
               ],
               "title": "Call Start Before Unix"
+            }
+          },
+          {
+            "name": "call_start_after_unix",
+            "in": "query",
+            "description": "Unix timestamp (in seconds) to filter conversations after to this start date.",
+            "required": false,
+            "schema": {
+              "description": "Unix timestamp (in seconds) to filter conversations after to this start date.",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Call Start After Unix"
             }
           },
           {
@@ -14458,6 +14476,14 @@
             "type": "string",
             "title": "Name"
           },
+          "categories": {
+            "description": "The categories of the agent",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "title": "Categories"
+          },
           "created_at_unix_secs": {
             "description": "The creation time of the agent in unix seconds",
             "type": "integer",
@@ -14470,12 +14496,18 @@
         },
         "example": {
           "agent_id": "J3Pbu5gP6NNKBscdCdwB",
+          "categories": [
+            "Customer Support",
+            "Technical Help",
+            "Eleven"
+          ],
           "created_at_unix_secs": 1716153600,
           "name": "My Agent"
         },
         "required": [
           "agent_id",
           "name",
+          "categories",
           "created_at_unix_secs",
           "access_info"
         ],
@@ -15827,6 +15859,29 @@
             ],
             "optional": true,
             "title": "Name"
+          },
+          "categories": {
+            "description": "Categories to help classify and filter the agent",
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "examples": [
+              [
+                "Customer Support",
+                "Technical Help",
+                "Eleven"
+              ]
+            ],
+            "optional": true,
+            "title": "Categories"
           }
         },
         "required": [
@@ -17785,6 +17840,39 @@
               ]
             ],
             "title": "Group Ids"
+          },
+          "workspace_permission": {
+            "description": "The workspace permission of the user",
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "external",
+                  "admin",
+                  "workspace_admin",
+                  "workspace_member",
+                  "support_l1",
+                  "support_l2",
+                  "moderator",
+                  "sales",
+                  "voice_mixer",
+                  "voice_admin",
+                  "convai_admin",
+                  "enterprise_viewer",
+                  "quality_check_admin",
+                  "workspace_migration_admin",
+                  "human_reviewer",
+                  "productions_admin"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "examples": [
+              "workspace_member"
+            ],
+            "title": "Workspace Permission"
           }
         },
         "required": [
@@ -17834,6 +17922,29 @@
             ],
             "optional": true,
             "title": "Name"
+          },
+          "categories": {
+            "description": "Categories to help classify and filter the agent",
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "examples": [
+              [
+                "Customer Support",
+                "Technical Help",
+                "Eleven"
+              ]
+            ],
+            "optional": true,
+            "title": "Categories"
           }
         },
         "title": "Body_Patches_an_Agent_settings_v1_convai_agents__agent_id__patch"
@@ -17986,7 +18097,7 @@
             "$ref": "#/components/schemas/WorkspaceResourceType"
           },
           "user_email": {
-            "description": "The email of the user",
+            "description": "The email of the user or service account.",
             "anyOf": [
               {
                 "type": "string"
@@ -19199,7 +19310,7 @@
             "$ref": "#/components/schemas/WorkspaceResourceType"
           },
           "user_email": {
-            "description": "The email of the user",
+            "description": "The email of the user or service account.",
             "anyOf": [
               {
                 "type": "string"
@@ -20335,98 +20446,6 @@
           "description"
         ],
         "title": "ClientToolConfig"
-      },
-      "CollectionContentItem": {
-        "type": "object",
-        "properties": {
-          "added_at": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Added At"
-          },
-          "added_by": {
-            "type": "string",
-            "title": "Added By"
-          },
-          "_id": {
-            "type": "string",
-            "format": "uuid",
-            "title": "Id"
-          },
-          "data": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/TaskDescriptionContentItem"
-              },
-              {
-                "$ref": "#/components/schemas/NestedCollectionContentItem"
-              }
-            ],
-            "title": "Data"
-          }
-        },
-        "required": [
-          "added_at",
-          "added_by",
-          "_id",
-          "data"
-        ],
-        "title": "CollectionContentItem"
-      },
-      "CollectionModel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "title": "Id"
-          },
-          "name": {
-            "type": "string",
-            "title": "Name"
-          },
-          "description": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Description"
-          },
-          "contents": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CollectionContentItem"
-            },
-            "title": "Contents"
-          }
-        },
-        "required": [
-          "id",
-          "name",
-          "description",
-          "contents"
-        ],
-        "title": "CollectionModel"
-      },
-      "CollectionsList": {
-        "type": "object",
-        "properties": {
-          "collections": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CollectionModel"
-            },
-            "title": "Collections"
-          }
-        },
-        "required": [
-          "collections"
-        ],
-        "title": "CollectionsList"
       },
       "ConvAISecretLocator": {
         "description": "Used to reference a secret from the agent's secret store.",
@@ -21754,30 +21773,6 @@
           "phone_number_id"
         ],
         "title": "CreatePhoneNumberResponseModel"
-      },
-      "CreateProjectRequestBody": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "title": "Name"
-          },
-          "description": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Description"
-          }
-        },
-        "required": [
-          "name"
-        ],
-        "title": "CreateProjectRequestBody"
       },
       "CreatePronunciationDictionaryResponseModel": {
         "type": "object",
@@ -23509,6 +23504,14 @@
                 "type": "null"
               }
             ]
+          },
+          "categories": {
+            "description": "The categories of the agent",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "title": "Categories"
           }
         },
         "example": {
@@ -24901,6 +24904,18 @@
             "type": "integer",
             "title": "Amount Due Cents"
           },
+          "discount_percent_off": {
+            "description": "The discount applied to the invoice. E.g. [20.0f] for 20% off.",
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Discount Percent Off"
+          },
           "next_payment_attempt_unix": {
             "description": "The Unix timestamp of the next payment attempt.",
             "type": "integer",
@@ -25928,26 +25943,6 @@
           "on_watchlist"
         ],
         "title": "ModerationStatusResponseModel"
-      },
-      "NestedCollectionContentItem": {
-        "type": "object",
-        "properties": {
-          "kind": {
-            "type": "string",
-            "const": "subproject",
-            "title": "Kind"
-          },
-          "ref_id": {
-            "type": "string",
-            "format": "uuid",
-            "title": "Ref Id"
-          }
-        },
-        "required": [
-          "kind",
-          "ref_id"
-        ],
-        "title": "NestedCollectionContentItem"
       },
       "ObjectJsonSchemaProperty-Input": {
         "type": "object",
@@ -27771,6 +27766,7 @@
         },
         "required": [
           "id",
+          "name",
           "conversation_goal_prompt"
         ],
         "title": "PromptEvaluationCriteria"
@@ -28250,19 +28246,6 @@
           "transcription"
         ],
         "title": "RecordingResponseModel"
-      },
-      "RenameProjectRequestBody": {
-        "type": "object",
-        "properties": {
-          "new_name": {
-            "type": "string",
-            "title": "New Name"
-          }
-        },
-        "required": [
-          "new_name"
-        ],
-        "title": "RenameProjectRequestBody"
       },
       "Render": {
         "type": "object",
@@ -28933,7 +28916,7 @@
             "title": "Id"
           },
           "type": {
-            "description": "The type of the principal: user, group, or workspace api key.",
+            "description": "The type of the principal: user, group, or service account (under 'key').",
             "type": "string",
             "enum": [
               "user",
@@ -30432,26 +30415,6 @@
         ],
         "title": "TTSOutputFormat"
       },
-      "TaskDescriptionContentItem": {
-        "type": "object",
-        "properties": {
-          "kind": {
-            "type": "string",
-            "const": "task_description",
-            "title": "Kind"
-          },
-          "ref_id": {
-            "type": "string",
-            "format": "uuid",
-            "title": "Ref Id"
-          }
-        },
-        "required": [
-          "kind",
-          "ref_id"
-        ],
-        "title": "TaskDescriptionContentItem"
-      },
       "TelephonyProvider": {
         "type": "string",
         "enum": [
@@ -31335,8 +31298,7 @@
           }
         },
         "required": [
-          "voice_description",
-          "text"
+          "voice_description"
         ],
         "title": "VoicePreviewsRequestModel"
       },
@@ -32526,7 +32488,7 @@
             ]
           },
           "request_body_schema": {
-            "description": "Schema for the body parameters, if any. Used for POST/PATCH requests. The schema should be an object which will be sent as the json body",
+            "description": "Schema for the body parameters, if any. Used for POST/PATCH/PUT requests. The schema should be an object which will be sent as the json body",
             "anyOf": [
               {
                 "$ref": "#/components/schemas/ObjectJsonSchemaProperty-Input"
@@ -32621,7 +32583,7 @@
             ]
           },
           "request_body_schema": {
-            "description": "Schema for the body parameters, if any. Used for POST/PATCH requests. The schema should be an object which will be sent as the json body",
+            "description": "Schema for the body parameters, if any. Used for POST/PATCH/PUT requests. The schema should be an object which will be sent as the json body",
             "anyOf": [
               {
                 "$ref": "#/components/schemas/ObjectJsonSchemaProperty-Output"

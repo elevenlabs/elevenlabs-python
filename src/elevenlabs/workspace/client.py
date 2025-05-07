@@ -18,6 +18,9 @@ from ..core.jsonable_encoder import jsonable_encoder
 from ..types.add_workspace_group_member_response_model import (
     AddWorkspaceGroupMemberResponseModel,
 )
+from .types.body_invite_user_v_1_workspace_invites_add_post_workspace_permission import (
+    BodyInviteUserV1WorkspaceInvitesAddPostWorkspacePermission,
+)
 from ..types.add_workspace_invite_response_model import AddWorkspaceInviteResponseModel
 from ..types.delete_workspace_invite_response_model import (
     DeleteWorkspaceInviteResponseModel,
@@ -264,6 +267,7 @@ class WorkspaceClient:
         *,
         email: str,
         group_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        workspace_permission: typing.Optional[BodyInviteUserV1WorkspaceInvitesAddPostWorkspacePermission] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddWorkspaceInviteResponseModel:
         """
@@ -276,6 +280,9 @@ class WorkspaceClient:
 
         group_ids : typing.Optional[typing.Sequence[str]]
             The group ids of the user
+
+        workspace_permission : typing.Optional[BodyInviteUserV1WorkspaceInvitesAddPostWorkspacePermission]
+            The workspace permission of the user
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -303,6 +310,7 @@ class WorkspaceClient:
             json={
                 "email": email,
                 "group_ids": group_ids,
+                "workspace_permission": workspace_permission,
             },
             headers={
                 "content-type": "application/json",
@@ -706,7 +714,7 @@ class WorkspaceClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
-        Grants a role on a workspace resource to a user or a group. It overrides any existing role this user/group/workspace api key has on the resource. To target a user, pass only the user email. The user must be in your workspace. To target a group, pass only the group id. To target a workspace api key, pass the api key id. You must have admin access to the resource to share it.
+        Grants a role on a workspace resource to a user or a group. It overrides any existing role this user/service account/group/workspace api key has on the resource. To target a user or service account, pass only the user email. The user must be in your workspace. To target a group, pass only the group id. To target a workspace api key, pass the api key id. The resource will be shared with the service account associated with the api key. You must have admin access to the resource to share it.
 
         Parameters
         ----------
@@ -720,7 +728,7 @@ class WorkspaceClient:
             Resource type of the target resource.
 
         user_email : typing.Optional[str]
-            The email of the user
+            The email of the user or service account.
 
         group_id : typing.Optional[str]
             The ID of the target group. To target the permissions principals have by default on this resource, use the value 'default'.
@@ -801,7 +809,7 @@ class WorkspaceClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
-        Removes any existing role on a workspace resource from a user or a group. To target a user, pass only the user email. The user must be in your workspace. To target a group, pass only the group id. To target a workspace api key, pass the api key id. You must have admin access to the resource to unshare it. You cannot remove permissions from the user who created the resource.
+        Removes any existing role on a workspace resource from a user, service account, group or workspace api key. To target a user or service account, pass only the user email. The user must be in your workspace. To target a group, pass only the group id. To target a workspace api key, pass the api key id. The resource will be unshared from the service account associated with the api key. You must have admin access to the resource to unshare it. You cannot remove permissions from the user who created the resource.
 
         Parameters
         ----------
@@ -812,7 +820,7 @@ class WorkspaceClient:
             Resource type of the target resource.
 
         user_email : typing.Optional[str]
-            The email of the user
+            The email of the user or service account.
 
         group_id : typing.Optional[str]
             The ID of the target group. To target the permissions principals have by default on this resource, use the value 'default'.
@@ -1127,6 +1135,7 @@ class AsyncWorkspaceClient:
         *,
         email: str,
         group_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        workspace_permission: typing.Optional[BodyInviteUserV1WorkspaceInvitesAddPostWorkspacePermission] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddWorkspaceInviteResponseModel:
         """
@@ -1139,6 +1148,9 @@ class AsyncWorkspaceClient:
 
         group_ids : typing.Optional[typing.Sequence[str]]
             The group ids of the user
+
+        workspace_permission : typing.Optional[BodyInviteUserV1WorkspaceInvitesAddPostWorkspacePermission]
+            The workspace permission of the user
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1174,6 +1186,7 @@ class AsyncWorkspaceClient:
             json={
                 "email": email,
                 "group_ids": group_ids,
+                "workspace_permission": workspace_permission,
             },
             headers={
                 "content-type": "application/json",
@@ -1617,7 +1630,7 @@ class AsyncWorkspaceClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
-        Grants a role on a workspace resource to a user or a group. It overrides any existing role this user/group/workspace api key has on the resource. To target a user, pass only the user email. The user must be in your workspace. To target a group, pass only the group id. To target a workspace api key, pass the api key id. You must have admin access to the resource to share it.
+        Grants a role on a workspace resource to a user or a group. It overrides any existing role this user/service account/group/workspace api key has on the resource. To target a user or service account, pass only the user email. The user must be in your workspace. To target a group, pass only the group id. To target a workspace api key, pass the api key id. The resource will be shared with the service account associated with the api key. You must have admin access to the resource to share it.
 
         Parameters
         ----------
@@ -1631,7 +1644,7 @@ class AsyncWorkspaceClient:
             Resource type of the target resource.
 
         user_email : typing.Optional[str]
-            The email of the user
+            The email of the user or service account.
 
         group_id : typing.Optional[str]
             The ID of the target group. To target the permissions principals have by default on this resource, use the value 'default'.
@@ -1720,7 +1733,7 @@ class AsyncWorkspaceClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
-        Removes any existing role on a workspace resource from a user or a group. To target a user, pass only the user email. The user must be in your workspace. To target a group, pass only the group id. To target a workspace api key, pass the api key id. You must have admin access to the resource to unshare it. You cannot remove permissions from the user who created the resource.
+        Removes any existing role on a workspace resource from a user, service account, group or workspace api key. To target a user or service account, pass only the user email. The user must be in your workspace. To target a group, pass only the group id. To target a workspace api key, pass the api key id. The resource will be unshared from the service account associated with the api key. You must have admin access to the resource to unshare it. You cannot remove permissions from the user who created the resource.
 
         Parameters
         ----------
@@ -1731,7 +1744,7 @@ class AsyncWorkspaceClient:
             Resource type of the target resource.
 
         user_email : typing.Optional[str]
-            The email of the user
+            The email of the user or service account.
 
         group_id : typing.Optional[str]
             The ID of the target group. To target the permissions principals have by default on this resource, use the value 'default'.

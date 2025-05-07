@@ -211,7 +211,7 @@ types:
         default: 100000
     source:
       openapi: openapi.json
-  AgentConfigApiModelInput:
+  AgentConfig:
     properties:
       first_message:
         type: optional<string>
@@ -227,27 +227,7 @@ types:
         type: optional<DynamicVariablesConfig>
         docs: Configuration for dynamic variables
       prompt:
-        type: optional<PromptAgentInput>
-        docs: The prompt for the agent
-    source:
-      openapi: openapi.json
-  AgentConfigApiModelOutput:
-    properties:
-      first_message:
-        type: optional<string>
-        docs: >-
-          If non-empty, the first message the agent will say. If empty, the
-          agent waits for the user to start the discussion.
-        default: ''
-      language:
-        type: optional<string>
-        docs: Language of the agent - used for ASR and TTS
-        default: en
-      dynamic_variables:
-        type: optional<DynamicVariablesConfig>
-        docs: Configuration for dynamic variables
-      prompt:
-        type: optional<PromptAgentOutput>
+        type: optional<PromptAgent>
         docs: The prompt for the agent
     source:
       openapi: openapi.json
@@ -354,6 +334,9 @@ types:
       name:
         type: string
         docs: The name of the agent
+      categories:
+        docs: The categories of the agent
+        type: list<string>
       created_at_unix_secs:
         type: integer
         docs: The creation time of the agent in unix seconds
@@ -510,7 +493,7 @@ types:
         default: ready
     source:
       openapi: openapi.json
-  AudioWithTimestampsResponseModel:
+  AudioWithTimestampsResponse:
     properties:
       audio_base64:
         type: string
@@ -813,7 +796,7 @@ types:
           format: binary
     source:
       openapi: openapi.json
-  CreatePreviouslyGenertedVoiceRequest:
+  CreatePreviouslyGeneratedVoiceRequest:
     properties:
       voice_name:
         type: string
@@ -1487,48 +1470,6 @@ types:
         docs: Configuration for dynamic variables
     source:
       openapi: openapi.json
-  CollectionContentItemData:
-    discriminant: kind
-    base-properties: {}
-    union:
-      task_description:
-        type: TaskDescriptionContentItem
-      subproject:
-        type: NestedCollectionContentItem
-    source:
-      openapi: openapi.json
-  CollectionContentItem:
-    properties:
-      added_at:
-        type: datetime
-      added_by: string
-      _id:
-        type: string
-        validation:
-          format: uuid
-      data:
-        display-name: Data
-        type: CollectionContentItemData
-    source:
-      openapi: openapi.json
-  CollectionModel:
-    properties:
-      id:
-        type: string
-        validation:
-          format: uuid
-      name: string
-      description: optional<string>
-      contents:
-        type: list<CollectionContentItem>
-    source:
-      openapi: openapi.json
-  CollectionsList:
-    properties:
-      collections:
-        type: list<CollectionModel>
-    source:
-      openapi: openapi.json
   ConvAiSecretLocator:
     docs: Used to reference a secret from the agent's secret store.
     properties:
@@ -2003,29 +1944,7 @@ types:
         type: optional<map<string, MetricRecord>>
     source:
       openapi: openapi.json
-  ConversationalConfigApiModelInput:
-    properties:
-      asr:
-        type: optional<AsrConversationalConfig>
-        docs: Configuration for conversational transcription
-      turn:
-        type: optional<TurnConfig>
-        docs: Configuration for turn detection
-      tts:
-        type: optional<TtsConversationalConfig>
-        docs: Configuration for conversational text to speech
-      conversation:
-        type: optional<ConversationConfig>
-        docs: Configuration for conversational events
-      language_presets:
-        type: optional<map<string, LanguagePresetInput>>
-        docs: Language presets for conversations
-      agent:
-        type: optional<AgentConfigApiModelInput>
-        docs: Agent specific configuration
-    source:
-      openapi: openapi.json
-  ConversationalConfigApiModelOutput:
+  ConversationalConfig:
     properties:
       asr:
         type: optional<AsrConversationalConfig>
@@ -2043,7 +1962,7 @@ types:
         type: optional<map<string, LanguagePresetOutput>>
         docs: Language presets for conversations
       agent:
-        type: optional<AgentConfigApiModelOutput>
+        type: optional<AgentConfig>
         docs: Agent specific configuration
     source:
       openapi: openapi.json
@@ -2079,13 +1998,6 @@ types:
       phone_number_id:
         type: string
         docs: Phone entity ID
-    source:
-      openapi: openapi.json
-  CreateProjectRequestBody:
-    properties:
-      name: string
-      description:
-        type: optional<string>
     source:
       openapi: openapi.json
   CreatePronunciationDictionaryResponseModel:
@@ -2220,7 +2132,7 @@ types:
           status 500 will be returned.
     source:
       openapi: openapi.json
-  DeleteSampleResponseModel:
+  DeleteSampleResponse:
     properties:
       status:
         type: string
@@ -2587,7 +2499,7 @@ types:
     inline: true
     source:
       openapi: openapi.json
-  SubscriptionStatus:
+  ExtendedSubscriptionResponseModelStatus:
     enum:
       - trialing
       - active
@@ -2675,7 +2587,7 @@ types:
         type: optional<ExtendedSubscriptionResponseModelCurrency>
         docs: The currency of the user's subscription.
       status:
-        type: SubscriptionStatus
+        type: ExtendedSubscriptionResponseModelStatus
         docs: The status of the user's subscription.
       billing_period:
         type: optional<ExtendedSubscriptionResponseModelBillingPeriod>
@@ -2684,7 +2596,7 @@ types:
         type: optional<ExtendedSubscriptionResponseModelCharacterRefreshPeriod>
         docs: The character refresh period of the user's subscription.
       next_invoice:
-        type: optional<Invoice>
+        type: optional<InvoiceResponse>
         docs: The next invoice for the user.
       has_open_invoices:
         type: boolean
@@ -2852,7 +2764,7 @@ types:
         type: string
         docs: The name of the agent
       conversation_config:
-        type: ConversationalConfigApiModelOutput
+        type: ConversationalConfig
         docs: The conversation configuration of the agent
       metadata:
         type: AgentMetadataResponseModel
@@ -2866,6 +2778,9 @@ types:
       access_info:
         type: optional<ResourceAccessInfo>
         docs: The access information of the agent for the user
+      categories:
+        type: optional<list<string>>
+        docs: The categories of the agent
     source:
       openapi: openapi.json
   GetAgentsPageResponseModel:
@@ -3222,7 +3137,7 @@ types:
         type: list<Voice>
     source:
       openapi: openapi.json
-  GetVoicesV2ResponseModel:
+  GetVoicesV2Response:
     properties:
       voices:
         type: list<Voice>
@@ -3291,11 +3206,14 @@ types:
         default: ''
     source:
       openapi: openapi.json
-  Invoice:
+  InvoiceResponse:
     properties:
       amount_due_cents:
         type: integer
         docs: The amount due in cents.
+      discount_percent_off:
+        type: optional<double>
+        docs: The discount applied to the invoice. E.g. [20.0f] for 20% off.
       next_payment_attempt_unix:
         type: integer
         docs: The Unix timestamp of the next payment attempt.
@@ -3769,14 +3687,6 @@ types:
       on_watchlist:
         type: boolean
         docs: Whether the user is on the watchlist.
-    source:
-      openapi: openapi.json
-  NestedCollectionContentItem:
-    properties:
-      ref_id:
-        type: string
-        validation:
-          format: uuid
     source:
       openapi: openapi.json
   ObjectJsonSchemaPropertyInputPropertiesValue:
@@ -4372,59 +4282,7 @@ types:
         type: WebhookToolConfigInput
     source:
       openapi: openapi.json
-  PromptAgentInput:
-    properties:
-      prompt:
-        type: optional<string>
-        docs: The prompt for the agent
-        default: ''
-      llm:
-        type: optional<Llm>
-        docs: The LLM to query with the prompt and the chat history
-      temperature:
-        type: optional<double>
-        docs: The temperature for the LLM
-        default: 0
-      max_tokens:
-        type: optional<integer>
-        docs: If greater than 0, maximum number of tokens the LLM can predict
-        default: -1
-      tools:
-        type: optional<list<PromptAgentInputToolsItem>>
-        docs: >-
-          A list of tools that the agent can use over the course of the
-          conversation
-      tool_ids:
-        type: optional<list<string>>
-        docs: A list of IDs of tools used by the agent
-      knowledge_base:
-        type: optional<list<KnowledgeBaseLocator>>
-        docs: A list of knowledge bases to be used by the agent
-      custom_llm:
-        type: optional<CustomLlm>
-        docs: Definition for a custom LLM if LLM field is set to 'CUSTOM_LLM'
-      ignore_default_personality:
-        type: optional<boolean>
-        docs: Whether to ignore the default personality
-      rag:
-        type: optional<RagConfig>
-        docs: Configuration for RAG
-    source:
-      openapi: openapi.json
-  PromptAgentOutputToolsItem:
-    discriminant: type
-    base-properties: {}
-    docs: The type of tool
-    union:
-      client:
-        type: ClientToolConfigOutput
-      system:
-        type: SystemToolConfigOutput
-      webhook:
-        type: WebhookToolConfigOutput
-    source:
-      openapi: openapi.json
-  PromptAgentOutput:
+  PromptAgent:
     properties:
       prompt:
         type: optional<string>
@@ -4463,6 +4321,19 @@ types:
         docs: Configuration for RAG
     source:
       openapi: openapi.json
+  PromptAgentOutputToolsItem:
+    discriminant: type
+    base-properties: {}
+    docs: The type of tool
+    union:
+      client:
+        type: ClientToolConfigOutput
+      system:
+        type: SystemToolConfigOutput
+      webhook:
+        type: WebhookToolConfigOutput
+    source:
+      openapi: openapi.json
   PromptAgentOverride:
     properties:
       prompt:
@@ -4489,8 +4360,7 @@ types:
       id:
         type: string
         docs: The unique identifier for the evaluation criteria
-      name:
-        type: optional<string>
+      name: string
       type:
         type: optional<literal<"prompt">>
         docs: The type of evaluation criteria
@@ -4686,11 +4556,6 @@ types:
       transcription:
         type: string
         docs: The transcription of the recording.
-    source:
-      openapi: openapi.json
-  RenameProjectRequestBody:
-    properties:
-      new_name: string
     source:
       openapi: openapi.json
   RenderStatus:
@@ -4935,7 +4800,7 @@ types:
       - user
       - group
       - key
-    docs: 'The type of the principal: user, group, or workspace api key.'
+    docs: 'The type of the principal: user, group, or service account (under ''key'').'
     inline: true
     source:
       openapi: openapi.json
@@ -4949,7 +4814,9 @@ types:
         docs: The ID of the principal.
       type:
         type: ShareOptionResponseModelType
-        docs: 'The type of the principal: user, group, or workspace api key.'
+        docs: >-
+          The type of the principal: user, group, or service account (under
+          'key').
     source:
       openapi: openapi.json
   SpeakerAudioResponseModel:
@@ -5213,7 +5080,7 @@ types:
           status 500 will be returned.
     source:
       openapi: openapi.json
-  StreamingAudioChunkWithTimestampsResponseModel:
+  StreamingAudioChunkWithTimestampsResponse:
     properties:
       audio_base64:
         type: string
@@ -5267,6 +5134,20 @@ types:
     enum:
       - usd
       - eur
+    inline: true
+    source:
+      openapi: openapi.json
+  SubscriptionStatus:
+    enum:
+      - trialing
+      - active
+      - incomplete
+      - incomplete_expired
+      - past_due
+      - canceled
+      - unpaid
+      - free
+    docs: The status of the user's subscription.
     inline: true
     source:
       openapi: openapi.json
@@ -5525,14 +5406,6 @@ types:
       - pcm_44100
       - pcm_48000
       - ulaw_8000
-    source:
-      openapi: openapi.json
-  TaskDescriptionContentItem:
-    properties:
-      ref_id:
-        type: string
-        validation:
-          format: uuid
     source:
       openapi: openapi.json
   TelephonyProvider:
@@ -5801,7 +5674,7 @@ types:
       duration_secs: double
     source:
       openapi: openapi.json
-  VoicePreviewsResponseModel:
+  VoiceDesignPreviewResponse:
     properties:
       previews:
         type: list<VoicePreviewResponseModel>
@@ -6194,8 +6067,9 @@ types:
       request_body_schema:
         type: optional<ObjectJsonSchemaPropertyInput>
         docs: >-
-          Schema for the body parameters, if any. Used for POST/PATCH requests.
-          The schema should be an object which will be sent as the json body
+          Schema for the body parameters, if any. Used for POST/PATCH/PUT
+          requests. The schema should be an object which will be sent as the
+          json body
       request_headers:
         type: >-
           optional<map<string,
@@ -6249,8 +6123,9 @@ types:
       request_body_schema:
         type: optional<ObjectJsonSchemaPropertyOutput>
         docs: >-
-          Schema for the body parameters, if any. Used for POST/PATCH requests.
-          The schema should be an object which will be sent as the json body
+          Schema for the body parameters, if any. Used for POST/PATCH/PUT
+          requests. The schema should be an object which will be sent as the
+          json body
       request_headers:
         type: >-
           optional<map<string,
@@ -6609,7 +6484,7 @@ types:
           Twilio audio inputs.
     source:
       openapi: openapi.json
-  HistoryItem:
+  HistoryItemResponse:
     properties:
       state: optional<unknown>
       voice_category: optional<unknown>
@@ -6619,7 +6494,23 @@ types:
   Gender: unknown
   AddSharingVoiceRequest: unknown
   CreateAudioNativeProjectRequest: unknown
-  TextToSpeechAsStreamRequest: unknown
+  TextToSpeechStreamRequest: unknown
+  EditVoiceSettingsRequest: unknown
+  GetChaptersRequest: unknown
+  GetChapterRequest: unknown
+  DeleteChapterRequest: unknown
+  GetChapterSnapshotsRequest: unknown
+  GetProjectsRequest: unknown
+  GetProjectRequest: unknown
+  DeleteProjectRequest: unknown
+  CreateTranscriptRequest: unknown
+  RemoveMemberFromGroupRequest: unknown
+  UpdateAudioNativeProjectRequest: unknown
+  UpdateProjectRequest: unknown
+  UpdateChapterRequest: unknown
+  CharacterUsageResponse: unknown
+  GetPronunciationDictionariesResponse: unknown
+  GetPronunciationDictionaryResponse: unknown
   InitializeConnection:
     properties:
       text:

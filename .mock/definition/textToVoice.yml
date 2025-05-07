@@ -46,7 +46,7 @@ service:
         openapi: openapi.json
       display-name: Voice design
       request:
-        name: VoicePreviewsRequestModel
+        name: VoiceDesignRequest
         query-parameters:
           output_format:
             type: optional<TextToVoiceCreatePreviewsRequestOutputFormat>
@@ -111,7 +111,7 @@ service:
         content-type: application/json
       response:
         docs: Successful Response
-        type: root.VoicePreviewsResponseModel
+        type: root.VoiceDesignPreviewResponse
         status-code: 200
       errors:
         - root.UnprocessableEntityError
@@ -135,8 +135,7 @@ service:
         openapi: openapi.json
       display-name: Save a voice preview
       request:
-        name: >-
-          BodyCreateANewVoiceFromVoicePreviewV1TextToVoiceCreateVoiceFromPreviewPost
+        name: SaveVoicePreviewRequest
         body:
           properties:
             voice_name:

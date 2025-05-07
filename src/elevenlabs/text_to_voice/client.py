@@ -6,7 +6,7 @@ from .types.text_to_voice_create_previews_request_output_format import (
     TextToVoiceCreatePreviewsRequestOutputFormat,
 )
 from ..core.request_options import RequestOptions
-from ..types.voice_previews_response_model import VoicePreviewsResponseModel
+from ..types.voice_design_preview_response import VoiceDesignPreviewResponse
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.http_validation_error import HttpValidationError
@@ -35,7 +35,7 @@ class TextToVoiceClient:
         seed: typing.Optional[int] = OMIT,
         guidance_scale: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> VoicePreviewsResponseModel:
+    ) -> VoiceDesignPreviewResponse:
         """
         Create a voice from a text prompt.
 
@@ -70,7 +70,7 @@ class TextToVoiceClient:
 
         Returns
         -------
-        VoicePreviewsResponseModel
+        VoiceDesignPreviewResponse
             Successful Response
 
         Examples
@@ -109,9 +109,9 @@ class TextToVoiceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    VoicePreviewsResponseModel,
+                    VoiceDesignPreviewResponse,
                     construct_type(
-                        type_=VoicePreviewsResponseModel,  # type: ignore
+                        type_=VoiceDesignPreviewResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -239,7 +239,7 @@ class AsyncTextToVoiceClient:
         seed: typing.Optional[int] = OMIT,
         guidance_scale: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> VoicePreviewsResponseModel:
+    ) -> VoiceDesignPreviewResponse:
         """
         Create a voice from a text prompt.
 
@@ -274,7 +274,7 @@ class AsyncTextToVoiceClient:
 
         Returns
         -------
-        VoicePreviewsResponseModel
+        VoiceDesignPreviewResponse
             Successful Response
 
         Examples
@@ -321,9 +321,9 @@ class AsyncTextToVoiceClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    VoicePreviewsResponseModel,
+                    VoiceDesignPreviewResponse,
                     construct_type(
-                        type_=VoicePreviewsResponseModel,  # type: ignore
+                        type_=VoiceDesignPreviewResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

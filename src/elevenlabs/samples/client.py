@@ -3,7 +3,7 @@
 from ..core.client_wrapper import SyncClientWrapper
 import typing
 from ..core.request_options import RequestOptions
-from ..types.delete_sample_response_model import DeleteSampleResponseModel
+from ..types.delete_sample_response import DeleteSampleResponse
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
@@ -23,7 +23,7 @@ class SamplesClient:
         sample_id: str,
         *,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> DeleteSampleResponseModel:
+    ) -> DeleteSampleResponse:
         """
         Removes a sample by its ID.
 
@@ -40,7 +40,7 @@ class SamplesClient:
 
         Returns
         -------
-        DeleteSampleResponseModel
+        DeleteSampleResponse
             Successful Response
 
         Examples
@@ -64,9 +64,9 @@ class SamplesClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    DeleteSampleResponseModel,
+                    DeleteSampleResponse,
                     construct_type(
-                        type_=DeleteSampleResponseModel,  # type: ignore
+                        type_=DeleteSampleResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -150,7 +150,7 @@ class AsyncSamplesClient:
         sample_id: str,
         *,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> DeleteSampleResponseModel:
+    ) -> DeleteSampleResponse:
         """
         Removes a sample by its ID.
 
@@ -167,7 +167,7 @@ class AsyncSamplesClient:
 
         Returns
         -------
-        DeleteSampleResponseModel
+        DeleteSampleResponse
             Successful Response
 
         Examples
@@ -199,9 +199,9 @@ class AsyncSamplesClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    DeleteSampleResponseModel,
+                    DeleteSampleResponse,
                     construct_type(
-                        type_=DeleteSampleResponseModel,  # type: ignore
+                        type_=DeleteSampleResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

@@ -89,7 +89,7 @@ service:
           docs: The ID of the target group.
       display-name: Add member to user group
       request:
-        name: BodyAddMemberToUserGroupV1WorkspaceGroupsGroupIdMembersPost
+        name: AddMemberToGroupRequest
         body:
           properties:
             email:
@@ -126,7 +126,7 @@ service:
         openapi: openapi.json
       display-name: Invite user
       request:
-        name: BodyInviteUserV1WorkspaceInvitesAddPost
+        name: InviteUserRequest
         body:
           properties:
             email:
@@ -135,6 +135,10 @@ service:
             group_ids:
               type: optional<list<string>>
               docs: The group ids of the user
+            workspace_permission:
+              type: >-
+                optional<BodyInviteUserV1WorkspaceInvitesAddPostWorkspacePermission>
+              docs: The workspace permission of the user
         content-type: application/json
       response:
         docs: Successful Response
@@ -230,7 +234,7 @@ service:
         openapi: openapi.json
       display-name: Update member
       request:
-        name: BodyUpdateMemberV1WorkspaceMembersPost
+        name: UpdateMemberRequest
         body:
           properties:
             email:
@@ -339,11 +343,12 @@ service:
       auth: false
       docs: >-
         Grants a role on a workspace resource to a user or a group. It overrides
-        any existing role this user/group/workspace api key has on the resource.
-        To target a user, pass only the user email. The user must be in your
-        workspace. To target a group, pass only the group id. To target a
-        workspace api key, pass the api key id. You must have admin access to
-        the resource to share it.
+        any existing role this user/service account/group/workspace api key has
+        on the resource. To target a user or service account, pass only the user
+        email. The user must be in your workspace. To target a group, pass only
+        the group id. To target a workspace api key, pass the api key id. The
+        resource will be shared with the service account associated with the api
+        key. You must have admin access to the resource to share it.
       source:
         openapi: openapi.json
       path-parameters:
@@ -364,7 +369,7 @@ service:
               docs: Resource type of the target resource.
             user_email:
               type: optional<string>
-              docs: The email of the user
+              docs: The email of the user or service account.
             group_id:
               type: optional<string>
               docs: >-
@@ -398,12 +403,14 @@ service:
       method: POST
       auth: false
       docs: >-
-        Removes any existing role on a workspace resource from a user or a
-        group. To target a user, pass only the user email. The user must be in
-        your workspace. To target a group, pass only the group id. To target a
-        workspace api key, pass the api key id. You must have admin access to
-        the resource to unshare it. You cannot remove permissions from the user
-        who created the resource.
+        Removes any existing role on a workspace resource from a user, service
+        account, group or workspace api key. To target a user or service
+        account, pass only the user email. The user must be in your workspace.
+        To target a group, pass only the group id. To target a workspace api
+        key, pass the api key id. The resource will be unshared from the service
+        account associated with the api key. You must have admin access to the
+        resource to unshare it. You cannot remove permissions from the user who
+        created the resource.
       source:
         openapi: openapi.json
       path-parameters:
@@ -420,7 +427,7 @@ service:
               docs: Resource type of the target resource.
             user_email:
               type: optional<string>
-              docs: The email of the user
+              docs: The email of the user or service account.
             group_id:
               type: optional<string>
               docs: >-
@@ -451,6 +458,27 @@ service:
   source:
     openapi: openapi.json
 types:
+  BodyInviteUserV1WorkspaceInvitesAddPostWorkspacePermission:
+    enum:
+      - external
+      - admin
+      - workspace_admin
+      - workspace_member
+      - support_l1
+      - support_l2
+      - moderator
+      - sales
+      - voice_mixer
+      - voice_admin
+      - convai_admin
+      - enterprise_viewer
+      - quality_check_admin
+      - workspace_migration_admin
+      - human_reviewer
+      - productions_admin
+    inline: true
+    source:
+      openapi: openapi.json
   BodyUpdateMemberV1WorkspaceMembersPostWorkspaceRole:
     enum:
       - workspace_admin

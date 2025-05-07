@@ -48,7 +48,7 @@ service:
         openapi: openapi.json
       display-name: Create sound effect
       request:
-        name: BodySoundGenerationV1SoundGenerationPost
+        name: CreateSoundEffectRequest
         query-parameters:
           output_format:
             type: optional<TextToSoundEffectsConvertRequestOutputFormat>

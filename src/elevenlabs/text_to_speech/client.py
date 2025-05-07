@@ -26,9 +26,7 @@ from .types.text_to_speech_convert_with_timestamps_request_output_format import 
 from .types.body_text_to_speech_with_timestamps_v_1_text_to_speech_voice_id_with_timestamps_post_apply_text_normalization import (
     BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization,
 )
-from ..types.audio_with_timestamps_response_model import (
-    AudioWithTimestampsResponseModel,
-)
+from ..types.audio_with_timestamps_response import AudioWithTimestampsResponse
 from .types.text_to_speech_convert_as_stream_request_output_format import (
     TextToSpeechConvertAsStreamRequestOutputFormat,
 )
@@ -41,8 +39,8 @@ from .types.text_to_speech_stream_with_timestamps_request_output_format import (
 from .types.body_text_to_speech_streaming_with_timestamps_v_1_text_to_speech_voice_id_stream_with_timestamps_post_apply_text_normalization import (
     BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization,
 )
-from ..types.streaming_audio_chunk_with_timestamps_response_model import (
-    StreamingAudioChunkWithTimestampsResponseModel,
+from ..types.streaming_audio_chunk_with_timestamps_response import (
+    StreamingAudioChunkWithTimestampsResponse,
 )
 import json
 from ..core.client_wrapper import AsyncClientWrapper
@@ -249,7 +247,7 @@ class TextToSpeechClient:
         ] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AudioWithTimestampsResponseModel:
+    ) -> AudioWithTimestampsResponse:
         """
         Generate speech from text with precise character-level timing information for audio-text synchronization.
 
@@ -318,7 +316,7 @@ class TextToSpeechClient:
 
         Returns
         -------
-        AudioWithTimestampsResponseModel
+        AudioWithTimestampsResponse
             Successful Response
 
         Examples
@@ -372,9 +370,9 @@ class TextToSpeechClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AudioWithTimestampsResponseModel,
+                    AudioWithTimestampsResponse,
                     construct_type(
-                        type_=AudioWithTimestampsResponseModel,  # type: ignore
+                        type_=AudioWithTimestampsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -587,7 +585,7 @@ class TextToSpeechClient:
         ] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Iterator[StreamingAudioChunkWithTimestampsResponseModel]:
+    ) -> typing.Iterator[StreamingAudioChunkWithTimestampsResponse]:
         """
         Converts text into speech using a voice of your choice and returns a stream of JSONs containing audio as a base64 encoded string together with information on when which character was spoken.
 
@@ -656,7 +654,7 @@ class TextToSpeechClient:
 
         Yields
         ------
-        typing.Iterator[StreamingAudioChunkWithTimestampsResponseModel]
+        typing.Iterator[StreamingAudioChunkWithTimestampsResponse]
             Stream of transcription chunks
 
         Examples
@@ -718,9 +716,9 @@ class TextToSpeechClient:
                             if len(_text) == 0:
                                 continue
                             yield typing.cast(
-                                StreamingAudioChunkWithTimestampsResponseModel,
+                                StreamingAudioChunkWithTimestampsResponse,
                                 construct_type(
-                                    type_=StreamingAudioChunkWithTimestampsResponseModel,  # type: ignore
+                                    type_=StreamingAudioChunkWithTimestampsResponse,  # type: ignore
                                     object_=json.loads(_text),
                                 ),
                             )
@@ -950,7 +948,7 @@ class AsyncTextToSpeechClient:
         ] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AudioWithTimestampsResponseModel:
+    ) -> AudioWithTimestampsResponse:
         """
         Generate speech from text with precise character-level timing information for audio-text synchronization.
 
@@ -1019,7 +1017,7 @@ class AsyncTextToSpeechClient:
 
         Returns
         -------
-        AudioWithTimestampsResponseModel
+        AudioWithTimestampsResponse
             Successful Response
 
         Examples
@@ -1081,9 +1079,9 @@ class AsyncTextToSpeechClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AudioWithTimestampsResponseModel,
+                    AudioWithTimestampsResponse,
                     construct_type(
-                        type_=AudioWithTimestampsResponseModel,  # type: ignore
+                        type_=AudioWithTimestampsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1304,7 +1302,7 @@ class AsyncTextToSpeechClient:
         ] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.AsyncIterator[StreamingAudioChunkWithTimestampsResponseModel]:
+    ) -> typing.AsyncIterator[StreamingAudioChunkWithTimestampsResponse]:
         """
         Converts text into speech using a voice of your choice and returns a stream of JSONs containing audio as a base64 encoded string together with information on when which character was spoken.
 
@@ -1373,7 +1371,7 @@ class AsyncTextToSpeechClient:
 
         Yields
         ------
-        typing.AsyncIterator[StreamingAudioChunkWithTimestampsResponseModel]
+        typing.AsyncIterator[StreamingAudioChunkWithTimestampsResponse]
             Stream of transcription chunks
 
         Examples
@@ -1443,9 +1441,9 @@ class AsyncTextToSpeechClient:
                             if len(_text) == 0:
                                 continue
                             yield typing.cast(
-                                StreamingAudioChunkWithTimestampsResponseModel,
+                                StreamingAudioChunkWithTimestampsResponse,
                                 construct_type(
-                                    type_=StreamingAudioChunkWithTimestampsResponseModel,  # type: ignore
+                                    type_=StreamingAudioChunkWithTimestampsResponse,  # type: ignore
                                     object_=json.loads(_text),
                                 ),
                             )

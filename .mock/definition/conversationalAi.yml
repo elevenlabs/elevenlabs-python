@@ -83,7 +83,7 @@ service:
         body:
           properties:
             conversation_config:
-              type: root.ConversationalConfigApiModelInput
+              type: root.ConversationalConfig
               docs: Conversation configuration for an agent
             platform_settings:
               type: optional<root.AgentPlatformSettingsRequestModel>
@@ -93,6 +93,9 @@ service:
             name:
               type: optional<string>
               docs: A name to make the agent easier to find
+            categories:
+              type: optional<list<string>>
+              docs: Categories to help classify and filter the agent
         content-type: application/json
       response:
         docs: Successful Response
@@ -202,6 +205,7 @@ service:
                 evaluation:
                   criteria:
                     - id: '1234567890'
+                      name: name
                       conversation_goal_prompt: >-
                         You are a helpful assistant that can answer questions
                         about the topic of the conversation.
@@ -286,6 +290,8 @@ service:
                 creator_name: John Doe
                 creator_email: john.doe@example.com
                 role: admin
+              categories:
+                - categories
       audiences:
         - convai
     delete_agent:
@@ -320,7 +326,7 @@ service:
           docs: The id of an agent. This is returned on agent creation.
       display-name: Update agent
       request:
-        name: BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatch
+        name: UpdateAgentRequest
         body:
           properties:
             conversation_config:
@@ -330,6 +336,9 @@ service:
             name:
               type: optional<string>
               docs: A name to make the agent easier to find
+            categories:
+              type: optional<list<string>>
+              docs: Categories to help classify and filter the agent
         content-type: application/json
       response:
         docs: Successful Response
@@ -414,6 +423,7 @@ service:
                 evaluation:
                   criteria:
                     - id: '1234567890'
+                      name: name
                       conversation_goal_prompt: >-
                         You are a helpful assistant that can answer questions
                         about the topic of the conversation.
@@ -498,6 +508,8 @@ service:
                 creator_name: John Doe
                 creator_email: john.doe@example.com
                 role: admin
+              categories:
+                - categories
       audiences:
         - convai
     get_agent_widget:
@@ -673,6 +685,10 @@ service:
               agents:
                 - agent_id: J3Pbu5gP6NNKBscdCdwB
                   name: My Agent
+                  categories:
+                    - Customer Support
+                    - Technical Help
+                    - Eleven
                   created_at_unix_secs: 1716153600
                   access_info:
                     is_creator: true
@@ -709,6 +725,11 @@ service:
             type: optional<integer>
             docs: >-
               Unix timestamp (in seconds) to filter conversations up to this
+              start date.
+          call_start_after_unix:
+            type: optional<integer>
+            docs: >-
+              Unix timestamp (in seconds) to filter conversations after to this
               start date.
           page_size:
             type: optional<integer>
