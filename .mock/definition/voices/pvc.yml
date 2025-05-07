@@ -13,7 +13,7 @@ service:
         openapi: openapi.json
       display-name: Create PVC voice
       request:
-        name: BodyCreatePvcVoiceV1VoicesPvcPost
+        name: CreatePvcVoiceRequest
         body:
           properties:
             name:

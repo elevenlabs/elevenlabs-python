@@ -2,14 +2,19 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
-class Invoice(UncheckedBaseModel):
+class InvoiceResponse(UncheckedBaseModel):
     amount_due_cents: int = pydantic.Field()
     """
     The amount due in cents.
+    """
+
+    discount_percent_off: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    The discount applied to the invoice. E.g. [20.0f] for 20% off.
     """
 
     next_payment_attempt_unix: int = pydantic.Field()

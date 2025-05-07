@@ -9,7 +9,7 @@ from .character_alignment_response_model import CharacterAlignmentResponseModel
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
-class StreamingAudioChunkWithTimestampsResponseModel(UncheckedBaseModel):
+class StreamingAudioChunkWithTimestampsResponse(UncheckedBaseModel):
     audio_base_64: typing_extensions.Annotated[str, FieldMetadata(alias="audio_base64")] = pydantic.Field()
     """
     Base64 encoded audio data

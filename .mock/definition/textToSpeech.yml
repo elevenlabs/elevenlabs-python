@@ -394,7 +394,7 @@ service:
             to list all the available voices.
       display-name: Create speech with timing
       request:
-        name: BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPost
+        name: TextToSpeechWithTimestampsRequest
         query-parameters:
           enable_logging:
             type: optional<boolean>
@@ -544,7 +544,7 @@ service:
         content-type: application/json
       response:
         docs: Successful Response
-        type: root.AudioWithTimestampsResponseModel
+        type: root.AudioWithTimestampsResponse
         status-code: 200
       errors:
         - root.UnprocessableEntityError
@@ -943,7 +943,7 @@ service:
         content-type: application/json
       response-stream:
         docs: Stream of transcription chunks
-        type: root.StreamingAudioChunkWithTimestampsResponseModel
+        type: root.StreamingAudioChunkWithTimestampsResponse
         format: json
       errors:
         - root.UnprocessableEntityError

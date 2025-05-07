@@ -217,8 +217,7 @@ service:
           docs: The id of the pronunciation dictionary
       display-name: Remove pronunciation dictionary rules
       request:
-        name: >-
-          BodyRemoveRulesFromThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdRemoveRulesPost
+        name: RemovePronunciationDictionaryRulesRequest
         body:
           properties:
             rule_strings:

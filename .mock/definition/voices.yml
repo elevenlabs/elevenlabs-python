@@ -218,7 +218,7 @@ service:
               response. Incurs a performance cost.
       response:
         docs: Successful Response
-        type: root.GetVoicesV2ResponseModel
+        type: root.GetVoicesV2Response
         status-code: 200
       errors:
         - root.UnprocessableEntityError

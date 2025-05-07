@@ -2,9 +2,9 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import pydantic
+import typing
 from .resource_access_info import ResourceAccessInfo
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
-import typing
 
 
 class AgentSummaryResponseModel(UncheckedBaseModel):
@@ -16,6 +16,11 @@ class AgentSummaryResponseModel(UncheckedBaseModel):
     name: str = pydantic.Field()
     """
     The name of the agent
+    """
+
+    categories: typing.List[str] = pydantic.Field()
+    """
+    The categories of the agent
     """
 
     created_at_unix_secs: int = pydantic.Field()

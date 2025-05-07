@@ -6,11 +6,11 @@ from .object_json_schema_property_output import ObjectJsonSchemaPropertyOutput
 import typing
 import pydantic
 from .dynamic_variables_config import DynamicVariablesConfig
-from .prompt_agent_output import PromptAgentOutput
+from .prompt_agent import PromptAgent
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
-class AgentConfigApiModelOutput(UncheckedBaseModel):
+class AgentConfig(UncheckedBaseModel):
     first_message: typing.Optional[str] = pydantic.Field(default=None)
     """
     If non-empty, the first message the agent will say. If empty, the agent waits for the user to start the discussion.
@@ -26,7 +26,7 @@ class AgentConfigApiModelOutput(UncheckedBaseModel):
     Configuration for dynamic variables
     """
 
-    prompt: typing.Optional[PromptAgentOutput] = pydantic.Field(default=None)
+    prompt: typing.Optional[PromptAgent] = pydantic.Field(default=None)
     """
     The prompt for the agent
     """

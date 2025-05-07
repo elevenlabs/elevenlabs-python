@@ -2,4 +2,4 @@
 
 import typing
 
-TextToSpeechAsStreamRequest = typing.Optional[typing.Any]
+GetChapterRequest = typing.Optional[typing.Any]

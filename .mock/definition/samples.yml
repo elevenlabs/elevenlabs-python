@@ -27,7 +27,7 @@ service:
       display-name: Delete voice sample
       response:
         docs: Successful Response
-        type: root.DeleteSampleResponseModel
+        type: root.DeleteSampleResponse
         status-code: 200
       errors:
         - root.UnprocessableEntityError

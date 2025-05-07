@@ -16,7 +16,7 @@ class PromptEvaluationCriteria(UncheckedBaseModel):
     The unique identifier for the evaluation criteria
     """
 
-    name: typing.Optional[str] = None
+    name: str
     type: typing.Optional[typing.Literal["prompt"]] = pydantic.Field(default=None)
     """
     The type of evaluation criteria

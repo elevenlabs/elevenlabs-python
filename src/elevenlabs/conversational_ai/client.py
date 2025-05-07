@@ -16,9 +16,7 @@ from ..types.conversation_initiation_client_data_request_input import (
 )
 from ..types.twilio_outbound_call_response import TwilioOutboundCallResponse
 from ..core.serialization import convert_and_respect_annotation_metadata
-from ..types.conversational_config_api_model_input import (
-    ConversationalConfigApiModelInput,
-)
+from ..types.conversational_config import ConversationalConfig
 from ..types.agent_platform_settings_request_model import (
     AgentPlatformSettingsRequestModel,
 )
@@ -237,9 +235,10 @@ class ConversationalAiClient:
     def create_agent(
         self,
         *,
-        conversation_config: ConversationalConfigApiModelInput,
+        conversation_config: ConversationalConfig,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
+        categories: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateAgentResponseModel:
         """
@@ -247,7 +246,7 @@ class ConversationalAiClient:
 
         Parameters
         ----------
-        conversation_config : ConversationalConfigApiModelInput
+        conversation_config : ConversationalConfig
             Conversation configuration for an agent
 
         platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
@@ -255,6 +254,9 @@ class ConversationalAiClient:
 
         name : typing.Optional[str]
             A name to make the agent easier to find
+
+        categories : typing.Optional[typing.Sequence[str]]
+            Categories to help classify and filter the agent
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -266,13 +268,13 @@ class ConversationalAiClient:
 
         Examples
         --------
-        from elevenlabs import ConversationalConfigApiModelInput, ElevenLabs
+        from elevenlabs import ConversationalConfig, ElevenLabs
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.create_agent(
-            conversation_config=ConversationalConfigApiModelInput(),
+            conversation_config=ConversationalConfig(),
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -282,7 +284,7 @@ class ConversationalAiClient:
             json={
                 "conversation_config": convert_and_respect_annotation_metadata(
                     object_=conversation_config,
-                    annotation=ConversationalConfigApiModelInput,
+                    annotation=ConversationalConfig,
                     direction="write",
                 ),
                 "platform_settings": convert_and_respect_annotation_metadata(
@@ -291,6 +293,7 @@ class ConversationalAiClient:
                     direction="write",
                 ),
                 "name": name,
+                "categories": categories,
             },
             headers={
                 "content-type": "application/json",
@@ -440,6 +443,7 @@ class ConversationalAiClient:
         conversation_config: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         platform_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         name: typing.Optional[str] = OMIT,
+        categories: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetAgentResponseModel:
         """
@@ -456,6 +460,9 @@ class ConversationalAiClient:
 
         name : typing.Optional[str]
             A name to make the agent easier to find
+
+        categories : typing.Optional[typing.Sequence[str]]
+            Categories to help classify and filter the agent
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -484,6 +491,7 @@ class ConversationalAiClient:
                 "conversation_config": conversation_config,
                 "platform_settings": platform_settings,
                 "name": name,
+                "categories": categories,
             },
             headers={
                 "content-type": "application/json",
@@ -798,6 +806,7 @@ class ConversationalAiClient:
         agent_id: typing.Optional[str] = None,
         call_successful: typing.Optional[EvaluationSuccessResult] = None,
         call_start_before_unix: typing.Optional[int] = None,
+        call_start_after_unix: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationsPageResponseModel:
@@ -817,6 +826,9 @@ class ConversationalAiClient:
 
         call_start_before_unix : typing.Optional[int]
             Unix timestamp (in seconds) to filter conversations up to this start date.
+
+        call_start_after_unix : typing.Optional[int]
+            Unix timestamp (in seconds) to filter conversations after to this start date.
 
         page_size : typing.Optional[int]
             How many conversations to return at maximum. Can not exceed 100, defaults to 30.
@@ -847,6 +859,7 @@ class ConversationalAiClient:
                 "agent_id": agent_id,
                 "call_successful": call_successful,
                 "call_start_before_unix": call_start_before_unix,
+                "call_start_after_unix": call_start_after_unix,
                 "page_size": page_size,
             },
             request_options=request_options,
@@ -2854,9 +2867,10 @@ class AsyncConversationalAiClient:
     async def create_agent(
         self,
         *,
-        conversation_config: ConversationalConfigApiModelInput,
+        conversation_config: ConversationalConfig,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
+        categories: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateAgentResponseModel:
         """
@@ -2864,7 +2878,7 @@ class AsyncConversationalAiClient:
 
         Parameters
         ----------
-        conversation_config : ConversationalConfigApiModelInput
+        conversation_config : ConversationalConfig
             Conversation configuration for an agent
 
         platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
@@ -2872,6 +2886,9 @@ class AsyncConversationalAiClient:
 
         name : typing.Optional[str]
             A name to make the agent easier to find
+
+        categories : typing.Optional[typing.Sequence[str]]
+            Categories to help classify and filter the agent
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -2885,7 +2902,7 @@ class AsyncConversationalAiClient:
         --------
         import asyncio
 
-        from elevenlabs import AsyncElevenLabs, ConversationalConfigApiModelInput
+        from elevenlabs import AsyncElevenLabs, ConversationalConfig
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
@@ -2894,7 +2911,7 @@ class AsyncConversationalAiClient:
 
         async def main() -> None:
             await client.conversational_ai.create_agent(
-                conversation_config=ConversationalConfigApiModelInput(),
+                conversation_config=ConversationalConfig(),
             )
 
 
@@ -2907,7 +2924,7 @@ class AsyncConversationalAiClient:
             json={
                 "conversation_config": convert_and_respect_annotation_metadata(
                     object_=conversation_config,
-                    annotation=ConversationalConfigApiModelInput,
+                    annotation=ConversationalConfig,
                     direction="write",
                 ),
                 "platform_settings": convert_and_respect_annotation_metadata(
@@ -2916,6 +2933,7 @@ class AsyncConversationalAiClient:
                     direction="write",
                 ),
                 "name": name,
+                "categories": categories,
             },
             headers={
                 "content-type": "application/json",
@@ -3081,6 +3099,7 @@ class AsyncConversationalAiClient:
         conversation_config: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         platform_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         name: typing.Optional[str] = OMIT,
+        categories: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetAgentResponseModel:
         """
@@ -3097,6 +3116,9 @@ class AsyncConversationalAiClient:
 
         name : typing.Optional[str]
             A name to make the agent easier to find
+
+        categories : typing.Optional[typing.Sequence[str]]
+            Categories to help classify and filter the agent
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -3133,6 +3155,7 @@ class AsyncConversationalAiClient:
                 "conversation_config": conversation_config,
                 "platform_settings": platform_settings,
                 "name": name,
+                "categories": categories,
             },
             headers={
                 "content-type": "application/json",
@@ -3479,6 +3502,7 @@ class AsyncConversationalAiClient:
         agent_id: typing.Optional[str] = None,
         call_successful: typing.Optional[EvaluationSuccessResult] = None,
         call_start_before_unix: typing.Optional[int] = None,
+        call_start_after_unix: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationsPageResponseModel:
@@ -3498,6 +3522,9 @@ class AsyncConversationalAiClient:
 
         call_start_before_unix : typing.Optional[int]
             Unix timestamp (in seconds) to filter conversations up to this start date.
+
+        call_start_after_unix : typing.Optional[int]
+            Unix timestamp (in seconds) to filter conversations after to this start date.
 
         page_size : typing.Optional[int]
             How many conversations to return at maximum. Can not exceed 100, defaults to 30.
@@ -3536,6 +3563,7 @@ class AsyncConversationalAiClient:
                 "agent_id": agent_id,
                 "call_successful": call_successful,
                 "call_start_before_unix": call_start_before_unix,
+                "call_start_after_unix": call_start_after_unix,
                 "page_size": page_size,
             },
             request_options=request_options,
