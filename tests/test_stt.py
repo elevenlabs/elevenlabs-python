@@ -16,7 +16,7 @@ def handle_api_error(e: ApiError) -> None:
     """Handle common API error patterns."""
     if e.status_code == 401:
         pytest.skip("Invalid API key")
-    raise
+    raise e
 
 async def convert_audio_file(
     client: Union[ElevenLabs, AsyncElevenLabs],
@@ -198,5 +198,3 @@ async def test_stt_convert_local_file_handling(eleven_client):
     transcription = await convert_audio_file(eleven_client, DEFAULT_VOICE_FILE)
     assert isinstance(transcription, SpeechToTextChunkResponseModel)
     assert transcription.text is not None
-
-   
