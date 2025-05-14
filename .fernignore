@@ -5,9 +5,6 @@ src/elevenlabs/client.py
 src/elevenlabs/conversational_ai/conversation.py
 src/elevenlabs/conversational_ai/default_audio_interface.py
 src/elevenlabs/play.py
-src/elevenlabs/realtime_tts.py
-src/elevenlabs/types/get_agent_response_model.py
-src/elevenlabs/types/prompt_agent.py
 
 # Ignore CI files
 .github/
