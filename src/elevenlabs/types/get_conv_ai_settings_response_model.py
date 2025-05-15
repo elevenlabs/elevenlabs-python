@@ -13,6 +13,7 @@ import pydantic
 class GetConvAiSettingsResponseModel(UncheckedBaseModel):
     conversation_initiation_client_data_webhook: typing.Optional[ConversationInitiationClientDataWebhook] = None
     webhooks: typing.Optional[ConvAiWebhooks] = None
+    rag_retention_period_days: typing.Optional[int] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

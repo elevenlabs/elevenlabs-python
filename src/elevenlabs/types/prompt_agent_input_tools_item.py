@@ -23,10 +23,34 @@ class PromptAgentInputToolsItem_Client(UncheckedBaseModel):
     id: typing.Optional[str] = None
     name: str
     description: str
+    response_timeout_secs: typing.Optional[int] = None
     parameters: typing.Optional[ObjectJsonSchemaPropertyInput] = None
     expects_response: typing.Optional[bool] = None
-    response_timeout_secs: typing.Optional[int] = None
     dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class PromptAgentInputToolsItem_Mcp(UncheckedBaseModel):
+    """
+    The type of tool
+    """
+
+    type: typing.Literal["mcp"] = "mcp"
+    id: typing.Optional[str] = None
+    name: str
+    description: str
+    response_timeout_secs: typing.Optional[int] = None
+    parameters: typing.Optional[ObjectJsonSchemaPropertyInput] = None
+    mcp_tool_name: str
+    mcp_server_id: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -47,6 +71,7 @@ class PromptAgentInputToolsItem_System(UncheckedBaseModel):
     id: typing.Optional[str] = None
     name: str
     description: str
+    response_timeout_secs: typing.Optional[int] = None
     params: SystemToolConfigInputParams
 
     if IS_PYDANTIC_V2:
@@ -68,6 +93,7 @@ class PromptAgentInputToolsItem_Webhook(UncheckedBaseModel):
     id: typing.Optional[str] = None
     name: str
     description: str
+    response_timeout_secs: typing.Optional[int] = None
     api_schema: WebhookToolApiSchemaConfigInput
     dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
 
@@ -84,6 +110,7 @@ class PromptAgentInputToolsItem_Webhook(UncheckedBaseModel):
 PromptAgentInputToolsItem = typing_extensions.Annotated[
     typing.Union[
         PromptAgentInputToolsItem_Client,
+        PromptAgentInputToolsItem_Mcp,
         PromptAgentInputToolsItem_System,
         PromptAgentInputToolsItem_Webhook,
     ],

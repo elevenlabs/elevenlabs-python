@@ -2,16 +2,13 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
+from .llm_input_output_tokens_usage import LlmInputOutputTokensUsage
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
-class ProfilePageResponseModel(UncheckedBaseModel):
-    handle: typing.Optional[str] = None
-    public_user_id: typing.Optional[str] = None
-    name: typing.Optional[str] = None
-    bio: typing.Optional[str] = None
-    profile_picture: typing.Optional[str] = None
+class LlmUsageInput(UncheckedBaseModel):
+    model_usage: typing.Optional[typing.Dict[str, LlmInputOutputTokensUsage]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

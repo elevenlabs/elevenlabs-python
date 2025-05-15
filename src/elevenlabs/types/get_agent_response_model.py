@@ -6,7 +6,7 @@ from .conversational_config import ConversationalConfig
 from .agent_metadata_response_model import AgentMetadataResponseModel
 import typing
 from .agent_platform_settings_response_model import AgentPlatformSettingsResponseModel
-from .get_phone_number_response_model import GetPhoneNumberResponseModel
+from .get_phone_number_response import GetPhoneNumberResponse
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 
 
@@ -36,7 +36,7 @@ class GetAgentResponseModel(UncheckedBaseModel):
     The platform settings of the agent
     """
 
-    phone_numbers: typing.Optional[typing.List[GetPhoneNumberResponseModel]] = pydantic.Field(default=None)
+    phone_numbers: typing.Optional[typing.List[GetPhoneNumberResponse]] = pydantic.Field(default=None)
     """
     The phone numbers of the agent
     """

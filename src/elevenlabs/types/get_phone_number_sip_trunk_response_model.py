@@ -2,21 +2,16 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import pydantic
-from .telephony_provider import TelephonyProvider
 import typing
 from .phone_number_agent_info import PhoneNumberAgentInfo
+from .sip_trunk_config_response_model import SipTrunkConfigResponseModel
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
-class GetPhoneNumberResponseModel(UncheckedBaseModel):
+class GetPhoneNumberSipTrunkResponseModel(UncheckedBaseModel):
     phone_number: str = pydantic.Field()
     """
     Phone number
-    """
-
-    provider: TelephonyProvider = pydantic.Field()
-    """
-    Phone provider
     """
 
     label: str = pydantic.Field()
@@ -33,6 +28,8 @@ class GetPhoneNumberResponseModel(UncheckedBaseModel):
     """
     The agent that is assigned to the phone number
     """
+
+    provider_config: typing.Optional[SipTrunkConfigResponseModel] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

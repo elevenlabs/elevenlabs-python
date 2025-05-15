@@ -38,6 +38,11 @@ class SpeechToTextWordResponseModel(UncheckedBaseModel):
     Unique identifier for the speaker of this word.
     """
 
+    logprob: float = pydantic.Field()
+    """
+    The log of the probability with which this word was predicted. Logprobs are in range [-infinity, 0], higher logprobs indicate a higher confidence the model has in its predictions.
+    """
+
     characters: typing.Optional[typing.List[SpeechToTextCharacterResponseModel]] = pydantic.Field(default=None)
     """
     The characters that make up the word and their timing information.
