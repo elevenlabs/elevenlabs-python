@@ -3,5 +3,6 @@
 import typing
 
 SpeechHistoryItemResponseModelSource = typing.Union[
-    typing.Literal["TTS", "STS", "Projects", "AN", "Dubbing", "PlayAPI"], typing.Any
+    typing.Literal["TTS", "STS", "Projects", "PD", "AN", "Dubbing", "PlayAPI", "ConvAI"],
+    typing.Any,
 ]

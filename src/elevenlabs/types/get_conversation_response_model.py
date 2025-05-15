@@ -3,8 +3,8 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .get_conversation_response_model_status import GetConversationResponseModelStatus
 import typing
-from .conversation_history_transcript_common_model import (
-    ConversationHistoryTranscriptCommonModel,
+from .conversation_history_transcript_common_model_output import (
+    ConversationHistoryTranscriptCommonModelOutput,
 )
 from .conversation_history_metadata_common_model import (
     ConversationHistoryMetadataCommonModel,
@@ -23,7 +23,7 @@ class GetConversationResponseModel(UncheckedBaseModel):
     agent_id: str
     conversation_id: str
     status: GetConversationResponseModelStatus
-    transcript: typing.List[ConversationHistoryTranscriptCommonModel]
+    transcript: typing.List[ConversationHistoryTranscriptCommonModelOutput]
     metadata: ConversationHistoryMetadataCommonModel
     analysis: typing.Optional[ConversationHistoryAnalysisCommonModel] = None
     conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestOutput] = None

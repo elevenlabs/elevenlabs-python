@@ -2,9 +2,8 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import pydantic
-import typing
-from .telephony_provider import TelephonyProvider
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
+import typing
 
 
 class CreateTwilioPhoneNumberRequest(UncheckedBaseModel):
@@ -13,7 +12,6 @@ class CreateTwilioPhoneNumberRequest(UncheckedBaseModel):
     Phone number
     """
 
-    provider: typing.Optional[TelephonyProvider] = None
     label: str = pydantic.Field()
     """
     Label for the phone number

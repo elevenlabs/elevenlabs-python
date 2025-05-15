@@ -11,6 +11,7 @@ class DubbedSegment(UncheckedBaseModel):
     start_time: float
     end_time: float
     text: typing.Optional[str] = None
+    audio_stale: bool
     media_ref: typing.Optional[DubbingMediaReference] = None
 
     if IS_PYDANTIC_V2:

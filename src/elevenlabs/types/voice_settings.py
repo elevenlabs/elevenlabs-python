@@ -29,7 +29,7 @@ class VoiceSettings(UncheckedBaseModel):
 
     speed: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Controls the speed of the generated speech. Values range from 0.7 to 1.2, with 1.0 being the default speed. Lower values create slower, more deliberate speech while higher values produce faster-paced speech. Extreme values can impact the quality of the generated speech.
+    Adjusts the speed of the voice. A value of 1.0 is the default speed, while values less than 1.0 slow down the speech, and values greater than 1.0 speed it up.
     """
 
     if IS_PYDANTIC_V2:

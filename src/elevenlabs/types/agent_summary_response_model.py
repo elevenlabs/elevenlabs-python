@@ -18,9 +18,9 @@ class AgentSummaryResponseModel(UncheckedBaseModel):
     The name of the agent
     """
 
-    categories: typing.List[str] = pydantic.Field()
+    tags: typing.List[str] = pydantic.Field()
     """
-    The categories of the agent
+    Agent tags used to categorize the agent
     """
 
     created_at_unix_secs: int = pydantic.Field()

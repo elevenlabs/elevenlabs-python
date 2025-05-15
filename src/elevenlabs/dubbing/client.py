@@ -2,6 +2,7 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .speaker.client import SpeakerClient
 from ..core.request_options import RequestOptions
 from ..types.dubbing_resource import DubbingResource
 from ..core.jsonable_encoder import jsonable_encoder
@@ -11,7 +12,6 @@ from ..types.http_validation_error import HttpValidationError
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..types.language_added_response import LanguageAddedResponse
-from ..types.segment_create_response import SegmentCreateResponse
 from ..types.segment_update_response import SegmentUpdateResponse
 from ..types.segment_delete_response import SegmentDeleteResponse
 from ..types.segment_transcription_response import SegmentTranscriptionResponse
@@ -30,6 +30,7 @@ from .types.dubbing_get_transcript_for_dub_request_format_type import (
     DubbingGetTranscriptForDubRequestFormatType,
 )
 from ..core.client_wrapper import AsyncClientWrapper
+from .speaker.client import AsyncSpeakerClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -38,6 +39,7 @@ OMIT = typing.cast(typing.Any, ...)
 class DubbingClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+        self.speaker = SpeakerClient(client_wrapper=self._client_wrapper)
 
     def get_dubbing_resource(
         self,
@@ -158,94 +160,6 @@ class DubbingClient:
                     LanguageAddedResponse,
                     construct_type(
                         type_=LanguageAddedResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def create_segment_for_speaker(
-        self,
-        dubbing_id: str,
-        speaker_id: str,
-        *,
-        start_time: float,
-        end_time: float,
-        text: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SegmentCreateResponse:
-        """
-        Creates a new segment in dubbing resource with a start and end time for the speaker in every available language. Does not automatically generate transcripts/translations/audio.
-
-        Parameters
-        ----------
-        dubbing_id : str
-            ID of the dubbing project.
-
-        speaker_id : str
-            ID of the speaker.
-
-        start_time : float
-
-        end_time : float
-
-        text : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SegmentCreateResponse
-            Successful Response
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.dubbing.create_segment_for_speaker(
-            dubbing_id="dubbing_id",
-            speaker_id="speaker_id",
-            start_time=1.1,
-            end_time=1.1,
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/speaker/{jsonable_encoder(speaker_id)}/segment",
-            base_url=self._client_wrapper.get_environment().base,
-            method="POST",
-            json={
-                "start_time": start_time,
-                "end_time": end_time,
-                "text": text,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    SegmentCreateResponse,
-                    construct_type(
-                        type_=SegmentCreateResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1203,6 +1117,7 @@ class DubbingClient:
 class AsyncDubbingClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+        self.speaker = AsyncSpeakerClient(client_wrapper=self._client_wrapper)
 
     async def get_dubbing_resource(
         self,
@@ -1339,102 +1254,6 @@ class AsyncDubbingClient:
                     LanguageAddedResponse,
                     construct_type(
                         type_=LanguageAddedResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def create_segment_for_speaker(
-        self,
-        dubbing_id: str,
-        speaker_id: str,
-        *,
-        start_time: float,
-        end_time: float,
-        text: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SegmentCreateResponse:
-        """
-        Creates a new segment in dubbing resource with a start and end time for the speaker in every available language. Does not automatically generate transcripts/translations/audio.
-
-        Parameters
-        ----------
-        dubbing_id : str
-            ID of the dubbing project.
-
-        speaker_id : str
-            ID of the speaker.
-
-        start_time : float
-
-        end_time : float
-
-        text : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SegmentCreateResponse
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.dubbing.create_segment_for_speaker(
-                dubbing_id="dubbing_id",
-                speaker_id="speaker_id",
-                start_time=1.1,
-                end_time=1.1,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/speaker/{jsonable_encoder(speaker_id)}/segment",
-            base_url=self._client_wrapper.get_environment().base,
-            method="POST",
-            json={
-                "start_time": start_time,
-                "end_time": end_time,
-                "text": text,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    SegmentCreateResponse,
-                    construct_type(
-                        type_=SegmentCreateResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

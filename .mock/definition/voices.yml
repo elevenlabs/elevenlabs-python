@@ -885,6 +885,9 @@ service:
             docs: >-
               Filter voices with a minimum notice period of the given number of
               days.
+          include_custom_rates:
+            type: optional<boolean>
+            docs: Include/exclude voices with custom rates
           reader_app_enabled:
             type: optional<boolean>
             default: false
@@ -1029,34 +1032,6 @@ service:
                   is_added_by_user: true
               has_more: false
               last_sort_id: last_sort_id
-    get_a_profile_page:
-      path: /profile/{handle}
-      method: GET
-      auth: false
-      docs: Gets a profile page based on a handle
-      source:
-        openapi: openapi.json
-      path-parameters:
-        handle:
-          type: string
-          docs: Handle for a VA's profile page
-      display-name: Get a profile page
-      response:
-        docs: Successful Response
-        type: root.ProfilePageResponseModel
-        status-code: 200
-      errors:
-        - root.UnprocessableEntityError
-      examples:
-        - path-parameters:
-            handle: talexgeorge
-          response:
-            body:
-              handle: handle
-              public_user_id: public_user_id
-              name: name
-              bio: bio
-              profile_picture: profile_picture
   source:
     openapi: openapi.json
   display-name: Voices

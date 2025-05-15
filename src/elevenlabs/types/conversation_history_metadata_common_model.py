@@ -11,6 +11,7 @@ from .conversation_charging_common_model import ConversationChargingCommonModel
 from .conversation_history_metadata_common_model_phone_call import (
     ConversationHistoryMetadataCommonModelPhoneCall,
 )
+from .conversation_history_batch_call_model import ConversationHistoryBatchCallModel
 from .conversation_history_error_common_model import ConversationHistoryErrorCommonModel
 from .conversation_history_rag_usage_common_model import (
     ConversationHistoryRagUsageCommonModel,
@@ -29,6 +30,7 @@ class ConversationHistoryMetadataCommonModel(UncheckedBaseModel):
     authorization_method: typing.Optional[AuthorizationMethod] = None
     charging: typing.Optional[ConversationChargingCommonModel] = None
     phone_call: typing.Optional[ConversationHistoryMetadataCommonModelPhoneCall] = None
+    batch_call: typing.Optional[ConversationHistoryBatchCallModel] = None
     termination_reason: typing.Optional[str] = None
     error: typing.Optional[ConversationHistoryErrorCommonModel] = None
     main_language: typing.Optional[str] = None
