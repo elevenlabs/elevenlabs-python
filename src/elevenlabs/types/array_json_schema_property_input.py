@@ -10,8 +10,8 @@ from ..core.pydantic_utilities import update_forward_refs
 
 class ArrayJsonSchemaPropertyInput(UncheckedBaseModel):
     type: typing.Optional[typing.Literal["array"]] = None
-    items: "ArrayJsonSchemaPropertyInputItems"
     description: typing.Optional[str] = None
+    items: "ArrayJsonSchemaPropertyInputItems"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

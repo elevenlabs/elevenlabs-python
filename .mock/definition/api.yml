@@ -11,6 +11,10 @@ environments:
     urls:
       Base: https://api.us.elevenlabs.io/
       WSS: wss://api.elevenlabs.io
+  Production EU:
+    urls:
+      Base: https://api.eu.residency.elevenlabs.io
+      WSS: wss://api.elevenlabs.io
 default-environment: Production
 default-url: Base
 headers:
