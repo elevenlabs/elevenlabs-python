@@ -3,7 +3,6 @@ import hmac
 import hashlib
 import time
 from typing import Any, Dict
-
 from .errors import BadRequestError
 
 

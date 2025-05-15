@@ -17,6 +17,7 @@ from .types import Voice, VoiceSettings, \
 from .environment import ElevenLabsEnvironment
 from .realtime_tts import RealtimeTextToSpeechClient
 from .types import OutputFormat
+from .webhooks import WebhooksClient
 
 
 DEFAULT_VOICE = Voice(
@@ -122,6 +123,7 @@ class ElevenLabs(BaseElevenLabs):
             httpx_client=httpx_client
         )
         self.text_to_speech = RealtimeTextToSpeechClient(client_wrapper=self._client_wrapper)
+        self.webhooks = WebhooksClient()
 
     @deprecated
     def clone(
@@ -302,6 +304,29 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
         api_key="YOUR_API_KEY",
     )
     """
+
+    def __init__(
+        self,
+        *,
+        base_url: typing.Optional[str] = None,
+        environment: ElevenLabsEnvironment = ElevenLabsEnvironment.PRODUCTION,
+        api_key: typing.Optional[str] = os.getenv("ELEVENLABS_API_KEY"),
+        timeout: typing.Optional[float] = 60,
+        httpx_client: typing.Optional[httpx.AsyncClient] = None
+    ):
+        super().__init__(
+            environment=base_url
+            and ElevenLabsEnvironment(
+                base=f"https://{get_base_url_host(base_url)}",
+                wss=f"wss://{get_base_url_host(base_url)}",
+            )
+            or environment,
+            api_key=api_key,
+            timeout=timeout,
+            httpx_client=httpx_client
+        )
+        self.text_to_speech = RealtimeTextToSpeechClient(client_wrapper=self._client_wrapper)
+        self.webhooks = WebhooksClient()
 
     @deprecated_async
     async def clone(
