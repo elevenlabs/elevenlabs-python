@@ -325,7 +325,6 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
             timeout=timeout,
             httpx_client=httpx_client
         )
-        self.text_to_speech = RealtimeTextToSpeechClient(client_wrapper=self._client_wrapper)
         self.webhooks = WebhooksClient()
 
     @deprecated_async
