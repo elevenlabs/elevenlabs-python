@@ -3,6 +3,8 @@ import json
 import re
 import os
 import httpx
+import warnings
+from functools import wraps
 
 from typing import Iterator, Optional, Union, \
   Optional, AsyncIterator
@@ -42,6 +44,38 @@ def get_base_url_host(base_url: str) -> str:
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
+
+
+def deprecated(func):
+    """
+    This is a decorator which can be used to mark functions as deprecated.
+    It will result in a warning being emitted when the function is used.
+    """
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        warnings.warn(
+            f"The method {func.__name__} is deprecated and will be removed in a future version.",
+            category=DeprecationWarning,
+            stacklevel=2
+        )
+        return func(*args, **kwargs)
+    return wrapper
+
+
+def deprecated_async(func):
+    """
+    This is a decorator which can be used to mark async functions as deprecated.
+    It will result in a warning being emitted when the function is used.
+    """
+    @wraps(func)
+    async def wrapper(*args, **kwargs):
+        warnings.warn(
+            f"The method {func.__name__} is deprecated and will be removed in a future version.",
+            category=DeprecationWarning,
+            stacklevel=2
+        )
+        return await func(*args, **kwargs)
+    return wrapper
 
 
 class ElevenLabs(BaseElevenLabs):
@@ -89,6 +123,7 @@ class ElevenLabs(BaseElevenLabs):
         )
         self.text_to_speech = RealtimeTextToSpeechClient(client_wrapper=self._client_wrapper)
 
+    @deprecated
     def clone(
       self,
       name: str,
@@ -124,6 +159,8 @@ class ElevenLabs(BaseElevenLabs):
           request_options=request_options
         )
 
+
+    @deprecated
     def generate(
       self,
       *,
@@ -266,6 +303,7 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
     )
     """
 
+    @deprecated_async
     async def clone(
       self,
       name: str,
@@ -304,6 +342,7 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
           request_options=request_options
         )
 
+    @deprecated_async
     async def generate(
       self,
       *,

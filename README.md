@@ -29,16 +29,23 @@ pip install elevenlabs
 
 1. **Eleven Multilingual v2** (`eleven_multilingual_v2`)
 
-   - Excels in stability, language diversity, and accent accuracy
-   - Supports 29 languages
-   - Recommended for most use cases
+    - Excels in stability, language diversity, and accent accuracy
+    - Supports 29 languages
+    - Recommended for most use cases
+
+2. **Eleven Flash v2.5** (`eleven_flash_v2_5`)
+
+    - Ultra-low latency
+    - Supports 32 languages
+    - Faster model, 50% lower price per character
 
 2. **Eleven Turbo v2.5** (`eleven_turbo_v2_5`)
-   - High quality, lowest latency
-   - Ideal for developer use cases where speed is crucial
-   - Supports 32 languages
 
-For more detailed information about these models and others, visit the [ElevenLabs Models documentation](https://elevenlabs.io/docs/speech-synthesis/models).
+    - Good balance of quality and latency
+    - Ideal for developer use cases where speed is crucial
+    - Supports 32 languages
+
+For more detailed information about these models and others, visit the [ElevenLabs Models documentation](https://elevenlabs.io/docs/models).
 
 ```py
 from dotenv import load_dotenv
@@ -96,10 +103,10 @@ from elevenlabs.client import ElevenLabs
 from elevenlabs import play
 
 client = ElevenLabs(
-  api_key="YOUR_API_KEY", # Defaults ELEVENLABS_API_KEY
+  api_key="YOUR_API_KEY",
 )
 
-voice = client.clone(
+voice = client.voices.add(
     name="Alex",
     description="An old American male voice with a slight hoarseness in his throat. Perfect for news", # Optional
     files=["./sample_0.mp3", "./sample_1.mp3", "./sample_2.mp3"],
@@ -132,32 +139,6 @@ for chunk in audio_stream:
 
 ```
 
-### Input streaming
-
-Stream text chunks into audio as it's being generated, with <1s latency. Note: if chunks don't end with space or punctuation (" ", ".", "?", "!"), the stream will wait for more text.
-
-```py
-from elevenlabs.client import ElevenLabs
-from elevenlabs import stream
-
-client = ElevenLabs(
-  api_key="YOUR_API_KEY", # Defaults to ELEVENLABS_API_KEY
-)
-
-def text_stream():
-    yield "Hi there, I'm Eleven "
-    yield "I'm a text to speech API "
-
-audio_stream = client.generate(
-    text=text_stream(),
-    voice="Brian",
-    model="eleven_multilingual_v2",
-    stream=True
-)
-
-stream(audio_stream)
-```
-
 ## Async Client
 
 Use `AsyncElevenLabs` if you want to make API calls asynchronously.
@@ -168,7 +149,7 @@ import asyncio
 from elevenlabs.client import AsyncElevenLabs
 
 eleven = AsyncElevenLabs(
-  api_key="MY_API_KEY" # Defaults to ELEVENLABS_API_KEY
+  api_key="MY_API_KEY"
 )
 
 async def print_models() -> None:
