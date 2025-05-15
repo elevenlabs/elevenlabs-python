@@ -3,7 +3,8 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import pydantic
 import typing
-from .telephony_provider import TelephonyProvider
+from .sip_trunk_transport_enum import SipTrunkTransportEnum
+from .sip_media_encryption_enum import SipMediaEncryptionEnum
 from .sip_trunk_credentials import SipTrunkCredentials
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
@@ -22,7 +23,6 @@ class CreateSipTrunkPhoneNumberRequest(UncheckedBaseModel):
     Phone number
     """
 
-    provider: typing.Optional[TelephonyProvider] = None
     label: str = pydantic.Field()
     """
     Label for the phone number
@@ -31,6 +31,26 @@ class CreateSipTrunkPhoneNumberRequest(UncheckedBaseModel):
     termination_uri: str = pydantic.Field()
     """
     SIP trunk termination URI
+    """
+
+    address: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Hostname or IP the SIP INVITE is sent to.
+    """
+
+    transport: typing.Optional[SipTrunkTransportEnum] = pydantic.Field(default=None)
+    """
+    Protocol to use for SIP transport (signalling layer).
+    """
+
+    media_encryption: typing.Optional[SipMediaEncryptionEnum] = pydantic.Field(default=None)
+    """
+    Whether or not to encrypt media (data layer).
+    """
+
+    headers: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
+    """
+    SIP X-* headers for INVITE request. These headers are sent as-is and may help identify this call.
     """
 
     credentials: typing.Optional[SipTrunkCredentials] = pydantic.Field(default=None)

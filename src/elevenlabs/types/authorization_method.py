@@ -3,6 +3,14 @@
 import typing
 
 AuthorizationMethod = typing.Union[
-    typing.Literal["invalid", "public", "authorization_header", "signed_url", "shareable_link"],
+    typing.Literal[
+        "invalid",
+        "public",
+        "authorization_header",
+        "signed_url",
+        "shareable_link",
+        "livekit_token",
+        "livekit_token_website",
+    ],
     typing.Any,
 ]

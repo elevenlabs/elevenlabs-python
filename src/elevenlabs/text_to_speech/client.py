@@ -6,8 +6,8 @@ from .types.text_to_speech_convert_request_output_format import (
     TextToSpeechConvertRequestOutputFormat,
 )
 from ..types.voice_settings import VoiceSettings
-from ..types.pronunciation_dictionary_version_locator import (
-    PronunciationDictionaryVersionLocator,
+from ..types.pronunciation_dictionary_version_locator_request_model import (
+    PronunciationDictionaryVersionLocatorRequestModel,
 )
 from .types.body_text_to_speech_v_1_text_to_speech_voice_id_post_apply_text_normalization import (
     BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization,
@@ -65,7 +65,7 @@ class TextToSpeechClient:
         language_code: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[
-            typing.Sequence[PronunciationDictionaryVersionLocator]
+            typing.Sequence[PronunciationDictionaryVersionLocatorRequestModel]
         ] = OMIT,
         seed: typing.Optional[int] = OMIT,
         previous_text: typing.Optional[str] = OMIT,
@@ -115,7 +115,7 @@ class TextToSpeechClient:
         voice_settings : typing.Optional[VoiceSettings]
             Voice settings overriding stored settings for the given voice. They are applied only on the given request.
 
-        pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
+        pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocatorRequestModel]]
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
 
         seed : typing.Optional[int]
@@ -182,7 +182,7 @@ class TextToSpeechClient:
                 ),
                 "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
                     object_=pronunciation_dictionary_locators,
-                    annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
+                    annotation=typing.Sequence[PronunciationDictionaryVersionLocatorRequestModel],
                     direction="write",
                 ),
                 "seed": seed,
@@ -234,7 +234,7 @@ class TextToSpeechClient:
         language_code: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[
-            typing.Sequence[PronunciationDictionaryVersionLocator]
+            typing.Sequence[PronunciationDictionaryVersionLocatorRequestModel]
         ] = OMIT,
         seed: typing.Optional[int] = OMIT,
         previous_text: typing.Optional[str] = OMIT,
@@ -284,7 +284,7 @@ class TextToSpeechClient:
         voice_settings : typing.Optional[VoiceSettings]
             Voice settings overriding stored settings for the given voice. They are applied only on the given request.
 
-        pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
+        pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocatorRequestModel]]
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
 
         seed : typing.Optional[int]
@@ -349,7 +349,7 @@ class TextToSpeechClient:
                 ),
                 "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
                     object_=pronunciation_dictionary_locators,
-                    annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
+                    annotation=typing.Sequence[PronunciationDictionaryVersionLocatorRequestModel],
                     direction="write",
                 ),
                 "seed": seed,
@@ -403,7 +403,7 @@ class TextToSpeechClient:
         language_code: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[
-            typing.Sequence[PronunciationDictionaryVersionLocator]
+            typing.Sequence[PronunciationDictionaryVersionLocatorRequestModel]
         ] = OMIT,
         seed: typing.Optional[int] = OMIT,
         previous_text: typing.Optional[str] = OMIT,
@@ -453,7 +453,7 @@ class TextToSpeechClient:
         voice_settings : typing.Optional[VoiceSettings]
             Voice settings overriding stored settings for the given voice. They are applied only on the given request.
 
-        pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
+        pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocatorRequestModel]]
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
 
         seed : typing.Optional[int]
@@ -520,7 +520,7 @@ class TextToSpeechClient:
                 ),
                 "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
                     object_=pronunciation_dictionary_locators,
-                    annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
+                    annotation=typing.Sequence[PronunciationDictionaryVersionLocatorRequestModel],
                     direction="write",
                 ),
                 "seed": seed,
@@ -572,7 +572,7 @@ class TextToSpeechClient:
         language_code: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[
-            typing.Sequence[PronunciationDictionaryVersionLocator]
+            typing.Sequence[PronunciationDictionaryVersionLocatorRequestModel]
         ] = OMIT,
         seed: typing.Optional[int] = OMIT,
         previous_text: typing.Optional[str] = OMIT,
@@ -622,7 +622,7 @@ class TextToSpeechClient:
         voice_settings : typing.Optional[VoiceSettings]
             Voice settings overriding stored settings for the given voice. They are applied only on the given request.
 
-        pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
+        pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocatorRequestModel]]
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
 
         seed : typing.Optional[int]
@@ -691,7 +691,7 @@ class TextToSpeechClient:
                 ),
                 "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
                     object_=pronunciation_dictionary_locators,
-                    annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
+                    annotation=typing.Sequence[PronunciationDictionaryVersionLocatorRequestModel],
                     direction="write",
                 ),
                 "seed": seed,
@@ -758,7 +758,7 @@ class AsyncTextToSpeechClient:
         language_code: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[
-            typing.Sequence[PronunciationDictionaryVersionLocator]
+            typing.Sequence[PronunciationDictionaryVersionLocatorRequestModel]
         ] = OMIT,
         seed: typing.Optional[int] = OMIT,
         previous_text: typing.Optional[str] = OMIT,
@@ -808,7 +808,7 @@ class AsyncTextToSpeechClient:
         voice_settings : typing.Optional[VoiceSettings]
             Voice settings overriding stored settings for the given voice. They are applied only on the given request.
 
-        pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
+        pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocatorRequestModel]]
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
 
         seed : typing.Optional[int]
@@ -883,7 +883,7 @@ class AsyncTextToSpeechClient:
                 ),
                 "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
                     object_=pronunciation_dictionary_locators,
-                    annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
+                    annotation=typing.Sequence[PronunciationDictionaryVersionLocatorRequestModel],
                     direction="write",
                 ),
                 "seed": seed,
@@ -935,7 +935,7 @@ class AsyncTextToSpeechClient:
         language_code: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[
-            typing.Sequence[PronunciationDictionaryVersionLocator]
+            typing.Sequence[PronunciationDictionaryVersionLocatorRequestModel]
         ] = OMIT,
         seed: typing.Optional[int] = OMIT,
         previous_text: typing.Optional[str] = OMIT,
@@ -985,7 +985,7 @@ class AsyncTextToSpeechClient:
         voice_settings : typing.Optional[VoiceSettings]
             Voice settings overriding stored settings for the given voice. They are applied only on the given request.
 
-        pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
+        pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocatorRequestModel]]
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
 
         seed : typing.Optional[int]
@@ -1058,7 +1058,7 @@ class AsyncTextToSpeechClient:
                 ),
                 "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
                     object_=pronunciation_dictionary_locators,
-                    annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
+                    annotation=typing.Sequence[PronunciationDictionaryVersionLocatorRequestModel],
                     direction="write",
                 ),
                 "seed": seed,
@@ -1112,7 +1112,7 @@ class AsyncTextToSpeechClient:
         language_code: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[
-            typing.Sequence[PronunciationDictionaryVersionLocator]
+            typing.Sequence[PronunciationDictionaryVersionLocatorRequestModel]
         ] = OMIT,
         seed: typing.Optional[int] = OMIT,
         previous_text: typing.Optional[str] = OMIT,
@@ -1162,7 +1162,7 @@ class AsyncTextToSpeechClient:
         voice_settings : typing.Optional[VoiceSettings]
             Voice settings overriding stored settings for the given voice. They are applied only on the given request.
 
-        pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
+        pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocatorRequestModel]]
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
 
         seed : typing.Optional[int]
@@ -1237,7 +1237,7 @@ class AsyncTextToSpeechClient:
                 ),
                 "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
                     object_=pronunciation_dictionary_locators,
-                    annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
+                    annotation=typing.Sequence[PronunciationDictionaryVersionLocatorRequestModel],
                     direction="write",
                 ),
                 "seed": seed,
@@ -1289,7 +1289,7 @@ class AsyncTextToSpeechClient:
         language_code: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[
-            typing.Sequence[PronunciationDictionaryVersionLocator]
+            typing.Sequence[PronunciationDictionaryVersionLocatorRequestModel]
         ] = OMIT,
         seed: typing.Optional[int] = OMIT,
         previous_text: typing.Optional[str] = OMIT,
@@ -1339,7 +1339,7 @@ class AsyncTextToSpeechClient:
         voice_settings : typing.Optional[VoiceSettings]
             Voice settings overriding stored settings for the given voice. They are applied only on the given request.
 
-        pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
+        pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocatorRequestModel]]
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
 
         seed : typing.Optional[int]
@@ -1416,7 +1416,7 @@ class AsyncTextToSpeechClient:
                 ),
                 "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
                     object_=pronunciation_dictionary_locators,
-                    annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
+                    annotation=typing.Sequence[PronunciationDictionaryVersionLocatorRequestModel],
                     direction="write",
                 ),
                 "seed": seed,

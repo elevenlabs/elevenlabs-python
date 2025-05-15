@@ -3,13 +3,34 @@
 from __future__ import annotations
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .conversation_history_twilio_phone_call_model_direction import (
-    ConversationHistoryTwilioPhoneCallModelDirection,
+from .conversation_history_sip_trunking_phone_call_model_direction import (
+    ConversationHistorySipTrunkingPhoneCallModelDirection,
 )
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from .conversation_history_twilio_phone_call_model_direction import (
+    ConversationHistoryTwilioPhoneCallModelDirection,
+)
 import typing_extensions
 from ..core.unchecked_base_model import UnionMetadata
+
+
+class ConversationHistoryMetadataCommonModelPhoneCall_SipTrunking(UncheckedBaseModel):
+    type: typing.Literal["sip_trunking"] = "sip_trunking"
+    direction: ConversationHistorySipTrunkingPhoneCallModelDirection
+    phone_number_id: str
+    agent_number: str
+    external_number: str
+    call_sid: str
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class ConversationHistoryMetadataCommonModelPhoneCall_Twilio(UncheckedBaseModel):
@@ -32,6 +53,9 @@ class ConversationHistoryMetadataCommonModelPhoneCall_Twilio(UncheckedBaseModel)
 
 
 ConversationHistoryMetadataCommonModelPhoneCall = typing_extensions.Annotated[
-    ConversationHistoryMetadataCommonModelPhoneCall_Twilio,
+    typing.Union[
+        ConversationHistoryMetadataCommonModelPhoneCall_SipTrunking,
+        ConversationHistoryMetadataCommonModelPhoneCall_Twilio,
+    ],
     UnionMetadata(discriminant="type"),
 ]

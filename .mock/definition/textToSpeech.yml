@@ -271,7 +271,7 @@ service:
                 using GET /v1/models. The model needs to have support for text
                 to speech, you can check this using the can_do_text_to_speech
                 property.
-              default: eleven_monolingual_v1
+              default: eleven_multilingual_v2
             language_code:
               type: optional<string>
               docs: >-
@@ -285,7 +285,8 @@ service:
                 Voice settings overriding stored settings for the given voice.
                 They are applied only on the given request.
             pronunciation_dictionary_locators:
-              type: optional<list<root.PronunciationDictionaryVersionLocator>>
+              type: >-
+                optional<list<root.PronunciationDictionaryVersionLocatorRequestModel>>
               docs: >-
                 A list of pronunciation dictionary locators (id, version_id) to
                 be applied to the text. They will be applied in order. You may
@@ -450,7 +451,7 @@ service:
                 using GET /v1/models. The model needs to have support for text
                 to speech, you can check this using the can_do_text_to_speech
                 property.
-              default: eleven_monolingual_v1
+              default: eleven_multilingual_v2
             language_code:
               type: optional<string>
               docs: >-
@@ -464,7 +465,8 @@ service:
                 Voice settings overriding stored settings for the given voice.
                 They are applied only on the given request.
             pronunciation_dictionary_locators:
-              type: optional<list<root.PronunciationDictionaryVersionLocator>>
+              type: >-
+                optional<list<root.PronunciationDictionaryVersionLocatorRequestModel>>
               docs: >-
                 A list of pronunciation dictionary locators (id, version_id) to
                 be applied to the text. They will be applied in order. You may
@@ -668,7 +670,7 @@ service:
                 using GET /v1/models. The model needs to have support for text
                 to speech, you can check this using the can_do_text_to_speech
                 property.
-              default: eleven_monolingual_v1
+              default: eleven_multilingual_v2
             language_code:
               type: optional<string>
               docs: >-
@@ -682,7 +684,8 @@ service:
                 Voice settings overriding stored settings for the given voice.
                 They are applied only on the given request.
             pronunciation_dictionary_locators:
-              type: optional<list<root.PronunciationDictionaryVersionLocator>>
+              type: >-
+                optional<list<root.PronunciationDictionaryVersionLocatorRequestModel>>
               docs: >-
                 A list of pronunciation dictionary locators (id, version_id) to
                 be applied to the text. They will be applied in order. You may
@@ -849,7 +852,7 @@ service:
                 using GET /v1/models. The model needs to have support for text
                 to speech, you can check this using the can_do_text_to_speech
                 property.
-              default: eleven_monolingual_v1
+              default: eleven_multilingual_v2
             language_code:
               type: optional<string>
               docs: >-
@@ -863,7 +866,8 @@ service:
                 Voice settings overriding stored settings for the given voice.
                 They are applied only on the given request.
             pronunciation_dictionary_locators:
-              type: optional<list<root.PronunciationDictionaryVersionLocator>>
+              type: >-
+                optional<list<root.PronunciationDictionaryVersionLocatorRequestModel>>
               docs: >-
                 A list of pronunciation dictionary locators (id, version_id) to
                 be applied to the text. They will be applied in order. You may

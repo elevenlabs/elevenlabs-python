@@ -231,6 +231,25 @@ types:
         docs: The prompt for the agent
     source:
       openapi: openapi.json
+  AgentConfigDbModel:
+    properties:
+      first_message:
+        type: optional<string>
+        docs: >-
+          If non-empty, the first message the agent will say. If empty, the
+          agent waits for the user to start the discussion.
+        default: ''
+      language:
+        type: optional<string>
+        docs: Language of the agent - used for ASR and TTS
+        default: en
+      dynamic_variables:
+        type: optional<DynamicVariablesConfig>
+        docs: Configuration for dynamic variables
+      prompt:
+        type: optional<PromptAgentDbModel>
+    source:
+      openapi: openapi.json
   AgentConfigOverride:
     properties:
       prompt:
@@ -326,6 +345,14 @@ types:
         type: optional<SafetyResponseModel>
     source:
       openapi: openapi.json
+  AgentSimulatedChatTestResponseModel:
+    properties:
+      simulated_conversation:
+        type: list<ConversationHistoryTranscriptCommonModelOutput>
+      analysis:
+        type: ConversationHistoryAnalysisCommonModel
+    source:
+      openapi: openapi.json
   AgentSummaryResponseModel:
     properties:
       agent_id:
@@ -334,8 +361,8 @@ types:
       name:
         type: string
         docs: The name of the agent
-      categories:
-        docs: The categories of the agent
+      tags:
+        docs: Agent tags used to categorize the agent
         type: list<string>
       created_at_unix_secs:
         type: integer
@@ -389,12 +416,12 @@ types:
     properties:
       type:
         type: optional<literal<"array">>
-      items:
-        display-name: Items
-        type: ArrayJsonSchemaPropertyInputItems
       description:
         type: optional<string>
         default: ''
+      items:
+        display-name: Items
+        type: ArrayJsonSchemaPropertyInputItems
     source:
       openapi: openapi.json
   ArrayJsonSchemaPropertyOutputItems:
@@ -410,12 +437,12 @@ types:
     properties:
       type:
         type: optional<literal<"array">>
-      items:
-        display-name: Items
-        type: ArrayJsonSchemaPropertyOutputItems
       description:
         type: optional<string>
         default: ''
+      items:
+        display-name: Items
+        type: ArrayJsonSchemaPropertyOutputItems
     source:
       openapi: openapi.json
   AudioNativeCreateProjectResponseModel:
@@ -531,12 +558,51 @@ types:
       - authorization_header
       - signed_url
       - shareable_link
+      - livekit_token
+      - livekit_token_website
     source:
       openapi: openapi.json
   BanReasonType:
     enum:
       - safety
       - manual
+    source:
+      openapi: openapi.json
+  BatchCallDetailedResponse:
+    docs: Detailed response model for a batch call including all recipients.
+    properties:
+      id: string
+      phone_number_id: string
+      name: string
+      agent_id: string
+      created_at_unix: integer
+      scheduled_time_unix: integer
+      total_calls_dispatched: integer
+      total_calls_scheduled: integer
+      last_updated_at_unix: integer
+      status:
+        type: BatchCallStatus
+      agent_name: string
+      recipients:
+        type: list<OutboundCallRecipientResponseModel>
+    source:
+      openapi: openapi.json
+  BatchCallRecipientStatus:
+    enum:
+      - pending
+      - in_progress
+      - completed
+      - failed
+      - cancelled
+    source:
+      openapi: openapi.json
+  BatchCallStatus:
+    enum:
+      - pending
+      - in_progress
+      - completed
+      - failed
+      - cancelled
     source:
       openapi: openapi.json
   BodyAddChapterToAProjectV1ProjectsProjectIdChaptersAddPost:
@@ -763,6 +829,8 @@ types:
       name:
         type: optional<string>
         docs: A custom, human-readable name for the document.
+        validation:
+          minLength: 1
       url:
         type: optional<string>
         docs: >-
@@ -782,6 +850,8 @@ types:
       name:
         type: optional<string>
         docs: A custom, human-readable name for the document.
+        validation:
+          minLength: 1
       url:
         type: optional<string>
         docs: >-
@@ -1403,6 +1473,15 @@ types:
         type: string
         validation:
           minLength: 0
+      response_timeout_secs:
+        type: optional<integer>
+        docs: >-
+          The maximum time in seconds to wait for the tool call to complete.
+          Must be between 1 and 30 seconds (inclusive).
+        default: 20
+        validation:
+          min: 1
+          max: 30
       parameters:
         type: optional<ObjectJsonSchemaPropertyInput>
         docs: Schema for any parameters to pass to the client
@@ -1415,14 +1494,6 @@ types:
           client to respond, this is useful to show content to a user but not
           block the conversation
         default: false
-      response_timeout_secs:
-        type: optional<integer>
-        docs: >-
-          The maximum time in seconds to wait for a response from the client.
-          Should only be set if expects_response is true
-        validation:
-          min: 1
-          max: 30
       dynamic_variables:
         type: optional<DynamicVariablesConfig>
         docs: Configuration for dynamic variables
@@ -1445,6 +1516,15 @@ types:
         type: string
         validation:
           minLength: 0
+      response_timeout_secs:
+        type: optional<integer>
+        docs: >-
+          The maximum time in seconds to wait for the tool call to complete.
+          Must be between 1 and 30 seconds (inclusive).
+        default: 20
+        validation:
+          min: 1
+          max: 30
       parameters:
         type: optional<ObjectJsonSchemaPropertyOutput>
         docs: Schema for any parameters to pass to the client
@@ -1457,14 +1537,6 @@ types:
           client to respond, this is useful to show content to a user but not
           block the conversation
         default: false
-      response_timeout_secs:
-        type: optional<integer>
-        docs: >-
-          The maximum time in seconds to wait for a response from the client.
-          Should only be set if expects_response is true
-        validation:
-          min: 1
-          max: 30
       dynamic_variables:
         type: optional<DynamicVariablesConfig>
         docs: Configuration for dynamic variables
@@ -1619,6 +1691,12 @@ types:
       transcript_summary: string
     source:
       openapi: openapi.json
+  ConversationHistoryBatchCallModel:
+    properties:
+      batch_call_id: string
+      batch_call_recipient_id: string
+    source:
+      openapi: openapi.json
   ConversationHistoryErrorCommonModel:
     properties:
       code: integer
@@ -1650,6 +1728,8 @@ types:
     discriminant: type
     base-properties: {}
     union:
+      sip_trunking:
+        type: ConversationHistorySipTrunkingPhoneCallModel
       twilio:
         type: ConversationHistoryTwilioPhoneCallModel
     source:
@@ -1672,6 +1752,8 @@ types:
         type: optional<ConversationChargingCommonModel>
       phone_call:
         type: optional<ConversationHistoryMetadataCommonModelPhoneCall>
+      batch_call:
+        type: optional<ConversationHistoryBatchCallModel>
       termination_reason:
         type: optional<string>
         default: ''
@@ -1689,17 +1771,34 @@ types:
       embedding_model: string
     source:
       openapi: openapi.json
-  ConversationHistoryTranscriptCommonModelRole:
+  ConversationHistorySipTrunkingPhoneCallModelDirection:
+    enum:
+      - inbound
+      - outbound
+    inline: true
+    source:
+      openapi: openapi.json
+  ConversationHistorySipTrunkingPhoneCallModel:
+    properties:
+      direction:
+        type: ConversationHistorySipTrunkingPhoneCallModelDirection
+      phone_number_id: string
+      agent_number: string
+      external_number: string
+      call_sid: string
+    source:
+      openapi: openapi.json
+  ConversationHistoryTranscriptCommonModelInputRole:
     enum:
       - user
       - agent
     inline: true
     source:
       openapi: openapi.json
-  ConversationHistoryTranscriptCommonModel:
+  ConversationHistoryTranscriptCommonModelInput:
     properties:
       role:
-        type: ConversationHistoryTranscriptCommonModelRole
+        type: ConversationHistoryTranscriptCommonModelInputRole
       message:
         type: optional<string>
       tool_calls:
@@ -1716,7 +1815,37 @@ types:
       rag_retrieval_info:
         type: optional<RagRetrievalInfo>
       llm_usage:
-        type: optional<LlmUsage>
+        type: optional<LlmUsageInput>
+    source:
+      openapi: openapi.json
+  ConversationHistoryTranscriptCommonModelOutputRole:
+    enum:
+      - user
+      - agent
+    inline: true
+    source:
+      openapi: openapi.json
+  ConversationHistoryTranscriptCommonModelOutput:
+    properties:
+      role:
+        type: ConversationHistoryTranscriptCommonModelOutputRole
+      message:
+        type: optional<string>
+      tool_calls:
+        type: optional<list<ConversationHistoryTranscriptToolCallCommonModel>>
+      tool_results:
+        type: optional<list<ConversationHistoryTranscriptToolResultCommonModel>>
+      feedback:
+        type: optional<UserFeedback>
+      llm_override:
+        type: optional<string>
+      time_in_call_secs: integer
+      conversation_turn_metrics:
+        type: optional<ConversationTurnMetrics>
+      rag_retrieval_info:
+        type: optional<RagRetrievalInfo>
+      llm_usage:
+        type: optional<LlmUsageOutput>
     source:
       openapi: openapi.json
   ConversationHistoryTranscriptToolCallClientDetails:
@@ -1822,6 +1951,28 @@ types:
         default: false
     source:
       openapi: openapi.json
+  ConversationInitiationClientDataInternalDynamicVariablesValue:
+    discriminated: false
+    union:
+      - string
+      - double
+      - integer
+      - boolean
+    source:
+      openapi: openapi.json
+    inline: true
+  ConversationInitiationClientDataInternal:
+    properties:
+      conversation_config_override:
+        type: optional<ConversationConfigClientOverrideOutput>
+      custom_llm_extra_body:
+        type: optional<map<string, unknown>>
+      dynamic_variables:
+        type: >-
+          optional<map<string,
+          optional<ConversationInitiationClientDataInternalDynamicVariablesValue>>>
+    source:
+      openapi: openapi.json
   ConversationInitiationClientDataRequestInputDynamicVariablesValue:
     discriminated: false
     union:
@@ -1889,6 +2040,22 @@ types:
   ConversationSignedUrlResponseModel:
     properties:
       signed_url: string
+    source:
+      openapi: openapi.json
+  ConversationSimulationSpecification:
+    docs: >-
+      A specification that will be used to simulate a conversation between an
+      agent and an AI user.
+    properties:
+      simulated_user_config:
+        type: AgentConfigDbModel
+      tool_mock_config:
+        type: optional<map<string, ToolMockConfig>>
+      partial_conversation_history:
+        type: optional<list<ConversationHistoryTranscriptCommonModelInput>>
+        docs: >-
+          A partial conversation history to start the simulation from. If empty,
+          simulation starts fresh.
     source:
       openapi: openapi.json
   ConversationSummaryResponseModelStatus:
@@ -2025,14 +2192,26 @@ types:
       phone_number:
         type: string
         docs: Phone number
-      provider:
-        type: optional<TelephonyProvider>
       label:
         type: string
         docs: Label for the phone number
       termination_uri:
         type: string
         docs: SIP trunk termination URI
+      address:
+        type: optional<string>
+        docs: Hostname or IP the SIP INVITE is sent to.
+      transport:
+        type: optional<SipTrunkTransportEnum>
+        docs: Protocol to use for SIP transport (signalling layer).
+      media_encryption:
+        type: optional<SipMediaEncryptionEnum>
+        docs: Whether or not to encrypt media (data layer).
+      headers:
+        type: optional<map<string, string>>
+        docs: >-
+          SIP X-* headers for INVITE request. These headers are sent as-is and
+          may help identify this call.
       credentials:
         type: optional<SipTrunkCredentials>
         docs: >-
@@ -2045,8 +2224,6 @@ types:
       phone_number:
         type: string
         docs: Phone number
-      provider:
-        type: optional<TelephonyProvider>
       label:
         type: string
         docs: Label for the phone number
@@ -2080,6 +2257,12 @@ types:
     properties:
       name: string
       criteria_id: string
+    source:
+      openapi: openapi.json
+  DashboardDataCollectionChartModel:
+    properties:
+      name: string
+      data_collection_id: string
     source:
       openapi: openapi.json
   DataCollectionResultCommonModel:
@@ -2312,6 +2495,7 @@ types:
       start_time: double
       end_time: double
       text: optional<string>
+      audio_stale: boolean
       media_ref: optional<DubbingMediaReference>
     source:
       openapi: openapi.json
@@ -2755,6 +2939,16 @@ types:
         docs: The token data for the agent
     source:
       openapi: openapi.json
+  GetAgentResponseModelPhoneNumbersItem:
+    discriminant: provider
+    base-properties: {}
+    union:
+      sip_trunk:
+        type: GetPhoneNumberSipTrunkResponseModel
+      twilio:
+        type: GetPhoneNumberTwilioResponseModel
+    source:
+      openapi: openapi.json
   GetAgentResponseModel:
     properties:
       agent_id:
@@ -2773,14 +2967,14 @@ types:
         type: optional<AgentPlatformSettingsResponseModel>
         docs: The platform settings of the agent
       phone_numbers:
-        type: optional<list<GetPhoneNumberResponseModel>>
+        type: optional<list<GetAgentResponseModelPhoneNumbersItem>>
         docs: The phone numbers of the agent
       access_info:
         type: optional<ResourceAccessInfo>
         docs: The access information of the agent for the user
-      categories:
+      tags:
         type: optional<list<string>>
-        docs: The categories of the agent
+        docs: Agent tags used to categorize the agent
     source:
       openapi: openapi.json
   GetAgentsPageResponseModel:
@@ -2823,6 +3017,8 @@ types:
         type: DashboardCallSuccessChartModel
       criteria:
         type: DashboardCriteriaChartModel
+      data_collection:
+        type: DashboardDataCollectionChartModel
     source:
       openapi: openapi.json
   GetConvAiDashboardSettingsResponseModel:
@@ -2837,6 +3033,11 @@ types:
         type: optional<ConversationInitiationClientDataWebhook>
       webhooks:
         type: optional<ConvAiWebhooks>
+      rag_retention_period_days:
+        type: optional<integer>
+        default: 10
+        validation:
+          max: 30
     source:
       openapi: openapi.json
   GetConversationResponseModelStatus:
@@ -2856,7 +3057,7 @@ types:
       status:
         type: GetConversationResponseModelStatus
       transcript:
-        type: list<ConversationHistoryTranscriptCommonModel>
+        type: list<ConversationHistoryTranscriptCommonModelOutput>
       metadata:
         type: ConversationHistoryMetadataCommonModel
       analysis:
@@ -3036,14 +3237,29 @@ types:
         type: optional<string>
     source:
       openapi: openapi.json
-  GetPhoneNumberResponseModel:
+  GetPhoneNumberSipTrunkResponseModel:
     properties:
       phone_number:
         type: string
         docs: Phone number
-      provider:
-        type: TelephonyProvider
-        docs: Phone provider
+      label:
+        type: string
+        docs: Label for the phone number
+      phone_number_id:
+        type: string
+        docs: The ID of the phone number
+      assigned_agent:
+        type: optional<PhoneNumberAgentInfo>
+        docs: The agent that is assigned to the phone number
+      provider_config:
+        type: optional<SipTrunkConfigResponseModel>
+    source:
+      openapi: openapi.json
+  GetPhoneNumberTwilioResponseModel:
+    properties:
+      phone_number:
+        type: string
+        docs: Phone number
       label:
         type: string
         docs: Label for the phone number
@@ -3303,9 +3519,9 @@ types:
   LlmCategoryUsage:
     properties:
       irreversible_generation:
-        type: optional<LlmUsage>
+        type: optional<LlmUsageOutput>
       initiated_generation:
-        type: optional<LlmUsage>
+        type: optional<LlmUsageOutput>
     source:
       openapi: openapi.json
   LlmInputOutputTokensUsage:
@@ -3330,7 +3546,13 @@ types:
         default: 0
     source:
       openapi: openapi.json
-  LlmUsage:
+  LlmUsageInput:
+    properties:
+      model_usage:
+        type: optional<map<string, LlmInputOutputTokensUsage>>
+    source:
+      openapi: openapi.json
+  LlmUsageOutput:
     properties:
       model_usage:
         type: optional<map<string, LlmInputOutputTokensUsage>>
@@ -3524,6 +3746,66 @@ types:
         docs: The constant value of the property
     source:
       openapi: openapi.json
+  McpToolConfigInput:
+    docs: A MCP tool is a tool that is used to call a MCP server
+    properties:
+      id:
+        type: optional<string>
+        default: ''
+      name:
+        type: string
+        validation:
+          pattern: ^[a-zA-Z0-9_-]{1,64}$
+          minLength: 0
+      description:
+        type: string
+        validation:
+          minLength: 0
+      response_timeout_secs:
+        type: optional<integer>
+        docs: The maximum time in seconds to wait for the tool call to complete.
+        default: 20
+      parameters:
+        type: optional<ObjectJsonSchemaPropertyInput>
+        docs: Schema for any parameters the LLM needs to provide to the MCP tool.
+      mcp_tool_name:
+        type: string
+        docs: The name of the MCP tool to call
+      mcp_server_id:
+        type: string
+        docs: The id of the MCP server to call
+    source:
+      openapi: openapi.json
+  McpToolConfigOutput:
+    docs: A MCP tool is a tool that is used to call a MCP server
+    properties:
+      id:
+        type: optional<string>
+        default: ''
+      name:
+        type: string
+        validation:
+          pattern: ^[a-zA-Z0-9_-]{1,64}$
+          minLength: 0
+      description:
+        type: string
+        validation:
+          minLength: 0
+      response_timeout_secs:
+        type: optional<integer>
+        docs: The maximum time in seconds to wait for the tool call to complete.
+        default: 20
+      parameters:
+        type: optional<ObjectJsonSchemaPropertyOutput>
+        docs: Schema for any parameters the LLM needs to provide to the MCP tool.
+      mcp_tool_name:
+        type: string
+        docs: The name of the MCP tool to call
+      mcp_server_id:
+        type: string
+        docs: The id of the MCP server to call
+    source:
+      openapi: openapi.json
   ManualVerificationFileResponse:
     properties:
       file_id:
@@ -3702,13 +3984,13 @@ types:
     properties:
       type:
         type: optional<literal<"object">>
-      properties:
-        type: optional<map<string, ObjectJsonSchemaPropertyInputPropertiesValue>>
       required:
         type: optional<list<string>>
       description:
         type: optional<string>
         default: ''
+      properties:
+        type: optional<map<string, ObjectJsonSchemaPropertyInputPropertiesValue>>
     source:
       openapi: openapi.json
   ObjectJsonSchemaPropertyOutputPropertiesValue:
@@ -3724,13 +4006,13 @@ types:
     properties:
       type:
         type: optional<literal<"object">>
-      properties:
-        type: optional<map<string, ObjectJsonSchemaPropertyOutputPropertiesValue>>
       required:
         type: optional<list<string>>
       description:
         type: optional<string>
         default: ''
+      properties:
+        type: optional<map<string, ObjectJsonSchemaPropertyOutputPropertiesValue>>
     source:
       openapi: openapi.json
   OrbAvatar:
@@ -3743,6 +4025,19 @@ types:
         type: optional<string>
         docs: The second color of the avatar
         default: '#9ce6e6'
+    source:
+      openapi: openapi.json
+  OutboundCallRecipientResponseModel:
+    properties:
+      id: string
+      phone_number: string
+      status:
+        type: BatchCallRecipientStatus
+      created_at_unix: integer
+      updated_at_unix: integer
+      conversation_id: optional<string>
+      conversation_initiation_client_data:
+        type: optional<ConversationInitiationClientDataInternal>
     source:
       openapi: openapi.json
   PdfExportOptions:
@@ -3868,15 +4163,10 @@ types:
         type: optional<boolean>
         docs: Whether to apply the privacy settings to existing conversations
         default: false
-    source:
-      openapi: openapi.json
-  ProfilePageResponseModel:
-    properties:
-      handle: optional<string>
-      public_user_id: optional<string>
-      name: optional<string>
-      bio: optional<string>
-      profile_picture: optional<string>
+      zero_retention_mode:
+        type: optional<boolean>
+        docs: Whether to enable zero retention mode - no PII data is stored
+        default: false
     source:
       openapi: openapi.json
   ProjectCreationMetaResponseModelStatus:
@@ -4276,6 +4566,8 @@ types:
     union:
       client:
         type: ClientToolConfigInput
+      mcp:
+        type: McpToolConfigInput
       system:
         type: SystemToolConfigInput
       webhook:
@@ -4307,6 +4599,9 @@ types:
       tool_ids:
         type: optional<list<string>>
         docs: A list of IDs of tools used by the agent
+      mcp_server_ids:
+        type: optional<list<string>>
+        docs: A list of MCP server ids to be used by the agent
       knowledge_base:
         type: optional<list<KnowledgeBaseLocator>>
         docs: A list of knowledge bases to be used by the agent
@@ -4328,10 +4623,71 @@ types:
     union:
       client:
         type: ClientToolConfigOutput
+      mcp:
+        type: McpToolConfigOutput
       system:
         type: SystemToolConfigOutput
       webhook:
         type: WebhookToolConfigOutput
+    source:
+      openapi: openapi.json
+  PromptAgentDbModelToolsItem:
+    discriminant: type
+    base-properties: {}
+    docs: The type of tool
+    union:
+      client:
+        type: ClientToolConfigInput
+      mcp:
+        type: McpToolConfigInput
+      system:
+        type: SystemToolConfigInput
+      webhook:
+        type: WebhookToolConfigInput
+    source:
+      openapi: openapi.json
+  PromptAgentDbModel:
+    properties:
+      prompt:
+        type: optional<string>
+        docs: The prompt for the agent
+        default: ''
+      llm:
+        type: optional<Llm>
+        docs: The LLM to query with the prompt and the chat history
+      temperature:
+        type: optional<double>
+        docs: The temperature for the LLM
+        default: 0
+      max_tokens:
+        type: optional<integer>
+        docs: If greater than 0, maximum number of tokens the LLM can predict
+        default: -1
+      tools:
+        type: optional<list<PromptAgentDbModelToolsItem>>
+        docs: >-
+          A list of tools that the agent can use over the course of the
+          conversation
+      tool_ids:
+        type: optional<list<string>>
+        docs: A list of IDs of tools used by the agent
+      mcp_server_ids:
+        type: optional<list<string>>
+        docs: A list of MCP server ids to be used by the agent
+      knowledge_base:
+        type: optional<list<KnowledgeBaseLocator>>
+        docs: A list of knowledge bases to be used by the agent
+      custom_llm:
+        type: optional<CustomLlm>
+        docs: Definition for a custom LLM if LLM field is set to 'CUSTOM_LLM'
+      ignore_default_personality:
+        type: optional<boolean>
+        docs: Whether to ignore the default personality
+      rag:
+        type: optional<RagConfig>
+        docs: Configuration for RAG
+      knowledge_base_document_ids:
+        type: optional<list<string>>
     source:
       openapi: openapi.json
   PromptAgentOverride:
@@ -4421,6 +4777,18 @@ types:
     properties:
       pronunciation_dictionary_id: string
       version_id: optional<string>
+    source:
+      openapi: openapi.json
+  PronunciationDictionaryVersionLocatorRequestModel:
+    properties:
+      pronunciation_dictionary_id:
+        type: string
+        docs: The ID of the pronunciation dictionary.
+      version_id:
+        type: optional<string>
+        docs: >-
+          The ID of the version of the pronunciation dictionary. If not
+          provided, the latest version will be used.
     source:
       openapi: openapi.json
   PronunciationDictionaryVersionResponseModelPermissionOnResource:
@@ -4646,6 +5014,40 @@ types:
         type: list<ShareOptionResponseModel>
     source:
       openapi: openapi.json
+  SipMediaEncryptionEnum:
+    enum:
+      - disabled
+      - allowed
+      - required
+    source:
+      openapi: openapi.json
+  SipTrunkConfigResponseModel:
+    docs: SIP Trunk configuration details for a phone number
+    properties:
+      address:
+        type: string
+        docs: Hostname or IP the SIP INVITE is sent to
+      transport:
+        type: SipTrunkTransportEnum
+        docs: Protocol to use for SIP transport
+      media_encryption:
+        type: SipMediaEncryptionEnum
+        docs: Whether or not to encrypt media (data layer).
+      headers:
+        type: optional<map<string, string>>
+        docs: SIP headers for INVITE request
+      has_auth_credentials:
+        type: boolean
+        docs: Whether authentication credentials are configured
+      username:
+        type: optional<string>
+        docs: SIP trunk username (if available)
+      has_outbound_trunk:
+        type: optional<boolean>
+        docs: Whether a LiveKit SIP outbound trunk is configured
+        default: false
+    source:
+      openapi: openapi.json
   SipTrunkCredentials:
     properties:
       username:
@@ -4654,6 +5056,21 @@ types:
       password:
         type: string
         docs: SIP trunk password
+    source:
+      openapi: openapi.json
+  SipTrunkOutboundCallResponse:
+    properties:
+      success: boolean
+      message: string
+      sip_call_id: optional<string>
+    source:
+      openapi: openapi.json
+  SipTrunkTransportEnum:
+    enum:
+      - auto
+      - udp
+      - tcp
+      - tls
     source:
       openapi: openapi.json
   SafetyCommonModel:
@@ -4819,6 +5236,34 @@ types:
           'key').
     source:
       openapi: openapi.json
+  SimilarVoiceCategory:
+    enum:
+      - premade
+      - cloned
+      - generated
+      - professional
+      - famous
+    inline: true
+    source:
+      openapi: openapi.json
+  SimilarVoice:
+    properties:
+      voice_id: string
+      name: string
+      category:
+        type: SimilarVoiceCategory
+      description:
+        type: optional<string>
+      preview_url:
+        type: optional<string>
+    source:
+      openapi: openapi.json
+  SimilarVoicesForSpeakerResponse:
+    properties:
+      voices:
+        type: list<SimilarVoice>
+    source:
+      openapi: openapi.json
   SpeakerAudioResponseModel:
     properties:
       audio_base_64:
@@ -4890,8 +5335,15 @@ types:
       media_ref:
         type: DubbingMediaReference
       speaker_name: string
+      voices:
+        type: map<string, string>
       segments:
         type: list<string>
+    source:
+      openapi: openapi.json
+  SpeakerUpdatedResponse:
+    properties:
+      version: integer
     source:
       openapi: openapi.json
   SpeechHistoryItemResponseModelVoiceCategory:
@@ -4908,9 +5360,11 @@ types:
       - TTS
       - STS
       - Projects
+      - PD
       - AN
       - Dubbing
       - PlayAPI
+      - ConvAI
     inline: true
     source:
       openapi: openapi.json
@@ -4967,7 +5421,8 @@ types:
         type: optional<SpeechHistoryItemResponseModelSource>
         docs: >-
           The source of the history item. Either TTS (text to speech), STS
-          (speech to text), AN (audio native), Projects, Dubbing or PlayAPI.
+          (speech to text), AN (audio native), Projects, Dubbing, PlayAPI, PD
+          (pronunciation dictionary) or ConvAI (conversational AI).
       alignments:
         type: optional<HistoryAlignmentsResponseModel>
         docs: The alignments of the history item.
@@ -5037,6 +5492,12 @@ types:
       speaker_id:
         type: optional<string>
         docs: Unique identifier for the speaker of this word.
+      logprob:
+        type: double
+        docs: >-
+          The log of the probability with which this word was predicted.
+          Logprobs are in range [-infinity, 0], higher logprobs indicate a
+          higher confidence the model has in its predictions.
       characters:
         type: optional<list<SpeechToTextCharacterResponseModel>>
         docs: The characters that make up the word and their timing information.
@@ -5292,6 +5753,10 @@ types:
         type: string
         validation:
           minLength: 0
+      response_timeout_secs:
+        type: optional<integer>
+        docs: The maximum time in seconds to wait for the tool call to complete.
+        default: 20
       params:
         display-name: Params
         type: SystemToolConfigInputParams
@@ -5326,6 +5791,10 @@ types:
         type: string
         validation:
           minLength: 0
+      response_timeout_secs:
+        type: optional<integer>
+        docs: The maximum time in seconds to wait for the tool call to complete.
+        default: 20
       params:
         display-name: Params
         type: SystemToolConfigOutputParams
@@ -5412,6 +5881,16 @@ types:
     enum:
       - twilio
       - sip_trunk
+    source:
+      openapi: openapi.json
+  ToolMockConfig:
+    properties:
+      default_return_value:
+        type: optional<string>
+        default: Tool Called.
+      default_is_error:
+        type: optional<boolean>
+        default: false
     source:
       openapi: openapi.json
   TransferToAgentToolConfig:
@@ -5829,10 +6308,9 @@ types:
       speed:
         type: optional<double>
         docs: >-
-          Controls the speed of the generated speech. Values range from 0.7 to
-          1.2, with 1.0 being the default speed. Lower values create slower,
-          more deliberate speech while higher values produce faster-paced
-          speech. Extreme values can impact the quality of the generated speech.
+          Adjusts the speed of the voice. A value of 1.0 is the default speed,
+          while values less than 1.0 slow down the speech, and values greater
+          than 1.0 speed it up.
     source:
       openapi: openapi.json
   VoiceSharingModerationCheckResponseModel:
@@ -6148,6 +6626,15 @@ types:
         type: string
         validation:
           minLength: 0
+      response_timeout_secs:
+        type: optional<integer>
+        docs: >-
+          The maximum time in seconds to wait for the tool call to complete.
+          Must be between 5 and 120 seconds (inclusive).
+        default: 20
+        validation:
+          min: 5
+          max: 120
       api_schema:
         type: WebhookToolApiSchemaConfigInput
         docs: >-
@@ -6173,6 +6660,15 @@ types:
         type: string
         validation:
           minLength: 0
+      response_timeout_secs:
+        type: optional<integer>
+        docs: >-
+          The maximum time in seconds to wait for the tool call to complete.
+          Must be between 5 and 120 seconds (inclusive).
+        default: 20
+        validation:
+          min: 5
+          max: 120
       api_schema:
         type: WebhookToolApiSchemaConfigOutput
         docs: >-
@@ -6443,6 +6939,7 @@ types:
       - convai_secrets
       - music_latent
       - convai_phone_numbers
+      - convai_mcps
       - convai_batch_calls
     docs: >-
       Resource types that can be shared in the workspace. The name always need
@@ -6739,7 +7236,7 @@ types:
       Alignment information for the generated audio given the input normalized
       text sequence.
     properties:
-      char_start_times_ms:
+      charStartTimesMs:
         type: optional<list<integer>>
         docs: >
           A list of starting times (in milliseconds) for each character in the
@@ -6752,7 +7249,7 @@ types:
           and not the
 
           full audio response.
-      chars_durations_ms:
+      charsDurationsMs:
         type: optional<list<integer>>
         docs: >
           A list of durations (in milliseconds) for each character in the
@@ -6775,7 +7272,7 @@ types:
           characters.
 
           The length of this list should be the same as the lengths of
-          `char_start_times_ms` and `chars_durations_ms`.
+          `charStartTimesMs` and `charsDurationsMs`.
     source:
       openapi: asyncapi.yml
   Alignment:
@@ -6783,7 +7280,7 @@ types:
       Alignment information for the generated audio given the input text
       sequence.
     properties:
-      char_start_times_ms:
+      charStartTimesMs:
         type: optional<list<integer>>
         docs: >
           A list of starting times (in milliseconds) for each character in the
@@ -6796,7 +7293,7 @@ types:
           and not the
 
           full audio response.
-      chars_durations_ms:
+      charsDurationsMs:
         type: optional<list<integer>>
         docs: >
           A list of durations (in milliseconds) for each character in the text
@@ -6819,7 +7316,7 @@ types:
           characters.
 
           The length of this list should be the same as the lengths of
-          `char_start_times_ms` and `chars_durations_ms`.
+          `charStartTimesMs` and `charsDurationsMs`.
     source:
       openapi: asyncapi.yml
   PronunciationDictionaryLocator:
@@ -6831,5 +7328,373 @@ types:
       version_id:
         type: string
         docs: The version identifier of the pronunciation dictionary
+    source:
+      openapi: asyncapi.yml
+  WebsocketTtsClientMessageMulti:
+    docs: Message sent from the client to the multi-context TTS WebSocket.
+    properties:
+      text:
+        type: optional<string>
+        docs: >
+          Text to be synthesized. 
+
+          For the first message establishing a new context (identified by
+          `context_id`, or a default context if `context_id` is absent), this
+          should be a single space character (' '). 
+
+          For subsequent messages to an active context, this is the text to
+          synthesize. 
+
+          This field can be null or an empty string if the message is primarily
+          for control (e.g., using `flush`, `close_context`, or `close_socket`).
+      voice_settings:
+        type: optional<RealtimeVoiceSettings>
+        docs: >-
+          Voice settings. Can only be provided in the first message for a given
+          context_id (or first message overall if context_id is not
+          used/default).
+      generation_config:
+        type: optional<GenerationConfig>
+        docs: >-
+          Generation config. Can only be provided in the first message for a
+          given context_id (or first message overall if context_id is not
+          used/default).
+      xi-api-key:
+        type: optional<string>
+        docs: >-
+          Your ElevenLabs API key. Can only be provided in the first message for
+          a given context_id if not present in the header.
+      authorization:
+        type: optional<string>
+        docs: >-
+          Your authorization bearer token. Can only be provided in the first
+          message for a given context_id if not present in the header.
+      flush:
+        type: optional<boolean>
+        docs: >-
+          If true, flushes the audio buffer and returns the remaining audio for
+          the specified `context_id`.
+        default: false
+      pronunciation_dictionary_locators:
+        type: optional<list<PronunciationDictionaryLocator>>
+        docs: >-
+          Optional list of pronunciation dictionary locators. Can only be
+          provided in the first message for a given context_id.
+      context_id:
+        type: optional<string>
+        docs: >-
+          An identifier for the text-to-speech context. Allows managing multiple
+          independent audio generation streams over a single WebSocket
+          connection. If omitted, a default context is used.
+      close_context:
+        type: optional<boolean>
+        docs: >-
+          If true, closes the specified `context_id`. No further audio will be
+          generated for this context. The `text` field is ignored.
+        default: false
+      close_socket:
+        type: optional<boolean>
+        docs: >-
+          If true, flushes all contexts and closes the entire WebSocket
+          connection. The `text` and `context_id` fields are ignored.
+        default: false
+    source:
+      openapi: asyncapi.yml
+  WebsocketTtsServerMessageMulti:
+    docs: >-
+      Message sent from the server to the client for the multi-context TTS
+      WebSocket.
+    properties:
+      audio:
+        type: optional<string>
+        docs: >-
+          A generated partial audio chunk, encoded using the selected
+          output_format (e.g., MP3 as a base64 string).
+      is_final:
+        type: optional<boolean>
+        docs: >-
+          If true, indicates that this is the final message for the specified
+          `context_id`. This is sent when a context is closed. `audio` will be
+          null or empty.
+      normalizedAlignment: optional<NormalizedAlignment>
+      alignment: optional<Alignment>
+      context_id:
+        type: optional<string>
+        docs: The context identifier to which this message pertains.
+    source:
+      openapi: asyncapi.yml
+  InitializeConnectionMulti:
+    docs: >-
+      Payload to initialize a new context in a multi-stream WebSocket
+      connection.
+    properties:
+      text:
+        type: literal<" ">
+        docs: Must be a single space character to initiate the context.
+      voice_settings: optional<RealtimeVoiceSettings>
+      generation_config: optional<GenerationConfig>
+      pronunciation_dictionary_locators:
+        type: optional<list<PronunciationDictionaryLocator>>
+        docs: Optional pronunciation dictionaries for this context.
+      xi_api_key:
+        type: optional<string>
+        docs: >-
+          Your ElevenLabs API key (if not in header). For this context's first
+          message only.
+      authorization:
+        type: optional<string>
+        docs: >-
+          Your authorization bearer token (if not in header). For this context's
+          first message only.
+      context_id:
+        type: optional<string>
+        docs: >-
+          A unique identifier for the first context created in the websocket. If
+          not provided, a default context will be used.
+    source:
+      openapi: asyncapi.yml
+  SendTextMulti:
+    docs: Payload to send text for synthesis to an existing context.
+    properties:
+      text:
+        type: string
+        docs: Text to synthesize. Should end with a single space.
+      context_id:
+        type: optional<string>
+        docs: The target context_id for this text.
+      flush:
+        type: optional<boolean>
+        docs: >-
+          If true, flushes the audio buffer for the specified context. If false,
+          the text will be appended to the buffer to be generated.
+        default: false
+    source:
+      openapi: asyncapi.yml
+  FlushContext:
+    docs: Payload to flush the audio buffer for a specific context.
+    properties:
+      context_id:
+        type: string
+        docs: The context_id to flush.
+      text:
+        type: optional<string>
+        docs: The text to append to the buffer to be flushed.
+      flush:
+        type: boolean
+        docs: >-
+          If true, flushes the audio buffer for the specified context. If false,
+          the context will remain open and the text will be appended to the
+          buffer to be generated.
+        default: false
+    source:
+      openapi: asyncapi.yml
+  CloseContext:
+    docs: Payload to close a specific TTS context.
+    properties:
+      context_id:
+        type: string
+        docs: The context_id to close.
+      close_context:
+        type: boolean
+        docs: >-
+          Must set the close_context to true, to close the specified context. If
+          false, the context will remain open and the text will be ignored. If
+          set to true, the context will close. If it has already been set to
+          flush it will continue flushing. The same context id can be used again
+          but will not be linked to the previous context with the same name.
+        default: false
+    source:
+      openapi: asyncapi.yml
+  CloseSocket:
+    docs: Payload to signal closing the entire WebSocket connection.
+    properties:
+      close_socket:
+        type: optional<boolean>
+        docs: >-
+          If true, closes all contexts and closes the entire WebSocket
+          connection. Any context that was previously set to flush will wait to
+          flush before closing.
+        default: false
+    source:
+      openapi: asyncapi.yml
+  AudioOutputMulti:
+    docs: Server payload containing an audio chunk for a specific context.
+    properties:
+      audio:
+        type: string
+        docs: Base64 encoded audio chunk.
+      normalizedAlignment: optional<NormalizedAlignment>
+      alignment: optional<Alignment>
+      context_id:
+        type: optional<string>
+        docs: The context_id for which this audio is.
+    source:
+      openapi: asyncapi.yml
+  FinalOutputMulti:
+    docs: Server payload indicating the final output for a specific context.
+    properties:
+      isFinal:
+        type: literal<true>
+        docs: Indicates this is the final message for the context.
+      context_id:
+        type: optional<string>
+        docs: The context_id for which this is the final message.
+    source:
+      openapi: asyncapi.yml
+  KeepContextAlive:
+    docs: >-
+      Payload to keep a specific context alive by resetting its inactivity
+      timeout. Empty text is ignored but resets the clock.
+    properties:
+      text:
+        type: literal<"">
+        docs: >-
+          An empty string. This text is ignored by the server but its presence
+          resets the inactivity timeout for the specified context.
+      context_id:
+        type: string
+        docs: The identifier of the context to keep alive.
+    source:
+      openapi: asyncapi.yml
+  InitialiseContext:
+    docs: >-
+      Payload to initialize or re-initialize a TTS context with specific
+      settings and initial text for multi-stream connections.
+    properties:
+      text:
+        type: string
+        docs: The initial text to synthesize. Should end with a single space.
+      voice_settings: optional<RealtimeVoiceSettings>
+      generation_config: optional<GenerationConfig>
+      pronunciation_dictionary_locators:
+        type: optional<list<PronunciationDictionaryLocator>>
+        docs: >-
+          Optional list of pronunciation dictionary locators to be used for this
+          context.
+      xi_api_key:
+        type: optional<string>
+        docs: >-
+          Your ElevenLabs API key. Required if not provided in the WebSocket
+          connection's header or query parameters. This applies to the
+          (re)initialization of this specific context.
+      authorization:
+        type: optional<string>
+        docs: >-
+          Your authorization bearer token. Required if not provided in the
+          WebSocket connection's header or query parameters. This applies to the
+          (re)initialization of this specific context.
+      context_id:
+        type: optional<string>
+        docs: >-
+          An identifier for the text-to-speech context. If omitted, a default
+          context ID may be assigned by the server. If provided, this message
+          will create a new context with this ID or re-initialize an existing
+          one with the new settings and text.
+    source:
+      openapi: asyncapi.yml
+  TextToSpeechApplyTextNormalizationEnum:
+    enum:
+      - auto
+      - 'on'
+      - 'off'
+    docs: >-
+      This parameter controls text normalization with three modes - 'auto',
+      'on', and 'off'. When set to 'auto', the system will automatically decide
+      whether to apply text normalization (e.g., spelling out numbers). With
+      'on', text normalization will always be applied, while with 'off', it will
+      be skipped. Cannot be turned on for 'eleven_turbo_v2_5' or
+      'eleven_flash_v2_5' models. Defaults to 'auto'.
+    default: auto
+    source:
+      openapi: asyncapi.yml
+  TextToSpeechOutputFormatEnum:
+    enum:
+      - mp3_22050_32
+      - mp3_44100_32
+      - mp3_44100_64
+      - mp3_44100_96
+      - mp3_44100_128
+      - mp3_44100_192
+      - pcm_8000
+      - pcm_16000
+      - pcm_22050
+      - pcm_24000
+      - pcm_44100
+      - ulaw_8000
+      - alaw_8000
+      - opus_48000_32
+      - opus_48000_64
+      - opus_48000_96
+      - opus_48000_128
+      - opus_48000_192
+    docs: The output audio format
+    source:
+      openapi: asyncapi.yml
+  StreamInputQueryParametersOptimizeStreamingLatency:
+    enum:
+      - value: '0'
+        name: Zero
+      - value: '1'
+        name: One
+      - value: '2'
+        name: Two
+      - value: '3'
+        name: Three
+      - value: '4'
+        name: Four
+    docs: Latency optimization level (deprecated)
+    default: '0'
+    inline: true
+    source:
+      openapi: asyncapi.yml
+  StreamInputQueryParameters:
+    properties:
+      model_id:
+        type: optional<string>
+        docs: The model ID to use
+      language_code:
+        type: optional<string>
+        docs: >-
+          The ISO 639-1 language code (for Turbo v2.5 and Flash v2.5 models
+          only)
+      enable_logging:
+        type: optional<string>
+        docs: Whether to enable logging of the request
+      enable_ssml_parsing:
+        type: optional<boolean>
+        docs: Whether to enable SSML parsing
+        default: false
+      optimize_streaming_latency:
+        type: optional<StreamInputQueryParametersOptimizeStreamingLatency>
+        docs: Latency optimization level (deprecated)
+        default: '0'
+        availability: deprecated
+      output_format: optional<TextToSpeechOutputFormatEnum>
+      inactivity_timeout:
+        type: optional<double>
+        docs: Timeout for inactivity before connection is closed
+        default: 20
+      sync_alignment:
+        type: optional<boolean>
+        docs: Whether to include timing data with every audio chunk
+        default: false
+      auto_mode:
+        type: optional<boolean>
+        docs: >-
+          This parameter focuses on reducing the latency by disabling the chunk
+          schedule and all buffers. It is only recommended when sending full
+          sentences or phrases, sending partial phrases will result in highly
+          reduced quality. By default it's set to false.
+        default: false
+      apply_text_normalization: optional<TextToSpeechApplyTextNormalizationEnum>
+      seed:
+        type: optional<integer>
+        docs: >-
+          If specified, our system will make a best effort to sample
+          deterministically, such that repeated requests with the same seed and
+          parameters should return the same result. Determinism is not
+          guaranteed. Must be an integer between 0 and 4294967295.
+        validation:
+          min: 0
     source:
       openapi: asyncapi.yml

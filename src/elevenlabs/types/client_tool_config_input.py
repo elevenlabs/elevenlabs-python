@@ -17,6 +17,11 @@ class ClientToolConfigInput(UncheckedBaseModel):
     id: typing.Optional[str] = None
     name: str
     description: str
+    response_timeout_secs: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The maximum time in seconds to wait for the tool call to complete. Must be between 1 and 30 seconds (inclusive).
+    """
+
     parameters: typing.Optional[ObjectJsonSchemaPropertyInput] = pydantic.Field(default=None)
     """
     Schema for any parameters to pass to the client
@@ -25,11 +30,6 @@ class ClientToolConfigInput(UncheckedBaseModel):
     expects_response: typing.Optional[bool] = pydantic.Field(default=None)
     """
     If true, calling this tool should block the conversation until the client responds with some response which is passed to the llm. If false then we will continue the conversation without waiting for the client to respond, this is useful to show content to a user but not block the conversation
-    """
-
-    response_timeout_secs: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    The maximum time in seconds to wait for a response from the client. Should only be set if expects_response is true
     """
 
     dynamic_variables: typing.Optional[DynamicVariablesConfig] = pydantic.Field(default=None)

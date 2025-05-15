@@ -11,6 +11,7 @@ class SpeakerTrack(UncheckedBaseModel):
     id: str
     media_ref: DubbingMediaReference
     speaker_name: str
+    voices: typing.Dict[str, str]
     segments: typing.List[str]
 
     if IS_PYDANTIC_V2:
