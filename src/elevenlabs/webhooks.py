@@ -11,13 +11,13 @@ class WebhooksClient:
     A client to handle ElevenLabs webhook-related functionality
     """
 
-    def construct_event(self, payload: Any, sig_header: str, secret: str) -> Dict:
+    def construct_event(self, rawBody: str, sig_header: str, secret: str) -> Dict:
         """
         Constructs a webhook event object from a payload and signature.
         Verifies the webhook signature to ensure the event came from ElevenLabs.
 
         Args:
-            payload: The webhook payload (request body)
+            rawBody: The webhook request body. Must be the raw body, not a JSON object
             sig_header: The signature header from the request
             secret: Your webhook secret
 
@@ -27,10 +27,12 @@ class WebhooksClient:
         Raises:
             BadRequestError: If the signature is invalid or missing
         """
-        body = json.dumps(payload)
 
         if not sig_header:
             raise BadRequestError(body="Missing signature header")
+
+        if not secret:
+            raise BadRequestError(body="Webhook secret not configured")
 
         headers = sig_header.split(',')
         timestamp = None
@@ -52,10 +54,7 @@ class WebhooksClient:
             raise BadRequestError(body="Timestamp outside the tolerance zone")
 
         # Validate hash
-        message = f"{timestamp}.{body}"
-
-        if not secret:
-            raise BadRequestError(body="Webhook secret not configured")
+        message = f"{timestamp}.{rawBody}"
 
         digest = "v0=" + hmac.new(
             secret.encode('utf-8'),
@@ -68,4 +67,4 @@ class WebhooksClient:
                 body="Signature hash does not match the expected signature hash for payload"
             )
 
-        return json.loads(body)
+        return json.loads(rawBody)
