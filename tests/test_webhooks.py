@@ -29,7 +29,7 @@ def test_construct_event_valid_signature():
     sig_header = f"t={timestamp},{signature}"
 
     # Verify event construction
-    event = client.webhooks.construct_event(payload, sig_header, webhook_secret)
+    event = client.webhooks.construct_event(body, sig_header, webhook_secret)
     assert event == payload, "Event should match the original payload"
 
 
@@ -50,10 +50,11 @@ def test_construct_event_invalid_signature_format():
     client = ElevenLabs()
     webhook_secret = "test_secret"
     payload = {"event_type": "speech.completed", "id": "123456"}
+    body = json.dumps(payload)
     sig_header = "invalid_format"
 
     with pytest.raises(BadRequestError) as excinfo:
-        client.webhooks.construct_event(payload, sig_header, webhook_secret)
+        client.webhooks.construct_event(body, sig_header, webhook_secret)
 
     assert "No signature hash found with expected scheme v0" in str(excinfo.value)
 
@@ -78,7 +79,7 @@ def test_construct_event_expired_timestamp():
     sig_header = f"t={timestamp},{signature}"
 
     with pytest.raises(BadRequestError) as excinfo:
-        client.webhooks.construct_event(payload, sig_header, webhook_secret)
+        client.webhooks.construct_event(body, sig_header, webhook_secret)
 
     assert "Timestamp outside the tolerance zone" in str(excinfo.value)
 
@@ -88,12 +89,13 @@ def test_construct_event_invalid_signature():
     client = ElevenLabs()
     webhook_secret = "test_secret"
     payload = {"event_type": "speech.completed", "id": "123456"}
+    body = json.dumps(payload)
 
     timestamp = str(int(time.time()))
     sig_header = f"t={timestamp},v0=invalid_signature"
 
     with pytest.raises(BadRequestError) as excinfo:
-        client.webhooks.construct_event(payload, sig_header, webhook_secret)
+        client.webhooks.construct_event(body, sig_header, webhook_secret)
 
     assert "Signature hash does not match" in str(excinfo.value)
 
@@ -102,12 +104,13 @@ def test_construct_event_missing_secret():
     """Test webhook event construction with missing secret."""
     client = ElevenLabs()
     payload = {"event_type": "speech.completed", "id": "123456"}
+    body = json.dumps(payload)
 
     timestamp = str(int(time.time()))
     sig_header = f"t={timestamp},v0=some_signature"
 
     with pytest.raises(BadRequestError) as excinfo:
-        client.webhooks.construct_event(payload, sig_header, "")
+        client.webhooks.construct_event(body, sig_header, "")
 
     assert "Webhook secret not configured" in str(excinfo.value)
 
@@ -133,5 +136,5 @@ def test_construct_event_mocked_time(mock_time):
     sig_header = f"t={timestamp},{signature}"
 
     # Verify event construction
-    event = client.webhooks.construct_event(payload, sig_header, webhook_secret)
+    event = client.webhooks.construct_event(body, sig_header, webhook_secret)
     assert event == payload, "Event should match the original payload"
