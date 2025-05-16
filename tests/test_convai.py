@@ -163,3 +163,33 @@ def test_conversation_with_dynamic_variables():
     mock_ws.send.assert_any_call(json.dumps(expected_init_message))
     agent_response_callback.assert_called_once_with("Hello there!")
     assert conversation._conversation_id == TEST_CONVERSATION_ID
+
+def test_conversation_with_contextual_update():
+    # Mock setup
+    mock_ws = create_mock_websocket([])
+    mock_client = MagicMock()
+
+    # Setup the conversation
+    conversation = Conversation(
+        client=mock_client,
+        agent_id=TEST_AGENT_ID,
+        requires_auth=False,
+        audio_interface=MockAudioInterface(),
+    )
+
+    # Run the test
+    with patch("elevenlabs.conversational_ai.conversation.connect") as mock_connect:
+        mock_connect.return_value.__enter__.return_value = mock_ws
+
+        conversation.start_session()
+        time.sleep(0.1)
+
+        conversation.send_contextual_update("User appears to be looking at pricing page")
+
+        # Teardown
+        conversation.end_session()
+        conversation.wait_for_session_end()
+
+    # Assertions
+    expected = json.dumps({"type": "contextual_update", "text": "User appears to be looking at pricing page"})
+    mock_ws.send.assert_any_call(expected)
