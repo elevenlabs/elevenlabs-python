@@ -32,6 +32,11 @@ class PrivacyConfig(UncheckedBaseModel):
     Whether to apply the privacy settings to existing conversations
     """
 
+    zero_retention_mode: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to enable zero retention mode - no PII data is stored
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

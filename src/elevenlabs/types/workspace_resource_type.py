@@ -16,6 +16,7 @@ WorkspaceResourceType = typing.Union[
         "convai_secrets",
         "music_latent",
         "convai_phone_numbers",
+        "convai_mcps",
         "convai_batch_calls",
     ],
     typing.Any,

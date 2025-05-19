@@ -5,7 +5,7 @@ service:
   base-path: ''
   endpoints:
     get_signed_url:
-      path: /v1/convai/conversation/get_signed_url
+      path: /v1/convai/conversation/get-signed-url
       method: GET
       auth: false
       docs: >-
@@ -35,7 +35,7 @@ service:
       audiences:
         - convai
     twilio_outbound_call:
-      path: /v1/convai/twilio/outbound_call
+      path: /v1/convai/twilio/outbound-call
       method: POST
       auth: false
       docs: Handle an outbound call via Twilio
@@ -93,9 +93,9 @@ service:
             name:
               type: optional<string>
               docs: A name to make the agent easier to find
-            categories:
+            tags:
               type: optional<list<string>>
-              docs: Categories to help classify and filter the agent
+              docs: Tags to help classify and filter the agent
         content-type: application/json
       response:
         docs: Successful Response
@@ -268,6 +268,7 @@ service:
                   delete_transcript_and_pii: false
                   delete_audio: false
                   apply_to_existing_conversations: false
+                  zero_retention_mode: false
                 workspace_overrides:
                   conversation_initiation_client_data_webhook:
                     url: https://example.com/webhook
@@ -279,19 +280,24 @@ service:
                   ignore_safety_evaluation: true
               phone_numbers:
                 - phone_number: phone_number
-                  provider: twilio
                   label: label
                   phone_number_id: X3Pbu5gP6NNKBscdCdwB
                   assigned_agent:
                     agent_id: F3Pbu5gP6NNKBscdCdwB
                     agent_name: My Agent
+                  provider_config:
+                    address: address
+                    transport: auto
+                    media_encryption: disabled
+                    has_auth_credentials: true
+                  provider: sip_trunk
               access_info:
                 is_creator: true
                 creator_name: John Doe
                 creator_email: john.doe@example.com
                 role: admin
-              categories:
-                - categories
+              tags:
+                - tags
       audiences:
         - convai
     delete_agent:
@@ -336,9 +342,9 @@ service:
             name:
               type: optional<string>
               docs: A name to make the agent easier to find
-            categories:
+            tags:
               type: optional<list<string>>
-              docs: Categories to help classify and filter the agent
+              docs: Tags to help classify and filter the agent
         content-type: application/json
       response:
         docs: Successful Response
@@ -486,6 +492,7 @@ service:
                   delete_transcript_and_pii: false
                   delete_audio: false
                   apply_to_existing_conversations: false
+                  zero_retention_mode: false
                 workspace_overrides:
                   conversation_initiation_client_data_webhook:
                     url: https://example.com/webhook
@@ -497,19 +504,24 @@ service:
                   ignore_safety_evaluation: true
               phone_numbers:
                 - phone_number: phone_number
-                  provider: twilio
                   label: label
                   phone_number_id: X3Pbu5gP6NNKBscdCdwB
                   assigned_agent:
                     agent_id: F3Pbu5gP6NNKBscdCdwB
                     agent_name: My Agent
+                  provider_config:
+                    address: address
+                    transport: auto
+                    media_encryption: disabled
+                    has_auth_credentials: true
+                  provider: sip_trunk
               access_info:
                 is_creator: true
                 creator_name: John Doe
                 creator_email: john.doe@example.com
                 role: admin
-              categories:
-                - categories
+              tags:
+                - tags
       audiences:
         - convai
     get_agent_widget:
@@ -530,9 +542,9 @@ service:
           conversation_signature:
             type: optional<string>
             docs: >-
-              An expiring token that enables a conversation to start. These can
-              be generated for an agent using the
-              /v1/convai/conversation/get_signed_url endpoint
+              An expiring token that enables a websocket conversation to start.
+              These can be generated for an agent using the
+              /v1/convai/conversation/get-signed-url endpoint
       response:
         docs: Successful Response
         type: root.GetAgentEmbedResponseModel
@@ -685,7 +697,7 @@ service:
               agents:
                 - agent_id: J3Pbu5gP6NNKBscdCdwB
                   name: My Agent
-                  categories:
+                  tags:
                     - Customer Support
                     - Technical Help
                     - Eleven
@@ -911,6 +923,7 @@ service:
             label: label
             sid: sid
             token: token
+            provider: twilio
           response:
             body:
               phone_number_id: phone_number_id
@@ -930,7 +943,7 @@ service:
       display-name: Get Phone Number
       response:
         docs: Successful Response
-        type: root.GetPhoneNumberResponseModel
+        type: ConversationalAiGetPhoneNumberResponse
         status-code: 200
       errors:
         - root.UnprocessableEntityError
@@ -940,12 +953,12 @@ service:
           response:
             body:
               phone_number: phone_number
-              provider: twilio
               label: label
               phone_number_id: X3Pbu5gP6NNKBscdCdwB
               assigned_agent:
                 agent_id: F3Pbu5gP6NNKBscdCdwB
                 agent_name: My Agent
+              provider: twilio
       audiences:
         - convai
     delete_phone_number:
@@ -995,7 +1008,7 @@ service:
         content-type: application/json
       response:
         docs: Successful Response
-        type: root.GetPhoneNumberResponseModel
+        type: ConversationalAiUpdatePhoneNumberResponse
         status-code: 200
       errors:
         - root.UnprocessableEntityError
@@ -1006,12 +1019,12 @@ service:
           response:
             body:
               phone_number: phone_number
-              provider: twilio
               label: label
               phone_number_id: X3Pbu5gP6NNKBscdCdwB
               assigned_agent:
                 agent_id: F3Pbu5gP6NNKBscdCdwB
                 agent_name: My Agent
+              provider: twilio
       audiences:
         - convai
     get_phone_numbers:
@@ -1024,7 +1037,7 @@ service:
       display-name: List Phone Numbers
       response:
         docs: Successful Response
-        type: list<root.GetPhoneNumberResponseModel>
+        type: list<ConversationalAiGetPhoneNumbersResponseItem>
         status-code: 200
       errors:
         - root.UnprocessableEntityError
@@ -1032,12 +1045,12 @@ service:
         - response:
             body:
               - phone_number: phone_number
-                provider: twilio
                 label: label
                 phone_number_id: X3Pbu5gP6NNKBscdCdwB
                 assigned_agent:
                   agent_id: F3Pbu5gP6NNKBscdCdwB
                   agent_name: My Agent
+                provider: twilio
       audiences:
         - convai
     get_knowledge_base_list:
@@ -1139,6 +1152,8 @@ service:
             name:
               type: optional<string>
               docs: A custom, human-readable name for the document.
+              validation:
+                minLength: 1
             url:
               type: optional<string>
               docs: >-
@@ -1186,6 +1201,8 @@ service:
             name:
               type: optional<string>
               docs: A custom, human-readable name for the document.
+              validation:
+                minLength: 1
         content-type: application/json
       response:
         docs: Successful Response
@@ -1223,6 +1240,8 @@ service:
             name:
               type: optional<string>
               docs: A custom, human-readable name for the document.
+              validation:
+                minLength: 1
         content-type: multipart/form-data
       response:
         docs: Successful Response
@@ -1257,6 +1276,8 @@ service:
             name:
               type: optional<string>
               docs: A custom, human-readable name for the document.
+              validation:
+                minLength: 1
         content-type: application/json
       response:
         docs: Successful Response
@@ -1272,46 +1293,6 @@ service:
               id: id
               name: name
               prompt_injectable: true
-      audiences:
-        - convai
-    rag_index_status:
-      path: /v1/convai/knowledge-base/{documentation_id}/rag-index
-      method: POST
-      auth: false
-      docs: >-
-        In case the document is not RAG indexed, it triggers rag indexing task,
-        otherwise it just returns the current status.
-      source:
-        openapi: openapi.json
-      path-parameters:
-        documentation_id:
-          type: string
-          docs: >-
-            The id of a document from the knowledge base. This is returned on
-            document addition.
-      display-name: Compute Rag Index.
-      request:
-        name: RagIndexRequestModel
-        body:
-          properties:
-            model:
-              type: root.EmbeddingModelEnum
-        content-type: application/json
-      response:
-        docs: Successful Response
-        type: root.RagIndexResponseModel
-        status-code: 200
-      errors:
-        - root.UnprocessableEntityError
-      examples:
-        - path-parameters:
-            documentation_id: 21m00Tcm4TlvDq8ikWAM
-          request:
-            model: e5_mistral_7b_instruct
-          response:
-            body:
-              status: created
-              progress_percentage: 1.1
       audiences:
         - convai
     get_knowledge_base_document_by_id:
@@ -1384,6 +1365,60 @@ service:
           response:
             body:
               key: value
+      audiences:
+        - convai
+    update_knowledge_base_document:
+      path: /v1/convai/knowledge-base/{documentation_id}
+      method: PATCH
+      auth: false
+      docs: Update the name of a document
+      source:
+        openapi: openapi.json
+      path-parameters:
+        documentation_id:
+          type: string
+          docs: >-
+            The id of a document from the knowledge base. This is returned on
+            document addition.
+      display-name: Update Document
+      request:
+        name: BodyUpdateDocumentV1ConvaiKnowledgeBaseDocumentationIdPatch
+        body:
+          properties:
+            name:
+              type: string
+              docs: A custom, human-readable name for the document.
+              validation:
+                minLength: 1
+        content-type: application/json
+      response:
+        docs: Successful Response
+        type: ConversationalAiUpdateKnowledgeBaseDocumentResponse
+        status-code: 200
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            documentation_id: 21m00Tcm4TlvDq8ikWAM
+          request:
+            name: name
+          response:
+            body:
+              id: id
+              name: name
+              metadata:
+                created_at_unix_secs: 1
+                last_updated_at_unix_secs: 1
+                size_bytes: 1
+              prompt_injectable: true
+              access_info:
+                is_creator: true
+                creator_name: John Doe
+                creator_email: john.doe@example.com
+                role: admin
+              extracted_inner_html: extracted_inner_html
+              url: url
+              type: url
       audiences:
         - convai
     get_dependent_agents:
@@ -1514,6 +1549,7 @@ service:
                   Content-Type: application/json
               webhooks:
                 post_call_webhook_id: post_call_webhook_id
+              rag_retention_period_days: 1
       audiences:
         - convai
     update_settings:
@@ -1532,6 +1568,11 @@ service:
               type: optional<root.ConversationInitiationClientDataWebhook>
             webhooks:
               type: optional<root.ConvAiWebhooks>
+            rag_retention_period_days:
+              type: optional<integer>
+              default: 10
+              validation:
+                max: 30
         content-type: application/json
       response:
         docs: Successful Response
@@ -1549,6 +1590,7 @@ service:
                   Content-Type: application/json
               webhooks:
                 post_call_webhook_id: post_call_webhook_id
+              rag_retention_period_days: 1
       audiences:
         - convai
     get_dashboard_settings:
@@ -1695,18 +1737,104 @@ service:
             secret_id: secret_id
       audiences:
         - convai
+    get_batch_call:
+      path: /v1/convai/batch-calling/{batch_id}
+      method: GET
+      auth: false
+      docs: Get detailed information about a batch call including all recipients.
+      source:
+        openapi: openapi.json
+      path-parameters:
+        batch_id: string
+      display-name: Get A Batch Call By Id.
+      response:
+        docs: Successful Response
+        type: root.BatchCallDetailedResponse
+        status-code: 200
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            batch_id: batch_id
+          response:
+            body:
+              id: id
+              phone_number_id: phone_number_id
+              name: name
+              agent_id: agent_id
+              created_at_unix: 1
+              scheduled_time_unix: 1
+              total_calls_dispatched: 1
+              total_calls_scheduled: 1
+              last_updated_at_unix: 1
+              status: pending
+              agent_name: agent_name
+              recipients:
+                - id: id
+                  phone_number: phone_number
+                  status: pending
+                  created_at_unix: 1
+                  updated_at_unix: 1
+                  conversation_id: conversation_id
+      audiences:
+        - convai
   source:
     openapi: openapi.json
 types:
   ConversationalAiCreatePhoneNumberRequestBody:
-    discriminated: false
+    discriminant: provider
+    base-properties: {}
     docs: Create Phone Request Information
     union:
-      - type: root.CreateTwilioPhoneNumberRequest
-      - type: root.CreateSipTrunkPhoneNumberRequest
+      twilio:
+        type: root.CreateTwilioPhoneNumberRequest
+      sip_trunk:
+        type: root.CreateSipTrunkPhoneNumberRequest
+    source:
+      openapi: openapi.json
+  ConversationalAiGetPhoneNumberResponse:
+    discriminant: provider
+    base-properties: {}
+    union:
+      twilio:
+        type: root.GetPhoneNumberTwilioResponseModel
+      sip_trunk:
+        type: root.GetPhoneNumberSipTrunkResponseModel
+    source:
+      openapi: openapi.json
+  ConversationalAiUpdatePhoneNumberResponse:
+    discriminant: provider
+    base-properties: {}
+    union:
+      twilio:
+        type: root.GetPhoneNumberTwilioResponseModel
+      sip_trunk:
+        type: root.GetPhoneNumberSipTrunkResponseModel
+    source:
+      openapi: openapi.json
+  ConversationalAiGetPhoneNumbersResponseItem:
+    discriminant: provider
+    base-properties: {}
+    union:
+      twilio:
+        type: root.GetPhoneNumberTwilioResponseModel
+      sip_trunk:
+        type: root.GetPhoneNumberSipTrunkResponseModel
     source:
       openapi: openapi.json
   ConversationalAiGetKnowledgeBaseDocumentByIdResponse:
+    discriminant: type
+    base-properties: {}
+    union:
+      url:
+        type: root.GetKnowledgeBaseUrlResponseModel
+      file:
+        type: root.GetKnowledgeBaseFileResponseModel
+      text:
+        type: root.GetKnowledgeBaseTextResponseModel
+    source:
+      openapi: openapi.json
+  ConversationalAiUpdateKnowledgeBaseDocumentResponse:
     discriminant: type
     base-properties: {}
     union:
@@ -1726,5 +1854,7 @@ types:
         type: root.DashboardCallSuccessChartModel
       criteria:
         type: root.DashboardCriteriaChartModel
+      data_collection:
+        type: root.DashboardDataCollectionChartModel
     source:
       openapi: openapi.json

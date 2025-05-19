@@ -271,7 +271,7 @@ service:
                 using GET /v1/models. The model needs to have support for text
                 to speech, you can check this using the can_do_text_to_speech
                 property.
-              default: eleven_monolingual_v1
+              default: eleven_multilingual_v2
             language_code:
               type: optional<string>
               docs: >-
@@ -450,7 +450,7 @@ service:
                 using GET /v1/models. The model needs to have support for text
                 to speech, you can check this using the can_do_text_to_speech
                 property.
-              default: eleven_monolingual_v1
+              default: eleven_multilingual_v2
             language_code:
               type: optional<string>
               docs: >-
@@ -668,7 +668,7 @@ service:
                 using GET /v1/models. The model needs to have support for text
                 to speech, you can check this using the can_do_text_to_speech
                 property.
-              default: eleven_monolingual_v1
+              default: eleven_multilingual_v2
             language_code:
               type: optional<string>
               docs: >-
@@ -849,7 +849,7 @@ service:
                 using GET /v1/models. The model needs to have support for text
                 to speech, you can check this using the can_do_text_to_speech
                 property.
-              default: eleven_monolingual_v1
+              default: eleven_multilingual_v2
             language_code:
               type: optional<string>
               docs: >-

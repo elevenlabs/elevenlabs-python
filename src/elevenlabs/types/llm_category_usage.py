@@ -2,14 +2,14 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .llm_usage import LlmUsage
+from .llm_usage_output import LlmUsageOutput
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
 class LlmCategoryUsage(UncheckedBaseModel):
-    irreversible_generation: typing.Optional[LlmUsage] = None
-    initiated_generation: typing.Optional[LlmUsage] = None
+    irreversible_generation: typing.Optional[LlmUsageOutput] = None
+    initiated_generation: typing.Optional[LlmUsageOutput] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

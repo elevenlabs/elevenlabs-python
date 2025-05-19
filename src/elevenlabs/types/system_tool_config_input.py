@@ -2,9 +2,9 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
+import pydantic
 from .system_tool_config_input_params import SystemToolConfigInputParams
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
-import pydantic
 
 
 class SystemToolConfigInput(UncheckedBaseModel):
@@ -15,6 +15,11 @@ class SystemToolConfigInput(UncheckedBaseModel):
     id: typing.Optional[str] = None
     name: str
     description: str
+    response_timeout_secs: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The maximum time in seconds to wait for the tool call to complete.
+    """
+
     params: SystemToolConfigInputParams
 
     if IS_PYDANTIC_V2:

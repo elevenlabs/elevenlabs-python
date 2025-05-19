@@ -70,6 +70,8 @@ service:
                     is_audio: true
                     url: url
                   speaker_name: speaker_name
+                  voices:
+                    key: value
                   segments:
                     - segments
               speaker_segments:
@@ -82,6 +84,7 @@ service:
                     key:
                       start_time: 1.1
                       end_time: 1.1
+                      audio_stale: true
               renders:
                 key:
                   id: id
@@ -132,50 +135,6 @@ service:
           response:
             body:
               version: 1
-    create_segment_for_speaker:
-      path: /v1/dubbing/resource/{dubbing_id}/speaker/{speaker_id}/segment
-      method: POST
-      auth: false
-      docs: >-
-        Creates a new segment in dubbing resource with a start and end time for
-        the speaker in every available language. Does not automatically generate
-        transcripts/translations/audio.
-      source:
-        openapi: openapi.json
-      path-parameters:
-        dubbing_id:
-          type: string
-          docs: ID of the dubbing project.
-        speaker_id:
-          type: string
-          docs: ID of the speaker.
-      display-name: Add speaker segment to dubbing resource
-      request:
-        name: SegmentCreatePayload
-        body:
-          properties:
-            start_time: double
-            end_time: double
-            text:
-              type: optional<string>
-        content-type: application/json
-      response:
-        docs: Successful Response
-        type: root.SegmentCreateResponse
-        status-code: 201
-      errors:
-        - root.UnprocessableEntityError
-      examples:
-        - path-parameters:
-            dubbing_id: dubbing_id
-            speaker_id: speaker_id
-          request:
-            start_time: 1.1
-            end_time: 1.1
-          response:
-            body:
-              version: 1
-              new_segment: new_segment
     update_segment_language:
       path: /v1/dubbing/resource/{dubbing_id}/segment/{segment_id}/{language}
       method: PATCH

@@ -142,6 +142,7 @@ service:
                   end: 0.5
                   type: word
                   speaker_id: speaker_1
+                  logprob: 1.1
                   characters:
                     - text: text
                       start: 0
@@ -151,6 +152,7 @@ service:
                   end: 0.5
                   type: spacing
                   speaker_id: speaker_1
+                  logprob: 1.1
                   characters:
                     - text: text
                       start: 0
@@ -160,6 +162,7 @@ service:
                   end: 1.2
                   type: word
                   speaker_id: speaker_1
+                  logprob: 1.1
                   characters:
                     - text: text
                       start: 0

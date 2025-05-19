@@ -1,75 +1,3 @@
-types:
-  TextToSpeechOptimizeStreamingLatency:
-    enum:
-      - value: '0'
-        name: Zero
-      - value: '1'
-        name: One
-      - value: '2'
-        name: Two
-      - value: '3'
-        name: Three
-      - value: '4'
-        name: Four
-    docs: Latency optimization level (deprecated)
-    default: '0'
-    source:
-      openapi: asyncapi.yml
-  TextToSpeechOutputFormat:
-    enum:
-      - mp3_22050_32
-      - mp3_44100_32
-      - mp3_44100_64
-      - mp3_44100_96
-      - mp3_44100_128
-      - mp3_44100_192
-      - pcm_8000
-      - pcm_16000
-      - pcm_22050
-      - pcm_24000
-      - pcm_44100
-      - ulaw_8000
-      - alaw_8000
-      - opus_48000_32
-      - opus_48000_64
-      - opus_48000_96
-      - opus_48000_128
-      - opus_48000_192
-    docs: The output audio format
-    source:
-      openapi: asyncapi.yml
-  TextToSpeechApplyTextNormalization:
-    enum:
-      - auto
-      - 'on'
-      - 'off'
-    docs: >-
-      This parameter controls text normalization with three modes - 'auto',
-      'on', and 'off'. When set to 'auto', the system will automatically decide
-      whether to apply text normalization (e.g., spelling out numbers). With
-      'on', text normalization will always be applied, while with 'off', it will
-      be skipped. Cannot be turned on for 'eleven_turbo_v2_5' or
-      'eleven_flash_v2_5' models. Defaults to 'auto'.
-    default: auto
-    source:
-      openapi: asyncapi.yml
-  sendMessage:
-    discriminated: false
-    docs: Send messages to the WebSocket
-    union:
-      - root.InitializeConnection
-      - root.SendText
-      - root.CloseConnection
-    source:
-      openapi: asyncapi.yml
-  receiveMessage:
-    discriminated: false
-    docs: Receive messages from the WebSocket
-    union:
-      - root.AudioOutput
-      - root.FinalOutput
-    source:
-      openapi: asyncapi.yml
 channel:
   path: /v1/text-to-speech/{voice_id}/stream-input
   url: WSS
@@ -96,63 +24,6 @@ channel:
     voice_id:
       type: string
       docs: The unique identifier for the voice to use in the TTS process.
-  query-parameters:
-    model_id:
-      type: optional<string>
-      docs: The model ID to use
-    language_code:
-      type: optional<string>
-      docs: The ISO 639-1 language code (for Turbo v2.5 and Flash v2.5 models only)
-    enable_logging:
-      type: optional<string>
-      docs: Whether to enable logging of the request
-    enable_ssml_parsing:
-      type: optional<boolean>
-      default: false
-      docs: Whether to enable SSML parsing
-    optimize_streaming_latency:
-      type: optional<TextToSpeechOptimizeStreamingLatency>
-      default: '0'
-      docs: Latency optimization level (deprecated)
-      availability: deprecated
-    output_format:
-      type: optional<TextToSpeechOutputFormat>
-      docs: The output audio format
-    inactivity_timeout:
-      type: optional<double>
-      default: 20
-      docs: Timeout for inactivity before connection is closed
-    sync_alignment:
-      type: optional<boolean>
-      default: false
-      docs: Whether to include timing data with every audio chunk
-    auto_mode:
-      type: optional<boolean>
-      default: false
-      docs: >-
-        This parameter focuses on reducing the latency by disabling the chunk
-        schedule and all buffers. It is only recommended when sending full
-        sentences or phrases, sending partial phrases will result in highly
-        reduced quality. By default it's set to false.
-    apply_text_normalization:
-      type: optional<TextToSpeechApplyTextNormalization>
-      default: auto
-      docs: >-
-        This parameter controls text normalization with three modes - 'auto',
-        'on', and 'off'. When set to 'auto', the system will automatically
-        decide whether to apply text normalization (e.g., spelling out numbers).
-        With 'on', text normalization will always be applied, while with 'off',
-        it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' or
-        'eleven_flash_v2_5' models. Defaults to 'auto'.
-    seed:
-      type: optional<integer>
-      docs: >-
-        If specified, our system will make a best effort to sample
-        deterministically, such that repeated requests with the same seed and
-        parameters should return the same result. Determinism is not guaranteed.
-        Must be an integer between 0 and 4294967295.
-      validation:
-        min: 0
   messages:
     publish:
       origin: client
@@ -184,7 +55,7 @@ channel:
           body:
             audio: Y3VyaW91cyBtaW5kcyB0aGluayBhbGlrZSA6KQ==
             normalizedAlignment:
-              char_start_times_ms:
+              charStartTimesMs:
                 - 0
                 - 3
                 - 7
@@ -196,7 +67,7 @@ channel:
                 - 17
                 - 19
                 - 21
-              chars_durations_ms:
+              charsDurationsMs:
                 - 3
                 - 4
                 - 2
@@ -221,7 +92,7 @@ channel:
                 - l
                 - d
             alignment:
-              char_start_times_ms:
+              charStartTimesMs:
                 - 0
                 - 3
                 - 7
@@ -233,7 +104,7 @@ channel:
                 - 17
                 - 19
                 - 21
-              chars_durations_ms:
+              charsDurationsMs:
                 - 3
                 - 4
                 - 2
@@ -257,7 +128,23 @@ channel:
                 - r
                 - l
                 - d
-      query-parameters:
-        seed: 12345
 imports:
   root: __package__.yml
+types:
+  sendMessage:
+    discriminated: false
+    docs: Send messages to the WebSocket
+    union:
+      - root.InitializeConnection
+      - root.SendText
+      - root.CloseConnection
+    source:
+      openapi: asyncapi.yml
+  receiveMessage:
+    discriminated: false
+    docs: Receive messages from the WebSocket
+    union:
+      - root.AudioOutput
+      - root.FinalOutput
+    source:
+      openapi: asyncapi.yml

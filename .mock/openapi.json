@@ -6241,7 +6241,8 @@
           "dubbing",
           "dubbing",
           "resource",
-          "segment"
+          "segment",
+          "enterprise"
         ],
         "x-fern-sdk-group-name": "dubbing",
         "x-fern-sdk-method-name": "get_dubbing_resource"
@@ -6319,7 +6320,8 @@
           "dubbing",
           "dubbing",
           "resource",
-          "segment"
+          "segment",
+          "enterprise"
         ],
         "x-fern-sdk-group-name": "dubbing",
         "x-fern-sdk-method-name": "add_language_to_resource"
@@ -6409,10 +6411,15 @@
           "dubbing",
           "dubbing",
           "resource",
+          "segment",
+          "enterprise"
+        ],
+        "x-fern-sdk-group-name": [
+          "dubbing",
+          "speaker",
           "segment"
         ],
-        "x-fern-sdk-group-name": "dubbing",
-        "x-fern-sdk-method-name": "create_segment_for_speaker"
+        "x-fern-sdk-method-name": "create"
       }
     },
     "/v1/dubbing/resource/{dubbing_id}/segment/{segment_id}/{language}": {
@@ -6510,7 +6517,8 @@
           "dubbing",
           "dubbing",
           "resource",
-          "segment"
+          "segment",
+          "enterprise"
         ],
         "x-fern-sdk-group-name": "dubbing",
         "x-fern-sdk-method-name": "update_segment_language"
@@ -6589,7 +6597,8 @@
           "dubbing",
           "dubbing",
           "resource",
-          "segment"
+          "segment",
+          "enterprise"
         ],
         "x-fern-sdk-group-name": "dubbing",
         "x-fern-sdk-method-name": "delete_segment"
@@ -6667,7 +6676,8 @@
           "dubbing",
           "dubbing",
           "resource",
-          "segment"
+          "segment",
+          "enterprise"
         ],
         "x-fern-sdk-group-name": "dubbing",
         "x-fern-sdk-method-name": "transcribe_segments"
@@ -6745,7 +6755,8 @@
           "dubbing",
           "dubbing",
           "resource",
-          "segment"
+          "segment",
+          "enterprise"
         ],
         "x-fern-sdk-group-name": "dubbing",
         "x-fern-sdk-method-name": "translate_segments"
@@ -6823,10 +6834,186 @@
           "dubbing",
           "dubbing",
           "resource",
-          "segment"
+          "segment",
+          "enterprise"
         ],
         "x-fern-sdk-group-name": "dubbing",
         "x-fern-sdk-method-name": "dub_segments"
+      }
+    },
+    "/v1/dubbing/resource/{dubbing_id}/speaker/{speaker_id}": {
+      "patch": {
+        "operationId": "Update_metadata_for_a_speaker_v1_dubbing_resource__dubbing_id__speaker__speaker_id__patch",
+        "summary": "Update Metadata For A Speaker",
+        "description": "Amend the metadata associated with a speaker, such as their voice. Both voice cloning and using voices from the ElevenLabs library are supported.",
+        "parameters": [
+          {
+            "name": "dubbing_id",
+            "in": "path",
+            "description": "ID of the dubbing project.",
+            "required": true,
+            "schema": {
+              "description": "ID of the dubbing project.",
+              "type": "string",
+              "title": "Dubbing Id"
+            }
+          },
+          {
+            "name": "speaker_id",
+            "in": "path",
+            "description": "ID of the speaker.",
+            "required": true,
+            "schema": {
+              "description": "ID of the speaker.",
+              "type": "string",
+              "title": "Speaker Id"
+            }
+          },
+          {
+            "name": "xi-api-key",
+            "in": "header",
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Xi-Api-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_Update_metadata_for_a_speaker_v1_dubbing_resource__dubbing_id__speaker__speaker_id__patch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SpeakerUpdatedResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "dubbing",
+          "dubbing",
+          "resource",
+          "segment",
+          "enterprise"
+        ],
+        "x-fern-sdk-group-name": [
+          "dubbing",
+          "speaker"
+        ],
+        "x-fern-sdk-method-name": "update"
+      }
+    },
+    "/v1/dubbing/resource/{dubbing_id}/speaker/{speaker_id}/similar-voices": {
+      "get": {
+        "operationId": "Search_the_ElevenLabs_library_for_voices_similar_to_a_speaker__v1_dubbing_resource__dubbing_id__speaker__speaker_id__similar_voices_get",
+        "summary": "Search The Elevenlabs Library For Voices Similar To A Speaker.",
+        "description": "Fetch the top 10 similar voices to a speaker, including the voice IDs, names, descriptions, and, where possible, a sample audio recording.",
+        "parameters": [
+          {
+            "name": "dubbing_id",
+            "in": "path",
+            "description": "ID of the dubbing project.",
+            "required": true,
+            "schema": {
+              "description": "ID of the dubbing project.",
+              "type": "string",
+              "title": "Dubbing Id"
+            }
+          },
+          {
+            "name": "speaker_id",
+            "in": "path",
+            "description": "ID of the speaker.",
+            "required": true,
+            "schema": {
+              "description": "ID of the speaker.",
+              "type": "string",
+              "title": "Speaker Id"
+            }
+          },
+          {
+            "name": "xi-api-key",
+            "in": "header",
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Xi-Api-Key"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimilarVoicesForSpeakerResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "dubbing",
+          "dubbing",
+          "resource",
+          "segment",
+          "enterprise"
+        ],
+        "x-fern-sdk-group-name": [
+          "dubbing",
+          "speaker"
+        ],
+        "x-fern-sdk-method-name": "similar_voices"
       }
     },
     "/v1/dubbing/resource/{dubbing_id}/render/{language}": {
@@ -6912,7 +7099,8 @@
           "dubbing",
           "dubbing",
           "resource",
-          "segment"
+          "segment",
+          "enterprise"
         ],
         "x-fern-sdk-group-name": "dubbing",
         "x-fern-sdk-method-name": "render_dub"
@@ -7884,6 +8072,27 @@
             }
           },
           {
+            "name": "include_custom_rates",
+            "in": "query",
+            "description": "Include/exclude voices with custom rates",
+            "required": false,
+            "schema": {
+              "description": "Include/exclude voices with custom rates",
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "examples": [
+                true
+              ],
+              "title": "Include Custom Rates"
+            }
+          },
+          {
             "name": "reader_app_enabled",
             "in": "query",
             "description": "Filter voices that are enabled for the reader app",
@@ -8063,9 +8272,9 @@
     },
     "/v1/usage/character-stats": {
       "get": {
-        "operationId": "Get_character_usage_metrics_v1_usage_character_stats_get",
-        "summary": "Get Character Usage Metrics",
-        "description": "Returns the credit usage metrics for the current user or the entire workspace they are part of. The response will return a time axis with unix timestamps for each day and daily usage along that axis. The usage will be broken down by the specified breakdown type. For example, breakdown type \"voice\" will return the usage of each voice along the time axis.",
+        "operationId": "Get_characters_usage_metrics_v1_usage_character_stats_get",
+        "summary": "Get Characters Usage Metrics",
+        "description": "Returns the usage metrics for the current user or the entire workspace they are part of. The response provides a time axis based on the specified aggregation interval (default: day), with usage values for each interval along that axis. Usage is broken down by the selected breakdown type. For example, breakdown type \"voice\" will return the usage of each voice for each interval along the time axis.",
         "parameters": [
           {
             "name": "start_unix",
@@ -9460,56 +9669,6 @@
         ]
       }
     },
-    "/profile/{handle}": {
-      "get": {
-        "operationId": "Get_a_profile_page_profile__handle__get",
-        "summary": "Get A Profile Page",
-        "description": "Gets a profile page based on a handle",
-        "parameters": [
-          {
-            "name": "handle",
-            "in": "path",
-            "description": "Handle for a VA's profile page",
-            "required": true,
-            "schema": {
-              "description": "Handle for a VA's profile page",
-              "type": "string",
-              "examples": [
-                "talexgeorge"
-              ],
-              "title": "Handle"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProfilePageResponseModel"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "voices"
-        ],
-        "x-fern-sdk-group-name": "profile",
-        "x-fern-sdk-method-name": "get"
-      }
-    },
     "/v1/speech-to-text": {
       "post": {
         "operationId": "Speech_to_Text_v1_speech_to_text_post",
@@ -9650,7 +9809,7 @@
         "x-fern-sdk-method-name": "create"
       }
     },
-    "/v1/convai/conversation/get_signed_url": {
+    "/v1/convai/conversation/get-signed-url": {
       "get": {
         "operationId": "Get_Signed_Url_v1_convai_conversation_get_signed_url_get",
         "summary": "Get Signed Url",
@@ -9718,7 +9877,75 @@
         "x-fern-sdk-method-name": "get_signed_url"
       }
     },
-    "/v1/convai/twilio/outbound_call": {
+    "/v1/convai/conversation/get_signed_url": {
+      "get": {
+        "operationId": "get_signed_url_deprecated",
+        "summary": "Get Signed Url",
+        "description": "Get a signed url to start a conversation with an agent with an agent that requires authorization",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "query",
+            "description": "The id of the agent you're taking the action on.",
+            "required": true,
+            "schema": {
+              "description": "The id of the agent you're taking the action on.",
+              "type": "string",
+              "examples": [
+                "21m00Tcm4TlvDq8ikWAM"
+              ],
+              "title": "Agent Id"
+            }
+          },
+          {
+            "name": "xi-api-key",
+            "in": "header",
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Xi-Api-Key"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConversationSignedUrlResponseModel"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true,
+        "tags": [
+          "Conversational AI"
+        ],
+        "x-skip-spec": true
+      }
+    },
+    "/v1/convai/twilio/outbound-call": {
       "post": {
         "operationId": "Handle_an_outbound_call_via_Twilio_v1_convai_twilio_outbound_call_post",
         "summary": "Handle An Outbound Call Via Twilio",
@@ -10078,10 +10305,10 @@
           {
             "name": "conversation_signature",
             "in": "query",
-            "description": "An expiring token that enables a conversation to start. These can be generated for an agent using the /v1/convai/conversation/get_signed_url endpoint",
+            "description": "An expiring token that enables a websocket conversation to start. These can be generated for an agent using the /v1/convai/conversation/get-signed-url endpoint",
             "required": false,
             "schema": {
-              "description": "An expiring token that enables a conversation to start. These can be generated for an agent using the /v1/convai/conversation/get_signed_url endpoint",
+              "description": "An expiring token that enables a websocket conversation to start. These can be generated for an agent using the /v1/convai/conversation/get-signed-url endpoint",
               "anyOf": [
                 {
                   "type": "string"
@@ -10391,6 +10618,163 @@
         ],
         "x-fern-sdk-group-name": "conversational_ai",
         "x-fern-sdk-method-name": "get_agents"
+      }
+    },
+    "/v1/convai/agents/{agent_id}/simulate-conversation": {
+      "post": {
+        "operationId": "Simulates_a_conversation_v1_convai_agents__agent_id__simulate_conversation_post",
+        "summary": "Simulates A Conversation",
+        "description": "Run a conversation between the agent and a simulated user.",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "description": "The id of an agent. This is returned on agent creation.",
+            "required": true,
+            "schema": {
+              "description": "The id of an agent. This is returned on agent creation.",
+              "type": "string",
+              "embed": true,
+              "examples": [
+                "21m00Tcm4TlvDq8ikWAM"
+              ],
+              "title": "Agent Id"
+            }
+          },
+          {
+            "name": "xi-api-key",
+            "in": "header",
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Xi-Api-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_Simulates_a_conversation_v1_convai_agents__agent_id__simulate_conversation_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AgentSimulatedChatTestResponseModel"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Conversational AI"
+        ],
+        "x-fern-sdk-group-name": [
+          "conversational_ai",
+          "agents"
+        ],
+        "x-fern-sdk-method-name": "simulate_conversation"
+      }
+    },
+    "/v1/convai/agents/{agent_id}/simulate-conversation/stream": {
+      "post": {
+        "operationId": "Simulates_a_conversation__Stream__v1_convai_agents__agent_id__simulate_conversation_stream_post",
+        "summary": "Simulates A Conversation (Stream)",
+        "description": "Run a conversation between the agent and a simulated user and stream back the response. Response is streamed back as partial lists of messages that should be concatenated and once the conversation has complete a single final message with the conversation analysis will be sent.",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "description": "The id of an agent. This is returned on agent creation.",
+            "required": true,
+            "schema": {
+              "description": "The id of an agent. This is returned on agent creation.",
+              "type": "string",
+              "embed": true,
+              "examples": [
+                "21m00Tcm4TlvDq8ikWAM"
+              ],
+              "title": "Agent Id"
+            }
+          },
+          {
+            "name": "xi-api-key",
+            "in": "header",
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Xi-Api-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_Simulates_a_conversation__Stream__v1_convai_agents__agent_id__simulate_conversation_stream_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Conversational AI"
+        ],
+        "x-fern-sdk-group-name": [
+          "conversational_ai",
+          "agents"
+        ],
+        "x-fern-sdk-method-name": "simulate_conversation_stream"
       }
     },
     "/v1/convai/conversations": {
@@ -10935,7 +11319,22 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetPhoneNumberResponseModel"
+                  "discriminator": {
+                    "propertyName": "provider",
+                    "mapping": {
+                      "twilio": "#/components/schemas/GetPhoneNumberTwilioResponseModel",
+                      "sip_trunk": "#/components/schemas/GetPhoneNumberSIPTrunkResponseModel"
+                    }
+                  },
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/GetPhoneNumberTwilioResponseModel"
+                    },
+                    {
+                      "$ref": "#/components/schemas/GetPhoneNumberSIPTrunkResponseModel"
+                    }
+                  ],
+                  "title": "Response Get Phone Number V1 Convai Phone Numbers  Phone Number Id  Get"
                 }
               }
             }
@@ -11078,7 +11477,22 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetPhoneNumberResponseModel"
+                  "discriminator": {
+                    "propertyName": "provider",
+                    "mapping": {
+                      "twilio": "#/components/schemas/GetPhoneNumberTwilioResponseModel",
+                      "sip_trunk": "#/components/schemas/GetPhoneNumberSIPTrunkResponseModel"
+                    }
+                  },
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/GetPhoneNumberTwilioResponseModel"
+                    },
+                    {
+                      "$ref": "#/components/schemas/GetPhoneNumberSIPTrunkResponseModel"
+                    }
+                  ],
+                  "title": "Response Update Phone Number V1 Convai Phone Numbers  Phone Number Id  Patch"
                 }
               }
             }
@@ -11134,7 +11548,21 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/GetPhoneNumberResponseModel"
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/GetPhoneNumberTwilioResponseModel"
+                      },
+                      {
+                        "$ref": "#/components/schemas/GetPhoneNumberSIPTrunkResponseModel"
+                      }
+                    ],
+                    "discriminator": {
+                      "propertyName": "provider",
+                      "mapping": {
+                        "twilio": "#/components/schemas/GetPhoneNumberTwilioResponseModel",
+                        "sip_trunk": "#/components/schemas/GetPhoneNumberSIPTrunkResponseModel"
+                      }
+                    }
                   },
                   "title": "Response List Phone Numbers V1 Convai Phone Numbers  Get"
                 }
@@ -11688,11 +12116,11 @@
         "x-fern-sdk-method-name": "create_knowledge_base_text_document"
       }
     },
-    "/v1/convai/knowledge-base/{documentation_id}/rag-index": {
-      "post": {
-        "operationId": "Compute_RAG_index__v1_convai_knowledge_base__documentation_id__rag_index_post",
-        "summary": "Compute Rag Index.",
-        "description": "In case the document is not RAG indexed, it triggers rag indexing task, otherwise it just returns the current status.",
+    "/v1/convai/knowledge-base/{documentation_id}": {
+      "patch": {
+        "operationId": "Update_document_v1_convai_knowledge_base__documentation_id__patch",
+        "summary": "Update Document",
+        "description": "Update the name of a document",
         "parameters": [
           {
             "name": "documentation_id",
@@ -11733,8 +12161,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "description": "Payload for RAG index status endpoint.",
-                "$ref": "#/components/schemas/RAGIndexRequestModel"
+                "$ref": "#/components/schemas/Body_Update_document_v1_convai_knowledge_base__documentation_id__patch"
               }
             }
           }
@@ -11745,7 +12172,26 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RAGIndexResponseModel"
+                  "discriminator": {
+                    "propertyName": "type",
+                    "mapping": {
+                      "url": "#/components/schemas/GetKnowledgeBaseURLResponseModel",
+                      "file": "#/components/schemas/GetKnowledgeBaseFileResponseModel",
+                      "text": "#/components/schemas/GetKnowledgeBaseTextResponseModel"
+                    }
+                  },
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/GetKnowledgeBaseURLResponseModel"
+                    },
+                    {
+                      "$ref": "#/components/schemas/GetKnowledgeBaseFileResponseModel"
+                    },
+                    {
+                      "$ref": "#/components/schemas/GetKnowledgeBaseTextResponseModel"
+                    }
+                  ],
+                  "title": "Response Update Document V1 Convai Knowledge Base  Documentation Id  Patch"
                 }
               }
             }
@@ -11765,10 +12211,8 @@
           "Conversational AI"
         ],
         "x-fern-sdk-group-name": "conversational_ai",
-        "x-fern-sdk-method-name": "rag_index_status"
-      }
-    },
-    "/v1/convai/knowledge-base/{documentation_id}": {
+        "x-fern-sdk-method-name": "update_knowledge_base_document"
+      },
       "get": {
         "operationId": "Get_documentation_from_knowledge_base_v1_convai_knowledge_base__documentation_id__get",
         "summary": "Get Documentation From Knowledge Base",
@@ -11919,6 +12363,90 @@
         ],
         "x-fern-sdk-group-name": "conversational_ai",
         "x-fern-sdk-method-name": "delete_knowledge_base_document"
+      }
+    },
+    "/v1/convai/knowledge-base/{documentation_id}/rag-index": {
+      "post": {
+        "operationId": "Compute_RAG_index__v1_convai_knowledge_base__documentation_id__rag_index_post",
+        "summary": "Compute Rag Index.",
+        "description": "In case the document is not RAG indexed, it triggers rag indexing task, otherwise it just returns the current status.",
+        "parameters": [
+          {
+            "name": "documentation_id",
+            "in": "path",
+            "description": "The id of a document from the knowledge base. This is returned on document addition.",
+            "required": true,
+            "schema": {
+              "description": "The id of a document from the knowledge base. This is returned on document addition.",
+              "type": "string",
+              "embed": true,
+              "examples": [
+                "21m00Tcm4TlvDq8ikWAM"
+              ],
+              "title": "Documentation Id"
+            }
+          },
+          {
+            "name": "xi-api-key",
+            "in": "header",
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Xi-Api-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "Payload for RAG index status endpoint.",
+                "$ref": "#/components/schemas/RAGIndexRequestModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RAGIndexResponseModel"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Conversational AI"
+        ],
+        "x-fern-sdk-group-name": [
+          "conversational_ai",
+          "knowledge_base",
+          "document"
+        ],
+        "x-fern-sdk-method-name": "compute_rag_index"
       }
     },
     "/v1/convai/agents/{agent_id}/knowledge-base/{documentation_id}": {
@@ -12662,6 +13190,136 @@
         ],
         "x-fern-sdk-group-name": "conversational_ai",
         "x-fern-sdk-method-name": "delete_secret"
+      }
+    },
+    "/v1/convai/batch-calling/{batch_id}": {
+      "get": {
+        "operationId": "Get_a_batch_call_by_ID__v1_convai_batch_calling__batch_id__get",
+        "summary": "Get A Batch Call By Id.",
+        "description": "Get detailed information about a batch call including all recipients.",
+        "parameters": [
+          {
+            "name": "batch_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Batch Id"
+            }
+          },
+          {
+            "name": "xi-api-key",
+            "in": "header",
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Xi-Api-Key"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchCallDetailedResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Conversational AI"
+        ],
+        "x-fern-sdk-group-name": "conversational_ai",
+        "x-fern-sdk-method-name": "get_batch_call"
+      }
+    },
+    "/v1/convai/sip-trunk/outbound-call": {
+      "post": {
+        "operationId": "Handle_an_outbound_call_via_SIP_trunk_v1_convai_sip_trunk_outbound_call_post",
+        "summary": "Handle An Outbound Call Via Sip Trunk",
+        "description": "Handle an outbound call via SIP trunk",
+        "parameters": [
+          {
+            "name": "xi-api-key",
+            "in": "header",
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Xi-Api-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_Handle_an_outbound_call_via_SIP_trunk_v1_convai_sip_trunk_outbound_call_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SIPTrunkOutboundCallResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Conversational AI"
+        ],
+        "x-fern-sdk-group-name": [
+          "conversational_ai",
+          "sip_trunk"
+        ],
+        "x-fern-sdk-method-name": "outbound_call"
       }
     },
     "/v1/voices/pvc": {
@@ -14288,6 +14946,35 @@
         },
         "title": "AgentConfigAPIModel"
       },
+      "AgentConfigDBModel": {
+        "type": "object",
+        "properties": {
+          "first_message": {
+            "description": "If non-empty, the first message the agent will say. If empty, the agent waits for the user to start the discussion.",
+            "type": "string",
+            "default": "",
+            "title": "First Message"
+          },
+          "language": {
+            "description": "Language of the agent - used for ASR and TTS",
+            "type": "string",
+            "default": "en",
+            "title": "Language"
+          },
+          "dynamic_variables": {
+            "description": "Configuration for dynamic variables",
+            "$ref": "#/components/schemas/DynamicVariablesConfig"
+          },
+          "prompt": {
+            "$ref": "#/components/schemas/PromptAgentDBModel"
+          }
+        },
+        "example": {
+          "first_message": "Hello, how can I help you today?",
+          "language": "en"
+        },
+        "title": "AgentConfigDBModel"
+      },
       "AgentConfigOverride": {
         "type": "object",
         "properties": {
@@ -14463,6 +15150,26 @@
         },
         "title": "AgentPlatformSettingsResponseModel"
       },
+      "AgentSimulatedChatTestResponseModel": {
+        "type": "object",
+        "properties": {
+          "simulated_conversation": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConversationHistoryTranscriptCommonModel-Output"
+            },
+            "title": "Simulated Conversation"
+          },
+          "analysis": {
+            "$ref": "#/components/schemas/ConversationHistoryAnalysisCommonModel"
+          }
+        },
+        "required": [
+          "simulated_conversation",
+          "analysis"
+        ],
+        "title": "AgentSimulatedChatTestResponseModel"
+      },
       "AgentSummaryResponseModel": {
         "type": "object",
         "properties": {
@@ -14476,13 +15183,13 @@
             "type": "string",
             "title": "Name"
           },
-          "categories": {
-            "description": "The categories of the agent",
+          "tags": {
+            "description": "Agent tags used to categorize the agent",
             "type": "array",
             "items": {
               "type": "string"
             },
-            "title": "Categories"
+            "title": "Tags"
           },
           "created_at_unix_secs": {
             "description": "The creation time of the agent in unix seconds",
@@ -14496,18 +15203,18 @@
         },
         "example": {
           "agent_id": "J3Pbu5gP6NNKBscdCdwB",
-          "categories": [
+          "created_at_unix_secs": 1716153600,
+          "name": "My Agent",
+          "tags": [
             "Customer Support",
             "Technical Help",
             "Eleven"
-          ],
-          "created_at_unix_secs": 1716153600,
-          "name": "My Agent"
+          ]
         },
         "required": [
           "agent_id",
           "name",
-          "categories",
+          "tags",
           "created_at_unix_secs",
           "access_info"
         ],
@@ -14594,6 +15301,11 @@
             "const": "array",
             "title": "Type"
           },
+          "description": {
+            "type": "string",
+            "default": "",
+            "title": "Description"
+          },
           "items": {
             "oneOf": [
               {
@@ -14607,11 +15319,6 @@
               }
             ],
             "title": "Items"
-          },
-          "description": {
-            "type": "string",
-            "default": "",
-            "title": "Description"
           }
         },
         "additionalProperties": false,
@@ -14629,6 +15336,11 @@
             "const": "array",
             "title": "Type"
           },
+          "description": {
+            "type": "string",
+            "default": "",
+            "title": "Description"
+          },
           "items": {
             "oneOf": [
               {
@@ -14642,11 +15354,6 @@
               }
             ],
             "title": "Items"
-          },
-          "description": {
-            "type": "string",
-            "default": "",
-            "title": "Description"
           }
         },
         "additionalProperties": false,
@@ -14953,7 +15660,9 @@
           "public",
           "authorization_header",
           "signed_url",
-          "shareable_link"
+          "shareable_link",
+          "livekit_token",
+          "livekit_token_website"
         ],
         "title": "AuthorizationMethod"
       },
@@ -14964,6 +15673,99 @@
           "manual"
         ],
         "title": "BanReasonType"
+      },
+      "BatchCallDetailedResponse": {
+        "description": "Detailed response model for a batch call including all recipients.",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "phone_number_id": {
+            "type": "string",
+            "title": "Phone Number Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "agent_id": {
+            "type": "string",
+            "title": "Agent Id"
+          },
+          "created_at_unix": {
+            "type": "integer",
+            "title": "Created At Unix"
+          },
+          "scheduled_time_unix": {
+            "type": "integer",
+            "title": "Scheduled Time Unix"
+          },
+          "total_calls_dispatched": {
+            "type": "integer",
+            "title": "Total Calls Dispatched"
+          },
+          "total_calls_scheduled": {
+            "type": "integer",
+            "title": "Total Calls Scheduled"
+          },
+          "last_updated_at_unix": {
+            "type": "integer",
+            "title": "Last Updated At Unix"
+          },
+          "status": {
+            "$ref": "#/components/schemas/BatchCallStatus"
+          },
+          "agent_name": {
+            "type": "string",
+            "title": "Agent Name"
+          },
+          "recipients": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OutboundCallRecipientResponseModel"
+            },
+            "title": "Recipients"
+          }
+        },
+        "required": [
+          "id",
+          "phone_number_id",
+          "name",
+          "agent_id",
+          "created_at_unix",
+          "scheduled_time_unix",
+          "total_calls_dispatched",
+          "total_calls_scheduled",
+          "last_updated_at_unix",
+          "status",
+          "agent_name",
+          "recipients"
+        ],
+        "title": "BatchCallDetailedResponse"
+      },
+      "BatchCallRecipientStatus": {
+        "type": "string",
+        "enum": [
+          "pending",
+          "in_progress",
+          "completed",
+          "failed",
+          "cancelled"
+        ],
+        "title": "BatchCallRecipientStatus"
+      },
+      "BatchCallStatus": {
+        "type": "string",
+        "enum": [
+          "pending",
+          "in_progress",
+          "completed",
+          "failed",
+          "cancelled"
+        ],
+        "title": "BatchCallStatus"
       },
       "Body_Add_a_language_to_the_resource_v1_dubbing_resource__dubbing_id__language_post": {
         "type": "object",
@@ -15611,7 +16413,8 @@
             "description": "A custom, human-readable name for the document.",
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "minLength": 1
               },
               {
                 "type": "null"
@@ -15640,7 +16443,8 @@
             "description": "A custom, human-readable name for the document.",
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "minLength": 1
               },
               {
                 "type": "null"
@@ -15669,7 +16473,8 @@
             "description": "A custom, human-readable name for the document.",
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "minLength": 1
               },
               {
                 "type": "null"
@@ -15860,8 +16665,8 @@
             "optional": true,
             "title": "Name"
           },
-          "categories": {
-            "description": "Categories to help classify and filter the agent",
+          "tags": {
+            "description": "Tags to help classify and filter the agent",
             "anyOf": [
               {
                 "items": {
@@ -15881,7 +16686,7 @@
               ]
             ],
             "optional": true,
-            "title": "Categories"
+            "title": "Tags"
           }
         },
         "required": [
@@ -16355,7 +17160,8 @@
             "description": "A custom, human-readable name for the document.",
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "minLength": 1
               },
               {
                 "type": "null"
@@ -16558,7 +17364,8 @@
             "description": "A custom, human-readable name for the document.",
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "minLength": 1
               },
               {
                 "type": "null"
@@ -16925,7 +17732,8 @@
             "description": "A custom, human-readable name for the document.",
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "minLength": 1
               },
               {
                 "type": "null"
@@ -17047,7 +17855,7 @@
             "title": "Model Id"
           },
           "file": {
-            "description": "Either txt or HTML input file containing the article content. HTML should be formatted as follows '&lt;html&gt;&lt;body&gt;&lt;div&gt;&lt;p&gt;Your content&lt;/p&gt;&lt;h5&gt;More of your content&lt;/h5&gt;&lt;p&gt;Some more of your content&lt;/p&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;'",
+            "description": "Either txt or HTML input file containing the article content. HTML should be formatted as follows '&lt;html&gt;&lt;body&gt;&lt;div&gt;&lt;p&gt;Your content&lt;/p&gt;&lt;h3&gt;More of your content&lt;/h3&gt;&lt;p&gt;Some more of your content&lt;/p&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;'",
             "type": "string",
             "format": "binary",
             "title": "File"
@@ -17735,6 +18543,39 @@
         },
         "title": "Body_Get_similar_library_voices_v1_similar_voices_post"
       },
+      "Body_Handle_an_outbound_call_via_SIP_trunk_v1_convai_sip_trunk_outbound_call_post": {
+        "type": "object",
+        "properties": {
+          "agent_id": {
+            "type": "string",
+            "title": "Agent Id"
+          },
+          "agent_phone_number_id": {
+            "type": "string",
+            "title": "Agent Phone Number Id"
+          },
+          "to_number": {
+            "type": "string",
+            "title": "To Number"
+          },
+          "conversation_initiation_client_data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ConversationInitiationClientDataRequest-Input"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "agent_id",
+          "agent_phone_number_id",
+          "to_number"
+        ],
+        "title": "Body_Handle_an_outbound_call_via_SIP_trunk_v1_convai_sip_trunk_outbound_call_post"
+      },
       "Body_Handle_an_outbound_call_via_Twilio_v1_convai_twilio_outbound_call_post": {
         "type": "object",
         "properties": {
@@ -17923,8 +18764,8 @@
             "optional": true,
             "title": "Name"
           },
-          "categories": {
-            "description": "Categories to help classify and filter the agent",
+          "tags": {
+            "description": "Tags to help classify and filter the agent",
             "anyOf": [
               {
                 "items": {
@@ -17944,7 +18785,7 @@
               ]
             ],
             "optional": true,
-            "title": "Categories"
+            "title": "Tags"
           }
         },
         "title": "Body_Patches_an_Agent_settings_v1_convai_agents__agent_id__patch"
@@ -18138,6 +18979,62 @@
           "resource_type"
         ],
         "title": "Body_Share_workspace_resource_v1_workspace_resources__resource_id__share_post"
+      },
+      "Body_Simulates_a_conversation__Stream__v1_convai_agents__agent_id__simulate_conversation_stream_post": {
+        "type": "object",
+        "properties": {
+          "simulation_specification": {
+            "description": "A specification detailing how the conversation should be simulated",
+            "$ref": "#/components/schemas/ConversationSimulationSpecification"
+          },
+          "extra_evaluation_criteria": {
+            "description": "A list of evaluation criteria to test",
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/PromptEvaluationCriteria"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Extra Evaluation Criteria"
+          }
+        },
+        "required": [
+          "simulation_specification"
+        ],
+        "title": "Body_Simulates_a_conversation__Stream__v1_convai_agents__agent_id__simulate_conversation_stream_post"
+      },
+      "Body_Simulates_a_conversation_v1_convai_agents__agent_id__simulate_conversation_post": {
+        "type": "object",
+        "properties": {
+          "simulation_specification": {
+            "description": "A specification detailing how the conversation should be simulated",
+            "$ref": "#/components/schemas/ConversationSimulationSpecification"
+          },
+          "extra_evaluation_criteria": {
+            "description": "A list of evaluation criteria to test",
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/PromptEvaluationCriteria"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Extra Evaluation Criteria"
+          }
+        },
+        "required": [
+          "simulation_specification"
+        ],
+        "title": "Body_Simulates_a_conversation_v1_convai_agents__agent_id__simulate_conversation_post"
       },
       "Body_Sound_Generation_v1_sound_generation_post": {
         "type": "object",
@@ -18523,7 +19420,7 @@
           "model_id": {
             "description": "Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.",
             "type": "string",
-            "default": "eleven_monolingual_v1",
+            "default": "eleven_multilingual_v2",
             "title": "Model Id"
           },
           "language_code": {
@@ -18554,7 +19451,7 @@
             "anyOf": [
               {
                 "items": {
-                  "$ref": "#/components/schemas/PronunciationDictionaryVersionLocatorDBModel"
+                  "$ref": "#/components/schemas/PronunciationDictionaryVersionLocatorRequestModel"
                 },
                 "type": "array"
               },
@@ -18714,7 +19611,7 @@
           "model_id": {
             "description": "Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.",
             "type": "string",
-            "default": "eleven_monolingual_v1",
+            "default": "eleven_multilingual_v2",
             "title": "Model Id"
           },
           "language_code": {
@@ -18745,7 +19642,7 @@
             "anyOf": [
               {
                 "items": {
-                  "$ref": "#/components/schemas/PronunciationDictionaryVersionLocatorDBModel"
+                  "$ref": "#/components/schemas/PronunciationDictionaryVersionLocatorRequestModel"
                 },
                 "type": "array"
               },
@@ -18905,7 +19802,7 @@
           "model_id": {
             "description": "Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.",
             "type": "string",
-            "default": "eleven_monolingual_v1",
+            "default": "eleven_multilingual_v2",
             "title": "Model Id"
           },
           "language_code": {
@@ -18936,7 +19833,7 @@
             "anyOf": [
               {
                 "items": {
-                  "$ref": "#/components/schemas/PronunciationDictionaryVersionLocatorDBModel"
+                  "$ref": "#/components/schemas/PronunciationDictionaryVersionLocatorRequestModel"
                 },
                 "type": "array"
               },
@@ -19096,7 +19993,7 @@
           "model_id": {
             "description": "Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.",
             "type": "string",
-            "default": "eleven_monolingual_v1",
+            "default": "eleven_multilingual_v2",
             "title": "Model Id"
           },
           "language_code": {
@@ -19126,7 +20023,7 @@
             "description": "A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request",
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/PronunciationDictionaryVersionLocatorDBModel"
+              "$ref": "#/components/schemas/PronunciationDictionaryVersionLocatorRequestModel"
             },
             "examples": [
               [
@@ -19630,6 +20527,21 @@
         },
         "title": "Body_Update_chapter_v1_studio_projects__project_id__chapters__chapter_id__post"
       },
+      "Body_Update_document_v1_convai_knowledge_base__documentation_id__patch": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "A custom, human-readable name for the document.",
+            "type": "string",
+            "minLength": 1,
+            "title": "Name"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "Body_Update_document_v1_convai_knowledge_base__documentation_id__patch"
+      },
       "Body_Update_member_v1_workspace_members_post": {
         "type": "object",
         "properties": {
@@ -19671,6 +20583,39 @@
           "email"
         ],
         "title": "Body_Update_member_v1_workspace_members_post"
+      },
+      "Body_Update_metadata_for_a_speaker_v1_dubbing_resource__dubbing_id__speaker__speaker_id__patch": {
+        "type": "object",
+        "properties": {
+          "voice_id": {
+            "description": "Either the identifier of a voice from the ElevenLabs voice library, or one of ['track-clone', 'clip-clone'].",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Voice Id"
+          },
+          "languages": {
+            "description": "Languages to apply these changes to. If empty, will apply to all languages.",
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Languages"
+          }
+        },
+        "title": "Body_Update_metadata_for_a_speaker_v1_dubbing_resource__dubbing_id__speaker__speaker_id__patch"
       },
       "Body_Verify_PVC_voice_captcha_v1_voices_pvc__voice_id__captcha_post": {
         "type": "object",
@@ -20310,13 +21255,6 @@
             "default": "",
             "title": "Id"
           },
-          "type": {
-            "description": "The type of tool",
-            "type": "string",
-            "default": "client",
-            "const": "client",
-            "title": "Type"
-          },
           "name": {
             "type": "string",
             "minLength": 0,
@@ -20327,6 +21265,21 @@
             "type": "string",
             "minLength": 0,
             "title": "Description"
+          },
+          "response_timeout_secs": {
+            "description": "The maximum time in seconds to wait for the tool call to complete. Must be between 1 and 30 seconds (inclusive).",
+            "type": "integer",
+            "default": 20,
+            "maximum": 30,
+            "minimum": 1,
+            "title": "Response Timeout Secs"
+          },
+          "type": {
+            "description": "The type of tool",
+            "type": "string",
+            "default": "client",
+            "const": "client",
+            "title": "Type"
           },
           "parameters": {
             "description": "Schema for any parameters to pass to the client",
@@ -20344,20 +21297,6 @@
             "type": "boolean",
             "default": false,
             "title": "Expects Response"
-          },
-          "response_timeout_secs": {
-            "description": "The maximum time in seconds to wait for a response from the client. Should only be set if expects_response is true",
-            "anyOf": [
-              {
-                "type": "integer",
-                "maximum": 30,
-                "minimum": 1
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Response Timeout Secs"
           },
           "dynamic_variables": {
             "description": "Configuration for dynamic variables",
@@ -20383,13 +21322,6 @@
             "default": "",
             "title": "Id"
           },
-          "type": {
-            "description": "The type of tool",
-            "type": "string",
-            "default": "client",
-            "const": "client",
-            "title": "Type"
-          },
           "name": {
             "type": "string",
             "minLength": 0,
@@ -20400,6 +21332,21 @@
             "type": "string",
             "minLength": 0,
             "title": "Description"
+          },
+          "response_timeout_secs": {
+            "description": "The maximum time in seconds to wait for the tool call to complete. Must be between 1 and 30 seconds (inclusive).",
+            "type": "integer",
+            "default": 20,
+            "maximum": 30,
+            "minimum": 1,
+            "title": "Response Timeout Secs"
+          },
+          "type": {
+            "description": "The type of tool",
+            "type": "string",
+            "default": "client",
+            "const": "client",
+            "title": "Type"
           },
           "parameters": {
             "description": "Schema for any parameters to pass to the client",
@@ -20417,20 +21364,6 @@
             "type": "boolean",
             "default": false,
             "title": "Expects Response"
-          },
-          "response_timeout_secs": {
-            "description": "The maximum time in seconds to wait for a response from the client. Should only be set if expects_response is true",
-            "anyOf": [
-              {
-                "type": "integer",
-                "maximum": 30,
-                "minimum": 1
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Response Timeout Secs"
           },
           "dynamic_variables": {
             "description": "Configuration for dynamic variables",
@@ -20811,6 +21744,24 @@
         ],
         "title": "ConversationHistoryAnalysisCommonModel"
       },
+      "ConversationHistoryBatchCallModel": {
+        "type": "object",
+        "properties": {
+          "batch_call_id": {
+            "type": "string",
+            "title": "Batch Call Id"
+          },
+          "batch_call_recipient_id": {
+            "type": "string",
+            "title": "Batch Call Recipient Id"
+          }
+        },
+        "required": [
+          "batch_call_id",
+          "batch_call_recipient_id"
+        ],
+        "title": "ConversationHistoryBatchCallModel"
+      },
       "ConversationHistoryErrorCommonModel": {
         "type": "object",
         "properties": {
@@ -20935,11 +21886,15 @@
                 "oneOf": [
                   {
                     "$ref": "#/components/schemas/ConversationHistoryTwilioPhoneCallModel"
+                  },
+                  {
+                    "$ref": "#/components/schemas/ConversationHistorySIPTrunkingPhoneCallModel"
                   }
                 ],
                 "discriminator": {
                   "propertyName": "type",
                   "mapping": {
+                    "sip_trunking": "#/components/schemas/ConversationHistorySIPTrunkingPhoneCallModel",
                     "twilio": "#/components/schemas/ConversationHistoryTwilioPhoneCallModel"
                   }
                 }
@@ -20949,6 +21904,16 @@
               }
             ],
             "title": "Phone Call"
+          },
+          "batch_call": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ConversationHistoryBatchCallModel"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "termination_reason": {
             "type": "string",
@@ -21011,7 +21976,50 @@
         ],
         "title": "ConversationHistoryRagUsageCommonModel"
       },
-      "ConversationHistoryTranscriptCommonModel": {
+      "ConversationHistorySIPTrunkingPhoneCallModel": {
+        "type": "object",
+        "properties": {
+          "direction": {
+            "type": "string",
+            "enum": [
+              "inbound",
+              "outbound"
+            ],
+            "title": "Direction"
+          },
+          "phone_number_id": {
+            "type": "string",
+            "title": "Phone Number Id"
+          },
+          "agent_number": {
+            "type": "string",
+            "title": "Agent Number"
+          },
+          "external_number": {
+            "type": "string",
+            "title": "External Number"
+          },
+          "type": {
+            "type": "string",
+            "const": "sip_trunking",
+            "title": "Type"
+          },
+          "call_sid": {
+            "type": "string",
+            "title": "Call Sid"
+          }
+        },
+        "required": [
+          "direction",
+          "phone_number_id",
+          "agent_number",
+          "external_number",
+          "type",
+          "call_sid"
+        ],
+        "title": "ConversationHistorySIPTrunkingPhoneCallModel"
+      },
+      "ConversationHistoryTranscriptCommonModel-Input": {
         "type": "object",
         "properties": {
           "role": {
@@ -21095,7 +22103,105 @@
           "llm_usage": {
             "anyOf": [
               {
-                "$ref": "#/components/schemas/LLMUsage"
+                "$ref": "#/components/schemas/LLMUsage-Input"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "role",
+          "time_in_call_secs"
+        ],
+        "title": "ConversationHistoryTranscriptCommonModel"
+      },
+      "ConversationHistoryTranscriptCommonModel-Output": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "string",
+            "enum": [
+              "user",
+              "agent"
+            ],
+            "title": "Role"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "tool_calls": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConversationHistoryTranscriptToolCallCommonModel"
+            },
+            "title": "Tool Calls"
+          },
+          "tool_results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConversationHistoryTranscriptToolResultCommonModel"
+            },
+            "title": "Tool Results"
+          },
+          "feedback": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/UserFeedback"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "llm_override": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Llm Override"
+          },
+          "time_in_call_secs": {
+            "type": "integer",
+            "title": "Time In Call Secs"
+          },
+          "conversation_turn_metrics": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ConversationTurnMetrics"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "rag_retrieval_info": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RagRetrievalInfo"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "llm_usage": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/LLMUsage-Output"
               },
               {
                 "type": "null"
@@ -21397,6 +22503,42 @@
         },
         "title": "ConversationInitiationClientDataConfig"
       },
+      "ConversationInitiationClientDataInternal": {
+        "type": "object",
+        "properties": {
+          "conversation_config_override": {
+            "$ref": "#/components/schemas/ConversationConfigClientOverride-Output"
+          },
+          "custom_llm_extra_body": {
+            "type": "object",
+            "title": "Custom Llm Extra Body"
+          },
+          "dynamic_variables": {
+            "type": "object",
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": "Dynamic Variables"
+          }
+        },
+        "title": "ConversationInitiationClientDataInternal"
+      },
       "ConversationInitiationClientDataRequest-Input": {
         "type": "object",
         "properties": {
@@ -21517,6 +22659,34 @@
           "signed_url"
         ],
         "title": "ConversationSignedUrlResponseModel"
+      },
+      "ConversationSimulationSpecification": {
+        "description": "A specification that will be used to simulate a conversation between an agent and an AI user.",
+        "type": "object",
+        "properties": {
+          "simulated_user_config": {
+            "$ref": "#/components/schemas/AgentConfigDBModel"
+          },
+          "tool_mock_config": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/ToolMockConfig"
+            },
+            "title": "Tool Mock Config"
+          },
+          "partial_conversation_history": {
+            "description": "A partial conversation history to start the simulation from. If empty, simulation starts fresh.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConversationHistoryTranscriptCommonModel-Input"
+            },
+            "title": "Partial Conversation History"
+          }
+        },
+        "required": [
+          "simulated_user_config"
+        ],
+        "title": "ConversationSimulationSpecification"
       },
       "ConversationSummaryResponseModel": {
         "type": "object",
@@ -21800,19 +22970,51 @@
             "type": "string",
             "title": "Phone Number"
           },
-          "provider": {
-            "default": "sip_trunk",
-            "$ref": "#/components/schemas/TelephonyProvider"
-          },
           "label": {
             "description": "Label for the phone number",
             "type": "string",
             "title": "Label"
           },
+          "provider": {
+            "type": "string",
+            "default": "sip_trunk",
+            "const": "sip_trunk",
+            "title": "Provider"
+          },
           "termination_uri": {
             "description": "SIP trunk termination URI",
             "type": "string",
             "title": "Termination Uri"
+          },
+          "address": {
+            "description": "Hostname or IP the SIP INVITE is sent to.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Address"
+          },
+          "transport": {
+            "description": "Protocol to use for SIP transport (signalling layer).",
+            "default": "auto",
+            "$ref": "#/components/schemas/SIPTrunkTransportEnum"
+          },
+          "media_encryption": {
+            "description": "Whether or not to encrypt media (data layer).",
+            "default": "allowed",
+            "$ref": "#/components/schemas/SIPMediaEncryptionEnum"
+          },
+          "headers": {
+            "description": "SIP X-* headers for INVITE request. These headers are sent as-is and may help identify this call.",
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Headers"
           },
           "credentials": {
             "description": "Optional digest authentication credentials (username/password). If not provided, ACL authentication is assumed.",
@@ -21841,14 +23043,16 @@
             "type": "string",
             "title": "Phone Number"
           },
-          "provider": {
-            "default": "twilio",
-            "$ref": "#/components/schemas/TelephonyProvider"
-          },
           "label": {
             "description": "Label for the phone number",
             "type": "string",
             "title": "Label"
+          },
+          "provider": {
+            "type": "string",
+            "default": "twilio",
+            "const": "twilio",
+            "title": "Provider"
           },
           "sid": {
             "description": "Twilio Account SID",
@@ -21948,6 +23152,30 @@
           "criteria_id"
         ],
         "title": "DashboardCriteriaChartModel"
+      },
+      "DashboardDataCollectionChartModel": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "type": {
+            "type": "string",
+            "default": "data_collection",
+            "const": "data_collection",
+            "title": "Type"
+          },
+          "data_collection_id": {
+            "type": "string",
+            "title": "Data Collection Id"
+          }
+        },
+        "required": [
+          "name",
+          "data_collection_id"
+        ],
+        "title": "DashboardDataCollectionChartModel"
       },
       "DataCollectionResultCommonModel": {
         "type": "object",
@@ -22452,6 +23680,10 @@
             ],
             "title": "Text"
           },
+          "audio_stale": {
+            "type": "boolean",
+            "title": "Audio Stale"
+          },
           "media_ref": {
             "anyOf": [
               {
@@ -22467,6 +23699,7 @@
           "start_time",
           "end_time",
           "text",
+          "audio_stale",
           "media_ref"
         ],
         "title": "DubbedSegment"
@@ -23490,7 +24723,21 @@
             "description": "The phone numbers of the agent",
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/GetPhoneNumberResponseModel"
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/GetPhoneNumberTwilioResponseModel"
+                },
+                {
+                  "$ref": "#/components/schemas/GetPhoneNumberSIPTrunkResponseModel"
+                }
+              ],
+              "discriminator": {
+                "propertyName": "provider",
+                "mapping": {
+                  "sip_trunk": "#/components/schemas/GetPhoneNumberSIPTrunkResponseModel",
+                  "twilio": "#/components/schemas/GetPhoneNumberTwilioResponseModel"
+                }
+              }
             },
             "title": "Phone Numbers"
           },
@@ -23505,13 +24752,13 @@
               }
             ]
           },
-          "categories": {
-            "description": "The categories of the agent",
+          "tags": {
+            "description": "Agent tags used to categorize the agent",
             "type": "array",
             "items": {
               "type": "string"
             },
-            "title": "Categories"
+            "title": "Tags"
           }
         },
         "example": {
@@ -23646,13 +24893,17 @@
                 },
                 {
                   "$ref": "#/components/schemas/DashboardCriteriaChartModel"
+                },
+                {
+                  "$ref": "#/components/schemas/DashboardDataCollectionChartModel"
                 }
               ],
               "discriminator": {
                 "propertyName": "type",
                 "mapping": {
                   "call_success": "#/components/schemas/DashboardCallSuccessChartModel",
-                  "criteria": "#/components/schemas/DashboardCriteriaChartModel"
+                  "criteria": "#/components/schemas/DashboardCriteriaChartModel",
+                  "data_collection": "#/components/schemas/DashboardDataCollectionChartModel"
                 }
               }
             },
@@ -23677,6 +24928,13 @@
           },
           "webhooks": {
             "$ref": "#/components/schemas/ConvAIWebhooks"
+          },
+          "rag_retention_period_days": {
+            "type": "integer",
+            "default": 10,
+            "exclusiveMinimum": 0,
+            "maximum": 30,
+            "title": "Rag Retention Period Days"
           }
         },
         "title": "GetConvAISettingsResponseModel"
@@ -23705,7 +24963,7 @@
           "transcript": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/ConversationHistoryTranscriptCommonModel"
+              "$ref": "#/components/schemas/ConversationHistoryTranscriptCommonModel-Output"
             },
             "title": "Transcript"
           },
@@ -24251,17 +25509,13 @@
         ],
         "title": "GetLibraryVoicesResponseModel"
       },
-      "GetPhoneNumberResponseModel": {
+      "GetPhoneNumberSIPTrunkResponseModel": {
         "type": "object",
         "properties": {
           "phone_number": {
             "description": "Phone number",
             "type": "string",
             "title": "Phone Number"
-          },
-          "provider": {
-            "description": "Phone provider",
-            "$ref": "#/components/schemas/TelephonyProvider"
           },
           "label": {
             "description": "Label for the phone number",
@@ -24283,6 +25537,23 @@
                 "type": "null"
               }
             ]
+          },
+          "provider": {
+            "description": "Phone provider",
+            "type": "string",
+            "default": "sip_trunk",
+            "const": "sip_trunk",
+            "title": "Provider"
+          },
+          "provider_config": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SIPTrunkConfigResponseModel"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "example": {
@@ -24290,11 +25561,57 @@
         },
         "required": [
           "phone_number",
-          "provider",
           "label",
           "phone_number_id"
         ],
-        "title": "GetPhoneNumberResponseModel"
+        "title": "GetPhoneNumberSIPTrunkResponseModel"
+      },
+      "GetPhoneNumberTwilioResponseModel": {
+        "type": "object",
+        "properties": {
+          "phone_number": {
+            "description": "Phone number",
+            "type": "string",
+            "title": "Phone Number"
+          },
+          "label": {
+            "description": "Label for the phone number",
+            "type": "string",
+            "title": "Label"
+          },
+          "phone_number_id": {
+            "description": "The ID of the phone number",
+            "type": "string",
+            "title": "Phone Number Id"
+          },
+          "assigned_agent": {
+            "description": "The agent that is assigned to the phone number",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PhoneNumberAgentInfo"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "provider": {
+            "description": "Phone provider",
+            "type": "string",
+            "default": "twilio",
+            "const": "twilio",
+            "title": "Provider"
+          }
+        },
+        "example": {
+          "phone_number_id": "X3Pbu5gP6NNKBscdCdwB"
+        },
+        "required": [
+          "phone_number",
+          "label",
+          "phone_number_id"
+        ],
+        "title": "GetPhoneNumberTwilioResponseModel"
       },
       "GetProjectsResponseModel": {
         "type": "object",
@@ -25053,10 +26370,10 @@
         "type": "object",
         "properties": {
           "irreversible_generation": {
-            "$ref": "#/components/schemas/LLMUsage"
+            "$ref": "#/components/schemas/LLMUsage-Output"
           },
           "initiated_generation": {
-            "$ref": "#/components/schemas/LLMUsage"
+            "$ref": "#/components/schemas/LLMUsage-Output"
           }
         },
         "title": "LLMCategoryUsage"
@@ -25095,7 +26412,23 @@
         },
         "title": "LLMTokensCategoryUsage"
       },
-      "LLMUsage": {
+      "LLMUsage-Input": {
+        "type": "object",
+        "properties": {
+          "model_usage": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/LLMInputOutputTokensUsage"
+            },
+            "propertyNames": {
+              "$ref": "#/components/schemas/LLM"
+            },
+            "title": "Model Usage"
+          }
+        },
+        "title": "LLMUsage"
+      },
+      "LLMUsage-Output": {
         "type": "object",
         "properties": {
           "model_usage": {
@@ -25581,6 +26914,132 @@
         ],
         "title": "LiteralJsonSchemaProperty"
       },
+      "MCPToolConfig-Input": {
+        "description": "A MCP tool is a tool that is used to call a MCP server",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "default": "",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 0,
+            "pattern": "^[a-zA-Z0-9_-]{1,64}$",
+            "title": "Name"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 0,
+            "title": "Description"
+          },
+          "response_timeout_secs": {
+            "description": "The maximum time in seconds to wait for the tool call to complete.",
+            "type": "integer",
+            "default": 20,
+            "title": "Response Timeout Secs"
+          },
+          "type": {
+            "description": "The type of tool",
+            "type": "string",
+            "default": "mcp",
+            "const": "mcp",
+            "title": "Type"
+          },
+          "parameters": {
+            "description": "Schema for any parameters the LLM needs to provide to the MCP tool.",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ObjectJsonSchemaProperty-Input"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "mcp_tool_name": {
+            "description": "The name of the MCP tool to call",
+            "type": "string",
+            "title": "Mcp Tool Name"
+          },
+          "mcp_server_id": {
+            "description": "The id of the MCP server to call",
+            "type": "string",
+            "title": "Mcp Server Id"
+          }
+        },
+        "required": [
+          "name",
+          "description",
+          "mcp_tool_name",
+          "mcp_server_id"
+        ],
+        "title": "MCPToolConfig"
+      },
+      "MCPToolConfig-Output": {
+        "description": "A MCP tool is a tool that is used to call a MCP server",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "default": "",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 0,
+            "pattern": "^[a-zA-Z0-9_-]{1,64}$",
+            "title": "Name"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 0,
+            "title": "Description"
+          },
+          "response_timeout_secs": {
+            "description": "The maximum time in seconds to wait for the tool call to complete.",
+            "type": "integer",
+            "default": 20,
+            "title": "Response Timeout Secs"
+          },
+          "type": {
+            "description": "The type of tool",
+            "type": "string",
+            "default": "mcp",
+            "const": "mcp",
+            "title": "Type"
+          },
+          "parameters": {
+            "description": "Schema for any parameters the LLM needs to provide to the MCP tool.",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ObjectJsonSchemaProperty-Output"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "mcp_tool_name": {
+            "description": "The name of the MCP tool to call",
+            "type": "string",
+            "title": "Mcp Tool Name"
+          },
+          "mcp_server_id": {
+            "description": "The id of the MCP server to call",
+            "type": "string",
+            "title": "Mcp Server Id"
+          }
+        },
+        "required": [
+          "name",
+          "description",
+          "mcp_tool_name",
+          "mcp_server_id"
+        ],
+        "title": "MCPToolConfig"
+      },
       "ManualVerificationFileResponseModel": {
         "type": "object",
         "properties": {
@@ -25953,6 +27412,18 @@
             "const": "object",
             "title": "Type"
           },
+          "required": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "title": "Required"
+          },
+          "description": {
+            "type": "string",
+            "default": "",
+            "title": "Description"
+          },
           "properties": {
             "type": "object",
             "additionalProperties": {
@@ -25969,18 +27440,6 @@
               ]
             },
             "title": "Properties"
-          },
-          "required": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "title": "Required"
-          },
-          "description": {
-            "type": "string",
-            "default": "",
-            "title": "Description"
           }
         },
         "additionalProperties": false,
@@ -25994,6 +27453,18 @@
             "default": "object",
             "const": "object",
             "title": "Type"
+          },
+          "required": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "title": "Required"
+          },
+          "description": {
+            "type": "string",
+            "default": "",
+            "title": "Description"
           },
           "properties": {
             "type": "object",
@@ -26011,18 +27482,6 @@
               ]
             },
             "title": "Properties"
-          },
-          "required": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "title": "Required"
-          },
-          "description": {
-            "type": "string",
-            "default": "",
-            "title": "Description"
           }
         },
         "additionalProperties": false,
@@ -26058,6 +27517,60 @@
         },
         "title": "OrbAvatar"
       },
+      "OutboundCallRecipientResponseModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "phone_number": {
+            "type": "string",
+            "title": "Phone Number"
+          },
+          "status": {
+            "$ref": "#/components/schemas/BatchCallRecipientStatus"
+          },
+          "created_at_unix": {
+            "type": "integer",
+            "title": "Created At Unix"
+          },
+          "updated_at_unix": {
+            "type": "integer",
+            "title": "Updated At Unix"
+          },
+          "conversation_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Conversation Id"
+          },
+          "conversation_initiation_client_data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ConversationInitiationClientDataInternal"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "phone_number",
+          "status",
+          "created_at_unix",
+          "updated_at_unix",
+          "conversation_id"
+        ],
+        "title": "OutboundCallRecipientResponseModel"
+      },
       "PatchConvAIDashboardSettingsRequest": {
         "type": "object",
         "properties": {
@@ -26070,13 +27583,17 @@
                 },
                 {
                   "$ref": "#/components/schemas/DashboardCriteriaChartModel"
+                },
+                {
+                  "$ref": "#/components/schemas/DashboardDataCollectionChartModel"
                 }
               ],
               "discriminator": {
                 "propertyName": "type",
                 "mapping": {
                   "call_success": "#/components/schemas/DashboardCallSuccessChartModel",
-                  "criteria": "#/components/schemas/DashboardCriteriaChartModel"
+                  "criteria": "#/components/schemas/DashboardCriteriaChartModel",
+                  "data_collection": "#/components/schemas/DashboardDataCollectionChartModel"
                 }
               }
             },
@@ -26101,6 +27618,13 @@
           },
           "webhooks": {
             "$ref": "#/components/schemas/ConvAIWebhooks"
+          },
+          "rag_retention_period_days": {
+            "type": "integer",
+            "default": 10,
+            "exclusiveMinimum": 0,
+            "maximum": 30,
+            "title": "Rag Retention Period Days"
           }
         },
         "title": "PatchConvAISettingsRequest"
@@ -26465,6 +27989,12 @@
             "type": "boolean",
             "default": false,
             "title": "Apply To Existing Conversations"
+          },
+          "zero_retention_mode": {
+            "description": "Whether to enable zero retention mode - no PII data is stored",
+            "type": "boolean",
+            "default": false,
+            "title": "Zero Retention Mode"
           }
         },
         "example": {
@@ -26472,77 +28002,10 @@
           "delete_audio": false,
           "delete_transcript_and_pii": false,
           "record_voice": true,
-          "retention_days": -1
+          "retention_days": -1,
+          "zero_retention_mode": false
         },
         "title": "PrivacyConfig"
-      },
-      "ProfilePageResponseModel": {
-        "type": "object",
-        "properties": {
-          "handle": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Handle"
-          },
-          "public_user_id": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Public User Id"
-          },
-          "name": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Name"
-          },
-          "bio": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Bio"
-          },
-          "profile_picture": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Profile Picture"
-          }
-        },
-        "required": [
-          "handle",
-          "public_user_id",
-          "name",
-          "bio",
-          "profile_picture"
-        ],
-        "title": "ProfilePageResponseModel"
       },
       "ProjectCreationMetaResponseModel": {
         "type": "object",
@@ -27520,6 +28983,9 @@
                 },
                 {
                   "$ref": "#/components/schemas/SystemToolConfig-Input"
+                },
+                {
+                  "$ref": "#/components/schemas/MCPToolConfig-Input"
                 }
               ],
               "description": "The type of tool",
@@ -27527,6 +28993,7 @@
                 "propertyName": "type",
                 "mapping": {
                   "client": "#/components/schemas/ClientToolConfig-Input",
+                  "mcp": "#/components/schemas/MCPToolConfig-Input",
                   "system": "#/components/schemas/SystemToolConfig-Input",
                   "webhook": "#/components/schemas/WebhookToolConfig-Input"
                 }
@@ -27541,6 +29008,15 @@
               "type": "string"
             },
             "title": "Tool Ids"
+          },
+          "mcp_server_ids": {
+            "description": "A list of MCP server ids to be used by the agent",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 10,
+            "title": "Mcp Server Ids"
           },
           "knowledge_base": {
             "description": "A list of knowledge bases to be used by the agent",
@@ -27629,6 +29105,9 @@
                 },
                 {
                   "$ref": "#/components/schemas/SystemToolConfig-Output"
+                },
+                {
+                  "$ref": "#/components/schemas/MCPToolConfig-Output"
                 }
               ],
               "description": "The type of tool",
@@ -27636,6 +29115,7 @@
                 "propertyName": "type",
                 "mapping": {
                   "client": "#/components/schemas/ClientToolConfig-Output",
+                  "mcp": "#/components/schemas/MCPToolConfig-Output",
                   "system": "#/components/schemas/SystemToolConfig-Output",
                   "webhook": "#/components/schemas/WebhookToolConfig-Output"
                 }
@@ -27650,6 +29130,15 @@
               "type": "string"
             },
             "title": "Tool Ids"
+          },
+          "mcp_server_ids": {
+            "description": "A list of MCP server ids to be used by the agent",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 10,
+            "title": "Mcp Server Ids"
           },
           "knowledge_base": {
             "description": "A list of knowledge bases to be used by the agent",
@@ -27698,6 +29187,135 @@
           "tools": []
         },
         "title": "PromptAgent"
+      },
+      "PromptAgentDBModel": {
+        "type": "object",
+        "properties": {
+          "prompt": {
+            "description": "The prompt for the agent",
+            "type": "string",
+            "default": "",
+            "title": "Prompt"
+          },
+          "llm": {
+            "description": "The LLM to query with the prompt and the chat history",
+            "default": "gemini-2.0-flash-001",
+            "$ref": "#/components/schemas/LLM"
+          },
+          "temperature": {
+            "description": "The temperature for the LLM",
+            "type": "number",
+            "default": 0,
+            "title": "Temperature"
+          },
+          "max_tokens": {
+            "description": "If greater than 0, maximum number of tokens the LLM can predict",
+            "type": "integer",
+            "default": -1,
+            "title": "Max Tokens"
+          },
+          "tools": {
+            "description": "A list of tools that the agent can use over the course of the conversation",
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/WebhookToolConfig-Input"
+                },
+                {
+                  "$ref": "#/components/schemas/ClientToolConfig-Input"
+                },
+                {
+                  "$ref": "#/components/schemas/SystemToolConfig-Input"
+                },
+                {
+                  "$ref": "#/components/schemas/MCPToolConfig-Input"
+                }
+              ],
+              "description": "The type of tool",
+              "discriminator": {
+                "propertyName": "type",
+                "mapping": {
+                  "client": "#/components/schemas/ClientToolConfig-Input",
+                  "mcp": "#/components/schemas/MCPToolConfig-Input",
+                  "system": "#/components/schemas/SystemToolConfig-Input",
+                  "webhook": "#/components/schemas/WebhookToolConfig-Input"
+                }
+              }
+            },
+            "title": "Tools"
+          },
+          "tool_ids": {
+            "description": "A list of IDs of tools used by the agent",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "title": "Tool Ids"
+          },
+          "mcp_server_ids": {
+            "description": "A list of MCP server ids to be used by the agent",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 10,
+            "title": "Mcp Server Ids"
+          },
+          "knowledge_base": {
+            "description": "A list of knowledge bases to be used by the agent",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/KnowledgeBaseLocator"
+            },
+            "title": "Knowledge Base"
+          },
+          "custom_llm": {
+            "description": "Definition for a custom LLM if LLM field is set to 'CUSTOM_LLM'",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CustomLLM"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "ignore_default_personality": {
+            "description": "Whether to ignore the default personality",
+            "default": false,
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ignore Default Personality"
+          },
+          "rag": {
+            "description": "Configuration for RAG",
+            "$ref": "#/components/schemas/RagConfig"
+          },
+          "knowledge_base_document_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "title": "Knowledge Base Document Ids"
+          }
+        },
+        "example": {
+          "knowledge_base": [],
+          "llm": "gemini-2.0-flash-001",
+          "max_tokens": -1,
+          "prompt": "You are a helpful assistant that can answer questions about the topic of the conversation.",
+          "temperature": 0,
+          "tool_ids": [],
+          "tools": []
+        },
+        "title": "PromptAgentDBModel"
       },
       "PromptAgentOverride": {
         "type": "object",
@@ -27922,6 +29540,32 @@
         ],
         "title": "PronunciationDictionaryVersionLocatorDBModel"
       },
+      "PronunciationDictionaryVersionLocatorRequestModel": {
+        "type": "object",
+        "properties": {
+          "pronunciation_dictionary_id": {
+            "description": "The ID of the pronunciation dictionary.",
+            "type": "string",
+            "title": "Pronunciation Dictionary Id"
+          },
+          "version_id": {
+            "description": "The ID of the version of the pronunciation dictionary. If not provided, the latest version will be used.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version Id"
+          }
+        },
+        "required": [
+          "pronunciation_dictionary_id"
+        ],
+        "title": "PronunciationDictionaryVersionLocatorRequestModel"
+      },
       "PronunciationDictionaryVersionResponseModel": {
         "type": "object",
         "properties": {
@@ -28029,6 +29673,7 @@
             "additionalProperties": {
               "$ref": "#/components/schemas/LiteralJsonSchemaProperty"
             },
+            "minProperties": 1,
             "title": "Properties"
           },
           "required": {
@@ -28468,6 +30113,72 @@
         ],
         "title": "ResourceMetadataResponseModel"
       },
+      "SIPMediaEncryptionEnum": {
+        "type": "string",
+        "enum": [
+          "disabled",
+          "allowed",
+          "required"
+        ],
+        "title": "SIPMediaEncryptionEnum"
+      },
+      "SIPTrunkConfigResponseModel": {
+        "description": "SIP Trunk configuration details for a phone number",
+        "type": "object",
+        "properties": {
+          "address": {
+            "description": "Hostname or IP the SIP INVITE is sent to",
+            "type": "string",
+            "title": "Address"
+          },
+          "transport": {
+            "description": "Protocol to use for SIP transport",
+            "$ref": "#/components/schemas/SIPTrunkTransportEnum"
+          },
+          "media_encryption": {
+            "description": "Whether or not to encrypt media (data layer).",
+            "$ref": "#/components/schemas/SIPMediaEncryptionEnum"
+          },
+          "headers": {
+            "description": "SIP headers for INVITE request",
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Headers"
+          },
+          "has_auth_credentials": {
+            "description": "Whether authentication credentials are configured",
+            "type": "boolean",
+            "title": "Has Auth Credentials"
+          },
+          "username": {
+            "description": "SIP trunk username (if available)",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Username"
+          },
+          "has_outbound_trunk": {
+            "description": "Whether a LiveKit SIP outbound trunk is configured",
+            "type": "boolean",
+            "default": false,
+            "title": "Has Outbound Trunk"
+          }
+        },
+        "required": [
+          "address",
+          "transport",
+          "media_encryption",
+          "has_auth_credentials"
+        ],
+        "title": "SIPTrunkConfigResponseModel"
+      },
       "SIPTrunkCredentials": {
         "type": "object",
         "properties": {
@@ -28487,6 +30198,46 @@
           "password"
         ],
         "title": "SIPTrunkCredentials"
+      },
+      "SIPTrunkOutboundCallResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "sip_call_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sip Call Id"
+          }
+        },
+        "required": [
+          "success",
+          "message",
+          "sip_call_id"
+        ],
+        "title": "SIPTrunkOutboundCallResponse"
+      },
+      "SIPTrunkTransportEnum": {
+        "type": "string",
+        "enum": [
+          "auto",
+          "udp",
+          "tcp",
+          "tls"
+        ],
+        "title": "SIPTrunkTransportEnum"
       },
       "SafetyCommonModel": {
         "description": "Safety object that has the information of safety evaluations based on used voice.",
@@ -28715,6 +30466,20 @@
               }
             ],
             "title": "Text"
+          },
+          "translations": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Translations"
           }
         },
         "required": [
@@ -28933,6 +30698,74 @@
         ],
         "title": "ShareOptionResponseModel"
       },
+      "SimilarVoice": {
+        "type": "object",
+        "properties": {
+          "voice_id": {
+            "type": "string",
+            "title": "Voice Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "premade",
+              "cloned",
+              "generated",
+              "professional",
+              "famous"
+            ],
+            "title": "Category"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "preview_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Preview Url"
+          }
+        },
+        "required": [
+          "voice_id",
+          "name",
+          "category"
+        ],
+        "title": "SimilarVoice"
+      },
+      "SimilarVoicesForSpeakerResponse": {
+        "type": "object",
+        "properties": {
+          "voices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SimilarVoice"
+            },
+            "title": "Voices"
+          }
+        },
+        "required": [
+          "voices"
+        ],
+        "title": "SimilarVoicesForSpeakerResponse"
+      },
       "SpeakerAudioResponseModel": {
         "type": "object",
         "properties": {
@@ -29120,6 +30953,13 @@
             "type": "string",
             "title": "Speaker Name"
           },
+          "voices": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Voices"
+          },
           "segments": {
             "type": "array",
             "items": {
@@ -29132,9 +30972,23 @@
           "id",
           "media_ref",
           "speaker_name",
+          "voices",
           "segments"
         ],
         "title": "SpeakerTrack"
+      },
+      "SpeakerUpdatedResponse": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "integer",
+            "title": "Version"
+          }
+        },
+        "required": [
+          "version"
+        ],
+        "title": "SpeakerUpdatedResponse"
       },
       "SpeechHistoryItemResponseModel": {
         "type": "object",
@@ -29267,7 +31121,7 @@
             "title": "Share Link Id"
           },
           "source": {
-            "description": "The source of the history item. Either TTS (text to speech), STS (speech to text), AN (audio native), Projects, Dubbing or PlayAPI.",
+            "description": "The source of the history item. Either TTS (text to speech), STS (speech to text), AN (audio native), Projects, Dubbing, PlayAPI, PD (pronunciation dictionary) or ConvAI (conversational AI).",
             "anyOf": [
               {
                 "type": "string",
@@ -29275,9 +31129,11 @@
                   "TTS",
                   "STS",
                   "Projects",
+                  "PD",
                   "AN",
                   "Dubbing",
-                  "PlayAPI"
+                  "PlayAPI",
+                  "ConvAI"
                 ]
               },
               {
@@ -29516,6 +31372,11 @@
             ],
             "title": "Speaker Id"
           },
+          "logprob": {
+            "description": "The log of the probability with which this word was predicted. Logprobs are in range [-infinity, 0], higher logprobs indicate a higher confidence the model has in its predictions.",
+            "type": "number",
+            "title": "Logprob"
+          },
           "characters": {
             "description": "The characters that make up the word and their timing information.",
             "anyOf": [
@@ -29561,6 +31422,7 @@
             }
           ],
           "end": 0.5,
+          "logprob": -0.124,
           "speaker_id": "speaker_1",
           "start": 0,
           "text": "Hello",
@@ -29568,7 +31430,8 @@
         },
         "required": [
           "text",
-          "type"
+          "type",
+          "logprob"
         ],
         "title": "SpeechToTextWordResponseModel"
       },
@@ -30160,13 +32023,6 @@
             "default": "",
             "title": "Id"
           },
-          "type": {
-            "description": "The type of tool",
-            "type": "string",
-            "default": "system",
-            "const": "system",
-            "title": "Type"
-          },
           "name": {
             "type": "string",
             "minLength": 0,
@@ -30177,6 +32033,19 @@
             "type": "string",
             "minLength": 0,
             "title": "Description"
+          },
+          "response_timeout_secs": {
+            "description": "The maximum time in seconds to wait for the tool call to complete.",
+            "type": "integer",
+            "default": 20,
+            "title": "Response Timeout Secs"
+          },
+          "type": {
+            "description": "The type of tool",
+            "type": "string",
+            "default": "system",
+            "const": "system",
+            "title": "Type"
           },
           "params": {
             "discriminator": {
@@ -30224,13 +32093,6 @@
             "default": "",
             "title": "Id"
           },
-          "type": {
-            "description": "The type of tool",
-            "type": "string",
-            "default": "system",
-            "const": "system",
-            "title": "Type"
-          },
           "name": {
             "type": "string",
             "minLength": 0,
@@ -30241,6 +32103,19 @@
             "type": "string",
             "minLength": 0,
             "title": "Description"
+          },
+          "response_timeout_secs": {
+            "description": "The maximum time in seconds to wait for the tool call to complete.",
+            "type": "integer",
+            "default": 20,
+            "title": "Response Timeout Secs"
+          },
+          "type": {
+            "description": "The type of tool",
+            "type": "string",
+            "default": "system",
+            "const": "system",
+            "title": "Type"
           },
           "params": {
             "discriminator": {
@@ -30422,6 +32297,22 @@
           "sip_trunk"
         ],
         "title": "TelephonyProvider"
+      },
+      "ToolMockConfig": {
+        "type": "object",
+        "properties": {
+          "default_return_value": {
+            "type": "string",
+            "default": "Tool Called.",
+            "title": "Default Return Value"
+          },
+          "default_is_error": {
+            "type": "boolean",
+            "default": false,
+            "title": "Default Is Error"
+          }
+        },
+        "title": "ToolMockConfig"
       },
       "TransferToAgentToolConfig": {
         "type": "object",
@@ -31819,7 +33710,7 @@
             "title": "Use Speaker Boost"
           },
           "speed": {
-            "description": "Controls the speed of the generated speech. Values range from 0.7 to 1.2, with 1.0 being the default speed. Lower values create slower, more deliberate speech while higher values produce faster-paced speech. Extreme values can impact the quality of the generated speech.",
+            "description": "Adjusts the speed of the voice. A value of 1.0 is the default speed, while values less than 1.0 slow down the speech, and values greater than 1.0 speed it up.",
             "anyOf": [
               {
                 "type": "number"
@@ -32645,13 +34536,6 @@
             "default": "",
             "title": "Id"
           },
-          "type": {
-            "description": "The type of tool",
-            "type": "string",
-            "default": "webhook",
-            "const": "webhook",
-            "title": "Type"
-          },
           "name": {
             "type": "string",
             "minLength": 0,
@@ -32663,6 +34547,21 @@
             "minLength": 0,
             "title": "Description"
           },
+          "response_timeout_secs": {
+            "description": "The maximum time in seconds to wait for the tool call to complete. Must be between 5 and 120 seconds (inclusive).",
+            "type": "integer",
+            "default": 20,
+            "maximum": 120,
+            "minimum": 5,
+            "title": "Response Timeout Secs"
+          },
+          "type": {
+            "description": "The type of tool",
+            "type": "string",
+            "default": "webhook",
+            "const": "webhook",
+            "title": "Type"
+          },
           "api_schema": {
             "description": "The schema for the outgoing webhoook, including parameters and URL specification",
             "$ref": "#/components/schemas/WebhookToolApiSchemaConfig-Input"
@@ -32673,6 +34572,7 @@
           }
         },
         "example": {
+          "response_timeout_secs": 20,
           "type": "webhook"
         },
         "required": [
@@ -32691,13 +34591,6 @@
             "default": "",
             "title": "Id"
           },
-          "type": {
-            "description": "The type of tool",
-            "type": "string",
-            "default": "webhook",
-            "const": "webhook",
-            "title": "Type"
-          },
           "name": {
             "type": "string",
             "minLength": 0,
@@ -32709,6 +34602,21 @@
             "minLength": 0,
             "title": "Description"
           },
+          "response_timeout_secs": {
+            "description": "The maximum time in seconds to wait for the tool call to complete. Must be between 5 and 120 seconds (inclusive).",
+            "type": "integer",
+            "default": 20,
+            "maximum": 120,
+            "minimum": 5,
+            "title": "Response Timeout Secs"
+          },
+          "type": {
+            "description": "The type of tool",
+            "type": "string",
+            "default": "webhook",
+            "const": "webhook",
+            "title": "Type"
+          },
           "api_schema": {
             "description": "The schema for the outgoing webhoook, including parameters and URL specification",
             "$ref": "#/components/schemas/WebhookToolApiSchemaConfig-Output"
@@ -32719,6 +34627,7 @@
           }
         },
         "example": {
+          "response_timeout_secs": 20,
           "type": "webhook"
         },
         "required": [
@@ -33363,6 +35272,7 @@
           "convai_secrets",
           "music_latent",
           "convai_phone_numbers",
+          "convai_mcps",
           "convai_batch_calls"
         ],
         "title": "WorkspaceResourceType"

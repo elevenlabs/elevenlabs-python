@@ -10,9 +10,9 @@ from ..core.pydantic_utilities import update_forward_refs
 
 class ObjectJsonSchemaPropertyOutput(UncheckedBaseModel):
     type: typing.Optional[typing.Literal["object"]] = None
-    properties: typing.Optional[typing.Dict[str, "ObjectJsonSchemaPropertyOutputPropertiesValue"]] = None
     required: typing.Optional[typing.List[str]] = None
     description: typing.Optional[str] = None
+    properties: typing.Optional[typing.Dict[str, "ObjectJsonSchemaPropertyOutputPropertiesValue"]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

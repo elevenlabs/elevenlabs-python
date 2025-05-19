@@ -38,10 +38,26 @@ class GetConvAiDashboardSettingsResponseModelChartsItem_Criteria(UncheckedBaseMo
             extra = pydantic.Extra.allow
 
 
+class GetConvAiDashboardSettingsResponseModelChartsItem_DataCollection(UncheckedBaseModel):
+    type: typing.Literal["data_collection"] = "data_collection"
+    name: str
+    data_collection_id: str
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 GetConvAiDashboardSettingsResponseModelChartsItem = typing_extensions.Annotated[
     typing.Union[
         GetConvAiDashboardSettingsResponseModelChartsItem_CallSuccess,
         GetConvAiDashboardSettingsResponseModelChartsItem_Criteria,
+        GetConvAiDashboardSettingsResponseModelChartsItem_DataCollection,
     ],
     UnionMetadata(discriminant="type"),
 ]
