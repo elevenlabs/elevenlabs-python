@@ -8,6 +8,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ConversationConfig(UncheckedBaseModel):
+    text_only: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If enabled audio will not be processed and only text will be used, use to avoid audio pricing.
+    """
+
     max_duration_seconds: typing.Optional[int] = pydantic.Field(default=None)
     """
     The maximum duration of a conversation in seconds

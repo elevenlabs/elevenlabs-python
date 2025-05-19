@@ -11,12 +11,12 @@ from .types import (
     BodyCreatePodcastV1StudioPodcastsPostSourceItem_Text,
     BodyCreatePodcastV1StudioPodcastsPostSourceItem_Url,
 )
-from . import chapters, projects
+from . import projects
 from .projects import (
-    ProjectsAddRequestApplyTextNormalization,
-    ProjectsAddRequestFiction,
-    ProjectsAddRequestSourceType,
-    ProjectsAddRequestTargetAudience,
+    ProjectsCreateRequestApplyTextNormalization,
+    ProjectsCreateRequestFiction,
+    ProjectsCreateRequestSourceType,
+    ProjectsCreateRequestTargetAudience,
 )
 
 __all__ = [
@@ -29,10 +29,9 @@ __all__ = [
     "BodyCreatePodcastV1StudioPodcastsPostSourceItem",
     "BodyCreatePodcastV1StudioPodcastsPostSourceItem_Text",
     "BodyCreatePodcastV1StudioPodcastsPostSourceItem_Url",
-    "ProjectsAddRequestApplyTextNormalization",
-    "ProjectsAddRequestFiction",
-    "ProjectsAddRequestSourceType",
-    "ProjectsAddRequestTargetAudience",
-    "chapters",
+    "ProjectsCreateRequestApplyTextNormalization",
+    "ProjectsCreateRequestFiction",
+    "ProjectsCreateRequestSourceType",
+    "ProjectsCreateRequestTargetAudience",
     "projects",
 ]

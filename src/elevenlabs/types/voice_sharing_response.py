@@ -64,6 +64,11 @@ class VoiceSharingResponse(UncheckedBaseModel):
     The rate of the voice sharing.
     """
 
+    fiat_rate: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    The rate of the voice sharing in USD per 1000 credits.
+    """
+
     notice_period: typing.Optional[int] = pydantic.Field(default=None)
     """
     The notice period of the voice sharing.

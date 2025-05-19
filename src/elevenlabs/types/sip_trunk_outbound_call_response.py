@@ -9,6 +9,7 @@ import pydantic
 class SipTrunkOutboundCallResponse(UncheckedBaseModel):
     success: bool
     message: str
+    conversation_id: typing.Optional[str] = None
     sip_call_id: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

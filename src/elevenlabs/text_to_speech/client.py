@@ -27,8 +27,8 @@ from .types.body_text_to_speech_with_timestamps_v_1_text_to_speech_voice_id_with
     BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization,
 )
 from ..types.audio_with_timestamps_response import AudioWithTimestampsResponse
-from .types.text_to_speech_convert_as_stream_request_output_format import (
-    TextToSpeechConvertAsStreamRequestOutputFormat,
+from .types.text_to_speech_stream_request_output_format import (
+    TextToSpeechStreamRequestOutputFormat,
 )
 from .types.body_text_to_speech_streaming_v_1_text_to_speech_voice_id_stream_post_apply_text_normalization import (
     BodyTextToSpeechStreamingV1TextToSpeechVoiceIdStreamPostApplyTextNormalization,
@@ -391,14 +391,14 @@ class TextToSpeechClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def convert_as_stream(
+    def stream(
         self,
         voice_id: str,
         *,
         text: str,
         enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[TextToSpeechConvertAsStreamRequestOutputFormat] = None,
+        output_format: typing.Optional[TextToSpeechStreamRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
@@ -441,7 +441,7 @@ class TextToSpeechClient:
 
             Defaults to None.
 
-        output_format : typing.Optional[TextToSpeechConvertAsStreamRequestOutputFormat]
+        output_format : typing.Optional[TextToSpeechStreamRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
@@ -495,7 +495,7 @@ class TextToSpeechClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.text_to_speech.convert_as_stream(
+        client.text_to_speech.stream(
             voice_id="JBFqnCBsd6RMkjVDRZzb",
             output_format="mp3_44100_128",
             text="The first move is what sets everything in motion.",
@@ -1100,14 +1100,14 @@ class AsyncTextToSpeechClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def convert_as_stream(
+    async def stream(
         self,
         voice_id: str,
         *,
         text: str,
         enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[TextToSpeechConvertAsStreamRequestOutputFormat] = None,
+        output_format: typing.Optional[TextToSpeechStreamRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
@@ -1150,7 +1150,7 @@ class AsyncTextToSpeechClient:
 
             Defaults to None.
 
-        output_format : typing.Optional[TextToSpeechConvertAsStreamRequestOutputFormat]
+        output_format : typing.Optional[TextToSpeechStreamRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
@@ -1209,7 +1209,7 @@ class AsyncTextToSpeechClient:
 
 
         async def main() -> None:
-            await client.text_to_speech.convert_as_stream(
+            await client.text_to_speech.stream(
                 voice_id="JBFqnCBsd6RMkjVDRZzb",
                 output_format="mp3_44100_128",
                 text="The first move is what sets everything in motion.",

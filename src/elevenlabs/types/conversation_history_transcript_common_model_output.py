@@ -12,6 +12,9 @@ from .conversation_history_transcript_tool_result_common_model import (
     ConversationHistoryTranscriptToolResultCommonModel,
 )
 from .user_feedback import UserFeedback
+from .conversation_history_transcript_common_model_output_source_medium import (
+    ConversationHistoryTranscriptCommonModelOutputSourceMedium,
+)
 from .conversation_turn_metrics import ConversationTurnMetrics
 from .rag_retrieval_info import RagRetrievalInfo
 from .llm_usage_output import LlmUsageOutput
@@ -26,10 +29,13 @@ class ConversationHistoryTranscriptCommonModelOutput(UncheckedBaseModel):
     tool_results: typing.Optional[typing.List[ConversationHistoryTranscriptToolResultCommonModel]] = None
     feedback: typing.Optional[UserFeedback] = None
     llm_override: typing.Optional[str] = None
+    source_medium: typing.Optional[ConversationHistoryTranscriptCommonModelOutputSourceMedium] = None
     time_in_call_secs: int
     conversation_turn_metrics: typing.Optional[ConversationTurnMetrics] = None
     rag_retrieval_info: typing.Optional[RagRetrievalInfo] = None
     llm_usage: typing.Optional[LlmUsageOutput] = None
+    interrupted: typing.Optional[bool] = None
+    original_message: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

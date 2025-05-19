@@ -136,6 +136,11 @@ class WidgetConfigResponseModel(UncheckedBaseModel):
     Whether to disable the banner
     """
 
+    override_link: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The override link for the widget
+    """
+
     mic_muting_enabled: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether to enable mic muting

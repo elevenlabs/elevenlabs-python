@@ -19,7 +19,7 @@ class UsageClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_characters_usage_metrics(
+    def get(
         self,
         *,
         start_unix: int,
@@ -68,7 +68,7 @@ class UsageClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.usage.get_characters_usage_metrics(
+        client.usage.get(
             start_unix=1,
             end_unix=1,
         )
@@ -116,7 +116,7 @@ class AsyncUsageClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_characters_usage_metrics(
+    async def get(
         self,
         *,
         start_unix: int,
@@ -170,7 +170,7 @@ class AsyncUsageClient:
 
 
         async def main() -> None:
-            await client.usage.get_characters_usage_metrics(
+            await client.usage.get(
                 start_unix=1,
                 end_unix=1,
             )

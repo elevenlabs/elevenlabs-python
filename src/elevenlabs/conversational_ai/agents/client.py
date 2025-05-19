@@ -2,22 +2,33 @@
 
 import typing
 from ...core.client_wrapper import SyncClientWrapper
-from ...types.conversation_simulation_specification import (
-    ConversationSimulationSpecification,
+from .widget.client import WidgetClient
+from .link.client import LinkClient
+from ...types.conversational_config import ConversationalConfig
+from ...types.agent_platform_settings_request_model import (
+    AgentPlatformSettingsRequestModel,
 )
-from ...types.prompt_evaluation_criteria import PromptEvaluationCriteria
 from ...core.request_options import RequestOptions
-from ...types.agent_simulated_chat_test_response_model import (
-    AgentSimulatedChatTestResponseModel,
-)
-from ...core.jsonable_encoder import jsonable_encoder
+from ...types.create_agent_response_model import CreateAgentResponseModel
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.http_validation_error import HttpValidationError
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
+from ...types.get_agent_response_model import GetAgentResponseModel
+from ...core.jsonable_encoder import jsonable_encoder
+from ...types.get_agents_page_response_model import GetAgentsPageResponseModel
+from ...types.conversation_simulation_specification import (
+    ConversationSimulationSpecification,
+)
+from ...types.prompt_evaluation_criteria import PromptEvaluationCriteria
+from ...types.agent_simulated_chat_test_response_model import (
+    AgentSimulatedChatTestResponseModel,
+)
 from ...core.client_wrapper import AsyncClientWrapper
+from .widget.client import AsyncWidgetClient
+from .link.client import AsyncLinkClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -26,6 +37,371 @@ OMIT = typing.cast(typing.Any, ...)
 class AgentsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+        self.widget = WidgetClient(client_wrapper=self._client_wrapper)
+        self.link = LinkClient(client_wrapper=self._client_wrapper)
+
+    def create(
+        self,
+        *,
+        conversation_config: ConversationalConfig,
+        platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
+        name: typing.Optional[str] = OMIT,
+        tags: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> CreateAgentResponseModel:
+        """
+        Create an agent from a config object
+
+        Parameters
+        ----------
+        conversation_config : ConversationalConfig
+            Conversation configuration for an agent
+
+        platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
+            Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
+
+        name : typing.Optional[str]
+            A name to make the agent easier to find
+
+        tags : typing.Optional[typing.Sequence[str]]
+            Tags to help classify and filter the agent
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CreateAgentResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ConversationalConfig, ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.agents.create(
+            conversation_config=ConversationalConfig(),
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/convai/agents/create",
+            base_url=self._client_wrapper.get_environment().base,
+            method="POST",
+            json={
+                "conversation_config": convert_and_respect_annotation_metadata(
+                    object_=conversation_config,
+                    annotation=ConversationalConfig,
+                    direction="write",
+                ),
+                "platform_settings": convert_and_respect_annotation_metadata(
+                    object_=platform_settings,
+                    annotation=AgentPlatformSettingsRequestModel,
+                    direction="write",
+                ),
+                "name": name,
+                "tags": tags,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    CreateAgentResponseModel,
+                    construct_type(
+                        type_=CreateAgentResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get(self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetAgentResponseModel:
+        """
+        Retrieve config for an agent
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of an agent. This is returned on agent creation.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetAgentResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.agents.get(
+            agent_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/convai/agents/{jsonable_encoder(agent_id)}",
+            base_url=self._client_wrapper.get_environment().base,
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetAgentResponseModel,
+                    construct_type(
+                        type_=GetAgentResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def delete(self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete an agent
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of an agent. This is returned on agent creation.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.agents.delete(
+            agent_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/convai/agents/{jsonable_encoder(agent_id)}",
+            base_url=self._client_wrapper.get_environment().base,
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def update(
+        self,
+        agent_id: str,
+        *,
+        conversation_config: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        platform_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        name: typing.Optional[str] = OMIT,
+        tags: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetAgentResponseModel:
+        """
+        Patches an Agent settings
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of an agent. This is returned on agent creation.
+
+        conversation_config : typing.Optional[typing.Optional[typing.Any]]
+
+        platform_settings : typing.Optional[typing.Optional[typing.Any]]
+
+        name : typing.Optional[str]
+            A name to make the agent easier to find
+
+        tags : typing.Optional[typing.Sequence[str]]
+            Tags to help classify and filter the agent
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetAgentResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.agents.update(
+            agent_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/convai/agents/{jsonable_encoder(agent_id)}",
+            base_url=self._client_wrapper.get_environment().base,
+            method="PATCH",
+            json={
+                "conversation_config": conversation_config,
+                "platform_settings": platform_settings,
+                "name": name,
+                "tags": tags,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetAgentResponseModel,
+                    construct_type(
+                        type_=GetAgentResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def list(
+        self,
+        *,
+        cursor: typing.Optional[str] = None,
+        page_size: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetAgentsPageResponseModel:
+        """
+        Returns a list of your agents and their metadata.
+
+        Parameters
+        ----------
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        page_size : typing.Optional[int]
+            How many Agents to return at maximum. Can not exceed 100, defaults to 30.
+
+        search : typing.Optional[str]
+            Search by agents name.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetAgentsPageResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.agents.list()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/convai/agents",
+            base_url=self._client_wrapper.get_environment().base,
+            method="GET",
+            params={
+                "cursor": cursor,
+                "page_size": page_size,
+                "search": search,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetAgentsPageResponseModel,
+                    construct_type(
+                        type_=GetAgentsPageResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def simulate_conversation(
         self,
@@ -218,6 +594,413 @@ class AgentsClient:
 class AsyncAgentsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+        self.widget = AsyncWidgetClient(client_wrapper=self._client_wrapper)
+        self.link = AsyncLinkClient(client_wrapper=self._client_wrapper)
+
+    async def create(
+        self,
+        *,
+        conversation_config: ConversationalConfig,
+        platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
+        name: typing.Optional[str] = OMIT,
+        tags: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> CreateAgentResponseModel:
+        """
+        Create an agent from a config object
+
+        Parameters
+        ----------
+        conversation_config : ConversationalConfig
+            Conversation configuration for an agent
+
+        platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
+            Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
+
+        name : typing.Optional[str]
+            A name to make the agent easier to find
+
+        tags : typing.Optional[typing.Sequence[str]]
+            Tags to help classify and filter the agent
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CreateAgentResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs, ConversationalConfig
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.agents.create(
+                conversation_config=ConversationalConfig(),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/convai/agents/create",
+            base_url=self._client_wrapper.get_environment().base,
+            method="POST",
+            json={
+                "conversation_config": convert_and_respect_annotation_metadata(
+                    object_=conversation_config,
+                    annotation=ConversationalConfig,
+                    direction="write",
+                ),
+                "platform_settings": convert_and_respect_annotation_metadata(
+                    object_=platform_settings,
+                    annotation=AgentPlatformSettingsRequestModel,
+                    direction="write",
+                ),
+                "name": name,
+                "tags": tags,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    CreateAgentResponseModel,
+                    construct_type(
+                        type_=CreateAgentResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get(
+        self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetAgentResponseModel:
+        """
+        Retrieve config for an agent
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of an agent. This is returned on agent creation.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetAgentResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.agents.get(
+                agent_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/convai/agents/{jsonable_encoder(agent_id)}",
+            base_url=self._client_wrapper.get_environment().base,
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetAgentResponseModel,
+                    construct_type(
+                        type_=GetAgentResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def delete(self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete an agent
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of an agent. This is returned on agent creation.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.agents.delete(
+                agent_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/convai/agents/{jsonable_encoder(agent_id)}",
+            base_url=self._client_wrapper.get_environment().base,
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def update(
+        self,
+        agent_id: str,
+        *,
+        conversation_config: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        platform_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        name: typing.Optional[str] = OMIT,
+        tags: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetAgentResponseModel:
+        """
+        Patches an Agent settings
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of an agent. This is returned on agent creation.
+
+        conversation_config : typing.Optional[typing.Optional[typing.Any]]
+
+        platform_settings : typing.Optional[typing.Optional[typing.Any]]
+
+        name : typing.Optional[str]
+            A name to make the agent easier to find
+
+        tags : typing.Optional[typing.Sequence[str]]
+            Tags to help classify and filter the agent
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetAgentResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.agents.update(
+                agent_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/convai/agents/{jsonable_encoder(agent_id)}",
+            base_url=self._client_wrapper.get_environment().base,
+            method="PATCH",
+            json={
+                "conversation_config": conversation_config,
+                "platform_settings": platform_settings,
+                "name": name,
+                "tags": tags,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetAgentResponseModel,
+                    construct_type(
+                        type_=GetAgentResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def list(
+        self,
+        *,
+        cursor: typing.Optional[str] = None,
+        page_size: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetAgentsPageResponseModel:
+        """
+        Returns a list of your agents and their metadata.
+
+        Parameters
+        ----------
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        page_size : typing.Optional[int]
+            How many Agents to return at maximum. Can not exceed 100, defaults to 30.
+
+        search : typing.Optional[str]
+            Search by agents name.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetAgentsPageResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.agents.list()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/convai/agents",
+            base_url=self._client_wrapper.get_environment().base,
+            method="GET",
+            params={
+                "cursor": cursor,
+                "page_size": page_size,
+                "search": search,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetAgentsPageResponseModel,
+                    construct_type(
+                        type_=GetAgentsPageResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def simulate_conversation(
         self,

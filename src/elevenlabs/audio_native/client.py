@@ -216,7 +216,7 @@ class AudioNativeClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def update_content(
+    def update(
         self,
         project_id: str,
         *,
@@ -257,7 +257,7 @@ class AudioNativeClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.audio_native.update_content(
+        client.audio_native.update(
             project_id="21m00Tcm4TlvDq8ikWAM",
         )
         """
@@ -507,7 +507,7 @@ class AsyncAudioNativeClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def update_content(
+    async def update(
         self,
         project_id: str,
         *,
@@ -553,7 +553,7 @@ class AsyncAudioNativeClient:
 
 
         async def main() -> None:
-            await client.audio_native.update_content(
+            await client.audio_native.update(
                 project_id="21m00Tcm4TlvDq8ikWAM",
             )
 

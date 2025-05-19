@@ -19,11 +19,11 @@ from .dubbing.client import DubbingClient
 from .models.client import ModelsClient
 from .audio_native.client import AudioNativeClient
 from .usage.client import UsageClient
-from .pronunciation_dictionary.client import PronunciationDictionaryClient
-from .workspace.client import WorkspaceClient
+from .pronunciation_dictionaries.client import PronunciationDictionariesClient
 from .speech_to_text.client import SpeechToTextClient
 from .forced_alignment.client import ForcedAlignmentClient
 from .conversational_ai.client import ConversationalAiClient
+from .workspace.client import WorkspaceClient
 from .core.client_wrapper import AsyncClientWrapper
 from .history.client import AsyncHistoryClient
 from .text_to_sound_effects.client import AsyncTextToSoundEffectsClient
@@ -39,11 +39,11 @@ from .dubbing.client import AsyncDubbingClient
 from .models.client import AsyncModelsClient
 from .audio_native.client import AsyncAudioNativeClient
 from .usage.client import AsyncUsageClient
-from .pronunciation_dictionary.client import AsyncPronunciationDictionaryClient
-from .workspace.client import AsyncWorkspaceClient
+from .pronunciation_dictionaries.client import AsyncPronunciationDictionariesClient
 from .speech_to_text.client import AsyncSpeechToTextClient
 from .forced_alignment.client import AsyncForcedAlignmentClient
 from .conversational_ai.client import AsyncConversationalAiClient
+from .workspace.client import AsyncWorkspaceClient
 
 
 class BaseElevenLabs:
@@ -116,11 +116,11 @@ class BaseElevenLabs:
         self.models = ModelsClient(client_wrapper=self._client_wrapper)
         self.audio_native = AudioNativeClient(client_wrapper=self._client_wrapper)
         self.usage = UsageClient(client_wrapper=self._client_wrapper)
-        self.pronunciation_dictionary = PronunciationDictionaryClient(client_wrapper=self._client_wrapper)
-        self.workspace = WorkspaceClient(client_wrapper=self._client_wrapper)
+        self.pronunciation_dictionaries = PronunciationDictionariesClient(client_wrapper=self._client_wrapper)
         self.speech_to_text = SpeechToTextClient(client_wrapper=self._client_wrapper)
         self.forced_alignment = ForcedAlignmentClient(client_wrapper=self._client_wrapper)
         self.conversational_ai = ConversationalAiClient(client_wrapper=self._client_wrapper)
+        self.workspace = WorkspaceClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncBaseElevenLabs:
@@ -193,8 +193,8 @@ class AsyncBaseElevenLabs:
         self.models = AsyncModelsClient(client_wrapper=self._client_wrapper)
         self.audio_native = AsyncAudioNativeClient(client_wrapper=self._client_wrapper)
         self.usage = AsyncUsageClient(client_wrapper=self._client_wrapper)
-        self.pronunciation_dictionary = AsyncPronunciationDictionaryClient(client_wrapper=self._client_wrapper)
-        self.workspace = AsyncWorkspaceClient(client_wrapper=self._client_wrapper)
+        self.pronunciation_dictionaries = AsyncPronunciationDictionariesClient(client_wrapper=self._client_wrapper)
         self.speech_to_text = AsyncSpeechToTextClient(client_wrapper=self._client_wrapper)
         self.forced_alignment = AsyncForcedAlignmentClient(client_wrapper=self._client_wrapper)
         self.conversational_ai = AsyncConversationalAiClient(client_wrapper=self._client_wrapper)
+        self.workspace = AsyncWorkspaceClient(client_wrapper=self._client_wrapper)

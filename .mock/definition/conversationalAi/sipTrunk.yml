@@ -37,6 +37,7 @@ service:
             body:
               success: true
               message: message
+              conversation_id: conversation_id
               sip_call_id: sip_call_id
       audiences:
         - convai

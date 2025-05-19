@@ -52,6 +52,7 @@ from .authorization_method import AuthorizationMethod
 from .ban_reason_type import BanReasonType
 from .batch_call_detailed_response import BatchCallDetailedResponse
 from .batch_call_recipient_status import BatchCallRecipientStatus
+from .batch_call_response import BatchCallResponse
 from .batch_call_status import BatchCallStatus
 from .body_add_chapter_to_a_project_v_1_projects_project_id_chapters_add_post import (
     BodyAddChapterToAProjectV1ProjectsProjectIdChaptersAddPost,
@@ -140,6 +141,7 @@ from .client_tool_config_output import ClientToolConfigOutput
 from .close_connection import CloseConnection
 from .close_context import CloseContext
 from .close_socket import CloseSocket
+from .conv_ai_dynamic_variable import ConvAiDynamicVariable
 from .conv_ai_secret_locator import ConvAiSecretLocator
 from .conv_ai_stored_secret_dependencies import ConvAiStoredSecretDependencies
 from .conv_ai_stored_secret_dependencies_agent_tools_item import (
@@ -160,6 +162,8 @@ from .conversation_config_client_override_config_input import ConversationConfig
 from .conversation_config_client_override_config_output import ConversationConfigClientOverrideConfigOutput
 from .conversation_config_client_override_input import ConversationConfigClientOverrideInput
 from .conversation_config_client_override_output import ConversationConfigClientOverrideOutput
+from .conversation_config_override import ConversationConfigOverride
+from .conversation_config_override_config import ConversationConfigOverrideConfig
 from .conversation_deletion_settings import ConversationDeletionSettings
 from .conversation_history_analysis_common_model import ConversationHistoryAnalysisCommonModel
 from .conversation_history_batch_call_model import ConversationHistoryBatchCallModel
@@ -181,8 +185,14 @@ from .conversation_history_sip_trunking_phone_call_model_direction import (
 )
 from .conversation_history_transcript_common_model_input import ConversationHistoryTranscriptCommonModelInput
 from .conversation_history_transcript_common_model_input_role import ConversationHistoryTranscriptCommonModelInputRole
+from .conversation_history_transcript_common_model_input_source_medium import (
+    ConversationHistoryTranscriptCommonModelInputSourceMedium,
+)
 from .conversation_history_transcript_common_model_output import ConversationHistoryTranscriptCommonModelOutput
 from .conversation_history_transcript_common_model_output_role import ConversationHistoryTranscriptCommonModelOutputRole
+from .conversation_history_transcript_common_model_output_source_medium import (
+    ConversationHistoryTranscriptCommonModelOutputSourceMedium,
+)
 from .conversation_history_transcript_tool_call_client_details import ConversationHistoryTranscriptToolCallClientDetails
 from .conversation_history_transcript_tool_call_common_model import ConversationHistoryTranscriptToolCallCommonModel
 from .conversation_history_transcript_tool_call_common_model_tool_details import (
@@ -436,6 +446,7 @@ from .object_json_schema_property_input_properties_value import ObjectJsonSchema
 from .object_json_schema_property_output import ObjectJsonSchemaPropertyOutput
 from .object_json_schema_property_output_properties_value import ObjectJsonSchemaPropertyOutputPropertiesValue
 from .orb_avatar import OrbAvatar
+from .outbound_call_recipient import OutboundCallRecipient
 from .outbound_call_recipient_response_model import OutboundCallRecipientResponseModel
 from .output_format import OutputFormat
 from .pdf_export_options import PdfExportOptions
@@ -567,8 +578,6 @@ from .speech_to_text_word_response_model_type import SpeechToTextWordResponseMod
 from .srt_export_options import SrtExportOptions
 from .start_pvc_voice_training_response_model import StartPvcVoiceTrainingResponseModel
 from .start_speaker_separation_response_model import StartSpeakerSeparationResponseModel
-from .stream_input_query_parameters import StreamInputQueryParameters
-from .stream_input_query_parameters_optimize_streaming_latency import StreamInputQueryParametersOptimizeStreamingLatency
 from .streaming_audio_chunk_with_timestamps_response import StreamingAudioChunkWithTimestampsResponse
 from .subscription import Subscription
 from .subscription_extras_response_model import SubscriptionExtrasResponseModel
@@ -674,6 +683,7 @@ from .widget_config_response_model_avatar import (
 )
 from .widget_expandable import WidgetExpandable
 from .widget_feedback_mode import WidgetFeedbackMode
+from .workspace_batch_calls_response import WorkspaceBatchCallsResponse
 from .workspace_group_by_name_response_model import WorkspaceGroupByNameResponseModel
 from .workspace_resource_type import WorkspaceResourceType
 
@@ -728,6 +738,7 @@ __all__ = [
     "BanReasonType",
     "BatchCallDetailedResponse",
     "BatchCallRecipientStatus",
+    "BatchCallResponse",
     "BatchCallStatus",
     "BodyAddChapterToAProjectV1ProjectsProjectIdChaptersAddPost",
     "BodyAddProjectV1ProjectsAddPostApplyTextNormalization",
@@ -782,6 +793,7 @@ __all__ = [
     "CloseConnection",
     "CloseContext",
     "CloseSocket",
+    "ConvAiDynamicVariable",
     "ConvAiSecretLocator",
     "ConvAiStoredSecretDependencies",
     "ConvAiStoredSecretDependenciesAgentToolsItem",
@@ -798,6 +810,8 @@ __all__ = [
     "ConversationConfigClientOverrideConfigOutput",
     "ConversationConfigClientOverrideInput",
     "ConversationConfigClientOverrideOutput",
+    "ConversationConfigOverride",
+    "ConversationConfigOverrideConfig",
     "ConversationDeletionSettings",
     "ConversationHistoryAnalysisCommonModel",
     "ConversationHistoryBatchCallModel",
@@ -813,8 +827,10 @@ __all__ = [
     "ConversationHistorySipTrunkingPhoneCallModelDirection",
     "ConversationHistoryTranscriptCommonModelInput",
     "ConversationHistoryTranscriptCommonModelInputRole",
+    "ConversationHistoryTranscriptCommonModelInputSourceMedium",
     "ConversationHistoryTranscriptCommonModelOutput",
     "ConversationHistoryTranscriptCommonModelOutputRole",
+    "ConversationHistoryTranscriptCommonModelOutputSourceMedium",
     "ConversationHistoryTranscriptToolCallClientDetails",
     "ConversationHistoryTranscriptToolCallCommonModel",
     "ConversationHistoryTranscriptToolCallCommonModelToolDetails",
@@ -1034,6 +1050,7 @@ __all__ = [
     "ObjectJsonSchemaPropertyOutput",
     "ObjectJsonSchemaPropertyOutputPropertiesValue",
     "OrbAvatar",
+    "OutboundCallRecipient",
     "OutboundCallRecipientResponseModel",
     "OutputFormat",
     "PdfExportOptions",
@@ -1157,8 +1174,6 @@ __all__ = [
     "SrtExportOptions",
     "StartPvcVoiceTrainingResponseModel",
     "StartSpeakerSeparationResponseModel",
-    "StreamInputQueryParameters",
-    "StreamInputQueryParametersOptimizeStreamingLatency",
     "StreamingAudioChunkWithTimestampsResponse",
     "Subscription",
     "SubscriptionExtrasResponseModel",
@@ -1252,6 +1267,7 @@ __all__ = [
     "WidgetConfigResponseModelAvatar_Url",
     "WidgetExpandable",
     "WidgetFeedbackMode",
+    "WorkspaceBatchCallsResponse",
     "WorkspaceGroupByNameResponseModel",
     "WorkspaceResourceType",
 ]

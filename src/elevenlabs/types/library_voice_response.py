@@ -109,7 +109,12 @@ class LibraryVoiceResponse(UncheckedBaseModel):
 
     rate: typing.Optional[float] = pydantic.Field(default=None)
     """
-    The rate of the voice.
+    The rate multiplier of the voice.
+    """
+
+    fiat_rate: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    The rate of the voice in USD per 1000 credits. null if default
     """
 
     free_users_allowed: bool = pydantic.Field()

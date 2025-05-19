@@ -16,7 +16,7 @@ class ModelsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_all(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Model]:
+    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Model]:
         """
         Gets a list of available models.
 
@@ -37,7 +37,7 @@ class ModelsClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.models.get_all()
+        client.models.list()
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/models",
@@ -74,7 +74,7 @@ class AsyncModelsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_all(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Model]:
+    async def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Model]:
         """
         Gets a list of available models.
 
@@ -100,7 +100,7 @@ class AsyncModelsClient:
 
 
         async def main() -> None:
-            await client.models.get_all()
+            await client.models.list()
 
 
         asyncio.run(main())

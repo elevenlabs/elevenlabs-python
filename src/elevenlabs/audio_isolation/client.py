@@ -3,8 +3,8 @@
 import typing
 from ..core.client_wrapper import SyncClientWrapper
 from .. import core
-from .types.audio_isolation_audio_isolation_request_file_format import (
-    AudioIsolationAudioIsolationRequestFileFormat,
+from .types.audio_isolation_convert_request_file_format import (
+    AudioIsolationConvertRequestFileFormat,
 )
 from ..core.request_options import RequestOptions
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
@@ -12,8 +12,8 @@ from ..types.http_validation_error import HttpValidationError
 from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from .types.audio_isolation_audio_isolation_stream_request_file_format import (
-    AudioIsolationAudioIsolationStreamRequestFileFormat,
+from .types.audio_isolation_stream_request_file_format import (
+    AudioIsolationStreamRequestFileFormat,
 )
 from ..core.client_wrapper import AsyncClientWrapper
 
@@ -25,11 +25,11 @@ class AudioIsolationClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def audio_isolation(
+    def convert(
         self,
         *,
         audio: core.File,
-        file_format: typing.Optional[AudioIsolationAudioIsolationRequestFileFormat] = OMIT,
+        file_format: typing.Optional[AudioIsolationConvertRequestFileFormat] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -40,7 +40,7 @@ class AudioIsolationClient:
         audio : core.File
             See core.File for more documentation
 
-        file_format : typing.Optional[AudioIsolationAudioIsolationRequestFileFormat]
+        file_format : typing.Optional[AudioIsolationConvertRequestFileFormat]
             The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
 
         request_options : typing.Optional[RequestOptions]
@@ -86,11 +86,11 @@ class AudioIsolationClient:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def audio_isolation_stream(
+    def stream(
         self,
         *,
         audio: core.File,
-        file_format: typing.Optional[AudioIsolationAudioIsolationStreamRequestFileFormat] = OMIT,
+        file_format: typing.Optional[AudioIsolationStreamRequestFileFormat] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -101,7 +101,7 @@ class AudioIsolationClient:
         audio : core.File
             See core.File for more documentation
 
-        file_format : typing.Optional[AudioIsolationAudioIsolationStreamRequestFileFormat]
+        file_format : typing.Optional[AudioIsolationStreamRequestFileFormat]
             The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
 
         request_options : typing.Optional[RequestOptions]
@@ -152,11 +152,11 @@ class AsyncAudioIsolationClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def audio_isolation(
+    async def convert(
         self,
         *,
         audio: core.File,
-        file_format: typing.Optional[AudioIsolationAudioIsolationRequestFileFormat] = OMIT,
+        file_format: typing.Optional[AudioIsolationConvertRequestFileFormat] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -167,7 +167,7 @@ class AsyncAudioIsolationClient:
         audio : core.File
             See core.File for more documentation
 
-        file_format : typing.Optional[AudioIsolationAudioIsolationRequestFileFormat]
+        file_format : typing.Optional[AudioIsolationConvertRequestFileFormat]
             The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
 
         request_options : typing.Optional[RequestOptions]
@@ -213,11 +213,11 @@ class AsyncAudioIsolationClient:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def audio_isolation_stream(
+    async def stream(
         self,
         *,
         audio: core.File,
-        file_format: typing.Optional[AudioIsolationAudioIsolationStreamRequestFileFormat] = OMIT,
+        file_format: typing.Optional[AudioIsolationStreamRequestFileFormat] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -228,7 +228,7 @@ class AsyncAudioIsolationClient:
         audio : core.File
             See core.File for more documentation
 
-        file_format : typing.Optional[AudioIsolationAudioIsolationStreamRequestFileFormat]
+        file_format : typing.Optional[AudioIsolationStreamRequestFileFormat]
             The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
 
         request_options : typing.Optional[RequestOptions]

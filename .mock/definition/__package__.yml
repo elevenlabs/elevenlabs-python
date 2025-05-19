@@ -590,10 +590,27 @@ types:
   BatchCallRecipientStatus:
     enum:
       - pending
+      - initiated
       - in_progress
       - completed
       - failed
       - cancelled
+    source:
+      openapi: openapi.json
+  BatchCallResponse:
+    properties:
+      id: string
+      phone_number_id: string
+      name: string
+      agent_id: string
+      created_at_unix: integer
+      scheduled_time_unix: integer
+      total_calls_dispatched: integer
+      total_calls_scheduled: integer
+      last_updated_at_unix: integer
+      status:
+        type: BatchCallStatus
+      agent_name: string
     source:
       openapi: openapi.json
   BatchCallStatus:
@@ -1542,6 +1559,12 @@ types:
         docs: Configuration for dynamic variables
     source:
       openapi: openapi.json
+  ConvAiDynamicVariable:
+    docs: Used to reference a dynamic variable.
+    properties:
+      variable_name: string
+    source:
+      openapi: openapi.json
   ConvAiSecretLocator:
     docs: Used to reference a secret from the agent's secret store.
     properties:
@@ -1611,6 +1634,12 @@ types:
       openapi: openapi.json
   ConversationConfig:
     properties:
+      text_only:
+        type: optional<boolean>
+        docs: >-
+          If enabled audio will not be processed and only text will be used, use
+          to avoid audio pricing.
+        default: false
       max_duration_seconds:
         type: optional<integer>
         docs: The maximum duration of a conversation in seconds
@@ -1628,6 +1657,9 @@ types:
       tts:
         type: optional<TtsConversationalConfigOverride>
         docs: The overrides for the TTS configuration
+      conversation:
+        type: optional<ConversationConfigOverride>
+        docs: The overrides for the conversation configuration
     source:
       openapi: openapi.json
   ConversationConfigClientOverrideOutput:
@@ -1638,6 +1670,9 @@ types:
       tts:
         type: optional<TtsConversationalConfigOverride>
         docs: The overrides for the TTS configuration
+      conversation:
+        type: optional<ConversationConfigOverride>
+        docs: The overrides for the conversation configuration
     source:
       openapi: openapi.json
   ConversationConfigClientOverrideConfigInput:
@@ -1648,6 +1683,9 @@ types:
       tts:
         type: optional<TtsConversationalConfigOverrideConfig>
         docs: Overrides for the TTS configuration
+      conversation:
+        type: optional<ConversationConfigOverrideConfig>
+        docs: Overrides for the conversation configuration
     source:
       openapi: openapi.json
   ConversationConfigClientOverrideConfigOutput:
@@ -1658,6 +1696,23 @@ types:
       tts:
         type: optional<TtsConversationalConfigOverrideConfig>
         docs: Overrides for the TTS configuration
+      conversation:
+        type: optional<ConversationConfigOverrideConfig>
+        docs: Overrides for the conversation configuration
+    source:
+      openapi: openapi.json
+  ConversationConfigOverride:
+    properties:
+      text_only:
+        type: optional<boolean>
+    source:
+      openapi: openapi.json
+  ConversationConfigOverrideConfig:
+    properties:
+      text_only:
+        type: optional<boolean>
+        docs: Whether to allow overriding the text only configuration
+        default: false
     source:
       openapi: openapi.json
   ConversationDeletionSettings:
@@ -1795,6 +1850,13 @@ types:
     inline: true
     source:
       openapi: openapi.json
+  ConversationHistoryTranscriptCommonModelInputSourceMedium:
+    enum:
+      - audio
+      - text
+    inline: true
+    source:
+      openapi: openapi.json
   ConversationHistoryTranscriptCommonModelInput:
     properties:
       role:
@@ -1809,6 +1871,8 @@ types:
         type: optional<UserFeedback>
       llm_override:
         type: optional<string>
+      source_medium:
+        type: optional<ConversationHistoryTranscriptCommonModelInputSourceMedium>
       time_in_call_secs: integer
       conversation_turn_metrics:
         type: optional<ConversationTurnMetrics>
@@ -1816,12 +1880,24 @@ types:
         type: optional<RagRetrievalInfo>
       llm_usage:
         type: optional<LlmUsageInput>
+      interrupted:
+        type: optional<boolean>
+        default: false
+      original_message:
+        type: optional<string>
     source:
       openapi: openapi.json
   ConversationHistoryTranscriptCommonModelOutputRole:
     enum:
       - user
       - agent
+    inline: true
+    source:
+      openapi: openapi.json
+  ConversationHistoryTranscriptCommonModelOutputSourceMedium:
+    enum:
+      - audio
+      - text
     inline: true
     source:
       openapi: openapi.json
@@ -1839,6 +1915,8 @@ types:
         type: optional<UserFeedback>
       llm_override:
         type: optional<string>
+      source_medium:
+        type: optional<ConversationHistoryTranscriptCommonModelOutputSourceMedium>
       time_in_call_secs: integer
       conversation_turn_metrics:
         type: optional<ConversationTurnMetrics>
@@ -1846,6 +1924,11 @@ types:
         type: optional<RagRetrievalInfo>
       llm_usage:
         type: optional<LlmUsageOutput>
+      interrupted:
+        type: optional<boolean>
+        default: false
+      original_message:
+        type: optional<string>
     source:
       openapi: openapi.json
   ConversationHistoryTranscriptToolCallClientDetails:
@@ -2060,6 +2143,7 @@ types:
       openapi: openapi.json
   ConversationSummaryResponseModelStatus:
     enum:
+      - initiated
       - value: in-progress
         name: InProgress
       - processing
@@ -3033,6 +3117,10 @@ types:
         type: optional<ConversationInitiationClientDataWebhook>
       webhooks:
         type: optional<ConvAiWebhooks>
+      can_use_mcp_servers:
+        type: optional<boolean>
+        docs: Whether the workspace can use MCP servers
+        default: false
       rag_retention_period_days:
         type: optional<integer>
         default: 10
@@ -3042,6 +3130,7 @@ types:
       openapi: openapi.json
   GetConversationResponseModelStatus:
     enum:
+      - initiated
       - value: in-progress
         name: InProgress
       - processing
@@ -3673,7 +3762,10 @@ types:
         docs: The number of times the voice has been cloned.
       rate:
         type: optional<double>
-        docs: The rate of the voice.
+        docs: The rate multiplier of the voice.
+      fiat_rate:
+        type: optional<double>
+        docs: The rate of the voice in USD per 1000 credits. null if default
       free_users_allowed:
         type: boolean
         docs: Whether free users are allowed to use the voice.
@@ -4025,6 +4117,15 @@ types:
         type: optional<string>
         docs: The second color of the avatar
         default: '#9ce6e6'
+    source:
+      openapi: openapi.json
+  OutboundCallRecipient:
+    properties:
+      id:
+        type: optional<string>
+      phone_number: string
+      conversation_initiation_client_data:
+        type: optional<ConversationInitiationClientDataRequestInput>
     source:
       openapi: openapi.json
   OutboundCallRecipientResponseModel:
@@ -5056,6 +5157,7 @@ types:
     properties:
       success: boolean
       message: string
+      conversation_id: optional<string>
       sip_call_id: optional<string>
     source:
       openapi: openapi.json
@@ -5926,6 +6028,7 @@ types:
     properties:
       success: boolean
       message: string
+      conversation_id: optional<string>
       callSid: optional<string>
     source:
       openapi: openapi.json
@@ -6403,6 +6506,9 @@ types:
       rate:
         type: optional<double>
         docs: The rate of the voice sharing.
+      fiat_rate:
+        type: optional<double>
+        docs: The rate of the voice sharing in USD per 1000 credits.
       notice_period:
         type: optional<integer>
         docs: The notice period of the voice sharing.
@@ -6510,6 +6616,7 @@ types:
     union:
       - string
       - type: ConvAiSecretLocator
+      - type: ConvAiDynamicVariable
     source:
       openapi: openapi.json
     inline: true
@@ -6566,6 +6673,7 @@ types:
     union:
       - string
       - type: ConvAiSecretLocator
+      - type: ConvAiDynamicVariable
     source:
       openapi: openapi.json
     inline: true
@@ -6771,6 +6879,9 @@ types:
         type: optional<boolean>
         docs: Whether to disable the banner
         default: false
+      override_link:
+        type: optional<string>
+        docs: The override link for the widget
       mic_muting_enabled:
         type: optional<boolean>
         docs: Whether to enable mic muting
@@ -6882,6 +6993,9 @@ types:
         type: optional<boolean>
         docs: Whether to disable the banner
         default: false
+      override_link:
+        type: optional<string>
+        docs: The override link for the widget
       mic_muting_enabled:
         type: optional<boolean>
         docs: Whether to enable mic muting
@@ -6904,6 +7018,19 @@ types:
       - none
       - during
       - end
+    source:
+      openapi: openapi.json
+  WorkspaceBatchCallsResponse:
+    properties:
+      batch_calls:
+        type: list<BatchCallResponse>
+      next_doc:
+        type: optional<string>
+        docs: The next document, used to paginate through the batch calls
+      has_more:
+        type: optional<boolean>
+        docs: Whether there are more batch calls to paginate through
+        default: false
     source:
       openapi: openapi.json
   WorkspaceGroupByNameResponseModel:
@@ -7623,73 +7750,5 @@ types:
       - opus_48000_128
       - opus_48000_192
     docs: The output audio format
-    source:
-      openapi: asyncapi.yml
-  StreamInputQueryParametersOptimizeStreamingLatency:
-    enum:
-      - value: '0'
-        name: Zero
-      - value: '1'
-        name: One
-      - value: '2'
-        name: Two
-      - value: '3'
-        name: Three
-      - value: '4'
-        name: Four
-    docs: Latency optimization level (deprecated)
-    default: '0'
-    inline: true
-    source:
-      openapi: asyncapi.yml
-  StreamInputQueryParameters:
-    properties:
-      model_id:
-        type: optional<string>
-        docs: The model ID to use
-      language_code:
-        type: optional<string>
-        docs: >-
-          The ISO 639-1 language code (for Turbo v2.5 and Flash v2.5 models
-          only)
-      enable_logging:
-        type: optional<string>
-        docs: Whether to enable logging of the request
-      enable_ssml_parsing:
-        type: optional<boolean>
-        docs: Whether to enable SSML parsing
-        default: false
-      optimize_streaming_latency:
-        type: optional<StreamInputQueryParametersOptimizeStreamingLatency>
-        docs: Latency optimization level (deprecated)
-        default: '0'
-        availability: deprecated
-      output_format: optional<TextToSpeechOutputFormatEnum>
-      inactivity_timeout:
-        type: optional<double>
-        docs: Timeout for inactivity before connection is closed
-        default: 20
-      sync_alignment:
-        type: optional<boolean>
-        docs: Whether to include timing data with every audio chunk
-        default: false
-      auto_mode:
-        type: optional<boolean>
-        docs: >-
-          This parameter focuses on reducing the latency by disabling the chunk
-          schedule and all buffers. It is only recommended when sending full
-          sentences or phrases, sending partial phrases will result in highly
-          reduced quality. By default it's set to false.
-        default: false
-      apply_text_normalization: optional<TextToSpeechApplyTextNormalizationEnum>
-      seed:
-        type: optional<integer>
-        docs: >-
-          If specified, our system will make a best effort to sample
-          deterministically, such that repeated requests with the same seed and
-          parameters should return the same result. Determinism is not
-          guaranteed. Must be an integer between 0 and 4294967295.
-        validation:
-          min: 0
     source:
       openapi: asyncapi.yml

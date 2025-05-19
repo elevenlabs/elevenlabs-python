@@ -2,5 +2,6 @@
 
 import typing
 from .conv_ai_secret_locator import ConvAiSecretLocator
+from .conv_ai_dynamic_variable import ConvAiDynamicVariable
 
-WebhookToolApiSchemaConfigInputRequestHeadersValue = typing.Union[str, ConvAiSecretLocator]
+WebhookToolApiSchemaConfigInputRequestHeadersValue = typing.Union[str, ConvAiSecretLocator, ConvAiDynamicVariable]

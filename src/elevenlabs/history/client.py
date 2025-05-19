@@ -2,7 +2,7 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
-from .types.history_get_all_request_source import HistoryGetAllRequestSource
+from .types.history_list_request_source import HistoryListRequestSource
 from ..core.request_options import RequestOptions
 from ..types.get_speech_history_response import GetSpeechHistoryResponse
 from ..core.unchecked_base_model import construct_type
@@ -24,14 +24,14 @@ class HistoryClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_all(
+    def list(
         self,
         *,
         page_size: typing.Optional[int] = None,
         start_after_history_item_id: typing.Optional[str] = None,
         voice_id: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
-        source: typing.Optional[HistoryGetAllRequestSource] = None,
+        source: typing.Optional[HistoryListRequestSource] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSpeechHistoryResponse:
         """
@@ -51,7 +51,7 @@ class HistoryClient:
         search : typing.Optional[str]
             Search term used for filtering history items. If provided, source becomes required.
 
-        source : typing.Optional[HistoryGetAllRequestSource]
+        source : typing.Optional[HistoryListRequestSource]
             Source of the generated history item
 
         request_options : typing.Optional[RequestOptions]
@@ -69,7 +69,7 @@ class HistoryClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.history.get_all()
+        client.history.list()
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/history",
@@ -361,14 +361,14 @@ class AsyncHistoryClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_all(
+    async def list(
         self,
         *,
         page_size: typing.Optional[int] = None,
         start_after_history_item_id: typing.Optional[str] = None,
         voice_id: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
-        source: typing.Optional[HistoryGetAllRequestSource] = None,
+        source: typing.Optional[HistoryListRequestSource] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSpeechHistoryResponse:
         """
@@ -388,7 +388,7 @@ class AsyncHistoryClient:
         search : typing.Optional[str]
             Search term used for filtering history items. If provided, source becomes required.
 
-        source : typing.Optional[HistoryGetAllRequestSource]
+        source : typing.Optional[HistoryListRequestSource]
             Source of the generated history item
 
         request_options : typing.Optional[RequestOptions]
@@ -411,7 +411,7 @@ class AsyncHistoryClient:
 
 
         async def main() -> None:
-            await client.history.get_all()
+            await client.history.list()
 
 
         asyncio.run(main())

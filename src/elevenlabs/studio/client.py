@@ -3,7 +3,6 @@
 import typing
 from ..core.client_wrapper import SyncClientWrapper
 from .projects.client import ProjectsClient
-from .chapters.client import ChaptersClient
 from .types.body_create_podcast_v_1_studio_podcasts_post_mode import (
     BodyCreatePodcastV1StudioPodcastsPostMode,
 )
@@ -26,7 +25,6 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
 from .projects.client import AsyncProjectsClient
-from .chapters.client import AsyncChaptersClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -36,7 +34,6 @@ class StudioClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
         self.projects = ProjectsClient(client_wrapper=self._client_wrapper)
-        self.chapters = ChaptersClient(client_wrapper=self._client_wrapper)
 
     def create_podcast(
         self,
@@ -179,7 +176,6 @@ class AsyncStudioClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
         self.projects = AsyncProjectsClient(client_wrapper=self._client_wrapper)
-        self.chapters = AsyncChaptersClient(client_wrapper=self._client_wrapper)
 
     async def create_podcast(
         self,

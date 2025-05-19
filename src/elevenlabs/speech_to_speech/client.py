@@ -16,11 +16,11 @@ from ..types.http_validation_error import HttpValidationError
 from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from .types.speech_to_speech_convert_as_stream_request_output_format import (
-    SpeechToSpeechConvertAsStreamRequestOutputFormat,
+from .types.speech_to_speech_stream_request_output_format import (
+    SpeechToSpeechStreamRequestOutputFormat,
 )
-from .types.speech_to_speech_convert_as_stream_request_file_format import (
-    SpeechToSpeechConvertAsStreamRequestFileFormat,
+from .types.speech_to_speech_stream_request_file_format import (
+    SpeechToSpeechStreamRequestFileFormat,
 )
 from ..core.client_wrapper import AsyncClientWrapper
 
@@ -154,19 +154,19 @@ class SpeechToSpeechClient:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def convert_as_stream(
+    def stream(
         self,
         voice_id: str,
         *,
         audio: core.File,
         enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[SpeechToSpeechConvertAsStreamRequestOutputFormat] = None,
+        output_format: typing.Optional[SpeechToSpeechStreamRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[str] = OMIT,
         seed: typing.Optional[int] = OMIT,
         remove_background_noise: typing.Optional[bool] = OMIT,
-        file_format: typing.Optional[SpeechToSpeechConvertAsStreamRequestFileFormat] = OMIT,
+        file_format: typing.Optional[SpeechToSpeechStreamRequestFileFormat] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -193,7 +193,7 @@ class SpeechToSpeechClient:
 
             Defaults to None.
 
-        output_format : typing.Optional[SpeechToSpeechConvertAsStreamRequestOutputFormat]
+        output_format : typing.Optional[SpeechToSpeechStreamRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
@@ -208,7 +208,7 @@ class SpeechToSpeechClient:
         remove_background_noise : typing.Optional[bool]
             If set, will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
 
-        file_format : typing.Optional[SpeechToSpeechConvertAsStreamRequestFileFormat]
+        file_format : typing.Optional[SpeechToSpeechStreamRequestFileFormat]
             The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
 
         request_options : typing.Optional[RequestOptions]
@@ -226,7 +226,7 @@ class SpeechToSpeechClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.speech_to_speech.convert_as_stream(
+        client.speech_to_speech.stream(
             voice_id="JBFqnCBsd6RMkjVDRZzb",
             output_format="mp3_44100_128",
             model_id="eleven_multilingual_sts_v2",
@@ -411,19 +411,19 @@ class AsyncSpeechToSpeechClient:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def convert_as_stream(
+    async def stream(
         self,
         voice_id: str,
         *,
         audio: core.File,
         enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[SpeechToSpeechConvertAsStreamRequestOutputFormat] = None,
+        output_format: typing.Optional[SpeechToSpeechStreamRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[str] = OMIT,
         seed: typing.Optional[int] = OMIT,
         remove_background_noise: typing.Optional[bool] = OMIT,
-        file_format: typing.Optional[SpeechToSpeechConvertAsStreamRequestFileFormat] = OMIT,
+        file_format: typing.Optional[SpeechToSpeechStreamRequestFileFormat] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -450,7 +450,7 @@ class AsyncSpeechToSpeechClient:
 
             Defaults to None.
 
-        output_format : typing.Optional[SpeechToSpeechConvertAsStreamRequestOutputFormat]
+        output_format : typing.Optional[SpeechToSpeechStreamRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
@@ -465,7 +465,7 @@ class AsyncSpeechToSpeechClient:
         remove_background_noise : typing.Optional[bool]
             If set, will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
 
-        file_format : typing.Optional[SpeechToSpeechConvertAsStreamRequestFileFormat]
+        file_format : typing.Optional[SpeechToSpeechStreamRequestFileFormat]
             The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
 
         request_options : typing.Optional[RequestOptions]
@@ -488,7 +488,7 @@ class AsyncSpeechToSpeechClient:
 
 
         async def main() -> None:
-            await client.speech_to_speech.convert_as_stream(
+            await client.speech_to_speech.stream(
                 voice_id="JBFqnCBsd6RMkjVDRZzb",
                 output_format="mp3_44100_128",
                 model_id="eleven_multilingual_sts_v2",

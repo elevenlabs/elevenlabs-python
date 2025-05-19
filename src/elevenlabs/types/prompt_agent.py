@@ -10,7 +10,7 @@ from .prompt_agent_output_tools_item import PromptAgentOutputToolsItem
 from .knowledge_base_locator import KnowledgeBaseLocator
 from .custom_llm import CustomLlm
 from .rag_config import RagConfig
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class PromptAgent(UncheckedBaseModel):
@@ -44,6 +44,11 @@ class PromptAgent(UncheckedBaseModel):
     A list of IDs of tools used by the agent
     """
 
+    mcp_server_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    A list of MCP server ids to be used by the agent
+    """
+
     knowledge_base: typing.Optional[typing.List[KnowledgeBaseLocator]] = pydantic.Field(default=None)
     """
     A list of knowledge bases to be used by the agent
@@ -72,10 +77,3 @@ class PromptAgent(UncheckedBaseModel):
             frozen = True
             smart_union = True
             extra = pydantic.Extra.allow
-
-from .array_json_schema_property_output import ArrayJsonSchemaPropertyOutput  # noqa: E402
-
-update_forward_refs(ArrayJsonSchemaPropertyOutput)
-
-if IS_PYDANTIC_V2:
-    PromptAgent.model_rebuild()

@@ -12,11 +12,11 @@ from .body_text_to_speech_v_1_text_to_speech_voice_id_post_apply_text_normalizat
 from .body_text_to_speech_with_timestamps_v_1_text_to_speech_voice_id_with_timestamps_post_apply_text_normalization import (
     BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization,
 )
-from .text_to_speech_convert_as_stream_request_output_format import TextToSpeechConvertAsStreamRequestOutputFormat
 from .text_to_speech_convert_request_output_format import TextToSpeechConvertRequestOutputFormat
 from .text_to_speech_convert_with_timestamps_request_output_format import (
     TextToSpeechConvertWithTimestampsRequestOutputFormat,
 )
+from .text_to_speech_stream_request_output_format import TextToSpeechStreamRequestOutputFormat
 from .text_to_speech_stream_with_timestamps_request_output_format import (
     TextToSpeechStreamWithTimestampsRequestOutputFormat,
 )
@@ -26,8 +26,8 @@ __all__ = [
     "BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization",
     "BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization",
     "BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization",
-    "TextToSpeechConvertAsStreamRequestOutputFormat",
     "TextToSpeechConvertRequestOutputFormat",
     "TextToSpeechConvertWithTimestampsRequestOutputFormat",
+    "TextToSpeechStreamRequestOutputFormat",
     "TextToSpeechStreamWithTimestampsRequestOutputFormat",
 ]

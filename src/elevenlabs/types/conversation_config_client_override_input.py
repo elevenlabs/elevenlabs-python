@@ -5,6 +5,7 @@ import typing
 from .agent_config_override import AgentConfigOverride
 import pydantic
 from .tts_conversational_config_override import TtsConversationalConfigOverride
+from .conversation_config_override import ConversationConfigOverride
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -17,6 +18,11 @@ class ConversationConfigClientOverrideInput(UncheckedBaseModel):
     tts: typing.Optional[TtsConversationalConfigOverride] = pydantic.Field(default=None)
     """
     The overrides for the TTS configuration
+    """
+
+    conversation: typing.Optional[ConversationConfigOverride] = pydantic.Field(default=None)
+    """
+    The overrides for the conversation configuration
     """
 
     if IS_PYDANTIC_V2:

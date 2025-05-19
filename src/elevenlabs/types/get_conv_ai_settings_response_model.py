@@ -6,13 +6,18 @@ from .conversation_initiation_client_data_webhook import (
     ConversationInitiationClientDataWebhook,
 )
 from .conv_ai_webhooks import ConvAiWebhooks
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class GetConvAiSettingsResponseModel(UncheckedBaseModel):
     conversation_initiation_client_data_webhook: typing.Optional[ConversationInitiationClientDataWebhook] = None
     webhooks: typing.Optional[ConvAiWebhooks] = None
+    can_use_mcp_servers: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the workspace can use MCP servers
+    """
+
     rag_retention_period_days: typing.Optional[int] = None
 
     if IS_PYDANTIC_V2:
