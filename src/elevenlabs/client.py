@@ -112,12 +112,10 @@ class ElevenLabs(BaseElevenLabs):
         httpx_client: typing.Optional[httpx.Client] = None
     ):
         super().__init__(
-            environment=base_url
-            and ElevenLabsEnvironment(
+            environment=ElevenLabsEnvironment(
                 base=f"https://{get_base_url_host(base_url)}",
                 wss=f"wss://{get_base_url_host(base_url)}",
-            )
-            or environment,
+            ) if base_url else environment,
             api_key=api_key,
             timeout=timeout,
             httpx_client=httpx_client
