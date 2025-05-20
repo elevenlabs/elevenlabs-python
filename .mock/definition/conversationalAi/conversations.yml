@@ -1,0 +1,165 @@
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    get_signed_url:
+      path: /v1/convai/conversation/get-signed-url
+      method: GET
+      auth: false
+      docs: >-
+        Get a signed url to start a conversation with an agent with an agent
+        that requires authorization
+      source:
+        openapi: openapi.json
+      display-name: Get Signed Url
+      request:
+        name: ConversationsGetSignedUrlRequest
+        query-parameters:
+          agent_id:
+            type: string
+            docs: The id of the agent you're taking the action on.
+      response:
+        docs: Successful Response
+        type: root.ConversationSignedUrlResponseModel
+        status-code: 200
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - query-parameters:
+            agent_id: 21m00Tcm4TlvDq8ikWAM
+          response:
+            body:
+              signed_url: signed_url
+      audiences:
+        - convai
+    list:
+      path: /v1/convai/conversations
+      method: GET
+      auth: false
+      docs: >-
+        Get all conversations of agents that user owns. With option to restrict
+        to a specific agent.
+      source:
+        openapi: openapi.json
+      display-name: List conversations
+      request:
+        name: ConversationsListRequest
+        query-parameters:
+          cursor:
+            type: optional<string>
+            docs: Used for fetching next page. Cursor is returned in the response.
+          agent_id:
+            type: optional<string>
+            docs: The id of the agent you're taking the action on.
+          call_successful:
+            type: optional<root.EvaluationSuccessResult>
+            docs: The result of the success evaluation
+          call_start_before_unix:
+            type: optional<integer>
+            docs: >-
+              Unix timestamp (in seconds) to filter conversations up to this
+              start date.
+          call_start_after_unix:
+            type: optional<integer>
+            docs: >-
+              Unix timestamp (in seconds) to filter conversations after to this
+              start date.
+          page_size:
+            type: optional<integer>
+            default: 30
+            docs: >-
+              How many conversations to return at maximum. Can not exceed 100,
+              defaults to 30.
+            validation:
+              min: 1
+              max: 100
+      response:
+        docs: Successful Response
+        type: root.GetConversationsPageResponseModel
+        status-code: 200
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - response:
+            body:
+              conversations:
+                - agent_id: agent_id
+                  agent_name: agent_name
+                  conversation_id: conversation_id
+                  start_time_unix_secs: 1
+                  call_duration_secs: 1
+                  message_count: 1
+                  status: initiated
+                  call_successful: success
+              next_cursor: next_cursor
+              has_more: true
+      audiences:
+        - convai
+    get:
+      path: /v1/convai/conversations/{conversation_id}
+      method: GET
+      auth: false
+      docs: Get the details of a particular conversation
+      source:
+        openapi: openapi.json
+      path-parameters:
+        conversation_id:
+          type: string
+          docs: The id of the conversation you're taking the action on.
+      display-name: Get Conversation Details
+      response:
+        docs: Successful Response
+        type: root.GetConversationResponseModel
+        status-code: 200
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            conversation_id: '123'
+          response:
+            body:
+              agent_id: '123'
+              conversation_id: '123'
+              status: processing
+              transcript:
+                - role: user
+                  message: Hello, how are you?
+                  time_in_call_secs: 10
+              metadata:
+                start_time_unix_secs: 1714423232
+                call_duration_secs: 10
+              has_audio: true
+              has_user_audio: true
+              has_response_audio: true
+      audiences:
+        - convai
+    delete:
+      path: /v1/convai/conversations/{conversation_id}
+      method: DELETE
+      auth: false
+      docs: Delete a particular conversation
+      source:
+        openapi: openapi.json
+      path-parameters:
+        conversation_id:
+          type: string
+          docs: The id of the conversation you're taking the action on.
+      display-name: Delete Conversation
+      response:
+        docs: Successful Response
+        type: unknown
+        status-code: 200
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            conversation_id: 21m00Tcm4TlvDq8ikWAM
+          response:
+            body:
+              key: value
+      audiences:
+        - convai
+  source:
+    openapi: openapi.json

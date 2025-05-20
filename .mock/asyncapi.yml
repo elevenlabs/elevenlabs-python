@@ -39,7 +39,48 @@ channels:
     bindings:
       ws:
         query:
-          $ref: '#/components/schemas/StreamInputQueryParameters'
+          type: object
+          properties:
+            authorization:
+              description: Your authorization bearer token.
+              type: string
+            model_id:
+              description: The model ID to use.
+              type: string
+            language_code:
+              description: The ISO 639-1 language code (for specific models).
+              type: string
+            enable_logging:
+              description: Whether to enable logging of the request.
+              type: boolean
+              default: true
+            enable_ssml_parsing:
+              description: Whether to enable SSML parsing.
+              type: boolean
+              default: false
+            output_format:
+              $ref: '#/components/schemas/TextToSpeechOutputFormatEnum'
+            inactivity_timeout:
+              description: Timeout for inactivity before a context is closed (seconds), can be up to 180 seconds.
+              type: integer
+              default: 20
+            sync_alignment:
+              description: Whether to include timing data with every audio chunk.
+              type: boolean
+              default: false
+            auto_mode:
+              description: Reduces latency by disabling chunk schedule and buffers. Recommended for full sentences/phrases.
+              type: boolean
+              default: false
+            apply_text_normalization:
+              $ref: '#/components/schemas/TextToSpeechApplyTextNormalizationEnum'
+            seed:
+              description: If specified, system will best-effort sample deterministically. Integer between 0 and 4294967295.
+              type: integer
+              minimum: 0
+              maximum: 4294967295
+              example: 12345
+
     publish:
       description: Send messages to the WebSocket
       operationId: sendMessage
@@ -813,50 +854,3 @@ components:
           'opus_48000_192',
         ]
       default: 'mp3_44100'
-    StreamInputQueryParameters:
-      type: object
-      properties:
-        model_id:
-          description: The model ID to use
-          type: string
-        language_code:
-          description: The ISO 639-1 language code (for Turbo v2.5 and Flash v2.5 models only)
-          type: string
-        enable_logging:
-          description: Whether to enable logging of the request
-          type: string
-        enable_ssml_parsing:
-          description: Whether to enable SSML parsing
-          type: boolean
-          default: false
-        optimize_streaming_latency:
-          description: Latency optimization level (deprecated)
-          type: string
-          enum: ['0', '1', '2', '3', '4']
-          default: '0'
-          deprecated: true
-        output_format:
-          $ref: '#/components/schemas/TextToSpeechOutputFormatEnum'
-        inactivity_timeout:
-          description: Timeout for inactivity before connection is closed
-          type: number
-          default: 20
-        sync_alignment:
-          description: Whether to include timing data with every audio chunk
-          type: boolean
-          default: false
-        auto_mode:
-          description: This parameter focuses on reducing the latency by disabling the chunk schedule and all buffers. It is only recommended when sending full sentences or phrases, sending partial phrases will result in highly reduced quality. By default it's set to false.
-          type: boolean
-          default: false
-        apply_text_normalization:
-          $ref: '#/components/schemas/TextToSpeechApplyTextNormalizationEnum'
-        seed:
-          description: >-
-            If specified, our system will make a best effort to sample deterministically, such that repeated requests
-            with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be an
-            integer between 0 and 4294967295.
-          type: integer
-          minimum: 0
-          maximum: 4294967295
-          example: 12345

@@ -351,62 +351,6 @@ service:
               has_more: true
               total_count: 1
               next_page_token: next_page_token
-    get_default_settings:
-      path: /v1/voices/settings/default
-      method: GET
-      auth: false
-      docs: >-
-        Gets the default settings for voices. "similarity_boost" corresponds
-        to"Clarity + Similarity Enhancement" in the web app and "stability"
-        corresponds to "Stability" slider in the web app.
-      source:
-        openapi: openapi.json
-      display-name: Get default voice settings
-      response:
-        docs: Successful Response
-        type: root.VoiceSettings
-        status-code: 200
-      examples:
-        - response:
-            body:
-              stability: 1
-              similarity_boost: 1
-              style: 0
-              use_speaker_boost: true
-              speed: 1
-    get_settings:
-      path: /v1/voices/{voice_id}/settings
-      method: GET
-      auth: false
-      docs: >-
-        Returns the settings for a specific voice. "similarity_boost"
-        corresponds to"Clarity + Similarity Enhancement" in the web app and
-        "stability" corresponds to "Stability" slider in the web app.
-      source:
-        openapi: openapi.json
-      path-parameters:
-        voice_id:
-          type: string
-          docs: >-
-            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices
-            to list all the available voices.
-      display-name: Get voice settings
-      response:
-        docs: Successful Response
-        type: root.VoiceSettings
-        status-code: 200
-      errors:
-        - root.UnprocessableEntityError
-      examples:
-        - path-parameters:
-            voice_id: 21m00Tcm4TlvDq8ikWAM
-          response:
-            body:
-              stability: 1
-              similarity_boost: 1
-              style: 0
-              use_speaker_boost: true
-              speed: 1
     get:
       path: /v1/voices/{voice_id}
       method: GET
@@ -533,6 +477,7 @@ service:
                 free_users_allowed: true
                 live_moderation_enabled: true
                 rate: 0.05
+                fiat_rate: 1.1
                 notice_period: 30
                 disable_at_unix: 1714204800
                 voice_mixing_allowed: false
@@ -642,97 +587,7 @@ service:
           response:
             body:
               status: ok
-    edit_settings:
-      path: /v1/voices/{voice_id}/settings/edit
-      method: POST
-      auth: false
-      docs: >-
-        Edit your settings for a specific voice. "similarity_boost" corresponds
-        to "Clarity + Similarity Enhancement" in the web app and "stability"
-        corresponds to "Stability" slider in the web app.
-      source:
-        openapi: openapi.json
-      path-parameters:
-        voice_id:
-          type: string
-          docs: >-
-            ID of the voice to be used. You can use the [Get
-            voices](/docs/api-reference/voices/search) endpoint list all the
-            available voices.
-      display-name: Edit voice settings
-      request:
-        body:
-          type: root.VoiceSettings
-          docs: The settings for a specific voice.
-        content-type: application/json
-      response:
-        docs: Successful Response
-        type: root.EditVoiceSettingsResponseModel
-        status-code: 200
-      errors:
-        - root.UnprocessableEntityError
-      examples:
-        - path-parameters:
-            voice_id: 21m00Tcm4TlvDq8ikWAM
-          request:
-            stability: 1
-            similarity_boost: 1
-            style: 0
-            use_speaker_boost: true
-            speed: 1
-          response:
-            body:
-              status: ok
-    add:
-      path: /v1/voices/add
-      method: POST
-      auth: false
-      docs: Create a voice clone and add it to your Voices
-      source:
-        openapi: openapi.json
-      display-name: Create voice clone
-      request:
-        name: Body_Add_voice_v1_voices_add_post
-        body:
-          properties:
-            name:
-              type: string
-              docs: >-
-                The name that identifies this voice. This will be displayed in
-                the dropdown of the website.
-            files:
-              type: list<file>
-              docs: >-
-                A list of file paths to audio recordings intended for voice
-                cloning.
-            remove_background_noise:
-              type: optional<boolean>
-              docs: >-
-                If set will remove background noise for voice samples using our
-                audio isolation model. If the samples do not include background
-                noise, it can make the quality worse.
-              default: false
-            description:
-              type: optional<string>
-              docs: A description of the voice.
-            labels:
-              type: optional<string>
-              docs: Serialized labels dictionary for the voice.
-        content-type: multipart/form-data
-      response:
-        docs: Successful Response
-        type: root.AddVoiceIvcResponseModel
-        status-code: 200
-      errors:
-        - root.UnprocessableEntityError
-      examples:
-        - request:
-            name: name
-          response:
-            body:
-              voice_id: c38kUX8pkfYO2kHyqfFy
-              requires_verification: false
-    edit:
+    update:
       path: /v1/voices/{voice_id}/edit
       method: POST
       auth: false
@@ -787,7 +642,7 @@ service:
           response:
             body:
               status: ok
-    add_sharing_voice:
+    share:
       path: /v1/voices/add/{public_user_id}/{voice_id}
       method: POST
       auth: false
@@ -937,6 +792,7 @@ service:
                   play_api_usage_character_count_1y: 12852
                   cloned_by_count: 11
                   rate: 1
+                  fiat_rate: 1.1
                   free_users_allowed: true
                   live_moderation_enabled: false
                   featured: false
@@ -953,7 +809,7 @@ service:
                   is_added_by_user: true
               has_more: false
               last_sort_id: last_sort_id
-    get_similar_library_voices:
+    find_similar_voices:
       path: /v1/similar-voices
       method: POST
       auth: false
@@ -1016,6 +872,7 @@ service:
                   play_api_usage_character_count_1y: 12852
                   cloned_by_count: 11
                   rate: 1
+                  fiat_rate: 1.1
                   free_users_allowed: true
                   live_moderation_enabled: false
                   featured: false

@@ -1,5 +1,5 @@
 types:
-  HistoryGetAllRequestSource:
+  HistoryListRequestSource:
     enum:
       - TTS
       - STS
@@ -11,7 +11,7 @@ service:
   auth: false
   base-path: ''
   endpoints:
-    get_all:
+    list:
       path: /v1/history
       method: GET
       auth: false
@@ -20,7 +20,7 @@ service:
         openapi: openapi.json
       display-name: Get generated items
       request:
-        name: HistoryGetAllRequest
+        name: HistoryListRequest
         query-parameters:
           page_size:
             type: optional<integer>
@@ -48,7 +48,7 @@ service:
               Search term used for filtering history items. If provided, source
               becomes required.
           source:
-            type: optional<HistoryGetAllRequestSource>
+            type: optional<HistoryListRequestSource>
             docs: Source of the generated history item
       response:
         docs: Successful Response

@@ -1,0 +1,83 @@
+types:
+  BodyUpdateMemberV1WorkspaceMembersPostWorkspaceRole:
+    enum:
+      - workspace_admin
+      - workspace_member
+    inline: true
+    source:
+      openapi: openapi.json
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    update:
+      path: /v1/workspace/members
+      method: POST
+      auth: false
+      docs: >-
+        Updates attributes of a workspace member. Apart from the email
+        identifier, all parameters will remain unchanged unless specified. This
+        endpoint may only be called by workspace administrators.
+      source:
+        openapi: openapi.json
+      display-name: Update member
+      request:
+        name: UpdateMemberRequest
+        body:
+          properties:
+            email:
+              type: string
+              docs: Email of the target user.
+            is_locked:
+              type: optional<boolean>
+              docs: Whether to lock or unlock the user account.
+            workspace_role:
+              type: optional<BodyUpdateMemberV1WorkspaceMembersPostWorkspaceRole>
+              docs: Role dictating permissions in the workspace.
+        content-type: application/json
+      response:
+        docs: Successful Response
+        type: root.UpdateWorkspaceMemberResponseModel
+        status-code: 200
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - request:
+            email: email
+          response:
+            body:
+              status: ok
+    delete:
+      path: /v1/workspace/members
+      method: DELETE
+      auth: false
+      docs: >-
+        Deletes a workspace member. This endpoint may only be called by
+        workspace administrators.
+      source:
+        openapi: openapi.json
+      display-name: Delete Member
+      request:
+        name: BodyDeleteMemberV1WorkspaceMembersDelete
+        body:
+          properties:
+            email:
+              type: string
+              docs: Email of the target user.
+        content-type: application/json
+      response:
+        docs: Successful Response
+        type: root.DeleteWorkspaceMemberResponseModel
+        status-code: 200
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - request:
+            email: email
+          response:
+            body:
+              status: ok
+  source:
+    openapi: openapi.json

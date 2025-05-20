@@ -3,6 +3,5 @@
 import typing
 
 VoiceResponseModelCategory = typing.Union[
-    typing.Literal["generated", "cloned", "premade", "professional", "famous", "high_quality"],
-    typing.Any,
+    typing.Literal["generated", "cloned", "premade", "professional", "famous", "high_quality"], typing.Any
 ]

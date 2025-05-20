@@ -1,0 +1,28 @@
+imports:
+  root: ../../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    get:
+      path: /v1/convai/conversations/{conversation_id}/audio
+      method: GET
+      auth: false
+      docs: Get the audio recording of a particular conversation
+      source:
+        openapi: openapi.json
+      path-parameters:
+        conversation_id:
+          type: string
+          docs: The id of the conversation you're taking the action on.
+      display-name: Get Conversation Audio
+      response:
+        docs: Successful Response
+        type: file
+        status-code: 200
+      errors:
+        - root.UnprocessableEntityError
+      audiences:
+        - convai
+  source:
+    openapi: openapi.json
