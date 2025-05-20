@@ -1,0 +1,35 @@
+imports:
+  root: ../../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    get:
+      path: /v1/voices/{voice_id}/samples/{sample_id}/audio
+      method: GET
+      auth: false
+      docs: Returns the audio corresponding to a sample attached to a voice.
+      source:
+        openapi: openapi.json
+      path-parameters:
+        voice_id:
+          type: string
+          docs: >-
+            ID of the voice to be used. You can use the [Get
+            voices](/docs/api-reference/voices/search) endpoint list all the
+            available voices.
+        sample_id:
+          type: string
+          docs: >-
+            ID of the sample to be used. You can use the [Get
+            voices](/docs/api-reference/voices/get) endpoint list all the
+            available samples for a voice.
+      display-name: Get audio from sample
+      response:
+        docs: Successful Response
+        type: file
+        status-code: 200
+      errors:
+        - root.UnprocessableEntityError
+  source:
+    openapi: openapi.json

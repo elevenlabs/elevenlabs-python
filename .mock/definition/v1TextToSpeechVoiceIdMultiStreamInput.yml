@@ -1,63 +1,5 @@
-types:
-  TextToSpeechOutputFormat:
-    enum:
-      - mp3_22050_32
-      - mp3_44100_32
-      - mp3_44100_64
-      - mp3_44100_96
-      - mp3_44100_128
-      - mp3_44100_192
-      - pcm_8000
-      - pcm_16000
-      - pcm_22050
-      - pcm_24000
-      - pcm_44100
-      - ulaw_8000
-      - alaw_8000
-      - opus_48000_32
-      - opus_48000_64
-      - opus_48000_96
-      - opus_48000_128
-      - opus_48000_192
-    docs: The output audio format
-    source:
-      openapi: asyncapi.yml
-  TextToSpeechApplyTextNormalization:
-    enum:
-      - auto
-      - 'on'
-      - 'off'
-    docs: >-
-      This parameter controls text normalization with three modes - 'auto',
-      'on', and 'off'. When set to 'auto', the system will automatically decide
-      whether to apply text normalization (e.g., spelling out numbers). With
-      'on', text normalization will always be applied, while with 'off', it will
-      be skipped. Cannot be turned on for 'eleven_turbo_v2_5' or
-      'eleven_flash_v2_5' models. Defaults to 'auto'.
-    default: auto
-    source:
-      openapi: asyncapi.yml
-  sendMessageMulti:
-    discriminated: false
-    docs: Send messages to the multi-context WebSocket.
-    union:
-      - root.InitializeConnectionMulti
-      - root.InitialiseContext
-      - root.SendTextMulti
-      - root.FlushContext
-      - root.CloseContext
-      - root.CloseSocket
-      - root.KeepContextAlive
-    source:
-      openapi: asyncapi.yml
-  receiveMessageMulti:
-    discriminated: false
-    docs: Receive messages from the multi-context WebSocket.
-    union:
-      - root.AudioOutputMulti
-      - root.FinalOutputMulti
-    source:
-      openapi: asyncapi.yml
+imports:
+  root: __package__.yml
 channel:
   path: /v1/text-to-speech/{voice_id}/multi-stream-input
   url: WSS
@@ -110,7 +52,7 @@ channel:
       default: false
       docs: Whether to enable SSML parsing.
     output_format:
-      type: optional<TextToSpeechOutputFormat>
+      type: root.TextToSpeechOutputFormatEnum
       docs: The output audio format
     inactivity_timeout:
       type: optional<integer>
@@ -129,8 +71,7 @@ channel:
         Reduces latency by disabling chunk schedule and buffers. Recommended for
         full sentences/phrases.
     apply_text_normalization:
-      type: optional<TextToSpeechApplyTextNormalization>
-      default: auto
+      type: root.TextToSpeechApplyTextNormalizationEnum
       docs: >-
         This parameter controls text normalization with three modes - 'auto',
         'on', and 'off'. When set to 'auto', the system will automatically
@@ -282,6 +223,28 @@ channel:
             close_socket: true
       docs: Demonstrates initializing two contexts, sending text, and managing them.
       query-parameters:
+        output_format: mp3_22050_32
+        apply_text_normalization: auto
         seed: 12345
-imports:
-  root: __package__.yml
+types:
+  sendMessageMulti:
+    discriminated: false
+    docs: Send messages to the multi-context WebSocket.
+    union:
+      - root.InitializeConnectionMulti
+      - root.InitialiseContext
+      - root.SendTextMulti
+      - root.FlushContext
+      - root.CloseContext
+      - root.CloseSocket
+      - root.KeepContextAlive
+    source:
+      openapi: asyncapi.yml
+  receiveMessageMulti:
+    discriminated: false
+    docs: Receive messages from the multi-context WebSocket.
+    union:
+      - root.AudioOutputMulti
+      - root.FinalOutputMulti
+    source:
+      openapi: asyncapi.yml

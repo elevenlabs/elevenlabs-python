@@ -4,7 +4,7 @@ service:
   auth: false
   base-path: ''
   endpoints:
-    get_characters_usage_metrics:
+    get:
       path: /v1/usage/character-stats
       method: GET
       auth: false
@@ -19,7 +19,7 @@ service:
         openapi: openapi.json
       display-name: Get character usage metrics
       request:
-        name: UsageGetCharactersUsageMetricsRequest
+        name: UsageGetRequest
         query-parameters:
           start_unix:
             type: integer
