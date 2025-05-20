@@ -1,0 +1,141 @@
+imports:
+  root: ../../../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /v1/studio/projects/{project_id}/chapters/{chapter_id}/snapshots
+      method: GET
+      auth: false
+      docs: >-
+        Gets information about all the snapshots of a chapter. Each snapshot can
+        be downloaded as audio. Whenever a chapter is converted a snapshot will
+        automatically be created.
+      source:
+        openapi: openapi.json
+      path-parameters:
+        project_id:
+          type: string
+          docs: >-
+            The ID of the project to be used. You can use the [List
+            projects](/docs/api-reference/studio/get-projects) endpoint to list
+            all the available projects.
+        chapter_id:
+          type: string
+          docs: >-
+            The ID of the chapter to be used. You can use the [List project
+            chapters](/docs/api-reference/studio/get-chapters) endpoint to list
+            all the available chapters.
+      display-name: List Chapter Snapshots
+      response:
+        docs: Successful Response
+        type: root.ChapterSnapshotsResponse
+        status-code: 200
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            project_id: 21m00Tcm4TlvDq8ikWAM
+            chapter_id: 21m00Tcm4TlvDq8ikWAM
+          response:
+            body:
+              snapshots:
+                - chapter_snapshot_id: aw1NgEzBg83R7vgmiJt1
+                  project_id: aw1NgEzBg83R7vgmiJt2
+                  chapter_id: aw1NgEzBg83R7vgmiJt3
+                  created_at_unix: 1714204800
+                  name: My Chapter Snapshot
+    get:
+      path: >-
+        /v1/studio/projects/{project_id}/chapters/{chapter_id}/snapshots/{chapter_snapshot_id}
+      method: GET
+      auth: false
+      docs: Returns the chapter snapshot.
+      source:
+        openapi: openapi.json
+      path-parameters:
+        project_id:
+          type: string
+          docs: The ID of the Studio project.
+        chapter_id:
+          type: string
+          docs: The ID of the chapter.
+        chapter_snapshot_id:
+          type: string
+          docs: The ID of the chapter snapshot.
+      display-name: Get Chapter Snapshot
+      response:
+        docs: Successful Response
+        type: root.ChapterSnapshotExtendedResponseModel
+        status-code: 200
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            project_id: 21m00Tcm4TlvDq8ikWAM
+            chapter_id: 21m00Tcm4TlvDq8ikWAM
+            chapter_snapshot_id: 21m00Tcm4TlvDq8ikWAM
+          response:
+            body:
+              chapter_snapshot_id: aw1NgEzBg83R7vgmiJt1
+              project_id: aw1NgEzBg83R7vgmiJt2
+              chapter_id: aw1NgEzBg83R7vgmiJt3
+              created_at_unix: 1714204800
+              name: My Chapter Snapshot
+              character_alignments:
+                - characters:
+                    - characters
+                  character_start_times_seconds:
+                    - 1.1
+                  character_end_times_seconds:
+                    - 1.1
+    stream:
+      path: >-
+        /v1/studio/projects/{project_id}/chapters/{chapter_id}/snapshots/{chapter_snapshot_id}/stream
+      method: POST
+      auth: false
+      docs: >-
+        Stream the audio from a chapter snapshot. Use `GET
+        /v1/studio/projects/{project_id}/chapters/{chapter_id}/snapshots` to
+        return the snapshots of a chapter.
+      source:
+        openapi: openapi.json
+      path-parameters:
+        project_id:
+          type: string
+          docs: >-
+            The ID of the project to be used. You can use the [List
+            projects](/docs/api-reference/studio/get-projects) endpoint to list
+            all the available projects.
+        chapter_id:
+          type: string
+          docs: >-
+            The ID of the chapter to be used. You can use the [List project
+            chapters](/docs/api-reference/studio/get-chapters) endpoint to list
+            all the available chapters.
+        chapter_snapshot_id:
+          type: string
+          docs: >-
+            The ID of the chapter snapshot to be used. You can use the [List
+            project chapter snapshots](/docs/api-reference/studio/get-snapshots)
+            endpoint to list all the available snapshots.
+      display-name: Stream Chapter Audio
+      request:
+        name: >-
+          BodyStreamChapterAudioV1StudioProjectsProjectIdChaptersChapterIdSnapshotsChapterSnapshotIdStreamPost
+        body:
+          properties:
+            convert_to_mpeg:
+              type: optional<boolean>
+              docs: Whether to convert the audio to mpeg format.
+              default: false
+        content-type: application/json
+      response:
+        docs: Streaming audio data
+        type: file
+        status-code: 200
+      errors:
+        - root.UnprocessableEntityError
+  source:
+    openapi: openapi.json

@@ -2,7 +2,4 @@
 
 import typing
 
-BatchCallStatus = typing.Union[
-    typing.Literal["pending", "in_progress", "completed", "failed", "cancelled"],
-    typing.Any,
-]
+BatchCallStatus = typing.Union[typing.Literal["pending", "in_progress", "completed", "failed", "cancelled"], typing.Any]

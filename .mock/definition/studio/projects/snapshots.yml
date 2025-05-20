@@ -1,0 +1,140 @@
+imports:
+  root: ../../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /v1/studio/projects/{project_id}/snapshots
+      method: GET
+      auth: false
+      docs: Retrieves a list of snapshots for a Studio project.
+      source:
+        openapi: openapi.json
+      path-parameters:
+        project_id:
+          type: string
+          docs: The ID of the Studio project.
+      display-name: List Studio Project Snapshots
+      response:
+        docs: Successful Response
+        type: root.ProjectSnapshotsResponse
+        status-code: 200
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            project_id: 21m00Tcm4TlvDq8ikWAM
+          response:
+            body:
+              snapshots:
+                - project_snapshot_id: aw1NgEzBg83R7vgmiJt6
+                  project_id: aw1NgEzBg83R7vgmiJt6
+                  created_at_unix: 1714204800
+                  name: My Project Snapshot
+                  audio_upload:
+                    key: value
+                  zip_upload:
+                    key: value
+    get:
+      path: /v1/studio/projects/{project_id}/snapshots/{project_snapshot_id}
+      method: GET
+      auth: false
+      docs: Returns the project snapshot.
+      source:
+        openapi: openapi.json
+      path-parameters:
+        project_id:
+          type: string
+          docs: The ID of the Studio project.
+        project_snapshot_id:
+          type: string
+          docs: The ID of the Studio project snapshot.
+      display-name: Get Project Snapshot
+      response:
+        docs: Successful Response
+        type: root.ProjectSnapshotExtendedResponseModel
+        status-code: 200
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            project_id: 21m00Tcm4TlvDq8ikWAM
+            project_snapshot_id: 21m00Tcm4TlvDq8ikWAM
+          response:
+            body:
+              project_snapshot_id: aw1NgEzBg83R7vgmiJt6
+              project_id: aw1NgEzBg83R7vgmiJt6
+              created_at_unix: 1714204800
+              name: My Project Snapshot
+              audio_upload:
+                key: value
+              zip_upload:
+                key: value
+              character_alignments:
+                - characters:
+                    - characters
+                  character_start_times_seconds:
+                    - 1.1
+                  character_end_times_seconds:
+                    - 1.1
+    stream:
+      path: /v1/studio/projects/{project_id}/snapshots/{project_snapshot_id}/stream
+      method: POST
+      auth: false
+      docs: Stream the audio from a Studio project snapshot.
+      source:
+        openapi: openapi.json
+      path-parameters:
+        project_id:
+          type: string
+          docs: >-
+            The ID of the project to be used. You can use the [List
+            projects](/docs/api-reference/studio/get-projects) endpoint to list
+            all the available projects.
+        project_snapshot_id:
+          type: string
+          docs: The ID of the Studio project snapshot.
+      display-name: Stream Studio Project Audio
+      request:
+        name: >-
+          BodyStreamStudioProjectAudioV1StudioProjectsProjectIdSnapshotsProjectSnapshotIdStreamPost
+        body:
+          properties:
+            convert_to_mpeg:
+              type: optional<boolean>
+              docs: Whether to convert the audio to mpeg format.
+              default: false
+        content-type: application/json
+      response:
+        docs: Successful Response
+        type: file
+        status-code: 200
+      errors:
+        - root.UnprocessableEntityError
+    stream_archive:
+      path: /v1/studio/projects/{project_id}/snapshots/{project_snapshot_id}/archive
+      method: POST
+      auth: false
+      docs: Returns a compressed archive of the Studio project's audio.
+      source:
+        openapi: openapi.json
+      path-parameters:
+        project_id:
+          type: string
+          docs: >-
+            The ID of the project to be used. You can use the [List
+            projects](/docs/api-reference/studio/get-projects) endpoint to list
+            all the available projects.
+        project_snapshot_id:
+          type: string
+          docs: The ID of the Studio project snapshot.
+      display-name: Stream Archive With Studio Project Audio
+      response:
+        docs: Streaming archive data
+        type: file
+        status-code: 200
+      errors:
+        - root.UnprocessableEntityError
+  source:
+    openapi: openapi.json

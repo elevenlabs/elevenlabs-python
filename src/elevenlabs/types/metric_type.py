@@ -3,13 +3,5 @@
 import typing
 
 MetricType = typing.Union[
-    typing.Literal[
-        "credits",
-        "minutes_used",
-        "request_count",
-        "ttfb_avg",
-        "ttfb_p95",
-        "fiat_units_spent",
-    ],
-    typing.Any,
+    typing.Literal["credits", "minutes_used", "request_count", "ttfb_avg", "ttfb_p95", "fiat_units_spent"], typing.Any
 ]

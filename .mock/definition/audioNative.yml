@@ -138,7 +138,7 @@ service:
                 audio_path: audio/my_project.mp3
                 audio_url: https://example.com/audio/my_project.mp3
                 status: ready
-    update_content:
+    update:
       path: /v1/audio-native/{project_id}/content
       method: POST
       auth: false

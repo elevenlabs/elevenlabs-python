@@ -3,6 +3,5 @@
 import typing
 
 BatchCallRecipientStatus = typing.Union[
-    typing.Literal["pending", "in_progress", "completed", "failed", "cancelled"],
-    typing.Any,
+    typing.Literal["pending", "initiated", "in_progress", "completed", "failed", "cancelled"], typing.Any
 ]

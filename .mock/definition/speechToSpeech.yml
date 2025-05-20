@@ -38,7 +38,7 @@ types:
     inline: true
     source:
       openapi: openapi.json
-  SpeechToSpeechConvertAsStreamRequestOutputFormat:
+  SpeechToSpeechStreamRequestOutputFormat:
     enum:
       - mp3_22050_32
       - mp3_44100_32
@@ -70,7 +70,7 @@ types:
     default: mp3_44100_128
     source:
       openapi: openapi.json
-  SpeechToSpeechConvertAsStreamRequestFileFormat:
+  SpeechToSpeechStreamRequestFileFormat:
     enum:
       - pcm_s16le_16
       - other
@@ -201,7 +201,7 @@ service:
             output_format: mp3_44100_128
           request:
             model_id: eleven_multilingual_sts_v2
-    convert_as_stream:
+    stream:
       path: /v1/speech-to-speech/{voice_id}/stream
       method: POST
       auth: false
@@ -254,7 +254,7 @@ service:
               Defaults to None.
             availability: deprecated
           output_format:
-            type: optional<SpeechToSpeechConvertAsStreamRequestOutputFormat>
+            type: optional<SpeechToSpeechStreamRequestOutputFormat>
             default: mp3_44100_128
             docs: >-
               Output format of the generated audio. Formatted as
@@ -299,7 +299,7 @@ service:
                 using our audio isolation model. Only applies to Voice Changer.
               default: false
             file_format:
-              type: optional<SpeechToSpeechConvertAsStreamRequestFileFormat>
+              type: optional<SpeechToSpeechStreamRequestFileFormat>
               docs: >-
                 The format of input audio. Options are 'pcm_s16le_16' or 'other'
                 For `pcm_s16le_16`, the input audio must be 16-bit PCM at a

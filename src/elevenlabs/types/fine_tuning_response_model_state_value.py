@@ -3,6 +3,5 @@
 import typing
 
 FineTuningResponseModelStateValue = typing.Union[
-    typing.Literal["not_started", "queued", "fine_tuning", "fine_tuned", "failed", "delayed"],
-    typing.Any,
+    typing.Literal["not_started", "queued", "fine_tuning", "fine_tuned", "failed", "delayed"], typing.Any
 ]

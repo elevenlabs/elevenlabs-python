@@ -1,0 +1,83 @@
+imports:
+  root: ../../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    update:
+      path: /v1/dubbing/resource/{dubbing_id}/segment/{segment_id}/{language}
+      method: PATCH
+      auth: false
+      docs: >-
+        Modifies a single segment with new text and/or start/end times. Will
+        update the values for only a specific language of a segment. Does not
+        automatically regenerate the dub.
+      source:
+        openapi: openapi.json
+      path-parameters:
+        dubbing_id:
+          type: string
+          docs: ID of the dubbing project.
+        segment_id:
+          type: string
+          docs: ID of the segment
+        language:
+          type: string
+          docs: ID of the language.
+      display-name: Modify a segment
+      request:
+        name: SegmentUpdatePayload
+        body:
+          properties:
+            start_time:
+              type: optional<double>
+            end_time:
+              type: optional<double>
+            text:
+              type: optional<string>
+        content-type: application/json
+      response:
+        docs: Successful Response
+        type: root.SegmentUpdateResponse
+        status-code: 200
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            dubbing_id: dubbing_id
+            segment_id: segment_id
+            language: language
+          request: {}
+          response:
+            body:
+              version: 1
+    delete:
+      path: /v1/dubbing/resource/{dubbing_id}/segment/{segment_id}
+      method: DELETE
+      auth: false
+      docs: Deletes a single segment from the dubbing.
+      source:
+        openapi: openapi.json
+      path-parameters:
+        dubbing_id:
+          type: string
+          docs: ID of the dubbing project.
+        segment_id:
+          type: string
+          docs: ID of the segment
+      display-name: Delete a segment
+      response:
+        docs: Successful Response
+        type: root.SegmentDeleteResponse
+        status-code: 200
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            dubbing_id: dubbing_id
+            segment_id: segment_id
+          response:
+            body:
+              version: 1
+  source:
+    openapi: openapi.json
