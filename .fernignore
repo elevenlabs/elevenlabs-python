@@ -5,6 +5,7 @@ src/elevenlabs/client.py
 src/elevenlabs/conversational_ai/conversation.py
 src/elevenlabs/conversational_ai/default_audio_interface.py
 src/elevenlabs/play.py
+src/elevenlabs/webhooks.py
 
 # Ignore CI files
 .github/
