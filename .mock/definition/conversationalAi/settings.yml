@@ -1,0 +1,81 @@
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    get:
+      path: /v1/convai/settings
+      method: GET
+      auth: false
+      docs: Retrieve Convai settings for the workspace
+      source:
+        openapi: openapi.json
+      display-name: Get Convai Settings
+      response:
+        docs: Successful Response
+        type: root.GetConvAiSettingsResponseModel
+        status-code: 200
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - response:
+            body:
+              conversation_initiation_client_data_webhook:
+                url: https://example.com/webhook
+                request_headers:
+                  Content-Type: application/json
+              webhooks:
+                post_call_webhook_id: post_call_webhook_id
+              can_use_mcp_servers: true
+              rag_retention_period_days: 1
+      audiences:
+        - convai
+    update:
+      path: /v1/convai/settings
+      method: PATCH
+      auth: false
+      docs: Update Convai settings for the workspace
+      source:
+        openapi: openapi.json
+      display-name: Update Convai Settings
+      request:
+        name: PatchConvAiSettingsRequest
+        body:
+          properties:
+            conversation_initiation_client_data_webhook:
+              type: optional<root.ConversationInitiationClientDataWebhook>
+            webhooks:
+              type: optional<root.ConvAiWebhooks>
+            can_use_mcp_servers:
+              type: optional<boolean>
+              docs: Whether the workspace can use MCP servers
+              default: false
+            rag_retention_period_days:
+              type: optional<integer>
+              default: 10
+              validation:
+                max: 30
+        content-type: application/json
+      response:
+        docs: Successful Response
+        type: root.GetConvAiSettingsResponseModel
+        status-code: 200
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - request: {}
+          response:
+            body:
+              conversation_initiation_client_data_webhook:
+                url: https://example.com/webhook
+                request_headers:
+                  Content-Type: application/json
+              webhooks:
+                post_call_webhook_id: post_call_webhook_id
+              can_use_mcp_servers: true
+              rag_retention_period_days: 1
+      audiences:
+        - convai
+  source:
+    openapi: openapi.json

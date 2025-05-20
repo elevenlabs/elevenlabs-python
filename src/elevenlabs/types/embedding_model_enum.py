@@ -3,6 +3,5 @@
 import typing
 
 EmbeddingModelEnum = typing.Union[
-    typing.Literal["e5_mistral_7b_instruct", "multilingual_e5_large_instruct"],
-    typing.Any,
+    typing.Literal["e5_mistral_7b_instruct", "multilingual_e5_large_instruct"], typing.Any
 ]

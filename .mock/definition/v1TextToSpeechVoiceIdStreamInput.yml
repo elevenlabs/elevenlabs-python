@@ -1,3 +1,5 @@
+imports:
+  root: __package__.yml
 channel:
   path: /v1/text-to-speech/{voice_id}/stream-input
   url: WSS
@@ -24,6 +26,59 @@ channel:
     voice_id:
       type: string
       docs: The unique identifier for the voice to use in the TTS process.
+  query-parameters:
+    authorization:
+      type: optional<string>
+      docs: Your authorization bearer token.
+    model_id:
+      type: optional<string>
+      docs: The model ID to use.
+    language_code:
+      type: optional<string>
+      docs: The ISO 639-1 language code (for specific models).
+    enable_logging:
+      type: optional<boolean>
+      default: true
+      docs: Whether to enable logging of the request.
+    enable_ssml_parsing:
+      type: optional<boolean>
+      default: false
+      docs: Whether to enable SSML parsing.
+    output_format:
+      type: root.TextToSpeechOutputFormatEnum
+      docs: The output audio format
+    inactivity_timeout:
+      type: optional<integer>
+      default: 20
+      docs: >-
+        Timeout for inactivity before a context is closed (seconds), can be up
+        to 180 seconds.
+    sync_alignment:
+      type: optional<boolean>
+      default: false
+      docs: Whether to include timing data with every audio chunk.
+    auto_mode:
+      type: optional<boolean>
+      default: false
+      docs: >-
+        Reduces latency by disabling chunk schedule and buffers. Recommended for
+        full sentences/phrases.
+    apply_text_normalization:
+      type: root.TextToSpeechApplyTextNormalizationEnum
+      docs: >-
+        This parameter controls text normalization with three modes - 'auto',
+        'on', and 'off'. When set to 'auto', the system will automatically
+        decide whether to apply text normalization (e.g., spelling out numbers).
+        With 'on', text normalization will always be applied, while with 'off',
+        it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' or
+        'eleven_flash_v2_5' models. Defaults to 'auto'.
+    seed:
+      type: optional<integer>
+      docs: >-
+        If specified, system will best-effort sample deterministically. Integer
+        between 0 and 4294967295.
+      validation:
+        min: 0
   messages:
     publish:
       origin: client
@@ -128,8 +183,10 @@ channel:
                 - r
                 - l
                 - d
-imports:
-  root: __package__.yml
+      query-parameters:
+        output_format: mp3_22050_32
+        apply_text_normalization: auto
+        seed: 12345
 types:
   sendMessage:
     discriminated: false

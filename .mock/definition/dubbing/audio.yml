@@ -1,0 +1,35 @@
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    get:
+      path: /v1/dubbing/{dubbing_id}/audio/{language_code}
+      method: GET
+      auth: false
+      docs: >-
+        Returns dub as a streamed MP3 or MP4 file. If this dub has been edited
+        using Dubbing Studio you need to use the resource render endpoint as
+        this endpoint only returns the original automatic dub result.
+      source:
+        openapi: openapi.json
+      path-parameters:
+        dubbing_id:
+          type: string
+          docs: ID of the dubbing project.
+        language_code:
+          type: string
+          docs: ID of the language.
+      display-name: Get dubbed audio
+      response:
+        docs: The dubbed audio or video file
+        type: file
+        status-code: 200
+      errors:
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.UnprocessableEntityError
+        - root.TooEarlyError
+  source:
+    openapi: openapi.json
