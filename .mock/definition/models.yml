@@ -4,7 +4,7 @@ service:
   auth: false
   base-path: ''
   endpoints:
-    get_all:
+    list:
       path: /v1/models
       method: GET
       auth: false

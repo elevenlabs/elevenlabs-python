@@ -3,6 +3,5 @@
 import typing
 
 SimilarVoiceCategory = typing.Union[
-    typing.Literal["premade", "cloned", "generated", "professional", "famous"],
-    typing.Any,
+    typing.Literal["premade", "cloned", "generated", "professional", "famous"], typing.Any
 ]
