@@ -35,7 +35,7 @@ def test_tts_convert_with_voice_settings() -> None:
 def test_tts_convert_as_stream():
     async def main():
         async_client = AsyncElevenLabs()
-        results = async_client.text_to_speech.convert_as_stream(
+        results = async_client.text_to_speech.stream(
             text=DEFAULT_TEXT, voice_id=DEFAULT_VOICE, model_id=DEFAULT_MODEL
         )
         out = b""

@@ -16,7 +16,7 @@ def test_get_voice():
 
 def test_get_voices():
     client = ElevenLabs()
-    response = client.voices.get_all()
+    response = client.voices.search()
 
     assert len(response.voices) > 0
 

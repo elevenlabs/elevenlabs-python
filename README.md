@@ -83,7 +83,7 @@ client = ElevenLabs(
   api_key="YOUR_API_KEY",
 )
 
-response = client.voices.get_all()
+response = client.voices.search()
 print(response.voices)
 ```
 
@@ -106,7 +106,7 @@ client = ElevenLabs(
   api_key="YOUR_API_KEY",
 )
 
-voice = client.voices.add(
+voice = client.voices.ivc.create(
     name="Alex",
     description="An old American male voice with a slight hoarseness in his throat. Perfect for news", # Optional
     files=["./sample_0.mp3", "./sample_1.mp3", "./sample_2.mp3"],
@@ -123,7 +123,7 @@ from elevenlabs.client import ElevenLabs
 
 client = ElevenLabs()
 
-audio_stream = client.text_to_speech.convert_as_stream(
+audio_stream = client.text_to_speech.stream(
     text="This is a test",
     voice_id="JBFqnCBsd6RMkjVDRZzb",
     model_id="eleven_multilingual_v2"
@@ -153,7 +153,7 @@ eleven = AsyncElevenLabs(
 )
 
 async def print_models() -> None:
-    models = await eleven.models.get_all()
+    models = await eleven.models.list()
     print(models)
 
 asyncio.run(print_models())

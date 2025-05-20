@@ -91,7 +91,7 @@ def test_conversation_basic_flow():
 def test_conversation_with_auth():
     # Mock setup
     mock_client = MagicMock()
-    mock_client.conversational_ai.get_signed_url.return_value.signed_url = "wss://signed.url"
+    mock_client.conversational_ai.conversations.get_signed_url.return_value.signed_url = "wss://signed.url"
     mock_ws = create_mock_websocket(
         [
             {
@@ -116,7 +116,7 @@ def test_conversation_with_auth():
         conversation.wait_for_session_end()
 
     # Assertions
-    mock_client.conversational_ai.get_signed_url.assert_called_once_with(agent_id=TEST_AGENT_ID)
+    mock_client.conversational_ai.conversations.get_signed_url.assert_called_once_with(agent_id=TEST_AGENT_ID)
 
 def test_conversation_with_dynamic_variables():
     # Mock setup
