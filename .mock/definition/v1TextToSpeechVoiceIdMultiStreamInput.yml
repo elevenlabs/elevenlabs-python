@@ -26,9 +26,9 @@ channel:
     the entire connection gracefully.
 
 
-    For more information on how to use this API for conversational agents see
-    the [conversational agents
-    guide](/docs/best-practices/conversational-agents).
+    For more information on best practices for how to use this API, please see
+    the [multi context websocket
+    guide](/docs/cookbooks/multi-context-web-socket).
   path-parameters:
     voice_id:
       type: string
@@ -192,6 +192,7 @@ channel:
                 - r
                 - l
                 - d
+            contextId: conv_1
         - type: publish
           body:
             text: 'Hi this is a new context with different settings! '
@@ -210,6 +211,7 @@ channel:
         - type: subscribe
           body:
             audio: Y3VyaW91cyBtaW5kcyB0aGluayBhbGlrZSA6KQ==
+            contextId: interruption_context
         - type: subscribe
           body:
             isFinal: true

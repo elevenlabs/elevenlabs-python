@@ -12,6 +12,7 @@ from .batch_calls.client import AsyncBatchCallsClient, BatchCallsClient
 from .conversations.client import AsyncConversationsClient, ConversationsClient
 from .dashboard.client import AsyncDashboardClient, DashboardClient
 from .knowledge_base.client import AsyncKnowledgeBaseClient, KnowledgeBaseClient
+from .llm_usage.client import AsyncLlmUsageClient, LlmUsageClient
 from .phone_numbers.client import AsyncPhoneNumbersClient, PhoneNumbersClient
 from .raw_client import AsyncRawConversationalAiClient, RawConversationalAiClient
 from .secrets.client import AsyncSecretsClient, SecretsClient
@@ -33,6 +34,8 @@ class ConversationalAiClient:
         self.agents = AgentsClient(client_wrapper=client_wrapper)
 
         self.phone_numbers = PhoneNumbersClient(client_wrapper=client_wrapper)
+
+        self.llm_usage = LlmUsageClient(client_wrapper=client_wrapper)
 
         self.knowledge_base = KnowledgeBaseClient(client_wrapper=client_wrapper)
 
@@ -150,6 +153,8 @@ class AsyncConversationalAiClient:
         self.agents = AsyncAgentsClient(client_wrapper=client_wrapper)
 
         self.phone_numbers = AsyncPhoneNumbersClient(client_wrapper=client_wrapper)
+
+        self.llm_usage = AsyncLlmUsageClient(client_wrapper=client_wrapper)
 
         self.knowledge_base = AsyncKnowledgeBaseClient(client_wrapper=client_wrapper)
 

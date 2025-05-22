@@ -24,6 +24,11 @@ class ConversationTokenDbModel(UncheckedBaseModel):
     The expiration time of the token in unix seconds
     """
 
+    conversation_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ID of the conversation
+    """
+
     purpose: typing.Optional[ConversationTokenPurpose] = pydantic.Field(default=None)
     """
     The purpose of the token

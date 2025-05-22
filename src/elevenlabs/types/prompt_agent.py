@@ -50,6 +50,11 @@ class PromptAgent(UncheckedBaseModel):
     A list of MCP server ids to be used by the agent
     """
 
+    native_mcp_server_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    A list of Native MCP server ids to be used by the agent
+    """
+
     knowledge_base: typing.Optional[typing.List[KnowledgeBaseLocator]] = pydantic.Field(default=None)
     """
     A list of knowledge bases to be used by the agent

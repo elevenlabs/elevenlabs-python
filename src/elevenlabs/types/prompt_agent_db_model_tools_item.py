@@ -61,6 +61,30 @@ class PromptAgentDbModelToolsItem_Mcp(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class PromptAgentDbModelToolsItem_NativeMcp(UncheckedBaseModel):
+    """
+    The type of tool
+    """
+
+    type: typing.Literal["native_mcp"] = "native_mcp"
+    id: typing.Optional[str] = None
+    name: str
+    description: str
+    response_timeout_secs: typing.Optional[int] = None
+    parameters: typing.Optional["ObjectJsonSchemaPropertyInput"] = None
+    mcp_tool_name: str
+    mcp_server_id: str
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class PromptAgentDbModelToolsItem_System(UncheckedBaseModel):
     """
     The type of tool
@@ -113,6 +137,7 @@ PromptAgentDbModelToolsItem = typing_extensions.Annotated[
     typing.Union[
         PromptAgentDbModelToolsItem_Client,
         PromptAgentDbModelToolsItem_Mcp,
+        PromptAgentDbModelToolsItem_NativeMcp,
         PromptAgentDbModelToolsItem_System,
         PromptAgentDbModelToolsItem_Webhook,
     ],
@@ -120,4 +145,5 @@ PromptAgentDbModelToolsItem = typing_extensions.Annotated[
 ]
 update_forward_refs(PromptAgentDbModelToolsItem_Client)
 update_forward_refs(PromptAgentDbModelToolsItem_Mcp)
+update_forward_refs(PromptAgentDbModelToolsItem_NativeMcp)
 update_forward_refs(PromptAgentDbModelToolsItem_Webhook)

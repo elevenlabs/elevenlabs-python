@@ -29,9 +29,10 @@ service:
             body:
               agent_id: J3Pbu5gP6NNKBscdCdwB
               token:
-                agent_id: J3Pbu5gP6NNKBscdCdwB
+                agent_id: agent_J3Pbu5gP6NNKBscdCdwB
                 conversation_token: '1234567890'
                 expiration_time_unix_secs: 1716153600
+                conversation_id: conv_J3Pbu5gP6NNKBscdCdwB
                 purpose: signed_url
       audiences:
         - convai
