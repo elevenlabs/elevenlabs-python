@@ -7,27 +7,35 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .dynamic_variables_config import DynamicVariablesConfig
-from .prompt_agent_db_model import PromptAgentDbModel
 
 
-class AgentConfigDbModel(UncheckedBaseModel):
-    first_message: typing.Optional[str] = pydantic.Field(default=None)
+class NativeMcpToolConfigInput(UncheckedBaseModel):
     """
-    If non-empty, the first message the agent will say. If empty, the agent waits for the user to start the discussion.
-    """
-
-    language: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Language of the agent - used for ASR and TTS
+    A Native MCP tool is a tool that is used to call a Native MCP server
     """
 
-    dynamic_variables: typing.Optional[DynamicVariablesConfig] = pydantic.Field(default=None)
+    id: typing.Optional[str] = None
+    name: str
+    description: str
+    response_timeout_secs: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Configuration for dynamic variables
+    The maximum time in seconds to wait for the tool call to complete.
     """
 
-    prompt: typing.Optional[PromptAgentDbModel] = None
+    parameters: typing.Optional["ObjectJsonSchemaPropertyInput"] = pydantic.Field(default=None)
+    """
+    Schema for any parameters the LLM needs to provide to the MCP tool.
+    """
+
+    mcp_tool_name: str = pydantic.Field()
+    """
+    The name of the MCP tool to call
+    """
+
+    mcp_server_id: str = pydantic.Field()
+    """
+    The id of the MCP server to call
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -42,4 +50,4 @@ class AgentConfigDbModel(UncheckedBaseModel):
 from .array_json_schema_property_input import ArrayJsonSchemaPropertyInput  # noqa: E402, F401, I001
 from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput  # noqa: E402, F401, I001
 
-update_forward_refs(AgentConfigDbModel)
+update_forward_refs(NativeMcpToolConfigInput)

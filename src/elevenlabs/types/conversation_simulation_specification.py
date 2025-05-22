@@ -7,7 +7,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .agent_config_db_model import AgentConfigDbModel
+from .agent_config import AgentConfig
 from .conversation_history_transcript_common_model_input import ConversationHistoryTranscriptCommonModelInput
 from .tool_mock_config import ToolMockConfig
 
@@ -17,7 +17,7 @@ class ConversationSimulationSpecification(UncheckedBaseModel):
     A specification that will be used to simulate a conversation between an agent and an AI user.
     """
 
-    simulated_user_config: AgentConfigDbModel
+    simulated_user_config: AgentConfig
     tool_mock_config: typing.Optional[typing.Dict[str, ToolMockConfig]] = None
     partial_conversation_history: typing.Optional[typing.List[ConversationHistoryTranscriptCommonModelInput]] = (
         pydantic.Field(default=None)

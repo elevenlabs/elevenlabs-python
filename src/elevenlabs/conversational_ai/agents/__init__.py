@@ -2,6 +2,6 @@
 
 # isort: skip_file
 
-from . import link, widget
+from . import knowledge_base, link, llm_usage, widget
 
-__all__ = ["link", "widget"]
+__all__ = ["knowledge_base", "link", "llm_usage", "widget"]

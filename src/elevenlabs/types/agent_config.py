@@ -8,7 +8,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .dynamic_variables_config import DynamicVariablesConfig
-from .prompt_agent import PromptAgent
+from .prompt_agent_db_model import PromptAgentDbModel
 
 
 class AgentConfig(UncheckedBaseModel):
@@ -27,10 +27,7 @@ class AgentConfig(UncheckedBaseModel):
     Configuration for dynamic variables
     """
 
-    prompt: typing.Optional[PromptAgent] = pydantic.Field(default=None)
-    """
-    The prompt for the agent
-    """
+    prompt: typing.Optional[PromptAgentDbModel] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -42,7 +39,7 @@ class AgentConfig(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .array_json_schema_property_output import ArrayJsonSchemaPropertyOutput  # noqa: E402, F401, I001
-from .object_json_schema_property_output import ObjectJsonSchemaPropertyOutput  # noqa: E402, F401, I001
+from .array_json_schema_property_input import ArrayJsonSchemaPropertyInput  # noqa: E402, F401, I001
+from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput  # noqa: E402, F401, I001
 
 update_forward_refs(AgentConfig)

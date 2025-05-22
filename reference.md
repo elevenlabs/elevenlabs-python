@@ -5370,7 +5370,7 @@ Run a conversation between the agent and a simulated user.
 
 ```python
 from elevenlabs import (
-    AgentConfigDbModel,
+    AgentConfig,
     ConversationSimulationSpecification,
     ElevenLabs,
 )
@@ -5381,7 +5381,7 @@ client = ElevenLabs(
 client.conversational_ai.agents.simulate_conversation(
     agent_id="21m00Tcm4TlvDq8ikWAM",
     simulation_specification=ConversationSimulationSpecification(
-        simulated_user_config=AgentConfigDbModel(
+        simulated_user_config=AgentConfig(
             first_message="Hello, how can I help you today?",
             language="en",
         ),
@@ -5466,7 +5466,7 @@ Run a conversation between the agent and a simulated user and stream back the re
 
 ```python
 from elevenlabs import (
-    AgentConfigDbModel,
+    AgentConfig,
     ConversationSimulationSpecification,
     ElevenLabs,
 )
@@ -5477,7 +5477,7 @@ client = ElevenLabs(
 client.conversational_ai.agents.simulate_conversation_stream(
     agent_id="21m00Tcm4TlvDq8ikWAM",
     simulation_specification=ConversationSimulationSpecification(
-        simulated_user_config=AgentConfigDbModel(
+        simulated_user_config=AgentConfig(
             first_message="Hello, how can I help you today?",
             language="en",
         ),
@@ -5875,6 +5875,95 @@ client.conversational_ai.phone_numbers.list()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi LlmUsage
+<details><summary><code>client.conversational_ai.llm_usage.<a href="src/elevenlabs/conversational_ai/llm_usage/client.py">calculate</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of LLM models and the expected cost for using them based on the provided values.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.llm_usage.calculate(
+    prompt_length=1,
+    number_of_pages=1,
+    rag_enabled=True,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**prompt_length:** `int` — Length of the prompt in characters.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**number_of_pages:** `int` — Pages of content in PDF documents or URLs in the agent's knowledge base.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rag_enabled:** `bool` — Whether RAG is enabled.
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -6851,6 +6940,172 @@ client.conversational_ai.agents.link.get(
 <dd>
 
 **agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi Agents KnowledgeBase
+<details><summary><code>client.conversational_ai.agents.knowledge_base.<a href="src/elevenlabs/conversational_ai/agents/knowledge_base/client.py">size</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the number of pages in the agent's knowledge base.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.agents.knowledge_base.size(
+    agent_id="agent_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi Agents LlmUsage
+<details><summary><code>client.conversational_ai.agents.llm_usage.<a href="src/elevenlabs/conversational_ai/agents/llm_usage/client.py">calculate</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Calculates expected number of LLM tokens needed for the specified agent.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.agents.llm_usage.calculate(
+    agent_id="agent_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prompt_length:** `typing.Optional[int]` — Length of the prompt in characters.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**number_of_pages:** `typing.Optional[int]` — Pages of content in pdf documents OR urls in agent's Knowledge Base.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rag_enabled:** `typing.Optional[bool]` — Whether RAG is enabled.
     
 </dd>
 </dl>
