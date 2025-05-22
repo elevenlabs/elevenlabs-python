@@ -5,14 +5,12 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .chapter_content_block_input_model_sub_type import ChapterContentBlockInputModelSubType
-from .chapter_content_paragraph_tts_node_input_model import ChapterContentParagraphTtsNodeInputModel
+from .llm import Llm
 
 
-class ChapterContentBlockInputModel(UncheckedBaseModel):
-    sub_type: typing.Optional[ChapterContentBlockInputModelSubType] = None
-    block_id: typing.Optional[str] = None
-    nodes: typing.List[ChapterContentParagraphTtsNodeInputModel]
+class LlmUsageCalculatorLlmResponseModel(UncheckedBaseModel):
+    llm: Llm
+    price_per_minute: float
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

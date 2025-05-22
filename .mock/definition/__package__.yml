@@ -227,26 +227,6 @@ types:
         type: optional<DynamicVariablesConfig>
         docs: Configuration for dynamic variables
       prompt:
-        type: optional<PromptAgent>
-        docs: The prompt for the agent
-    source:
-      openapi: openapi.json
-  AgentConfigDbModel:
-    properties:
-      first_message:
-        type: optional<string>
-        docs: >-
-          If non-empty, the first message the agent will say. If empty, the
-          agent waits for the user to start the discussion.
-        default: ''
-      language:
-        type: optional<string>
-        docs: Language of the agent - used for ASR and TTS
-        default: en
-      dynamic_variables:
-        type: optional<DynamicVariablesConfig>
-        docs: Configuration for dynamic variables
-      prompt:
         type: optional<PromptAgentDbModel>
     source:
       openapi: openapi.json
@@ -1253,8 +1233,19 @@ types:
     properties: {}
     source:
       openapi: openapi.json
+  ChapterContentBlockInputModelSubType:
+    enum:
+      - p
+      - h1
+      - h2
+      - h3
+    inline: true
+    source:
+      openapi: openapi.json
   ChapterContentBlockInputModel:
     properties:
+      sub_type:
+        type: optional<ChapterContentBlockInputModelSubType>
       block_id:
         type: optional<string>
       nodes:
@@ -2135,7 +2126,7 @@ types:
       agent and an AI user.
     properties:
       simulated_user_config:
-        type: AgentConfigDbModel
+        type: AgentConfig
       tool_mock_config:
         type: optional<map<string, ToolMockConfig>>
       partial_conversation_history:
@@ -2182,6 +2173,9 @@ types:
       expiration_time_unix_secs:
         type: optional<integer>
         docs: The expiration time of the token in unix seconds
+      conversation_id:
+        type: optional<string>
+        docs: The ID of the conversation
       purpose:
         type: optional<ConversationTokenPurpose>
         docs: The purpose of the token
@@ -3017,6 +3011,11 @@ types:
         type: WidgetConfigResponseModel
     source:
       openapi: openapi.json
+  GetAgentKnowledgebaseSizeResponseModel:
+    properties:
+      number_of_pages: double
+    source:
+      openapi: openapi.json
   GetAgentLinkResponseModel:
     properties:
       agent_id:
@@ -3651,6 +3650,19 @@ types:
         type: optional<map<string, LlmInputOutputTokensUsage>>
     source:
       openapi: openapi.json
+  LlmUsageCalculatorLlmResponseModel:
+    properties:
+      llm:
+        type: Llm
+      price_per_minute: double
+    source:
+      openapi: openapi.json
+  LlmUsageCalculatorResponseModel:
+    properties:
+      llm_prices:
+        type: list<LlmUsageCalculatorLlmResponseModel>
+    source:
+      openapi: openapi.json
   LanguageAddedResponse:
     properties:
       version: integer
@@ -4065,6 +4077,66 @@ types:
       on_watchlist:
         type: boolean
         docs: Whether the user is on the watchlist.
+    source:
+      openapi: openapi.json
+  NativeMcpToolConfigInput:
+    docs: A Native MCP tool is a tool that is used to call a Native MCP server
+    properties:
+      id:
+        type: optional<string>
+        default: ''
+      name:
+        type: string
+        validation:
+          pattern: ^[a-zA-Z0-9_-]{1,64}$
+          minLength: 0
+      description:
+        type: string
+        validation:
+          minLength: 0
+      response_timeout_secs:
+        type: optional<integer>
+        docs: The maximum time in seconds to wait for the tool call to complete.
+        default: 20
+      parameters:
+        type: optional<ObjectJsonSchemaPropertyInput>
+        docs: Schema for any parameters the LLM needs to provide to the MCP tool.
+      mcp_tool_name:
+        type: string
+        docs: The name of the MCP tool to call
+      mcp_server_id:
+        type: string
+        docs: The id of the MCP server to call
+    source:
+      openapi: openapi.json
+  NativeMcpToolConfigOutput:
+    docs: A Native MCP tool is a tool that is used to call a Native MCP server
+    properties:
+      id:
+        type: optional<string>
+        default: ''
+      name:
+        type: string
+        validation:
+          pattern: ^[a-zA-Z0-9_-]{1,64}$
+          minLength: 0
+      description:
+        type: string
+        validation:
+          minLength: 0
+      response_timeout_secs:
+        type: optional<integer>
+        docs: The maximum time in seconds to wait for the tool call to complete.
+        default: 20
+      parameters:
+        type: optional<ObjectJsonSchemaPropertyOutput>
+        docs: Schema for any parameters the LLM needs to provide to the MCP tool.
+      mcp_tool_name:
+        type: string
+        docs: The name of the MCP tool to call
+      mcp_server_id:
+        type: string
+        docs: The id of the MCP server to call
     source:
       openapi: openapi.json
   ObjectJsonSchemaPropertyInputPropertiesValue:
@@ -4673,6 +4745,8 @@ types:
         type: ClientToolConfigInput
       mcp:
         type: McpToolConfigInput
+      native_mcp:
+        type: NativeMcpToolConfigInput
       system:
         type: SystemToolConfigInput
       webhook:
@@ -4707,6 +4781,9 @@ types:
       mcp_server_ids:
         type: optional<list<string>>
         docs: A list of MCP server ids to be used by the agent
+      native_mcp_server_ids:
+        type: optional<list<string>>
+        docs: A list of Native MCP server ids to be used by the agent
       knowledge_base:
         type: optional<list<KnowledgeBaseLocator>>
         docs: A list of knowledge bases to be used by the agent
@@ -4730,6 +4807,8 @@ types:
         type: ClientToolConfigOutput
       mcp:
         type: McpToolConfigOutput
+      native_mcp:
+        type: NativeMcpToolConfigOutput
       system:
         type: SystemToolConfigOutput
       webhook:
@@ -4745,6 +4824,8 @@ types:
         type: ClientToolConfigInput
       mcp:
         type: McpToolConfigInput
+      native_mcp:
+        type: NativeMcpToolConfigInput
       system:
         type: SystemToolConfigInput
       webhook:
@@ -4779,6 +4860,9 @@ types:
       mcp_server_ids:
         type: optional<list<string>>
         docs: A list of MCP server ids to be used by the agent
+      native_mcp_server_ids:
+        type: optional<list<string>>
+        docs: A list of Native MCP server ids to be used by the agent
       knowledge_base:
         type: optional<list<KnowledgeBaseLocator>>
         docs: A list of knowledge bases to be used by the agent
@@ -7506,7 +7590,7 @@ types:
         docs: >-
           Optional list of pronunciation dictionary locators. Can only be
           provided in the first message for a given context_id.
-      context_id:
+      contextId:
         type: optional<string>
         docs: >-
           An identifier for the text-to-speech context. Allows managing multiple
@@ -7515,14 +7599,14 @@ types:
       close_context:
         type: optional<boolean>
         docs: >-
-          If true, closes the specified `context_id`. No further audio will be
+          If true, closes the specified `contextId`. No further audio will be
           generated for this context. The `text` field is ignored.
         default: false
       close_socket:
         type: optional<boolean>
         docs: >-
           If true, flushes all contexts and closes the entire WebSocket
-          connection. The `text` and `context_id` fields are ignored.
+          connection. The `text` and `contextId` fields are ignored.
         default: false
     source:
       openapi: asyncapi.yml
@@ -7651,9 +7735,9 @@ types:
         docs: Base64 encoded audio chunk.
       normalizedAlignment: optional<NormalizedAlignment>
       alignment: optional<Alignment>
-      context_id:
+      contextId:
         type: optional<string>
-        docs: The context_id for which this audio is.
+        docs: The contextId for which this audio is.
     source:
       openapi: asyncapi.yml
   FinalOutputMulti:

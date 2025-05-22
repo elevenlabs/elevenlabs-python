@@ -61,6 +61,30 @@ class PromptAgentOutputToolsItem_Mcp(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class PromptAgentOutputToolsItem_NativeMcp(UncheckedBaseModel):
+    """
+    The type of tool
+    """
+
+    type: typing.Literal["native_mcp"] = "native_mcp"
+    id: typing.Optional[str] = None
+    name: str
+    description: str
+    response_timeout_secs: typing.Optional[int] = None
+    parameters: typing.Optional["ObjectJsonSchemaPropertyOutput"] = None
+    mcp_tool_name: str
+    mcp_server_id: str
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class PromptAgentOutputToolsItem_System(UncheckedBaseModel):
     """
     The type of tool
@@ -113,6 +137,7 @@ PromptAgentOutputToolsItem = typing_extensions.Annotated[
     typing.Union[
         PromptAgentOutputToolsItem_Client,
         PromptAgentOutputToolsItem_Mcp,
+        PromptAgentOutputToolsItem_NativeMcp,
         PromptAgentOutputToolsItem_System,
         PromptAgentOutputToolsItem_Webhook,
     ],
@@ -120,4 +145,5 @@ PromptAgentOutputToolsItem = typing_extensions.Annotated[
 ]
 update_forward_refs(PromptAgentOutputToolsItem_Client)
 update_forward_refs(PromptAgentOutputToolsItem_Mcp)
+update_forward_refs(PromptAgentOutputToolsItem_NativeMcp)
 update_forward_refs(PromptAgentOutputToolsItem_Webhook)

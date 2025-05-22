@@ -59,19 +59,21 @@ class WebsocketTtsClientMessageMulti(UncheckedBaseModel):
     Optional list of pronunciation dictionary locators. Can only be provided in the first message for a given context_id.
     """
 
-    context_id: typing.Optional[str] = pydantic.Field(default=None)
+    context_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="contextId")] = pydantic.Field(
+        default=None
+    )
     """
     An identifier for the text-to-speech context. Allows managing multiple independent audio generation streams over a single WebSocket connection. If omitted, a default context is used.
     """
 
     close_context: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    If true, closes the specified `context_id`. No further audio will be generated for this context. The `text` field is ignored.
+    If true, closes the specified `contextId`. No further audio will be generated for this context. The `text` field is ignored.
     """
 
     close_socket: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    If true, flushes all contexts and closes the entire WebSocket connection. The `text` and `context_id` fields are ignored.
+    If true, flushes all contexts and closes the entire WebSocket connection. The `text` and `contextId` fields are ignored.
     """
 
     if IS_PYDANTIC_V2:

@@ -12,7 +12,9 @@ from ...types.create_agent_response_model import CreateAgentResponseModel
 from ...types.get_agent_response_model import GetAgentResponseModel
 from ...types.get_agents_page_response_model import GetAgentsPageResponseModel
 from ...types.prompt_evaluation_criteria import PromptEvaluationCriteria
+from .knowledge_base.client import AsyncKnowledgeBaseClient, KnowledgeBaseClient
 from .link.client import AsyncLinkClient, LinkClient
+from .llm_usage.client import AsyncLlmUsageClient, LlmUsageClient
 from .raw_client import AsyncRawAgentsClient, RawAgentsClient
 from .widget.client import AsyncWidgetClient, WidgetClient
 
@@ -26,6 +28,10 @@ class AgentsClient:
         self.widget = WidgetClient(client_wrapper=client_wrapper)
 
         self.link = LinkClient(client_wrapper=client_wrapper)
+
+        self.knowledge_base = KnowledgeBaseClient(client_wrapper=client_wrapper)
+
+        self.llm_usage = LlmUsageClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> RawAgentsClient:
@@ -287,7 +293,7 @@ class AgentsClient:
         Examples
         --------
         from elevenlabs import (
-            AgentConfigDbModel,
+            AgentConfig,
             ConversationSimulationSpecification,
             ElevenLabs,
         )
@@ -298,7 +304,7 @@ class AgentsClient:
         client.conversational_ai.agents.simulate_conversation(
             agent_id="21m00Tcm4TlvDq8ikWAM",
             simulation_specification=ConversationSimulationSpecification(
-                simulated_user_config=AgentConfigDbModel(
+                simulated_user_config=AgentConfig(
                     first_message="Hello, how can I help you today?",
                     language="en",
                 ),
@@ -345,7 +351,7 @@ class AgentsClient:
         Examples
         --------
         from elevenlabs import (
-            AgentConfigDbModel,
+            AgentConfig,
             ConversationSimulationSpecification,
             ElevenLabs,
         )
@@ -356,7 +362,7 @@ class AgentsClient:
         client.conversational_ai.agents.simulate_conversation_stream(
             agent_id="21m00Tcm4TlvDq8ikWAM",
             simulation_specification=ConversationSimulationSpecification(
-                simulated_user_config=AgentConfigDbModel(
+                simulated_user_config=AgentConfig(
                     first_message="Hello, how can I help you today?",
                     language="en",
                 ),
@@ -378,6 +384,10 @@ class AsyncAgentsClient:
         self.widget = AsyncWidgetClient(client_wrapper=client_wrapper)
 
         self.link = AsyncLinkClient(client_wrapper=client_wrapper)
+
+        self.knowledge_base = AsyncKnowledgeBaseClient(client_wrapper=client_wrapper)
+
+        self.llm_usage = AsyncLlmUsageClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> AsyncRawAgentsClient:
@@ -683,7 +693,7 @@ class AsyncAgentsClient:
         import asyncio
 
         from elevenlabs import (
-            AgentConfigDbModel,
+            AgentConfig,
             AsyncElevenLabs,
             ConversationSimulationSpecification,
         )
@@ -697,7 +707,7 @@ class AsyncAgentsClient:
             await client.conversational_ai.agents.simulate_conversation(
                 agent_id="21m00Tcm4TlvDq8ikWAM",
                 simulation_specification=ConversationSimulationSpecification(
-                    simulated_user_config=AgentConfigDbModel(
+                    simulated_user_config=AgentConfig(
                         first_message="Hello, how can I help you today?",
                         language="en",
                     ),
@@ -749,7 +759,7 @@ class AsyncAgentsClient:
         import asyncio
 
         from elevenlabs import (
-            AgentConfigDbModel,
+            AgentConfig,
             AsyncElevenLabs,
             ConversationSimulationSpecification,
         )
@@ -763,7 +773,7 @@ class AsyncAgentsClient:
             await client.conversational_ai.agents.simulate_conversation_stream(
                 agent_id="21m00Tcm4TlvDq8ikWAM",
                 simulation_specification=ConversationSimulationSpecification(
-                    simulated_user_config=AgentConfigDbModel(
+                    simulated_user_config=AgentConfig(
                         first_message="Hello, how can I help you today?",
                         language="en",
                     ),

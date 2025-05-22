@@ -147,7 +147,7 @@ channels:
       contexts, flush them, or close them independently. A `close_socket` message can be used to terminate
       the entire connection gracefully.
 
-      For more information on how to use this API for conversational agents see the [conversational agents guide](/docs/best-practices/conversational-agents).
+      For more information on best practices for how to use this API, please see the [multi context websocket guide](/docs/cookbooks/multi-context-web-socket).
 
     bindings:
       ws:
@@ -624,18 +624,18 @@ components:
           items:
             $ref: '#/components/schemas/PronunciationDictionaryLocator'
           description: Optional list of pronunciation dictionary locators. Can only be provided in the first message for a given context_id.
-        context_id:
+        contextId:
           type: string
           nullable: true
           description: An identifier for the text-to-speech context. Allows managing multiple independent audio generation streams over a single WebSocket connection. If omitted, a default context is used.
         close_context:
           type: boolean
           default: false
-          description: If true, closes the specified `context_id`. No further audio will be generated for this context. The `text` field is ignored.
+          description: If true, closes the specified `contextId`. No further audio will be generated for this context. The `text` field is ignored.
         close_socket:
           type: boolean
           default: false
-          description: If true, flushes all contexts and closes the entire WebSocket connection. The `text` and `context_id` fields are ignored.
+          description: If true, flushes all contexts and closes the entire WebSocket connection. The `text` and `contextId` fields are ignored.
 
     WebsocketTTSServerMessageMulti:
       type: object
@@ -762,9 +762,9 @@ components:
         alignment:
           $ref: '#/components/schemas/Alignment'
           nullable: true
-        context_id:
+        contextId:
           type: string
-          description: The context_id for which this audio is.
+          description: The contextId for which this audio is.
 
     FinalOutputMulti:
       type: object
