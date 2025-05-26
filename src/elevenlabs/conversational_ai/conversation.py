@@ -2,18 +2,18 @@ from abc import ABC, abstractmethod
 import base64
 import json
 import threading
-from typing import Callable, Optional, Awaitable, Union, Any, Literal, Dict, Tuple
+from typing import Callable, Optional, Awaitable, Union, Any, Literal
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
-from enum import Enum
+from enum import StrEnum
 
-from websockets.sync.client import connect, Connection
+from websockets.sync.client import connect, ClientConnection
 from websockets.exceptions import ConnectionClosedOK
 
 from ..base_client import BaseElevenLabs
 
 
-class ClientToOrchestratorEvent(str, Enum):
+class ClientToOrchestratorEvent(StrEnum):
     """Event types that can be sent from client to orchestrator."""
     # Response to a ping request.
     PONG = "pong"
@@ -44,7 +44,7 @@ class UserMessageClientToOrchestratorEvent:
 class UserActivityClientToOrchestratorEvent:
     """Event for registering user activity (ping to prevent timeout)."""
     
-    def __init__(self) -> None:
+    def __init__(self):
         self.type: Literal[ClientToOrchestratorEvent.USER_ACTIVITY] = ClientToOrchestratorEvent.USER_ACTIVITY
     
     def to_dict(self) -> dict:
@@ -118,8 +118,8 @@ class ClientTools:
     ensuring non-blocking operation of the main conversation thread.
     """
 
-    def __init__(self) -> None:
-        self.tools: Dict[str, Tuple[Union[Callable[[dict], Any], Callable[[dict], Awaitable[Any]]], bool]] = {}
+    def __init__(self):
+        self.tools: dict[str, tuple[Union[Callable[[dict], Any], Callable[[dict], Awaitable[Any]]], bool]] = {}
         self.lock = threading.Lock()
         self._loop = None
         self._thread = None
@@ -196,9 +196,6 @@ class ClientTools:
         """
         if not self._running.is_set():
             raise RuntimeError("ClientTools event loop is not running")
-        
-        if self._loop is None:
-            raise RuntimeError("Event loop is not available")
 
         async def _execute_and_callback():
             try:
@@ -251,7 +248,7 @@ class Conversation:
     _should_stop: threading.Event
     _conversation_id: Optional[str]
     _last_interrupt_id: int
-    _ws: Optional[Connection]
+    _ws: Optional[ClientConnection]
 
     def __init__(
         self,
@@ -299,10 +296,11 @@ class Conversation:
         self.client_tools.start()
 
         self._thread = None
-        self._ws: Optional[Connection] = None
+        self._ws: Optional[ClientConnection] = None
         self._should_stop = threading.Event()
         self._conversation_id = None
         self._last_interrupt_id = 0
+        self._ws = None
 
     def start_session(self):
         """Starts the conversation session.
@@ -492,6 +490,16 @@ class Conversation:
             self.client_tools.execute_tool(tool_name, parameters, send_response)
         else:
             pass  # Ignore all other message types.
+
+    def send_contextual_update(self, text: str):
+        if not self._ws:
+            raise RuntimeError("WebSocket is not connected")
+
+        payload = {
+                "type": "contextual_update",
+                "text": text,
+        }
+        self._ws.send(json.dumps(payload))
 
     def _get_wss_url(self):
         base_ws_url = self.client._client_wrapper.get_environment().wss
