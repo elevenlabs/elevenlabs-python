@@ -5,7 +5,7 @@ import threading
 from typing import Callable, Optional, Awaitable, Union, Any, Literal
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
-from enum import StrEnum
+from enum import Enum
 
 from websockets.sync.client import connect, ClientConnection
 from websockets.exceptions import ConnectionClosedOK
@@ -13,7 +13,7 @@ from websockets.exceptions import ConnectionClosedOK
 from ..base_client import BaseElevenLabs
 
 
-class ClientToOrchestratorEvent(StrEnum):
+class ClientToOrchestratorEvent(str, Enum):
     """Event types that can be sent from client to orchestrator."""
     # Response to a ping request.
     PONG = "pong"
