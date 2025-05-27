@@ -191,5 +191,5 @@ def test_conversation_with_contextual_update():
         conversation.wait_for_session_end()
 
     # Assertions
-    expected = json.dumps({"type": "contextual_update", "text": "User appears to be looking at pricing page"})
+    expected = json.dumps({"type": "contextual_update", "content": "User appears to be looking at pricing page"})
     mock_ws.send.assert_any_call(expected)
