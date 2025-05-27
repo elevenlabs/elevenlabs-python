@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 import base64
 import json
 import threading
-from typing import Callable, Optional, Awaitable, Union, Any, Literal, Dict, Tuple
+from typing import Callable, Optional, Awaitable, Union, Any, Literal
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
 from enum import Enum
@@ -119,7 +119,7 @@ class ClientTools:
     """
 
     def __init__(self) -> None:
-        self.tools: Dict[str, Tuple[Union[Callable[[dict], Any], Callable[[dict], Awaitable[Any]]], bool]] = {}
+        self.tools: dict[str, tuple[Union[Callable[[dict], Any], Callable[[dict], Awaitable[Any]]], bool]] = {}
         self.lock = threading.Lock()
         self._loop = None
         self._thread = None
