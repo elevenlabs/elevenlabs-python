@@ -7,7 +7,7 @@ import asyncio
 from concurrent.futures import ThreadPoolExecutor
 from enum import Enum
 
-from websockets.sync.client import connect, ClientConnection
+from websockets.sync.client import connect, Connection
 from websockets.exceptions import ConnectionClosedOK
 
 from ..base_client import BaseElevenLabs
@@ -44,7 +44,7 @@ class UserMessageClientToOrchestratorEvent:
 class UserActivityClientToOrchestratorEvent:
     """Event for registering user activity (ping to prevent timeout)."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.type: Literal[ClientToOrchestratorEvent.USER_ACTIVITY] = ClientToOrchestratorEvent.USER_ACTIVITY
     
     def to_dict(self) -> dict:
@@ -118,7 +118,7 @@ class ClientTools:
     ensuring non-blocking operation of the main conversation thread.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.tools: dict[str, tuple[Union[Callable[[dict], Any], Callable[[dict], Awaitable[Any]]], bool]] = {}
         self.lock = threading.Lock()
         self._loop = None
@@ -248,7 +248,7 @@ class Conversation:
     _should_stop: threading.Event
     _conversation_id: Optional[str]
     _last_interrupt_id: int
-    _ws: Optional[ClientConnection]
+    _ws: Optional[Connection]
 
     def __init__(
         self,
