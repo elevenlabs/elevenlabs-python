@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 import base64
 import json
 import threading
-from typing import Callable, Optional, Awaitable, Union, Any, Literal
+from typing import Callable, Optional, Awaitable, Union, Any, Literal, Dict, Tuple
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
 from enum import Enum
@@ -119,7 +119,7 @@ class ClientTools:
     """
 
     def __init__(self) -> None:
-        self.tools: dict[str, tuple[Union[Callable[[dict], Any], Callable[[dict], Awaitable[Any]]], bool]] = {}
+        self.tools: Dict[str, Tuple[Union[Callable[[dict], Any], Callable[[dict], Awaitable[Any]]], bool]] = {}
         self.lock = threading.Lock()
         self._loop = None
         self._thread = None
@@ -296,11 +296,10 @@ class Conversation:
         self.client_tools.start()
 
         self._thread = None
-        self._ws: Optional[ClientConnection] = None
+        self._ws: Optional[Connection] = None
         self._should_stop = threading.Event()
         self._conversation_id = None
         self._last_interrupt_id = 0
-        self._ws = None
 
     def start_session(self):
         """Starts the conversation session.
@@ -490,16 +489,6 @@ class Conversation:
             self.client_tools.execute_tool(tool_name, parameters, send_response)
         else:
             pass  # Ignore all other message types.
-
-    def send_contextual_update(self, text: str):
-        if not self._ws:
-            raise RuntimeError("WebSocket is not connected")
-
-        payload = {
-                "type": "contextual_update",
-                "text": text,
-        }
-        self._ws.send(json.dumps(payload))
 
     def _get_wss_url(self):
         base_ws_url = self.client._client_wrapper.get_environment().wss
