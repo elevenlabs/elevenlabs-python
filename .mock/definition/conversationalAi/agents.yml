@@ -85,6 +85,9 @@ service:
                 tts:
                   model_id: eleven_turbo_v2
                   voice_id: cjVigY5qzO86Huf0OWal
+                  supported_voices:
+                    - label: label
+                      voice_id: voice_id
                   agent_output_audio_format: pcm_16000
                   optimize_streaming_latency: 3
                   stability: 0.5
@@ -100,7 +103,16 @@ service:
                     - interruption
                 language_presets:
                   key:
-                    overrides: {}
+                    overrides:
+                      tts:
+                        voice_id: cjVigY5qzO86Huf0OWal
+                      agent:
+                        first_message: Hello, how can I help you today?
+                        language: en
+                        prompt:
+                          prompt: >-
+                            You are a helpful assistant that can answer
+                            questions about the topic of the conversation.
                 agent:
                   first_message: Hello, how can I help you today?
                   language: en
@@ -146,7 +158,8 @@ service:
                         about the topic of the conversation.
                       use_knowledge_base: false
                 widget:
-                  variant: compact
+                  variant: tiny
+                  placement: top-left
                   expandable: never
                   avatar:
                     color_1: '#2792dc'
@@ -176,8 +189,13 @@ service:
                   disable_banner: true
                   override_link: override_link
                   mic_muting_enabled: true
+                  transcript_enabled: true
+                  text_input_enabled: true
                   language_selector: false
+                  supports_text_only: true
                   custom_avatar_path: https://example.com/avatar.png
+                  language_presets:
+                    key: {}
                 data_collection:
                   key:
                     type: boolean
@@ -185,16 +203,6 @@ service:
                     dynamic_variable: Dynamic variable
                     constant_value: Constant value
                 overrides:
-                  conversation_config_override:
-                    agent:
-                      prompt:
-                        prompt: false
-                      first_message: false
-                      language: false
-                    tts:
-                      voice_id: false
-                    conversation:
-                      text_only: false
                   custom_llm_extra_body: true
                   enable_conversation_initiation_client_data_from_webhook: true
                 call_limits:
@@ -274,9 +282,13 @@ service:
         body:
           properties:
             conversation_config:
-              type: optional<unknown>
+              type: optional<root.ConversationalConfig>
+              docs: Conversation configuration for an agent
             platform_settings:
-              type: optional<unknown>
+              type: optional<root.AgentPlatformSettingsRequestModel>
+              docs: >-
+                Platform settings for the agent are all settings that aren't
+                related to the conversation orchestration and content.
             name:
               type: optional<string>
               docs: A name to make the agent easier to find
@@ -313,6 +325,9 @@ service:
                 tts:
                   model_id: eleven_turbo_v2
                   voice_id: cjVigY5qzO86Huf0OWal
+                  supported_voices:
+                    - label: label
+                      voice_id: voice_id
                   agent_output_audio_format: pcm_16000
                   optimize_streaming_latency: 3
                   stability: 0.5
@@ -328,7 +343,16 @@ service:
                     - interruption
                 language_presets:
                   key:
-                    overrides: {}
+                    overrides:
+                      tts:
+                        voice_id: cjVigY5qzO86Huf0OWal
+                      agent:
+                        first_message: Hello, how can I help you today?
+                        language: en
+                        prompt:
+                          prompt: >-
+                            You are a helpful assistant that can answer
+                            questions about the topic of the conversation.
                 agent:
                   first_message: Hello, how can I help you today?
                   language: en
@@ -374,7 +398,8 @@ service:
                         about the topic of the conversation.
                       use_knowledge_base: false
                 widget:
-                  variant: compact
+                  variant: tiny
+                  placement: top-left
                   expandable: never
                   avatar:
                     color_1: '#2792dc'
@@ -404,8 +429,13 @@ service:
                   disable_banner: true
                   override_link: override_link
                   mic_muting_enabled: true
+                  transcript_enabled: true
+                  text_input_enabled: true
                   language_selector: false
+                  supports_text_only: true
                   custom_avatar_path: https://example.com/avatar.png
+                  language_presets:
+                    key: {}
                 data_collection:
                   key:
                     type: boolean
@@ -413,16 +443,6 @@ service:
                     dynamic_variable: Dynamic variable
                     constant_value: Constant value
                 overrides:
-                  conversation_config_override:
-                    agent:
-                      prompt:
-                        prompt: false
-                      first_message: false
-                      language: false
-                    tts:
-                      voice_id: false
-                    conversation:
-                      text_only: false
                   custom_llm_extra_body: true
                   enable_conversation_initiation_client_data_from_webhook: true
                 call_limits:
@@ -578,7 +598,6 @@ service:
                     score: like
                     time_in_call_secs: 1
                   llm_override: llm_override
-                  source_medium: audio
                   time_in_call_secs: 1
                   rag_retrieval_info:
                     chunks:
@@ -590,6 +609,7 @@ service:
                     rag_latency_secs: 1.1
                   interrupted: true
                   original_message: original_message
+                  source_medium: audio
               analysis:
                 evaluation_criteria_results:
                   key:

@@ -9,19 +9,19 @@ from .prompt_agent_override import PromptAgentOverride
 
 
 class AgentConfigOverride(UncheckedBaseModel):
-    prompt: typing.Optional[PromptAgentOverride] = pydantic.Field(default=None)
-    """
-    The overrides for the prompt configuration
-    """
-
     first_message: typing.Optional[str] = pydantic.Field(default=None)
     """
-    If non-empty, the first message the agent will say. If empty, the agent waits for the user to start the discussion
+    If non-empty, the first message the agent will say. If empty, the agent waits for the user to start the discussion.
     """
 
     language: typing.Optional[str] = pydantic.Field(default=None)
     """
-    The language of the agent, used for ASR and TTS
+    Language of the agent - used for ASR and TTS
+    """
+
+    prompt: typing.Optional[PromptAgentOverride] = pydantic.Field(default=None)
+    """
+    The prompt for the agent
     """
 
     if IS_PYDANTIC_V2:

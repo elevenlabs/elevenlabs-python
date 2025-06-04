@@ -245,6 +245,7 @@ from .create_sip_trunk_phone_number_request import CreateSipTrunkPhoneNumberRequ
 from .create_transcript_request import CreateTranscriptRequest
 from .create_twilio_phone_number_request import CreateTwilioPhoneNumberRequest
 from .custom_llm import CustomLlm
+from .custom_llm_request_headers_value import CustomLlmRequestHeadersValue
 from .dashboard_call_success_chart_model import DashboardCallSuccessChartModel
 from .dashboard_criteria_chart_model import DashboardCriteriaChartModel
 from .dashboard_data_collection_chart_model import DashboardDataCollectionChartModel
@@ -271,6 +272,8 @@ from .dependent_phone_number_identifier import DependentPhoneNumberIdentifier
 from .dependent_unknown_agent_identifier import DependentUnknownAgentIdentifier
 from .dependent_unknown_agent_tool_identifier import DependentUnknownAgentToolIdentifier
 from .dependent_unknown_tool_identifier import DependentUnknownToolIdentifier
+from .dialogue_input import DialogueInput
+from .dialogue_input_response_model import DialogueInputResponseModel
 from .do_dubbing_response import DoDubbingResponse
 from .document_usage_mode_enum import DocumentUsageModeEnum
 from .docx_export_options import DocxExportOptions
@@ -308,7 +311,8 @@ from .extended_subscription_response_model_character_refresh_period import (
     ExtendedSubscriptionResponseModelCharacterRefreshPeriod,
 )
 from .extended_subscription_response_model_currency import ExtendedSubscriptionResponseModelCurrency
-from .extended_subscription_response_model_status import ExtendedSubscriptionResponseModelStatus
+from .feature_status_common_model import FeatureStatusCommonModel
+from .features_usage_common_model import FeaturesUsageCommonModel
 from .feedback_item import FeedbackItem
 from .final_output import FinalOutput
 from .final_output_multi import FinalOutputMulti
@@ -395,6 +399,7 @@ from .get_pronunciation_dictionary_metadata_response_model_permission_on_resourc
     GetPronunciationDictionaryMetadataResponseModelPermissionOnResource,
 )
 from .get_pronunciation_dictionary_response import GetPronunciationDictionaryResponse
+from .get_shared_sound_generations_response_model import GetSharedSoundGenerationsResponseModel
 from .get_speech_history_response import GetSpeechHistoryResponse
 from .get_voices_response import GetVoicesResponse
 from .get_voices_v_2_response import GetVoicesV2Response
@@ -435,6 +440,7 @@ from .llm_usage_input import LlmUsageInput
 from .llm_usage_output import LlmUsageOutput
 from .manual_verification_file_response import ManualVerificationFileResponse
 from .manual_verification_response import ManualVerificationResponse
+from .mcp_approval_required_model import McpApprovalRequiredModel
 from .mcp_tool_config_input import McpToolConfigInput
 from .mcp_tool_config_output import McpToolConfigOutput
 from .metric_record import MetricRecord
@@ -442,6 +448,7 @@ from .metric_type import MetricType
 from .model import Model
 from .model_rates_response_model import ModelRatesResponseModel
 from .model_response_model_concurrency_group import ModelResponseModelConcurrencyGroup
+from .model_settings_response_model import ModelSettingsResponseModel
 from .moderation_status_response_model import ModerationStatusResponseModel
 from .moderation_status_response_model_safety_status import ModerationStatusResponseModelSafetyStatus
 from .moderation_status_response_model_warning_status import ModerationStatusResponseModelWarningStatus
@@ -531,7 +538,11 @@ from .pydantic_pronunciation_dictionary_version_locator import PydanticPronuncia
 from .query_params_json_schema import QueryParamsJsonSchema
 from .rag_chunk_metadata import RagChunkMetadata
 from .rag_config import RagConfig
-from .rag_index_response_model import RagIndexResponseModel
+from .rag_document_index_response_model import RagDocumentIndexResponseModel
+from .rag_document_index_usage import RagDocumentIndexUsage
+from .rag_document_indexes_response_model import RagDocumentIndexesResponseModel
+from .rag_index_overview_embedding_model_response_model import RagIndexOverviewEmbeddingModelResponseModel
+from .rag_index_overview_response_model import RagIndexOverviewResponseModel
 from .rag_index_status import RagIndexStatus
 from .rag_retrieval_info import RagRetrievalInfo
 from .reader_resource_response_model import ReaderResourceResponseModel
@@ -563,6 +574,7 @@ from .send_text import SendText
 from .send_text_multi import SendTextMulti
 from .share_option_response_model import ShareOptionResponseModel
 from .share_option_response_model_type import ShareOptionResponseModelType
+from .shared_sound_generation_response_model import SharedSoundGenerationResponseModel
 from .similar_voice import SimilarVoice
 from .similar_voice_category import SimilarVoiceCategory
 from .similar_voices_for_speaker_response import SimilarVoicesForSpeakerResponse
@@ -571,6 +583,7 @@ from .sip_trunk_config_response_model import SipTrunkConfigResponseModel
 from .sip_trunk_credentials import SipTrunkCredentials
 from .sip_trunk_outbound_call_response import SipTrunkOutboundCallResponse
 from .sip_trunk_transport_enum import SipTrunkTransportEnum
+from .skip_turn_tool_config import SkipTurnToolConfig
 from .speaker_audio_response_model import SpeakerAudioResponseModel
 from .speaker_response_model import SpeakerResponseModel
 from .speaker_segment import SpeakerSegment
@@ -595,13 +608,15 @@ from .subscription_response import SubscriptionResponse
 from .subscription_response_model_billing_period import SubscriptionResponseModelBillingPeriod
 from .subscription_response_model_character_refresh_period import SubscriptionResponseModelCharacterRefreshPeriod
 from .subscription_response_model_currency import SubscriptionResponseModelCurrency
-from .subscription_status import SubscriptionStatus
+from .subscription_status_type import SubscriptionStatusType
 from .subscription_usage_response_model import SubscriptionUsageResponseModel
+from .supported_voice import SupportedVoice
 from .system_tool_config_input import SystemToolConfigInput
 from .system_tool_config_input_params import (
     SystemToolConfigInputParams,
     SystemToolConfigInputParams_EndCall,
     SystemToolConfigInputParams_LanguageDetection,
+    SystemToolConfigInputParams_SkipTurn,
     SystemToolConfigInputParams_TransferToAgent,
     SystemToolConfigInputParams_TransferToNumber,
 )
@@ -610,6 +625,7 @@ from .system_tool_config_output_params import (
     SystemToolConfigOutputParams,
     SystemToolConfigOutputParams_EndCall,
     SystemToolConfigOutputParams_LanguageDetection,
+    SystemToolConfigOutputParams_SkipTurn,
     SystemToolConfigOutputParams_TransferToAgent,
     SystemToolConfigOutputParams_TransferToNumber,
 )
@@ -620,10 +636,12 @@ from .text_to_speech_stream_request import TextToSpeechStreamRequest
 from .tool_mock_config import ToolMockConfig
 from .transfer_to_agent_tool_config import TransferToAgentToolConfig
 from .transfer_to_number_tool_config import TransferToNumberToolConfig
-from .tts_conversational_config import TtsConversationalConfig
+from .tts_conversational_config_input import TtsConversationalConfigInput
+from .tts_conversational_config_output import TtsConversationalConfigOutput
 from .tts_conversational_config_override import TtsConversationalConfigOverride
 from .tts_conversational_config_override_config import TtsConversationalConfigOverrideConfig
 from .tts_conversational_model import TtsConversationalModel
+from .tts_model_family import TtsModelFamily
 from .tts_optimize_streaming_latency import TtsOptimizeStreamingLatency
 from .tts_output_format import TtsOutputFormat
 from .turn_config import TurnConfig
@@ -678,13 +696,19 @@ from .webhook_tool_config_output import WebhookToolConfigOutput
 from .websocket_tts_client_message_multi import WebsocketTtsClientMessageMulti
 from .websocket_tts_server_message_multi import WebsocketTtsServerMessageMulti
 from .widget_config import WidgetConfig
-from .widget_config_avatar import (
-    WidgetConfigAvatar,
-    WidgetConfigAvatar_Image,
-    WidgetConfigAvatar_Orb,
-    WidgetConfigAvatar_Url,
+from .widget_config_input_avatar import (
+    WidgetConfigInputAvatar,
+    WidgetConfigInputAvatar_Image,
+    WidgetConfigInputAvatar_Orb,
+    WidgetConfigInputAvatar_Url,
 )
-from .widget_config_response_model import WidgetConfigResponseModel
+from .widget_config_output_avatar import (
+    WidgetConfigOutputAvatar,
+    WidgetConfigOutputAvatar_Image,
+    WidgetConfigOutputAvatar_Orb,
+    WidgetConfigOutputAvatar_Url,
+)
+from .widget_config_response import WidgetConfigResponse
 from .widget_config_response_model_avatar import (
     WidgetConfigResponseModelAvatar,
     WidgetConfigResponseModelAvatar_Image,
@@ -693,6 +717,10 @@ from .widget_config_response_model_avatar import (
 )
 from .widget_expandable import WidgetExpandable
 from .widget_feedback_mode import WidgetFeedbackMode
+from .widget_language_preset import WidgetLanguagePreset
+from .widget_language_preset_response import WidgetLanguagePresetResponse
+from .widget_placement import WidgetPlacement
+from .widget_text_contents import WidgetTextContents
 from .workspace_batch_calls_response import WorkspaceBatchCallsResponse
 from .workspace_group_by_name_response_model import WorkspaceGroupByNameResponseModel
 from .workspace_resource_type import WorkspaceResourceType
@@ -879,6 +907,7 @@ __all__ = [
     "CreateTranscriptRequest",
     "CreateTwilioPhoneNumberRequest",
     "CustomLlm",
+    "CustomLlmRequestHeadersValue",
     "DashboardCallSuccessChartModel",
     "DashboardCriteriaChartModel",
     "DashboardDataCollectionChartModel",
@@ -905,6 +934,8 @@ __all__ = [
     "DependentUnknownAgentIdentifier",
     "DependentUnknownAgentToolIdentifier",
     "DependentUnknownToolIdentifier",
+    "DialogueInput",
+    "DialogueInputResponseModel",
     "DoDubbingResponse",
     "DocumentUsageModeEnum",
     "DocxExportOptions",
@@ -936,7 +967,8 @@ __all__ = [
     "ExtendedSubscriptionResponseModelBillingPeriod",
     "ExtendedSubscriptionResponseModelCharacterRefreshPeriod",
     "ExtendedSubscriptionResponseModelCurrency",
-    "ExtendedSubscriptionResponseModelStatus",
+    "FeatureStatusCommonModel",
+    "FeaturesUsageCommonModel",
     "FeedbackItem",
     "FinalOutput",
     "FinalOutputMulti",
@@ -1007,6 +1039,7 @@ __all__ = [
     "GetPronunciationDictionaryMetadataResponse",
     "GetPronunciationDictionaryMetadataResponseModelPermissionOnResource",
     "GetPronunciationDictionaryResponse",
+    "GetSharedSoundGenerationsResponseModel",
     "GetSpeechHistoryResponse",
     "GetVoicesResponse",
     "GetVoicesV2Response",
@@ -1047,6 +1080,7 @@ __all__ = [
     "LlmUsageOutput",
     "ManualVerificationFileResponse",
     "ManualVerificationResponse",
+    "McpApprovalRequiredModel",
     "McpToolConfigInput",
     "McpToolConfigOutput",
     "MetricRecord",
@@ -1054,6 +1088,7 @@ __all__ = [
     "Model",
     "ModelRatesResponseModel",
     "ModelResponseModelConcurrencyGroup",
+    "ModelSettingsResponseModel",
     "ModerationStatusResponseModel",
     "ModerationStatusResponseModelSafetyStatus",
     "ModerationStatusResponseModelWarningStatus",
@@ -1135,7 +1170,11 @@ __all__ = [
     "QueryParamsJsonSchema",
     "RagChunkMetadata",
     "RagConfig",
-    "RagIndexResponseModel",
+    "RagDocumentIndexResponseModel",
+    "RagDocumentIndexUsage",
+    "RagDocumentIndexesResponseModel",
+    "RagIndexOverviewEmbeddingModelResponseModel",
+    "RagIndexOverviewResponseModel",
     "RagIndexStatus",
     "RagRetrievalInfo",
     "ReaderResourceResponseModel",
@@ -1167,6 +1206,7 @@ __all__ = [
     "SendTextMulti",
     "ShareOptionResponseModel",
     "ShareOptionResponseModelType",
+    "SharedSoundGenerationResponseModel",
     "SimilarVoice",
     "SimilarVoiceCategory",
     "SimilarVoicesForSpeakerResponse",
@@ -1175,6 +1215,7 @@ __all__ = [
     "SipTrunkCredentials",
     "SipTrunkOutboundCallResponse",
     "SipTrunkTransportEnum",
+    "SkipTurnToolConfig",
     "SpeakerAudioResponseModel",
     "SpeakerResponseModel",
     "SpeakerSegment",
@@ -1199,18 +1240,21 @@ __all__ = [
     "SubscriptionResponseModelBillingPeriod",
     "SubscriptionResponseModelCharacterRefreshPeriod",
     "SubscriptionResponseModelCurrency",
-    "SubscriptionStatus",
+    "SubscriptionStatusType",
     "SubscriptionUsageResponseModel",
+    "SupportedVoice",
     "SystemToolConfigInput",
     "SystemToolConfigInputParams",
     "SystemToolConfigInputParams_EndCall",
     "SystemToolConfigInputParams_LanguageDetection",
+    "SystemToolConfigInputParams_SkipTurn",
     "SystemToolConfigInputParams_TransferToAgent",
     "SystemToolConfigInputParams_TransferToNumber",
     "SystemToolConfigOutput",
     "SystemToolConfigOutputParams",
     "SystemToolConfigOutputParams_EndCall",
     "SystemToolConfigOutputParams_LanguageDetection",
+    "SystemToolConfigOutputParams_SkipTurn",
     "SystemToolConfigOutputParams_TransferToAgent",
     "SystemToolConfigOutputParams_TransferToNumber",
     "TelephonyProvider",
@@ -1220,10 +1264,12 @@ __all__ = [
     "ToolMockConfig",
     "TransferToAgentToolConfig",
     "TransferToNumberToolConfig",
-    "TtsConversationalConfig",
+    "TtsConversationalConfigInput",
+    "TtsConversationalConfigOutput",
     "TtsConversationalConfigOverride",
     "TtsConversationalConfigOverrideConfig",
     "TtsConversationalModel",
+    "TtsModelFamily",
     "TtsOptimizeStreamingLatency",
     "TtsOutputFormat",
     "TurnConfig",
@@ -1274,17 +1320,25 @@ __all__ = [
     "WebsocketTtsClientMessageMulti",
     "WebsocketTtsServerMessageMulti",
     "WidgetConfig",
-    "WidgetConfigAvatar",
-    "WidgetConfigAvatar_Image",
-    "WidgetConfigAvatar_Orb",
-    "WidgetConfigAvatar_Url",
-    "WidgetConfigResponseModel",
+    "WidgetConfigInputAvatar",
+    "WidgetConfigInputAvatar_Image",
+    "WidgetConfigInputAvatar_Orb",
+    "WidgetConfigInputAvatar_Url",
+    "WidgetConfigOutputAvatar",
+    "WidgetConfigOutputAvatar_Image",
+    "WidgetConfigOutputAvatar_Orb",
+    "WidgetConfigOutputAvatar_Url",
+    "WidgetConfigResponse",
     "WidgetConfigResponseModelAvatar",
     "WidgetConfigResponseModelAvatar_Image",
     "WidgetConfigResponseModelAvatar_Orb",
     "WidgetConfigResponseModelAvatar_Url",
     "WidgetExpandable",
     "WidgetFeedbackMode",
+    "WidgetLanguagePreset",
+    "WidgetLanguagePresetResponse",
+    "WidgetPlacement",
+    "WidgetTextContents",
     "WorkspaceBatchCallsResponse",
     "WorkspaceGroupByNameResponseModel",
     "WorkspaceResourceType",

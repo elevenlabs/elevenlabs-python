@@ -5,12 +5,12 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .rag_index_status import RagIndexStatus
+from .embedding_model_enum import EmbeddingModelEnum
 
 
-class RagIndexResponseModel(UncheckedBaseModel):
-    status: RagIndexStatus
-    progress_percentage: float
+class RagIndexOverviewEmbeddingModelResponseModel(UncheckedBaseModel):
+    model: EmbeddingModelEnum
+    used_bytes: int
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

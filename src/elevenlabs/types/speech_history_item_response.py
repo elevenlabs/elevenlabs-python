@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .dialogue_input_response_model import DialogueInputResponseModel
 from .feedback_item import FeedbackItem
 from .history_alignments_response_model import HistoryAlignmentsResponseModel
 from .speech_history_item_response_model_source import SpeechHistoryItemResponseModelSource
@@ -22,7 +23,7 @@ class SpeechHistoryItemResponse(UncheckedBaseModel):
     The ID of the request.
     """
 
-    voice_id: str = pydantic.Field()
+    voice_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     The ID of the voice used.
     """
@@ -32,7 +33,7 @@ class SpeechHistoryItemResponse(UncheckedBaseModel):
     The ID of the model.
     """
 
-    voice_name: str = pydantic.Field()
+    voice_name: typing.Optional[str] = pydantic.Field(default=None)
     """
     The name of the voice.
     """
@@ -42,7 +43,7 @@ class SpeechHistoryItemResponse(UncheckedBaseModel):
     The category of the voice. Either 'premade', 'cloned', 'generated' or 'professional'.
     """
 
-    text: str = pydantic.Field()
+    text: typing.Optional[str] = pydantic.Field(default=None)
     """
     The text used to generate the audio item.
     """
@@ -91,6 +92,11 @@ class SpeechHistoryItemResponse(UncheckedBaseModel):
     alignments: typing.Optional[HistoryAlignmentsResponseModel] = pydantic.Field(default=None)
     """
     The alignments of the history item.
+    """
+
+    dialogue: typing.Optional[typing.List[DialogueInputResponseModel]] = pydantic.Field(default=None)
+    """
+    The dialogue (voice and text pairs) used to generate the audio item. If this is set then the top level `text` and `voice_id` fields will be empty.
     """
 
     if IS_PYDANTIC_V2:

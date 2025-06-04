@@ -10,7 +10,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 class PromptAgentOverrideConfig(UncheckedBaseModel):
     prompt: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Whether to allow prompt overriding
+    Whether to allow overriding the prompt field.
     """
 
     if IS_PYDANTIC_V2:

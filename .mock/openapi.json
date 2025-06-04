@@ -661,6 +661,267 @@
         "x-fern-streaming": true
       }
     },
+    "/v1/shared-sound-generations": {
+      "get": {
+        "operationId": "Get_shared_sound_effects_v1_shared_sound_generations_get",
+        "summary": "Get Shared Sound Effects",
+        "description": "Returns a list of shared sound effects.",
+        "parameters": [
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "How many sound effects to return at maximum. Can not exceed 100, defaults to 30.",
+            "required": false,
+            "schema": {
+              "description": "How many sound effects to return at maximum. Can not exceed 100, defaults to 30.",
+              "type": "integer",
+              "default": 30,
+              "title": "Page Size"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "description": "Sound effect category used for filtering.",
+            "required": false,
+            "schema": {
+              "description": "Sound effect category used for filtering.",
+              "anyOf": [
+                {
+                  "enum": [
+                    "restaurant",
+                    "park",
+                    "industrial",
+                    "school",
+                    "office",
+                    "urban",
+                    "ocean",
+                    "nature",
+                    "weather",
+                    "foley",
+                    "fantasy",
+                    "human",
+                    "device",
+                    "sci-fi",
+                    "horror",
+                    "animal",
+                    "boom",
+                    "braam",
+                    "riser",
+                    "whoosh",
+                    "drone",
+                    "impact",
+                    "weapon",
+                    "transport",
+                    "household",
+                    "percussion",
+                    "cymbal",
+                    "synth",
+                    "bass",
+                    "guitar",
+                    "key",
+                    "string",
+                    "brass",
+                    "woodwind",
+                    "ui element",
+                    "sport",
+                    "vehicle",
+                    "misc"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "examples": [
+                "Nature"
+              ],
+              "title": "Category"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Search term used for filtering",
+            "required": false,
+            "schema": {
+              "description": "Search term used for filtering",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "examples": [
+                "Cold water"
+              ],
+              "title": "Search"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort criteria. Can be one of: created_date, download_count, like_count, trending_score. Defaults to trending_score.",
+            "required": false,
+            "schema": {
+              "description": "Sort criteria. Can be one of: created_date, download_count, like_count, trending_score. Defaults to trending_score.",
+              "default": "trending_score",
+              "anyOf": [
+                {
+                  "enum": [
+                    "sharing_date_unix",
+                    "purchased_count",
+                    "like_count",
+                    "trending_score"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "examples": [
+                "trending_score"
+              ],
+              "title": "Sort"
+            }
+          },
+          {
+            "name": "featured",
+            "in": "query",
+            "description": "Filter featured sound effects.",
+            "required": false,
+            "schema": {
+              "description": "Filter featured sound effects.",
+              "type": "boolean",
+              "default": false,
+              "examples": [
+                true
+              ],
+              "title": "Featured"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "xi-api-key",
+            "in": "header",
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Xi-Api-Key"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetSharedSoundGenerationsResponseModel"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "sound-effects-explore"
+        ]
+      }
+    },
+    "/v1/shared-sound-generations/{sound_effect_generation_id}/purchase": {
+      "post": {
+        "operationId": "Purchases_shared_sound_effect_v1_shared_sound_generations__sound_effect_generation_id__purchase_post",
+        "summary": "Purchases Shared Sound Effect",
+        "description": "Purchases shared sound effect and charges user for the purchase.",
+        "parameters": [
+          {
+            "name": "sound_effect_generation_id",
+            "in": "path",
+            "description": "sound_effect_generation_id to be used, you can use GET https://api.elevenlabs.io/v1/sound-effects-history to receive a list of history items and their sound_effect_generation_ids.",
+            "required": true,
+            "schema": {
+              "description": "sound_effect_generation_id to be used, you can use GET https://api.elevenlabs.io/v1/sound-effects-history to receive a list of history items and their sound_effect_generation_ids.",
+              "type": "string",
+              "examples": [
+                "VW7YKqPnjY4h39yTbx2L"
+              ],
+              "title": "Sound Effect Generation Id"
+            }
+          },
+          {
+            "name": "xi-api-key",
+            "in": "header",
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Xi-Api-Key"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "audio/mpeg": {}
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "sound-effects-explore"
+        ]
+      }
+    },
     "/v1/voices/{voice_id}/samples/{sample_id}": {
       "delete": {
         "operationId": "Delete_sample_v1_voices__voice_id__samples__sample_id__delete",
@@ -1398,6 +1659,204 @@
         ],
         "x-fern-sdk-group-name": "text_to_speech",
         "x-fern-sdk-method-name": "stream_with_timestamps",
+        "x-fern-streaming": true
+      }
+    },
+    "/v1/text-to-dialogue": {
+      "post": {
+        "operationId": "Text_to_dialogue__multi_voice__v1_text_to_dialogue_post",
+        "summary": "Text To Dialogue (Multi-Voice)",
+        "description": "Converts a list of text and voice ID pairs into speech (dialogue) and returns audio.",
+        "parameters": [
+          {
+            "name": "output_format",
+            "in": "query",
+            "description": "Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.",
+            "required": false,
+            "schema": {
+              "description": "Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.",
+              "type": "string",
+              "default": "mp3_44100_128",
+              "enum": [
+                "mp3_22050_32",
+                "mp3_44100_32",
+                "mp3_44100_64",
+                "mp3_44100_96",
+                "mp3_44100_128",
+                "mp3_44100_192",
+                "pcm_8000",
+                "pcm_16000",
+                "pcm_22050",
+                "pcm_24000",
+                "pcm_44100",
+                "pcm_48000",
+                "ulaw_8000",
+                "alaw_8000",
+                "opus_48000_32",
+                "opus_48000_64",
+                "opus_48000_96",
+                "opus_48000_128",
+                "opus_48000_192"
+              ],
+              "title": "Output format of the generated audio."
+            }
+          },
+          {
+            "name": "xi-api-key",
+            "in": "header",
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Xi-Api-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_Text_to_dialogue__multi_voice__v1_text_to_dialogue_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The generated audio file",
+            "content": {
+              "audio/mpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "text-to-dialogue"
+        ],
+        "x-fern-sdk-group-name": "text_to_dialogue",
+        "x-fern-sdk-method-name": "convert",
+        "x-fern-streaming": true
+      }
+    },
+    "/v1/text-to-dialogue/stream": {
+      "post": {
+        "operationId": "Text_to_dialogue__multi_voice__streaming_v1_text_to_dialogue_stream_post",
+        "summary": "Text To Dialogue (Multi-Voice) Streaming",
+        "description": "Converts a list of text and voice ID pairs into speech (dialogue) and returns an audio stream.",
+        "parameters": [
+          {
+            "name": "output_format",
+            "in": "query",
+            "description": "Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.",
+            "required": false,
+            "schema": {
+              "description": "Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.",
+              "type": "string",
+              "default": "mp3_44100_128",
+              "enum": [
+                "mp3_22050_32",
+                "mp3_44100_32",
+                "mp3_44100_64",
+                "mp3_44100_96",
+                "mp3_44100_128",
+                "mp3_44100_192",
+                "pcm_8000",
+                "pcm_16000",
+                "pcm_22050",
+                "pcm_24000",
+                "pcm_44100",
+                "pcm_48000",
+                "ulaw_8000",
+                "alaw_8000",
+                "opus_48000_32",
+                "opus_48000_64",
+                "opus_48000_96",
+                "opus_48000_128",
+                "opus_48000_192"
+              ],
+              "title": "Output format of the generated audio."
+            }
+          },
+          {
+            "name": "xi-api-key",
+            "in": "header",
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Xi-Api-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_Text_to_dialogue__multi_voice__streaming_v1_text_to_dialogue_stream_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Streaming audio data",
+            "content": {
+              "audio/mpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "text-to-dialogue"
+        ],
+        "x-fern-sdk-group-name": "text_to_dialogue",
+        "x-fern-sdk-method-name": "stream",
         "x-fern-streaming": true
       }
     },
@@ -8166,6 +8625,27 @@
             }
           },
           {
+            "name": "include_live_moderated",
+            "in": "query",
+            "description": "Include/exclude voices that are live moderated",
+            "required": false,
+            "schema": {
+              "description": "Include/exclude voices that are live moderated",
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "examples": [
+                true
+              ],
+              "title": "Include Live Moderated"
+            }
+          },
+          {
             "name": "reader_app_enabled",
             "in": "query",
             "description": "Filter voices that are enabled for the reader app",
@@ -9074,10 +9554,17 @@
             "name": "xi-api-key",
             "in": "header",
             "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
-            "required": true,
+            "required": false,
             "schema": {
               "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
-              "type": "string",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
               "title": "Xi-Api-Key"
             }
           }
@@ -9139,10 +9626,17 @@
             "name": "xi-api-key",
             "in": "header",
             "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
-            "required": true,
+            "required": false,
             "schema": {
               "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
-              "type": "string",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
               "title": "Xi-Api-Key"
             }
           }
@@ -9211,10 +9705,17 @@
             "name": "xi-api-key",
             "in": "header",
             "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
-            "required": true,
+            "required": false,
             "schema": {
               "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
-              "type": "string",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
               "title": "Xi-Api-Key"
             }
           }
@@ -9809,7 +10310,7 @@
       "post": {
         "operationId": "Speech_to_Text_v1_speech_to_text_post",
         "summary": "Speech To Text",
-        "description": "Transcribe an audio or video file.",
+        "description": "Transcribe an audio or video file. If webhook is set to true, the request will be processed asynchronously and results sent to configured webhooks.",
         "parameters": [
           {
             "name": "enable_logging",
@@ -9854,11 +10355,22 @@
         },
         "responses": {
           "200": {
-            "description": "Successful Response",
+            "description": "Synchronous transcription result",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SpeechToTextChunkResponseModel"
+                }
+              }
+            }
+          },
+          "202": {
+            "description": "Asynchronous request accepted",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Request accepted. Transcription result will be sent to the webhook.",
+                  "request_id": "abc123"
                 }
               }
             }
@@ -12736,6 +13248,18 @@
             }
           },
           {
+            "name": "force",
+            "in": "query",
+            "description": "If set to true, the document will be deleted regardless of whether it is used by any agents and it will be deleted from the dependent agents.",
+            "required": false,
+            "schema": {
+              "description": "If set to true, the document will be deleted regardless of whether it is used by any agents and it will be deleted from the dependent agents.",
+              "type": "boolean",
+              "default": false,
+              "title": "Force"
+            }
+          },
+          {
             "name": "xi-api-key",
             "in": "header",
             "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
@@ -12842,7 +13366,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RAGIndexResponseModel"
+                  "$ref": "#/components/schemas/RAGDocumentIndexResponseModel"
                 }
               }
             }
@@ -12867,6 +13391,211 @@
           "document"
         ],
         "x-fern-sdk-method-name": "compute_rag_index"
+      },
+      "get": {
+        "operationId": "Get_RAG_indexes_of_the_specified_knowledgebase_document__v1_convai_knowledge_base__documentation_id__rag_index_get",
+        "summary": "Get Rag Indexes Of The Specified Knowledgebase Document.",
+        "description": "Provides information about all RAG indexes of the specified knowledgebase document.",
+        "parameters": [
+          {
+            "name": "documentation_id",
+            "in": "path",
+            "description": "The id of a document from the knowledge base. This is returned on document addition.",
+            "required": true,
+            "schema": {
+              "description": "The id of a document from the knowledge base. This is returned on document addition.",
+              "type": "string",
+              "embed": true,
+              "examples": [
+                "21m00Tcm4TlvDq8ikWAM"
+              ],
+              "title": "Documentation Id"
+            }
+          },
+          {
+            "name": "xi-api-key",
+            "in": "header",
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Xi-Api-Key"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RAGDocumentIndexesResponseModel"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Conversational AI"
+        ],
+        "x-fern-sdk-group-name": "conversational_ai",
+        "x-fern-sdk-method-name": "get_document_rag_indexes"
+      }
+    },
+    "/v1/convai/knowledge-base/{documentation_id}/rag-index/{rag_index_id}": {
+      "delete": {
+        "operationId": "Delete_RAG_index__v1_convai_knowledge_base__documentation_id__rag_index__rag_index_id__delete",
+        "summary": "Delete Rag Index.",
+        "description": "Delete RAG index for the knowledgebase document.",
+        "parameters": [
+          {
+            "name": "documentation_id",
+            "in": "path",
+            "description": "The id of a document from the knowledge base. This is returned on document addition.",
+            "required": true,
+            "schema": {
+              "description": "The id of a document from the knowledge base. This is returned on document addition.",
+              "type": "string",
+              "embed": true,
+              "examples": [
+                "21m00Tcm4TlvDq8ikWAM"
+              ],
+              "title": "Documentation Id"
+            }
+          },
+          {
+            "name": "rag_index_id",
+            "in": "path",
+            "description": "The id of RAG index of document from the knowledge base.",
+            "required": true,
+            "schema": {
+              "description": "The id of RAG index of document from the knowledge base.",
+              "type": "string",
+              "embed": true,
+              "examples": [
+                "21m00Tcm4TlvDq8ikWAM"
+              ],
+              "title": "Rag Index Id"
+            }
+          },
+          {
+            "name": "xi-api-key",
+            "in": "header",
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Xi-Api-Key"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RAGDocumentIndexResponseModel"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Conversational AI"
+        ],
+        "x-fern-sdk-group-name": "conversational_ai",
+        "x-fern-sdk-method-name": "delete_document_rag_index"
+      }
+    },
+    "/v1/convai/knowledge-base/rag-index": {
+      "get": {
+        "operationId": "Get_RAG_index_overview__v1_convai_knowledge_base_rag_index_get",
+        "summary": "Get Rag Index Overview.",
+        "description": "Provides total size and other information of RAG indexes used by knowledgebase documents",
+        "parameters": [
+          {
+            "name": "xi-api-key",
+            "in": "header",
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Xi-Api-Key"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RAGIndexOverviewResponseModel"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Conversational AI"
+        ],
+        "x-fern-sdk-group-name": "conversational_ai",
+        "x-fern-sdk-method-name": "rag_index_overview"
       }
     },
     "/v1/convai/agents/{agent_id}/knowledge-base/{documentation_id}": {
@@ -13934,6 +14663,138 @@
           "batch_calls"
         ],
         "x-fern-sdk-method-name": "get"
+      }
+    },
+    "/v1/convai/batch-calling/{batch_id}/cancel": {
+      "post": {
+        "operationId": "Cancel_a_batch_call__v1_convai_batch_calling__batch_id__cancel_post",
+        "summary": "Cancel A Batch Call.",
+        "description": "Cancel a running batch call and set all recipients to cancelled status.",
+        "parameters": [
+          {
+            "name": "batch_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Batch Id"
+            }
+          },
+          {
+            "name": "xi-api-key",
+            "in": "header",
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Xi-Api-Key"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchCallResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Conversational AI"
+        ],
+        "x-fern-sdk-group-name": [
+          "conversational_ai",
+          "batch_calls"
+        ],
+        "x-fern-sdk-method-name": "cancel"
+      }
+    },
+    "/v1/convai/batch-calling/{batch_id}/retry": {
+      "post": {
+        "operationId": "Retry_a_batch_call__v1_convai_batch_calling__batch_id__retry_post",
+        "summary": "Retry A Batch Call.",
+        "description": "Retry a batch call by setting completed recipients back to pending status.",
+        "parameters": [
+          {
+            "name": "batch_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Batch Id"
+            }
+          },
+          {
+            "name": "xi-api-key",
+            "in": "header",
+            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+            "required": false,
+            "schema": {
+              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Xi-Api-Key"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchCallResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Conversational AI"
+        ],
+        "x-fern-sdk-group-name": [
+          "conversational_ai",
+          "batch_calls"
+        ],
+        "x-fern-sdk-method-name": "retry"
       }
     },
     "/v1/convai/sip-trunk/outbound-call": {
@@ -15289,16 +16150,11 @@
           "name": {
             "type": "string",
             "title": "Name"
-          },
-          "prompt_injectable": {
-            "type": "boolean",
-            "title": "Prompt Injectable"
           }
         },
         "required": [
           "id",
-          "name",
-          "prompt_injectable"
+          "name"
         ],
         "title": "AddKnowledgeBaseResponseModel"
       },
@@ -15574,13 +16430,16 @@
             "description": "If non-empty, the first message the agent will say. If empty, the agent waits for the user to start the discussion.",
             "type": "string",
             "default": "",
-            "title": "First Message"
+            "title": "First Message",
+            "x-convai-client-override": true,
+            "x-convai-language-override": true
           },
           "language": {
             "description": "Language of the agent - used for ASR and TTS",
             "type": "string",
             "default": "en",
-            "title": "Language"
+            "title": "Language",
+            "x-convai-client-override": true
           },
           "dynamic_variables": {
             "description": "Configuration for dynamic variables",
@@ -15604,13 +16463,16 @@
             "description": "If non-empty, the first message the agent will say. If empty, the agent waits for the user to start the discussion.",
             "type": "string",
             "default": "",
-            "title": "First Message"
+            "title": "First Message",
+            "x-convai-client-override": true,
+            "x-convai-language-override": true
           },
           "language": {
             "description": "Language of the agent - used for ASR and TTS",
             "type": "string",
             "default": "en",
-            "title": "Language"
+            "title": "Language",
+            "x-convai-client-override": true
           },
           "dynamic_variables": {
             "description": "Configuration for dynamic variables",
@@ -15634,13 +16496,16 @@
             "description": "If non-empty, the first message the agent will say. If empty, the agent waits for the user to start the discussion.",
             "type": "string",
             "default": "",
-            "title": "First Message"
+            "title": "First Message",
+            "x-convai-client-override": true,
+            "x-convai-language-override": true
           },
           "language": {
             "description": "Language of the agent - used for ASR and TTS",
             "type": "string",
             "default": "en",
-            "title": "Language"
+            "title": "Language",
+            "x-convai-client-override": true
           },
           "dynamic_variables": {
             "description": "Configuration for dynamic variables",
@@ -15659,8 +16524,35 @@
       "AgentConfigOverride": {
         "type": "object",
         "properties": {
+          "first_message": {
+            "description": "If non-empty, the first message the agent will say. If empty, the agent waits for the user to start the discussion.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "First Message",
+            "x-convai-client-override": true,
+            "x-convai-language-override": true
+          },
+          "language": {
+            "description": "Language of the agent - used for ASR and TTS",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Language",
+            "x-convai-client-override": true
+          },
           "prompt": {
-            "description": "The overrides for the prompt configuration",
+            "description": "The prompt for the agent",
             "anyOf": [
               {
                 "$ref": "#/components/schemas/PromptAgentOverride"
@@ -15669,63 +16561,35 @@
                 "type": "null"
               }
             ]
-          },
-          "first_message": {
-            "description": "If non-empty, the first message the agent will say. If empty, the agent waits for the user to start the discussion",
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "First Message"
-          },
-          "language": {
-            "description": "The language of the agent, used for ASR and TTS",
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Language"
           }
         },
         "example": {
           "first_message": "Hello, how can I help you today?",
-          "language": "en"
+          "language": "en",
+          "prompt": {
+            "prompt": "You are a helpful assistant that can answer questions about the topic of the conversation."
+          }
         },
         "title": "AgentConfigOverride"
       },
       "AgentConfigOverrideConfig": {
         "type": "object",
         "properties": {
-          "prompt": {
-            "description": "Overrides for the prompt configuration",
-            "$ref": "#/components/schemas/PromptAgentOverrideConfig"
-          },
           "first_message": {
-            "description": "Whether to allow overriding the first message",
+            "description": "Whether to allow overriding the first_message field.",
             "type": "boolean",
             "default": false,
             "title": "First Message"
           },
           "language": {
-            "description": "Whether to allow overriding the language",
+            "description": "Whether to allow overriding the language field.",
             "type": "boolean",
             "default": false,
             "title": "Language"
-          }
-        },
-        "example": {
-          "first_message": false,
-          "language": false,
+          },
           "prompt": {
-            "prompt": false
+            "description": "Configures overrides for nested fields.",
+            "$ref": "#/components/schemas/PromptAgentOverrideConfig"
           }
         },
         "title": "AgentConfigOverrideConfig"
@@ -15757,7 +16621,7 @@
           },
           "widget": {
             "description": "Configuration for the widget",
-            "$ref": "#/components/schemas/WidgetConfig"
+            "$ref": "#/components/schemas/WidgetConfig-Input"
           },
           "data_collection": {
             "description": "Data collection settings",
@@ -15799,7 +16663,7 @@
           },
           "widget": {
             "description": "Configuration for the widget",
-            "$ref": "#/components/schemas/WidgetConfig"
+            "$ref": "#/components/schemas/WidgetConfig-Output"
           },
           "data_collection": {
             "description": "Data collection settings",
@@ -16343,7 +17207,8 @@
           "signed_url",
           "shareable_link",
           "livekit_token",
-          "livekit_token_website"
+          "livekit_token_website",
+          "genesys_api_key"
         ],
         "title": "AuthorizationMethod"
       },
@@ -20103,6 +20968,12 @@
               "https://account123.r2.cloudflarestorage.com/my-bucket/audio.mp3"
             ],
             "title": "Cloud Storage Url"
+          },
+          "webhook": {
+            "description": "Whether to send the transcription result to configured speech-to-text webhooks.  If set the request will return early without the transcription, which will be delivered later via webhook. Webhooks can be created and assigned to a transcription task in webhook settings page in the UI.",
+            "type": "boolean",
+            "default": false,
+            "title": "Webhook"
           }
         },
         "required": [
@@ -20201,6 +21072,186 @@
           "recipients"
         ],
         "title": "Body_Submit_a_batch_call_request__v1_convai_batch_calling_submit_post"
+      },
+      "Body_Text_to_dialogue__multi_voice__streaming_v1_text_to_dialogue_stream_post": {
+        "type": "object",
+        "properties": {
+          "inputs": {
+            "description": "A list of dialogue inputs, each containing text and a voice ID which will be converted into speech.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DialogueInput"
+            },
+            "examples": [
+              [
+                {
+                  "text": "Hello, how are you?",
+                  "voice_id": "bYTqZQo3Jz7LQtmGTgwi"
+                },
+                {
+                  "text": "I'm doing well, thank you!",
+                  "voice_id": "6lCwbsX1yVjD49QmpkTR"
+                }
+              ]
+            ],
+            "title": "Inputs"
+          },
+          "model_id": {
+            "description": "Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.",
+            "type": "string",
+            "default": "eleven_v3",
+            "title": "Model Id"
+          },
+          "settings": {
+            "description": "Settings controlling the dialogue generation.",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ModelSettingsResponseModel"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "examples": [
+              {
+                "stability": 0.5,
+                "use_speaker_boost": true
+              }
+            ]
+          },
+          "pronunciation_dictionary_locators": {
+            "description": "A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request",
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/PronunciationDictionaryVersionLocatorRequestModel"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "examples": [
+              [
+                {
+                  "pronunciation_dictionary_id": "test",
+                  "version_id": "id2"
+                }
+              ]
+            ],
+            "title": "Pronunciation Dictionary Locators"
+          },
+          "seed": {
+            "description": "If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.",
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "examples": [
+              12345
+            ],
+            "title": "Seed"
+          }
+        },
+        "required": [
+          "inputs"
+        ],
+        "title": "Body_Text_to_dialogue__multi_voice__streaming_v1_text_to_dialogue_stream_post"
+      },
+      "Body_Text_to_dialogue__multi_voice__v1_text_to_dialogue_post": {
+        "type": "object",
+        "properties": {
+          "inputs": {
+            "description": "A list of dialogue inputs, each containing text and a voice ID which will be converted into speech.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DialogueInput"
+            },
+            "examples": [
+              [
+                {
+                  "text": "Hello, how are you?",
+                  "voice_id": "bYTqZQo3Jz7LQtmGTgwi"
+                },
+                {
+                  "text": "I'm doing well, thank you!",
+                  "voice_id": "6lCwbsX1yVjD49QmpkTR"
+                }
+              ]
+            ],
+            "title": "Inputs"
+          },
+          "model_id": {
+            "description": "Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.",
+            "type": "string",
+            "default": "eleven_v3",
+            "title": "Model Id"
+          },
+          "settings": {
+            "description": "Settings controlling the dialogue generation.",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ModelSettingsResponseModel"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "examples": [
+              {
+                "stability": 0.5,
+                "use_speaker_boost": true
+              }
+            ]
+          },
+          "pronunciation_dictionary_locators": {
+            "description": "A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request",
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/PronunciationDictionaryVersionLocatorRequestModel"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "examples": [
+              [
+                {
+                  "pronunciation_dictionary_id": "test",
+                  "version_id": "id2"
+                }
+              ]
+            ],
+            "title": "Pronunciation Dictionary Locators"
+          },
+          "seed": {
+            "description": "If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.",
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "examples": [
+              12345
+            ],
+            "title": "Seed"
+          }
+        },
+        "required": [
+          "inputs"
+        ],
+        "title": "Body_Text_to_dialogue__multi_voice__v1_text_to_dialogue_post"
       },
       "Body_Text_to_speech_streaming_v1_text_to_speech__voice_id__stream_post": {
         "type": "object",
@@ -22055,7 +23106,8 @@
           "client_tool_call",
           "vad_score",
           "internal_turn_probability",
-          "internal_tentative_agent_response"
+          "internal_tentative_agent_response",
+          "internal_native_mcp_tool_call"
         ],
         "title": "ClientEvent"
       },
@@ -22376,7 +23428,8 @@
             "description": "If enabled audio will not be processed and only text will be used, use to avoid audio pricing.",
             "type": "boolean",
             "default": false,
-            "title": "Text Only"
+            "title": "Text Only",
+            "x-convai-client-override": true
           },
           "max_duration_seconds": {
             "description": "The maximum duration of a conversation in seconds",
@@ -22405,19 +23458,8 @@
       "ConversationConfigClientOverride-Input": {
         "type": "object",
         "properties": {
-          "agent": {
-            "description": "The overrides for the agent configuration",
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/AgentConfigOverride"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
           "tts": {
-            "description": "The overrides for the TTS configuration",
+            "description": "Configuration for conversational text to speech",
             "anyOf": [
               {
                 "$ref": "#/components/schemas/TTSConversationalConfigOverride"
@@ -22428,7 +23470,7 @@
             ]
           },
           "conversation": {
-            "description": "The overrides for the conversation configuration",
+            "description": "Configuration for conversational events",
             "anyOf": [
               {
                 "$ref": "#/components/schemas/ConversationConfigOverride"
@@ -22437,6 +23479,29 @@
                 "type": "null"
               }
             ]
+          },
+          "agent": {
+            "description": "Agent specific configuration",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AgentConfigOverride"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "example": {
+          "agent": {
+            "first_message": "Hello, how can I help you today?",
+            "language": "en",
+            "prompt": {
+              "prompt": "You are a helpful assistant that can answer questions about the topic of the conversation."
+            }
+          },
+          "tts": {
+            "voice_id": "cjVigY5qzO86Huf0OWal"
           }
         },
         "title": "ConversationConfigClientOverride"
@@ -22444,19 +23509,8 @@
       "ConversationConfigClientOverride-Output": {
         "type": "object",
         "properties": {
-          "agent": {
-            "description": "The overrides for the agent configuration",
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/AgentConfigOverride"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
           "tts": {
-            "description": "The overrides for the TTS configuration",
+            "description": "Configuration for conversational text to speech",
             "anyOf": [
               {
                 "$ref": "#/components/schemas/TTSConversationalConfigOverride"
@@ -22467,7 +23521,7 @@
             ]
           },
           "conversation": {
-            "description": "The overrides for the conversation configuration",
+            "description": "Configuration for conversational events",
             "anyOf": [
               {
                 "$ref": "#/components/schemas/ConversationConfigOverride"
@@ -22476,6 +23530,29 @@
                 "type": "null"
               }
             ]
+          },
+          "agent": {
+            "description": "Agent specific configuration",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AgentConfigOverride"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "example": {
+          "agent": {
+            "first_message": "Hello, how can I help you today?",
+            "language": "en",
+            "prompt": {
+              "prompt": "You are a helpful assistant that can answer questions about the topic of the conversation."
+            }
+          },
+          "tts": {
+            "voice_id": "cjVigY5qzO86Huf0OWal"
           }
         },
         "title": "ConversationConfigClientOverride"
@@ -22483,17 +23560,17 @@
       "ConversationConfigClientOverrideConfig-Input": {
         "type": "object",
         "properties": {
-          "agent": {
-            "description": "Overrides for the agent configuration",
-            "$ref": "#/components/schemas/AgentConfigOverrideConfig"
-          },
           "tts": {
-            "description": "Overrides for the TTS configuration",
+            "description": "Configures overrides for nested fields.",
             "$ref": "#/components/schemas/TTSConversationalConfigOverrideConfig"
           },
           "conversation": {
-            "description": "Overrides for the conversation configuration",
+            "description": "Configures overrides for nested fields.",
             "$ref": "#/components/schemas/ConversationConfigOverrideConfig"
+          },
+          "agent": {
+            "description": "Configures overrides for nested fields.",
+            "$ref": "#/components/schemas/AgentConfigOverrideConfig"
           }
         },
         "title": "ConversationConfigClientOverrideConfig"
@@ -22501,17 +23578,17 @@
       "ConversationConfigClientOverrideConfig-Output": {
         "type": "object",
         "properties": {
-          "agent": {
-            "description": "Overrides for the agent configuration",
-            "$ref": "#/components/schemas/AgentConfigOverrideConfig"
-          },
           "tts": {
-            "description": "Overrides for the TTS configuration",
+            "description": "Configures overrides for nested fields.",
             "$ref": "#/components/schemas/TTSConversationalConfigOverrideConfig"
           },
           "conversation": {
-            "description": "Overrides for the conversation configuration",
+            "description": "Configures overrides for nested fields.",
             "$ref": "#/components/schemas/ConversationConfigOverrideConfig"
+          },
+          "agent": {
+            "description": "Configures overrides for nested fields.",
+            "$ref": "#/components/schemas/AgentConfigOverrideConfig"
           }
         },
         "title": "ConversationConfigClientOverrideConfig"
@@ -22520,6 +23597,7 @@
         "type": "object",
         "properties": {
           "text_only": {
+            "description": "If enabled audio will not be processed and only text will be used, use to avoid audio pricing.",
             "anyOf": [
               {
                 "type": "boolean"
@@ -22528,7 +23606,8 @@
                 "type": "null"
               }
             ],
-            "title": "Text Only"
+            "title": "Text Only",
+            "x-convai-client-override": true
           }
         },
         "title": "ConversationConfigOverride"
@@ -22537,14 +23616,11 @@
         "type": "object",
         "properties": {
           "text_only": {
-            "description": "Whether to allow overriding the text only configuration",
+            "description": "Whether to allow overriding the text_only field.",
             "type": "boolean",
             "default": false,
             "title": "Text Only"
           }
-        },
-        "example": {
-          "text_only": false
         },
         "title": "ConversationConfigOverrideConfig"
       },
@@ -22845,6 +23921,14 @@
                 "type": "null"
               }
             ]
+          },
+          "text_only": {
+            "type": "boolean",
+            "default": false,
+            "title": "Text Only"
+          },
+          "features_usage": {
+            "$ref": "#/components/schemas/FeaturesUsageCommonModel"
           }
         },
         "required": [
@@ -22971,21 +24055,6 @@
             ],
             "title": "Llm Override"
           },
-          "source_medium": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "audio",
-                  "text"
-                ]
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Source Medium"
-          },
           "time_in_call_secs": {
             "type": "integer",
             "title": "Time In Call Secs"
@@ -23035,6 +24104,21 @@
               }
             ],
             "title": "Original Message"
+          },
+          "source_medium": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "audio",
+                  "text"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Medium"
           }
         },
         "required": [
@@ -23100,21 +24184,6 @@
             ],
             "title": "Llm Override"
           },
-          "source_medium": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "audio",
-                  "text"
-                ]
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Source Medium"
-          },
           "time_in_call_secs": {
             "type": "integer",
             "title": "Time In Call Secs"
@@ -23164,6 +24233,21 @@
               }
             ],
             "title": "Original Message"
+          },
+          "source_medium": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "audio",
+                  "text"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Medium"
           }
         },
         "required": [
@@ -23795,7 +24879,7 @@
           },
           "tts": {
             "description": "Configuration for conversational text to speech",
-            "$ref": "#/components/schemas/TTSConversationalConfig"
+            "$ref": "#/components/schemas/TTSConversationalConfig-Input"
           },
           "conversation": {
             "description": "Configuration for conversational events",
@@ -23829,7 +24913,7 @@
           },
           "tts": {
             "description": "Configuration for conversational text to speech",
-            "$ref": "#/components/schemas/TTSConversationalConfig"
+            "$ref": "#/components/schemas/TTSConversationalConfig-Output"
           },
           "conversation": {
             "description": "Configuration for conversational events",
@@ -24074,6 +25158,24 @@
                 "type": "null"
               }
             ]
+          },
+          "request_headers": {
+            "description": "Headers that should be included in the request",
+            "type": "object",
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/components/schemas/ConvAISecretLocator"
+                },
+                {
+                  "$ref": "#/components/schemas/ConvAIDynamicVariable"
+                }
+              ]
+            },
+            "title": "Request Headers"
           }
         },
         "required": [
@@ -24540,6 +25642,52 @@
         },
         "title": "DependentUnknownToolIdentifier"
       },
+      "DialogueInput": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "description": "The text to be converted into speech.",
+            "type": "string",
+            "title": "Text"
+          },
+          "voice_id": {
+            "description": "The ID of the voice to be used for the generation.",
+            "type": "string",
+            "title": "Voice Id"
+          }
+        },
+        "required": [
+          "text",
+          "voice_id"
+        ],
+        "title": "DialogueInput"
+      },
+      "DialogueInputResponseModel": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "description": "The text of the dialogue input line.",
+            "type": "string",
+            "title": "Text"
+          },
+          "voice_id": {
+            "description": "The ID of the voice used for this dialogue input line.",
+            "type": "string",
+            "title": "Voice Id"
+          },
+          "voice_name": {
+            "description": "The name of the voice used for this dialogue input line.",
+            "type": "string",
+            "title": "Voice Name"
+          }
+        },
+        "required": [
+          "text",
+          "voice_id",
+          "voice_name"
+        ],
+        "title": "DialogueInputResponseModel"
+      },
       "DoDubbingResponseModel": {
         "type": "object",
         "properties": {
@@ -24988,6 +26136,7 @@
       "EmbedVariant": {
         "type": "string",
         "enum": [
+          "tiny",
           "compact",
           "full",
           "expandable"
@@ -25194,18 +26343,7 @@
           },
           "status": {
             "description": "The status of the user's subscription.",
-            "type": "string",
-            "enum": [
-              "trialing",
-              "active",
-              "incomplete",
-              "incomplete_expired",
-              "past_due",
-              "canceled",
-              "unpaid",
-              "free"
-            ],
-            "title": "Status"
+            "$ref": "#/components/schemas/SubscriptionStatusType"
           },
           "billing_period": {
             "description": "The billing period of the user's subscription.",
@@ -25282,6 +26420,50 @@
           "has_open_invoices"
         ],
         "title": "ExtendedSubscriptionResponseModel"
+      },
+      "FeatureStatusCommonModel": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "default": false,
+            "title": "Enabled"
+          },
+          "used": {
+            "type": "boolean",
+            "default": false,
+            "title": "Used"
+          }
+        },
+        "title": "FeatureStatusCommonModel"
+      },
+      "FeaturesUsageCommonModel": {
+        "type": "object",
+        "properties": {
+          "language_detection": {
+            "$ref": "#/components/schemas/FeatureStatusCommonModel"
+          },
+          "transfer_to_agent": {
+            "$ref": "#/components/schemas/FeatureStatusCommonModel"
+          },
+          "transfer_to_number": {
+            "$ref": "#/components/schemas/FeatureStatusCommonModel"
+          },
+          "multivoice": {
+            "$ref": "#/components/schemas/FeatureStatusCommonModel"
+          },
+          "pii_zrm_workspace": {
+            "type": "boolean",
+            "default": false,
+            "title": "Pii Zrm Workspace"
+          },
+          "pii_zrm_agent": {
+            "type": "boolean",
+            "default": false,
+            "title": "Pii Zrm Agent"
+          }
+        },
+        "title": "FeaturesUsageCommonModel"
       },
       "FeedbackResponseModel": {
         "type": "object",
@@ -26091,9 +27273,12 @@
           "metadata": {
             "$ref": "#/components/schemas/KnowledgeBaseDocumentMetadataResponseModel"
           },
-          "prompt_injectable": {
-            "type": "boolean",
-            "title": "Prompt Injectable"
+          "supported_usages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DocumentUsageModeEnum"
+            },
+            "title": "Supported Usages"
           },
           "access_info": {
             "$ref": "#/components/schemas/ResourceAccessInfo"
@@ -26112,7 +27297,7 @@
           "id",
           "name",
           "metadata",
-          "prompt_injectable",
+          "supported_usages",
           "access_info",
           "extracted_inner_html",
           "type"
@@ -26183,9 +27368,12 @@
           "metadata": {
             "$ref": "#/components/schemas/KnowledgeBaseDocumentMetadataResponseModel"
           },
-          "prompt_injectable": {
-            "type": "boolean",
-            "title": "Prompt Injectable"
+          "supported_usages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DocumentUsageModeEnum"
+            },
+            "title": "Supported Usages"
           },
           "access_info": {
             "$ref": "#/components/schemas/ResourceAccessInfo"
@@ -26221,7 +27409,7 @@
           "id",
           "name",
           "metadata",
-          "prompt_injectable",
+          "supported_usages",
           "access_info",
           "dependent_agents",
           "type"
@@ -26242,9 +27430,12 @@
           "metadata": {
             "$ref": "#/components/schemas/KnowledgeBaseDocumentMetadataResponseModel"
           },
-          "prompt_injectable": {
-            "type": "boolean",
-            "title": "Prompt Injectable"
+          "supported_usages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DocumentUsageModeEnum"
+            },
+            "title": "Supported Usages"
           },
           "access_info": {
             "$ref": "#/components/schemas/ResourceAccessInfo"
@@ -26280,7 +27471,7 @@
           "id",
           "name",
           "metadata",
-          "prompt_injectable",
+          "supported_usages",
           "access_info",
           "dependent_agents",
           "type"
@@ -26301,9 +27492,12 @@
           "metadata": {
             "$ref": "#/components/schemas/KnowledgeBaseDocumentMetadataResponseModel"
           },
-          "prompt_injectable": {
-            "type": "boolean",
-            "title": "Prompt Injectable"
+          "supported_usages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DocumentUsageModeEnum"
+            },
+            "title": "Supported Usages"
           },
           "access_info": {
             "$ref": "#/components/schemas/ResourceAccessInfo"
@@ -26343,7 +27537,7 @@
           "id",
           "name",
           "metadata",
-          "prompt_injectable",
+          "supported_usages",
           "access_info",
           "dependent_agents",
           "type",
@@ -26365,9 +27559,12 @@
           "metadata": {
             "$ref": "#/components/schemas/KnowledgeBaseDocumentMetadataResponseModel"
           },
-          "prompt_injectable": {
-            "type": "boolean",
-            "title": "Prompt Injectable"
+          "supported_usages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DocumentUsageModeEnum"
+            },
+            "title": "Supported Usages"
           },
           "access_info": {
             "$ref": "#/components/schemas/ResourceAccessInfo"
@@ -26386,7 +27583,7 @@
           "id",
           "name",
           "metadata",
-          "prompt_injectable",
+          "supported_usages",
           "access_info",
           "extracted_inner_html",
           "type"
@@ -26407,9 +27604,12 @@
           "metadata": {
             "$ref": "#/components/schemas/KnowledgeBaseDocumentMetadataResponseModel"
           },
-          "prompt_injectable": {
-            "type": "boolean",
-            "title": "Prompt Injectable"
+          "supported_usages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DocumentUsageModeEnum"
+            },
+            "title": "Supported Usages"
           },
           "access_info": {
             "$ref": "#/components/schemas/ResourceAccessInfo"
@@ -26432,7 +27632,7 @@
           "id",
           "name",
           "metadata",
-          "prompt_injectable",
+          "supported_usages",
           "access_info",
           "extracted_inner_html",
           "type",
@@ -26794,6 +27994,39 @@
           "archived_time_unix"
         ],
         "title": "GetPronunciationDictionaryMetadataResponseModel"
+      },
+      "GetSharedSoundGenerationsResponseModel": {
+        "type": "object",
+        "properties": {
+          "shared_sound_generations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SharedSoundGenerationResponseModel"
+            },
+            "title": "Shared Sound Generations"
+          },
+          "last_sort_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Sort Id"
+          },
+          "has_more": {
+            "type": "boolean",
+            "title": "Has More"
+          }
+        },
+        "required": [
+          "shared_sound_generations",
+          "last_sort_id",
+          "has_more"
+        ],
+        "title": "GetSharedSoundGenerationsResponseModel"
       },
       "GetSpeechHistoryResponseModel": {
         "type": "object",
@@ -27344,16 +28577,41 @@
           "gpt-3.5-turbo",
           "gemini-1.5-pro",
           "gemini-1.5-flash",
-          "gemini-2.0-flash-001",
+          "gemini-2.0-flash",
           "gemini-2.0-flash-lite",
           "gemini-2.5-flash",
-          "gemini-1.0-pro",
+          "claude-sonnet-4",
           "claude-3-7-sonnet",
           "claude-3-5-sonnet",
           "claude-3-5-sonnet-v1",
           "claude-3-haiku",
           "grok-beta",
-          "custom-llm"
+          "custom-llm",
+          "gemini-2.5-flash-preview-05-20",
+          "gemini-2.5-flash-preview-04-17",
+          "gemini-2.0-flash-lite-001",
+          "gemini-2.0-flash-001",
+          "gemini-1.5-flash-002",
+          "gemini-1.5-flash-001",
+          "gemini-1.5-pro-002",
+          "gemini-1.5-pro-001",
+          "claude-sonnet-4@20250514",
+          "claude-3-7-sonnet@20250219",
+          "claude-3-5-sonnet@20240620",
+          "claude-3-5-sonnet-v2@20241022",
+          "claude-3-haiku@20240307",
+          "gpt-4.1-2025-04-14",
+          "gpt-4.1-mini-2025-04-14",
+          "gpt-4.1-nano-2025-04-14",
+          "gpt-4o-mini-2024-07-18",
+          "gpt-4o-2024-11-20",
+          "gpt-4o-2024-08-06",
+          "gpt-4o-2024-05-13",
+          "gpt-4-0613",
+          "gpt-4-0314",
+          "gpt-4-turbo-2024-04-09",
+          "gpt-3.5-turbo-0125",
+          "gpt-3.5-turbo-1106"
         ],
         "title": "LLM"
       },
@@ -28018,6 +29276,16 @@
         ],
         "title": "LiteralJsonSchemaProperty"
       },
+      "MCPApprovalRequiredModel": {
+        "description": "Defines the approval model for an MCP tool",
+        "type": "string",
+        "enum": [
+          "user_approval_always_given",
+          "user_approval_never_given",
+          "user_approval_required_per_tool"
+        ],
+        "title": "MCPApprovalRequiredModel"
+      },
       "MCPToolConfig-Input": {
         "description": "A MCP tool is a tool that is used to call a MCP server",
         "type": "object",
@@ -28071,6 +29339,11 @@
             "description": "The id of the MCP server to call",
             "type": "string",
             "title": "Mcp Server Id"
+          },
+          "approval_mode": {
+            "description": "If set to approved, the tool will be pre-approved and not require user approval before executing",
+            "default": "user_approval_never_given",
+            "$ref": "#/components/schemas/MCPApprovalRequiredModel"
           }
         },
         "required": [
@@ -28134,6 +29407,11 @@
             "description": "The id of the MCP server to call",
             "type": "string",
             "title": "Mcp Server Id"
+          },
+          "approval_mode": {
+            "description": "If set to approved, the tool will be pre-approved and not require user approval before executing",
+            "default": "user_approval_never_given",
+            "$ref": "#/components/schemas/MCPApprovalRequiredModel"
           }
         },
         "required": [
@@ -28415,6 +29693,40 @@
         ],
         "title": "ModelResponseModel"
       },
+      "ModelSettingsResponseModel": {
+        "type": "object",
+        "properties": {
+          "stability": {
+            "description": "Determines how stable the voice is and the randomness between each generation. Lower values introduce broader emotional range for the voice. Higher values can result in a monotonous voice with limited emotion.",
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Stability"
+          },
+          "use_speaker_boost": {
+            "description": "This setting boosts the similarity to the original speaker. Using this setting requires a slightly higher computational load, which in turn increases latency.",
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Use Speaker Boost"
+          }
+        },
+        "example": {
+          "similarity_boost": 1,
+          "stability": 1
+        },
+        "title": "ModelSettingsResponseModel"
+      },
       "ModerationStatusResponseModel": {
         "type": "object",
         "properties": {
@@ -28560,6 +29872,11 @@
             "description": "The id of the MCP server to call",
             "type": "string",
             "title": "Mcp Server Id"
+          },
+          "approval_mode": {
+            "description": "If set to always accept, the tool will be pre-approved and not require user approval before executing",
+            "default": "user_approval_never_given",
+            "$ref": "#/components/schemas/MCPApprovalRequiredModel"
           }
         },
         "required": [
@@ -28623,6 +29940,11 @@
             "description": "The id of the MCP server to call",
             "type": "string",
             "title": "Mcp Server Id"
+          },
+          "approval_mode": {
+            "description": "If set to always accept, the tool will be pre-approved and not require user approval before executing",
+            "default": "user_approval_never_given",
+            "$ref": "#/components/schemas/MCPApprovalRequiredModel"
           }
         },
         "required": [
@@ -30245,11 +31567,12 @@
             "description": "The prompt for the agent",
             "type": "string",
             "default": "",
-            "title": "Prompt"
+            "title": "Prompt",
+            "x-convai-client-override": true
           },
           "llm": {
             "description": "The LLM to query with the prompt and the chat history",
-            "default": "gemini-2.0-flash-001",
+            "default": "gemini-2.0-flash",
             "$ref": "#/components/schemas/LLM"
           },
           "temperature": {
@@ -30380,11 +31703,12 @@
             "description": "The prompt for the agent",
             "type": "string",
             "default": "",
-            "title": "Prompt"
+            "title": "Prompt",
+            "x-convai-client-override": true
           },
           "llm": {
             "description": "The LLM to query with the prompt and the chat history",
-            "default": "gemini-2.0-flash-001",
+            "default": "gemini-2.0-flash",
             "$ref": "#/components/schemas/LLM"
           },
           "temperature": {
@@ -30515,11 +31839,12 @@
             "description": "The prompt for the agent",
             "type": "string",
             "default": "",
-            "title": "Prompt"
+            "title": "Prompt",
+            "x-convai-client-override": true
           },
           "llm": {
             "description": "The LLM to query with the prompt and the chat history",
-            "default": "gemini-2.0-flash-001",
+            "default": "gemini-2.0-flash",
             "$ref": "#/components/schemas/LLM"
           },
           "temperature": {
@@ -30654,14 +31979,21 @@
         "type": "object",
         "properties": {
           "prompt": {
-            "description": "The initial system message that defines the agent, e.g. “You are a German language teacher named Laura.”",
-            "type": "string",
-            "default": "",
-            "title": "Prompt"
+            "description": "The prompt for the agent",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Prompt",
+            "x-convai-client-override": true
           }
         },
         "example": {
-          "prompt": "You are a German language teacher named Laura."
+          "prompt": "You are a helpful assistant that can answer questions about the topic of the conversation."
         },
         "title": "PromptAgentOverride"
       },
@@ -30669,7 +32001,7 @@
         "type": "object",
         "properties": {
           "prompt": {
-            "description": "Whether to allow prompt overriding",
+            "description": "Whether to allow overriding the prompt field.",
             "type": "boolean",
             "default": false,
             "title": "Prompt"
@@ -31023,6 +32355,108 @@
         ],
         "title": "QueryParamsJsonSchema"
       },
+      "RAGDocumentIndexResponseModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "model": {
+            "$ref": "#/components/schemas/EmbeddingModelEnum"
+          },
+          "status": {
+            "$ref": "#/components/schemas/RAGIndexStatus"
+          },
+          "progress_percentage": {
+            "type": "number",
+            "title": "Progress Percentage"
+          },
+          "document_model_index_usage": {
+            "$ref": "#/components/schemas/RAGDocumentIndexUsage"
+          }
+        },
+        "required": [
+          "id",
+          "model",
+          "status",
+          "progress_percentage",
+          "document_model_index_usage"
+        ],
+        "title": "RAGDocumentIndexResponseModel"
+      },
+      "RAGDocumentIndexUsage": {
+        "type": "object",
+        "properties": {
+          "used_bytes": {
+            "type": "integer",
+            "title": "Used Bytes"
+          }
+        },
+        "required": [
+          "used_bytes"
+        ],
+        "title": "RAGDocumentIndexUsage"
+      },
+      "RAGDocumentIndexesResponseModel": {
+        "type": "object",
+        "properties": {
+          "indexes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RAGDocumentIndexResponseModel"
+            },
+            "title": "Indexes"
+          }
+        },
+        "required": [
+          "indexes"
+        ],
+        "title": "RAGDocumentIndexesResponseModel"
+      },
+      "RAGIndexOverviewEmbeddingModelResponseModel": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/EmbeddingModelEnum"
+          },
+          "used_bytes": {
+            "type": "integer",
+            "title": "Used Bytes"
+          }
+        },
+        "required": [
+          "model",
+          "used_bytes"
+        ],
+        "title": "RAGIndexOverviewEmbeddingModelResponseModel"
+      },
+      "RAGIndexOverviewResponseModel": {
+        "type": "object",
+        "properties": {
+          "total_used_bytes": {
+            "type": "integer",
+            "title": "Total Used Bytes"
+          },
+          "total_max_bytes": {
+            "type": "integer",
+            "title": "Total Max Bytes"
+          },
+          "models": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RAGIndexOverviewEmbeddingModelResponseModel"
+            },
+            "title": "Models"
+          }
+        },
+        "required": [
+          "total_used_bytes",
+          "total_max_bytes",
+          "models"
+        ],
+        "title": "RAGIndexOverviewResponseModel"
+      },
       "RAGIndexRequestModel": {
         "type": "object",
         "properties": {
@@ -31035,30 +32469,15 @@
         ],
         "title": "RAGIndexRequestModel"
       },
-      "RAGIndexResponseModel": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "$ref": "#/components/schemas/RAGIndexStatus"
-          },
-          "progress_percentage": {
-            "type": "number",
-            "title": "Progress Percentage"
-          }
-        },
-        "required": [
-          "status",
-          "progress_percentage"
-        ],
-        "title": "RAGIndexResponseModel"
-      },
       "RAGIndexStatus": {
         "type": "string",
         "enum": [
           "created",
           "processing",
           "failed",
-          "succeeded"
+          "succeeded",
+          "rag_limit_exceeded",
+          "document_too_small"
         ],
         "title": "RAGIndexStatus"
       },
@@ -31118,6 +32537,17 @@
             "exclusiveMaximum": 10000000,
             "exclusiveMinimum": 0,
             "title": "Max Documents Length"
+          },
+          "max_retrieved_rag_chunks_count": {
+            "description": "Maximum number of RAG document chunks to initially retrieve from the vector store. These are then further filtered by vector distance and total length.",
+            "type": "integer",
+            "default": 20,
+            "examples": [
+              5
+            ],
+            "exclusiveMinimum": 0,
+            "maximum": 20,
+            "title": "Max Retrieved Rag Chunks Count"
           }
         },
         "title": "RagConfig"
@@ -32043,6 +33473,77 @@
         ],
         "title": "ShareOptionResponseModel"
       },
+      "SharedSoundGenerationResponseModel": {
+        "type": "object",
+        "properties": {
+          "public_user_id": {
+            "type": "string",
+            "title": "Public User Id"
+          },
+          "history_item_id": {
+            "type": "string",
+            "title": "History Item Id"
+          },
+          "generation_id": {
+            "type": "string",
+            "title": "Generation Id"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "category": {
+            "type": "string",
+            "title": "Category"
+          },
+          "labels": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Labels"
+          },
+          "purchased_count": {
+            "type": "integer",
+            "title": "Purchased Count"
+          },
+          "like_count": {
+            "type": "integer",
+            "title": "Like Count"
+          },
+          "featured": {
+            "type": "boolean",
+            "title": "Featured"
+          },
+          "preview_url": {
+            "type": "string",
+            "title": "Preview Url"
+          },
+          "purchased": {
+            "type": "boolean",
+            "title": "Purchased"
+          },
+          "icon_url": {
+            "type": "string",
+            "title": "Icon Url"
+          }
+        },
+        "required": [
+          "public_user_id",
+          "history_item_id",
+          "generation_id",
+          "text",
+          "category",
+          "labels",
+          "purchased_count",
+          "like_count",
+          "featured",
+          "preview_url",
+          "purchased",
+          "icon_url"
+        ],
+        "title": "SharedSoundGenerationResponseModel"
+      },
       "SimilarVoice": {
         "type": "object",
         "properties": {
@@ -32110,6 +33611,19 @@
           "voices"
         ],
         "title": "SimilarVoicesForSpeakerResponse"
+      },
+      "SkipTurnToolConfig": {
+        "description": "Allows the agent to explicitly skip its turn.\n\nThis tool should be invoked by the LLM when the user indicates they would like\nto think or take a short pause before continuing the conversation—e.g. when\nthey say: \"Give me a second\", \"Let me think\", or \"One moment please\".  After\ncalling this tool, the assistant should not speak until the user speaks\nagain, or another normal turn-taking condition is met.  The tool itself has\nno parameters and performs no side-effects other than informing the backend\nthat the current turn generation is complete.",
+        "type": "object",
+        "properties": {
+          "system_tool_type": {
+            "type": "string",
+            "default": "skip_turn",
+            "const": "skip_turn",
+            "title": "System Tool Type"
+          }
+        },
+        "title": "SkipTurnToolConfig"
       },
       "SpeakerAudioResponseModel": {
         "type": "object",
@@ -32357,7 +33871,14 @@
           },
           "voice_id": {
             "description": "The ID of the voice used.",
-            "type": "string",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Voice Id"
           },
           "model_id": {
@@ -32374,7 +33895,14 @@
           },
           "voice_name": {
             "description": "The name of the voice.",
-            "type": "string",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Voice Name"
           },
           "voice_category": {
@@ -32397,7 +33925,14 @@
           },
           "text": {
             "description": "The text used to generate the audio item.",
-            "type": "string",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Text"
           },
           "date_unix": {
@@ -32497,6 +34032,21 @@
                 "type": "null"
               }
             ]
+          },
+          "dialogue": {
+            "description": "The dialogue (voice and text pairs) used to generate the audio item. If this is set then the top level `text` and `voice_id` fields will be empty.",
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/DialogueInputResponseModel"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dialogue"
           }
         },
         "example": {
@@ -32522,9 +34072,6 @@
         },
         "required": [
           "history_item_id",
-          "voice_id",
-          "voice_name",
-          "text",
           "date_unix",
           "character_count_change_from",
           "character_count_change_to",
@@ -33207,18 +34754,7 @@
           },
           "status": {
             "description": "The status of the user's subscription.",
-            "type": "string",
-            "enum": [
-              "trialing",
-              "active",
-              "incomplete",
-              "incomplete_expired",
-              "past_due",
-              "canceled",
-              "unpaid",
-              "free"
-            ],
-            "title": "Status"
+            "$ref": "#/components/schemas/SubscriptionStatusType"
           },
           "billing_period": {
             "description": "The billing period of the user's subscription.",
@@ -33293,6 +34829,21 @@
         ],
         "title": "SubscriptionResponseModel"
       },
+      "SubscriptionStatusType": {
+        "type": "string",
+        "enum": [
+          "trialing",
+          "active",
+          "incomplete",
+          "incomplete_expired",
+          "past_due",
+          "canceled",
+          "unpaid",
+          "free",
+          "free_disabled"
+        ],
+        "title": "SubscriptionStatusType"
+      },
       "SubscriptionUsageResponseModel": {
         "type": "object",
         "properties": {
@@ -33359,6 +34910,58 @@
         ],
         "title": "SubscriptionUsageResponseModel"
       },
+      "SupportedVoice": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Label"
+          },
+          "voice_id": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Voice Id"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "language": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Language"
+          },
+          "model_family": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TTSModelFamily"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "label",
+          "voice_id"
+        ],
+        "title": "SupportedVoice"
+      },
       "SystemToolConfig-Input": {
         "description": "A system tool is a tool that is used to call a system method in the server",
         "type": "object",
@@ -33398,6 +35001,7 @@
               "mapping": {
                 "end_call": "#/components/schemas/EndCallToolConfig",
                 "language_detection": "#/components/schemas/LanguageDetectionToolConfig",
+                "skip_turn": "#/components/schemas/SkipTurnToolConfig",
                 "transfer_to_agent": "#/components/schemas/TransferToAgentToolConfig",
                 "transfer_to_number": "#/components/schemas/TransferToNumberToolConfig"
               }
@@ -33414,6 +35018,9 @@
               },
               {
                 "$ref": "#/components/schemas/TransferToNumberToolConfig"
+              },
+              {
+                "$ref": "#/components/schemas/SkipTurnToolConfig"
               }
             ],
             "title": "Params"
@@ -33468,6 +35075,7 @@
               "mapping": {
                 "end_call": "#/components/schemas/EndCallToolConfig",
                 "language_detection": "#/components/schemas/LanguageDetectionToolConfig",
+                "skip_turn": "#/components/schemas/SkipTurnToolConfig",
                 "transfer_to_agent": "#/components/schemas/TransferToAgentToolConfig",
                 "transfer_to_number": "#/components/schemas/TransferToNumberToolConfig"
               }
@@ -33484,6 +35092,9 @@
               },
               {
                 "$ref": "#/components/schemas/TransferToNumberToolConfig"
+              },
+              {
+                "$ref": "#/components/schemas/SkipTurnToolConfig"
               }
             ],
             "title": "Params"
@@ -33499,7 +35110,7 @@
         ],
         "title": "SystemToolConfig"
       },
-      "TTSConversationalConfig": {
+      "TTSConversationalConfig-Input": {
         "type": "object",
         "properties": {
           "model_id": {
@@ -33512,7 +35123,97 @@
             "type": "string",
             "default": "cjVigY5qzO86Huf0OWal",
             "minLength": 0,
-            "title": "Voice Id"
+            "title": "Voice Id",
+            "x-convai-client-override": true,
+            "x-convai-language-override": true
+          },
+          "supported_voices": {
+            "description": "Additional supported voices for the agent",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SupportedVoice"
+            },
+            "title": "Supported Voices"
+          },
+          "agent_output_audio_format": {
+            "description": "The audio format to use for TTS",
+            "default": "pcm_16000",
+            "$ref": "#/components/schemas/TTSOutputFormat"
+          },
+          "optimize_streaming_latency": {
+            "description": "The optimization for streaming latency",
+            "default": 3,
+            "$ref": "#/components/schemas/TTSOptimizeStreamingLatency"
+          },
+          "stability": {
+            "description": "The stability of generated speech",
+            "type": "number",
+            "default": 0.5,
+            "maximum": 1,
+            "minimum": 0,
+            "title": "Stability"
+          },
+          "speed": {
+            "description": "The speed of generated speech",
+            "type": "number",
+            "default": 1,
+            "maximum": 1.2,
+            "minimum": 0.7,
+            "title": "Speed"
+          },
+          "similarity_boost": {
+            "description": "The similarity boost for generated speech",
+            "type": "number",
+            "default": 0.8,
+            "maximum": 1,
+            "minimum": 0,
+            "title": "Similarity Boost"
+          },
+          "pronunciation_dictionary_locators": {
+            "description": "The pronunciation dictionary locators",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PydanticPronunciationDictionaryVersionLocator"
+            },
+            "title": "Pronunciation Dictionary Locators"
+          }
+        },
+        "example": {
+          "agent_output_audio_format": "pcm_16000",
+          "model_id": "eleven_turbo_v2",
+          "optimize_streaming_latency": 3,
+          "pronunciation_dictionary_locators": [],
+          "similarity_boost": 0.8,
+          "speed": 1,
+          "stability": 0.5,
+          "voice_id": "cjVigY5qzO86Huf0OWal"
+        },
+        "title": "TTSConversationalConfig"
+      },
+      "TTSConversationalConfig-Output": {
+        "type": "object",
+        "properties": {
+          "model_id": {
+            "description": "The model to use for TTS",
+            "default": "eleven_turbo_v2",
+            "$ref": "#/components/schemas/TTSConversationalModel"
+          },
+          "voice_id": {
+            "description": "The voice ID to use for TTS",
+            "type": "string",
+            "default": "cjVigY5qzO86Huf0OWal",
+            "minLength": 0,
+            "title": "Voice Id",
+            "x-convai-client-override": true,
+            "x-convai-language-override": true
+          },
+          "supported_voices": {
+            "description": "Additional supported voices for the agent",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SupportedVoice"
+            },
+            "title": "Supported Voices"
           },
           "agent_output_audio_format": {
             "description": "The audio format to use for TTS",
@@ -33573,6 +35274,7 @@
         "type": "object",
         "properties": {
           "voice_id": {
+            "description": "The voice ID to use for TTS",
             "anyOf": [
               {
                 "type": "string"
@@ -33581,8 +35283,13 @@
                 "type": "null"
               }
             ],
-            "title": "Voice Id"
+            "title": "Voice Id",
+            "x-convai-client-override": true,
+            "x-convai-language-override": true
           }
+        },
+        "example": {
+          "voice_id": "cjVigY5qzO86Huf0OWal"
         },
         "title": "TTSConversationalConfigOverride"
       },
@@ -33590,14 +35297,11 @@
         "type": "object",
         "properties": {
           "voice_id": {
-            "description": "Whether to allow overriding the voice ID",
+            "description": "Whether to allow overriding the voice_id field.",
             "type": "boolean",
             "default": false,
             "title": "Voice Id"
           }
-        },
-        "example": {
-          "voice_id": false
         },
         "title": "TTSConversationalConfigOverrideConfig"
       },
@@ -33610,6 +35314,15 @@
           "eleven_flash_v2_5"
         ],
         "title": "TTSConversationalModel"
+      },
+      "TTSModelFamily": {
+        "type": "string",
+        "enum": [
+          "turbo",
+          "flash",
+          "multilingual"
+        ],
+        "title": "TTSModelFamily"
       },
       "TTSOptimizeStreamingLatency": {
         "type": "integer",
@@ -35030,6 +36743,18 @@
             ],
             "title": "Stability"
           },
+          "use_speaker_boost": {
+            "description": "This setting boosts the similarity to the original speaker. Using this setting requires a slightly higher computational load, which in turn increases latency.",
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Use Speaker Boost"
+          },
           "similarity_boost": {
             "description": "Determines how closely the AI should adhere to the original voice when attempting to replicate it.",
             "anyOf": [
@@ -35053,18 +36778,6 @@
               }
             ],
             "title": "Style"
-          },
-          "use_speaker_boost": {
-            "description": "This setting boosts the similarity to the original speaker. Using this setting requires a slightly higher computational load, which in turn increases latency.",
-            "anyOf": [
-              {
-                "type": "boolean"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Use Speaker Boost"
           },
           "speed": {
             "description": "Adjusts the speed of the voice. A value of 1.0 is the default speed, while values less than 1.0 slow down the speech, and values greater than 1.0 speed it up.",
@@ -36012,13 +37725,18 @@
         ],
         "title": "WebhookToolConfig"
       },
-      "WidgetConfig": {
+      "WidgetConfig-Input": {
         "type": "object",
         "properties": {
           "variant": {
             "description": "The variant of the widget",
             "default": "full",
             "$ref": "#/components/schemas/EmbedVariant"
+          },
+          "placement": {
+            "description": "The placement of the widget on the screen",
+            "default": "bottom-right",
+            "$ref": "#/components/schemas/WidgetPlacement"
           },
           "expandable": {
             "description": "Whether the widget is expandable",
@@ -36268,11 +37986,33 @@
             "default": false,
             "title": "Mic Muting Enabled"
           },
+          "transcript_enabled": {
+            "description": "Whether the widget should show the conversation transcript as it goes on",
+            "type": "boolean",
+            "default": false,
+            "title": "Transcript Enabled"
+          },
+          "text_input_enabled": {
+            "description": "Whether the user should be able to send text messages",
+            "type": "boolean",
+            "default": true,
+            "title": "Text Input Enabled"
+          },
+          "text_contents": {
+            "description": "Text contents of the widget",
+            "$ref": "#/components/schemas/WidgetTextContents"
+          },
           "language_selector": {
             "description": "Whether to show the language selector",
             "type": "boolean",
             "default": false,
             "title": "Language Selector"
+          },
+          "supports_text_only": {
+            "description": "Whether the widget can switch to text only mode",
+            "type": "boolean",
+            "default": true,
+            "title": "Supports Text Only"
           },
           "custom_avatar_path": {
             "description": "The custom avatar path",
@@ -36285,6 +38025,330 @@
               }
             ],
             "title": "Custom Avatar Path"
+          },
+          "language_presets": {
+            "description": "Language presets for the widget",
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/WidgetLanguagePreset"
+            },
+            "title": "Language Presets"
+          }
+        },
+        "example": {
+          "custom_avatar_path": "https://example.com/avatar.png",
+          "language_selector": false
+        },
+        "title": "WidgetConfig"
+      },
+      "WidgetConfig-Output": {
+        "type": "object",
+        "properties": {
+          "variant": {
+            "description": "The variant of the widget",
+            "default": "full",
+            "$ref": "#/components/schemas/EmbedVariant"
+          },
+          "placement": {
+            "description": "The placement of the widget on the screen",
+            "default": "bottom-right",
+            "$ref": "#/components/schemas/WidgetPlacement"
+          },
+          "expandable": {
+            "description": "Whether the widget is expandable",
+            "default": "never",
+            "$ref": "#/components/schemas/WidgetExpandable"
+          },
+          "avatar": {
+            "description": "The avatar of the widget",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/OrbAvatar"
+              },
+              {
+                "$ref": "#/components/schemas/URLAvatar"
+              },
+              {
+                "$ref": "#/components/schemas/ImageAvatar"
+              }
+            ],
+            "title": "Avatar"
+          },
+          "feedback_mode": {
+            "description": "The feedback mode of the widget",
+            "default": "none",
+            "$ref": "#/components/schemas/WidgetFeedbackMode"
+          },
+          "bg_color": {
+            "description": "The background color of the widget",
+            "type": "string",
+            "default": "#ffffff",
+            "title": "Bg Color"
+          },
+          "text_color": {
+            "description": "The text color of the widget",
+            "type": "string",
+            "default": "#000000",
+            "title": "Text Color"
+          },
+          "btn_color": {
+            "description": "The button color of the widget",
+            "type": "string",
+            "default": "#000000",
+            "title": "Btn Color"
+          },
+          "btn_text_color": {
+            "description": "The button text color of the widget",
+            "type": "string",
+            "default": "#ffffff",
+            "title": "Btn Text Color"
+          },
+          "border_color": {
+            "description": "The border color of the widget",
+            "type": "string",
+            "default": "#e1e1e1",
+            "title": "Border Color"
+          },
+          "focus_color": {
+            "description": "The focus color of the widget",
+            "type": "string",
+            "default": "#000000",
+            "title": "Focus Color"
+          },
+          "border_radius": {
+            "description": "The border radius of the widget",
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Border Radius"
+          },
+          "btn_radius": {
+            "description": "The button radius of the widget",
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Btn Radius"
+          },
+          "action_text": {
+            "description": "The action text of the widget",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Action Text"
+          },
+          "start_call_text": {
+            "description": "The start call text of the widget",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Start Call Text"
+          },
+          "end_call_text": {
+            "description": "The end call text of the widget",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End Call Text"
+          },
+          "expand_text": {
+            "description": "The expand text of the widget",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expand Text"
+          },
+          "listening_text": {
+            "description": "The text to display when the agent is listening",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Listening Text"
+          },
+          "speaking_text": {
+            "description": "The text to display when the agent is speaking",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Speaking Text"
+          },
+          "shareable_page_text": {
+            "description": "The text to display when sharing",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Shareable Page Text"
+          },
+          "shareable_page_show_terms": {
+            "description": "Whether to show terms and conditions on the shareable page",
+            "type": "boolean",
+            "default": true,
+            "title": "Shareable Page Show Terms"
+          },
+          "terms_text": {
+            "description": "The text to display for terms and conditions",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Terms Text"
+          },
+          "terms_html": {
+            "description": "The HTML to display for terms and conditions",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Terms Html"
+          },
+          "terms_key": {
+            "description": "The key to display for terms and conditions",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Terms Key"
+          },
+          "show_avatar_when_collapsed": {
+            "description": "Whether to show the avatar when the widget is collapsed",
+            "default": false,
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Show Avatar When Collapsed"
+          },
+          "disable_banner": {
+            "description": "Whether to disable the banner",
+            "type": "boolean",
+            "default": false,
+            "title": "Disable Banner"
+          },
+          "override_link": {
+            "description": "The override link for the widget",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Override Link"
+          },
+          "mic_muting_enabled": {
+            "description": "Whether to enable mic muting",
+            "type": "boolean",
+            "default": false,
+            "title": "Mic Muting Enabled"
+          },
+          "transcript_enabled": {
+            "description": "Whether the widget should show the conversation transcript as it goes on",
+            "type": "boolean",
+            "default": false,
+            "title": "Transcript Enabled"
+          },
+          "text_input_enabled": {
+            "description": "Whether the user should be able to send text messages",
+            "type": "boolean",
+            "default": true,
+            "title": "Text Input Enabled"
+          },
+          "text_contents": {
+            "description": "Text contents of the widget",
+            "$ref": "#/components/schemas/WidgetTextContents"
+          },
+          "language_selector": {
+            "description": "Whether to show the language selector",
+            "type": "boolean",
+            "default": false,
+            "title": "Language Selector"
+          },
+          "supports_text_only": {
+            "description": "Whether the widget can switch to text only mode",
+            "type": "boolean",
+            "default": true,
+            "title": "Supports Text Only"
+          },
+          "custom_avatar_path": {
+            "description": "The custom avatar path",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Custom Avatar Path"
+          },
+          "language_presets": {
+            "description": "Language presets for the widget",
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/WidgetLanguagePreset"
+            },
+            "title": "Language Presets"
           }
         },
         "example": {
@@ -36301,6 +38365,11 @@
             "default": "full",
             "$ref": "#/components/schemas/EmbedVariant"
           },
+          "placement": {
+            "description": "The placement of the widget on the screen",
+            "default": "bottom-right",
+            "$ref": "#/components/schemas/WidgetPlacement"
+          },
           "expandable": {
             "description": "Whether the widget is expandable",
             "default": "never",
@@ -36548,6 +38617,22 @@
             "type": "boolean",
             "default": false,
             "title": "Mic Muting Enabled"
+          },
+          "transcript_enabled": {
+            "description": "Whether the widget should show the conversation transcript as it goes on",
+            "type": "boolean",
+            "default": false,
+            "title": "Transcript Enabled"
+          },
+          "text_input_enabled": {
+            "description": "Whether the user should be able to send text messages",
+            "type": "boolean",
+            "default": true,
+            "title": "Text Input Enabled"
+          },
+          "text_contents": {
+            "description": "Text contents of the widget",
+            "$ref": "#/components/schemas/WidgetTextContents"
           },
           "language": {
             "type": "string",
@@ -36566,6 +38651,37 @@
               }
             ],
             "title": "Supported Language Overrides"
+          },
+          "language_presets": {
+            "description": "Language presets for the widget",
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/WidgetLanguagePresetResponse"
+            },
+            "title": "Language Presets"
+          },
+          "text_only": {
+            "description": "Whether the agent uses text-only mode",
+            "type": "boolean",
+            "default": false,
+            "title": "Text Only"
+          },
+          "supports_text_only": {
+            "description": "Whether the agent can be switched to text-only mode",
+            "type": "boolean",
+            "default": false,
+            "title": "Supports Text Only"
+          },
+          "first_message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "First Message"
           }
         },
         "example": {
@@ -36617,6 +38733,321 @@
           "end"
         ],
         "title": "WidgetFeedbackMode"
+      },
+      "WidgetLanguagePreset": {
+        "type": "object",
+        "properties": {
+          "text_contents": {
+            "description": "The text contents for the selected language",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/WidgetTextContents"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "title": "WidgetLanguagePreset"
+      },
+      "WidgetLanguagePresetResponse": {
+        "type": "object",
+        "properties": {
+          "first_message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "First Message"
+          },
+          "text_contents": {
+            "description": "The text contents for the selected language",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/WidgetTextContents"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "title": "WidgetLanguagePresetResponse"
+      },
+      "WidgetPlacement": {
+        "type": "string",
+        "enum": [
+          "top-left",
+          "top",
+          "top-right",
+          "bottom-left",
+          "bottom",
+          "bottom-right"
+        ],
+        "title": "WidgetPlacement"
+      },
+      "WidgetTextContents": {
+        "type": "object",
+        "properties": {
+          "main_label": {
+            "description": "Call to action displayed inside the compact and full variants.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Main Label"
+          },
+          "start_call": {
+            "description": "Text and ARIA label for the start call button.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Start Call"
+          },
+          "new_call": {
+            "description": "Text and ARIA label for the new call button. Displayed when the caller already finished at least one call in order ot start the next one.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "New Call"
+          },
+          "end_call": {
+            "description": "Text and ARIA label for the end call button.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End Call"
+          },
+          "mute_microphone": {
+            "description": "ARIA label for the mute microphone button.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mute Microphone"
+          },
+          "change_language": {
+            "description": "ARIA label for the change language dropdown.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Change Language"
+          },
+          "collapse": {
+            "description": "ARIA label for the collapse button.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Collapse"
+          },
+          "expand": {
+            "description": "ARIA label for the expand button.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expand"
+          },
+          "copied": {
+            "description": "Text displayed when the user copies a value using the copy button.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Copied"
+          },
+          "accept_terms": {
+            "description": "Text and ARIA label for the accept terms button.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Accept Terms"
+          },
+          "dismiss_terms": {
+            "description": "Text and ARIA label for the cancel terms button.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dismiss Terms"
+          },
+          "listening_status": {
+            "description": "Status displayed when the agent is listening.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Listening Status"
+          },
+          "speaking_status": {
+            "description": "Status displayed when the agent is speaking.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Speaking Status"
+          },
+          "connecting_status": {
+            "description": "Status displayed when the agent is connecting.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Connecting Status"
+          },
+          "input_label": {
+            "description": "ARIA label for the text message input.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Input Label"
+          },
+          "input_placeholder": {
+            "description": "Placeholder text for the text message input.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Input Placeholder"
+          },
+          "user_ended_conversation": {
+            "description": "Information message displayed when the user ends the conversation.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "User Ended Conversation"
+          },
+          "agent_ended_conversation": {
+            "description": "Information message displayed when the agent ends the conversation.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Agent Ended Conversation"
+          },
+          "conversation_id": {
+            "description": "Text label used next to the conversation ID.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Conversation Id"
+          },
+          "error_occurred": {
+            "description": "Text label used when an error occurs.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error Occurred"
+          },
+          "copy_id": {
+            "description": "Text and ARIA label used for the copy ID button.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Copy Id"
+          }
+        },
+        "title": "WidgetTextContents"
       },
       "WorkspaceBatchCallsResponse": {
         "type": "object",

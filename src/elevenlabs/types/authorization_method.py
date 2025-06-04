@@ -11,6 +11,7 @@ AuthorizationMethod = typing.Union[
         "shareable_link",
         "livekit_token",
         "livekit_token_website",
+        "genesys_api_key",
     ],
     typing.Any,
 ]

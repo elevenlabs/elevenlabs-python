@@ -35,7 +35,6 @@ service:
       examples:
         - path-parameters:
             group_id: group_id
-          headers: {}
           request:
             email: email
           response:
@@ -72,7 +71,6 @@ service:
       examples:
         - path-parameters:
             group_id: group_id
-          headers: {}
           request:
             email: email
           response:

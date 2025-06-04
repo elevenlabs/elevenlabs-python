@@ -116,9 +116,9 @@ class SettingsClient:
             voice_id="21m00Tcm4TlvDq8ikWAM",
             request=VoiceSettings(
                 stability=1.0,
+                use_speaker_boost=True,
                 similarity_boost=1.0,
                 style=0.0,
-                use_speaker_boost=True,
                 speed=1.0,
             ),
         )
@@ -252,9 +252,9 @@ class AsyncSettingsClient:
                 voice_id="21m00Tcm4TlvDq8ikWAM",
                 request=VoiceSettings(
                     stability=1.0,
+                    use_speaker_boost=True,
                     similarity_boost=1.0,
                     style=0.0,
-                    use_speaker_boost=True,
                     speed=1.0,
                 ),
             )

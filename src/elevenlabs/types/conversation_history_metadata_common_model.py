@@ -13,6 +13,7 @@ from .conversation_history_error_common_model import ConversationHistoryErrorCom
 from .conversation_history_feedback_common_model import ConversationHistoryFeedbackCommonModel
 from .conversation_history_metadata_common_model_phone_call import ConversationHistoryMetadataCommonModelPhoneCall
 from .conversation_history_rag_usage_common_model import ConversationHistoryRagUsageCommonModel
+from .features_usage_common_model import FeaturesUsageCommonModel
 
 
 class ConversationHistoryMetadataCommonModel(UncheckedBaseModel):
@@ -30,6 +31,8 @@ class ConversationHistoryMetadataCommonModel(UncheckedBaseModel):
     error: typing.Optional[ConversationHistoryErrorCommonModel] = None
     main_language: typing.Optional[str] = None
     rag_usage: typing.Optional[ConversationHistoryRagUsageCommonModel] = None
+    text_only: typing.Optional[bool] = None
+    features_usage: typing.Optional[FeaturesUsageCommonModel] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

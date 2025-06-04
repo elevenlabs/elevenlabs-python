@@ -13,6 +13,11 @@ class VoiceSettings(UncheckedBaseModel):
     Determines how stable the voice is and the randomness between each generation. Lower values introduce broader emotional range for the voice. Higher values can result in a monotonous voice with limited emotion.
     """
 
+    use_speaker_boost: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    This setting boosts the similarity to the original speaker. Using this setting requires a slightly higher computational load, which in turn increases latency.
+    """
+
     similarity_boost: typing.Optional[float] = pydantic.Field(default=None)
     """
     Determines how closely the AI should adhere to the original voice when attempting to replicate it.
@@ -21,11 +26,6 @@ class VoiceSettings(UncheckedBaseModel):
     style: typing.Optional[float] = pydantic.Field(default=None)
     """
     Determines the style exaggeration of the voice. This setting attempts to amplify the style of the original speaker. It does consume additional computational resources and might increase latency if set to anything other than 0.
-    """
-
-    use_speaker_boost: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    This setting boosts the similarity to the original speaker. Using this setting requires a slightly higher computational load, which in turn increases latency.
     """
 
     speed: typing.Optional[float] = pydantic.Field(default=None)

@@ -581,14 +581,14 @@ components:
       type: object
       description: Identifies a specific pronunciation dictionary to use
       properties:
-        dictionary_id:
+        pronunciation_dictionary_id:
           type: string
           description: The unique identifier of the pronunciation dictionary
         version_id:
           type: string
           description: The version identifier of the pronunciation dictionary
       required:
-        - dictionary_id
+        - pronunciation_dictionary_id
         - version_id
 
     WebsocketTTSClientMessageMulti:
@@ -599,9 +599,9 @@ components:
           type: string
           nullable: true
           description: |
-            Text to be synthesized. 
-            For the first message establishing a new context (identified by `context_id`, or a default context if `context_id` is absent), this should be a single space character (' '). 
-            For subsequent messages to an active context, this is the text to synthesize. 
+            Text to be synthesized.
+            For the first message establishing a new context (identified by `context_id`, or a default context if `context_id` is absent), this should be a single space character (' ').
+            For subsequent messages to an active context, this is the text to synthesize.
             This field can be null or an empty string if the message is primarily for control (e.g., using `flush`, `close_context`, or `close_socket`).
         voice_settings:
           $ref: '#/components/schemas/RealtimeVoiceSettings'

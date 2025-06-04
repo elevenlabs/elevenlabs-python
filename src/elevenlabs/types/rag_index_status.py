@@ -2,4 +2,7 @@
 
 import typing
 
-RagIndexStatus = typing.Union[typing.Literal["created", "processing", "failed", "succeeded"], typing.Any]
+RagIndexStatus = typing.Union[
+    typing.Literal["created", "processing", "failed", "succeeded", "rag_limit_exceeded", "document_too_small"],
+    typing.Any,
+]

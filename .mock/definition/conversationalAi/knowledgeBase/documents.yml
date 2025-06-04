@@ -42,7 +42,6 @@ service:
             body:
               id: id
               name: name
-              prompt_injectable: true
       audiences:
         - convai
     create_from_file:
@@ -80,7 +79,6 @@ service:
             body:
               id: id
               name: name
-              prompt_injectable: true
       audiences:
         - convai
     create_from_text:
@@ -117,7 +115,6 @@ service:
             body:
               id: id
               name: name
-              prompt_injectable: true
       audiences:
         - convai
     get:
@@ -153,7 +150,8 @@ service:
                 created_at_unix_secs: 1
                 last_updated_at_unix_secs: 1
                 size_bytes: 1
-              prompt_injectable: true
+              supported_usages:
+                - prompt
               access_info:
                 is_creator: true
                 creator_name: John Doe
@@ -178,6 +176,16 @@ service:
             The id of a document from the knowledge base. This is returned on
             document addition.
       display-name: Delete Knowledge Base Document
+      request:
+        name: DocumentsDeleteRequest
+        query-parameters:
+          force:
+            type: optional<boolean>
+            default: false
+            docs: >-
+              If set to true, the document will be deleted regardless of whether
+              it is used by any agents and it will be deleted from the dependent
+              agents.
       response:
         docs: Successful Response
         type: unknown
@@ -235,7 +243,8 @@ service:
                 created_at_unix_secs: 1
                 last_updated_at_unix_secs: 1
                 size_bytes: 1
-              prompt_injectable: true
+              supported_usages:
+                - prompt
               access_info:
                 is_creator: true
                 creator_name: John Doe

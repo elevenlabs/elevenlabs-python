@@ -44,7 +44,7 @@ service:
       docs: Creates a new pronunciation dictionary from a lexicon .PLS file
       source:
         openapi: openapi.json
-      display-name: Create a pronunciation dictionary
+      display-name: Create a pronunciation dictionary from a file
       request:
         name: >-
           Body_Add_a_pronunciation_dictionary_v1_pronunciation_dictionaries_add_from_file_post
@@ -98,7 +98,7 @@ service:
       docs: Creates a new pronunciation dictionary from provided rules.
       source:
         openapi: openapi.json
-      display-name: Add A Pronunciation Dictionary
+      display-name: Create a pronunciation dictionary from rules
       request:
         name: >-
           BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPost

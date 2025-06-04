@@ -7,6 +7,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .mcp_approval_required_model import McpApprovalRequiredModel
 
 
 class NativeMcpToolConfigOutput(UncheckedBaseModel):
@@ -35,6 +36,11 @@ class NativeMcpToolConfigOutput(UncheckedBaseModel):
     mcp_server_id: str = pydantic.Field()
     """
     The id of the MCP server to call
+    """
+
+    approval_mode: typing.Optional[McpApprovalRequiredModel] = pydantic.Field(default=None)
+    """
+    If set to always accept, the tool will be pre-approved and not require user approval before executing
     """
 
     if IS_PYDANTIC_V2:

@@ -8,7 +8,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class TtsConversationalConfigOverride(UncheckedBaseModel):
-    voice_id: typing.Optional[str] = None
+    voice_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The voice ID to use for TTS
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

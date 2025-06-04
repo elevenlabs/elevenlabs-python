@@ -50,7 +50,105 @@ service:
             body:
               id: id
               name: name
-              prompt_injectable: true
+    get_document_rag_indexes:
+      path: /v1/convai/knowledge-base/{documentation_id}/rag-index
+      method: GET
+      auth: false
+      docs: >-
+        Provides information about all RAG indexes of the specified
+        knowledgebase document.
+      source:
+        openapi: openapi.json
+      path-parameters:
+        documentation_id:
+          type: string
+          docs: >-
+            The id of a document from the knowledge base. This is returned on
+            document addition.
+      display-name: Get Rag Indexes Of The Specified Knowledgebase Document.
+      response:
+        docs: Successful Response
+        type: root.RagDocumentIndexesResponseModel
+        status-code: 200
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            documentation_id: 21m00Tcm4TlvDq8ikWAM
+          response:
+            body:
+              indexes:
+                - id: id
+                  model: e5_mistral_7b_instruct
+                  status: created
+                  progress_percentage: 1.1
+                  document_model_index_usage:
+                    used_bytes: 1
+      audiences:
+        - convai
+    delete_document_rag_index:
+      path: /v1/convai/knowledge-base/{documentation_id}/rag-index/{rag_index_id}
+      method: DELETE
+      auth: false
+      docs: Delete RAG index for the knowledgebase document.
+      source:
+        openapi: openapi.json
+      path-parameters:
+        documentation_id:
+          type: string
+          docs: >-
+            The id of a document from the knowledge base. This is returned on
+            document addition.
+        rag_index_id:
+          type: string
+          docs: The id of RAG index of document from the knowledge base.
+      display-name: Delete Rag Index.
+      response:
+        docs: Successful Response
+        type: root.RagDocumentIndexResponseModel
+        status-code: 200
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            documentation_id: 21m00Tcm4TlvDq8ikWAM
+            rag_index_id: 21m00Tcm4TlvDq8ikWAM
+          response:
+            body:
+              id: id
+              model: e5_mistral_7b_instruct
+              status: created
+              progress_percentage: 1.1
+              document_model_index_usage:
+                used_bytes: 1
+      audiences:
+        - convai
+    rag_index_overview:
+      path: /v1/convai/knowledge-base/rag-index
+      method: GET
+      auth: false
+      docs: >-
+        Provides total size and other information of RAG indexes used by
+        knowledgebase documents
+      source:
+        openapi: openapi.json
+      display-name: Get Rag Index Overview.
+      response:
+        docs: Successful Response
+        type: root.RagIndexOverviewResponseModel
+        status-code: 200
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - response:
+            body:
+              total_used_bytes: 1
+              total_max_bytes: 1
+              models:
+                - model: e5_mistral_7b_instruct
+                  used_bytes: 1
+      audiences:
+        - convai
     update_secret:
       path: /v1/convai/secrets/{secret_id}
       method: PATCH

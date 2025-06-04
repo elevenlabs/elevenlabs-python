@@ -158,6 +158,66 @@ class BatchCallsClient:
         _response = self._raw_client.get(batch_id, request_options=request_options)
         return _response.data
 
+    def cancel(self, batch_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> BatchCallResponse:
+        """
+        Cancel a running batch call and set all recipients to cancelled status.
+
+        Parameters
+        ----------
+        batch_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        BatchCallResponse
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.batch_calls.cancel(
+            batch_id="batch_id",
+        )
+        """
+        _response = self._raw_client.cancel(batch_id, request_options=request_options)
+        return _response.data
+
+    def retry(self, batch_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> BatchCallResponse:
+        """
+        Retry a batch call by setting completed recipients back to pending status.
+
+        Parameters
+        ----------
+        batch_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        BatchCallResponse
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.batch_calls.retry(
+            batch_id="batch_id",
+        )
+        """
+        _response = self._raw_client.retry(batch_id, request_options=request_options)
+        return _response.data
+
 
 class AsyncBatchCallsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -325,4 +385,84 @@ class AsyncBatchCallsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get(batch_id, request_options=request_options)
+        return _response.data
+
+    async def cancel(
+        self, batch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> BatchCallResponse:
+        """
+        Cancel a running batch call and set all recipients to cancelled status.
+
+        Parameters
+        ----------
+        batch_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        BatchCallResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.batch_calls.cancel(
+                batch_id="batch_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.cancel(batch_id, request_options=request_options)
+        return _response.data
+
+    async def retry(
+        self, batch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> BatchCallResponse:
+        """
+        Retry a batch call by setting completed recipients back to pending status.
+
+        Parameters
+        ----------
+        batch_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        BatchCallResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.batch_calls.retry(
+                batch_id="batch_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.retry(batch_id, request_options=request_options)
         return _response.data

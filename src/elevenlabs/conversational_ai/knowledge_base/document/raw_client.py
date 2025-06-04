@@ -12,7 +12,7 @@ from ....core.unchecked_base_model import construct_type
 from ....errors.unprocessable_entity_error import UnprocessableEntityError
 from ....types.embedding_model_enum import EmbeddingModelEnum
 from ....types.http_validation_error import HttpValidationError
-from ....types.rag_index_response_model import RagIndexResponseModel
+from ....types.rag_document_index_response_model import RagDocumentIndexResponseModel
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -28,7 +28,7 @@ class RawDocumentClient:
         *,
         model: EmbeddingModelEnum,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[RagIndexResponseModel]:
+    ) -> HttpResponse[RagDocumentIndexResponseModel]:
         """
         In case the document is not RAG indexed, it triggers rag indexing task, otherwise it just returns the current status.
 
@@ -44,7 +44,7 @@ class RawDocumentClient:
 
         Returns
         -------
-        HttpResponse[RagIndexResponseModel]
+        HttpResponse[RagDocumentIndexResponseModel]
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -63,9 +63,9 @@ class RawDocumentClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    RagIndexResponseModel,
+                    RagDocumentIndexResponseModel,
                     construct_type(
-                        type_=RagIndexResponseModel,  # type: ignore
+                        type_=RagDocumentIndexResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -97,7 +97,7 @@ class AsyncRawDocumentClient:
         *,
         model: EmbeddingModelEnum,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[RagIndexResponseModel]:
+    ) -> AsyncHttpResponse[RagDocumentIndexResponseModel]:
         """
         In case the document is not RAG indexed, it triggers rag indexing task, otherwise it just returns the current status.
 
@@ -113,7 +113,7 @@ class AsyncRawDocumentClient:
 
         Returns
         -------
-        AsyncHttpResponse[RagIndexResponseModel]
+        AsyncHttpResponse[RagDocumentIndexResponseModel]
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -132,9 +132,9 @@ class AsyncRawDocumentClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    RagIndexResponseModel,
+                    RagDocumentIndexResponseModel,
                     construct_type(
-                        type_=RagIndexResponseModel,  # type: ignore
+                        type_=RagDocumentIndexResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

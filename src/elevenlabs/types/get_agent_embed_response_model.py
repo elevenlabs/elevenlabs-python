@@ -5,12 +5,12 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .widget_config_response_model import WidgetConfigResponseModel
+from .widget_config_response import WidgetConfigResponse
 
 
 class GetAgentEmbedResponseModel(UncheckedBaseModel):
     agent_id: str
-    widget_config: WidgetConfigResponseModel
+    widget_config: WidgetConfigResponse
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -103,6 +103,10 @@ service:
                         - 1.1
                       character_end_times_seconds:
                         - 1.1
+                  dialogue:
+                    - text: text
+                      voice_id: voice_id
+                      voice_name: voice_name
               last_history_item_id: ja9xsmfGhxYcymxGcOGB
               has_more: true
     get:
@@ -174,6 +178,10 @@ service:
                     - 1.1
                   character_end_times_seconds:
                     - 1.1
+              dialogue:
+                - text: text
+                  voice_id: voice_id
+                  voice_name: voice_name
     delete:
       path: /v1/history/{history_item_id}
       method: DELETE

@@ -12,7 +12,7 @@ class PronunciationDictionaryLocator(UncheckedBaseModel):
     Identifies a specific pronunciation dictionary to use
     """
 
-    dictionary_id: str = pydantic.Field()
+    pronunciation_dictionary_id: str = pydantic.Field()
     """
     The unique identifier of the pronunciation dictionary
     """

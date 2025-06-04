@@ -5,7 +5,7 @@ import typing
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.request_options import RequestOptions
 from ....types.embedding_model_enum import EmbeddingModelEnum
-from ....types.rag_index_response_model import RagIndexResponseModel
+from ....types.rag_document_index_response_model import RagDocumentIndexResponseModel
 from .raw_client import AsyncRawDocumentClient, RawDocumentClient
 
 # this is used as the default value for optional parameters
@@ -33,7 +33,7 @@ class DocumentClient:
         *,
         model: EmbeddingModelEnum,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> RagIndexResponseModel:
+    ) -> RagDocumentIndexResponseModel:
         """
         In case the document is not RAG indexed, it triggers rag indexing task, otherwise it just returns the current status.
 
@@ -49,7 +49,7 @@ class DocumentClient:
 
         Returns
         -------
-        RagIndexResponseModel
+        RagDocumentIndexResponseModel
             Successful Response
 
         Examples
@@ -89,7 +89,7 @@ class AsyncDocumentClient:
         *,
         model: EmbeddingModelEnum,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> RagIndexResponseModel:
+    ) -> RagDocumentIndexResponseModel:
         """
         In case the document is not RAG indexed, it triggers rag indexing task, otherwise it just returns the current status.
 
@@ -105,7 +105,7 @@ class AsyncDocumentClient:
 
         Returns
         -------
-        RagIndexResponseModel
+        RagDocumentIndexResponseModel
             Successful Response
 
         Examples

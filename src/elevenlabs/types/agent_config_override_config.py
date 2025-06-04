@@ -9,19 +9,19 @@ from .prompt_agent_override_config import PromptAgentOverrideConfig
 
 
 class AgentConfigOverrideConfig(UncheckedBaseModel):
-    prompt: typing.Optional[PromptAgentOverrideConfig] = pydantic.Field(default=None)
-    """
-    Overrides for the prompt configuration
-    """
-
     first_message: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Whether to allow overriding the first message
+    Whether to allow overriding the first_message field.
     """
 
     language: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Whether to allow overriding the language
+    Whether to allow overriding the language field.
+    """
+
+    prompt: typing.Optional[PromptAgentOverrideConfig] = pydantic.Field(default=None)
+    """
+    Configures overrides for nested fields.
     """
 
     if IS_PYDANTIC_V2:

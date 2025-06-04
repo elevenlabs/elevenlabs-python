@@ -205,8 +205,8 @@ class RawAgentsClient:
         self,
         agent_id: str,
         *,
-        conversation_config: typing.Optional[typing.Optional[typing.Any]] = OMIT,
-        platform_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        conversation_config: typing.Optional[ConversationalConfig] = OMIT,
+        platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -219,9 +219,11 @@ class RawAgentsClient:
         agent_id : str
             The id of an agent. This is returned on agent creation.
 
-        conversation_config : typing.Optional[typing.Optional[typing.Any]]
+        conversation_config : typing.Optional[ConversationalConfig]
+            Conversation configuration for an agent
 
-        platform_settings : typing.Optional[typing.Optional[typing.Any]]
+        platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
+            Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
 
         name : typing.Optional[str]
             A name to make the agent easier to find
@@ -242,8 +244,12 @@ class RawAgentsClient:
             base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
-                "conversation_config": conversation_config,
-                "platform_settings": platform_settings,
+                "conversation_config": convert_and_respect_annotation_metadata(
+                    object_=conversation_config, annotation=ConversationalConfig, direction="write"
+                ),
+                "platform_settings": convert_and_respect_annotation_metadata(
+                    object_=platform_settings, annotation=AgentPlatformSettingsRequestModel, direction="write"
+                ),
                 "name": name,
                 "tags": tags,
             },
@@ -673,8 +679,8 @@ class AsyncRawAgentsClient:
         self,
         agent_id: str,
         *,
-        conversation_config: typing.Optional[typing.Optional[typing.Any]] = OMIT,
-        platform_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        conversation_config: typing.Optional[ConversationalConfig] = OMIT,
+        platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -687,9 +693,11 @@ class AsyncRawAgentsClient:
         agent_id : str
             The id of an agent. This is returned on agent creation.
 
-        conversation_config : typing.Optional[typing.Optional[typing.Any]]
+        conversation_config : typing.Optional[ConversationalConfig]
+            Conversation configuration for an agent
 
-        platform_settings : typing.Optional[typing.Optional[typing.Any]]
+        platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
+            Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
 
         name : typing.Optional[str]
             A name to make the agent easier to find
@@ -710,8 +718,12 @@ class AsyncRawAgentsClient:
             base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
-                "conversation_config": conversation_config,
-                "platform_settings": platform_settings,
+                "conversation_config": convert_and_respect_annotation_metadata(
+                    object_=conversation_config, annotation=ConversationalConfig, direction="write"
+                ),
+                "platform_settings": convert_and_respect_annotation_metadata(
+                    object_=platform_settings, annotation=AgentPlatformSettingsRequestModel, direction="write"
+                ),
                 "name": name,
                 "tags": tags,
             },
