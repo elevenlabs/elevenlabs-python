@@ -21,6 +21,11 @@ class RagConfig(UncheckedBaseModel):
     Maximum total length of document chunks retrieved from RAG.
     """
 
+    max_retrieved_rag_chunks_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Maximum number of RAG document chunks to initially retrieve from the vector store. These are then further filtered by vector distance and total length.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

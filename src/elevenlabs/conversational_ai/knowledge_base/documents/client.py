@@ -176,7 +176,11 @@ class DocumentsClient:
         return _response.data
 
     def delete(
-        self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        documentation_id: str,
+        *,
+        force: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
         Delete a document from the knowledge base
@@ -185,6 +189,9 @@ class DocumentsClient:
         ----------
         documentation_id : str
             The id of a document from the knowledge base. This is returned on document addition.
+
+        force : typing.Optional[bool]
+            If set to true, the document will be deleted regardless of whether it is used by any agents and it will be deleted from the dependent agents.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -205,7 +212,7 @@ class DocumentsClient:
             documentation_id="21m00Tcm4TlvDq8ikWAM",
         )
         """
-        _response = self._raw_client.delete(documentation_id, request_options=request_options)
+        _response = self._raw_client.delete(documentation_id, force=force, request_options=request_options)
         return _response.data
 
     def update(
@@ -514,7 +521,11 @@ class AsyncDocumentsClient:
         return _response.data
 
     async def delete(
-        self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        documentation_id: str,
+        *,
+        force: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
         Delete a document from the knowledge base
@@ -523,6 +534,9 @@ class AsyncDocumentsClient:
         ----------
         documentation_id : str
             The id of a document from the knowledge base. This is returned on document addition.
+
+        force : typing.Optional[bool]
+            If set to true, the document will be deleted regardless of whether it is used by any agents and it will be deleted from the dependent agents.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -551,7 +565,7 @@ class AsyncDocumentsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.delete(documentation_id, request_options=request_options)
+        _response = await self._raw_client.delete(documentation_id, force=force, request_options=request_options)
         return _response.data
 
     async def update(

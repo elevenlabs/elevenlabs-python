@@ -163,8 +163,8 @@ class AgentsClient:
         self,
         agent_id: str,
         *,
-        conversation_config: typing.Optional[typing.Optional[typing.Any]] = OMIT,
-        platform_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        conversation_config: typing.Optional[ConversationalConfig] = OMIT,
+        platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -177,9 +177,11 @@ class AgentsClient:
         agent_id : str
             The id of an agent. This is returned on agent creation.
 
-        conversation_config : typing.Optional[typing.Optional[typing.Any]]
+        conversation_config : typing.Optional[ConversationalConfig]
+            Conversation configuration for an agent
 
-        platform_settings : typing.Optional[typing.Optional[typing.Any]]
+        platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
+            Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
 
         name : typing.Optional[str]
             A name to make the agent easier to find
@@ -545,8 +547,8 @@ class AsyncAgentsClient:
         self,
         agent_id: str,
         *,
-        conversation_config: typing.Optional[typing.Optional[typing.Any]] = OMIT,
-        platform_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        conversation_config: typing.Optional[ConversationalConfig] = OMIT,
+        platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -559,9 +561,11 @@ class AsyncAgentsClient:
         agent_id : str
             The id of an agent. This is returned on agent creation.
 
-        conversation_config : typing.Optional[typing.Optional[typing.Any]]
+        conversation_config : typing.Optional[ConversationalConfig]
+            Conversation configuration for an agent
 
-        platform_settings : typing.Optional[typing.Optional[typing.Any]]
+        platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
+            Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
 
         name : typing.Optional[str]
             A name to make the agent easier to find

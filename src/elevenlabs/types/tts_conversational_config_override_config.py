@@ -10,7 +10,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 class TtsConversationalConfigOverrideConfig(UncheckedBaseModel):
     voice_id: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Whether to allow overriding the voice ID
+    Whether to allow overriding the voice_id field.
     """
 
     if IS_PYDANTIC_V2:

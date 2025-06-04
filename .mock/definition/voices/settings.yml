@@ -23,9 +23,9 @@ service:
         - response:
             body:
               stability: 1
+              use_speaker_boost: true
               similarity_boost: 1
               style: 0
-              use_speaker_boost: true
               speed: 1
     get:
       path: /v1/voices/{voice_id}/settings
@@ -56,9 +56,9 @@ service:
           response:
             body:
               stability: 1
+              use_speaker_boost: true
               similarity_boost: 1
               style: 0
-              use_speaker_boost: true
               speed: 1
     update:
       path: /v1/voices/{voice_id}/settings/edit
@@ -94,9 +94,9 @@ service:
             voice_id: 21m00Tcm4TlvDq8ikWAM
           request:
             stability: 1
+            use_speaker_boost: true
             similarity_boost: 1
             style: 0
-            use_speaker_boost: true
             speed: 1
           response:
             body:

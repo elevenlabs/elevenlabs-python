@@ -213,6 +213,106 @@ class RawBatchCallsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def cancel(
+        self, batch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[BatchCallResponse]:
+        """
+        Cancel a running batch call and set all recipients to cancelled status.
+
+        Parameters
+        ----------
+        batch_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[BatchCallResponse]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/convai/batch-calling/{jsonable_encoder(batch_id)}/cancel",
+            base_url=self._client_wrapper.get_environment().base,
+            method="POST",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    BatchCallResponse,
+                    construct_type(
+                        type_=BatchCallResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def retry(
+        self, batch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[BatchCallResponse]:
+        """
+        Retry a batch call by setting completed recipients back to pending status.
+
+        Parameters
+        ----------
+        batch_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[BatchCallResponse]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/convai/batch-calling/{jsonable_encoder(batch_id)}/retry",
+            base_url=self._client_wrapper.get_environment().base,
+            method="POST",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    BatchCallResponse,
+                    construct_type(
+                        type_=BatchCallResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawBatchCallsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -386,6 +486,106 @@ class AsyncRawBatchCallsClient:
                     BatchCallDetailedResponse,
                     construct_type(
                         type_=BatchCallDetailedResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def cancel(
+        self, batch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[BatchCallResponse]:
+        """
+        Cancel a running batch call and set all recipients to cancelled status.
+
+        Parameters
+        ----------
+        batch_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[BatchCallResponse]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/convai/batch-calling/{jsonable_encoder(batch_id)}/cancel",
+            base_url=self._client_wrapper.get_environment().base,
+            method="POST",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    BatchCallResponse,
+                    construct_type(
+                        type_=BatchCallResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def retry(
+        self, batch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[BatchCallResponse]:
+        """
+        Retry a batch call by setting completed recipients back to pending status.
+
+        Parameters
+        ----------
+        batch_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[BatchCallResponse]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/convai/batch-calling/{jsonable_encoder(batch_id)}/retry",
+            base_url=self._client_wrapper.get_environment().base,
+            method="POST",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    BatchCallResponse,
+                    construct_type(
+                        type_=BatchCallResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

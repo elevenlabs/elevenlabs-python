@@ -9,12 +9,20 @@ from .embed_variant import EmbedVariant
 from .widget_config_response_model_avatar import WidgetConfigResponseModelAvatar
 from .widget_expandable import WidgetExpandable
 from .widget_feedback_mode import WidgetFeedbackMode
+from .widget_language_preset_response import WidgetLanguagePresetResponse
+from .widget_placement import WidgetPlacement
+from .widget_text_contents import WidgetTextContents
 
 
-class WidgetConfigResponseModel(UncheckedBaseModel):
+class WidgetConfigResponse(UncheckedBaseModel):
     variant: typing.Optional[EmbedVariant] = pydantic.Field(default=None)
     """
     The variant of the widget
+    """
+
+    placement: typing.Optional[WidgetPlacement] = pydantic.Field(default=None)
+    """
+    The placement of the widget on the screen
     """
 
     expandable: typing.Optional[WidgetExpandable] = pydantic.Field(default=None)
@@ -147,8 +155,39 @@ class WidgetConfigResponseModel(UncheckedBaseModel):
     Whether to enable mic muting
     """
 
+    transcript_enabled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the widget should show the conversation transcript as it goes on
+    """
+
+    text_input_enabled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the user should be able to send text messages
+    """
+
+    text_contents: typing.Optional[WidgetTextContents] = pydantic.Field(default=None)
+    """
+    Text contents of the widget
+    """
+
     language: str
     supported_language_overrides: typing.Optional[typing.List[str]] = None
+    language_presets: typing.Optional[typing.Dict[str, WidgetLanguagePresetResponse]] = pydantic.Field(default=None)
+    """
+    Language presets for the widget
+    """
+
+    text_only: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the agent uses text-only mode
+    """
+
+    supports_text_only: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the agent can be switched to text-only mode
+    """
+
+    first_message: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

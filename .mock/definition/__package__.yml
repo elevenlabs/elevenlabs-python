@@ -85,7 +85,6 @@ types:
     properties:
       id: string
       name: string
-      prompt_injectable: boolean
     source:
       openapi: openapi.json
   AddProjectResponseModel:
@@ -232,32 +231,32 @@ types:
       openapi: openapi.json
   AgentConfigOverride:
     properties:
-      prompt:
-        type: optional<PromptAgentOverride>
-        docs: The overrides for the prompt configuration
       first_message:
         type: optional<string>
         docs: >-
           If non-empty, the first message the agent will say. If empty, the
-          agent waits for the user to start the discussion
+          agent waits for the user to start the discussion.
       language:
         type: optional<string>
-        docs: The language of the agent, used for ASR and TTS
+        docs: Language of the agent - used for ASR and TTS
+      prompt:
+        type: optional<PromptAgentOverride>
+        docs: The prompt for the agent
     source:
       openapi: openapi.json
   AgentConfigOverrideConfig:
     properties:
-      prompt:
-        type: optional<PromptAgentOverrideConfig>
-        docs: Overrides for the prompt configuration
       first_message:
         type: optional<boolean>
-        docs: Whether to allow overriding the first message
+        docs: Whether to allow overriding the first_message field.
         default: false
       language:
         type: optional<boolean>
-        docs: Whether to allow overriding the language
+        docs: Whether to allow overriding the language field.
         default: false
+      prompt:
+        type: optional<PromptAgentOverrideConfig>
+        docs: Configures overrides for nested fields.
     source:
       openapi: openapi.json
   AgentMetadataResponseModel:
@@ -540,6 +539,7 @@ types:
       - shareable_link
       - livekit_token
       - livekit_token_website
+      - genesys_api_key
     source:
       openapi: openapi.json
   BanReasonType:
@@ -1466,6 +1466,7 @@ types:
       - vad_score
       - internal_turn_probability
       - internal_tentative_agent_response
+      - internal_native_mcp_tool_call
     source:
       openapi: openapi.json
   ClientToolConfigInput:
@@ -1646,67 +1647,70 @@ types:
       openapi: openapi.json
   ConversationConfigClientOverrideInput:
     properties:
-      agent:
-        type: optional<AgentConfigOverride>
-        docs: The overrides for the agent configuration
       tts:
         type: optional<TtsConversationalConfigOverride>
-        docs: The overrides for the TTS configuration
+        docs: Configuration for conversational text to speech
       conversation:
         type: optional<ConversationConfigOverride>
-        docs: The overrides for the conversation configuration
+        docs: Configuration for conversational events
+      agent:
+        type: optional<AgentConfigOverride>
+        docs: Agent specific configuration
     source:
       openapi: openapi.json
   ConversationConfigClientOverrideOutput:
     properties:
-      agent:
-        type: optional<AgentConfigOverride>
-        docs: The overrides for the agent configuration
       tts:
         type: optional<TtsConversationalConfigOverride>
-        docs: The overrides for the TTS configuration
+        docs: Configuration for conversational text to speech
       conversation:
         type: optional<ConversationConfigOverride>
-        docs: The overrides for the conversation configuration
+        docs: Configuration for conversational events
+      agent:
+        type: optional<AgentConfigOverride>
+        docs: Agent specific configuration
     source:
       openapi: openapi.json
   ConversationConfigClientOverrideConfigInput:
     properties:
-      agent:
-        type: optional<AgentConfigOverrideConfig>
-        docs: Overrides for the agent configuration
       tts:
         type: optional<TtsConversationalConfigOverrideConfig>
-        docs: Overrides for the TTS configuration
+        docs: Configures overrides for nested fields.
       conversation:
         type: optional<ConversationConfigOverrideConfig>
-        docs: Overrides for the conversation configuration
+        docs: Configures overrides for nested fields.
+      agent:
+        type: optional<AgentConfigOverrideConfig>
+        docs: Configures overrides for nested fields.
     source:
       openapi: openapi.json
   ConversationConfigClientOverrideConfigOutput:
     properties:
-      agent:
-        type: optional<AgentConfigOverrideConfig>
-        docs: Overrides for the agent configuration
       tts:
         type: optional<TtsConversationalConfigOverrideConfig>
-        docs: Overrides for the TTS configuration
+        docs: Configures overrides for nested fields.
       conversation:
         type: optional<ConversationConfigOverrideConfig>
-        docs: Overrides for the conversation configuration
+        docs: Configures overrides for nested fields.
+      agent:
+        type: optional<AgentConfigOverrideConfig>
+        docs: Configures overrides for nested fields.
     source:
       openapi: openapi.json
   ConversationConfigOverride:
     properties:
       text_only:
         type: optional<boolean>
+        docs: >-
+          If enabled audio will not be processed and only text will be used, use
+          to avoid audio pricing.
     source:
       openapi: openapi.json
   ConversationConfigOverrideConfig:
     properties:
       text_only:
         type: optional<boolean>
-        docs: Whether to allow overriding the text only configuration
+        docs: Whether to allow overriding the text_only field.
         default: false
     source:
       openapi: openapi.json
@@ -1813,6 +1817,11 @@ types:
         type: optional<string>
       rag_usage:
         type: optional<ConversationHistoryRagUsageCommonModel>
+      text_only:
+        type: optional<boolean>
+        default: false
+      features_usage:
+        type: optional<FeaturesUsageCommonModel>
     source:
       openapi: openapi.json
   ConversationHistoryRagUsageCommonModel:
@@ -1866,8 +1875,6 @@ types:
         type: optional<UserFeedback>
       llm_override:
         type: optional<string>
-      source_medium:
-        type: optional<ConversationHistoryTranscriptCommonModelInputSourceMedium>
       time_in_call_secs: integer
       conversation_turn_metrics:
         type: optional<ConversationTurnMetrics>
@@ -1880,6 +1887,8 @@ types:
         default: false
       original_message:
         type: optional<string>
+      source_medium:
+        type: optional<ConversationHistoryTranscriptCommonModelInputSourceMedium>
     source:
       openapi: openapi.json
   ConversationHistoryTranscriptCommonModelOutputRole:
@@ -1910,8 +1919,6 @@ types:
         type: optional<UserFeedback>
       llm_override:
         type: optional<string>
-      source_medium:
-        type: optional<ConversationHistoryTranscriptCommonModelOutputSourceMedium>
       time_in_call_secs: integer
       conversation_turn_metrics:
         type: optional<ConversationTurnMetrics>
@@ -1924,6 +1931,8 @@ types:
         default: false
       original_message:
         type: optional<string>
+      source_medium:
+        type: optional<ConversationHistoryTranscriptCommonModelOutputSourceMedium>
     source:
       openapi: openapi.json
   ConversationHistoryTranscriptToolCallClientDetails:
@@ -2202,7 +2211,7 @@ types:
         type: optional<TurnConfig>
         docs: Configuration for turn detection
       tts:
-        type: optional<TtsConversationalConfig>
+        type: optional<TtsConversationalConfigOutput>
         docs: Configuration for conversational text to speech
       conversation:
         type: optional<ConversationConfig>
@@ -2317,6 +2326,15 @@ types:
         docs: Twilio Auth Token
     source:
       openapi: openapi.json
+  CustomLlmRequestHeadersValue:
+    discriminated: false
+    union:
+      - string
+      - type: ConvAiSecretLocator
+      - type: ConvAiDynamicVariable
+    source:
+      openapi: openapi.json
+    inline: true
   CustomLlm:
     properties:
       url:
@@ -2328,6 +2346,9 @@ types:
       api_key:
         type: optional<ConvAiSecretLocator>
         docs: The API key for authentication
+      request_headers:
+        type: optional<map<string, CustomLlmRequestHeadersValue>>
+        docs: Headers that should be included in the request
     source:
       openapi: openapi.json
   DashboardCallSuccessChartModel:
@@ -2540,6 +2561,29 @@ types:
     properties: {}
     source:
       openapi: openapi.json
+  DialogueInput:
+    properties:
+      text:
+        type: string
+        docs: The text to be converted into speech.
+      voice_id:
+        type: string
+        docs: The ID of the voice to be used for the generation.
+    source:
+      openapi: openapi.json
+  DialogueInputResponseModel:
+    properties:
+      text:
+        type: string
+        docs: The text of the dialogue input line.
+      voice_id:
+        type: string
+        docs: The ID of the voice used for this dialogue input line.
+      voice_name:
+        type: string
+        docs: The name of the voice used for this dialogue input line.
+    source:
+      openapi: openapi.json
   DoDubbingResponse:
     properties:
       dubbing_id:
@@ -2706,6 +2750,7 @@ types:
       openapi: openapi.json
   EmbedVariant:
     enum:
+      - tiny
       - compact
       - full
       - expandable
@@ -2762,20 +2807,6 @@ types:
     enum:
       - usd
       - eur
-    inline: true
-    source:
-      openapi: openapi.json
-  ExtendedSubscriptionResponseModelStatus:
-    enum:
-      - trialing
-      - active
-      - incomplete
-      - incomplete_expired
-      - past_due
-      - canceled
-      - unpaid
-      - free
-    docs: The status of the user's subscription.
     inline: true
     source:
       openapi: openapi.json
@@ -2853,7 +2884,7 @@ types:
         type: optional<ExtendedSubscriptionResponseModelCurrency>
         docs: The currency of the user's subscription.
       status:
-        type: ExtendedSubscriptionResponseModelStatus
+        type: SubscriptionStatusType
         docs: The status of the user's subscription.
       billing_period:
         type: optional<ExtendedSubscriptionResponseModelBillingPeriod>
@@ -2867,6 +2898,34 @@ types:
       has_open_invoices:
         type: boolean
         docs: Whether the user has open invoices.
+    source:
+      openapi: openapi.json
+  FeatureStatusCommonModel:
+    properties:
+      enabled:
+        type: optional<boolean>
+        default: false
+      used:
+        type: optional<boolean>
+        default: false
+    source:
+      openapi: openapi.json
+  FeaturesUsageCommonModel:
+    properties:
+      language_detection:
+        type: optional<FeatureStatusCommonModel>
+      transfer_to_agent:
+        type: optional<FeatureStatusCommonModel>
+      transfer_to_number:
+        type: optional<FeatureStatusCommonModel>
+      multivoice:
+        type: optional<FeatureStatusCommonModel>
+      pii_zrm_workspace:
+        type: optional<boolean>
+        default: false
+      pii_zrm_agent:
+        type: optional<boolean>
+        default: false
     source:
       openapi: openapi.json
   FeedbackItem:
@@ -3008,7 +3067,7 @@ types:
     properties:
       agent_id: string
       widget_config:
-        type: WidgetConfigResponseModel
+        type: WidgetConfigResponse
     source:
       openapi: openapi.json
   GetAgentKnowledgebaseSizeResponseModel:
@@ -3195,7 +3254,8 @@ types:
       name: string
       metadata:
         type: KnowledgeBaseDocumentMetadataResponseModel
-      prompt_injectable: boolean
+      supported_usages:
+        type: list<DocumentUsageModeEnum>
       access_info:
         type: ResourceAccessInfo
       extracted_inner_html: string
@@ -3238,7 +3298,8 @@ types:
       name: string
       metadata:
         type: KnowledgeBaseDocumentMetadataResponseModel
-      prompt_injectable: boolean
+      supported_usages:
+        type: list<DocumentUsageModeEnum>
       access_info:
         type: ResourceAccessInfo
       dependent_agents:
@@ -3261,7 +3322,8 @@ types:
       name: string
       metadata:
         type: KnowledgeBaseDocumentMetadataResponseModel
-      prompt_injectable: boolean
+      supported_usages:
+        type: list<DocumentUsageModeEnum>
       access_info:
         type: ResourceAccessInfo
       dependent_agents:
@@ -3284,7 +3346,8 @@ types:
       name: string
       metadata:
         type: KnowledgeBaseDocumentMetadataResponseModel
-      prompt_injectable: boolean
+      supported_usages:
+        type: list<DocumentUsageModeEnum>
       access_info:
         type: ResourceAccessInfo
       dependent_agents:
@@ -3298,7 +3361,8 @@ types:
       name: string
       metadata:
         type: KnowledgeBaseDocumentMetadataResponseModel
-      prompt_injectable: boolean
+      supported_usages:
+        type: list<DocumentUsageModeEnum>
       access_info:
         type: ResourceAccessInfo
       extracted_inner_html: string
@@ -3310,7 +3374,8 @@ types:
       name: string
       metadata:
         type: KnowledgeBaseDocumentMetadataResponseModel
-      prompt_injectable: boolean
+      supported_usages:
+        type: list<DocumentUsageModeEnum>
       access_info:
         type: ResourceAccessInfo
       extracted_inner_html: string
@@ -3423,6 +3488,14 @@ types:
       description:
         type: optional<string>
         docs: The description of the pronunciation dictionary.
+    source:
+      openapi: openapi.json
+  GetSharedSoundGenerationsResponseModel:
+    properties:
+      shared_sound_generations:
+        type: list<SharedSoundGenerationResponseModel>
+      last_sort_id: optional<string>
+      has_more: boolean
     source:
       openapi: openapi.json
   GetSpeechHistoryResponse:
@@ -3586,14 +3659,14 @@ types:
         name: Gemini15Pro
       - value: gemini-1.5-flash
         name: Gemini15Flash
-      - value: gemini-2.0-flash-001
-        name: Gemini20Flash001
+      - value: gemini-2.0-flash
+        name: Gemini20Flash
       - value: gemini-2.0-flash-lite
         name: Gemini20FlashLite
       - value: gemini-2.5-flash
         name: Gemini25Flash
-      - value: gemini-1.0-pro
-        name: Gemini10Pro
+      - value: claude-sonnet-4
+        name: ClaudeSonnet4
       - value: claude-3-7-sonnet
         name: Claude37Sonnet
       - value: claude-3-5-sonnet
@@ -3606,6 +3679,56 @@ types:
         name: GrokBeta
       - value: custom-llm
         name: CustomLlm
+      - value: gemini-2.5-flash-preview-05-20
+        name: Gemini25FlashPreview0520
+      - value: gemini-2.5-flash-preview-04-17
+        name: Gemini25FlashPreview0417
+      - value: gemini-2.0-flash-lite-001
+        name: Gemini20FlashLite001
+      - value: gemini-2.0-flash-001
+        name: Gemini20Flash001
+      - value: gemini-1.5-flash-002
+        name: Gemini15Flash002
+      - value: gemini-1.5-flash-001
+        name: Gemini15Flash001
+      - value: gemini-1.5-pro-002
+        name: Gemini15Pro002
+      - value: gemini-1.5-pro-001
+        name: Gemini15Pro001
+      - value: claude-sonnet-4@20250514
+        name: ClaudeSonnet420250514
+      - value: claude-3-7-sonnet@20250219
+        name: Claude37Sonnet20250219
+      - value: claude-3-5-sonnet@20240620
+        name: Claude35Sonnet20240620
+      - value: claude-3-5-sonnet-v2@20241022
+        name: Claude35SonnetV220241022
+      - value: claude-3-haiku@20240307
+        name: Claude3Haiku20240307
+      - value: gpt-4.1-2025-04-14
+        name: Gpt4120250414
+      - value: gpt-4.1-mini-2025-04-14
+        name: Gpt41Mini20250414
+      - value: gpt-4.1-nano-2025-04-14
+        name: Gpt41Nano20250414
+      - value: gpt-4o-mini-2024-07-18
+        name: Gpt4OMini20240718
+      - value: gpt-4o-2024-11-20
+        name: Gpt4O20241120
+      - value: gpt-4o-2024-08-06
+        name: Gpt4O20240806
+      - value: gpt-4o-2024-05-13
+        name: Gpt4O20240513
+      - value: gpt-4-0613
+        name: Gpt40613
+      - value: gpt-4-0314
+        name: Gpt40314
+      - value: gpt-4-turbo-2024-04-09
+        name: Gpt4Turbo20240409
+      - value: gpt-3.5-turbo-0125
+        name: Gpt35Turbo0125
+      - value: gpt-3.5-turbo-1106
+        name: Gpt35Turbo1106
     source:
       openapi: openapi.json
   LlmCategoryUsage:
@@ -3854,6 +3977,14 @@ types:
         docs: The constant value of the property
     source:
       openapi: openapi.json
+  McpApprovalRequiredModel:
+    enum:
+      - user_approval_always_given
+      - user_approval_never_given
+      - user_approval_required_per_tool
+    docs: Defines the approval model for an MCP tool
+    source:
+      openapi: openapi.json
   McpToolConfigInput:
     docs: A MCP tool is a tool that is used to call a MCP server
     properties:
@@ -3882,6 +4013,11 @@ types:
       mcp_server_id:
         type: string
         docs: The id of the MCP server to call
+      approval_mode:
+        type: optional<McpApprovalRequiredModel>
+        docs: >-
+          If set to approved, the tool will be pre-approved and not require user
+          approval before executing
     source:
       openapi: openapi.json
   McpToolConfigOutput:
@@ -3912,6 +4048,11 @@ types:
       mcp_server_id:
         type: string
         docs: The id of the MCP server to call
+      approval_mode:
+        type: optional<McpApprovalRequiredModel>
+        docs: >-
+          If set to approved, the tool will be pre-approved and not require user
+          approval before executing
     source:
       openapi: openapi.json
   ManualVerificationFileResponse:
@@ -4033,6 +4174,23 @@ types:
         docs: The concurrency group for the model.
     source:
       openapi: openapi.json
+  ModelSettingsResponseModel:
+    properties:
+      stability:
+        type: optional<double>
+        docs: >-
+          Determines how stable the voice is and the randomness between each
+          generation. Lower values introduce broader emotional range for the
+          voice. Higher values can result in a monotonous voice with limited
+          emotion.
+      use_speaker_boost:
+        type: optional<boolean>
+        docs: >-
+          This setting boosts the similarity to the original speaker. Using this
+          setting requires a slightly higher computational load, which in turn
+          increases latency.
+    source:
+      openapi: openapi.json
   ModerationStatusResponseModelSafetyStatus:
     enum:
       - appeal_approved
@@ -4107,6 +4265,11 @@ types:
       mcp_server_id:
         type: string
         docs: The id of the MCP server to call
+      approval_mode:
+        type: optional<McpApprovalRequiredModel>
+        docs: >-
+          If set to always accept, the tool will be pre-approved and not require
+          user approval before executing
     source:
       openapi: openapi.json
   NativeMcpToolConfigOutput:
@@ -4137,6 +4300,11 @@ types:
       mcp_server_id:
         type: string
         docs: The id of the MCP server to call
+      approval_mode:
+        type: optional<McpApprovalRequiredModel>
+        docs: >-
+          If set to always accept, the tool will be pre-approved and not require
+          user approval before executing
     source:
       openapi: openapi.json
   ObjectJsonSchemaPropertyInputPropertiesValue:
@@ -4883,17 +5051,14 @@ types:
     properties:
       prompt:
         type: optional<string>
-        docs: >-
-          The initial system message that defines the agent, e.g. “You are a
-          German language teacher named Laura.”
-        default: ''
+        docs: The prompt for the agent
     source:
       openapi: openapi.json
   PromptAgentOverrideConfig:
     properties:
       prompt:
         type: optional<boolean>
-        docs: Whether to allow prompt overriding
+        docs: Whether to allow overriding the prompt field.
         default: false
     source:
       openapi: openapi.json
@@ -5023,11 +5188,42 @@ types:
         type: optional<list<string>>
     source:
       openapi: openapi.json
-  RagIndexResponseModel:
+  RagDocumentIndexResponseModel:
     properties:
+      id: string
+      model:
+        type: EmbeddingModelEnum
       status:
         type: RagIndexStatus
       progress_percentage: double
+      document_model_index_usage:
+        type: RagDocumentIndexUsage
+    source:
+      openapi: openapi.json
+  RagDocumentIndexUsage:
+    properties:
+      used_bytes: integer
+    source:
+      openapi: openapi.json
+  RagDocumentIndexesResponseModel:
+    properties:
+      indexes:
+        type: list<RagDocumentIndexResponseModel>
+    source:
+      openapi: openapi.json
+  RagIndexOverviewEmbeddingModelResponseModel:
+    properties:
+      model:
+        type: EmbeddingModelEnum
+      used_bytes: integer
+    source:
+      openapi: openapi.json
+  RagIndexOverviewResponseModel:
+    properties:
+      total_used_bytes: integer
+      total_max_bytes: integer
+      models:
+        type: list<RagIndexOverviewEmbeddingModelResponseModel>
     source:
       openapi: openapi.json
   RagIndexStatus:
@@ -5036,6 +5232,8 @@ types:
       - processing
       - failed
       - succeeded
+      - rag_limit_exceeded
+      - document_too_small
     source:
       openapi: openapi.json
   RagChunkMetadata:
@@ -5060,6 +5258,15 @@ types:
         type: optional<integer>
         docs: Maximum total length of document chunks retrieved from RAG.
         default: 50000
+      max_retrieved_rag_chunks_count:
+        type: optional<integer>
+        docs: >-
+          Maximum number of RAG document chunks to initially retrieve from the
+          vector store. These are then further filtered by vector distance and
+          total length.
+        default: 20
+        validation:
+          max: 20
     source:
       openapi: openapi.json
   RagRetrievalInfo:
@@ -5420,6 +5627,23 @@ types:
           'key').
     source:
       openapi: openapi.json
+  SharedSoundGenerationResponseModel:
+    properties:
+      public_user_id: string
+      history_item_id: string
+      generation_id: string
+      text: string
+      category: string
+      labels:
+        type: map<string, string>
+      purchased_count: integer
+      like_count: integer
+      featured: boolean
+      preview_url: string
+      purchased: boolean
+      icon_url: string
+    source:
+      openapi: openapi.json
   SimilarVoiceCategory:
     enum:
       - premade
@@ -5446,6 +5670,32 @@ types:
     properties:
       voices:
         type: list<SimilarVoice>
+    source:
+      openapi: openapi.json
+  SkipTurnToolConfig:
+    docs: >-
+      Allows the agent to explicitly skip its turn.
+
+
+      This tool should be invoked by the LLM when the user indicates they would
+      like
+
+      to think or take a short pause before continuing the conversation—e.g.
+      when
+
+      they say: "Give me a second", "Let me think", or "One moment please". 
+      After
+
+      calling this tool, the assistant should not speak until the user speaks
+
+      again, or another normal turn-taking condition is met.  The tool itself
+      has
+
+      no parameters and performs no side-effects other than informing the
+      backend
+
+      that the current turn generation is complete.
+    properties: {}
     source:
       openapi: openapi.json
   SpeakerAudioResponseModel:
@@ -5561,13 +5811,13 @@ types:
         type: optional<string>
         docs: The ID of the request.
       voice_id:
-        type: string
+        type: optional<string>
         docs: The ID of the voice used.
       model_id:
         type: optional<string>
         docs: The ID of the model.
       voice_name:
-        type: string
+        type: optional<string>
         docs: The name of the voice.
       voice_category:
         type: optional<SpeechHistoryItemResponseModelVoiceCategory>
@@ -5575,7 +5825,7 @@ types:
           The category of the voice. Either 'premade', 'cloned', 'generated' or
           'professional'.
       text:
-        type: string
+        type: optional<string>
         docs: The text used to generate the audio item.
       date_unix:
         type: integer
@@ -5610,6 +5860,12 @@ types:
       alignments:
         type: optional<HistoryAlignmentsResponseModel>
         docs: The alignments of the history item.
+      dialogue:
+        type: optional<list<DialogueInputResponseModel>>
+        docs: >-
+          The dialogue (voice and text pairs) used to generate the audio item.
+          If this is set then the top level `text` and `voice_id` fields will be
+          empty.
     source:
       openapi: openapi.json
   SpeechToTextCharacterResponseModel:
@@ -5782,20 +6038,6 @@ types:
     inline: true
     source:
       openapi: openapi.json
-  SubscriptionStatus:
-    enum:
-      - trialing
-      - active
-      - incomplete
-      - incomplete_expired
-      - past_due
-      - canceled
-      - unpaid
-      - free
-    docs: The status of the user's subscription.
-    inline: true
-    source:
-      openapi: openapi.json
   SubscriptionResponseModelBillingPeriod:
     enum:
       - monthly_period
@@ -5870,7 +6112,7 @@ types:
         type: optional<SubscriptionResponseModelCurrency>
         docs: The currency of the user's subscription.
       status:
-        type: SubscriptionStatus
+        type: SubscriptionStatusType
         docs: The status of the user's subscription.
       billing_period:
         type: optional<SubscriptionResponseModelBillingPeriod>
@@ -5878,6 +6120,19 @@ types:
       character_refresh_period:
         type: optional<SubscriptionResponseModelCharacterRefreshPeriod>
         docs: The character refresh period of the user's subscription.
+    source:
+      openapi: openapi.json
+  SubscriptionStatusType:
+    enum:
+      - trialing
+      - active
+      - incomplete
+      - incomplete_expired
+      - past_due
+      - canceled
+      - unpaid
+      - free
+      - free_disabled
     source:
       openapi: openapi.json
   SubscriptionUsageResponseModel:
@@ -5908,6 +6163,24 @@ types:
         docs: The actual reported credits.
     source:
       openapi: openapi.json
+  SupportedVoice:
+    properties:
+      label:
+        type: string
+        validation:
+          minLength: 1
+      voice_id:
+        type: string
+        validation:
+          minLength: 1
+      description:
+        type: optional<string>
+      language:
+        type: optional<string>
+      model_family:
+        type: optional<TtsModelFamily>
+    source:
+      openapi: openapi.json
   SystemToolConfigInputParams:
     discriminant: system_tool_type
     base-properties: {}
@@ -5916,6 +6189,8 @@ types:
         type: EndCallToolConfig
       language_detection:
         type: LanguageDetectionToolConfig
+      skip_turn:
+        type: SkipTurnToolConfig
       transfer_to_agent:
         type: TransferToAgentToolConfig
       transfer_to_number:
@@ -5954,6 +6229,8 @@ types:
         type: EndCallToolConfig
       language_detection:
         type: LanguageDetectionToolConfig
+      skip_turn:
+        type: SkipTurnToolConfig
       transfer_to_agent:
         type: TransferToAgentToolConfig
       transfer_to_number:
@@ -5984,7 +6261,7 @@ types:
         type: SystemToolConfigOutputParams
     source:
       openapi: openapi.json
-  TtsConversationalConfig:
+  TtsConversationalConfigInput:
     properties:
       model_id:
         type: optional<TtsConversationalModel>
@@ -5995,6 +6272,55 @@ types:
         default: cjVigY5qzO86Huf0OWal
         validation:
           minLength: 0
+      supported_voices:
+        type: optional<list<SupportedVoice>>
+        docs: Additional supported voices for the agent
+      agent_output_audio_format:
+        type: optional<TtsOutputFormat>
+        docs: The audio format to use for TTS
+      optimize_streaming_latency:
+        type: optional<TtsOptimizeStreamingLatency>
+        docs: The optimization for streaming latency
+      stability:
+        type: optional<double>
+        docs: The stability of generated speech
+        default: 0.5
+        validation:
+          min: 0
+          max: 1
+      speed:
+        type: optional<double>
+        docs: The speed of generated speech
+        default: 1
+        validation:
+          min: 0.7
+          max: 1.2
+      similarity_boost:
+        type: optional<double>
+        docs: The similarity boost for generated speech
+        default: 0.8
+        validation:
+          min: 0
+          max: 1
+      pronunciation_dictionary_locators:
+        type: optional<list<PydanticPronunciationDictionaryVersionLocator>>
+        docs: The pronunciation dictionary locators
+    source:
+      openapi: openapi.json
+  TtsConversationalConfigOutput:
+    properties:
+      model_id:
+        type: optional<TtsConversationalModel>
+        docs: The model to use for TTS
+      voice_id:
+        type: optional<string>
+        docs: The voice ID to use for TTS
+        default: cjVigY5qzO86Huf0OWal
+        validation:
+          minLength: 0
+      supported_voices:
+        type: optional<list<SupportedVoice>>
+        docs: Additional supported voices for the agent
       agent_output_audio_format:
         type: optional<TtsOutputFormat>
         docs: The audio format to use for TTS
@@ -6031,13 +6357,14 @@ types:
     properties:
       voice_id:
         type: optional<string>
+        docs: The voice ID to use for TTS
     source:
       openapi: openapi.json
   TtsConversationalConfigOverrideConfig:
     properties:
       voice_id:
         type: optional<boolean>
-        docs: Whether to allow overriding the voice ID
+        docs: Whether to allow overriding the voice_id field.
         default: false
     source:
       openapi: openapi.json
@@ -6047,6 +6374,13 @@ types:
       - eleven_turbo_v2_5
       - eleven_flash_v2
       - eleven_flash_v2_5
+    source:
+      openapi: openapi.json
+  TtsModelFamily:
+    enum:
+      - turbo
+      - flash
+      - multilingual
     source:
       openapi: openapi.json
   TtsOptimizeStreamingLatency: integer
@@ -6472,6 +6806,12 @@ types:
           generation. Lower values introduce broader emotional range for the
           voice. Higher values can result in a monotonous voice with limited
           emotion.
+      use_speaker_boost:
+        type: optional<boolean>
+        docs: >-
+          This setting boosts the similarity to the original speaker. Using this
+          setting requires a slightly higher computational load, which in turn
+          increases latency.
       similarity_boost:
         type: optional<double>
         docs: >-
@@ -6484,12 +6824,6 @@ types:
           to amplify the style of the original speaker. It does consume
           additional computational resources and might increase latency if set
           to anything other than 0.
-      use_speaker_boost:
-        type: optional<boolean>
-        docs: >-
-          This setting boosts the similarity to the original speaker. Using this
-          setting requires a slightly higher computational load, which in turn
-          increases latency.
       speed:
         type: optional<double>
         docs: >-
@@ -6869,7 +7203,7 @@ types:
         docs: Configuration for dynamic variables
     source:
       openapi: openapi.json
-  WidgetConfigAvatar:
+  WidgetConfigInputAvatar:
     discriminant: type
     base-properties: {}
     docs: The avatar of the widget
@@ -6887,11 +7221,14 @@ types:
       variant:
         type: optional<EmbedVariant>
         docs: The variant of the widget
+      placement:
+        type: optional<WidgetPlacement>
+        docs: The placement of the widget on the screen
       expandable:
         type: optional<WidgetExpandable>
         docs: Whether the widget is expandable
       avatar:
-        type: optional<WidgetConfigAvatar>
+        type: optional<WidgetConfigOutputAvatar>
         docs: The avatar of the widget
       feedback_mode:
         type: optional<WidgetFeedbackMode>
@@ -6974,13 +7311,46 @@ types:
         type: optional<boolean>
         docs: Whether to enable mic muting
         default: false
+      transcript_enabled:
+        type: optional<boolean>
+        docs: >-
+          Whether the widget should show the conversation transcript as it goes
+          on
+        default: false
+      text_input_enabled:
+        type: optional<boolean>
+        docs: Whether the user should be able to send text messages
+        default: true
+      text_contents:
+        type: optional<WidgetTextContents>
+        docs: Text contents of the widget
       language_selector:
         type: optional<boolean>
         docs: Whether to show the language selector
         default: false
+      supports_text_only:
+        type: optional<boolean>
+        docs: Whether the widget can switch to text only mode
+        default: true
       custom_avatar_path:
         type: optional<string>
         docs: The custom avatar path
+      language_presets:
+        type: optional<map<string, WidgetLanguagePreset>>
+        docs: Language presets for the widget
+    source:
+      openapi: openapi.json
+  WidgetConfigOutputAvatar:
+    discriminant: type
+    base-properties: {}
+    docs: The avatar of the widget
+    union:
+      orb:
+        type: OrbAvatar
+      url:
+        type: UrlAvatar
+      image:
+        type: ImageAvatar
     source:
       openapi: openapi.json
   WidgetConfigResponseModelAvatar:
@@ -6996,11 +7366,14 @@ types:
         type: ImageAvatar
     source:
       openapi: openapi.json
-  WidgetConfigResponseModel:
+  WidgetConfigResponse:
     properties:
       variant:
         type: optional<EmbedVariant>
         docs: The variant of the widget
+      placement:
+        type: optional<WidgetPlacement>
+        docs: The placement of the widget on the screen
       expandable:
         type: optional<WidgetExpandable>
         docs: Whether the widget is expandable
@@ -7088,9 +7461,35 @@ types:
         type: optional<boolean>
         docs: Whether to enable mic muting
         default: false
+      transcript_enabled:
+        type: optional<boolean>
+        docs: >-
+          Whether the widget should show the conversation transcript as it goes
+          on
+        default: false
+      text_input_enabled:
+        type: optional<boolean>
+        docs: Whether the user should be able to send text messages
+        default: true
+      text_contents:
+        type: optional<WidgetTextContents>
+        docs: Text contents of the widget
       language: string
       supported_language_overrides:
         type: optional<list<string>>
+      language_presets:
+        type: optional<map<string, WidgetLanguagePresetResponse>>
+        docs: Language presets for the widget
+      text_only:
+        type: optional<boolean>
+        docs: Whether the agent uses text-only mode
+        default: false
+      supports_text_only:
+        type: optional<boolean>
+        docs: Whether the agent can be switched to text-only mode
+        default: false
+      first_message:
+        type: optional<string>
     source:
       openapi: openapi.json
   WidgetExpandable:
@@ -7106,6 +7505,105 @@ types:
       - none
       - during
       - end
+    source:
+      openapi: openapi.json
+  WidgetLanguagePreset:
+    properties:
+      text_contents:
+        type: optional<WidgetTextContents>
+        docs: The text contents for the selected language
+    source:
+      openapi: openapi.json
+  WidgetLanguagePresetResponse:
+    properties:
+      first_message:
+        type: optional<string>
+      text_contents:
+        type: optional<WidgetTextContents>
+        docs: The text contents for the selected language
+    source:
+      openapi: openapi.json
+  WidgetPlacement:
+    enum:
+      - value: top-left
+        name: TopLeft
+      - top
+      - value: top-right
+        name: TopRight
+      - value: bottom-left
+        name: BottomLeft
+      - bottom
+      - value: bottom-right
+        name: BottomRight
+    source:
+      openapi: openapi.json
+  WidgetTextContents:
+    properties:
+      main_label:
+        type: optional<string>
+        docs: Call to action displayed inside the compact and full variants.
+      start_call:
+        type: optional<string>
+        docs: Text and ARIA label for the start call button.
+      new_call:
+        type: optional<string>
+        docs: >-
+          Text and ARIA label for the new call button. Displayed when the caller
+          already finished at least one call in order ot start the next one.
+      end_call:
+        type: optional<string>
+        docs: Text and ARIA label for the end call button.
+      mute_microphone:
+        type: optional<string>
+        docs: ARIA label for the mute microphone button.
+      change_language:
+        type: optional<string>
+        docs: ARIA label for the change language dropdown.
+      collapse:
+        type: optional<string>
+        docs: ARIA label for the collapse button.
+      expand:
+        type: optional<string>
+        docs: ARIA label for the expand button.
+      copied:
+        type: optional<string>
+        docs: Text displayed when the user copies a value using the copy button.
+      accept_terms:
+        type: optional<string>
+        docs: Text and ARIA label for the accept terms button.
+      dismiss_terms:
+        type: optional<string>
+        docs: Text and ARIA label for the cancel terms button.
+      listening_status:
+        type: optional<string>
+        docs: Status displayed when the agent is listening.
+      speaking_status:
+        type: optional<string>
+        docs: Status displayed when the agent is speaking.
+      connecting_status:
+        type: optional<string>
+        docs: Status displayed when the agent is connecting.
+      input_label:
+        type: optional<string>
+        docs: ARIA label for the text message input.
+      input_placeholder:
+        type: optional<string>
+        docs: Placeholder text for the text message input.
+      user_ended_conversation:
+        type: optional<string>
+        docs: Information message displayed when the user ends the conversation.
+      agent_ended_conversation:
+        type: optional<string>
+        docs: Information message displayed when the agent ends the conversation.
+      conversation_id:
+        type: optional<string>
+        docs: Text label used next to the conversation ID.
+      error_occurred:
+        type: optional<string>
+        docs: Text label used when an error occurs.
+      copy_id:
+        type: optional<string>
+        docs: Text and ARIA label used for the copy ID button.
     source:
       openapi: openapi.json
   WorkspaceBatchCallsResponse:
@@ -7532,7 +8030,7 @@ types:
   PronunciationDictionaryLocator:
     docs: Identifies a specific pronunciation dictionary to use
     properties:
-      dictionary_id:
+      pronunciation_dictionary_id:
         type: string
         docs: The unique identifier of the pronunciation dictionary
       version_id:
@@ -7546,14 +8044,14 @@ types:
       text:
         type: optional<string>
         docs: >
-          Text to be synthesized. 
+          Text to be synthesized.
 
           For the first message establishing a new context (identified by
           `context_id`, or a default context if `context_id` is absent), this
-          should be a single space character (' '). 
+          should be a single space character (' ').
 
           For subsequent messages to an active context, this is the text to
-          synthesize. 
+          synthesize.
 
           This field can be null or an empty string if the message is primarily
           for control (e.g., using `flush`, `close_context`, or `close_socket`).

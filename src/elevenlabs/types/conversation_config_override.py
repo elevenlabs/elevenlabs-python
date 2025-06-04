@@ -8,7 +8,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class ConversationConfigOverride(UncheckedBaseModel):
-    text_only: typing.Optional[bool] = None
+    text_only: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If enabled audio will not be processed and only text will be used, use to avoid audio pricing.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

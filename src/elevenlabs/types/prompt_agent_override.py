@@ -10,7 +10,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 class PromptAgentOverride(UncheckedBaseModel):
     prompt: typing.Optional[str] = pydantic.Field(default=None)
     """
-    The initial system message that defines the agent, e.g. “You are a German language teacher named Laura.”
+    The prompt for the agent
     """
 
     if IS_PYDANTIC_V2:

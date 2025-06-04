@@ -6,9 +6,12 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .embed_variant import EmbedVariant
-from .widget_config_avatar import WidgetConfigAvatar
+from .widget_config_output_avatar import WidgetConfigOutputAvatar
 from .widget_expandable import WidgetExpandable
 from .widget_feedback_mode import WidgetFeedbackMode
+from .widget_language_preset import WidgetLanguagePreset
+from .widget_placement import WidgetPlacement
+from .widget_text_contents import WidgetTextContents
 
 
 class WidgetConfig(UncheckedBaseModel):
@@ -17,12 +20,17 @@ class WidgetConfig(UncheckedBaseModel):
     The variant of the widget
     """
 
+    placement: typing.Optional[WidgetPlacement] = pydantic.Field(default=None)
+    """
+    The placement of the widget on the screen
+    """
+
     expandable: typing.Optional[WidgetExpandable] = pydantic.Field(default=None)
     """
     Whether the widget is expandable
     """
 
-    avatar: typing.Optional[WidgetConfigAvatar] = pydantic.Field(default=None)
+    avatar: typing.Optional[WidgetConfigOutputAvatar] = pydantic.Field(default=None)
     """
     The avatar of the widget
     """
@@ -147,14 +155,39 @@ class WidgetConfig(UncheckedBaseModel):
     Whether to enable mic muting
     """
 
+    transcript_enabled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the widget should show the conversation transcript as it goes on
+    """
+
+    text_input_enabled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the user should be able to send text messages
+    """
+
+    text_contents: typing.Optional[WidgetTextContents] = pydantic.Field(default=None)
+    """
+    Text contents of the widget
+    """
+
     language_selector: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether to show the language selector
     """
 
+    supports_text_only: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the widget can switch to text only mode
+    """
+
     custom_avatar_path: typing.Optional[str] = pydantic.Field(default=None)
     """
     The custom avatar path
+    """
+
+    language_presets: typing.Optional[typing.Dict[str, WidgetLanguagePreset]] = pydantic.Field(default=None)
+    """
+    Language presets for the widget
     """
 
     if IS_PYDANTIC_V2:

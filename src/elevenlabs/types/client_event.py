@@ -16,6 +16,7 @@ ClientEvent = typing.Union[
         "vad_score",
         "internal_turn_probability",
         "internal_tentative_agent_response",
+        "internal_native_mcp_tool_call",
     ],
     typing.Any,
 ]

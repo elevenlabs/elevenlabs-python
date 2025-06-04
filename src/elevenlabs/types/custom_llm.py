@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .conv_ai_secret_locator import ConvAiSecretLocator
+from .custom_llm_request_headers_value import CustomLlmRequestHeadersValue
 
 
 class CustomLlm(UncheckedBaseModel):
@@ -22,6 +23,11 @@ class CustomLlm(UncheckedBaseModel):
     api_key: typing.Optional[ConvAiSecretLocator] = pydantic.Field(default=None)
     """
     The API key for authentication
+    """
+
+    request_headers: typing.Optional[typing.Dict[str, CustomLlmRequestHeadersValue]] = pydantic.Field(default=None)
+    """
+    Headers that should be included in the request
     """
 
     if IS_PYDANTIC_V2:

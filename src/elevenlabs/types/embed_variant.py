@@ -2,4 +2,4 @@
 
 import typing
 
-EmbedVariant = typing.Union[typing.Literal["compact", "full", "expandable"], typing.Any]
+EmbedVariant = typing.Union[typing.Literal["tiny", "compact", "full", "expandable"], typing.Any]

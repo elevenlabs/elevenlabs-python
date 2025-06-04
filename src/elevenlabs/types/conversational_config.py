@@ -11,7 +11,7 @@ from .agent_config import AgentConfig
 from .asr_conversational_config import AsrConversationalConfig
 from .conversation_config import ConversationConfig
 from .language_preset_output import LanguagePresetOutput
-from .tts_conversational_config import TtsConversationalConfig
+from .tts_conversational_config_output import TtsConversationalConfigOutput
 from .turn_config import TurnConfig
 
 
@@ -26,7 +26,7 @@ class ConversationalConfig(UncheckedBaseModel):
     Configuration for turn detection
     """
 
-    tts: typing.Optional[TtsConversationalConfig] = pydantic.Field(default=None)
+    tts: typing.Optional[TtsConversationalConfigOutput] = pydantic.Field(default=None)
     """
     Configuration for conversational text to speech
     """

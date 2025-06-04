@@ -6,12 +6,13 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .pydantic_pronunciation_dictionary_version_locator import PydanticPronunciationDictionaryVersionLocator
+from .supported_voice import SupportedVoice
 from .tts_conversational_model import TtsConversationalModel
 from .tts_optimize_streaming_latency import TtsOptimizeStreamingLatency
 from .tts_output_format import TtsOutputFormat
 
 
-class TtsConversationalConfig(UncheckedBaseModel):
+class TtsConversationalConfigOutput(UncheckedBaseModel):
     model_id: typing.Optional[TtsConversationalModel] = pydantic.Field(default=None)
     """
     The model to use for TTS
@@ -20,6 +21,11 @@ class TtsConversationalConfig(UncheckedBaseModel):
     voice_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     The voice ID to use for TTS
+    """
+
+    supported_voices: typing.Optional[typing.List[SupportedVoice]] = pydantic.Field(default=None)
+    """
+    Additional supported voices for the agent
     """
 
     agent_output_audio_format: typing.Optional[TtsOutputFormat] = pydantic.Field(default=None)

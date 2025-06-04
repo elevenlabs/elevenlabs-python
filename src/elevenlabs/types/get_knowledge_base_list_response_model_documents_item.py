@@ -8,6 +8,7 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
+from .document_usage_mode_enum import DocumentUsageModeEnum
 from .get_knowledge_base_summary_file_response_model_dependent_agents_item import (
     GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem,
 )
@@ -26,7 +27,7 @@ class GetKnowledgeBaseListResponseModelDocumentsItem_File(UncheckedBaseModel):
     id: str
     name: str
     metadata: KnowledgeBaseDocumentMetadataResponseModel
-    prompt_injectable: bool
+    supported_usages: typing.List[DocumentUsageModeEnum]
     access_info: ResourceAccessInfo
     dependent_agents: typing.List[GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem]
 
@@ -45,7 +46,7 @@ class GetKnowledgeBaseListResponseModelDocumentsItem_Text(UncheckedBaseModel):
     id: str
     name: str
     metadata: KnowledgeBaseDocumentMetadataResponseModel
-    prompt_injectable: bool
+    supported_usages: typing.List[DocumentUsageModeEnum]
     access_info: ResourceAccessInfo
     dependent_agents: typing.List[GetKnowledgeBaseSummaryTextResponseModelDependentAgentsItem]
 
@@ -64,7 +65,7 @@ class GetKnowledgeBaseListResponseModelDocumentsItem_Url(UncheckedBaseModel):
     id: str
     name: str
     metadata: KnowledgeBaseDocumentMetadataResponseModel
-    prompt_injectable: bool
+    supported_usages: typing.List[DocumentUsageModeEnum]
     access_info: ResourceAccessInfo
     dependent_agents: typing.List[GetKnowledgeBaseSummaryUrlResponseModelDependentAgentsItem]
     url: str

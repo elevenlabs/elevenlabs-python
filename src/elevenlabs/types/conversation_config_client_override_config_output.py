@@ -11,19 +11,19 @@ from .tts_conversational_config_override_config import TtsConversationalConfigOv
 
 
 class ConversationConfigClientOverrideConfigOutput(UncheckedBaseModel):
-    agent: typing.Optional[AgentConfigOverrideConfig] = pydantic.Field(default=None)
-    """
-    Overrides for the agent configuration
-    """
-
     tts: typing.Optional[TtsConversationalConfigOverrideConfig] = pydantic.Field(default=None)
     """
-    Overrides for the TTS configuration
+    Configures overrides for nested fields.
     """
 
     conversation: typing.Optional[ConversationConfigOverrideConfig] = pydantic.Field(default=None)
     """
-    Overrides for the conversation configuration
+    Configures overrides for nested fields.
+    """
+
+    agent: typing.Optional[AgentConfigOverrideConfig] = pydantic.Field(default=None)
+    """
+    Configures overrides for nested fields.
     """
 
     if IS_PYDANTIC_V2:

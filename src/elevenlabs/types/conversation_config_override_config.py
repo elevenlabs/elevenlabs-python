@@ -10,7 +10,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 class ConversationConfigOverrideConfig(UncheckedBaseModel):
     text_only: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Whether to allow overriding the text only configuration
+    Whether to allow overriding the text_only field.
     """
 
     if IS_PYDANTIC_V2:

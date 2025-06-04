@@ -19,9 +19,9 @@ class WebsocketTtsClientMessageMulti(UncheckedBaseModel):
 
     text: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Text to be synthesized. 
-    For the first message establishing a new context (identified by `context_id`, or a default context if `context_id` is absent), this should be a single space character (' '). 
-    For subsequent messages to an active context, this is the text to synthesize. 
+    Text to be synthesized.
+    For the first message establishing a new context (identified by `context_id`, or a default context if `context_id` is absent), this should be a single space character (' ').
+    For subsequent messages to an active context, this is the text to synthesize.
     This field can be null or an empty string if the message is primarily for control (e.g., using `flush`, `close_context`, or `close_socket`).
     """
 

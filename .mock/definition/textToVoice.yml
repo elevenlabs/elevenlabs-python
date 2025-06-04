@@ -252,9 +252,9 @@ service:
                 - enterprise
               settings:
                 stability: 1
+                use_speaker_boost: true
                 similarity_boost: 1
                 style: 0
-                use_speaker_boost: true
                 speed: 1
               sharing:
                 status: enabled

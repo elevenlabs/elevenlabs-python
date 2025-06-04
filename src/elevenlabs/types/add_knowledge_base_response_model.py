@@ -10,7 +10,6 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 class AddKnowledgeBaseResponseModel(UncheckedBaseModel):
     id: str
     name: str
-    prompt_injectable: bool
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

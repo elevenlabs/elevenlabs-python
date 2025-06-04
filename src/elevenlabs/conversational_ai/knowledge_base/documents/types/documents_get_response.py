@@ -8,6 +8,7 @@ import pydantic
 import typing_extensions
 from .....core.pydantic_utilities import IS_PYDANTIC_V2
 from .....core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
+from .....types.document_usage_mode_enum import DocumentUsageModeEnum
 from .....types.knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
 from .....types.resource_access_info import ResourceAccessInfo
 
@@ -17,7 +18,7 @@ class DocumentsGetResponse_Url(UncheckedBaseModel):
     id: str
     name: str
     metadata: KnowledgeBaseDocumentMetadataResponseModel
-    prompt_injectable: bool
+    supported_usages: typing.List[DocumentUsageModeEnum]
     access_info: ResourceAccessInfo
     extracted_inner_html: str
     url: str
@@ -37,7 +38,7 @@ class DocumentsGetResponse_File(UncheckedBaseModel):
     id: str
     name: str
     metadata: KnowledgeBaseDocumentMetadataResponseModel
-    prompt_injectable: bool
+    supported_usages: typing.List[DocumentUsageModeEnum]
     access_info: ResourceAccessInfo
     extracted_inner_html: str
 
@@ -56,7 +57,7 @@ class DocumentsGetResponse_Text(UncheckedBaseModel):
     id: str
     name: str
     metadata: KnowledgeBaseDocumentMetadataResponseModel
-    prompt_injectable: bool
+    supported_usages: typing.List[DocumentUsageModeEnum]
     access_info: ResourceAccessInfo
     extracted_inner_html: str
 

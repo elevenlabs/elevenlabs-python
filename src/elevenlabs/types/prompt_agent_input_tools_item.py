@@ -9,6 +9,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .dynamic_variables_config import DynamicVariablesConfig
+from .mcp_approval_required_model import McpApprovalRequiredModel
 from .system_tool_config_input_params import SystemToolConfigInputParams
 from .webhook_tool_api_schema_config_input import WebhookToolApiSchemaConfigInput
 
@@ -50,6 +51,7 @@ class PromptAgentInputToolsItem_Mcp(UncheckedBaseModel):
     parameters: typing.Optional["ObjectJsonSchemaPropertyInput"] = None
     mcp_tool_name: str
     mcp_server_id: str
+    approval_mode: typing.Optional[McpApprovalRequiredModel] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -74,6 +76,7 @@ class PromptAgentInputToolsItem_NativeMcp(UncheckedBaseModel):
     parameters: typing.Optional["ObjectJsonSchemaPropertyInput"] = None
     mcp_tool_name: str
     mcp_server_id: str
+    approval_mode: typing.Optional[McpApprovalRequiredModel] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -7,6 +7,9 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.add_knowledge_base_response_model import AddKnowledgeBaseResponseModel
 from ..types.post_workspace_secret_response_model import PostWorkspaceSecretResponseModel
+from ..types.rag_document_index_response_model import RagDocumentIndexResponseModel
+from ..types.rag_document_indexes_response_model import RagDocumentIndexesResponseModel
+from ..types.rag_index_overview_response_model import RagIndexOverviewResponseModel
 from .agents.client import AgentsClient, AsyncAgentsClient
 from .batch_calls.client import AsyncBatchCallsClient, BatchCallsClient
 from .conversations.client import AsyncConversationsClient, ConversationsClient
@@ -102,6 +105,106 @@ class ConversationalAiClient:
         _response = self._raw_client.add_to_knowledge_base(
             name=name, url=url, file=file, request_options=request_options
         )
+        return _response.data
+
+    def get_document_rag_indexes(
+        self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> RagDocumentIndexesResponseModel:
+        """
+        Provides information about all RAG indexes of the specified knowledgebase document.
+
+        Parameters
+        ----------
+        documentation_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RagDocumentIndexesResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.get_document_rag_indexes(
+            documentation_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._raw_client.get_document_rag_indexes(documentation_id, request_options=request_options)
+        return _response.data
+
+    def delete_document_rag_index(
+        self, documentation_id: str, rag_index_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> RagDocumentIndexResponseModel:
+        """
+        Delete RAG index for the knowledgebase document.
+
+        Parameters
+        ----------
+        documentation_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        rag_index_id : str
+            The id of RAG index of document from the knowledge base.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RagDocumentIndexResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.delete_document_rag_index(
+            documentation_id="21m00Tcm4TlvDq8ikWAM",
+            rag_index_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._raw_client.delete_document_rag_index(
+            documentation_id, rag_index_id, request_options=request_options
+        )
+        return _response.data
+
+    def rag_index_overview(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> RagIndexOverviewResponseModel:
+        """
+        Provides total size and other information of RAG indexes used by knowledgebase documents
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RagIndexOverviewResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.rag_index_overview()
+        """
+        _response = self._raw_client.rag_index_overview(request_options=request_options)
         return _response.data
 
     def update_secret(
@@ -229,6 +332,130 @@ class AsyncConversationalAiClient:
         _response = await self._raw_client.add_to_knowledge_base(
             name=name, url=url, file=file, request_options=request_options
         )
+        return _response.data
+
+    async def get_document_rag_indexes(
+        self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> RagDocumentIndexesResponseModel:
+        """
+        Provides information about all RAG indexes of the specified knowledgebase document.
+
+        Parameters
+        ----------
+        documentation_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RagDocumentIndexesResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.get_document_rag_indexes(
+                documentation_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_document_rag_indexes(documentation_id, request_options=request_options)
+        return _response.data
+
+    async def delete_document_rag_index(
+        self, documentation_id: str, rag_index_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> RagDocumentIndexResponseModel:
+        """
+        Delete RAG index for the knowledgebase document.
+
+        Parameters
+        ----------
+        documentation_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        rag_index_id : str
+            The id of RAG index of document from the knowledge base.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RagDocumentIndexResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.delete_document_rag_index(
+                documentation_id="21m00Tcm4TlvDq8ikWAM",
+                rag_index_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete_document_rag_index(
+            documentation_id, rag_index_id, request_options=request_options
+        )
+        return _response.data
+
+    async def rag_index_overview(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> RagIndexOverviewResponseModel:
+        """
+        Provides total size and other information of RAG indexes used by knowledgebase documents
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RagIndexOverviewResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.rag_index_overview()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.rag_index_overview(request_options=request_options)
         return _response.data
 
     async def update_secret(

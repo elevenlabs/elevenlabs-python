@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .document_usage_mode_enum import DocumentUsageModeEnum
 from .knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
 from .resource_access_info import ResourceAccessInfo
 
@@ -13,7 +14,7 @@ class GetKnowledgeBaseFileResponseModel(UncheckedBaseModel):
     id: str
     name: str
     metadata: KnowledgeBaseDocumentMetadataResponseModel
-    prompt_injectable: bool
+    supported_usages: typing.List[DocumentUsageModeEnum]
     access_info: ResourceAccessInfo
     extracted_inner_html: str
 

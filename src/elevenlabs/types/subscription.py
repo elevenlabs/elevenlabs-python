@@ -10,8 +10,8 @@ from .extended_subscription_response_model_character_refresh_period import (
     ExtendedSubscriptionResponseModelCharacterRefreshPeriod,
 )
 from .extended_subscription_response_model_currency import ExtendedSubscriptionResponseModelCurrency
-from .extended_subscription_response_model_status import ExtendedSubscriptionResponseModelStatus
 from .invoice_response import InvoiceResponse
+from .subscription_status_type import SubscriptionStatusType
 
 
 class Subscription(UncheckedBaseModel):
@@ -100,7 +100,7 @@ class Subscription(UncheckedBaseModel):
     The currency of the user's subscription.
     """
 
-    status: ExtendedSubscriptionResponseModelStatus = pydantic.Field()
+    status: SubscriptionStatusType = pydantic.Field()
     """
     The status of the user's subscription.
     """

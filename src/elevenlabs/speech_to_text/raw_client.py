@@ -38,10 +38,11 @@ class RawSpeechToTextClient:
         additional_formats: typing.Optional[AdditionalFormats] = OMIT,
         file_format: typing.Optional[SpeechToTextConvertRequestFileFormat] = OMIT,
         cloud_storage_url: typing.Optional[str] = OMIT,
+        webhook: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SpeechToTextChunkResponseModel]:
         """
-        Transcribe an audio or video file.
+        Transcribe an audio or video file. If webhook is set to true, the request will be processed asynchronously and results sent to configured webhooks.
 
         Parameters
         ----------
@@ -78,13 +79,16 @@ class RawSpeechToTextClient:
         cloud_storage_url : typing.Optional[str]
             The valid AWS S3, Cloudflare R2 or Google Cloud Storage URL of the file to transcribe. Exactly one of the file or cloud_storage_url parameters must be provided. The file must be a valid publicly accessible cloud storage URL. The file size must be less than 2GB. URL can be pre-signed.
 
+        webhook : typing.Optional[bool]
+            Whether to send the transcription result to configured speech-to-text webhooks.  If set the request will return early without the transcription, which will be delivered later via webhook. Webhooks can be created and assigned to a transcription task in webhook settings page in the UI.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
         HttpResponse[SpeechToTextChunkResponseModel]
-            Successful Response
+            Synchronous transcription result
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/speech-to-text",
@@ -103,6 +107,7 @@ class RawSpeechToTextClient:
                 "additional_formats": additional_formats,
                 "file_format": file_format,
                 "cloud_storage_url": cloud_storage_url,
+                "webhook": webhook,
             },
             files={
                 **({"file": file} if file is not None else {}),
@@ -156,10 +161,11 @@ class AsyncRawSpeechToTextClient:
         additional_formats: typing.Optional[AdditionalFormats] = OMIT,
         file_format: typing.Optional[SpeechToTextConvertRequestFileFormat] = OMIT,
         cloud_storage_url: typing.Optional[str] = OMIT,
+        webhook: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SpeechToTextChunkResponseModel]:
         """
-        Transcribe an audio or video file.
+        Transcribe an audio or video file. If webhook is set to true, the request will be processed asynchronously and results sent to configured webhooks.
 
         Parameters
         ----------
@@ -196,13 +202,16 @@ class AsyncRawSpeechToTextClient:
         cloud_storage_url : typing.Optional[str]
             The valid AWS S3, Cloudflare R2 or Google Cloud Storage URL of the file to transcribe. Exactly one of the file or cloud_storage_url parameters must be provided. The file must be a valid publicly accessible cloud storage URL. The file size must be less than 2GB. URL can be pre-signed.
 
+        webhook : typing.Optional[bool]
+            Whether to send the transcription result to configured speech-to-text webhooks.  If set the request will return early without the transcription, which will be delivered later via webhook. Webhooks can be created and assigned to a transcription task in webhook settings page in the UI.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
         AsyncHttpResponse[SpeechToTextChunkResponseModel]
-            Successful Response
+            Synchronous transcription result
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/speech-to-text",
@@ -221,6 +230,7 @@ class AsyncRawSpeechToTextClient:
                 "additional_formats": additional_formats,
                 "file_format": file_format,
                 "cloud_storage_url": cloud_storage_url,
+                "webhook": webhook,
             },
             files={
                 **({"file": file} if file is not None else {}),

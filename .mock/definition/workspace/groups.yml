@@ -29,7 +29,6 @@ service:
       examples:
         - query-parameters:
             name: name
-          headers: {}
           response:
             body:
               - name: My Workspace Group

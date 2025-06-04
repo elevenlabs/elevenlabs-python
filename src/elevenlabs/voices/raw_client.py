@@ -467,6 +467,7 @@ class RawVoicesClient:
         featured: typing.Optional[bool] = None,
         min_notice_period_days: typing.Optional[int] = None,
         include_custom_rates: typing.Optional[bool] = None,
+        include_live_moderated: typing.Optional[bool] = None,
         reader_app_enabled: typing.Optional[bool] = None,
         owner_id: typing.Optional[str] = None,
         sort: typing.Optional[str] = None,
@@ -517,6 +518,9 @@ class RawVoicesClient:
         include_custom_rates : typing.Optional[bool]
             Include/exclude voices with custom rates
 
+        include_live_moderated : typing.Optional[bool]
+            Include/exclude voices that are live moderated
+
         reader_app_enabled : typing.Optional[bool]
             Filter voices that are enabled for the reader app
 
@@ -554,6 +558,7 @@ class RawVoicesClient:
                 "featured": featured,
                 "min_notice_period_days": min_notice_period_days,
                 "include_custom_rates": include_custom_rates,
+                "include_live_moderated": include_live_moderated,
                 "reader_app_enabled": reader_app_enabled,
                 "owner_id": owner_id,
                 "sort": sort,
@@ -1101,6 +1106,7 @@ class AsyncRawVoicesClient:
         featured: typing.Optional[bool] = None,
         min_notice_period_days: typing.Optional[int] = None,
         include_custom_rates: typing.Optional[bool] = None,
+        include_live_moderated: typing.Optional[bool] = None,
         reader_app_enabled: typing.Optional[bool] = None,
         owner_id: typing.Optional[str] = None,
         sort: typing.Optional[str] = None,
@@ -1151,6 +1157,9 @@ class AsyncRawVoicesClient:
         include_custom_rates : typing.Optional[bool]
             Include/exclude voices with custom rates
 
+        include_live_moderated : typing.Optional[bool]
+            Include/exclude voices that are live moderated
+
         reader_app_enabled : typing.Optional[bool]
             Filter voices that are enabled for the reader app
 
@@ -1188,6 +1197,7 @@ class AsyncRawVoicesClient:
                 "featured": featured,
                 "min_notice_period_days": min_notice_period_days,
                 "include_custom_rates": include_custom_rates,
+                "include_live_moderated": include_live_moderated,
                 "reader_app_enabled": reader_app_enabled,
                 "owner_id": owner_id,
                 "sort": sort,

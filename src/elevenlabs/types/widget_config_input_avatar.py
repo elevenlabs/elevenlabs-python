@@ -10,7 +10,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 
 
-class WidgetConfigAvatar_Orb(UncheckedBaseModel):
+class WidgetConfigInputAvatar_Orb(UncheckedBaseModel):
     """
     The avatar of the widget
     """
@@ -29,7 +29,7 @@ class WidgetConfigAvatar_Orb(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-class WidgetConfigAvatar_Url(UncheckedBaseModel):
+class WidgetConfigInputAvatar_Url(UncheckedBaseModel):
     """
     The avatar of the widget
     """
@@ -47,7 +47,7 @@ class WidgetConfigAvatar_Url(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-class WidgetConfigAvatar_Image(UncheckedBaseModel):
+class WidgetConfigInputAvatar_Image(UncheckedBaseModel):
     """
     The avatar of the widget
     """
@@ -65,7 +65,7 @@ class WidgetConfigAvatar_Image(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-WidgetConfigAvatar = typing_extensions.Annotated[
-    typing.Union[WidgetConfigAvatar_Orb, WidgetConfigAvatar_Url, WidgetConfigAvatar_Image],
+WidgetConfigInputAvatar = typing_extensions.Annotated[
+    typing.Union[WidgetConfigInputAvatar_Orb, WidgetConfigInputAvatar_Url, WidgetConfigInputAvatar_Image],
     UnionMetadata(discriminant="type"),
 ]

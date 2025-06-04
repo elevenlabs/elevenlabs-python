@@ -38,6 +38,19 @@ class SystemToolConfigInputParams_LanguageDetection(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class SystemToolConfigInputParams_SkipTurn(UncheckedBaseModel):
+    system_tool_type: typing.Literal["skip_turn"] = "skip_turn"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class SystemToolConfigInputParams_TransferToAgent(UncheckedBaseModel):
     system_tool_type: typing.Literal["transfer_to_agent"] = "transfer_to_agent"
     transfers: typing.List[AgentTransfer]
@@ -70,6 +83,7 @@ SystemToolConfigInputParams = typing_extensions.Annotated[
     typing.Union[
         SystemToolConfigInputParams_EndCall,
         SystemToolConfigInputParams_LanguageDetection,
+        SystemToolConfigInputParams_SkipTurn,
         SystemToolConfigInputParams_TransferToAgent,
         SystemToolConfigInputParams_TransferToNumber,
     ],

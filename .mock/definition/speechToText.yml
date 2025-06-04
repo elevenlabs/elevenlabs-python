@@ -35,7 +35,10 @@ service:
       path: /v1/speech-to-text
       method: POST
       auth: false
-      docs: Transcribe an audio or video file.
+      docs: >-
+        Transcribe an audio or video file. If webhook is set to true, the
+        request will be processed asynchronously and results sent to configured
+        webhooks.
       source:
         openapi: openapi.json
       display-name: Create transcript
@@ -121,9 +124,18 @@ service:
                 cloud_storage_url parameters must be provided. The file must be
                 a valid publicly accessible cloud storage URL. The file size
                 must be less than 2GB. URL can be pre-signed.
+            webhook:
+              type: optional<boolean>
+              docs: >-
+                Whether to send the transcription result to configured
+                speech-to-text webhooks.  If set the request will return early
+                without the transcription, which will be delivered later via
+                webhook. Webhooks can be created and assigned to a transcription
+                task in webhook settings page in the UI.
+              default: false
         content-type: multipart/form-data
       response:
-        docs: Successful Response
+        docs: Synchronous transcription result
         type: root.SpeechToTextChunkResponseModel
         status-code: 200
       errors:
