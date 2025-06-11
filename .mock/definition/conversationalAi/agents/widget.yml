@@ -93,6 +93,27 @@ service:
                   conversation_id: conversation_id
                   error_occurred: error_occurred
                   copy_id: copy_id
+                styles:
+                  base: base
+                  base_hover: base_hover
+                  base_active: base_active
+                  base_border: base_border
+                  base_subtle: base_subtle
+                  base_primary: base_primary
+                  base_error: base_error
+                  accent: accent
+                  accent_hover: accent_hover
+                  accent_active: accent_active
+                  accent_border: accent_border
+                  accent_subtle: accent_subtle
+                  accent_primary: accent_primary
+                  overlay_padding: 1.1
+                  button_radius: 1.1
+                  input_radius: 1.1
+                  bubble_radius: 1.1
+                  sheet_radius: 1.1
+                  compact_sheet_radius: 1.1
+                  dropdown_sheet_radius: 1.1
                 language: language
                 supported_language_overrides:
                   - supported_language_overrides

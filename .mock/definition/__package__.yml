@@ -1228,6 +1228,25 @@ types:
       include_workspace_metrics is False.
     source:
       openapi: openapi.json
+  BuiltInTools:
+    properties:
+      end_call:
+        type: optional<SystemToolConfigInput>
+        docs: The end call tool
+      language_detection:
+        type: optional<SystemToolConfigInput>
+        docs: The language detection tool
+      transfer_to_agent:
+        type: optional<SystemToolConfigInput>
+        docs: The transfer to agent tool
+      transfer_to_number:
+        type: optional<SystemToolConfigInput>
+        docs: The transfer to number tool
+      skip_turn:
+        type: optional<SystemToolConfigInput>
+        docs: The skip turn tool
+    source:
+      openapi: openapi.json
   ChapterContentBlockExtendableNodeResponseModel:
     docs: Not used. Make sure you anticipate new types in the future.
     properties: {}
@@ -1463,10 +1482,11 @@ types:
       - agent_response
       - agent_response_correction
       - client_tool_call
+      - mcp_tool_call
+      - agent_tool_response
       - vad_score
       - internal_turn_probability
       - internal_tentative_agent_response
-      - internal_native_mcp_tool_call
     source:
       openapi: openapi.json
   ClientToolConfigInput:
@@ -3490,14 +3510,6 @@ types:
         docs: The description of the pronunciation dictionary.
     source:
       openapi: openapi.json
-  GetSharedSoundGenerationsResponseModel:
-    properties:
-      shared_sound_generations:
-        type: list<SharedSoundGenerationResponseModel>
-      last_sort_id: optional<string>
-      has_more: boolean
-    source:
-      openapi: openapi.json
   GetSpeechHistoryResponse:
     properties:
       history:
@@ -3585,6 +3597,12 @@ types:
         type: optional<string>
         docs: The URL of the avatar
         default: ''
+    source:
+      openapi: openapi.json
+  IntegrationType:
+    enum:
+      - mcp_server
+      - mcp_integration
     source:
       openapi: openapi.json
   InvoiceResponse:
@@ -3977,16 +3995,16 @@ types:
         docs: The constant value of the property
     source:
       openapi: openapi.json
-  McpApprovalRequiredModel:
+  McpApprovalPolicy:
     enum:
-      - user_approval_always_given
-      - user_approval_never_given
-      - user_approval_required_per_tool
-    docs: Defines the approval model for an MCP tool
+      - auto_approve_all
+      - require_approval_all
+      - require_approval_per_tool
+    docs: Defines the MCP server-level approval policy for tool execution.
     source:
       openapi: openapi.json
   McpToolConfigInput:
-    docs: A MCP tool is a tool that is used to call a MCP server
+    docs: An MCP tool configuration that can be used to call MCP servers
     properties:
       id:
         type: optional<string>
@@ -4004,24 +4022,34 @@ types:
         type: optional<integer>
         docs: The maximum time in seconds to wait for the tool call to complete.
         default: 20
+      integration_type:
+        type: IntegrationType
+        docs: The type of MCP tool
       parameters:
         type: optional<ObjectJsonSchemaPropertyInput>
         docs: Schema for any parameters the LLM needs to provide to the MCP tool.
+      approval_policy:
+        type: optional<McpApprovalPolicy>
+        docs: The approval policy for the MCP tool
       mcp_tool_name:
         type: string
         docs: The name of the MCP tool to call
+      mcp_tool_description:
+        type: string
+        docs: The description of the MCP tool to call
       mcp_server_id:
         type: string
         docs: The id of the MCP server to call
-      approval_mode:
-        type: optional<McpApprovalRequiredModel>
-        docs: >-
-          If set to approved, the tool will be pre-approved and not require user
-          approval before executing
+      mcp_server_name:
+        type: string
+        docs: The name of the MCP server to call
+      mcp_input_schema:
+        type: optional<map<string, unknown>>
+        docs: Original inputSchema dict for consistent hashing (pure MCP format)
     source:
       openapi: openapi.json
   McpToolConfigOutput:
-    docs: A MCP tool is a tool that is used to call a MCP server
+    docs: An MCP tool configuration that can be used to call MCP servers
     properties:
       id:
         type: optional<string>
@@ -4039,20 +4067,30 @@ types:
         type: optional<integer>
         docs: The maximum time in seconds to wait for the tool call to complete.
         default: 20
+      integration_type:
+        type: IntegrationType
+        docs: The type of MCP tool
       parameters:
         type: optional<ObjectJsonSchemaPropertyOutput>
         docs: Schema for any parameters the LLM needs to provide to the MCP tool.
+      approval_policy:
+        type: optional<McpApprovalPolicy>
+        docs: The approval policy for the MCP tool
       mcp_tool_name:
         type: string
         docs: The name of the MCP tool to call
+      mcp_tool_description:
+        type: string
+        docs: The description of the MCP tool to call
       mcp_server_id:
         type: string
         docs: The id of the MCP server to call
-      approval_mode:
-        type: optional<McpApprovalRequiredModel>
-        docs: >-
-          If set to approved, the tool will be pre-approved and not require user
-          approval before executing
+      mcp_server_name:
+        type: string
+        docs: The name of the MCP server to call
+      mcp_input_schema:
+        type: optional<map<string, unknown>>
+        docs: Original inputSchema dict for consistent hashing (pure MCP format)
     source:
       openapi: openapi.json
   ManualVerificationFileResponse:
@@ -4235,76 +4273,6 @@ types:
       on_watchlist:
         type: boolean
         docs: Whether the user is on the watchlist.
-    source:
-      openapi: openapi.json
-  NativeMcpToolConfigInput:
-    docs: A Native MCP tool is a tool that is used to call a Native MCP server
-    properties:
-      id:
-        type: optional<string>
-        default: ''
-      name:
-        type: string
-        validation:
-          pattern: ^[a-zA-Z0-9_-]{1,64}$
-          minLength: 0
-      description:
-        type: string
-        validation:
-          minLength: 0
-      response_timeout_secs:
-        type: optional<integer>
-        docs: The maximum time in seconds to wait for the tool call to complete.
-        default: 20
-      parameters:
-        type: optional<ObjectJsonSchemaPropertyInput>
-        docs: Schema for any parameters the LLM needs to provide to the MCP tool.
-      mcp_tool_name:
-        type: string
-        docs: The name of the MCP tool to call
-      mcp_server_id:
-        type: string
-        docs: The id of the MCP server to call
-      approval_mode:
-        type: optional<McpApprovalRequiredModel>
-        docs: >-
-          If set to always accept, the tool will be pre-approved and not require
-          user approval before executing
-    source:
-      openapi: openapi.json
-  NativeMcpToolConfigOutput:
-    docs: A Native MCP tool is a tool that is used to call a Native MCP server
-    properties:
-      id:
-        type: optional<string>
-        default: ''
-      name:
-        type: string
-        validation:
-          pattern: ^[a-zA-Z0-9_-]{1,64}$
-          minLength: 0
-      description:
-        type: string
-        validation:
-          minLength: 0
-      response_timeout_secs:
-        type: optional<integer>
-        docs: The maximum time in seconds to wait for the tool call to complete.
-        default: 20
-      parameters:
-        type: optional<ObjectJsonSchemaPropertyOutput>
-        docs: Schema for any parameters the LLM needs to provide to the MCP tool.
-      mcp_tool_name:
-        type: string
-        docs: The name of the MCP tool to call
-      mcp_server_id:
-        type: string
-        docs: The id of the MCP server to call
-      approval_mode:
-        type: optional<McpApprovalRequiredModel>
-        docs: >-
-          If set to always accept, the tool will be pre-approved and not require
-          user approval before executing
     source:
       openapi: openapi.json
   ObjectJsonSchemaPropertyInputPropertiesValue:
@@ -4913,8 +4881,6 @@ types:
         type: ClientToolConfigInput
       mcp:
         type: McpToolConfigInput
-      native_mcp:
-        type: NativeMcpToolConfigInput
       system:
         type: SystemToolConfigInput
       webhook:
@@ -4975,8 +4941,6 @@ types:
         type: ClientToolConfigOutput
       mcp:
         type: McpToolConfigOutput
-      native_mcp:
-        type: NativeMcpToolConfigOutput
       system:
         type: SystemToolConfigOutput
       webhook:
@@ -4992,8 +4956,6 @@ types:
         type: ClientToolConfigInput
       mcp:
         type: McpToolConfigInput
-      native_mcp:
-        type: NativeMcpToolConfigInput
       system:
         type: SystemToolConfigInput
       webhook:
@@ -5045,6 +5007,8 @@ types:
         docs: Configuration for RAG
       knowledge_base_document_ids:
         type: optional<list<string>>
+      built_in_tools:
+        type: optional<BuiltInTools>
     source:
       openapi: openapi.json
   PromptAgentOverride:
@@ -5627,23 +5591,6 @@ types:
           'key').
     source:
       openapi: openapi.json
-  SharedSoundGenerationResponseModel:
-    properties:
-      public_user_id: string
-      history_item_id: string
-      generation_id: string
-      text: string
-      category: string
-      labels:
-        type: map<string, string>
-      purchased_count: integer
-      like_count: integer
-      featured: boolean
-      preview_url: string
-      purchased: boolean
-      icon_url: string
-    source:
-      openapi: openapi.json
   SimilarVoiceCategory:
     enum:
       - premade
@@ -6179,6 +6126,23 @@ types:
         type: optional<string>
       model_family:
         type: optional<TtsModelFamily>
+      optimize_streaming_latency:
+        type: optional<TtsOptimizeStreamingLatency>
+      stability:
+        type: optional<double>
+        validation:
+          min: 0
+          max: 1
+      speed:
+        type: optional<double>
+        validation:
+          min: 0.7
+          max: 1.2
+      similarity_boost:
+        type: optional<double>
+        validation:
+          min: 0
+          max: 1
     source:
       openapi: openapi.json
   SystemToolConfigInputParams:
@@ -6421,6 +6385,12 @@ types:
     properties:
       transfers:
         type: list<PhoneNumberTransfer>
+      enable_client_message:
+        type: optional<boolean>
+        docs: >-
+          Whether to play a message to the client while they wait for transfer.
+          Defaults to true for backward compatibility.
+        default: true
     source:
       openapi: openapi.json
   TurnConfig:
@@ -7324,6 +7294,9 @@ types:
       text_contents:
         type: optional<WidgetTextContents>
         docs: Text contents of the widget
+      styles:
+        type: optional<WidgetStyles>
+        docs: Styles for the widget
       language_selector:
         type: optional<boolean>
         docs: Whether to show the language selector
@@ -7474,6 +7447,9 @@ types:
       text_contents:
         type: optional<WidgetTextContents>
         docs: Text contents of the widget
+      styles:
+        type: optional<WidgetStyles>
+        docs: Styles for the widget
       language: string
       supported_language_overrides:
         type: optional<list<string>>
@@ -7535,6 +7511,70 @@ types:
       - bottom
       - value: bottom-right
         name: BottomRight
+    source:
+      openapi: openapi.json
+  WidgetStyles:
+    properties:
+      base:
+        type: optional<string>
+        docs: The base background color.
+      base_hover:
+        type: optional<string>
+        docs: The color of the base background when hovered.
+      base_active:
+        type: optional<string>
+        docs: The color of the base background when active (clicked).
+      base_border:
+        type: optional<string>
+        docs: The color of the border against the base background.
+      base_subtle:
+        type: optional<string>
+        docs: The color of subtle text against the base background.
+      base_primary:
+        type: optional<string>
+        docs: The color of primary text against the base background.
+      base_error:
+        type: optional<string>
+        docs: The color of error text against the base background.
+      accent:
+        type: optional<string>
+        docs: The accent background color.
+      accent_hover:
+        type: optional<string>
+        docs: The color of the accent background when hovered.
+      accent_active:
+        type: optional<string>
+        docs: The color of the accent background when active (clicked).
+      accent_border:
+        type: optional<string>
+        docs: The color of the border against the accent background.
+      accent_subtle:
+        type: optional<string>
+        docs: The color of subtle text against the accent background.
+      accent_primary:
+        type: optional<string>
+        docs: The color of primary text against the accent background.
+      overlay_padding:
+        type: optional<double>
+        docs: The padding around the edges of the viewport.
+      button_radius:
+        type: optional<double>
+        docs: The radius of the buttons.
+      input_radius:
+        type: optional<double>
+        docs: The radius of the input fields.
+      bubble_radius:
+        type: optional<double>
+        docs: The radius of the chat bubbles.
+      sheet_radius:
+        type: optional<double>
+        docs: The default radius of sheets.
+      compact_sheet_radius:
+        type: optional<double>
+        docs: The radius of the sheet in compact mode.
+      dropdown_sheet_radius:
+        type: optional<double>
+        docs: The radius of the dropdown sheet.
     source:
       openapi: openapi.json
   WidgetTextContents:
@@ -7646,7 +7686,7 @@ types:
       - convai_secrets
       - music_latent
       - convai_phone_numbers
-      - convai_mcps
+      - convai_mcp_servers
       - convai_batch_calls
     docs: >-
       Resource types that can be shared in the workspace. The name always need

@@ -1,0 +1,34 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    updateUserAutoProvisioning:
+      path: /v1/workspace/user-auto-provisioning
+      method: POST
+      auth: false
+      docs: Update user auto provisioning settings for the workspace.
+      source:
+        openapi: openapi.json
+      display-name: Update User Auto Provisioning
+      request:
+        name: BodyUpdateUserAutoProvisioningV1WorkspaceUserAutoProvisioningPost
+        body:
+          properties:
+            enabled: boolean
+        content-type: application/json
+      response:
+        docs: Successful Response
+        type: unknown
+        status-code: 200
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - request:
+            enabled: true
+          response:
+            body:
+              key: value
+  source:
+    openapi: openapi.json

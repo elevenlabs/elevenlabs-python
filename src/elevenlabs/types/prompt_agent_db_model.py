@@ -7,6 +7,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .built_in_tools import BuiltInTools
 from .custom_llm import CustomLlm
 from .knowledge_base_locator import KnowledgeBaseLocator
 from .llm import Llm
@@ -76,6 +77,7 @@ class PromptAgentDbModel(UncheckedBaseModel):
     """
 
     knowledge_base_document_ids: typing.Optional[typing.List[str]] = None
+    built_in_tools: typing.Optional[BuiltInTools] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

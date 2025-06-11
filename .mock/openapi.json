@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "ElevenLabs API Documentation",
-    "description": "This is the documentation for the ElevenLabs API. You can use this API to use our service programmatically, this is done by using your xi-api-key. <br/> You can view your xi-api-key using the 'Profile' tab on https://elevenlabs.io. Our API is experimental so all endpoints are subject to change.",
+    "description": "This is the documentation for the ElevenLabs API. You can use this API to use our service programmatically, this is done by using your API key. You can find your API key in the dashboard at https://elevenlabs.io/app/settings/api-keys.",
     "version": "1.0"
   },
   "paths": {
@@ -659,267 +659,6 @@
         "x-fern-sdk-group-name": "audio_isolation",
         "x-fern-sdk-method-name": "stream",
         "x-fern-streaming": true
-      }
-    },
-    "/v1/shared-sound-generations": {
-      "get": {
-        "operationId": "Get_shared_sound_effects_v1_shared_sound_generations_get",
-        "summary": "Get Shared Sound Effects",
-        "description": "Returns a list of shared sound effects.",
-        "parameters": [
-          {
-            "name": "page_size",
-            "in": "query",
-            "description": "How many sound effects to return at maximum. Can not exceed 100, defaults to 30.",
-            "required": false,
-            "schema": {
-              "description": "How many sound effects to return at maximum. Can not exceed 100, defaults to 30.",
-              "type": "integer",
-              "default": 30,
-              "title": "Page Size"
-            }
-          },
-          {
-            "name": "category",
-            "in": "query",
-            "description": "Sound effect category used for filtering.",
-            "required": false,
-            "schema": {
-              "description": "Sound effect category used for filtering.",
-              "anyOf": [
-                {
-                  "enum": [
-                    "restaurant",
-                    "park",
-                    "industrial",
-                    "school",
-                    "office",
-                    "urban",
-                    "ocean",
-                    "nature",
-                    "weather",
-                    "foley",
-                    "fantasy",
-                    "human",
-                    "device",
-                    "sci-fi",
-                    "horror",
-                    "animal",
-                    "boom",
-                    "braam",
-                    "riser",
-                    "whoosh",
-                    "drone",
-                    "impact",
-                    "weapon",
-                    "transport",
-                    "household",
-                    "percussion",
-                    "cymbal",
-                    "synth",
-                    "bass",
-                    "guitar",
-                    "key",
-                    "string",
-                    "brass",
-                    "woodwind",
-                    "ui element",
-                    "sport",
-                    "vehicle",
-                    "misc"
-                  ],
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "examples": [
-                "Nature"
-              ],
-              "title": "Category"
-            }
-          },
-          {
-            "name": "search",
-            "in": "query",
-            "description": "Search term used for filtering",
-            "required": false,
-            "schema": {
-              "description": "Search term used for filtering",
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "examples": [
-                "Cold water"
-              ],
-              "title": "Search"
-            }
-          },
-          {
-            "name": "sort",
-            "in": "query",
-            "description": "Sort criteria. Can be one of: created_date, download_count, like_count, trending_score. Defaults to trending_score.",
-            "required": false,
-            "schema": {
-              "description": "Sort criteria. Can be one of: created_date, download_count, like_count, trending_score. Defaults to trending_score.",
-              "default": "trending_score",
-              "anyOf": [
-                {
-                  "enum": [
-                    "sharing_date_unix",
-                    "purchased_count",
-                    "like_count",
-                    "trending_score"
-                  ],
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "examples": [
-                "trending_score"
-              ],
-              "title": "Sort"
-            }
-          },
-          {
-            "name": "featured",
-            "in": "query",
-            "description": "Filter featured sound effects.",
-            "required": false,
-            "schema": {
-              "description": "Filter featured sound effects.",
-              "type": "boolean",
-              "default": false,
-              "examples": [
-                true
-              ],
-              "title": "Featured"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 0,
-              "title": "Page"
-            }
-          },
-          {
-            "name": "xi-api-key",
-            "in": "header",
-            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
-            "required": false,
-            "schema": {
-              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Xi-Api-Key"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GetSharedSoundGenerationsResponseModel"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "sound-effects-explore"
-        ]
-      }
-    },
-    "/v1/shared-sound-generations/{sound_effect_generation_id}/purchase": {
-      "post": {
-        "operationId": "Purchases_shared_sound_effect_v1_shared_sound_generations__sound_effect_generation_id__purchase_post",
-        "summary": "Purchases Shared Sound Effect",
-        "description": "Purchases shared sound effect and charges user for the purchase.",
-        "parameters": [
-          {
-            "name": "sound_effect_generation_id",
-            "in": "path",
-            "description": "sound_effect_generation_id to be used, you can use GET https://api.elevenlabs.io/v1/sound-effects-history to receive a list of history items and their sound_effect_generation_ids.",
-            "required": true,
-            "schema": {
-              "description": "sound_effect_generation_id to be used, you can use GET https://api.elevenlabs.io/v1/sound-effects-history to receive a list of history items and their sound_effect_generation_ids.",
-              "type": "string",
-              "examples": [
-                "VW7YKqPnjY4h39yTbx2L"
-              ],
-              "title": "Sound Effect Generation Id"
-            }
-          },
-          {
-            "name": "xi-api-key",
-            "in": "header",
-            "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
-            "required": false,
-            "schema": {
-              "description": "Your API key. This is required by most endpoints to access our API programatically. You can view your xi-api-key using the 'Profile' tab on the website.",
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Xi-Api-Key"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "audio/mpeg": {}
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "sound-effects-explore"
-        ]
       }
     },
     "/v1/voices/{voice_id}/samples/{sample_id}": {
@@ -1757,8 +1496,7 @@
           "text-to-dialogue"
         ],
         "x-fern-sdk-group-name": "text_to_dialogue",
-        "x-fern-sdk-method-name": "convert",
-        "x-fern-streaming": true
+        "x-fern-sdk-method-name": "convert"
       }
     },
     "/v1/text-to-dialogue/stream": {
@@ -2747,10 +2485,10 @@
           {
             "name": "voice_type",
             "in": "query",
-            "description": "Type of the voice to filter by. One of 'personal', 'community', 'default', 'workspace', 'non-default'. 'non-default' is equal to 'personal' plus 'community'.",
+            "description": "Type of the voice to filter by. One of 'personal', 'community', 'default', 'workspace', 'non-default'. 'non-default' is equal to all but 'default'.",
             "required": false,
             "schema": {
-              "description": "Type of the voice to filter by. One of 'personal', 'community', 'default', 'workspace', 'non-default'. 'non-default' is equal to 'personal' plus 'community'.",
+              "description": "Type of the voice to filter by. One of 'personal', 'community', 'default', 'workspace', 'non-default'. 'non-default' is equal to all but 'default'.",
               "anyOf": [
                 {
                   "type": "string"
@@ -9531,6 +9269,47 @@
         ],
         "x-fern-sdk-group-name": "pronunciation_dictionaries",
         "x-fern-sdk-method-name": "list"
+      }
+    },
+    "/v1/workspace/user-auto-provisioning": {
+      "post": {
+        "operationId": "update_user_auto_provisioning_v1_workspace_user_auto_provisioning_post",
+        "summary": "Update User Auto Provisioning",
+        "description": "Update user auto provisioning settings for the workspace.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_update_user_auto_provisioning_v1_workspace_user_auto_provisioning_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "workspace",
+          "workspace"
+        ]
       }
     },
     "/v1/workspace/groups/search": {
@@ -20970,10 +20749,24 @@
             "title": "Cloud Storage Url"
           },
           "webhook": {
-            "description": "Whether to send the transcription result to configured speech-to-text webhooks.  If set the request will return early without the transcription, which will be delivered later via webhook. Webhooks can be created and assigned to a transcription task in webhook settings page in the UI.",
+            "description": "Whether to send the transcription result to configured speech-to-text webhooks.  If set the request will return early without the transcription, which will be delivered later via webhook.",
             "type": "boolean",
             "default": false,
             "title": "Webhook"
+          },
+          "temperature": {
+            "description": "Controls the randomness of the transcription output. Accepts values between 0.0 and 2.0, where higher values result in more diverse and less deterministic results. If omitted, we will use a temperature based on the model you selected which is usually 0.",
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 2,
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Temperature"
           }
         },
         "required": [
@@ -22479,6 +22272,19 @@
         ],
         "title": "Body_Verify_PVC_voice_captcha_v1_voices_pvc__voice_id__captcha_post"
       },
+      "Body_update_user_auto_provisioning_v1_workspace_user_auto_provisioning_post": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled"
+          }
+        },
+        "required": [
+          "enabled"
+        ],
+        "title": "Body_update_user_auto_provisioning_v1_workspace_user_auto_provisioning_post"
+      },
       "BreakdownTypes": {
         "description": "How to break down the information. Cannot be \"user\" or \"api_key\" if include_workspace_metrics is False.",
         "type": "string",
@@ -22496,6 +22302,67 @@
           "request_queue"
         ],
         "title": "BreakdownTypes"
+      },
+      "BuiltInTools": {
+        "type": "object",
+        "properties": {
+          "end_call": {
+            "description": "The end call tool",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SystemToolConfig-Input"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "language_detection": {
+            "description": "The language detection tool",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SystemToolConfig-Input"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "transfer_to_agent": {
+            "description": "The transfer to agent tool",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SystemToolConfig-Input"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "transfer_to_number": {
+            "description": "The transfer to number tool",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SystemToolConfig-Input"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "skip_turn": {
+            "description": "The skip turn tool",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SystemToolConfig-Input"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "title": "BuiltInTools"
       },
       "ChapterContentBlockExtendableNodeResponseModel": {
         "description": "Not used. Make sure you anticipate new types in the future.",
@@ -23104,10 +22971,11 @@
           "agent_response",
           "agent_response_correction",
           "client_tool_call",
+          "mcp_tool_call",
+          "agent_tool_response",
           "vad_score",
           "internal_turn_probability",
-          "internal_tentative_agent_response",
-          "internal_native_mcp_tool_call"
+          "internal_tentative_agent_response"
         ],
         "title": "ClientEvent"
       },
@@ -27995,39 +27863,6 @@
         ],
         "title": "GetPronunciationDictionaryMetadataResponseModel"
       },
-      "GetSharedSoundGenerationsResponseModel": {
-        "type": "object",
-        "properties": {
-          "shared_sound_generations": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SharedSoundGenerationResponseModel"
-            },
-            "title": "Shared Sound Generations"
-          },
-          "last_sort_id": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Last Sort Id"
-          },
-          "has_more": {
-            "type": "boolean",
-            "title": "Has More"
-          }
-        },
-        "required": [
-          "shared_sound_generations",
-          "last_sort_id",
-          "has_more"
-        ],
-        "title": "GetSharedSoundGenerationsResponseModel"
-      },
       "GetSpeechHistoryResponseModel": {
         "type": "object",
         "properties": {
@@ -28436,6 +28271,14 @@
           }
         },
         "title": "ImageAvatar"
+      },
+      "IntegrationType": {
+        "type": "string",
+        "enum": [
+          "mcp_server",
+          "mcp_integration"
+        ],
+        "title": "IntegrationType"
       },
       "InvoiceResponseModel": {
         "type": "object",
@@ -29276,18 +29119,18 @@
         ],
         "title": "LiteralJsonSchemaProperty"
       },
-      "MCPApprovalRequiredModel": {
-        "description": "Defines the approval model for an MCP tool",
+      "MCPApprovalPolicy": {
+        "description": "Defines the MCP server-level approval policy for tool execution.",
         "type": "string",
         "enum": [
-          "user_approval_always_given",
-          "user_approval_never_given",
-          "user_approval_required_per_tool"
+          "auto_approve_all",
+          "require_approval_all",
+          "require_approval_per_tool"
         ],
-        "title": "MCPApprovalRequiredModel"
+        "title": "MCPApprovalPolicy"
       },
       "MCPToolConfig-Input": {
-        "description": "A MCP tool is a tool that is used to call a MCP server",
+        "description": "An MCP tool configuration that can be used to call MCP servers",
         "type": "object",
         "properties": {
           "id": {
@@ -29313,11 +29156,14 @@
             "title": "Response Timeout Secs"
           },
           "type": {
-            "description": "The type of tool",
             "type": "string",
             "default": "mcp",
             "const": "mcp",
             "title": "Type"
+          },
+          "integration_type": {
+            "description": "The type of MCP tool",
+            "$ref": "#/components/schemas/IntegrationType"
           },
           "parameters": {
             "description": "Schema for any parameters the LLM needs to provide to the MCP tool.",
@@ -29330,32 +29176,57 @@
               }
             ]
           },
+          "approval_policy": {
+            "description": "The approval policy for the MCP tool",
+            "default": "require_approval_all",
+            "$ref": "#/components/schemas/MCPApprovalPolicy"
+          },
           "mcp_tool_name": {
             "description": "The name of the MCP tool to call",
             "type": "string",
             "title": "Mcp Tool Name"
+          },
+          "mcp_tool_description": {
+            "description": "The description of the MCP tool to call",
+            "type": "string",
+            "title": "Mcp Tool Description"
           },
           "mcp_server_id": {
             "description": "The id of the MCP server to call",
             "type": "string",
             "title": "Mcp Server Id"
           },
-          "approval_mode": {
-            "description": "If set to approved, the tool will be pre-approved and not require user approval before executing",
-            "default": "user_approval_never_given",
-            "$ref": "#/components/schemas/MCPApprovalRequiredModel"
+          "mcp_server_name": {
+            "description": "The name of the MCP server to call",
+            "type": "string",
+            "title": "Mcp Server Name"
+          },
+          "mcp_input_schema": {
+            "description": "Original inputSchema dict for consistent hashing (pure MCP format)",
+            "anyOf": [
+              {
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mcp Input Schema"
           }
         },
         "required": [
           "name",
           "description",
+          "integration_type",
           "mcp_tool_name",
-          "mcp_server_id"
+          "mcp_tool_description",
+          "mcp_server_id",
+          "mcp_server_name"
         ],
         "title": "MCPToolConfig"
       },
       "MCPToolConfig-Output": {
-        "description": "A MCP tool is a tool that is used to call a MCP server",
+        "description": "An MCP tool configuration that can be used to call MCP servers",
         "type": "object",
         "properties": {
           "id": {
@@ -29381,11 +29252,14 @@
             "title": "Response Timeout Secs"
           },
           "type": {
-            "description": "The type of tool",
             "type": "string",
             "default": "mcp",
             "const": "mcp",
             "title": "Type"
+          },
+          "integration_type": {
+            "description": "The type of MCP tool",
+            "$ref": "#/components/schemas/IntegrationType"
           },
           "parameters": {
             "description": "Schema for any parameters the LLM needs to provide to the MCP tool.",
@@ -29398,27 +29272,52 @@
               }
             ]
           },
+          "approval_policy": {
+            "description": "The approval policy for the MCP tool",
+            "default": "require_approval_all",
+            "$ref": "#/components/schemas/MCPApprovalPolicy"
+          },
           "mcp_tool_name": {
             "description": "The name of the MCP tool to call",
             "type": "string",
             "title": "Mcp Tool Name"
+          },
+          "mcp_tool_description": {
+            "description": "The description of the MCP tool to call",
+            "type": "string",
+            "title": "Mcp Tool Description"
           },
           "mcp_server_id": {
             "description": "The id of the MCP server to call",
             "type": "string",
             "title": "Mcp Server Id"
           },
-          "approval_mode": {
-            "description": "If set to approved, the tool will be pre-approved and not require user approval before executing",
-            "default": "user_approval_never_given",
-            "$ref": "#/components/schemas/MCPApprovalRequiredModel"
+          "mcp_server_name": {
+            "description": "The name of the MCP server to call",
+            "type": "string",
+            "title": "Mcp Server Name"
+          },
+          "mcp_input_schema": {
+            "description": "Original inputSchema dict for consistent hashing (pure MCP format)",
+            "anyOf": [
+              {
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mcp Input Schema"
           }
         },
         "required": [
           "name",
           "description",
+          "integration_type",
           "mcp_tool_name",
-          "mcp_server_id"
+          "mcp_tool_description",
+          "mcp_server_id",
+          "mcp_server_name"
         ],
         "title": "MCPToolConfig"
       },
@@ -29818,142 +29717,6 @@
           "on_watchlist"
         ],
         "title": "ModerationStatusResponseModel"
-      },
-      "NativeMCPToolConfig-Input": {
-        "description": "A Native MCP tool is a tool that is used to call a Native MCP server",
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "default": "",
-            "title": "Id"
-          },
-          "name": {
-            "type": "string",
-            "minLength": 0,
-            "pattern": "^[a-zA-Z0-9_-]{1,64}$",
-            "title": "Name"
-          },
-          "description": {
-            "type": "string",
-            "minLength": 0,
-            "title": "Description"
-          },
-          "response_timeout_secs": {
-            "description": "The maximum time in seconds to wait for the tool call to complete.",
-            "type": "integer",
-            "default": 20,
-            "title": "Response Timeout Secs"
-          },
-          "type": {
-            "description": "The type of tool",
-            "type": "string",
-            "default": "native_mcp",
-            "const": "native_mcp",
-            "title": "Type"
-          },
-          "parameters": {
-            "description": "Schema for any parameters the LLM needs to provide to the MCP tool.",
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/ObjectJsonSchemaProperty-Input"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "mcp_tool_name": {
-            "description": "The name of the MCP tool to call",
-            "type": "string",
-            "title": "Mcp Tool Name"
-          },
-          "mcp_server_id": {
-            "description": "The id of the MCP server to call",
-            "type": "string",
-            "title": "Mcp Server Id"
-          },
-          "approval_mode": {
-            "description": "If set to always accept, the tool will be pre-approved and not require user approval before executing",
-            "default": "user_approval_never_given",
-            "$ref": "#/components/schemas/MCPApprovalRequiredModel"
-          }
-        },
-        "required": [
-          "name",
-          "description",
-          "mcp_tool_name",
-          "mcp_server_id"
-        ],
-        "title": "NativeMCPToolConfig"
-      },
-      "NativeMCPToolConfig-Output": {
-        "description": "A Native MCP tool is a tool that is used to call a Native MCP server",
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "default": "",
-            "title": "Id"
-          },
-          "name": {
-            "type": "string",
-            "minLength": 0,
-            "pattern": "^[a-zA-Z0-9_-]{1,64}$",
-            "title": "Name"
-          },
-          "description": {
-            "type": "string",
-            "minLength": 0,
-            "title": "Description"
-          },
-          "response_timeout_secs": {
-            "description": "The maximum time in seconds to wait for the tool call to complete.",
-            "type": "integer",
-            "default": 20,
-            "title": "Response Timeout Secs"
-          },
-          "type": {
-            "description": "The type of tool",
-            "type": "string",
-            "default": "native_mcp",
-            "const": "native_mcp",
-            "title": "Type"
-          },
-          "parameters": {
-            "description": "Schema for any parameters the LLM needs to provide to the MCP tool.",
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/ObjectJsonSchemaProperty-Output"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "mcp_tool_name": {
-            "description": "The name of the MCP tool to call",
-            "type": "string",
-            "title": "Mcp Tool Name"
-          },
-          "mcp_server_id": {
-            "description": "The id of the MCP server to call",
-            "type": "string",
-            "title": "Mcp Server Id"
-          },
-          "approval_mode": {
-            "description": "If set to always accept, the tool will be pre-approved and not require user approval before executing",
-            "default": "user_approval_never_given",
-            "$ref": "#/components/schemas/MCPApprovalRequiredModel"
-          }
-        },
-        "required": [
-          "name",
-          "description",
-          "mcp_tool_name",
-          "mcp_server_id"
-        ],
-        "title": "NativeMCPToolConfig"
       },
       "ObjectJsonSchemaProperty-Input": {
         "type": "object",
@@ -31603,9 +31366,6 @@
                 },
                 {
                   "$ref": "#/components/schemas/MCPToolConfig-Input"
-                },
-                {
-                  "$ref": "#/components/schemas/NativeMCPToolConfig-Input"
                 }
               ],
               "description": "The type of tool",
@@ -31614,7 +31374,6 @@
                 "mapping": {
                   "client": "#/components/schemas/ClientToolConfig-Input",
                   "mcp": "#/components/schemas/MCPToolConfig-Input",
-                  "native_mcp": "#/components/schemas/NativeMCPToolConfig-Input",
                   "system": "#/components/schemas/SystemToolConfig-Input",
                   "webhook": "#/components/schemas/WebhookToolConfig-Input"
                 }
@@ -31739,9 +31498,6 @@
                 },
                 {
                   "$ref": "#/components/schemas/MCPToolConfig-Output"
-                },
-                {
-                  "$ref": "#/components/schemas/NativeMCPToolConfig-Output"
                 }
               ],
               "description": "The type of tool",
@@ -31750,7 +31506,6 @@
                 "mapping": {
                   "client": "#/components/schemas/ClientToolConfig-Output",
                   "mcp": "#/components/schemas/MCPToolConfig-Output",
-                  "native_mcp": "#/components/schemas/NativeMCPToolConfig-Output",
                   "system": "#/components/schemas/SystemToolConfig-Output",
                   "webhook": "#/components/schemas/WebhookToolConfig-Output"
                 }
@@ -31875,9 +31630,6 @@
                 },
                 {
                   "$ref": "#/components/schemas/MCPToolConfig-Input"
-                },
-                {
-                  "$ref": "#/components/schemas/NativeMCPToolConfig-Input"
                 }
               ],
               "description": "The type of tool",
@@ -31886,7 +31638,6 @@
                 "mapping": {
                   "client": "#/components/schemas/ClientToolConfig-Input",
                   "mcp": "#/components/schemas/MCPToolConfig-Input",
-                  "native_mcp": "#/components/schemas/NativeMCPToolConfig-Input",
                   "system": "#/components/schemas/SystemToolConfig-Input",
                   "webhook": "#/components/schemas/WebhookToolConfig-Input"
                 }
@@ -31962,6 +31713,9 @@
               "type": "string"
             },
             "title": "Knowledge Base Document Ids"
+          },
+          "built_in_tools": {
+            "$ref": "#/components/schemas/BuiltInTools"
           }
         },
         "example": {
@@ -33473,77 +33227,6 @@
         ],
         "title": "ShareOptionResponseModel"
       },
-      "SharedSoundGenerationResponseModel": {
-        "type": "object",
-        "properties": {
-          "public_user_id": {
-            "type": "string",
-            "title": "Public User Id"
-          },
-          "history_item_id": {
-            "type": "string",
-            "title": "History Item Id"
-          },
-          "generation_id": {
-            "type": "string",
-            "title": "Generation Id"
-          },
-          "text": {
-            "type": "string",
-            "title": "Text"
-          },
-          "category": {
-            "type": "string",
-            "title": "Category"
-          },
-          "labels": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string"
-            },
-            "title": "Labels"
-          },
-          "purchased_count": {
-            "type": "integer",
-            "title": "Purchased Count"
-          },
-          "like_count": {
-            "type": "integer",
-            "title": "Like Count"
-          },
-          "featured": {
-            "type": "boolean",
-            "title": "Featured"
-          },
-          "preview_url": {
-            "type": "string",
-            "title": "Preview Url"
-          },
-          "purchased": {
-            "type": "boolean",
-            "title": "Purchased"
-          },
-          "icon_url": {
-            "type": "string",
-            "title": "Icon Url"
-          }
-        },
-        "required": [
-          "public_user_id",
-          "history_item_id",
-          "generation_id",
-          "text",
-          "category",
-          "labels",
-          "purchased_count",
-          "like_count",
-          "featured",
-          "preview_url",
-          "purchased",
-          "icon_url"
-        ],
-        "title": "SharedSoundGenerationResponseModel"
-      },
       "SimilarVoice": {
         "type": "object",
         "properties": {
@@ -34954,6 +34637,55 @@
                 "type": "null"
               }
             ]
+          },
+          "optimize_streaming_latency": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TTSOptimizeStreamingLatency"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "stability": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1,
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Stability"
+          },
+          "speed": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1.2,
+                "minimum": 0.7
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Speed"
+          },
+          "similarity_boost": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1,
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Similarity Boost"
           }
         },
         "required": [
@@ -35409,6 +35141,12 @@
               "$ref": "#/components/schemas/PhoneNumberTransfer"
             },
             "title": "Transfers"
+          },
+          "enable_client_message": {
+            "description": "Whether to play a message to the client while they wait for transfer. Defaults to true for backward compatibility.",
+            "type": "boolean",
+            "default": true,
+            "title": "Enable Client Message"
           }
         },
         "required": [
@@ -38002,6 +37740,10 @@
             "description": "Text contents of the widget",
             "$ref": "#/components/schemas/WidgetTextContents"
           },
+          "styles": {
+            "description": "Styles for the widget",
+            "$ref": "#/components/schemas/WidgetStyles"
+          },
           "language_selector": {
             "description": "Whether to show the language selector",
             "type": "boolean",
@@ -38317,6 +38059,10 @@
           "text_contents": {
             "description": "Text contents of the widget",
             "$ref": "#/components/schemas/WidgetTextContents"
+          },
+          "styles": {
+            "description": "Styles for the widget",
+            "$ref": "#/components/schemas/WidgetStyles"
           },
           "language_selector": {
             "description": "Whether to show the language selector",
@@ -38634,6 +38380,10 @@
             "description": "Text contents of the widget",
             "$ref": "#/components/schemas/WidgetTextContents"
           },
+          "styles": {
+            "description": "Styles for the widget",
+            "$ref": "#/components/schemas/WidgetStyles"
+          },
           "language": {
             "type": "string",
             "title": "Language"
@@ -38790,6 +38540,252 @@
           "bottom-right"
         ],
         "title": "WidgetPlacement"
+      },
+      "WidgetStyles": {
+        "type": "object",
+        "properties": {
+          "base": {
+            "description": "The base background color.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Base"
+          },
+          "base_hover": {
+            "description": "The color of the base background when hovered.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Base Hover"
+          },
+          "base_active": {
+            "description": "The color of the base background when active (clicked).",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Base Active"
+          },
+          "base_border": {
+            "description": "The color of the border against the base background.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Base Border"
+          },
+          "base_subtle": {
+            "description": "The color of subtle text against the base background.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Base Subtle"
+          },
+          "base_primary": {
+            "description": "The color of primary text against the base background.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Base Primary"
+          },
+          "base_error": {
+            "description": "The color of error text against the base background.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Base Error"
+          },
+          "accent": {
+            "description": "The accent background color.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Accent"
+          },
+          "accent_hover": {
+            "description": "The color of the accent background when hovered.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Accent Hover"
+          },
+          "accent_active": {
+            "description": "The color of the accent background when active (clicked).",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Accent Active"
+          },
+          "accent_border": {
+            "description": "The color of the border against the accent background.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Accent Border"
+          },
+          "accent_subtle": {
+            "description": "The color of subtle text against the accent background.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Accent Subtle"
+          },
+          "accent_primary": {
+            "description": "The color of primary text against the accent background.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Accent Primary"
+          },
+          "overlay_padding": {
+            "description": "The padding around the edges of the viewport.",
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Overlay Padding"
+          },
+          "button_radius": {
+            "description": "The radius of the buttons.",
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Button Radius"
+          },
+          "input_radius": {
+            "description": "The radius of the input fields.",
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Input Radius"
+          },
+          "bubble_radius": {
+            "description": "The radius of the chat bubbles.",
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bubble Radius"
+          },
+          "sheet_radius": {
+            "description": "The default radius of sheets.",
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sheet Radius"
+          },
+          "compact_sheet_radius": {
+            "description": "The radius of the sheet in compact mode.",
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Compact Sheet Radius"
+          },
+          "dropdown_sheet_radius": {
+            "description": "The radius of the dropdown sheet.",
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dropdown Sheet Radius"
+          }
+        },
+        "title": "WidgetStyles"
       },
       "WidgetTextContents": {
         "type": "object",
@@ -39136,7 +39132,7 @@
           "convai_secrets",
           "music_latent",
           "convai_phone_numbers",
-          "convai_mcps",
+          "convai_mcp_servers",
           "convai_batch_calls"
         ],
         "title": "WorkspaceResourceType"
@@ -39154,7 +39150,7 @@
     },
     {
       "name": "speech-to-text",
-      "description": "Transcribe your audio files with detailed speaker annotations and precise timestamps using our cutting-edge model. Speech-to-text is currently in alpha and available to a select group of users. We plan to roll it out more broadly soon."
+      "description": "Transcribe your audio files with detailed speaker annotations and precise timestamps using our cutting-edge model."
     },
     {
       "name": "forced-alignment",
@@ -39166,7 +39162,7 @@
     },
     {
       "name": "voices",
-      "description": "Access to voices created either by you or us."
+      "description": "Access to voices created either by you or ElevenLabs."
     },
     {
       "name": "samples",
@@ -39177,8 +39173,8 @@
       "description": "Accesses your speech history. Your speech history is a list of all your created audio including its metadata using our text-to-speech and speech-to-speech models."
     },
     {
-      "name": "projects",
-      "description": "Access, create and convert Projects programmatically, only specifically whitelisted accounts can access the Projects API. If you need access please contact our sales team."
+      "name": "studios",
+      "description": "Access, create and convert Studio Projects programmatically, only specifically whitelisted accounts can access the Projects API. If you need access please contact our sales team."
     }
   ]
 }

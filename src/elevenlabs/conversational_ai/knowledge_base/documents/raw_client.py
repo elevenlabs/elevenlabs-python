@@ -302,6 +302,8 @@ class RawDocumentsClient:
             request_options=request_options,
         )
         try:
+            if _response is None or not _response.text.strip():
+                return HttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     typing.Optional[typing.Any],
@@ -779,6 +781,8 @@ class AsyncRawDocumentsClient:
             request_options=request_options,
         )
         try:
+            if _response is None or not _response.text.strip():
+                return AsyncHttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     typing.Optional[typing.Any],
