@@ -14,16 +14,13 @@ The official Python API for [ElevenLabs](https://elevenlabs.io/) [text-to-speech
 
 Check out the [HTTP API documentation](https://elevenlabs.io/docs/api-reference).
 
-## ⚙️ Install
+## Install
 
 ```bash
 pip install elevenlabs
 ```
 
-## 🗣️ Usage
-
-[![Open in Spaces](https://img.shields.io/badge/🤗-Open%20in%20Spaces-blue.svg)](https://huggingface.co/spaces/elevenlabs/tts)
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/gist/flavioschneider/49468d728a816c6538fd2f56b3b50b96/elevenlabs-python.ipynb)
+## Usage
 
 ### Main Models
 
@@ -72,7 +69,7 @@ play(audio)
 
 </details>
 
-## 🗣️ Voices
+## Voices
 
 List all your available voices with `voices()`.
 
@@ -113,7 +110,7 @@ voice = client.voices.ivc.create(
 )
 ```
 
-## 🚿 Streaming
+## Streaming
 
 Stream audio in real-time, as it's being generated.
 
@@ -161,9 +158,7 @@ asyncio.run(print_models())
 
 ## Languages Supported
 
-We support 32 languages and 100+ accents. Explore [all languages](https://elevenlabs.io/languages).
-
-<img src="https://github.com/elevenlabs/elevenlabs-js/blob/main/assets/languages.png" width="900">
+Explore [all models & languages](https://elevenlabs.io/docs/models).
 
 ## Contributing
 
