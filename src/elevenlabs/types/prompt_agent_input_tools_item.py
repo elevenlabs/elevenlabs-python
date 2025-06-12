@@ -9,7 +9,8 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .dynamic_variables_config import DynamicVariablesConfig
-from .mcp_approval_required_model import McpApprovalRequiredModel
+from .integration_type import IntegrationType
+from .mcp_approval_policy import McpApprovalPolicy
 from .system_tool_config_input_params import SystemToolConfigInputParams
 from .webhook_tool_api_schema_config_input import WebhookToolApiSchemaConfigInput
 
@@ -48,35 +49,14 @@ class PromptAgentInputToolsItem_Mcp(UncheckedBaseModel):
     name: str
     description: str
     response_timeout_secs: typing.Optional[int] = None
+    integration_type: IntegrationType
     parameters: typing.Optional["ObjectJsonSchemaPropertyInput"] = None
+    approval_policy: typing.Optional[McpApprovalPolicy] = None
     mcp_tool_name: str
+    mcp_tool_description: str
     mcp_server_id: str
-    approval_mode: typing.Optional[McpApprovalRequiredModel] = None
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
-
-
-class PromptAgentInputToolsItem_NativeMcp(UncheckedBaseModel):
-    """
-    The type of tool
-    """
-
-    type: typing.Literal["native_mcp"] = "native_mcp"
-    id: typing.Optional[str] = None
-    name: str
-    description: str
-    response_timeout_secs: typing.Optional[int] = None
-    parameters: typing.Optional["ObjectJsonSchemaPropertyInput"] = None
-    mcp_tool_name: str
-    mcp_server_id: str
-    approval_mode: typing.Optional[McpApprovalRequiredModel] = None
+    mcp_server_name: str
+    mcp_input_schema: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -140,7 +120,6 @@ PromptAgentInputToolsItem = typing_extensions.Annotated[
     typing.Union[
         PromptAgentInputToolsItem_Client,
         PromptAgentInputToolsItem_Mcp,
-        PromptAgentInputToolsItem_NativeMcp,
         PromptAgentInputToolsItem_System,
         PromptAgentInputToolsItem_Webhook,
     ],
@@ -148,5 +127,4 @@ PromptAgentInputToolsItem = typing_extensions.Annotated[
 ]
 update_forward_refs(PromptAgentInputToolsItem_Client)
 update_forward_refs(PromptAgentInputToolsItem_Mcp)
-update_forward_refs(PromptAgentInputToolsItem_NativeMcp)
 update_forward_refs(PromptAgentInputToolsItem_Webhook)

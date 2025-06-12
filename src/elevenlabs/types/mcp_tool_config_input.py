@@ -7,12 +7,13 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .mcp_approval_required_model import McpApprovalRequiredModel
+from .integration_type import IntegrationType
+from .mcp_approval_policy import McpApprovalPolicy
 
 
 class McpToolConfigInput(UncheckedBaseModel):
     """
-    A MCP tool is a tool that is used to call a MCP server
+    An MCP tool configuration that can be used to call MCP servers
     """
 
     id: typing.Optional[str] = None
@@ -23,9 +24,19 @@ class McpToolConfigInput(UncheckedBaseModel):
     The maximum time in seconds to wait for the tool call to complete.
     """
 
+    integration_type: IntegrationType = pydantic.Field()
+    """
+    The type of MCP tool
+    """
+
     parameters: typing.Optional["ObjectJsonSchemaPropertyInput"] = pydantic.Field(default=None)
     """
     Schema for any parameters the LLM needs to provide to the MCP tool.
+    """
+
+    approval_policy: typing.Optional[McpApprovalPolicy] = pydantic.Field(default=None)
+    """
+    The approval policy for the MCP tool
     """
 
     mcp_tool_name: str = pydantic.Field()
@@ -33,14 +44,24 @@ class McpToolConfigInput(UncheckedBaseModel):
     The name of the MCP tool to call
     """
 
+    mcp_tool_description: str = pydantic.Field()
+    """
+    The description of the MCP tool to call
+    """
+
     mcp_server_id: str = pydantic.Field()
     """
     The id of the MCP server to call
     """
 
-    approval_mode: typing.Optional[McpApprovalRequiredModel] = pydantic.Field(default=None)
+    mcp_server_name: str = pydantic.Field()
     """
-    If set to approved, the tool will be pre-approved and not require user approval before executing
+    The name of the MCP server to call
+    """
+
+    mcp_input_schema: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    """
+    Original inputSchema dict for consistent hashing (pure MCP format)
     """
 
     if IS_PYDANTIC_V2:

@@ -13,10 +13,11 @@ ClientEvent = typing.Union[
         "agent_response",
         "agent_response_correction",
         "client_tool_call",
+        "mcp_tool_call",
+        "agent_tool_response",
         "vad_score",
         "internal_turn_probability",
         "internal_tentative_agent_response",
-        "internal_native_mcp_tool_call",
     ],
     typing.Any,
 ]
