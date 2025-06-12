@@ -45,6 +45,7 @@ class SpeechToTextClient:
         file_format: typing.Optional[SpeechToTextConvertRequestFileFormat] = OMIT,
         cloud_storage_url: typing.Optional[str] = OMIT,
         webhook: typing.Optional[bool] = OMIT,
+        temperature: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SpeechToTextChunkResponseModel:
         """
@@ -86,7 +87,10 @@ class SpeechToTextClient:
             The valid AWS S3, Cloudflare R2 or Google Cloud Storage URL of the file to transcribe. Exactly one of the file or cloud_storage_url parameters must be provided. The file must be a valid publicly accessible cloud storage URL. The file size must be less than 2GB. URL can be pre-signed.
 
         webhook : typing.Optional[bool]
-            Whether to send the transcription result to configured speech-to-text webhooks.  If set the request will return early without the transcription, which will be delivered later via webhook. Webhooks can be created and assigned to a transcription task in webhook settings page in the UI.
+            Whether to send the transcription result to configured speech-to-text webhooks.  If set the request will return early without the transcription, which will be delivered later via webhook.
+
+        temperature : typing.Optional[float]
+            Controls the randomness of the transcription output. Accepts values between 0.0 and 2.0, where higher values result in more diverse and less deterministic results. If omitted, we will use a temperature based on the model you selected which is usually 0.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -120,6 +124,7 @@ class SpeechToTextClient:
             file_format=file_format,
             cloud_storage_url=cloud_storage_url,
             webhook=webhook,
+            temperature=temperature,
             request_options=request_options,
         )
         return _response.data
@@ -155,6 +160,7 @@ class AsyncSpeechToTextClient:
         file_format: typing.Optional[SpeechToTextConvertRequestFileFormat] = OMIT,
         cloud_storage_url: typing.Optional[str] = OMIT,
         webhook: typing.Optional[bool] = OMIT,
+        temperature: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SpeechToTextChunkResponseModel:
         """
@@ -196,7 +202,10 @@ class AsyncSpeechToTextClient:
             The valid AWS S3, Cloudflare R2 or Google Cloud Storage URL of the file to transcribe. Exactly one of the file or cloud_storage_url parameters must be provided. The file must be a valid publicly accessible cloud storage URL. The file size must be less than 2GB. URL can be pre-signed.
 
         webhook : typing.Optional[bool]
-            Whether to send the transcription result to configured speech-to-text webhooks.  If set the request will return early without the transcription, which will be delivered later via webhook. Webhooks can be created and assigned to a transcription task in webhook settings page in the UI.
+            Whether to send the transcription result to configured speech-to-text webhooks.  If set the request will return early without the transcription, which will be delivered later via webhook.
+
+        temperature : typing.Optional[float]
+            Controls the randomness of the transcription output. Accepts values between 0.0 and 2.0, where higher values result in more diverse and less deterministic results. If omitted, we will use a temperature based on the model you selected which is usually 0.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -238,6 +247,7 @@ class AsyncSpeechToTextClient:
             file_format=file_format,
             cloud_storage_url=cloud_storage_url,
             webhook=webhook,
+            temperature=temperature,
             request_options=request_options,
         )
         return _response.data

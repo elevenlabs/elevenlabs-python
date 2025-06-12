@@ -44,6 +44,7 @@ service:
               next_invoice:
                 amount_due_cents: 1000
                 discount_percent_off: 1.1
+                discount_amount_off: 1.1
                 next_payment_attempt_unix: 1738356858
               has_open_invoices: false
   source:

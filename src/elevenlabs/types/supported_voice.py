@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .tts_model_family import TtsModelFamily
+from .tts_optimize_streaming_latency import TtsOptimizeStreamingLatency
 
 
 class SupportedVoice(UncheckedBaseModel):
@@ -14,6 +15,10 @@ class SupportedVoice(UncheckedBaseModel):
     description: typing.Optional[str] = None
     language: typing.Optional[str] = None
     model_family: typing.Optional[TtsModelFamily] = None
+    optimize_streaming_latency: typing.Optional[TtsOptimizeStreamingLatency] = None
+    stability: typing.Optional[float] = None
+    speed: typing.Optional[float] = None
+    similarity_boost: typing.Optional[float] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

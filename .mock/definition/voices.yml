@@ -194,7 +194,7 @@ service:
             docs: >-
               Type of the voice to filter by. One of 'personal', 'community',
               'default', 'workspace', 'non-default'. 'non-default' is equal to
-              'personal' plus 'community'.
+              all but 'default'.
           category:
             type: optional<string>
             docs: >-
@@ -895,7 +895,7 @@ service:
   source:
     openapi: openapi.json
   display-name: Voices
-docs: Access to voices created either by you or us.
+docs: Access to voices created either by you or ElevenLabs.
 types:
   VoicesGetSharedRequestCategory:
     enum:

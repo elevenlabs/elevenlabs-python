@@ -18,6 +18,11 @@ class InvoiceResponse(UncheckedBaseModel):
     The discount applied to the invoice. E.g. [20.0f] for 20% off.
     """
 
+    discount_amount_off: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    The discount applied to the invoice. E.g. [20.0f] for 20% off.
+    """
+
     next_payment_attempt_unix: int = pydantic.Field()
     """
     The Unix timestamp of the next payment attempt.

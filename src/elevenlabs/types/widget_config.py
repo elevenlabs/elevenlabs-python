@@ -11,6 +11,7 @@ from .widget_expandable import WidgetExpandable
 from .widget_feedback_mode import WidgetFeedbackMode
 from .widget_language_preset import WidgetLanguagePreset
 from .widget_placement import WidgetPlacement
+from .widget_styles import WidgetStyles
 from .widget_text_contents import WidgetTextContents
 
 
@@ -168,6 +169,11 @@ class WidgetConfig(UncheckedBaseModel):
     text_contents: typing.Optional[WidgetTextContents] = pydantic.Field(default=None)
     """
     Text contents of the widget
+    """
+
+    styles: typing.Optional[WidgetStyles] = pydantic.Field(default=None)
+    """
+    Styles for the widget
     """
 
     language_selector: typing.Optional[bool] = pydantic.Field(default=None)

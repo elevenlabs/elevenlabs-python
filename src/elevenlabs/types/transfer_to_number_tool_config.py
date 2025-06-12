@@ -10,6 +10,10 @@ from .phone_number_transfer import PhoneNumberTransfer
 
 class TransferToNumberToolConfig(UncheckedBaseModel):
     transfers: typing.List[PhoneNumberTransfer]
+    enable_client_message: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to play a message to the client while they wait for transfer. Defaults to true for backward compatibility.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

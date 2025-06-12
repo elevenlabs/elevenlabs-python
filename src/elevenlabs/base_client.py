@@ -100,10 +100,10 @@ class BaseElevenLabs:
         self.audio_native = AudioNativeClient(client_wrapper=self._client_wrapper)
         self.usage = UsageClient(client_wrapper=self._client_wrapper)
         self.pronunciation_dictionaries = PronunciationDictionariesClient(client_wrapper=self._client_wrapper)
+        self.workspace = WorkspaceClient(client_wrapper=self._client_wrapper)
         self.speech_to_text = SpeechToTextClient(client_wrapper=self._client_wrapper)
         self.forced_alignment = ForcedAlignmentClient(client_wrapper=self._client_wrapper)
         self.conversational_ai = ConversationalAiClient(client_wrapper=self._client_wrapper)
-        self.workspace = WorkspaceClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncBaseElevenLabs:
@@ -178,7 +178,7 @@ class AsyncBaseElevenLabs:
         self.audio_native = AsyncAudioNativeClient(client_wrapper=self._client_wrapper)
         self.usage = AsyncUsageClient(client_wrapper=self._client_wrapper)
         self.pronunciation_dictionaries = AsyncPronunciationDictionariesClient(client_wrapper=self._client_wrapper)
+        self.workspace = AsyncWorkspaceClient(client_wrapper=self._client_wrapper)
         self.speech_to_text = AsyncSpeechToTextClient(client_wrapper=self._client_wrapper)
         self.forced_alignment = AsyncForcedAlignmentClient(client_wrapper=self._client_wrapper)
         self.conversational_ai = AsyncConversationalAiClient(client_wrapper=self._client_wrapper)
-        self.workspace = AsyncWorkspaceClient(client_wrapper=self._client_wrapper)

@@ -113,6 +113,7 @@ from .body_stream_project_audio_v_1_projects_project_id_snapshots_project_snapsh
     BodyStreamProjectAudioV1ProjectsProjectIdSnapshotsProjectSnapshotIdStreamPost,
 )
 from .breakdown_types import BreakdownTypes
+from .built_in_tools import BuiltInTools
 from .chapter_content_block_extendable_node_response_model import ChapterContentBlockExtendableNodeResponseModel
 from .chapter_content_block_input_model import ChapterContentBlockInputModel
 from .chapter_content_block_input_model_sub_type import ChapterContentBlockInputModelSubType
@@ -399,7 +400,6 @@ from .get_pronunciation_dictionary_metadata_response_model_permission_on_resourc
     GetPronunciationDictionaryMetadataResponseModelPermissionOnResource,
 )
 from .get_pronunciation_dictionary_response import GetPronunciationDictionaryResponse
-from .get_shared_sound_generations_response_model import GetSharedSoundGenerationsResponseModel
 from .get_speech_history_response import GetSpeechHistoryResponse
 from .get_voices_response import GetVoicesResponse
 from .get_voices_v_2_response import GetVoicesV2Response
@@ -413,6 +413,7 @@ from .image_avatar import ImageAvatar
 from .initialise_context import InitialiseContext
 from .initialize_connection import InitializeConnection
 from .initialize_connection_multi import InitializeConnectionMulti
+from .integration_type import IntegrationType
 from .invoice_response import InvoiceResponse
 from .keep_context_alive import KeepContextAlive
 from .knowledge_base_document_chunk_response_model import KnowledgeBaseDocumentChunkResponseModel
@@ -440,7 +441,7 @@ from .llm_usage_input import LlmUsageInput
 from .llm_usage_output import LlmUsageOutput
 from .manual_verification_file_response import ManualVerificationFileResponse
 from .manual_verification_response import ManualVerificationResponse
-from .mcp_approval_required_model import McpApprovalRequiredModel
+from .mcp_approval_policy import McpApprovalPolicy
 from .mcp_tool_config_input import McpToolConfigInput
 from .mcp_tool_config_output import McpToolConfigOutput
 from .metric_record import MetricRecord
@@ -452,8 +453,6 @@ from .model_settings_response_model import ModelSettingsResponseModel
 from .moderation_status_response_model import ModerationStatusResponseModel
 from .moderation_status_response_model_safety_status import ModerationStatusResponseModelSafetyStatus
 from .moderation_status_response_model_warning_status import ModerationStatusResponseModelWarningStatus
-from .native_mcp_tool_config_input import NativeMcpToolConfigInput
-from .native_mcp_tool_config_output import NativeMcpToolConfigOutput
 from .normalized_alignment import NormalizedAlignment
 from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput
 from .object_json_schema_property_input_properties_value import ObjectJsonSchemaPropertyInputPropertiesValue
@@ -501,7 +500,6 @@ from .prompt_agent_db_model_tools_item import (
     PromptAgentDbModelToolsItem,
     PromptAgentDbModelToolsItem_Client,
     PromptAgentDbModelToolsItem_Mcp,
-    PromptAgentDbModelToolsItem_NativeMcp,
     PromptAgentDbModelToolsItem_System,
     PromptAgentDbModelToolsItem_Webhook,
 )
@@ -509,7 +507,6 @@ from .prompt_agent_input_tools_item import (
     PromptAgentInputToolsItem,
     PromptAgentInputToolsItem_Client,
     PromptAgentInputToolsItem_Mcp,
-    PromptAgentInputToolsItem_NativeMcp,
     PromptAgentInputToolsItem_System,
     PromptAgentInputToolsItem_Webhook,
 )
@@ -517,7 +514,6 @@ from .prompt_agent_output_tools_item import (
     PromptAgentOutputToolsItem,
     PromptAgentOutputToolsItem_Client,
     PromptAgentOutputToolsItem_Mcp,
-    PromptAgentOutputToolsItem_NativeMcp,
     PromptAgentOutputToolsItem_System,
     PromptAgentOutputToolsItem_Webhook,
 )
@@ -574,7 +570,6 @@ from .send_text import SendText
 from .send_text_multi import SendTextMulti
 from .share_option_response_model import ShareOptionResponseModel
 from .share_option_response_model_type import ShareOptionResponseModelType
-from .shared_sound_generation_response_model import SharedSoundGenerationResponseModel
 from .similar_voice import SimilarVoice
 from .similar_voice_category import SimilarVoiceCategory
 from .similar_voices_for_speaker_response import SimilarVoicesForSpeakerResponse
@@ -720,6 +715,7 @@ from .widget_feedback_mode import WidgetFeedbackMode
 from .widget_language_preset import WidgetLanguagePreset
 from .widget_language_preset_response import WidgetLanguagePresetResponse
 from .widget_placement import WidgetPlacement
+from .widget_styles import WidgetStyles
 from .widget_text_contents import WidgetTextContents
 from .workspace_batch_calls_response import WorkspaceBatchCallsResponse
 from .workspace_group_by_name_response_model import WorkspaceGroupByNameResponseModel
@@ -803,6 +799,7 @@ __all__ = [
     "BodyStreamChapterAudioV1ProjectsProjectIdChaptersChapterIdSnapshotsChapterSnapshotIdStreamPost",
     "BodyStreamProjectAudioV1ProjectsProjectIdSnapshotsProjectSnapshotIdStreamPost",
     "BreakdownTypes",
+    "BuiltInTools",
     "ChapterContentBlockExtendableNodeResponseModel",
     "ChapterContentBlockInputModel",
     "ChapterContentBlockInputModelSubType",
@@ -1039,7 +1036,6 @@ __all__ = [
     "GetPronunciationDictionaryMetadataResponse",
     "GetPronunciationDictionaryMetadataResponseModelPermissionOnResource",
     "GetPronunciationDictionaryResponse",
-    "GetSharedSoundGenerationsResponseModel",
     "GetSpeechHistoryResponse",
     "GetVoicesResponse",
     "GetVoicesV2Response",
@@ -1053,6 +1049,7 @@ __all__ = [
     "InitialiseContext",
     "InitializeConnection",
     "InitializeConnectionMulti",
+    "IntegrationType",
     "InvoiceResponse",
     "KeepContextAlive",
     "KnowledgeBaseDocumentChunkResponseModel",
@@ -1080,7 +1077,7 @@ __all__ = [
     "LlmUsageOutput",
     "ManualVerificationFileResponse",
     "ManualVerificationResponse",
-    "McpApprovalRequiredModel",
+    "McpApprovalPolicy",
     "McpToolConfigInput",
     "McpToolConfigOutput",
     "MetricRecord",
@@ -1092,8 +1089,6 @@ __all__ = [
     "ModerationStatusResponseModel",
     "ModerationStatusResponseModelSafetyStatus",
     "ModerationStatusResponseModelWarningStatus",
-    "NativeMcpToolConfigInput",
-    "NativeMcpToolConfigOutput",
     "NormalizedAlignment",
     "ObjectJsonSchemaPropertyInput",
     "ObjectJsonSchemaPropertyInputPropertiesValue",
@@ -1140,19 +1135,16 @@ __all__ = [
     "PromptAgentDbModelToolsItem",
     "PromptAgentDbModelToolsItem_Client",
     "PromptAgentDbModelToolsItem_Mcp",
-    "PromptAgentDbModelToolsItem_NativeMcp",
     "PromptAgentDbModelToolsItem_System",
     "PromptAgentDbModelToolsItem_Webhook",
     "PromptAgentInputToolsItem",
     "PromptAgentInputToolsItem_Client",
     "PromptAgentInputToolsItem_Mcp",
-    "PromptAgentInputToolsItem_NativeMcp",
     "PromptAgentInputToolsItem_System",
     "PromptAgentInputToolsItem_Webhook",
     "PromptAgentOutputToolsItem",
     "PromptAgentOutputToolsItem_Client",
     "PromptAgentOutputToolsItem_Mcp",
-    "PromptAgentOutputToolsItem_NativeMcp",
     "PromptAgentOutputToolsItem_System",
     "PromptAgentOutputToolsItem_Webhook",
     "PromptAgentOverride",
@@ -1206,7 +1198,6 @@ __all__ = [
     "SendTextMulti",
     "ShareOptionResponseModel",
     "ShareOptionResponseModelType",
-    "SharedSoundGenerationResponseModel",
     "SimilarVoice",
     "SimilarVoiceCategory",
     "SimilarVoicesForSpeakerResponse",
@@ -1338,6 +1329,7 @@ __all__ = [
     "WidgetLanguagePreset",
     "WidgetLanguagePresetResponse",
     "WidgetPlacement",
+    "WidgetStyles",
     "WidgetTextContents",
     "WorkspaceBatchCallsResponse",
     "WorkspaceGroupByNameResponseModel",
