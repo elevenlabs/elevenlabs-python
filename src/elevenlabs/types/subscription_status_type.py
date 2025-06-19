@@ -4,15 +4,7 @@ import typing
 
 SubscriptionStatusType = typing.Union[
     typing.Literal[
-        "trialing",
-        "active",
-        "incomplete",
-        "incomplete_expired",
-        "past_due",
-        "canceled",
-        "unpaid",
-        "free",
-        "free_disabled",
+        "trialing", "active", "incomplete", "incomplete_expired", "past_due", "free", "free_disabled", "canceled"
     ],
     typing.Any,
 ]

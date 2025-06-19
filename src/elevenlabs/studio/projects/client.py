@@ -82,6 +82,7 @@ class ProjectsClient:
         default_model_id: str,
         from_url: typing.Optional[str] = OMIT,
         from_document: typing.Optional[core.File] = OMIT,
+        from_content_json: typing.Optional[str] = OMIT,
         quality_preset: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
         author: typing.Optional[str] = OMIT,
@@ -122,10 +123,13 @@ class ProjectsClient:
             The ID of the model to be used for this Studio project, you can query GET /v1/models to list all available models.
 
         from_url : typing.Optional[str]
-            An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
+            An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' and 'from_content' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
 
         from_document : typing.Optional[core.File]
             See core.File for more documentation
+
+        from_content_json : typing.Optional[str]
+            An optional content to initialize the Studio project with. If this is set, 'from_url' and 'from_document' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
 
         quality_preset : typing.Optional[str]
             Output quality of the generated audio. Must be one of:
@@ -174,7 +178,61 @@ class ProjectsClient:
             A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text. A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
 
         callback_url : typing.Optional[str]
-            A url that will be called by our service when the Studio project is converted. Request will contain a json blob containing the status of the conversion
+
+                A url that will be called by our service when the Studio project is converted. Request will contain a json blob containing the status of the conversion
+                Messages:
+                1. When project was converted successfully:
+                {
+                  type: "project_conversion_status",
+                  event_timestamp: 1234567890,
+                  data: {
+                    request_id: "1234567890",
+                    project_id: "21m00Tcm4TlvDq8ikWAM",
+                    conversion_status: "success",
+                    project_snapshot_id: "22m00Tcm4TlvDq8ikMAT",
+                    error_details: None,
+                  }
+                }
+                2. When project conversion failed:
+                {
+                  type: "project_conversion_status",
+                  event_timestamp: 1234567890,
+                  data: {
+                    request_id: "1234567890",
+                    project_id: "21m00Tcm4TlvDq8ikWAM",
+                    conversion_status: "error",
+                    project_snapshot_id: None,
+                    error_details: "Error details if conversion failed"
+                  }
+                }
+
+                3. When chapter was converted successfully:
+                {
+                  type: "chapter_conversion_status",
+                  event_timestamp: 1234567890,
+                  data: {
+                    request_id: "1234567890",
+                    project_id: "21m00Tcm4TlvDq8ikWAM",
+                    chapter_id: "22m00Tcm4TlvDq8ikMAT",
+                    conversion_status: "success",
+                    chapter_snapshot_id: "23m00Tcm4TlvDq8ikMAV",
+                    error_details: None,
+                  }
+                }
+                4. When chapter conversion failed:
+                {
+                  type: "chapter_conversion_status",
+                  event_timestamp: 1234567890,
+                  data: {
+                    request_id: "1234567890",
+                    project_id: "21m00Tcm4TlvDq8ikWAM",
+                    chapter_id: "22m00Tcm4TlvDq8ikMAT",
+                    conversion_status: "error",
+                    chapter_snapshot_id: None,
+                    error_details: "Error details if conversion failed"
+                  }
+                }
+
 
         fiction : typing.Optional[ProjectsCreateRequestFiction]
             An optional specification of whether the content of this Studio project is fiction.
@@ -225,6 +283,7 @@ class ProjectsClient:
             default_model_id=default_model_id,
             from_url=from_url,
             from_document=from_document,
+            from_content_json=from_content_json,
             quality_preset=quality_preset,
             title=title,
             author=author,
@@ -491,6 +550,7 @@ class AsyncProjectsClient:
         default_model_id: str,
         from_url: typing.Optional[str] = OMIT,
         from_document: typing.Optional[core.File] = OMIT,
+        from_content_json: typing.Optional[str] = OMIT,
         quality_preset: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
         author: typing.Optional[str] = OMIT,
@@ -531,10 +591,13 @@ class AsyncProjectsClient:
             The ID of the model to be used for this Studio project, you can query GET /v1/models to list all available models.
 
         from_url : typing.Optional[str]
-            An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
+            An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' and 'from_content' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
 
         from_document : typing.Optional[core.File]
             See core.File for more documentation
+
+        from_content_json : typing.Optional[str]
+            An optional content to initialize the Studio project with. If this is set, 'from_url' and 'from_document' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
 
         quality_preset : typing.Optional[str]
             Output quality of the generated audio. Must be one of:
@@ -583,7 +646,61 @@ class AsyncProjectsClient:
             A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text. A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
 
         callback_url : typing.Optional[str]
-            A url that will be called by our service when the Studio project is converted. Request will contain a json blob containing the status of the conversion
+
+                A url that will be called by our service when the Studio project is converted. Request will contain a json blob containing the status of the conversion
+                Messages:
+                1. When project was converted successfully:
+                {
+                  type: "project_conversion_status",
+                  event_timestamp: 1234567890,
+                  data: {
+                    request_id: "1234567890",
+                    project_id: "21m00Tcm4TlvDq8ikWAM",
+                    conversion_status: "success",
+                    project_snapshot_id: "22m00Tcm4TlvDq8ikMAT",
+                    error_details: None,
+                  }
+                }
+                2. When project conversion failed:
+                {
+                  type: "project_conversion_status",
+                  event_timestamp: 1234567890,
+                  data: {
+                    request_id: "1234567890",
+                    project_id: "21m00Tcm4TlvDq8ikWAM",
+                    conversion_status: "error",
+                    project_snapshot_id: None,
+                    error_details: "Error details if conversion failed"
+                  }
+                }
+
+                3. When chapter was converted successfully:
+                {
+                  type: "chapter_conversion_status",
+                  event_timestamp: 1234567890,
+                  data: {
+                    request_id: "1234567890",
+                    project_id: "21m00Tcm4TlvDq8ikWAM",
+                    chapter_id: "22m00Tcm4TlvDq8ikMAT",
+                    conversion_status: "success",
+                    chapter_snapshot_id: "23m00Tcm4TlvDq8ikMAV",
+                    error_details: None,
+                  }
+                }
+                4. When chapter conversion failed:
+                {
+                  type: "chapter_conversion_status",
+                  event_timestamp: 1234567890,
+                  data: {
+                    request_id: "1234567890",
+                    project_id: "21m00Tcm4TlvDq8ikWAM",
+                    chapter_id: "22m00Tcm4TlvDq8ikMAT",
+                    conversion_status: "error",
+                    chapter_snapshot_id: None,
+                    error_details: "Error details if conversion failed"
+                  }
+                }
+
 
         fiction : typing.Optional[ProjectsCreateRequestFiction]
             An optional specification of whether the content of this Studio project is fiction.
@@ -642,6 +759,7 @@ class AsyncProjectsClient:
             default_model_id=default_model_id,
             from_url=from_url,
             from_document=from_document,
+            from_content_json=from_content_json,
             quality_preset=quality_preset,
             title=title,
             author=author,

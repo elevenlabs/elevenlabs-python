@@ -74,7 +74,7 @@ class StudioClient:
             Duration of the generated podcast. Must be one of:
             short - produces podcasts shorter than 3 minutes.
             default - produces podcasts roughly between 3-7 minutes.
-            long - prodces podcasts longer than 7 minutes.
+            long - produces podcasts longer than 7 minutes.
 
         language : typing.Optional[str]
             An optional language of the Studio project. Two-letter language code (ISO 639-1).
@@ -83,7 +83,61 @@ class StudioClient:
             A brief summary or highlights of the Studio project's content, providing key points or themes. This should be between 10 and 70 characters.
 
         callback_url : typing.Optional[str]
-            A url that will be called by our service when the Studio project is converted. Request will contain a json blob containing the status of the conversion
+
+                A url that will be called by our service when the Studio project is converted. Request will contain a json blob containing the status of the conversion
+                Messages:
+                1. When project was converted successfully:
+                {
+                  type: "project_conversion_status",
+                  event_timestamp: 1234567890,
+                  data: {
+                    request_id: "1234567890",
+                    project_id: "21m00Tcm4TlvDq8ikWAM",
+                    conversion_status: "success",
+                    project_snapshot_id: "22m00Tcm4TlvDq8ikMAT",
+                    error_details: None,
+                  }
+                }
+                2. When project conversion failed:
+                {
+                  type: "project_conversion_status",
+                  event_timestamp: 1234567890,
+                  data: {
+                    request_id: "1234567890",
+                    project_id: "21m00Tcm4TlvDq8ikWAM",
+                    conversion_status: "error",
+                    project_snapshot_id: None,
+                    error_details: "Error details if conversion failed"
+                  }
+                }
+
+                3. When chapter was converted successfully:
+                {
+                  type: "chapter_conversion_status",
+                  event_timestamp: 1234567890,
+                  data: {
+                    request_id: "1234567890",
+                    project_id: "21m00Tcm4TlvDq8ikWAM",
+                    chapter_id: "22m00Tcm4TlvDq8ikMAT",
+                    conversion_status: "success",
+                    chapter_snapshot_id: "23m00Tcm4TlvDq8ikMAV",
+                    error_details: None,
+                  }
+                }
+                4. When chapter conversion failed:
+                {
+                  type: "chapter_conversion_status",
+                  event_timestamp: 1234567890,
+                  data: {
+                    request_id: "1234567890",
+                    project_id: "21m00Tcm4TlvDq8ikWAM",
+                    chapter_id: "22m00Tcm4TlvDq8ikMAT",
+                    conversion_status: "error",
+                    chapter_snapshot_id: None,
+                    error_details: "Error details if conversion failed"
+                  }
+                }
+
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -108,7 +162,7 @@ class StudioClient:
             api_key="YOUR_API_KEY",
         )
         client.studio.create_podcast(
-            model_id="21m00Tcm4TlvDq8ikWAM",
+            model_id="eleven_multilingual_v2",
             mode=BodyCreatePodcastV1StudioPodcastsPostMode_Conversation(
                 conversation=PodcastConversationModeData(
                     host_voice_id="aw1NgEzBg83R7vgmiJt6",
@@ -188,7 +242,7 @@ class AsyncStudioClient:
             Duration of the generated podcast. Must be one of:
             short - produces podcasts shorter than 3 minutes.
             default - produces podcasts roughly between 3-7 minutes.
-            long - prodces podcasts longer than 7 minutes.
+            long - produces podcasts longer than 7 minutes.
 
         language : typing.Optional[str]
             An optional language of the Studio project. Two-letter language code (ISO 639-1).
@@ -197,7 +251,61 @@ class AsyncStudioClient:
             A brief summary or highlights of the Studio project's content, providing key points or themes. This should be between 10 and 70 characters.
 
         callback_url : typing.Optional[str]
-            A url that will be called by our service when the Studio project is converted. Request will contain a json blob containing the status of the conversion
+
+                A url that will be called by our service when the Studio project is converted. Request will contain a json blob containing the status of the conversion
+                Messages:
+                1. When project was converted successfully:
+                {
+                  type: "project_conversion_status",
+                  event_timestamp: 1234567890,
+                  data: {
+                    request_id: "1234567890",
+                    project_id: "21m00Tcm4TlvDq8ikWAM",
+                    conversion_status: "success",
+                    project_snapshot_id: "22m00Tcm4TlvDq8ikMAT",
+                    error_details: None,
+                  }
+                }
+                2. When project conversion failed:
+                {
+                  type: "project_conversion_status",
+                  event_timestamp: 1234567890,
+                  data: {
+                    request_id: "1234567890",
+                    project_id: "21m00Tcm4TlvDq8ikWAM",
+                    conversion_status: "error",
+                    project_snapshot_id: None,
+                    error_details: "Error details if conversion failed"
+                  }
+                }
+
+                3. When chapter was converted successfully:
+                {
+                  type: "chapter_conversion_status",
+                  event_timestamp: 1234567890,
+                  data: {
+                    request_id: "1234567890",
+                    project_id: "21m00Tcm4TlvDq8ikWAM",
+                    chapter_id: "22m00Tcm4TlvDq8ikMAT",
+                    conversion_status: "success",
+                    chapter_snapshot_id: "23m00Tcm4TlvDq8ikMAV",
+                    error_details: None,
+                  }
+                }
+                4. When chapter conversion failed:
+                {
+                  type: "chapter_conversion_status",
+                  event_timestamp: 1234567890,
+                  data: {
+                    request_id: "1234567890",
+                    project_id: "21m00Tcm4TlvDq8ikWAM",
+                    chapter_id: "22m00Tcm4TlvDq8ikMAT",
+                    conversion_status: "error",
+                    chapter_snapshot_id: None,
+                    error_details: "Error details if conversion failed"
+                  }
+                }
+
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -227,7 +335,7 @@ class AsyncStudioClient:
 
         async def main() -> None:
             await client.studio.create_podcast(
-                model_id="21m00Tcm4TlvDq8ikWAM",
+                model_id="eleven_multilingual_v2",
                 mode=BodyCreatePodcastV1StudioPodcastsPostMode_Conversation(
                     conversation=PodcastConversationModeData(
                         host_voice_id="aw1NgEzBg83R7vgmiJt6",

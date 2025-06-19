@@ -113,6 +113,7 @@ from .body_stream_project_audio_v_1_projects_project_id_snapshots_project_snapsh
     BodyStreamProjectAudioV1ProjectsProjectIdSnapshotsProjectSnapshotIdStreamPost,
 )
 from .breakdown_types import BreakdownTypes
+from .built_in_tools import BuiltInTools
 from .chapter_content_block_extendable_node_response_model import ChapterContentBlockExtendableNodeResponseModel
 from .chapter_content_block_input_model import ChapterContentBlockInputModel
 from .chapter_content_block_input_model_sub_type import ChapterContentBlockInputModelSubType
@@ -156,6 +157,7 @@ from .conv_ai_stored_secret_dependencies_tools_item import (
     ConvAiStoredSecretDependenciesToolsItem_Available,
     ConvAiStoredSecretDependenciesToolsItem_Unknown,
 )
+from .conv_ai_user_secret_db_model import ConvAiUserSecretDbModel
 from .conv_ai_webhooks import ConvAiWebhooks
 from .conv_ai_workspace_stored_secret_config import ConvAiWorkspaceStoredSecretConfig
 from .conversation_charging_common_model import ConversationChargingCommonModel
@@ -228,6 +230,9 @@ from .conversation_initiation_client_data_webhook_request_headers_value import (
 )
 from .conversation_signed_url_response_model import ConversationSignedUrlResponseModel
 from .conversation_simulation_specification import ConversationSimulationSpecification
+from .conversation_simulation_specification_dynamic_variables_value import (
+    ConversationSimulationSpecificationDynamicVariablesValue,
+)
 from .conversation_summary_response_model import ConversationSummaryResponseModel
 from .conversation_summary_response_model_status import ConversationSummaryResponseModelStatus
 from .conversation_token_db_model import ConversationTokenDbModel
@@ -399,7 +404,6 @@ from .get_pronunciation_dictionary_metadata_response_model_permission_on_resourc
     GetPronunciationDictionaryMetadataResponseModelPermissionOnResource,
 )
 from .get_pronunciation_dictionary_response import GetPronunciationDictionaryResponse
-from .get_shared_sound_generations_response_model import GetSharedSoundGenerationsResponseModel
 from .get_speech_history_response import GetSpeechHistoryResponse
 from .get_voices_response import GetVoicesResponse
 from .get_voices_v_2_response import GetVoicesV2Response
@@ -413,6 +417,7 @@ from .image_avatar import ImageAvatar
 from .initialise_context import InitialiseContext
 from .initialize_connection import InitializeConnection
 from .initialize_connection_multi import InitializeConnectionMulti
+from .integration_type import IntegrationType
 from .invoice_response import InvoiceResponse
 from .keep_context_alive import KeepContextAlive
 from .knowledge_base_document_chunk_response_model import KnowledgeBaseDocumentChunkResponseModel
@@ -427,6 +432,7 @@ from .language_preset_translation import LanguagePresetTranslation
 from .language_response import LanguageResponse
 from .library_voice_response import LibraryVoiceResponse
 from .library_voice_response_model_category import LibraryVoiceResponseModelCategory
+from .list_mcp_tools_response_model import ListMcpToolsResponseModel
 from .literal_json_schema_property import LiteralJsonSchemaProperty
 from .literal_json_schema_property_constant_value import LiteralJsonSchemaPropertyConstantValue
 from .literal_json_schema_property_type import LiteralJsonSchemaPropertyType
@@ -440,7 +446,26 @@ from .llm_usage_input import LlmUsageInput
 from .llm_usage_output import LlmUsageOutput
 from .manual_verification_file_response import ManualVerificationFileResponse
 from .manual_verification_response import ManualVerificationResponse
-from .mcp_approval_required_model import McpApprovalRequiredModel
+from .mcp_approval_policy import McpApprovalPolicy
+from .mcp_server_config_input import McpServerConfigInput
+from .mcp_server_config_input_request_headers_value import McpServerConfigInputRequestHeadersValue
+from .mcp_server_config_input_secret_token import McpServerConfigInputSecretToken
+from .mcp_server_config_input_url import McpServerConfigInputUrl
+from .mcp_server_config_output import McpServerConfigOutput
+from .mcp_server_config_output_request_headers_value import McpServerConfigOutputRequestHeadersValue
+from .mcp_server_config_output_secret_token import McpServerConfigOutputSecretToken
+from .mcp_server_config_output_url import McpServerConfigOutputUrl
+from .mcp_server_metadata_response_model import McpServerMetadataResponseModel
+from .mcp_server_response_model import McpServerResponseModel
+from .mcp_server_response_model_dependent_agents_item import (
+    McpServerResponseModelDependentAgentsItem,
+    McpServerResponseModelDependentAgentsItem_Available,
+    McpServerResponseModelDependentAgentsItem_Unknown,
+)
+from .mcp_server_transport import McpServerTransport
+from .mcp_servers_response_model import McpServersResponseModel
+from .mcp_tool_approval_hash import McpToolApprovalHash
+from .mcp_tool_approval_policy import McpToolApprovalPolicy
 from .mcp_tool_config_input import McpToolConfigInput
 from .mcp_tool_config_output import McpToolConfigOutput
 from .metric_record import MetricRecord
@@ -452,8 +477,6 @@ from .model_settings_response_model import ModelSettingsResponseModel
 from .moderation_status_response_model import ModerationStatusResponseModel
 from .moderation_status_response_model_safety_status import ModerationStatusResponseModelSafetyStatus
 from .moderation_status_response_model_warning_status import ModerationStatusResponseModelWarningStatus
-from .native_mcp_tool_config_input import NativeMcpToolConfigInput
-from .native_mcp_tool_config_output import NativeMcpToolConfigOutput
 from .normalized_alignment import NormalizedAlignment
 from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput
 from .object_json_schema_property_input_properties_value import ObjectJsonSchemaPropertyInputPropertiesValue
@@ -501,7 +524,6 @@ from .prompt_agent_db_model_tools_item import (
     PromptAgentDbModelToolsItem,
     PromptAgentDbModelToolsItem_Client,
     PromptAgentDbModelToolsItem_Mcp,
-    PromptAgentDbModelToolsItem_NativeMcp,
     PromptAgentDbModelToolsItem_System,
     PromptAgentDbModelToolsItem_Webhook,
 )
@@ -509,7 +531,6 @@ from .prompt_agent_input_tools_item import (
     PromptAgentInputToolsItem,
     PromptAgentInputToolsItem_Client,
     PromptAgentInputToolsItem_Mcp,
-    PromptAgentInputToolsItem_NativeMcp,
     PromptAgentInputToolsItem_System,
     PromptAgentInputToolsItem_Webhook,
 )
@@ -517,7 +538,6 @@ from .prompt_agent_output_tools_item import (
     PromptAgentOutputToolsItem,
     PromptAgentOutputToolsItem_Client,
     PromptAgentOutputToolsItem_Mcp,
-    PromptAgentOutputToolsItem_NativeMcp,
     PromptAgentOutputToolsItem_System,
     PromptAgentOutputToolsItem_Webhook,
 )
@@ -574,7 +594,6 @@ from .send_text import SendText
 from .send_text_multi import SendTextMulti
 from .share_option_response_model import ShareOptionResponseModel
 from .share_option_response_model_type import ShareOptionResponseModelType
-from .shared_sound_generation_response_model import SharedSoundGenerationResponseModel
 from .similar_voice import SimilarVoice
 from .similar_voice_category import SimilarVoiceCategory
 from .similar_voices_for_speaker_response import SimilarVoicesForSpeakerResponse
@@ -633,6 +652,8 @@ from .telephony_provider import TelephonyProvider
 from .text_to_speech_apply_text_normalization_enum import TextToSpeechApplyTextNormalizationEnum
 from .text_to_speech_output_format_enum import TextToSpeechOutputFormatEnum
 from .text_to_speech_stream_request import TextToSpeechStreamRequest
+from .tool import Tool
+from .tool_annotations import ToolAnnotations
 from .tool_mock_config import ToolMockConfig
 from .transfer_to_agent_tool_config import TransferToAgentToolConfig
 from .transfer_to_number_tool_config import TransferToNumberToolConfig
@@ -681,6 +702,7 @@ from .voice_sharing_response import VoiceSharingResponse
 from .voice_sharing_response_model_category import VoiceSharingResponseModelCategory
 from .voice_sharing_state import VoiceSharingState
 from .voice_verification_response import VoiceVerificationResponse
+from .webhook_auth_method_type import WebhookAuthMethodType
 from .webhook_tool_api_schema_config_input import WebhookToolApiSchemaConfigInput
 from .webhook_tool_api_schema_config_input_method import WebhookToolApiSchemaConfigInputMethod
 from .webhook_tool_api_schema_config_input_request_headers_value import (
@@ -693,6 +715,7 @@ from .webhook_tool_api_schema_config_output_request_headers_value import (
 )
 from .webhook_tool_config_input import WebhookToolConfigInput
 from .webhook_tool_config_output import WebhookToolConfigOutput
+from .webhook_usage_type import WebhookUsageType
 from .websocket_tts_client_message_multi import WebsocketTtsClientMessageMulti
 from .websocket_tts_server_message_multi import WebsocketTtsServerMessageMulti
 from .widget_config import WidgetConfig
@@ -720,10 +743,14 @@ from .widget_feedback_mode import WidgetFeedbackMode
 from .widget_language_preset import WidgetLanguagePreset
 from .widget_language_preset_response import WidgetLanguagePresetResponse
 from .widget_placement import WidgetPlacement
+from .widget_styles import WidgetStyles
 from .widget_text_contents import WidgetTextContents
 from .workspace_batch_calls_response import WorkspaceBatchCallsResponse
 from .workspace_group_by_name_response_model import WorkspaceGroupByNameResponseModel
 from .workspace_resource_type import WorkspaceResourceType
+from .workspace_webhook_list_response_model import WorkspaceWebhookListResponseModel
+from .workspace_webhook_response_model import WorkspaceWebhookResponseModel
+from .workspace_webhook_usage_response_model import WorkspaceWebhookUsageResponseModel
 
 __all__ = [
     "AddChapterResponseModel",
@@ -803,6 +830,7 @@ __all__ = [
     "BodyStreamChapterAudioV1ProjectsProjectIdChaptersChapterIdSnapshotsChapterSnapshotIdStreamPost",
     "BodyStreamProjectAudioV1ProjectsProjectIdSnapshotsProjectSnapshotIdStreamPost",
     "BreakdownTypes",
+    "BuiltInTools",
     "ChapterContentBlockExtendableNodeResponseModel",
     "ChapterContentBlockInputModel",
     "ChapterContentBlockInputModelSubType",
@@ -840,6 +868,7 @@ __all__ = [
     "ConvAiStoredSecretDependenciesToolsItem",
     "ConvAiStoredSecretDependenciesToolsItem_Available",
     "ConvAiStoredSecretDependenciesToolsItem_Unknown",
+    "ConvAiUserSecretDbModel",
     "ConvAiWebhooks",
     "ConvAiWorkspaceStoredSecretConfig",
     "ConversationChargingCommonModel",
@@ -890,6 +919,7 @@ __all__ = [
     "ConversationInitiationClientDataWebhookRequestHeadersValue",
     "ConversationSignedUrlResponseModel",
     "ConversationSimulationSpecification",
+    "ConversationSimulationSpecificationDynamicVariablesValue",
     "ConversationSummaryResponseModel",
     "ConversationSummaryResponseModelStatus",
     "ConversationTokenDbModel",
@@ -1039,7 +1069,6 @@ __all__ = [
     "GetPronunciationDictionaryMetadataResponse",
     "GetPronunciationDictionaryMetadataResponseModelPermissionOnResource",
     "GetPronunciationDictionaryResponse",
-    "GetSharedSoundGenerationsResponseModel",
     "GetSpeechHistoryResponse",
     "GetVoicesResponse",
     "GetVoicesV2Response",
@@ -1053,6 +1082,7 @@ __all__ = [
     "InitialiseContext",
     "InitializeConnection",
     "InitializeConnectionMulti",
+    "IntegrationType",
     "InvoiceResponse",
     "KeepContextAlive",
     "KnowledgeBaseDocumentChunkResponseModel",
@@ -1067,6 +1097,7 @@ __all__ = [
     "LanguageResponse",
     "LibraryVoiceResponse",
     "LibraryVoiceResponseModelCategory",
+    "ListMcpToolsResponseModel",
     "LiteralJsonSchemaProperty",
     "LiteralJsonSchemaPropertyConstantValue",
     "LiteralJsonSchemaPropertyType",
@@ -1080,7 +1111,24 @@ __all__ = [
     "LlmUsageOutput",
     "ManualVerificationFileResponse",
     "ManualVerificationResponse",
-    "McpApprovalRequiredModel",
+    "McpApprovalPolicy",
+    "McpServerConfigInput",
+    "McpServerConfigInputRequestHeadersValue",
+    "McpServerConfigInputSecretToken",
+    "McpServerConfigInputUrl",
+    "McpServerConfigOutput",
+    "McpServerConfigOutputRequestHeadersValue",
+    "McpServerConfigOutputSecretToken",
+    "McpServerConfigOutputUrl",
+    "McpServerMetadataResponseModel",
+    "McpServerResponseModel",
+    "McpServerResponseModelDependentAgentsItem",
+    "McpServerResponseModelDependentAgentsItem_Available",
+    "McpServerResponseModelDependentAgentsItem_Unknown",
+    "McpServerTransport",
+    "McpServersResponseModel",
+    "McpToolApprovalHash",
+    "McpToolApprovalPolicy",
     "McpToolConfigInput",
     "McpToolConfigOutput",
     "MetricRecord",
@@ -1092,8 +1140,6 @@ __all__ = [
     "ModerationStatusResponseModel",
     "ModerationStatusResponseModelSafetyStatus",
     "ModerationStatusResponseModelWarningStatus",
-    "NativeMcpToolConfigInput",
-    "NativeMcpToolConfigOutput",
     "NormalizedAlignment",
     "ObjectJsonSchemaPropertyInput",
     "ObjectJsonSchemaPropertyInputPropertiesValue",
@@ -1140,19 +1186,16 @@ __all__ = [
     "PromptAgentDbModelToolsItem",
     "PromptAgentDbModelToolsItem_Client",
     "PromptAgentDbModelToolsItem_Mcp",
-    "PromptAgentDbModelToolsItem_NativeMcp",
     "PromptAgentDbModelToolsItem_System",
     "PromptAgentDbModelToolsItem_Webhook",
     "PromptAgentInputToolsItem",
     "PromptAgentInputToolsItem_Client",
     "PromptAgentInputToolsItem_Mcp",
-    "PromptAgentInputToolsItem_NativeMcp",
     "PromptAgentInputToolsItem_System",
     "PromptAgentInputToolsItem_Webhook",
     "PromptAgentOutputToolsItem",
     "PromptAgentOutputToolsItem_Client",
     "PromptAgentOutputToolsItem_Mcp",
-    "PromptAgentOutputToolsItem_NativeMcp",
     "PromptAgentOutputToolsItem_System",
     "PromptAgentOutputToolsItem_Webhook",
     "PromptAgentOverride",
@@ -1206,7 +1249,6 @@ __all__ = [
     "SendTextMulti",
     "ShareOptionResponseModel",
     "ShareOptionResponseModelType",
-    "SharedSoundGenerationResponseModel",
     "SimilarVoice",
     "SimilarVoiceCategory",
     "SimilarVoicesForSpeakerResponse",
@@ -1261,6 +1303,8 @@ __all__ = [
     "TextToSpeechApplyTextNormalizationEnum",
     "TextToSpeechOutputFormatEnum",
     "TextToSpeechStreamRequest",
+    "Tool",
+    "ToolAnnotations",
     "ToolMockConfig",
     "TransferToAgentToolConfig",
     "TransferToNumberToolConfig",
@@ -1309,6 +1353,7 @@ __all__ = [
     "VoiceSharingResponseModelCategory",
     "VoiceSharingState",
     "VoiceVerificationResponse",
+    "WebhookAuthMethodType",
     "WebhookToolApiSchemaConfigInput",
     "WebhookToolApiSchemaConfigInputMethod",
     "WebhookToolApiSchemaConfigInputRequestHeadersValue",
@@ -1317,6 +1362,7 @@ __all__ = [
     "WebhookToolApiSchemaConfigOutputRequestHeadersValue",
     "WebhookToolConfigInput",
     "WebhookToolConfigOutput",
+    "WebhookUsageType",
     "WebsocketTtsClientMessageMulti",
     "WebsocketTtsServerMessageMulti",
     "WidgetConfig",
@@ -1338,8 +1384,12 @@ __all__ = [
     "WidgetLanguagePreset",
     "WidgetLanguagePresetResponse",
     "WidgetPlacement",
+    "WidgetStyles",
     "WidgetTextContents",
     "WorkspaceBatchCallsResponse",
     "WorkspaceGroupByNameResponseModel",
     "WorkspaceResourceType",
+    "WorkspaceWebhookListResponseModel",
+    "WorkspaceWebhookResponseModel",
+    "WorkspaceWebhookUsageResponseModel",
 ]

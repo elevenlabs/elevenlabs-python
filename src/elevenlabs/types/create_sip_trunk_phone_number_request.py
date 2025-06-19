@@ -49,6 +49,11 @@ class CreateSipTrunkPhoneNumberRequest(UncheckedBaseModel):
     Whether or not to encrypt media (data layer).
     """
 
+    inbound_media_encryption: typing.Optional[SipMediaEncryptionEnum] = pydantic.Field(default=None)
+    """
+    Whether or not to encrypt media (data layer) for inbound calls.
+    """
+
     headers: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
     """
     SIP X-* headers for INVITE request. These headers are sent as-is and may help identify this call.

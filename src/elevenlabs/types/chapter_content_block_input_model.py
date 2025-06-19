@@ -11,8 +11,8 @@ from .chapter_content_paragraph_tts_node_input_model import ChapterContentParagr
 
 class ChapterContentBlockInputModel(UncheckedBaseModel):
     sub_type: typing.Optional[ChapterContentBlockInputModelSubType] = None
-    block_id: typing.Optional[str] = None
     nodes: typing.List[ChapterContentParagraphTtsNodeInputModel]
+    block_id: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

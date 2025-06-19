@@ -9,6 +9,9 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_config import AgentConfig
 from .conversation_history_transcript_common_model_input import ConversationHistoryTranscriptCommonModelInput
+from .conversation_simulation_specification_dynamic_variables_value import (
+    ConversationSimulationSpecificationDynamicVariablesValue,
+)
 from .tool_mock_config import ToolMockConfig
 
 
@@ -25,6 +28,10 @@ class ConversationSimulationSpecification(UncheckedBaseModel):
     """
     A partial conversation history to start the simulation from. If empty, simulation starts fresh.
     """
+
+    dynamic_variables: typing.Optional[
+        typing.Dict[str, typing.Optional[ConversationSimulationSpecificationDynamicVariablesValue]]
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

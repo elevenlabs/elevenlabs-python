@@ -46,6 +46,7 @@ class PhoneNumbersCreateRequestBody_SipTrunk(UncheckedBaseModel):
     address: typing.Optional[str] = None
     transport: typing.Optional[SipTrunkTransportEnum] = None
     media_encryption: typing.Optional[SipMediaEncryptionEnum] = None
+    inbound_media_encryption: typing.Optional[SipMediaEncryptionEnum] = None
     headers: typing.Optional[typing.Dict[str, str]] = None
     credentials: typing.Optional[SipTrunkCredentials] = None
 

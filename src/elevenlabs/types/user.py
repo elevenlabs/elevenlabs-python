@@ -37,7 +37,7 @@ class User(UncheckedBaseModel):
 
     can_use_delayed_payment_methods: bool = pydantic.Field()
     """
-    Whether the user can use delayed payment methods.
+    This field is deprecated and will be removed in a future major version. Instead use subscription.trust_on_invoice_creation.
     """
 
     is_onboarding_completed: bool = pydantic.Field()

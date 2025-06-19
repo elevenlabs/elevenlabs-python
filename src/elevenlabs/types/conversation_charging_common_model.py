@@ -10,6 +10,7 @@ from .llm_category_usage import LlmCategoryUsage
 
 class ConversationChargingCommonModel(UncheckedBaseModel):
     dev_discount: typing.Optional[bool] = None
+    is_burst: typing.Optional[bool] = None
     tier: typing.Optional[str] = None
     llm_usage: typing.Optional[LlmCategoryUsage] = None
     llm_price: typing.Optional[float] = None

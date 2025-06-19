@@ -7,7 +7,7 @@ from .base_client import \
   BaseElevenLabs, AsyncBaseElevenLabs
 from .environment import ElevenLabsEnvironment
 from .realtime_tts import RealtimeTextToSpeechClient
-from .webhooks import WebhooksClient
+from .webhooks_custom import WebhooksClient, AsyncWebhooksClient
 
 
 # this is used as the default value for optional parameters
@@ -27,7 +27,7 @@ class ElevenLabs(BaseElevenLabs):
 
         - environment: ElevenLabsEnvironment. The environment to use for requests from the client. from .environment import ElevenLabsEnvironment
 
-                                              Defaults to ElevenLabsEnvironment.PRODUCTION
+        Defaults to ElevenLabsEnvironment.PRODUCTION
 
         - api_key: typing.Optional[str].
 
@@ -60,7 +60,7 @@ class ElevenLabs(BaseElevenLabs):
             httpx_client=httpx_client
         )
         self.text_to_speech = RealtimeTextToSpeechClient(client_wrapper=self._client_wrapper)
-        self.webhooks = WebhooksClient()
+        self.webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncElevenLabs(AsyncBaseElevenLabs):
@@ -72,7 +72,7 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
 
         - environment: ElevenLabsEnvironment. The environment to use for requests from the client. from .environment import ElevenLabsEnvironment
 
-                                              Defaults to ElevenLabsEnvironment.PRODUCTION
+        Defaults to ElevenLabsEnvironment.PRODUCTION
 
         - api_key: typing.Optional[str].
 
@@ -107,4 +107,4 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
             timeout=timeout,
             httpx_client=httpx_client
         )
-        self.webhooks = WebhooksClient()
+        self.webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)

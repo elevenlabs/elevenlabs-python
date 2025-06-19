@@ -68,6 +68,7 @@ class SystemToolConfigOutputParams_TransferToAgent(UncheckedBaseModel):
 class SystemToolConfigOutputParams_TransferToNumber(UncheckedBaseModel):
     system_tool_type: typing.Literal["transfer_to_number"] = "transfer_to_number"
     transfers: typing.List[PhoneNumberTransfer]
+    enable_client_message: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
