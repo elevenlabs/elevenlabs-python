@@ -18,6 +18,11 @@ class AgentCallLimits(UncheckedBaseModel):
     The maximum number of conversations per day
     """
 
+    bursting_enabled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to enable bursting. If true, exceeding workspace concurrency limit will be allowed up to 3 times the limit. Calls will be charged at double rate when exceeding the limit.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

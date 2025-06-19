@@ -36,12 +36,17 @@ class AddProjectRequest(UncheckedBaseModel):
 
     from_url: typing.Optional[str] = pydantic.Field(default=None)
     """
-    An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
+    An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' and 'from_content' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
     """
 
     from_document: typing.Optional[str] = pydantic.Field(default=None)
     """
-    An optional .epub, .pdf, .txt or similar file can be provided. If provided, we will initialize the Studio project with its content. If this is set, 'from_url' must be null.  If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
+    An optional .epub, .pdf, .txt or similar file can be provided. If provided, we will initialize the Studio project with its content. If this is set, 'from_url' and 'from_content' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
+    """
+
+    from_content_json: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    An optional content to initialize the Studio project with. If this is set, 'from_url' and 'from_document' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
     """
 
     quality_preset: typing.Optional[str] = pydantic.Field(default=None)
@@ -120,7 +125,61 @@ class AddProjectRequest(UncheckedBaseModel):
 
     callback_url: typing.Optional[str] = pydantic.Field(default=None)
     """
-    A url that will be called by our service when the Studio project is converted. Request will contain a json blob containing the status of the conversion
+    
+        A url that will be called by our service when the Studio project is converted. Request will contain a json blob containing the status of the conversion
+        Messages:
+        1. When project was converted successfully:
+        {
+          type: "project_conversion_status",
+          event_timestamp: 1234567890,
+          data: {
+            request_id: "1234567890",
+            project_id: "21m00Tcm4TlvDq8ikWAM",
+            conversion_status: "success",
+            project_snapshot_id: "22m00Tcm4TlvDq8ikMAT",
+            error_details: None,
+          }
+        }
+        2. When project conversion failed:
+        {
+          type: "project_conversion_status",
+          event_timestamp: 1234567890,
+          data: {
+            request_id: "1234567890",
+            project_id: "21m00Tcm4TlvDq8ikWAM",
+            conversion_status: "error",
+            project_snapshot_id: None,
+            error_details: "Error details if conversion failed"
+          }
+        }
+    
+        3. When chapter was converted successfully:
+        {
+          type: "chapter_conversion_status",
+          event_timestamp: 1234567890,
+          data: {
+            request_id: "1234567890",
+            project_id: "21m00Tcm4TlvDq8ikWAM",
+            chapter_id: "22m00Tcm4TlvDq8ikMAT",
+            conversion_status: "success",
+            chapter_snapshot_id: "23m00Tcm4TlvDq8ikMAV",
+            error_details: None,
+          }
+        }
+        4. When chapter conversion failed:
+        {
+          type: "chapter_conversion_status",
+          event_timestamp: 1234567890,
+          data: {
+            request_id: "1234567890",
+            project_id: "21m00Tcm4TlvDq8ikWAM",
+            chapter_id: "22m00Tcm4TlvDq8ikMAT",
+            conversion_status: "error",
+            chapter_snapshot_id: None,
+            error_details: "Error details if conversion failed"
+          }
+        }
+        
     """
 
     fiction: typing.Optional[BodyAddProjectV1ProjectsAddPostFiction] = pydantic.Field(default=None)

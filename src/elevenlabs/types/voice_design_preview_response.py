@@ -9,8 +9,15 @@ from .voice_preview_response_model import VoicePreviewResponseModel
 
 
 class VoiceDesignPreviewResponse(UncheckedBaseModel):
-    previews: typing.List[VoicePreviewResponseModel]
-    text: str
+    previews: typing.List[VoicePreviewResponseModel] = pydantic.Field()
+    """
+    The previews of the generated voices.
+    """
+
+    text: str = pydantic.Field()
+    """
+    The text used to preview the voices.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

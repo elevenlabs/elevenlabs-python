@@ -99,7 +99,7 @@ class RawChaptersClient:
             The name of the chapter, used for identification only.
 
         from_url : typing.Optional[str]
-            An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
+            An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' and 'from_content' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -463,7 +463,7 @@ class AsyncRawChaptersClient:
             The name of the chapter, used for identification only.
 
         from_url : typing.Optional[str]
-            An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
+            An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' and 'from_content' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

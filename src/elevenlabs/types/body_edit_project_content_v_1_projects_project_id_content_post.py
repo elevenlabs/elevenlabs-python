@@ -10,12 +10,12 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 class BodyEditProjectContentV1ProjectsProjectIdContentPost(UncheckedBaseModel):
     from_url: typing.Optional[str] = pydantic.Field(default=None)
     """
-    An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
+    An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' and 'from_content' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
     """
 
     from_document: typing.Optional[str] = pydantic.Field(default=None)
     """
-    An optional .epub, .pdf, .txt or similar file can be provided. If provided, we will initialize the Studio project with its content. If this is set, 'from_url' must be null.  If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
+    An optional .epub, .pdf, .txt or similar file can be provided. If provided, we will initialize the Studio project with its content. If this is set, 'from_url' and 'from_content' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
     """
 
     auto_convert: typing.Optional[bool] = pydantic.Field(default=None)

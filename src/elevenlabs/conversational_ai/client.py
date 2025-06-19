@@ -16,6 +16,7 @@ from .conversations.client import AsyncConversationsClient, ConversationsClient
 from .dashboard.client import AsyncDashboardClient, DashboardClient
 from .knowledge_base.client import AsyncKnowledgeBaseClient, KnowledgeBaseClient
 from .llm_usage.client import AsyncLlmUsageClient, LlmUsageClient
+from .mcp_servers.client import AsyncMcpServersClient, McpServersClient
 from .phone_numbers.client import AsyncPhoneNumbersClient, PhoneNumbersClient
 from .raw_client import AsyncRawConversationalAiClient, RawConversationalAiClient
 from .secrets.client import AsyncSecretsClient, SecretsClient
@@ -49,6 +50,8 @@ class ConversationalAiClient:
         self.batch_calls = BatchCallsClient(client_wrapper=client_wrapper)
 
         self.sip_trunk = SipTrunkClient(client_wrapper=client_wrapper)
+
+        self.mcp_servers = McpServersClient(client_wrapper=client_wrapper)
 
         self.dashboard = DashboardClient(client_wrapper=client_wrapper)
 
@@ -268,6 +271,8 @@ class AsyncConversationalAiClient:
         self.batch_calls = AsyncBatchCallsClient(client_wrapper=client_wrapper)
 
         self.sip_trunk = AsyncSipTrunkClient(client_wrapper=client_wrapper)
+
+        self.mcp_servers = AsyncMcpServersClient(client_wrapper=client_wrapper)
 
         self.dashboard = AsyncDashboardClient(client_wrapper=client_wrapper)
 

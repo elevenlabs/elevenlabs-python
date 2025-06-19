@@ -51,7 +51,7 @@ class BodyCreatePodcastV1ProjectsPodcastCreatePost(UncheckedBaseModel):
     Duration of the generated podcast. Must be one of:
     short - produces podcasts shorter than 3 minutes.
     default - produces podcasts roughly between 3-7 minutes.
-    long - prodces podcasts longer than 7 minutes.
+    long - produces podcasts longer than 7 minutes.
     """
 
     language: typing.Optional[str] = pydantic.Field(default=None)
@@ -66,7 +66,61 @@ class BodyCreatePodcastV1ProjectsPodcastCreatePost(UncheckedBaseModel):
 
     callback_url: typing.Optional[str] = pydantic.Field(default=None)
     """
-    A url that will be called by our service when the Studio project is converted. Request will contain a json blob containing the status of the conversion
+    
+        A url that will be called by our service when the Studio project is converted. Request will contain a json blob containing the status of the conversion
+        Messages:
+        1. When project was converted successfully:
+        {
+          type: "project_conversion_status",
+          event_timestamp: 1234567890,
+          data: {
+            request_id: "1234567890",
+            project_id: "21m00Tcm4TlvDq8ikWAM",
+            conversion_status: "success",
+            project_snapshot_id: "22m00Tcm4TlvDq8ikMAT",
+            error_details: None,
+          }
+        }
+        2. When project conversion failed:
+        {
+          type: "project_conversion_status",
+          event_timestamp: 1234567890,
+          data: {
+            request_id: "1234567890",
+            project_id: "21m00Tcm4TlvDq8ikWAM",
+            conversion_status: "error",
+            project_snapshot_id: None,
+            error_details: "Error details if conversion failed"
+          }
+        }
+    
+        3. When chapter was converted successfully:
+        {
+          type: "chapter_conversion_status",
+          event_timestamp: 1234567890,
+          data: {
+            request_id: "1234567890",
+            project_id: "21m00Tcm4TlvDq8ikWAM",
+            chapter_id: "22m00Tcm4TlvDq8ikMAT",
+            conversion_status: "success",
+            chapter_snapshot_id: "23m00Tcm4TlvDq8ikMAV",
+            error_details: None,
+          }
+        }
+        4. When chapter conversion failed:
+        {
+          type: "chapter_conversion_status",
+          event_timestamp: 1234567890,
+          data: {
+            request_id: "1234567890",
+            project_id: "21m00Tcm4TlvDq8ikWAM",
+            chapter_id: "22m00Tcm4TlvDq8ikMAT",
+            conversion_status: "error",
+            chapter_snapshot_id: None,
+            error_details: "Error details if conversion failed"
+          }
+        }
+        
     """
 
     if IS_PYDANTIC_V2:

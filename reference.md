@@ -2264,7 +2264,7 @@ client.voices.search(
 <dl>
 <dd>
 
-**voice_type:** `typing.Optional[str]` — Type of the voice to filter by. One of 'personal', 'community', 'default', 'workspace', 'non-default'. 'non-default' is equal to 'personal' plus 'community'.
+**voice_type:** `typing.Optional[str]` — Type of the voice to filter by. One of 'personal', 'community', 'default', 'workspace', 'non-default'. 'non-default' is equal to all but 'default'.
     
 </dd>
 </dl>
@@ -2999,7 +2999,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.studio.create_podcast(
-    model_id="21m00Tcm4TlvDq8ikWAM",
+    model_id="eleven_multilingual_v2",
     mode=BodyCreatePodcastV1StudioPodcastsPostMode_Conversation(
         conversation=PodcastConversationModeData(
             host_voice_id="aw1NgEzBg83R7vgmiJt6",
@@ -3068,7 +3068,7 @@ ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate
 Duration of the generated podcast. Must be one of:
 short - produces podcasts shorter than 3 minutes.
 default - produces podcasts roughly between 3-7 minutes.
-long - prodces podcasts longer than 7 minutes.
+long - produces podcasts longer than 7 minutes.
     
 </dd>
 </dl>
@@ -3092,7 +3092,63 @@ long - prodces podcasts longer than 7 minutes.
 <dl>
 <dd>
 
-**callback_url:** `typing.Optional[str]` — A url that will be called by our service when the Studio project is converted. Request will contain a json blob containing the status of the conversion
+**callback_url:** `typing.Optional[str]` 
+
+
+    A url that will be called by our service when the Studio project is converted. Request will contain a json blob containing the status of the conversion
+    Messages:
+    1. When project was converted successfully:
+    {
+      type: "project_conversion_status",
+      event_timestamp: 1234567890,
+      data: {
+        request_id: "1234567890",
+        project_id: "21m00Tcm4TlvDq8ikWAM",
+        conversion_status: "success",
+        project_snapshot_id: "22m00Tcm4TlvDq8ikMAT",
+        error_details: None,
+      }
+    }
+    2. When project conversion failed:
+    {
+      type: "project_conversion_status",
+      event_timestamp: 1234567890,
+      data: {
+        request_id: "1234567890",
+        project_id: "21m00Tcm4TlvDq8ikWAM",
+        conversion_status: "error",
+        project_snapshot_id: None,
+        error_details: "Error details if conversion failed"
+      }
+    }
+
+    3. When chapter was converted successfully:
+    {
+      type: "chapter_conversion_status",
+      event_timestamp: 1234567890,
+      data: {
+        request_id: "1234567890",
+        project_id: "21m00Tcm4TlvDq8ikWAM",
+        chapter_id: "22m00Tcm4TlvDq8ikMAT",
+        conversion_status: "success",
+        chapter_snapshot_id: "23m00Tcm4TlvDq8ikMAV",
+        error_details: None,
+      }
+    }
+    4. When chapter conversion failed:
+    {
+      type: "chapter_conversion_status",
+      event_timestamp: 1234567890,
+      data: {
+        request_id: "1234567890",
+        project_id: "21m00Tcm4TlvDq8ikWAM",
+        chapter_id: "22m00Tcm4TlvDq8ikMAT",
+        conversion_status: "error",
+        chapter_snapshot_id: None,
+        error_details: "Error details if conversion failed"
+      }
+    }
+    
     
 </dd>
 </dl>
@@ -4335,6 +4391,148 @@ client.pronunciation_dictionaries.list()
 </dl>
 </details>
 
+## Workspace
+<details><summary><code>client.workspace.<a href="src/elevenlabs/workspace/client.py">update_user_auto_provisioning</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update user auto provisioning settings for the workspace.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.workspace.update_user_auto_provisioning(
+    enabled=True,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**enabled:** `bool` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Webhooks
+<details><summary><code>client.webhooks.<a href="src/elevenlabs/webhooks/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all webhooks for a workspace
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.webhooks.list(
+    include_usages=False,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**include_usages:** `typing.Optional[bool]` — Whether to include active usages of the webhook, only usable by admins
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## SpeechToText
 <details><summary><code>client.speech_to_text.<a href="src/elevenlabs/speech_to_text/client.py">convert</a>(...)</code></summary>
 <dl>
@@ -4476,7 +4674,15 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**webhook:** `typing.Optional[bool]` — Whether to send the transcription result to configured speech-to-text webhooks.  If set the request will return early without the transcription, which will be delivered later via webhook. Webhooks can be created and assigned to a transcription task in webhook settings page in the UI.
+**webhook:** `typing.Optional[bool]` — Whether to send the transcription result to configured speech-to-text webhooks.  If set the request will return early without the transcription, which will be delivered later via webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**temperature:** `typing.Optional[float]` — Controls the randomness of the transcription output. Accepts values between 0.0 and 2.0, where higher values result in more diverse and less deterministic results. If omitted, we will use a temperature based on the model you selected which is usually 0.
     
 </dd>
 </dl>
@@ -7413,6 +7619,210 @@ client.conversational_ai.sip_trunk.outbound_call(
 </dl>
 </details>
 
+## ConversationalAi McpServers
+<details><summary><code>client.conversational_ai.mcp_servers.<a href="src/elevenlabs/conversational_ai/mcp_servers/client.py">list</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve all MCP server configurations available in the workspace.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.mcp_servers.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.mcp_servers.<a href="src/elevenlabs/conversational_ai/mcp_servers/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new MCP server configuration in the workspace.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs, McpServerConfigInput
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.mcp_servers.create(
+    config=McpServerConfigInput(
+        url="url",
+        name="name",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**config:** `McpServerConfigInput` — Configuration details for the MCP Server.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.mcp_servers.<a href="src/elevenlabs/conversational_ai/mcp_servers/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a specific MCP server configuration from the workspace.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.mcp_servers.get(
+    mcp_server_id="mcp_server_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**mcp_server_id:** `str` — ID of the MCP Server.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ConversationalAi Agents Widget
 <details><summary><code>client.conversational_ai.agents.widget.<a href="src/elevenlabs/conversational_ai/agents/widget/client.py">get</a>(...)</code></summary>
 <dl>
@@ -8779,6 +9189,341 @@ client.conversational_ai.knowledge_base.documents.chunk.get(
 <dd>
 
 **chunk_id:** `str` — The id of a document RAG chunk from the knowledge base.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi McpServers Tools
+<details><summary><code>client.conversational_ai.mcp_servers.tools.<a href="src/elevenlabs/conversational_ai/mcp_servers/tools/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve all tools available for a specific MCP server configuration.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.mcp_servers.tools.list(
+    mcp_server_id="mcp_server_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**mcp_server_id:** `str` — ID of the MCP Server.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi McpServers ApprovalPolicy
+<details><summary><code>client.conversational_ai.mcp_servers.approval_policy.<a href="src/elevenlabs/conversational_ai/mcp_servers/approval_policy/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the approval policy configuration for an MCP server.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.mcp_servers.approval_policy.update(
+    mcp_server_id="mcp_server_id",
+    approval_policy="auto_approve_all",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**mcp_server_id:** `str` — ID of the MCP Server.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**approval_policy:** `McpApprovalPolicy` — The approval mode to set for the MCP server
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi McpServers ToolApprovals
+<details><summary><code>client.conversational_ai.mcp_servers.tool_approvals.<a href="src/elevenlabs/conversational_ai/mcp_servers/tool_approvals/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Add approval for a specific MCP tool when using per-tool approval mode.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.mcp_servers.tool_approvals.create(
+    mcp_server_id="mcp_server_id",
+    tool_name="tool_name",
+    tool_description="tool_description",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**mcp_server_id:** `str` — ID of the MCP Server.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tool_name:** `str` — The name of the MCP tool
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tool_description:** `str` — The description of the MCP tool
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**input_schema:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — The input schema of the MCP tool (the schema defined on the MCP server before ElevenLabs does any extra processing)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**approval_policy:** `typing.Optional[McpToolApprovalPolicy]` — The tool-level approval policy
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.mcp_servers.tool_approvals.<a href="src/elevenlabs/conversational_ai/mcp_servers/tool_approvals/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove approval for a specific MCP tool when using per-tool approval mode.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.mcp_servers.tool_approvals.delete(
+    mcp_server_id="mcp_server_id",
+    tool_name="tool_name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**mcp_server_id:** `str` — ID of the MCP Server.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tool_name:** `str` — Name of the MCP tool to remove approval for.
     
 </dd>
 </dl>
@@ -10176,7 +10921,7 @@ client.studio.projects.create(
 <dl>
 <dd>
 
-**from_url:** `typing.Optional[str]` — An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
+**from_url:** `typing.Optional[str]` — An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' and 'from_content' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
     
 </dd>
 </dl>
@@ -10187,6 +10932,14 @@ client.studio.projects.create(
 **from_document:** `from __future__ import annotations
 
 typing.Optional[core.File]` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from_content_json:** `typing.Optional[str]` — An optional content to initialize the Studio project with. If this is set, 'from_url' and 'from_document' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
     
 </dd>
 </dl>
@@ -10312,7 +11065,63 @@ ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate
 <dl>
 <dd>
 
-**callback_url:** `typing.Optional[str]` — A url that will be called by our service when the Studio project is converted. Request will contain a json blob containing the status of the conversion
+**callback_url:** `typing.Optional[str]` 
+
+
+    A url that will be called by our service when the Studio project is converted. Request will contain a json blob containing the status of the conversion
+    Messages:
+    1. When project was converted successfully:
+    {
+      type: "project_conversion_status",
+      event_timestamp: 1234567890,
+      data: {
+        request_id: "1234567890",
+        project_id: "21m00Tcm4TlvDq8ikWAM",
+        conversion_status: "success",
+        project_snapshot_id: "22m00Tcm4TlvDq8ikMAT",
+        error_details: None,
+      }
+    }
+    2. When project conversion failed:
+    {
+      type: "project_conversion_status",
+      event_timestamp: 1234567890,
+      data: {
+        request_id: "1234567890",
+        project_id: "21m00Tcm4TlvDq8ikWAM",
+        conversion_status: "error",
+        project_snapshot_id: None,
+        error_details: "Error details if conversion failed"
+      }
+    }
+
+    3. When chapter was converted successfully:
+    {
+      type: "chapter_conversion_status",
+      event_timestamp: 1234567890,
+      data: {
+        request_id: "1234567890",
+        project_id: "21m00Tcm4TlvDq8ikWAM",
+        chapter_id: "22m00Tcm4TlvDq8ikMAT",
+        conversion_status: "success",
+        chapter_snapshot_id: "23m00Tcm4TlvDq8ikMAV",
+        error_details: None,
+      }
+    }
+    4. When chapter conversion failed:
+    {
+      type: "chapter_conversion_status",
+      event_timestamp: 1234567890,
+      data: {
+        request_id: "1234567890",
+        project_id: "21m00Tcm4TlvDq8ikWAM",
+        chapter_id: "22m00Tcm4TlvDq8ikMAT",
+        conversion_status: "error",
+        chapter_snapshot_id: None,
+        error_details: "Error details if conversion failed"
+      }
+    }
+    
     
 </dd>
 </dl>
@@ -10777,7 +11586,7 @@ client.studio.projects.content.update(
 <dl>
 <dd>
 
-**from_url:** `typing.Optional[str]` — An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
+**from_url:** `typing.Optional[str]` — An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' and 'from_content' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
     
 </dd>
 </dl>
@@ -11103,7 +11912,7 @@ client.studio.projects.chapters.create(
 <dl>
 <dd>
 
-**from_url:** `typing.Optional[str]` — An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
+**from_url:** `typing.Optional[str]` — An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' and 'from_content' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
     
 </dd>
 </dl>
