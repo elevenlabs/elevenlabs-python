@@ -8,16 +8,15 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
-from .dependent_available_agent_tool_identifier_access_level import DependentAvailableAgentToolIdentifierAccessLevel
+from .dependent_available_agent_identifier_access_level import DependentAvailableAgentIdentifierAccessLevel
 
 
-class ConvAiStoredSecretDependenciesAgentToolsItem_Available(UncheckedBaseModel):
+class ConvAiStoredSecretDependenciesAgentsItem_Available(UncheckedBaseModel):
     type: typing.Literal["available"] = "available"
-    agent_id: str
-    agent_name: str
-    used_by: typing.List[str]
+    id: str
+    name: str
     created_at_unix_secs: int
-    access_level: DependentAvailableAgentToolIdentifierAccessLevel
+    access_level: DependentAvailableAgentIdentifierAccessLevel
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -29,7 +28,7 @@ class ConvAiStoredSecretDependenciesAgentToolsItem_Available(UncheckedBaseModel)
             extra = pydantic.Extra.allow
 
 
-class ConvAiStoredSecretDependenciesAgentToolsItem_Unknown(UncheckedBaseModel):
+class ConvAiStoredSecretDependenciesAgentsItem_Unknown(UncheckedBaseModel):
     type: typing.Literal["unknown"] = "unknown"
 
     if IS_PYDANTIC_V2:
@@ -42,9 +41,7 @@ class ConvAiStoredSecretDependenciesAgentToolsItem_Unknown(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-ConvAiStoredSecretDependenciesAgentToolsItem = typing_extensions.Annotated[
-    typing.Union[
-        ConvAiStoredSecretDependenciesAgentToolsItem_Available, ConvAiStoredSecretDependenciesAgentToolsItem_Unknown
-    ],
+ConvAiStoredSecretDependenciesAgentsItem = typing_extensions.Annotated[
+    typing.Union[ConvAiStoredSecretDependenciesAgentsItem_Available, ConvAiStoredSecretDependenciesAgentsItem_Unknown],
     UnionMetadata(discriminant="type"),
 ]

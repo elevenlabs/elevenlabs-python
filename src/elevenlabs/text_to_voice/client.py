@@ -8,6 +8,8 @@ from ..types.voice import Voice
 from ..types.voice_design_preview_response import VoiceDesignPreviewResponse
 from .raw_client import AsyncRawTextToVoiceClient, RawTextToVoiceClient
 from .types.text_to_voice_create_previews_request_output_format import TextToVoiceCreatePreviewsRequestOutputFormat
+from .types.text_to_voice_design_request_output_format import TextToVoiceDesignRequestOutputFormat
+from .types.voice_design_request_model_model_id import VoiceDesignRequestModelModelId
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -159,6 +161,156 @@ class TextToVoiceClient:
             generated_voice_id=generated_voice_id,
             labels=labels,
             played_not_selected_voice_ids=played_not_selected_voice_ids,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def create(
+        self,
+        *,
+        voice_name: str,
+        voice_description: str,
+        generated_voice_id: str,
+        labels: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
+        played_not_selected_voice_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Voice:
+        """
+        Create a voice from previously generated voice preview. This endpoint should be called after you fetched a generated_voice_id using POST /v1/text-to-voice/design or POST /v1/text-to-voice/:voice_id/remix.
+
+        Parameters
+        ----------
+        voice_name : str
+            Name to use for the created voice.
+
+        voice_description : str
+            Description to use for the created voice.
+
+        generated_voice_id : str
+            The generated_voice_id to create, call POST /v1/text-to-voice/create-previews and fetch the generated_voice_id from the response header if don't have one yet.
+
+        labels : typing.Optional[typing.Dict[str, typing.Optional[str]]]
+            Optional, metadata to add to the created voice. Defaults to None.
+
+        played_not_selected_voice_ids : typing.Optional[typing.Sequence[str]]
+            List of voice ids that the user has played but not selected. Used for RLHF.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Voice
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.text_to_voice.create(
+            voice_name="Sassy squeaky mouse",
+            voice_description="A sassy squeaky mouse",
+            generated_voice_id="37HceQefKmEi3bGovXjL",
+        )
+        """
+        _response = self._raw_client.create(
+            voice_name=voice_name,
+            voice_description=voice_description,
+            generated_voice_id=generated_voice_id,
+            labels=labels,
+            played_not_selected_voice_ids=played_not_selected_voice_ids,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def design(
+        self,
+        *,
+        voice_description: str,
+        output_format: typing.Optional[TextToVoiceDesignRequestOutputFormat] = None,
+        model_id: typing.Optional[VoiceDesignRequestModelModelId] = OMIT,
+        text: typing.Optional[str] = OMIT,
+        auto_generate_text: typing.Optional[bool] = OMIT,
+        loudness: typing.Optional[float] = OMIT,
+        seed: typing.Optional[int] = OMIT,
+        guidance_scale: typing.Optional[float] = OMIT,
+        quality: typing.Optional[float] = OMIT,
+        reference_audio_base_64: typing.Optional[str] = OMIT,
+        prompt_strength: typing.Optional[float] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> VoiceDesignPreviewResponse:
+        """
+        Design a voice via a prompt. This method returns a list of voice previews. Each preview has a generated_voice_id and a sample of the voice as base64 encoded mp3 audio. To create a voice use the generated_voice_id of the preferred preview with the /v1/text-to-voice endpoint.
+
+        Parameters
+        ----------
+        voice_description : str
+            Description to use for the created voice.
+
+        output_format : typing.Optional[TextToVoiceDesignRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        model_id : typing.Optional[VoiceDesignRequestModelModelId]
+            Model to use for the voice generation. Possible values: eleven_multilingual_ttv_v2, eleven_ttv_v3.
+
+        text : typing.Optional[str]
+            Text to generate, text length has to be between 100 and 1000.
+
+        auto_generate_text : typing.Optional[bool]
+            Whether to automatically generate a text suitable for the voice description.
+
+        loudness : typing.Optional[float]
+            Controls the volume level of the generated voice. -1 is quietest, 1 is loudest, 0 corresponds to roughly -24 LUFS.
+
+        seed : typing.Optional[int]
+            Random number that controls the voice generation. Same seed with same inputs produces same voice.
+
+        guidance_scale : typing.Optional[float]
+            Controls how closely the AI follows the prompt. Lower numbers give the AI more freedom to be creative, while higher numbers force it to stick more to the prompt. High numbers can cause voice to sound artificial or robotic. We recommend to use longer, more detailed prompts at lower Guidance Scale.
+
+        quality : typing.Optional[float]
+            Higher quality results in better voice output but less variety.
+
+        reference_audio_base_64 : typing.Optional[str]
+            Reference audio to use for the voice generation. The audio should be base64 encoded. Only supported when using the  eleven_ttv_v3 model.
+
+        prompt_strength : typing.Optional[float]
+            Controls the balance of prompt versus reference audio when generating voice samples. 0 means almost no prompt influence, 1 means almost no reference audio influence. Only supported when using the eleven_ttv_v3 model and providing reference audio.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        VoiceDesignPreviewResponse
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.text_to_voice.design(
+            voice_description="A sassy squeaky mouse",
+        )
+        """
+        _response = self._raw_client.design(
+            voice_description=voice_description,
+            output_format=output_format,
+            model_id=model_id,
+            text=text,
+            auto_generate_text=auto_generate_text,
+            loudness=loudness,
+            seed=seed,
+            guidance_scale=guidance_scale,
+            quality=quality,
+            reference_audio_base_64=reference_audio_base_64,
+            prompt_strength=prompt_strength,
             request_options=request_options,
         )
         return _response.data
@@ -326,6 +478,172 @@ class AsyncTextToVoiceClient:
             generated_voice_id=generated_voice_id,
             labels=labels,
             played_not_selected_voice_ids=played_not_selected_voice_ids,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def create(
+        self,
+        *,
+        voice_name: str,
+        voice_description: str,
+        generated_voice_id: str,
+        labels: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
+        played_not_selected_voice_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Voice:
+        """
+        Create a voice from previously generated voice preview. This endpoint should be called after you fetched a generated_voice_id using POST /v1/text-to-voice/design or POST /v1/text-to-voice/:voice_id/remix.
+
+        Parameters
+        ----------
+        voice_name : str
+            Name to use for the created voice.
+
+        voice_description : str
+            Description to use for the created voice.
+
+        generated_voice_id : str
+            The generated_voice_id to create, call POST /v1/text-to-voice/create-previews and fetch the generated_voice_id from the response header if don't have one yet.
+
+        labels : typing.Optional[typing.Dict[str, typing.Optional[str]]]
+            Optional, metadata to add to the created voice. Defaults to None.
+
+        played_not_selected_voice_ids : typing.Optional[typing.Sequence[str]]
+            List of voice ids that the user has played but not selected. Used for RLHF.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Voice
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.text_to_voice.create(
+                voice_name="Sassy squeaky mouse",
+                voice_description="A sassy squeaky mouse",
+                generated_voice_id="37HceQefKmEi3bGovXjL",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.create(
+            voice_name=voice_name,
+            voice_description=voice_description,
+            generated_voice_id=generated_voice_id,
+            labels=labels,
+            played_not_selected_voice_ids=played_not_selected_voice_ids,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def design(
+        self,
+        *,
+        voice_description: str,
+        output_format: typing.Optional[TextToVoiceDesignRequestOutputFormat] = None,
+        model_id: typing.Optional[VoiceDesignRequestModelModelId] = OMIT,
+        text: typing.Optional[str] = OMIT,
+        auto_generate_text: typing.Optional[bool] = OMIT,
+        loudness: typing.Optional[float] = OMIT,
+        seed: typing.Optional[int] = OMIT,
+        guidance_scale: typing.Optional[float] = OMIT,
+        quality: typing.Optional[float] = OMIT,
+        reference_audio_base_64: typing.Optional[str] = OMIT,
+        prompt_strength: typing.Optional[float] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> VoiceDesignPreviewResponse:
+        """
+        Design a voice via a prompt. This method returns a list of voice previews. Each preview has a generated_voice_id and a sample of the voice as base64 encoded mp3 audio. To create a voice use the generated_voice_id of the preferred preview with the /v1/text-to-voice endpoint.
+
+        Parameters
+        ----------
+        voice_description : str
+            Description to use for the created voice.
+
+        output_format : typing.Optional[TextToVoiceDesignRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        model_id : typing.Optional[VoiceDesignRequestModelModelId]
+            Model to use for the voice generation. Possible values: eleven_multilingual_ttv_v2, eleven_ttv_v3.
+
+        text : typing.Optional[str]
+            Text to generate, text length has to be between 100 and 1000.
+
+        auto_generate_text : typing.Optional[bool]
+            Whether to automatically generate a text suitable for the voice description.
+
+        loudness : typing.Optional[float]
+            Controls the volume level of the generated voice. -1 is quietest, 1 is loudest, 0 corresponds to roughly -24 LUFS.
+
+        seed : typing.Optional[int]
+            Random number that controls the voice generation. Same seed with same inputs produces same voice.
+
+        guidance_scale : typing.Optional[float]
+            Controls how closely the AI follows the prompt. Lower numbers give the AI more freedom to be creative, while higher numbers force it to stick more to the prompt. High numbers can cause voice to sound artificial or robotic. We recommend to use longer, more detailed prompts at lower Guidance Scale.
+
+        quality : typing.Optional[float]
+            Higher quality results in better voice output but less variety.
+
+        reference_audio_base_64 : typing.Optional[str]
+            Reference audio to use for the voice generation. The audio should be base64 encoded. Only supported when using the  eleven_ttv_v3 model.
+
+        prompt_strength : typing.Optional[float]
+            Controls the balance of prompt versus reference audio when generating voice samples. 0 means almost no prompt influence, 1 means almost no reference audio influence. Only supported when using the eleven_ttv_v3 model and providing reference audio.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        VoiceDesignPreviewResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.text_to_voice.design(
+                voice_description="A sassy squeaky mouse",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.design(
+            voice_description=voice_description,
+            output_format=output_format,
+            model_id=model_id,
+            text=text,
+            auto_generate_text=auto_generate_text,
+            loudness=loudness,
+            seed=seed,
+            guidance_scale=guidance_scale,
+            quality=quality,
+            reference_audio_base_64=reference_audio_base_64,
+            prompt_strength=prompt_strength,
             request_options=request_options,
         )
         return _response.data

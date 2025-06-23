@@ -262,6 +262,46 @@ class AgentsClient:
         )
         return _response.data
 
+    def duplicate(
+        self,
+        agent_id: str,
+        *,
+        name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> CreateAgentResponseModel:
+        """
+        Create a new agent by duplicating an existing one
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of an agent. This is returned on agent creation.
+
+        name : typing.Optional[str]
+            A name to make the agent easier to find
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CreateAgentResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.agents.duplicate(
+            agent_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._raw_client.duplicate(agent_id, name=name, request_options=request_options)
+        return _response.data
+
     def simulate_conversation(
         self,
         agent_id: str,
@@ -660,6 +700,54 @@ class AsyncAgentsClient:
         _response = await self._raw_client.list(
             cursor=cursor, page_size=page_size, search=search, request_options=request_options
         )
+        return _response.data
+
+    async def duplicate(
+        self,
+        agent_id: str,
+        *,
+        name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> CreateAgentResponseModel:
+        """
+        Create a new agent by duplicating an existing one
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of an agent. This is returned on agent creation.
+
+        name : typing.Optional[str]
+            A name to make the agent easier to find
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CreateAgentResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.agents.duplicate(
+                agent_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.duplicate(agent_id, name=name, request_options=request_options)
         return _response.data
 
     async def simulate_conversation(

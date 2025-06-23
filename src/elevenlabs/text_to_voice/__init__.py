@@ -2,6 +2,14 @@
 
 # isort: skip_file
 
-from .types import TextToVoiceCreatePreviewsRequestOutputFormat
+from .types import (
+    TextToVoiceCreatePreviewsRequestOutputFormat,
+    TextToVoiceDesignRequestOutputFormat,
+    VoiceDesignRequestModelModelId,
+)
 
-__all__ = ["TextToVoiceCreatePreviewsRequestOutputFormat"]
+__all__ = [
+    "TextToVoiceCreatePreviewsRequestOutputFormat",
+    "TextToVoiceDesignRequestOutputFormat",
+    "VoiceDesignRequestModelModelId",
+]

@@ -5,7 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .conv_ai_stored_secret_dependencies_agent_tools_item import ConvAiStoredSecretDependenciesAgentToolsItem
+from .conv_ai_stored_secret_dependencies_agents_item import ConvAiStoredSecretDependenciesAgentsItem
 from .conv_ai_stored_secret_dependencies_tools_item import ConvAiStoredSecretDependenciesToolsItem
 from .dependent_phone_number_identifier import DependentPhoneNumberIdentifier
 from .secret_dependency_type import SecretDependencyType
@@ -13,7 +13,7 @@ from .secret_dependency_type import SecretDependencyType
 
 class ConvAiStoredSecretDependencies(UncheckedBaseModel):
     tools: typing.List[ConvAiStoredSecretDependenciesToolsItem]
-    agent_tools: typing.List[ConvAiStoredSecretDependenciesAgentToolsItem]
+    agents: typing.List[ConvAiStoredSecretDependenciesAgentsItem]
     others: typing.List[SecretDependencyType]
     phone_numbers: typing.Optional[typing.List[DependentPhoneNumberIdentifier]] = None
 

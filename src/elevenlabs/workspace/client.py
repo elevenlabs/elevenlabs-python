@@ -4,6 +4,8 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.default_sharing_preferences_response_model import DefaultSharingPreferencesResponseModel
+from ..types.share_option_response_model import ShareOptionResponseModel
 from .groups.client import AsyncGroupsClient, GroupsClient
 from .invites.client import AsyncInvitesClient, InvitesClient
 from .members.client import AsyncMembersClient, MembersClient
@@ -66,6 +68,97 @@ class WorkspaceClient:
         )
         """
         _response = self._raw_client.update_user_auto_provisioning(enabled=enabled, request_options=request_options)
+        return _response.data
+
+    def get_default_sharing_preferences(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> DefaultSharingPreferencesResponseModel:
+        """
+        Get the user's default sharing preferences.
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DefaultSharingPreferencesResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.workspace.get_default_sharing_preferences()
+        """
+        _response = self._raw_client.get_default_sharing_preferences(request_options=request_options)
+        return _response.data
+
+    def update_default_sharing_preferences(
+        self, *, default_sharing_groups: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Optional[typing.Any]:
+        """
+        Update the user's default sharing preferences.
+
+        Parameters
+        ----------
+        default_sharing_groups : typing.Sequence[str]
+            List of group IDs to share with by default
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.workspace.update_default_sharing_preferences(
+            default_sharing_groups=["default_sharing_groups"],
+        )
+        """
+        _response = self._raw_client.update_default_sharing_preferences(
+            default_sharing_groups=default_sharing_groups, request_options=request_options
+        )
+        return _response.data
+
+    def get_share_options(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[ShareOptionResponseModel]:
+        """
+        Get the share options for a workspace.
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[ShareOptionResponseModel]
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.workspace.get_share_options()
+        """
+        _response = self._raw_client.get_share_options(request_options=request_options)
         return _response.data
 
 
@@ -131,4 +224,119 @@ class AsyncWorkspaceClient:
         _response = await self._raw_client.update_user_auto_provisioning(
             enabled=enabled, request_options=request_options
         )
+        return _response.data
+
+    async def get_default_sharing_preferences(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> DefaultSharingPreferencesResponseModel:
+        """
+        Get the user's default sharing preferences.
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DefaultSharingPreferencesResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.workspace.get_default_sharing_preferences()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_default_sharing_preferences(request_options=request_options)
+        return _response.data
+
+    async def update_default_sharing_preferences(
+        self, *, default_sharing_groups: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Optional[typing.Any]:
+        """
+        Update the user's default sharing preferences.
+
+        Parameters
+        ----------
+        default_sharing_groups : typing.Sequence[str]
+            List of group IDs to share with by default
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.workspace.update_default_sharing_preferences(
+                default_sharing_groups=["default_sharing_groups"],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update_default_sharing_preferences(
+            default_sharing_groups=default_sharing_groups, request_options=request_options
+        )
+        return _response.data
+
+    async def get_share_options(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[ShareOptionResponseModel]:
+        """
+        Get the share options for a workspace.
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[ShareOptionResponseModel]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.workspace.get_share_options()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_share_options(request_options=request_options)
         return _response.data

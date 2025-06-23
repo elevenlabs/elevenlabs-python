@@ -8,7 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .system_tool_config_input import SystemToolConfigInput
 
 
-class BuiltInTools(UncheckedBaseModel):
+class BuiltInToolsInput(UncheckedBaseModel):
     end_call: typing.Optional[SystemToolConfigInput] = pydantic.Field(default=None)
     """
     The end call tool

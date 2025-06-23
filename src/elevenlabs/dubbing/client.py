@@ -58,6 +58,7 @@ class DubbingClient:
         dubbing_studio: typing.Optional[bool] = OMIT,
         disable_voice_cloning: typing.Optional[bool] = OMIT,
         mode: typing.Optional[str] = OMIT,
+        csv_fps: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DoDubbingResponse:
         """
@@ -119,6 +120,9 @@ class DubbingClient:
         mode : typing.Optional[str]
             automatic or manual. Manual mode is only supported when creating a dubbing studio project
 
+        csv_fps : typing.Optional[float]
+            Frames per second to use when parsing a CSV file for dubbing. If not provided, FPS will be inferred from timecodes.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -155,6 +159,7 @@ class DubbingClient:
             dubbing_studio=dubbing_studio,
             disable_voice_cloning=disable_voice_cloning,
             mode=mode,
+            csv_fps=csv_fps,
             request_options=request_options,
         )
         return _response.data
@@ -267,6 +272,7 @@ class AsyncDubbingClient:
         dubbing_studio: typing.Optional[bool] = OMIT,
         disable_voice_cloning: typing.Optional[bool] = OMIT,
         mode: typing.Optional[str] = OMIT,
+        csv_fps: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DoDubbingResponse:
         """
@@ -328,6 +334,9 @@ class AsyncDubbingClient:
         mode : typing.Optional[str]
             automatic or manual. Manual mode is only supported when creating a dubbing studio project
 
+        csv_fps : typing.Optional[float]
+            Frames per second to use when parsing a CSV file for dubbing. If not provided, FPS will be inferred from timecodes.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -372,6 +381,7 @@ class AsyncDubbingClient:
             dubbing_studio=dubbing_studio,
             disable_voice_cloning=disable_voice_cloning,
             mode=mode,
+            csv_fps=csv_fps,
             request_options=request_options,
         )
         return _response.data

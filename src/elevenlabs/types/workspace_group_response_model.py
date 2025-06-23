@@ -5,13 +5,14 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .workspace_group_permission import WorkspaceGroupPermission
 
 
-class DependentUnknownAgentToolIdentifier(UncheckedBaseModel):
-    """
-    A model that represents an tool dependent on a knowledge base/tools
-    to which the user has no direct access.
-    """
+class WorkspaceGroupResponseModel(UncheckedBaseModel):
+    name: str
+    id: str
+    members: typing.List[str]
+    permissions: typing.Optional[typing.List[WorkspaceGroupPermission]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

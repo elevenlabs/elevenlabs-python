@@ -11,21 +11,20 @@ from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .dynamic_variables_config import DynamicVariablesConfig
 from .integration_type import IntegrationType
 from .mcp_approval_policy import McpApprovalPolicy
-from .system_tool_config_input_params import SystemToolConfigInputParams
-from .webhook_tool_api_schema_config_input import WebhookToolApiSchemaConfigInput
+from .system_tool_config_output_params import SystemToolConfigOutputParams
+from .webhook_tool_api_schema_config_output import WebhookToolApiSchemaConfigOutput
 
 
-class PromptAgentDbModelToolsItem_Client(UncheckedBaseModel):
+class PromptAgentApiModelOutputToolsItem_Client(UncheckedBaseModel):
     """
     The type of tool
     """
 
     type: typing.Literal["client"] = "client"
-    id: typing.Optional[str] = None
     name: str
     description: str
     response_timeout_secs: typing.Optional[int] = None
-    parameters: typing.Optional["ObjectJsonSchemaPropertyInput"] = None
+    parameters: typing.Optional["ObjectJsonSchemaPropertyOutput"] = None
     expects_response: typing.Optional[bool] = None
     dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
 
@@ -39,18 +38,17 @@ class PromptAgentDbModelToolsItem_Client(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-class PromptAgentDbModelToolsItem_Mcp(UncheckedBaseModel):
+class PromptAgentApiModelOutputToolsItem_Mcp(UncheckedBaseModel):
     """
     The type of tool
     """
 
     type: typing.Literal["mcp"] = "mcp"
-    id: typing.Optional[str] = None
     name: str
     description: str
     response_timeout_secs: typing.Optional[int] = None
     integration_type: IntegrationType
-    parameters: typing.Optional["ObjectJsonSchemaPropertyInput"] = None
+    parameters: typing.Optional["ObjectJsonSchemaPropertyOutput"] = None
     approval_policy: typing.Optional[McpApprovalPolicy] = None
     mcp_tool_name: str
     mcp_tool_description: str
@@ -68,17 +66,16 @@ class PromptAgentDbModelToolsItem_Mcp(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-class PromptAgentDbModelToolsItem_System(UncheckedBaseModel):
+class PromptAgentApiModelOutputToolsItem_System(UncheckedBaseModel):
     """
     The type of tool
     """
 
     type: typing.Literal["system"] = "system"
-    id: typing.Optional[str] = None
     name: str
     description: str
     response_timeout_secs: typing.Optional[int] = None
-    params: SystemToolConfigInputParams
+    params: SystemToolConfigOutputParams
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -90,17 +87,16 @@ class PromptAgentDbModelToolsItem_System(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-class PromptAgentDbModelToolsItem_Webhook(UncheckedBaseModel):
+class PromptAgentApiModelOutputToolsItem_Webhook(UncheckedBaseModel):
     """
     The type of tool
     """
 
     type: typing.Literal["webhook"] = "webhook"
-    id: typing.Optional[str] = None
     name: str
     description: str
     response_timeout_secs: typing.Optional[int] = None
-    api_schema: WebhookToolApiSchemaConfigInput
+    api_schema: WebhookToolApiSchemaConfigOutput
     dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
 
     if IS_PYDANTIC_V2:
@@ -113,18 +109,18 @@ class PromptAgentDbModelToolsItem_Webhook(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .array_json_schema_property_input import ArrayJsonSchemaPropertyInput  # noqa: E402, F401, I001
-from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput  # noqa: E402, F401, I001
+from .array_json_schema_property_output import ArrayJsonSchemaPropertyOutput  # noqa: E402, F401, I001
+from .object_json_schema_property_output import ObjectJsonSchemaPropertyOutput  # noqa: E402, F401, I001
 
-PromptAgentDbModelToolsItem = typing_extensions.Annotated[
+PromptAgentApiModelOutputToolsItem = typing_extensions.Annotated[
     typing.Union[
-        PromptAgentDbModelToolsItem_Client,
-        PromptAgentDbModelToolsItem_Mcp,
-        PromptAgentDbModelToolsItem_System,
-        PromptAgentDbModelToolsItem_Webhook,
+        PromptAgentApiModelOutputToolsItem_Client,
+        PromptAgentApiModelOutputToolsItem_Mcp,
+        PromptAgentApiModelOutputToolsItem_System,
+        PromptAgentApiModelOutputToolsItem_Webhook,
     ],
     UnionMetadata(discriminant="type"),
 ]
-update_forward_refs(PromptAgentDbModelToolsItem_Client)
-update_forward_refs(PromptAgentDbModelToolsItem_Mcp)
-update_forward_refs(PromptAgentDbModelToolsItem_Webhook)
+update_forward_refs(PromptAgentApiModelOutputToolsItem_Client)
+update_forward_refs(PromptAgentApiModelOutputToolsItem_Mcp)
+update_forward_refs(PromptAgentApiModelOutputToolsItem_Webhook)

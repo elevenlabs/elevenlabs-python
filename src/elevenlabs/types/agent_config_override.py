@@ -5,7 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .prompt_agent_override import PromptAgentOverride
+from .prompt_agent_api_model_override import PromptAgentApiModelOverride
 
 
 class AgentConfigOverride(UncheckedBaseModel):
@@ -19,7 +19,7 @@ class AgentConfigOverride(UncheckedBaseModel):
     Language of the agent - used for ASR and TTS
     """
 
-    prompt: typing.Optional[PromptAgentOverride] = pydantic.Field(default=None)
+    prompt: typing.Optional[PromptAgentApiModelOverride] = pydantic.Field(default=None)
     """
     The prompt for the agent
     """
