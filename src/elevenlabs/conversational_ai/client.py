@@ -22,6 +22,7 @@ from .raw_client import AsyncRawConversationalAiClient, RawConversationalAiClien
 from .secrets.client import AsyncSecretsClient, SecretsClient
 from .settings.client import AsyncSettingsClient, SettingsClient
 from .sip_trunk.client import AsyncSipTrunkClient, SipTrunkClient
+from .tools.client import AsyncToolsClient, ToolsClient
 from .twilio.client import AsyncTwilioClient, TwilioClient
 
 # this is used as the default value for optional parameters
@@ -42,6 +43,8 @@ class ConversationalAiClient:
         self.llm_usage = LlmUsageClient(client_wrapper=client_wrapper)
 
         self.knowledge_base = KnowledgeBaseClient(client_wrapper=client_wrapper)
+
+        self.tools = ToolsClient(client_wrapper=client_wrapper)
 
         self.settings = SettingsClient(client_wrapper=client_wrapper)
 
@@ -263,6 +266,8 @@ class AsyncConversationalAiClient:
         self.llm_usage = AsyncLlmUsageClient(client_wrapper=client_wrapper)
 
         self.knowledge_base = AsyncKnowledgeBaseClient(client_wrapper=client_wrapper)
+
+        self.tools = AsyncToolsClient(client_wrapper=client_wrapper)
 
         self.settings = AsyncSettingsClient(client_wrapper=client_wrapper)
 

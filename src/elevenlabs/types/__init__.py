@@ -113,7 +113,8 @@ from .body_stream_project_audio_v_1_projects_project_id_snapshots_project_snapsh
     BodyStreamProjectAudioV1ProjectsProjectIdSnapshotsProjectSnapshotIdStreamPost,
 )
 from .breakdown_types import BreakdownTypes
-from .built_in_tools import BuiltInTools
+from .built_in_tools_input import BuiltInToolsInput
+from .built_in_tools_output import BuiltInToolsOutput
 from .chapter_content_block_extendable_node_response_model import ChapterContentBlockExtendableNodeResponseModel
 from .chapter_content_block_input_model import ChapterContentBlockInputModel
 from .chapter_content_block_input_model_sub_type import ChapterContentBlockInputModelSubType
@@ -147,10 +148,10 @@ from .close_socket import CloseSocket
 from .conv_ai_dynamic_variable import ConvAiDynamicVariable
 from .conv_ai_secret_locator import ConvAiSecretLocator
 from .conv_ai_stored_secret_dependencies import ConvAiStoredSecretDependencies
-from .conv_ai_stored_secret_dependencies_agent_tools_item import (
-    ConvAiStoredSecretDependenciesAgentToolsItem,
-    ConvAiStoredSecretDependenciesAgentToolsItem_Available,
-    ConvAiStoredSecretDependenciesAgentToolsItem_Unknown,
+from .conv_ai_stored_secret_dependencies_agents_item import (
+    ConvAiStoredSecretDependenciesAgentsItem,
+    ConvAiStoredSecretDependenciesAgentsItem_Available,
+    ConvAiStoredSecretDependenciesAgentsItem_Unknown,
 )
 from .conv_ai_stored_secret_dependencies_tools_item import (
     ConvAiStoredSecretDependenciesToolsItem,
@@ -255,6 +256,7 @@ from .dashboard_call_success_chart_model import DashboardCallSuccessChartModel
 from .dashboard_criteria_chart_model import DashboardCriteriaChartModel
 from .dashboard_data_collection_chart_model import DashboardDataCollectionChartModel
 from .data_collection_result_common_model import DataCollectionResultCommonModel
+from .default_sharing_preferences_response_model import DefaultSharingPreferencesResponseModel
 from .delete_chapter_request import DeleteChapterRequest
 from .delete_chapter_response_model import DeleteChapterResponseModel
 from .delete_dubbing_response_model import DeleteDubbingResponseModel
@@ -269,13 +271,10 @@ from .delete_workspace_invite_response_model import DeleteWorkspaceInviteRespons
 from .delete_workspace_member_response_model import DeleteWorkspaceMemberResponseModel
 from .dependent_available_agent_identifier import DependentAvailableAgentIdentifier
 from .dependent_available_agent_identifier_access_level import DependentAvailableAgentIdentifierAccessLevel
-from .dependent_available_agent_tool_identifier import DependentAvailableAgentToolIdentifier
-from .dependent_available_agent_tool_identifier_access_level import DependentAvailableAgentToolIdentifierAccessLevel
 from .dependent_available_tool_identifier import DependentAvailableToolIdentifier
 from .dependent_available_tool_identifier_access_level import DependentAvailableToolIdentifierAccessLevel
 from .dependent_phone_number_identifier import DependentPhoneNumberIdentifier
 from .dependent_unknown_agent_identifier import DependentUnknownAgentIdentifier
-from .dependent_unknown_agent_tool_identifier import DependentUnknownAgentToolIdentifier
 from .dependent_unknown_tool_identifier import DependentUnknownToolIdentifier
 from .dialogue_input import DialogueInput
 from .dialogue_input_response_model import DialogueInputResponseModel
@@ -405,6 +404,12 @@ from .get_pronunciation_dictionary_metadata_response_model_permission_on_resourc
 )
 from .get_pronunciation_dictionary_response import GetPronunciationDictionaryResponse
 from .get_speech_history_response import GetSpeechHistoryResponse
+from .get_tool_dependent_agents_response_model import GetToolDependentAgentsResponseModel
+from .get_tool_dependent_agents_response_model_agents_item import (
+    GetToolDependentAgentsResponseModelAgentsItem,
+    GetToolDependentAgentsResponseModelAgentsItem_Available,
+    GetToolDependentAgentsResponseModelAgentsItem_Unknown,
+)
 from .get_voices_response import GetVoicesResponse
 from .get_voices_v_2_response import GetVoicesV2Response
 from .get_workspace_secrets_response_model import GetWorkspaceSecretsResponseModel
@@ -519,30 +524,25 @@ from .project_snapshot_response import ProjectSnapshotResponse
 from .project_snapshots_response import ProjectSnapshotsResponse
 from .project_state import ProjectState
 from .prompt_agent import PromptAgent
+from .prompt_agent_api_model_input import PromptAgentApiModelInput
+from .prompt_agent_api_model_input_tools_item import (
+    PromptAgentApiModelInputToolsItem,
+    PromptAgentApiModelInputToolsItem_Client,
+    PromptAgentApiModelInputToolsItem_Mcp,
+    PromptAgentApiModelInputToolsItem_System,
+    PromptAgentApiModelInputToolsItem_Webhook,
+)
+from .prompt_agent_api_model_output import PromptAgentApiModelOutput
+from .prompt_agent_api_model_output_tools_item import (
+    PromptAgentApiModelOutputToolsItem,
+    PromptAgentApiModelOutputToolsItem_Client,
+    PromptAgentApiModelOutputToolsItem_Mcp,
+    PromptAgentApiModelOutputToolsItem_System,
+    PromptAgentApiModelOutputToolsItem_Webhook,
+)
+from .prompt_agent_api_model_override import PromptAgentApiModelOverride
+from .prompt_agent_api_model_override_config import PromptAgentApiModelOverrideConfig
 from .prompt_agent_db_model import PromptAgentDbModel
-from .prompt_agent_db_model_tools_item import (
-    PromptAgentDbModelToolsItem,
-    PromptAgentDbModelToolsItem_Client,
-    PromptAgentDbModelToolsItem_Mcp,
-    PromptAgentDbModelToolsItem_System,
-    PromptAgentDbModelToolsItem_Webhook,
-)
-from .prompt_agent_input_tools_item import (
-    PromptAgentInputToolsItem,
-    PromptAgentInputToolsItem_Client,
-    PromptAgentInputToolsItem_Mcp,
-    PromptAgentInputToolsItem_System,
-    PromptAgentInputToolsItem_Webhook,
-)
-from .prompt_agent_output_tools_item import (
-    PromptAgentOutputToolsItem,
-    PromptAgentOutputToolsItem_Client,
-    PromptAgentOutputToolsItem_Mcp,
-    PromptAgentOutputToolsItem_System,
-    PromptAgentOutputToolsItem_Webhook,
-)
-from .prompt_agent_override import PromptAgentOverride
-from .prompt_agent_override_config import PromptAgentOverrideConfig
 from .prompt_evaluation_criteria import PromptEvaluationCriteria
 from .pronunciation_dictionary_alias_rule_request_model import PronunciationDictionaryAliasRuleRequestModel
 from .pronunciation_dictionary_locator import PronunciationDictionaryLocator
@@ -655,6 +655,23 @@ from .text_to_speech_stream_request import TextToSpeechStreamRequest
 from .tool import Tool
 from .tool_annotations import ToolAnnotations
 from .tool_mock_config import ToolMockConfig
+from .tool_request_model import ToolRequestModel
+from .tool_request_model_tool_config import (
+    ToolRequestModelToolConfig,
+    ToolRequestModelToolConfig_Client,
+    ToolRequestModelToolConfig_Mcp,
+    ToolRequestModelToolConfig_System,
+    ToolRequestModelToolConfig_Webhook,
+)
+from .tool_response_model import ToolResponseModel
+from .tool_response_model_tool_config import (
+    ToolResponseModelToolConfig,
+    ToolResponseModelToolConfig_Client,
+    ToolResponseModelToolConfig_Mcp,
+    ToolResponseModelToolConfig_System,
+    ToolResponseModelToolConfig_Webhook,
+)
+from .tools_response_model import ToolsResponseModel
 from .transfer_to_agent_tool_config import TransferToAgentToolConfig
 from .transfer_to_number_tool_config import TransferToNumberToolConfig
 from .tts_conversational_config_input import TtsConversationalConfigInput
@@ -747,6 +764,8 @@ from .widget_styles import WidgetStyles
 from .widget_text_contents import WidgetTextContents
 from .workspace_batch_calls_response import WorkspaceBatchCallsResponse
 from .workspace_group_by_name_response_model import WorkspaceGroupByNameResponseModel
+from .workspace_group_permission import WorkspaceGroupPermission
+from .workspace_group_response_model import WorkspaceGroupResponseModel
 from .workspace_resource_type import WorkspaceResourceType
 from .workspace_webhook_list_response_model import WorkspaceWebhookListResponseModel
 from .workspace_webhook_response_model import WorkspaceWebhookResponseModel
@@ -830,7 +849,8 @@ __all__ = [
     "BodyStreamChapterAudioV1ProjectsProjectIdChaptersChapterIdSnapshotsChapterSnapshotIdStreamPost",
     "BodyStreamProjectAudioV1ProjectsProjectIdSnapshotsProjectSnapshotIdStreamPost",
     "BreakdownTypes",
-    "BuiltInTools",
+    "BuiltInToolsInput",
+    "BuiltInToolsOutput",
     "ChapterContentBlockExtendableNodeResponseModel",
     "ChapterContentBlockInputModel",
     "ChapterContentBlockInputModelSubType",
@@ -862,9 +882,9 @@ __all__ = [
     "ConvAiDynamicVariable",
     "ConvAiSecretLocator",
     "ConvAiStoredSecretDependencies",
-    "ConvAiStoredSecretDependenciesAgentToolsItem",
-    "ConvAiStoredSecretDependenciesAgentToolsItem_Available",
-    "ConvAiStoredSecretDependenciesAgentToolsItem_Unknown",
+    "ConvAiStoredSecretDependenciesAgentsItem",
+    "ConvAiStoredSecretDependenciesAgentsItem_Available",
+    "ConvAiStoredSecretDependenciesAgentsItem_Unknown",
     "ConvAiStoredSecretDependenciesToolsItem",
     "ConvAiStoredSecretDependenciesToolsItem_Available",
     "ConvAiStoredSecretDependenciesToolsItem_Unknown",
@@ -942,6 +962,7 @@ __all__ = [
     "DashboardCriteriaChartModel",
     "DashboardDataCollectionChartModel",
     "DataCollectionResultCommonModel",
+    "DefaultSharingPreferencesResponseModel",
     "DeleteChapterRequest",
     "DeleteChapterResponseModel",
     "DeleteDubbingResponseModel",
@@ -956,13 +977,10 @@ __all__ = [
     "DeleteWorkspaceMemberResponseModel",
     "DependentAvailableAgentIdentifier",
     "DependentAvailableAgentIdentifierAccessLevel",
-    "DependentAvailableAgentToolIdentifier",
-    "DependentAvailableAgentToolIdentifierAccessLevel",
     "DependentAvailableToolIdentifier",
     "DependentAvailableToolIdentifierAccessLevel",
     "DependentPhoneNumberIdentifier",
     "DependentUnknownAgentIdentifier",
-    "DependentUnknownAgentToolIdentifier",
     "DependentUnknownToolIdentifier",
     "DialogueInput",
     "DialogueInputResponseModel",
@@ -1070,6 +1088,10 @@ __all__ = [
     "GetPronunciationDictionaryMetadataResponseModelPermissionOnResource",
     "GetPronunciationDictionaryResponse",
     "GetSpeechHistoryResponse",
+    "GetToolDependentAgentsResponseModel",
+    "GetToolDependentAgentsResponseModelAgentsItem",
+    "GetToolDependentAgentsResponseModelAgentsItem_Available",
+    "GetToolDependentAgentsResponseModelAgentsItem_Unknown",
     "GetVoicesResponse",
     "GetVoicesV2Response",
     "GetWorkspaceSecretsResponseModel",
@@ -1182,24 +1204,21 @@ __all__ = [
     "ProjectSnapshotsResponse",
     "ProjectState",
     "PromptAgent",
+    "PromptAgentApiModelInput",
+    "PromptAgentApiModelInputToolsItem",
+    "PromptAgentApiModelInputToolsItem_Client",
+    "PromptAgentApiModelInputToolsItem_Mcp",
+    "PromptAgentApiModelInputToolsItem_System",
+    "PromptAgentApiModelInputToolsItem_Webhook",
+    "PromptAgentApiModelOutput",
+    "PromptAgentApiModelOutputToolsItem",
+    "PromptAgentApiModelOutputToolsItem_Client",
+    "PromptAgentApiModelOutputToolsItem_Mcp",
+    "PromptAgentApiModelOutputToolsItem_System",
+    "PromptAgentApiModelOutputToolsItem_Webhook",
+    "PromptAgentApiModelOverride",
+    "PromptAgentApiModelOverrideConfig",
     "PromptAgentDbModel",
-    "PromptAgentDbModelToolsItem",
-    "PromptAgentDbModelToolsItem_Client",
-    "PromptAgentDbModelToolsItem_Mcp",
-    "PromptAgentDbModelToolsItem_System",
-    "PromptAgentDbModelToolsItem_Webhook",
-    "PromptAgentInputToolsItem",
-    "PromptAgentInputToolsItem_Client",
-    "PromptAgentInputToolsItem_Mcp",
-    "PromptAgentInputToolsItem_System",
-    "PromptAgentInputToolsItem_Webhook",
-    "PromptAgentOutputToolsItem",
-    "PromptAgentOutputToolsItem_Client",
-    "PromptAgentOutputToolsItem_Mcp",
-    "PromptAgentOutputToolsItem_System",
-    "PromptAgentOutputToolsItem_Webhook",
-    "PromptAgentOverride",
-    "PromptAgentOverrideConfig",
     "PromptEvaluationCriteria",
     "PronunciationDictionaryAliasRuleRequestModel",
     "PronunciationDictionaryLocator",
@@ -1306,6 +1325,19 @@ __all__ = [
     "Tool",
     "ToolAnnotations",
     "ToolMockConfig",
+    "ToolRequestModel",
+    "ToolRequestModelToolConfig",
+    "ToolRequestModelToolConfig_Client",
+    "ToolRequestModelToolConfig_Mcp",
+    "ToolRequestModelToolConfig_System",
+    "ToolRequestModelToolConfig_Webhook",
+    "ToolResponseModel",
+    "ToolResponseModelToolConfig",
+    "ToolResponseModelToolConfig_Client",
+    "ToolResponseModelToolConfig_Mcp",
+    "ToolResponseModelToolConfig_System",
+    "ToolResponseModelToolConfig_Webhook",
+    "ToolsResponseModel",
     "TransferToAgentToolConfig",
     "TransferToNumberToolConfig",
     "TtsConversationalConfigInput",
@@ -1388,6 +1420,8 @@ __all__ = [
     "WidgetTextContents",
     "WorkspaceBatchCallsResponse",
     "WorkspaceGroupByNameResponseModel",
+    "WorkspaceGroupPermission",
+    "WorkspaceGroupResponseModel",
     "WorkspaceResourceType",
     "WorkspaceWebhookListResponseModel",
     "WorkspaceWebhookResponseModel",

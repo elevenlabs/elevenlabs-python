@@ -5,15 +5,13 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .dependent_available_agent_tool_identifier_access_level import DependentAvailableAgentToolIdentifierAccessLevel
 
 
-class DependentAvailableAgentToolIdentifier(UncheckedBaseModel):
-    agent_id: str
-    agent_name: str
-    used_by: typing.List[str]
-    created_at_unix_secs: int
-    access_level: DependentAvailableAgentToolIdentifierAccessLevel
+class PromptAgentApiModelOverrideConfig(UncheckedBaseModel):
+    prompt: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to allow overriding the prompt field.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

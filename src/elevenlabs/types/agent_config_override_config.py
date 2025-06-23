@@ -5,7 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .prompt_agent_override_config import PromptAgentOverrideConfig
+from .prompt_agent_api_model_override_config import PromptAgentApiModelOverrideConfig
 
 
 class AgentConfigOverrideConfig(UncheckedBaseModel):
@@ -19,7 +19,7 @@ class AgentConfigOverrideConfig(UncheckedBaseModel):
     Whether to allow overriding the language field.
     """
 
-    prompt: typing.Optional[PromptAgentOverrideConfig] = pydantic.Field(default=None)
+    prompt: typing.Optional[PromptAgentApiModelOverrideConfig] = pydantic.Field(default=None)
     """
     Configures overrides for nested fields.
     """

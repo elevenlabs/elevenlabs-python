@@ -11,21 +11,20 @@ from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .dynamic_variables_config import DynamicVariablesConfig
 from .integration_type import IntegrationType
 from .mcp_approval_policy import McpApprovalPolicy
-from .system_tool_config_input_params import SystemToolConfigInputParams
-from .webhook_tool_api_schema_config_input import WebhookToolApiSchemaConfigInput
+from .system_tool_config_output_params import SystemToolConfigOutputParams
+from .webhook_tool_api_schema_config_output import WebhookToolApiSchemaConfigOutput
 
 
-class PromptAgentInputToolsItem_Client(UncheckedBaseModel):
+class ToolResponseModelToolConfig_Client(UncheckedBaseModel):
     """
     The type of tool
     """
 
     type: typing.Literal["client"] = "client"
-    id: typing.Optional[str] = None
     name: str
     description: str
     response_timeout_secs: typing.Optional[int] = None
-    parameters: typing.Optional["ObjectJsonSchemaPropertyInput"] = None
+    parameters: typing.Optional["ObjectJsonSchemaPropertyOutput"] = None
     expects_response: typing.Optional[bool] = None
     dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
 
@@ -39,18 +38,17 @@ class PromptAgentInputToolsItem_Client(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-class PromptAgentInputToolsItem_Mcp(UncheckedBaseModel):
+class ToolResponseModelToolConfig_Mcp(UncheckedBaseModel):
     """
     The type of tool
     """
 
     type: typing.Literal["mcp"] = "mcp"
-    id: typing.Optional[str] = None
     name: str
     description: str
     response_timeout_secs: typing.Optional[int] = None
     integration_type: IntegrationType
-    parameters: typing.Optional["ObjectJsonSchemaPropertyInput"] = None
+    parameters: typing.Optional["ObjectJsonSchemaPropertyOutput"] = None
     approval_policy: typing.Optional[McpApprovalPolicy] = None
     mcp_tool_name: str
     mcp_tool_description: str
@@ -68,17 +66,16 @@ class PromptAgentInputToolsItem_Mcp(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-class PromptAgentInputToolsItem_System(UncheckedBaseModel):
+class ToolResponseModelToolConfig_System(UncheckedBaseModel):
     """
     The type of tool
     """
 
     type: typing.Literal["system"] = "system"
-    id: typing.Optional[str] = None
     name: str
     description: str
     response_timeout_secs: typing.Optional[int] = None
-    params: SystemToolConfigInputParams
+    params: SystemToolConfigOutputParams
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -90,17 +87,16 @@ class PromptAgentInputToolsItem_System(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-class PromptAgentInputToolsItem_Webhook(UncheckedBaseModel):
+class ToolResponseModelToolConfig_Webhook(UncheckedBaseModel):
     """
     The type of tool
     """
 
     type: typing.Literal["webhook"] = "webhook"
-    id: typing.Optional[str] = None
     name: str
     description: str
     response_timeout_secs: typing.Optional[int] = None
-    api_schema: WebhookToolApiSchemaConfigInput
+    api_schema: WebhookToolApiSchemaConfigOutput
     dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
 
     if IS_PYDANTIC_V2:
@@ -113,18 +109,18 @@ class PromptAgentInputToolsItem_Webhook(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .array_json_schema_property_input import ArrayJsonSchemaPropertyInput  # noqa: E402, F401, I001
-from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput  # noqa: E402, F401, I001
+from .array_json_schema_property_output import ArrayJsonSchemaPropertyOutput  # noqa: E402, F401, I001
+from .object_json_schema_property_output import ObjectJsonSchemaPropertyOutput  # noqa: E402, F401, I001
 
-PromptAgentInputToolsItem = typing_extensions.Annotated[
+ToolResponseModelToolConfig = typing_extensions.Annotated[
     typing.Union[
-        PromptAgentInputToolsItem_Client,
-        PromptAgentInputToolsItem_Mcp,
-        PromptAgentInputToolsItem_System,
-        PromptAgentInputToolsItem_Webhook,
+        ToolResponseModelToolConfig_Client,
+        ToolResponseModelToolConfig_Mcp,
+        ToolResponseModelToolConfig_System,
+        ToolResponseModelToolConfig_Webhook,
     ],
     UnionMetadata(discriminant="type"),
 ]
-update_forward_refs(PromptAgentInputToolsItem_Client)
-update_forward_refs(PromptAgentInputToolsItem_Mcp)
-update_forward_refs(PromptAgentInputToolsItem_Webhook)
+update_forward_refs(ToolResponseModelToolConfig_Client)
+update_forward_refs(ToolResponseModelToolConfig_Mcp)
+update_forward_refs(ToolResponseModelToolConfig_Webhook)

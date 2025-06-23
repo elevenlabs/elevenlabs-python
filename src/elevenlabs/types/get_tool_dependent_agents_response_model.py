@@ -5,22 +5,13 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .system_tool_config_output_params import SystemToolConfigOutputParams
+from .get_tool_dependent_agents_response_model_agents_item import GetToolDependentAgentsResponseModelAgentsItem
 
 
-class SystemToolConfigOutput(UncheckedBaseModel):
-    """
-    A system tool is a tool that is used to call a system method in the server
-    """
-
-    name: str
-    description: str
-    response_timeout_secs: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    The maximum time in seconds to wait for the tool call to complete.
-    """
-
-    params: SystemToolConfigOutputParams
+class GetToolDependentAgentsResponseModel(UncheckedBaseModel):
+    agents: typing.List[GetToolDependentAgentsResponseModelAgentsItem]
+    next_cursor: typing.Optional[str] = None
+    has_more: bool
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

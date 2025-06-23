@@ -352,6 +352,71 @@ class RawAgentsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def duplicate(
+        self,
+        agent_id: str,
+        *,
+        name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[CreateAgentResponseModel]:
+        """
+        Create a new agent by duplicating an existing one
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of an agent. This is returned on agent creation.
+
+        name : typing.Optional[str]
+            A name to make the agent easier to find
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[CreateAgentResponseModel]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/convai/agents/{jsonable_encoder(agent_id)}/duplicate",
+            base_url=self._client_wrapper.get_environment().base,
+            method="POST",
+            json={
+                "name": name,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    CreateAgentResponseModel,
+                    construct_type(
+                        type_=CreateAgentResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def simulate_conversation(
         self,
         agent_id: str,
@@ -806,6 +871,71 @@ class AsyncRawAgentsClient:
                     GetAgentsPageResponseModel,
                     construct_type(
                         type_=GetAgentsPageResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def duplicate(
+        self,
+        agent_id: str,
+        *,
+        name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[CreateAgentResponseModel]:
+        """
+        Create a new agent by duplicating an existing one
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of an agent. This is returned on agent creation.
+
+        name : typing.Optional[str]
+            A name to make the agent easier to find
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[CreateAgentResponseModel]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/convai/agents/{jsonable_encoder(agent_id)}/duplicate",
+            base_url=self._client_wrapper.get_environment().base,
+            method="POST",
+            json={
+                "name": name,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    CreateAgentResponseModel,
+                    construct_type(
+                        type_=CreateAgentResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

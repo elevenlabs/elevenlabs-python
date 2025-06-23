@@ -11,21 +11,20 @@ from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .dynamic_variables_config import DynamicVariablesConfig
 from .integration_type import IntegrationType
 from .mcp_approval_policy import McpApprovalPolicy
-from .system_tool_config_output_params import SystemToolConfigOutputParams
-from .webhook_tool_api_schema_config_output import WebhookToolApiSchemaConfigOutput
+from .system_tool_config_input_params import SystemToolConfigInputParams
+from .webhook_tool_api_schema_config_input import WebhookToolApiSchemaConfigInput
 
 
-class PromptAgentOutputToolsItem_Client(UncheckedBaseModel):
+class ToolRequestModelToolConfig_Client(UncheckedBaseModel):
     """
-    The type of tool
+    Configuration for the tool
     """
 
     type: typing.Literal["client"] = "client"
-    id: typing.Optional[str] = None
     name: str
     description: str
     response_timeout_secs: typing.Optional[int] = None
-    parameters: typing.Optional["ObjectJsonSchemaPropertyOutput"] = None
+    parameters: typing.Optional["ObjectJsonSchemaPropertyInput"] = None
     expects_response: typing.Optional[bool] = None
     dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
 
@@ -39,18 +38,17 @@ class PromptAgentOutputToolsItem_Client(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-class PromptAgentOutputToolsItem_Mcp(UncheckedBaseModel):
+class ToolRequestModelToolConfig_Mcp(UncheckedBaseModel):
     """
-    The type of tool
+    Configuration for the tool
     """
 
     type: typing.Literal["mcp"] = "mcp"
-    id: typing.Optional[str] = None
     name: str
     description: str
     response_timeout_secs: typing.Optional[int] = None
     integration_type: IntegrationType
-    parameters: typing.Optional["ObjectJsonSchemaPropertyOutput"] = None
+    parameters: typing.Optional["ObjectJsonSchemaPropertyInput"] = None
     approval_policy: typing.Optional[McpApprovalPolicy] = None
     mcp_tool_name: str
     mcp_tool_description: str
@@ -68,17 +66,16 @@ class PromptAgentOutputToolsItem_Mcp(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-class PromptAgentOutputToolsItem_System(UncheckedBaseModel):
+class ToolRequestModelToolConfig_System(UncheckedBaseModel):
     """
-    The type of tool
+    Configuration for the tool
     """
 
     type: typing.Literal["system"] = "system"
-    id: typing.Optional[str] = None
     name: str
     description: str
     response_timeout_secs: typing.Optional[int] = None
-    params: SystemToolConfigOutputParams
+    params: SystemToolConfigInputParams
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -90,17 +87,16 @@ class PromptAgentOutputToolsItem_System(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-class PromptAgentOutputToolsItem_Webhook(UncheckedBaseModel):
+class ToolRequestModelToolConfig_Webhook(UncheckedBaseModel):
     """
-    The type of tool
+    Configuration for the tool
     """
 
     type: typing.Literal["webhook"] = "webhook"
-    id: typing.Optional[str] = None
     name: str
     description: str
     response_timeout_secs: typing.Optional[int] = None
-    api_schema: WebhookToolApiSchemaConfigOutput
+    api_schema: WebhookToolApiSchemaConfigInput
     dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
 
     if IS_PYDANTIC_V2:
@@ -113,18 +109,18 @@ class PromptAgentOutputToolsItem_Webhook(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .array_json_schema_property_output import ArrayJsonSchemaPropertyOutput  # noqa: E402, F401, I001
-from .object_json_schema_property_output import ObjectJsonSchemaPropertyOutput  # noqa: E402, F401, I001
+from .array_json_schema_property_input import ArrayJsonSchemaPropertyInput  # noqa: E402, F401, I001
+from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput  # noqa: E402, F401, I001
 
-PromptAgentOutputToolsItem = typing_extensions.Annotated[
+ToolRequestModelToolConfig = typing_extensions.Annotated[
     typing.Union[
-        PromptAgentOutputToolsItem_Client,
-        PromptAgentOutputToolsItem_Mcp,
-        PromptAgentOutputToolsItem_System,
-        PromptAgentOutputToolsItem_Webhook,
+        ToolRequestModelToolConfig_Client,
+        ToolRequestModelToolConfig_Mcp,
+        ToolRequestModelToolConfig_System,
+        ToolRequestModelToolConfig_Webhook,
     ],
     UnionMetadata(discriminant="type"),
 ]
-update_forward_refs(PromptAgentOutputToolsItem_Client)
-update_forward_refs(PromptAgentOutputToolsItem_Mcp)
-update_forward_refs(PromptAgentOutputToolsItem_Webhook)
+update_forward_refs(ToolRequestModelToolConfig_Client)
+update_forward_refs(ToolRequestModelToolConfig_Mcp)
+update_forward_refs(ToolRequestModelToolConfig_Webhook)

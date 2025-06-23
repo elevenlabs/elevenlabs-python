@@ -16,7 +16,6 @@ class McpToolConfigOutput(UncheckedBaseModel):
     An MCP tool configuration that can be used to call MCP servers
     """
 
-    id: typing.Optional[str] = None
     name: str
     description: str
     response_timeout_secs: typing.Optional[int] = pydantic.Field(default=None)

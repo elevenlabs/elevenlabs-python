@@ -14,6 +14,8 @@ class ConversationChargingCommonModel(UncheckedBaseModel):
     tier: typing.Optional[str] = None
     llm_usage: typing.Optional[LlmCategoryUsage] = None
     llm_price: typing.Optional[float] = None
+    llm_charge: typing.Optional[int] = None
+    call_charge: typing.Optional[int] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

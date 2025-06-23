@@ -14,6 +14,7 @@ from . import (
     secrets,
     settings,
     sip_trunk,
+    tools,
     twilio,
 )
 from .phone_numbers import (
@@ -55,5 +56,6 @@ __all__ = [
     "secrets",
     "settings",
     "sip_trunk",
+    "tools",
     "twilio",
 ]

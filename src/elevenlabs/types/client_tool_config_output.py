@@ -15,7 +15,6 @@ class ClientToolConfigOutput(UncheckedBaseModel):
     A client tool is one that sends an event to the user's client to trigger something client side
     """
 
-    id: typing.Optional[str] = None
     name: str
     description: str
     response_timeout_secs: typing.Optional[int] = pydantic.Field(default=None)

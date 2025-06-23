@@ -5,12 +5,13 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .workspace_group_response_model import WorkspaceGroupResponseModel
 
 
-class PromptAgentOverrideConfig(UncheckedBaseModel):
-    prompt: typing.Optional[bool] = pydantic.Field(default=None)
+class DefaultSharingPreferencesResponseModel(UncheckedBaseModel):
+    default_sharing_groups: typing.List[WorkspaceGroupResponseModel] = pydantic.Field()
     """
-    Whether to allow overriding the prompt field.
+    List of groups that the user shares with by default
     """
 
     if IS_PYDANTIC_V2:
