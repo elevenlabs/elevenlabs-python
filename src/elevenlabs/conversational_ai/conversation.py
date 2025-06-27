@@ -246,6 +246,7 @@ class Conversation:
     callback_agent_response_correction: Optional[Callable[[str, str], None]]
     callback_user_transcript: Optional[Callable[[str], None]]
     callback_latency_measurement: Optional[Callable[[int], None]]
+    proxy_url: Optional[str]
 
     _thread: Optional[threading.Thread]
     _should_stop: threading.Event
@@ -266,6 +267,7 @@ class Conversation:
         callback_agent_response_correction: Optional[Callable[[str, str], None]] = None,
         callback_user_transcript: Optional[Callable[[str], None]] = None,
         callback_latency_measurement: Optional[Callable[[int], None]] = None,
+        proxy_url: Optional[str] = None,
     ):
         """Conversational AI session.
 
@@ -295,6 +297,7 @@ class Conversation:
         self.callback_agent_response_correction = callback_agent_response_correction
         self.callback_user_transcript = callback_user_transcript
         self.callback_latency_measurement = callback_latency_measurement
+        self.proxy_url = proxy_url
 
         self.client_tools.start()
 
@@ -392,7 +395,7 @@ class Conversation:
             raise
 
     def _run(self, ws_url: str):
-        with connect(ws_url, max_size=16 * 1024 * 1024) as ws:
+        with connect(ws_url, max_size=16 * 1024 * 1024, proxy=self.proxy_url) as ws:
             self._ws = ws
             ws.send(
                 json.dumps(
