@@ -216,7 +216,11 @@ class RawDocumentsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
-        self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        documentation_id: str,
+        *,
+        agent_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DocumentsGetResponse]:
         """
         Get details about a specific documentation making up the agent's knowledge base
@@ -225,6 +229,8 @@ class RawDocumentsClient:
         ----------
         documentation_id : str
             The id of a document from the knowledge base. This is returned on document addition.
+
+        agent_id : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -238,6 +244,9 @@ class RawDocumentsClient:
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}",
             base_url=self._client_wrapper.get_environment().base,
             method="GET",
+            params={
+                "agent_id": agent_id,
+            },
             request_options=request_options,
         )
         try:
@@ -695,7 +704,11 @@ class AsyncRawDocumentsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
-        self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        documentation_id: str,
+        *,
+        agent_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DocumentsGetResponse]:
         """
         Get details about a specific documentation making up the agent's knowledge base
@@ -704,6 +717,8 @@ class AsyncRawDocumentsClient:
         ----------
         documentation_id : str
             The id of a document from the knowledge base. This is returned on document addition.
+
+        agent_id : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -717,6 +732,9 @@ class AsyncRawDocumentsClient:
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}",
             base_url=self._client_wrapper.get_environment().base,
             method="GET",
+            params={
+                "agent_id": agent_id,
+            },
             request_options=request_options,
         )
         try:

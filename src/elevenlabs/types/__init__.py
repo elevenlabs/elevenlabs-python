@@ -48,8 +48,10 @@ from .audio_native_project_settings_response_model_status import AudioNativeProj
 from .audio_output import AudioOutput
 from .audio_output_multi import AudioOutputMulti
 from .audio_with_timestamps_response import AudioWithTimestampsResponse
+from .auth_connection_locator import AuthConnectionLocator
 from .auth_settings import AuthSettings
 from .authorization_method import AuthorizationMethod
+from .bad_request_error_body import BadRequestErrorBody
 from .ban_reason_type import BanReasonType
 from .batch_call_detailed_response import BatchCallDetailedResponse
 from .batch_call_recipient_status import BatchCallRecipientStatus
@@ -102,9 +104,6 @@ from .body_generate_a_random_voice_v_1_voice_generation_generate_voice_post_age 
 )
 from .body_generate_a_random_voice_v_1_voice_generation_generate_voice_post_gender import (
     BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostGender,
-)
-from .body_retrieve_voice_sample_audio_v_1_voices_pvc_voice_id_samples_sample_id_audio_get import (
-    BodyRetrieveVoiceSampleAudioV1VoicesPvcVoiceIdSamplesSampleIdAudioGet,
 )
 from .body_stream_chapter_audio_v_1_projects_project_id_chapters_chapter_id_snapshots_chapter_snapshot_id_stream_post import (
     BodyStreamChapterAudioV1ProjectsProjectIdChaptersChapterIdSnapshotsChapterSnapshotIdStreamPost,
@@ -256,7 +255,6 @@ from .dashboard_call_success_chart_model import DashboardCallSuccessChartModel
 from .dashboard_criteria_chart_model import DashboardCriteriaChartModel
 from .dashboard_data_collection_chart_model import DashboardDataCollectionChartModel
 from .data_collection_result_common_model import DataCollectionResultCommonModel
-from .default_sharing_preferences_response_model import DefaultSharingPreferencesResponseModel
 from .delete_chapter_request import DeleteChapterRequest
 from .delete_chapter_response_model import DeleteChapterResponseModel
 from .delete_dubbing_response_model import DeleteDubbingResponseModel
@@ -494,6 +492,7 @@ from .output_format import OutputFormat
 from .pdf_export_options import PdfExportOptions
 from .phone_number_agent_info import PhoneNumberAgentInfo
 from .phone_number_transfer import PhoneNumberTransfer
+from .play_dtmf_tool_config import PlayDtmfToolConfig
 from .podcast_bulletin_mode import PodcastBulletinMode
 from .podcast_bulletin_mode_data import PodcastBulletinModeData
 from .podcast_conversation_mode import PodcastConversationMode
@@ -635,6 +634,7 @@ from .system_tool_config_input_params import (
     SystemToolConfigInputParams,
     SystemToolConfigInputParams_EndCall,
     SystemToolConfigInputParams_LanguageDetection,
+    SystemToolConfigInputParams_PlayKeypadTouchTone,
     SystemToolConfigInputParams_SkipTurn,
     SystemToolConfigInputParams_TransferToAgent,
     SystemToolConfigInputParams_TransferToNumber,
@@ -644,6 +644,7 @@ from .system_tool_config_output_params import (
     SystemToolConfigOutputParams,
     SystemToolConfigOutputParams_EndCall,
     SystemToolConfigOutputParams_LanguageDetection,
+    SystemToolConfigOutputParams_PlayKeypadTouchTone,
     SystemToolConfigOutputParams_SkipTurn,
     SystemToolConfigOutputParams_TransferToAgent,
     SystemToolConfigOutputParams_TransferToNumber,
@@ -764,8 +765,6 @@ from .widget_styles import WidgetStyles
 from .widget_text_contents import WidgetTextContents
 from .workspace_batch_calls_response import WorkspaceBatchCallsResponse
 from .workspace_group_by_name_response_model import WorkspaceGroupByNameResponseModel
-from .workspace_group_permission import WorkspaceGroupPermission
-from .workspace_group_response_model import WorkspaceGroupResponseModel
 from .workspace_resource_type import WorkspaceResourceType
 from .workspace_webhook_list_response_model import WorkspaceWebhookListResponseModel
 from .workspace_webhook_response_model import WorkspaceWebhookResponseModel
@@ -816,8 +815,10 @@ __all__ = [
     "AudioOutput",
     "AudioOutputMulti",
     "AudioWithTimestampsResponse",
+    "AuthConnectionLocator",
     "AuthSettings",
     "AuthorizationMethod",
+    "BadRequestErrorBody",
     "BanReasonType",
     "BatchCallDetailedResponse",
     "BatchCallRecipientStatus",
@@ -845,7 +846,6 @@ __all__ = [
     "BodyEditProjectContentV1ProjectsProjectIdContentPost",
     "BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostAge",
     "BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostGender",
-    "BodyRetrieveVoiceSampleAudioV1VoicesPvcVoiceIdSamplesSampleIdAudioGet",
     "BodyStreamChapterAudioV1ProjectsProjectIdChaptersChapterIdSnapshotsChapterSnapshotIdStreamPost",
     "BodyStreamProjectAudioV1ProjectsProjectIdSnapshotsProjectSnapshotIdStreamPost",
     "BreakdownTypes",
@@ -962,7 +962,6 @@ __all__ = [
     "DashboardCriteriaChartModel",
     "DashboardDataCollectionChartModel",
     "DataCollectionResultCommonModel",
-    "DefaultSharingPreferencesResponseModel",
     "DeleteChapterRequest",
     "DeleteChapterResponseModel",
     "DeleteDubbingResponseModel",
@@ -1174,6 +1173,7 @@ __all__ = [
     "PdfExportOptions",
     "PhoneNumberAgentInfo",
     "PhoneNumberTransfer",
+    "PlayDtmfToolConfig",
     "PodcastBulletinMode",
     "PodcastBulletinModeData",
     "PodcastConversationMode",
@@ -1308,6 +1308,7 @@ __all__ = [
     "SystemToolConfigInputParams",
     "SystemToolConfigInputParams_EndCall",
     "SystemToolConfigInputParams_LanguageDetection",
+    "SystemToolConfigInputParams_PlayKeypadTouchTone",
     "SystemToolConfigInputParams_SkipTurn",
     "SystemToolConfigInputParams_TransferToAgent",
     "SystemToolConfigInputParams_TransferToNumber",
@@ -1315,6 +1316,7 @@ __all__ = [
     "SystemToolConfigOutputParams",
     "SystemToolConfigOutputParams_EndCall",
     "SystemToolConfigOutputParams_LanguageDetection",
+    "SystemToolConfigOutputParams_PlayKeypadTouchTone",
     "SystemToolConfigOutputParams_SkipTurn",
     "SystemToolConfigOutputParams_TransferToAgent",
     "SystemToolConfigOutputParams_TransferToNumber",
@@ -1420,8 +1422,6 @@ __all__ = [
     "WidgetTextContents",
     "WorkspaceBatchCallsResponse",
     "WorkspaceGroupByNameResponseModel",
-    "WorkspaceGroupPermission",
-    "WorkspaceGroupResponseModel",
     "WorkspaceResourceType",
     "WorkspaceWebhookListResponseModel",
     "WorkspaceWebhookResponseModel",

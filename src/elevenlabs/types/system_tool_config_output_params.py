@@ -38,6 +38,19 @@ class SystemToolConfigOutputParams_LanguageDetection(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class SystemToolConfigOutputParams_PlayKeypadTouchTone(UncheckedBaseModel):
+    system_tool_type: typing.Literal["play_keypad_touch_tone"] = "play_keypad_touch_tone"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class SystemToolConfigOutputParams_SkipTurn(UncheckedBaseModel):
     system_tool_type: typing.Literal["skip_turn"] = "skip_turn"
 
@@ -84,6 +97,7 @@ SystemToolConfigOutputParams = typing_extensions.Annotated[
     typing.Union[
         SystemToolConfigOutputParams_EndCall,
         SystemToolConfigOutputParams_LanguageDetection,
+        SystemToolConfigOutputParams_PlayKeypadTouchTone,
         SystemToolConfigOutputParams_SkipTurn,
         SystemToolConfigOutputParams_TransferToAgent,
         SystemToolConfigOutputParams_TransferToNumber,

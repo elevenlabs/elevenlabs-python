@@ -29,6 +29,7 @@ class RawConversationalAiClient:
     def add_to_knowledge_base(
         self,
         *,
+        agent_id: typing.Optional[str] = None,
         name: typing.Optional[str] = OMIT,
         url: typing.Optional[str] = OMIT,
         file: typing.Optional[core.File] = OMIT,
@@ -39,6 +40,8 @@ class RawConversationalAiClient:
 
         Parameters
         ----------
+        agent_id : typing.Optional[str]
+
         name : typing.Optional[str]
             A custom, human-readable name for the document.
 
@@ -60,6 +63,9 @@ class RawConversationalAiClient:
             "v1/convai/knowledge-base",
             base_url=self._client_wrapper.get_environment().base,
             method="POST",
+            params={
+                "agent_id": agent_id,
+            },
             data={
                 "name": name,
                 "url": url,
@@ -321,6 +327,7 @@ class AsyncRawConversationalAiClient:
     async def add_to_knowledge_base(
         self,
         *,
+        agent_id: typing.Optional[str] = None,
         name: typing.Optional[str] = OMIT,
         url: typing.Optional[str] = OMIT,
         file: typing.Optional[core.File] = OMIT,
@@ -331,6 +338,8 @@ class AsyncRawConversationalAiClient:
 
         Parameters
         ----------
+        agent_id : typing.Optional[str]
+
         name : typing.Optional[str]
             A custom, human-readable name for the document.
 
@@ -352,6 +361,9 @@ class AsyncRawConversationalAiClient:
             "v1/convai/knowledge-base",
             base_url=self._client_wrapper.get_environment().base,
             method="POST",
+            params={
+                "agent_id": agent_id,
+            },
             data={
                 "name": name,
                 "url": url,

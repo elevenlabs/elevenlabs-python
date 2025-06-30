@@ -5,14 +5,15 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .workspace_group_permission import WorkspaceGroupPermission
 
 
-class WorkspaceGroupResponseModel(UncheckedBaseModel):
-    name: str
-    id: str
-    members: typing.List[str]
-    permissions: typing.Optional[typing.List[WorkspaceGroupPermission]] = None
+class PlayDtmfToolConfig(UncheckedBaseModel):
+    """
+    Allows the agent to play DTMF tones during a phone call.
+
+    This tool can be used to interact with automated phone systems, such as
+    navigating phone menus, entering extensions, or inputting numeric codes.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
