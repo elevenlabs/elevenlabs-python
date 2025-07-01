@@ -3,5 +3,5 @@
 import typing
 
 BodyAddProjectV1ProjectsAddPostSourceType = typing.Union[
-    typing.Literal["blank", "book", "article", "genfm"], typing.Any
+    typing.Literal["blank", "book", "article", "genfm", "video"], typing.Any
 ]

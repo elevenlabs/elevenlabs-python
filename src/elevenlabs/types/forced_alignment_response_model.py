@@ -24,6 +24,11 @@ class ForcedAlignmentResponseModel(UncheckedBaseModel):
     List of words with their timing information.
     """
 
+    loss: float = pydantic.Field()
+    """
+    The average alignment loss/confidence score for the entire transcript, calculated from all characters.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
