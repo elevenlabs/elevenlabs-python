@@ -491,16 +491,6 @@ class Conversation:
         else:
             pass  # Ignore all other message types.
 
-    def send_contextual_update(self, text: str):
-        if not self._ws:
-            raise RuntimeError("WebSocket is not connected")
-
-        payload = {
-                "type": "contextual_update",
-                "text": text,
-        }
-        self._ws.send(json.dumps(payload))
-
     def _get_wss_url(self):
         base_ws_url = self.client._client_wrapper.get_environment().wss
         return f"{base_ws_url}/v1/convai/conversation?agent_id={self.agent_id}"
