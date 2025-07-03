@@ -19,7 +19,12 @@ class RawAudioClient:
         self._client_wrapper = client_wrapper
 
     def get(
-        self, voice_id: str, sample_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        voice_id: str,
+        sample_id: str,
+        *,
+        remove_background_noise: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[VoiceSamplePreviewResponseModel]:
         """
         Retrieve the first 30 seconds of voice sample audio with or without noise removal.
@@ -31,6 +36,9 @@ class RawAudioClient:
 
         sample_id : str
             Sample ID to be used
+
+        remove_background_noise : typing.Optional[bool]
+            If set will remove background noise for voice samples using our audio isolation model. If the samples do not include background noise, it can make the quality worse.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -44,6 +52,9 @@ class RawAudioClient:
             f"v1/voices/pvc/{jsonable_encoder(voice_id)}/samples/{jsonable_encoder(sample_id)}/audio",
             base_url=self._client_wrapper.get_environment().base,
             method="GET",
+            params={
+                "remove_background_noise": remove_background_noise,
+            },
             request_options=request_options,
         )
         try:
@@ -78,7 +89,12 @@ class AsyncRawAudioClient:
         self._client_wrapper = client_wrapper
 
     async def get(
-        self, voice_id: str, sample_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        voice_id: str,
+        sample_id: str,
+        *,
+        remove_background_noise: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[VoiceSamplePreviewResponseModel]:
         """
         Retrieve the first 30 seconds of voice sample audio with or without noise removal.
@@ -90,6 +106,9 @@ class AsyncRawAudioClient:
 
         sample_id : str
             Sample ID to be used
+
+        remove_background_noise : typing.Optional[bool]
+            If set will remove background noise for voice samples using our audio isolation model. If the samples do not include background noise, it can make the quality worse.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -103,6 +122,9 @@ class AsyncRawAudioClient:
             f"v1/voices/pvc/{jsonable_encoder(voice_id)}/samples/{jsonable_encoder(sample_id)}/audio",
             base_url=self._client_wrapper.get_environment().base,
             method="GET",
+            params={
+                "remove_background_noise": remove_background_noise,
+            },
             request_options=request_options,
         )
         try:

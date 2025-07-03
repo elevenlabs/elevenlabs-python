@@ -7,11 +7,12 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class BodyRetrieveVoiceSampleAudioV1VoicesPvcVoiceIdSamplesSampleIdAudioGet(UncheckedBaseModel):
-    remove_background_noise: typing.Optional[bool] = pydantic.Field(default=None)
+class AuthConnectionLocator(UncheckedBaseModel):
     """
-    If set will remove background noise for voice samples using our audio isolation model. If the samples do not include background noise, it can make the quality worse.
+    Used to reference an auth connection from the workspace's auth connection store.
     """
+
+    auth_connection_id: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

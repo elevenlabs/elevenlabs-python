@@ -5,14 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .workspace_group_response_model import WorkspaceGroupResponseModel
 
 
-class DefaultSharingPreferencesResponseModel(UncheckedBaseModel):
-    default_sharing_groups: typing.List[WorkspaceGroupResponseModel] = pydantic.Field()
-    """
-    List of groups that the user shares with by default
-    """
+class BadRequestErrorBody(UncheckedBaseModel):
+    error: typing.Optional[str] = None
+    message: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

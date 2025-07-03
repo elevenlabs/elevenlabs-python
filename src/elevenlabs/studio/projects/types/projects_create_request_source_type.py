@@ -2,4 +2,4 @@
 
 import typing
 
-ProjectsCreateRequestSourceType = typing.Union[typing.Literal["blank", "book", "article", "genfm"], typing.Any]
+ProjectsCreateRequestSourceType = typing.Union[typing.Literal["blank", "book", "article", "genfm", "video"], typing.Any]

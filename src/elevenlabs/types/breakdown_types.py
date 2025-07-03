@@ -15,6 +15,8 @@ BreakdownTypes = typing.Union[
         "model",
         "resource",
         "request_queue",
+        "region",
+        "subresource_id",
     ],
     typing.Any,
 ]
