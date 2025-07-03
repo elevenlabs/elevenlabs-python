@@ -246,6 +246,7 @@ class Conversation:
     callback_agent_response_correction: Optional[Callable[[str, str], None]]
     callback_user_transcript: Optional[Callable[[str], None]]
     callback_latency_measurement: Optional[Callable[[int], None]]
+    callback_end_session: Optional[Callable]
 
     _thread: Optional[threading.Thread]
     _should_stop: threading.Event
@@ -266,6 +267,7 @@ class Conversation:
         callback_agent_response_correction: Optional[Callable[[str, str], None]] = None,
         callback_user_transcript: Optional[Callable[[str], None]] = None,
         callback_latency_measurement: Optional[Callable[[int], None]] = None,
+        callback_end_session: Optional[Callable] = None,
     ):
         """Conversational AI session.
 
@@ -295,6 +297,7 @@ class Conversation:
         self.callback_agent_response_correction = callback_agent_response_correction
         self.callback_user_transcript = callback_user_transcript
         self.callback_latency_measurement = callback_latency_measurement
+        self.callback_end_session = callback_end_session
 
         self.client_tools.start()
 
@@ -319,6 +322,9 @@ class Conversation:
         self.client_tools.stop()
         self._ws = None
         self._should_stop.set()
+
+        if self.callback_end_session:
+            self.callback_end_session()
 
     def wait_for_session_end(self) -> Optional[str]:
         """Waits for the conversation session to end.
