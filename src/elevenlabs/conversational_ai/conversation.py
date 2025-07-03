@@ -56,14 +56,14 @@ class UserActivityClientToOrchestratorEvent:
 class ContextualUpdateClientToOrchestratorEvent:
     """Event for sending non-interrupting contextual updates to the conversation state."""
     
-    def __init__(self, content: str):
+    def __init__(self, text: str):
         self.type: Literal[ClientToOrchestratorEvent.CONTEXTUAL_UPDATE] = ClientToOrchestratorEvent.CONTEXTUAL_UPDATE
-        self.content = content
+        self.text = text
     
     def to_dict(self) -> dict:
         return {
             "type": self.type,
-            "content": self.content
+            "content": self.text
         }
 
 
@@ -369,7 +369,7 @@ class Conversation:
             print(f"Error registering user activity: {e}")
             raise
 
-    def send_contextual_update(self, content: str):
+    def send_contextual_update(self, text: str):
         """Send a contextual update to the conversation.
         
         Contextual updates are non-interrupting content that is sent to the server
@@ -384,7 +384,7 @@ class Conversation:
         if not self._ws:
             raise RuntimeError("Session not started or websocket not connected.")
         
-        event = ContextualUpdateClientToOrchestratorEvent(content=content)
+        event = ContextualUpdateClientToOrchestratorEvent(text=text)
         try:
             self._ws.send(json.dumps(event.to_dict()))
         except Exception as e:
