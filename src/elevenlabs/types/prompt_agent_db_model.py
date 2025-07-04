@@ -5,75 +5,9 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .built_in_tools_input import BuiltInToolsInput
-from .custom_llm import CustomLlm
-from .knowledge_base_locator import KnowledgeBaseLocator
-from .llm import Llm
-from .rag_config import RagConfig
 
 
 class PromptAgentDbModel(UncheckedBaseModel):
-    prompt: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    The prompt for the agent
-    """
-
-    llm: typing.Optional[Llm] = pydantic.Field(default=None)
-    """
-    The LLM to query with the prompt and the chat history
-    """
-
-    temperature: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    The temperature for the LLM
-    """
-
-    max_tokens: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    If greater than 0, maximum number of tokens the LLM can predict
-    """
-
-    tool_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
-    """
-    A list of IDs of tools used by the agent
-    """
-
-    built_in_tools: typing.Optional[BuiltInToolsInput] = pydantic.Field(default=None)
-    """
-    Built-in system tools to be used by the agent
-    """
-
-    mcp_server_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
-    """
-    A list of MCP server ids to be used by the agent
-    """
-
-    native_mcp_server_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
-    """
-    A list of Native MCP server ids to be used by the agent
-    """
-
-    knowledge_base: typing.Optional[typing.List[KnowledgeBaseLocator]] = pydantic.Field(default=None)
-    """
-    A list of knowledge bases to be used by the agent
-    """
-
-    custom_llm: typing.Optional[CustomLlm] = pydantic.Field(default=None)
-    """
-    Definition for a custom LLM if LLM field is set to 'CUSTOM_LLM'
-    """
-
-    ignore_default_personality: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Whether to ignore the default personality
-    """
-
-    rag: typing.Optional[RagConfig] = pydantic.Field(default=None)
-    """
-    Configuration for RAG
-    """
-
-    knowledge_base_document_ids: typing.Optional[typing.List[str]] = None
     tools: typing.Optional[typing.Optional[typing.Any]] = None
 
     if IS_PYDANTIC_V2:

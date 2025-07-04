@@ -9,6 +9,7 @@ from .authorization_method import AuthorizationMethod
 from .conversation_charging_common_model import ConversationChargingCommonModel
 from .conversation_deletion_settings import ConversationDeletionSettings
 from .conversation_history_batch_call_model import ConversationHistoryBatchCallModel
+from .conversation_history_eleven_assistant_common_model import ConversationHistoryElevenAssistantCommonModel
 from .conversation_history_error_common_model import ConversationHistoryErrorCommonModel
 from .conversation_history_feedback_common_model import ConversationHistoryFeedbackCommonModel
 from .conversation_history_metadata_common_model_phone_call import ConversationHistoryMetadataCommonModelPhoneCall
@@ -33,6 +34,7 @@ class ConversationHistoryMetadataCommonModel(UncheckedBaseModel):
     rag_usage: typing.Optional[ConversationHistoryRagUsageCommonModel] = None
     text_only: typing.Optional[bool] = None
     features_usage: typing.Optional[FeaturesUsageCommonModel] = None
+    eleven_assistant: typing.Optional[ConversationHistoryElevenAssistantCommonModel] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

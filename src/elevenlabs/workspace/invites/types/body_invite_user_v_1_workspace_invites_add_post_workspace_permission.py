@@ -20,6 +20,8 @@ BodyInviteUserV1WorkspaceInvitesAddPostWorkspacePermission = typing.Union[
         "workspace_migration_admin",
         "human_reviewer",
         "productions_admin",
+        "support",
+        "internal",
     ],
     typing.Any,
 ]

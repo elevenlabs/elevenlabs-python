@@ -8,7 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .phone_number_transfer import PhoneNumberTransfer
 
 
-class TransferToNumberToolConfig(UncheckedBaseModel):
+class TransferToNumberToolConfigOutput(UncheckedBaseModel):
     transfers: typing.List[PhoneNumberTransfer]
     enable_client_message: typing.Optional[bool] = pydantic.Field(default=None)
     """

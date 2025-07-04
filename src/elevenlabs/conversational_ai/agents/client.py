@@ -334,11 +334,7 @@ class AgentsClient:
 
         Examples
         --------
-        from elevenlabs import (
-            AgentConfig,
-            ConversationSimulationSpecification,
-            ElevenLabs,
-        )
+        from elevenlabs import ConversationSimulationSpecification, ElevenLabs
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
@@ -346,10 +342,10 @@ class AgentsClient:
         client.conversational_ai.agents.simulate_conversation(
             agent_id="21m00Tcm4TlvDq8ikWAM",
             simulation_specification=ConversationSimulationSpecification(
-                simulated_user_config=AgentConfig(
-                    first_message="Hello, how can I help you today?",
-                    language="en",
-                ),
+                simulated_user_config={
+                    "first_message": "Hello, how can I help you today?",
+                    "language": "en",
+                },
             ),
         )
         """
@@ -392,11 +388,7 @@ class AgentsClient:
 
         Examples
         --------
-        from elevenlabs import (
-            AgentConfig,
-            ConversationSimulationSpecification,
-            ElevenLabs,
-        )
+        from elevenlabs import ConversationSimulationSpecification, ElevenLabs
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
@@ -404,10 +396,10 @@ class AgentsClient:
         client.conversational_ai.agents.simulate_conversation_stream(
             agent_id="21m00Tcm4TlvDq8ikWAM",
             simulation_specification=ConversationSimulationSpecification(
-                simulated_user_config=AgentConfig(
-                    first_message="Hello, how can I help you today?",
-                    language="en",
-                ),
+                simulated_user_config={
+                    "first_message": "Hello, how can I help you today?",
+                    "language": "en",
+                },
             ),
         )
         """
@@ -784,11 +776,7 @@ class AsyncAgentsClient:
         --------
         import asyncio
 
-        from elevenlabs import (
-            AgentConfig,
-            AsyncElevenLabs,
-            ConversationSimulationSpecification,
-        )
+        from elevenlabs import AsyncElevenLabs, ConversationSimulationSpecification
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
@@ -799,10 +787,10 @@ class AsyncAgentsClient:
             await client.conversational_ai.agents.simulate_conversation(
                 agent_id="21m00Tcm4TlvDq8ikWAM",
                 simulation_specification=ConversationSimulationSpecification(
-                    simulated_user_config=AgentConfig(
-                        first_message="Hello, how can I help you today?",
-                        language="en",
-                    ),
+                    simulated_user_config={
+                        "first_message": "Hello, how can I help you today?",
+                        "language": "en",
+                    },
                 ),
             )
 
@@ -850,11 +838,7 @@ class AsyncAgentsClient:
         --------
         import asyncio
 
-        from elevenlabs import (
-            AgentConfig,
-            AsyncElevenLabs,
-            ConversationSimulationSpecification,
-        )
+        from elevenlabs import AsyncElevenLabs, ConversationSimulationSpecification
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
@@ -865,10 +849,10 @@ class AsyncAgentsClient:
             await client.conversational_ai.agents.simulate_conversation_stream(
                 agent_id="21m00Tcm4TlvDq8ikWAM",
                 simulation_specification=ConversationSimulationSpecification(
-                    simulated_user_config=AgentConfig(
-                        first_message="Hello, how can I help you today?",
-                        language="en",
-                    ),
+                    simulated_user_config={
+                        "first_message": "Hello, how can I help you today?",
+                        "language": "en",
+                    },
                 ),
             )
 

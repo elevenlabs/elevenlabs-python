@@ -9,7 +9,7 @@ from .sip_media_encryption_enum import SipMediaEncryptionEnum
 from .sip_trunk_transport_enum import SipTrunkTransportEnum
 
 
-class SipTrunkConfigResponseModel(UncheckedBaseModel):
+class GetPhoneNumberOutboundSipTrunkConfigResponseModel(UncheckedBaseModel):
     """
     SIP Trunk configuration details for a phone number
     """

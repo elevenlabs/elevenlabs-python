@@ -171,6 +171,7 @@ from .conversation_config_override_config import ConversationConfigOverrideConfi
 from .conversation_deletion_settings import ConversationDeletionSettings
 from .conversation_history_analysis_common_model import ConversationHistoryAnalysisCommonModel
 from .conversation_history_batch_call_model import ConversationHistoryBatchCallModel
+from .conversation_history_eleven_assistant_common_model import ConversationHistoryElevenAssistantCommonModel
 from .conversation_history_error_common_model import ConversationHistoryErrorCommonModel
 from .conversation_history_evaluation_criteria_result_common_model import (
     ConversationHistoryEvaluationCriteriaResultCommonModel,
@@ -202,8 +203,10 @@ from .conversation_history_transcript_tool_call_common_model import Conversation
 from .conversation_history_transcript_tool_call_common_model_tool_details import (
     ConversationHistoryTranscriptToolCallCommonModelToolDetails,
     ConversationHistoryTranscriptToolCallCommonModelToolDetails_Client,
+    ConversationHistoryTranscriptToolCallCommonModelToolDetails_Mcp,
     ConversationHistoryTranscriptToolCallCommonModelToolDetails_Webhook,
 )
+from .conversation_history_transcript_tool_call_mcp_details import ConversationHistoryTranscriptToolCallMcpDetails
 from .conversation_history_transcript_tool_call_webhook_details import (
     ConversationHistoryTranscriptToolCallWebhookDetails,
 )
@@ -246,7 +249,7 @@ from .create_audio_native_project_request import CreateAudioNativeProjectRequest
 from .create_phone_number_response_model import CreatePhoneNumberResponseModel
 from .create_previously_generated_voice_request import CreatePreviouslyGeneratedVoiceRequest
 from .create_pronunciation_dictionary_response_model import CreatePronunciationDictionaryResponseModel
-from .create_sip_trunk_phone_number_request import CreateSipTrunkPhoneNumberRequest
+from .create_sip_trunk_phone_number_request_v_2 import CreateSipTrunkPhoneNumberRequestV2
 from .create_transcript_request import CreateTranscriptRequest
 from .create_twilio_phone_number_request import CreateTwilioPhoneNumberRequest
 from .custom_llm import CustomLlm
@@ -388,6 +391,8 @@ from .get_knowledge_base_summary_url_response_model_dependent_agents_item import
 from .get_knowledge_base_text_response_model import GetKnowledgeBaseTextResponseModel
 from .get_knowledge_base_url_response_model import GetKnowledgeBaseUrlResponseModel
 from .get_library_voices_response import GetLibraryVoicesResponse
+from .get_phone_number_inbound_sip_trunk_config_response_model import GetPhoneNumberInboundSipTrunkConfigResponseModel
+from .get_phone_number_outbound_sip_trunk_config_response_model import GetPhoneNumberOutboundSipTrunkConfigResponseModel
 from .get_phone_number_response import GetPhoneNumberResponse
 from .get_phone_number_sip_trunk_response_model import GetPhoneNumberSipTrunkResponseModel
 from .get_phone_number_twilio_response_model import GetPhoneNumberTwilioResponseModel
@@ -417,6 +422,7 @@ from .history_item_response import HistoryItemResponse
 from .html_export_options import HtmlExportOptions
 from .http_validation_error import HttpValidationError
 from .image_avatar import ImageAvatar
+from .inbound_sip_trunk_config_request_model import InboundSipTrunkConfigRequestModel
 from .initialise_context import InitialiseContext
 from .initialize_connection import InitializeConnection
 from .initialize_connection_multi import InitializeConnectionMulti
@@ -488,10 +494,17 @@ from .object_json_schema_property_output_properties_value import ObjectJsonSchem
 from .orb_avatar import OrbAvatar
 from .outbound_call_recipient import OutboundCallRecipient
 from .outbound_call_recipient_response_model import OutboundCallRecipientResponseModel
+from .outbound_sip_trunk_config_request_model import OutboundSipTrunkConfigRequestModel
 from .output_format import OutputFormat
 from .pdf_export_options import PdfExportOptions
 from .phone_number_agent_info import PhoneNumberAgentInfo
 from .phone_number_transfer import PhoneNumberTransfer
+from .phone_number_transfer_destination import PhoneNumberTransferDestination
+from .phone_number_transfer_transfer_destination import (
+    PhoneNumberTransferTransferDestination,
+    PhoneNumberTransferTransferDestination_Phone,
+    PhoneNumberTransferTransferDestination_SipUri,
+)
 from .play_dtmf_tool_config import PlayDtmfToolConfig
 from .podcast_bulletin_mode import PodcastBulletinMode
 from .podcast_bulletin_mode_data import PodcastBulletinModeData
@@ -597,10 +610,10 @@ from .similar_voice import SimilarVoice
 from .similar_voice_category import SimilarVoiceCategory
 from .similar_voices_for_speaker_response import SimilarVoicesForSpeakerResponse
 from .sip_media_encryption_enum import SipMediaEncryptionEnum
-from .sip_trunk_config_response_model import SipTrunkConfigResponseModel
-from .sip_trunk_credentials import SipTrunkCredentials
+from .sip_trunk_credentials_request_model import SipTrunkCredentialsRequestModel
 from .sip_trunk_outbound_call_response import SipTrunkOutboundCallResponse
 from .sip_trunk_transport_enum import SipTrunkTransportEnum
+from .sip_uri_transfer_destination import SipUriTransferDestination
 from .skip_turn_tool_config import SkipTurnToolConfig
 from .speaker_audio_response_model import SpeakerAudioResponseModel
 from .speaker_response_model import SpeakerResponseModel
@@ -674,7 +687,9 @@ from .tool_response_model_tool_config import (
 )
 from .tools_response_model import ToolsResponseModel
 from .transfer_to_agent_tool_config import TransferToAgentToolConfig
-from .transfer_to_number_tool_config import TransferToNumberToolConfig
+from .transfer_to_number_tool_config_input import TransferToNumberToolConfigInput
+from .transfer_to_number_tool_config_output import TransferToNumberToolConfigOutput
+from .transfer_type_enum import TransferTypeEnum
 from .tts_conversational_config_input import TtsConversationalConfigInput
 from .tts_conversational_config_output import TtsConversationalConfigOutput
 from .tts_conversational_config_override import TtsConversationalConfigOverride
@@ -902,6 +917,7 @@ __all__ = [
     "ConversationDeletionSettings",
     "ConversationHistoryAnalysisCommonModel",
     "ConversationHistoryBatchCallModel",
+    "ConversationHistoryElevenAssistantCommonModel",
     "ConversationHistoryErrorCommonModel",
     "ConversationHistoryEvaluationCriteriaResultCommonModel",
     "ConversationHistoryFeedbackCommonModel",
@@ -922,7 +938,9 @@ __all__ = [
     "ConversationHistoryTranscriptToolCallCommonModel",
     "ConversationHistoryTranscriptToolCallCommonModelToolDetails",
     "ConversationHistoryTranscriptToolCallCommonModelToolDetails_Client",
+    "ConversationHistoryTranscriptToolCallCommonModelToolDetails_Mcp",
     "ConversationHistoryTranscriptToolCallCommonModelToolDetails_Webhook",
+    "ConversationHistoryTranscriptToolCallMcpDetails",
     "ConversationHistoryTranscriptToolCallWebhookDetails",
     "ConversationHistoryTranscriptToolResultCommonModel",
     "ConversationHistoryTwilioPhoneCallModel",
@@ -953,7 +971,7 @@ __all__ = [
     "CreatePhoneNumberResponseModel",
     "CreatePreviouslyGeneratedVoiceRequest",
     "CreatePronunciationDictionaryResponseModel",
-    "CreateSipTrunkPhoneNumberRequest",
+    "CreateSipTrunkPhoneNumberRequestV2",
     "CreateTranscriptRequest",
     "CreateTwilioPhoneNumberRequest",
     "CustomLlm",
@@ -1075,6 +1093,8 @@ __all__ = [
     "GetKnowledgeBaseTextResponseModel",
     "GetKnowledgeBaseUrlResponseModel",
     "GetLibraryVoicesResponse",
+    "GetPhoneNumberInboundSipTrunkConfigResponseModel",
+    "GetPhoneNumberOutboundSipTrunkConfigResponseModel",
     "GetPhoneNumberResponse",
     "GetPhoneNumberSipTrunkResponseModel",
     "GetPhoneNumberTwilioResponseModel",
@@ -1100,6 +1120,7 @@ __all__ = [
     "HtmlExportOptions",
     "HttpValidationError",
     "ImageAvatar",
+    "InboundSipTrunkConfigRequestModel",
     "InitialiseContext",
     "InitializeConnection",
     "InitializeConnectionMulti",
@@ -1169,10 +1190,15 @@ __all__ = [
     "OrbAvatar",
     "OutboundCallRecipient",
     "OutboundCallRecipientResponseModel",
+    "OutboundSipTrunkConfigRequestModel",
     "OutputFormat",
     "PdfExportOptions",
     "PhoneNumberAgentInfo",
     "PhoneNumberTransfer",
+    "PhoneNumberTransferDestination",
+    "PhoneNumberTransferTransferDestination",
+    "PhoneNumberTransferTransferDestination_Phone",
+    "PhoneNumberTransferTransferDestination_SipUri",
     "PlayDtmfToolConfig",
     "PodcastBulletinMode",
     "PodcastBulletinModeData",
@@ -1272,10 +1298,10 @@ __all__ = [
     "SimilarVoiceCategory",
     "SimilarVoicesForSpeakerResponse",
     "SipMediaEncryptionEnum",
-    "SipTrunkConfigResponseModel",
-    "SipTrunkCredentials",
+    "SipTrunkCredentialsRequestModel",
     "SipTrunkOutboundCallResponse",
     "SipTrunkTransportEnum",
+    "SipUriTransferDestination",
     "SkipTurnToolConfig",
     "SpeakerAudioResponseModel",
     "SpeakerResponseModel",
@@ -1341,7 +1367,9 @@ __all__ = [
     "ToolResponseModelToolConfig_Webhook",
     "ToolsResponseModel",
     "TransferToAgentToolConfig",
-    "TransferToNumberToolConfig",
+    "TransferToNumberToolConfigInput",
+    "TransferToNumberToolConfigOutput",
+    "TransferTypeEnum",
     "TtsConversationalConfigInput",
     "TtsConversationalConfigOutput",
     "TtsConversationalConfigOverride",

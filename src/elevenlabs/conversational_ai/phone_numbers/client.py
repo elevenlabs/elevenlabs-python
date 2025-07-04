@@ -30,6 +30,34 @@ class PhoneNumbersClient:
         """
         return self._raw_client
 
+    def list(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[PhoneNumbersListResponseItem]:
+        """
+        Retrieve all Phone Numbers
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[PhoneNumbersListResponseItem]
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.phone_numbers.list()
+        """
+        _response = self._raw_client.list(request_options=request_options)
+        return _response.data
+
     def create(
         self, *, request: PhoneNumbersCreateRequestBody, request_options: typing.Optional[RequestOptions] = None
     ) -> CreatePhoneNumberResponseModel:
@@ -175,7 +203,23 @@ class PhoneNumbersClient:
         _response = self._raw_client.update(phone_number_id, agent_id=agent_id, request_options=request_options)
         return _response.data
 
-    def list(
+
+class AsyncPhoneNumbersClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._raw_client = AsyncRawPhoneNumbersClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawPhoneNumbersClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawPhoneNumbersClient
+        """
+        return self._raw_client
+
+    async def list(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[PhoneNumbersListResponseItem]:
         """
@@ -193,31 +237,23 @@ class PhoneNumbersClient:
 
         Examples
         --------
-        from elevenlabs import ElevenLabs
+        import asyncio
 
-        client = ElevenLabs(
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.conversational_ai.phone_numbers.list()
+
+
+        async def main() -> None:
+            await client.conversational_ai.phone_numbers.list()
+
+
+        asyncio.run(main())
         """
-        _response = self._raw_client.list(request_options=request_options)
+        _response = await self._raw_client.list(request_options=request_options)
         return _response.data
-
-
-class AsyncPhoneNumbersClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawPhoneNumbersClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawPhoneNumbersClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawPhoneNumbersClient
-        """
-        return self._raw_client
 
     async def create(
         self, *, request: PhoneNumbersCreateRequestBody, request_options: typing.Optional[RequestOptions] = None
@@ -394,40 +430,4 @@ class AsyncPhoneNumbersClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.update(phone_number_id, agent_id=agent_id, request_options=request_options)
-        return _response.data
-
-    async def list(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[PhoneNumbersListResponseItem]:
-        """
-        Retrieve all Phone Numbers
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        typing.List[PhoneNumbersListResponseItem]
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.conversational_ai.phone_numbers.list()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.list(request_options=request_options)
         return _response.data
