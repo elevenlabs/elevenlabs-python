@@ -24,6 +24,27 @@ class ConversationHistoryTranscriptToolCallCommonModelToolDetails_Client(Uncheck
             extra = pydantic.Extra.allow
 
 
+class ConversationHistoryTranscriptToolCallCommonModelToolDetails_Mcp(UncheckedBaseModel):
+    type: typing.Literal["mcp"] = "mcp"
+    mcp_server_id: str
+    mcp_server_name: str
+    integration_type: str
+    parameters: typing.Optional[typing.Dict[str, str]] = None
+    approval_policy: str
+    requires_approval: typing.Optional[bool] = None
+    mcp_tool_name: typing.Optional[str] = None
+    mcp_tool_description: typing.Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class ConversationHistoryTranscriptToolCallCommonModelToolDetails_Webhook(UncheckedBaseModel):
     type: typing.Literal["webhook"] = "webhook"
     method: str
@@ -46,6 +67,7 @@ class ConversationHistoryTranscriptToolCallCommonModelToolDetails_Webhook(Unchec
 ConversationHistoryTranscriptToolCallCommonModelToolDetails = typing_extensions.Annotated[
     typing.Union[
         ConversationHistoryTranscriptToolCallCommonModelToolDetails_Client,
+        ConversationHistoryTranscriptToolCallCommonModelToolDetails_Mcp,
         ConversationHistoryTranscriptToolCallCommonModelToolDetails_Webhook,
     ],
     UnionMetadata(discriminant="type"),

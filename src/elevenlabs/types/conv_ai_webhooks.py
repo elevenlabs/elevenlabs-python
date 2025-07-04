@@ -9,6 +9,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 class ConvAiWebhooks(UncheckedBaseModel):
     post_call_webhook_id: typing.Optional[str] = None
+    send_audio: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to send audio data with post-call webhooks for ConvAI conversations
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

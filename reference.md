@@ -6324,11 +6324,7 @@ Run a conversation between the agent and a simulated user.
 <dd>
 
 ```python
-from elevenlabs import (
-    AgentConfig,
-    ConversationSimulationSpecification,
-    ElevenLabs,
-)
+from elevenlabs import ConversationSimulationSpecification, ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -6336,10 +6332,10 @@ client = ElevenLabs(
 client.conversational_ai.agents.simulate_conversation(
     agent_id="21m00Tcm4TlvDq8ikWAM",
     simulation_specification=ConversationSimulationSpecification(
-        simulated_user_config=AgentConfig(
-            first_message="Hello, how can I help you today?",
-            language="en",
-        ),
+        simulated_user_config={
+            "first_message": "Hello, how can I help you today?",
+            "language": "en",
+        },
     ),
 )
 
@@ -6420,11 +6416,7 @@ Run a conversation between the agent and a simulated user and stream back the re
 <dd>
 
 ```python
-from elevenlabs import (
-    AgentConfig,
-    ConversationSimulationSpecification,
-    ElevenLabs,
-)
+from elevenlabs import ConversationSimulationSpecification, ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -6432,10 +6424,10 @@ client = ElevenLabs(
 client.conversational_ai.agents.simulate_conversation_stream(
     agent_id="21m00Tcm4TlvDq8ikWAM",
     simulation_specification=ConversationSimulationSpecification(
-        simulated_user_config=AgentConfig(
-            first_message="Hello, how can I help you today?",
-            language="en",
-        ),
+        simulated_user_config={
+            "first_message": "Hello, how can I help you today?",
+            "language": "en",
+        },
     ),
 )
 
@@ -6490,6 +6482,66 @@ client.conversational_ai.agents.simulate_conversation_stream(
 </details>
 
 ## ConversationalAi PhoneNumbers
+<details><summary><code>client.conversational_ai.phone_numbers.<a href="src/elevenlabs/conversational_ai/phone_numbers/client.py">list</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve all Phone Numbers
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.phone_numbers.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.conversational_ai.phone_numbers.<a href="src/elevenlabs/conversational_ai/phone_numbers/client.py">create</a>(...)</code></summary>
 <dl>
 <dd>
@@ -6770,66 +6822,6 @@ client.conversational_ai.phone_numbers.update(
     
 </dd>
 </dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.conversational_ai.phone_numbers.<a href="src/elevenlabs/conversational_ai/phone_numbers/client.py">list</a>()</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve all Phone Numbers
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.conversational_ai.phone_numbers.list()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
 
 <dl>
 <dd>

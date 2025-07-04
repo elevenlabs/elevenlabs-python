@@ -3,4 +3,3 @@
 __pycache__/
 dist/
 poetry.toml
-venv

@@ -5,8 +5,9 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .get_phone_number_inbound_sip_trunk_config_response_model import GetPhoneNumberInboundSipTrunkConfigResponseModel
+from .get_phone_number_outbound_sip_trunk_config_response_model import GetPhoneNumberOutboundSipTrunkConfigResponseModel
 from .phone_number_agent_info import PhoneNumberAgentInfo
-from .sip_trunk_config_response_model import SipTrunkConfigResponseModel
 
 
 class GetPhoneNumberSipTrunkResponseModel(UncheckedBaseModel):
@@ -30,7 +31,16 @@ class GetPhoneNumberSipTrunkResponseModel(UncheckedBaseModel):
     The agent that is assigned to the phone number
     """
 
-    provider_config: typing.Optional[SipTrunkConfigResponseModel] = None
+    provider_config: typing.Optional[GetPhoneNumberOutboundSipTrunkConfigResponseModel] = None
+    outbound_trunk: typing.Optional[GetPhoneNumberOutboundSipTrunkConfigResponseModel] = pydantic.Field(default=None)
+    """
+    Configuration of the Outbound SIP trunk - if configured.
+    """
+
+    inbound_trunk: typing.Optional[GetPhoneNumberInboundSipTrunkConfigResponseModel] = pydantic.Field(default=None)
+    """
+    Configuration of the Inbound SIP trunk - if configured.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

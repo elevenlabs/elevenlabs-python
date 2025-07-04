@@ -19,6 +19,7 @@ WorkspaceResourceType = typing.Union[
         "convai_phone_numbers",
         "convai_mcp_servers",
         "convai_batch_calls",
+        "convai_agent_response_tests",
     ],
     typing.Any,
 ]
