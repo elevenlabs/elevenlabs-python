@@ -15,6 +15,7 @@ from ..base_client import BaseElevenLabs
 
 class ClientToOrchestratorEvent(str, Enum):
     """Event types that can be sent from client to orchestrator."""
+
     # Response to a ping request.
     PONG = "pong"
     CLIENT_TOOL_RESULT = "client_tool_result"
@@ -29,42 +30,34 @@ class ClientToOrchestratorEvent(str, Enum):
 
 class UserMessageClientToOrchestratorEvent:
     """Event for sending user text messages."""
-    
+
     def __init__(self, text: Optional[str] = None):
         self.type: Literal[ClientToOrchestratorEvent.USER_MESSAGE] = ClientToOrchestratorEvent.USER_MESSAGE
         self.text = text
-    
+
     def to_dict(self) -> dict:
-        return {
-            "type": self.type,
-            "text": self.text
-        }
+        return {"type": self.type, "text": self.text}
 
 
 class UserActivityClientToOrchestratorEvent:
     """Event for registering user activity (ping to prevent timeout)."""
-    
+
     def __init__(self) -> None:
         self.type: Literal[ClientToOrchestratorEvent.USER_ACTIVITY] = ClientToOrchestratorEvent.USER_ACTIVITY
-    
+
     def to_dict(self) -> dict:
-        return {
-            "type": self.type
-        }
+        return {"type": self.type}
 
 
 class ContextualUpdateClientToOrchestratorEvent:
     """Event for sending non-interrupting contextual updates to the conversation state."""
-    
+
     def __init__(self, text: str):
         self.type: Literal[ClientToOrchestratorEvent.CONTEXTUAL_UPDATE] = ClientToOrchestratorEvent.CONTEXTUAL_UPDATE
         self.text = text
-    
+
     def to_dict(self) -> dict:
-        return {
-            "type": self.type,
-            "content": self.text
-        }
+        return {"type": self.type, "content": self.text}
 
 
 class AudioInterface(ABC):
@@ -196,7 +189,7 @@ class ClientTools:
         """
         if not self._running.is_set():
             raise RuntimeError("ClientTools event loop is not running")
-        
+
         if self._loop is None:
             raise RuntimeError("Event loop is not available")
 
@@ -257,6 +250,7 @@ class Conversation:
         self,
         client: BaseElevenLabs,
         agent_id: str,
+        user_id: Optional[str] = None,
         *,
         requires_auth: bool,
         audio_interface: AudioInterface,
@@ -274,6 +268,7 @@ class Conversation:
         Args:
             client: The ElevenLabs client to use for the conversation.
             agent_id: The ID of the agent to converse with.
+            user_id: The ID of the user conversing with the agent.
             requires_auth: Whether the agent requires authentication.
             audio_interface: The audio interface to use for input and output.
             client_tools: The client tools to use for the conversation.
@@ -287,6 +282,7 @@ class Conversation:
 
         self.client = client
         self.agent_id = agent_id
+        self.user_id = user_id
         self.requires_auth = requires_auth
         self.audio_interface = audio_interface
         self.callback_agent_response = callback_agent_response
@@ -334,16 +330,16 @@ class Conversation:
 
     def send_user_message(self, text: str):
         """Send a text message from the user to the agent.
-        
+
         Args:
             text: The text message to send to the agent.
-            
+
         Raises:
             RuntimeError: If the session is not active or websocket is not connected.
         """
         if not self._ws:
             raise RuntimeError("Session not started or websocket not connected.")
-        
+
         event = UserMessageClientToOrchestratorEvent(text=text)
         try:
             self._ws.send(json.dumps(event.to_dict()))
@@ -353,15 +349,15 @@ class Conversation:
 
     def register_user_activity(self):
         """Register user activity to prevent session timeout.
-        
+
         This sends a ping to the orchestrator to reset the timeout timer.
-        
+
         Raises:
             RuntimeError: If the session is not active or websocket is not connected.
         """
         if not self._ws:
             raise RuntimeError("Session not started or websocket not connected.")
-        
+
         event = UserActivityClientToOrchestratorEvent()
         try:
             self._ws.send(json.dumps(event.to_dict()))
@@ -371,19 +367,19 @@ class Conversation:
 
     def send_contextual_update(self, text: str):
         """Send a contextual update to the conversation.
-        
+
         Contextual updates are non-interrupting content that is sent to the server
         to update the conversation state without directly prompting the agent.
-        
+
         Args:
             content: The contextual information to send to the conversation.
-            
+
         Raises:
             RuntimeError: If the session is not active or websocket is not connected.
         """
         if not self._ws:
             raise RuntimeError("Session not started or websocket not connected.")
-        
+
         event = ContextualUpdateClientToOrchestratorEvent(text=text)
         try:
             self._ws.send(json.dumps(event.to_dict()))
@@ -435,7 +431,7 @@ class Conversation:
                 except Exception as e:
                     print(f"Error receiving message: {e}")
                     self.end_session()
-            
+
             self._ws = None
 
     def _handle_message(self, message, ws):
