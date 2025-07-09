@@ -57,7 +57,7 @@ class ContextualUpdateClientToOrchestratorEvent:
         self.text = text
 
     def to_dict(self) -> dict:
-        return {"type": self.type, "content": self.text}
+        return {"type": self.type, "text": self.text}
 
 
 class AudioInterface(ABC):
