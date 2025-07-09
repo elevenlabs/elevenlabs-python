@@ -52,11 +52,13 @@ def test_conversation_basic_flow():
     mock_ws = create_mock_websocket()
     mock_client = MagicMock()
     agent_response_callback = MagicMock()
+    test_user_id = "test_user_123"
 
     # Setup the conversation
     conversation = Conversation(
         client=mock_client,
         agent_id=TEST_AGENT_ID,
+        user_id=test_user_id,
         requires_auth=False,
         audio_interface=MockAudioInterface(),
         callback_agent_response=agent_response_callback,
@@ -86,6 +88,7 @@ def test_conversation_basic_flow():
     mock_ws.send.assert_any_call(json.dumps(expected_init_message))
     agent_response_callback.assert_called_once_with("Hello there!")
     assert conversation._conversation_id == TEST_CONVERSATION_ID
+    assert conversation.user_id == test_user_id
 
 
 def test_conversation_with_auth():
@@ -117,6 +120,7 @@ def test_conversation_with_auth():
 
     # Assertions
     mock_client.conversational_ai.conversations.get_signed_url.assert_called_once_with(agent_id=TEST_AGENT_ID)
+
 
 def test_conversation_with_dynamic_variables():
     # Mock setup
@@ -156,13 +160,12 @@ def test_conversation_with_dynamic_variables():
         "type": "conversation_initiation_client_data",
         "custom_llm_extra_body": {},
         "conversation_config_override": {},
-        "dynamic_variables": {
-            "name": "angelo"
-        },
+        "dynamic_variables": {"name": "angelo"},
     }
     mock_ws.send.assert_any_call(json.dumps(expected_init_message))
     agent_response_callback.assert_called_once_with("Hello there!")
     assert conversation._conversation_id == TEST_CONVERSATION_ID
+
 
 def test_conversation_with_contextual_update():
     # Mock setup
@@ -191,5 +194,5 @@ def test_conversation_with_contextual_update():
         conversation.wait_for_session_end()
 
     # Assertions
-    expected = json.dumps({"type": "contextual_update", "content": "User appears to be looking at pricing page"})
+    expected = json.dumps({"type": "contextual_update", "text": "User appears to be looking at pricing page"})
     mock_ws.send.assert_any_call(expected)

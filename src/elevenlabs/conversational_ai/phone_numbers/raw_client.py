@@ -26,6 +26,54 @@ class RawPhoneNumbersClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
+    def list(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[typing.List[PhoneNumbersListResponseItem]]:
+        """
+        Retrieve all Phone Numbers
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[typing.List[PhoneNumbersListResponseItem]]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/convai/phone-numbers",
+            base_url=self._client_wrapper.get_environment().base,
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.List[PhoneNumbersListResponseItem],
+                    construct_type(
+                        type_=typing.List[PhoneNumbersListResponseItem],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def create(
         self, *, request: PhoneNumbersCreateRequestBody, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[CreatePhoneNumberResponseModel]:
@@ -45,7 +93,7 @@ class RawPhoneNumbersClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v1/convai/phone-numbers/create",
+            "v1/convai/phone-numbers",
             base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json=convert_and_respect_annotation_metadata(
@@ -251,9 +299,14 @@ class RawPhoneNumbersClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def list(
+
+class AsyncRawPhoneNumbersClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._client_wrapper = client_wrapper
+
+    async def list(
         self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[typing.List[PhoneNumbersListResponseItem]]:
+    ) -> AsyncHttpResponse[typing.List[PhoneNumbersListResponseItem]]:
         """
         Retrieve all Phone Numbers
 
@@ -264,11 +317,11 @@ class RawPhoneNumbersClient:
 
         Returns
         -------
-        HttpResponse[typing.List[PhoneNumbersListResponseItem]]
+        AsyncHttpResponse[typing.List[PhoneNumbersListResponseItem]]
             Successful Response
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "v1/convai/phone-numbers/",
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/convai/phone-numbers",
             base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
@@ -282,7 +335,7 @@ class RawPhoneNumbersClient:
                         object_=_response.json(),
                     ),
                 )
-                return HttpResponse(response=_response, data=_data)
+                return AsyncHttpResponse(response=_response, data=_data)
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
@@ -298,11 +351,6 @@ class RawPhoneNumbersClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-
-class AsyncRawPhoneNumbersClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
 
     async def create(
         self, *, request: PhoneNumbersCreateRequestBody, request_options: typing.Optional[RequestOptions] = None
@@ -323,7 +371,7 @@ class AsyncRawPhoneNumbersClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v1/convai/phone-numbers/create",
+            "v1/convai/phone-numbers",
             base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json=convert_and_respect_annotation_metadata(
@@ -509,54 +557,6 @@ class AsyncRawPhoneNumbersClient:
                     PhoneNumbersUpdateResponse,
                     construct_type(
                         type_=PhoneNumbersUpdateResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def list(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[typing.List[PhoneNumbersListResponseItem]]:
-        """
-        Retrieve all Phone Numbers
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[typing.List[PhoneNumbersListResponseItem]]
-            Successful Response
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "v1/convai/phone-numbers/",
-            base_url=self._client_wrapper.get_environment().base,
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    typing.List[PhoneNumbersListResponseItem],
-                    construct_type(
-                        type_=typing.List[PhoneNumbersListResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),
                 )

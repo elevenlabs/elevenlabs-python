@@ -7,6 +7,7 @@ class ElevenLabsEnvironment:
     PRODUCTION: ElevenLabsEnvironment
     PRODUCTION_US: ElevenLabsEnvironment
     PRODUCTION_EU: ElevenLabsEnvironment
+    PRODUCTION_INDIA: ElevenLabsEnvironment
 
     def __init__(self, *, base: str, wss: str):
         self.base = base
@@ -21,4 +22,7 @@ ElevenLabsEnvironment.PRODUCTION_US = ElevenLabsEnvironment(
 )
 ElevenLabsEnvironment.PRODUCTION_EU = ElevenLabsEnvironment(
     base="https://api.eu.residency.elevenlabs.io", wss="wss://api.elevenlabs.io"
+)
+ElevenLabsEnvironment.PRODUCTION_INDIA = ElevenLabsEnvironment(
+    base="https://api.in.residency.elevenlabs.io", wss="wss://api.elevenlabs.io"
 )

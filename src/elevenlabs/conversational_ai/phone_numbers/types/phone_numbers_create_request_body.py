@@ -8,9 +8,8 @@ import pydantic
 import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
-from ....types.sip_media_encryption_enum import SipMediaEncryptionEnum
-from ....types.sip_trunk_credentials import SipTrunkCredentials
-from ....types.sip_trunk_transport_enum import SipTrunkTransportEnum
+from ....types.inbound_sip_trunk_config_request_model import InboundSipTrunkConfigRequestModel
+from ....types.outbound_sip_trunk_config_request_model import OutboundSipTrunkConfigRequestModel
 
 
 class PhoneNumbersCreateRequestBody_Twilio(UncheckedBaseModel):
@@ -42,13 +41,8 @@ class PhoneNumbersCreateRequestBody_SipTrunk(UncheckedBaseModel):
     provider: typing.Literal["sip_trunk"] = "sip_trunk"
     phone_number: str
     label: str
-    termination_uri: str
-    address: typing.Optional[str] = None
-    transport: typing.Optional[SipTrunkTransportEnum] = None
-    media_encryption: typing.Optional[SipMediaEncryptionEnum] = None
-    inbound_media_encryption: typing.Optional[SipMediaEncryptionEnum] = None
-    headers: typing.Optional[typing.Dict[str, str]] = None
-    credentials: typing.Optional[SipTrunkCredentials] = None
+    inbound_trunk_config: typing.Optional[InboundSipTrunkConfigRequestModel] = None
+    outbound_trunk_config: typing.Optional[OutboundSipTrunkConfigRequestModel] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

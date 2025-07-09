@@ -27,6 +27,11 @@ class ForcedAlignmentWordResponseModel(UncheckedBaseModel):
     The end time of the word in seconds.
     """
 
+    loss: float = pydantic.Field()
+    """
+    The average alignment loss/confidence score for this word, calculated from its constituent characters.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

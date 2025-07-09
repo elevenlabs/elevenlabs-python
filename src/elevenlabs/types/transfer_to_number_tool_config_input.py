@@ -5,14 +5,15 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .workspace_group_permission import WorkspaceGroupPermission
+from .phone_number_transfer import PhoneNumberTransfer
 
 
-class WorkspaceGroupResponseModel(UncheckedBaseModel):
-    name: str
-    id: str
-    members: typing.List[str]
-    permissions: typing.Optional[typing.List[WorkspaceGroupPermission]] = None
+class TransferToNumberToolConfigInput(UncheckedBaseModel):
+    transfers: typing.List[PhoneNumberTransfer]
+    enable_client_message: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to play a message to the client while they wait for transfer. Defaults to true for backward compatibility.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

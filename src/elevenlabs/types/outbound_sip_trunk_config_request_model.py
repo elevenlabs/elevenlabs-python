@@ -6,35 +6,12 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .sip_media_encryption_enum import SipMediaEncryptionEnum
-from .sip_trunk_credentials import SipTrunkCredentials
+from .sip_trunk_credentials_request_model import SipTrunkCredentialsRequestModel
 from .sip_trunk_transport_enum import SipTrunkTransportEnum
 
 
-class CreateSipTrunkPhoneNumberRequest(UncheckedBaseModel):
-    """
-    SIP trunk phone number request
-
-    Includes termination URI and optional digest authentication credentials.
-    If credentials are provided, both username and password must be included.
-    If credentials are not provided, ACL authentication is assumed. (user needs to add our ips in their settings)
-    """
-
-    phone_number: str = pydantic.Field()
-    """
-    Phone number
-    """
-
-    label: str = pydantic.Field()
-    """
-    Label for the phone number
-    """
-
-    termination_uri: str = pydantic.Field()
-    """
-    SIP trunk termination URI
-    """
-
-    address: typing.Optional[str] = pydantic.Field(default=None)
+class OutboundSipTrunkConfigRequestModel(UncheckedBaseModel):
+    address: str = pydantic.Field()
     """
     Hostname or IP the SIP INVITE is sent to.
     """
@@ -49,17 +26,12 @@ class CreateSipTrunkPhoneNumberRequest(UncheckedBaseModel):
     Whether or not to encrypt media (data layer).
     """
 
-    inbound_media_encryption: typing.Optional[SipMediaEncryptionEnum] = pydantic.Field(default=None)
-    """
-    Whether or not to encrypt media (data layer) for inbound calls.
-    """
-
     headers: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
     """
     SIP X-* headers for INVITE request. These headers are sent as-is and may help identify this call.
     """
 
-    credentials: typing.Optional[SipTrunkCredentials] = pydantic.Field(default=None)
+    credentials: typing.Optional[SipTrunkCredentialsRequestModel] = pydantic.Field(default=None)
     """
     Optional digest authentication credentials (username/password). If not provided, ACL authentication is assumed.
     """
