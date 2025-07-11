@@ -184,9 +184,9 @@ class ProjectExtendedResponse(UncheckedBaseModel):
     Whether text normalization is applied to the project.
     """
 
-    experimental: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
+    experimental: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
     """
-    Experimental features of the project.
+    Experimental features for the project.
     """
 
     if IS_PYDANTIC_V2:

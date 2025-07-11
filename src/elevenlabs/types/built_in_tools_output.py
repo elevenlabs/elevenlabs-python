@@ -34,6 +34,11 @@ class BuiltInToolsOutput(UncheckedBaseModel):
     The skip turn tool
     """
 
+    play_keypad_touch_tone: typing.Optional[SystemToolConfigOutput] = pydantic.Field(default=None)
+    """
+    The play DTMF tool
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

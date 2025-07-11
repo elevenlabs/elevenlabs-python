@@ -2,36 +2,4 @@
 
 import typing
 
-import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
-from .dynamic_variables_config import DynamicVariablesConfig
-from .prompt_agent_db_model import PromptAgentDbModel
-
-
-class AgentConfig(UncheckedBaseModel):
-    first_message: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    If non-empty, the first message the agent will say. If empty, the agent waits for the user to start the discussion.
-    """
-
-    language: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Language of the agent - used for ASR and TTS
-    """
-
-    dynamic_variables: typing.Optional[DynamicVariablesConfig] = pydantic.Field(default=None)
-    """
-    Configuration for dynamic variables
-    """
-
-    prompt: typing.Optional[PromptAgentDbModel] = None
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+AgentConfig = typing.Optional[typing.Any]

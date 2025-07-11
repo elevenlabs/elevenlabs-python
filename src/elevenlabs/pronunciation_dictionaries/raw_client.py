@@ -278,7 +278,7 @@ class RawPronunciationDictionariesClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}/",
+            f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}",
             base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
@@ -344,7 +344,7 @@ class RawPronunciationDictionariesClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v1/pronunciation-dictionaries/",
+            "v1/pronunciation-dictionaries",
             base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
@@ -627,7 +627,7 @@ class AsyncRawPronunciationDictionariesClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}/",
+            f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}",
             base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
@@ -693,7 +693,7 @@ class AsyncRawPronunciationDictionariesClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v1/pronunciation-dictionaries/",
+            "v1/pronunciation-dictionaries",
             base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={

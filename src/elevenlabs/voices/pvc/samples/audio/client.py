@@ -24,7 +24,12 @@ class AudioClient:
         return self._raw_client
 
     def get(
-        self, voice_id: str, sample_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        voice_id: str,
+        sample_id: str,
+        *,
+        remove_background_noise: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> VoiceSamplePreviewResponseModel:
         """
         Retrieve the first 30 seconds of voice sample audio with or without noise removal.
@@ -36,6 +41,9 @@ class AudioClient:
 
         sample_id : str
             Sample ID to be used
+
+        remove_background_noise : typing.Optional[bool]
+            If set will remove background noise for voice samples using our audio isolation model. If the samples do not include background noise, it can make the quality worse.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -55,9 +63,12 @@ class AudioClient:
         client.voices.pvc.samples.audio.get(
             voice_id="21m00Tcm4TlvDq8ikWAM",
             sample_id="VW7YKqPnjY4h39yTbx2L",
+            remove_background_noise=True,
         )
         """
-        _response = self._raw_client.get(voice_id, sample_id, request_options=request_options)
+        _response = self._raw_client.get(
+            voice_id, sample_id, remove_background_noise=remove_background_noise, request_options=request_options
+        )
         return _response.data
 
 
@@ -77,7 +88,12 @@ class AsyncAudioClient:
         return self._raw_client
 
     async def get(
-        self, voice_id: str, sample_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        voice_id: str,
+        sample_id: str,
+        *,
+        remove_background_noise: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> VoiceSamplePreviewResponseModel:
         """
         Retrieve the first 30 seconds of voice sample audio with or without noise removal.
@@ -89,6 +105,9 @@ class AsyncAudioClient:
 
         sample_id : str
             Sample ID to be used
+
+        remove_background_noise : typing.Optional[bool]
+            If set will remove background noise for voice samples using our audio isolation model. If the samples do not include background noise, it can make the quality worse.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -113,10 +132,13 @@ class AsyncAudioClient:
             await client.voices.pvc.samples.audio.get(
                 voice_id="21m00Tcm4TlvDq8ikWAM",
                 sample_id="VW7YKqPnjY4h39yTbx2L",
+                remove_background_noise=True,
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get(voice_id, sample_id, request_options=request_options)
+        _response = await self._raw_client.get(
+            voice_id, sample_id, remove_background_noise=remove_background_noise, request_options=request_options
+        )
         return _response.data

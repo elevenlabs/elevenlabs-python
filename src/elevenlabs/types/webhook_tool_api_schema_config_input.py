@@ -7,6 +7,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .auth_connection_locator import AuthConnectionLocator
 from .literal_json_schema_property import LiteralJsonSchemaProperty
 from .query_params_json_schema import QueryParamsJsonSchema
 from .webhook_tool_api_schema_config_input_method import WebhookToolApiSchemaConfigInputMethod
@@ -50,6 +51,11 @@ class WebhookToolApiSchemaConfigInput(UncheckedBaseModel):
     )
     """
     Headers that should be included in the request
+    """
+
+    auth_connection: typing.Optional[AuthConnectionLocator] = pydantic.Field(default=None)
+    """
+    Optional auth connection to use for authentication with this webhook
     """
 
     if IS_PYDANTIC_V2:

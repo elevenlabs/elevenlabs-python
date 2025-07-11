@@ -18,6 +18,11 @@ class WidgetTextContents(UncheckedBaseModel):
     Text and ARIA label for the start call button.
     """
 
+    start_chat: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Text and ARIA label for the start chat button (text only)
+    """
+
     new_call: typing.Optional[str] = pydantic.Field(default=None)
     """
     Text and ARIA label for the new call button. Displayed when the caller already finished at least one call in order ot start the next one.
@@ -78,6 +83,11 @@ class WidgetTextContents(UncheckedBaseModel):
     Status displayed when the agent is connecting.
     """
 
+    chatting_status: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Status displayed when the agent is chatting (text only)
+    """
+
     input_label: typing.Optional[str] = pydantic.Field(default=None)
     """
     ARIA label for the text message input.
@@ -86,6 +96,16 @@ class WidgetTextContents(UncheckedBaseModel):
     input_placeholder: typing.Optional[str] = pydantic.Field(default=None)
     """
     Placeholder text for the text message input.
+    """
+
+    input_placeholder_text_only: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Placeholder text for the text message input (text only)
+    """
+
+    input_placeholder_new_conversation: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Placeholder text for the text message input when starting a new conversation (text only)
     """
 
     user_ended_conversation: typing.Optional[str] = pydantic.Field(default=None)

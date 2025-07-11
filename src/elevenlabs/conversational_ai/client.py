@@ -72,6 +72,7 @@ class ConversationalAiClient:
     def add_to_knowledge_base(
         self,
         *,
+        agent_id: typing.Optional[str] = None,
         name: typing.Optional[str] = OMIT,
         url: typing.Optional[str] = OMIT,
         file: typing.Optional[core.File] = OMIT,
@@ -82,6 +83,8 @@ class ConversationalAiClient:
 
         Parameters
         ----------
+        agent_id : typing.Optional[str]
+
         name : typing.Optional[str]
             A custom, human-readable name for the document.
 
@@ -109,7 +112,7 @@ class ConversationalAiClient:
         client.conversational_ai.add_to_knowledge_base()
         """
         _response = self._raw_client.add_to_knowledge_base(
-            name=name, url=url, file=file, request_options=request_options
+            agent_id=agent_id, name=name, url=url, file=file, request_options=request_options
         )
         return _response.data
 
@@ -295,6 +298,7 @@ class AsyncConversationalAiClient:
     async def add_to_knowledge_base(
         self,
         *,
+        agent_id: typing.Optional[str] = None,
         name: typing.Optional[str] = OMIT,
         url: typing.Optional[str] = OMIT,
         file: typing.Optional[core.File] = OMIT,
@@ -305,6 +309,8 @@ class AsyncConversationalAiClient:
 
         Parameters
         ----------
+        agent_id : typing.Optional[str]
+
         name : typing.Optional[str]
             A custom, human-readable name for the document.
 
@@ -340,7 +346,7 @@ class AsyncConversationalAiClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.add_to_knowledge_base(
-            name=name, url=url, file=file, request_options=request_options
+            agent_id=agent_id, name=name, url=url, file=file, request_options=request_options
         )
         return _response.data
 

@@ -143,7 +143,11 @@ class DocumentsClient:
         return _response.data
 
     def get(
-        self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        documentation_id: str,
+        *,
+        agent_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> DocumentsGetResponse:
         """
         Get details about a specific documentation making up the agent's knowledge base
@@ -152,6 +156,8 @@ class DocumentsClient:
         ----------
         documentation_id : str
             The id of a document from the knowledge base. This is returned on document addition.
+
+        agent_id : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -172,7 +178,7 @@ class DocumentsClient:
             documentation_id="21m00Tcm4TlvDq8ikWAM",
         )
         """
-        _response = self._raw_client.get(documentation_id, request_options=request_options)
+        _response = self._raw_client.get(documentation_id, agent_id=agent_id, request_options=request_options)
         return _response.data
 
     def delete(
@@ -480,7 +486,11 @@ class AsyncDocumentsClient:
         return _response.data
 
     async def get(
-        self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        documentation_id: str,
+        *,
+        agent_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> DocumentsGetResponse:
         """
         Get details about a specific documentation making up the agent's knowledge base
@@ -489,6 +499,8 @@ class AsyncDocumentsClient:
         ----------
         documentation_id : str
             The id of a document from the knowledge base. This is returned on document addition.
+
+        agent_id : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -517,7 +529,7 @@ class AsyncDocumentsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get(documentation_id, request_options=request_options)
+        _response = await self._raw_client.get(documentation_id, agent_id=agent_id, request_options=request_options)
         return _response.data
 
     async def delete(

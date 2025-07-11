@@ -7,16 +7,8 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class SipTrunkCredentials(UncheckedBaseModel):
-    username: str = pydantic.Field()
-    """
-    SIP trunk username
-    """
-
-    password: str = pydantic.Field()
-    """
-    SIP trunk password
-    """
+class PhoneNumberTransferDestination(UncheckedBaseModel):
+    phone_number: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

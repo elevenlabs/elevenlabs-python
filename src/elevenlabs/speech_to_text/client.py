@@ -41,6 +41,7 @@ class SpeechToTextClient:
         num_speakers: typing.Optional[int] = OMIT,
         timestamps_granularity: typing.Optional[SpeechToTextConvertRequestTimestampsGranularity] = OMIT,
         diarize: typing.Optional[bool] = OMIT,
+        diarization_threshold: typing.Optional[float] = OMIT,
         additional_formats: typing.Optional[AdditionalFormats] = OMIT,
         file_format: typing.Optional[SpeechToTextConvertRequestFileFormat] = OMIT,
         cloud_storage_url: typing.Optional[str] = OMIT,
@@ -76,6 +77,9 @@ class SpeechToTextClient:
 
         diarize : typing.Optional[bool]
             Whether to annotate which speaker is currently talking in the uploaded file.
+
+        diarization_threshold : typing.Optional[float]
+            Diarization threshold to apply during speaker diarization. A higher value means there will be a lower chance of one speaker being diarized as two different speakers but also a higher chance of two different speakers being diarized as one speaker (less total speakers predicted). A low value means there will be a higher chance of one speaker being diarized as two different speakers but also a lower chance of two different speakers being diarized as one speaker (more total speakers predicted). Can only be set when diarize=True and num_speakers=None. Defaults to None, in which case we will choose a threshold based on the model_id (0.22 usually).
 
         additional_formats : typing.Optional[AdditionalFormats]
             A list of additional formats to export the transcript to.
@@ -120,6 +124,7 @@ class SpeechToTextClient:
             num_speakers=num_speakers,
             timestamps_granularity=timestamps_granularity,
             diarize=diarize,
+            diarization_threshold=diarization_threshold,
             additional_formats=additional_formats,
             file_format=file_format,
             cloud_storage_url=cloud_storage_url,
@@ -156,6 +161,7 @@ class AsyncSpeechToTextClient:
         num_speakers: typing.Optional[int] = OMIT,
         timestamps_granularity: typing.Optional[SpeechToTextConvertRequestTimestampsGranularity] = OMIT,
         diarize: typing.Optional[bool] = OMIT,
+        diarization_threshold: typing.Optional[float] = OMIT,
         additional_formats: typing.Optional[AdditionalFormats] = OMIT,
         file_format: typing.Optional[SpeechToTextConvertRequestFileFormat] = OMIT,
         cloud_storage_url: typing.Optional[str] = OMIT,
@@ -191,6 +197,9 @@ class AsyncSpeechToTextClient:
 
         diarize : typing.Optional[bool]
             Whether to annotate which speaker is currently talking in the uploaded file.
+
+        diarization_threshold : typing.Optional[float]
+            Diarization threshold to apply during speaker diarization. A higher value means there will be a lower chance of one speaker being diarized as two different speakers but also a higher chance of two different speakers being diarized as one speaker (less total speakers predicted). A low value means there will be a higher chance of one speaker being diarized as two different speakers but also a lower chance of two different speakers being diarized as one speaker (more total speakers predicted). Can only be set when diarize=True and num_speakers=None. Defaults to None, in which case we will choose a threshold based on the model_id (0.22 usually).
 
         additional_formats : typing.Optional[AdditionalFormats]
             A list of additional formats to export the transcript to.
@@ -243,6 +252,7 @@ class AsyncSpeechToTextClient:
             num_speakers=num_speakers,
             timestamps_granularity=timestamps_granularity,
             diarize=diarize,
+            diarization_threshold=diarization_threshold,
             additional_formats=additional_formats,
             file_format=file_format,
             cloud_storage_url=cloud_storage_url,

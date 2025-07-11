@@ -5,15 +5,15 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .phone_number_transfer_transfer_destination import PhoneNumberTransferTransferDestination
-from .transfer_type_enum import TransferTypeEnum
 
 
-class PhoneNumberTransfer(UncheckedBaseModel):
-    transfer_destination: typing.Optional[PhoneNumberTransferTransferDestination] = None
-    phone_number: typing.Optional[str] = None
-    condition: str
-    transfer_type: typing.Optional[TransferTypeEnum] = None
+class PlayDtmfToolConfig(UncheckedBaseModel):
+    """
+    Allows the agent to play DTMF tones during a phone call.
+
+    This tool can be used to interact with automated phone systems, such as
+    navigating phone menus, entering extensions, or inputting numeric codes.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
