@@ -11,6 +11,7 @@ from websockets.sync.client import connect, Connection
 from websockets.exceptions import ConnectionClosedOK
 
 from ..base_client import BaseElevenLabs
+from ..version import __version__
 
 
 class ClientToOrchestratorEvent(str, Enum):
@@ -491,8 +492,11 @@ class Conversation:
 
     def _get_wss_url(self):
         base_ws_url = self.client._client_wrapper.get_environment().wss
-        return f"{base_ws_url}/v1/convai/conversation?agent_id={self.agent_id}"
+        return f"{base_ws_url}/v1/convai/conversation?agent_id={self.agent_id}&source=python_sdk&version={__version__}"
 
     def _get_signed_url(self):
         response = self.client.conversational_ai.conversations.get_signed_url(agent_id=self.agent_id)
-        return response.signed_url
+        signed_url = response.signed_url
+        # Append source and version query parameters to the signed URL
+        separator = "&" if "?" in signed_url else "?"
+        return f"{signed_url}{separator}source=python_sdk&version={__version__}"
