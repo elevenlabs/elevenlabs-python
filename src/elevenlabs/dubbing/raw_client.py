@@ -13,8 +13,11 @@ from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.delete_dubbing_response_model import DeleteDubbingResponseModel
 from ..types.do_dubbing_response import DoDubbingResponse
+from ..types.dubbing_metadata_page_response_model import DubbingMetadataPageResponseModel
 from ..types.dubbing_metadata_response import DubbingMetadataResponse
 from ..types.http_validation_error import HttpValidationError
+from .types.dubbing_list_request_dubbing_status import DubbingListRequestDubbingStatus
+from .types.dubbing_list_request_filter_by_creator import DubbingListRequestFilterByCreator
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -23,6 +26,77 @@ OMIT = typing.cast(typing.Any, ...)
 class RawDubbingClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    def list(
+        self,
+        *,
+        cursor: typing.Optional[str] = None,
+        page_size: typing.Optional[int] = None,
+        dubbing_status: typing.Optional[DubbingListRequestDubbingStatus] = None,
+        filter_by_creator: typing.Optional[DubbingListRequestFilterByCreator] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[DubbingMetadataPageResponseModel]:
+        """
+        List the dubs you have access to.
+
+        Parameters
+        ----------
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        page_size : typing.Optional[int]
+            How many dubs to return at maximum. Can not exceed 200, defaults to 100.
+
+        dubbing_status : typing.Optional[DubbingListRequestDubbingStatus]
+            Status of the dubbing, either 'in_progress', 'completed' or 'failed'.
+
+        filter_by_creator : typing.Optional[DubbingListRequestFilterByCreator]
+            Filters who created the resources being listed, whether it was the user running the request or someone else that shared the resource with them.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[DubbingMetadataPageResponseModel]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/dubbing",
+            method="GET",
+            params={
+                "cursor": cursor,
+                "page_size": page_size,
+                "dubbing_status": dubbing_status,
+                "filter_by_creator": filter_by_creator,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    DubbingMetadataPageResponseModel,
+                    construct_type(
+                        type_=DubbingMetadataPageResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
         self,
@@ -120,7 +194,6 @@ class RawDubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/dubbing",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -196,7 +269,6 @@ class RawDubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -247,7 +319,6 @@ class RawDubbingClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -281,6 +352,77 @@ class RawDubbingClient:
 class AsyncRawDubbingClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    async def list(
+        self,
+        *,
+        cursor: typing.Optional[str] = None,
+        page_size: typing.Optional[int] = None,
+        dubbing_status: typing.Optional[DubbingListRequestDubbingStatus] = None,
+        filter_by_creator: typing.Optional[DubbingListRequestFilterByCreator] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[DubbingMetadataPageResponseModel]:
+        """
+        List the dubs you have access to.
+
+        Parameters
+        ----------
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        page_size : typing.Optional[int]
+            How many dubs to return at maximum. Can not exceed 200, defaults to 100.
+
+        dubbing_status : typing.Optional[DubbingListRequestDubbingStatus]
+            Status of the dubbing, either 'in_progress', 'completed' or 'failed'.
+
+        filter_by_creator : typing.Optional[DubbingListRequestFilterByCreator]
+            Filters who created the resources being listed, whether it was the user running the request or someone else that shared the resource with them.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[DubbingMetadataPageResponseModel]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/dubbing",
+            method="GET",
+            params={
+                "cursor": cursor,
+                "page_size": page_size,
+                "dubbing_status": dubbing_status,
+                "filter_by_creator": filter_by_creator,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    DubbingMetadataPageResponseModel,
+                    construct_type(
+                        type_=DubbingMetadataPageResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
         self,
@@ -378,7 +520,6 @@ class AsyncRawDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/dubbing",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -454,7 +595,6 @@ class AsyncRawDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -505,7 +645,6 @@ class AsyncRawDubbingClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )

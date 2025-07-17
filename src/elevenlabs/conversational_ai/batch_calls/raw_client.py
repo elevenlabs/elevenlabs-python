@@ -60,7 +60,6 @@ class RawBatchCallsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/batch-calling/submit",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "call_name": call_name,
@@ -129,7 +128,6 @@ class RawBatchCallsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/batch-calling/workspace",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "limit": limit,
@@ -183,7 +181,6 @@ class RawBatchCallsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/batch-calling/{jsonable_encoder(batch_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -233,7 +230,6 @@ class RawBatchCallsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/batch-calling/{jsonable_encoder(batch_id)}/cancel",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             request_options=request_options,
         )
@@ -267,7 +263,7 @@ class RawBatchCallsClient:
         self, batch_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[BatchCallResponse]:
         """
-        Retry a batch call by setting completed recipients back to pending status.
+        Retry a batch call, calling failed and no-response recipients again.
 
         Parameters
         ----------
@@ -283,7 +279,6 @@ class RawBatchCallsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/batch-calling/{jsonable_encoder(batch_id)}/retry",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             request_options=request_options,
         )
@@ -353,7 +348,6 @@ class AsyncRawBatchCallsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/batch-calling/submit",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "call_name": call_name,
@@ -422,7 +416,6 @@ class AsyncRawBatchCallsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/batch-calling/workspace",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "limit": limit,
@@ -476,7 +469,6 @@ class AsyncRawBatchCallsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/batch-calling/{jsonable_encoder(batch_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -526,7 +518,6 @@ class AsyncRawBatchCallsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/batch-calling/{jsonable_encoder(batch_id)}/cancel",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             request_options=request_options,
         )
@@ -560,7 +551,7 @@ class AsyncRawBatchCallsClient:
         self, batch_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[BatchCallResponse]:
         """
-        Retry a batch call by setting completed recipients back to pending status.
+        Retry a batch call, calling failed and no-response recipients again.
 
         Parameters
         ----------
@@ -576,7 +567,6 @@ class AsyncRawBatchCallsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/batch-calling/{jsonable_encoder(batch_id)}/retry",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             request_options=request_options,
         )

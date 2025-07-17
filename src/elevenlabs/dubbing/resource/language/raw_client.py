@@ -49,7 +49,6 @@ class RawLanguageClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/language",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "language": language,
@@ -119,7 +118,6 @@ class AsyncRawLanguageClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/language",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "language": language,

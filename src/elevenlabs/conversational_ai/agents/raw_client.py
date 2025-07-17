@@ -34,6 +34,7 @@ class RawAgentsClient:
         *,
         conversation_config: ConversationalConfig,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
+        workflow: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -48,6 +49,8 @@ class RawAgentsClient:
 
         platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
             Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
+
+        workflow : typing.Optional[typing.Optional[typing.Any]]
 
         name : typing.Optional[str]
             A name to make the agent easier to find
@@ -65,7 +68,6 @@ class RawAgentsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/agents/create",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "conversation_config": convert_and_respect_annotation_metadata(
@@ -74,6 +76,7 @@ class RawAgentsClient:
                 "platform_settings": convert_and_respect_annotation_metadata(
                     object_=platform_settings, annotation=AgentPlatformSettingsRequestModel, direction="write"
                 ),
+                "workflow": workflow,
                 "name": name,
                 "tags": tags,
             },
@@ -130,7 +133,6 @@ class RawAgentsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -178,7 +180,6 @@ class RawAgentsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -207,6 +208,7 @@ class RawAgentsClient:
         *,
         conversation_config: typing.Optional[ConversationalConfig] = OMIT,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
+        workflow: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -225,6 +227,8 @@ class RawAgentsClient:
         platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
             Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
 
+        workflow : typing.Optional[typing.Optional[typing.Any]]
+
         name : typing.Optional[str]
             A name to make the agent easier to find
 
@@ -241,7 +245,6 @@ class RawAgentsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "conversation_config": convert_and_respect_annotation_metadata(
@@ -250,6 +253,7 @@ class RawAgentsClient:
                 "platform_settings": convert_and_respect_annotation_metadata(
                     object_=platform_settings, annotation=AgentPlatformSettingsRequestModel, direction="write"
                 ),
+                "workflow": workflow,
                 "name": name,
                 "tags": tags,
             },
@@ -317,7 +321,6 @@ class RawAgentsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/agents",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -380,7 +383,6 @@ class RawAgentsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/duplicate",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -449,7 +451,6 @@ class RawAgentsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/simulate-conversation",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "simulation_specification": convert_and_respect_annotation_metadata(
@@ -524,7 +525,6 @@ class RawAgentsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/simulate-conversation/stream",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "simulation_specification": convert_and_respect_annotation_metadata(
@@ -571,6 +571,7 @@ class AsyncRawAgentsClient:
         *,
         conversation_config: ConversationalConfig,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
+        workflow: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -585,6 +586,8 @@ class AsyncRawAgentsClient:
 
         platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
             Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
+
+        workflow : typing.Optional[typing.Optional[typing.Any]]
 
         name : typing.Optional[str]
             A name to make the agent easier to find
@@ -602,7 +605,6 @@ class AsyncRawAgentsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/agents/create",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "conversation_config": convert_and_respect_annotation_metadata(
@@ -611,6 +613,7 @@ class AsyncRawAgentsClient:
                 "platform_settings": convert_and_respect_annotation_metadata(
                     object_=platform_settings, annotation=AgentPlatformSettingsRequestModel, direction="write"
                 ),
+                "workflow": workflow,
                 "name": name,
                 "tags": tags,
             },
@@ -667,7 +670,6 @@ class AsyncRawAgentsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -717,7 +719,6 @@ class AsyncRawAgentsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -746,6 +747,7 @@ class AsyncRawAgentsClient:
         *,
         conversation_config: typing.Optional[ConversationalConfig] = OMIT,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
+        workflow: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -764,6 +766,8 @@ class AsyncRawAgentsClient:
         platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
             Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
 
+        workflow : typing.Optional[typing.Optional[typing.Any]]
+
         name : typing.Optional[str]
             A name to make the agent easier to find
 
@@ -780,7 +784,6 @@ class AsyncRawAgentsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "conversation_config": convert_and_respect_annotation_metadata(
@@ -789,6 +792,7 @@ class AsyncRawAgentsClient:
                 "platform_settings": convert_and_respect_annotation_metadata(
                     object_=platform_settings, annotation=AgentPlatformSettingsRequestModel, direction="write"
                 ),
+                "workflow": workflow,
                 "name": name,
                 "tags": tags,
             },
@@ -856,7 +860,6 @@ class AsyncRawAgentsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/agents",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -919,7 +922,6 @@ class AsyncRawAgentsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/duplicate",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -988,7 +990,6 @@ class AsyncRawAgentsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/simulate-conversation",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "simulation_specification": convert_and_respect_annotation_metadata(
@@ -1063,7 +1064,6 @@ class AsyncRawAgentsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/simulate-conversation/stream",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "simulation_specification": convert_and_respect_annotation_metadata(

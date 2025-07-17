@@ -49,7 +49,6 @@ class RawFeedbackClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}/feedback",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "feedback": feedback,
@@ -121,7 +120,6 @@ class AsyncRawFeedbackClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}/feedback",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "feedback": feedback,

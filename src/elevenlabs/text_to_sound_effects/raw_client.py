@@ -58,7 +58,6 @@ class RawTextToSoundEffectsClient:
         """
         with self._client_wrapper.httpx_client.stream(
             "v1/sound-generation",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "output_format": output_format,
@@ -145,7 +144,6 @@ class AsyncRawTextToSoundEffectsClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             "v1/sound-generation",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "output_format": output_format,

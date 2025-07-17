@@ -64,7 +64,6 @@ class RawKnowledgeBaseClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/knowledge-base",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -153,7 +152,6 @@ class AsyncRawKnowledgeBaseClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/knowledge-base",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,

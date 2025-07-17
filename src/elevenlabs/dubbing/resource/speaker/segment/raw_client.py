@@ -61,7 +61,6 @@ class RawSegmentClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/speaker/{jsonable_encoder(speaker_id)}/segment",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "start_time": start_time,
@@ -146,7 +145,6 @@ class AsyncRawSegmentClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/speaker/{jsonable_encoder(speaker_id)}/segment",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "start_time": start_time,

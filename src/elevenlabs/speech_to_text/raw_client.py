@@ -42,7 +42,9 @@ class RawSpeechToTextClient:
         file_format: typing.Optional[SpeechToTextConvertRequestFileFormat] = OMIT,
         cloud_storage_url: typing.Optional[str] = OMIT,
         webhook: typing.Optional[bool] = OMIT,
+        webhook_id: typing.Optional[str] = OMIT,
         temperature: typing.Optional[float] = OMIT,
+        seed: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SpeechToTextChunkResponseModel]:
         """
@@ -89,8 +91,14 @@ class RawSpeechToTextClient:
         webhook : typing.Optional[bool]
             Whether to send the transcription result to configured speech-to-text webhooks.  If set the request will return early without the transcription, which will be delivered later via webhook.
 
+        webhook_id : typing.Optional[str]
+            Optional specific webhook ID to send the transcription result to. Only valid when webhook is set to true. If not provided, transcription will be sent to all configured speech-to-text webhooks.
+
         temperature : typing.Optional[float]
             Controls the randomness of the transcription output. Accepts values between 0.0 and 2.0, where higher values result in more diverse and less deterministic results. If omitted, we will use a temperature based on the model you selected which is usually 0.
+
+        seed : typing.Optional[int]
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be an integer between 0 and 2147483647.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -102,7 +110,6 @@ class RawSpeechToTextClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/speech-to-text",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -118,7 +125,9 @@ class RawSpeechToTextClient:
                 "file_format": file_format,
                 "cloud_storage_url": cloud_storage_url,
                 "webhook": webhook,
+                "webhook_id": webhook_id,
                 "temperature": temperature,
+                "seed": seed,
             },
             files={
                 **({"file": file} if file is not None else {}),
@@ -179,7 +188,9 @@ class AsyncRawSpeechToTextClient:
         file_format: typing.Optional[SpeechToTextConvertRequestFileFormat] = OMIT,
         cloud_storage_url: typing.Optional[str] = OMIT,
         webhook: typing.Optional[bool] = OMIT,
+        webhook_id: typing.Optional[str] = OMIT,
         temperature: typing.Optional[float] = OMIT,
+        seed: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SpeechToTextChunkResponseModel]:
         """
@@ -226,8 +237,14 @@ class AsyncRawSpeechToTextClient:
         webhook : typing.Optional[bool]
             Whether to send the transcription result to configured speech-to-text webhooks.  If set the request will return early without the transcription, which will be delivered later via webhook.
 
+        webhook_id : typing.Optional[str]
+            Optional specific webhook ID to send the transcription result to. Only valid when webhook is set to true. If not provided, transcription will be sent to all configured speech-to-text webhooks.
+
         temperature : typing.Optional[float]
             Controls the randomness of the transcription output. Accepts values between 0.0 and 2.0, where higher values result in more diverse and less deterministic results. If omitted, we will use a temperature based on the model you selected which is usually 0.
+
+        seed : typing.Optional[int]
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be an integer between 0 and 2147483647.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -239,7 +256,6 @@ class AsyncRawSpeechToTextClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/speech-to-text",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -255,7 +271,9 @@ class AsyncRawSpeechToTextClient:
                 "file_format": file_format,
                 "cloud_storage_url": cloud_storage_url,
                 "webhook": webhook,
+                "webhook_id": webhook_id,
                 "temperature": temperature,
+                "seed": seed,
             },
             files={
                 **({"file": file} if file is not None else {}),

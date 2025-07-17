@@ -52,7 +52,6 @@ class RawLlmUsageClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/llm-usage/calculate",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "prompt_length": prompt_length,
@@ -128,7 +127,6 @@ class AsyncRawLlmUsageClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/llm-usage/calculate",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "prompt_length": prompt_length,

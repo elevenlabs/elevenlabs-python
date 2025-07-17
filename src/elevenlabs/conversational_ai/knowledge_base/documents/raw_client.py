@@ -49,7 +49,6 @@ class RawDocumentsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/knowledge-base/url",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "url": url,
@@ -115,7 +114,6 @@ class RawDocumentsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/knowledge-base/file",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -177,7 +175,6 @@ class RawDocumentsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/knowledge-base/text",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "text": text,
@@ -242,7 +239,6 @@ class RawDocumentsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "agent_id": agent_id,
@@ -303,7 +299,6 @@ class RawDocumentsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             params={
                 "force": force,
@@ -362,7 +357,6 @@ class RawDocumentsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "name": name,
@@ -431,7 +425,6 @@ class RawDocumentsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/dependent-agents",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -485,7 +478,6 @@ class RawDocumentsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/content",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -537,7 +529,6 @@ class AsyncRawDocumentsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/knowledge-base/url",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "url": url,
@@ -603,7 +594,6 @@ class AsyncRawDocumentsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/knowledge-base/file",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -665,7 +655,6 @@ class AsyncRawDocumentsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/knowledge-base/text",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "text": text,
@@ -730,7 +719,6 @@ class AsyncRawDocumentsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "agent_id": agent_id,
@@ -791,7 +779,6 @@ class AsyncRawDocumentsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             params={
                 "force": force,
@@ -850,7 +837,6 @@ class AsyncRawDocumentsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "name": name,
@@ -919,7 +905,6 @@ class AsyncRawDocumentsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/dependent-agents",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -973,7 +958,6 @@ class AsyncRawDocumentsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/content",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )

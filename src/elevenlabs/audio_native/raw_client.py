@@ -92,7 +92,6 @@ class RawAudioNativeClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/audio-native",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -161,7 +160,6 @@ class RawAudioNativeClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/audio-native/{jsonable_encoder(project_id)}/settings",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -227,7 +225,6 @@ class RawAudioNativeClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/audio-native/{jsonable_encoder(project_id)}/content",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "auto_convert": auto_convert,
@@ -339,7 +336,6 @@ class AsyncRawAudioNativeClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/audio-native",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -408,7 +404,6 @@ class AsyncRawAudioNativeClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/audio-native/{jsonable_encoder(project_id)}/settings",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -474,7 +469,6 @@ class AsyncRawAudioNativeClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/audio-native/{jsonable_encoder(project_id)}/content",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "auto_convert": auto_convert,

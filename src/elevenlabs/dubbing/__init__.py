@@ -2,7 +2,15 @@
 
 # isort: skip_file
 
+from .types import DubbingListRequestDubbingStatus, DubbingListRequestFilterByCreator
 from . import audio, resource, transcript
 from .transcript import TranscriptGetTranscriptForDubRequestFormatType
 
-__all__ = ["TranscriptGetTranscriptForDubRequestFormatType", "audio", "resource", "transcript"]
+__all__ = [
+    "DubbingListRequestDubbingStatus",
+    "DubbingListRequestFilterByCreator",
+    "TranscriptGetTranscriptForDubRequestFormatType",
+    "audio",
+    "resource",
+    "transcript",
+]

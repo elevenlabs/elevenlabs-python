@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_call_limits import AgentCallLimits
+from .agent_testing_settings import AgentTestingSettings
 from .agent_workspace_overrides_input import AgentWorkspaceOverridesInput
 from .auth_settings import AuthSettings
 from .conversation_initiation_client_data_config_input import ConversationInitiationClientDataConfigInput
@@ -54,6 +55,11 @@ class AgentPlatformSettingsRequestModel(UncheckedBaseModel):
     workspace_overrides: typing.Optional[AgentWorkspaceOverridesInput] = pydantic.Field(default=None)
     """
     Workspace overrides for the agent
+    """
+
+    testing: typing.Optional[AgentTestingSettings] = pydantic.Field(default=None)
+    """
+    Testing configuration for the agent
     """
 
     if IS_PYDANTIC_V2:

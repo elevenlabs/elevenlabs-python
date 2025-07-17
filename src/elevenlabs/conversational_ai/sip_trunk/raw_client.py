@@ -54,7 +54,6 @@ class RawSipTrunkClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/sip-trunk/outbound-call",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "agent_id": agent_id,
@@ -135,7 +134,6 @@ class AsyncRawSipTrunkClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/sip-trunk/outbound-call",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "agent_id": agent_id,

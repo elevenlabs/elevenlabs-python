@@ -7,9 +7,11 @@ from .types import (
     TextToVoiceDesignRequestOutputFormat,
     VoiceDesignRequestModelModelId,
 )
+from . import preview
 
 __all__ = [
     "TextToVoiceCreatePreviewsRequestOutputFormat",
     "TextToVoiceDesignRequestOutputFormat",
     "VoiceDesignRequestModelModelId",
+    "preview",
 ]

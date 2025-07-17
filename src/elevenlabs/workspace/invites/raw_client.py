@@ -56,7 +56,6 @@ class RawInvitesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/workspace/invites/add",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,
@@ -123,7 +122,6 @@ class RawInvitesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/workspace/invites/add-bulk",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "emails": emails,
@@ -182,7 +180,6 @@ class RawInvitesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/workspace/invites",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             json={
                 "email": email,
@@ -256,7 +253,6 @@ class AsyncRawInvitesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/workspace/invites/add",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,
@@ -323,7 +319,6 @@ class AsyncRawInvitesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/workspace/invites/add-bulk",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "emails": emails,
@@ -382,7 +377,6 @@ class AsyncRawInvitesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/workspace/invites",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             json={
                 "email": email,

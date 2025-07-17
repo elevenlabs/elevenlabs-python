@@ -23,7 +23,7 @@ class PromptAgentApiModelInput(UncheckedBaseModel):
 
     llm: typing.Optional[Llm] = pydantic.Field(default=None)
     """
-    The LLM to query with the prompt and the chat history
+    The LLM to query with the prompt and the chat history. If using data residency, the LLM must be supported in the data residency environment
     """
 
     temperature: typing.Optional[float] = pydantic.Field(default=None)
@@ -74,6 +74,11 @@ class PromptAgentApiModelInput(UncheckedBaseModel):
     rag: typing.Optional[RagConfig] = pydantic.Field(default=None)
     """
     Configuration for RAG
+    """
+
+    timezone: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Timezone for displaying current time in system prompt. If set, the current time will be included in the system prompt using this timezone. Must be a valid timezone name (e.g., 'America/New_York', 'Europe/London', 'UTC').
     """
 
     tools: typing.Optional[typing.List[PromptAgentApiModelInputToolsItem]] = pydantic.Field(default=None)

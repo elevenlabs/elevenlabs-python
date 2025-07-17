@@ -16,6 +16,7 @@ class GetConversationResponseModel(UncheckedBaseModel):
     agent_id: str
     conversation_id: str
     status: GetConversationResponseModelStatus
+    user_id: typing.Optional[str] = None
     transcript: typing.List[ConversationHistoryTranscriptCommonModelOutput]
     metadata: ConversationHistoryMetadataCommonModel
     analysis: typing.Optional[ConversationHistoryAnalysisCommonModel] = None

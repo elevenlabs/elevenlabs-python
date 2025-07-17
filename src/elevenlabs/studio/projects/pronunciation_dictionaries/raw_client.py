@@ -55,7 +55,6 @@ class RawPronunciationDictionariesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/pronunciation-dictionaries",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
@@ -134,7 +133,6 @@ class AsyncRawPronunciationDictionariesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/pronunciation-dictionaries",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(

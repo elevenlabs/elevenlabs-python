@@ -18,6 +18,16 @@ class CreateTwilioPhoneNumberRequest(UncheckedBaseModel):
     Label for the phone number
     """
 
+    supports_inbound: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether this phone number supports inbound calls
+    """
+
+    supports_outbound: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether this phone number supports outbound calls
+    """
+
     sid: str = pydantic.Field()
     """
     Twilio Account SID

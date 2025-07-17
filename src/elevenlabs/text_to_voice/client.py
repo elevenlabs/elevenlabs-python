@@ -6,6 +6,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.voice import Voice
 from ..types.voice_design_preview_response import VoiceDesignPreviewResponse
+from .preview.client import AsyncPreviewClient, PreviewClient
 from .raw_client import AsyncRawTextToVoiceClient, RawTextToVoiceClient
 from .types.text_to_voice_create_previews_request_output_format import TextToVoiceCreatePreviewsRequestOutputFormat
 from .types.text_to_voice_design_request_output_format import TextToVoiceDesignRequestOutputFormat
@@ -18,6 +19,7 @@ OMIT = typing.cast(typing.Any, ...)
 class TextToVoiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawTextToVoiceClient(client_wrapper=client_wrapper)
+        self.preview = PreviewClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> RawTextToVoiceClient:
@@ -237,6 +239,7 @@ class TextToVoiceClient:
         loudness: typing.Optional[float] = OMIT,
         seed: typing.Optional[int] = OMIT,
         guidance_scale: typing.Optional[float] = OMIT,
+        stream_previews: typing.Optional[bool] = OMIT,
         quality: typing.Optional[float] = OMIT,
         reference_audio_base_64: typing.Optional[str] = OMIT,
         prompt_strength: typing.Optional[float] = OMIT,
@@ -270,6 +273,9 @@ class TextToVoiceClient:
 
         guidance_scale : typing.Optional[float]
             Controls how closely the AI follows the prompt. Lower numbers give the AI more freedom to be creative, while higher numbers force it to stick more to the prompt. High numbers can cause voice to sound artificial or robotic. We recommend to use longer, more detailed prompts at lower Guidance Scale.
+
+        stream_previews : typing.Optional[bool]
+            Determines whether the Text to Voice previews should be included in the response. If true, only the generated IDs will be returned which can then be streamed via the /v1/text-to-voice/:generated_voice_id/stream endpoint.
 
         quality : typing.Optional[float]
             Higher quality results in better voice output but less variety.
@@ -308,6 +314,7 @@ class TextToVoiceClient:
             loudness=loudness,
             seed=seed,
             guidance_scale=guidance_scale,
+            stream_previews=stream_previews,
             quality=quality,
             reference_audio_base_64=reference_audio_base_64,
             prompt_strength=prompt_strength,
@@ -319,6 +326,7 @@ class TextToVoiceClient:
 class AsyncTextToVoiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawTextToVoiceClient(client_wrapper=client_wrapper)
+        self.preview = AsyncPreviewClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> AsyncRawTextToVoiceClient:
@@ -562,6 +570,7 @@ class AsyncTextToVoiceClient:
         loudness: typing.Optional[float] = OMIT,
         seed: typing.Optional[int] = OMIT,
         guidance_scale: typing.Optional[float] = OMIT,
+        stream_previews: typing.Optional[bool] = OMIT,
         quality: typing.Optional[float] = OMIT,
         reference_audio_base_64: typing.Optional[str] = OMIT,
         prompt_strength: typing.Optional[float] = OMIT,
@@ -595,6 +604,9 @@ class AsyncTextToVoiceClient:
 
         guidance_scale : typing.Optional[float]
             Controls how closely the AI follows the prompt. Lower numbers give the AI more freedom to be creative, while higher numbers force it to stick more to the prompt. High numbers can cause voice to sound artificial or robotic. We recommend to use longer, more detailed prompts at lower Guidance Scale.
+
+        stream_previews : typing.Optional[bool]
+            Determines whether the Text to Voice previews should be included in the response. If true, only the generated IDs will be returned which can then be streamed via the /v1/text-to-voice/:generated_voice_id/stream endpoint.
 
         quality : typing.Optional[float]
             Higher quality results in better voice output but less variety.
@@ -641,6 +653,7 @@ class AsyncTextToVoiceClient:
             loudness=loudness,
             seed=seed,
             guidance_scale=guidance_scale,
+            stream_previews=stream_previews,
             quality=quality,
             reference_audio_base_64=reference_audio_base_64,
             prompt_strength=prompt_strength,

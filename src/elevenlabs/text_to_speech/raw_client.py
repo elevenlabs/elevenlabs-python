@@ -147,7 +147,6 @@ class RawTextToSpeechClient:
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/text-to-speech/{jsonable_encoder(voice_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -309,7 +308,6 @@ class RawTextToSpeechClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/text-to-speech/{jsonable_encoder(voice_id)}/with-timestamps",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -469,7 +467,6 @@ class RawTextToSpeechClient:
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -632,7 +629,6 @@ class RawTextToSpeechClient:
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream/with-timestamps",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -814,7 +810,6 @@ class AsyncRawTextToSpeechClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/text-to-speech/{jsonable_encoder(voice_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -977,7 +972,6 @@ class AsyncRawTextToSpeechClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/text-to-speech/{jsonable_encoder(voice_id)}/with-timestamps",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -1137,7 +1131,6 @@ class AsyncRawTextToSpeechClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -1301,7 +1294,6 @@ class AsyncRawTextToSpeechClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream/with-timestamps",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,

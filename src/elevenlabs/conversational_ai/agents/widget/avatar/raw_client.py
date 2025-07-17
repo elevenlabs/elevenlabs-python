@@ -46,7 +46,6 @@ class RawAvatarClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/avatar",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={},
             files={
@@ -111,7 +110,6 @@ class AsyncRawAvatarClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/avatar",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={},
             files={

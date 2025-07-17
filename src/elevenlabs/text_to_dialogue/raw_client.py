@@ -73,7 +73,6 @@ class RawTextToDialogueClient:
         """
         with self._client_wrapper.httpx_client.stream(
             "v1/text-to-dialogue",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "output_format": output_format,
@@ -175,7 +174,6 @@ class RawTextToDialogueClient:
         """
         with self._client_wrapper.httpx_client.stream(
             "v1/text-to-dialogue/stream",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "output_format": output_format,
@@ -282,7 +280,6 @@ class AsyncRawTextToDialogueClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             "v1/text-to-dialogue",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "output_format": output_format,
@@ -385,7 +382,6 @@ class AsyncRawTextToDialogueClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             "v1/text-to-dialogue/stream",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "output_format": output_format,

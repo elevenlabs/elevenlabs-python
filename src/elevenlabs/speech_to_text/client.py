@@ -46,7 +46,9 @@ class SpeechToTextClient:
         file_format: typing.Optional[SpeechToTextConvertRequestFileFormat] = OMIT,
         cloud_storage_url: typing.Optional[str] = OMIT,
         webhook: typing.Optional[bool] = OMIT,
+        webhook_id: typing.Optional[str] = OMIT,
         temperature: typing.Optional[float] = OMIT,
+        seed: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SpeechToTextChunkResponseModel:
         """
@@ -93,8 +95,14 @@ class SpeechToTextClient:
         webhook : typing.Optional[bool]
             Whether to send the transcription result to configured speech-to-text webhooks.  If set the request will return early without the transcription, which will be delivered later via webhook.
 
+        webhook_id : typing.Optional[str]
+            Optional specific webhook ID to send the transcription result to. Only valid when webhook is set to true. If not provided, transcription will be sent to all configured speech-to-text webhooks.
+
         temperature : typing.Optional[float]
             Controls the randomness of the transcription output. Accepts values between 0.0 and 2.0, where higher values result in more diverse and less deterministic results. If omitted, we will use a temperature based on the model you selected which is usually 0.
+
+        seed : typing.Optional[int]
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be an integer between 0 and 2147483647.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -129,7 +137,9 @@ class SpeechToTextClient:
             file_format=file_format,
             cloud_storage_url=cloud_storage_url,
             webhook=webhook,
+            webhook_id=webhook_id,
             temperature=temperature,
+            seed=seed,
             request_options=request_options,
         )
         return _response.data
@@ -166,7 +176,9 @@ class AsyncSpeechToTextClient:
         file_format: typing.Optional[SpeechToTextConvertRequestFileFormat] = OMIT,
         cloud_storage_url: typing.Optional[str] = OMIT,
         webhook: typing.Optional[bool] = OMIT,
+        webhook_id: typing.Optional[str] = OMIT,
         temperature: typing.Optional[float] = OMIT,
+        seed: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SpeechToTextChunkResponseModel:
         """
@@ -213,8 +225,14 @@ class AsyncSpeechToTextClient:
         webhook : typing.Optional[bool]
             Whether to send the transcription result to configured speech-to-text webhooks.  If set the request will return early without the transcription, which will be delivered later via webhook.
 
+        webhook_id : typing.Optional[str]
+            Optional specific webhook ID to send the transcription result to. Only valid when webhook is set to true. If not provided, transcription will be sent to all configured speech-to-text webhooks.
+
         temperature : typing.Optional[float]
             Controls the randomness of the transcription output. Accepts values between 0.0 and 2.0, where higher values result in more diverse and less deterministic results. If omitted, we will use a temperature based on the model you selected which is usually 0.
+
+        seed : typing.Optional[int]
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be an integer between 0 and 2147483647.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -257,7 +275,9 @@ class AsyncSpeechToTextClient:
             file_format=file_format,
             cloud_storage_url=cloud_storage_url,
             webhook=webhook,
+            webhook_id=webhook_id,
             temperature=temperature,
+            seed=seed,
             request_options=request_options,
         )
         return _response.data

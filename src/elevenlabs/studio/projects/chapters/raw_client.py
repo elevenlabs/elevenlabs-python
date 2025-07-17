@@ -49,7 +49,6 @@ class RawChaptersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -111,7 +110,6 @@ class RawChaptersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -173,7 +171,6 @@ class RawChaptersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -239,7 +236,6 @@ class RawChaptersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -303,7 +299,6 @@ class RawChaptersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -357,7 +352,6 @@ class RawChaptersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/convert",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             request_options=request_options,
         )
@@ -413,7 +407,6 @@ class AsyncRawChaptersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -475,7 +468,6 @@ class AsyncRawChaptersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -537,7 +529,6 @@ class AsyncRawChaptersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -603,7 +594,6 @@ class AsyncRawChaptersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -667,7 +657,6 @@ class AsyncRawChaptersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -721,7 +710,6 @@ class AsyncRawChaptersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/convert",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             request_options=request_options,
         )

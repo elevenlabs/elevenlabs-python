@@ -14,6 +14,7 @@ from .conversation_history_error_common_model import ConversationHistoryErrorCom
 from .conversation_history_feedback_common_model import ConversationHistoryFeedbackCommonModel
 from .conversation_history_metadata_common_model_phone_call import ConversationHistoryMetadataCommonModelPhoneCall
 from .conversation_history_rag_usage_common_model import ConversationHistoryRagUsageCommonModel
+from .conversation_initiation_source import ConversationInitiationSource
 from .features_usage_common_model import FeaturesUsageCommonModel
 
 
@@ -35,6 +36,10 @@ class ConversationHistoryMetadataCommonModel(UncheckedBaseModel):
     text_only: typing.Optional[bool] = None
     features_usage: typing.Optional[FeaturesUsageCommonModel] = None
     eleven_assistant: typing.Optional[ConversationHistoryElevenAssistantCommonModel] = None
+    initiator_id: typing.Optional[str] = None
+    conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None
+    conversation_initiation_source_version: typing.Optional[str] = None
+    timezone: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

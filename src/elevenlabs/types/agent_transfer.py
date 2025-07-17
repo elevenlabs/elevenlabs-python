@@ -10,6 +10,9 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 class AgentTransfer(UncheckedBaseModel):
     agent_id: str
     condition: str
+    delay_ms: typing.Optional[int] = None
+    transfer_message: typing.Optional[str] = None
+    enable_transferred_agent_first_message: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -58,7 +58,6 @@ class RawSpeakerClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/speaker/{jsonable_encoder(speaker_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "voice_id": voice_id,
@@ -120,7 +119,6 @@ class RawSpeakerClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/speaker/{jsonable_encoder(speaker_id)}/similar-voices",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -191,7 +189,6 @@ class AsyncRawSpeakerClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/speaker/{jsonable_encoder(speaker_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "voice_id": voice_id,
@@ -253,7 +250,6 @@ class AsyncRawSpeakerClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/speaker/{jsonable_encoder(speaker_id)}/similar-voices",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )

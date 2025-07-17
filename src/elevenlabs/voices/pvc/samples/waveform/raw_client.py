@@ -42,7 +42,6 @@ class RawWaveformClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/pvc/{jsonable_encoder(voice_id)}/samples/{jsonable_encoder(sample_id)}/waveform",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -101,7 +100,6 @@ class AsyncRawWaveformClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/pvc/{jsonable_encoder(voice_id)}/samples/{jsonable_encoder(sample_id)}/waveform",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )

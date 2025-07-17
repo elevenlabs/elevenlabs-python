@@ -38,7 +38,6 @@ class RawGroupsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/workspace/groups/search",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "name": name,
@@ -97,7 +96,6 @@ class AsyncRawGroupsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/workspace/groups/search",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "name": name,

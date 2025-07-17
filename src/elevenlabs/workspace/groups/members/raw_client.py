@@ -46,7 +46,6 @@ class RawMembersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/workspace/groups/{jsonable_encoder(group_id)}/members/remove",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,
@@ -107,7 +106,6 @@ class RawMembersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/workspace/groups/{jsonable_encoder(group_id)}/members",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,
@@ -173,7 +171,6 @@ class AsyncRawMembersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/workspace/groups/{jsonable_encoder(group_id)}/members/remove",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,
@@ -234,7 +231,6 @@ class AsyncRawMembersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/workspace/groups/{jsonable_encoder(group_id)}/members",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,

@@ -41,7 +41,6 @@ class RawToolsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/tools",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -91,7 +90,6 @@ class RawToolsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/tools",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=ToolRequestModel, direction="write"
@@ -149,7 +147,6 @@ class RawToolsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/tools/{jsonable_encoder(tool_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -200,7 +197,6 @@ class RawToolsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/tools/{jsonable_encoder(tool_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -255,7 +251,6 @@ class RawToolsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/tools/{jsonable_encoder(tool_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=ToolRequestModel, direction="write"
@@ -324,7 +319,6 @@ class RawToolsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/tools/{jsonable_encoder(tool_id)}/dependent-agents",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -381,7 +375,6 @@ class AsyncRawToolsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/tools",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -431,7 +424,6 @@ class AsyncRawToolsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/tools",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=ToolRequestModel, direction="write"
@@ -489,7 +481,6 @@ class AsyncRawToolsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/tools/{jsonable_encoder(tool_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -540,7 +531,6 @@ class AsyncRawToolsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/tools/{jsonable_encoder(tool_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -595,7 +585,6 @@ class AsyncRawToolsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/tools/{jsonable_encoder(tool_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=ToolRequestModel, direction="write"
@@ -664,7 +653,6 @@ class AsyncRawToolsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/tools/{jsonable_encoder(tool_id)}/dependent-agents",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,

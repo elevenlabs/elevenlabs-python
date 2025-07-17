@@ -53,7 +53,6 @@ class RawResourcesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/workspace/resources/{jsonable_encoder(resource_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "resource_type": resource_type,
@@ -130,7 +129,6 @@ class RawResourcesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/workspace/resources/{jsonable_encoder(resource_id)}/share",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "role": role,
@@ -213,7 +211,6 @@ class RawResourcesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/workspace/resources/{jsonable_encoder(resource_id)}/unshare",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "resource_type": resource_type,
@@ -288,7 +285,6 @@ class AsyncRawResourcesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/workspace/resources/{jsonable_encoder(resource_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "resource_type": resource_type,
@@ -365,7 +361,6 @@ class AsyncRawResourcesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/workspace/resources/{jsonable_encoder(resource_id)}/share",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "role": role,
@@ -448,7 +443,6 @@ class AsyncRawResourcesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/workspace/resources/{jsonable_encoder(resource_id)}/unshare",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "resource_type": resource_type,

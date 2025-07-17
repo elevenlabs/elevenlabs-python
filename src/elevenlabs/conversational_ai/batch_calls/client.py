@@ -190,7 +190,7 @@ class BatchCallsClient:
 
     def retry(self, batch_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> BatchCallResponse:
         """
-        Retry a batch call by setting completed recipients back to pending status.
+        Retry a batch call, calling failed and no-response recipients again.
 
         Parameters
         ----------
@@ -431,7 +431,7 @@ class AsyncBatchCallsClient:
         self, batch_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> BatchCallResponse:
         """
-        Retry a batch call by setting completed recipients back to pending status.
+        Retry a batch call, calling failed and no-response recipients again.
 
         Parameters
         ----------

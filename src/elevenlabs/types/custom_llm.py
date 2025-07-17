@@ -30,6 +30,11 @@ class CustomLlm(UncheckedBaseModel):
     Headers that should be included in the request
     """
 
+    api_version: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The API version to use for the request
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

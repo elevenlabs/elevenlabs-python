@@ -49,7 +49,6 @@ class RawDocumentClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/rag-index",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "model": model,
@@ -118,7 +117,6 @@ class AsyncRawDocumentClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/rag-index",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "model": model,

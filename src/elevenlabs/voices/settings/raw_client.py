@@ -39,7 +39,6 @@ class RawSettingsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/voices/settings/default",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -79,7 +78,6 @@ class RawSettingsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}/settings",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -132,7 +130,6 @@ class RawSettingsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}/settings/edit",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json=convert_and_respect_annotation_metadata(object_=request, annotation=VoiceSettings, direction="write"),
             headers={
@@ -190,7 +187,6 @@ class AsyncRawSettingsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/voices/settings/default",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -230,7 +226,6 @@ class AsyncRawSettingsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}/settings",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -283,7 +278,6 @@ class AsyncRawSettingsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}/settings/edit",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json=convert_and_respect_annotation_metadata(object_=request, annotation=VoiceSettings, direction="write"),
             headers={

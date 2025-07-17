@@ -50,7 +50,6 @@ class RawAudioClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/pvc/{jsonable_encoder(voice_id)}/samples/{jsonable_encoder(sample_id)}/audio",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "remove_background_noise": remove_background_noise,
@@ -120,7 +119,6 @@ class AsyncRawAudioClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/pvc/{jsonable_encoder(voice_id)}/samples/{jsonable_encoder(sample_id)}/audio",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "remove_background_noise": remove_background_noise,

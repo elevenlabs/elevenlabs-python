@@ -19,7 +19,7 @@ class ClientToolConfigInput(UncheckedBaseModel):
     description: str
     response_timeout_secs: typing.Optional[int] = pydantic.Field(default=None)
     """
-    The maximum time in seconds to wait for the tool call to complete. Must be between 1 and 30 seconds (inclusive).
+    The maximum time in seconds to wait for the tool call to complete. Must be between 1 and 120 seconds (inclusive).
     """
 
     parameters: typing.Optional["ObjectJsonSchemaPropertyInput"] = pydantic.Field(default=None)

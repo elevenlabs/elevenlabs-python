@@ -14,6 +14,11 @@ from .conversation_initiation_client_data_request_output_dynamic_variables_value
 class ConversationInitiationClientDataRequestOutput(UncheckedBaseModel):
     conversation_config_override: typing.Optional[ConversationConfigClientOverrideOutput] = None
     custom_llm_extra_body: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
+    user_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    ID of the end user participating in this conversation (for agent owner's user identification)
+    """
+
     dynamic_variables: typing.Optional[
         typing.Dict[str, typing.Optional[ConversationInitiationClientDataRequestOutputDynamicVariablesValue]]
     ] = None

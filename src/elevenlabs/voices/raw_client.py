@@ -50,7 +50,6 @@ class RawVoicesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/voices",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "show_legacy": show_legacy,
@@ -143,7 +142,6 @@ class RawVoicesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v2/voices",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "next_page_token": next_page_token,
@@ -213,7 +211,6 @@ class RawVoicesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "with_settings": with_settings,
@@ -267,7 +264,6 @@ class RawVoicesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -341,7 +337,6 @@ class RawVoicesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}/edit",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -414,7 +409,6 @@ class RawVoicesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/add/{jsonable_encoder(public_user_id)}/{jsonable_encoder(voice_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "new_name": new_name,
@@ -542,7 +536,6 @@ class RawVoicesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/shared-voices",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "page_size": page_size,
@@ -624,7 +617,6 @@ class RawVoicesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/similar-voices",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "similarity_threshold": similarity_threshold,
@@ -689,7 +681,6 @@ class AsyncRawVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/voices",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "show_legacy": show_legacy,
@@ -782,7 +773,6 @@ class AsyncRawVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v2/voices",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "next_page_token": next_page_token,
@@ -852,7 +842,6 @@ class AsyncRawVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "with_settings": with_settings,
@@ -906,7 +895,6 @@ class AsyncRawVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -980,7 +968,6 @@ class AsyncRawVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/{jsonable_encoder(voice_id)}/edit",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -1053,7 +1040,6 @@ class AsyncRawVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/add/{jsonable_encoder(public_user_id)}/{jsonable_encoder(voice_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "new_name": new_name,
@@ -1181,7 +1167,6 @@ class AsyncRawVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/shared-voices",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "page_size": page_size,
@@ -1263,7 +1248,6 @@ class AsyncRawVoicesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/similar-voices",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "similarity_threshold": similarity_threshold,
