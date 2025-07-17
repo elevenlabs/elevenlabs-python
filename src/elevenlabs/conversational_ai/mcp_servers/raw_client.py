@@ -40,7 +40,6 @@ class RawMcpServersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/mcp-servers",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -91,7 +90,6 @@ class RawMcpServersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/mcp-servers",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "config": convert_and_respect_annotation_metadata(
@@ -151,7 +149,6 @@ class RawMcpServersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/mcp-servers/{jsonable_encoder(mcp_server_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -204,7 +201,6 @@ class AsyncRawMcpServersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/mcp-servers",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -255,7 +251,6 @@ class AsyncRawMcpServersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/mcp-servers",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "config": convert_and_respect_annotation_metadata(
@@ -315,7 +310,6 @@ class AsyncRawMcpServersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/mcp-servers/{jsonable_encoder(mcp_server_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )

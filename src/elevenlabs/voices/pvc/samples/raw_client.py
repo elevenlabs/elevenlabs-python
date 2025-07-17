@@ -56,7 +56,6 @@ class RawSamplesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/pvc/{jsonable_encoder(voice_id)}/samples",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "remove_background_noise": remove_background_noise,
@@ -138,7 +137,6 @@ class RawSamplesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/pvc/{jsonable_encoder(voice_id)}/samples/{jsonable_encoder(sample_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "remove_background_noise": remove_background_noise,
@@ -202,7 +200,6 @@ class RawSamplesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/pvc/{jsonable_encoder(voice_id)}/samples/{jsonable_encoder(sample_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -269,7 +266,6 @@ class AsyncRawSamplesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/pvc/{jsonable_encoder(voice_id)}/samples",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "remove_background_noise": remove_background_noise,
@@ -351,7 +347,6 @@ class AsyncRawSamplesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/pvc/{jsonable_encoder(voice_id)}/samples/{jsonable_encoder(sample_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "remove_background_noise": remove_background_noise,
@@ -415,7 +410,6 @@ class AsyncRawSamplesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/pvc/{jsonable_encoder(voice_id)}/samples/{jsonable_encoder(sample_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )

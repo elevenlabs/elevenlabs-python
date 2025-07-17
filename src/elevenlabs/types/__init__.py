@@ -28,6 +28,7 @@ from .agent_platform_settings_request_model import AgentPlatformSettingsRequestM
 from .agent_platform_settings_response_model import AgentPlatformSettingsResponseModel
 from .agent_simulated_chat_test_response_model import AgentSimulatedChatTestResponseModel
 from .agent_summary_response_model import AgentSummaryResponseModel
+from .agent_testing_settings import AgentTestingSettings
 from .agent_transfer import AgentTransfer
 from .agent_workspace_overrides_input import AgentWorkspaceOverridesInput
 from .agent_workspace_overrides_output import AgentWorkspaceOverridesOutput
@@ -231,6 +232,7 @@ from .conversation_initiation_client_data_webhook import ConversationInitiationC
 from .conversation_initiation_client_data_webhook_request_headers_value import (
     ConversationInitiationClientDataWebhookRequestHeadersValue,
 )
+from .conversation_initiation_source import ConversationInitiationSource
 from .conversation_signed_url_response_model import ConversationSignedUrlResponseModel
 from .conversation_simulation_specification import ConversationSimulationSpecification
 from .conversation_simulation_specification_dynamic_variables_value import (
@@ -249,7 +251,7 @@ from .create_audio_native_project_request import CreateAudioNativeProjectRequest
 from .create_phone_number_response_model import CreatePhoneNumberResponseModel
 from .create_previously_generated_voice_request import CreatePreviouslyGeneratedVoiceRequest
 from .create_pronunciation_dictionary_response_model import CreatePronunciationDictionaryResponseModel
-from .create_sip_trunk_phone_number_request_v_2 import CreateSipTrunkPhoneNumberRequestV2
+from .create_sip_trunk_phone_number_request import CreateSipTrunkPhoneNumberRequest
 from .create_transcript_request import CreateTranscriptRequest
 from .create_twilio_phone_number_request import CreateTwilioPhoneNumberRequest
 from .custom_llm import CustomLlm
@@ -285,6 +287,7 @@ from .docx_export_options import DocxExportOptions
 from .dubbed_segment import DubbedSegment
 from .dubbing_media_metadata import DubbingMediaMetadata
 from .dubbing_media_reference import DubbingMediaReference
+from .dubbing_metadata_page_response_model import DubbingMetadataPageResponseModel
 from .dubbing_metadata_response import DubbingMetadataResponse
 from .dubbing_render_response_model import DubbingRenderResponseModel
 from .dubbing_resource import DubbingResource
@@ -810,6 +813,7 @@ __all__ = [
     "AgentPlatformSettingsResponseModel",
     "AgentSimulatedChatTestResponseModel",
     "AgentSummaryResponseModel",
+    "AgentTestingSettings",
     "AgentTransfer",
     "AgentWorkspaceOverridesInput",
     "AgentWorkspaceOverridesOutput",
@@ -955,6 +959,7 @@ __all__ = [
     "ConversationInitiationClientDataRequestOutputDynamicVariablesValue",
     "ConversationInitiationClientDataWebhook",
     "ConversationInitiationClientDataWebhookRequestHeadersValue",
+    "ConversationInitiationSource",
     "ConversationSignedUrlResponseModel",
     "ConversationSimulationSpecification",
     "ConversationSimulationSpecificationDynamicVariablesValue",
@@ -971,7 +976,7 @@ __all__ = [
     "CreatePhoneNumberResponseModel",
     "CreatePreviouslyGeneratedVoiceRequest",
     "CreatePronunciationDictionaryResponseModel",
-    "CreateSipTrunkPhoneNumberRequestV2",
+    "CreateSipTrunkPhoneNumberRequest",
     "CreateTranscriptRequest",
     "CreateTwilioPhoneNumberRequest",
     "CustomLlm",
@@ -1007,6 +1012,7 @@ __all__ = [
     "DubbedSegment",
     "DubbingMediaMetadata",
     "DubbingMediaReference",
+    "DubbingMetadataPageResponseModel",
     "DubbingMetadataResponse",
     "DubbingRenderResponseModel",
     "DubbingResource",

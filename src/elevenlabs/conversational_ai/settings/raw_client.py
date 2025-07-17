@@ -41,7 +41,6 @@ class RawSettingsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/settings",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -104,7 +103,6 @@ class RawSettingsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/settings",
-            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "conversation_initiation_client_data_webhook": convert_and_respect_annotation_metadata(
@@ -173,7 +171,6 @@ class AsyncRawSettingsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/settings",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -236,7 +233,6 @@ class AsyncRawSettingsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/settings",
-            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "conversation_initiation_client_data_webhook": convert_and_respect_annotation_metadata(

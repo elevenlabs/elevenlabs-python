@@ -43,7 +43,6 @@ class RawAudioClient:
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/voices/{jsonable_encoder(voice_id)}/samples/{jsonable_encoder(sample_id)}/audio",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         ) as _response:
@@ -106,7 +105,6 @@ class AsyncRawAudioClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/voices/{jsonable_encoder(voice_id)}/samples/{jsonable_encoder(sample_id)}/audio",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         ) as _response:

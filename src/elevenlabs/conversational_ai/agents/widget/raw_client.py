@@ -46,7 +46,6 @@ class RawWidgetClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/widget",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "conversation_signature": conversation_signature,
@@ -112,7 +111,6 @@ class AsyncRawWidgetClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/widget",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "conversation_signature": conversation_signature,

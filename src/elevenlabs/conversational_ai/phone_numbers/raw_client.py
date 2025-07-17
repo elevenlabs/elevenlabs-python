@@ -44,7 +44,6 @@ class RawPhoneNumbersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/phone-numbers",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -94,7 +93,6 @@ class RawPhoneNumbersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/phone-numbers",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=PhoneNumbersCreateRequestBody, direction="write"
@@ -152,7 +150,6 @@ class RawPhoneNumbersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -203,7 +200,6 @@ class RawPhoneNumbersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -262,7 +258,6 @@ class RawPhoneNumbersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "agent_id": agent_id,
@@ -322,7 +317,6 @@ class AsyncRawPhoneNumbersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/phone-numbers",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -372,7 +366,6 @@ class AsyncRawPhoneNumbersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/phone-numbers",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=PhoneNumbersCreateRequestBody, direction="write"
@@ -430,7 +423,6 @@ class AsyncRawPhoneNumbersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -481,7 +473,6 @@ class AsyncRawPhoneNumbersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -540,7 +531,6 @@ class AsyncRawPhoneNumbersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "agent_id": agent_id,

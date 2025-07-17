@@ -67,7 +67,6 @@ class RawContentClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/content",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "from_url": from_url,
@@ -157,7 +156,6 @@ class AsyncRawContentClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}/content",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "from_url": from_url,

@@ -40,7 +40,6 @@ class RawCaptchaClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/pvc/{jsonable_encoder(voice_id)}/captcha",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -87,7 +86,6 @@ class RawCaptchaClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/pvc/{jsonable_encoder(voice_id)}/captcha",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={},
             files={
@@ -148,7 +146,6 @@ class AsyncRawCaptchaClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/pvc/{jsonable_encoder(voice_id)}/captcha",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -195,7 +192,6 @@ class AsyncRawCaptchaClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/pvc/{jsonable_encoder(voice_id)}/captcha",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={},
             files={

@@ -5,23 +5,17 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .inbound_sip_trunk_config_request_model import InboundSipTrunkConfigRequestModel
-from .outbound_sip_trunk_config_request_model import OutboundSipTrunkConfigRequestModel
 
 
-class CreateSipTrunkPhoneNumberRequestV2(UncheckedBaseModel):
-    phone_number: str = pydantic.Field()
+class AgentTestingSettings(UncheckedBaseModel):
     """
-    Phone number
-    """
-
-    label: str = pydantic.Field()
-    """
-    Label for the phone number
+    Settings for agent testing configuration.
     """
 
-    inbound_trunk_config: typing.Optional[InboundSipTrunkConfigRequestModel] = None
-    outbound_trunk_config: typing.Optional[OutboundSipTrunkConfigRequestModel] = None
+    test_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    List of test IDs that should be run for this agent
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

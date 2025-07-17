@@ -40,7 +40,6 @@ class RawSecretsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/secrets",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -92,7 +91,6 @@ class RawSecretsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/secrets",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -148,7 +146,6 @@ class RawSecretsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/secrets/{jsonable_encoder(secret_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -194,7 +191,6 @@ class AsyncRawSecretsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/secrets",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -246,7 +242,6 @@ class AsyncRawSecretsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/secrets",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -304,7 +299,6 @@ class AsyncRawSecretsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/secrets/{jsonable_encoder(secret_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )

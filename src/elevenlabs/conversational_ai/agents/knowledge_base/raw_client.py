@@ -38,7 +38,6 @@ class RawKnowledgeBaseClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agent/{jsonable_encoder(agent_id)}/knowledge-base/size",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -93,7 +92,6 @@ class AsyncRawKnowledgeBaseClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agent/{jsonable_encoder(agent_id)}/knowledge-base/size",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )

@@ -59,6 +59,21 @@ class BodyCreatePodcastV1ProjectsPodcastCreatePost(UncheckedBaseModel):
     An optional language of the Studio project. Two-letter language code (ISO 639-1).
     """
 
+    intro: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The intro text that will always be added to the beginning of the podcast.
+    """
+
+    outro: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The outro text that will always be added to the end of the podcast.
+    """
+
+    instructions_prompt: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Additional instructions prompt for the podcast generation used to adjust the podcast's style and tone.
+    """
+
     highlights: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     A brief summary or highlights of the Studio project's content, providing key points or themes. This should be between 10 and 70 characters.
