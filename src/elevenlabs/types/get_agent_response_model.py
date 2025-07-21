@@ -43,6 +43,7 @@ class GetAgentResponseModel(UncheckedBaseModel):
     The phone numbers of the agent
     """
 
+    workflow: typing.Optional[typing.Optional[typing.Any]] = None
     access_info: typing.Optional[ResourceAccessInfo] = pydantic.Field(default=None)
     """
     The access information of the agent for the user

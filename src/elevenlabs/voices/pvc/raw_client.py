@@ -58,7 +58,6 @@ class RawPvcClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/voices/pvc",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -138,7 +137,6 @@ class RawPvcClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/pvc/{jsonable_encoder(voice_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -206,7 +204,6 @@ class RawPvcClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/pvc/{jsonable_encoder(voice_id)}/train",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "model_id": model_id,
@@ -284,7 +281,6 @@ class AsyncRawPvcClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/voices/pvc",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -364,7 +360,6 @@ class AsyncRawPvcClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/pvc/{jsonable_encoder(voice_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "name": name,
@@ -432,7 +427,6 @@ class AsyncRawPvcClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/pvc/{jsonable_encoder(voice_id)}/train",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "model_id": model_id,

@@ -34,6 +34,9 @@ class BaseElevenLabs:
 
     Parameters
     ----------
+    base_url : typing.Optional[str]
+        The base url to use for requests from the client.
+
     environment : ElevenLabsEnvironment
         The environment to use for requests from the client. from .environment import ElevenLabsEnvironment
 
@@ -65,6 +68,7 @@ class BaseElevenLabs:
     def __init__(
         self,
         *,
+        base_url: typing.Optional[str] = None,
         environment: ElevenLabsEnvironment = ElevenLabsEnvironment.PRODUCTION,
         api_key: typing.Optional[str] = None,
         timeout: typing.Optional[float] = None,
@@ -75,7 +79,7 @@ class BaseElevenLabs:
             timeout if timeout is not None else 240 if httpx_client is None else httpx_client.timeout.read
         )
         self._client_wrapper = SyncClientWrapper(
-            environment=environment,
+            base_url=_get_base_url(base_url=base_url, environment=environment),
             api_key=api_key,
             httpx_client=httpx_client
             if httpx_client is not None
@@ -113,6 +117,9 @@ class AsyncBaseElevenLabs:
 
     Parameters
     ----------
+    base_url : typing.Optional[str]
+        The base url to use for requests from the client.
+
     environment : ElevenLabsEnvironment
         The environment to use for requests from the client. from .environment import ElevenLabsEnvironment
 
@@ -144,6 +151,7 @@ class AsyncBaseElevenLabs:
     def __init__(
         self,
         *,
+        base_url: typing.Optional[str] = None,
         environment: ElevenLabsEnvironment = ElevenLabsEnvironment.PRODUCTION,
         api_key: typing.Optional[str] = None,
         timeout: typing.Optional[float] = None,
@@ -154,7 +162,7 @@ class AsyncBaseElevenLabs:
             timeout if timeout is not None else 240 if httpx_client is None else httpx_client.timeout.read
         )
         self._client_wrapper = AsyncClientWrapper(
-            environment=environment,
+            base_url=_get_base_url(base_url=base_url, environment=environment),
             api_key=api_key,
             httpx_client=httpx_client
             if httpx_client is not None
@@ -184,3 +192,12 @@ class AsyncBaseElevenLabs:
         self.forced_alignment = AsyncForcedAlignmentClient(client_wrapper=self._client_wrapper)
         self.conversational_ai = AsyncConversationalAiClient(client_wrapper=self._client_wrapper)
         self.workspace = AsyncWorkspaceClient(client_wrapper=self._client_wrapper)
+
+
+def _get_base_url(*, base_url: typing.Optional[str] = None, environment: ElevenLabsEnvironment) -> str:
+    if base_url is not None:
+        return base_url
+    elif environment is not None:
+        return environment.value
+    else:
+        raise Exception("Please pass in either base_url or environment to construct the client")

@@ -61,7 +61,6 @@ class RawIvcClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/voices/add",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,
@@ -147,7 +146,6 @@ class AsyncRawIvcClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/voices/add",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "name": name,

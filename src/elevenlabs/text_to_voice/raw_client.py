@@ -76,7 +76,6 @@ class RawTextToVoiceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/text-to-voice/create-previews",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "output_format": output_format,
@@ -162,7 +161,6 @@ class RawTextToVoiceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/text-to-voice/create-voice-from-preview",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "voice_name": voice_name,
@@ -243,7 +241,6 @@ class RawTextToVoiceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/text-to-voice",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "voice_name": voice_name,
@@ -295,6 +292,7 @@ class RawTextToVoiceClient:
         loudness: typing.Optional[float] = OMIT,
         seed: typing.Optional[int] = OMIT,
         guidance_scale: typing.Optional[float] = OMIT,
+        stream_previews: typing.Optional[bool] = OMIT,
         quality: typing.Optional[float] = OMIT,
         reference_audio_base_64: typing.Optional[str] = OMIT,
         prompt_strength: typing.Optional[float] = OMIT,
@@ -329,6 +327,9 @@ class RawTextToVoiceClient:
         guidance_scale : typing.Optional[float]
             Controls how closely the AI follows the prompt. Lower numbers give the AI more freedom to be creative, while higher numbers force it to stick more to the prompt. High numbers can cause voice to sound artificial or robotic. We recommend to use longer, more detailed prompts at lower Guidance Scale.
 
+        stream_previews : typing.Optional[bool]
+            Determines whether the Text to Voice previews should be included in the response. If true, only the generated IDs will be returned which can then be streamed via the /v1/text-to-voice/:generated_voice_id/stream endpoint.
+
         quality : typing.Optional[float]
             Higher quality results in better voice output but less variety.
 
@@ -348,7 +349,6 @@ class RawTextToVoiceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/text-to-voice/design",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "output_format": output_format,
@@ -361,6 +361,7 @@ class RawTextToVoiceClient:
                 "loudness": loudness,
                 "seed": seed,
                 "guidance_scale": guidance_scale,
+                "stream_previews": stream_previews,
                 "quality": quality,
                 "reference_audio_base64": reference_audio_base_64,
                 "prompt_strength": prompt_strength,
@@ -454,7 +455,6 @@ class AsyncRawTextToVoiceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/text-to-voice/create-previews",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "output_format": output_format,
@@ -540,7 +540,6 @@ class AsyncRawTextToVoiceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/text-to-voice/create-voice-from-preview",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "voice_name": voice_name,
@@ -621,7 +620,6 @@ class AsyncRawTextToVoiceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/text-to-voice",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "voice_name": voice_name,
@@ -673,6 +671,7 @@ class AsyncRawTextToVoiceClient:
         loudness: typing.Optional[float] = OMIT,
         seed: typing.Optional[int] = OMIT,
         guidance_scale: typing.Optional[float] = OMIT,
+        stream_previews: typing.Optional[bool] = OMIT,
         quality: typing.Optional[float] = OMIT,
         reference_audio_base_64: typing.Optional[str] = OMIT,
         prompt_strength: typing.Optional[float] = OMIT,
@@ -707,6 +706,9 @@ class AsyncRawTextToVoiceClient:
         guidance_scale : typing.Optional[float]
             Controls how closely the AI follows the prompt. Lower numbers give the AI more freedom to be creative, while higher numbers force it to stick more to the prompt. High numbers can cause voice to sound artificial or robotic. We recommend to use longer, more detailed prompts at lower Guidance Scale.
 
+        stream_previews : typing.Optional[bool]
+            Determines whether the Text to Voice previews should be included in the response. If true, only the generated IDs will be returned which can then be streamed via the /v1/text-to-voice/:generated_voice_id/stream endpoint.
+
         quality : typing.Optional[float]
             Higher quality results in better voice output but less variety.
 
@@ -726,7 +728,6 @@ class AsyncRawTextToVoiceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/text-to-voice/design",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "output_format": output_format,
@@ -739,6 +740,7 @@ class AsyncRawTextToVoiceClient:
                 "loudness": loudness,
                 "seed": seed,
                 "guidance_scale": guidance_scale,
+                "stream_previews": stream_previews,
                 "quality": quality,
                 "reference_audio_base64": reference_audio_base_64,
                 "prompt_strength": prompt_strength,

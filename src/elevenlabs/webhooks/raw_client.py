@@ -38,7 +38,6 @@ class RawWebhooksClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/workspace/webhooks",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "include_usages": include_usages,
@@ -97,7 +96,6 @@ class AsyncRawWebhooksClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/workspace/webhooks",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "include_usages": include_usages,

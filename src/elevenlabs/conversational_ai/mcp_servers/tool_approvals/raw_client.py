@@ -62,7 +62,6 @@ class RawToolApprovalsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/mcp-servers/{jsonable_encoder(mcp_server_id)}/tool-approvals",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "tool_name": tool_name,
@@ -126,7 +125,6 @@ class RawToolApprovalsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/mcp-servers/{jsonable_encoder(mcp_server_id)}/tool-approvals/{jsonable_encoder(tool_name)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -201,7 +199,6 @@ class AsyncRawToolApprovalsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/mcp-servers/{jsonable_encoder(mcp_server_id)}/tool-approvals",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "tool_name": tool_name,
@@ -265,7 +262,6 @@ class AsyncRawToolApprovalsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/mcp-servers/{jsonable_encoder(mcp_server_id)}/tool-approvals/{jsonable_encoder(tool_name)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )

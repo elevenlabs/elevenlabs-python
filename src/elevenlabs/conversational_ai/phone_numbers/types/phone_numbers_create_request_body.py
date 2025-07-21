@@ -20,6 +20,8 @@ class PhoneNumbersCreateRequestBody_Twilio(UncheckedBaseModel):
     provider: typing.Literal["twilio"] = "twilio"
     phone_number: str
     label: str
+    supports_inbound: typing.Optional[bool] = None
+    supports_outbound: typing.Optional[bool] = None
     sid: str
     token: str
 
@@ -41,6 +43,8 @@ class PhoneNumbersCreateRequestBody_SipTrunk(UncheckedBaseModel):
     provider: typing.Literal["sip_trunk"] = "sip_trunk"
     phone_number: str
     label: str
+    supports_inbound: typing.Optional[bool] = None
+    supports_outbound: typing.Optional[bool] = None
     inbound_trunk_config: typing.Optional[InboundSipTrunkConfigRequestModel] = None
     outbound_trunk_config: typing.Optional[OutboundSipTrunkConfigRequestModel] = None
 

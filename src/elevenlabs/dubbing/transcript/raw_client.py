@@ -53,7 +53,6 @@ class RawTranscriptClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}/transcript/{jsonable_encoder(language_code)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "format_type": format_type,
@@ -149,7 +148,6 @@ class AsyncRawTranscriptClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}/transcript/{jsonable_encoder(language_code)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "format_type": format_type,

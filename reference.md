@@ -2262,6 +2262,14 @@ client.text_to_voice.design(
 <dl>
 <dd>
 
+**stream_previews:** `typing.Optional[bool]` — Determines whether the Text to Voice previews should be included in the response. If true, only the generated IDs will be returned which can then be streamed via the /v1/text-to-voice/:generated_voice_id/stream endpoint.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **quality:** `typing.Optional[float]` — Higher quality results in better voice output but less variety.
     
 </dd>
@@ -3338,6 +3346,30 @@ long - produces podcasts longer than 7 minutes.
 <dl>
 <dd>
 
+**intro:** `typing.Optional[str]` — The intro text that will always be added to the beginning of the podcast.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**outro:** `typing.Optional[str]` — The outro text that will always be added to the end of the podcast.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**instructions_prompt:** `typing.Optional[str]` — Additional instructions prompt for the podcast generation used to adjust the podcast's style and tone.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **highlights:** `typing.Optional[typing.Sequence[str]]` — A brief summary or highlights of the Studio project's content, providing key points or themes. This should be between 10 and 70 characters.
     
 </dd>
@@ -3423,6 +3455,98 @@ long - produces podcasts longer than 7 minutes.
 </details>
 
 ## Dubbing
+<details><summary><code>client.dubbing.<a href="src/elevenlabs/dubbing/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the dubs you have access to.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.dubbing.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many dubs to return at maximum. Can not exceed 200, defaults to 100.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dubbing_status:** `typing.Optional[DubbingListRequestDubbingStatus]` — Status of the dubbing, either 'in_progress', 'completed' or 'failed'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filter_by_creator:** `typing.Optional[DubbingListRequestFilterByCreator]` — Filters who created the resources being listed, whether it was the user running the request or someone else that shared the resource with them.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.dubbing.<a href="src/elevenlabs/dubbing/client.py">create</a>(...)</code></summary>
 <dl>
 <dd>
@@ -4881,7 +5005,23 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
+**webhook_id:** `typing.Optional[str]` — Optional specific webhook ID to send the transcription result to. Only valid when webhook is set to true. If not provided, transcription will be sent to all configured speech-to-text webhooks.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **temperature:** `typing.Optional[float]` — Controls the randomness of the transcription output. Accepts values between 0.0 and 2.0, where higher values result in more diverse and less deterministic results. If omitted, we will use a temperature based on the model you selected which is usually 0.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**seed:** `typing.Optional[int]` — If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be an integer between 0 and 2147483647.
     
 </dd>
 </dl>
@@ -5865,6 +6005,14 @@ client.conversational_ai.agents.create(
 <dl>
 <dd>
 
+**workflow:** `typing.Optional[typing.Optional[typing.Any]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **name:** `typing.Optional[str]` — A name to make the agent easier to find
     
 </dd>
@@ -6100,6 +6248,14 @@ client.conversational_ai.agents.update(
 <dd>
 
 **platform_settings:** `typing.Optional[AgentPlatformSettingsRequestModel]` — Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**workflow:** `typing.Optional[typing.Optional[typing.Any]]` 
     
 </dd>
 </dl>
@@ -8197,7 +8353,7 @@ client.conversational_ai.batch_calls.cancel(
 <dl>
 <dd>
 
-Retry a batch call by setting completed recipients back to pending status.
+Retry a batch call, calling failed and no-response recipients again.
 </dd>
 </dl>
 </dd>
@@ -13287,6 +13443,7 @@ client.studio.projects.chapters.snapshots.get(
 </dl>
 </details>
 
+## TextToVoice Preview
 ## User Subscription
 <details><summary><code>client.user.subscription.<a href="src/elevenlabs/user/subscription/client.py">get</a>()</code></summary>
 <dl>

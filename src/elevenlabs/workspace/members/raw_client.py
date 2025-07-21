@@ -56,7 +56,6 @@ class RawMembersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/workspace/members",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,
@@ -116,7 +115,6 @@ class RawMembersClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/workspace/members",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             json={
                 "email": email,
@@ -190,7 +188,6 @@ class AsyncRawMembersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/workspace/members",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "email": email,
@@ -250,7 +247,6 @@ class AsyncRawMembersClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/workspace/members",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             json={
                 "email": email,

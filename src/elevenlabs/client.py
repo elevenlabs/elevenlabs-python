@@ -51,10 +51,8 @@ class ElevenLabs(BaseElevenLabs):
         httpx_client: typing.Optional[httpx.Client] = None
     ):
         super().__init__(
-            environment=ElevenLabsEnvironment(
-                base=f"https://{get_base_url_host(base_url)}",
-                wss=f"wss://{get_base_url_host(base_url)}",
-            ) if base_url else environment,
+            base_url=base_url,
+            environment=environment,
             api_key=api_key,
             timeout=timeout,
             httpx_client=httpx_client
@@ -97,12 +95,8 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
         httpx_client: typing.Optional[httpx.AsyncClient] = None
     ):
         super().__init__(
-            environment=base_url
-            and ElevenLabsEnvironment(
-                base=f"https://{get_base_url_host(base_url)}",
-                wss=f"wss://{get_base_url_host(base_url)}",
-            )
-            or environment,
+            base_url=base_url,
+            environment=environment,
             api_key=api_key,
             timeout=timeout,
             httpx_client=httpx_client

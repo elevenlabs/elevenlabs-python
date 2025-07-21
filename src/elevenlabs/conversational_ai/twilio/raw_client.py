@@ -54,7 +54,6 @@ class RawTwilioClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/twilio/outbound-call",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "agent_id": agent_id,
@@ -135,7 +134,6 @@ class AsyncRawTwilioClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/twilio/outbound-call",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "agent_id": agent_id,

@@ -63,7 +63,6 @@ class RawSegmentClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/segment/{jsonable_encoder(segment_id)}/{jsonable_encoder(language)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "start_time": start_time,
@@ -126,7 +125,6 @@ class RawSegmentClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/segment/{jsonable_encoder(segment_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -202,7 +200,6 @@ class AsyncRawSegmentClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/segment/{jsonable_encoder(segment_id)}/{jsonable_encoder(language)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "start_time": start_time,
@@ -265,7 +262,6 @@ class AsyncRawSegmentClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/segment/{jsonable_encoder(segment_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
