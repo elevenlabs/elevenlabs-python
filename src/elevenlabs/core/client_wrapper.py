@@ -3,35 +3,28 @@
 import typing
 
 import httpx
-from ..environment import ElevenLabsEnvironment
 from .http_client import AsyncHttpClient, HttpClient
 
 
 class BaseClientWrapper:
-    def __init__(
-        self,
-        *,
-        api_key: typing.Optional[str] = None,
-        environment: ElevenLabsEnvironment,
-        timeout: typing.Optional[float] = None,
-    ):
+    def __init__(self, *, api_key: typing.Optional[str] = None, base_url: str, timeout: typing.Optional[float] = None):
         self._api_key = api_key
-        self._environment = environment
+        self._base_url = base_url
         self._timeout = timeout
 
     def get_headers(self) -> typing.Dict[str, str]:
         headers: typing.Dict[str, str] = {
-            "User-Agent": "elevenlabs/v2.7.0",
+            "User-Agent": "elevenlabs/v2.8.0",
             "X-Fern-Language": "Python",
             "X-Fern-SDK-Name": "elevenlabs",
-            "X-Fern-SDK-Version": "v2.7.0",
+            "X-Fern-SDK-Version": "v2.8.0",
         }
         if self._api_key is not None:
             headers["xi-api-key"] = self._api_key
         return headers
 
-    def get_environment(self) -> ElevenLabsEnvironment:
-        return self._environment
+    def get_base_url(self) -> str:
+        return self._base_url
 
     def get_timeout(self) -> typing.Optional[float]:
         return self._timeout
@@ -42,13 +35,16 @@ class SyncClientWrapper(BaseClientWrapper):
         self,
         *,
         api_key: typing.Optional[str] = None,
-        environment: ElevenLabsEnvironment,
+        base_url: str,
         timeout: typing.Optional[float] = None,
         httpx_client: httpx.Client,
     ):
-        super().__init__(api_key=api_key, environment=environment, timeout=timeout)
+        super().__init__(api_key=api_key, base_url=base_url, timeout=timeout)
         self.httpx_client = HttpClient(
-            httpx_client=httpx_client, base_headers=self.get_headers, base_timeout=self.get_timeout
+            httpx_client=httpx_client,
+            base_headers=self.get_headers,
+            base_timeout=self.get_timeout,
+            base_url=self.get_base_url,
         )
 
 
@@ -57,11 +53,14 @@ class AsyncClientWrapper(BaseClientWrapper):
         self,
         *,
         api_key: typing.Optional[str] = None,
-        environment: ElevenLabsEnvironment,
+        base_url: str,
         timeout: typing.Optional[float] = None,
         httpx_client: httpx.AsyncClient,
     ):
-        super().__init__(api_key=api_key, environment=environment, timeout=timeout)
+        super().__init__(api_key=api_key, base_url=base_url, timeout=timeout)
         self.httpx_client = AsyncHttpClient(
-            httpx_client=httpx_client, base_headers=self.get_headers, base_timeout=self.get_timeout
+            httpx_client=httpx_client,
+            base_headers=self.get_headers,
+            base_timeout=self.get_timeout,
+            base_url=self.get_base_url,
         )

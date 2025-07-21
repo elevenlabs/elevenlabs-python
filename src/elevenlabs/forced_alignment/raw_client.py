@@ -53,7 +53,6 @@ class RawForcedAlignmentClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/forced-alignment",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "text": text,
@@ -129,7 +128,6 @@ class AsyncRawForcedAlignmentClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/forced-alignment",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "text": text,

@@ -7,11 +7,14 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.delete_dubbing_response_model import DeleteDubbingResponseModel
 from ..types.do_dubbing_response import DoDubbingResponse
+from ..types.dubbing_metadata_page_response_model import DubbingMetadataPageResponseModel
 from ..types.dubbing_metadata_response import DubbingMetadataResponse
 from .audio.client import AsyncAudioClient, AudioClient
 from .raw_client import AsyncRawDubbingClient, RawDubbingClient
 from .resource.client import AsyncResourceClient, ResourceClient
 from .transcript.client import AsyncTranscriptClient, TranscriptClient
+from .types.dubbing_list_request_dubbing_status import DubbingListRequestDubbingStatus
+from .types.dubbing_list_request_filter_by_creator import DubbingListRequestFilterByCreator
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -36,6 +39,58 @@ class DubbingClient:
         RawDubbingClient
         """
         return self._raw_client
+
+    def list(
+        self,
+        *,
+        cursor: typing.Optional[str] = None,
+        page_size: typing.Optional[int] = None,
+        dubbing_status: typing.Optional[DubbingListRequestDubbingStatus] = None,
+        filter_by_creator: typing.Optional[DubbingListRequestFilterByCreator] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> DubbingMetadataPageResponseModel:
+        """
+        List the dubs you have access to.
+
+        Parameters
+        ----------
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        page_size : typing.Optional[int]
+            How many dubs to return at maximum. Can not exceed 200, defaults to 100.
+
+        dubbing_status : typing.Optional[DubbingListRequestDubbingStatus]
+            Status of the dubbing, either 'in_progress', 'completed' or 'failed'.
+
+        filter_by_creator : typing.Optional[DubbingListRequestFilterByCreator]
+            Filters who created the resources being listed, whether it was the user running the request or someone else that shared the resource with them.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DubbingMetadataPageResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.dubbing.list()
+        """
+        _response = self._raw_client.list(
+            cursor=cursor,
+            page_size=page_size,
+            dubbing_status=dubbing_status,
+            filter_by_creator=filter_by_creator,
+            request_options=request_options,
+        )
+        return _response.data
 
     def create(
         self,
@@ -250,6 +305,66 @@ class AsyncDubbingClient:
         AsyncRawDubbingClient
         """
         return self._raw_client
+
+    async def list(
+        self,
+        *,
+        cursor: typing.Optional[str] = None,
+        page_size: typing.Optional[int] = None,
+        dubbing_status: typing.Optional[DubbingListRequestDubbingStatus] = None,
+        filter_by_creator: typing.Optional[DubbingListRequestFilterByCreator] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> DubbingMetadataPageResponseModel:
+        """
+        List the dubs you have access to.
+
+        Parameters
+        ----------
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        page_size : typing.Optional[int]
+            How many dubs to return at maximum. Can not exceed 200, defaults to 100.
+
+        dubbing_status : typing.Optional[DubbingListRequestDubbingStatus]
+            Status of the dubbing, either 'in_progress', 'completed' or 'failed'.
+
+        filter_by_creator : typing.Optional[DubbingListRequestFilterByCreator]
+            Filters who created the resources being listed, whether it was the user running the request or someone else that shared the resource with them.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DubbingMetadataPageResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.dubbing.list()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.list(
+            cursor=cursor,
+            page_size=page_size,
+            dubbing_status=dubbing_status,
+            filter_by_creator=filter_by_creator,
+            request_options=request_options,
+        )
+        return _response.data
 
     async def create(
         self,

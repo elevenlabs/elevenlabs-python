@@ -24,8 +24,6 @@ Llm = typing.Union[
         "claude-3-haiku",
         "grok-beta",
         "custom-llm",
-        "gemini-2.5-flash-preview-05-20",
-        "gemini-2.5-flash-preview-04-17",
         "gemini-2.0-flash-lite-001",
         "gemini-2.0-flash-001",
         "gemini-1.5-flash-002",

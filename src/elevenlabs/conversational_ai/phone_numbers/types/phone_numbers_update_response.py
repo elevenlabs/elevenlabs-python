@@ -21,6 +21,8 @@ class PhoneNumbersUpdateResponse_Twilio(UncheckedBaseModel):
     provider: typing.Literal["twilio"] = "twilio"
     phone_number: str
     label: str
+    supports_inbound: typing.Optional[bool] = None
+    supports_outbound: typing.Optional[bool] = None
     phone_number_id: str
     assigned_agent: typing.Optional[PhoneNumberAgentInfo] = None
 
@@ -38,6 +40,8 @@ class PhoneNumbersUpdateResponse_SipTrunk(UncheckedBaseModel):
     provider: typing.Literal["sip_trunk"] = "sip_trunk"
     phone_number: str
     label: str
+    supports_inbound: typing.Optional[bool] = None
+    supports_outbound: typing.Optional[bool] = None
     phone_number_id: str
     assigned_agent: typing.Optional[PhoneNumberAgentInfo] = None
     provider_config: typing.Optional[GetPhoneNumberOutboundSipTrunkConfigResponseModel] = None

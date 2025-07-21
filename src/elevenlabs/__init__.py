@@ -27,6 +27,7 @@ from .types import (
     AgentPlatformSettingsResponseModel,
     AgentSimulatedChatTestResponseModel,
     AgentSummaryResponseModel,
+    AgentTestingSettings,
     AgentTransfer,
     AgentWorkspaceOverridesInput,
     AgentWorkspaceOverridesOutput,
@@ -172,6 +173,7 @@ from .types import (
     ConversationInitiationClientDataRequestOutputDynamicVariablesValue,
     ConversationInitiationClientDataWebhook,
     ConversationInitiationClientDataWebhookRequestHeadersValue,
+    ConversationInitiationSource,
     ConversationSignedUrlResponseModel,
     ConversationSimulationSpecification,
     ConversationSimulationSpecificationDynamicVariablesValue,
@@ -188,7 +190,7 @@ from .types import (
     CreatePhoneNumberResponseModel,
     CreatePreviouslyGeneratedVoiceRequest,
     CreatePronunciationDictionaryResponseModel,
-    CreateSipTrunkPhoneNumberRequestV2,
+    CreateSipTrunkPhoneNumberRequest,
     CreateTranscriptRequest,
     CreateTwilioPhoneNumberRequest,
     CustomLlm,
@@ -224,6 +226,7 @@ from .types import (
     DubbedSegment,
     DubbingMediaMetadata,
     DubbingMediaReference,
+    DubbingMetadataPageResponseModel,
     DubbingMetadataResponse,
     DubbingRenderResponseModel,
     DubbingResource,
@@ -700,6 +703,7 @@ from . import (
 )
 from .audio_isolation import AudioIsolationConvertRequestFileFormat, AudioIsolationStreamRequestFileFormat
 from .client import AsyncElevenLabs, ElevenLabs
+from .dubbing import DubbingListRequestDubbingStatus, DubbingListRequestFilterByCreator
 from .environment import ElevenLabsEnvironment
 from .history import HistoryListRequestSource
 from .play import play, save, stream
@@ -776,6 +780,7 @@ __all__ = [
     "AgentPlatformSettingsResponseModel",
     "AgentSimulatedChatTestResponseModel",
     "AgentSummaryResponseModel",
+    "AgentTestingSettings",
     "AgentTransfer",
     "AgentWorkspaceOverridesInput",
     "AgentWorkspaceOverridesOutput",
@@ -942,6 +947,7 @@ __all__ = [
     "ConversationInitiationClientDataRequestOutputDynamicVariablesValue",
     "ConversationInitiationClientDataWebhook",
     "ConversationInitiationClientDataWebhookRequestHeadersValue",
+    "ConversationInitiationSource",
     "ConversationSignedUrlResponseModel",
     "ConversationSimulationSpecification",
     "ConversationSimulationSpecificationDynamicVariablesValue",
@@ -958,7 +964,7 @@ __all__ = [
     "CreatePhoneNumberResponseModel",
     "CreatePreviouslyGeneratedVoiceRequest",
     "CreatePronunciationDictionaryResponseModel",
-    "CreateSipTrunkPhoneNumberRequestV2",
+    "CreateSipTrunkPhoneNumberRequest",
     "CreateTranscriptRequest",
     "CreateTwilioPhoneNumberRequest",
     "CustomLlm",
@@ -992,8 +998,11 @@ __all__ = [
     "DocumentUsageModeEnum",
     "DocxExportOptions",
     "DubbedSegment",
+    "DubbingListRequestDubbingStatus",
+    "DubbingListRequestFilterByCreator",
     "DubbingMediaMetadata",
     "DubbingMediaReference",
+    "DubbingMetadataPageResponseModel",
     "DubbingMetadataResponse",
     "DubbingRenderResponseModel",
     "DubbingResource",

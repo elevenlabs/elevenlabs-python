@@ -61,7 +61,6 @@ class RawConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/knowledge-base",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "agent_id": agent_id,
@@ -124,7 +123,6 @@ class RawConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/rag-index",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -178,7 +176,6 @@ class RawConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/rag-index/{jsonable_encoder(rag_index_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -226,7 +223,6 @@ class RawConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/knowledge-base/rag-index",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -280,7 +276,6 @@ class RawConversationalAiClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/secrets/{jsonable_encoder(secret_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "name": name,
@@ -359,7 +354,6 @@ class AsyncRawConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/knowledge-base",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "agent_id": agent_id,
@@ -422,7 +416,6 @@ class AsyncRawConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/rag-index",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -476,7 +469,6 @@ class AsyncRawConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/rag-index/{jsonable_encoder(rag_index_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -524,7 +516,6 @@ class AsyncRawConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/knowledge-base/rag-index",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -578,7 +569,6 @@ class AsyncRawConversationalAiClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/secrets/{jsonable_encoder(secret_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "name": name,

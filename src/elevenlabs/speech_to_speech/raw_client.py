@@ -94,7 +94,6 @@ class RawSpeechToSpeechClient:
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/speech-to-speech/{jsonable_encoder(voice_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -212,7 +211,6 @@ class RawSpeechToSpeechClient:
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/speech-to-speech/{jsonable_encoder(voice_id)}/stream",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -335,7 +333,6 @@ class AsyncRawSpeechToSpeechClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/speech-to-speech/{jsonable_encoder(voice_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -454,7 +451,6 @@ class AsyncRawSpeechToSpeechClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/speech-to-speech/{jsonable_encoder(voice_id)}/stream",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "enable_logging": enable_logging,

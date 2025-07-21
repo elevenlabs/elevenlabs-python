@@ -54,7 +54,6 @@ class RawVerificationClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/voices/pvc/{jsonable_encoder(voice_id)}/verification",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "extra_text": extra_text,
@@ -129,7 +128,6 @@ class AsyncRawVerificationClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/voices/pvc/{jsonable_encoder(voice_id)}/verification",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             data={
                 "extra_text": extra_text,

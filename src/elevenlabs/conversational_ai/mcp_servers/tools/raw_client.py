@@ -39,7 +39,6 @@ class RawToolsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/mcp-servers/{jsonable_encoder(mcp_server_id)}/tools",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -95,7 +94,6 @@ class AsyncRawToolsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/mcp-servers/{jsonable_encoder(mcp_server_id)}/tools",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )

@@ -45,6 +45,9 @@ class StudioClient:
         quality_preset: typing.Optional[BodyCreatePodcastV1StudioPodcastsPostQualityPreset] = OMIT,
         duration_scale: typing.Optional[BodyCreatePodcastV1StudioPodcastsPostDurationScale] = OMIT,
         language: typing.Optional[str] = OMIT,
+        intro: typing.Optional[str] = OMIT,
+        outro: typing.Optional[str] = OMIT,
+        instructions_prompt: typing.Optional[str] = OMIT,
         highlights: typing.Optional[typing.Sequence[str]] = OMIT,
         callback_url: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -78,6 +81,15 @@ class StudioClient:
 
         language : typing.Optional[str]
             An optional language of the Studio project. Two-letter language code (ISO 639-1).
+
+        intro : typing.Optional[str]
+            The intro text that will always be added to the beginning of the podcast.
+
+        outro : typing.Optional[str]
+            The outro text that will always be added to the end of the podcast.
+
+        instructions_prompt : typing.Optional[str]
+            Additional instructions prompt for the podcast generation used to adjust the podcast's style and tone.
 
         highlights : typing.Optional[typing.Sequence[str]]
             A brief summary or highlights of the Studio project's content, providing key points or themes. This should be between 10 and 70 characters.
@@ -181,6 +193,9 @@ class StudioClient:
             quality_preset=quality_preset,
             duration_scale=duration_scale,
             language=language,
+            intro=intro,
+            outro=outro,
+            instructions_prompt=instructions_prompt,
             highlights=highlights,
             callback_url=callback_url,
             request_options=request_options,
@@ -213,6 +228,9 @@ class AsyncStudioClient:
         quality_preset: typing.Optional[BodyCreatePodcastV1StudioPodcastsPostQualityPreset] = OMIT,
         duration_scale: typing.Optional[BodyCreatePodcastV1StudioPodcastsPostDurationScale] = OMIT,
         language: typing.Optional[str] = OMIT,
+        intro: typing.Optional[str] = OMIT,
+        outro: typing.Optional[str] = OMIT,
+        instructions_prompt: typing.Optional[str] = OMIT,
         highlights: typing.Optional[typing.Sequence[str]] = OMIT,
         callback_url: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -246,6 +264,15 @@ class AsyncStudioClient:
 
         language : typing.Optional[str]
             An optional language of the Studio project. Two-letter language code (ISO 639-1).
+
+        intro : typing.Optional[str]
+            The intro text that will always be added to the beginning of the podcast.
+
+        outro : typing.Optional[str]
+            The outro text that will always be added to the end of the podcast.
+
+        instructions_prompt : typing.Optional[str]
+            Additional instructions prompt for the podcast generation used to adjust the podcast's style and tone.
 
         highlights : typing.Optional[typing.Sequence[str]]
             A brief summary or highlights of the Studio project's content, providing key points or themes. This should be between 10 and 70 characters.
@@ -357,6 +384,9 @@ class AsyncStudioClient:
             quality_preset=quality_preset,
             duration_scale=duration_scale,
             language=language,
+            intro=intro,
+            outro=outro,
+            instructions_prompt=instructions_prompt,
             highlights=highlights,
             callback_url=callback_url,
             request_options=request_options,

@@ -42,7 +42,6 @@ class RawConversationsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/conversation/get-signed-url",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "agent_id": agent_id,
@@ -119,7 +118,6 @@ class RawConversationsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/conversations",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -178,7 +176,6 @@ class RawConversationsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -229,7 +226,6 @@ class RawConversationsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -287,7 +283,6 @@ class AsyncRawConversationsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/conversation/get-signed-url",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "agent_id": agent_id,
@@ -364,7 +359,6 @@ class AsyncRawConversationsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/conversations",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "cursor": cursor,
@@ -423,7 +417,6 @@ class AsyncRawConversationsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -474,7 +467,6 @@ class AsyncRawConversationsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
