@@ -45,13 +45,12 @@ pip install elevenlabs
 For more detailed information about these models and others, visit the [ElevenLabs Models documentation](https://elevenlabs.io/docs/models).
 
 ```py
-from dotenv import load_dotenv
 from elevenlabs.client import ElevenLabs
 from elevenlabs import play
 
-load_dotenv()
-
-client = ElevenLabs()
+client = ElevenLabs(
+  api_key="YOUR_API_KEY",
+)
 
 audio = client.text_to_speech.convert(
     text="The first move is what sets everything in motion.",
@@ -118,7 +117,9 @@ Stream audio in real-time, as it's being generated.
 from elevenlabs import stream
 from elevenlabs.client import ElevenLabs
 
-client = ElevenLabs()
+client = ElevenLabs(
+  api_key="YOUR_API_KEY",
+)
 
 audio_stream = client.text_to_speech.stream(
     text="This is a test",
