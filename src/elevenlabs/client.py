@@ -31,7 +31,7 @@ class ElevenLabs(BaseElevenLabs):
 
         - api_key: typing.Optional[str].
 
-        - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds.
+        - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 240 seconds.
 
         - httpx_client: typing.Optional[httpx.Client]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
     ---
@@ -47,7 +47,7 @@ class ElevenLabs(BaseElevenLabs):
         base_url: typing.Optional[str] = None,
         environment: ElevenLabsEnvironment = ElevenLabsEnvironment.PRODUCTION,
         api_key: typing.Optional[str] = os.getenv("ELEVENLABS_API_KEY"),
-        timeout: typing.Optional[float] = 60,
+        timeout: typing.Optional[float] = 240,
         httpx_client: typing.Optional[httpx.Client] = None
     ):
         super().__init__(
@@ -74,7 +74,7 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
 
         - api_key: typing.Optional[str].
 
-        - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds.
+        - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 240 seconds.
 
         - httpx_client: typing.Optional[httpx.AsyncClient]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
     ---
@@ -91,7 +91,7 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
         base_url: typing.Optional[str] = None,
         environment: ElevenLabsEnvironment = ElevenLabsEnvironment.PRODUCTION,
         api_key: typing.Optional[str] = os.getenv("ELEVENLABS_API_KEY"),
-        timeout: typing.Optional[float] = 60,
+        timeout: typing.Optional[float] = 240,
         httpx_client: typing.Optional[httpx.AsyncClient] = None
     ):
         super().__init__(
