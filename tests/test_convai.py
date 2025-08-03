@@ -55,10 +55,11 @@ def test_conversation_basic_flow():
     test_user_id = "test_user_123"
 
     # Setup the conversation
+    config = ConversationInitiationData(user_id=test_user_id)
     conversation = Conversation(
         client=mock_client,
         agent_id=TEST_AGENT_ID,
-        user_id=test_user_id,
+        config=config,
         requires_auth=False,
         audio_interface=MockAudioInterface(),
         callback_agent_response=agent_response_callback,
@@ -78,17 +79,22 @@ def test_conversation_basic_flow():
         conversation.end_session()
         conversation.wait_for_session_end()
 
-    # Assertions
-    expected_init_message = {
-        "type": "conversation_initiation_client_data",
-        "custom_llm_extra_body": {},
-        "conversation_config_override": {},
-        "dynamic_variables": {},
-    }
-    mock_ws.send.assert_any_call(json.dumps(expected_init_message))
+    # Assertions - check the call was made with the right structure
+    send_calls = [call[0][0] for call in mock_ws.send.call_args_list]
+    init_messages = [json.loads(call) for call in send_calls if 'conversation_initiation_client_data' in call]
+    assert len(init_messages) == 1
+    init_message = init_messages[0]
+    
+    assert init_message["type"] == "conversation_initiation_client_data"
+    assert init_message["custom_llm_extra_body"] == {}
+    assert init_message["conversation_config_override"] == {}
+    assert init_message["dynamic_variables"] == {}
+    assert init_message["source_info"]["source"] == "python_sdk"
+    assert "version" in init_message["source_info"]
+    assert init_message["user_id"] == test_user_id
     agent_response_callback.assert_called_once_with("Hello there!")
     assert conversation._conversation_id == TEST_CONVERSATION_ID
-    assert conversation.user_id == test_user_id
+    assert conversation.config.user_id == test_user_id
 
 
 def test_conversation_with_auth():
@@ -155,14 +161,18 @@ def test_conversation_with_dynamic_variables():
         conversation.end_session()
         conversation.wait_for_session_end()
 
-    # Assertions
-    expected_init_message = {
-        "type": "conversation_initiation_client_data",
-        "custom_llm_extra_body": {},
-        "conversation_config_override": {},
-        "dynamic_variables": {"name": "angelo"},
-    }
-    mock_ws.send.assert_any_call(json.dumps(expected_init_message))
+    # Assertions - check the call was made with the right structure
+    send_calls = [call[0][0] for call in mock_ws.send.call_args_list]
+    init_messages = [json.loads(call) for call in send_calls if 'conversation_initiation_client_data' in call]
+    assert len(init_messages) == 1
+    init_message = init_messages[0]
+    
+    assert init_message["type"] == "conversation_initiation_client_data"
+    assert init_message["custom_llm_extra_body"] == {}
+    assert init_message["conversation_config_override"] == {}
+    assert init_message["dynamic_variables"] == {"name": "angelo"}
+    assert init_message["source_info"]["source"] == "python_sdk"
+    assert "version" in init_message["source_info"]
     agent_response_callback.assert_called_once_with("Hello there!")
     assert conversation._conversation_id == TEST_CONVERSATION_ID
 
