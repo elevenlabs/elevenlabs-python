@@ -223,10 +223,12 @@ class ConversationInitiationData:
         extra_body: Optional[dict] = None,
         conversation_config_override: Optional[dict] = None,
         dynamic_variables: Optional[dict] = None,
+        user_id: Optional[str] = None,
     ):
         self.extra_body = extra_body or {}
         self.conversation_config_override = conversation_config_override or {}
         self.dynamic_variables = dynamic_variables or {}
+        self.user_id = user_id
 
 
 class Conversation:
@@ -404,6 +406,11 @@ class Conversation:
                         "custom_llm_extra_body": self.config.extra_body,
                         "conversation_config_override": self.config.conversation_config_override,
                         "dynamic_variables": self.config.dynamic_variables,
+                        "source_info": {
+                            "source": "python_sdk",
+                            "version": __version__,
+                        },
+                        **({"user_id": self.config.user_id} if self.config.user_id else {}),
                     }
                 )
             )
