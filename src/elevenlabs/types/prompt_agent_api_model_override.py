@@ -13,6 +13,11 @@ class PromptAgentApiModelOverride(UncheckedBaseModel):
     The prompt for the agent
     """
 
+    native_mcp_server_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    A list of Native MCP server ids to be used by the agent
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

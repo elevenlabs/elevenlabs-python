@@ -8,6 +8,7 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
+from .dynamic_variable_assignment import DynamicVariableAssignment
 from .dynamic_variables_config import DynamicVariablesConfig
 from .integration_type import IntegrationType
 from .mcp_approval_policy import McpApprovalPolicy
@@ -24,6 +25,9 @@ class ToolRequestModelToolConfig_Client(UncheckedBaseModel):
     name: str
     description: str
     response_timeout_secs: typing.Optional[int] = None
+    disable_interruptions: typing.Optional[bool] = None
+    force_pre_tool_speech: typing.Optional[bool] = None
+    assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = None
     parameters: typing.Optional["ObjectJsonSchemaPropertyInput"] = None
     expects_response: typing.Optional[bool] = None
     dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
@@ -47,6 +51,9 @@ class ToolRequestModelToolConfig_Mcp(UncheckedBaseModel):
     name: str
     description: str
     response_timeout_secs: typing.Optional[int] = None
+    disable_interruptions: typing.Optional[bool] = None
+    force_pre_tool_speech: typing.Optional[bool] = None
+    assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = None
     integration_type: IntegrationType
     parameters: typing.Optional["ObjectJsonSchemaPropertyInput"] = None
     approval_policy: typing.Optional[McpApprovalPolicy] = None
@@ -75,6 +82,9 @@ class ToolRequestModelToolConfig_System(UncheckedBaseModel):
     name: str
     description: str
     response_timeout_secs: typing.Optional[int] = None
+    disable_interruptions: typing.Optional[bool] = None
+    force_pre_tool_speech: typing.Optional[bool] = None
+    assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = None
     params: SystemToolConfigInputParams
 
     if IS_PYDANTIC_V2:
@@ -96,6 +106,9 @@ class ToolRequestModelToolConfig_Webhook(UncheckedBaseModel):
     name: str
     description: str
     response_timeout_secs: typing.Optional[int] = None
+    disable_interruptions: typing.Optional[bool] = None
+    force_pre_tool_speech: typing.Optional[bool] = None
+    assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = None
     api_schema: WebhookToolApiSchemaConfigInput
     dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
 

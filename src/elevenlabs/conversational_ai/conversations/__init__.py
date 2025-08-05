@@ -2,6 +2,7 @@
 
 # isort: skip_file
 
+from .types import ConversationsListRequestSummaryMode
 from . import audio, feedback
 
-__all__ = ["audio", "feedback"]
+__all__ = ["ConversationsListRequestSummaryMode", "audio", "feedback"]

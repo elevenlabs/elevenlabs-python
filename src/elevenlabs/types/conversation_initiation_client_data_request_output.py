@@ -9,6 +9,7 @@ from .conversation_config_client_override_output import ConversationConfigClient
 from .conversation_initiation_client_data_request_output_dynamic_variables_value import (
     ConversationInitiationClientDataRequestOutputDynamicVariablesValue,
 )
+from .conversation_initiation_source_info import ConversationInitiationSourceInfo
 
 
 class ConversationInitiationClientDataRequestOutput(UncheckedBaseModel):
@@ -19,6 +20,7 @@ class ConversationInitiationClientDataRequestOutput(UncheckedBaseModel):
     ID of the end user participating in this conversation (for agent owner's user identification)
     """
 
+    source_info: typing.Optional[ConversationInitiationSourceInfo] = None
     dynamic_variables: typing.Optional[
         typing.Dict[str, typing.Optional[ConversationInitiationClientDataRequestOutputDynamicVariablesValue]]
     ] = None

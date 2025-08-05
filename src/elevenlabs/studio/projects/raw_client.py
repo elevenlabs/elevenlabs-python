@@ -80,9 +80,9 @@ class RawProjectsClient:
         self,
         *,
         name: str,
-        default_title_voice_id: str,
-        default_paragraph_voice_id: str,
-        default_model_id: str,
+        default_title_voice_id: typing.Optional[str] = OMIT,
+        default_paragraph_voice_id: typing.Optional[str] = OMIT,
+        default_model_id: typing.Optional[str] = OMIT,
         from_url: typing.Optional[str] = OMIT,
         from_document: typing.Optional[core.File] = OMIT,
         from_content_json: typing.Optional[str] = OMIT,
@@ -116,13 +116,13 @@ class RawProjectsClient:
         name : str
             The name of the Studio project, used for identification only.
 
-        default_title_voice_id : str
+        default_title_voice_id : typing.Optional[str]
             The voice_id that corresponds to the default voice used for new titles.
 
-        default_paragraph_voice_id : str
+        default_paragraph_voice_id : typing.Optional[str]
             The voice_id that corresponds to the default voice used for new paragraphs.
 
-        default_model_id : str
+        default_model_id : typing.Optional[str]
             The ID of the model to be used for this Studio project, you can query GET /v1/models to list all available models.
 
         from_url : typing.Optional[str]
@@ -634,9 +634,9 @@ class AsyncRawProjectsClient:
         self,
         *,
         name: str,
-        default_title_voice_id: str,
-        default_paragraph_voice_id: str,
-        default_model_id: str,
+        default_title_voice_id: typing.Optional[str] = OMIT,
+        default_paragraph_voice_id: typing.Optional[str] = OMIT,
+        default_model_id: typing.Optional[str] = OMIT,
         from_url: typing.Optional[str] = OMIT,
         from_document: typing.Optional[core.File] = OMIT,
         from_content_json: typing.Optional[str] = OMIT,
@@ -670,13 +670,13 @@ class AsyncRawProjectsClient:
         name : str
             The name of the Studio project, used for identification only.
 
-        default_title_voice_id : str
+        default_title_voice_id : typing.Optional[str]
             The voice_id that corresponds to the default voice used for new titles.
 
-        default_paragraph_voice_id : str
+        default_paragraph_voice_id : typing.Optional[str]
             The voice_id that corresponds to the default voice used for new paragraphs.
 
-        default_model_id : str
+        default_model_id : typing.Optional[str]
             The ID of the model to be used for this Studio project, you can query GET /v1/models to list all available models.
 
         from_url : typing.Optional[str]

@@ -4,13 +4,16 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...types.conversation_initiation_source import ConversationInitiationSource
 from ...types.conversation_signed_url_response_model import ConversationSignedUrlResponseModel
 from ...types.evaluation_success_result import EvaluationSuccessResult
 from ...types.get_conversation_response_model import GetConversationResponseModel
 from ...types.get_conversations_page_response_model import GetConversationsPageResponseModel
+from ...types.token_response_model import TokenResponseModel
 from .audio.client import AsyncAudioClient, AudioClient
 from .feedback.client import AsyncFeedbackClient, FeedbackClient
 from .raw_client import AsyncRawConversationsClient, RawConversationsClient
+from .types.conversations_list_request_summary_mode import ConversationsListRequestSummaryMode
 
 
 class ConversationsClient:
@@ -64,6 +67,60 @@ class ConversationsClient:
         _response = self._raw_client.get_signed_url(agent_id=agent_id, request_options=request_options)
         return _response.data
 
+    def get_webrtc_token(
+        self,
+        *,
+        agent_id: str,
+        participant_name: typing.Optional[str] = None,
+        source: typing.Optional[ConversationInitiationSource] = None,
+        version: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> TokenResponseModel:
+        """
+        Get a WebRTC session token for real-time communication.
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of the agent you're taking the action on.
+
+        participant_name : typing.Optional[str]
+            Optional custom participant name. If not provided, user ID will be used
+
+        source : typing.Optional[ConversationInitiationSource]
+            The source of the conversation initiation.
+
+        version : typing.Optional[str]
+            The SDK version number
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TokenResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.conversations.get_webrtc_token(
+            agent_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._raw_client.get_webrtc_token(
+            agent_id=agent_id,
+            participant_name=participant_name,
+            source=source,
+            version=version,
+            request_options=request_options,
+        )
+        return _response.data
+
     def list(
         self,
         *,
@@ -72,7 +129,9 @@ class ConversationsClient:
         call_successful: typing.Optional[EvaluationSuccessResult] = None,
         call_start_before_unix: typing.Optional[int] = None,
         call_start_after_unix: typing.Optional[int] = None,
+        user_id: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
+        summary_mode: typing.Optional[ConversationsListRequestSummaryMode] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationsPageResponseModel:
         """
@@ -95,8 +154,14 @@ class ConversationsClient:
         call_start_after_unix : typing.Optional[int]
             Unix timestamp (in seconds) to filter conversations after to this start date.
 
+        user_id : typing.Optional[str]
+            Filter conversations by the user ID who initiated them.
+
         page_size : typing.Optional[int]
             How many conversations to return at maximum. Can not exceed 100, defaults to 30.
+
+        summary_mode : typing.Optional[ConversationsListRequestSummaryMode]
+            Whether to include transcript summaries in the response.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -121,7 +186,9 @@ class ConversationsClient:
             call_successful=call_successful,
             call_start_before_unix=call_start_before_unix,
             call_start_after_unix=call_start_after_unix,
+            user_id=user_id,
             page_size=page_size,
+            summary_mode=summary_mode,
             request_options=request_options,
         )
         return _response.data
@@ -252,6 +319,68 @@ class AsyncConversationsClient:
         _response = await self._raw_client.get_signed_url(agent_id=agent_id, request_options=request_options)
         return _response.data
 
+    async def get_webrtc_token(
+        self,
+        *,
+        agent_id: str,
+        participant_name: typing.Optional[str] = None,
+        source: typing.Optional[ConversationInitiationSource] = None,
+        version: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> TokenResponseModel:
+        """
+        Get a WebRTC session token for real-time communication.
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of the agent you're taking the action on.
+
+        participant_name : typing.Optional[str]
+            Optional custom participant name. If not provided, user ID will be used
+
+        source : typing.Optional[ConversationInitiationSource]
+            The source of the conversation initiation.
+
+        version : typing.Optional[str]
+            The SDK version number
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TokenResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.conversations.get_webrtc_token(
+                agent_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_webrtc_token(
+            agent_id=agent_id,
+            participant_name=participant_name,
+            source=source,
+            version=version,
+            request_options=request_options,
+        )
+        return _response.data
+
     async def list(
         self,
         *,
@@ -260,7 +389,9 @@ class AsyncConversationsClient:
         call_successful: typing.Optional[EvaluationSuccessResult] = None,
         call_start_before_unix: typing.Optional[int] = None,
         call_start_after_unix: typing.Optional[int] = None,
+        user_id: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
+        summary_mode: typing.Optional[ConversationsListRequestSummaryMode] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationsPageResponseModel:
         """
@@ -283,8 +414,14 @@ class AsyncConversationsClient:
         call_start_after_unix : typing.Optional[int]
             Unix timestamp (in seconds) to filter conversations after to this start date.
 
+        user_id : typing.Optional[str]
+            Filter conversations by the user ID who initiated them.
+
         page_size : typing.Optional[int]
             How many conversations to return at maximum. Can not exceed 100, defaults to 30.
+
+        summary_mode : typing.Optional[ConversationsListRequestSummaryMode]
+            Whether to include transcript summaries in the response.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -317,7 +454,9 @@ class AsyncConversationsClient:
             call_successful=call_successful,
             call_start_before_unix=call_start_before_unix,
             call_start_after_unix=call_start_after_unix,
+            user_id=user_id,
             page_size=page_size,
+            summary_mode=summary_mode,
             request_options=request_options,
         )
         return _response.data

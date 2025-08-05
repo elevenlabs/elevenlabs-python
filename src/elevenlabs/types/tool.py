@@ -16,11 +16,18 @@ class Tool(UncheckedBaseModel):
     """
 
     name: str
+    title: typing.Optional[str] = None
     description: typing.Optional[str] = None
     input_schema: typing_extensions.Annotated[
         typing.Dict[str, typing.Optional[typing.Any]], FieldMetadata(alias="inputSchema")
     ]
+    output_schema: typing_extensions.Annotated[
+        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="outputSchema")
+    ] = None
     annotations: typing.Optional[ToolAnnotations] = None
+    meta: typing_extensions.Annotated[
+        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="_meta")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

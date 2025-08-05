@@ -6,10 +6,10 @@ from .. import core
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.additional_formats import AdditionalFormats
-from ..types.speech_to_text_chunk_response_model import SpeechToTextChunkResponseModel
 from .raw_client import AsyncRawSpeechToTextClient, RawSpeechToTextClient
 from .types.speech_to_text_convert_request_file_format import SpeechToTextConvertRequestFileFormat
 from .types.speech_to_text_convert_request_timestamps_granularity import SpeechToTextConvertRequestTimestampsGranularity
+from .types.speech_to_text_convert_response import SpeechToTextConvertResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -49,10 +49,11 @@ class SpeechToTextClient:
         webhook_id: typing.Optional[str] = OMIT,
         temperature: typing.Optional[float] = OMIT,
         seed: typing.Optional[int] = OMIT,
+        use_multi_channel: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SpeechToTextChunkResponseModel:
+    ) -> SpeechToTextConvertResponse:
         """
-        Transcribe an audio or video file. If webhook is set to true, the request will be processed asynchronously and results sent to configured webhooks.
+        Transcribe an audio or video file. If webhook is set to true, the request will be processed asynchronously and results sent to configured webhooks. When use_multi_channel is true and the provided audio has multiple channels, a 'transcripts' object with separate transcripts for each channel is returned. Otherwise, returns a single transcript.
 
         Parameters
         ----------
@@ -104,12 +105,15 @@ class SpeechToTextClient:
         seed : typing.Optional[int]
             If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be an integer between 0 and 2147483647.
 
+        use_multi_channel : typing.Optional[bool]
+            Whether the audio file contains multiple channels where each channel contains a single speaker. When enabled, each channel will be transcribed independently and the results will be combined. Each word in the response will include a 'channel_index' field indicating which channel it was spoken on. A maximum of 5 channels is supported.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        SpeechToTextChunkResponseModel
+        SpeechToTextConvertResponse
             Synchronous transcription result
 
         Examples
@@ -140,6 +144,7 @@ class SpeechToTextClient:
             webhook_id=webhook_id,
             temperature=temperature,
             seed=seed,
+            use_multi_channel=use_multi_channel,
             request_options=request_options,
         )
         return _response.data
@@ -179,10 +184,11 @@ class AsyncSpeechToTextClient:
         webhook_id: typing.Optional[str] = OMIT,
         temperature: typing.Optional[float] = OMIT,
         seed: typing.Optional[int] = OMIT,
+        use_multi_channel: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SpeechToTextChunkResponseModel:
+    ) -> SpeechToTextConvertResponse:
         """
-        Transcribe an audio or video file. If webhook is set to true, the request will be processed asynchronously and results sent to configured webhooks.
+        Transcribe an audio or video file. If webhook is set to true, the request will be processed asynchronously and results sent to configured webhooks. When use_multi_channel is true and the provided audio has multiple channels, a 'transcripts' object with separate transcripts for each channel is returned. Otherwise, returns a single transcript.
 
         Parameters
         ----------
@@ -234,12 +240,15 @@ class AsyncSpeechToTextClient:
         seed : typing.Optional[int]
             If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be an integer between 0 and 2147483647.
 
+        use_multi_channel : typing.Optional[bool]
+            Whether the audio file contains multiple channels where each channel contains a single speaker. When enabled, each channel will be transcribed independently and the results will be combined. Each word in the response will include a 'channel_index' field indicating which channel it was spoken on. A maximum of 5 channels is supported.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        SpeechToTextChunkResponseModel
+        SpeechToTextConvertResponse
             Synchronous transcription result
 
         Examples
@@ -278,6 +287,7 @@ class AsyncSpeechToTextClient:
             webhook_id=webhook_id,
             temperature=temperature,
             seed=seed,
+            use_multi_channel=use_multi_channel,
             request_options=request_options,
         )
         return _response.data

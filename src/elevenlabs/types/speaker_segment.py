@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .dubbed_segment import DubbedSegment
+from .segment_subtitle_frame import SegmentSubtitleFrame
 
 
 class SpeakerSegment(UncheckedBaseModel):
@@ -13,6 +14,7 @@ class SpeakerSegment(UncheckedBaseModel):
     start_time: float
     end_time: float
     text: str
+    subtitles: typing.List[SegmentSubtitleFrame]
     dubs: typing.Dict[str, DubbedSegment]
 
     if IS_PYDANTIC_V2:

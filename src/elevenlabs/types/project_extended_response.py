@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .caption_style_model import CaptionStyleModel
 from .chapter_response import ChapterResponse
 from .project_creation_meta_response_model import ProjectCreationMetaResponseModel
 from .project_extended_response_model_access_level import ProjectExtendedResponseModelAccessLevel
@@ -157,6 +158,16 @@ class ProjectExtendedResponse(UncheckedBaseModel):
     chapters_enabled: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether chapters are enabled for the project.
+    """
+
+    captions_enabled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether captions are enabled for the project.
+    """
+
+    caption_style: typing.Optional[CaptionStyleModel] = pydantic.Field(default=None)
+    """
+    Global styling to be applied to all captions
     """
 
     quality_preset: ProjectExtendedResponseModelQualityPreset = pydantic.Field()

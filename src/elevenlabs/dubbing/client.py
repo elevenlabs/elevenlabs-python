@@ -61,7 +61,7 @@ class DubbingClient:
             How many dubs to return at maximum. Can not exceed 200, defaults to 100.
 
         dubbing_status : typing.Optional[DubbingListRequestDubbingStatus]
-            Status of the dubbing, either 'in_progress', 'completed' or 'failed'.
+            What state the dub is currently in.
 
         filter_by_creator : typing.Optional[DubbingListRequestFilterByCreator]
             Filters who created the resources being listed, whether it was the user running the request or someone else that shared the resource with them.
@@ -103,6 +103,7 @@ class DubbingClient:
         source_url: typing.Optional[str] = OMIT,
         source_lang: typing.Optional[str] = OMIT,
         target_lang: typing.Optional[str] = OMIT,
+        target_accent: typing.Optional[str] = OMIT,
         num_speakers: typing.Optional[int] = OMIT,
         watermark: typing.Optional[bool] = OMIT,
         start_time: typing.Optional[int] = OMIT,
@@ -144,6 +145,9 @@ class DubbingClient:
 
         target_lang : typing.Optional[str]
             The Target language to dub the content into.
+
+        target_accent : typing.Optional[str]
+            [Experimental] An accent to apply when selecting voices from the library and to use to inform translation of the dialect to prefer.
 
         num_speakers : typing.Optional[int]
             Number of speakers to use for the dubbing. Set to 0 to automatically detect the number of speakers
@@ -204,6 +208,7 @@ class DubbingClient:
             source_url=source_url,
             source_lang=source_lang,
             target_lang=target_lang,
+            target_accent=target_accent,
             num_speakers=num_speakers,
             watermark=watermark,
             start_time=start_time,
@@ -327,7 +332,7 @@ class AsyncDubbingClient:
             How many dubs to return at maximum. Can not exceed 200, defaults to 100.
 
         dubbing_status : typing.Optional[DubbingListRequestDubbingStatus]
-            Status of the dubbing, either 'in_progress', 'completed' or 'failed'.
+            What state the dub is currently in.
 
         filter_by_creator : typing.Optional[DubbingListRequestFilterByCreator]
             Filters who created the resources being listed, whether it was the user running the request or someone else that shared the resource with them.
@@ -377,6 +382,7 @@ class AsyncDubbingClient:
         source_url: typing.Optional[str] = OMIT,
         source_lang: typing.Optional[str] = OMIT,
         target_lang: typing.Optional[str] = OMIT,
+        target_accent: typing.Optional[str] = OMIT,
         num_speakers: typing.Optional[int] = OMIT,
         watermark: typing.Optional[bool] = OMIT,
         start_time: typing.Optional[int] = OMIT,
@@ -418,6 +424,9 @@ class AsyncDubbingClient:
 
         target_lang : typing.Optional[str]
             The Target language to dub the content into.
+
+        target_accent : typing.Optional[str]
+            [Experimental] An accent to apply when selecting voices from the library and to use to inform translation of the dialect to prefer.
 
         num_speakers : typing.Optional[int]
             Number of speakers to use for the dubbing. Set to 0 to automatically detect the number of speakers
@@ -486,6 +495,7 @@ class AsyncDubbingClient:
             source_url=source_url,
             source_lang=source_lang,
             target_lang=target_lang,
+            target_accent=target_accent,
             num_speakers=num_speakers,
             watermark=watermark,
             start_time=start_time,

@@ -39,6 +39,11 @@ class BuiltInToolsOutput(UncheckedBaseModel):
     The play DTMF tool
     """
 
+    voicemail_detection: typing.Optional[SystemToolConfigOutput] = pydantic.Field(default=None)
+    """
+    The voicemail detection tool
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

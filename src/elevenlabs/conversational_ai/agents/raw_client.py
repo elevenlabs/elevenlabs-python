@@ -425,6 +425,7 @@ class RawAgentsClient:
         *,
         simulation_specification: ConversationSimulationSpecification,
         extra_evaluation_criteria: typing.Optional[typing.Sequence[PromptEvaluationCriteria]] = OMIT,
+        new_turns_limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AgentSimulatedChatTestResponseModel]:
         """
@@ -440,6 +441,9 @@ class RawAgentsClient:
 
         extra_evaluation_criteria : typing.Optional[typing.Sequence[PromptEvaluationCriteria]]
             A list of evaluation criteria to test
+
+        new_turns_limit : typing.Optional[int]
+            Maximum number of new turns to generate in the conversation simulation
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -461,6 +465,7 @@ class RawAgentsClient:
                     annotation=typing.Sequence[PromptEvaluationCriteria],
                     direction="write",
                 ),
+                "new_turns_limit": new_turns_limit,
             },
             headers={
                 "content-type": "application/json",
@@ -500,6 +505,7 @@ class RawAgentsClient:
         *,
         simulation_specification: ConversationSimulationSpecification,
         extra_evaluation_criteria: typing.Optional[typing.Sequence[PromptEvaluationCriteria]] = OMIT,
+        new_turns_limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[None]:
         """
@@ -515,6 +521,9 @@ class RawAgentsClient:
 
         extra_evaluation_criteria : typing.Optional[typing.Sequence[PromptEvaluationCriteria]]
             A list of evaluation criteria to test
+
+        new_turns_limit : typing.Optional[int]
+            Maximum number of new turns to generate in the conversation simulation
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -535,6 +544,7 @@ class RawAgentsClient:
                     annotation=typing.Sequence[PromptEvaluationCriteria],
                     direction="write",
                 ),
+                "new_turns_limit": new_turns_limit,
             },
             headers={
                 "content-type": "application/json",
@@ -964,6 +974,7 @@ class AsyncRawAgentsClient:
         *,
         simulation_specification: ConversationSimulationSpecification,
         extra_evaluation_criteria: typing.Optional[typing.Sequence[PromptEvaluationCriteria]] = OMIT,
+        new_turns_limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AgentSimulatedChatTestResponseModel]:
         """
@@ -979,6 +990,9 @@ class AsyncRawAgentsClient:
 
         extra_evaluation_criteria : typing.Optional[typing.Sequence[PromptEvaluationCriteria]]
             A list of evaluation criteria to test
+
+        new_turns_limit : typing.Optional[int]
+            Maximum number of new turns to generate in the conversation simulation
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1000,6 +1014,7 @@ class AsyncRawAgentsClient:
                     annotation=typing.Sequence[PromptEvaluationCriteria],
                     direction="write",
                 ),
+                "new_turns_limit": new_turns_limit,
             },
             headers={
                 "content-type": "application/json",
@@ -1039,6 +1054,7 @@ class AsyncRawAgentsClient:
         *,
         simulation_specification: ConversationSimulationSpecification,
         extra_evaluation_criteria: typing.Optional[typing.Sequence[PromptEvaluationCriteria]] = OMIT,
+        new_turns_limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[None]:
         """
@@ -1054,6 +1070,9 @@ class AsyncRawAgentsClient:
 
         extra_evaluation_criteria : typing.Optional[typing.Sequence[PromptEvaluationCriteria]]
             A list of evaluation criteria to test
+
+        new_turns_limit : typing.Optional[int]
+            Maximum number of new turns to generate in the conversation simulation
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1074,6 +1093,7 @@ class AsyncRawAgentsClient:
                     annotation=typing.Sequence[PromptEvaluationCriteria],
                     direction="write",
                 ),
+                "new_turns_limit": new_turns_limit,
             },
             headers={
                 "content-type": "application/json",

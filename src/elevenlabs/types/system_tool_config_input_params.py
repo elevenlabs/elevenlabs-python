@@ -93,6 +93,20 @@ class SystemToolConfigInputParams_TransferToNumber(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class SystemToolConfigInputParams_VoicemailDetection(UncheckedBaseModel):
+    system_tool_type: typing.Literal["voicemail_detection"] = "voicemail_detection"
+    voicemail_message: typing.Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 SystemToolConfigInputParams = typing_extensions.Annotated[
     typing.Union[
         SystemToolConfigInputParams_EndCall,
@@ -101,6 +115,7 @@ SystemToolConfigInputParams = typing_extensions.Annotated[
         SystemToolConfigInputParams_SkipTurn,
         SystemToolConfigInputParams_TransferToAgent,
         SystemToolConfigInputParams_TransferToNumber,
+        SystemToolConfigInputParams_VoicemailDetection,
     ],
     UnionMetadata(discriminant="system_tool_type"),
 ]

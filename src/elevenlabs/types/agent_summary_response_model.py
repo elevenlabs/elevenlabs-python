@@ -34,6 +34,11 @@ class AgentSummaryResponseModel(UncheckedBaseModel):
     The access information of the agent
     """
 
+    last_call_time_unix_secs: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The time of the most recent call in unix seconds, null if no calls have been made
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
