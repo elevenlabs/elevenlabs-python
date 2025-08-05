@@ -6172,14 +6172,6 @@ client.conversational_ai.agents.create(
 <dl>
 <dd>
 
-**workflow:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **name:** `typing.Optional[str]` — A name to make the agent easier to find
     
 </dd>
@@ -6422,14 +6414,6 @@ client.conversational_ai.agents.update(
 <dl>
 <dd>
 
-**workflow:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **name:** `typing.Optional[str]` — A name to make the agent easier to find
     
 </dd>
@@ -6647,7 +6631,11 @@ Run a conversation between the agent and a simulated user.
 <dd>
 
 ```python
-from elevenlabs import ConversationSimulationSpecification, ElevenLabs
+from elevenlabs import (
+    AgentConfig,
+    ConversationSimulationSpecification,
+    ElevenLabs,
+)
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -6655,10 +6643,10 @@ client = ElevenLabs(
 client.conversational_ai.agents.simulate_conversation(
     agent_id="21m00Tcm4TlvDq8ikWAM",
     simulation_specification=ConversationSimulationSpecification(
-        simulated_user_config={
-            "first_message": "Hello, how can I help you today?",
-            "language": "en",
-        },
+        simulated_user_config=AgentConfig(
+            first_message="Hello, how can I help you today?",
+            language="en",
+        ),
     ),
 )
 
@@ -6747,7 +6735,11 @@ Run a conversation between the agent and a simulated user and stream back the re
 <dd>
 
 ```python
-from elevenlabs import ConversationSimulationSpecification, ElevenLabs
+from elevenlabs import (
+    AgentConfig,
+    ConversationSimulationSpecification,
+    ElevenLabs,
+)
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
@@ -6755,10 +6747,10 @@ client = ElevenLabs(
 client.conversational_ai.agents.simulate_conversation_stream(
     agent_id="21m00Tcm4TlvDq8ikWAM",
     simulation_specification=ConversationSimulationSpecification(
-        simulated_user_config={
-            "first_message": "Hello, how can I help you today?",
-            "language": "en",
-        },
+        simulated_user_config=AgentConfig(
+            first_message="Hello, how can I help you today?",
+            language="en",
+        ),
     ),
 )
 

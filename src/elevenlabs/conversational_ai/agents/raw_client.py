@@ -34,7 +34,6 @@ class RawAgentsClient:
         *,
         conversation_config: ConversationalConfig,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
-        workflow: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -49,8 +48,6 @@ class RawAgentsClient:
 
         platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
             Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
-
-        workflow : typing.Optional[typing.Optional[typing.Any]]
 
         name : typing.Optional[str]
             A name to make the agent easier to find
@@ -76,7 +73,6 @@ class RawAgentsClient:
                 "platform_settings": convert_and_respect_annotation_metadata(
                     object_=platform_settings, annotation=AgentPlatformSettingsRequestModel, direction="write"
                 ),
-                "workflow": workflow,
                 "name": name,
                 "tags": tags,
             },
@@ -208,7 +204,6 @@ class RawAgentsClient:
         *,
         conversation_config: typing.Optional[ConversationalConfig] = OMIT,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
-        workflow: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -226,8 +221,6 @@ class RawAgentsClient:
 
         platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
             Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
-
-        workflow : typing.Optional[typing.Optional[typing.Any]]
 
         name : typing.Optional[str]
             A name to make the agent easier to find
@@ -253,7 +246,6 @@ class RawAgentsClient:
                 "platform_settings": convert_and_respect_annotation_metadata(
                     object_=platform_settings, annotation=AgentPlatformSettingsRequestModel, direction="write"
                 ),
-                "workflow": workflow,
                 "name": name,
                 "tags": tags,
             },
@@ -581,7 +573,6 @@ class AsyncRawAgentsClient:
         *,
         conversation_config: ConversationalConfig,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
-        workflow: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -596,8 +587,6 @@ class AsyncRawAgentsClient:
 
         platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
             Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
-
-        workflow : typing.Optional[typing.Optional[typing.Any]]
 
         name : typing.Optional[str]
             A name to make the agent easier to find
@@ -623,7 +612,6 @@ class AsyncRawAgentsClient:
                 "platform_settings": convert_and_respect_annotation_metadata(
                     object_=platform_settings, annotation=AgentPlatformSettingsRequestModel, direction="write"
                 ),
-                "workflow": workflow,
                 "name": name,
                 "tags": tags,
             },
@@ -757,7 +745,6 @@ class AsyncRawAgentsClient:
         *,
         conversation_config: typing.Optional[ConversationalConfig] = OMIT,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
-        workflow: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -775,8 +762,6 @@ class AsyncRawAgentsClient:
 
         platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
             Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
-
-        workflow : typing.Optional[typing.Optional[typing.Any]]
 
         name : typing.Optional[str]
             A name to make the agent easier to find
@@ -802,7 +787,6 @@ class AsyncRawAgentsClient:
                 "platform_settings": convert_and_respect_annotation_metadata(
                     object_=platform_settings, annotation=AgentPlatformSettingsRequestModel, direction="write"
                 ),
-                "workflow": workflow,
                 "name": name,
                 "tags": tags,
             },
