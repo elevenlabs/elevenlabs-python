@@ -15,6 +15,7 @@ ConversationInitiationSource = typing.Union[
         "sip_trunk",
         "twilio",
         "genesys",
+        "swift_sdk",
     ],
     typing.Any,
 ]

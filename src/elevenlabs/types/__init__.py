@@ -58,63 +58,33 @@ from .batch_call_detailed_response import BatchCallDetailedResponse
 from .batch_call_recipient_status import BatchCallRecipientStatus
 from .batch_call_response import BatchCallResponse
 from .batch_call_status import BatchCallStatus
-from .body_add_chapter_to_a_project_v_1_projects_project_id_chapters_add_post import (
-    BodyAddChapterToAProjectV1ProjectsProjectIdChaptersAddPost,
-)
-from .body_add_project_v_1_projects_add_post_apply_text_normalization import (
-    BodyAddProjectV1ProjectsAddPostApplyTextNormalization,
-)
-from .body_add_project_v_1_projects_add_post_fiction import BodyAddProjectV1ProjectsAddPostFiction
-from .body_add_project_v_1_projects_add_post_source_type import BodyAddProjectV1ProjectsAddPostSourceType
-from .body_add_project_v_1_projects_add_post_target_audience import BodyAddProjectV1ProjectsAddPostTargetAudience
-from .body_add_to_knowledge_base_v_1_convai_add_to_knowledge_base_post import (
-    BodyAddToKnowledgeBaseV1ConvaiAddToKnowledgeBasePost,
-)
-from .body_add_to_knowledge_base_v_1_convai_agents_agent_id_add_to_knowledge_base_post import (
-    BodyAddToKnowledgeBaseV1ConvaiAgentsAgentIdAddToKnowledgeBasePost,
-)
-from .body_create_podcast_v_1_projects_podcast_create_post import BodyCreatePodcastV1ProjectsPodcastCreatePost
-from .body_create_podcast_v_1_projects_podcast_create_post_duration_scale import (
-    BodyCreatePodcastV1ProjectsPodcastCreatePostDurationScale,
-)
-from .body_create_podcast_v_1_projects_podcast_create_post_mode import (
-    BodyCreatePodcastV1ProjectsPodcastCreatePostMode,
-    BodyCreatePodcastV1ProjectsPodcastCreatePostMode_Bulletin,
-    BodyCreatePodcastV1ProjectsPodcastCreatePostMode_Conversation,
-)
-from .body_create_podcast_v_1_projects_podcast_create_post_quality_preset import (
-    BodyCreatePodcastV1ProjectsPodcastCreatePostQualityPreset,
-)
-from .body_create_podcast_v_1_projects_podcast_create_post_source import (
-    BodyCreatePodcastV1ProjectsPodcastCreatePostSource,
-)
-from .body_create_podcast_v_1_projects_podcast_create_post_source_item import (
-    BodyCreatePodcastV1ProjectsPodcastCreatePostSourceItem,
-    BodyCreatePodcastV1ProjectsPodcastCreatePostSourceItem_Text,
-    BodyCreatePodcastV1ProjectsPodcastCreatePostSourceItem_Url,
-)
-from .body_edit_basic_project_info_v_1_projects_project_id_post import BodyEditBasicProjectInfoV1ProjectsProjectIdPost
-from .body_edit_chapter_v_1_projects_project_id_chapters_chapter_id_patch import (
-    BodyEditChapterV1ProjectsProjectIdChaptersChapterIdPatch,
-)
-from .body_edit_project_content_v_1_projects_project_id_content_post import (
-    BodyEditProjectContentV1ProjectsProjectIdContentPost,
-)
 from .body_generate_a_random_voice_v_1_voice_generation_generate_voice_post_age import (
     BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostAge,
 )
 from .body_generate_a_random_voice_v_1_voice_generation_generate_voice_post_gender import (
     BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostGender,
 )
-from .body_stream_chapter_audio_v_1_projects_project_id_chapters_chapter_id_snapshots_chapter_snapshot_id_stream_post import (
-    BodyStreamChapterAudioV1ProjectsProjectIdChaptersChapterIdSnapshotsChapterSnapshotIdStreamPost,
-)
-from .body_stream_project_audio_v_1_projects_project_id_snapshots_project_snapshot_id_stream_post import (
-    BodyStreamProjectAudioV1ProjectsProjectIdSnapshotsProjectSnapshotIdStreamPost,
-)
 from .breakdown_types import BreakdownTypes
 from .built_in_tools_input import BuiltInToolsInput
 from .built_in_tools_output import BuiltInToolsOutput
+from .caption_style_character_animation_model import CaptionStyleCharacterAnimationModel
+from .caption_style_character_animation_model_enter_type import CaptionStyleCharacterAnimationModelEnterType
+from .caption_style_character_animation_model_exit_type import CaptionStyleCharacterAnimationModelExitType
+from .caption_style_horizontal_placement_model import CaptionStyleHorizontalPlacementModel
+from .caption_style_horizontal_placement_model_align import CaptionStyleHorizontalPlacementModelAlign
+from .caption_style_model import CaptionStyleModel
+from .caption_style_model_text_align import CaptionStyleModelTextAlign
+from .caption_style_model_text_style import CaptionStyleModelTextStyle
+from .caption_style_model_text_weight import CaptionStyleModelTextWeight
+from .caption_style_section_animation_model import CaptionStyleSectionAnimationModel
+from .caption_style_section_animation_model_enter_type import CaptionStyleSectionAnimationModelEnterType
+from .caption_style_section_animation_model_exit_type import CaptionStyleSectionAnimationModelExitType
+from .caption_style_template_model import CaptionStyleTemplateModel
+from .caption_style_vertical_placement_model import CaptionStyleVerticalPlacementModel
+from .caption_style_vertical_placement_model_align import CaptionStyleVerticalPlacementModelAlign
+from .caption_style_word_animation_model import CaptionStyleWordAnimationModel
+from .caption_style_word_animation_model_enter_type import CaptionStyleWordAnimationModelEnterType
+from .caption_style_word_animation_model_exit_type import CaptionStyleWordAnimationModelExitType
 from .chapter_content_block_extendable_node_response_model import ChapterContentBlockExtendableNodeResponseModel
 from .chapter_content_block_input_model import ChapterContentBlockInputModel
 from .chapter_content_block_input_model_sub_type import ChapterContentBlockInputModelSubType
@@ -194,10 +164,38 @@ from .conversation_history_transcript_common_model_input_role import Conversatio
 from .conversation_history_transcript_common_model_input_source_medium import (
     ConversationHistoryTranscriptCommonModelInputSourceMedium,
 )
+from .conversation_history_transcript_common_model_input_tool_results_item import (
+    ConversationHistoryTranscriptCommonModelInputToolResultsItem,
+)
 from .conversation_history_transcript_common_model_output import ConversationHistoryTranscriptCommonModelOutput
 from .conversation_history_transcript_common_model_output_role import ConversationHistoryTranscriptCommonModelOutputRole
 from .conversation_history_transcript_common_model_output_source_medium import (
     ConversationHistoryTranscriptCommonModelOutputSourceMedium,
+)
+from .conversation_history_transcript_common_model_output_tool_results_item import (
+    ConversationHistoryTranscriptCommonModelOutputToolResultsItem,
+)
+from .conversation_history_transcript_other_tools_result_common_model import (
+    ConversationHistoryTranscriptOtherToolsResultCommonModel,
+)
+from .conversation_history_transcript_other_tools_result_common_model_type import (
+    ConversationHistoryTranscriptOtherToolsResultCommonModelType,
+)
+from .conversation_history_transcript_system_tool_result_common_model import (
+    ConversationHistoryTranscriptSystemToolResultCommonModel,
+)
+from .conversation_history_transcript_system_tool_result_common_model_result import (
+    ConversationHistoryTranscriptSystemToolResultCommonModelResult,
+    ConversationHistoryTranscriptSystemToolResultCommonModelResult_EndCallSuccess,
+    ConversationHistoryTranscriptSystemToolResultCommonModelResult_LanguageDetectionSuccess,
+    ConversationHistoryTranscriptSystemToolResultCommonModelResult_PlayDtmfError,
+    ConversationHistoryTranscriptSystemToolResultCommonModelResult_PlayDtmfSuccess,
+    ConversationHistoryTranscriptSystemToolResultCommonModelResult_SkipTurnSuccess,
+    ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToAgentError,
+    ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToAgentSuccess,
+    ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToNumberError,
+    ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToNumberSipSuccess,
+    ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToNumberTwilioSuccess,
 )
 from .conversation_history_transcript_tool_call_client_details import ConversationHistoryTranscriptToolCallClientDetails
 from .conversation_history_transcript_tool_call_common_model import ConversationHistoryTranscriptToolCallCommonModel
@@ -211,7 +209,6 @@ from .conversation_history_transcript_tool_call_mcp_details import ConversationH
 from .conversation_history_transcript_tool_call_webhook_details import (
     ConversationHistoryTranscriptToolCallWebhookDetails,
 )
-from .conversation_history_transcript_tool_result_common_model import ConversationHistoryTranscriptToolResultCommonModel
 from .conversation_history_twilio_phone_call_model import ConversationHistoryTwilioPhoneCallModel
 from .conversation_history_twilio_phone_call_model_direction import ConversationHistoryTwilioPhoneCallModelDirection
 from .conversation_initiation_client_data_config_input import ConversationInitiationClientDataConfigInput
@@ -233,6 +230,7 @@ from .conversation_initiation_client_data_webhook_request_headers_value import (
     ConversationInitiationClientDataWebhookRequestHeadersValue,
 )
 from .conversation_initiation_source import ConversationInitiationSource
+from .conversation_initiation_source_info import ConversationInitiationSourceInfo
 from .conversation_signed_url_response_model import ConversationSignedUrlResponseModel
 from .conversation_simulation_specification import ConversationSimulationSpecification
 from .conversation_simulation_specification_dynamic_variables_value import (
@@ -291,6 +289,8 @@ from .dubbing_metadata_page_response_model import DubbingMetadataPageResponseMod
 from .dubbing_metadata_response import DubbingMetadataResponse
 from .dubbing_render_response_model import DubbingRenderResponseModel
 from .dubbing_resource import DubbingResource
+from .dynamic_variable_assignment import DynamicVariableAssignment
+from .dynamic_variable_update_common_model import DynamicVariableUpdateCommonModel
 from .dynamic_variables_config import DynamicVariablesConfig
 from .dynamic_variables_config_dynamic_variable_placeholders_value import (
     DynamicVariablesConfigDynamicVariablePlaceholdersValue,
@@ -303,6 +303,7 @@ from .edit_voice_settings_response_model import EditVoiceSettingsResponseModel
 from .embed_variant import EmbedVariant
 from .embedding_model_enum import EmbeddingModelEnum
 from .end_call_tool_config import EndCallToolConfig
+from .end_call_tool_result_model import EndCallToolResultModel
 from .evaluation_settings import EvaluationSettings
 from .evaluation_success_result import EvaluationSuccessResult
 from .export_options import (
@@ -438,6 +439,7 @@ from .knowledge_base_document_type import KnowledgeBaseDocumentType
 from .knowledge_base_locator import KnowledgeBaseLocator
 from .language_added_response import LanguageAddedResponse
 from .language_detection_tool_config import LanguageDetectionToolConfig
+from .language_detection_tool_result_model import LanguageDetectionToolResultModel
 from .language_preset_input import LanguagePresetInput
 from .language_preset_output import LanguagePresetOutput
 from .language_preset_translation import LanguagePresetTranslation
@@ -489,6 +491,7 @@ from .model_settings_response_model import ModelSettingsResponseModel
 from .moderation_status_response_model import ModerationStatusResponseModel
 from .moderation_status_response_model_safety_status import ModerationStatusResponseModelSafetyStatus
 from .moderation_status_response_model_warning_status import ModerationStatusResponseModelWarningStatus
+from .multichannel_speech_to_text_response_model import MultichannelSpeechToTextResponseModel
 from .normalized_alignment import NormalizedAlignment
 from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput
 from .object_json_schema_property_input_properties_value import ObjectJsonSchemaPropertyInputPropertiesValue
@@ -508,6 +511,8 @@ from .phone_number_transfer_transfer_destination import (
     PhoneNumberTransferTransferDestination_Phone,
     PhoneNumberTransferTransferDestination_SipUri,
 )
+from .play_dtmf_result_error_model import PlayDtmfResultErrorModel
+from .play_dtmf_result_success_model import PlayDtmfResultSuccessModel
 from .play_dtmf_tool_config import PlayDtmfToolConfig
 from .podcast_bulletin_mode import PodcastBulletinMode
 from .podcast_bulletin_mode_data import PodcastBulletinModeData
@@ -597,10 +602,12 @@ from .safety_common_model import SafetyCommonModel
 from .safety_evaluation import SafetyEvaluation
 from .safety_response_model import SafetyResponseModel
 from .safety_rule import SafetyRule
+from .save_voice_preview_request import SaveVoicePreviewRequest
 from .secret_dependency_type import SecretDependencyType
 from .segment_create_response import SegmentCreateResponse
 from .segment_delete_response import SegmentDeleteResponse
 from .segment_dub_response import SegmentDubResponse
+from .segment_subtitle_frame import SegmentSubtitleFrame
 from .segment_transcription_response import SegmentTranscriptionResponse
 from .segment_translation_response import SegmentTranslationResponse
 from .segment_update_response import SegmentUpdateResponse
@@ -618,6 +625,7 @@ from .sip_trunk_outbound_call_response import SipTrunkOutboundCallResponse
 from .sip_trunk_transport_enum import SipTrunkTransportEnum
 from .sip_uri_transfer_destination import SipUriTransferDestination
 from .skip_turn_tool_config import SkipTurnToolConfig
+from .skip_turn_tool_response_model import SkipTurnToolResponseModel
 from .speaker_audio_response_model import SpeakerAudioResponseModel
 from .speaker_response_model import SpeakerResponseModel
 from .speaker_segment import SpeakerSegment
@@ -654,6 +662,7 @@ from .system_tool_config_input_params import (
     SystemToolConfigInputParams_SkipTurn,
     SystemToolConfigInputParams_TransferToAgent,
     SystemToolConfigInputParams_TransferToNumber,
+    SystemToolConfigInputParams_VoicemailDetection,
 )
 from .system_tool_config_output import SystemToolConfigOutput
 from .system_tool_config_output_params import (
@@ -664,11 +673,13 @@ from .system_tool_config_output_params import (
     SystemToolConfigOutputParams_SkipTurn,
     SystemToolConfigOutputParams_TransferToAgent,
     SystemToolConfigOutputParams_TransferToNumber,
+    SystemToolConfigOutputParams_VoicemailDetection,
 )
 from .telephony_provider import TelephonyProvider
 from .text_to_speech_apply_text_normalization_enum import TextToSpeechApplyTextNormalizationEnum
 from .text_to_speech_output_format_enum import TextToSpeechOutputFormatEnum
 from .text_to_speech_stream_request import TextToSpeechStreamRequest
+from .token_response_model import TokenResponseModel
 from .tool import Tool
 from .tool_annotations import ToolAnnotations
 from .tool_mock_config import ToolMockConfig
@@ -688,8 +699,15 @@ from .tool_response_model_tool_config import (
     ToolResponseModelToolConfig_System,
     ToolResponseModelToolConfig_Webhook,
 )
+from .tool_type import ToolType
+from .tool_usage_stats_response_model import ToolUsageStatsResponseModel
 from .tools_response_model import ToolsResponseModel
 from .transfer_to_agent_tool_config import TransferToAgentToolConfig
+from .transfer_to_agent_tool_result_error_model import TransferToAgentToolResultErrorModel
+from .transfer_to_agent_tool_result_success_model import TransferToAgentToolResultSuccessModel
+from .transfer_to_number_result_error_model import TransferToNumberResultErrorModel
+from .transfer_to_number_result_sip_success_model import TransferToNumberResultSipSuccessModel
+from .transfer_to_number_result_twilio_success_model import TransferToNumberResultTwilioSuccessModel
 from .transfer_to_number_tool_config_input import TransferToNumberToolConfigInput
 from .transfer_to_number_tool_config_output import TransferToNumberToolConfigOutput
 from .transfer_type_enum import TransferTypeEnum
@@ -738,6 +756,7 @@ from .voice_sharing_response import VoiceSharingResponse
 from .voice_sharing_response_model_category import VoiceSharingResponseModelCategory
 from .voice_sharing_state import VoiceSharingState
 from .voice_verification_response import VoiceVerificationResponse
+from .voicemail_detection_tool_config import VoicemailDetectionToolConfig
 from .webhook_auth_method_type import WebhookAuthMethodType
 from .webhook_tool_api_schema_config_input import WebhookToolApiSchemaConfigInput
 from .webhook_tool_api_schema_config_input_method import WebhookToolApiSchemaConfigInputMethod
@@ -781,9 +800,15 @@ from .widget_language_preset_response import WidgetLanguagePresetResponse
 from .widget_placement import WidgetPlacement
 from .widget_styles import WidgetStyles
 from .widget_text_contents import WidgetTextContents
+from .workspace_api_key_list_response_model import WorkspaceApiKeyListResponseModel
+from .workspace_api_key_response_model import WorkspaceApiKeyResponseModel
+from .workspace_api_key_response_model_permissions_item import WorkspaceApiKeyResponseModelPermissionsItem
 from .workspace_batch_calls_response import WorkspaceBatchCallsResponse
+from .workspace_create_api_key_response_model import WorkspaceCreateApiKeyResponseModel
 from .workspace_group_by_name_response_model import WorkspaceGroupByNameResponseModel
 from .workspace_resource_type import WorkspaceResourceType
+from .workspace_service_account_list_response_model import WorkspaceServiceAccountListResponseModel
+from .workspace_service_account_response_model import WorkspaceServiceAccountResponseModel
 from .workspace_webhook_list_response_model import WorkspaceWebhookListResponseModel
 from .workspace_webhook_response_model import WorkspaceWebhookResponseModel
 from .workspace_webhook_usage_response_model import WorkspaceWebhookUsageResponseModel
@@ -843,33 +868,29 @@ __all__ = [
     "BatchCallRecipientStatus",
     "BatchCallResponse",
     "BatchCallStatus",
-    "BodyAddChapterToAProjectV1ProjectsProjectIdChaptersAddPost",
-    "BodyAddProjectV1ProjectsAddPostApplyTextNormalization",
-    "BodyAddProjectV1ProjectsAddPostFiction",
-    "BodyAddProjectV1ProjectsAddPostSourceType",
-    "BodyAddProjectV1ProjectsAddPostTargetAudience",
-    "BodyAddToKnowledgeBaseV1ConvaiAddToKnowledgeBasePost",
-    "BodyAddToKnowledgeBaseV1ConvaiAgentsAgentIdAddToKnowledgeBasePost",
-    "BodyCreatePodcastV1ProjectsPodcastCreatePost",
-    "BodyCreatePodcastV1ProjectsPodcastCreatePostDurationScale",
-    "BodyCreatePodcastV1ProjectsPodcastCreatePostMode",
-    "BodyCreatePodcastV1ProjectsPodcastCreatePostMode_Bulletin",
-    "BodyCreatePodcastV1ProjectsPodcastCreatePostMode_Conversation",
-    "BodyCreatePodcastV1ProjectsPodcastCreatePostQualityPreset",
-    "BodyCreatePodcastV1ProjectsPodcastCreatePostSource",
-    "BodyCreatePodcastV1ProjectsPodcastCreatePostSourceItem",
-    "BodyCreatePodcastV1ProjectsPodcastCreatePostSourceItem_Text",
-    "BodyCreatePodcastV1ProjectsPodcastCreatePostSourceItem_Url",
-    "BodyEditBasicProjectInfoV1ProjectsProjectIdPost",
-    "BodyEditChapterV1ProjectsProjectIdChaptersChapterIdPatch",
-    "BodyEditProjectContentV1ProjectsProjectIdContentPost",
     "BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostAge",
     "BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostGender",
-    "BodyStreamChapterAudioV1ProjectsProjectIdChaptersChapterIdSnapshotsChapterSnapshotIdStreamPost",
-    "BodyStreamProjectAudioV1ProjectsProjectIdSnapshotsProjectSnapshotIdStreamPost",
     "BreakdownTypes",
     "BuiltInToolsInput",
     "BuiltInToolsOutput",
+    "CaptionStyleCharacterAnimationModel",
+    "CaptionStyleCharacterAnimationModelEnterType",
+    "CaptionStyleCharacterAnimationModelExitType",
+    "CaptionStyleHorizontalPlacementModel",
+    "CaptionStyleHorizontalPlacementModelAlign",
+    "CaptionStyleModel",
+    "CaptionStyleModelTextAlign",
+    "CaptionStyleModelTextStyle",
+    "CaptionStyleModelTextWeight",
+    "CaptionStyleSectionAnimationModel",
+    "CaptionStyleSectionAnimationModelEnterType",
+    "CaptionStyleSectionAnimationModelExitType",
+    "CaptionStyleTemplateModel",
+    "CaptionStyleVerticalPlacementModel",
+    "CaptionStyleVerticalPlacementModelAlign",
+    "CaptionStyleWordAnimationModel",
+    "CaptionStyleWordAnimationModelEnterType",
+    "CaptionStyleWordAnimationModelExitType",
     "ChapterContentBlockExtendableNodeResponseModel",
     "ChapterContentBlockInputModel",
     "ChapterContentBlockInputModelSubType",
@@ -935,9 +956,25 @@ __all__ = [
     "ConversationHistoryTranscriptCommonModelInput",
     "ConversationHistoryTranscriptCommonModelInputRole",
     "ConversationHistoryTranscriptCommonModelInputSourceMedium",
+    "ConversationHistoryTranscriptCommonModelInputToolResultsItem",
     "ConversationHistoryTranscriptCommonModelOutput",
     "ConversationHistoryTranscriptCommonModelOutputRole",
     "ConversationHistoryTranscriptCommonModelOutputSourceMedium",
+    "ConversationHistoryTranscriptCommonModelOutputToolResultsItem",
+    "ConversationHistoryTranscriptOtherToolsResultCommonModel",
+    "ConversationHistoryTranscriptOtherToolsResultCommonModelType",
+    "ConversationHistoryTranscriptSystemToolResultCommonModel",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelResult",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelResult_EndCallSuccess",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelResult_LanguageDetectionSuccess",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelResult_PlayDtmfError",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelResult_PlayDtmfSuccess",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelResult_SkipTurnSuccess",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToAgentError",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToAgentSuccess",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToNumberError",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToNumberSipSuccess",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToNumberTwilioSuccess",
     "ConversationHistoryTranscriptToolCallClientDetails",
     "ConversationHistoryTranscriptToolCallCommonModel",
     "ConversationHistoryTranscriptToolCallCommonModelToolDetails",
@@ -946,7 +983,6 @@ __all__ = [
     "ConversationHistoryTranscriptToolCallCommonModelToolDetails_Webhook",
     "ConversationHistoryTranscriptToolCallMcpDetails",
     "ConversationHistoryTranscriptToolCallWebhookDetails",
-    "ConversationHistoryTranscriptToolResultCommonModel",
     "ConversationHistoryTwilioPhoneCallModel",
     "ConversationHistoryTwilioPhoneCallModelDirection",
     "ConversationInitiationClientDataConfigInput",
@@ -960,6 +996,7 @@ __all__ = [
     "ConversationInitiationClientDataWebhook",
     "ConversationInitiationClientDataWebhookRequestHeadersValue",
     "ConversationInitiationSource",
+    "ConversationInitiationSourceInfo",
     "ConversationSignedUrlResponseModel",
     "ConversationSimulationSpecification",
     "ConversationSimulationSpecificationDynamicVariablesValue",
@@ -1016,6 +1053,8 @@ __all__ = [
     "DubbingMetadataResponse",
     "DubbingRenderResponseModel",
     "DubbingResource",
+    "DynamicVariableAssignment",
+    "DynamicVariableUpdateCommonModel",
     "DynamicVariablesConfig",
     "DynamicVariablesConfigDynamicVariablePlaceholdersValue",
     "EditChapterResponseModel",
@@ -1026,6 +1065,7 @@ __all__ = [
     "EmbedVariant",
     "EmbeddingModelEnum",
     "EndCallToolConfig",
+    "EndCallToolResultModel",
     "EvaluationSettings",
     "EvaluationSuccessResult",
     "ExportOptions",
@@ -1139,6 +1179,7 @@ __all__ = [
     "KnowledgeBaseLocator",
     "LanguageAddedResponse",
     "LanguageDetectionToolConfig",
+    "LanguageDetectionToolResultModel",
     "LanguagePresetInput",
     "LanguagePresetOutput",
     "LanguagePresetTranslation",
@@ -1188,6 +1229,7 @@ __all__ = [
     "ModerationStatusResponseModel",
     "ModerationStatusResponseModelSafetyStatus",
     "ModerationStatusResponseModelWarningStatus",
+    "MultichannelSpeechToTextResponseModel",
     "NormalizedAlignment",
     "ObjectJsonSchemaPropertyInput",
     "ObjectJsonSchemaPropertyInputPropertiesValue",
@@ -1205,6 +1247,8 @@ __all__ = [
     "PhoneNumberTransferTransferDestination",
     "PhoneNumberTransferTransferDestination_Phone",
     "PhoneNumberTransferTransferDestination_SipUri",
+    "PlayDtmfResultErrorModel",
+    "PlayDtmfResultSuccessModel",
     "PlayDtmfToolConfig",
     "PodcastBulletinMode",
     "PodcastBulletinModeData",
@@ -1288,10 +1332,12 @@ __all__ = [
     "SafetyEvaluation",
     "SafetyResponseModel",
     "SafetyRule",
+    "SaveVoicePreviewRequest",
     "SecretDependencyType",
     "SegmentCreateResponse",
     "SegmentDeleteResponse",
     "SegmentDubResponse",
+    "SegmentSubtitleFrame",
     "SegmentTranscriptionResponse",
     "SegmentTranslationResponse",
     "SegmentUpdateResponse",
@@ -1309,6 +1355,7 @@ __all__ = [
     "SipTrunkTransportEnum",
     "SipUriTransferDestination",
     "SkipTurnToolConfig",
+    "SkipTurnToolResponseModel",
     "SpeakerAudioResponseModel",
     "SpeakerResponseModel",
     "SpeakerSegment",
@@ -1344,6 +1391,7 @@ __all__ = [
     "SystemToolConfigInputParams_SkipTurn",
     "SystemToolConfigInputParams_TransferToAgent",
     "SystemToolConfigInputParams_TransferToNumber",
+    "SystemToolConfigInputParams_VoicemailDetection",
     "SystemToolConfigOutput",
     "SystemToolConfigOutputParams",
     "SystemToolConfigOutputParams_EndCall",
@@ -1352,10 +1400,12 @@ __all__ = [
     "SystemToolConfigOutputParams_SkipTurn",
     "SystemToolConfigOutputParams_TransferToAgent",
     "SystemToolConfigOutputParams_TransferToNumber",
+    "SystemToolConfigOutputParams_VoicemailDetection",
     "TelephonyProvider",
     "TextToSpeechApplyTextNormalizationEnum",
     "TextToSpeechOutputFormatEnum",
     "TextToSpeechStreamRequest",
+    "TokenResponseModel",
     "Tool",
     "ToolAnnotations",
     "ToolMockConfig",
@@ -1371,8 +1421,15 @@ __all__ = [
     "ToolResponseModelToolConfig_Mcp",
     "ToolResponseModelToolConfig_System",
     "ToolResponseModelToolConfig_Webhook",
+    "ToolType",
+    "ToolUsageStatsResponseModel",
     "ToolsResponseModel",
     "TransferToAgentToolConfig",
+    "TransferToAgentToolResultErrorModel",
+    "TransferToAgentToolResultSuccessModel",
+    "TransferToNumberResultErrorModel",
+    "TransferToNumberResultSipSuccessModel",
+    "TransferToNumberResultTwilioSuccessModel",
     "TransferToNumberToolConfigInput",
     "TransferToNumberToolConfigOutput",
     "TransferTypeEnum",
@@ -1421,6 +1478,7 @@ __all__ = [
     "VoiceSharingResponseModelCategory",
     "VoiceSharingState",
     "VoiceVerificationResponse",
+    "VoicemailDetectionToolConfig",
     "WebhookAuthMethodType",
     "WebhookToolApiSchemaConfigInput",
     "WebhookToolApiSchemaConfigInputMethod",
@@ -1454,9 +1512,15 @@ __all__ = [
     "WidgetPlacement",
     "WidgetStyles",
     "WidgetTextContents",
+    "WorkspaceApiKeyListResponseModel",
+    "WorkspaceApiKeyResponseModel",
+    "WorkspaceApiKeyResponseModelPermissionsItem",
     "WorkspaceBatchCallsResponse",
+    "WorkspaceCreateApiKeyResponseModel",
     "WorkspaceGroupByNameResponseModel",
     "WorkspaceResourceType",
+    "WorkspaceServiceAccountListResponseModel",
+    "WorkspaceServiceAccountResponseModel",
     "WorkspaceWebhookListResponseModel",
     "WorkspaceWebhookResponseModel",
     "WorkspaceWebhookUsageResponseModel",

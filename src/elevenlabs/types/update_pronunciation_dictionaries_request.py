@@ -2,28 +2,4 @@
 
 import typing
 
-import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
-from .pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
-
-
-class UpdatePronunciationDictionariesRequest(UncheckedBaseModel):
-    pronunciation_dictionary_locators: typing.List[PronunciationDictionaryVersionLocator] = pydantic.Field()
-    """
-    A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text. A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
-    """
-
-    invalidate_affected_text: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    This will automatically mark text in this project for reconversion when the new dictionary applies or the old one no longer does.
-    """
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+UpdatePronunciationDictionariesRequest = typing.Optional[typing.Any]

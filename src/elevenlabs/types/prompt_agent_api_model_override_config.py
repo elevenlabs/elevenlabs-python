@@ -13,6 +13,11 @@ class PromptAgentApiModelOverrideConfig(UncheckedBaseModel):
     Whether to allow overriding the prompt field.
     """
 
+    native_mcp_server_ids: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to allow overriding the native_mcp_server_ids field.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

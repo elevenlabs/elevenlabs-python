@@ -10,11 +10,14 @@ from ...core.jsonable_encoder import jsonable_encoder
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
+from ...types.conversation_initiation_source import ConversationInitiationSource
 from ...types.conversation_signed_url_response_model import ConversationSignedUrlResponseModel
 from ...types.evaluation_success_result import EvaluationSuccessResult
 from ...types.get_conversation_response_model import GetConversationResponseModel
 from ...types.get_conversations_page_response_model import GetConversationsPageResponseModel
 from ...types.http_validation_error import HttpValidationError
+from ...types.token_response_model import TokenResponseModel
+from .types.conversations_list_request_summary_mode import ConversationsListRequestSummaryMode
 
 
 class RawConversationsClient:
@@ -74,6 +77,77 @@ class RawConversationsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def get_webrtc_token(
+        self,
+        *,
+        agent_id: str,
+        participant_name: typing.Optional[str] = None,
+        source: typing.Optional[ConversationInitiationSource] = None,
+        version: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[TokenResponseModel]:
+        """
+        Get a WebRTC session token for real-time communication.
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of the agent you're taking the action on.
+
+        participant_name : typing.Optional[str]
+            Optional custom participant name. If not provided, user ID will be used
+
+        source : typing.Optional[ConversationInitiationSource]
+            The source of the conversation initiation.
+
+        version : typing.Optional[str]
+            The SDK version number
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[TokenResponseModel]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/convai/conversation/token",
+            method="GET",
+            params={
+                "agent_id": agent_id,
+                "participant_name": participant_name,
+                "source": source,
+                "version": version,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    TokenResponseModel,
+                    construct_type(
+                        type_=TokenResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def list(
         self,
         *,
@@ -82,7 +156,9 @@ class RawConversationsClient:
         call_successful: typing.Optional[EvaluationSuccessResult] = None,
         call_start_before_unix: typing.Optional[int] = None,
         call_start_after_unix: typing.Optional[int] = None,
+        user_id: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
+        summary_mode: typing.Optional[ConversationsListRequestSummaryMode] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetConversationsPageResponseModel]:
         """
@@ -105,8 +181,14 @@ class RawConversationsClient:
         call_start_after_unix : typing.Optional[int]
             Unix timestamp (in seconds) to filter conversations after to this start date.
 
+        user_id : typing.Optional[str]
+            Filter conversations by the user ID who initiated them.
+
         page_size : typing.Optional[int]
             How many conversations to return at maximum. Can not exceed 100, defaults to 30.
+
+        summary_mode : typing.Optional[ConversationsListRequestSummaryMode]
+            Whether to include transcript summaries in the response.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -125,7 +207,9 @@ class RawConversationsClient:
                 "call_successful": call_successful,
                 "call_start_before_unix": call_start_before_unix,
                 "call_start_after_unix": call_start_after_unix,
+                "user_id": user_id,
                 "page_size": page_size,
+                "summary_mode": summary_mode,
             },
             request_options=request_options,
         )
@@ -315,6 +399,77 @@ class AsyncRawConversationsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    async def get_webrtc_token(
+        self,
+        *,
+        agent_id: str,
+        participant_name: typing.Optional[str] = None,
+        source: typing.Optional[ConversationInitiationSource] = None,
+        version: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[TokenResponseModel]:
+        """
+        Get a WebRTC session token for real-time communication.
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of the agent you're taking the action on.
+
+        participant_name : typing.Optional[str]
+            Optional custom participant name. If not provided, user ID will be used
+
+        source : typing.Optional[ConversationInitiationSource]
+            The source of the conversation initiation.
+
+        version : typing.Optional[str]
+            The SDK version number
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[TokenResponseModel]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/convai/conversation/token",
+            method="GET",
+            params={
+                "agent_id": agent_id,
+                "participant_name": participant_name,
+                "source": source,
+                "version": version,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    TokenResponseModel,
+                    construct_type(
+                        type_=TokenResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     async def list(
         self,
         *,
@@ -323,7 +478,9 @@ class AsyncRawConversationsClient:
         call_successful: typing.Optional[EvaluationSuccessResult] = None,
         call_start_before_unix: typing.Optional[int] = None,
         call_start_after_unix: typing.Optional[int] = None,
+        user_id: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
+        summary_mode: typing.Optional[ConversationsListRequestSummaryMode] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetConversationsPageResponseModel]:
         """
@@ -346,8 +503,14 @@ class AsyncRawConversationsClient:
         call_start_after_unix : typing.Optional[int]
             Unix timestamp (in seconds) to filter conversations after to this start date.
 
+        user_id : typing.Optional[str]
+            Filter conversations by the user ID who initiated them.
+
         page_size : typing.Optional[int]
             How many conversations to return at maximum. Can not exceed 100, defaults to 30.
+
+        summary_mode : typing.Optional[ConversationsListRequestSummaryMode]
+            Whether to include transcript summaries in the response.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -366,7 +529,9 @@ class AsyncRawConversationsClient:
                 "call_successful": call_successful,
                 "call_start_before_unix": call_start_before_unix,
                 "call_start_after_unix": call_start_after_unix,
+                "user_id": user_id,
                 "page_size": page_size,
+                "summary_mode": summary_mode,
             },
             request_options=request_options,
         )

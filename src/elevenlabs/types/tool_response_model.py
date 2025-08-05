@@ -9,6 +9,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .resource_access_info import ResourceAccessInfo
 from .tool_response_model_tool_config import ToolResponseModelToolConfig
+from .tool_usage_stats_response_model import ToolUsageStatsResponseModel
 
 
 class ToolResponseModel(UncheckedBaseModel):
@@ -19,6 +20,7 @@ class ToolResponseModel(UncheckedBaseModel):
     """
 
     access_info: ResourceAccessInfo
+    usage_stats: ToolUsageStatsResponseModel
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

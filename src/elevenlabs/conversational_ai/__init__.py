@@ -17,6 +17,7 @@ from . import (
     tools,
     twilio,
 )
+from .conversations import ConversationsListRequestSummaryMode
 from .phone_numbers import (
     PhoneNumbersCreateRequestBody,
     PhoneNumbersCreateRequestBody_SipTrunk,
@@ -33,6 +34,7 @@ from .phone_numbers import (
 )
 
 __all__ = [
+    "ConversationsListRequestSummaryMode",
     "PhoneNumbersCreateRequestBody",
     "PhoneNumbersCreateRequestBody_SipTrunk",
     "PhoneNumbersCreateRequestBody_Twilio",

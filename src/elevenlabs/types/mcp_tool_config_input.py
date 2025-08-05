@@ -7,6 +7,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .dynamic_variable_assignment import DynamicVariableAssignment
 from .integration_type import IntegrationType
 from .mcp_approval_policy import McpApprovalPolicy
 
@@ -21,6 +22,21 @@ class McpToolConfigInput(UncheckedBaseModel):
     response_timeout_secs: typing.Optional[int] = pydantic.Field(default=None)
     """
     The maximum time in seconds to wait for the tool call to complete.
+    """
+
+    disable_interruptions: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If true, the user will not be able to interrupt the agent while this tool is running.
+    """
+
+    force_pre_tool_speech: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If true, the agent will speak before the tool call.
+    """
+
+    assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = pydantic.Field(default=None)
+    """
+    Configuration for extracting values from tool responses and assigning them to dynamic variables
     """
 
     integration_type: IntegrationType = pydantic.Field()

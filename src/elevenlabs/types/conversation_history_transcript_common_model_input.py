@@ -9,8 +9,10 @@ from .conversation_history_transcript_common_model_input_role import Conversatio
 from .conversation_history_transcript_common_model_input_source_medium import (
     ConversationHistoryTranscriptCommonModelInputSourceMedium,
 )
+from .conversation_history_transcript_common_model_input_tool_results_item import (
+    ConversationHistoryTranscriptCommonModelInputToolResultsItem,
+)
 from .conversation_history_transcript_tool_call_common_model import ConversationHistoryTranscriptToolCallCommonModel
-from .conversation_history_transcript_tool_result_common_model import ConversationHistoryTranscriptToolResultCommonModel
 from .conversation_turn_metrics import ConversationTurnMetrics
 from .llm_usage_input import LlmUsageInput
 from .rag_retrieval_info import RagRetrievalInfo
@@ -21,7 +23,7 @@ class ConversationHistoryTranscriptCommonModelInput(UncheckedBaseModel):
     role: ConversationHistoryTranscriptCommonModelInputRole
     message: typing.Optional[str] = None
     tool_calls: typing.Optional[typing.List[ConversationHistoryTranscriptToolCallCommonModel]] = None
-    tool_results: typing.Optional[typing.List[ConversationHistoryTranscriptToolResultCommonModel]] = None
+    tool_results: typing.Optional[typing.List[ConversationHistoryTranscriptCommonModelInputToolResultsItem]] = None
     feedback: typing.Optional[UserFeedback] = None
     llm_override: typing.Optional[str] = None
     time_in_call_secs: int

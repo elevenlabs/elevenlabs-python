@@ -18,6 +18,8 @@ class ConversationSummaryResponseModel(UncheckedBaseModel):
     message_count: int
     status: ConversationSummaryResponseModelStatus
     call_successful: EvaluationSuccessResult
+    transcript_summary: typing.Optional[str] = None
+    call_summary_title: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

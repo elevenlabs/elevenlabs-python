@@ -89,6 +89,7 @@ class VoicesClient:
         fine_tuning_state: typing.Optional[str] = None,
         collection_id: typing.Optional[str] = None,
         include_total_count: typing.Optional[bool] = None,
+        voice_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetVoicesV2Response:
         """
@@ -126,6 +127,9 @@ class VoicesClient:
         include_total_count : typing.Optional[bool]
             Whether to include the total count of voices found in the response. Incurs a performance cost.
 
+        voice_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Voice IDs to lookup by. Maximum 100 voice IDs.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -156,6 +160,7 @@ class VoicesClient:
             fine_tuning_state=fine_tuning_state,
             collection_id=collection_id,
             include_total_count=include_total_count,
+            voice_ids=voice_ids,
             request_options=request_options,
         )
         return _response.data
@@ -590,6 +595,7 @@ class AsyncVoicesClient:
         fine_tuning_state: typing.Optional[str] = None,
         collection_id: typing.Optional[str] = None,
         include_total_count: typing.Optional[bool] = None,
+        voice_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetVoicesV2Response:
         """
@@ -626,6 +632,9 @@ class AsyncVoicesClient:
 
         include_total_count : typing.Optional[bool]
             Whether to include the total count of voices found in the response. Incurs a performance cost.
+
+        voice_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Voice IDs to lookup by. Maximum 100 voice IDs.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -665,6 +674,7 @@ class AsyncVoicesClient:
             fine_tuning_state=fine_tuning_state,
             collection_id=collection_id,
             include_total_count=include_total_count,
+            voice_ids=voice_ids,
             request_options=request_options,
         )
         return _response.data

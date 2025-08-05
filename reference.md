@@ -1,4 +1,64 @@
 # Reference
+<details><summary><code>client.<a href="src/elevenlabs/base_client.py">save_a_voice_preview</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Add a generated voice to the voice library.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.save_a_voice_preview()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## History
 <details><summary><code>client.history.<a href="src/elevenlabs/history/client.py">list</a>(...)</code></summary>
 <dl>
@@ -599,7 +659,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**apply_text_normalization:** `typing.Optional[BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' or 'eleven_flash_v2_5' models.
+**apply_text_normalization:** `typing.Optional[BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
     
 </dd>
 </dl>
@@ -809,7 +869,7 @@ Defaults to None.
 
 **apply_text_normalization:** `typing.Optional[
     BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization
-]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' or 'eleven_flash_v2_5' models.
+]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
     
 </dd>
 </dl>
@@ -1021,7 +1081,7 @@ Defaults to None.
 
 **apply_text_normalization:** `typing.Optional[
     BodyTextToSpeechStreamingV1TextToSpeechVoiceIdStreamPostApplyTextNormalization
-]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' or 'eleven_flash_v2_5' models.
+]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
     
 </dd>
 </dl>
@@ -1235,7 +1295,7 @@ Defaults to None.
 
 **apply_text_normalization:** `typing.Optional[
     BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization
-]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' or 'eleven_flash_v2_5' models.
+]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
     
 </dd>
 </dl>
@@ -1940,110 +2000,6 @@ client.text_to_voice.create_previews(
 </dl>
 </details>
 
-<details><summary><code>client.text_to_voice.<a href="src/elevenlabs/text_to_voice/client.py">create_voice_from_preview</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Add a generated voice to the voice library.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.text_to_voice.create_voice_from_preview(
-    voice_name="Sassy squeaky mouse",
-    voice_description="A sassy squeaky mouse",
-    generated_voice_id="37HceQefKmEi3bGovXjL",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**voice_name:** `str` — Name to use for the created voice.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**voice_description:** `str` — Description to use for the created voice.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**generated_voice_id:** `str` — The generated_voice_id to create, call POST /v1/text-to-voice/create-previews and fetch the generated_voice_id from the response header if don't have one yet.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**labels:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` — Optional, metadata to add to the created voice. Defaults to None.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**played_not_selected_voice_ids:** `typing.Optional[typing.Sequence[str]]` — List of voice ids that the user has played but not selected. Used for RLHF.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.text_to_voice.<a href="src/elevenlabs/text_to_voice/client.py">create</a>(...)</code></summary>
 <dl>
 <dd>
@@ -2263,6 +2219,22 @@ client.text_to_voice.design(
 <dd>
 
 **stream_previews:** `typing.Optional[bool]` — Determines whether the Text to Voice previews should be included in the response. If true, only the generated IDs will be returned which can then be streamed via the /v1/text-to-voice/:generated_voice_id/stream endpoint.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**remixing_session_id:** `typing.Optional[str]` — The remixing session id.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**remixing_session_iteration_id:** `typing.Optional[str]` — The id of the remixing session iteration where these generations should be attached to. If not provided, a new iteration will be created.
     
 </dd>
 </dl>
@@ -2559,6 +2531,14 @@ client.voices.search(
 <dd>
 
 **include_total_count:** `typing.Optional[bool]` — Whether to include the total count of voices found in the response. Incurs a performance cost.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**voice_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Voice IDs to lookup by. Maximum 100 voice IDs.
     
 </dd>
 </dl>
@@ -3519,7 +3499,7 @@ client.dubbing.list()
 <dl>
 <dd>
 
-**dubbing_status:** `typing.Optional[DubbingListRequestDubbingStatus]` — Status of the dubbing, either 'in_progress', 'completed' or 'failed'.
+**dubbing_status:** `typing.Optional[DubbingListRequestDubbingStatus]` — What state the dub is currently in.
     
 </dd>
 </dl>
@@ -3660,6 +3640,14 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dd>
 
 **target_lang:** `typing.Optional[str]` — The Target language to dub the content into.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**target_accent:** `typing.Optional[str]` — [Experimental] An accent to apply when selecting voices from the library and to use to inform translation of the dialect to prefer.
     
 </dd>
 </dl>
@@ -4777,6 +4765,67 @@ client.pronunciation_dictionaries.list()
 </dl>
 </details>
 
+## ServiceAccounts
+<details><summary><code>client.service_accounts.<a href="src/elevenlabs/service_accounts/client.py">list</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all service accounts in the workspace
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.service_accounts.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Webhooks
 <details><summary><code>client.webhooks.<a href="src/elevenlabs/webhooks/client.py">list</a>(...)</code></summary>
 <dl>
@@ -4861,7 +4910,7 @@ client.webhooks.list(
 <dl>
 <dd>
 
-Transcribe an audio or video file. If webhook is set to true, the request will be processed asynchronously and results sent to configured webhooks.
+Transcribe an audio or video file. If webhook is set to true, the request will be processed asynchronously and results sent to configured webhooks. When use_multi_channel is true and the provided audio has multiple channels, a 'transcripts' object with separate transcripts for each channel is returned. Otherwise, returns a single transcript.
 </dd>
 </dl>
 </dd>
@@ -5022,6 +5071,14 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dd>
 
 **seed:** `typing.Optional[int]` — If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be an integer between 0 and 2147483647.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_multi_channel:** `typing.Optional[bool]` — Whether the audio file contains multiple channels where each channel contains a single speaker. When enabled, each channel will be transcribed independently and the results will be combined. Each word in the response will include a 'channel_index' field indicating which channel it was spoken on. A maximum of 5 channels is supported.
     
 </dd>
 </dl>
@@ -5593,6 +5650,100 @@ client.conversational_ai.conversations.get_signed_url(
 </dl>
 </details>
 
+<details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">get_webrtc_token</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a WebRTC session token for real-time communication.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.conversations.get_webrtc_token(
+    agent_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of the agent you're taking the action on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**participant_name:** `typing.Optional[str]` — Optional custom participant name. If not provided, user ID will be used
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**source:** `typing.Optional[ConversationInitiationSource]` — The source of the conversation initiation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version:** `typing.Optional[str]` — The SDK version number
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
@@ -5681,7 +5832,23 @@ client.conversational_ai.conversations.list()
 <dl>
 <dd>
 
+**user_id:** `typing.Optional[str]` — Filter conversations by the user ID who initiated them.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **page_size:** `typing.Optional[int]` — How many conversations to return at maximum. Can not exceed 100, defaults to 30.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**summary_mode:** `typing.Optional[ConversationsListRequestSummaryMode]` — Whether to include transcript summaries in the response.
     
 </dd>
 </dl>
@@ -6533,6 +6700,14 @@ client.conversational_ai.agents.simulate_conversation(
 <dl>
 <dd>
 
+**new_turns_limit:** `typing.Optional[int]` — Maximum number of new turns to generate in the conversation simulation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -6618,6 +6793,14 @@ client.conversational_ai.agents.simulate_conversation_stream(
 <dd>
 
 **extra_evaluation_criteria:** `typing.Optional[typing.Sequence[PromptEvaluationCriteria]]` — A list of evaluation criteria to test
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**new_turns_limit:** `typing.Optional[int]` — Maximum number of new turns to generate in the conversation simulation
     
 </dd>
 </dl>
@@ -11672,6 +11855,366 @@ client.pronunciation_dictionaries.rules.remove(
 </dl>
 </details>
 
+## ServiceAccounts ApiKeys
+<details><summary><code>client.service_accounts.api_keys.<a href="src/elevenlabs/service_accounts/api_keys/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all API keys for a service account
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.service_accounts.api_keys.list(
+    service_account_user_id="service_account_user_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**service_account_user_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.service_accounts.api_keys.<a href="src/elevenlabs/service_accounts/api_keys/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new API key for a service account
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.service_accounts.api_keys.create(
+    service_account_user_id="service_account_user_id",
+    name="name",
+    permissions=["text_to_speech"],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**service_account_user_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**permissions:** `BodyCreateServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysPostPermissions` — The permissions of the XI API.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**character_limit:** `typing.Optional[int]` — The character limit of the XI API key. If provided this will limit the usage of this api key to n characters per month where n is the chosen value. Requests that incur charges will fail after reaching this monthly limit.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.service_accounts.api_keys.<a href="src/elevenlabs/service_accounts/api_keys/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete an existing API key for a service account
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.service_accounts.api_keys.delete(
+    service_account_user_id="service_account_user_id",
+    api_key_id="api_key_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**service_account_user_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**api_key_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.service_accounts.api_keys.<a href="src/elevenlabs/service_accounts/api_keys/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update an existing API key for a service account
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.service_accounts.api_keys.update(
+    service_account_user_id="service_account_user_id",
+    api_key_id="api_key_id",
+    is_enabled=True,
+    name="Sneaky Fox",
+    permissions=["text_to_speech"],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**service_account_user_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**api_key_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_enabled:** `bool` — Whether to enable or disable the API key.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `str` — The name of the XI API key to use (used for identification purposes only).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**permissions:** `BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissions` — The permissions of the XI API.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**character_limit:** `typing.Optional[int]` — The character limit of the XI API key. If provided this will limit the usage of this api key to n characters per month where n is the chosen value. Requests that incur charges will fail after reaching this monthly limit.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Studio Projects
 <details><summary><code>client.studio.projects.<a href="src/elevenlabs/studio/projects/client.py">list</a>()</code></summary>
 <dl>
@@ -11767,9 +12310,6 @@ client = ElevenLabs(
 )
 client.studio.projects.create(
     name="name",
-    default_title_voice_id="default_title_voice_id",
-    default_paragraph_voice_id="default_paragraph_voice_id",
-    default_model_id="default_model_id",
 )
 
 ```
@@ -11794,7 +12334,7 @@ client.studio.projects.create(
 <dl>
 <dd>
 
-**default_title_voice_id:** `str` — The voice_id that corresponds to the default voice used for new titles.
+**default_title_voice_id:** `typing.Optional[str]` — The voice_id that corresponds to the default voice used for new titles.
     
 </dd>
 </dl>
@@ -11802,7 +12342,7 @@ client.studio.projects.create(
 <dl>
 <dd>
 
-**default_paragraph_voice_id:** `str` — The voice_id that corresponds to the default voice used for new paragraphs.
+**default_paragraph_voice_id:** `typing.Optional[str]` — The voice_id that corresponds to the default voice used for new paragraphs.
     
 </dd>
 </dl>
@@ -11810,7 +12350,7 @@ client.studio.projects.create(
 <dl>
 <dd>
 
-**default_model_id:** `str` — The ID of the model to be used for this Studio project, you can query GET /v1/models to list all available models.
+**default_model_id:** `typing.Optional[str]` — The ID of the model to be used for this Studio project, you can query GET /v1/models to list all available models.
     
 </dd>
 </dl>

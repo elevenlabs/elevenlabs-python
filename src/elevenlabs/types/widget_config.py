@@ -166,6 +166,16 @@ class WidgetConfig(UncheckedBaseModel):
     Whether the user should be able to send text messages
     """
 
+    default_expanded: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the widget should be expanded by default
+    """
+
+    always_expanded: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the widget should always be expanded
+    """
+
     text_contents: typing.Optional[WidgetTextContents] = pydantic.Field(default=None)
     """
     Text contents of the widget

@@ -19,6 +19,7 @@ class ConversationHistoryAnalysisCommonModel(UncheckedBaseModel):
     data_collection_results: typing.Optional[typing.Dict[str, DataCollectionResultCommonModel]] = None
     call_successful: EvaluationSuccessResult
     transcript_summary: str
+    call_summary_title: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

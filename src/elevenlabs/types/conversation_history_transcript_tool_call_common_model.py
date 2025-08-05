@@ -8,10 +8,11 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .conversation_history_transcript_tool_call_common_model_tool_details import (
     ConversationHistoryTranscriptToolCallCommonModelToolDetails,
 )
+from .tool_type import ToolType
 
 
 class ConversationHistoryTranscriptToolCallCommonModel(UncheckedBaseModel):
-    type: typing.Optional[str] = None
+    type: typing.Optional[ToolType] = None
     request_id: str
     tool_name: str
     params_as_json: str

@@ -121,86 +121,6 @@ class RawTextToVoiceClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def create_voice_from_preview(
-        self,
-        *,
-        voice_name: str,
-        voice_description: str,
-        generated_voice_id: str,
-        labels: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
-        played_not_selected_voice_ids: typing.Optional[typing.Sequence[str]] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[Voice]:
-        """
-        Add a generated voice to the voice library.
-
-        Parameters
-        ----------
-        voice_name : str
-            Name to use for the created voice.
-
-        voice_description : str
-            Description to use for the created voice.
-
-        generated_voice_id : str
-            The generated_voice_id to create, call POST /v1/text-to-voice/create-previews and fetch the generated_voice_id from the response header if don't have one yet.
-
-        labels : typing.Optional[typing.Dict[str, typing.Optional[str]]]
-            Optional, metadata to add to the created voice. Defaults to None.
-
-        played_not_selected_voice_ids : typing.Optional[typing.Sequence[str]]
-            List of voice ids that the user has played but not selected. Used for RLHF.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[Voice]
-            Successful Response
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "v1/text-to-voice/create-voice-from-preview",
-            method="POST",
-            json={
-                "voice_name": voice_name,
-                "voice_description": voice_description,
-                "generated_voice_id": generated_voice_id,
-                "labels": labels,
-                "played_not_selected_voice_ids": played_not_selected_voice_ids,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    Voice,
-                    construct_type(
-                        type_=Voice,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
     def create(
         self,
         *,
@@ -293,6 +213,8 @@ class RawTextToVoiceClient:
         seed: typing.Optional[int] = OMIT,
         guidance_scale: typing.Optional[float] = OMIT,
         stream_previews: typing.Optional[bool] = OMIT,
+        remixing_session_id: typing.Optional[str] = OMIT,
+        remixing_session_iteration_id: typing.Optional[str] = OMIT,
         quality: typing.Optional[float] = OMIT,
         reference_audio_base_64: typing.Optional[str] = OMIT,
         prompt_strength: typing.Optional[float] = OMIT,
@@ -330,6 +252,12 @@ class RawTextToVoiceClient:
         stream_previews : typing.Optional[bool]
             Determines whether the Text to Voice previews should be included in the response. If true, only the generated IDs will be returned which can then be streamed via the /v1/text-to-voice/:generated_voice_id/stream endpoint.
 
+        remixing_session_id : typing.Optional[str]
+            The remixing session id.
+
+        remixing_session_iteration_id : typing.Optional[str]
+            The id of the remixing session iteration where these generations should be attached to. If not provided, a new iteration will be created.
+
         quality : typing.Optional[float]
             Higher quality results in better voice output but less variety.
 
@@ -362,6 +290,8 @@ class RawTextToVoiceClient:
                 "seed": seed,
                 "guidance_scale": guidance_scale,
                 "stream_previews": stream_previews,
+                "remixing_session_id": remixing_session_id,
+                "remixing_session_iteration_id": remixing_session_iteration_id,
                 "quality": quality,
                 "reference_audio_base64": reference_audio_base_64,
                 "prompt_strength": prompt_strength,
@@ -500,86 +430,6 @@ class AsyncRawTextToVoiceClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def create_voice_from_preview(
-        self,
-        *,
-        voice_name: str,
-        voice_description: str,
-        generated_voice_id: str,
-        labels: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
-        played_not_selected_voice_ids: typing.Optional[typing.Sequence[str]] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[Voice]:
-        """
-        Add a generated voice to the voice library.
-
-        Parameters
-        ----------
-        voice_name : str
-            Name to use for the created voice.
-
-        voice_description : str
-            Description to use for the created voice.
-
-        generated_voice_id : str
-            The generated_voice_id to create, call POST /v1/text-to-voice/create-previews and fetch the generated_voice_id from the response header if don't have one yet.
-
-        labels : typing.Optional[typing.Dict[str, typing.Optional[str]]]
-            Optional, metadata to add to the created voice. Defaults to None.
-
-        played_not_selected_voice_ids : typing.Optional[typing.Sequence[str]]
-            List of voice ids that the user has played but not selected. Used for RLHF.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[Voice]
-            Successful Response
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "v1/text-to-voice/create-voice-from-preview",
-            method="POST",
-            json={
-                "voice_name": voice_name,
-                "voice_description": voice_description,
-                "generated_voice_id": generated_voice_id,
-                "labels": labels,
-                "played_not_selected_voice_ids": played_not_selected_voice_ids,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    Voice,
-                    construct_type(
-                        type_=Voice,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
     async def create(
         self,
         *,
@@ -672,6 +522,8 @@ class AsyncRawTextToVoiceClient:
         seed: typing.Optional[int] = OMIT,
         guidance_scale: typing.Optional[float] = OMIT,
         stream_previews: typing.Optional[bool] = OMIT,
+        remixing_session_id: typing.Optional[str] = OMIT,
+        remixing_session_iteration_id: typing.Optional[str] = OMIT,
         quality: typing.Optional[float] = OMIT,
         reference_audio_base_64: typing.Optional[str] = OMIT,
         prompt_strength: typing.Optional[float] = OMIT,
@@ -709,6 +561,12 @@ class AsyncRawTextToVoiceClient:
         stream_previews : typing.Optional[bool]
             Determines whether the Text to Voice previews should be included in the response. If true, only the generated IDs will be returned which can then be streamed via the /v1/text-to-voice/:generated_voice_id/stream endpoint.
 
+        remixing_session_id : typing.Optional[str]
+            The remixing session id.
+
+        remixing_session_iteration_id : typing.Optional[str]
+            The id of the remixing session iteration where these generations should be attached to. If not provided, a new iteration will be created.
+
         quality : typing.Optional[float]
             Higher quality results in better voice output but less variety.
 
@@ -741,6 +599,8 @@ class AsyncRawTextToVoiceClient:
                 "seed": seed,
                 "guidance_scale": guidance_scale,
                 "stream_previews": stream_previews,
+                "remixing_session_id": remixing_session_id,
+                "remixing_session_iteration_id": remixing_session_iteration_id,
                 "quality": quality,
                 "reference_audio_base64": reference_audio_base_64,
                 "prompt_strength": prompt_strength,

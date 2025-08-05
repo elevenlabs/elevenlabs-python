@@ -13,8 +13,12 @@ class FeaturesUsageCommonModel(UncheckedBaseModel):
     transfer_to_agent: typing.Optional[FeatureStatusCommonModel] = None
     transfer_to_number: typing.Optional[FeatureStatusCommonModel] = None
     multivoice: typing.Optional[FeatureStatusCommonModel] = None
+    dtmf_tones: typing.Optional[FeatureStatusCommonModel] = None
+    external_mcp_servers: typing.Optional[FeatureStatusCommonModel] = None
     pii_zrm_workspace: typing.Optional[bool] = None
     pii_zrm_agent: typing.Optional[bool] = None
+    tool_dynamic_variable_updates: typing.Optional[FeatureStatusCommonModel] = None
+    is_livekit: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

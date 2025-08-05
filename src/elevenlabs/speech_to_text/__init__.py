@@ -2,6 +2,14 @@
 
 # isort: skip_file
 
-from .types import SpeechToTextConvertRequestFileFormat, SpeechToTextConvertRequestTimestampsGranularity
+from .types import (
+    SpeechToTextConvertRequestFileFormat,
+    SpeechToTextConvertRequestTimestampsGranularity,
+    SpeechToTextConvertResponse,
+)
 
-__all__ = ["SpeechToTextConvertRequestFileFormat", "SpeechToTextConvertRequestTimestampsGranularity"]
+__all__ = [
+    "SpeechToTextConvertRequestFileFormat",
+    "SpeechToTextConvertRequestTimestampsGranularity",
+    "SpeechToTextConvertResponse",
+]

@@ -316,6 +316,7 @@ class AgentsClient:
         *,
         simulation_specification: ConversationSimulationSpecification,
         extra_evaluation_criteria: typing.Optional[typing.Sequence[PromptEvaluationCriteria]] = OMIT,
+        new_turns_limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AgentSimulatedChatTestResponseModel:
         """
@@ -331,6 +332,9 @@ class AgentsClient:
 
         extra_evaluation_criteria : typing.Optional[typing.Sequence[PromptEvaluationCriteria]]
             A list of evaluation criteria to test
+
+        new_turns_limit : typing.Optional[int]
+            Maximum number of new turns to generate in the conversation simulation
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -361,6 +365,7 @@ class AgentsClient:
             agent_id,
             simulation_specification=simulation_specification,
             extra_evaluation_criteria=extra_evaluation_criteria,
+            new_turns_limit=new_turns_limit,
             request_options=request_options,
         )
         return _response.data
@@ -371,6 +376,7 @@ class AgentsClient:
         *,
         simulation_specification: ConversationSimulationSpecification,
         extra_evaluation_criteria: typing.Optional[typing.Sequence[PromptEvaluationCriteria]] = OMIT,
+        new_turns_limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -386,6 +392,9 @@ class AgentsClient:
 
         extra_evaluation_criteria : typing.Optional[typing.Sequence[PromptEvaluationCriteria]]
             A list of evaluation criteria to test
+
+        new_turns_limit : typing.Optional[int]
+            Maximum number of new turns to generate in the conversation simulation
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -415,6 +424,7 @@ class AgentsClient:
             agent_id,
             simulation_specification=simulation_specification,
             extra_evaluation_criteria=extra_evaluation_criteria,
+            new_turns_limit=new_turns_limit,
             request_options=request_options,
         )
         return _response.data
@@ -764,6 +774,7 @@ class AsyncAgentsClient:
         *,
         simulation_specification: ConversationSimulationSpecification,
         extra_evaluation_criteria: typing.Optional[typing.Sequence[PromptEvaluationCriteria]] = OMIT,
+        new_turns_limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AgentSimulatedChatTestResponseModel:
         """
@@ -779,6 +790,9 @@ class AsyncAgentsClient:
 
         extra_evaluation_criteria : typing.Optional[typing.Sequence[PromptEvaluationCriteria]]
             A list of evaluation criteria to test
+
+        new_turns_limit : typing.Optional[int]
+            Maximum number of new turns to generate in the conversation simulation
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -817,6 +831,7 @@ class AsyncAgentsClient:
             agent_id,
             simulation_specification=simulation_specification,
             extra_evaluation_criteria=extra_evaluation_criteria,
+            new_turns_limit=new_turns_limit,
             request_options=request_options,
         )
         return _response.data
@@ -827,6 +842,7 @@ class AsyncAgentsClient:
         *,
         simulation_specification: ConversationSimulationSpecification,
         extra_evaluation_criteria: typing.Optional[typing.Sequence[PromptEvaluationCriteria]] = OMIT,
+        new_turns_limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -842,6 +858,9 @@ class AsyncAgentsClient:
 
         extra_evaluation_criteria : typing.Optional[typing.Sequence[PromptEvaluationCriteria]]
             A list of evaluation criteria to test
+
+        new_turns_limit : typing.Optional[int]
+            Maximum number of new turns to generate in the conversation simulation
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -879,6 +898,7 @@ class AsyncAgentsClient:
             agent_id,
             simulation_specification=simulation_specification,
             extra_evaluation_criteria=extra_evaluation_criteria,
+            new_turns_limit=new_turns_limit,
             request_options=request_options,
         )
         return _response.data

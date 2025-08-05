@@ -77,9 +77,9 @@ class ProjectsClient:
         self,
         *,
         name: str,
-        default_title_voice_id: str,
-        default_paragraph_voice_id: str,
-        default_model_id: str,
+        default_title_voice_id: typing.Optional[str] = OMIT,
+        default_paragraph_voice_id: typing.Optional[str] = OMIT,
+        default_model_id: typing.Optional[str] = OMIT,
         from_url: typing.Optional[str] = OMIT,
         from_document: typing.Optional[core.File] = OMIT,
         from_content_json: typing.Optional[str] = OMIT,
@@ -113,13 +113,13 @@ class ProjectsClient:
         name : str
             The name of the Studio project, used for identification only.
 
-        default_title_voice_id : str
+        default_title_voice_id : typing.Optional[str]
             The voice_id that corresponds to the default voice used for new titles.
 
-        default_paragraph_voice_id : str
+        default_paragraph_voice_id : typing.Optional[str]
             The voice_id that corresponds to the default voice used for new paragraphs.
 
-        default_model_id : str
+        default_model_id : typing.Optional[str]
             The ID of the model to be used for this Studio project, you can query GET /v1/models to list all available models.
 
         from_url : typing.Optional[str]
@@ -276,9 +276,6 @@ class ProjectsClient:
         )
         client.studio.projects.create(
             name="name",
-            default_title_voice_id="default_title_voice_id",
-            default_paragraph_voice_id="default_paragraph_voice_id",
-            default_model_id="default_model_id",
         )
         """
         _response = self._raw_client.create(
@@ -550,9 +547,9 @@ class AsyncProjectsClient:
         self,
         *,
         name: str,
-        default_title_voice_id: str,
-        default_paragraph_voice_id: str,
-        default_model_id: str,
+        default_title_voice_id: typing.Optional[str] = OMIT,
+        default_paragraph_voice_id: typing.Optional[str] = OMIT,
+        default_model_id: typing.Optional[str] = OMIT,
         from_url: typing.Optional[str] = OMIT,
         from_document: typing.Optional[core.File] = OMIT,
         from_content_json: typing.Optional[str] = OMIT,
@@ -586,13 +583,13 @@ class AsyncProjectsClient:
         name : str
             The name of the Studio project, used for identification only.
 
-        default_title_voice_id : str
+        default_title_voice_id : typing.Optional[str]
             The voice_id that corresponds to the default voice used for new titles.
 
-        default_paragraph_voice_id : str
+        default_paragraph_voice_id : typing.Optional[str]
             The voice_id that corresponds to the default voice used for new paragraphs.
 
-        default_model_id : str
+        default_model_id : typing.Optional[str]
             The ID of the model to be used for this Studio project, you can query GET /v1/models to list all available models.
 
         from_url : typing.Optional[str]
@@ -754,9 +751,6 @@ class AsyncProjectsClient:
         async def main() -> None:
             await client.studio.projects.create(
                 name="name",
-                default_title_voice_id="default_title_voice_id",
-                default_paragraph_voice_id="default_paragraph_voice_id",
-                default_model_id="default_model_id",
             )
 
 

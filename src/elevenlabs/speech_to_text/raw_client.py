@@ -14,9 +14,9 @@ from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.additional_formats import AdditionalFormats
 from ..types.http_validation_error import HttpValidationError
-from ..types.speech_to_text_chunk_response_model import SpeechToTextChunkResponseModel
 from .types.speech_to_text_convert_request_file_format import SpeechToTextConvertRequestFileFormat
 from .types.speech_to_text_convert_request_timestamps_granularity import SpeechToTextConvertRequestTimestampsGranularity
+from .types.speech_to_text_convert_response import SpeechToTextConvertResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -45,10 +45,11 @@ class RawSpeechToTextClient:
         webhook_id: typing.Optional[str] = OMIT,
         temperature: typing.Optional[float] = OMIT,
         seed: typing.Optional[int] = OMIT,
+        use_multi_channel: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[SpeechToTextChunkResponseModel]:
+    ) -> HttpResponse[SpeechToTextConvertResponse]:
         """
-        Transcribe an audio or video file. If webhook is set to true, the request will be processed asynchronously and results sent to configured webhooks.
+        Transcribe an audio or video file. If webhook is set to true, the request will be processed asynchronously and results sent to configured webhooks. When use_multi_channel is true and the provided audio has multiple channels, a 'transcripts' object with separate transcripts for each channel is returned. Otherwise, returns a single transcript.
 
         Parameters
         ----------
@@ -100,12 +101,15 @@ class RawSpeechToTextClient:
         seed : typing.Optional[int]
             If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be an integer between 0 and 2147483647.
 
+        use_multi_channel : typing.Optional[bool]
+            Whether the audio file contains multiple channels where each channel contains a single speaker. When enabled, each channel will be transcribed independently and the results will be combined. Each word in the response will include a 'channel_index' field indicating which channel it was spoken on. A maximum of 5 channels is supported.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[SpeechToTextChunkResponseModel]
+        HttpResponse[SpeechToTextConvertResponse]
             Synchronous transcription result
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -128,6 +132,7 @@ class RawSpeechToTextClient:
                 "webhook_id": webhook_id,
                 "temperature": temperature,
                 "seed": seed,
+                "use_multi_channel": use_multi_channel,
             },
             files={
                 **({"file": file} if file is not None else {}),
@@ -144,9 +149,9 @@ class RawSpeechToTextClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    SpeechToTextChunkResponseModel,
+                    SpeechToTextConvertResponse,
                     construct_type(
-                        type_=SpeechToTextChunkResponseModel,  # type: ignore
+                        type_=SpeechToTextConvertResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -191,10 +196,11 @@ class AsyncRawSpeechToTextClient:
         webhook_id: typing.Optional[str] = OMIT,
         temperature: typing.Optional[float] = OMIT,
         seed: typing.Optional[int] = OMIT,
+        use_multi_channel: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[SpeechToTextChunkResponseModel]:
+    ) -> AsyncHttpResponse[SpeechToTextConvertResponse]:
         """
-        Transcribe an audio or video file. If webhook is set to true, the request will be processed asynchronously and results sent to configured webhooks.
+        Transcribe an audio or video file. If webhook is set to true, the request will be processed asynchronously and results sent to configured webhooks. When use_multi_channel is true and the provided audio has multiple channels, a 'transcripts' object with separate transcripts for each channel is returned. Otherwise, returns a single transcript.
 
         Parameters
         ----------
@@ -246,12 +252,15 @@ class AsyncRawSpeechToTextClient:
         seed : typing.Optional[int]
             If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be an integer between 0 and 2147483647.
 
+        use_multi_channel : typing.Optional[bool]
+            Whether the audio file contains multiple channels where each channel contains a single speaker. When enabled, each channel will be transcribed independently and the results will be combined. Each word in the response will include a 'channel_index' field indicating which channel it was spoken on. A maximum of 5 channels is supported.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[SpeechToTextChunkResponseModel]
+        AsyncHttpResponse[SpeechToTextConvertResponse]
             Synchronous transcription result
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -274,6 +283,7 @@ class AsyncRawSpeechToTextClient:
                 "webhook_id": webhook_id,
                 "temperature": temperature,
                 "seed": seed,
+                "use_multi_channel": use_multi_channel,
             },
             files={
                 **({"file": file} if file is not None else {}),
@@ -290,9 +300,9 @@ class AsyncRawSpeechToTextClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    SpeechToTextChunkResponseModel,
+                    SpeechToTextConvertResponse,
                     construct_type(
-                        type_=SpeechToTextChunkResponseModel,  # type: ignore
+                        type_=SpeechToTextConvertResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

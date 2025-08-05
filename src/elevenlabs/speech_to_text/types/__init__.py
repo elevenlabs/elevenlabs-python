@@ -4,5 +4,10 @@
 
 from .speech_to_text_convert_request_file_format import SpeechToTextConvertRequestFileFormat
 from .speech_to_text_convert_request_timestamps_granularity import SpeechToTextConvertRequestTimestampsGranularity
+from .speech_to_text_convert_response import SpeechToTextConvertResponse
 
-__all__ = ["SpeechToTextConvertRequestFileFormat", "SpeechToTextConvertRequestTimestampsGranularity"]
+__all__ = [
+    "SpeechToTextConvertRequestFileFormat",
+    "SpeechToTextConvertRequestTimestampsGranularity",
+    "SpeechToTextConvertResponse",
+]

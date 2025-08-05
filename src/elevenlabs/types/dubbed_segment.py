@@ -6,12 +6,14 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .dubbing_media_reference import DubbingMediaReference
+from .segment_subtitle_frame import SegmentSubtitleFrame
 
 
 class DubbedSegment(UncheckedBaseModel):
     start_time: float
     end_time: float
     text: typing.Optional[str] = None
+    subtitles: typing.List[SegmentSubtitleFrame]
     audio_stale: bool
     media_ref: typing.Optional[DubbingMediaReference] = None
 

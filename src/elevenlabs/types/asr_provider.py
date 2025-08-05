@@ -2,4 +2,4 @@
 
 import typing
 
-AsrProvider = typing.Union[typing.Literal["elevenlabs", "realtime_scribe_v1"], typing.Any]
+AsrProvider = typing.Literal["elevenlabs"]

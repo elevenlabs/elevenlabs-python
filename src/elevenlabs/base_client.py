@@ -7,13 +7,16 @@ from .audio_isolation.client import AsyncAudioIsolationClient, AudioIsolationCli
 from .audio_native.client import AsyncAudioNativeClient, AudioNativeClient
 from .conversational_ai.client import AsyncConversationalAiClient, ConversationalAiClient
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from .core.request_options import RequestOptions
 from .dubbing.client import AsyncDubbingClient, DubbingClient
 from .environment import ElevenLabsEnvironment
 from .forced_alignment.client import AsyncForcedAlignmentClient, ForcedAlignmentClient
 from .history.client import AsyncHistoryClient, HistoryClient
 from .models.client import AsyncModelsClient, ModelsClient
 from .pronunciation_dictionaries.client import AsyncPronunciationDictionariesClient, PronunciationDictionariesClient
+from .raw_base_client import AsyncRawBaseElevenLabs, RawBaseElevenLabs
 from .samples.client import AsyncSamplesClient, SamplesClient
+from .service_accounts.client import AsyncServiceAccountsClient, ServiceAccountsClient
 from .speech_to_speech.client import AsyncSpeechToSpeechClient, SpeechToSpeechClient
 from .speech_to_text.client import AsyncSpeechToTextClient, SpeechToTextClient
 from .studio.client import AsyncStudioClient, StudioClient
@@ -88,6 +91,7 @@ class BaseElevenLabs:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self._raw_client = RawBaseElevenLabs(client_wrapper=self._client_wrapper)
         self.history = HistoryClient(client_wrapper=self._client_wrapper)
         self.text_to_sound_effects = TextToSoundEffectsClient(client_wrapper=self._client_wrapper)
         self.audio_isolation = AudioIsolationClient(client_wrapper=self._client_wrapper)
@@ -104,11 +108,48 @@ class BaseElevenLabs:
         self.audio_native = AudioNativeClient(client_wrapper=self._client_wrapper)
         self.usage = UsageClient(client_wrapper=self._client_wrapper)
         self.pronunciation_dictionaries = PronunciationDictionariesClient(client_wrapper=self._client_wrapper)
+        self.service_accounts = ServiceAccountsClient(client_wrapper=self._client_wrapper)
         self.webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
         self.speech_to_text = SpeechToTextClient(client_wrapper=self._client_wrapper)
         self.forced_alignment = ForcedAlignmentClient(client_wrapper=self._client_wrapper)
         self.conversational_ai = ConversationalAiClient(client_wrapper=self._client_wrapper)
         self.workspace = WorkspaceClient(client_wrapper=self._client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawBaseElevenLabs:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawBaseElevenLabs
+        """
+        return self._raw_client
+
+    def save_a_voice_preview(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Add a generated voice to the voice library.
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.save_a_voice_preview()
+        """
+        _response = self._raw_client.save_a_voice_preview(request_options=request_options)
+        return _response.data
 
 
 class AsyncBaseElevenLabs:
@@ -171,6 +212,7 @@ class AsyncBaseElevenLabs:
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self._raw_client = AsyncRawBaseElevenLabs(client_wrapper=self._client_wrapper)
         self.history = AsyncHistoryClient(client_wrapper=self._client_wrapper)
         self.text_to_sound_effects = AsyncTextToSoundEffectsClient(client_wrapper=self._client_wrapper)
         self.audio_isolation = AsyncAudioIsolationClient(client_wrapper=self._client_wrapper)
@@ -187,11 +229,56 @@ class AsyncBaseElevenLabs:
         self.audio_native = AsyncAudioNativeClient(client_wrapper=self._client_wrapper)
         self.usage = AsyncUsageClient(client_wrapper=self._client_wrapper)
         self.pronunciation_dictionaries = AsyncPronunciationDictionariesClient(client_wrapper=self._client_wrapper)
+        self.service_accounts = AsyncServiceAccountsClient(client_wrapper=self._client_wrapper)
         self.webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
         self.speech_to_text = AsyncSpeechToTextClient(client_wrapper=self._client_wrapper)
         self.forced_alignment = AsyncForcedAlignmentClient(client_wrapper=self._client_wrapper)
         self.conversational_ai = AsyncConversationalAiClient(client_wrapper=self._client_wrapper)
         self.workspace = AsyncWorkspaceClient(client_wrapper=self._client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawBaseElevenLabs:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawBaseElevenLabs
+        """
+        return self._raw_client
+
+    async def save_a_voice_preview(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Add a generated voice to the voice library.
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.save_a_voice_preview()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.save_a_voice_preview(request_options=request_options)
+        return _response.data
 
 
 def _get_base_url(*, base_url: typing.Optional[str] = None, environment: ElevenLabsEnvironment) -> str:

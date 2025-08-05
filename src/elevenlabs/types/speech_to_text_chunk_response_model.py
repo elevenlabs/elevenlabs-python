@@ -34,6 +34,11 @@ class SpeechToTextChunkResponseModel(UncheckedBaseModel):
     List of words with their timing information.
     """
 
+    channel_index: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The channel index this transcript belongs to (for multichannel audio).
+    """
+
     additional_formats: typing.Optional[typing.List[typing.Optional[AdditionalFormatResponseModel]]] = pydantic.Field(
         default=None
     )
