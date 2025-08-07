@@ -5,13 +5,18 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .ban_reason_type import BanReasonType
 
 
-class AgentBan(UncheckedBaseModel):
-    at_unix: int
-    reason: typing.Optional[str] = None
-    reason_type: BanReasonType
+class SpeechToTextWebhookResponseModel(UncheckedBaseModel):
+    message: str = pydantic.Field()
+    """
+    The message of the webhook response.
+    """
+
+    request_id: str = pydantic.Field()
+    """
+    The request ID of the webhook response.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
