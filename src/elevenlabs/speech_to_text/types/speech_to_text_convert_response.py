@@ -4,5 +4,8 @@ import typing
 
 from ...types.multichannel_speech_to_text_response_model import MultichannelSpeechToTextResponseModel
 from ...types.speech_to_text_chunk_response_model import SpeechToTextChunkResponseModel
+from ...types.speech_to_text_webhook_response_model import SpeechToTextWebhookResponseModel
 
-SpeechToTextConvertResponse = typing.Union[SpeechToTextChunkResponseModel, MultichannelSpeechToTextResponseModel]
+SpeechToTextConvertResponse = typing.Union[
+    SpeechToTextChunkResponseModel, MultichannelSpeechToTextResponseModel, SpeechToTextWebhookResponseModel
+]

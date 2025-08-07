@@ -10,8 +10,6 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .dynamic_variable_assignment import DynamicVariableAssignment
 from .dynamic_variables_config import DynamicVariablesConfig
-from .integration_type import IntegrationType
-from .mcp_approval_policy import McpApprovalPolicy
 from .system_tool_config_output_params import SystemToolConfigOutputParams
 from .webhook_tool_api_schema_config_output import WebhookToolApiSchemaConfigOutput
 
@@ -43,34 +41,16 @@ class PromptAgentApiModelOutputToolsItem_Client(UncheckedBaseModel):
 
 
 class PromptAgentApiModelOutputToolsItem_Mcp(UncheckedBaseModel):
-    """
-    The type of tool
-    """
-
+    value: typing.Optional[typing.Any] = None
     type: typing.Literal["mcp"] = "mcp"
-    name: str
-    description: str
-    response_timeout_secs: typing.Optional[int] = None
-    disable_interruptions: typing.Optional[bool] = None
-    force_pre_tool_speech: typing.Optional[bool] = None
-    assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = None
-    integration_type: IntegrationType
-    parameters: typing.Optional["ObjectJsonSchemaPropertyOutput"] = None
-    approval_policy: typing.Optional[McpApprovalPolicy] = None
-    mcp_tool_name: str
-    mcp_tool_description: str
-    mcp_server_id: str
-    mcp_server_name: str
-    mcp_input_schema: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:
             frozen = True
             smart_union = True
-            extra = pydantic.Extra.allow
 
 
 class PromptAgentApiModelOutputToolsItem_System(UncheckedBaseModel):
@@ -135,5 +115,4 @@ PromptAgentApiModelOutputToolsItem = typing_extensions.Annotated[
     UnionMetadata(discriminant="type"),
 ]
 update_forward_refs(PromptAgentApiModelOutputToolsItem_Client)
-update_forward_refs(PromptAgentApiModelOutputToolsItem_Mcp)
 update_forward_refs(PromptAgentApiModelOutputToolsItem_Webhook)

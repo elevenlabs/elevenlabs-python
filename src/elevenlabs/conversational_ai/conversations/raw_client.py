@@ -10,7 +10,6 @@ from ...core.jsonable_encoder import jsonable_encoder
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
-from ...types.conversation_initiation_source import ConversationInitiationSource
 from ...types.conversation_signed_url_response_model import ConversationSignedUrlResponseModel
 from ...types.evaluation_success_result import EvaluationSuccessResult
 from ...types.get_conversation_response_model import GetConversationResponseModel
@@ -82,8 +81,6 @@ class RawConversationsClient:
         *,
         agent_id: str,
         participant_name: typing.Optional[str] = None,
-        source: typing.Optional[ConversationInitiationSource] = None,
-        version: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[TokenResponseModel]:
         """
@@ -96,12 +93,6 @@ class RawConversationsClient:
 
         participant_name : typing.Optional[str]
             Optional custom participant name. If not provided, user ID will be used
-
-        source : typing.Optional[ConversationInitiationSource]
-            The source of the conversation initiation.
-
-        version : typing.Optional[str]
-            The SDK version number
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -117,8 +108,6 @@ class RawConversationsClient:
             params={
                 "agent_id": agent_id,
                 "participant_name": participant_name,
-                "source": source,
-                "version": version,
             },
             request_options=request_options,
         )
@@ -404,8 +393,6 @@ class AsyncRawConversationsClient:
         *,
         agent_id: str,
         participant_name: typing.Optional[str] = None,
-        source: typing.Optional[ConversationInitiationSource] = None,
-        version: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[TokenResponseModel]:
         """
@@ -418,12 +405,6 @@ class AsyncRawConversationsClient:
 
         participant_name : typing.Optional[str]
             Optional custom participant name. If not provided, user ID will be used
-
-        source : typing.Optional[ConversationInitiationSource]
-            The source of the conversation initiation.
-
-        version : typing.Optional[str]
-            The SDK version number
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -439,8 +420,6 @@ class AsyncRawConversationsClient:
             params={
                 "agent_id": agent_id,
                 "participant_name": participant_name,
-                "source": source,
-                "version": version,
             },
             request_options=request_options,
         )

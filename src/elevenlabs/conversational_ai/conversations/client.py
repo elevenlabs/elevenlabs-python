@@ -4,7 +4,6 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
-from ...types.conversation_initiation_source import ConversationInitiationSource
 from ...types.conversation_signed_url_response_model import ConversationSignedUrlResponseModel
 from ...types.evaluation_success_result import EvaluationSuccessResult
 from ...types.get_conversation_response_model import GetConversationResponseModel
@@ -72,8 +71,6 @@ class ConversationsClient:
         *,
         agent_id: str,
         participant_name: typing.Optional[str] = None,
-        source: typing.Optional[ConversationInitiationSource] = None,
-        version: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TokenResponseModel:
         """
@@ -86,12 +83,6 @@ class ConversationsClient:
 
         participant_name : typing.Optional[str]
             Optional custom participant name. If not provided, user ID will be used
-
-        source : typing.Optional[ConversationInitiationSource]
-            The source of the conversation initiation.
-
-        version : typing.Optional[str]
-            The SDK version number
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -113,11 +104,7 @@ class ConversationsClient:
         )
         """
         _response = self._raw_client.get_webrtc_token(
-            agent_id=agent_id,
-            participant_name=participant_name,
-            source=source,
-            version=version,
-            request_options=request_options,
+            agent_id=agent_id, participant_name=participant_name, request_options=request_options
         )
         return _response.data
 
@@ -324,8 +311,6 @@ class AsyncConversationsClient:
         *,
         agent_id: str,
         participant_name: typing.Optional[str] = None,
-        source: typing.Optional[ConversationInitiationSource] = None,
-        version: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TokenResponseModel:
         """
@@ -338,12 +323,6 @@ class AsyncConversationsClient:
 
         participant_name : typing.Optional[str]
             Optional custom participant name. If not provided, user ID will be used
-
-        source : typing.Optional[ConversationInitiationSource]
-            The source of the conversation initiation.
-
-        version : typing.Optional[str]
-            The SDK version number
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -373,11 +352,7 @@ class AsyncConversationsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get_webrtc_token(
-            agent_id=agent_id,
-            participant_name=participant_name,
-            source=source,
-            version=version,
-            request_options=request_options,
+            agent_id=agent_id, participant_name=participant_name, request_options=request_options
         )
         return _response.data
 

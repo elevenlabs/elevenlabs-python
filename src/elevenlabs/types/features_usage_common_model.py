@@ -19,6 +19,7 @@ class FeaturesUsageCommonModel(UncheckedBaseModel):
     pii_zrm_agent: typing.Optional[bool] = None
     tool_dynamic_variable_updates: typing.Optional[FeatureStatusCommonModel] = None
     is_livekit: typing.Optional[bool] = None
+    voicemail_detection: typing.Optional[FeatureStatusCommonModel] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

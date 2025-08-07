@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .conversation_summary_response_model_direction import ConversationSummaryResponseModelDirection
 from .conversation_summary_response_model_status import ConversationSummaryResponseModelStatus
 from .evaluation_success_result import EvaluationSuccessResult
 
@@ -20,6 +21,7 @@ class ConversationSummaryResponseModel(UncheckedBaseModel):
     call_successful: EvaluationSuccessResult
     transcript_summary: typing.Optional[str] = None
     call_summary_title: typing.Optional[str] = None
+    direction: typing.Optional[ConversationSummaryResponseModelDirection] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
