@@ -34,6 +34,7 @@ class UsageClient:
         include_workspace_metrics: typing.Optional[bool] = None,
         breakdown_type: typing.Optional[BreakdownTypes] = None,
         aggregation_interval: typing.Optional[UsageAggregationInterval] = None,
+        aggregation_bucket_size: typing.Optional[int] = None,
         metric: typing.Optional[MetricType] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> UsageCharactersResponseModel:
@@ -56,6 +57,9 @@ class UsageClient:
 
         aggregation_interval : typing.Optional[UsageAggregationInterval]
             How to aggregate usage data over time. Can be "hour", "day", "week", "month", or "cumulative".
+
+        aggregation_bucket_size : typing.Optional[int]
+            Aggregation bucket size in seconds. Overrides the aggregation interval.
 
         metric : typing.Optional[MetricType]
             Which metric to aggregate.
@@ -86,6 +90,7 @@ class UsageClient:
             include_workspace_metrics=include_workspace_metrics,
             breakdown_type=breakdown_type,
             aggregation_interval=aggregation_interval,
+            aggregation_bucket_size=aggregation_bucket_size,
             metric=metric,
             request_options=request_options,
         )
@@ -115,6 +120,7 @@ class AsyncUsageClient:
         include_workspace_metrics: typing.Optional[bool] = None,
         breakdown_type: typing.Optional[BreakdownTypes] = None,
         aggregation_interval: typing.Optional[UsageAggregationInterval] = None,
+        aggregation_bucket_size: typing.Optional[int] = None,
         metric: typing.Optional[MetricType] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> UsageCharactersResponseModel:
@@ -137,6 +143,9 @@ class AsyncUsageClient:
 
         aggregation_interval : typing.Optional[UsageAggregationInterval]
             How to aggregate usage data over time. Can be "hour", "day", "week", "month", or "cumulative".
+
+        aggregation_bucket_size : typing.Optional[int]
+            Aggregation bucket size in seconds. Overrides the aggregation interval.
 
         metric : typing.Optional[MetricType]
             Which metric to aggregate.
@@ -175,6 +184,7 @@ class AsyncUsageClient:
             include_workspace_metrics=include_workspace_metrics,
             breakdown_type=breakdown_type,
             aggregation_interval=aggregation_interval,
+            aggregation_bucket_size=aggregation_bucket_size,
             metric=metric,
             request_options=request_options,
         )

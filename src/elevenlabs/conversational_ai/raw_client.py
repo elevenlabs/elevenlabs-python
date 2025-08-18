@@ -36,7 +36,7 @@ class RawConversationalAiClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AddKnowledgeBaseResponseModel]:
         """
-        Upload a file or webpage URL to create a knowledge base document. <br> <Note> After creating the document, update the agent's knowledge base by calling [Update agent](/docs/conversational-ai/api-reference/agents/update-agent). </Note>
+        Upload a file or webpage URL to create a knowledge base document. <br> <Note> After creating the document, update the agent's knowledge base by calling [Update agent](/docs/api-reference/agents/update). </Note>
 
         Parameters
         ----------
@@ -329,7 +329,7 @@ class AsyncRawConversationalAiClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AddKnowledgeBaseResponseModel]:
         """
-        Upload a file or webpage URL to create a knowledge base document. <br> <Note> After creating the document, update the agent's knowledge base by calling [Update agent](/docs/conversational-ai/api-reference/agents/update-agent). </Note>
+        Upload a file or webpage URL to create a knowledge base document. <br> <Note> After creating the document, update the agent's knowledge base by calling [Update agent](/docs/api-reference/agents/update). </Note>
 
         Parameters
         ----------

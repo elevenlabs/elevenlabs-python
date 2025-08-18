@@ -5,11 +5,13 @@
 from .types import (
     SpeechToTextConvertRequestFileFormat,
     SpeechToTextConvertRequestTimestampsGranularity,
+    SpeechToTextConvertRequestWebhookMetadata,
     SpeechToTextConvertResponse,
 )
 
 __all__ = [
     "SpeechToTextConvertRequestFileFormat",
     "SpeechToTextConvertRequestTimestampsGranularity",
+    "SpeechToTextConvertRequestWebhookMetadata",
     "SpeechToTextConvertResponse",
 ]

@@ -9,6 +9,7 @@ from ..types.additional_formats import AdditionalFormats
 from .raw_client import AsyncRawSpeechToTextClient, RawSpeechToTextClient
 from .types.speech_to_text_convert_request_file_format import SpeechToTextConvertRequestFileFormat
 from .types.speech_to_text_convert_request_timestamps_granularity import SpeechToTextConvertRequestTimestampsGranularity
+from .types.speech_to_text_convert_request_webhook_metadata import SpeechToTextConvertRequestWebhookMetadata
 from .types.speech_to_text_convert_response import SpeechToTextConvertResponse
 
 # this is used as the default value for optional parameters
@@ -50,10 +51,11 @@ class SpeechToTextClient:
         temperature: typing.Optional[float] = OMIT,
         seed: typing.Optional[int] = OMIT,
         use_multi_channel: typing.Optional[bool] = OMIT,
+        webhook_metadata: typing.Optional[SpeechToTextConvertRequestWebhookMetadata] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SpeechToTextConvertResponse:
         """
-        Transcribe an audio or video file. If webhook is set to true, the request will be processed asynchronously and results sent to configured webhooks. When use_multi_channel is true and the provided audio has multiple channels, a 'transcripts' object with separate transcripts for each channel is returned. Otherwise, returns a single transcript.
+        Transcribe an audio or video file. If webhook is set to true, the request will be processed asynchronously and results sent to configured webhooks. When use_multi_channel is true and the provided audio has multiple channels, a 'transcripts' object with separate transcripts for each channel is returned. Otherwise, returns a single transcript. The optional webhook_metadata parameter allows you to attach custom data that will be included in webhook responses for request correlation and tracking.
 
         Parameters
         ----------
@@ -108,6 +110,9 @@ class SpeechToTextClient:
         use_multi_channel : typing.Optional[bool]
             Whether the audio file contains multiple channels where each channel contains a single speaker. When enabled, each channel will be transcribed independently and the results will be combined. Each word in the response will include a 'channel_index' field indicating which channel it was spoken on. A maximum of 5 channels is supported.
 
+        webhook_metadata : typing.Optional[SpeechToTextConvertRequestWebhookMetadata]
+            Optional metadata to be included in the webhook response. This should be a JSON string representing an object with a maximum depth of 2 levels and maximum size of 16KB. Useful for tracking internal IDs, job references, or other contextual information.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -145,6 +150,7 @@ class SpeechToTextClient:
             temperature=temperature,
             seed=seed,
             use_multi_channel=use_multi_channel,
+            webhook_metadata=webhook_metadata,
             request_options=request_options,
         )
         return _response.data
@@ -185,10 +191,11 @@ class AsyncSpeechToTextClient:
         temperature: typing.Optional[float] = OMIT,
         seed: typing.Optional[int] = OMIT,
         use_multi_channel: typing.Optional[bool] = OMIT,
+        webhook_metadata: typing.Optional[SpeechToTextConvertRequestWebhookMetadata] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SpeechToTextConvertResponse:
         """
-        Transcribe an audio or video file. If webhook is set to true, the request will be processed asynchronously and results sent to configured webhooks. When use_multi_channel is true and the provided audio has multiple channels, a 'transcripts' object with separate transcripts for each channel is returned. Otherwise, returns a single transcript.
+        Transcribe an audio or video file. If webhook is set to true, the request will be processed asynchronously and results sent to configured webhooks. When use_multi_channel is true and the provided audio has multiple channels, a 'transcripts' object with separate transcripts for each channel is returned. Otherwise, returns a single transcript. The optional webhook_metadata parameter allows you to attach custom data that will be included in webhook responses for request correlation and tracking.
 
         Parameters
         ----------
@@ -242,6 +249,9 @@ class AsyncSpeechToTextClient:
 
         use_multi_channel : typing.Optional[bool]
             Whether the audio file contains multiple channels where each channel contains a single speaker. When enabled, each channel will be transcribed independently and the results will be combined. Each word in the response will include a 'channel_index' field indicating which channel it was spoken on. A maximum of 5 channels is supported.
+
+        webhook_metadata : typing.Optional[SpeechToTextConvertRequestWebhookMetadata]
+            Optional metadata to be included in the webhook response. This should be a JSON string representing an object with a maximum depth of 2 levels and maximum size of 16KB. Useful for tracking internal IDs, job references, or other contextual information.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -288,6 +298,7 @@ class AsyncSpeechToTextClient:
             temperature=temperature,
             seed=seed,
             use_multi_channel=use_multi_channel,
+            webhook_metadata=webhook_metadata,
             request_options=request_options,
         )
         return _response.data
