@@ -8,6 +8,7 @@ from concurrent.futures import ThreadPoolExecutor
 from enum import Enum
 
 from websockets.sync.client import connect, Connection
+import websockets
 from websockets.exceptions import ConnectionClosedOK
 
 from ..base_client import BaseElevenLabs
@@ -97,6 +98,50 @@ class AudioInterface(ABC):
 
     @abstractmethod
     def interrupt(self):
+        """Interruption signal to stop any audio output.
+
+        User has interrupted the agent and all previosly buffered audio output should
+        be stopped.
+        """
+        pass
+
+
+class AsyncAudioInterface(ABC):
+    """AsyncAudioInterface provides an async abstraction for handling audio input and output."""
+
+    @abstractmethod
+    async def start(self, input_callback: Callable[[bytes], Awaitable[None]]):
+        """Starts the audio interface.
+
+        Called one time before the conversation starts.
+        The `input_callback` should be called regularly with input audio chunks from
+        the user. The audio should be in 16-bit PCM mono format at 16kHz. Recommended
+        chunk size is 4000 samples (250 milliseconds).
+        """
+        pass
+
+    @abstractmethod
+    async def stop(self):
+        """Stops the audio interface.
+
+        Called one time after the conversation ends. Should clean up any resources
+        used by the audio interface and stop any audio streams. Do not call the
+        `input_callback` from `start` after this method is called.
+        """
+        pass
+
+    @abstractmethod
+    async def output(self, audio: bytes):
+        """Output audio to the user.
+
+        The `audio` input is in 16-bit PCM mono format at 16kHz. Implementations can
+        choose to do additional buffering. This method should return quickly and not
+        block the calling thread.
+        """
+        pass
+
+    @abstractmethod
+    async def interrupt(self):
         """Interruption signal to stop any audio output.
 
         User has interrupted the agent and all previosly buffered audio output should
@@ -231,13 +276,60 @@ class ConversationInitiationData:
         self.user_id = user_id
 
 
-class Conversation:
-    client: BaseElevenLabs
-    agent_id: str
-    requires_auth: bool
-    config: ConversationInitiationData
+class BaseConversation:
+    """Base class for conversation implementations with shared parameters and logic."""
+    
+    def __init__(
+        self,
+        client: BaseElevenLabs,
+        agent_id: str,
+        user_id: Optional[str] = None,
+        *,
+        requires_auth: bool,
+        config: Optional[ConversationInitiationData] = None,
+        client_tools: Optional[ClientTools] = None,
+    ):
+        self.client = client
+        self.agent_id = agent_id
+        self.user_id = user_id
+        self.requires_auth = requires_auth
+        self.config = config or ConversationInitiationData()
+        self.client_tools = client_tools or ClientTools()
+        
+        self.client_tools.start()
+        
+        self._conversation_id = None
+        self._last_interrupt_id = 0
+
+    def _get_wss_url(self):
+        base_ws_url = self.client._client_wrapper.get_environment().wss
+        return f"{base_ws_url}/v1/convai/conversation?agent_id={self.agent_id}&source=python_sdk&version={__version__}"
+
+    def _get_signed_url(self):
+        response = self.client.conversational_ai.conversations.get_signed_url(agent_id=self.agent_id)
+        signed_url = response.signed_url
+        # Append source and version query parameters to the signed URL
+        separator = "&" if "?" in signed_url else "?"
+        return f"{signed_url}{separator}source=python_sdk&version={__version__}"
+
+    def _create_initiation_message(self):
+        return json.dumps(
+            {
+                "type": "conversation_initiation_client_data",
+                "custom_llm_extra_body": self.config.extra_body,
+                "conversation_config_override": self.config.conversation_config_override,
+                "dynamic_variables": self.config.dynamic_variables,
+                "source_info": {
+                    "source": "python_sdk",
+                    "version": __version__,
+                },
+                **({"user_id": self.config.user_id} if self.config.user_id else {}),
+            }
+        )
+
+
+class Conversation(BaseConversation):
     audio_interface: AudioInterface
-    client_tools: Optional[ClientTools]
     callback_agent_response: Optional[Callable[[str], None]]
     callback_agent_response_correction: Optional[Callable[[str, str], None]]
     callback_user_transcript: Optional[Callable[[str], None]]
@@ -246,8 +338,6 @@ class Conversation:
 
     _thread: Optional[threading.Thread]
     _should_stop: threading.Event
-    _conversation_id: Optional[str]
-    _last_interrupt_id: int
     _ws: Optional[Connection]
 
     def __init__(
@@ -285,26 +375,25 @@ class Conversation:
             callback_latency_measurement: Callback for latency measurements (in milliseconds).
         """
 
-        self.client = client
-        self.agent_id = agent_id
-        self.user_id = user_id
-        self.requires_auth = requires_auth
+        super().__init__(
+            client=client,
+            agent_id=agent_id,
+            user_id=user_id,
+            requires_auth=requires_auth,
+            config=config,
+            client_tools=client_tools,
+        )
+        
         self.audio_interface = audio_interface
         self.callback_agent_response = callback_agent_response
-        self.config = config or ConversationInitiationData()
-        self.client_tools = client_tools or ClientTools()
         self.callback_agent_response_correction = callback_agent_response_correction
         self.callback_user_transcript = callback_user_transcript
         self.callback_latency_measurement = callback_latency_measurement
         self.callback_end_session = callback_end_session
 
-        self.client_tools.start()
-
         self._thread = None
         self._ws: Optional[Connection] = None
         self._should_stop = threading.Event()
-        self._conversation_id = None
-        self._last_interrupt_id = 0
 
     def start_session(self):
         """Starts the conversation session.
@@ -399,21 +488,7 @@ class Conversation:
     def _run(self, ws_url: str):
         with connect(ws_url, max_size=16 * 1024 * 1024) as ws:
             self._ws = ws
-            ws.send(
-                json.dumps(
-                    {
-                        "type": "conversation_initiation_client_data",
-                        "custom_llm_extra_body": self.config.extra_body,
-                        "conversation_config_override": self.config.conversation_config_override,
-                        "dynamic_variables": self.config.dynamic_variables,
-                        "source_info": {
-                            "source": "python_sdk",
-                            "version": __version__,
-                        },
-                        **({"user_id": self.config.user_id} if self.config.user_id else {}),
-                    }
-                )
-            )
+            ws.send(self._create_initiation_message())
             self._ws = ws
 
             def input_callback(audio):
@@ -503,13 +578,257 @@ class Conversation:
         else:
             pass  # Ignore all other message types.
 
-    def _get_wss_url(self):
-        base_ws_url = self.client._client_wrapper.get_environment().wss
-        return f"{base_ws_url}/v1/convai/conversation?agent_id={self.agent_id}&source=python_sdk&version={__version__}"
 
-    def _get_signed_url(self):
-        response = self.client.conversational_ai.conversations.get_signed_url(agent_id=self.agent_id)
-        signed_url = response.signed_url
-        # Append source and version query parameters to the signed URL
-        separator = "&" if "?" in signed_url else "?"
-        return f"{signed_url}{separator}source=python_sdk&version={__version__}"
+class AsyncConversation(BaseConversation):
+    audio_interface: AsyncAudioInterface
+    callback_agent_response: Optional[Callable[[str], Awaitable[None]]]
+    callback_agent_response_correction: Optional[Callable[[str, str], Awaitable[None]]]
+    callback_user_transcript: Optional[Callable[[str], Awaitable[None]]]
+    callback_latency_measurement: Optional[Callable[[int], Awaitable[None]]]
+    callback_end_session: Optional[Callable[[], Awaitable[None]]]
+
+    _task: Optional[asyncio.Task]
+    _should_stop: asyncio.Event
+    _ws: Optional[websockets.WebSocketClientProtocol]
+
+    def __init__(
+        self,
+        client: BaseElevenLabs,
+        agent_id: str,
+        user_id: Optional[str] = None,
+        *,
+        requires_auth: bool,
+        audio_interface: AsyncAudioInterface,
+        config: Optional[ConversationInitiationData] = None,
+        client_tools: Optional[ClientTools] = None,
+        callback_agent_response: Optional[Callable[[str], Awaitable[None]]] = None,
+        callback_agent_response_correction: Optional[Callable[[str, str], Awaitable[None]]] = None,
+        callback_user_transcript: Optional[Callable[[str], Awaitable[None]]] = None,
+        callback_latency_measurement: Optional[Callable[[int], Awaitable[None]]] = None,
+        callback_end_session: Optional[Callable[[], Awaitable[None]]] = None,
+    ):
+        """Async Conversational AI session.
+
+        BETA: This API is subject to change without regard to backwards compatibility.
+
+        Args:
+            client: The ElevenLabs client to use for the conversation.
+            agent_id: The ID of the agent to converse with.
+            user_id: The ID of the user conversing with the agent.
+            requires_auth: Whether the agent requires authentication.
+            audio_interface: The async audio interface to use for input and output.
+            client_tools: The client tools to use for the conversation.
+            callback_agent_response: Async callback for agent responses.
+            callback_agent_response_correction: Async callback for agent response corrections.
+                First argument is the original response (previously given to
+                callback_agent_response), second argument is the corrected response.
+            callback_user_transcript: Async callback for user transcripts.
+            callback_latency_measurement: Async callback for latency measurements (in milliseconds).
+            callback_end_session: Async callback for when session ends.
+        """
+
+        super().__init__(
+            client=client,
+            agent_id=agent_id,
+            user_id=user_id,
+            requires_auth=requires_auth,
+            config=config,
+            client_tools=client_tools,
+        )
+        
+        self.audio_interface = audio_interface
+        self.callback_agent_response = callback_agent_response
+        self.callback_agent_response_correction = callback_agent_response_correction
+        self.callback_user_transcript = callback_user_transcript
+        self.callback_latency_measurement = callback_latency_measurement
+        self.callback_end_session = callback_end_session
+
+        self._task = None
+        self._ws = None
+        self._should_stop = asyncio.Event()
+
+    async def start_session(self):
+        """Starts the conversation session.
+
+        Will run in background task until `end_session` is called.
+        """
+        ws_url = self._get_signed_url() if self.requires_auth else self._get_wss_url()
+        self._task = asyncio.create_task(self._run(ws_url))
+
+    async def end_session(self):
+        """Ends the conversation session and cleans up resources."""
+        await self.audio_interface.stop()
+        self.client_tools.stop()
+        self._ws = None
+        self._should_stop.set()
+
+        if self.callback_end_session:
+            await self.callback_end_session()
+
+    async def wait_for_session_end(self) -> Optional[str]:
+        """Waits for the conversation session to end.
+
+        You must call `end_session` before calling this method, otherwise it will block.
+
+        Returns the conversation ID, if available.
+        """
+        if not self._task:
+            raise RuntimeError("Session not started.")
+        await self._task
+        return self._conversation_id
+
+    async def send_user_message(self, text: str):
+        """Send a text message from the user to the agent.
+
+        Args:
+            text: The text message to send to the agent.
+
+        Raises:
+            RuntimeError: If the session is not active or websocket is not connected.
+        """
+        if not self._ws:
+            raise RuntimeError("Session not started or websocket not connected.")
+
+        event = UserMessageClientToOrchestratorEvent(text=text)
+        try:
+            await self._ws.send(json.dumps(event.to_dict()))
+        except Exception as e:
+            print(f"Error sending user message: {e}")
+            raise
+
+    async def register_user_activity(self):
+        """Register user activity to prevent session timeout.
+
+        This sends a ping to the orchestrator to reset the timeout timer.
+
+        Raises:
+            RuntimeError: If the session is not active or websocket is not connected.
+        """
+        if not self._ws:
+            raise RuntimeError("Session not started or websocket not connected.")
+
+        event = UserActivityClientToOrchestratorEvent()
+        try:
+            await self._ws.send(json.dumps(event.to_dict()))
+        except Exception as e:
+            print(f"Error registering user activity: {e}")
+            raise
+
+    async def send_contextual_update(self, text: str):
+        """Send a contextual update to the conversation.
+
+        Contextual updates are non-interrupting content that is sent to the server
+        to update the conversation state without directly prompting the agent.
+
+        Args:
+            text: The contextual information to send to the conversation.
+
+        Raises:
+            RuntimeError: If the session is not active or websocket is not connected.
+        """
+        if not self._ws:
+            raise RuntimeError("Session not started or websocket not connected.")
+
+        event = ContextualUpdateClientToOrchestratorEvent(text=text)
+        try:
+            await self._ws.send(json.dumps(event.to_dict()))
+        except Exception as e:
+            print(f"Error sending contextual update: {e}")
+            raise
+
+    async def _run(self, ws_url: str):
+        async with websockets.connect(ws_url, max_size=16 * 1024 * 1024) as ws:
+            self._ws = ws
+            await ws.send(self._create_initiation_message())
+
+            async def input_callback(audio):
+                try:
+                    await ws.send(
+                        json.dumps(
+                            {
+                                "user_audio_chunk": base64.b64encode(audio).decode(),
+                            }
+                        )
+                    )
+                except ConnectionClosedOK:
+                    await self.end_session()
+                except Exception as e:
+                    print(f"Error sending user audio chunk: {e}")
+                    await self.end_session()
+
+            await self.audio_interface.start(input_callback)
+            
+            try:
+                while not self._should_stop.is_set():
+                    try:
+                        message_str = await asyncio.wait_for(ws.recv(), timeout=0.5)
+                        if self._should_stop.is_set():
+                            return
+                        message = json.loads(message_str)
+                        await self._handle_message(message, ws)
+                    except asyncio.TimeoutError:
+                        pass
+                    except ConnectionClosedOK:
+                        await self.end_session()
+                        break
+                    except Exception as e:
+                        print(f"Error receiving message: {e}")
+                        await self.end_session()
+                        break
+            finally:
+                self._ws = None
+
+    async def _handle_message(self, message, ws):
+        if message["type"] == "conversation_initiation_metadata":
+            event = message["conversation_initiation_metadata_event"]
+            assert self._conversation_id is None
+            self._conversation_id = event["conversation_id"]
+
+        elif message["type"] == "audio":
+            event = message["audio_event"]
+            if int(event["event_id"]) <= self._last_interrupt_id:
+                return
+            audio = base64.b64decode(event["audio_base_64"])
+            await self.audio_interface.output(audio)
+        elif message["type"] == "agent_response":
+            if self.callback_agent_response:
+                event = message["agent_response_event"]
+                await self.callback_agent_response(event["agent_response"].strip())
+        elif message["type"] == "agent_response_correction":
+            if self.callback_agent_response_correction:
+                event = message["agent_response_correction_event"]
+                await self.callback_agent_response_correction(
+                    event["original_agent_response"].strip(), event["corrected_agent_response"].strip()
+                )
+        elif message["type"] == "user_transcript":
+            if self.callback_user_transcript:
+                event = message["user_transcription_event"]
+                await self.callback_user_transcript(event["user_transcript"].strip())
+        elif message["type"] == "interruption":
+            event = message["interruption_event"]
+            self._last_interrupt_id = int(event["event_id"])
+            await self.audio_interface.interrupt()
+        elif message["type"] == "ping":
+            event = message["ping_event"]
+            await ws.send(
+                json.dumps(
+                    {
+                        "type": "pong",
+                        "event_id": event["event_id"],
+                    }
+                )
+            )
+            if self.callback_latency_measurement and event["ping_ms"]:
+                await self.callback_latency_measurement(int(event["ping_ms"]))
+        elif message["type"] == "client_tool_call":
+            tool_call = message.get("client_tool_call", {})
+            tool_name = tool_call.get("tool_name")
+            parameters = {"tool_call_id": tool_call["tool_call_id"], **tool_call.get("parameters", {})}
+
+            def send_response(response):
+                if not self._should_stop.is_set():
+                    asyncio.create_task(ws.send(json.dumps(response)))
+
+            self.client_tools.execute_tool(tool_name, parameters, send_response)
+        else:
+            pass  # Ignore all other message types.
