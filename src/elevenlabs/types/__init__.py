@@ -18,7 +18,6 @@ from .add_workspace_invite_response_model import AddWorkspaceInviteResponseModel
 from .additional_format_response_model import AdditionalFormatResponseModel
 from .additional_formats import AdditionalFormats
 from .age import Age
-from .agent_ban import AgentBan
 from .agent_call_limits import AgentCallLimits
 from .agent_config import AgentConfig
 from .agent_config_override import AgentConfigOverride
@@ -58,6 +57,9 @@ from .batch_call_detailed_response import BatchCallDetailedResponse
 from .batch_call_recipient_status import BatchCallRecipientStatus
 from .batch_call_response import BatchCallResponse
 from .batch_call_status import BatchCallStatus
+from .body_compose_music_with_a_detailed_response_v_1_music_detailed_post import (
+    BodyComposeMusicWithADetailedResponseV1MusicDetailedPost,
+)
 from .body_generate_a_random_voice_v_1_voice_generation_generate_voice_post_age import (
     BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostAge,
 )
@@ -196,6 +198,7 @@ from .conversation_history_transcript_system_tool_result_common_model_result imp
     ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToNumberError,
     ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToNumberSipSuccess,
     ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToNumberTwilioSuccess,
+    ConversationHistoryTranscriptSystemToolResultCommonModelResult_VoicemailDetectionSuccess,
 )
 from .conversation_history_transcript_tool_call_client_details import ConversationHistoryTranscriptToolCallClientDetails
 from .conversation_history_transcript_tool_call_common_model import ConversationHistoryTranscriptToolCallCommonModel
@@ -208,6 +211,12 @@ from .conversation_history_transcript_tool_call_common_model_tool_details import
 from .conversation_history_transcript_tool_call_mcp_details import ConversationHistoryTranscriptToolCallMcpDetails
 from .conversation_history_transcript_tool_call_webhook_details import (
     ConversationHistoryTranscriptToolCallWebhookDetails,
+)
+from .conversation_history_transcript_workflow_tools_result_common_model_input import (
+    ConversationHistoryTranscriptWorkflowToolsResultCommonModelInput,
+)
+from .conversation_history_transcript_workflow_tools_result_common_model_output import (
+    ConversationHistoryTranscriptWorkflowToolsResultCommonModelOutput,
 )
 from .conversation_history_twilio_phone_call_model import ConversationHistoryTwilioPhoneCallModel
 from .conversation_history_twilio_phone_call_model_direction import ConversationHistoryTwilioPhoneCallModelDirection
@@ -237,6 +246,7 @@ from .conversation_simulation_specification_dynamic_variables_value import (
     ConversationSimulationSpecificationDynamicVariablesValue,
 )
 from .conversation_summary_response_model import ConversationSummaryResponseModel
+from .conversation_summary_response_model_direction import ConversationSummaryResponseModelDirection
 from .conversation_summary_response_model_status import ConversationSummaryResponseModelStatus
 from .conversation_token_db_model import ConversationTokenDbModel
 from .conversation_token_purpose import ConversationTokenPurpose
@@ -480,8 +490,6 @@ from .mcp_server_transport import McpServerTransport
 from .mcp_servers_response_model import McpServersResponseModel
 from .mcp_tool_approval_hash import McpToolApprovalHash
 from .mcp_tool_approval_policy import McpToolApprovalPolicy
-from .mcp_tool_config_input import McpToolConfigInput
-from .mcp_tool_config_output import McpToolConfigOutput
 from .metric_record import MetricRecord
 from .metric_type import MetricType
 from .model import Model
@@ -492,6 +500,7 @@ from .moderation_status_response_model import ModerationStatusResponseModel
 from .moderation_status_response_model_safety_status import ModerationStatusResponseModelSafetyStatus
 from .moderation_status_response_model_warning_status import ModerationStatusResponseModelWarningStatus
 from .multichannel_speech_to_text_response_model import MultichannelSpeechToTextResponseModel
+from .music_prompt import MusicPrompt
 from .normalized_alignment import NormalizedAlignment
 from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput
 from .object_json_schema_property_input_properties_value import ObjectJsonSchemaPropertyInputPropertiesValue
@@ -626,6 +635,7 @@ from .sip_trunk_transport_enum import SipTrunkTransportEnum
 from .sip_uri_transfer_destination import SipUriTransferDestination
 from .skip_turn_tool_config import SkipTurnToolConfig
 from .skip_turn_tool_response_model import SkipTurnToolResponseModel
+from .song_section import SongSection
 from .speaker_audio_response_model import SpeakerAudioResponseModel
 from .speaker_response_model import SpeakerResponseModel
 from .speaker_segment import SpeakerSegment
@@ -638,6 +648,7 @@ from .speech_history_item_response_model_source import SpeechHistoryItemResponse
 from .speech_history_item_response_model_voice_category import SpeechHistoryItemResponseModelVoiceCategory
 from .speech_to_text_character_response_model import SpeechToTextCharacterResponseModel
 from .speech_to_text_chunk_response_model import SpeechToTextChunkResponseModel
+from .speech_to_text_webhook_response_model import SpeechToTextWebhookResponseModel
 from .speech_to_text_word_response_model import SpeechToTextWordResponseModel
 from .speech_to_text_word_response_model_type import SpeechToTextWordResponseModelType
 from .srt_export_options import SrtExportOptions
@@ -744,6 +755,7 @@ from .voice import Voice
 from .voice_design_preview_response import VoiceDesignPreviewResponse
 from .voice_generation_parameter_option_response import VoiceGenerationParameterOptionResponse
 from .voice_generation_parameter_response import VoiceGenerationParameterResponse
+from .voice_mail_detection_result_success_model import VoiceMailDetectionResultSuccessModel
 from .voice_preview_response_model import VoicePreviewResponseModel
 from .voice_response_model_category import VoiceResponseModelCategory
 from .voice_response_model_safety_control import VoiceResponseModelSafetyControl
@@ -800,6 +812,26 @@ from .widget_language_preset_response import WidgetLanguagePresetResponse
 from .widget_placement import WidgetPlacement
 from .widget_styles import WidgetStyles
 from .widget_text_contents import WidgetTextContents
+from .workflow_tool_edge_step_model import WorkflowToolEdgeStepModel
+from .workflow_tool_max_iterations_exceeded_step_model import WorkflowToolMaxIterationsExceededStepModel
+from .workflow_tool_nested_tools_step_model_input import WorkflowToolNestedToolsStepModelInput
+from .workflow_tool_nested_tools_step_model_input_results_item import WorkflowToolNestedToolsStepModelInputResultsItem
+from .workflow_tool_nested_tools_step_model_output import WorkflowToolNestedToolsStepModelOutput
+from .workflow_tool_nested_tools_step_model_output_results_item import WorkflowToolNestedToolsStepModelOutputResultsItem
+from .workflow_tool_response_model_input import WorkflowToolResponseModelInput
+from .workflow_tool_response_model_input_steps_item import (
+    WorkflowToolResponseModelInputStepsItem,
+    WorkflowToolResponseModelInputStepsItem_Edge,
+    WorkflowToolResponseModelInputStepsItem_MaxIterationsExceeded,
+    WorkflowToolResponseModelInputStepsItem_NestedTools,
+)
+from .workflow_tool_response_model_output import WorkflowToolResponseModelOutput
+from .workflow_tool_response_model_output_steps_item import (
+    WorkflowToolResponseModelOutputStepsItem,
+    WorkflowToolResponseModelOutputStepsItem_Edge,
+    WorkflowToolResponseModelOutputStepsItem_MaxIterationsExceeded,
+    WorkflowToolResponseModelOutputStepsItem_NestedTools,
+)
 from .workspace_api_key_list_response_model import WorkspaceApiKeyListResponseModel
 from .workspace_api_key_response_model import WorkspaceApiKeyResponseModel
 from .workspace_api_key_response_model_permissions_item import WorkspaceApiKeyResponseModelPermissionsItem
@@ -828,7 +860,6 @@ __all__ = [
     "AdditionalFormatResponseModel",
     "AdditionalFormats",
     "Age",
-    "AgentBan",
     "AgentCallLimits",
     "AgentConfig",
     "AgentConfigOverride",
@@ -868,6 +899,7 @@ __all__ = [
     "BatchCallRecipientStatus",
     "BatchCallResponse",
     "BatchCallStatus",
+    "BodyComposeMusicWithADetailedResponseV1MusicDetailedPost",
     "BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostAge",
     "BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostGender",
     "BreakdownTypes",
@@ -975,6 +1007,7 @@ __all__ = [
     "ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToNumberError",
     "ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToNumberSipSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToNumberTwilioSuccess",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelResult_VoicemailDetectionSuccess",
     "ConversationHistoryTranscriptToolCallClientDetails",
     "ConversationHistoryTranscriptToolCallCommonModel",
     "ConversationHistoryTranscriptToolCallCommonModelToolDetails",
@@ -983,6 +1016,8 @@ __all__ = [
     "ConversationHistoryTranscriptToolCallCommonModelToolDetails_Webhook",
     "ConversationHistoryTranscriptToolCallMcpDetails",
     "ConversationHistoryTranscriptToolCallWebhookDetails",
+    "ConversationHistoryTranscriptWorkflowToolsResultCommonModelInput",
+    "ConversationHistoryTranscriptWorkflowToolsResultCommonModelOutput",
     "ConversationHistoryTwilioPhoneCallModel",
     "ConversationHistoryTwilioPhoneCallModelDirection",
     "ConversationInitiationClientDataConfigInput",
@@ -1001,6 +1036,7 @@ __all__ = [
     "ConversationSimulationSpecification",
     "ConversationSimulationSpecificationDynamicVariablesValue",
     "ConversationSummaryResponseModel",
+    "ConversationSummaryResponseModelDirection",
     "ConversationSummaryResponseModelStatus",
     "ConversationTokenDbModel",
     "ConversationTokenPurpose",
@@ -1218,8 +1254,6 @@ __all__ = [
     "McpServersResponseModel",
     "McpToolApprovalHash",
     "McpToolApprovalPolicy",
-    "McpToolConfigInput",
-    "McpToolConfigOutput",
     "MetricRecord",
     "MetricType",
     "Model",
@@ -1230,6 +1264,7 @@ __all__ = [
     "ModerationStatusResponseModelSafetyStatus",
     "ModerationStatusResponseModelWarningStatus",
     "MultichannelSpeechToTextResponseModel",
+    "MusicPrompt",
     "NormalizedAlignment",
     "ObjectJsonSchemaPropertyInput",
     "ObjectJsonSchemaPropertyInputPropertiesValue",
@@ -1356,6 +1391,7 @@ __all__ = [
     "SipUriTransferDestination",
     "SkipTurnToolConfig",
     "SkipTurnToolResponseModel",
+    "SongSection",
     "SpeakerAudioResponseModel",
     "SpeakerResponseModel",
     "SpeakerSegment",
@@ -1368,6 +1404,7 @@ __all__ = [
     "SpeechHistoryItemResponseModelVoiceCategory",
     "SpeechToTextCharacterResponseModel",
     "SpeechToTextChunkResponseModel",
+    "SpeechToTextWebhookResponseModel",
     "SpeechToTextWordResponseModel",
     "SpeechToTextWordResponseModelType",
     "SrtExportOptions",
@@ -1466,6 +1503,7 @@ __all__ = [
     "VoiceDesignPreviewResponse",
     "VoiceGenerationParameterOptionResponse",
     "VoiceGenerationParameterResponse",
+    "VoiceMailDetectionResultSuccessModel",
     "VoicePreviewResponseModel",
     "VoiceResponseModelCategory",
     "VoiceResponseModelSafetyControl",
@@ -1512,6 +1550,22 @@ __all__ = [
     "WidgetPlacement",
     "WidgetStyles",
     "WidgetTextContents",
+    "WorkflowToolEdgeStepModel",
+    "WorkflowToolMaxIterationsExceededStepModel",
+    "WorkflowToolNestedToolsStepModelInput",
+    "WorkflowToolNestedToolsStepModelInputResultsItem",
+    "WorkflowToolNestedToolsStepModelOutput",
+    "WorkflowToolNestedToolsStepModelOutputResultsItem",
+    "WorkflowToolResponseModelInput",
+    "WorkflowToolResponseModelInputStepsItem",
+    "WorkflowToolResponseModelInputStepsItem_Edge",
+    "WorkflowToolResponseModelInputStepsItem_MaxIterationsExceeded",
+    "WorkflowToolResponseModelInputStepsItem_NestedTools",
+    "WorkflowToolResponseModelOutput",
+    "WorkflowToolResponseModelOutputStepsItem",
+    "WorkflowToolResponseModelOutputStepsItem_Edge",
+    "WorkflowToolResponseModelOutputStepsItem_MaxIterationsExceeded",
+    "WorkflowToolResponseModelOutputStepsItem_NestedTools",
     "WorkspaceApiKeyListResponseModel",
     "WorkspaceApiKeyResponseModel",
     "WorkspaceApiKeyResponseModelPermissionsItem",

@@ -8,7 +8,12 @@ from .conversation_history_transcript_other_tools_result_common_model import (
 from .conversation_history_transcript_system_tool_result_common_model import (
     ConversationHistoryTranscriptSystemToolResultCommonModel,
 )
+from .conversation_history_transcript_workflow_tools_result_common_model_output import (
+    ConversationHistoryTranscriptWorkflowToolsResultCommonModelOutput,
+)
 
 ConversationHistoryTranscriptCommonModelOutputToolResultsItem = typing.Union[
-    ConversationHistoryTranscriptOtherToolsResultCommonModel, ConversationHistoryTranscriptSystemToolResultCommonModel
+    ConversationHistoryTranscriptOtherToolsResultCommonModel,
+    ConversationHistoryTranscriptSystemToolResultCommonModel,
+    ConversationHistoryTranscriptWorkflowToolsResultCommonModelOutput,
 ]

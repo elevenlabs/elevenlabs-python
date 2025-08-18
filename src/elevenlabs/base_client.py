@@ -13,6 +13,7 @@ from .environment import ElevenLabsEnvironment
 from .forced_alignment.client import AsyncForcedAlignmentClient, ForcedAlignmentClient
 from .history.client import AsyncHistoryClient, HistoryClient
 from .models.client import AsyncModelsClient, ModelsClient
+from .music.client import AsyncMusicClient, MusicClient
 from .pronunciation_dictionaries.client import AsyncPronunciationDictionariesClient, PronunciationDictionariesClient
 from .raw_base_client import AsyncRawBaseElevenLabs, RawBaseElevenLabs
 from .samples.client import AsyncSamplesClient, SamplesClient
@@ -113,6 +114,7 @@ class BaseElevenLabs:
         self.speech_to_text = SpeechToTextClient(client_wrapper=self._client_wrapper)
         self.forced_alignment = ForcedAlignmentClient(client_wrapper=self._client_wrapper)
         self.conversational_ai = ConversationalAiClient(client_wrapper=self._client_wrapper)
+        self.music = MusicClient(client_wrapper=self._client_wrapper)
         self.workspace = WorkspaceClient(client_wrapper=self._client_wrapper)
 
     @property
@@ -234,6 +236,7 @@ class AsyncBaseElevenLabs:
         self.speech_to_text = AsyncSpeechToTextClient(client_wrapper=self._client_wrapper)
         self.forced_alignment = AsyncForcedAlignmentClient(client_wrapper=self._client_wrapper)
         self.conversational_ai = AsyncConversationalAiClient(client_wrapper=self._client_wrapper)
+        self.music = AsyncMusicClient(client_wrapper=self._client_wrapper)
         self.workspace = AsyncWorkspaceClient(client_wrapper=self._client_wrapper)
 
     @property

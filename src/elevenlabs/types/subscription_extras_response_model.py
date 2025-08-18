@@ -22,12 +22,12 @@ class SubscriptionExtrasResponseModel(UncheckedBaseModel):
 
     convai_chars_per_minute: typing.Optional[int] = pydantic.Field(default=None)
     """
-    The Convai characters per minute of the user.
+    The Convai characters per minute of the user. This field is deprecated and will always return None.
     """
 
     convai_asr_chars_per_minute: typing.Optional[int] = pydantic.Field(default=None)
     """
-    The Convai ASR characters per minute of the user.
+    The Convai ASR characters per minute of the user. This field is deprecated and will always return None.
     """
 
     force_logging_disabled: bool = pydantic.Field()

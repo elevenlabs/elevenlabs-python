@@ -18,6 +18,7 @@ BreakdownTypes = typing.Union[
         "region",
         "subresource_id",
         "reporting_workspace_id",
+        "has_api_key",
     ],
     typing.Any,
 ]

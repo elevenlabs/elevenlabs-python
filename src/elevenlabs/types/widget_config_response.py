@@ -204,6 +204,10 @@ class WidgetConfigResponse(UncheckedBaseModel):
     """
 
     first_message: typing.Optional[str] = None
+    use_rtc: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to use WebRTC for conversation connections
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

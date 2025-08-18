@@ -178,6 +178,22 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToN
             extra = pydantic.Extra.allow
 
 
+class ConversationHistoryTranscriptSystemToolResultCommonModelResult_VoicemailDetectionSuccess(UncheckedBaseModel):
+    result_type: typing.Literal["voicemail_detection_success"] = "voicemail_detection_success"
+    status: typing.Optional[typing.Literal["success"]] = None
+    voicemail_message: typing.Optional[str] = None
+    reason: typing.Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 ConversationHistoryTranscriptSystemToolResultCommonModelResult = typing_extensions.Annotated[
     typing.Union[
         ConversationHistoryTranscriptSystemToolResultCommonModelResult_EndCallSuccess,
@@ -190,6 +206,7 @@ ConversationHistoryTranscriptSystemToolResultCommonModelResult = typing_extensio
         ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToNumberError,
         ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToNumberSipSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToNumberTwilioSuccess,
+        ConversationHistoryTranscriptSystemToolResultCommonModelResult_VoicemailDetectionSuccess,
     ],
     UnionMetadata(discriminant="result_type"),
 ]

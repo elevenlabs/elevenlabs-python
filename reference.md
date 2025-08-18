@@ -4375,6 +4375,14 @@ client.usage.get(
 <dl>
 <dd>
 
+**aggregation_bucket_size:** `typing.Optional[int]` — Aggregation bucket size in seconds. Overrides the aggregation interval.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **metric:** `typing.Optional[MetricType]` — Which metric to aggregate.
     
 </dd>
@@ -4910,7 +4918,7 @@ client.webhooks.list(
 <dl>
 <dd>
 
-Transcribe an audio or video file. If webhook is set to true, the request will be processed asynchronously and results sent to configured webhooks. When use_multi_channel is true and the provided audio has multiple channels, a 'transcripts' object with separate transcripts for each channel is returned. Otherwise, returns a single transcript.
+Transcribe an audio or video file. If webhook is set to true, the request will be processed asynchronously and results sent to configured webhooks. When use_multi_channel is true and the provided audio has multiple channels, a 'transcripts' object with separate transcripts for each channel is returned. Otherwise, returns a single transcript. The optional webhook_metadata parameter allows you to attach custom data that will be included in webhook responses for request correlation and tracking.
 </dd>
 </dl>
 </dd>
@@ -5086,6 +5094,14 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
+**webhook_metadata:** `typing.Optional[SpeechToTextConvertRequestWebhookMetadata]` — Optional metadata to be included in the webhook response. This should be a JSON string representing an object with a maximum depth of 2 levels and maximum size of 16KB. Useful for tracking internal IDs, job references, or other contextual information.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -5200,7 +5216,7 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-Upload a file or webpage URL to create a knowledge base document. <br> <Note> After creating the document, update the agent's knowledge base by calling [Update agent](/docs/conversational-ai/api-reference/agents/update-agent). </Note>
+Upload a file or webpage URL to create a knowledge base document. <br> <Note> After creating the document, update the agent's knowledge base by calling [Update agent](/docs/api-reference/agents/update). </Note>
 </dd>
 </dl>
 </dd>
@@ -5579,6 +5595,7 @@ client.conversational_ai.update_secret(
 </dl>
 </details>
 
+## Music
 ## ConversationalAi Conversations
 <details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">get_signed_url</a>(...)</code></summary>
 <dl>
@@ -5709,22 +5726,6 @@ client.conversational_ai.conversations.get_webrtc_token(
 <dd>
 
 **participant_name:** `typing.Optional[str]` — Optional custom participant name. If not provided, user ID will be used
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**source:** `typing.Optional[ConversationInitiationSource]` — The source of the conversation initiation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**version:** `typing.Optional[str]` — The SDK version number
     
 </dd>
 </dl>
@@ -6172,6 +6173,14 @@ client.conversational_ai.agents.create(
 <dl>
 <dd>
 
+**workflow:** `typing.Optional[typing.Optional[typing.Any]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **name:** `typing.Optional[str]` — A name to make the agent easier to find
     
 </dd>
@@ -6407,6 +6416,14 @@ client.conversational_ai.agents.update(
 <dd>
 
 **platform_settings:** `typing.Optional[AgentPlatformSettingsRequestModel]` — Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**workflow:** `typing.Optional[typing.Optional[typing.Any]]` 
     
 </dd>
 </dl>
@@ -11657,6 +11674,101 @@ client.dubbing.resource.speaker.segment.create(
 <dd>
 
 **translations:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Music CompositionPlan
+<details><summary><code>client.music.composition_plan.<a href="src/elevenlabs/music/composition_plan/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a composition plan for music generation. Usage of this endpoint does not cost any credits but is subject to rate limiting depending on your tier.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.music.composition_plan.create(
+    prompt="prompt",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**prompt:** `str` — A simple text prompt to compose a plan from.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**music_length_ms:** `typing.Optional[int]` — The length of the composition plan to generate in milliseconds. Must be between 10000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**source_composition_plan:** `typing.Optional[MusicPrompt]` — An optional composition plan to use as a source for the new composition plan.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_id:** `typing.Optional[typing.Literal["music_v1"]]` — The model to use for the generation.
     
 </dd>
 </dl>
