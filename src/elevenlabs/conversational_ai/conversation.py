@@ -327,6 +327,113 @@ class BaseConversation:
             }
         )
 
+    def _handle_message_core(self, message, message_handler):
+        """Core message handling logic shared between sync and async implementations.
+        
+        Args:
+            message: The parsed message dictionary
+            message_handler: Handler object with methods for different operations
+        """
+        if message["type"] == "conversation_initiation_metadata":
+            event = message["conversation_initiation_metadata_event"]
+            assert self._conversation_id is None
+            self._conversation_id = event["conversation_id"]
+
+        elif message["type"] == "audio":
+            event = message["audio_event"]
+            if int(event["event_id"]) <= self._last_interrupt_id:
+                return
+            audio = base64.b64decode(event["audio_base_64"])
+            message_handler.handle_audio_output(audio)
+            
+        elif message["type"] == "agent_response":
+            if message_handler.callback_agent_response:
+                event = message["agent_response_event"]
+                message_handler.handle_agent_response(event["agent_response"].strip())
+                
+        elif message["type"] == "agent_response_correction":
+            if message_handler.callback_agent_response_correction:
+                event = message["agent_response_correction_event"]
+                message_handler.handle_agent_response_correction(
+                    event["original_agent_response"].strip(), 
+                    event["corrected_agent_response"].strip()
+                )
+                
+        elif message["type"] == "user_transcript":
+            if message_handler.callback_user_transcript:
+                event = message["user_transcription_event"]
+                message_handler.handle_user_transcript(event["user_transcript"].strip())
+                
+        elif message["type"] == "interruption":
+            event = message["interruption_event"]
+            self._last_interrupt_id = int(event["event_id"])
+            message_handler.handle_interruption()
+            
+        elif message["type"] == "ping":
+            event = message["ping_event"]
+            message_handler.handle_ping(event)
+            if message_handler.callback_latency_measurement and event["ping_ms"]:
+                message_handler.handle_latency_measurement(int(event["ping_ms"]))
+                
+        elif message["type"] == "client_tool_call":
+            tool_call = message.get("client_tool_call", {})
+            tool_name = tool_call.get("tool_name")
+            parameters = {"tool_call_id": tool_call["tool_call_id"], **tool_call.get("parameters", {})}
+            message_handler.handle_client_tool_call(tool_name, parameters)
+        else:
+            pass  # Ignore all other message types.
+
+    async def _handle_message_core_async(self, message, message_handler):
+        """Async wrapper for core message handling logic."""
+        if message["type"] == "conversation_initiation_metadata":
+            event = message["conversation_initiation_metadata_event"]
+            assert self._conversation_id is None
+            self._conversation_id = event["conversation_id"]
+
+        elif message["type"] == "audio":
+            event = message["audio_event"]
+            if int(event["event_id"]) <= self._last_interrupt_id:
+                return
+            audio = base64.b64decode(event["audio_base_64"])
+            await message_handler.handle_audio_output(audio)
+            
+        elif message["type"] == "agent_response":
+            if message_handler.callback_agent_response:
+                event = message["agent_response_event"]
+                await message_handler.handle_agent_response(event["agent_response"].strip())
+                
+        elif message["type"] == "agent_response_correction":
+            if message_handler.callback_agent_response_correction:
+                event = message["agent_response_correction_event"]
+                await message_handler.handle_agent_response_correction(
+                    event["original_agent_response"].strip(), 
+                    event["corrected_agent_response"].strip()
+                )
+                
+        elif message["type"] == "user_transcript":
+            if message_handler.callback_user_transcript:
+                event = message["user_transcription_event"]
+                await message_handler.handle_user_transcript(event["user_transcript"].strip())
+                
+        elif message["type"] == "interruption":
+            event = message["interruption_event"]
+            self._last_interrupt_id = int(event["event_id"])
+            await message_handler.handle_interruption()
+            
+        elif message["type"] == "ping":
+            event = message["ping_event"]
+            await message_handler.handle_ping(event)
+            if message_handler.callback_latency_measurement and event["ping_ms"]:
+                await message_handler.handle_latency_measurement(int(event["ping_ms"]))
+                
+        elif message["type"] == "client_tool_call":
+            tool_call = message.get("client_tool_call", {})
+            tool_name = tool_call.get("tool_name")
+            parameters = {"tool_call_id": tool_call["tool_call_id"], **tool_call.get("parameters", {})}
+            message_handler.handle_client_tool_call(tool_name, parameters)
+        else:
+            pass  # Ignore all other message types.
+
 
 class Conversation(BaseConversation):
     audio_interface: AudioInterface
@@ -524,59 +631,52 @@ class Conversation(BaseConversation):
             self._ws = None
 
     def _handle_message(self, message, ws):
-        if message["type"] == "conversation_initiation_metadata":
-            event = message["conversation_initiation_metadata_event"]
-            assert self._conversation_id is None
-            self._conversation_id = event["conversation_id"]
-
-        elif message["type"] == "audio":
-            event = message["audio_event"]
-            if int(event["event_id"]) <= self._last_interrupt_id:
-                return
-            audio = base64.b64decode(event["audio_base_64"])
-            self.audio_interface.output(audio)
-        elif message["type"] == "agent_response":
-            if self.callback_agent_response:
-                event = message["agent_response_event"]
-                self.callback_agent_response(event["agent_response"].strip())
-        elif message["type"] == "agent_response_correction":
-            if self.callback_agent_response_correction:
-                event = message["agent_response_correction_event"]
-                self.callback_agent_response_correction(
-                    event["original_agent_response"].strip(), event["corrected_agent_response"].strip()
+        class SyncMessageHandler:
+            def __init__(self, conversation, ws):
+                self.conversation = conversation
+                self.ws = ws
+                self.callback_agent_response = conversation.callback_agent_response
+                self.callback_agent_response_correction = conversation.callback_agent_response_correction
+                self.callback_user_transcript = conversation.callback_user_transcript
+                self.callback_latency_measurement = conversation.callback_latency_measurement
+            
+            def handle_audio_output(self, audio):
+                self.conversation.audio_interface.output(audio)
+            
+            def handle_agent_response(self, response):
+                self.conversation.callback_agent_response(response)
+            
+            def handle_agent_response_correction(self, original, corrected):
+                self.conversation.callback_agent_response_correction(original, corrected)
+            
+            def handle_user_transcript(self, transcript):
+                self.conversation.callback_user_transcript(transcript)
+            
+            def handle_interruption(self):
+                self.conversation.audio_interface.interrupt()
+            
+            def handle_ping(self, event):
+                self.ws.send(
+                    json.dumps(
+                        {
+                            "type": "pong",
+                            "event_id": event["event_id"],
+                        }
+                    )
                 )
-        elif message["type"] == "user_transcript":
-            if self.callback_user_transcript:
-                event = message["user_transcription_event"]
-                self.callback_user_transcript(event["user_transcript"].strip())
-        elif message["type"] == "interruption":
-            event = message["interruption_event"]
-            self._last_interrupt_id = int(event["event_id"])
-            self.audio_interface.interrupt()
-        elif message["type"] == "ping":
-            event = message["ping_event"]
-            ws.send(
-                json.dumps(
-                    {
-                        "type": "pong",
-                        "event_id": event["event_id"],
-                    }
-                )
-            )
-            if self.callback_latency_measurement and event["ping_ms"]:
-                self.callback_latency_measurement(int(event["ping_ms"]))
-        elif message["type"] == "client_tool_call":
-            tool_call = message.get("client_tool_call", {})
-            tool_name = tool_call.get("tool_name")
-            parameters = {"tool_call_id": tool_call["tool_call_id"], **tool_call.get("parameters", {})}
-
-            def send_response(response):
-                if not self._should_stop.is_set():
-                    ws.send(json.dumps(response))
-
-            self.client_tools.execute_tool(tool_name, parameters, send_response)
-        else:
-            pass  # Ignore all other message types.
+            
+            def handle_latency_measurement(self, latency):
+                self.conversation.callback_latency_measurement(latency)
+            
+            def handle_client_tool_call(self, tool_name, parameters):
+                def send_response(response):
+                    if not self.conversation._should_stop.is_set():
+                        self.ws.send(json.dumps(response))
+                
+                self.conversation.client_tools.execute_tool(tool_name, parameters, send_response)
+        
+        handler = SyncMessageHandler(self, ws)
+        self._handle_message_core(message, handler)
 
 
 class AsyncConversation(BaseConversation):
@@ -779,56 +879,51 @@ class AsyncConversation(BaseConversation):
                 self._ws = None
 
     async def _handle_message(self, message, ws):
-        if message["type"] == "conversation_initiation_metadata":
-            event = message["conversation_initiation_metadata_event"]
-            assert self._conversation_id is None
-            self._conversation_id = event["conversation_id"]
-
-        elif message["type"] == "audio":
-            event = message["audio_event"]
-            if int(event["event_id"]) <= self._last_interrupt_id:
-                return
-            audio = base64.b64decode(event["audio_base_64"])
-            await self.audio_interface.output(audio)
-        elif message["type"] == "agent_response":
-            if self.callback_agent_response:
-                event = message["agent_response_event"]
-                await self.callback_agent_response(event["agent_response"].strip())
-        elif message["type"] == "agent_response_correction":
-            if self.callback_agent_response_correction:
-                event = message["agent_response_correction_event"]
-                await self.callback_agent_response_correction(
-                    event["original_agent_response"].strip(), event["corrected_agent_response"].strip()
+        class AsyncMessageHandler:
+            def __init__(self, conversation, ws):
+                self.conversation = conversation
+                self.ws = ws
+                self.callback_agent_response = conversation.callback_agent_response
+                self.callback_agent_response_correction = conversation.callback_agent_response_correction
+                self.callback_user_transcript = conversation.callback_user_transcript
+                self.callback_latency_measurement = conversation.callback_latency_measurement
+            
+            async def handle_audio_output(self, audio):
+                await self.conversation.audio_interface.output(audio)
+            
+            async def handle_agent_response(self, response):
+                await self.conversation.callback_agent_response(response)
+            
+            async def handle_agent_response_correction(self, original, corrected):
+                await self.conversation.callback_agent_response_correction(original, corrected)
+            
+            async def handle_user_transcript(self, transcript):
+                await self.conversation.callback_user_transcript(transcript)
+            
+            async def handle_interruption(self):
+                await self.conversation.audio_interface.interrupt()
+            
+            async def handle_ping(self, event):
+                await self.ws.send(
+                    json.dumps(
+                        {
+                            "type": "pong",
+                            "event_id": event["event_id"],
+                        }
+                    )
                 )
-        elif message["type"] == "user_transcript":
-            if self.callback_user_transcript:
-                event = message["user_transcription_event"]
-                await self.callback_user_transcript(event["user_transcript"].strip())
-        elif message["type"] == "interruption":
-            event = message["interruption_event"]
-            self._last_interrupt_id = int(event["event_id"])
-            await self.audio_interface.interrupt()
-        elif message["type"] == "ping":
-            event = message["ping_event"]
-            await ws.send(
-                json.dumps(
-                    {
-                        "type": "pong",
-                        "event_id": event["event_id"],
-                    }
-                )
-            )
-            if self.callback_latency_measurement and event["ping_ms"]:
-                await self.callback_latency_measurement(int(event["ping_ms"]))
-        elif message["type"] == "client_tool_call":
-            tool_call = message.get("client_tool_call", {})
-            tool_name = tool_call.get("tool_name")
-            parameters = {"tool_call_id": tool_call["tool_call_id"], **tool_call.get("parameters", {})}
-
-            def send_response(response):
-                if not self._should_stop.is_set():
-                    asyncio.create_task(ws.send(json.dumps(response)))
-
-            self.client_tools.execute_tool(tool_name, parameters, send_response)
-        else:
-            pass  # Ignore all other message types.
+            
+            async def handle_latency_measurement(self, latency):
+                await self.conversation.callback_latency_measurement(latency)
+            
+            def handle_client_tool_call(self, tool_name, parameters):
+                def send_response(response):
+                    if not self.conversation._should_stop.is_set():
+                        asyncio.create_task(self.ws.send(json.dumps(response)))
+                
+                self.conversation.client_tools.execute_tool(tool_name, parameters, send_response)
+        
+        handler = AsyncMessageHandler(self, ws)
+        
+        # Use the shared core message handling logic with async wrapper
+        await self._handle_message_core_async(message, handler)
