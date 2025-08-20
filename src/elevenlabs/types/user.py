@@ -27,7 +27,7 @@ class User(UncheckedBaseModel):
 
     is_new_user: bool = pydantic.Field()
     """
-    Whether the user is new.
+    Whether the user is new. This field is deprecated and will be removed in the future. Use 'created_at' instead.
     """
 
     xi_api_key: typing.Optional[str] = pydantic.Field(default=None)
@@ -73,6 +73,11 @@ class User(UncheckedBaseModel):
     partnerstack_partner_default_link: typing.Optional[str] = pydantic.Field(default=None)
     """
     The Partnerstack partner default link of the user.
+    """
+
+    created_at: int = pydantic.Field()
+    """
+    The unix timestamp of the user's creation. 0 if the user was created before the unix timestamp was added.
     """
 
     if IS_PYDANTIC_V2:

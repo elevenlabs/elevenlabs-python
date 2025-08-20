@@ -56,7 +56,6 @@ from .types import (
     BatchCallRecipientStatus,
     BatchCallResponse,
     BatchCallStatus,
-    BodyComposeMusicWithADetailedResponseV1MusicDetailedPost,
     BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostAge,
     BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostGender,
     BreakdownTypes,
@@ -769,7 +768,11 @@ from .client import AsyncElevenLabs, ElevenLabs
 from .dubbing import DubbingListRequestDubbingStatus, DubbingListRequestFilterByCreator
 from .environment import ElevenLabsEnvironment
 from .history import HistoryListRequestSource
-from .music import MusicComposeRequestOutputFormat, MusicStreamRequestOutputFormat
+from .music import (
+    MusicComposeDetailedRequestOutputFormat,
+    MusicComposeRequestOutputFormat,
+    MusicStreamRequestOutputFormat,
+)
 from .play import play, save, stream
 from .pronunciation_dictionaries import (
     BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem,
@@ -886,7 +889,6 @@ __all__ = [
     "BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem_Alias",
     "BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem_Phoneme",
     "BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostWorkspaceAccess",
-    "BodyComposeMusicWithADetailedResponseV1MusicDetailedPost",
     "BodyCreatePodcastV1StudioPodcastsPostDurationScale",
     "BodyCreatePodcastV1StudioPodcastsPostMode",
     "BodyCreatePodcastV1StudioPodcastsPostMode_Bulletin",
@@ -1270,6 +1272,7 @@ __all__ = [
     "ModerationStatusResponseModelSafetyStatus",
     "ModerationStatusResponseModelWarningStatus",
     "MultichannelSpeechToTextResponseModel",
+    "MusicComposeDetailedRequestOutputFormat",
     "MusicComposeRequestOutputFormat",
     "MusicPrompt",
     "MusicStreamRequestOutputFormat",

@@ -7,6 +7,7 @@ from ..core.request_options import RequestOptions
 from ..types.music_prompt import MusicPrompt
 from .composition_plan.client import AsyncCompositionPlanClient, CompositionPlanClient
 from .raw_client import AsyncRawMusicClient, RawMusicClient
+from .types.music_compose_detailed_request_output_format import MusicComposeDetailedRequestOutputFormat
 from .types.music_compose_request_output_format import MusicComposeRequestOutputFormat
 from .types.music_stream_request_output_format import MusicStreamRequestOutputFormat
 
@@ -73,6 +74,59 @@ class MusicClient:
             The generated audio file in the format specified
         """
         with self._raw_client.compose(
+            output_format=output_format,
+            prompt=prompt,
+            music_prompt=music_prompt,
+            composition_plan=composition_plan,
+            music_length_ms=music_length_ms,
+            model_id=model_id,
+            request_options=request_options,
+        ) as r:
+            yield from r.data
+
+    def compose_detailed(
+        self,
+        *,
+        output_format: typing.Optional[MusicComposeDetailedRequestOutputFormat] = None,
+        prompt: typing.Optional[str] = OMIT,
+        music_prompt: typing.Optional[MusicPrompt] = OMIT,
+        composition_plan: typing.Optional[MusicPrompt] = OMIT,
+        music_length_ms: typing.Optional[int] = OMIT,
+        model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[bytes]:
+        """
+        Compose a song from a prompt or a composition plan.
+
+        Parameters
+        ----------
+        output_format : typing.Optional[MusicComposeDetailedRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        prompt : typing.Optional[str]
+            A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
+
+        music_prompt : typing.Optional[MusicPrompt]
+            A music prompt. Deprecated. Use `composition_plan` instead.
+
+        composition_plan : typing.Optional[MusicPrompt]
+            A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
+
+        music_length_ms : typing.Optional[int]
+            The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 10000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
+
+        model_id : typing.Optional[typing.Literal["music_v1"]]
+            The model to use for the generation.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Returns
+        -------
+        typing.Iterator[bytes]
+            Successful Response
+        """
+        with self._raw_client.compose_detailed(
             output_format=output_format,
             prompt=prompt,
             music_prompt=music_prompt,
@@ -196,6 +250,60 @@ class AsyncMusicClient:
             The generated audio file in the format specified
         """
         async with self._raw_client.compose(
+            output_format=output_format,
+            prompt=prompt,
+            music_prompt=music_prompt,
+            composition_plan=composition_plan,
+            music_length_ms=music_length_ms,
+            model_id=model_id,
+            request_options=request_options,
+        ) as r:
+            async for _chunk in r.data:
+                yield _chunk
+
+    async def compose_detailed(
+        self,
+        *,
+        output_format: typing.Optional[MusicComposeDetailedRequestOutputFormat] = None,
+        prompt: typing.Optional[str] = OMIT,
+        music_prompt: typing.Optional[MusicPrompt] = OMIT,
+        composition_plan: typing.Optional[MusicPrompt] = OMIT,
+        music_length_ms: typing.Optional[int] = OMIT,
+        model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[bytes]:
+        """
+        Compose a song from a prompt or a composition plan.
+
+        Parameters
+        ----------
+        output_format : typing.Optional[MusicComposeDetailedRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        prompt : typing.Optional[str]
+            A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
+
+        music_prompt : typing.Optional[MusicPrompt]
+            A music prompt. Deprecated. Use `composition_plan` instead.
+
+        composition_plan : typing.Optional[MusicPrompt]
+            A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
+
+        music_length_ms : typing.Optional[int]
+            The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 10000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
+
+        model_id : typing.Optional[typing.Literal["music_v1"]]
+            The model to use for the generation.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Returns
+        -------
+        typing.AsyncIterator[bytes]
+            Successful Response
+        """
+        async with self._raw_client.compose_detailed(
             output_format=output_format,
             prompt=prompt,
             music_prompt=music_prompt,

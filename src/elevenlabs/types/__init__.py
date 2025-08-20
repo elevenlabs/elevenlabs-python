@@ -57,9 +57,6 @@ from .batch_call_detailed_response import BatchCallDetailedResponse
 from .batch_call_recipient_status import BatchCallRecipientStatus
 from .batch_call_response import BatchCallResponse
 from .batch_call_status import BatchCallStatus
-from .body_compose_music_with_a_detailed_response_v_1_music_detailed_post import (
-    BodyComposeMusicWithADetailedResponseV1MusicDetailedPost,
-)
 from .body_generate_a_random_voice_v_1_voice_generation_generate_voice_post_age import (
     BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostAge,
 )
@@ -899,7 +896,6 @@ __all__ = [
     "BatchCallRecipientStatus",
     "BatchCallResponse",
     "BatchCallStatus",
-    "BodyComposeMusicWithADetailedResponseV1MusicDetailedPost",
     "BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostAge",
     "BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostGender",
     "BreakdownTypes",
