@@ -13,6 +13,7 @@ from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.http_validation_error import HttpValidationError
 from ..types.music_prompt import MusicPrompt
+from .types.music_compose_detailed_request_output_format import MusicComposeDetailedRequestOutputFormat
 from .types.music_compose_request_output_format import MusicComposeRequestOutputFormat
 from .types.music_stream_request_output_format import MusicStreamRequestOutputFormat
 
@@ -69,6 +70,101 @@ class RawMusicClient:
         """
         with self._client_wrapper.httpx_client.stream(
             "v1/music",
+            method="POST",
+            params={
+                "output_format": output_format,
+            },
+            json={
+                "prompt": prompt,
+                "music_prompt": convert_and_respect_annotation_metadata(
+                    object_=music_prompt, annotation=MusicPrompt, direction="write"
+                ),
+                "composition_plan": convert_and_respect_annotation_metadata(
+                    object_=composition_plan, annotation=MusicPrompt, direction="write"
+                ),
+                "music_length_ms": music_length_ms,
+                "model_id": model_id,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        ) as _response:
+
+            def _stream() -> HttpResponse[typing.Iterator[bytes]]:
+                try:
+                    if 200 <= _response.status_code < 300:
+                        _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                        return HttpResponse(
+                            response=_response, data=(_chunk for _chunk in _response.iter_bytes(chunk_size=_chunk_size))
+                        )
+                    _response.read()
+                    if _response.status_code == 422:
+                        raise UnprocessableEntityError(
+                            headers=dict(_response.headers),
+                            body=typing.cast(
+                                HttpValidationError,
+                                construct_type(
+                                    type_=HttpValidationError,  # type: ignore
+                                    object_=_response.json(),
+                                ),
+                            ),
+                        )
+                    _response_json = _response.json()
+                except JSONDecodeError:
+                    raise ApiError(
+                        status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                    )
+                raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+            yield _stream()
+
+    @contextlib.contextmanager
+    def compose_detailed(
+        self,
+        *,
+        output_format: typing.Optional[MusicComposeDetailedRequestOutputFormat] = None,
+        prompt: typing.Optional[str] = OMIT,
+        music_prompt: typing.Optional[MusicPrompt] = OMIT,
+        composition_plan: typing.Optional[MusicPrompt] = OMIT,
+        music_length_ms: typing.Optional[int] = OMIT,
+        model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
+        """
+        Compose a song from a prompt or a composition plan.
+
+        Parameters
+        ----------
+        output_format : typing.Optional[MusicComposeDetailedRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        prompt : typing.Optional[str]
+            A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
+
+        music_prompt : typing.Optional[MusicPrompt]
+            A music prompt. Deprecated. Use `composition_plan` instead.
+
+        composition_plan : typing.Optional[MusicPrompt]
+            A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
+
+        music_length_ms : typing.Optional[int]
+            The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 10000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
+
+        model_id : typing.Optional[typing.Literal["music_v1"]]
+            The model to use for the generation.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Returns
+        -------
+        typing.Iterator[HttpResponse[typing.Iterator[bytes]]]
+            Successful Response
+        """
+        with self._client_wrapper.httpx_client.stream(
+            "v1/music/detailed",
             method="POST",
             params={
                 "output_format": output_format,
@@ -264,6 +360,102 @@ class AsyncRawMusicClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             "v1/music",
+            method="POST",
+            params={
+                "output_format": output_format,
+            },
+            json={
+                "prompt": prompt,
+                "music_prompt": convert_and_respect_annotation_metadata(
+                    object_=music_prompt, annotation=MusicPrompt, direction="write"
+                ),
+                "composition_plan": convert_and_respect_annotation_metadata(
+                    object_=composition_plan, annotation=MusicPrompt, direction="write"
+                ),
+                "music_length_ms": music_length_ms,
+                "model_id": model_id,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        ) as _response:
+
+            async def _stream() -> AsyncHttpResponse[typing.AsyncIterator[bytes]]:
+                try:
+                    if 200 <= _response.status_code < 300:
+                        _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                        return AsyncHttpResponse(
+                            response=_response,
+                            data=(_chunk async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size)),
+                        )
+                    await _response.aread()
+                    if _response.status_code == 422:
+                        raise UnprocessableEntityError(
+                            headers=dict(_response.headers),
+                            body=typing.cast(
+                                HttpValidationError,
+                                construct_type(
+                                    type_=HttpValidationError,  # type: ignore
+                                    object_=_response.json(),
+                                ),
+                            ),
+                        )
+                    _response_json = _response.json()
+                except JSONDecodeError:
+                    raise ApiError(
+                        status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                    )
+                raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+            yield await _stream()
+
+    @contextlib.asynccontextmanager
+    async def compose_detailed(
+        self,
+        *,
+        output_format: typing.Optional[MusicComposeDetailedRequestOutputFormat] = None,
+        prompt: typing.Optional[str] = OMIT,
+        music_prompt: typing.Optional[MusicPrompt] = OMIT,
+        composition_plan: typing.Optional[MusicPrompt] = OMIT,
+        music_length_ms: typing.Optional[int] = OMIT,
+        model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
+        """
+        Compose a song from a prompt or a composition plan.
+
+        Parameters
+        ----------
+        output_format : typing.Optional[MusicComposeDetailedRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        prompt : typing.Optional[str]
+            A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
+
+        music_prompt : typing.Optional[MusicPrompt]
+            A music prompt. Deprecated. Use `composition_plan` instead.
+
+        composition_plan : typing.Optional[MusicPrompt]
+            A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
+
+        music_length_ms : typing.Optional[int]
+            The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 10000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
+
+        model_id : typing.Optional[typing.Literal["music_v1"]]
+            The model to use for the generation.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Returns
+        -------
+        typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]
+            Successful Response
+        """
+        async with self._client_wrapper.httpx_client.stream(
+            "v1/music/detailed",
             method="POST",
             params={
                 "output_format": output_format,

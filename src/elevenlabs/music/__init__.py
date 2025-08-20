@@ -2,7 +2,16 @@
 
 # isort: skip_file
 
-from .types import MusicComposeRequestOutputFormat, MusicStreamRequestOutputFormat
+from .types import (
+    MusicComposeDetailedRequestOutputFormat,
+    MusicComposeRequestOutputFormat,
+    MusicStreamRequestOutputFormat,
+)
 from . import composition_plan
 
-__all__ = ["MusicComposeRequestOutputFormat", "MusicStreamRequestOutputFormat", "composition_plan"]
+__all__ = [
+    "MusicComposeDetailedRequestOutputFormat",
+    "MusicComposeRequestOutputFormat",
+    "MusicStreamRequestOutputFormat",
+    "composition_plan",
+]
