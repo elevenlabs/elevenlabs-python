@@ -161,7 +161,7 @@ class RawMusicClient:
         Returns
         -------
         typing.Iterator[HttpResponse[typing.Iterator[bytes]]]
-            Successful Response
+            Multipart/mixed response with JSON metadata and binary audio file
         """
         with self._client_wrapper.httpx_client.stream(
             "v1/music/detailed",
@@ -452,7 +452,7 @@ class AsyncRawMusicClient:
         Returns
         -------
         typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]
-            Successful Response
+            Multipart/mixed response with JSON metadata and binary audio file
         """
         async with self._client_wrapper.httpx_client.stream(
             "v1/music/detailed",

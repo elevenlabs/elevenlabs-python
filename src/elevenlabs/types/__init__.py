@@ -17,15 +17,18 @@ from .add_workspace_group_member_response_model import AddWorkspaceGroupMemberRe
 from .add_workspace_invite_response_model import AddWorkspaceInviteResponseModel
 from .additional_format_response_model import AdditionalFormatResponseModel
 from .additional_formats import AdditionalFormats
+from .adhoc_agent_config_override_for_test_request_model import AdhocAgentConfigOverrideForTestRequestModel
 from .age import Age
 from .agent_call_limits import AgentCallLimits
 from .agent_config import AgentConfig
 from .agent_config_override import AgentConfigOverride
 from .agent_config_override_config import AgentConfigOverrideConfig
+from .agent_failure_response_example import AgentFailureResponseExample
 from .agent_metadata_response_model import AgentMetadataResponseModel
 from .agent_platform_settings_request_model import AgentPlatformSettingsRequestModel
 from .agent_platform_settings_response_model import AgentPlatformSettingsResponseModel
 from .agent_simulated_chat_test_response_model import AgentSimulatedChatTestResponseModel
+from .agent_successful_response_example import AgentSuccessfulResponseExample
 from .agent_summary_response_model import AgentSummaryResponseModel
 from .agent_testing_settings import AgentTestingSettings
 from .agent_transfer import AgentTransfer
@@ -41,6 +44,7 @@ from .asr_conversational_config import AsrConversationalConfig
 from .asr_input_format import AsrInputFormat
 from .asr_provider import AsrProvider
 from .asr_quality import AsrQuality
+from .attached_test_model import AttachedTestModel
 from .audio_native_create_project_response_model import AudioNativeCreateProjectResponseModel
 from .audio_native_edit_content_response_model import AudioNativeEditContentResponseModel
 from .audio_native_project_settings_response_model import AudioNativeProjectSettingsResponseModel
@@ -190,6 +194,7 @@ from .conversation_history_transcript_system_tool_result_common_model_result imp
     ConversationHistoryTranscriptSystemToolResultCommonModelResult_PlayDtmfError,
     ConversationHistoryTranscriptSystemToolResultCommonModelResult_PlayDtmfSuccess,
     ConversationHistoryTranscriptSystemToolResultCommonModelResult_SkipTurnSuccess,
+    ConversationHistoryTranscriptSystemToolResultCommonModelResult_TestingToolResult,
     ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToAgentError,
     ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToAgentSuccess,
     ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToNumberError,
@@ -259,6 +264,8 @@ from .create_pronunciation_dictionary_response_model import CreatePronunciationD
 from .create_sip_trunk_phone_number_request import CreateSipTrunkPhoneNumberRequest
 from .create_transcript_request import CreateTranscriptRequest
 from .create_twilio_phone_number_request import CreateTwilioPhoneNumberRequest
+from .create_unit_test_request_dynamic_variables_value import CreateUnitTestRequestDynamicVariablesValue
+from .create_unit_test_response_model import CreateUnitTestResponseModel
 from .custom_llm import CustomLlm
 from .custom_llm_request_headers_value import CustomLlmRequestHeadersValue
 from .dashboard_call_success_chart_model import DashboardCallSuccessChartModel
@@ -284,6 +291,7 @@ from .dependent_available_tool_identifier_access_level import DependentAvailable
 from .dependent_phone_number_identifier import DependentPhoneNumberIdentifier
 from .dependent_unknown_agent_identifier import DependentUnknownAgentIdentifier
 from .dependent_unknown_tool_identifier import DependentUnknownToolIdentifier
+from .detailed_music_response import DetailedMusicResponse
 from .dialogue_input import DialogueInput
 from .dialogue_input_response_model import DialogueInputResponseModel
 from .do_dubbing_response import DoDubbingResponse
@@ -313,6 +321,7 @@ from .end_call_tool_config import EndCallToolConfig
 from .end_call_tool_result_model import EndCallToolResultModel
 from .evaluation_settings import EvaluationSettings
 from .evaluation_success_result import EvaluationSuccessResult
+from .exact_parameter_evaluation_strategy import ExactParameterEvaluationStrategy
 from .export_options import (
     ExportOptions,
     ExportOptions_Docx,
@@ -327,6 +336,7 @@ from .extended_subscription_response_model_character_refresh_period import (
     ExtendedSubscriptionResponseModelCharacterRefreshPeriod,
 )
 from .extended_subscription_response_model_currency import ExtendedSubscriptionResponseModelCurrency
+from .extended_subscription_response_model_pending_change import ExtendedSubscriptionResponseModelPendingChange
 from .feature_status_common_model import FeatureStatusCommonModel
 from .features_usage_common_model import FeaturesUsageCommonModel
 from .feedback_item import FeedbackItem
@@ -418,12 +428,17 @@ from .get_pronunciation_dictionary_metadata_response_model_permission_on_resourc
 )
 from .get_pronunciation_dictionary_response import GetPronunciationDictionaryResponse
 from .get_speech_history_response import GetSpeechHistoryResponse
+from .get_test_suite_invocation_response_model import GetTestSuiteInvocationResponseModel
+from .get_tests_page_response_model import GetTestsPageResponseModel
+from .get_tests_summaries_by_ids_response_model import GetTestsSummariesByIdsResponseModel
 from .get_tool_dependent_agents_response_model import GetToolDependentAgentsResponseModel
 from .get_tool_dependent_agents_response_model_agents_item import (
     GetToolDependentAgentsResponseModelAgentsItem,
     GetToolDependentAgentsResponseModelAgentsItem_Available,
     GetToolDependentAgentsResponseModelAgentsItem_Unknown,
 )
+from .get_unit_test_response_model import GetUnitTestResponseModel
+from .get_unit_test_response_model_dynamic_variables_value import GetUnitTestResponseModelDynamicVariablesValue
 from .get_voices_response import GetVoicesResponse
 from .get_voices_v_2_response import GetVoicesV2Response
 from .get_workspace_secrets_response_model import GetWorkspaceSecretsResponseModel
@@ -460,6 +475,7 @@ from .literal_json_schema_property_type import LiteralJsonSchemaPropertyType
 from .llm import Llm
 from .llm_category_usage import LlmCategoryUsage
 from .llm_input_output_tokens_usage import LlmInputOutputTokensUsage
+from .llm_parameter_evaluation_strategy import LlmParameterEvaluationStrategy
 from .llm_tokens_category_usage import LlmTokensCategoryUsage
 from .llm_usage_calculator_llm_response_model import LlmUsageCalculatorLlmResponseModel
 from .llm_usage_calculator_response_model import LlmUsageCalculatorResponseModel
@@ -497,6 +513,7 @@ from .moderation_status_response_model import ModerationStatusResponseModel
 from .moderation_status_response_model_safety_status import ModerationStatusResponseModelSafetyStatus
 from .moderation_status_response_model_warning_status import ModerationStatusResponseModelWarningStatus
 from .multichannel_speech_to_text_response_model import MultichannelSpeechToTextResponseModel
+from .multipart_music_response import MultipartMusicResponse
 from .music_prompt import MusicPrompt
 from .normalized_alignment import NormalizedAlignment
 from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput
@@ -509,6 +526,9 @@ from .outbound_call_recipient_response_model import OutboundCallRecipientRespons
 from .outbound_sip_trunk_config_request_model import OutboundSipTrunkConfigRequestModel
 from .output_format import OutputFormat
 from .pdf_export_options import PdfExportOptions
+from .pending_cancellation_response_model import PendingCancellationResponseModel
+from .pending_subscription_switch_response_model import PendingSubscriptionSwitchResponseModel
+from .pending_subscription_switch_response_model_next_tier import PendingSubscriptionSwitchResponseModelNextTier
 from .phone_number_agent_info import PhoneNumberAgentInfo
 from .phone_number_transfer import PhoneNumberTransfer
 from .phone_number_transfer_destination import PhoneNumberTransferDestination
@@ -595,6 +615,8 @@ from .reader_resource_response_model import ReaderResourceResponseModel
 from .reader_resource_response_model_resource_type import ReaderResourceResponseModelResourceType
 from .realtime_voice_settings import RealtimeVoiceSettings
 from .recording_response import RecordingResponse
+from .referenced_tool_common_model import ReferencedToolCommonModel
+from .regex_parameter_evaluation_strategy import RegexParameterEvaluationStrategy
 from .remove_member_from_group_request import RemoveMemberFromGroupRequest
 from .render import Render
 from .render_status import RenderStatus
@@ -625,6 +647,7 @@ from .share_option_response_model_type import ShareOptionResponseModelType
 from .similar_voice import SimilarVoice
 from .similar_voice_category import SimilarVoiceCategory
 from .similar_voices_for_speaker_response import SimilarVoicesForSpeakerResponse
+from .single_test_run_request_model import SingleTestRunRequestModel
 from .sip_media_encryption_enum import SipMediaEncryptionEnum
 from .sip_trunk_credentials_request_model import SipTrunkCredentialsRequestModel
 from .sip_trunk_outbound_call_response import SipTrunkOutboundCallResponse
@@ -632,6 +655,7 @@ from .sip_trunk_transport_enum import SipTrunkTransportEnum
 from .sip_uri_transfer_destination import SipUriTransferDestination
 from .skip_turn_tool_config import SkipTurnToolConfig
 from .skip_turn_tool_response_model import SkipTurnToolResponseModel
+from .song_metadata import SongMetadata
 from .song_section import SongSection
 from .speaker_audio_response_model import SpeakerAudioResponseModel
 from .speaker_response_model import SpeakerResponseModel
@@ -684,6 +708,10 @@ from .system_tool_config_output_params import (
     SystemToolConfigOutputParams_VoicemailDetection,
 )
 from .telephony_provider import TelephonyProvider
+from .test_condition_rationale_common_model import TestConditionRationaleCommonModel
+from .test_condition_result_common_model import TestConditionResultCommonModel
+from .test_run_status import TestRunStatus
+from .test_tool_result_model import TestToolResultModel
 from .text_to_speech_apply_text_normalization_enum import TextToSpeechApplyTextNormalizationEnum
 from .text_to_speech_output_format_enum import TextToSpeechOutputFormatEnum
 from .text_to_speech_stream_request import TextToSpeechStreamRequest
@@ -731,10 +759,22 @@ from .turn_config import TurnConfig
 from .turn_mode import TurnMode
 from .twilio_outbound_call_response import TwilioOutboundCallResponse
 from .txt_export_options import TxtExportOptions
+from .unit_test_run_response_model import UnitTestRunResponseModel
+from .unit_test_summary_response_model import UnitTestSummaryResponseModel
+from .unit_test_tool_call_evaluation_model_input import UnitTestToolCallEvaluationModelInput
+from .unit_test_tool_call_evaluation_model_output import UnitTestToolCallEvaluationModelOutput
+from .unit_test_tool_call_parameter import UnitTestToolCallParameter
+from .unit_test_tool_call_parameter_eval import (
+    UnitTestToolCallParameterEval,
+    UnitTestToolCallParameterEval_Exact,
+    UnitTestToolCallParameterEval_Llm,
+    UnitTestToolCallParameterEval_Regex,
+)
 from .update_audio_native_project_request import UpdateAudioNativeProjectRequest
 from .update_chapter_request import UpdateChapterRequest
 from .update_project_request import UpdateProjectRequest
 from .update_pronunciation_dictionaries_request import UpdatePronunciationDictionariesRequest
+from .update_unit_test_request_dynamic_variables_value import UpdateUnitTestRequestDynamicVariablesValue
 from .update_workspace_member_response_model import UpdateWorkspaceMemberResponseModel
 from .url_avatar import UrlAvatar
 from .usage_aggregation_interval import UsageAggregationInterval
@@ -809,6 +849,7 @@ from .widget_language_preset_response import WidgetLanguagePresetResponse
 from .widget_placement import WidgetPlacement
 from .widget_styles import WidgetStyles
 from .widget_text_contents import WidgetTextContents
+from .workflow_features_usage_common_model import WorkflowFeaturesUsageCommonModel
 from .workflow_tool_edge_step_model import WorkflowToolEdgeStepModel
 from .workflow_tool_max_iterations_exceeded_step_model import WorkflowToolMaxIterationsExceededStepModel
 from .workflow_tool_nested_tools_step_model_input import WorkflowToolNestedToolsStepModelInput
@@ -856,15 +897,18 @@ __all__ = [
     "AddWorkspaceInviteResponseModel",
     "AdditionalFormatResponseModel",
     "AdditionalFormats",
+    "AdhocAgentConfigOverrideForTestRequestModel",
     "Age",
     "AgentCallLimits",
     "AgentConfig",
     "AgentConfigOverride",
     "AgentConfigOverrideConfig",
+    "AgentFailureResponseExample",
     "AgentMetadataResponseModel",
     "AgentPlatformSettingsRequestModel",
     "AgentPlatformSettingsResponseModel",
     "AgentSimulatedChatTestResponseModel",
+    "AgentSuccessfulResponseExample",
     "AgentSummaryResponseModel",
     "AgentTestingSettings",
     "AgentTransfer",
@@ -880,6 +924,7 @@ __all__ = [
     "AsrInputFormat",
     "AsrProvider",
     "AsrQuality",
+    "AttachedTestModel",
     "AudioNativeCreateProjectResponseModel",
     "AudioNativeEditContentResponseModel",
     "AudioNativeProjectSettingsResponseModel",
@@ -998,6 +1043,7 @@ __all__ = [
     "ConversationHistoryTranscriptSystemToolResultCommonModelResult_PlayDtmfError",
     "ConversationHistoryTranscriptSystemToolResultCommonModelResult_PlayDtmfSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelResult_SkipTurnSuccess",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelResult_TestingToolResult",
     "ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToAgentError",
     "ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToAgentSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToNumberError",
@@ -1048,6 +1094,8 @@ __all__ = [
     "CreateSipTrunkPhoneNumberRequest",
     "CreateTranscriptRequest",
     "CreateTwilioPhoneNumberRequest",
+    "CreateUnitTestRequestDynamicVariablesValue",
+    "CreateUnitTestResponseModel",
     "CustomLlm",
     "CustomLlmRequestHeadersValue",
     "DashboardCallSuccessChartModel",
@@ -1073,6 +1121,7 @@ __all__ = [
     "DependentPhoneNumberIdentifier",
     "DependentUnknownAgentIdentifier",
     "DependentUnknownToolIdentifier",
+    "DetailedMusicResponse",
     "DialogueInput",
     "DialogueInputResponseModel",
     "DoDubbingResponse",
@@ -1100,6 +1149,7 @@ __all__ = [
     "EndCallToolResultModel",
     "EvaluationSettings",
     "EvaluationSuccessResult",
+    "ExactParameterEvaluationStrategy",
     "ExportOptions",
     "ExportOptions_Docx",
     "ExportOptions_Html",
@@ -1110,6 +1160,7 @@ __all__ = [
     "ExtendedSubscriptionResponseModelBillingPeriod",
     "ExtendedSubscriptionResponseModelCharacterRefreshPeriod",
     "ExtendedSubscriptionResponseModelCurrency",
+    "ExtendedSubscriptionResponseModelPendingChange",
     "FeatureStatusCommonModel",
     "FeaturesUsageCommonModel",
     "FeedbackItem",
@@ -1185,10 +1236,15 @@ __all__ = [
     "GetPronunciationDictionaryMetadataResponseModelPermissionOnResource",
     "GetPronunciationDictionaryResponse",
     "GetSpeechHistoryResponse",
+    "GetTestSuiteInvocationResponseModel",
+    "GetTestsPageResponseModel",
+    "GetTestsSummariesByIdsResponseModel",
     "GetToolDependentAgentsResponseModel",
     "GetToolDependentAgentsResponseModelAgentsItem",
     "GetToolDependentAgentsResponseModelAgentsItem_Available",
     "GetToolDependentAgentsResponseModelAgentsItem_Unknown",
+    "GetUnitTestResponseModel",
+    "GetUnitTestResponseModelDynamicVariablesValue",
     "GetVoicesResponse",
     "GetVoicesV2Response",
     "GetWorkspaceSecretsResponseModel",
@@ -1225,6 +1281,7 @@ __all__ = [
     "Llm",
     "LlmCategoryUsage",
     "LlmInputOutputTokensUsage",
+    "LlmParameterEvaluationStrategy",
     "LlmTokensCategoryUsage",
     "LlmUsageCalculatorLlmResponseModel",
     "LlmUsageCalculatorResponseModel",
@@ -1260,6 +1317,7 @@ __all__ = [
     "ModerationStatusResponseModelSafetyStatus",
     "ModerationStatusResponseModelWarningStatus",
     "MultichannelSpeechToTextResponseModel",
+    "MultipartMusicResponse",
     "MusicPrompt",
     "NormalizedAlignment",
     "ObjectJsonSchemaPropertyInput",
@@ -1272,6 +1330,9 @@ __all__ = [
     "OutboundSipTrunkConfigRequestModel",
     "OutputFormat",
     "PdfExportOptions",
+    "PendingCancellationResponseModel",
+    "PendingSubscriptionSwitchResponseModel",
+    "PendingSubscriptionSwitchResponseModelNextTier",
     "PhoneNumberAgentInfo",
     "PhoneNumberTransfer",
     "PhoneNumberTransferDestination",
@@ -1350,6 +1411,8 @@ __all__ = [
     "ReaderResourceResponseModelResourceType",
     "RealtimeVoiceSettings",
     "RecordingResponse",
+    "ReferencedToolCommonModel",
+    "RegexParameterEvaluationStrategy",
     "RemoveMemberFromGroupRequest",
     "Render",
     "RenderStatus",
@@ -1380,6 +1443,7 @@ __all__ = [
     "SimilarVoice",
     "SimilarVoiceCategory",
     "SimilarVoicesForSpeakerResponse",
+    "SingleTestRunRequestModel",
     "SipMediaEncryptionEnum",
     "SipTrunkCredentialsRequestModel",
     "SipTrunkOutboundCallResponse",
@@ -1387,6 +1451,7 @@ __all__ = [
     "SipUriTransferDestination",
     "SkipTurnToolConfig",
     "SkipTurnToolResponseModel",
+    "SongMetadata",
     "SongSection",
     "SpeakerAudioResponseModel",
     "SpeakerResponseModel",
@@ -1435,6 +1500,10 @@ __all__ = [
     "SystemToolConfigOutputParams_TransferToNumber",
     "SystemToolConfigOutputParams_VoicemailDetection",
     "TelephonyProvider",
+    "TestConditionRationaleCommonModel",
+    "TestConditionResultCommonModel",
+    "TestRunStatus",
+    "TestToolResultModel",
     "TextToSpeechApplyTextNormalizationEnum",
     "TextToSpeechOutputFormatEnum",
     "TextToSpeechStreamRequest",
@@ -1478,10 +1547,20 @@ __all__ = [
     "TurnMode",
     "TwilioOutboundCallResponse",
     "TxtExportOptions",
+    "UnitTestRunResponseModel",
+    "UnitTestSummaryResponseModel",
+    "UnitTestToolCallEvaluationModelInput",
+    "UnitTestToolCallEvaluationModelOutput",
+    "UnitTestToolCallParameter",
+    "UnitTestToolCallParameterEval",
+    "UnitTestToolCallParameterEval_Exact",
+    "UnitTestToolCallParameterEval_Llm",
+    "UnitTestToolCallParameterEval_Regex",
     "UpdateAudioNativeProjectRequest",
     "UpdateChapterRequest",
     "UpdateProjectRequest",
     "UpdatePronunciationDictionariesRequest",
+    "UpdateUnitTestRequestDynamicVariablesValue",
     "UpdateWorkspaceMemberResponseModel",
     "UrlAvatar",
     "UsageAggregationInterval",
@@ -1546,6 +1625,7 @@ __all__ = [
     "WidgetPlacement",
     "WidgetStyles",
     "WidgetTextContents",
+    "WorkflowFeaturesUsageCommonModel",
     "WorkflowToolEdgeStepModel",
     "WorkflowToolMaxIterationsExceededStepModel",
     "WorkflowToolNestedToolsStepModelInput",

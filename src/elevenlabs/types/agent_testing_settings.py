@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .attached_test_model import AttachedTestModel
 
 
 class AgentTestingSettings(UncheckedBaseModel):
@@ -12,7 +13,7 @@ class AgentTestingSettings(UncheckedBaseModel):
     Settings for agent testing configuration.
     """
 
-    test_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    attached_tests: typing.Optional[typing.List[AttachedTestModel]] = pydantic.Field(default=None)
     """
     List of test IDs that should be run for this agent
     """
