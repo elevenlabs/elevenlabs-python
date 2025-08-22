@@ -89,6 +89,21 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelResult_SkipTurnSuc
             extra = pydantic.Extra.allow
 
 
+class ConversationHistoryTranscriptSystemToolResultCommonModelResult_TestingToolResult(UncheckedBaseModel):
+    result_type: typing.Literal["testing_tool_result"] = "testing_tool_result"
+    status: typing.Optional[typing.Literal["success"]] = None
+    reason: typing.Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToAgentError(UncheckedBaseModel):
     result_type: typing.Literal["transfer_to_agent_error"] = "transfer_to_agent_error"
     status: typing.Optional[typing.Literal["error"]] = None
@@ -201,6 +216,7 @@ ConversationHistoryTranscriptSystemToolResultCommonModelResult = typing_extensio
         ConversationHistoryTranscriptSystemToolResultCommonModelResult_PlayDtmfError,
         ConversationHistoryTranscriptSystemToolResultCommonModelResult_PlayDtmfSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelResult_SkipTurnSuccess,
+        ConversationHistoryTranscriptSystemToolResultCommonModelResult_TestingToolResult,
         ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToAgentError,
         ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToAgentSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToNumberError,

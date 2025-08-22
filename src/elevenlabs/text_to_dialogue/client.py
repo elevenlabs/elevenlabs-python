@@ -44,7 +44,7 @@ class TextToDialogueClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
-        <Warning>Eleven v3 API access is currently not publicly available, but will be soon.</Warning><br/>Converts a list of text and voice ID pairs into speech (dialogue) and returns audio.
+        Converts a list of text and voice ID pairs into speech (dialogue) and returns audio.
 
         Parameters
         ----------
@@ -119,7 +119,7 @@ class TextToDialogueClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
-        <Warning>Eleven v3 API access is currently not publicly available, but will be soon.</Warning><br/>Converts a list of text and voice ID pairs into speech (dialogue) and returns an audio stream.
+        Converts a list of text and voice ID pairs into speech (dialogue) and returns an audio stream.
 
         Parameters
         ----------
@@ -210,7 +210,7 @@ class AsyncTextToDialogueClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
-        <Warning>Eleven v3 API access is currently not publicly available, but will be soon.</Warning><br/>Converts a list of text and voice ID pairs into speech (dialogue) and returns audio.
+        Converts a list of text and voice ID pairs into speech (dialogue) and returns audio.
 
         Parameters
         ----------
@@ -294,7 +294,7 @@ class AsyncTextToDialogueClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
-        <Warning>Eleven v3 API access is currently not publicly available, but will be soon.</Warning><br/>Converts a list of text and voice ID pairs into speech (dialogue) and returns an audio stream.
+        Converts a list of text and voice ID pairs into speech (dialogue) and returns an audio stream.
 
         Parameters
         ----------

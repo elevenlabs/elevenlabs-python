@@ -27,7 +27,7 @@ class RawToolsClient:
 
     def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[ToolsResponseModel]:
         """
-        Get all available tools available in the workspace.
+        Get all available tools in the workspace.
 
         Parameters
         ----------
@@ -361,7 +361,7 @@ class AsyncRawToolsClient:
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[ToolsResponseModel]:
         """
-        Get all available tools available in the workspace.
+        Get all available tools in the workspace.
 
         Parameters
         ----------

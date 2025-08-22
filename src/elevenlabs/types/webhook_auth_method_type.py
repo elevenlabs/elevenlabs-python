@@ -2,4 +2,4 @@
 
 import typing
 
-WebhookAuthMethodType = typing.Union[typing.Literal["hmac", "oauth2"], typing.Any]
+WebhookAuthMethodType = typing.Union[typing.Literal["hmac", "oauth2", "mtls"], typing.Any]

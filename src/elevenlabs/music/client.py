@@ -124,7 +124,7 @@ class MusicClient:
         Returns
         -------
         typing.Iterator[bytes]
-            Successful Response
+            Multipart/mixed response with JSON metadata and binary audio file
         """
         with self._raw_client.compose_detailed(
             output_format=output_format,
@@ -301,7 +301,7 @@ class AsyncMusicClient:
         Returns
         -------
         typing.AsyncIterator[bytes]
-            Successful Response
+            Multipart/mixed response with JSON metadata and binary audio file
         """
         async with self._raw_client.compose_detailed(
             output_format=output_format,

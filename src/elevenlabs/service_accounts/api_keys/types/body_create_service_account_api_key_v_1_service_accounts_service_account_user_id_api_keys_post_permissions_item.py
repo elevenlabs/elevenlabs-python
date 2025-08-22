@@ -29,6 +29,9 @@ BodyCreateServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysPostPe
         "workspace_read",
         "workspace_write",
         "forced_alignment",
+        "convai_read",
+        "convai_write",
+        "music_generation",
     ],
     typing.Any,
 ]
