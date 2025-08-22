@@ -198,6 +198,125 @@ class RawPronunciationDictionariesClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def get(
+        self, pronunciation_dictionary_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[GetPronunciationDictionaryMetadataResponse]:
+        """
+        Get metadata for a pronunciation dictionary
+
+        Parameters
+        ----------
+        pronunciation_dictionary_id : str
+            The id of the pronunciation dictionary
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetPronunciationDictionaryMetadataResponse]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetPronunciationDictionaryMetadataResponse,
+                    construct_type(
+                        type_=GetPronunciationDictionaryMetadataResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def update(
+        self,
+        pronunciation_dictionary_id: str,
+        *,
+        archived: typing.Optional[bool] = OMIT,
+        name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[GetPronunciationDictionaryMetadataResponse]:
+        """
+        Partially update the pronunciation dictionary without changing the version
+
+        Parameters
+        ----------
+        pronunciation_dictionary_id : str
+            The id of the pronunciation dictionary
+
+        archived : typing.Optional[bool]
+            The name of the pronunciation dictionary, used for identification only.
+
+        name : typing.Optional[str]
+            The name of the pronunciation dictionary, used for identification only.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetPronunciationDictionaryMetadataResponse]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}",
+            method="PATCH",
+            json={
+                "archived": archived,
+                "name": name,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetPronunciationDictionaryMetadataResponse,
+                    construct_type(
+                        type_=GetPronunciationDictionaryMetadataResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     @contextlib.contextmanager
     def download(
         self, dictionary_id: str, version_id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -254,56 +373,6 @@ class RawPronunciationDictionariesClient:
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
             yield _stream()
-
-    def get(
-        self, pronunciation_dictionary_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[GetPronunciationDictionaryMetadataResponse]:
-        """
-        Get metadata for a pronunciation dictionary
-
-        Parameters
-        ----------
-        pronunciation_dictionary_id : str
-            The id of the pronunciation dictionary
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[GetPronunciationDictionaryMetadataResponse]
-            Successful Response
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    GetPronunciationDictionaryMetadataResponse,
-                    construct_type(
-                        type_=GetPronunciationDictionaryMetadataResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def list(
         self,
@@ -541,6 +610,125 @@ class AsyncRawPronunciationDictionariesClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    async def get(
+        self, pronunciation_dictionary_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[GetPronunciationDictionaryMetadataResponse]:
+        """
+        Get metadata for a pronunciation dictionary
+
+        Parameters
+        ----------
+        pronunciation_dictionary_id : str
+            The id of the pronunciation dictionary
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GetPronunciationDictionaryMetadataResponse]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetPronunciationDictionaryMetadataResponse,
+                    construct_type(
+                        type_=GetPronunciationDictionaryMetadataResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def update(
+        self,
+        pronunciation_dictionary_id: str,
+        *,
+        archived: typing.Optional[bool] = OMIT,
+        name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[GetPronunciationDictionaryMetadataResponse]:
+        """
+        Partially update the pronunciation dictionary without changing the version
+
+        Parameters
+        ----------
+        pronunciation_dictionary_id : str
+            The id of the pronunciation dictionary
+
+        archived : typing.Optional[bool]
+            The name of the pronunciation dictionary, used for identification only.
+
+        name : typing.Optional[str]
+            The name of the pronunciation dictionary, used for identification only.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GetPronunciationDictionaryMetadataResponse]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}",
+            method="PATCH",
+            json={
+                "archived": archived,
+                "name": name,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetPronunciationDictionaryMetadataResponse,
+                    construct_type(
+                        type_=GetPronunciationDictionaryMetadataResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     @contextlib.asynccontextmanager
     async def download(
         self, dictionary_id: str, version_id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -598,56 +786,6 @@ class AsyncRawPronunciationDictionariesClient:
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
             yield await _stream()
-
-    async def get(
-        self, pronunciation_dictionary_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[GetPronunciationDictionaryMetadataResponse]:
-        """
-        Get metadata for a pronunciation dictionary
-
-        Parameters
-        ----------
-        pronunciation_dictionary_id : str
-            The id of the pronunciation dictionary
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[GetPronunciationDictionaryMetadataResponse]
-            Successful Response
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    GetPronunciationDictionaryMetadataResponse,
-                    construct_type(
-                        type_=GetPronunciationDictionaryMetadataResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def list(
         self,

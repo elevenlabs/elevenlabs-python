@@ -31,7 +31,7 @@ class ToolsClient:
 
     def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> ToolsResponseModel:
         """
-        Get all available tools available in the workspace.
+        Get all available tools in the workspace.
 
         Parameters
         ----------
@@ -271,7 +271,7 @@ class AsyncToolsClient:
 
     async def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> ToolsResponseModel:
         """
-        Get all available tools available in the workspace.
+        Get all available tools in the workspace.
 
         Parameters
         ----------

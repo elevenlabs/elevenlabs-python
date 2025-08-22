@@ -164,31 +164,6 @@ class PronunciationDictionariesClient:
         )
         return _response.data
 
-    def download(
-        self, dictionary_id: str, version_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Iterator[bytes]:
-        """
-        Get a PLS file with a pronunciation dictionary version rules
-
-        Parameters
-        ----------
-        dictionary_id : str
-            The id of the pronunciation dictionary
-
-        version_id : str
-            The id of the version of the pronunciation dictionary
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
-
-        Returns
-        -------
-        typing.Iterator[bytes]
-            The PLS file containing pronunciation dictionary rules
-        """
-        with self._raw_client.download(dictionary_id, version_id, request_options=request_options) as r:
-            yield from r.data
-
     def get(
         self, pronunciation_dictionary_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetPronunciationDictionaryMetadataResponse:
@@ -221,6 +196,77 @@ class PronunciationDictionariesClient:
         """
         _response = self._raw_client.get(pronunciation_dictionary_id, request_options=request_options)
         return _response.data
+
+    def update(
+        self,
+        pronunciation_dictionary_id: str,
+        *,
+        archived: typing.Optional[bool] = OMIT,
+        name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetPronunciationDictionaryMetadataResponse:
+        """
+        Partially update the pronunciation dictionary without changing the version
+
+        Parameters
+        ----------
+        pronunciation_dictionary_id : str
+            The id of the pronunciation dictionary
+
+        archived : typing.Optional[bool]
+            The name of the pronunciation dictionary, used for identification only.
+
+        name : typing.Optional[str]
+            The name of the pronunciation dictionary, used for identification only.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetPronunciationDictionaryMetadataResponse
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.pronunciation_dictionaries.update(
+            pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._raw_client.update(
+            pronunciation_dictionary_id, archived=archived, name=name, request_options=request_options
+        )
+        return _response.data
+
+    def download(
+        self, dictionary_id: str, version_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Iterator[bytes]:
+        """
+        Get a PLS file with a pronunciation dictionary version rules
+
+        Parameters
+        ----------
+        dictionary_id : str
+            The id of the pronunciation dictionary
+
+        version_id : str
+            The id of the version of the pronunciation dictionary
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Returns
+        -------
+        typing.Iterator[bytes]
+            The PLS file containing pronunciation dictionary rules
+        """
+        with self._raw_client.download(dictionary_id, version_id, request_options=request_options) as r:
+            yield from r.data
 
     def list(
         self,
@@ -428,32 +474,6 @@ class AsyncPronunciationDictionariesClient:
         )
         return _response.data
 
-    async def download(
-        self, dictionary_id: str, version_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.AsyncIterator[bytes]:
-        """
-        Get a PLS file with a pronunciation dictionary version rules
-
-        Parameters
-        ----------
-        dictionary_id : str
-            The id of the pronunciation dictionary
-
-        version_id : str
-            The id of the version of the pronunciation dictionary
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
-
-        Returns
-        -------
-        typing.AsyncIterator[bytes]
-            The PLS file containing pronunciation dictionary rules
-        """
-        async with self._raw_client.download(dictionary_id, version_id, request_options=request_options) as r:
-            async for _chunk in r.data:
-                yield _chunk
-
     async def get(
         self, pronunciation_dictionary_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetPronunciationDictionaryMetadataResponse:
@@ -494,6 +514,86 @@ class AsyncPronunciationDictionariesClient:
         """
         _response = await self._raw_client.get(pronunciation_dictionary_id, request_options=request_options)
         return _response.data
+
+    async def update(
+        self,
+        pronunciation_dictionary_id: str,
+        *,
+        archived: typing.Optional[bool] = OMIT,
+        name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetPronunciationDictionaryMetadataResponse:
+        """
+        Partially update the pronunciation dictionary without changing the version
+
+        Parameters
+        ----------
+        pronunciation_dictionary_id : str
+            The id of the pronunciation dictionary
+
+        archived : typing.Optional[bool]
+            The name of the pronunciation dictionary, used for identification only.
+
+        name : typing.Optional[str]
+            The name of the pronunciation dictionary, used for identification only.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetPronunciationDictionaryMetadataResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.pronunciation_dictionaries.update(
+                pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update(
+            pronunciation_dictionary_id, archived=archived, name=name, request_options=request_options
+        )
+        return _response.data
+
+    async def download(
+        self, dictionary_id: str, version_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.AsyncIterator[bytes]:
+        """
+        Get a PLS file with a pronunciation dictionary version rules
+
+        Parameters
+        ----------
+        dictionary_id : str
+            The id of the pronunciation dictionary
+
+        version_id : str
+            The id of the version of the pronunciation dictionary
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Returns
+        -------
+        typing.AsyncIterator[bytes]
+            The PLS file containing pronunciation dictionary rules
+        """
+        async with self._raw_client.download(dictionary_id, version_id, request_options=request_options) as r:
+            async for _chunk in r.data:
+                yield _chunk
 
     async def list(
         self,

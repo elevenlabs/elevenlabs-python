@@ -41,7 +41,7 @@ class RawTextToDialogueClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
         """
-        <Warning>Eleven v3 API access is currently not publicly available, but will be soon.</Warning><br/>Converts a list of text and voice ID pairs into speech (dialogue) and returns audio.
+        Converts a list of text and voice ID pairs into speech (dialogue) and returns audio.
 
         Parameters
         ----------
@@ -142,7 +142,7 @@ class RawTextToDialogueClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
         """
-        <Warning>Eleven v3 API access is currently not publicly available, but will be soon.</Warning><br/>Converts a list of text and voice ID pairs into speech (dialogue) and returns an audio stream.
+        Converts a list of text and voice ID pairs into speech (dialogue) and returns an audio stream.
 
         Parameters
         ----------
@@ -248,7 +248,7 @@ class AsyncRawTextToDialogueClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
         """
-        <Warning>Eleven v3 API access is currently not publicly available, but will be soon.</Warning><br/>Converts a list of text and voice ID pairs into speech (dialogue) and returns audio.
+        Converts a list of text and voice ID pairs into speech (dialogue) and returns audio.
 
         Parameters
         ----------
@@ -350,7 +350,7 @@ class AsyncRawTextToDialogueClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
         """
-        <Warning>Eleven v3 API access is currently not publicly available, but will be soon.</Warning><br/>Converts a list of text and voice ID pairs into speech (dialogue) and returns an audio stream.
+        Converts a list of text and voice ID pairs into speech (dialogue) and returns an audio stream.
 
         Parameters
         ----------

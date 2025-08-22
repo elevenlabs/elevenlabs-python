@@ -10,6 +10,7 @@ from .extended_subscription_response_model_character_refresh_period import (
     ExtendedSubscriptionResponseModelCharacterRefreshPeriod,
 )
 from .extended_subscription_response_model_currency import ExtendedSubscriptionResponseModelCurrency
+from .extended_subscription_response_model_pending_change import ExtendedSubscriptionResponseModelPendingChange
 from .invoice_response import InvoiceResponse
 from .subscription_status_type import SubscriptionStatusType
 
@@ -125,6 +126,11 @@ class Subscription(UncheckedBaseModel):
     has_open_invoices: bool = pydantic.Field()
     """
     Whether the user has open invoices.
+    """
+
+    pending_change: typing.Optional[ExtendedSubscriptionResponseModelPendingChange] = pydantic.Field(default=None)
+    """
+    The pending change for the user.
     """
 
     if IS_PYDANTIC_V2:
