@@ -8,7 +8,7 @@ from .base_client import \
 from .environment import ElevenLabsEnvironment
 from .realtime_tts import RealtimeTextToSpeechClient
 from .webhooks_custom import WebhooksClient, AsyncWebhooksClient
-
+from .music_custom import MusicClient, AsyncMusicClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -59,6 +59,7 @@ class ElevenLabs(BaseElevenLabs):
         )
         self.text_to_speech = RealtimeTextToSpeechClient(client_wrapper=self._client_wrapper)
         self.webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
+        self.music = MusicClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncElevenLabs(AsyncBaseElevenLabs):
@@ -102,3 +103,4 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
             httpx_client=httpx_client
         )
         self.webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
+        self.music = AsyncMusicClient(client_wrapper=self._client_wrapper)
