@@ -442,7 +442,7 @@ class Conversation(BaseConversation):
     callback_user_transcript: Optional[Callable[[str], None]]
     callback_latency_measurement: Optional[Callable[[int], None]]
     callback_end_session: Optional[Callable]
-
+    proxy_url: Optional[str]
     _thread: Optional[threading.Thread]
     _should_stop: threading.Event
     _ws: Optional[Connection]
@@ -462,6 +462,7 @@ class Conversation(BaseConversation):
         callback_user_transcript: Optional[Callable[[str], None]] = None,
         callback_latency_measurement: Optional[Callable[[int], None]] = None,
         callback_end_session: Optional[Callable] = None,
+        proxy_url: Optional[str] = None,
     ):
         """Conversational AI session.
 
@@ -497,6 +498,7 @@ class Conversation(BaseConversation):
         self.callback_user_transcript = callback_user_transcript
         self.callback_latency_measurement = callback_latency_measurement
         self.callback_end_session = callback_end_session
+        self.proxy_url = proxy_url
 
         self._thread = None
         self._ws: Optional[Connection] = None
@@ -593,7 +595,7 @@ class Conversation(BaseConversation):
             raise
 
     def _run(self, ws_url: str):
-        with connect(ws_url, max_size=16 * 1024 * 1024) as ws:
+        with connect(ws_url, max_size=16 * 1024 * 1024, proxy=self.proxy_url) as ws:
             self._ws = ws
             ws.send(self._create_initiation_message())
             self._ws = ws
