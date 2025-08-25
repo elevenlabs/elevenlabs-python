@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .feature_status_common_model import FeatureStatusCommonModel
+from .tests_feature_usage_common_model import TestsFeatureUsageCommonModel
 from .workflow_features_usage_common_model import WorkflowFeaturesUsageCommonModel
 
 
@@ -22,6 +23,7 @@ class FeaturesUsageCommonModel(UncheckedBaseModel):
     is_livekit: typing.Optional[bool] = None
     voicemail_detection: typing.Optional[FeatureStatusCommonModel] = None
     workflow: typing.Optional[WorkflowFeaturesUsageCommonModel] = None
+    agent_testing: typing.Optional[TestsFeatureUsageCommonModel] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

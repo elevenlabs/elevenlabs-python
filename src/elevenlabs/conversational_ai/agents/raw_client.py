@@ -11,6 +11,7 @@ from ...core.request_options import RequestOptions
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
+from ...types.adhoc_agent_config_override_for_test_request_model import AdhocAgentConfigOverrideForTestRequestModel
 from ...types.agent_platform_settings_request_model import AgentPlatformSettingsRequestModel
 from ...types.agent_simulated_chat_test_response_model import AgentSimulatedChatTestResponseModel
 from ...types.conversation_simulation_specification import ConversationSimulationSpecification
@@ -18,8 +19,10 @@ from ...types.conversational_config import ConversationalConfig
 from ...types.create_agent_response_model import CreateAgentResponseModel
 from ...types.get_agent_response_model import GetAgentResponseModel
 from ...types.get_agents_page_response_model import GetAgentsPageResponseModel
+from ...types.get_test_suite_invocation_response_model import GetTestSuiteInvocationResponseModel
 from ...types.http_validation_error import HttpValidationError
 from ...types.prompt_evaluation_criteria import PromptEvaluationCriteria
+from ...types.single_test_run_request_model import SingleTestRunRequestModel
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -571,6 +574,81 @@ class RawAgentsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def run_tests(
+        self,
+        agent_id: str,
+        *,
+        tests: typing.Sequence[SingleTestRunRequestModel],
+        agent_config_override: typing.Optional[AdhocAgentConfigOverrideForTestRequestModel] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[GetTestSuiteInvocationResponseModel]:
+        """
+        Run selected tests on the agent with provided configuration. If the agent configuration is provided, it will be used to override default agent configuration.
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of an agent. This is returned on agent creation.
+
+        tests : typing.Sequence[SingleTestRunRequestModel]
+            List of tests to run on the agent
+
+        agent_config_override : typing.Optional[AdhocAgentConfigOverrideForTestRequestModel]
+            Configuration overrides to use for testing. If not provided, the agent's default configuration will be used.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetTestSuiteInvocationResponseModel]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/convai/agents/{jsonable_encoder(agent_id)}/run-tests",
+            method="POST",
+            json={
+                "tests": convert_and_respect_annotation_metadata(
+                    object_=tests, annotation=typing.Sequence[SingleTestRunRequestModel], direction="write"
+                ),
+                "agent_config_override": convert_and_respect_annotation_metadata(
+                    object_=agent_config_override,
+                    annotation=AdhocAgentConfigOverrideForTestRequestModel,
+                    direction="write",
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetTestSuiteInvocationResponseModel,
+                    construct_type(
+                        type_=GetTestSuiteInvocationResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawAgentsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -1104,6 +1182,81 @@ class AsyncRawAgentsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return AsyncHttpResponse(response=_response, data=None)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def run_tests(
+        self,
+        agent_id: str,
+        *,
+        tests: typing.Sequence[SingleTestRunRequestModel],
+        agent_config_override: typing.Optional[AdhocAgentConfigOverrideForTestRequestModel] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[GetTestSuiteInvocationResponseModel]:
+        """
+        Run selected tests on the agent with provided configuration. If the agent configuration is provided, it will be used to override default agent configuration.
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of an agent. This is returned on agent creation.
+
+        tests : typing.Sequence[SingleTestRunRequestModel]
+            List of tests to run on the agent
+
+        agent_config_override : typing.Optional[AdhocAgentConfigOverrideForTestRequestModel]
+            Configuration overrides to use for testing. If not provided, the agent's default configuration will be used.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GetTestSuiteInvocationResponseModel]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/convai/agents/{jsonable_encoder(agent_id)}/run-tests",
+            method="POST",
+            json={
+                "tests": convert_and_respect_annotation_metadata(
+                    object_=tests, annotation=typing.Sequence[SingleTestRunRequestModel], direction="write"
+                ),
+                "agent_config_override": convert_and_respect_annotation_metadata(
+                    object_=agent_config_override,
+                    annotation=AdhocAgentConfigOverrideForTestRequestModel,
+                    direction="write",
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetTestSuiteInvocationResponseModel,
+                    construct_type(
+                        type_=GetTestSuiteInvocationResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),

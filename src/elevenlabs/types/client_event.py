@@ -10,6 +10,7 @@ ClientEvent = typing.Union[
         "audio",
         "interruption",
         "user_transcript",
+        "tentative_user_transcript",
         "agent_response",
         "agent_response_correction",
         "client_tool_call",

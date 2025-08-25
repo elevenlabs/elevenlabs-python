@@ -22,6 +22,7 @@ from .raw_client import AsyncRawConversationalAiClient, RawConversationalAiClien
 from .secrets.client import AsyncSecretsClient, SecretsClient
 from .settings.client import AsyncSettingsClient, SettingsClient
 from .sip_trunk.client import AsyncSipTrunkClient, SipTrunkClient
+from .tests.client import AsyncTestsClient, TestsClient
 from .tools.client import AsyncToolsClient, ToolsClient
 from .twilio.client import AsyncTwilioClient, TwilioClient
 
@@ -37,6 +38,8 @@ class ConversationalAiClient:
         self.twilio = TwilioClient(client_wrapper=client_wrapper)
 
         self.agents = AgentsClient(client_wrapper=client_wrapper)
+
+        self.tests = TestsClient(client_wrapper=client_wrapper)
 
         self.phone_numbers = PhoneNumbersClient(client_wrapper=client_wrapper)
 
@@ -263,6 +266,8 @@ class AsyncConversationalAiClient:
         self.twilio = AsyncTwilioClient(client_wrapper=client_wrapper)
 
         self.agents = AsyncAgentsClient(client_wrapper=client_wrapper)
+
+        self.tests = AsyncTestsClient(client_wrapper=client_wrapper)
 
         self.phone_numbers = AsyncPhoneNumbersClient(client_wrapper=client_wrapper)
 
