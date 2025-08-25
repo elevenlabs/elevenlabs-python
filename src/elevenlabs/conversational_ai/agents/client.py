@@ -4,6 +4,7 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...types.adhoc_agent_config_override_for_test_request_model import AdhocAgentConfigOverrideForTestRequestModel
 from ...types.agent_platform_settings_request_model import AgentPlatformSettingsRequestModel
 from ...types.agent_simulated_chat_test_response_model import AgentSimulatedChatTestResponseModel
 from ...types.conversation_simulation_specification import ConversationSimulationSpecification
@@ -11,7 +12,9 @@ from ...types.conversational_config import ConversationalConfig
 from ...types.create_agent_response_model import CreateAgentResponseModel
 from ...types.get_agent_response_model import GetAgentResponseModel
 from ...types.get_agents_page_response_model import GetAgentsPageResponseModel
+from ...types.get_test_suite_invocation_response_model import GetTestSuiteInvocationResponseModel
 from ...types.prompt_evaluation_criteria import PromptEvaluationCriteria
+from ...types.single_test_run_request_model import SingleTestRunRequestModel
 from .knowledge_base.client import AsyncKnowledgeBaseClient, KnowledgeBaseClient
 from .link.client import AsyncLinkClient, LinkClient
 from .llm_usage.client import AsyncLlmUsageClient, LlmUsageClient
@@ -434,6 +437,57 @@ class AgentsClient:
             extra_evaluation_criteria=extra_evaluation_criteria,
             new_turns_limit=new_turns_limit,
             request_options=request_options,
+        )
+        return _response.data
+
+    def run_tests(
+        self,
+        agent_id: str,
+        *,
+        tests: typing.Sequence[SingleTestRunRequestModel],
+        agent_config_override: typing.Optional[AdhocAgentConfigOverrideForTestRequestModel] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetTestSuiteInvocationResponseModel:
+        """
+        Run selected tests on the agent with provided configuration. If the agent configuration is provided, it will be used to override default agent configuration.
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of an agent. This is returned on agent creation.
+
+        tests : typing.Sequence[SingleTestRunRequestModel]
+            List of tests to run on the agent
+
+        agent_config_override : typing.Optional[AdhocAgentConfigOverrideForTestRequestModel]
+            Configuration overrides to use for testing. If not provided, the agent's default configuration will be used.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetTestSuiteInvocationResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs, SingleTestRunRequestModel
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.agents.run_tests(
+            agent_id="21m00Tcm4TlvDq8ikWAM",
+            tests=[
+                SingleTestRunRequestModel(
+                    test_id="test_id",
+                )
+            ],
+        )
+        """
+        _response = self._raw_client.run_tests(
+            agent_id, tests=tests, agent_config_override=agent_config_override, request_options=request_options
         )
         return _response.data
 
@@ -916,5 +970,64 @@ class AsyncAgentsClient:
             extra_evaluation_criteria=extra_evaluation_criteria,
             new_turns_limit=new_turns_limit,
             request_options=request_options,
+        )
+        return _response.data
+
+    async def run_tests(
+        self,
+        agent_id: str,
+        *,
+        tests: typing.Sequence[SingleTestRunRequestModel],
+        agent_config_override: typing.Optional[AdhocAgentConfigOverrideForTestRequestModel] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetTestSuiteInvocationResponseModel:
+        """
+        Run selected tests on the agent with provided configuration. If the agent configuration is provided, it will be used to override default agent configuration.
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of an agent. This is returned on agent creation.
+
+        tests : typing.Sequence[SingleTestRunRequestModel]
+            List of tests to run on the agent
+
+        agent_config_override : typing.Optional[AdhocAgentConfigOverrideForTestRequestModel]
+            Configuration overrides to use for testing. If not provided, the agent's default configuration will be used.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetTestSuiteInvocationResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs, SingleTestRunRequestModel
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.agents.run_tests(
+                agent_id="21m00Tcm4TlvDq8ikWAM",
+                tests=[
+                    SingleTestRunRequestModel(
+                        test_id="test_id",
+                    )
+                ],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.run_tests(
+            agent_id, tests=tests, agent_config_override=agent_config_override, request_options=request_options
         )
         return _response.data

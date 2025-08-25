@@ -1,852 +1,4 @@
 # Reference
-<details><summary><code>client.<a href="src/elevenlabs/base_client.py">create_agent_response_test_route</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Creates a new agent response test.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import (
-    AgentFailureResponseExample,
-    AgentSuccessfulResponseExample,
-    ConversationHistoryTranscriptCommonModelInput,
-    ElevenLabs,
-)
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.create_agent_response_test_route(
-    chat_history=[
-        ConversationHistoryTranscriptCommonModelInput(
-            role="user",
-            time_in_call_secs=1,
-        )
-    ],
-    success_condition="success_condition",
-    success_examples=[
-        AgentSuccessfulResponseExample(
-            response="response",
-        )
-    ],
-    failure_examples=[
-        AgentFailureResponseExample(
-            response="response",
-        )
-    ],
-    name="name",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**chat_history:** `typing.Sequence[ConversationHistoryTranscriptCommonModelInput]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**success_condition:** `str` — A prompt that evaluates whether the agent's response is successful. Should return True or False.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**success_examples:** `typing.Sequence[AgentSuccessfulResponseExample]` — Non-empty list of example responses that should be considered successful
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**failure_examples:** `typing.Sequence[AgentFailureResponseExample]` — Non-empty list of example responses that should be considered failures
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tool_call_parameters:** `typing.Optional[UnitTestToolCallEvaluationModelInput]` — How to evaluate the agent's tool call (if any). If empty, the tool call is not evaluated.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**dynamic_variables:** `typing.Optional[
-    typing.Dict[
-        str, typing.Optional[CreateUnitTestRequestDynamicVariablesValue]
-    ]
-]` — Dynamic variables to replace in the agent config during testing
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/elevenlabs/base_client.py">get_agent_response_test_route</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Gets an agent response test by ID.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.get_agent_response_test_route(
-    test_id="TeaqRRdTcIfIu2i7BYfT",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**test_id:** `str` — The id of a chat response test. This is returned on test creation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/elevenlabs/base_client.py">update_agent_response_test_route</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Updates an agent response test by ID.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import (
-    AgentFailureResponseExample,
-    AgentSuccessfulResponseExample,
-    ConversationHistoryTranscriptCommonModelInput,
-    ElevenLabs,
-)
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.update_agent_response_test_route(
-    test_id="TeaqRRdTcIfIu2i7BYfT",
-    chat_history=[
-        ConversationHistoryTranscriptCommonModelInput(
-            role="user",
-            time_in_call_secs=1,
-        )
-    ],
-    success_condition="success_condition",
-    success_examples=[
-        AgentSuccessfulResponseExample(
-            response="response",
-        )
-    ],
-    failure_examples=[
-        AgentFailureResponseExample(
-            response="response",
-        )
-    ],
-    name="name",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**test_id:** `str` — The id of a chat response test. This is returned on test creation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**chat_history:** `typing.Sequence[ConversationHistoryTranscriptCommonModelInput]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**success_condition:** `str` — A prompt that evaluates whether the agent's response is successful. Should return True or False.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**success_examples:** `typing.Sequence[AgentSuccessfulResponseExample]` — Non-empty list of example responses that should be considered successful
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**failure_examples:** `typing.Sequence[AgentFailureResponseExample]` — Non-empty list of example responses that should be considered failures
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tool_call_parameters:** `typing.Optional[UnitTestToolCallEvaluationModelInput]` — How to evaluate the agent's tool call (if any). If empty, the tool call is not evaluated.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**dynamic_variables:** `typing.Optional[
-    typing.Dict[
-        str, typing.Optional[UpdateUnitTestRequestDynamicVariablesValue]
-    ]
-]` — Dynamic variables to replace in the agent config during testing
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/elevenlabs/base_client.py">delete_chat_response_test_route</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Deletes an agent response test by ID.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.delete_chat_response_test_route(
-    test_id="TeaqRRdTcIfIu2i7BYfT",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**test_id:** `str` — The id of a chat response test. This is returned on test creation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/elevenlabs/base_client.py">get_agent_response_tests_summaries_route</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Gets multiple agent response tests by their IDs. Returns a dictionary mapping test IDs to test summaries.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.get_agent_response_tests_summaries_route(
-    test_ids=["test_id_1", "test_id_2"],
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**test_ids:** `typing.Sequence[str]` — List of test IDs to fetch. No duplicates allowed.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/elevenlabs/base_client.py">list_chat_response_tests_route</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Lists all agent response tests with pagination support and optional search filtering.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.list_chat_response_tests_route()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page_size:** `typing.Optional[int]` — How many Tests to return at maximum. Can not exceed 100, defaults to 30.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**search:** `typing.Optional[str]` — Search query to filter tests by name.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/elevenlabs/base_client.py">run_agent_test_suite_route</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Run selected tests on the agent with provided configuration. If the agent configuration is provided, it will be used to override default agent configuration.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs, SingleTestRunRequestModel
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.run_agent_test_suite_route(
-    agent_id="21m00Tcm4TlvDq8ikWAM",
-    tests=[
-        SingleTestRunRequestModel(
-            test_id="test_id",
-        )
-    ],
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**agent_id:** `str` — The id of an agent. This is returned on agent creation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tests:** `typing.Sequence[SingleTestRunRequestModel]` — List of tests to run on the agent
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**agent_config_override:** `typing.Optional[AdhocAgentConfigOverrideForTestRequestModel]` — Configuration overrides to use for testing. If not provided, the agent's default configuration will be used.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/elevenlabs/base_client.py">get_test_invocation_route</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Gets a test invocation by ID.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.get_test_invocation_route(
-    test_invocation_id="test_invocation_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**test_invocation_id:** `str` — The id of a test invocation. This is returned when tests are run.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.<a href="src/elevenlabs/base_client.py">resubmit_tests_route</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Resubmits specific test runs from a test invocation.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.resubmit_tests_route(
-    test_invocation_id="test_invocation_id",
-    test_run_ids=["test_run_ids"],
-    agent_id="agent_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**test_invocation_id:** `str` — The id of a test invocation. This is returned when tests are run.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**test_run_ids:** `typing.Sequence[str]` — List of test run IDs to resubmit
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**agent_id:** `str` — Agent ID to resubmit tests for
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**agent_config_override:** `typing.Optional[AdhocAgentConfigOverrideForTestRequestModel]` — Configuration overrides to use for testing. If not provided, the agent's default configuration will be used.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.<a href="src/elevenlabs/base_client.py">save_a_voice_preview</a>()</code></summary>
 <dl>
 <dd>
@@ -7763,6 +6915,689 @@ client.conversational_ai.agents.simulate_conversation_stream(
 </dl>
 </details>
 
+<details><summary><code>client.conversational_ai.agents.<a href="src/elevenlabs/conversational_ai/agents/client.py">run_tests</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Run selected tests on the agent with provided configuration. If the agent configuration is provided, it will be used to override default agent configuration.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs, SingleTestRunRequestModel
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.agents.run_tests(
+    agent_id="21m00Tcm4TlvDq8ikWAM",
+    tests=[
+        SingleTestRunRequestModel(
+            test_id="test_id",
+        )
+    ],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tests:** `typing.Sequence[SingleTestRunRequestModel]` — List of tests to run on the agent
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agent_config_override:** `typing.Optional[AdhocAgentConfigOverrideForTestRequestModel]` — Configuration overrides to use for testing. If not provided, the agent's default configuration will be used.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi Tests
+<details><summary><code>client.conversational_ai.tests.<a href="src/elevenlabs/conversational_ai/tests/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a new agent response test.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import (
+    AgentFailureResponseExample,
+    AgentSuccessfulResponseExample,
+    ConversationHistoryTranscriptCommonModelInput,
+    ElevenLabs,
+)
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.tests.create(
+    chat_history=[
+        ConversationHistoryTranscriptCommonModelInput(
+            role="user",
+            time_in_call_secs=1,
+        )
+    ],
+    success_condition="success_condition",
+    success_examples=[
+        AgentSuccessfulResponseExample(
+            response="response",
+        )
+    ],
+    failure_examples=[
+        AgentFailureResponseExample(
+            response="response",
+        )
+    ],
+    name="name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**chat_history:** `typing.Sequence[ConversationHistoryTranscriptCommonModelInput]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**success_condition:** `str` — A prompt that evaluates whether the agent's response is successful. Should return True or False.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**success_examples:** `typing.Sequence[AgentSuccessfulResponseExample]` — Non-empty list of example responses that should be considered successful
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**failure_examples:** `typing.Sequence[AgentFailureResponseExample]` — Non-empty list of example responses that should be considered failures
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tool_call_parameters:** `typing.Optional[UnitTestToolCallEvaluationModelInput]` — How to evaluate the agent's tool call (if any). If empty, the tool call is not evaluated.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dynamic_variables:** `typing.Optional[
+    typing.Dict[
+        str, typing.Optional[CreateUnitTestRequestDynamicVariablesValue]
+    ]
+]` — Dynamic variables to replace in the agent config during testing
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.tests.<a href="src/elevenlabs/conversational_ai/tests/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets an agent response test by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.tests.get(
+    test_id="TeaqRRdTcIfIu2i7BYfT",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**test_id:** `str` — The id of a chat response test. This is returned on test creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.tests.<a href="src/elevenlabs/conversational_ai/tests/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates an agent response test by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import (
+    AgentFailureResponseExample,
+    AgentSuccessfulResponseExample,
+    ConversationHistoryTranscriptCommonModelInput,
+    ElevenLabs,
+)
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.tests.update(
+    test_id="TeaqRRdTcIfIu2i7BYfT",
+    chat_history=[
+        ConversationHistoryTranscriptCommonModelInput(
+            role="user",
+            time_in_call_secs=1,
+        )
+    ],
+    success_condition="success_condition",
+    success_examples=[
+        AgentSuccessfulResponseExample(
+            response="response",
+        )
+    ],
+    failure_examples=[
+        AgentFailureResponseExample(
+            response="response",
+        )
+    ],
+    name="name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**test_id:** `str` — The id of a chat response test. This is returned on test creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**chat_history:** `typing.Sequence[ConversationHistoryTranscriptCommonModelInput]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**success_condition:** `str` — A prompt that evaluates whether the agent's response is successful. Should return True or False.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**success_examples:** `typing.Sequence[AgentSuccessfulResponseExample]` — Non-empty list of example responses that should be considered successful
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**failure_examples:** `typing.Sequence[AgentFailureResponseExample]` — Non-empty list of example responses that should be considered failures
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tool_call_parameters:** `typing.Optional[UnitTestToolCallEvaluationModelInput]` — How to evaluate the agent's tool call (if any). If empty, the tool call is not evaluated.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dynamic_variables:** `typing.Optional[
+    typing.Dict[
+        str, typing.Optional[UpdateUnitTestRequestDynamicVariablesValue]
+    ]
+]` — Dynamic variables to replace in the agent config during testing
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.tests.<a href="src/elevenlabs/conversational_ai/tests/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes an agent response test by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.tests.delete(
+    test_id="TeaqRRdTcIfIu2i7BYfT",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**test_id:** `str` — The id of a chat response test. This is returned on test creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.tests.<a href="src/elevenlabs/conversational_ai/tests/client.py">summaries</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets multiple agent response tests by their IDs. Returns a dictionary mapping test IDs to test summaries.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.tests.summaries(
+    test_ids=["test_id_1", "test_id_2"],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**test_ids:** `typing.Sequence[str]` — List of test IDs to fetch. No duplicates allowed.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.tests.<a href="src/elevenlabs/conversational_ai/tests/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists all agent response tests with pagination support and optional search filtering.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.tests.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many Tests to return at maximum. Can not exceed 100, defaults to 30.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Search query to filter tests by name.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ConversationalAi PhoneNumbers
 <details><summary><code>client.conversational_ai.phone_numbers.<a href="src/elevenlabs/conversational_ai/phone_numbers/client.py">list</a>()</code></summary>
 <dl>
@@ -11547,6 +11382,173 @@ client.conversational_ai.mcp_servers.tool_approvals.delete(
 <dd>
 
 **tool_name:** `str` — Name of the MCP tool to remove approval for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi Tests Invocations
+<details><summary><code>client.conversational_ai.tests.invocations.<a href="src/elevenlabs/conversational_ai/tests/invocations/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets a test invocation by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.tests.invocations.get(
+    test_invocation_id="test_invocation_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**test_invocation_id:** `str` — The id of a test invocation. This is returned when tests are run.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.tests.invocations.<a href="src/elevenlabs/conversational_ai/tests/invocations/client.py">resubmit</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Resubmits specific test runs from a test invocation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.tests.invocations.resubmit(
+    test_invocation_id="test_invocation_id",
+    test_run_ids=["test_run_ids"],
+    agent_id="agent_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**test_invocation_id:** `str` — The id of a test invocation. This is returned when tests are run.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**test_run_ids:** `typing.Sequence[str]` — List of test run IDs to resubmit
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — Agent ID to resubmit tests for
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agent_config_override:** `typing.Optional[AdhocAgentConfigOverrideForTestRequestModel]` — Configuration overrides to use for testing. If not provided, the agent's default configuration will be used.
     
 </dd>
 </dl>

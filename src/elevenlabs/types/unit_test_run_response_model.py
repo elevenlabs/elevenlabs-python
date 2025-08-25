@@ -20,6 +20,7 @@ class UnitTestRunResponseModel(UncheckedBaseModel):
     agent_responses: typing.Optional[typing.List[ConversationHistoryTranscriptCommonModelOutput]] = None
     test_id: str
     condition_result: typing.Optional[TestConditionResultCommonModel] = None
+    last_updated_at_unix: typing.Optional[int] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

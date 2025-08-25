@@ -14,6 +14,7 @@ from . import (
     secrets,
     settings,
     sip_trunk,
+    tests,
     tools,
     twilio,
 )
@@ -32,9 +33,11 @@ from .phone_numbers import (
     PhoneNumbersUpdateResponse_SipTrunk,
     PhoneNumbersUpdateResponse_Twilio,
 )
+from .tests import CreateUnitTestRequestDynamicVariablesValue, UpdateUnitTestRequestDynamicVariablesValue
 
 __all__ = [
     "ConversationsListRequestSummaryMode",
+    "CreateUnitTestRequestDynamicVariablesValue",
     "PhoneNumbersCreateRequestBody",
     "PhoneNumbersCreateRequestBody_SipTrunk",
     "PhoneNumbersCreateRequestBody_Twilio",
@@ -47,6 +50,7 @@ __all__ = [
     "PhoneNumbersUpdateResponse",
     "PhoneNumbersUpdateResponse_SipTrunk",
     "PhoneNumbersUpdateResponse_Twilio",
+    "UpdateUnitTestRequestDynamicVariablesValue",
     "agents",
     "batch_calls",
     "conversations",
@@ -58,6 +62,7 @@ __all__ = [
     "secrets",
     "settings",
     "sip_trunk",
+    "tests",
     "tools",
     "twilio",
 ]
