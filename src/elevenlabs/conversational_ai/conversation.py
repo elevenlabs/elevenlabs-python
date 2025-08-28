@@ -155,11 +155,18 @@ class ClientTools:
 
     Supports both synchronous and asynchronous tools running in a dedicated event loop,
     ensuring non-blocking operation of the main conversation thread.
+    
+    Args:
+        loop: Optional custom asyncio event loop to use for tool execution. If not provided,
+              a new event loop will be created and run in a separate thread. Using a custom
+              loop prevents "different event loop" runtime errors and allows for better
+              context propagation and resource management.
     """
 
-    def __init__(self) -> None:
+    def __init__(self, loop: Optional[asyncio.AbstractEventLoop] = None) -> None:
         self.tools: Dict[str, Tuple[Union[Callable[[dict], Any], Callable[[dict], Awaitable[Any]]], bool]] = {}
         self.lock = threading.Lock()
+        self._custom_loop = loop
         self._loop = None
         self._thread = None
         self._running = threading.Event()
@@ -170,27 +177,39 @@ class ClientTools:
         if self._running.is_set():
             return
 
-        def run_event_loop():
-            self._loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(self._loop)
+        if self._custom_loop is not None:
+            # Use the provided custom event loop
+            self._loop = self._custom_loop
             self._running.set()
-            try:
-                self._loop.run_forever()
-            finally:
-                self._running.clear()
-                self._loop.close()
-                self._loop = None
+        else:
+            # Create and run our own event loop in a separate thread
+            def run_event_loop():
+                self._loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(self._loop)
+                self._running.set()
+                try:
+                    self._loop.run_forever()
+                finally:
+                    self._running.clear()
+                    self._loop.close()
+                    self._loop = None
 
-        self._thread = threading.Thread(target=run_event_loop, daemon=True, name="ClientTools-EventLoop")
-        self._thread.start()
-        # Wait for loop to be ready
-        self._running.wait()
+            self._thread = threading.Thread(target=run_event_loop, daemon=True, name="ClientTools-EventLoop")
+            self._thread.start()
+            # Wait for loop to be ready
+            self._running.wait()
 
     def stop(self):
         """Gracefully stop the event loop and clean up resources."""
         if self._loop and self._running.is_set():
-            self._loop.call_soon_threadsafe(self._loop.stop)
-            self._thread.join()
+            if self._custom_loop is not None:
+                # For custom loops, we don't stop the loop itself, just clear our running flag
+                self._running.clear()
+            else:
+                # For our own loop, stop it and join the thread
+                self._loop.call_soon_threadsafe(self._loop.stop)
+                if self._thread:
+                    self._thread.join()
             self.thread_pool.shutdown(wait=False)
 
     def register(
@@ -257,7 +276,12 @@ class ClientTools:
                 }
             callback(response)
 
-        asyncio.run_coroutine_threadsafe(_execute_and_callback(), self._loop)
+        if self._custom_loop is not None:
+            # For custom loops, schedule the task on the custom loop
+            self._loop.create_task(_execute_and_callback())
+        else:
+            # For our own loop running in a separate thread, use run_coroutine_threadsafe
+            asyncio.run_coroutine_threadsafe(_execute_and_callback(), self._loop)
 
 
 class ConversationInitiationData:
