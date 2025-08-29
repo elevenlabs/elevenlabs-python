@@ -13,6 +13,11 @@ class AgentMetadataResponseModel(UncheckedBaseModel):
     The creation time of the agent in unix seconds
     """
 
+    updated_at_unix_secs: int = pydantic.Field()
+    """
+    The last update time of the agent in unix seconds
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

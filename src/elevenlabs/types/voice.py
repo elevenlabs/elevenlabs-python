@@ -111,6 +111,11 @@ class Voice(UncheckedBaseModel):
     Whether the voice is mixed.
     """
 
+    favorited_at_unix: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Timestamp when the voice was marked as favorite in Unix time.
+    """
+
     created_at_unix: typing.Optional[int] = pydantic.Field(default=None)
     """
     The creation time of the voice in Unix time.

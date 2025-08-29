@@ -4,7 +4,6 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
-from ...types.delete_workspace_member_response_model import DeleteWorkspaceMemberResponseModel
 from ...types.update_workspace_member_response_model import UpdateWorkspaceMemberResponseModel
 from .raw_client import AsyncRawMembersClient, RawMembersClient
 from .types.body_update_member_v_1_workspace_members_post_workspace_role import (
@@ -76,39 +75,6 @@ class MembersClient:
         )
         return _response.data
 
-    def delete(
-        self, *, email: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> DeleteWorkspaceMemberResponseModel:
-        """
-        Deletes a workspace member. This endpoint may only be called by workspace administrators.
-
-        Parameters
-        ----------
-        email : str
-            Email of the target user.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        DeleteWorkspaceMemberResponseModel
-            Successful Response
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.workspace.members.delete(
-            email="email",
-        )
-        """
-        _response = self._raw_client.delete(email=email, request_options=request_options)
-        return _response.data
-
 
 class AsyncMembersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -177,45 +143,4 @@ class AsyncMembersClient:
         _response = await self._raw_client.update(
             email=email, is_locked=is_locked, workspace_role=workspace_role, request_options=request_options
         )
-        return _response.data
-
-    async def delete(
-        self, *, email: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> DeleteWorkspaceMemberResponseModel:
-        """
-        Deletes a workspace member. This endpoint may only be called by workspace administrators.
-
-        Parameters
-        ----------
-        email : str
-            Email of the target user.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        DeleteWorkspaceMemberResponseModel
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.workspace.members.delete(
-                email="email",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.delete(email=email, request_options=request_options)
         return _response.data

@@ -31,6 +31,7 @@ class TextToSoundEffectsClient:
         *,
         text: str,
         output_format: typing.Optional[TextToSoundEffectsConvertRequestOutputFormat] = None,
+        loop: typing.Optional[bool] = OMIT,
         duration_seconds: typing.Optional[float] = OMIT,
         prompt_influence: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -45,6 +46,9 @@ class TextToSoundEffectsClient:
 
         output_format : typing.Optional[TextToSoundEffectsConvertRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        loop : typing.Optional[bool]
+            Whether to create a sound effect that loops smoothly.
 
         duration_seconds : typing.Optional[float]
             The duration of the sound which will be generated in seconds. Must be at least 0.5 and at most 30. If set to None we will guess the optimal duration using the prompt. Defaults to None.
@@ -74,6 +78,7 @@ class TextToSoundEffectsClient:
         with self._raw_client.convert(
             text=text,
             output_format=output_format,
+            loop=loop,
             duration_seconds=duration_seconds,
             prompt_influence=prompt_influence,
             request_options=request_options,
@@ -101,6 +106,7 @@ class AsyncTextToSoundEffectsClient:
         *,
         text: str,
         output_format: typing.Optional[TextToSoundEffectsConvertRequestOutputFormat] = None,
+        loop: typing.Optional[bool] = OMIT,
         duration_seconds: typing.Optional[float] = OMIT,
         prompt_influence: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -115,6 +121,9 @@ class AsyncTextToSoundEffectsClient:
 
         output_format : typing.Optional[TextToSoundEffectsConvertRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        loop : typing.Optional[bool]
+            Whether to create a sound effect that loops smoothly.
 
         duration_seconds : typing.Optional[float]
             The duration of the sound which will be generated in seconds. Must be at least 0.5 and at most 30. If set to None we will guess the optimal duration using the prompt. Defaults to None.
@@ -152,6 +161,7 @@ class AsyncTextToSoundEffectsClient:
         async with self._raw_client.convert(
             text=text,
             output_format=output_format,
+            loop=loop,
             duration_seconds=duration_seconds,
             prompt_influence=prompt_influence,
             request_options=request_options,

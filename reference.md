@@ -367,6 +367,14 @@ client.text_to_sound_effects.convert(
 <dl>
 <dd>
 
+**loop:** `typing.Optional[bool]` — Whether to create a sound effect that loops smoothly.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **duration_seconds:** `typing.Optional[float]` — The duration of the sound which will be generated in seconds. Must be at least 0.5 and at most 30. If set to None we will guess the optimal duration using the prompt. Defaults to None.
     
 </dd>
@@ -11968,6 +11976,14 @@ client.dubbing.resource.render(
 <dl>
 <dd>
 
+**should_normalize_volume:** `typing.Optional[bool]` — Whether to normalize the volume of the rendered audio.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -16993,76 +17009,6 @@ client.workspace.members.update(
 <dd>
 
 **workspace_role:** `typing.Optional[BodyUpdateMemberV1WorkspaceMembersPostWorkspaceRole]` — Role dictating permissions in the workspace.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.workspace.members.<a href="src/elevenlabs/workspace/members/client.py">delete</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Deletes a workspace member. This endpoint may only be called by workspace administrators.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.workspace.members.delete(
-    email="email",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**email:** `str` — Email of the target user.
     
 </dd>
 </dl>
