@@ -282,7 +282,6 @@ from .delete_voice_response_model import DeleteVoiceResponseModel
 from .delete_voice_sample_response_model import DeleteVoiceSampleResponseModel
 from .delete_workspace_group_member_response_model import DeleteWorkspaceGroupMemberResponseModel
 from .delete_workspace_invite_response_model import DeleteWorkspaceInviteResponseModel
-from .delete_workspace_member_response_model import DeleteWorkspaceMemberResponseModel
 from .dependent_available_agent_identifier import DependentAvailableAgentIdentifier
 from .dependent_available_agent_identifier_access_level import DependentAvailableAgentIdentifierAccessLevel
 from .dependent_available_tool_identifier import DependentAvailableToolIdentifier
@@ -453,6 +452,7 @@ from .initialize_connection import InitializeConnection
 from .initialize_connection_multi import InitializeConnectionMulti
 from .integration_type import IntegrationType
 from .invoice_response import InvoiceResponse
+from .invoice_response_model_payment_intent_status import InvoiceResponseModelPaymentIntentStatus
 from .keep_context_alive import KeepContextAlive
 from .knowledge_base_document_chunk_response_model import KnowledgeBaseDocumentChunkResponseModel
 from .knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
@@ -1111,7 +1111,6 @@ __all__ = [
     "DeleteVoiceSampleResponseModel",
     "DeleteWorkspaceGroupMemberResponseModel",
     "DeleteWorkspaceInviteResponseModel",
-    "DeleteWorkspaceMemberResponseModel",
     "DependentAvailableAgentIdentifier",
     "DependentAvailableAgentIdentifierAccessLevel",
     "DependentAvailableToolIdentifier",
@@ -1258,6 +1257,7 @@ __all__ = [
     "InitializeConnectionMulti",
     "IntegrationType",
     "InvoiceResponse",
+    "InvoiceResponseModelPaymentIntentStatus",
     "KeepContextAlive",
     "KnowledgeBaseDocumentChunkResponseModel",
     "KnowledgeBaseDocumentMetadataResponseModel",

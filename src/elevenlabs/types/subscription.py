@@ -123,6 +123,11 @@ class Subscription(UncheckedBaseModel):
     The next invoice for the user.
     """
 
+    open_invoices: typing.List[InvoiceResponse] = pydantic.Field()
+    """
+    The open invoices for the user.
+    """
+
     has_open_invoices: bool = pydantic.Field()
     """
     Whether the user has open invoices.

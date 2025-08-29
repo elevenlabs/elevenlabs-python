@@ -13,6 +13,21 @@ class TtsConversationalConfigOverrideConfig(UncheckedBaseModel):
     Whether to allow overriding the voice_id field.
     """
 
+    stability: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to allow overriding the stability field.
+    """
+
+    speed: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to allow overriding the speed field.
+    """
+
+    similarity_boost: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to allow overriding the similarity_boost field.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

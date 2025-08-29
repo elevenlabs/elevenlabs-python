@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .invoice_response_model_payment_intent_status import InvoiceResponseModelPaymentIntentStatus
 
 
 class InvoiceResponse(UncheckedBaseModel):
@@ -26,6 +27,11 @@ class InvoiceResponse(UncheckedBaseModel):
     next_payment_attempt_unix: int = pydantic.Field()
     """
     The Unix timestamp of the next payment attempt.
+    """
+
+    payment_intent_status: typing.Optional[InvoiceResponseModelPaymentIntentStatus] = pydantic.Field(default=None)
+    """
+    The status of this invoice's payment intent. None when there is no payment intent.
     """
 
     if IS_PYDANTIC_V2:

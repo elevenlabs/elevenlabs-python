@@ -13,6 +13,21 @@ class TtsConversationalConfigOverride(UncheckedBaseModel):
     The voice ID to use for TTS
     """
 
+    stability: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    The stability of generated speech
+    """
+
+    speed: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    The speed of generated speech
+    """
+
+    similarity_boost: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    The similarity boost for generated speech
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

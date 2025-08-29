@@ -211,6 +211,7 @@ class ResourceClient:
         language: str,
         *,
         render_type: RenderType,
+        should_normalize_volume: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingRenderResponseModel:
         """
@@ -226,6 +227,9 @@ class ResourceClient:
 
         render_type : RenderType
             The type of the render. One of ['mp4', 'aac', 'mp3', 'wav', 'aaf', 'tracks_zip', 'clips_zip']
+
+        should_normalize_volume : typing.Optional[bool]
+            Whether to normalize the volume of the rendered audio.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -249,7 +253,11 @@ class ResourceClient:
         )
         """
         _response = self._raw_client.render(
-            dubbing_id, language, render_type=render_type, request_options=request_options
+            dubbing_id,
+            language,
+            render_type=render_type,
+            should_normalize_volume=should_normalize_volume,
+            request_options=request_options,
         )
         return _response.data
 
@@ -478,6 +486,7 @@ class AsyncResourceClient:
         language: str,
         *,
         render_type: RenderType,
+        should_normalize_volume: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingRenderResponseModel:
         """
@@ -493,6 +502,9 @@ class AsyncResourceClient:
 
         render_type : RenderType
             The type of the render. One of ['mp4', 'aac', 'mp3', 'wav', 'aaf', 'tracks_zip', 'clips_zip']
+
+        should_normalize_volume : typing.Optional[bool]
+            Whether to normalize the volume of the rendered audio.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -524,6 +536,10 @@ class AsyncResourceClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.render(
-            dubbing_id, language, render_type=render_type, request_options=request_options
+            dubbing_id,
+            language,
+            render_type=render_type,
+            should_normalize_volume=should_normalize_volume,
+            request_options=request_options,
         )
         return _response.data
