@@ -84,7 +84,7 @@ def test_conversation_basic_flow():
     init_messages = [json.loads(call) for call in send_calls if 'conversation_initiation_client_data' in call]
     assert len(init_messages) == 1
     init_message = init_messages[0]
-    
+
     assert init_message["type"] == "conversation_initiation_client_data"
     assert init_message["custom_llm_extra_body"] == {}
     assert init_message["conversation_config_override"] == {}
@@ -166,7 +166,7 @@ def test_conversation_with_dynamic_variables():
     init_messages = [json.loads(call) for call in send_calls if 'conversation_initiation_client_data' in call]
     assert len(init_messages) == 1
     init_message = init_messages[0]
-    
+
     assert init_message["type"] == "conversation_initiation_client_data"
     assert init_message["custom_llm_extra_body"] == {}
     assert init_message["conversation_config_override"] == {}
@@ -206,3 +206,53 @@ def test_conversation_with_contextual_update():
     # Assertions
     expected = json.dumps({"type": "contextual_update", "text": "User appears to be looking at pricing page"})
     mock_ws.send.assert_any_call(expected)
+
+
+def test_conversation_wss_url_generation_without_get_environment():
+
+    from elevenlabs.core.client_wrapper import SyncClientWrapper
+
+    # Test with various base URL formats to ensure robustness
+    test_cases = [
+        ("https://api.elevenlabs.io", "wss://api.elevenlabs.io"),
+        ("https://api.us.elevenlabs.io", "wss://api.us.elevenlabs.io"),
+        ("https://api.eu.residency.elevenlabs.io", "wss://api.eu.residency.elevenlabs.io"),
+        ("http://localhost:8000", "ws://localhost:8000"),
+    ]
+
+    for base_url, expected_ws_base in test_cases:
+        # Create a real SyncClientWrapper to ensure it doesn't have get_environment method
+        mock_client = MagicMock()
+        mock_client._client_wrapper = SyncClientWrapper(
+            base_url=base_url,
+            api_key="test_key",
+            httpx_client=MagicMock(),
+            timeout=30.0
+        )
+
+        # Create conversation with requires_auth=False
+        conversation = Conversation(
+            client=mock_client,
+            agent_id=TEST_AGENT_ID,
+            requires_auth=False,
+            audio_interface=MockAudioInterface()
+        )
+
+        try:
+            wss_url = conversation._get_wss_url()
+
+            # Verify the URL is correctly generated
+            expected_url = f"{expected_ws_base}/v1/convai/conversation?agent_id={TEST_AGENT_ID}&source=python_sdk&version="
+            assert wss_url.startswith(expected_url), f"URL should start with {expected_url}, got {wss_url}"
+
+            # Verify the URL contains version parameter
+            assert "version=" in wss_url, f"URL should contain version parameter, got {wss_url}"
+
+        except AttributeError as e:
+            if "get_environment" in str(e):
+                assert False
+            else:
+                raise  # Re-raise if it's a different AttributeError
+
+        except Exception as e:
+            assert False, f"Unexpected error generating WebSocket URL: {e}"

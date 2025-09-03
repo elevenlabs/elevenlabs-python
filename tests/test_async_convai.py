@@ -49,7 +49,7 @@ def create_mock_async_websocket(messages=None):
 
     # Create an iterator
     message_iter = iter(json_messages)
-    
+
     async def mock_recv():
         try:
             return next(message_iter)
@@ -83,7 +83,7 @@ async def test_async_conversation_basic_flow():
     # Run the test
     with patch("elevenlabs.conversational_ai.conversation.websockets.connect") as mock_connect:
         mock_connect.return_value.__aenter__.return_value = mock_ws
-        
+
         await conversation.start_session()
 
         # Wait a bit for the callback to be called
@@ -97,7 +97,7 @@ async def test_async_conversation_basic_flow():
     init_messages = [json.loads(call) for call in send_calls if 'conversation_initiation_client_data' in call]
     assert len(init_messages) == 1
     init_message = init_messages[0]
-    
+
     assert init_message["type"] == "conversation_initiation_client_data"
     assert init_message["custom_llm_extra_body"] == {}
     assert init_message["conversation_config_override"] == {}
@@ -134,7 +134,7 @@ async def test_async_conversation_with_auth():
     # Run the test
     with patch("elevenlabs.conversational_ai.conversation.websockets.connect") as mock_connect:
         mock_connect.return_value.__aenter__.return_value = mock_ws
-        
+
         await conversation.start_session()
         await conversation.end_session()
         await conversation.wait_for_session_end()
@@ -166,7 +166,7 @@ async def test_async_conversation_with_dynamic_variables():
     # Run the test
     with patch("elevenlabs.conversational_ai.conversation.websockets.connect") as mock_connect:
         mock_connect.return_value.__aenter__.return_value = mock_ws
-        
+
         await conversation.start_session()
 
         # Wait a bit for the callback to be called
@@ -180,7 +180,7 @@ async def test_async_conversation_with_dynamic_variables():
     init_messages = [json.loads(call) for call in send_calls if 'conversation_initiation_client_data' in call]
     assert len(init_messages) == 1
     init_message = init_messages[0]
-    
+
     assert init_message["type"] == "conversation_initiation_client_data"
     assert init_message["custom_llm_extra_body"] == {}
     assert init_message["conversation_config_override"] == {}
@@ -320,10 +320,10 @@ async def test_async_conversation_callback_flows():
             "audio_event": {"event_id": "789", "audio_base_64": "dGVzdA=="}  # "test" in base64
         }
     ]
-    
+
     mock_ws = create_mock_async_websocket(messages)
     mock_client = MagicMock()
-    
+
     # Setup callbacks
     agent_response_callback = AsyncMock()
     agent_response_correction_callback = AsyncMock()
@@ -349,7 +349,7 @@ async def test_async_conversation_callback_flows():
         mock_connect.return_value.__aenter__.return_value = mock_ws
 
         await conversation.start_session()
-        
+
         # Wait for callbacks to be processed
         await asyncio.sleep(0.2)
 
@@ -364,3 +364,53 @@ async def test_async_conversation_callback_flows():
     end_session_callback.assert_called_once()
     assert conversation._conversation_id == TEST_CONVERSATION_ID
     assert conversation._last_interrupt_id == 456
+
+
+@pytest.mark.asyncio
+async def test_async_conversation_wss_url_generation_without_get_environment():
+
+    from elevenlabs.core.client_wrapper import SyncClientWrapper
+
+    # Test with various base URL formats to ensure robustness
+    test_cases = [
+        ("https://api.elevenlabs.io", "wss://api.elevenlabs.io"),
+        ("https://api.us.elevenlabs.io", "wss://api.us.elevenlabs.io"),
+        ("https://api.eu.residency.elevenlabs.io", "wss://api.eu.residency.elevenlabs.io"),
+        ("http://localhost:8000", "ws://localhost:8000"),
+    ]
+
+    for base_url, expected_ws_base in test_cases:
+        # Create a real SyncClientWrapper to ensure it doesn't have get_environment method
+        mock_client = MagicMock()
+        mock_client._client_wrapper = SyncClientWrapper(
+            base_url=base_url,
+            api_key="test_key",
+            httpx_client=MagicMock(),
+            timeout=30.0
+        )
+
+        conversation = AsyncConversation(
+            client=mock_client,
+            agent_id=TEST_AGENT_ID,
+            requires_auth=False,
+            audio_interface=MockAsyncAudioInterface()
+        )
+
+        try:
+            wss_url = conversation._get_wss_url()
+
+            # Verify the URL is correctly generated
+            expected_url = f"{expected_ws_base}/v1/convai/conversation?agent_id={TEST_AGENT_ID}&source=python_sdk&version="
+            assert wss_url.startswith(expected_url), f"URL should start with {expected_url}, got {wss_url}"
+
+            # Verify the URL contains version parameter
+            assert "version=" in wss_url, f"URL should contain version parameter, got {wss_url}"
+
+        except AttributeError as e:
+            if "get_environment" in str(e):
+                assert False
+            else:
+                raise  # Re-raise if it's a different AttributeError
+
+        except Exception as e:
+            assert False, f"Unexpected error generating WebSocket URL: {e}"
