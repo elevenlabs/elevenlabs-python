@@ -24,7 +24,11 @@ class RawConversationsClient:
         self._client_wrapper = client_wrapper
 
     def get_signed_url(
-        self, *, agent_id: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        agent_id: str,
+        include_conversation_id: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ConversationSignedUrlResponseModel]:
         """
         Get a signed url to start a conversation with an agent with an agent that requires authorization
@@ -33,6 +37,9 @@ class RawConversationsClient:
         ----------
         agent_id : str
             The id of the agent you're taking the action on.
+
+        include_conversation_id : typing.Optional[bool]
+            Whether to include a conversation_id with the response. If included, the conversation_signature cannot be used again.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -47,6 +54,7 @@ class RawConversationsClient:
             method="GET",
             params={
                 "agent_id": agent_id,
+                "include_conversation_id": include_conversation_id,
             },
             request_options=request_options,
         )
@@ -336,7 +344,11 @@ class AsyncRawConversationsClient:
         self._client_wrapper = client_wrapper
 
     async def get_signed_url(
-        self, *, agent_id: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        agent_id: str,
+        include_conversation_id: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ConversationSignedUrlResponseModel]:
         """
         Get a signed url to start a conversation with an agent with an agent that requires authorization
@@ -345,6 +357,9 @@ class AsyncRawConversationsClient:
         ----------
         agent_id : str
             The id of the agent you're taking the action on.
+
+        include_conversation_id : typing.Optional[bool]
+            Whether to include a conversation_id with the response. If included, the conversation_signature cannot be used again.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -359,6 +374,7 @@ class AsyncRawConversationsClient:
             method="GET",
             params={
                 "agent_id": agent_id,
+                "include_conversation_id": include_conversation_id,
             },
             request_options=request_options,
         )

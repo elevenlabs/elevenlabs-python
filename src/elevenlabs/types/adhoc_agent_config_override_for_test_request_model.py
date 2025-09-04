@@ -8,12 +8,14 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_platform_settings_request_model import AgentPlatformSettingsRequestModel
+from .agent_workflow_request_model import AgentWorkflowRequestModel
 from .conversational_config import ConversationalConfig
 
 
 class AdhocAgentConfigOverrideForTestRequestModel(UncheckedBaseModel):
     conversation_config: ConversationalConfig
     platform_settings: AgentPlatformSettingsRequestModel
+    workflow: typing.Optional[AgentWorkflowRequestModel] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -27,5 +29,7 @@ class AdhocAgentConfigOverrideForTestRequestModel(UncheckedBaseModel):
 
 from .array_json_schema_property_output import ArrayJsonSchemaPropertyOutput  # noqa: E402, F401, I001
 from .object_json_schema_property_output import ObjectJsonSchemaPropertyOutput  # noqa: E402, F401, I001
+from .array_json_schema_property_input import ArrayJsonSchemaPropertyInput  # noqa: E402, F401, I001
+from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput  # noqa: E402, F401, I001
 
 update_forward_refs(AdhocAgentConfigOverrideForTestRequestModel)

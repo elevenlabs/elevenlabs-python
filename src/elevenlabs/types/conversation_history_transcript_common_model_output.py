@@ -7,6 +7,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .conversation_history_multivoice_message_model import ConversationHistoryMultivoiceMessageModel
 from .conversation_history_transcript_common_model_output_role import ConversationHistoryTranscriptCommonModelOutputRole
 from .conversation_history_transcript_common_model_output_source_medium import (
     ConversationHistoryTranscriptCommonModelOutputSourceMedium,
@@ -24,6 +25,7 @@ from .user_feedback import UserFeedback
 class ConversationHistoryTranscriptCommonModelOutput(UncheckedBaseModel):
     role: ConversationHistoryTranscriptCommonModelOutputRole
     message: typing.Optional[str] = None
+    multivoice_message: typing.Optional[ConversationHistoryMultivoiceMessageModel] = None
     tool_calls: typing.Optional[typing.List[ConversationHistoryTranscriptToolCallCommonModel]] = None
     tool_results: typing.Optional[typing.List[ConversationHistoryTranscriptCommonModelOutputToolResultsItem]] = None
     feedback: typing.Optional[UserFeedback] = None

@@ -21,6 +21,7 @@ from .adhoc_agent_config_override_for_test_request_model import AdhocAgentConfig
 from .age import Age
 from .agent_call_limits import AgentCallLimits
 from .agent_config import AgentConfig
+from .agent_config_api_model_workflow_override import AgentConfigApiModelWorkflowOverride
 from .agent_config_override import AgentConfigOverride
 from .agent_config_override_config import AgentConfigOverrideConfig
 from .agent_failure_response_example import AgentFailureResponseExample
@@ -32,6 +33,16 @@ from .agent_successful_response_example import AgentSuccessfulResponseExample
 from .agent_summary_response_model import AgentSummaryResponseModel
 from .agent_testing_settings import AgentTestingSettings
 from .agent_transfer import AgentTransfer
+from .agent_workflow_request_model import AgentWorkflowRequestModel
+from .agent_workflow_request_model_nodes_value import (
+    AgentWorkflowRequestModelNodesValue,
+    AgentWorkflowRequestModelNodesValue_End,
+    AgentWorkflowRequestModelNodesValue_OverrideAgent,
+    AgentWorkflowRequestModelNodesValue_PhoneNumber,
+    AgentWorkflowRequestModelNodesValue_StandaloneAgent,
+    AgentWorkflowRequestModelNodesValue_Start,
+    AgentWorkflowRequestModelNodesValue_Tool,
+)
 from .agent_workspace_overrides_input import AgentWorkspaceOverridesInput
 from .agent_workspace_overrides_output import AgentWorkspaceOverridesOutput
 from .alignment import Alignment
@@ -41,6 +52,7 @@ from .array_json_schema_property_input_items import ArrayJsonSchemaPropertyInput
 from .array_json_schema_property_output import ArrayJsonSchemaPropertyOutput
 from .array_json_schema_property_output_items import ArrayJsonSchemaPropertyOutputItems
 from .asr_conversational_config import AsrConversationalConfig
+from .asr_conversational_config_workflow_override import AsrConversationalConfigWorkflowOverride
 from .asr_input_format import AsrInputFormat
 from .asr_provider import AsrProvider
 from .asr_quality import AsrQuality
@@ -70,6 +82,7 @@ from .body_generate_a_random_voice_v_1_voice_generation_generate_voice_post_gend
 from .breakdown_types import BreakdownTypes
 from .built_in_tools_input import BuiltInToolsInput
 from .built_in_tools_output import BuiltInToolsOutput
+from .built_in_tools_workflow_override import BuiltInToolsWorkflowOverride
 from .caption_style_character_animation_model import CaptionStyleCharacterAnimationModel
 from .caption_style_character_animation_model_enter_type import CaptionStyleCharacterAnimationModelEnterType
 from .caption_style_character_animation_model_exit_type import CaptionStyleCharacterAnimationModelExitType
@@ -142,6 +155,7 @@ from .conversation_config_client_override_input import ConversationConfigClientO
 from .conversation_config_client_override_output import ConversationConfigClientOverrideOutput
 from .conversation_config_override import ConversationConfigOverride
 from .conversation_config_override_config import ConversationConfigOverrideConfig
+from .conversation_config_workflow_override import ConversationConfigWorkflowOverride
 from .conversation_deletion_settings import ConversationDeletionSettings
 from .conversation_history_analysis_common_model import ConversationHistoryAnalysisCommonModel
 from .conversation_history_batch_call_model import ConversationHistoryBatchCallModel
@@ -157,6 +171,8 @@ from .conversation_history_metadata_common_model_phone_call import (
     ConversationHistoryMetadataCommonModelPhoneCall_SipTrunking,
     ConversationHistoryMetadataCommonModelPhoneCall_Twilio,
 )
+from .conversation_history_multivoice_message_model import ConversationHistoryMultivoiceMessageModel
+from .conversation_history_multivoice_message_part_model import ConversationHistoryMultivoiceMessagePartModel
 from .conversation_history_rag_usage_common_model import ConversationHistoryRagUsageCommonModel
 from .conversation_history_sip_trunking_phone_call_model import ConversationHistorySipTrunkingPhoneCallModel
 from .conversation_history_sip_trunking_phone_call_model_direction import (
@@ -254,6 +270,7 @@ from .conversation_token_db_model import ConversationTokenDbModel
 from .conversation_token_purpose import ConversationTokenPurpose
 from .conversation_turn_metrics import ConversationTurnMetrics
 from .conversational_config import ConversationalConfig
+from .conversational_config_api_model_workflow_override import ConversationalConfigApiModelWorkflowOverride
 from .convert_chapter_response_model import ConvertChapterResponseModel
 from .convert_project_response_model import ConvertProjectResponseModel
 from .create_agent_response_model import CreateAgentResponseModel
@@ -300,6 +317,7 @@ from .dubbing_media_metadata import DubbingMediaMetadata
 from .dubbing_media_reference import DubbingMediaReference
 from .dubbing_metadata_page_response_model import DubbingMetadataPageResponseModel
 from .dubbing_metadata_response import DubbingMetadataResponse
+from .dubbing_release_channel import DubbingReleaseChannel
 from .dubbing_render_response_model import DubbingRenderResponseModel
 from .dubbing_resource import DubbingResource
 from .dynamic_variable_assignment import DynamicVariableAssignment
@@ -307,6 +325,10 @@ from .dynamic_variable_update_common_model import DynamicVariableUpdateCommonMod
 from .dynamic_variables_config import DynamicVariablesConfig
 from .dynamic_variables_config_dynamic_variable_placeholders_value import (
     DynamicVariablesConfigDynamicVariablePlaceholdersValue,
+)
+from .dynamic_variables_config_workflow_override import DynamicVariablesConfigWorkflowOverride
+from .dynamic_variables_config_workflow_override_dynamic_variable_placeholders_value import (
+    DynamicVariablesConfigWorkflowOverrideDynamicVariablePlaceholdersValue,
 )
 from .edit_chapter_response_model import EditChapterResponseModel
 from .edit_project_response_model import EditProjectResponseModel
@@ -546,6 +568,7 @@ from .podcast_conversation_mode_data import PodcastConversationModeData
 from .podcast_project_response_model import PodcastProjectResponseModel
 from .podcast_text_source import PodcastTextSource
 from .podcast_url_source import PodcastUrlSource
+from .position import Position
 from .post_agent_avatar_response_model import PostAgentAvatarResponseModel
 from .post_workspace_secret_response_model import PostWorkspaceSecretResponseModel
 from .privacy_config import PrivacyConfig
@@ -587,6 +610,14 @@ from .prompt_agent_api_model_output_tools_item import (
 )
 from .prompt_agent_api_model_override import PromptAgentApiModelOverride
 from .prompt_agent_api_model_override_config import PromptAgentApiModelOverrideConfig
+from .prompt_agent_api_model_workflow_override import PromptAgentApiModelWorkflowOverride
+from .prompt_agent_api_model_workflow_override_tools_item import (
+    PromptAgentApiModelWorkflowOverrideToolsItem,
+    PromptAgentApiModelWorkflowOverrideToolsItem_Client,
+    PromptAgentApiModelWorkflowOverrideToolsItem_Mcp,
+    PromptAgentApiModelWorkflowOverrideToolsItem_System,
+    PromptAgentApiModelWorkflowOverrideToolsItem_Webhook,
+)
 from .prompt_agent_db_model import PromptAgentDbModel
 from .prompt_evaluation_criteria import PromptEvaluationCriteria
 from .pronunciation_dictionary_alias_rule_request_model import PronunciationDictionaryAliasRuleRequestModel
@@ -603,6 +634,7 @@ from .pydantic_pronunciation_dictionary_version_locator import PydanticPronuncia
 from .query_params_json_schema import QueryParamsJsonSchema
 from .rag_chunk_metadata import RagChunkMetadata
 from .rag_config import RagConfig
+from .rag_config_workflow_override import RagConfigWorkflowOverride
 from .rag_document_index_response_model import RagDocumentIndexResponseModel
 from .rag_document_index_usage import RagDocumentIndexUsage
 from .rag_document_indexes_response_model import RagDocumentIndexesResponseModel
@@ -624,6 +656,9 @@ from .request_pvc_manual_verification_response_model import RequestPvcManualVeri
 from .resource_access_info import ResourceAccessInfo
 from .resource_access_info_role import ResourceAccessInfoRole
 from .resource_metadata_response_model import ResourceMetadataResponseModel
+from .resource_metadata_response_model_anonymous_access_level_override import (
+    ResourceMetadataResponseModelAnonymousAccessLevelOverride,
+)
 from .review_status import ReviewStatus
 from .safety_common_model import SafetyCommonModel
 from .safety_evaluation import SafetyEvaluation
@@ -709,6 +744,8 @@ from .system_tool_config_output_params import (
 from .telephony_provider import TelephonyProvider
 from .test_condition_rationale_common_model import TestConditionRationaleCommonModel
 from .test_condition_result_common_model import TestConditionResultCommonModel
+from .test_run_metadata import TestRunMetadata
+from .test_run_metadata_test_type import TestRunMetadataTestType
 from .test_run_status import TestRunStatus
 from .test_tool_result_model import TestToolResultModel
 from .tests_feature_usage_common_model import TestsFeatureUsageCommonModel
@@ -751,11 +788,13 @@ from .tts_conversational_config_input import TtsConversationalConfigInput
 from .tts_conversational_config_output import TtsConversationalConfigOutput
 from .tts_conversational_config_override import TtsConversationalConfigOverride
 from .tts_conversational_config_override_config import TtsConversationalConfigOverrideConfig
+from .tts_conversational_config_workflow_override import TtsConversationalConfigWorkflowOverride
 from .tts_conversational_model import TtsConversationalModel
 from .tts_model_family import TtsModelFamily
 from .tts_optimize_streaming_latency import TtsOptimizeStreamingLatency
 from .tts_output_format import TtsOutputFormat
 from .turn_config import TurnConfig
+from .turn_config_workflow_override import TurnConfigWorkflowOverride
 from .turn_mode import TurnMode
 from .twilio_outbound_call_response import TwilioOutboundCallResponse
 from .txt_export_options import TxtExportOptions
@@ -848,13 +887,40 @@ from .widget_language_preset_response import WidgetLanguagePresetResponse
 from .widget_placement import WidgetPlacement
 from .widget_styles import WidgetStyles
 from .widget_text_contents import WidgetTextContents
+from .workflow_edge_model import WorkflowEdgeModel
+from .workflow_edge_model_backward_condition import (
+    WorkflowEdgeModelBackwardCondition,
+    WorkflowEdgeModelBackwardCondition_Llm,
+    WorkflowEdgeModelBackwardCondition_Result,
+    WorkflowEdgeModelBackwardCondition_Unconditional,
+)
+from .workflow_edge_model_forward_condition import (
+    WorkflowEdgeModelForwardCondition,
+    WorkflowEdgeModelForwardCondition_Llm,
+    WorkflowEdgeModelForwardCondition_Result,
+    WorkflowEdgeModelForwardCondition_Unconditional,
+)
+from .workflow_end_node_model import WorkflowEndNodeModel
 from .workflow_features_usage_common_model import WorkflowFeaturesUsageCommonModel
+from .workflow_llm_condition_model import WorkflowLlmConditionModel
+from .workflow_override_agent_node_model import WorkflowOverrideAgentNodeModel
+from .workflow_phone_number_node_model import WorkflowPhoneNumberNodeModel
+from .workflow_phone_number_node_model_transfer_destination import (
+    WorkflowPhoneNumberNodeModelTransferDestination,
+    WorkflowPhoneNumberNodeModelTransferDestination_Phone,
+    WorkflowPhoneNumberNodeModelTransferDestination_SipUri,
+)
+from .workflow_result_condition_model import WorkflowResultConditionModel
+from .workflow_standalone_agent_node_model import WorkflowStandaloneAgentNodeModel
+from .workflow_start_node_model import WorkflowStartNodeModel
 from .workflow_tool_edge_step_model import WorkflowToolEdgeStepModel
+from .workflow_tool_locator import WorkflowToolLocator
 from .workflow_tool_max_iterations_exceeded_step_model import WorkflowToolMaxIterationsExceededStepModel
 from .workflow_tool_nested_tools_step_model_input import WorkflowToolNestedToolsStepModelInput
 from .workflow_tool_nested_tools_step_model_input_results_item import WorkflowToolNestedToolsStepModelInputResultsItem
 from .workflow_tool_nested_tools_step_model_output import WorkflowToolNestedToolsStepModelOutput
 from .workflow_tool_nested_tools_step_model_output_results_item import WorkflowToolNestedToolsStepModelOutputResultsItem
+from .workflow_tool_node_model import WorkflowToolNodeModel
 from .workflow_tool_response_model_input import WorkflowToolResponseModelInput
 from .workflow_tool_response_model_input_steps_item import (
     WorkflowToolResponseModelInputStepsItem,
@@ -869,6 +935,7 @@ from .workflow_tool_response_model_output_steps_item import (
     WorkflowToolResponseModelOutputStepsItem_MaxIterationsExceeded,
     WorkflowToolResponseModelOutputStepsItem_NestedTools,
 )
+from .workflow_unconditional_model import WorkflowUnconditionalModel
 from .workspace_api_key_list_response_model import WorkspaceApiKeyListResponseModel
 from .workspace_api_key_response_model import WorkspaceApiKeyResponseModel
 from .workspace_api_key_response_model_permissions_item import WorkspaceApiKeyResponseModelPermissionsItem
@@ -900,6 +967,7 @@ __all__ = [
     "Age",
     "AgentCallLimits",
     "AgentConfig",
+    "AgentConfigApiModelWorkflowOverride",
     "AgentConfigOverride",
     "AgentConfigOverrideConfig",
     "AgentFailureResponseExample",
@@ -911,6 +979,14 @@ __all__ = [
     "AgentSummaryResponseModel",
     "AgentTestingSettings",
     "AgentTransfer",
+    "AgentWorkflowRequestModel",
+    "AgentWorkflowRequestModelNodesValue",
+    "AgentWorkflowRequestModelNodesValue_End",
+    "AgentWorkflowRequestModelNodesValue_OverrideAgent",
+    "AgentWorkflowRequestModelNodesValue_PhoneNumber",
+    "AgentWorkflowRequestModelNodesValue_StandaloneAgent",
+    "AgentWorkflowRequestModelNodesValue_Start",
+    "AgentWorkflowRequestModelNodesValue_Tool",
     "AgentWorkspaceOverridesInput",
     "AgentWorkspaceOverridesOutput",
     "Alignment",
@@ -920,6 +996,7 @@ __all__ = [
     "ArrayJsonSchemaPropertyOutput",
     "ArrayJsonSchemaPropertyOutputItems",
     "AsrConversationalConfig",
+    "AsrConversationalConfigWorkflowOverride",
     "AsrInputFormat",
     "AsrProvider",
     "AsrQuality",
@@ -945,6 +1022,7 @@ __all__ = [
     "BreakdownTypes",
     "BuiltInToolsInput",
     "BuiltInToolsOutput",
+    "BuiltInToolsWorkflowOverride",
     "CaptionStyleCharacterAnimationModel",
     "CaptionStyleCharacterAnimationModelEnterType",
     "CaptionStyleCharacterAnimationModelExitType",
@@ -1011,6 +1089,7 @@ __all__ = [
     "ConversationConfigClientOverrideOutput",
     "ConversationConfigOverride",
     "ConversationConfigOverrideConfig",
+    "ConversationConfigWorkflowOverride",
     "ConversationDeletionSettings",
     "ConversationHistoryAnalysisCommonModel",
     "ConversationHistoryBatchCallModel",
@@ -1022,6 +1101,8 @@ __all__ = [
     "ConversationHistoryMetadataCommonModelPhoneCall",
     "ConversationHistoryMetadataCommonModelPhoneCall_SipTrunking",
     "ConversationHistoryMetadataCommonModelPhoneCall_Twilio",
+    "ConversationHistoryMultivoiceMessageModel",
+    "ConversationHistoryMultivoiceMessagePartModel",
     "ConversationHistoryRagUsageCommonModel",
     "ConversationHistorySipTrunkingPhoneCallModel",
     "ConversationHistorySipTrunkingPhoneCallModelDirection",
@@ -1083,6 +1164,7 @@ __all__ = [
     "ConversationTokenPurpose",
     "ConversationTurnMetrics",
     "ConversationalConfig",
+    "ConversationalConfigApiModelWorkflowOverride",
     "ConvertChapterResponseModel",
     "ConvertProjectResponseModel",
     "CreateAgentResponseModel",
@@ -1129,12 +1211,15 @@ __all__ = [
     "DubbingMediaReference",
     "DubbingMetadataPageResponseModel",
     "DubbingMetadataResponse",
+    "DubbingReleaseChannel",
     "DubbingRenderResponseModel",
     "DubbingResource",
     "DynamicVariableAssignment",
     "DynamicVariableUpdateCommonModel",
     "DynamicVariablesConfig",
     "DynamicVariablesConfigDynamicVariablePlaceholdersValue",
+    "DynamicVariablesConfigWorkflowOverride",
+    "DynamicVariablesConfigWorkflowOverrideDynamicVariablePlaceholdersValue",
     "EditChapterResponseModel",
     "EditProjectResponseModel",
     "EditVoiceResponseModel",
@@ -1347,6 +1432,7 @@ __all__ = [
     "PodcastProjectResponseModel",
     "PodcastTextSource",
     "PodcastUrlSource",
+    "Position",
     "PostAgentAvatarResponseModel",
     "PostWorkspaceSecretResponseModel",
     "PrivacyConfig",
@@ -1384,6 +1470,12 @@ __all__ = [
     "PromptAgentApiModelOutputToolsItem_Webhook",
     "PromptAgentApiModelOverride",
     "PromptAgentApiModelOverrideConfig",
+    "PromptAgentApiModelWorkflowOverride",
+    "PromptAgentApiModelWorkflowOverrideToolsItem",
+    "PromptAgentApiModelWorkflowOverrideToolsItem_Client",
+    "PromptAgentApiModelWorkflowOverrideToolsItem_Mcp",
+    "PromptAgentApiModelWorkflowOverrideToolsItem_System",
+    "PromptAgentApiModelWorkflowOverrideToolsItem_Webhook",
     "PromptAgentDbModel",
     "PromptEvaluationCriteria",
     "PronunciationDictionaryAliasRuleRequestModel",
@@ -1398,6 +1490,7 @@ __all__ = [
     "QueryParamsJsonSchema",
     "RagChunkMetadata",
     "RagConfig",
+    "RagConfigWorkflowOverride",
     "RagDocumentIndexResponseModel",
     "RagDocumentIndexUsage",
     "RagDocumentIndexesResponseModel",
@@ -1419,6 +1512,7 @@ __all__ = [
     "ResourceAccessInfo",
     "ResourceAccessInfoRole",
     "ResourceMetadataResponseModel",
+    "ResourceMetadataResponseModelAnonymousAccessLevelOverride",
     "ReviewStatus",
     "SafetyCommonModel",
     "SafetyEvaluation",
@@ -1500,6 +1594,8 @@ __all__ = [
     "TelephonyProvider",
     "TestConditionRationaleCommonModel",
     "TestConditionResultCommonModel",
+    "TestRunMetadata",
+    "TestRunMetadataTestType",
     "TestRunStatus",
     "TestToolResultModel",
     "TestsFeatureUsageCommonModel",
@@ -1538,11 +1634,13 @@ __all__ = [
     "TtsConversationalConfigOutput",
     "TtsConversationalConfigOverride",
     "TtsConversationalConfigOverrideConfig",
+    "TtsConversationalConfigWorkflowOverride",
     "TtsConversationalModel",
     "TtsModelFamily",
     "TtsOptimizeStreamingLatency",
     "TtsOutputFormat",
     "TurnConfig",
+    "TurnConfigWorkflowOverride",
     "TurnMode",
     "TwilioOutboundCallResponse",
     "TxtExportOptions",
@@ -1623,13 +1721,34 @@ __all__ = [
     "WidgetPlacement",
     "WidgetStyles",
     "WidgetTextContents",
+    "WorkflowEdgeModel",
+    "WorkflowEdgeModelBackwardCondition",
+    "WorkflowEdgeModelBackwardCondition_Llm",
+    "WorkflowEdgeModelBackwardCondition_Result",
+    "WorkflowEdgeModelBackwardCondition_Unconditional",
+    "WorkflowEdgeModelForwardCondition",
+    "WorkflowEdgeModelForwardCondition_Llm",
+    "WorkflowEdgeModelForwardCondition_Result",
+    "WorkflowEdgeModelForwardCondition_Unconditional",
+    "WorkflowEndNodeModel",
     "WorkflowFeaturesUsageCommonModel",
+    "WorkflowLlmConditionModel",
+    "WorkflowOverrideAgentNodeModel",
+    "WorkflowPhoneNumberNodeModel",
+    "WorkflowPhoneNumberNodeModelTransferDestination",
+    "WorkflowPhoneNumberNodeModelTransferDestination_Phone",
+    "WorkflowPhoneNumberNodeModelTransferDestination_SipUri",
+    "WorkflowResultConditionModel",
+    "WorkflowStandaloneAgentNodeModel",
+    "WorkflowStartNodeModel",
     "WorkflowToolEdgeStepModel",
+    "WorkflowToolLocator",
     "WorkflowToolMaxIterationsExceededStepModel",
     "WorkflowToolNestedToolsStepModelInput",
     "WorkflowToolNestedToolsStepModelInputResultsItem",
     "WorkflowToolNestedToolsStepModelOutput",
     "WorkflowToolNestedToolsStepModelOutputResultsItem",
+    "WorkflowToolNodeModel",
     "WorkflowToolResponseModelInput",
     "WorkflowToolResponseModelInputStepsItem",
     "WorkflowToolResponseModelInputStepsItem_Edge",
@@ -1640,6 +1759,7 @@ __all__ = [
     "WorkflowToolResponseModelOutputStepsItem_Edge",
     "WorkflowToolResponseModelOutputStepsItem_MaxIterationsExceeded",
     "WorkflowToolResponseModelOutputStepsItem_NestedTools",
+    "WorkflowUnconditionalModel",
     "WorkspaceApiKeyListResponseModel",
     "WorkspaceApiKeyResponseModel",
     "WorkspaceApiKeyResponseModelPermissionsItem",

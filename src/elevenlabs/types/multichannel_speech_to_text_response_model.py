@@ -18,6 +18,11 @@ class MultichannelSpeechToTextResponseModel(UncheckedBaseModel):
     List of transcripts, one for each audio channel. Each transcript contains the text and word-level details for its respective channel.
     """
 
+    transcription_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The transcription ID of the response.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

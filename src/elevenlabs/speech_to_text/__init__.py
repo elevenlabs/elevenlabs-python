@@ -8,10 +8,14 @@ from .types import (
     SpeechToTextConvertRequestWebhookMetadata,
     SpeechToTextConvertResponse,
 )
+from . import transcripts
+from .transcripts import TranscriptsGetResponse
 
 __all__ = [
     "SpeechToTextConvertRequestFileFormat",
     "SpeechToTextConvertRequestTimestampsGranularity",
     "SpeechToTextConvertRequestWebhookMetadata",
     "SpeechToTextConvertResponse",
+    "TranscriptsGetResponse",
+    "transcripts",
 ]

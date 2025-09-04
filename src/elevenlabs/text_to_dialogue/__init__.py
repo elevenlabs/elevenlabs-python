@@ -2,6 +2,16 @@
 
 # isort: skip_file
 
-from .types import TextToDialogueConvertRequestOutputFormat, TextToDialogueStreamRequestOutputFormat
+from .types import (
+    BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization,
+    BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization,
+    TextToDialogueConvertRequestOutputFormat,
+    TextToDialogueStreamRequestOutputFormat,
+)
 
-__all__ = ["TextToDialogueConvertRequestOutputFormat", "TextToDialogueStreamRequestOutputFormat"]
+__all__ = [
+    "BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization",
+    "BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization",
+    "TextToDialogueConvertRequestOutputFormat",
+    "TextToDialogueStreamRequestOutputFormat",
+]

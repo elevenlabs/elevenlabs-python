@@ -13,6 +13,11 @@ class SingleTestRunRequestModel(UncheckedBaseModel):
     ID of the test to run
     """
 
+    workflow_node_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    ID of the workflow node to run the test on. If not provided, the test will be run on the agent's default workflow node.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

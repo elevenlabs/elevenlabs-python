@@ -335,7 +335,11 @@ class RawProjectsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
-        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: str,
+        *,
+        share_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ProjectExtendedResponse]:
         """
         Returns information about a specific Studio project. This endpoint returns more detailed information about a project than `GET /v1/studio`.
@@ -344,6 +348,9 @@ class RawProjectsClient:
         ----------
         project_id : str
             The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
+
+        share_id : typing.Optional[str]
+            The share ID of the project
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -356,6 +363,9 @@ class RawProjectsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}",
             method="GET",
+            params={
+                "share_id": share_id,
+            },
             request_options=request_options,
         )
         try:
@@ -889,7 +899,11 @@ class AsyncRawProjectsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
-        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: str,
+        *,
+        share_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ProjectExtendedResponse]:
         """
         Returns information about a specific Studio project. This endpoint returns more detailed information about a project than `GET /v1/studio`.
@@ -898,6 +912,9 @@ class AsyncRawProjectsClient:
         ----------
         project_id : str
             The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
+
+        share_id : typing.Optional[str]
+            The share ID of the project
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -910,6 +927,9 @@ class AsyncRawProjectsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/studio/projects/{jsonable_encoder(project_id)}",
             method="GET",
+            params={
+                "share_id": share_id,
+            },
             request_options=request_options,
         )
         try:
