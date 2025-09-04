@@ -302,7 +302,8 @@ class BaseConversation:
         self._last_interrupt_id = 0
 
     def _get_wss_url(self):
-        base_ws_url = self.client._client_wrapper.get_environment().wss
+        base_http_url = self.client._client_wrapper.get_base_url()
+        base_ws_url = base_http_url.replace("https://", "wss://").replace("http://", "ws://")
         return f"{base_ws_url}/v1/convai/conversation?agent_id={self.agent_id}&source=python_sdk&version={__version__}"
 
     def _get_signed_url(self):
