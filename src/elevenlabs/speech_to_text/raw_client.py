@@ -59,7 +59,7 @@ class RawSpeechToTextClient:
             The ID of the model to use for transcription, currently only 'scribe_v1' and 'scribe_v1_experimental' are available.
 
         enable_logging : typing.Optional[bool]
-            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean log and transcript storage features are unavailable for this request. Zero retention mode may only be used by enterprise customers.
 
         file : typing.Optional[core.File]
             See core.File for more documentation
@@ -215,7 +215,7 @@ class AsyncRawSpeechToTextClient:
             The ID of the model to use for transcription, currently only 'scribe_v1' and 'scribe_v1_experimental' are available.
 
         enable_logging : typing.Optional[bool]
-            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean log and transcript storage features are unavailable for this request. Zero retention mode may only be used by enterprise customers.
 
         file : typing.Optional[core.File]
             See core.File for more documentation

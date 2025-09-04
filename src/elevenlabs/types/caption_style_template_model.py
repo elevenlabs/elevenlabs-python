@@ -10,6 +10,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 class CaptionStyleTemplateModel(UncheckedBaseModel):
     key: str
     label: str
+    requires_high_fps: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -311,7 +311,11 @@ class ProjectsClient:
         return _response.data
 
     def get(
-        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: str,
+        *,
+        share_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectExtendedResponse:
         """
         Returns information about a specific Studio project. This endpoint returns more detailed information about a project than `GET /v1/studio`.
@@ -320,6 +324,9 @@ class ProjectsClient:
         ----------
         project_id : str
             The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
+
+        share_id : typing.Optional[str]
+            The share ID of the project
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -340,7 +347,7 @@ class ProjectsClient:
             project_id="21m00Tcm4TlvDq8ikWAM",
         )
         """
-        _response = self._raw_client.get(project_id, request_options=request_options)
+        _response = self._raw_client.get(project_id, share_id=share_id, request_options=request_options)
         return _response.data
 
     def update(
@@ -789,7 +796,11 @@ class AsyncProjectsClient:
         return _response.data
 
     async def get(
-        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: str,
+        *,
+        share_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectExtendedResponse:
         """
         Returns information about a specific Studio project. This endpoint returns more detailed information about a project than `GET /v1/studio`.
@@ -798,6 +809,9 @@ class AsyncProjectsClient:
         ----------
         project_id : str
             The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
+
+        share_id : typing.Optional[str]
+            The share ID of the project
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -826,7 +840,7 @@ class AsyncProjectsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get(project_id, request_options=request_options)
+        _response = await self._raw_client.get(project_id, share_id=share_id, request_options=request_options)
         return _response.data
 
     async def update(

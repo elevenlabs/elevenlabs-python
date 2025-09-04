@@ -2,7 +2,18 @@
 
 # isort: skip_file
 
+from .body_text_to_dialogue_multi_voice_streaming_v_1_text_to_dialogue_stream_post_apply_text_normalization import (
+    BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization,
+)
+from .body_text_to_dialogue_multi_voice_v_1_text_to_dialogue_post_apply_text_normalization import (
+    BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization,
+)
 from .text_to_dialogue_convert_request_output_format import TextToDialogueConvertRequestOutputFormat
 from .text_to_dialogue_stream_request_output_format import TextToDialogueStreamRequestOutputFormat
 
-__all__ = ["TextToDialogueConvertRequestOutputFormat", "TextToDialogueStreamRequestOutputFormat"]
+__all__ = [
+    "BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization",
+    "BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization",
+    "TextToDialogueConvertRequestOutputFormat",
+    "TextToDialogueStreamRequestOutputFormat",
+]

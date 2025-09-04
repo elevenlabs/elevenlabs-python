@@ -8,6 +8,12 @@ from ..types.dialogue_input import DialogueInput
 from ..types.model_settings_response_model import ModelSettingsResponseModel
 from ..types.pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
 from .raw_client import AsyncRawTextToDialogueClient, RawTextToDialogueClient
+from .types.body_text_to_dialogue_multi_voice_streaming_v_1_text_to_dialogue_stream_post_apply_text_normalization import (
+    BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization,
+)
+from .types.body_text_to_dialogue_multi_voice_v_1_text_to_dialogue_post_apply_text_normalization import (
+    BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization,
+)
 from .types.text_to_dialogue_convert_request_output_format import TextToDialogueConvertRequestOutputFormat
 from .types.text_to_dialogue_stream_request_output_format import TextToDialogueStreamRequestOutputFormat
 
@@ -36,11 +42,15 @@ class TextToDialogueClient:
         inputs: typing.Sequence[DialogueInput],
         output_format: typing.Optional[TextToDialogueConvertRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
+        language_code: typing.Optional[str] = OMIT,
         settings: typing.Optional[ModelSettingsResponseModel] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[
             typing.Sequence[PronunciationDictionaryVersionLocator]
         ] = OMIT,
         seed: typing.Optional[int] = OMIT,
+        apply_text_normalization: typing.Optional[
+            BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -57,6 +67,9 @@ class TextToDialogueClient:
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
 
+        language_code : typing.Optional[str]
+            Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+
         settings : typing.Optional[ModelSettingsResponseModel]
             Settings controlling the dialogue generation.
 
@@ -65,6 +78,9 @@ class TextToDialogueClient:
 
         seed : typing.Optional[int]
             If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
+
+        apply_text_normalization : typing.Optional[BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization]
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -98,9 +114,11 @@ class TextToDialogueClient:
             inputs=inputs,
             output_format=output_format,
             model_id=model_id,
+            language_code=language_code,
             settings=settings,
             pronunciation_dictionary_locators=pronunciation_dictionary_locators,
             seed=seed,
+            apply_text_normalization=apply_text_normalization,
             request_options=request_options,
         ) as r:
             yield from r.data
@@ -111,11 +129,15 @@ class TextToDialogueClient:
         inputs: typing.Sequence[DialogueInput],
         output_format: typing.Optional[TextToDialogueStreamRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
+        language_code: typing.Optional[str] = OMIT,
         settings: typing.Optional[ModelSettingsResponseModel] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[
             typing.Sequence[PronunciationDictionaryVersionLocator]
         ] = OMIT,
         seed: typing.Optional[int] = OMIT,
+        apply_text_normalization: typing.Optional[
+            BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -132,6 +154,9 @@ class TextToDialogueClient:
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
 
+        language_code : typing.Optional[str]
+            Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+
         settings : typing.Optional[ModelSettingsResponseModel]
             Settings controlling the dialogue generation.
 
@@ -140,6 +165,9 @@ class TextToDialogueClient:
 
         seed : typing.Optional[int]
             If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
+
+        apply_text_normalization : typing.Optional[BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization]
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -173,9 +201,11 @@ class TextToDialogueClient:
             inputs=inputs,
             output_format=output_format,
             model_id=model_id,
+            language_code=language_code,
             settings=settings,
             pronunciation_dictionary_locators=pronunciation_dictionary_locators,
             seed=seed,
+            apply_text_normalization=apply_text_normalization,
             request_options=request_options,
         ) as r:
             yield from r.data
@@ -202,11 +232,15 @@ class AsyncTextToDialogueClient:
         inputs: typing.Sequence[DialogueInput],
         output_format: typing.Optional[TextToDialogueConvertRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
+        language_code: typing.Optional[str] = OMIT,
         settings: typing.Optional[ModelSettingsResponseModel] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[
             typing.Sequence[PronunciationDictionaryVersionLocator]
         ] = OMIT,
         seed: typing.Optional[int] = OMIT,
+        apply_text_normalization: typing.Optional[
+            BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -223,6 +257,9 @@ class AsyncTextToDialogueClient:
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
 
+        language_code : typing.Optional[str]
+            Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+
         settings : typing.Optional[ModelSettingsResponseModel]
             Settings controlling the dialogue generation.
 
@@ -231,6 +268,9 @@ class AsyncTextToDialogueClient:
 
         seed : typing.Optional[int]
             If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
+
+        apply_text_normalization : typing.Optional[BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization]
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -272,9 +312,11 @@ class AsyncTextToDialogueClient:
             inputs=inputs,
             output_format=output_format,
             model_id=model_id,
+            language_code=language_code,
             settings=settings,
             pronunciation_dictionary_locators=pronunciation_dictionary_locators,
             seed=seed,
+            apply_text_normalization=apply_text_normalization,
             request_options=request_options,
         ) as r:
             async for _chunk in r.data:
@@ -286,11 +328,15 @@ class AsyncTextToDialogueClient:
         inputs: typing.Sequence[DialogueInput],
         output_format: typing.Optional[TextToDialogueStreamRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
+        language_code: typing.Optional[str] = OMIT,
         settings: typing.Optional[ModelSettingsResponseModel] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[
             typing.Sequence[PronunciationDictionaryVersionLocator]
         ] = OMIT,
         seed: typing.Optional[int] = OMIT,
+        apply_text_normalization: typing.Optional[
+            BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -307,6 +353,9 @@ class AsyncTextToDialogueClient:
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
 
+        language_code : typing.Optional[str]
+            Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+
         settings : typing.Optional[ModelSettingsResponseModel]
             Settings controlling the dialogue generation.
 
@@ -315,6 +364,9 @@ class AsyncTextToDialogueClient:
 
         seed : typing.Optional[int]
             If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
+
+        apply_text_normalization : typing.Optional[BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization]
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -356,9 +408,11 @@ class AsyncTextToDialogueClient:
             inputs=inputs,
             output_format=output_format,
             model_id=model_id,
+            language_code=language_code,
             settings=settings,
             pronunciation_dictionary_locators=pronunciation_dictionary_locators,
             seed=seed,
+            apply_text_normalization=apply_text_normalization,
             request_options=request_options,
         ) as r:
             async for _chunk in r.data:

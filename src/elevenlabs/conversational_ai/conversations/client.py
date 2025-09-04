@@ -34,7 +34,11 @@ class ConversationsClient:
         return self._raw_client
 
     def get_signed_url(
-        self, *, agent_id: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        agent_id: str,
+        include_conversation_id: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ConversationSignedUrlResponseModel:
         """
         Get a signed url to start a conversation with an agent with an agent that requires authorization
@@ -43,6 +47,9 @@ class ConversationsClient:
         ----------
         agent_id : str
             The id of the agent you're taking the action on.
+
+        include_conversation_id : typing.Optional[bool]
+            Whether to include a conversation_id with the response. If included, the conversation_signature cannot be used again.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -63,7 +70,9 @@ class ConversationsClient:
             agent_id="21m00Tcm4TlvDq8ikWAM",
         )
         """
-        _response = self._raw_client.get_signed_url(agent_id=agent_id, request_options=request_options)
+        _response = self._raw_client.get_signed_url(
+            agent_id=agent_id, include_conversation_id=include_conversation_id, request_options=request_options
+        )
         return _response.data
 
     def get_webrtc_token(
@@ -266,7 +275,11 @@ class AsyncConversationsClient:
         return self._raw_client
 
     async def get_signed_url(
-        self, *, agent_id: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        agent_id: str,
+        include_conversation_id: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ConversationSignedUrlResponseModel:
         """
         Get a signed url to start a conversation with an agent with an agent that requires authorization
@@ -275,6 +288,9 @@ class AsyncConversationsClient:
         ----------
         agent_id : str
             The id of the agent you're taking the action on.
+
+        include_conversation_id : typing.Optional[bool]
+            Whether to include a conversation_id with the response. If included, the conversation_signature cannot be used again.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -303,7 +319,9 @@ class AsyncConversationsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_signed_url(agent_id=agent_id, request_options=request_options)
+        _response = await self._raw_client.get_signed_url(
+            agent_id=agent_id, include_conversation_id=include_conversation_id, request_options=request_options
+        )
         return _response.data
 
     async def get_webrtc_token(

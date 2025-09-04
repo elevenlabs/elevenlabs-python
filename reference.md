@@ -313,7 +313,7 @@ client.history.delete(
 <dl>
 <dd>
 
-Turn text into sound effects for your videos, voice-overs or video games using the most advanced sound effects model in the world.
+Turn text into sound effects for your videos, voice-overs or video games using the most advanced sound effects models in the world.
 </dd>
 </dl>
 </dd>
@@ -367,7 +367,7 @@ client.text_to_sound_effects.convert(
 <dl>
 <dd>
 
-**loop:** `typing.Optional[bool]` — Whether to create a sound effect that loops smoothly.
+**loop:** `typing.Optional[bool]` — Whether to create a sound effect that loops smoothly. Only available for the 'eleven_text_to_sound_v2 model'.
     
 </dd>
 </dl>
@@ -384,6 +384,14 @@ client.text_to_sound_effects.convert(
 <dd>
 
 **prompt_influence:** `typing.Optional[float]` — A higher prompt influence makes your generation follow the prompt more closely while also making generations less variable. Must be a value between 0 and 1. Defaults to 0.3.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_id:** `typing.Optional[str]` — The model ID to use for the sound generation.
     
 </dd>
 </dl>
@@ -595,7 +603,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 and Flash v2.5 support language enforcement. For other models, an error will be returned if language code is provided.
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
     
 </dd>
 </dl>
@@ -803,7 +811,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 and Flash v2.5 support language enforcement. For other models, an error will be returned if language code is provided.
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
     
 </dd>
 </dl>
@@ -1015,7 +1023,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 and Flash v2.5 support language enforcement. For other models, an error will be returned if language code is provided.
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
     
 </dd>
 </dl>
@@ -1229,7 +1237,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 and Flash v2.5 support language enforcement. For other models, an error will be returned if language code is provided.
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
     
 </dd>
 </dl>
@@ -1415,6 +1423,14 @@ client.text_to_dialogue.convert(
 <dl>
 <dd>
 
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **settings:** `typing.Optional[ModelSettingsResponseModel]` — Settings controlling the dialogue generation.
     
 </dd>
@@ -1432,6 +1448,16 @@ client.text_to_dialogue.convert(
 <dd>
 
 **seed:** `typing.Optional[int]` — If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**apply_text_normalization:** `typing.Optional[
+    BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization
+]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
     
 </dd>
 </dl>
@@ -1534,6 +1560,14 @@ client.text_to_dialogue.stream(
 <dl>
 <dd>
 
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **settings:** `typing.Optional[ModelSettingsResponseModel]` — Settings controlling the dialogue generation.
     
 </dd>
@@ -1551,6 +1585,16 @@ client.text_to_dialogue.stream(
 <dd>
 
 **seed:** `typing.Optional[int]` — If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**apply_text_normalization:** `typing.Optional[
+    BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization
+]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
     
 </dd>
 </dl>
@@ -5058,7 +5102,7 @@ client.speech_to_text.convert(
 <dl>
 <dd>
 
-**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. This will mean log and transcript storage features are unavailable for this request. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -5742,6 +5786,14 @@ client.conversational_ai.conversations.get_signed_url(
 <dd>
 
 **agent_id:** `str` — The id of the agent you're taking the action on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_conversation_id:** `typing.Optional[bool]` — Whether to include a conversation_id with the response. If included, the conversation_signature cannot be used again.
     
 </dd>
 </dl>
@@ -13271,6 +13323,77 @@ client.service_accounts.api_keys.update(
 </dl>
 </details>
 
+## SpeechToText Transcripts
+<details><summary><code>client.speech_to_text.transcripts.<a href="src/elevenlabs/speech_to_text/transcripts/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a previously generated transcript by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.speech_to_text.transcripts.get(
+    transcription_id="transcription_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**transcription_id:** `str` — The unique ID of the transcript to retrieve
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Studio Projects
 <details><summary><code>client.studio.projects.<a href="src/elevenlabs/studio/projects/client.py">list</a>()</code></summary>
 <dl>
@@ -13739,6 +13862,14 @@ client.studio.projects.get(
 <dd>
 
 **project_id:** `str` — The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**share_id:** `typing.Optional[str]` — The share ID of the project
     
 </dd>
 </dl>

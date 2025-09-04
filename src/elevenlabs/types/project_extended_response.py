@@ -170,6 +170,11 @@ class ProjectExtendedResponse(UncheckedBaseModel):
     Global styling to be applied to all captions
     """
 
+    public_share_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The public share ID of the project.
+    """
+
     quality_preset: ProjectExtendedResponseModelQualityPreset = pydantic.Field()
     """
     The quality preset level of the project.

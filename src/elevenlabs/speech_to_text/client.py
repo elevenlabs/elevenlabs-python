@@ -7,6 +7,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.additional_formats import AdditionalFormats
 from .raw_client import AsyncRawSpeechToTextClient, RawSpeechToTextClient
+from .transcripts.client import AsyncTranscriptsClient, TranscriptsClient
 from .types.speech_to_text_convert_request_file_format import SpeechToTextConvertRequestFileFormat
 from .types.speech_to_text_convert_request_timestamps_granularity import SpeechToTextConvertRequestTimestampsGranularity
 from .types.speech_to_text_convert_request_webhook_metadata import SpeechToTextConvertRequestWebhookMetadata
@@ -19,6 +20,7 @@ OMIT = typing.cast(typing.Any, ...)
 class SpeechToTextClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawSpeechToTextClient(client_wrapper=client_wrapper)
+        self.transcripts = TranscriptsClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> RawSpeechToTextClient:
@@ -63,7 +65,7 @@ class SpeechToTextClient:
             The ID of the model to use for transcription, currently only 'scribe_v1' and 'scribe_v1_experimental' are available.
 
         enable_logging : typing.Optional[bool]
-            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean log and transcript storage features are unavailable for this request. Zero retention mode may only be used by enterprise customers.
 
         file : typing.Optional[core.File]
             See core.File for more documentation
@@ -159,6 +161,7 @@ class SpeechToTextClient:
 class AsyncSpeechToTextClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawSpeechToTextClient(client_wrapper=client_wrapper)
+        self.transcripts = AsyncTranscriptsClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> AsyncRawSpeechToTextClient:
@@ -203,7 +206,7 @@ class AsyncSpeechToTextClient:
             The ID of the model to use for transcription, currently only 'scribe_v1' and 'scribe_v1_experimental' are available.
 
         enable_logging : typing.Optional[bool]
-            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean log and transcript storage features are unavailable for this request. Zero retention mode may only be used by enterprise customers.
 
         file : typing.Optional[core.File]
             See core.File for more documentation

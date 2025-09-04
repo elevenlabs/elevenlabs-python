@@ -5,6 +5,9 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .resource_metadata_response_model_anonymous_access_level_override import (
+    ResourceMetadataResponseModelAnonymousAccessLevelOverride,
+)
 from .share_option_response_model import ShareOptionResponseModel
 from .workspace_resource_type import WorkspaceResourceType
 
@@ -23,6 +26,13 @@ class ResourceMetadataResponseModel(UncheckedBaseModel):
     creator_user_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     The ID of the user who created the resource.
+    """
+
+    anonymous_access_level_override: typing.Optional[ResourceMetadataResponseModelAnonymousAccessLevelOverride] = (
+        pydantic.Field(default=None)
+    )
+    """
+    The access level for anonymous users. If None, the resource is not shared publicly.
     """
 
     role_to_group_ids: typing.Dict[str, typing.List[str]] = pydantic.Field()

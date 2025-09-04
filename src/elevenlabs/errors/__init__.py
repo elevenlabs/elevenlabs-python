@@ -6,6 +6,14 @@ from .bad_request_error import BadRequestError
 from .forbidden_error import ForbiddenError
 from .not_found_error import NotFoundError
 from .too_early_error import TooEarlyError
+from .unauthorized_error import UnauthorizedError
 from .unprocessable_entity_error import UnprocessableEntityError
 
-__all__ = ["BadRequestError", "ForbiddenError", "NotFoundError", "TooEarlyError", "UnprocessableEntityError"]
+__all__ = [
+    "BadRequestError",
+    "ForbiddenError",
+    "NotFoundError",
+    "TooEarlyError",
+    "UnauthorizedError",
+    "UnprocessableEntityError",
+]
