@@ -6,6 +6,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
+from ..core.jsonable_encoder import jsonable_encoder
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
@@ -14,6 +15,7 @@ from ..types.voice import Voice
 from ..types.voice_design_preview_response import VoiceDesignPreviewResponse
 from .types.text_to_voice_create_previews_request_output_format import TextToVoiceCreatePreviewsRequestOutputFormat
 from .types.text_to_voice_design_request_output_format import TextToVoiceDesignRequestOutputFormat
+from .types.text_to_voice_remix_request_output_format import TextToVoiceRemixRequestOutputFormat
 from .types.voice_design_request_model_model_id import VoiceDesignRequestModelModelId
 
 # this is used as the default value for optional parameters
@@ -328,6 +330,122 @@ class RawTextToVoiceClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def remix(
+        self,
+        voice_id: str,
+        *,
+        voice_description: str,
+        output_format: typing.Optional[TextToVoiceRemixRequestOutputFormat] = None,
+        text: typing.Optional[str] = OMIT,
+        auto_generate_text: typing.Optional[bool] = OMIT,
+        loudness: typing.Optional[float] = OMIT,
+        seed: typing.Optional[int] = OMIT,
+        guidance_scale: typing.Optional[float] = OMIT,
+        stream_previews: typing.Optional[bool] = OMIT,
+        remixing_session_id: typing.Optional[str] = OMIT,
+        remixing_session_iteration_id: typing.Optional[str] = OMIT,
+        prompt_strength: typing.Optional[float] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[VoiceDesignPreviewResponse]:
+        """
+        Remix an existing voice via a prompt. This method returns a list of voice previews. Each preview has a generated_voice_id and a sample of the voice as base64 encoded mp3 audio. To create a voice use the generated_voice_id of the preferred preview with the /v1/text-to-voice endpoint.
+
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+
+        voice_description : str
+            Description of the changes to make to the voice.
+
+        output_format : typing.Optional[TextToVoiceRemixRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        text : typing.Optional[str]
+            Text to generate, text length has to be between 100 and 1000.
+
+        auto_generate_text : typing.Optional[bool]
+            Whether to automatically generate a text suitable for the voice description.
+
+        loudness : typing.Optional[float]
+            Controls the volume level of the generated voice. -1 is quietest, 1 is loudest, 0 corresponds to roughly -24 LUFS.
+
+        seed : typing.Optional[int]
+            Random number that controls the voice generation. Same seed with same inputs produces same voice.
+
+        guidance_scale : typing.Optional[float]
+            Controls how closely the AI follows the prompt. Lower numbers give the AI more freedom to be creative, while higher numbers force it to stick more to the prompt. High numbers can cause voice to sound artificial or robotic. We recommend to use longer, more detailed prompts at lower Guidance Scale.
+
+        stream_previews : typing.Optional[bool]
+            Determines whether the Text to Voice previews should be included in the response. If true, only the generated IDs will be returned which can then be streamed via the /v1/text-to-voice/:generated_voice_id/stream endpoint.
+
+        remixing_session_id : typing.Optional[str]
+            The remixing session id.
+
+        remixing_session_iteration_id : typing.Optional[str]
+            The id of the remixing session iteration where these generations should be attached to. If not provided, a new iteration will be created.
+
+        prompt_strength : typing.Optional[float]
+            Controls the balance of prompt versus reference audio when generating voice samples. 0 means almost no prompt influence, 1 means almost no reference audio influence. Only supported when using the eleven_ttv_v3 model and providing reference audio.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[VoiceDesignPreviewResponse]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/text-to-voice/{jsonable_encoder(voice_id)}/remix",
+            method="POST",
+            params={
+                "output_format": output_format,
+            },
+            json={
+                "voice_description": voice_description,
+                "text": text,
+                "auto_generate_text": auto_generate_text,
+                "loudness": loudness,
+                "seed": seed,
+                "guidance_scale": guidance_scale,
+                "stream_previews": stream_previews,
+                "remixing_session_id": remixing_session_id,
+                "remixing_session_iteration_id": remixing_session_iteration_id,
+                "prompt_strength": prompt_strength,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    VoiceDesignPreviewResponse,
+                    construct_type(
+                        type_=VoiceDesignPreviewResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawTextToVoiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -603,6 +721,122 @@ class AsyncRawTextToVoiceClient:
                 "remixing_session_iteration_id": remixing_session_iteration_id,
                 "quality": quality,
                 "reference_audio_base64": reference_audio_base_64,
+                "prompt_strength": prompt_strength,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    VoiceDesignPreviewResponse,
+                    construct_type(
+                        type_=VoiceDesignPreviewResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def remix(
+        self,
+        voice_id: str,
+        *,
+        voice_description: str,
+        output_format: typing.Optional[TextToVoiceRemixRequestOutputFormat] = None,
+        text: typing.Optional[str] = OMIT,
+        auto_generate_text: typing.Optional[bool] = OMIT,
+        loudness: typing.Optional[float] = OMIT,
+        seed: typing.Optional[int] = OMIT,
+        guidance_scale: typing.Optional[float] = OMIT,
+        stream_previews: typing.Optional[bool] = OMIT,
+        remixing_session_id: typing.Optional[str] = OMIT,
+        remixing_session_iteration_id: typing.Optional[str] = OMIT,
+        prompt_strength: typing.Optional[float] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[VoiceDesignPreviewResponse]:
+        """
+        Remix an existing voice via a prompt. This method returns a list of voice previews. Each preview has a generated_voice_id and a sample of the voice as base64 encoded mp3 audio. To create a voice use the generated_voice_id of the preferred preview with the /v1/text-to-voice endpoint.
+
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+
+        voice_description : str
+            Description of the changes to make to the voice.
+
+        output_format : typing.Optional[TextToVoiceRemixRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        text : typing.Optional[str]
+            Text to generate, text length has to be between 100 and 1000.
+
+        auto_generate_text : typing.Optional[bool]
+            Whether to automatically generate a text suitable for the voice description.
+
+        loudness : typing.Optional[float]
+            Controls the volume level of the generated voice. -1 is quietest, 1 is loudest, 0 corresponds to roughly -24 LUFS.
+
+        seed : typing.Optional[int]
+            Random number that controls the voice generation. Same seed with same inputs produces same voice.
+
+        guidance_scale : typing.Optional[float]
+            Controls how closely the AI follows the prompt. Lower numbers give the AI more freedom to be creative, while higher numbers force it to stick more to the prompt. High numbers can cause voice to sound artificial or robotic. We recommend to use longer, more detailed prompts at lower Guidance Scale.
+
+        stream_previews : typing.Optional[bool]
+            Determines whether the Text to Voice previews should be included in the response. If true, only the generated IDs will be returned which can then be streamed via the /v1/text-to-voice/:generated_voice_id/stream endpoint.
+
+        remixing_session_id : typing.Optional[str]
+            The remixing session id.
+
+        remixing_session_iteration_id : typing.Optional[str]
+            The id of the remixing session iteration where these generations should be attached to. If not provided, a new iteration will be created.
+
+        prompt_strength : typing.Optional[float]
+            Controls the balance of prompt versus reference audio when generating voice samples. 0 means almost no prompt influence, 1 means almost no reference audio influence. Only supported when using the eleven_ttv_v3 model and providing reference audio.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[VoiceDesignPreviewResponse]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/text-to-voice/{jsonable_encoder(voice_id)}/remix",
+            method="POST",
+            params={
+                "output_format": output_format,
+            },
+            json={
+                "voice_description": voice_description,
+                "text": text,
+                "auto_generate_text": auto_generate_text,
+                "loudness": loudness,
+                "seed": seed,
+                "guidance_scale": guidance_scale,
+                "stream_previews": stream_previews,
+                "remixing_session_id": remixing_session_id,
+                "remixing_session_iteration_id": remixing_session_iteration_id,
                 "prompt_strength": prompt_strength,
             },
             headers={

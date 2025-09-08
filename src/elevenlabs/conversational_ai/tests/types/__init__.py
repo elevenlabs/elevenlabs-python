@@ -2,7 +2,35 @@
 
 # isort: skip_file
 
-from .create_unit_test_request_dynamic_variables_value import CreateUnitTestRequestDynamicVariablesValue
-from .update_unit_test_request_dynamic_variables_value import UpdateUnitTestRequestDynamicVariablesValue
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from .create_unit_test_request_dynamic_variables_value import CreateUnitTestRequestDynamicVariablesValue
+    from .update_unit_test_request_dynamic_variables_value import UpdateUnitTestRequestDynamicVariablesValue
+_dynamic_imports: typing.Dict[str, str] = {
+    "CreateUnitTestRequestDynamicVariablesValue": ".create_unit_test_request_dynamic_variables_value",
+    "UpdateUnitTestRequestDynamicVariablesValue": ".update_unit_test_request_dynamic_variables_value",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        result = getattr(module, attr_name)
+        return result
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = ["CreateUnitTestRequestDynamicVariablesValue", "UpdateUnitTestRequestDynamicVariablesValue"]

@@ -7,7 +7,6 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .transfer_to_agent_tool_result_success_model import TransferToAgentToolResultSuccessModel
 
 
 class WorkflowToolResponseModelInput(UncheckedBaseModel):
@@ -15,7 +14,6 @@ class WorkflowToolResponseModelInput(UncheckedBaseModel):
     A common model for workflow tool responses.
     """
 
-    final_transfer: typing.Optional[TransferToAgentToolResultSuccessModel] = None
     steps: typing.Optional[typing.List["WorkflowToolResponseModelInputStepsItem"]] = None
 
     if IS_PYDANTIC_V2:

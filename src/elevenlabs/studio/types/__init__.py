@@ -2,23 +2,58 @@
 
 # isort: skip_file
 
-from .body_create_podcast_v_1_studio_podcasts_post_duration_scale import (
-    BodyCreatePodcastV1StudioPodcastsPostDurationScale,
-)
-from .body_create_podcast_v_1_studio_podcasts_post_mode import (
-    BodyCreatePodcastV1StudioPodcastsPostMode,
-    BodyCreatePodcastV1StudioPodcastsPostMode_Bulletin,
-    BodyCreatePodcastV1StudioPodcastsPostMode_Conversation,
-)
-from .body_create_podcast_v_1_studio_podcasts_post_quality_preset import (
-    BodyCreatePodcastV1StudioPodcastsPostQualityPreset,
-)
-from .body_create_podcast_v_1_studio_podcasts_post_source import BodyCreatePodcastV1StudioPodcastsPostSource
-from .body_create_podcast_v_1_studio_podcasts_post_source_item import (
-    BodyCreatePodcastV1StudioPodcastsPostSourceItem,
-    BodyCreatePodcastV1StudioPodcastsPostSourceItem_Text,
-    BodyCreatePodcastV1StudioPodcastsPostSourceItem_Url,
-)
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from .body_create_podcast_v_1_studio_podcasts_post_duration_scale import (
+        BodyCreatePodcastV1StudioPodcastsPostDurationScale,
+    )
+    from .body_create_podcast_v_1_studio_podcasts_post_mode import (
+        BodyCreatePodcastV1StudioPodcastsPostMode,
+        BodyCreatePodcastV1StudioPodcastsPostMode_Bulletin,
+        BodyCreatePodcastV1StudioPodcastsPostMode_Conversation,
+    )
+    from .body_create_podcast_v_1_studio_podcasts_post_quality_preset import (
+        BodyCreatePodcastV1StudioPodcastsPostQualityPreset,
+    )
+    from .body_create_podcast_v_1_studio_podcasts_post_source import BodyCreatePodcastV1StudioPodcastsPostSource
+    from .body_create_podcast_v_1_studio_podcasts_post_source_item import (
+        BodyCreatePodcastV1StudioPodcastsPostSourceItem,
+        BodyCreatePodcastV1StudioPodcastsPostSourceItem_Text,
+        BodyCreatePodcastV1StudioPodcastsPostSourceItem_Url,
+    )
+_dynamic_imports: typing.Dict[str, str] = {
+    "BodyCreatePodcastV1StudioPodcastsPostDurationScale": ".body_create_podcast_v_1_studio_podcasts_post_duration_scale",
+    "BodyCreatePodcastV1StudioPodcastsPostMode": ".body_create_podcast_v_1_studio_podcasts_post_mode",
+    "BodyCreatePodcastV1StudioPodcastsPostMode_Bulletin": ".body_create_podcast_v_1_studio_podcasts_post_mode",
+    "BodyCreatePodcastV1StudioPodcastsPostMode_Conversation": ".body_create_podcast_v_1_studio_podcasts_post_mode",
+    "BodyCreatePodcastV1StudioPodcastsPostQualityPreset": ".body_create_podcast_v_1_studio_podcasts_post_quality_preset",
+    "BodyCreatePodcastV1StudioPodcastsPostSource": ".body_create_podcast_v_1_studio_podcasts_post_source",
+    "BodyCreatePodcastV1StudioPodcastsPostSourceItem": ".body_create_podcast_v_1_studio_podcasts_post_source_item",
+    "BodyCreatePodcastV1StudioPodcastsPostSourceItem_Text": ".body_create_podcast_v_1_studio_podcasts_post_source_item",
+    "BodyCreatePodcastV1StudioPodcastsPostSourceItem_Url": ".body_create_podcast_v_1_studio_podcasts_post_source_item",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        result = getattr(module, attr_name)
+        return result
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = [
     "BodyCreatePodcastV1StudioPodcastsPostDurationScale",

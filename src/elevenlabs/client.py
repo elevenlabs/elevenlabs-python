@@ -58,9 +58,9 @@ class ElevenLabs(BaseElevenLabs):
             timeout=timeout,
             httpx_client=httpx_client
         )
-        self.text_to_speech = RealtimeTextToSpeechClient(client_wrapper=self._client_wrapper)
-        self.webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
-        self.music = MusicClient(client_wrapper=self._client_wrapper)
+        self._text_to_speech = RealtimeTextToSpeechClient(client_wrapper=self._client_wrapper)
+        self._webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
+        self._music = MusicClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncElevenLabs(AsyncBaseElevenLabs):
@@ -103,5 +103,5 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
             timeout=timeout,
             httpx_client=httpx_client
         )
-        self.webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
-        self.music = AsyncMusicClient(client_wrapper=self._client_wrapper)
+        self._webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
+        self._music = AsyncMusicClient(client_wrapper=self._client_wrapper)

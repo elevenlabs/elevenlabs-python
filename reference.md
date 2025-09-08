@@ -2330,6 +2330,165 @@ client.text_to_voice.design(
 </dl>
 </details>
 
+<details><summary><code>client.text_to_voice.<a href="src/elevenlabs/text_to_voice/client.py">remix</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remix an existing voice via a prompt. This method returns a list of voice previews. Each preview has a generated_voice_id and a sample of the voice as base64 encoded mp3 audio. To create a voice use the generated_voice_id of the preferred preview with the /v1/text-to-voice endpoint.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.text_to_voice.remix(
+    voice_id="21m00Tcm4TlvDq8ikWAM",
+    voice_description="Make the voice have a higher pitch.",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**voice_id:** `str` — Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**voice_description:** `str` — Description of the changes to make to the voice.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**output_format:** `typing.Optional[TextToVoiceRemixRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**text:** `typing.Optional[str]` — Text to generate, text length has to be between 100 and 1000.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auto_generate_text:** `typing.Optional[bool]` — Whether to automatically generate a text suitable for the voice description.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**loudness:** `typing.Optional[float]` — Controls the volume level of the generated voice. -1 is quietest, 1 is loudest, 0 corresponds to roughly -24 LUFS.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**seed:** `typing.Optional[int]` — Random number that controls the voice generation. Same seed with same inputs produces same voice.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**guidance_scale:** `typing.Optional[float]` — Controls how closely the AI follows the prompt. Lower numbers give the AI more freedom to be creative, while higher numbers force it to stick more to the prompt. High numbers can cause voice to sound artificial or robotic. We recommend to use longer, more detailed prompts at lower Guidance Scale.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**stream_previews:** `typing.Optional[bool]` — Determines whether the Text to Voice previews should be included in the response. If true, only the generated IDs will be returned which can then be streamed via the /v1/text-to-voice/:generated_voice_id/stream endpoint.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**remixing_session_id:** `typing.Optional[str]` — The remixing session id.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**remixing_session_iteration_id:** `typing.Optional[str]` — The id of the remixing session iteration where these generations should be attached to. If not provided, a new iteration will be created.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prompt_strength:** `typing.Optional[float]` — Controls the balance of prompt versus reference audio when generating voice samples. 0 means almost no prompt influence, 1 means almost no reference audio influence. Only supported when using the eleven_ttv_v3 model and providing reference audio.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## user
 <details><summary><code>client.user.<a href="src/elevenlabs/user/client.py">get</a>()</code></summary>
 <dl>
@@ -6809,6 +6968,7 @@ client.conversational_ai.agents.simulate_conversation(
         simulated_user_config=AgentConfig(
             first_message="Hello, how can I help you today?",
             language="en",
+            disable_first_message_interruptions=False,
         ),
     ),
 )
@@ -6913,6 +7073,7 @@ client.conversational_ai.agents.simulate_conversation_stream(
         simulated_user_config=AgentConfig(
             first_message="Hello, how can I help you today?",
             language="en",
+            disable_first_message_interruptions=False,
         ),
     ),
 )
