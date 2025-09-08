@@ -27,6 +27,11 @@ class AgentConfig(UncheckedBaseModel):
     Configuration for dynamic variables
     """
 
+    disable_first_message_interruptions: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If true, the user will not be able to interrupt the agent while the first message is being delivered.
+    """
+
     prompt: typing.Optional[PromptAgentApiModelOutput] = pydantic.Field(default=None)
     """
     The prompt for the agent

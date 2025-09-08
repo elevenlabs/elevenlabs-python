@@ -2,24 +2,64 @@
 
 # isort: skip_file
 
-from .types import (
-    BodyCreatePodcastV1StudioPodcastsPostDurationScale,
-    BodyCreatePodcastV1StudioPodcastsPostMode,
-    BodyCreatePodcastV1StudioPodcastsPostMode_Bulletin,
-    BodyCreatePodcastV1StudioPodcastsPostMode_Conversation,
-    BodyCreatePodcastV1StudioPodcastsPostQualityPreset,
-    BodyCreatePodcastV1StudioPodcastsPostSource,
-    BodyCreatePodcastV1StudioPodcastsPostSourceItem,
-    BodyCreatePodcastV1StudioPodcastsPostSourceItem_Text,
-    BodyCreatePodcastV1StudioPodcastsPostSourceItem_Url,
-)
-from . import projects
-from .projects import (
-    ProjectsCreateRequestApplyTextNormalization,
-    ProjectsCreateRequestFiction,
-    ProjectsCreateRequestSourceType,
-    ProjectsCreateRequestTargetAudience,
-)
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from .types import (
+        BodyCreatePodcastV1StudioPodcastsPostDurationScale,
+        BodyCreatePodcastV1StudioPodcastsPostMode,
+        BodyCreatePodcastV1StudioPodcastsPostMode_Bulletin,
+        BodyCreatePodcastV1StudioPodcastsPostMode_Conversation,
+        BodyCreatePodcastV1StudioPodcastsPostQualityPreset,
+        BodyCreatePodcastV1StudioPodcastsPostSource,
+        BodyCreatePodcastV1StudioPodcastsPostSourceItem,
+        BodyCreatePodcastV1StudioPodcastsPostSourceItem_Text,
+        BodyCreatePodcastV1StudioPodcastsPostSourceItem_Url,
+    )
+    from . import projects
+    from .projects import (
+        ProjectsCreateRequestApplyTextNormalization,
+        ProjectsCreateRequestFiction,
+        ProjectsCreateRequestSourceType,
+        ProjectsCreateRequestTargetAudience,
+    )
+_dynamic_imports: typing.Dict[str, str] = {
+    "BodyCreatePodcastV1StudioPodcastsPostDurationScale": ".types",
+    "BodyCreatePodcastV1StudioPodcastsPostMode": ".types",
+    "BodyCreatePodcastV1StudioPodcastsPostMode_Bulletin": ".types",
+    "BodyCreatePodcastV1StudioPodcastsPostMode_Conversation": ".types",
+    "BodyCreatePodcastV1StudioPodcastsPostQualityPreset": ".types",
+    "BodyCreatePodcastV1StudioPodcastsPostSource": ".types",
+    "BodyCreatePodcastV1StudioPodcastsPostSourceItem": ".types",
+    "BodyCreatePodcastV1StudioPodcastsPostSourceItem_Text": ".types",
+    "BodyCreatePodcastV1StudioPodcastsPostSourceItem_Url": ".types",
+    "ProjectsCreateRequestApplyTextNormalization": ".projects",
+    "ProjectsCreateRequestFiction": ".projects",
+    "ProjectsCreateRequestSourceType": ".projects",
+    "ProjectsCreateRequestTargetAudience": ".projects",
+    "projects": ".",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        result = getattr(module, attr_name)
+        return result
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = [
     "BodyCreatePodcastV1StudioPodcastsPostDurationScale",
