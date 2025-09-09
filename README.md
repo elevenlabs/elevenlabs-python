@@ -156,6 +156,103 @@ async def print_models() -> None:
 asyncio.run(print_models())
 ```
 
+## Conversational AI
+
+Build interactive AI agents with real-time audio capabilities using ElevenLabs Conversational AI.
+
+### Basic Usage
+
+```python
+from elevenlabs.client import ElevenLabs
+from elevenlabs.conversational_ai.conversation import Conversation, ClientTools
+from elevenlabs.conversational_ai.default_audio_interface import DefaultAudioInterface
+
+client = ElevenLabs(api_key="YOUR_API_KEY")
+
+# Create audio interface for real-time audio input/output
+audio_interface = DefaultAudioInterface()
+
+# Create conversation
+conversation = Conversation(
+    client=client,
+    agent_id="your-agent-id",
+    requires_auth=True,
+    audio_interface=audio_interface,
+)
+
+# Start the conversation
+conversation.start_session()
+
+# The conversation runs in background until you call:
+conversation.end_session()
+```
+
+### Custom Event Loop Support
+
+For advanced use cases involving context propagation, resource reuse, or specific event loop management, `ClientTools` supports custom asyncio event loops:
+
+```python
+import asyncio
+from elevenlabs.conversational_ai.conversation import ClientTools
+
+async def main():
+    # Get the current event loop
+    custom_loop = asyncio.get_running_loop()
+
+    # Create ClientTools with custom loop to prevent "different event loop" errors
+    client_tools = ClientTools(loop=custom_loop)
+
+    # Register your tools
+    async def get_weather(params):
+        location = params.get("location", "Unknown")
+        # Your async logic here
+        return f"Weather in {location}: Sunny, 72°F"
+
+    client_tools.register("get_weather", get_weather, is_async=True)
+
+    # Use with conversation
+    conversation = Conversation(
+        client=client,
+        agent_id="your-agent-id",
+        requires_auth=True,
+        audio_interface=audio_interface,
+        client_tools=client_tools
+    )
+
+asyncio.run(main())
+```
+
+**Benefits of Custom Event Loop:**
+- **Context Propagation**: Maintain request-scoped state across async operations
+- **Resource Reuse**: Share existing async resources like HTTP sessions or database pools
+- **Loop Management**: Prevent "Task got Future attached to a different event loop" errors
+- **Performance**: Better control over async task scheduling and execution
+
+**Important:** When using a custom loop, you're responsible for its lifecycle
+Don't close the loop while ClientTools are still using it.
+
+### Tool Registration
+
+Register custom tools that the AI agent can call during conversations:
+
+```python
+client_tools = ClientTools()
+
+# Sync tool
+def calculate_sum(params):
+    numbers = params.get("numbers", [])
+    return sum(numbers)
+
+# Async tool
+async def fetch_data(params):
+    url = params.get("url")
+    # Your async HTTP request logic
+    return {"data": "fetched"}
+
+client_tools.register("calculate_sum", calculate_sum, is_async=False)
+client_tools.register("fetch_data", fetch_data, is_async=True)
+```
+
 ## Languages Supported
 
 Explore [all models & languages](https://elevenlabs.io/docs/models).
