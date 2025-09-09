@@ -278,7 +278,6 @@ class ClientTools:
 
         self._schedule_coroutine(_execute_and_callback())
 
-
     def _schedule_coroutine(self, coro):
         """Schedule a coroutine on the appropriate event loop."""
         if self._custom_loop is not None:
@@ -780,7 +779,7 @@ class AsyncConversation(BaseConversation):
         Will run in background task until `end_session` is called.
         """
         ws_url = self._get_signed_url() if self.requires_auth else self._get_wss_url()
-        self._task = self._schedule_coroutine(self._run(ws_url))
+        self._task = asyncio.create_task(self._run(ws_url))
 
     async def end_session(self):
         """Ends the conversation session and cleans up resources."""
@@ -946,7 +945,7 @@ class AsyncConversation(BaseConversation):
             def handle_client_tool_call(self, tool_name, parameters):
                 def send_response(response):
                     if not self.conversation._should_stop.is_set():
-                        self.conversation._schedule_coroutine(self.ws.send(json.dumps(response)))
+                        asyncio.create_task(self.ws.send(json.dumps(response)))
 
                 self.conversation.client_tools.execute_tool(tool_name, parameters, send_response)
 
