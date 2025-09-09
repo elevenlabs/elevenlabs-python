@@ -155,7 +155,7 @@ class ClientTools:
 
     Supports both synchronous and asynchronous tools running in a dedicated event loop,
     ensuring non-blocking operation of the main conversation thread.
-    
+
     Args:
         loop: Optional custom asyncio event loop to use for tool execution. If not provided,
               a new event loop will be created and run in a separate thread. Using a custom
@@ -276,12 +276,15 @@ class ClientTools:
                 }
             callback(response)
 
+        self._schedule_coroutine(_execute_and_callback())
+
+
+    def _schedule_coroutine(self, coro):
+        """Schedule a coroutine on the appropriate event loop."""
         if self._custom_loop is not None:
-            # For custom loops, schedule the task on the custom loop
-            self._loop.create_task(_execute_and_callback())
+            return self._loop.create_task(coro)
         else:
-            # For our own loop running in a separate thread, use run_coroutine_threadsafe
-            asyncio.run_coroutine_threadsafe(_execute_and_callback(), self._loop)
+            return asyncio.run_coroutine_threadsafe(coro, self._loop)
 
 
 class ConversationInitiationData:
@@ -302,7 +305,7 @@ class ConversationInitiationData:
 
 class BaseConversation:
     """Base class for conversation implementations with shared parameters and logic."""
-    
+
     def __init__(
         self,
         client: BaseElevenLabs,
@@ -319,9 +322,9 @@ class BaseConversation:
         self.requires_auth = requires_auth
         self.config = config or ConversationInitiationData()
         self.client_tools = client_tools or ClientTools()
-        
+
         self.client_tools.start()
-        
+
         self._conversation_id = None
         self._last_interrupt_id = 0
 
@@ -353,7 +356,7 @@ class BaseConversation:
 
     def _handle_message_core(self, message, message_handler):
         """Core message handling logic shared between sync and async implementations.
-        
+
         Args:
             message: The parsed message dictionary
             message_handler: Handler object with methods for different operations
@@ -369,36 +372,36 @@ class BaseConversation:
                 return
             audio = base64.b64decode(event["audio_base_64"])
             message_handler.handle_audio_output(audio)
-            
+
         elif message["type"] == "agent_response":
             if message_handler.callback_agent_response:
                 event = message["agent_response_event"]
                 message_handler.handle_agent_response(event["agent_response"].strip())
-                
+
         elif message["type"] == "agent_response_correction":
             if message_handler.callback_agent_response_correction:
                 event = message["agent_response_correction_event"]
                 message_handler.handle_agent_response_correction(
-                    event["original_agent_response"].strip(), 
+                    event["original_agent_response"].strip(),
                     event["corrected_agent_response"].strip()
                 )
-                
+
         elif message["type"] == "user_transcript":
             if message_handler.callback_user_transcript:
                 event = message["user_transcription_event"]
                 message_handler.handle_user_transcript(event["user_transcript"].strip())
-                
+
         elif message["type"] == "interruption":
             event = message["interruption_event"]
             self._last_interrupt_id = int(event["event_id"])
             message_handler.handle_interruption()
-            
+
         elif message["type"] == "ping":
             event = message["ping_event"]
             message_handler.handle_ping(event)
             if message_handler.callback_latency_measurement and event["ping_ms"]:
                 message_handler.handle_latency_measurement(int(event["ping_ms"]))
-                
+
         elif message["type"] == "client_tool_call":
             tool_call = message.get("client_tool_call", {})
             tool_name = tool_call.get("tool_name")
@@ -420,36 +423,36 @@ class BaseConversation:
                 return
             audio = base64.b64decode(event["audio_base_64"])
             await message_handler.handle_audio_output(audio)
-            
+
         elif message["type"] == "agent_response":
             if message_handler.callback_agent_response:
                 event = message["agent_response_event"]
                 await message_handler.handle_agent_response(event["agent_response"].strip())
-                
+
         elif message["type"] == "agent_response_correction":
             if message_handler.callback_agent_response_correction:
                 event = message["agent_response_correction_event"]
                 await message_handler.handle_agent_response_correction(
-                    event["original_agent_response"].strip(), 
+                    event["original_agent_response"].strip(),
                     event["corrected_agent_response"].strip()
                 )
-                
+
         elif message["type"] == "user_transcript":
             if message_handler.callback_user_transcript:
                 event = message["user_transcription_event"]
                 await message_handler.handle_user_transcript(event["user_transcript"].strip())
-                
+
         elif message["type"] == "interruption":
             event = message["interruption_event"]
             self._last_interrupt_id = int(event["event_id"])
             await message_handler.handle_interruption()
-            
+
         elif message["type"] == "ping":
             event = message["ping_event"]
             await message_handler.handle_ping(event)
             if message_handler.callback_latency_measurement and event["ping_ms"]:
                 await message_handler.handle_latency_measurement(int(event["ping_ms"]))
-                
+
         elif message["type"] == "client_tool_call":
             tool_call = message.get("client_tool_call", {})
             tool_name = tool_call.get("tool_name")
@@ -514,7 +517,7 @@ class Conversation(BaseConversation):
             config=config,
             client_tools=client_tools,
         )
-        
+
         self.audio_interface = audio_interface
         self.callback_agent_response = callback_agent_response
         self.callback_agent_response_correction = callback_agent_response_correction
@@ -663,22 +666,22 @@ class Conversation(BaseConversation):
                 self.callback_agent_response_correction = conversation.callback_agent_response_correction
                 self.callback_user_transcript = conversation.callback_user_transcript
                 self.callback_latency_measurement = conversation.callback_latency_measurement
-            
+
             def handle_audio_output(self, audio):
                 self.conversation.audio_interface.output(audio)
-            
+
             def handle_agent_response(self, response):
                 self.conversation.callback_agent_response(response)
-            
+
             def handle_agent_response_correction(self, original, corrected):
                 self.conversation.callback_agent_response_correction(original, corrected)
-            
+
             def handle_user_transcript(self, transcript):
                 self.conversation.callback_user_transcript(transcript)
-            
+
             def handle_interruption(self):
                 self.conversation.audio_interface.interrupt()
-            
+
             def handle_ping(self, event):
                 self.ws.send(
                     json.dumps(
@@ -688,17 +691,17 @@ class Conversation(BaseConversation):
                         }
                     )
                 )
-            
+
             def handle_latency_measurement(self, latency):
                 self.conversation.callback_latency_measurement(latency)
-            
+
             def handle_client_tool_call(self, tool_name, parameters):
                 def send_response(response):
                     if not self.conversation._should_stop.is_set():
                         self.ws.send(json.dumps(response))
-                
+
                 self.conversation.client_tools.execute_tool(tool_name, parameters, send_response)
-        
+
         handler = SyncMessageHandler(self, ws)
         self._handle_message_core(message, handler)
 
@@ -759,7 +762,7 @@ class AsyncConversation(BaseConversation):
             config=config,
             client_tools=client_tools,
         )
-        
+
         self.audio_interface = audio_interface
         self.callback_agent_response = callback_agent_response
         self.callback_agent_response_correction = callback_agent_response_correction
@@ -777,7 +780,7 @@ class AsyncConversation(BaseConversation):
         Will run in background task until `end_session` is called.
         """
         ws_url = self._get_signed_url() if self.requires_auth else self._get_wss_url()
-        self._task = asyncio.create_task(self._run(ws_url))
+        self._task = self._schedule_coroutine(self._run(ws_url))
 
     async def end_session(self):
         """Ends the conversation session and cleans up resources."""
@@ -881,7 +884,7 @@ class AsyncConversation(BaseConversation):
                     await self.end_session()
 
             await self.audio_interface.start(input_callback)
-            
+
             try:
                 while not self._should_stop.is_set():
                     try:
@@ -911,22 +914,22 @@ class AsyncConversation(BaseConversation):
                 self.callback_agent_response_correction = conversation.callback_agent_response_correction
                 self.callback_user_transcript = conversation.callback_user_transcript
                 self.callback_latency_measurement = conversation.callback_latency_measurement
-            
+
             async def handle_audio_output(self, audio):
                 await self.conversation.audio_interface.output(audio)
-            
+
             async def handle_agent_response(self, response):
                 await self.conversation.callback_agent_response(response)
-            
+
             async def handle_agent_response_correction(self, original, corrected):
                 await self.conversation.callback_agent_response_correction(original, corrected)
-            
+
             async def handle_user_transcript(self, transcript):
                 await self.conversation.callback_user_transcript(transcript)
-            
+
             async def handle_interruption(self):
                 await self.conversation.audio_interface.interrupt()
-            
+
             async def handle_ping(self, event):
                 await self.ws.send(
                     json.dumps(
@@ -936,18 +939,18 @@ class AsyncConversation(BaseConversation):
                         }
                     )
                 )
-            
+
             async def handle_latency_measurement(self, latency):
                 await self.conversation.callback_latency_measurement(latency)
-            
+
             def handle_client_tool_call(self, tool_name, parameters):
                 def send_response(response):
                     if not self.conversation._should_stop.is_set():
-                        asyncio.create_task(self.ws.send(json.dumps(response)))
-                
+                        self.conversation._schedule_coroutine(self.ws.send(json.dumps(response)))
+
                 self.conversation.client_tools.execute_tool(tool_name, parameters, send_response)
-        
+
         handler = AsyncMessageHandler(self, ws)
-        
+
         # Use the shared core message handling logic with async wrapper
         await self._handle_message_core_async(message, handler)

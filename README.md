@@ -198,22 +198,22 @@ from elevenlabs.conversational_ai.conversation import ClientTools
 async def main():
     # Get the current event loop
     custom_loop = asyncio.get_running_loop()
-    
+
     # Create ClientTools with custom loop to prevent "different event loop" errors
     client_tools = ClientTools(loop=custom_loop)
-    
+
     # Register your tools
     async def get_weather(params):
         location = params.get("location", "Unknown")
         # Your async logic here
         return f"Weather in {location}: Sunny, 72°F"
-    
+
     client_tools.register("get_weather", get_weather, is_async=True)
-    
+
     # Use with conversation
     conversation = Conversation(
         client=client,
-        agent_id="your-agent-id", 
+        agent_id="your-agent-id",
         requires_auth=True,
         audio_interface=audio_interface,
         client_tools=client_tools
@@ -228,6 +228,9 @@ asyncio.run(main())
 - **Loop Management**: Prevent "Task got Future attached to a different event loop" errors
 - **Performance**: Better control over async task scheduling and execution
 
+**Important:** When using a custom loop, you're responsible for its lifecycle
+Don't close the loop while ClientTools are still using it.
+
 ### Tool Registration
 
 Register custom tools that the AI agent can call during conversations:
@@ -240,7 +243,7 @@ def calculate_sum(params):
     numbers = params.get("numbers", [])
     return sum(numbers)
 
-# Async tool  
+# Async tool
 async def fetch_data(params):
     url = params.get("url")
     # Your async HTTP request logic
