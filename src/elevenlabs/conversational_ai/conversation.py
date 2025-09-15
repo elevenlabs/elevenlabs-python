@@ -14,6 +14,8 @@ from websockets.exceptions import ConnectionClosedOK
 
 from ..base_client import BaseElevenLabs
 from ..version import __version__
+from .base_connection import ConnectionType
+from .connection_factory import create_connection, determine_connection_type
 
 
 class ClientToOrchestratorEvent(str, Enum):
@@ -296,11 +298,15 @@ class ConversationInitiationData:
         conversation_config_override: Optional[dict] = None,
         dynamic_variables: Optional[dict] = None,
         user_id: Optional[str] = None,
+        connection_type: Optional[ConnectionType] = None,
+        conversation_token: Optional[str] = None,
     ):
         self.extra_body = extra_body or {}
         self.conversation_config_override = conversation_config_override or {}
         self.dynamic_variables = dynamic_variables or {}
         self.user_id = user_id
+        self.connection_type = connection_type
+        self.conversation_token = conversation_token
 
 
 class BaseConversation:
@@ -342,6 +348,29 @@ class BaseConversation:
         # Append source and version query parameters to the signed URL
         separator = "&" if "?" in signed_url else "?"
         return f"{signed_url}{separator}source=python_sdk&version={__version__}"
+
+    def _determine_connection_type(self) -> ConnectionType:
+        """Determine the appropriate connection type for this conversation."""
+        return determine_connection_type(
+            connection_type=self.config.connection_type,
+            conversation_token=self.config.conversation_token
+        )
+
+    def _create_connection(self):
+        """Create the appropriate connection based on configuration."""
+        connection_type = self._determine_connection_type()
+
+        if connection_type == ConnectionType.WEBSOCKET:
+            ws_url = self._get_signed_url() if self.requires_auth else self._get_wss_url()
+            return create_connection(connection_type, ws_url=ws_url)
+        elif connection_type == ConnectionType.WEBRTC:
+            return create_connection(
+                connection_type,
+                conversation_token=self.config.conversation_token,
+                agent_id=self.agent_id
+            )
+        else:
+            raise ValueError(f"Unsupported connection type: {connection_type}")
 
     def _create_initiation_message(self):
         return json.dumps(
