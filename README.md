@@ -47,7 +47,7 @@ For more detailed information about these models and others, visit the [ElevenLa
 ```py
 from dotenv import load_dotenv
 from elevenlabs.client import ElevenLabs
-from elevenlabs import play
+from elevenlabs.play import play
 
 load_dotenv()
 
@@ -97,7 +97,7 @@ Clone your voice in an instant. Note that voice cloning requires an API key, see
 
 ```py
 from elevenlabs.client import ElevenLabs
-from elevenlabs import play
+from elevenlabs.play import play
 
 client = ElevenLabs(
   api_key="YOUR_API_KEY",
