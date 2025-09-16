@@ -351,7 +351,7 @@ conversation = create_webrtc_conversation(
 )
 ```
 
-**Requirements**: WebRTC conversations require the `livekit` dependency, which is automatically installed with the SDK. All WebRTC conversations must use `AsyncAudioInterface` implementations.
+**Requirements**: WebRTC conversations require the `livekit` dependency (`pip install livekit`), which is automatically installed with the SDK. All WebRTC conversations must use `AsyncAudioInterface` implementations.
 
 ## Languages Supported
 
