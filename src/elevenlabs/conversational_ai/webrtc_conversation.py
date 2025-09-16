@@ -11,7 +11,7 @@ from .conversation import (
     ClientTools
 )
 from .base_connection import ConnectionType
-from .webrtc_connection import WebRTCConnection
+from .webrtc_connection import WebRTCConnection, WebRTCConnectionConfig
 
 
 class WebRTCConversation(BaseConversation):
@@ -28,6 +28,10 @@ class WebRTCConversation(BaseConversation):
         user_id: Optional[str] = None,
         *,
         conversation_token: Optional[str] = None,
+        livekit_url: Optional[str] = None,
+        api_origin: Optional[str] = None,
+        webrtc_overrides: Optional[dict] = None,
+        on_debug: Optional[Callable[[dict], None]] = None,
         audio_interface: Optional[AsyncAudioInterface] = None,
         config: Optional[ConversationInitiationData] = None,
         client_tools: Optional[ClientTools] = None,
@@ -45,6 +49,10 @@ class WebRTCConversation(BaseConversation):
             user_id: The ID of the user conversing with the agent.
             conversation_token: Token for WebRTC authentication. If not provided,
                                will be fetched using the agent_id.
+            livekit_url: Custom LiveKit WebSocket URL. If not provided, uses default.
+            api_origin: Custom API origin for token fetching. If not provided, uses default.
+            webrtc_overrides: Additional overrides specific to WebRTC connection.
+            on_debug: Debug callback function for WebRTC connection events.
             audio_interface: The async audio interface to use for input and output.
             config: Configuration for the conversation.
             client_tools: Client tools for handling agent tool calls.
@@ -60,6 +68,10 @@ class WebRTCConversation(BaseConversation):
             config = ConversationInitiationData()
         config.connection_type = ConnectionType.WEBRTC
         config.conversation_token = conversation_token
+        config.livekit_url = livekit_url
+        config.api_origin = api_origin
+        config.webrtc_overrides = webrtc_overrides or {}
+        config.on_debug = on_debug
 
         super().__init__(
             client=client,
@@ -84,21 +96,14 @@ class WebRTCConversation(BaseConversation):
     async def start_session(self):
         """Start the WebRTC conversation session."""
         try:
-            # Create WebRTC connection
-            self._connection = WebRTCConnection(
-                conversation_token=self.config.conversation_token,
-                agent_id=self.agent_id
-            )
+            # Use the enhanced connection creation from BaseConversation
+            self._connection = self._create_connection()
 
             # Set up message handler
             self._connection.on_message(self._handle_message)
 
             # Connect
             await self._connection.connect()
-
-            # Send initiation message
-            initiation_message = json.loads(self._create_initiation_message())
-            await self._connection.send_message(initiation_message)
 
             # Update conversation ID
             self._conversation_id = self._connection.conversation_id
@@ -107,10 +112,18 @@ class WebRTCConversation(BaseConversation):
             if self.audio_interface:
                 await self.audio_interface.start(self._audio_input_callback)
 
-            print(f"WebRTC conversation started with ID: {self._conversation_id}")
+            if self.config.on_debug:
+                self.config.on_debug({
+                    "type": "webrtc_conversation_started",
+                    "conversation_id": self._conversation_id
+                })
 
         except Exception as e:
-            print(f"Failed to start WebRTC session: {e}")
+            if self.config.on_debug:
+                self.config.on_debug({
+                    "type": "webrtc_session_start_error",
+                    "error": str(e)
+                })
             raise
 
     async def end_session(self):

@@ -169,6 +169,10 @@ def create_webrtc_conversation(
     user_id: Optional[str] = None,
     *,
     conversation_token: Optional[str] = None,
+    livekit_url: Optional[str] = None,
+    api_origin: Optional[str] = None,
+    webrtc_overrides: Optional[dict] = None,
+    on_debug: Optional[Callable[[dict], None]] = None,
     audio_interface: Optional[AsyncAudioInterface] = None,
     config: Optional[ConversationInitiationData] = None,
     client_tools: Optional[ClientTools] = None,
@@ -182,20 +186,23 @@ def create_webrtc_conversation(
 
     Convenience function for creating WebRTC conversations with type safety.
     """
-    return create_conversation(
+    return WebRTCConversation(
         client=client,
         agent_id=agent_id,
         user_id=user_id,
-        connection_type=ConnectionType.WEBRTC,
         conversation_token=conversation_token,
+        livekit_url=livekit_url,
+        api_origin=api_origin,
+        webrtc_overrides=webrtc_overrides,
+        on_debug=on_debug,
         audio_interface=audio_interface,
         config=config,
         client_tools=client_tools,
-        async_callback_agent_response=callback_agent_response,
-        async_callback_agent_response_correction=callback_agent_response_correction,
-        async_callback_user_transcript=callback_user_transcript,
-        async_callback_latency_measurement=callback_latency_measurement,
-        async_callback_end_session=callback_end_session,
+        callback_agent_response=callback_agent_response,
+        callback_agent_response_correction=callback_agent_response_correction,
+        callback_user_transcript=callback_user_transcript,
+        callback_latency_measurement=callback_latency_measurement,
+        callback_end_session=callback_end_session,
     )
 
 

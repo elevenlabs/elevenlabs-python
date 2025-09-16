@@ -98,6 +98,11 @@ class WebRTCConnection(BaseConnection):
         if self.overrides:
             await self.send_message(self._construct_overrides())
 
+        self.debug({
+            "type": "conversation_initiation_client_data",
+            "message": self._construct_overrides()
+        })
+
     async def close(self) -> None:
         """Close the WebRTC connection."""
         if self._room:
@@ -126,6 +131,17 @@ class WebRTCConnection(BaseConnection):
         # In WebRTC mode, audio is sent through the microphone track
         # This method can be used for custom audio streaming if needed
         pass
+
+    async def receive_messages(self) -> None:
+        """Receive and handle messages - handled by LiveKit event callbacks."""
+        # In WebRTC mode, messages are handled via LiveKit event callbacks
+        # This method exists for compatibility with the BaseConnection interface
+        if not self._is_connected:
+            return
+
+        # Keep the connection alive while connected
+        while self._is_connected:
+            await asyncio.sleep(0.1)
 
     async def _fetch_conversation_token(self) -> str:
         """Fetch conversation token from ElevenLabs API."""

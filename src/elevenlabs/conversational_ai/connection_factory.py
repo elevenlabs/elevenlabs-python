@@ -1,8 +1,8 @@
-from typing import Optional
+from typing import Optional, Dict, Any, Callable
 
 from .base_connection import BaseConnection, ConnectionType
 from .websocket_connection import WebSocketConnection
-from .webrtc_connection import WebRTCConnection
+from .webrtc_connection import WebRTCConnection, WebRTCConnectionConfig
 
 
 def create_connection(
@@ -10,7 +10,11 @@ def create_connection(
     *,
     ws_url: Optional[str] = None,
     conversation_token: Optional[str] = None,
-    agent_id: Optional[str] = None
+    agent_id: Optional[str] = None,
+    livekit_url: Optional[str] = None,
+    api_origin: Optional[str] = None,
+    overrides: Optional[Dict[str, Any]] = None,
+    on_debug: Optional[Callable[[Dict[str, Any]], None]] = None,
 ) -> BaseConnection:
     """Factory function to create connections based on type."""
 
@@ -20,7 +24,14 @@ def create_connection(
         return WebSocketConnection(ws_url)
 
     elif connection_type == ConnectionType.WEBRTC:
-        return WebRTCConnection(conversation_token=conversation_token, agent_id=agent_id)
+        return WebRTCConnection(
+            conversation_token=conversation_token,
+            agent_id=agent_id,
+            livekit_url=livekit_url,
+            api_origin=api_origin,
+            overrides=overrides,
+            on_debug=on_debug,
+        )
 
     else:
         raise ValueError(f"Unknown connection type: {connection_type}")
