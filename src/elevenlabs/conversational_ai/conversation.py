@@ -13,6 +13,9 @@ from websockets.exceptions import ConnectionClosedOK
 
 from ..base_client import BaseElevenLabs
 from ..version import __version__
+from .base_connection import ConnectionType, BaseConnection
+from .connection_factory import create_connection, determine_connection_type
+from .location_utils import Location, get_origin_for_location
 
 
 class ClientToOrchestratorEvent(str, Enum):
@@ -295,11 +298,25 @@ class ConversationInitiationData:
         conversation_config_override: Optional[dict] = None,
         dynamic_variables: Optional[dict] = None,
         user_id: Optional[str] = None,
+        connection_type: Optional[ConnectionType] = None,
+        conversation_token: Optional[str] = None,
+        location: Optional[Location] = None,
+        livekit_url: Optional[str] = None,
+        api_origin: Optional[str] = None,
+        webrtc_overrides: Optional[dict] = None,
+        on_debug: Optional[Callable[[dict], None]] = None,
     ):
         self.extra_body = extra_body or {}
         self.conversation_config_override = conversation_config_override or {}
         self.dynamic_variables = dynamic_variables or {}
         self.user_id = user_id
+        self.connection_type = connection_type
+        self.conversation_token = conversation_token
+        self.location = location
+        self.livekit_url = livekit_url
+        self.api_origin = api_origin
+        self.webrtc_overrides = webrtc_overrides or {}
+        self.on_debug = on_debug
 
 
 class BaseConversation:
@@ -326,10 +343,15 @@ class BaseConversation:
 
         self._conversation_id = None
         self._last_interrupt_id = 0
+        self._connection: Optional[BaseConnection] = None
 
     def _get_wss_url(self):
-        base_http_url = self.client._client_wrapper.get_base_url()
-        base_ws_url = base_http_url.replace("https://", "wss://").replace("http://", "ws://")
+        # Use location-based URL if location is specified
+        if self.config.location is not None:
+            base_ws_url = get_origin_for_location(self.config.location)
+        else:
+            base_http_url = self.client._client_wrapper.get_base_url()
+            base_ws_url = base_http_url.replace("https://", "wss://").replace("http://", "ws://")
         return f"{base_ws_url}/v1/convai/conversation?agent_id={self.agent_id}&source=python_sdk&version={__version__}"
 
     def _get_signed_url(self):
@@ -338,6 +360,55 @@ class BaseConversation:
         # Append source and version query parameters to the signed URL
         separator = "&" if "?" in signed_url else "?"
         return f"{signed_url}{separator}source=python_sdk&version={__version__}"
+
+    def _determine_connection_type(self) -> ConnectionType:
+        """Determine the appropriate connection type for this conversation."""
+        return determine_connection_type(
+            connection_type=self.config.connection_type,
+            conversation_token=self.config.conversation_token
+        )
+
+    def _create_connection(self):
+        """Create the appropriate connection based on configuration."""
+        connection_type = self._determine_connection_type()
+
+        if connection_type == ConnectionType.WEBSOCKET:
+            ws_url = self._get_signed_url() if self.requires_auth else self._get_wss_url()
+            return create_connection(connection_type, ws_url=ws_url)
+        elif connection_type == ConnectionType.WEBRTC:
+            # Convert base HTTP URL to appropriate origins
+            base_http_url = self.client._client_wrapper.get_base_url()
+
+            # Use configured URLs or derive from base URL
+            api_origin = self.config.api_origin or base_http_url
+            livekit_url = self.config.livekit_url
+            if not livekit_url:
+                # Default LiveKit URL if not specified
+                livekit_url = "wss://livekit.rtc.elevenlabs.io"
+
+            # Merge conversation overrides with WebRTC overrides
+            overrides = {
+                **self.config.webrtc_overrides,
+                "client": {
+                    "version": __version__,
+                    "source": "python_sdk",
+                },
+                "custom_llm_extra_body": self.config.extra_body,
+                "conversation_config_override": self.config.conversation_config_override,
+                "dynamic_variables": self.config.dynamic_variables,
+            }
+
+            return create_connection(
+                connection_type,
+                conversation_token=self.config.conversation_token,
+                agent_id=self.agent_id,
+                livekit_url=livekit_url,
+                api_origin=api_origin,
+                overrides=overrides,
+                on_debug=self.config.on_debug,
+            )
+        else:
+            raise ValueError(f"Unsupported connection type: {connection_type}")
 
     def _create_initiation_message(self):
         return json.dumps(
@@ -534,8 +605,16 @@ class Conversation(BaseConversation):
 
         Will run in background thread until `end_session` is called.
         """
-        ws_url = self._get_signed_url() if self.requires_auth else self._get_wss_url()
-        self._thread = threading.Thread(target=self._run, args=(ws_url,))
+        connection_type = self._determine_connection_type()
+        if connection_type == ConnectionType.WEBSOCKET:
+            ws_url = self._get_signed_url() if self.requires_auth else self._get_wss_url()
+            self._thread = threading.Thread(target=self._run_websocket, args=(ws_url,))
+        elif connection_type == ConnectionType.WEBRTC:
+            self._connection = self._create_connection()
+            self._thread = threading.Thread(target=self._run_webrtc)
+        else:
+            raise ValueError(f"Unsupported connection type: {connection_type}")
+
         self._thread.start()
 
     def end_session(self):
@@ -544,6 +623,33 @@ class Conversation(BaseConversation):
         self.client_tools.stop()
         self._ws = None
         self._should_stop.set()
+
+        # Close connection if it exists
+        if self._connection:
+            connection_type = self._determine_connection_type()
+            if connection_type == ConnectionType.WEBRTC:
+                import asyncio
+                try:
+                    try:
+                        loop = asyncio.get_event_loop()
+                        if loop.is_running():
+                            task = asyncio.create_task(self._connection.close())
+                        else:
+                            asyncio.wait_for(
+                                loop.run_until_complete(self._connection.close()),
+                                timeout=5.0
+                            )
+                    except RuntimeError:
+                        async def cleanup():
+                            await asyncio.wait_for(self._connection.close(), timeout=5.0)
+
+                        asyncio.run(cleanup())
+
+                except asyncio.TimeoutError:
+                    print("Warning: WebRTC connection cleanup timed out")
+                except Exception as e:
+                    print(f"Warning: Error during WebRTC connection cleanup: {e}")
+            self._connection = None
 
         if self.callback_end_session:
             self.callback_end_session()
@@ -567,17 +673,31 @@ class Conversation(BaseConversation):
             text: The text message to send to the agent.
 
         Raises:
-            RuntimeError: If the session is not active or websocket is not connected.
+            RuntimeError: If the session is not active or connection is not established.
         """
-        if not self._ws:
-            raise RuntimeError("Session not started or websocket not connected.")
+        connection_type = self._determine_connection_type()
 
-        event = UserMessageClientToOrchestratorEvent(text=text)
-        try:
-            self._ws.send(json.dumps(event.to_dict()))
-        except Exception as e:
-            print(f"Error sending user message: {e}")
-            raise
+        if connection_type == ConnectionType.WEBSOCKET:
+            if not self._ws:
+                raise RuntimeError("Session not started or websocket not connected.")
+
+            event = UserMessageClientToOrchestratorEvent(text=text)
+            try:
+                self._ws.send(json.dumps(event.to_dict()))
+            except Exception as e:
+                print(f"Error sending user message: {e}")
+                raise
+
+        elif connection_type == ConnectionType.WEBRTC:
+            if not self._connection:
+                raise RuntimeError("Session not started or WebRTC connection not established.")
+
+            event = UserMessageClientToOrchestratorEvent(text=text)
+            try:
+                self._connection.send_message_sync(event.to_dict())
+            except Exception as e:
+                print(f"Error sending user message: {e}")
+                raise
 
     def register_user_activity(self):
         """Register user activity to prevent session timeout.
@@ -619,7 +739,7 @@ class Conversation(BaseConversation):
             print(f"Error sending contextual update: {e}")
             raise
 
-    def _run(self, ws_url: str):
+    def _run_websocket(self, ws_url: str):
         with connect(ws_url, max_size=16 * 1024 * 1024) as ws:
             self._ws = ws
             ws.send(self._create_initiation_message())
@@ -656,6 +776,104 @@ class Conversation(BaseConversation):
                     self.end_session()
 
             self._ws = None
+
+    def _run_webrtc(self):
+        """Run WebRTC conversation session."""
+        try:
+            # Connect to WebRTC
+            import asyncio
+
+            try:
+                loop = asyncio.get_event_loop()
+                if loop.is_closed():
+                    loop = asyncio.new_event_loop()
+                    asyncio.set_event_loop(loop)
+            except RuntimeError:
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+
+            async def webrtc_session():
+                await self._connection.connect()
+                self._conversation_id = self._connection.conversation_id
+
+                # Set up message callback
+                def message_callback(message):
+                    self._handle_webrtc_message(message)
+
+                self._connection.on_message(message_callback)
+
+                # Set up audio input callback
+                def input_callback(audio):
+                    try:
+                        # Send audio through WebRTC connection
+                        loop.create_task(self._connection.send_audio(audio))
+                    except Exception as e:
+                        print(f"Error sending user audio chunk: {e}")
+                        self.end_session()
+
+                self.audio_interface.start(input_callback)
+
+                # Keep running until stopped
+                while not self._should_stop.is_set():
+                    await asyncio.sleep(0.1)
+
+                await self._connection.close()
+
+            loop.run_until_complete(webrtc_session())
+
+        except Exception as e:
+            print(f"WebRTC session error: {e}")
+            self.end_session()
+        finally:
+            loop.close()
+
+    def _handle_webrtc_message(self, message):
+        """Handle messages from WebRTC connection."""
+        class WebRTCMessageHandler:
+            def __init__(self, conversation):
+                self.conversation = conversation
+                self.callback_agent_response = conversation.callback_agent_response
+                self.callback_agent_response_correction = conversation.callback_agent_response_correction
+                self.callback_user_transcript = conversation.callback_user_transcript
+                self.callback_latency_measurement = conversation.callback_latency_measurement
+
+            def handle_audio_output(self, audio):
+                self.conversation.audio_interface.output(audio)
+
+            def handle_agent_response(self, response):
+                if self.conversation.callback_agent_response:
+                    self.conversation.callback_agent_response(response)
+
+            def handle_agent_response_correction(self, original, corrected):
+                if self.conversation.callback_agent_response_correction:
+                    self.conversation.callback_agent_response_correction(original, corrected)
+
+            def handle_user_transcript(self, transcript):
+                if self.conversation.callback_user_transcript:
+                    self.conversation.callback_user_transcript(transcript)
+
+            def handle_interruption(self):
+                self.conversation.audio_interface.interrupt()
+
+            def handle_ping(self, event):
+                # For WebRTC, pings are handled by the connection itself
+                pass
+
+            def handle_latency_measurement(self, latency):
+                if self.conversation.callback_latency_measurement:
+                    self.conversation.callback_latency_measurement(latency)
+
+            def handle_client_tool_call(self, tool_name, parameters):
+                def send_response(response):
+                    if not self.conversation._should_stop.is_set():
+                        # Send response through WebRTC connection
+                        import asyncio
+                        asyncio.create_task(self.conversation._connection.send_message(response))
+
+                self.conversation.client_tools.execute_tool(tool_name, parameters, send_response)
+
+        handler = WebRTCMessageHandler(self)
+        self._handle_message_core(message, handler)
 
     def _handle_message(self, message, ws):
         class SyncMessageHandler:
@@ -779,8 +997,15 @@ class AsyncConversation(BaseConversation):
 
         Will run in background task until `end_session` is called.
         """
-        ws_url = self._get_signed_url() if self.requires_auth else self._get_wss_url()
-        self._task = asyncio.create_task(self._run(ws_url))
+        connection_type = self._determine_connection_type()
+        if connection_type == ConnectionType.WEBSOCKET:
+            ws_url = self._get_signed_url() if self.requires_auth else self._get_wss_url()
+            self._task = asyncio.create_task(self._run_websocket(ws_url))
+        elif connection_type == ConnectionType.WEBRTC:
+            self._connection = self._create_connection()
+            self._task = asyncio.create_task(self._run_webrtc())
+        else:
+            raise ValueError(f"Unsupported connection type: {connection_type}")
 
     async def end_session(self):
         """Ends the conversation session and cleans up resources."""
@@ -788,6 +1013,11 @@ class AsyncConversation(BaseConversation):
         self.client_tools.stop()
         self._ws = None
         self._should_stop.set()
+
+        # Close connection if it exists
+        if self._connection:
+            await self._connection.close()
+            self._connection = None
 
         if self.callback_end_session:
             await self.callback_end_session()
@@ -811,17 +1041,31 @@ class AsyncConversation(BaseConversation):
             text: The text message to send to the agent.
 
         Raises:
-            RuntimeError: If the session is not active or websocket is not connected.
+            RuntimeError: If the session is not active or connection is not established.
         """
-        if not self._ws:
-            raise RuntimeError("Session not started or websocket not connected.")
+        connection_type = self._determine_connection_type()
 
-        event = UserMessageClientToOrchestratorEvent(text=text)
-        try:
-            await self._ws.send(json.dumps(event.to_dict()))
-        except Exception as e:
-            print(f"Error sending user message: {e}")
-            raise
+        if connection_type == ConnectionType.WEBSOCKET:
+            if not self._ws:
+                raise RuntimeError("Session not started or websocket not connected.")
+
+            event = UserMessageClientToOrchestratorEvent(text=text)
+            try:
+                await self._ws.send(json.dumps(event.to_dict()))
+            except Exception as e:
+                print(f"Error sending user message: {e}")
+                raise
+
+        elif connection_type == ConnectionType.WEBRTC:
+            if not self._connection:
+                raise RuntimeError("Session not started or WebRTC connection not established.")
+
+            event = UserMessageClientToOrchestratorEvent(text=text)
+            try:
+                await self._connection.send_message(event.to_dict())
+            except Exception as e:
+                print(f"Error sending user message: {e}")
+                raise
 
     async def register_user_activity(self):
         """Register user activity to prevent session timeout.
@@ -863,7 +1107,7 @@ class AsyncConversation(BaseConversation):
             print(f"Error sending contextual update: {e}")
             raise
 
-    async def _run(self, ws_url: str):
+    async def _run_websocket(self, ws_url: str):
         async with websockets.connect(ws_url, max_size=16 * 1024 * 1024) as ws:
             self._ws = ws
             await ws.send(self._create_initiation_message())
@@ -904,6 +1148,84 @@ class AsyncConversation(BaseConversation):
                         break
             finally:
                 self._ws = None
+
+    async def _run_webrtc(self):
+        """Run async WebRTC conversation session."""
+        try:
+            await self._connection.connect()
+            self._conversation_id = self._connection.conversation_id
+
+            # Set up message callback
+            async def message_callback(message):
+                await self._handle_webrtc_message(message)
+
+            self._connection.on_message(message_callback)
+
+            # Set up audio input callback
+            async def input_callback(audio):
+                try:
+                    await self._connection.send_audio(audio)
+                except Exception as e:
+                    print(f"Error sending user audio chunk: {e}")
+                    await self.end_session()
+
+            await self.audio_interface.start(input_callback)
+
+            # Keep running until stopped
+            while not self._should_stop.is_set():
+                await asyncio.sleep(0.1)
+
+            await self._connection.close()
+
+        except Exception as e:
+            print(f"WebRTC session error: {e}")
+            await self.end_session()
+
+    async def _handle_webrtc_message(self, message):
+        """Handle messages from WebRTC connection."""
+        class AsyncWebRTCMessageHandler:
+            def __init__(self, conversation):
+                self.conversation = conversation
+                self.callback_agent_response = conversation.callback_agent_response
+                self.callback_agent_response_correction = conversation.callback_agent_response_correction
+                self.callback_user_transcript = conversation.callback_user_transcript
+                self.callback_latency_measurement = conversation.callback_latency_measurement
+
+            async def handle_audio_output(self, audio):
+                await self.conversation.audio_interface.output(audio)
+
+            async def handle_agent_response(self, response):
+                if self.conversation.callback_agent_response:
+                    await self.conversation.callback_agent_response(response)
+
+            async def handle_agent_response_correction(self, original, corrected):
+                if self.conversation.callback_agent_response_correction:
+                    await self.conversation.callback_agent_response_correction(original, corrected)
+
+            async def handle_user_transcript(self, transcript):
+                if self.conversation.callback_user_transcript:
+                    await self.conversation.callback_user_transcript(transcript)
+
+            async def handle_interruption(self):
+                await self.conversation.audio_interface.interrupt()
+
+            async def handle_ping(self, event):
+                # For WebRTC, pings are handled by the connection itself
+                pass
+
+            async def handle_latency_measurement(self, latency):
+                if self.conversation.callback_latency_measurement:
+                    await self.conversation.callback_latency_measurement(latency)
+
+            def handle_client_tool_call(self, tool_name, parameters):
+                def send_response(response):
+                    if not self.conversation._should_stop.is_set():
+                        asyncio.create_task(self.conversation._connection.send_message(response))
+
+                self.conversation.client_tools.execute_tool(tool_name, parameters, send_response)
+
+        handler = AsyncWebRTCMessageHandler(self)
+        await self._handle_message_core_async(message, handler)
 
     async def _handle_message(self, message, ws):
         class AsyncMessageHandler:
