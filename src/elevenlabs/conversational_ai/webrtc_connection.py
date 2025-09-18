@@ -106,12 +106,19 @@ class WebRTCConnection(BaseConnection):
             # Enable microphone
             try:
                 await self._room.local_participant.set_microphone_enabled(True)
+            except AttributeError:
+                try:
+                    await self._room.local_participant.enable_microphone()
+                except AttributeError:
+                    self.debug({
+                        "type": "microphone_enable_error",
+                        "error": "Neither set_microphone_enabled nor enable_microphone methods available"
+                    })
             except Exception as e:
                 self.debug({
                     "type": "microphone_enable_error",
                     "error": str(e)
                 })
-                # Don't fail the connection for microphone issues
 
             # Send overrides if any
             if self.overrides:
@@ -319,7 +326,26 @@ class WebRTCConnection(BaseConnection):
         if not self._room or not self._room.local_participant:
             raise RuntimeError("Room not connected")
 
-        await self._room.local_participant.set_microphone_enabled(enabled)
+        try:
+            await self._room.local_participant.set_microphone_enabled(enabled)
+        except AttributeError:
+            try:
+                if enabled:
+                    await self._room.local_participant.enable_microphone()
+                else:
+                    await self._room.local_participant.disable_microphone()
+            except AttributeError:
+                self.debug({
+                    "type": "microphone_control_error",
+                    "enabled": enabled,
+                    "error": "Microphone control methods not available"
+                })
+        except Exception as e:
+            self.debug({
+                "type": "microphone_control_error",
+                "enabled": enabled,
+                "error": str(e)
+            })
 
     async def set_microphone_device(self, device_id: str) -> None:
         """Set the microphone input device."""

@@ -13,7 +13,7 @@ from websockets.exceptions import ConnectionClosedOK
 
 from ..base_client import BaseElevenLabs
 from ..version import __version__
-from .base_connection import ConnectionType
+from .base_connection import ConnectionType, BaseConnection
 from .connection_factory import create_connection, determine_connection_type
 
 
@@ -340,7 +340,7 @@ class BaseConversation:
 
         self._conversation_id = None
         self._last_interrupt_id = 0
-        self._connection = None
+        self._connection: Optional[BaseConnection] = None
 
     def _get_wss_url(self):
         base_http_url = self.client._client_wrapper.get_base_url()
