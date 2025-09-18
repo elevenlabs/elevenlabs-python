@@ -18,6 +18,7 @@ from ..types.dubbing_metadata_response import DubbingMetadataResponse
 from ..types.http_validation_error import HttpValidationError
 from .types.dubbing_list_request_dubbing_status import DubbingListRequestDubbingStatus
 from .types.dubbing_list_request_filter_by_creator import DubbingListRequestFilterByCreator
+from .types.dubbing_list_request_order_direction import DubbingListRequestOrderDirection
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -34,6 +35,8 @@ class RawDubbingClient:
         page_size: typing.Optional[int] = None,
         dubbing_status: typing.Optional[DubbingListRequestDubbingStatus] = None,
         filter_by_creator: typing.Optional[DubbingListRequestFilterByCreator] = None,
+        order_by: typing.Optional[typing.Literal["created_at"]] = None,
+        order_direction: typing.Optional[DubbingListRequestOrderDirection] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DubbingMetadataPageResponseModel]:
         """
@@ -53,6 +56,12 @@ class RawDubbingClient:
         filter_by_creator : typing.Optional[DubbingListRequestFilterByCreator]
             Filters who created the resources being listed, whether it was the user running the request or someone else that shared the resource with them.
 
+        order_by : typing.Optional[typing.Literal["created_at"]]
+            The field to use for ordering results from this query.
+
+        order_direction : typing.Optional[DubbingListRequestOrderDirection]
+            The order direction to use for results from this query.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -69,6 +78,8 @@ class RawDubbingClient:
                 "page_size": page_size,
                 "dubbing_status": dubbing_status,
                 "filter_by_creator": filter_by_creator,
+                "order_by": order_by,
+                "order_direction": order_direction,
             },
             request_options=request_options,
         )
@@ -180,7 +191,7 @@ class RawDubbingClient:
             Whether to prepare dub for edits in dubbing studio or edits as a dubbing resource.
 
         disable_voice_cloning : typing.Optional[bool]
-            [BETA] Instead of using a voice clone in dubbing, use a similar voice from the ElevenLabs Voice Library.
+            Instead of using a voice clone in dubbing, use a similar voice from the ElevenLabs Voice Library. Voices used from the library will contribute towards a workspace's custom voices limit, and if there aren't enough available slots the dub will fail. Using this feature requires the caller to have the 'add_voice_from_voice_library' permission on their workspace to access new voices.
 
         mode : typing.Optional[str]
             automatic or manual. Manual mode is only supported when creating a dubbing studio project
@@ -365,6 +376,8 @@ class AsyncRawDubbingClient:
         page_size: typing.Optional[int] = None,
         dubbing_status: typing.Optional[DubbingListRequestDubbingStatus] = None,
         filter_by_creator: typing.Optional[DubbingListRequestFilterByCreator] = None,
+        order_by: typing.Optional[typing.Literal["created_at"]] = None,
+        order_direction: typing.Optional[DubbingListRequestOrderDirection] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DubbingMetadataPageResponseModel]:
         """
@@ -384,6 +397,12 @@ class AsyncRawDubbingClient:
         filter_by_creator : typing.Optional[DubbingListRequestFilterByCreator]
             Filters who created the resources being listed, whether it was the user running the request or someone else that shared the resource with them.
 
+        order_by : typing.Optional[typing.Literal["created_at"]]
+            The field to use for ordering results from this query.
+
+        order_direction : typing.Optional[DubbingListRequestOrderDirection]
+            The order direction to use for results from this query.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -400,6 +419,8 @@ class AsyncRawDubbingClient:
                 "page_size": page_size,
                 "dubbing_status": dubbing_status,
                 "filter_by_creator": filter_by_creator,
+                "order_by": order_by,
+                "order_direction": order_direction,
             },
             request_options=request_options,
         )
@@ -511,7 +532,7 @@ class AsyncRawDubbingClient:
             Whether to prepare dub for edits in dubbing studio or edits as a dubbing resource.
 
         disable_voice_cloning : typing.Optional[bool]
-            [BETA] Instead of using a voice clone in dubbing, use a similar voice from the ElevenLabs Voice Library.
+            Instead of using a voice clone in dubbing, use a similar voice from the ElevenLabs Voice Library. Voices used from the library will contribute towards a workspace's custom voices limit, and if there aren't enough available slots the dub will fail. Using this feature requires the caller to have the 'add_voice_from_voice_library' permission on their workspace to access new voices.
 
         mode : typing.Optional[str]
             automatic or manual. Manual mode is only supported when creating a dubbing studio project

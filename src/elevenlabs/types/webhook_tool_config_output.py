@@ -18,7 +18,11 @@ class WebhookToolConfigOutput(UncheckedBaseModel):
     """
 
     name: str
-    description: str
+    description: str = pydantic.Field()
+    """
+    Description of when the tool should be used and what it does.
+    """
+
     response_timeout_secs: typing.Optional[int] = pydantic.Field(default=None)
     """
     The maximum time in seconds to wait for the tool call to complete. Must be between 5 and 120 seconds (inclusive).

@@ -24,6 +24,11 @@ class GetSpeechHistoryResponse(UncheckedBaseModel):
     Whether there are more history items to fetch.
     """
 
+    scanned_until: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The timestamp of the last history item.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

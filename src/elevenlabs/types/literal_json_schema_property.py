@@ -16,6 +16,11 @@ class LiteralJsonSchemaProperty(UncheckedBaseModel):
     The description of the property
     """
 
+    enum: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    List of allowed string values for string type parameters
+    """
+
     dynamic_variable: typing.Optional[str] = pydantic.Field(default=None)
     """
     The dynamic variable of the property

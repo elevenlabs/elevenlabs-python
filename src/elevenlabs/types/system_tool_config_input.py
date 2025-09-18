@@ -15,7 +15,11 @@ class SystemToolConfigInput(UncheckedBaseModel):
     """
 
     name: str
-    description: str
+    description: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Description of when the tool should be used and what it does. Leave empty to use the default description that's optimized for the specific tool type.
+    """
+
     response_timeout_secs: typing.Optional[int] = pydantic.Field(default=None)
     """
     The maximum time in seconds to wait for the tool call to complete.

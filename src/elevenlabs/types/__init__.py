@@ -29,10 +29,12 @@ if typing.TYPE_CHECKING:
     from .agent_config_override import AgentConfigOverride
     from .agent_config_override_config import AgentConfigOverrideConfig
     from .agent_failure_response_example import AgentFailureResponseExample
+    from .agent_metadata import AgentMetadata
     from .agent_metadata_response_model import AgentMetadataResponseModel
     from .agent_platform_settings_request_model import AgentPlatformSettingsRequestModel
     from .agent_platform_settings_response_model import AgentPlatformSettingsResponseModel
     from .agent_simulated_chat_test_response_model import AgentSimulatedChatTestResponseModel
+    from .agent_sort_by import AgentSortBy
     from .agent_successful_response_example import AgentSuccessfulResponseExample
     from .agent_summary_response_model import AgentSummaryResponseModel
     from .agent_testing_settings import AgentTestingSettings
@@ -496,6 +498,7 @@ if typing.TYPE_CHECKING:
     from .knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
     from .knowledge_base_document_type import KnowledgeBaseDocumentType
     from .knowledge_base_locator import KnowledgeBaseLocator
+    from .knowledge_base_sort_by import KnowledgeBaseSortBy
     from .language_added_response import LanguageAddedResponse
     from .language_detection_tool_config import LanguageDetectionToolConfig
     from .language_detection_tool_result_model import LanguageDetectionToolResultModel
@@ -509,10 +512,12 @@ if typing.TYPE_CHECKING:
     from .literal_json_schema_property import LiteralJsonSchemaProperty
     from .literal_json_schema_property_constant_value import LiteralJsonSchemaPropertyConstantValue
     from .literal_json_schema_property_type import LiteralJsonSchemaPropertyType
+    from .livekit_stack_type import LivekitStackType
     from .llm import Llm
     from .llm_category_usage import LlmCategoryUsage
     from .llm_input_output_tokens_usage import LlmInputOutputTokensUsage
     from .llm_parameter_evaluation_strategy import LlmParameterEvaluationStrategy
+    from .llm_reasoning_effort import LlmReasoningEffort
     from .llm_tokens_category_usage import LlmTokensCategoryUsage
     from .llm_usage_calculator_llm_response_model import LlmUsageCalculatorLlmResponseModel
     from .llm_usage_calculator_response_model import LlmUsageCalculatorResponseModel
@@ -520,6 +525,7 @@ if typing.TYPE_CHECKING:
     from .llm_usage_output import LlmUsageOutput
     from .manual_verification_file_response import ManualVerificationFileResponse
     from .manual_verification_response import ManualVerificationResponse
+    from .match_anything_parameter_evaluation_strategy import MatchAnythingParameterEvaluationStrategy
     from .mcp_approval_policy import McpApprovalPolicy
     from .mcp_server_config_input import McpServerConfigInput
     from .mcp_server_config_input_request_headers_value import McpServerConfigInputRequestHeadersValue
@@ -544,7 +550,6 @@ if typing.TYPE_CHECKING:
     from .metric_type import MetricType
     from .model import Model
     from .model_rates_response_model import ModelRatesResponseModel
-    from .model_response_model_concurrency_group import ModelResponseModelConcurrencyGroup
     from .model_settings_response_model import ModelSettingsResponseModel
     from .moderation_status_response_model import ModerationStatusResponseModel
     from .moderation_status_response_model_safety_status import ModerationStatusResponseModelSafetyStatus
@@ -709,6 +714,7 @@ if typing.TYPE_CHECKING:
     from .skip_turn_tool_response_model import SkipTurnToolResponseModel
     from .song_metadata import SongMetadata
     from .song_section import SongSection
+    from .sort_direction import SortDirection
     from .speaker_audio_response_model import SpeakerAudioResponseModel
     from .speaker_response_model import SpeakerResponseModel
     from .speaker_segment import SpeakerSegment
@@ -770,6 +776,8 @@ if typing.TYPE_CHECKING:
     from .text_to_speech_apply_text_normalization_enum import TextToSpeechApplyTextNormalizationEnum
     from .text_to_speech_output_format_enum import TextToSpeechOutputFormatEnum
     from .text_to_speech_stream_request import TextToSpeechStreamRequest
+    from .text_to_speech_stream_with_timestamps_request import TextToSpeechStreamWithTimestampsRequest
+    from .text_to_speech_with_timestamps_request import TextToSpeechWithTimestampsRequest
     from .token_response_model import TokenResponseModel
     from .tool import Tool
     from .tool_annotations import ToolAnnotations
@@ -816,6 +824,7 @@ if typing.TYPE_CHECKING:
     from .turn_mode import TurnMode
     from .twilio_outbound_call_response import TwilioOutboundCallResponse
     from .txt_export_options import TxtExportOptions
+    from .unit_test_common_model_type import UnitTestCommonModelType
     from .unit_test_run_response_model import UnitTestRunResponseModel
     from .unit_test_summary_response_model import UnitTestSummaryResponseModel
     from .unit_test_tool_call_evaluation_model_input import UnitTestToolCallEvaluationModelInput
@@ -823,6 +832,7 @@ if typing.TYPE_CHECKING:
     from .unit_test_tool_call_parameter import UnitTestToolCallParameter
     from .unit_test_tool_call_parameter_eval import (
         UnitTestToolCallParameterEval,
+        UnitTestToolCallParameterEval_Anything,
         UnitTestToolCallParameterEval_Exact,
         UnitTestToolCallParameterEval_Llm,
         UnitTestToolCallParameterEval_Regex,
@@ -839,6 +849,8 @@ if typing.TYPE_CHECKING:
     from .user_feedback import UserFeedback
     from .user_feedback_score import UserFeedbackScore
     from .utterance_response_model import UtteranceResponseModel
+    from .vad_config import VadConfig
+    from .vad_config_workflow_override import VadConfigWorkflowOverride
     from .validation_error import ValidationError
     from .validation_error_loc_item import ValidationErrorLocItem
     from .verification_attempt_response import VerificationAttemptResponse
@@ -992,10 +1004,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentConfigOverride": ".agent_config_override",
     "AgentConfigOverrideConfig": ".agent_config_override_config",
     "AgentFailureResponseExample": ".agent_failure_response_example",
+    "AgentMetadata": ".agent_metadata",
     "AgentMetadataResponseModel": ".agent_metadata_response_model",
     "AgentPlatformSettingsRequestModel": ".agent_platform_settings_request_model",
     "AgentPlatformSettingsResponseModel": ".agent_platform_settings_response_model",
     "AgentSimulatedChatTestResponseModel": ".agent_simulated_chat_test_response_model",
+    "AgentSortBy": ".agent_sort_by",
     "AgentSuccessfulResponseExample": ".agent_successful_response_example",
     "AgentSummaryResponseModel": ".agent_summary_response_model",
     "AgentTestingSettings": ".agent_testing_settings",
@@ -1369,6 +1383,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "KnowledgeBaseDocumentMetadataResponseModel": ".knowledge_base_document_metadata_response_model",
     "KnowledgeBaseDocumentType": ".knowledge_base_document_type",
     "KnowledgeBaseLocator": ".knowledge_base_locator",
+    "KnowledgeBaseSortBy": ".knowledge_base_sort_by",
     "LanguageAddedResponse": ".language_added_response",
     "LanguageDetectionToolConfig": ".language_detection_tool_config",
     "LanguageDetectionToolResultModel": ".language_detection_tool_result_model",
@@ -1382,10 +1397,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LiteralJsonSchemaProperty": ".literal_json_schema_property",
     "LiteralJsonSchemaPropertyConstantValue": ".literal_json_schema_property_constant_value",
     "LiteralJsonSchemaPropertyType": ".literal_json_schema_property_type",
+    "LivekitStackType": ".livekit_stack_type",
     "Llm": ".llm",
     "LlmCategoryUsage": ".llm_category_usage",
     "LlmInputOutputTokensUsage": ".llm_input_output_tokens_usage",
     "LlmParameterEvaluationStrategy": ".llm_parameter_evaluation_strategy",
+    "LlmReasoningEffort": ".llm_reasoning_effort",
     "LlmTokensCategoryUsage": ".llm_tokens_category_usage",
     "LlmUsageCalculatorLlmResponseModel": ".llm_usage_calculator_llm_response_model",
     "LlmUsageCalculatorResponseModel": ".llm_usage_calculator_response_model",
@@ -1393,6 +1410,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LlmUsageOutput": ".llm_usage_output",
     "ManualVerificationFileResponse": ".manual_verification_file_response",
     "ManualVerificationResponse": ".manual_verification_response",
+    "MatchAnythingParameterEvaluationStrategy": ".match_anything_parameter_evaluation_strategy",
     "McpApprovalPolicy": ".mcp_approval_policy",
     "McpServerConfigInput": ".mcp_server_config_input",
     "McpServerConfigInputRequestHeadersValue": ".mcp_server_config_input_request_headers_value",
@@ -1415,7 +1433,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MetricType": ".metric_type",
     "Model": ".model",
     "ModelRatesResponseModel": ".model_rates_response_model",
-    "ModelResponseModelConcurrencyGroup": ".model_response_model_concurrency_group",
     "ModelSettingsResponseModel": ".model_settings_response_model",
     "ModerationStatusResponseModel": ".moderation_status_response_model",
     "ModerationStatusResponseModelSafetyStatus": ".moderation_status_response_model_safety_status",
@@ -1566,6 +1583,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SkipTurnToolResponseModel": ".skip_turn_tool_response_model",
     "SongMetadata": ".song_metadata",
     "SongSection": ".song_section",
+    "SortDirection": ".sort_direction",
     "SpeakerAudioResponseModel": ".speaker_audio_response_model",
     "SpeakerResponseModel": ".speaker_response_model",
     "SpeakerSegment": ".speaker_segment",
@@ -1623,6 +1641,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TextToSpeechApplyTextNormalizationEnum": ".text_to_speech_apply_text_normalization_enum",
     "TextToSpeechOutputFormatEnum": ".text_to_speech_output_format_enum",
     "TextToSpeechStreamRequest": ".text_to_speech_stream_request",
+    "TextToSpeechStreamWithTimestampsRequest": ".text_to_speech_stream_with_timestamps_request",
+    "TextToSpeechWithTimestampsRequest": ".text_to_speech_with_timestamps_request",
     "TokenResponseModel": ".token_response_model",
     "Tool": ".tool",
     "ToolAnnotations": ".tool_annotations",
@@ -1665,12 +1685,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TurnMode": ".turn_mode",
     "TwilioOutboundCallResponse": ".twilio_outbound_call_response",
     "TxtExportOptions": ".txt_export_options",
+    "UnitTestCommonModelType": ".unit_test_common_model_type",
     "UnitTestRunResponseModel": ".unit_test_run_response_model",
     "UnitTestSummaryResponseModel": ".unit_test_summary_response_model",
     "UnitTestToolCallEvaluationModelInput": ".unit_test_tool_call_evaluation_model_input",
     "UnitTestToolCallEvaluationModelOutput": ".unit_test_tool_call_evaluation_model_output",
     "UnitTestToolCallParameter": ".unit_test_tool_call_parameter",
     "UnitTestToolCallParameterEval": ".unit_test_tool_call_parameter_eval",
+    "UnitTestToolCallParameterEval_Anything": ".unit_test_tool_call_parameter_eval",
     "UnitTestToolCallParameterEval_Exact": ".unit_test_tool_call_parameter_eval",
     "UnitTestToolCallParameterEval_Llm": ".unit_test_tool_call_parameter_eval",
     "UnitTestToolCallParameterEval_Regex": ".unit_test_tool_call_parameter_eval",
@@ -1686,6 +1708,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UserFeedback": ".user_feedback",
     "UserFeedbackScore": ".user_feedback_score",
     "UtteranceResponseModel": ".utterance_response_model",
+    "VadConfig": ".vad_config",
+    "VadConfigWorkflowOverride": ".vad_config_workflow_override",
     "ValidationError": ".validation_error",
     "ValidationErrorLocItem": ".validation_error_loc_item",
     "VerificationAttemptResponse": ".verification_attempt_response",
@@ -1837,10 +1861,12 @@ __all__ = [
     "AgentConfigOverride",
     "AgentConfigOverrideConfig",
     "AgentFailureResponseExample",
+    "AgentMetadata",
     "AgentMetadataResponseModel",
     "AgentPlatformSettingsRequestModel",
     "AgentPlatformSettingsResponseModel",
     "AgentSimulatedChatTestResponseModel",
+    "AgentSortBy",
     "AgentSuccessfulResponseExample",
     "AgentSummaryResponseModel",
     "AgentTestingSettings",
@@ -2214,6 +2240,7 @@ __all__ = [
     "KnowledgeBaseDocumentMetadataResponseModel",
     "KnowledgeBaseDocumentType",
     "KnowledgeBaseLocator",
+    "KnowledgeBaseSortBy",
     "LanguageAddedResponse",
     "LanguageDetectionToolConfig",
     "LanguageDetectionToolResultModel",
@@ -2227,10 +2254,12 @@ __all__ = [
     "LiteralJsonSchemaProperty",
     "LiteralJsonSchemaPropertyConstantValue",
     "LiteralJsonSchemaPropertyType",
+    "LivekitStackType",
     "Llm",
     "LlmCategoryUsage",
     "LlmInputOutputTokensUsage",
     "LlmParameterEvaluationStrategy",
+    "LlmReasoningEffort",
     "LlmTokensCategoryUsage",
     "LlmUsageCalculatorLlmResponseModel",
     "LlmUsageCalculatorResponseModel",
@@ -2238,6 +2267,7 @@ __all__ = [
     "LlmUsageOutput",
     "ManualVerificationFileResponse",
     "ManualVerificationResponse",
+    "MatchAnythingParameterEvaluationStrategy",
     "McpApprovalPolicy",
     "McpServerConfigInput",
     "McpServerConfigInputRequestHeadersValue",
@@ -2260,7 +2290,6 @@ __all__ = [
     "MetricType",
     "Model",
     "ModelRatesResponseModel",
-    "ModelResponseModelConcurrencyGroup",
     "ModelSettingsResponseModel",
     "ModerationStatusResponseModel",
     "ModerationStatusResponseModelSafetyStatus",
@@ -2411,6 +2440,7 @@ __all__ = [
     "SkipTurnToolResponseModel",
     "SongMetadata",
     "SongSection",
+    "SortDirection",
     "SpeakerAudioResponseModel",
     "SpeakerResponseModel",
     "SpeakerSegment",
@@ -2468,6 +2498,8 @@ __all__ = [
     "TextToSpeechApplyTextNormalizationEnum",
     "TextToSpeechOutputFormatEnum",
     "TextToSpeechStreamRequest",
+    "TextToSpeechStreamWithTimestampsRequest",
+    "TextToSpeechWithTimestampsRequest",
     "TokenResponseModel",
     "Tool",
     "ToolAnnotations",
@@ -2510,12 +2542,14 @@ __all__ = [
     "TurnMode",
     "TwilioOutboundCallResponse",
     "TxtExportOptions",
+    "UnitTestCommonModelType",
     "UnitTestRunResponseModel",
     "UnitTestSummaryResponseModel",
     "UnitTestToolCallEvaluationModelInput",
     "UnitTestToolCallEvaluationModelOutput",
     "UnitTestToolCallParameter",
     "UnitTestToolCallParameterEval",
+    "UnitTestToolCallParameterEval_Anything",
     "UnitTestToolCallParameterEval_Exact",
     "UnitTestToolCallParameterEval_Llm",
     "UnitTestToolCallParameterEval_Regex",
@@ -2531,6 +2565,8 @@ __all__ = [
     "UserFeedback",
     "UserFeedbackScore",
     "UtteranceResponseModel",
+    "VadConfig",
+    "VadConfigWorkflowOverride",
     "ValidationError",
     "ValidationErrorLocItem",
     "VerificationAttemptResponse",

@@ -30,7 +30,7 @@ class RawApprovalPolicyClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[McpServerResponseModel]:
         """
-        Update the approval policy configuration for an MCP server.
+        Update the approval policy configuration for an MCP server. DEPRECATED: Use PATCH /mcp-servers/{id} endpoint instead.
 
         Parameters
         ----------
@@ -99,7 +99,7 @@ class AsyncRawApprovalPolicyClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[McpServerResponseModel]:
         """
-        Update the approval policy configuration for an MCP server.
+        Update the approval policy configuration for an MCP server. DEPRECATED: Use PATCH /mcp-servers/{id} endpoint instead.
 
         Parameters
         ----------

@@ -13,9 +13,9 @@ class SipTrunkCredentialsRequestModel(UncheckedBaseModel):
     SIP trunk username
     """
 
-    password: str = pydantic.Field()
+    password: typing.Optional[str] = pydantic.Field(default=None)
     """
-    SIP trunk password
+    SIP trunk password - if not specified, then remain unchanged
     """
 
     if IS_PYDANTIC_V2:

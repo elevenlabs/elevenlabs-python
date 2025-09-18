@@ -15,6 +15,7 @@ from ..types.audio_native_create_project_response_model import AudioNativeCreate
 from ..types.audio_native_edit_content_response_model import AudioNativeEditContentResponseModel
 from ..types.get_audio_native_project_settings_response_model import GetAudioNativeProjectSettingsResponseModel
 from ..types.http_validation_error import HttpValidationError
+from .types.audio_native_create_request_apply_text_normalization import AudioNativeCreateRequestApplyTextNormalization
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -39,6 +40,7 @@ class RawAudioNativeClient:
         model_id: typing.Optional[str] = OMIT,
         file: typing.Optional[core.File] = OMIT,
         auto_convert: typing.Optional[bool] = OMIT,
+        apply_text_normalization: typing.Optional[AudioNativeCreateRequestApplyTextNormalization] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AudioNativeCreateProjectResponseModel]:
         """
@@ -82,6 +84,14 @@ class RawAudioNativeClient:
         auto_convert : typing.Optional[bool]
             Whether to auto convert the project to audio or not.
 
+        apply_text_normalization : typing.Optional[AudioNativeCreateRequestApplyTextNormalization]
+
+                This parameter controls text normalization with four modes: 'auto', 'on', 'apply_english' and 'off'.
+                When set to 'auto', the system will automatically decide whether to apply text normalization
+                (e.g., spelling out numbers). With 'on', text normalization will always be applied, while
+                with 'off', it will be skipped. 'apply_english' is the same as 'on' but will assume that text is in English.
+
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -105,6 +115,7 @@ class RawAudioNativeClient:
                 "voice_id": voice_id,
                 "model_id": model_id,
                 "auto_convert": auto_convert,
+                "apply_text_normalization": apply_text_normalization,
             },
             files={
                 **({"file": file} if file is not None else {}),
@@ -283,6 +294,7 @@ class AsyncRawAudioNativeClient:
         model_id: typing.Optional[str] = OMIT,
         file: typing.Optional[core.File] = OMIT,
         auto_convert: typing.Optional[bool] = OMIT,
+        apply_text_normalization: typing.Optional[AudioNativeCreateRequestApplyTextNormalization] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AudioNativeCreateProjectResponseModel]:
         """
@@ -326,6 +338,14 @@ class AsyncRawAudioNativeClient:
         auto_convert : typing.Optional[bool]
             Whether to auto convert the project to audio or not.
 
+        apply_text_normalization : typing.Optional[AudioNativeCreateRequestApplyTextNormalization]
+
+                This parameter controls text normalization with four modes: 'auto', 'on', 'apply_english' and 'off'.
+                When set to 'auto', the system will automatically decide whether to apply text normalization
+                (e.g., spelling out numbers). With 'on', text normalization will always be applied, while
+                with 'off', it will be skipped. 'apply_english' is the same as 'on' but will assume that text is in English.
+
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -349,6 +369,7 @@ class AsyncRawAudioNativeClient:
                 "voice_id": voice_id,
                 "model_id": model_id,
                 "auto_convert": auto_convert,
+                "apply_text_normalization": apply_text_normalization,
             },
             files={
                 **({"file": file} if file is not None else {}),

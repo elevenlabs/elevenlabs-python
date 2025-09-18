@@ -30,11 +30,13 @@ class RawMusicClient:
         self,
         *,
         output_format: typing.Optional[MusicComposeRequestOutputFormat] = None,
+        respect_sections_durations: typing.Optional[bool] = OMIT,
         prompt: typing.Optional[str] = OMIT,
         music_prompt: typing.Optional[MusicPrompt] = OMIT,
         composition_plan: typing.Optional[MusicPrompt] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
         model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
+        seed: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
         """
@@ -44,6 +46,9 @@ class RawMusicClient:
         ----------
         output_format : typing.Optional[MusicComposeRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        respect_sections_durations : typing.Optional[bool]
+            Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan`. When set to true, the model will precisely respect each section's `duration_ms` from the plan. When set to false, the model may adjust individual section durations which will generally lead to better generation quality and improved latency, while always preserving the total song duration from the plan.
 
         prompt : typing.Optional[str]
             A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
@@ -60,6 +65,9 @@ class RawMusicClient:
         model_id : typing.Optional[typing.Literal["music_v1"]]
             The model to use for the generation.
 
+        seed : typing.Optional[int]
+            The seed to use for the generation.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -75,6 +83,7 @@ class RawMusicClient:
                 "output_format": output_format,
             },
             json={
+                "respect_sections_durations": respect_sections_durations,
                 "prompt": prompt,
                 "music_prompt": convert_and_respect_annotation_metadata(
                     object_=music_prompt, annotation=MusicPrompt, direction="write"
@@ -84,6 +93,7 @@ class RawMusicClient:
                 ),
                 "music_length_ms": music_length_ms,
                 "model_id": model_id,
+                "seed": seed,
             },
             headers={
                 "content-type": "application/json",
@@ -130,6 +140,7 @@ class RawMusicClient:
         composition_plan: typing.Optional[MusicPrompt] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
         model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
+        seed: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
         """
@@ -155,6 +166,9 @@ class RawMusicClient:
         model_id : typing.Optional[typing.Literal["music_v1"]]
             The model to use for the generation.
 
+        seed : typing.Optional[int]
+            The seed to use for the generation.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -179,6 +193,7 @@ class RawMusicClient:
                 ),
                 "music_length_ms": music_length_ms,
                 "model_id": model_id,
+                "seed": seed,
             },
             headers={
                 "content-type": "application/json",
@@ -225,6 +240,7 @@ class RawMusicClient:
         composition_plan: typing.Optional[MusicPrompt] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
         model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
+        seed: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
         """
@@ -250,6 +266,9 @@ class RawMusicClient:
         model_id : typing.Optional[typing.Literal["music_v1"]]
             The model to use for the generation.
 
+        seed : typing.Optional[int]
+            The seed to use for the generation.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -274,6 +293,7 @@ class RawMusicClient:
                 ),
                 "music_length_ms": music_length_ms,
                 "model_id": model_id,
+                "seed": seed,
             },
             headers={
                 "content-type": "application/json",
@@ -320,11 +340,13 @@ class AsyncRawMusicClient:
         self,
         *,
         output_format: typing.Optional[MusicComposeRequestOutputFormat] = None,
+        respect_sections_durations: typing.Optional[bool] = OMIT,
         prompt: typing.Optional[str] = OMIT,
         music_prompt: typing.Optional[MusicPrompt] = OMIT,
         composition_plan: typing.Optional[MusicPrompt] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
         model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
+        seed: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
         """
@@ -334,6 +356,9 @@ class AsyncRawMusicClient:
         ----------
         output_format : typing.Optional[MusicComposeRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        respect_sections_durations : typing.Optional[bool]
+            Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan`. When set to true, the model will precisely respect each section's `duration_ms` from the plan. When set to false, the model may adjust individual section durations which will generally lead to better generation quality and improved latency, while always preserving the total song duration from the plan.
 
         prompt : typing.Optional[str]
             A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
@@ -350,6 +375,9 @@ class AsyncRawMusicClient:
         model_id : typing.Optional[typing.Literal["music_v1"]]
             The model to use for the generation.
 
+        seed : typing.Optional[int]
+            The seed to use for the generation.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -365,6 +393,7 @@ class AsyncRawMusicClient:
                 "output_format": output_format,
             },
             json={
+                "respect_sections_durations": respect_sections_durations,
                 "prompt": prompt,
                 "music_prompt": convert_and_respect_annotation_metadata(
                     object_=music_prompt, annotation=MusicPrompt, direction="write"
@@ -374,6 +403,7 @@ class AsyncRawMusicClient:
                 ),
                 "music_length_ms": music_length_ms,
                 "model_id": model_id,
+                "seed": seed,
             },
             headers={
                 "content-type": "application/json",
@@ -421,6 +451,7 @@ class AsyncRawMusicClient:
         composition_plan: typing.Optional[MusicPrompt] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
         model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
+        seed: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
         """
@@ -446,6 +477,9 @@ class AsyncRawMusicClient:
         model_id : typing.Optional[typing.Literal["music_v1"]]
             The model to use for the generation.
 
+        seed : typing.Optional[int]
+            The seed to use for the generation.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -470,6 +504,7 @@ class AsyncRawMusicClient:
                 ),
                 "music_length_ms": music_length_ms,
                 "model_id": model_id,
+                "seed": seed,
             },
             headers={
                 "content-type": "application/json",
@@ -517,6 +552,7 @@ class AsyncRawMusicClient:
         composition_plan: typing.Optional[MusicPrompt] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
         model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
+        seed: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
         """
@@ -542,6 +578,9 @@ class AsyncRawMusicClient:
         model_id : typing.Optional[typing.Literal["music_v1"]]
             The model to use for the generation.
 
+        seed : typing.Optional[int]
+            The seed to use for the generation.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -566,6 +605,7 @@ class AsyncRawMusicClient:
                 ),
                 "music_length_ms": music_length_ms,
                 "model_id": model_id,
+                "seed": seed,
             },
             headers={
                 "content-type": "application/json",

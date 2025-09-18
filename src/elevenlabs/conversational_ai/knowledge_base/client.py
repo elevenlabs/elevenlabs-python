@@ -8,6 +8,8 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.get_knowledge_base_list_response_model import GetKnowledgeBaseListResponseModel
 from ...types.knowledge_base_document_type import KnowledgeBaseDocumentType
+from ...types.knowledge_base_sort_by import KnowledgeBaseSortBy
+from ...types.sort_direction import SortDirection
 from .raw_client import AsyncRawKnowledgeBaseClient, RawKnowledgeBaseClient
 
 if typing.TYPE_CHECKING:
@@ -36,14 +38,16 @@ class KnowledgeBaseClient:
     def list(
         self,
         *,
-        cursor: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         show_only_owned_documents: typing.Optional[bool] = None,
         types: typing.Optional[
             typing.Union[KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]]
         ] = None,
+        sort_direction: typing.Optional[SortDirection] = None,
+        sort_by: typing.Optional[KnowledgeBaseSortBy] = None,
         use_typesense: typing.Optional[bool] = None,
+        cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetKnowledgeBaseListResponseModel:
         """
@@ -51,9 +55,6 @@ class KnowledgeBaseClient:
 
         Parameters
         ----------
-        cursor : typing.Optional[str]
-            Used for fetching next page. Cursor is returned in the response.
-
         page_size : typing.Optional[int]
             How many documents to return at maximum. Can not exceed 100, defaults to 30.
 
@@ -66,8 +67,17 @@ class KnowledgeBaseClient:
         types : typing.Optional[typing.Union[KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]]]
             If present, the endpoint will return only documents of the given types.
 
+        sort_direction : typing.Optional[SortDirection]
+            The direction to sort the results
+
+        sort_by : typing.Optional[KnowledgeBaseSortBy]
+            The field to sort the results by
+
         use_typesense : typing.Optional[bool]
             If set to true, the endpoint will use typesense DB to search for the documents).
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -87,12 +97,14 @@ class KnowledgeBaseClient:
         client.conversational_ai.knowledge_base.list()
         """
         _response = self._raw_client.list(
-            cursor=cursor,
             page_size=page_size,
             search=search,
             show_only_owned_documents=show_only_owned_documents,
             types=types,
+            sort_direction=sort_direction,
+            sort_by=sort_by,
             use_typesense=use_typesense,
+            cursor=cursor,
             request_options=request_options,
         )
         return _response.data
@@ -135,14 +147,16 @@ class AsyncKnowledgeBaseClient:
     async def list(
         self,
         *,
-        cursor: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         show_only_owned_documents: typing.Optional[bool] = None,
         types: typing.Optional[
             typing.Union[KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]]
         ] = None,
+        sort_direction: typing.Optional[SortDirection] = None,
+        sort_by: typing.Optional[KnowledgeBaseSortBy] = None,
         use_typesense: typing.Optional[bool] = None,
+        cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetKnowledgeBaseListResponseModel:
         """
@@ -150,9 +164,6 @@ class AsyncKnowledgeBaseClient:
 
         Parameters
         ----------
-        cursor : typing.Optional[str]
-            Used for fetching next page. Cursor is returned in the response.
-
         page_size : typing.Optional[int]
             How many documents to return at maximum. Can not exceed 100, defaults to 30.
 
@@ -165,8 +176,17 @@ class AsyncKnowledgeBaseClient:
         types : typing.Optional[typing.Union[KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]]]
             If present, the endpoint will return only documents of the given types.
 
+        sort_direction : typing.Optional[SortDirection]
+            The direction to sort the results
+
+        sort_by : typing.Optional[KnowledgeBaseSortBy]
+            The field to sort the results by
+
         use_typesense : typing.Optional[bool]
             If set to true, the endpoint will use typesense DB to search for the documents).
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -194,12 +214,14 @@ class AsyncKnowledgeBaseClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
-            cursor=cursor,
             page_size=page_size,
             search=search,
             show_only_owned_documents=show_only_owned_documents,
             types=types,
+            sort_direction=sort_direction,
+            sort_by=sort_by,
             use_typesense=use_typesense,
+            cursor=cursor,
             request_options=request_options,
         )
         return _response.data

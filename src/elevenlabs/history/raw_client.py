@@ -17,6 +17,7 @@ from ..types.delete_history_item_response import DeleteHistoryItemResponse
 from ..types.get_speech_history_response import GetSpeechHistoryResponse
 from ..types.http_validation_error import HttpValidationError
 from ..types.speech_history_item_response import SpeechHistoryItemResponse
+from .types.history_list_request_sort_direction import HistoryListRequestSortDirection
 from .types.history_list_request_source import HistoryListRequestSource
 
 # this is used as the default value for optional parameters
@@ -33,6 +34,10 @@ class RawHistoryClient:
         page_size: typing.Optional[int] = None,
         start_after_history_item_id: typing.Optional[str] = None,
         voice_id: typing.Optional[str] = None,
+        model_id: typing.Optional[str] = None,
+        date_before_unix: typing.Optional[int] = None,
+        date_after_unix: typing.Optional[int] = None,
+        sort_direction: typing.Optional[HistoryListRequestSortDirection] = None,
         search: typing.Optional[str] = None,
         source: typing.Optional[HistoryListRequestSource] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -51,8 +56,20 @@ class RawHistoryClient:
         voice_id : typing.Optional[str]
             ID of the voice to be filtered for. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
 
-        search : typing.Optional[str]
+        model_id : typing.Optional[str]
             Search term used for filtering history items. If provided, source becomes required.
+
+        date_before_unix : typing.Optional[int]
+            Unix timestamp to filter history items before this date (exclusive).
+
+        date_after_unix : typing.Optional[int]
+            Unix timestamp to filter history items after this date (inclusive).
+
+        sort_direction : typing.Optional[HistoryListRequestSortDirection]
+            Sort direction for the results.
+
+        search : typing.Optional[str]
+            search term used for filtering
 
         source : typing.Optional[HistoryListRequestSource]
             Source of the generated history item
@@ -72,6 +89,10 @@ class RawHistoryClient:
                 "page_size": page_size,
                 "start_after_history_item_id": start_after_history_item_id,
                 "voice_id": voice_id,
+                "model_id": model_id,
+                "date_before_unix": date_before_unix,
+                "date_after_unix": date_after_unix,
+                "sort_direction": sort_direction,
                 "search": search,
                 "source": source,
             },
@@ -348,6 +369,10 @@ class AsyncRawHistoryClient:
         page_size: typing.Optional[int] = None,
         start_after_history_item_id: typing.Optional[str] = None,
         voice_id: typing.Optional[str] = None,
+        model_id: typing.Optional[str] = None,
+        date_before_unix: typing.Optional[int] = None,
+        date_after_unix: typing.Optional[int] = None,
+        sort_direction: typing.Optional[HistoryListRequestSortDirection] = None,
         search: typing.Optional[str] = None,
         source: typing.Optional[HistoryListRequestSource] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -366,8 +391,20 @@ class AsyncRawHistoryClient:
         voice_id : typing.Optional[str]
             ID of the voice to be filtered for. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
 
-        search : typing.Optional[str]
+        model_id : typing.Optional[str]
             Search term used for filtering history items. If provided, source becomes required.
+
+        date_before_unix : typing.Optional[int]
+            Unix timestamp to filter history items before this date (exclusive).
+
+        date_after_unix : typing.Optional[int]
+            Unix timestamp to filter history items after this date (inclusive).
+
+        sort_direction : typing.Optional[HistoryListRequestSortDirection]
+            Sort direction for the results.
+
+        search : typing.Optional[str]
+            search term used for filtering
 
         source : typing.Optional[HistoryListRequestSource]
             Source of the generated history item
@@ -387,6 +424,10 @@ class AsyncRawHistoryClient:
                 "page_size": page_size,
                 "start_after_history_item_id": start_after_history_item_id,
                 "voice_id": voice_id,
+                "model_id": model_id,
+                "date_before_unix": date_before_unix,
+                "date_after_unix": date_after_unix,
+                "sort_direction": sort_direction,
                 "search": search,
                 "source": source,
             },

@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .resource_access_info import ResourceAccessInfo
+from .unit_test_common_model_type import UnitTestCommonModelType
 
 
 class UnitTestSummaryResponseModel(UncheckedBaseModel):
@@ -32,6 +33,11 @@ class UnitTestSummaryResponseModel(UncheckedBaseModel):
     last_updated_at_unix_secs: int = pydantic.Field()
     """
     Last update time of the test in unix seconds
+    """
+
+    type: UnitTestCommonModelType = pydantic.Field()
+    """
+    Type of the test
     """
 
     if IS_PYDANTIC_V2:

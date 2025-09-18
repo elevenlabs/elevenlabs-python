@@ -13,6 +13,7 @@ from .conversation_config import ConversationConfig
 from .language_preset_output import LanguagePresetOutput
 from .tts_conversational_config_output import TtsConversationalConfigOutput
 from .turn_config import TurnConfig
+from .vad_config import VadConfig
 
 
 class ConversationalConfig(UncheckedBaseModel):
@@ -39,6 +40,11 @@ class ConversationalConfig(UncheckedBaseModel):
     language_presets: typing.Optional[typing.Dict[str, LanguagePresetOutput]] = pydantic.Field(default=None)
     """
     Language presets for conversations
+    """
+
+    vad: typing.Optional[VadConfig] = pydantic.Field(default=None)
+    """
+    Configuration for voice activity detection
     """
 
     agent: typing.Optional[AgentConfig] = pydantic.Field(default=None)
