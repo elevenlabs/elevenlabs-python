@@ -14,9 +14,9 @@ class ConnectionType(str, Enum):
 class BaseConnection(ABC):
     """Base class for conversation connections."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.conversation_id: Optional[str] = None
-        self._message_queue = []
+        self._message_queue: list[dict] = []
         self._on_message_callback: Optional[Callable[[dict], Union[None, Awaitable[None]]]] = None
 
     @abstractmethod
