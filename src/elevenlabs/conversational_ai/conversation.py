@@ -990,13 +990,12 @@ class AsyncConversation(BaseConversation):
 
         Will run in background task until `end_session` is called.
         """
-        self._connection = self._create_connection()
-
         connection_type = self._determine_connection_type()
         if connection_type == ConnectionType.WEBSOCKET:
             ws_url = self._get_signed_url() if self.requires_auth else self._get_wss_url()
             self._task = asyncio.create_task(self._run_websocket(ws_url))
         elif connection_type == ConnectionType.WEBRTC:
+            self._connection = self._create_connection()
             self._task = asyncio.create_task(self._run_webrtc())
         else:
             raise ValueError(f"Unsupported connection type: {connection_type}")
