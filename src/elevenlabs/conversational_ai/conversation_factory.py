@@ -240,4 +240,4 @@ def create_websocket_conversation(
         callback_latency_measurement=callback_latency_measurement,
         callback_end_session=callback_end_session,
     )
-    return result
+    return result  # type: ignore[return-value]
