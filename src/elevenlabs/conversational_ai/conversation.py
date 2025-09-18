@@ -15,6 +15,7 @@ from ..base_client import BaseElevenLabs
 from ..version import __version__
 from .base_connection import ConnectionType, BaseConnection
 from .connection_factory import create_connection, determine_connection_type
+from .location_utils import Location, get_origin_for_location
 
 
 class ClientToOrchestratorEvent(str, Enum):
@@ -299,6 +300,7 @@ class ConversationInitiationData:
         user_id: Optional[str] = None,
         connection_type: Optional[ConnectionType] = None,
         conversation_token: Optional[str] = None,
+        location: Optional[Location] = None,
         livekit_url: Optional[str] = None,
         api_origin: Optional[str] = None,
         webrtc_overrides: Optional[dict] = None,
@@ -310,6 +312,7 @@ class ConversationInitiationData:
         self.user_id = user_id
         self.connection_type = connection_type
         self.conversation_token = conversation_token
+        self.location = location
         self.livekit_url = livekit_url
         self.api_origin = api_origin
         self.webrtc_overrides = webrtc_overrides or {}
@@ -343,8 +346,12 @@ class BaseConversation:
         self._connection: Optional[BaseConnection] = None
 
     def _get_wss_url(self):
-        base_http_url = self.client._client_wrapper.get_base_url()
-        base_ws_url = base_http_url.replace("https://", "wss://").replace("http://", "ws://")
+        # Use location-based URL if location is specified
+        if self.config.location is not None:
+            base_ws_url = get_origin_for_location(self.config.location)
+        else:
+            base_http_url = self.client._client_wrapper.get_base_url()
+            base_ws_url = base_http_url.replace("https://", "wss://").replace("http://", "ws://")
         return f"{base_ws_url}/v1/convai/conversation?agent_id={self.agent_id}&source=python_sdk&version={__version__}"
 
     def _get_signed_url(self):

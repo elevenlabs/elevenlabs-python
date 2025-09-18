@@ -11,6 +11,7 @@ from .conversation import (
 )
 from .webrtc_conversation import WebRTCConversation
 from .base_connection import ConnectionType
+from .location_utils import Location, get_origin_for_location, get_livekit_url_for_location
 
 
 def create_conversation(
@@ -21,6 +22,7 @@ def create_conversation(
     connection_type: ConnectionType = ConnectionType.WEBSOCKET,
     conversation_token: Optional[str] = None,
     requires_auth: bool = True,
+    location: Optional[Location] = None,
     audio_interface: Optional[Union[AudioInterface, AsyncAudioInterface]] = None,
     config: Optional[ConversationInitiationData] = None,
     client_tools: Optional[ClientTools] = None,
@@ -46,6 +48,7 @@ def create_conversation(
         connection_type: Type of connection (websocket or webrtc)
         conversation_token: Token for WebRTC authentication
         requires_auth: Whether authentication is required
+        location: Data residency location (us, eu-residency, in-residency, global)
         audio_interface: Audio interface for the conversation
         config: Conversation configuration
         client_tools: Client tools for handling agent calls
@@ -63,23 +66,22 @@ def create_conversation(
             audio_interface=your_audio_interface
         )
 
-        # WebRTC conversation
+        # WebRTC conversation with EU residency
         conversation = create_conversation(
             client=client,
             agent_id="your-agent-id",
             connection_type=ConnectionType.WEBRTC,
-            conversation_token="your-token",  # Optional, will fetch if not provided
+            location=Location.EU_RESIDENCY,
             audio_interface=your_async_audio_interface,
             async_callback_agent_response=your_response_handler
         )
 
-        # Public agent (no auth required)
+        # WebSocket conversation with specific location
         conversation = create_conversation(
             client=client,
-            agent_id="public-agent-id",
-            connection_type=ConnectionType.WEBRTC,
-            requires_auth=False,
-            audio_interface=your_async_audio_interface
+            agent_id="your-agent-id",
+            location=Location.IN_RESIDENCY,
+            audio_interface=your_audio_interface
         )
     """
 
@@ -90,17 +92,29 @@ def create_conversation(
     config.connection_type = connection_type
     if conversation_token:
         config.conversation_token = conversation_token
+    if location is not None:
+        config.location = location
 
     if connection_type == ConnectionType.WEBRTC:
         # Create WebRTC conversation
         if not isinstance(audio_interface, AsyncAudioInterface) and audio_interface is not None:
             raise ValueError("WebRTC conversations require an AsyncAudioInterface")
 
+        # Determine URLs based on location
+        livekit_url = None
+        api_origin = None
+        if location is not None:
+            livekit_url = get_livekit_url_for_location(location)
+            # Convert WSS to HTTPS for API origin
+            api_origin = get_origin_for_location(location).replace("wss://", "https://")
+
         return WebRTCConversation(
             client=client,
             agent_id=agent_id,
             user_id=user_id,
             conversation_token=conversation_token,
+            livekit_url=livekit_url,
+            api_origin=api_origin,
             audio_interface=audio_interface,
             config=config,
             client_tools=client_tools,
@@ -169,6 +183,7 @@ def create_webrtc_conversation(
     user_id: Optional[str] = None,
     *,
     conversation_token: Optional[str] = None,
+    location: Optional[Location] = None,
     livekit_url: Optional[str] = None,
     api_origin: Optional[str] = None,
     webrtc_overrides: Optional[dict] = None,
@@ -185,7 +200,17 @@ def create_webrtc_conversation(
     """Create a WebRTC conversation.
 
     Convenience function for creating WebRTC conversations with type safety.
+
+    Args:
+        location: Data residency location. If provided, overrides livekit_url and api_origin.
+        livekit_url: Custom LiveKit URL (overridden by location if provided).
+        api_origin: Custom API origin (overridden by location if provided).
     """
+    # Determine URLs based on location if provided
+    if location is not None:
+        livekit_url = get_livekit_url_for_location(location)
+        api_origin = get_origin_for_location(location).replace("wss://", "https://")
+
     return WebRTCConversation(
         client=client,
         agent_id=agent_id,
@@ -212,6 +237,7 @@ def create_websocket_conversation(
     user_id: Optional[str] = None,
     *,
     requires_auth: bool = True,
+    location: Optional[Location] = None,
     audio_interface: Optional[AudioInterface] = None,
     config: Optional[ConversationInitiationData] = None,
     client_tools: Optional[ClientTools] = None,
@@ -224,6 +250,9 @@ def create_websocket_conversation(
     """Create a WebSocket conversation.
 
     Convenience function for creating WebSocket conversations with type safety.
+
+    Args:
+        location: Data residency location (us, eu-residency, in-residency, global)
     """
     result = create_conversation(
         client=client,
@@ -231,6 +260,7 @@ def create_websocket_conversation(
         user_id=user_id,
         connection_type=ConnectionType.WEBSOCKET,
         requires_auth=requires_auth,
+        location=location,
         audio_interface=audio_interface,
         config=config,
         client_tools=client_tools,
