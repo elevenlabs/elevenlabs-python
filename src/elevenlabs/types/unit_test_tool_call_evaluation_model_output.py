@@ -15,9 +15,14 @@ class UnitTestToolCallEvaluationModelOutput(UncheckedBaseModel):
     Parameters to evaluate for the agent's tool call. If empty, the tool call parameters are not evaluated.
     """
 
-    referenced_tool: ReferencedToolCommonModel = pydantic.Field()
+    referenced_tool: typing.Optional[ReferencedToolCommonModel] = pydantic.Field(default=None)
     """
     The tool to evaluate a call against.
+    """
+
+    verify_absence: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to verify that the tool was NOT called.
     """
 
     if IS_PYDANTIC_V2:

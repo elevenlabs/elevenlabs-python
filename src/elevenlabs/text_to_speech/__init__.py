@@ -7,20 +7,20 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
+        BodyTextToSpeechFullWithTimestampsApplyTextNormalization,
+        BodyTextToSpeechStreamWithTimestampsApplyTextNormalization,
         BodyTextToSpeechStreamingV1TextToSpeechVoiceIdStreamPostApplyTextNormalization,
-        BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization,
         BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization,
-        BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization,
         TextToSpeechConvertRequestOutputFormat,
         TextToSpeechConvertWithTimestampsRequestOutputFormat,
         TextToSpeechStreamRequestOutputFormat,
         TextToSpeechStreamWithTimestampsRequestOutputFormat,
     )
 _dynamic_imports: typing.Dict[str, str] = {
+    "BodyTextToSpeechFullWithTimestampsApplyTextNormalization": ".types",
+    "BodyTextToSpeechStreamWithTimestampsApplyTextNormalization": ".types",
     "BodyTextToSpeechStreamingV1TextToSpeechVoiceIdStreamPostApplyTextNormalization": ".types",
-    "BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization": ".types",
     "BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization": ".types",
-    "BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization": ".types",
     "TextToSpeechConvertRequestOutputFormat": ".types",
     "TextToSpeechConvertWithTimestampsRequestOutputFormat": ".types",
     "TextToSpeechStreamRequestOutputFormat": ".types",
@@ -48,10 +48,10 @@ def __dir__():
 
 
 __all__ = [
+    "BodyTextToSpeechFullWithTimestampsApplyTextNormalization",
+    "BodyTextToSpeechStreamWithTimestampsApplyTextNormalization",
     "BodyTextToSpeechStreamingV1TextToSpeechVoiceIdStreamPostApplyTextNormalization",
-    "BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization",
     "BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization",
-    "BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization",
     "TextToSpeechConvertRequestOutputFormat",
     "TextToSpeechConvertWithTimestampsRequestOutputFormat",
     "TextToSpeechStreamRequestOutputFormat",

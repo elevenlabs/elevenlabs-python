@@ -9,6 +9,7 @@ from ...core.request_options import RequestOptions
 from ...types.adhoc_agent_config_override_for_test_request_model import AdhocAgentConfigOverrideForTestRequestModel
 from ...types.agent_platform_settings_request_model import AgentPlatformSettingsRequestModel
 from ...types.agent_simulated_chat_test_response_model import AgentSimulatedChatTestResponseModel
+from ...types.agent_sort_by import AgentSortBy
 from ...types.conversation_simulation_specification import ConversationSimulationSpecification
 from ...types.conversational_config import ConversationalConfig
 from ...types.create_agent_response_model import CreateAgentResponseModel
@@ -17,6 +18,7 @@ from ...types.get_agents_page_response_model import GetAgentsPageResponseModel
 from ...types.get_test_suite_invocation_response_model import GetTestSuiteInvocationResponseModel
 from ...types.prompt_evaluation_criteria import PromptEvaluationCriteria
 from ...types.single_test_run_request_model import SingleTestRunRequestModel
+from ...types.sort_direction import SortDirection
 from .raw_client import AsyncRawAgentsClient, RawAgentsClient
 
 if typing.TYPE_CHECKING:
@@ -233,9 +235,11 @@ class AgentsClient:
     def list(
         self,
         *,
-        cursor: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
+        sort_direction: typing.Optional[SortDirection] = None,
+        sort_by: typing.Optional[AgentSortBy] = None,
+        cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetAgentsPageResponseModel:
         """
@@ -243,14 +247,20 @@ class AgentsClient:
 
         Parameters
         ----------
-        cursor : typing.Optional[str]
-            Used for fetching next page. Cursor is returned in the response.
-
         page_size : typing.Optional[int]
             How many Agents to return at maximum. Can not exceed 100, defaults to 30.
 
         search : typing.Optional[str]
             Search by agents name.
+
+        sort_direction : typing.Optional[SortDirection]
+            The direction to sort the results
+
+        sort_by : typing.Optional[AgentSortBy]
+            The field to sort the results by
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -270,7 +280,12 @@ class AgentsClient:
         client.conversational_ai.agents.list()
         """
         _response = self._raw_client.list(
-            cursor=cursor, page_size=page_size, search=search, request_options=request_options
+            page_size=page_size,
+            search=search,
+            sort_direction=sort_direction,
+            sort_by=sort_by,
+            cursor=cursor,
+            request_options=request_options,
         )
         return _response.data
 
@@ -766,9 +781,11 @@ class AsyncAgentsClient:
     async def list(
         self,
         *,
-        cursor: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
+        sort_direction: typing.Optional[SortDirection] = None,
+        sort_by: typing.Optional[AgentSortBy] = None,
+        cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetAgentsPageResponseModel:
         """
@@ -776,14 +793,20 @@ class AsyncAgentsClient:
 
         Parameters
         ----------
-        cursor : typing.Optional[str]
-            Used for fetching next page. Cursor is returned in the response.
-
         page_size : typing.Optional[int]
             How many Agents to return at maximum. Can not exceed 100, defaults to 30.
 
         search : typing.Optional[str]
             Search by agents name.
+
+        sort_direction : typing.Optional[SortDirection]
+            The direction to sort the results
+
+        sort_by : typing.Optional[AgentSortBy]
+            The field to sort the results by
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -811,7 +834,12 @@ class AsyncAgentsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
-            cursor=cursor, page_size=page_size, search=search, request_options=request_options
+            page_size=page_size,
+            search=search,
+            sort_direction=sort_direction,
+            sort_by=sort_by,
+            cursor=cursor,
+            request_options=request_options,
         )
         return _response.data
 

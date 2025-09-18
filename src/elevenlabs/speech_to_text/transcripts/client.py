@@ -56,6 +56,39 @@ class TranscriptsClient:
         _response = self._raw_client.get(transcription_id, request_options=request_options)
         return _response.data
 
+    def delete(
+        self, transcription_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Optional[typing.Any]:
+        """
+        Delete a previously generated transcript by its ID.
+
+        Parameters
+        ----------
+        transcription_id : str
+            The unique ID of the transcript to delete
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Delete completed successfully.
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.speech_to_text.transcripts.delete(
+            transcription_id="transcription_id",
+        )
+        """
+        _response = self._raw_client.delete(transcription_id, request_options=request_options)
+        return _response.data
+
 
 class AsyncTranscriptsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -111,4 +144,45 @@ class AsyncTranscriptsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get(transcription_id, request_options=request_options)
+        return _response.data
+
+    async def delete(
+        self, transcription_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Optional[typing.Any]:
+        """
+        Delete a previously generated transcript by its ID.
+
+        Parameters
+        ----------
+        transcription_id : str
+            The unique ID of the transcript to delete
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Delete completed successfully.
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.speech_to_text.transcripts.delete(
+                transcription_id="transcription_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete(transcription_id, request_options=request_options)
         return _response.data

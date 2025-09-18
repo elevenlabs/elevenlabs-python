@@ -14,6 +14,7 @@ from ....types.get_phone_number_inbound_sip_trunk_config_response_model import (
 from ....types.get_phone_number_outbound_sip_trunk_config_response_model import (
     GetPhoneNumberOutboundSipTrunkConfigResponseModel,
 )
+from ....types.livekit_stack_type import LivekitStackType
 from ....types.phone_number_agent_info import PhoneNumberAgentInfo
 
 
@@ -47,6 +48,7 @@ class PhoneNumbersListResponseItem_SipTrunk(UncheckedBaseModel):
     provider_config: typing.Optional[GetPhoneNumberOutboundSipTrunkConfigResponseModel] = None
     outbound_trunk: typing.Optional[GetPhoneNumberOutboundSipTrunkConfigResponseModel] = None
     inbound_trunk: typing.Optional[GetPhoneNumberInboundSipTrunkConfigResponseModel] = None
+    livekit_stack: LivekitStackType
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

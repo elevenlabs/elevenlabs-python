@@ -35,7 +35,7 @@ class ApprovalPolicyClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> McpServerResponseModel:
         """
-        Update the approval policy configuration for an MCP server.
+        Update the approval policy configuration for an MCP server. DEPRECATED: Use PATCH /mcp-servers/{id} endpoint instead.
 
         Parameters
         ----------
@@ -94,7 +94,7 @@ class AsyncApprovalPolicyClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> McpServerResponseModel:
         """
-        Update the approval policy configuration for an MCP server.
+        Update the approval policy configuration for an MCP server. DEPRECATED: Use PATCH /mcp-servers/{id} endpoint instead.
 
         Parameters
         ----------

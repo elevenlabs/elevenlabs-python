@@ -6,6 +6,7 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...types.mcp_approval_policy import McpApprovalPolicy
 from ...types.mcp_server_config_input import McpServerConfigInput
 from ...types.mcp_server_response_model import McpServerResponseModel
 from ...types.mcp_servers_response_model import McpServersResponseModel
@@ -131,6 +132,55 @@ class McpServersClient:
         )
         """
         _response = self._raw_client.get(mcp_server_id, request_options=request_options)
+        return _response.data
+
+    def update(
+        self,
+        mcp_server_id: str,
+        *,
+        approval_policy: typing.Optional[McpApprovalPolicy] = OMIT,
+        force_pre_tool_speech: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> McpServerResponseModel:
+        """
+        Update the configuration settings for an MCP server.
+
+        Parameters
+        ----------
+        mcp_server_id : str
+            ID of the MCP Server.
+
+        approval_policy : typing.Optional[McpApprovalPolicy]
+            The approval mode to set for the MCP server
+
+        force_pre_tool_speech : typing.Optional[bool]
+            Whether to force pre-tool speech for all tools from this MCP server
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        McpServerResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.mcp_servers.update(
+            mcp_server_id="mcp_server_id",
+        )
+        """
+        _response = self._raw_client.update(
+            mcp_server_id,
+            approval_policy=approval_policy,
+            force_pre_tool_speech=force_pre_tool_speech,
+            request_options=request_options,
+        )
         return _response.data
 
     @property
@@ -294,6 +344,63 @@ class AsyncMcpServersClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get(mcp_server_id, request_options=request_options)
+        return _response.data
+
+    async def update(
+        self,
+        mcp_server_id: str,
+        *,
+        approval_policy: typing.Optional[McpApprovalPolicy] = OMIT,
+        force_pre_tool_speech: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> McpServerResponseModel:
+        """
+        Update the configuration settings for an MCP server.
+
+        Parameters
+        ----------
+        mcp_server_id : str
+            ID of the MCP Server.
+
+        approval_policy : typing.Optional[McpApprovalPolicy]
+            The approval mode to set for the MCP server
+
+        force_pre_tool_speech : typing.Optional[bool]
+            Whether to force pre-tool speech for all tools from this MCP server
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        McpServerResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.mcp_servers.update(
+                mcp_server_id="mcp_server_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update(
+            mcp_server_id,
+            approval_policy=approval_policy,
+            force_pre_tool_speech=force_pre_tool_speech,
+            request_options=request_options,
+        )
         return _response.data
 
     @property

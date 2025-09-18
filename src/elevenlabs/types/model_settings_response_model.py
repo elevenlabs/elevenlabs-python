@@ -13,11 +13,6 @@ class ModelSettingsResponseModel(UncheckedBaseModel):
     Determines how stable the voice is and the randomness between each generation. Lower values introduce broader emotional range for the voice. Higher values can result in a monotonous voice with limited emotion.
     """
 
-    use_speaker_boost: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    This setting boosts the similarity to the original speaker. Using this setting requires a slightly higher computational load, which in turn increases latency.
-    """
-
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

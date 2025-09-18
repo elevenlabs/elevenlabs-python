@@ -44,6 +44,10 @@ class McpServerConfigInput(UncheckedBaseModel):
 
     name: str
     description: typing.Optional[str] = None
+    force_pre_tool_speech: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If true, all tools from this MCP server will require pre-tool execution speech
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

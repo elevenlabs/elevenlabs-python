@@ -5,6 +5,9 @@ import typing
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.create_phone_number_response_model import CreatePhoneNumberResponseModel
+from ...types.inbound_sip_trunk_config_request_model import InboundSipTrunkConfigRequestModel
+from ...types.livekit_stack_type import LivekitStackType
+from ...types.outbound_sip_trunk_config_request_model import OutboundSipTrunkConfigRequestModel
 from .raw_client import AsyncRawPhoneNumbersClient, RawPhoneNumbersClient
 from .types.phone_numbers_create_request_body import PhoneNumbersCreateRequestBody
 from .types.phone_numbers_get_response import PhoneNumbersGetResponse
@@ -169,10 +172,13 @@ class PhoneNumbersClient:
         phone_number_id: str,
         *,
         agent_id: typing.Optional[str] = OMIT,
+        inbound_trunk_config: typing.Optional[InboundSipTrunkConfigRequestModel] = OMIT,
+        outbound_trunk_config: typing.Optional[OutboundSipTrunkConfigRequestModel] = OMIT,
+        livekit_stack: typing.Optional[LivekitStackType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PhoneNumbersUpdateResponse:
         """
-        Update Phone Number details by ID
+        Update assigned agent of a phone number
 
         Parameters
         ----------
@@ -180,6 +186,12 @@ class PhoneNumbersClient:
             The id of an agent. This is returned on agent creation.
 
         agent_id : typing.Optional[str]
+
+        inbound_trunk_config : typing.Optional[InboundSipTrunkConfigRequestModel]
+
+        outbound_trunk_config : typing.Optional[OutboundSipTrunkConfigRequestModel]
+
+        livekit_stack : typing.Optional[LivekitStackType]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -200,7 +212,14 @@ class PhoneNumbersClient:
             phone_number_id="TeaqRRdTcIfIu2i7BYfT",
         )
         """
-        _response = self._raw_client.update(phone_number_id, agent_id=agent_id, request_options=request_options)
+        _response = self._raw_client.update(
+            phone_number_id,
+            agent_id=agent_id,
+            inbound_trunk_config=inbound_trunk_config,
+            outbound_trunk_config=outbound_trunk_config,
+            livekit_stack=livekit_stack,
+            request_options=request_options,
+        )
         return _response.data
 
 
@@ -390,10 +409,13 @@ class AsyncPhoneNumbersClient:
         phone_number_id: str,
         *,
         agent_id: typing.Optional[str] = OMIT,
+        inbound_trunk_config: typing.Optional[InboundSipTrunkConfigRequestModel] = OMIT,
+        outbound_trunk_config: typing.Optional[OutboundSipTrunkConfigRequestModel] = OMIT,
+        livekit_stack: typing.Optional[LivekitStackType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PhoneNumbersUpdateResponse:
         """
-        Update Phone Number details by ID
+        Update assigned agent of a phone number
 
         Parameters
         ----------
@@ -401,6 +423,12 @@ class AsyncPhoneNumbersClient:
             The id of an agent. This is returned on agent creation.
 
         agent_id : typing.Optional[str]
+
+        inbound_trunk_config : typing.Optional[InboundSipTrunkConfigRequestModel]
+
+        outbound_trunk_config : typing.Optional[OutboundSipTrunkConfigRequestModel]
+
+        livekit_stack : typing.Optional[LivekitStackType]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -429,5 +457,12 @@ class AsyncPhoneNumbersClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.update(phone_number_id, agent_id=agent_id, request_options=request_options)
+        _response = await self._raw_client.update(
+            phone_number_id,
+            agent_id=agent_id,
+            inbound_trunk_config=inbound_trunk_config,
+            outbound_trunk_config=outbound_trunk_config,
+            livekit_stack=livekit_stack,
+            request_options=request_options,
+        )
         return _response.data

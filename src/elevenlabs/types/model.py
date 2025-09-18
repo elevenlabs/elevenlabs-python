@@ -7,7 +7,6 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .language_response import LanguageResponse
 from .model_rates_response_model import ModelRatesResponseModel
-from .model_response_model_concurrency_group import ModelResponseModelConcurrencyGroup
 
 
 class Model(UncheckedBaseModel):
@@ -91,7 +90,7 @@ class Model(UncheckedBaseModel):
     The rates for the model.
     """
 
-    concurrency_group: typing.Optional[ModelResponseModelConcurrencyGroup] = pydantic.Field(default=None)
+    concurrency_group: typing.Optional[str] = pydantic.Field(default=None)
     """
     The concurrency group for the model.
     """

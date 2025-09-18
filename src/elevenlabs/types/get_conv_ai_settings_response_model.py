@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .conv_ai_webhooks import ConvAiWebhooks
 from .conversation_initiation_client_data_webhook import ConversationInitiationClientDataWebhook
+from .livekit_stack_type import LivekitStackType
 
 
 class GetConvAiSettingsResponseModel(UncheckedBaseModel):
@@ -18,6 +19,7 @@ class GetConvAiSettingsResponseModel(UncheckedBaseModel):
     """
 
     rag_retention_period_days: typing.Optional[int] = None
+    default_livekit_stack: typing.Optional[LivekitStackType] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

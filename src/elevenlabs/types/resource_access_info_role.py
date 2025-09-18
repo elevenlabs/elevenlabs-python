@@ -2,4 +2,4 @@
 
 import typing
 
-ResourceAccessInfoRole = typing.Union[typing.Literal["admin", "editor", "viewer"], typing.Any]
+ResourceAccessInfoRole = typing.Union[typing.Literal["admin", "editor", "commenter", "viewer"], typing.Any]

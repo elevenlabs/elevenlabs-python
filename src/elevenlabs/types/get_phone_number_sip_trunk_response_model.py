@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .get_phone_number_inbound_sip_trunk_config_response_model import GetPhoneNumberInboundSipTrunkConfigResponseModel
 from .get_phone_number_outbound_sip_trunk_config_response_model import GetPhoneNumberOutboundSipTrunkConfigResponseModel
+from .livekit_stack_type import LivekitStackType
 from .phone_number_agent_info import PhoneNumberAgentInfo
 
 
@@ -50,6 +51,11 @@ class GetPhoneNumberSipTrunkResponseModel(UncheckedBaseModel):
     inbound_trunk: typing.Optional[GetPhoneNumberInboundSipTrunkConfigResponseModel] = pydantic.Field(default=None)
     """
     Configuration of the Inbound SIP trunk - if configured.
+    """
+
+    livekit_stack: LivekitStackType = pydantic.Field()
+    """
+    Type of Livekit stack used for this number.
     """
 
     if IS_PYDANTIC_V2:

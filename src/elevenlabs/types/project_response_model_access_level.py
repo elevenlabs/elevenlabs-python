@@ -2,4 +2,4 @@
 
 import typing
 
-ProjectResponseModelAccessLevel = typing.Union[typing.Literal["admin", "editor", "viewer"], typing.Any]
+ProjectResponseModelAccessLevel = typing.Union[typing.Literal["admin", "editor", "commenter", "viewer"], typing.Any]

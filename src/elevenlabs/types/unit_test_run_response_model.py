@@ -21,6 +21,7 @@ class UnitTestRunResponseModel(UncheckedBaseModel):
     status: TestRunStatus
     agent_responses: typing.Optional[typing.List[ConversationHistoryTranscriptCommonModelOutput]] = None
     test_id: str
+    test_name: typing.Optional[str] = None
     condition_result: typing.Optional[TestConditionResultCommonModel] = None
     last_updated_at_unix: typing.Optional[int] = None
     metadata: typing.Optional[TestRunMetadata] = None

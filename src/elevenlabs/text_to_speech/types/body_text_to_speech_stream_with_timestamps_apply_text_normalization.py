@@ -2,6 +2,6 @@
 
 import typing
 
-BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization = typing.Union[
+BodyTextToSpeechStreamWithTimestampsApplyTextNormalization = typing.Union[
     typing.Literal["auto", "on", "off"], typing.Any
 ]

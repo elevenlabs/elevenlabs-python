@@ -213,7 +213,7 @@ class ResourceClient:
         language: str,
         *,
         render_type: RenderType,
-        should_normalize_volume: typing.Optional[bool] = None,
+        normalize_volume: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingRenderResponseModel:
         """
@@ -230,7 +230,7 @@ class ResourceClient:
         render_type : RenderType
             The type of the render. One of ['mp4', 'aac', 'mp3', 'wav', 'aaf', 'tracks_zip', 'clips_zip']
 
-        should_normalize_volume : typing.Optional[bool]
+        normalize_volume : typing.Optional[bool]
             Whether to normalize the volume of the rendered audio.
 
         request_options : typing.Optional[RequestOptions]
@@ -258,7 +258,7 @@ class ResourceClient:
             dubbing_id,
             language,
             render_type=render_type,
-            should_normalize_volume=should_normalize_volume,
+            normalize_volume=normalize_volume,
             request_options=request_options,
         )
         return _response.data
@@ -511,7 +511,7 @@ class AsyncResourceClient:
         language: str,
         *,
         render_type: RenderType,
-        should_normalize_volume: typing.Optional[bool] = None,
+        normalize_volume: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingRenderResponseModel:
         """
@@ -528,7 +528,7 @@ class AsyncResourceClient:
         render_type : RenderType
             The type of the render. One of ['mp4', 'aac', 'mp3', 'wav', 'aaf', 'tracks_zip', 'clips_zip']
 
-        should_normalize_volume : typing.Optional[bool]
+        normalize_volume : typing.Optional[bool]
             Whether to normalize the volume of the rendered audio.
 
         request_options : typing.Optional[RequestOptions]
@@ -564,7 +564,7 @@ class AsyncResourceClient:
             dubbing_id,
             language,
             render_type=render_type,
-            should_normalize_volume=should_normalize_volume,
+            normalize_volume=normalize_volume,
             request_options=request_options,
         )
         return _response.data

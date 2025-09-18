@@ -18,17 +18,17 @@ from ..types.http_validation_error import HttpValidationError
 from ..types.pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
 from ..types.streaming_audio_chunk_with_timestamps_response import StreamingAudioChunkWithTimestampsResponse
 from ..types.voice_settings import VoiceSettings
+from .types.body_text_to_speech_full_with_timestamps_apply_text_normalization import (
+    BodyTextToSpeechFullWithTimestampsApplyTextNormalization,
+)
+from .types.body_text_to_speech_stream_with_timestamps_apply_text_normalization import (
+    BodyTextToSpeechStreamWithTimestampsApplyTextNormalization,
+)
 from .types.body_text_to_speech_streaming_v_1_text_to_speech_voice_id_stream_post_apply_text_normalization import (
     BodyTextToSpeechStreamingV1TextToSpeechVoiceIdStreamPostApplyTextNormalization,
 )
-from .types.body_text_to_speech_streaming_with_timestamps_v_1_text_to_speech_voice_id_stream_with_timestamps_post_apply_text_normalization import (
-    BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization,
-)
 from .types.body_text_to_speech_v_1_text_to_speech_voice_id_post_apply_text_normalization import (
     BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization,
-)
-from .types.body_text_to_speech_with_timestamps_v_1_text_to_speech_voice_id_with_timestamps_post_apply_text_normalization import (
-    BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization,
 )
 from .types.text_to_speech_convert_request_output_format import TextToSpeechConvertRequestOutputFormat
 from .types.text_to_speech_convert_with_timestamps_request_output_format import (
@@ -229,9 +229,7 @@ class RawTextToSpeechClient:
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
-        apply_text_normalization: typing.Optional[
-            BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization
-        ] = OMIT,
+        apply_text_normalization: typing.Optional[BodyTextToSpeechFullWithTimestampsApplyTextNormalization] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AudioWithTimestampsResponse]:
@@ -292,7 +290,7 @@ class RawTextToSpeechClient:
         use_pvc_as_ivc : typing.Optional[bool]
             If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
 
-        apply_text_normalization : typing.Optional[BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization]
+        apply_text_normalization : typing.Optional[BodyTextToSpeechFullWithTimestampsApplyTextNormalization]
             This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
 
         apply_language_text_normalization : typing.Optional[bool]
@@ -550,9 +548,7 @@ class RawTextToSpeechClient:
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
-        apply_text_normalization: typing.Optional[
-            BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization
-        ] = OMIT,
+        apply_text_normalization: typing.Optional[BodyTextToSpeechStreamWithTimestampsApplyTextNormalization] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[HttpResponse[typing.Iterator[StreamingAudioChunkWithTimestampsResponse]]]:
@@ -613,7 +609,7 @@ class RawTextToSpeechClient:
         use_pvc_as_ivc : typing.Optional[bool]
             If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
 
-        apply_text_normalization : typing.Optional[BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization]
+        apply_text_normalization : typing.Optional[BodyTextToSpeechStreamWithTimestampsApplyTextNormalization]
             This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
 
         apply_language_text_normalization : typing.Optional[bool]
@@ -893,9 +889,7 @@ class AsyncRawTextToSpeechClient:
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
-        apply_text_normalization: typing.Optional[
-            BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization
-        ] = OMIT,
+        apply_text_normalization: typing.Optional[BodyTextToSpeechFullWithTimestampsApplyTextNormalization] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AudioWithTimestampsResponse]:
@@ -956,7 +950,7 @@ class AsyncRawTextToSpeechClient:
         use_pvc_as_ivc : typing.Optional[bool]
             If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
 
-        apply_text_normalization : typing.Optional[BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization]
+        apply_text_normalization : typing.Optional[BodyTextToSpeechFullWithTimestampsApplyTextNormalization]
             This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
 
         apply_language_text_normalization : typing.Optional[bool]
@@ -1215,9 +1209,7 @@ class AsyncRawTextToSpeechClient:
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
-        apply_text_normalization: typing.Optional[
-            BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization
-        ] = OMIT,
+        apply_text_normalization: typing.Optional[BodyTextToSpeechStreamWithTimestampsApplyTextNormalization] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[StreamingAudioChunkWithTimestampsResponse]]]:
@@ -1278,7 +1270,7 @@ class AsyncRawTextToSpeechClient:
         use_pvc_as_ivc : typing.Optional[bool]
             If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
 
-        apply_text_normalization : typing.Optional[BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization]
+        apply_text_normalization : typing.Optional[BodyTextToSpeechStreamWithTimestampsApplyTextNormalization]
             This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
 
         apply_language_text_normalization : typing.Optional[bool]

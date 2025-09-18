@@ -13,6 +13,9 @@ from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.create_phone_number_response_model import CreatePhoneNumberResponseModel
 from ...types.http_validation_error import HttpValidationError
+from ...types.inbound_sip_trunk_config_request_model import InboundSipTrunkConfigRequestModel
+from ...types.livekit_stack_type import LivekitStackType
+from ...types.outbound_sip_trunk_config_request_model import OutboundSipTrunkConfigRequestModel
 from .types.phone_numbers_create_request_body import PhoneNumbersCreateRequestBody
 from .types.phone_numbers_get_response import PhoneNumbersGetResponse
 from .types.phone_numbers_list_response_item import PhoneNumbersListResponseItem
@@ -236,10 +239,13 @@ class RawPhoneNumbersClient:
         phone_number_id: str,
         *,
         agent_id: typing.Optional[str] = OMIT,
+        inbound_trunk_config: typing.Optional[InboundSipTrunkConfigRequestModel] = OMIT,
+        outbound_trunk_config: typing.Optional[OutboundSipTrunkConfigRequestModel] = OMIT,
+        livekit_stack: typing.Optional[LivekitStackType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PhoneNumbersUpdateResponse]:
         """
-        Update Phone Number details by ID
+        Update assigned agent of a phone number
 
         Parameters
         ----------
@@ -247,6 +253,12 @@ class RawPhoneNumbersClient:
             The id of an agent. This is returned on agent creation.
 
         agent_id : typing.Optional[str]
+
+        inbound_trunk_config : typing.Optional[InboundSipTrunkConfigRequestModel]
+
+        outbound_trunk_config : typing.Optional[OutboundSipTrunkConfigRequestModel]
+
+        livekit_stack : typing.Optional[LivekitStackType]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -261,6 +273,13 @@ class RawPhoneNumbersClient:
             method="PATCH",
             json={
                 "agent_id": agent_id,
+                "inbound_trunk_config": convert_and_respect_annotation_metadata(
+                    object_=inbound_trunk_config, annotation=InboundSipTrunkConfigRequestModel, direction="write"
+                ),
+                "outbound_trunk_config": convert_and_respect_annotation_metadata(
+                    object_=outbound_trunk_config, annotation=OutboundSipTrunkConfigRequestModel, direction="write"
+                ),
+                "livekit_stack": livekit_stack,
             },
             headers={
                 "content-type": "application/json",
@@ -509,10 +528,13 @@ class AsyncRawPhoneNumbersClient:
         phone_number_id: str,
         *,
         agent_id: typing.Optional[str] = OMIT,
+        inbound_trunk_config: typing.Optional[InboundSipTrunkConfigRequestModel] = OMIT,
+        outbound_trunk_config: typing.Optional[OutboundSipTrunkConfigRequestModel] = OMIT,
+        livekit_stack: typing.Optional[LivekitStackType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PhoneNumbersUpdateResponse]:
         """
-        Update Phone Number details by ID
+        Update assigned agent of a phone number
 
         Parameters
         ----------
@@ -520,6 +542,12 @@ class AsyncRawPhoneNumbersClient:
             The id of an agent. This is returned on agent creation.
 
         agent_id : typing.Optional[str]
+
+        inbound_trunk_config : typing.Optional[InboundSipTrunkConfigRequestModel]
+
+        outbound_trunk_config : typing.Optional[OutboundSipTrunkConfigRequestModel]
+
+        livekit_stack : typing.Optional[LivekitStackType]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -534,6 +562,13 @@ class AsyncRawPhoneNumbersClient:
             method="PATCH",
             json={
                 "agent_id": agent_id,
+                "inbound_trunk_config": convert_and_respect_annotation_metadata(
+                    object_=inbound_trunk_config, annotation=InboundSipTrunkConfigRequestModel, direction="write"
+                ),
+                "outbound_trunk_config": convert_and_respect_annotation_metadata(
+                    object_=outbound_trunk_config, annotation=OutboundSipTrunkConfigRequestModel, direction="write"
+                ),
+                "livekit_stack": livekit_stack,
             },
             headers={
                 "content-type": "application/json",
