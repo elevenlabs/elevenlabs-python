@@ -128,7 +128,7 @@ def create_conversation(
                 agent_id=agent_id,
                 user_id=user_id,
                 requires_auth=requires_auth,
-                audio_interface=audio_interface,
+                audio_interface=audio_interface,  # type: ignore
                 config=config,
                 client_tools=client_tools,
                 callback_agent_response=async_callback_agent_response,
@@ -147,7 +147,7 @@ def create_conversation(
                 agent_id=agent_id,
                 user_id=user_id,
                 requires_auth=requires_auth,
-                audio_interface=audio_interface,
+                audio_interface=audio_interface,  # type: ignore
                 config=config,
                 client_tools=client_tools,
                 callback_agent_response=callback_agent_response,
@@ -220,12 +220,12 @@ def create_websocket_conversation(
     callback_user_transcript: Optional[Callable[[str], None]] = None,
     callback_latency_measurement: Optional[Callable[[int], None]] = None,
     callback_end_session: Optional[Callable] = None,
-) -> Conversation:
+) -> Union[Conversation, AsyncConversation]:
     """Create a WebSocket conversation.
 
     Convenience function for creating WebSocket conversations with type safety.
     """
-    return create_conversation(
+    result = create_conversation(
         client=client,
         agent_id=agent_id,
         user_id=user_id,
@@ -240,3 +240,4 @@ def create_websocket_conversation(
         callback_latency_measurement=callback_latency_measurement,
         callback_end_session=callback_end_session,
     )
+    return result
