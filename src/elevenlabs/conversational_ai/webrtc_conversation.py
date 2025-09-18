@@ -90,12 +90,15 @@ class WebRTCConversation(BaseConversation):
         self.callback_end_session = callback_end_session
 
         self._connection: Optional[WebRTCConnection] = None
-        self._should_stop = asyncio.Event()
+        self._should_stop: Optional[asyncio.Event] = None
         self._session_task: Optional[asyncio.Task] = None
 
     async def start_session(self):
         """Start the WebRTC conversation session."""
         try:
+            # Initialize the stop event
+            if self._should_stop is None:
+                self._should_stop = asyncio.Event()
             # Use the enhanced connection creation from BaseConversation
             self._connection = self._create_connection()
 
@@ -128,7 +131,8 @@ class WebRTCConversation(BaseConversation):
 
     async def end_session(self):
         """End the WebRTC conversation session."""
-        self._should_stop.set()
+        if self._should_stop:
+            self._should_stop.set()
 
         if self.audio_interface:
             await self.audio_interface.stop()
@@ -176,7 +180,7 @@ class WebRTCConversation(BaseConversation):
 
     async def _audio_input_callback(self, audio_data: bytes):
         """Handle audio input from the audio interface."""
-        if self._connection and not self._should_stop.is_set():
+        if self._connection and self._should_stop and not self._should_stop.is_set():
             # For WebRTC, audio is sent through the room's microphone track
             # This callback can be used for custom processing if needed
             pass
@@ -224,7 +228,8 @@ class WebRTCConversation(BaseConversation):
                     "type": "pong",
                     "event_id": event["event_id"]
                 }
-                await self._connection.send_message(pong_message)
+                if self._connection:
+                    await self._connection.send_message(pong_message)
 
                 if self.callback_latency_measurement and event.get("ping_ms"):
                     await self.callback_latency_measurement(int(event["ping_ms"]))
@@ -239,7 +244,7 @@ class WebRTCConversation(BaseConversation):
 
                 # Execute tool asynchronously
                 async def send_response(response):
-                    if not self._should_stop.is_set():
+                    if self._should_stop and not self._should_stop.is_set():
                         await self._connection.send_message(response)
 
                 self.client_tools.execute_tool(tool_name, parameters, send_response)
