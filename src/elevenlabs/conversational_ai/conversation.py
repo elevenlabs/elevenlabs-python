@@ -598,13 +598,12 @@ class Conversation(BaseConversation):
 
         Will run in background thread until `end_session` is called.
         """
-        self._connection = self._create_connection()
-
         connection_type = self._determine_connection_type()
         if connection_type == ConnectionType.WEBSOCKET:
             ws_url = self._get_signed_url() if self.requires_auth else self._get_wss_url()
             self._thread = threading.Thread(target=self._run_websocket, args=(ws_url,))
         elif connection_type == ConnectionType.WEBRTC:
+            self._connection = self._create_connection()
             self._thread = threading.Thread(target=self._run_webrtc)
         else:
             raise ValueError(f"Unsupported connection type: {connection_type}")
