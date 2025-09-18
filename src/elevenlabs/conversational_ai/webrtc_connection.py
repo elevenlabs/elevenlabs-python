@@ -105,15 +105,12 @@ class WebRTCConnection(BaseConnection):
 
             # Enable microphone
             try:
-                await self._room.local_participant.set_microphone_enabled(True)
-            except AttributeError:
-                try:
-                    await self._room.local_participant.enable_microphone()
-                except AttributeError:
-                    self.debug({
-                        "type": "microphone_enable_error",
-                        "error": "Neither set_microphone_enabled nor enable_microphone methods available"
-                    })
+                await self._enable_microphone(True)
+            except Exception as e:
+                self.debug({
+                    "type": "microphone_enable_error",
+                    "error": f"Failed to enable microphone: {e}"
+                })
             except Exception as e:
                 self.debug({
                     "type": "microphone_enable_error",
@@ -326,26 +323,28 @@ class WebRTCConnection(BaseConnection):
         if not self._room or not self._room.local_participant:
             raise RuntimeError("Room not connected")
 
-        try:
-            await self._room.local_participant.set_microphone_enabled(enabled)
-        except AttributeError:
-            try:
-                if enabled:
-                    await self._room.local_participant.enable_microphone()
-                else:
-                    await self._room.local_participant.disable_microphone()
-            except AttributeError:
-                self.debug({
-                    "type": "microphone_control_error",
-                    "enabled": enabled,
-                    "error": "Microphone control methods not available"
-                })
-        except Exception as e:
-            self.debug({
-                "type": "microphone_control_error",
-                "enabled": enabled,
-                "error": str(e)
-            })
+        await self._enable_microphone(enabled)
+
+    async def _enable_microphone(self, enabled: bool) -> None:
+        """Internal method to enable/disable microphone via track muting."""
+        if not self._room or not self._room.local_participant:
+            raise RuntimeError("Room not connected")
+
+        # Find the audio track publication
+        for track_pub in self._room.local_participant.track_publications.values():
+            if track_pub.kind == TrackKind.KIND_AUDIO:
+                if track_pub.track:
+                    if enabled:
+                        await track_pub.track.unmute()
+                    else:
+                        await track_pub.track.mute()
+                    return
+
+        self.debug({
+            "type": "microphone_control_error",
+            "enabled": enabled,
+            "error": "No audio track found"
+        })
 
     async def set_microphone_device(self, device_id: str) -> None:
         """Set the microphone input device."""
