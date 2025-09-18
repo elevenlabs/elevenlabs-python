@@ -53,13 +53,21 @@ class TestWebRTCConversation:
 
     def test_factory_creates_correct_conversation_types(self, mock_client):
         """Test that the factory creates the correct conversation types."""
-        # WebRTC conversation
-        webrtc_conv = create_conversation(
-            client=mock_client,
-            agent_id="test-agent",
-            connection_type=ConnectionType.WEBRTC
-        )
-        assert isinstance(webrtc_conv, WebRTCConversation)
+        # Create event loop for WebRTC conversation
+        import asyncio
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+
+        try:
+            # WebRTC conversation
+            webrtc_conv = create_conversation(
+                client=mock_client,
+                agent_id="test-agent",
+                connection_type=ConnectionType.WEBRTC
+            )
+            assert isinstance(webrtc_conv, WebRTCConversation)
+        finally:
+            loop.close()
 
         # WebSocket conversation (sync)
         ws_conv = create_conversation(
@@ -71,23 +79,31 @@ class TestWebRTCConversation:
 
     def test_convenience_functions(self, mock_client, mock_audio_interface):
         """Test convenience functions for creating conversations."""
-        # WebRTC convenience function with conversation token to avoid HTTP calls
-        with patch('elevenlabs.conversational_ai.webrtc_connection.Room') as mock_room_class:
-            mock_room = Mock()
-            mock_room.connect = AsyncMock()
-            mock_room.disconnect = AsyncMock()
-            mock_room.local_participant = Mock()
-            mock_room.local_participant.set_microphone_enabled = AsyncMock()
-            mock_room.name = "test-room"
-            mock_room_class.return_value = mock_room
+        # Create event loop for WebRTC conversation
+        import asyncio
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
 
-            webrtc_conv = create_webrtc_conversation(
-                client=mock_client,
-                agent_id="test-agent",
-                conversation_token="test-token",
-                audio_interface=mock_audio_interface
-            )
-            assert isinstance(webrtc_conv, WebRTCConversation)
+        try:
+            # WebRTC convenience function with conversation token to avoid HTTP calls
+            with patch('elevenlabs.conversational_ai.webrtc_connection.Room') as mock_room_class:
+                mock_room = Mock()
+                mock_room.connect = AsyncMock()
+                mock_room.disconnect = AsyncMock()
+                mock_room.local_participant = Mock()
+                mock_room.local_participant.set_microphone_enabled = AsyncMock()
+                mock_room.name = "test-room"
+                mock_room_class.return_value = mock_room
+
+                webrtc_conv = create_webrtc_conversation(
+                    client=mock_client,
+                    agent_id="test-agent",
+                    conversation_token="test-token",
+                    audio_interface=mock_audio_interface
+                )
+                assert isinstance(webrtc_conv, WebRTCConversation)
+        finally:
+            loop.close()
 
         # WebSocket convenience function
         ws_conv = create_websocket_conversation(
@@ -190,9 +206,12 @@ class TestWebRTCConversation:
             token = await connection._fetch_conversation_token()
 
             assert token == "fetched-token"
-            mock_client.get.assert_called_once_with(
-                "https://api.elevenlabs.io/v1/convai/conversation/token?agent_id=test-agent"
-            )
+            # Verify the call was made with required parameters
+            call_args = mock_client.get.call_args[0][0]
+            assert call_args.startswith("https://api.elevenlabs.io/v1/convai/conversation/token?")
+            assert "agent_id=test-agent" in call_args
+            assert "source=python_sdk" in call_args
+            assert "version=" in call_args
 
     @pytest.mark.asyncio
     async def test_webrtc_connection_token_fetch_error(self):
