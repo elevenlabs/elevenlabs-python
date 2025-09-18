@@ -2,4 +2,6 @@
 
 import typing
 
-DependentAvailableToolIdentifierAccessLevel = typing.Union[typing.Literal["admin", "editor", "viewer"], typing.Any]
+DependentAvailableToolIdentifierAccessLevel = typing.Union[
+    typing.Literal["admin", "editor", "commenter", "viewer"], typing.Any
+]

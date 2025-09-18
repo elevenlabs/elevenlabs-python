@@ -132,7 +132,39 @@ client.history.list()
 <dl>
 <dd>
 
-**search:** `typing.Optional[str]` — Search term used for filtering history items. If provided, source becomes required.
+**model_id:** `typing.Optional[str]` — Search term used for filtering history items. If provided, source becomes required.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**date_before_unix:** `typing.Optional[int]` — Unix timestamp to filter history items before this date (exclusive).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**date_after_unix:** `typing.Optional[int]` — Unix timestamp to filter history items after this date (inclusive).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_direction:** `typing.Optional[HistoryListRequestSortDirection]` — Sort direction for the results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — search term used for filtering
     
 </dd>
 </dl>
@@ -883,9 +915,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**apply_text_normalization:** `typing.Optional[
-    BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization
-]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
+**apply_text_normalization:** `typing.Optional[BodyTextToSpeechFullWithTimestampsApplyTextNormalization]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
     
 </dd>
 </dl>
@@ -1309,9 +1339,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**apply_text_normalization:** `typing.Optional[
-    BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization
-]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
+**apply_text_normalization:** `typing.Optional[BodyTextToSpeechStreamWithTimestampsApplyTextNormalization]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
     
 </dd>
 </dl>
@@ -3726,6 +3754,22 @@ client.dubbing.list()
 <dl>
 <dd>
 
+**order_by:** `typing.Optional[typing.Literal["created_at"]]` — The field to use for ordering results from this query.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**order_direction:** `typing.Optional[DubbingListRequestOrderDirection]` — The order direction to use for results from this query.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -3930,7 +3974,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**disable_voice_cloning:** `typing.Optional[bool]` — [BETA] Instead of using a voice clone in dubbing, use a similar voice from the ElevenLabs Voice Library.
+**disable_voice_cloning:** `typing.Optional[bool]` — Instead of using a voice clone in dubbing, use a similar voice from the ElevenLabs Voice Library. Voices used from the library will contribute towards a workspace's custom voices limit, and if there aren't enough available slots the dub will fail. Using this feature requires the caller to have the 'add_voice_from_voice_library' permission on their workspace to access new voices.
     
 </dd>
 </dl>
@@ -4309,6 +4353,21 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dd>
 
 **auto_convert:** `typing.Optional[bool]` — Whether to auto convert the project to audio or not.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**apply_text_normalization:** `typing.Optional[AudioNativeCreateRequestApplyTextNormalization]` 
+
+
+    This parameter controls text normalization with four modes: 'auto', 'on', 'apply_english' and 'off'.
+    When set to 'auto', the system will automatically decide whether to apply text normalization
+    (e.g., spelling out numbers). With 'on', text normalization will always be applied, while
+    with 'off', it will be skipped. 'apply_english' is the same as 'on' but will assume that text is in English.
+    
     
 </dd>
 </dl>
@@ -6812,14 +6871,6 @@ client.conversational_ai.agents.list()
 <dl>
 <dd>
 
-**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **page_size:** `typing.Optional[int]` — How many Agents to return at maximum. Can not exceed 100, defaults to 30.
     
 </dd>
@@ -6829,6 +6880,30 @@ client.conversational_ai.agents.list()
 <dd>
 
 **search:** `typing.Optional[str]` — Search by agents name.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_direction:** `typing.Optional[SortDirection]` — The direction to sort the results
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[AgentSortBy]` — The field to sort the results by
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
     
 </dd>
 </dl>
@@ -7360,6 +7435,14 @@ client.conversational_ai.tests.create(
 <dl>
 <dd>
 
+**type:** `typing.Optional[UnitTestCommonModelType]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -7576,6 +7659,14 @@ client.conversational_ai.tests.update(
         str, typing.Optional[UpdateUnitTestRequestDynamicVariablesValue]
     ]
 ]` — Dynamic variables to replace in the agent config during testing
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `typing.Optional[UnitTestCommonModelType]` 
     
 </dd>
 </dl>
@@ -8110,7 +8201,7 @@ client.conversational_ai.phone_numbers.delete(
 <dl>
 <dd>
 
-Update Phone Number details by ID
+Update assigned agent of a phone number
 </dd>
 </dl>
 </dd>
@@ -8157,6 +8248,30 @@ client.conversational_ai.phone_numbers.update(
 <dd>
 
 **agent_id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**inbound_trunk_config:** `typing.Optional[InboundSipTrunkConfigRequestModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**outbound_trunk_config:** `typing.Optional[OutboundSipTrunkConfigRequestModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**livekit_stack:** `typing.Optional[LivekitStackType]` 
     
 </dd>
 </dl>
@@ -8314,14 +8429,6 @@ client.conversational_ai.knowledge_base.list()
 <dl>
 <dd>
 
-**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **page_size:** `typing.Optional[int]` — How many documents to return at maximum. Can not exceed 100, defaults to 30.
     
 </dd>
@@ -8358,7 +8465,31 @@ client.conversational_ai.knowledge_base.list()
 <dl>
 <dd>
 
+**sort_direction:** `typing.Optional[SortDirection]` — The direction to sort the results
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[KnowledgeBaseSortBy]` — The field to sort the results by
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **use_typesense:** `typing.Optional[bool]` — If set to true, the endpoint will use typesense DB to search for the documents).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
     
 </dd>
 </dl>
@@ -8968,6 +9099,14 @@ client.conversational_ai.settings.update()
 <dd>
 
 **rag_retention_period_days:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**default_livekit_stack:** `typing.Optional[LivekitStackType]` 
     
 </dd>
 </dl>
@@ -9875,6 +10014,92 @@ client.conversational_ai.mcp_servers.get(
 <dd>
 
 **mcp_server_id:** `str` — ID of the MCP Server.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.mcp_servers.<a href="src/elevenlabs/conversational_ai/mcp_servers/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the configuration settings for an MCP server.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.mcp_servers.update(
+    mcp_server_id="mcp_server_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**mcp_server_id:** `str` — ID of the MCP Server.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**approval_policy:** `typing.Optional[McpApprovalPolicy]` — The approval mode to set for the MCP server
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force_pre_tool_speech:** `typing.Optional[bool]` — Whether to force pre-tool speech for all tools from this MCP server
     
 </dd>
 </dl>
@@ -11371,7 +11596,7 @@ client.conversational_ai.mcp_servers.tools.list(
 <dl>
 <dd>
 
-Update the approval policy configuration for an MCP server.
+Update the approval policy configuration for an MCP server. DEPRECATED: Use PATCH /mcp-servers/{id} endpoint instead.
 </dd>
 </dl>
 </dd>
@@ -12189,7 +12414,7 @@ client.dubbing.resource.render(
 <dl>
 <dd>
 
-**should_normalize_volume:** `typing.Optional[bool]` — Whether to normalize the volume of the rendered audio.
+**normalize_volume:** `typing.Optional[bool]` — Whether to normalize the volume of the rendered audio.
     
 </dd>
 </dl>
@@ -13536,6 +13761,76 @@ client.speech_to_text.transcripts.get(
 <dd>
 
 **transcription_id:** `str` — The unique ID of the transcript to retrieve
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.speech_to_text.transcripts.<a href="src/elevenlabs/speech_to_text/transcripts/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a previously generated transcript by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.speech_to_text.transcripts.delete(
+    transcription_id="transcription_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**transcription_id:** `str` — The unique ID of the transcript to delete
     
 </dd>
 </dl>

@@ -3,5 +3,5 @@
 import typing
 
 PronunciationDictionaryVersionResponseModelPermissionOnResource = typing.Union[
-    typing.Literal["admin", "editor", "viewer"], typing.Any
+    typing.Literal["admin", "editor", "commenter", "viewer"], typing.Any
 ]

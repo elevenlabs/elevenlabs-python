@@ -32,6 +32,7 @@ Llm = typing.Union[
         "qwen3-30b-a3b",
         "gpt-oss-20b",
         "gpt-oss-120b",
+        "glm-45-air-fp8",
         "gemini-2.5-flash-preview-05-20",
         "gemini-2.5-flash-preview-04-17",
         "gemini-2.5-flash-lite-preview-06-17",
@@ -61,6 +62,8 @@ Llm = typing.Union[
         "gpt-4-turbo-2024-04-09",
         "gpt-3.5-turbo-0125",
         "gpt-3.5-turbo-1106",
+        "watt-tool-8b",
+        "watt-tool-70b",
     ],
     typing.Any,
 ]

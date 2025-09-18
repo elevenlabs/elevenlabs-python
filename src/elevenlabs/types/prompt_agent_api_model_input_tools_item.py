@@ -60,7 +60,7 @@ class PromptAgentApiModelInputToolsItem_System(UncheckedBaseModel):
 
     type: typing.Literal["system"] = "system"
     name: str
-    description: str
+    description: typing.Optional[str] = None
     response_timeout_secs: typing.Optional[int] = None
     disable_interruptions: typing.Optional[bool] = None
     force_pre_tool_speech: typing.Optional[bool] = None

@@ -13,6 +13,7 @@ from .conversation_config_workflow_override import ConversationConfigWorkflowOve
 from .language_preset_input import LanguagePresetInput
 from .tts_conversational_config_workflow_override import TtsConversationalConfigWorkflowOverride
 from .turn_config_workflow_override import TurnConfigWorkflowOverride
+from .vad_config_workflow_override import VadConfigWorkflowOverride
 
 
 class ConversationalConfigApiModelWorkflowOverride(UncheckedBaseModel):
@@ -41,6 +42,11 @@ class ConversationalConfigApiModelWorkflowOverride(UncheckedBaseModel):
     )
     """
     Language presets for conversations
+    """
+
+    vad: typing.Optional[VadConfigWorkflowOverride] = pydantic.Field(default=None)
+    """
+    Configuration for voice activity detection
     """
 
     agent: typing.Optional[AgentConfigApiModelWorkflowOverride] = pydantic.Field(default=None)

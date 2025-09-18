@@ -12,6 +12,7 @@ from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.http_validation_error import HttpValidationError
+from ...types.mcp_approval_policy import McpApprovalPolicy
 from ...types.mcp_server_config_input import McpServerConfigInput
 from ...types.mcp_server_response_model import McpServerResponseModel
 from ...types.mcp_servers_response_model import McpServersResponseModel
@@ -178,6 +179,75 @@ class RawMcpServersClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def update(
+        self,
+        mcp_server_id: str,
+        *,
+        approval_policy: typing.Optional[McpApprovalPolicy] = OMIT,
+        force_pre_tool_speech: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[McpServerResponseModel]:
+        """
+        Update the configuration settings for an MCP server.
+
+        Parameters
+        ----------
+        mcp_server_id : str
+            ID of the MCP Server.
+
+        approval_policy : typing.Optional[McpApprovalPolicy]
+            The approval mode to set for the MCP server
+
+        force_pre_tool_speech : typing.Optional[bool]
+            Whether to force pre-tool speech for all tools from this MCP server
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[McpServerResponseModel]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/convai/mcp-servers/{jsonable_encoder(mcp_server_id)}",
+            method="PATCH",
+            json={
+                "approval_policy": approval_policy,
+                "force_pre_tool_speech": force_pre_tool_speech,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    McpServerResponseModel,
+                    construct_type(
+                        type_=McpServerResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawMcpServersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -312,6 +382,75 @@ class AsyncRawMcpServersClient:
             f"v1/convai/mcp-servers/{jsonable_encoder(mcp_server_id)}",
             method="GET",
             request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    McpServerResponseModel,
+                    construct_type(
+                        type_=McpServerResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def update(
+        self,
+        mcp_server_id: str,
+        *,
+        approval_policy: typing.Optional[McpApprovalPolicy] = OMIT,
+        force_pre_tool_speech: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[McpServerResponseModel]:
+        """
+        Update the configuration settings for an MCP server.
+
+        Parameters
+        ----------
+        mcp_server_id : str
+            ID of the MCP Server.
+
+        approval_policy : typing.Optional[McpApprovalPolicy]
+            The approval mode to set for the MCP server
+
+        force_pre_tool_speech : typing.Optional[bool]
+            Whether to force pre-tool speech for all tools from this MCP server
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[McpServerResponseModel]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/convai/mcp-servers/{jsonable_encoder(mcp_server_id)}",
+            method="PATCH",
+            json={
+                "approval_policy": approval_policy,
+                "force_pre_tool_speech": force_pre_tool_speech,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:

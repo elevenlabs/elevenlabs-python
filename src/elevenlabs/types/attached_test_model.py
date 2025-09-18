@@ -9,6 +9,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 class AttachedTestModel(UncheckedBaseModel):
     test_id: str
+    workflow_node_id: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

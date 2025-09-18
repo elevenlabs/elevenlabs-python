@@ -6,12 +6,17 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import DubbingListRequestDubbingStatus, DubbingListRequestFilterByCreator
+    from .types import (
+        DubbingListRequestDubbingStatus,
+        DubbingListRequestFilterByCreator,
+        DubbingListRequestOrderDirection,
+    )
     from . import audio, resource, transcript
     from .transcript import TranscriptGetTranscriptForDubRequestFormatType
 _dynamic_imports: typing.Dict[str, str] = {
     "DubbingListRequestDubbingStatus": ".types",
     "DubbingListRequestFilterByCreator": ".types",
+    "DubbingListRequestOrderDirection": ".types",
     "TranscriptGetTranscriptForDubRequestFormatType": ".transcript",
     "audio": ".",
     "resource": ".",
@@ -41,6 +46,7 @@ def __dir__():
 __all__ = [
     "DubbingListRequestDubbingStatus",
     "DubbingListRequestFilterByCreator",
+    "DubbingListRequestOrderDirection",
     "TranscriptGetTranscriptForDubRequestFormatType",
     "audio",
     "resource",

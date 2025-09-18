@@ -13,6 +13,7 @@ from ...types.create_unit_test_response_model import CreateUnitTestResponseModel
 from ...types.get_tests_page_response_model import GetTestsPageResponseModel
 from ...types.get_tests_summaries_by_ids_response_model import GetTestsSummariesByIdsResponseModel
 from ...types.get_unit_test_response_model import GetUnitTestResponseModel
+from ...types.unit_test_common_model_type import UnitTestCommonModelType
 from ...types.unit_test_tool_call_evaluation_model_input import UnitTestToolCallEvaluationModelInput
 from .raw_client import AsyncRawTestsClient, RawTestsClient
 from .types.create_unit_test_request_dynamic_variables_value import CreateUnitTestRequestDynamicVariablesValue
@@ -53,6 +54,7 @@ class TestsClient:
         dynamic_variables: typing.Optional[
             typing.Dict[str, typing.Optional[CreateUnitTestRequestDynamicVariablesValue]]
         ] = OMIT,
+        type: typing.Optional[UnitTestCommonModelType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateUnitTestResponseModel:
         """
@@ -78,6 +80,8 @@ class TestsClient:
 
         dynamic_variables : typing.Optional[typing.Dict[str, typing.Optional[CreateUnitTestRequestDynamicVariablesValue]]]
             Dynamic variables to replace in the agent config during testing
+
+        type : typing.Optional[UnitTestCommonModelType]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -128,6 +132,7 @@ class TestsClient:
             name=name,
             tool_call_parameters=tool_call_parameters,
             dynamic_variables=dynamic_variables,
+            type=type,
             request_options=request_options,
         )
         return _response.data
@@ -176,6 +181,7 @@ class TestsClient:
         dynamic_variables: typing.Optional[
             typing.Dict[str, typing.Optional[UpdateUnitTestRequestDynamicVariablesValue]]
         ] = OMIT,
+        type: typing.Optional[UnitTestCommonModelType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetUnitTestResponseModel:
         """
@@ -204,6 +210,8 @@ class TestsClient:
 
         dynamic_variables : typing.Optional[typing.Dict[str, typing.Optional[UpdateUnitTestRequestDynamicVariablesValue]]]
             Dynamic variables to replace in the agent config during testing
+
+        type : typing.Optional[UnitTestCommonModelType]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -256,6 +264,7 @@ class TestsClient:
             name=name,
             tool_call_parameters=tool_call_parameters,
             dynamic_variables=dynamic_variables,
+            type=type,
             request_options=request_options,
         )
         return _response.data
@@ -408,6 +417,7 @@ class AsyncTestsClient:
         dynamic_variables: typing.Optional[
             typing.Dict[str, typing.Optional[CreateUnitTestRequestDynamicVariablesValue]]
         ] = OMIT,
+        type: typing.Optional[UnitTestCommonModelType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateUnitTestResponseModel:
         """
@@ -433,6 +443,8 @@ class AsyncTestsClient:
 
         dynamic_variables : typing.Optional[typing.Dict[str, typing.Optional[CreateUnitTestRequestDynamicVariablesValue]]]
             Dynamic variables to replace in the agent config during testing
+
+        type : typing.Optional[UnitTestCommonModelType]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -491,6 +503,7 @@ class AsyncTestsClient:
             name=name,
             tool_call_parameters=tool_call_parameters,
             dynamic_variables=dynamic_variables,
+            type=type,
             request_options=request_options,
         )
         return _response.data
@@ -549,6 +562,7 @@ class AsyncTestsClient:
         dynamic_variables: typing.Optional[
             typing.Dict[str, typing.Optional[UpdateUnitTestRequestDynamicVariablesValue]]
         ] = OMIT,
+        type: typing.Optional[UnitTestCommonModelType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetUnitTestResponseModel:
         """
@@ -577,6 +591,8 @@ class AsyncTestsClient:
 
         dynamic_variables : typing.Optional[typing.Dict[str, typing.Optional[UpdateUnitTestRequestDynamicVariablesValue]]]
             Dynamic variables to replace in the agent config during testing
+
+        type : typing.Optional[UnitTestCommonModelType]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -637,6 +653,7 @@ class AsyncTestsClient:
             name=name,
             tool_call_parameters=tool_call_parameters,
             dynamic_variables=dynamic_variables,
+            type=type,
             request_options=request_options,
         )
         return _response.data

@@ -284,7 +284,7 @@ class RawResourceClient:
         language: str,
         *,
         render_type: RenderType,
-        should_normalize_volume: typing.Optional[bool] = None,
+        normalize_volume: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DubbingRenderResponseModel]:
         """
@@ -301,7 +301,7 @@ class RawResourceClient:
         render_type : RenderType
             The type of the render. One of ['mp4', 'aac', 'mp3', 'wav', 'aaf', 'tracks_zip', 'clips_zip']
 
-        should_normalize_volume : typing.Optional[bool]
+        normalize_volume : typing.Optional[bool]
             Whether to normalize the volume of the rendered audio.
 
         request_options : typing.Optional[RequestOptions]
@@ -315,11 +315,9 @@ class RawResourceClient:
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/render/{jsonable_encoder(language)}",
             method="POST",
-            params={
-                "should_normalize_volume": should_normalize_volume,
-            },
             json={
                 "render_type": render_type,
+                "normalize_volume": normalize_volume,
             },
             headers={
                 "content-type": "application/json",
@@ -616,7 +614,7 @@ class AsyncRawResourceClient:
         language: str,
         *,
         render_type: RenderType,
-        should_normalize_volume: typing.Optional[bool] = None,
+        normalize_volume: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DubbingRenderResponseModel]:
         """
@@ -633,7 +631,7 @@ class AsyncRawResourceClient:
         render_type : RenderType
             The type of the render. One of ['mp4', 'aac', 'mp3', 'wav', 'aaf', 'tracks_zip', 'clips_zip']
 
-        should_normalize_volume : typing.Optional[bool]
+        normalize_volume : typing.Optional[bool]
             Whether to normalize the volume of the rendered audio.
 
         request_options : typing.Optional[RequestOptions]
@@ -647,11 +645,9 @@ class AsyncRawResourceClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/render/{jsonable_encoder(language)}",
             method="POST",
-            params={
-                "should_normalize_volume": should_normalize_volume,
-            },
             json={
                 "render_type": render_type,
+                "normalize_volume": normalize_volume,
             },
             headers={
                 "content-type": "application/json",

@@ -8,9 +8,11 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .dubbing_list_request_dubbing_status import DubbingListRequestDubbingStatus
     from .dubbing_list_request_filter_by_creator import DubbingListRequestFilterByCreator
+    from .dubbing_list_request_order_direction import DubbingListRequestOrderDirection
 _dynamic_imports: typing.Dict[str, str] = {
     "DubbingListRequestDubbingStatus": ".dubbing_list_request_dubbing_status",
     "DubbingListRequestFilterByCreator": ".dubbing_list_request_filter_by_creator",
+    "DubbingListRequestOrderDirection": ".dubbing_list_request_order_direction",
 }
 
 
@@ -33,4 +35,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["DubbingListRequestDubbingStatus", "DubbingListRequestFilterByCreator"]
+__all__ = ["DubbingListRequestDubbingStatus", "DubbingListRequestFilterByCreator", "DubbingListRequestOrderDirection"]

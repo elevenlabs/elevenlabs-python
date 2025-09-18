@@ -22,7 +22,7 @@ class DubbingMetadataResponse(UncheckedBaseModel):
 
     status: str = pydantic.Field()
     """
-    The status of the dubbing project. Either 'dubbed', 'dubbing' or 'failed'.
+    The status of the dubbing project. Either 'dubbed', 'dubbing', 'failed', or 'cloning'.
     """
 
     target_languages: typing.List[str] = pydantic.Field()

@@ -11,6 +11,7 @@ from .built_in_tools_workflow_override import BuiltInToolsWorkflowOverride
 from .custom_llm import CustomLlm
 from .knowledge_base_locator import KnowledgeBaseLocator
 from .llm import Llm
+from .llm_reasoning_effort import LlmReasoningEffort
 from .prompt_agent_api_model_workflow_override_tools_item import PromptAgentApiModelWorkflowOverrideToolsItem
 from .rag_config_workflow_override import RagConfigWorkflowOverride
 
@@ -24,6 +25,11 @@ class PromptAgentApiModelWorkflowOverride(UncheckedBaseModel):
     llm: typing.Optional[Llm] = pydantic.Field(default=None)
     """
     The LLM to query with the prompt and the chat history. If using data residency, the LLM must be supported in the data residency environment
+    """
+
+    reasoning_effort: typing.Optional[LlmReasoningEffort] = pydantic.Field(default=None)
+    """
+    Reasoning effort of the model. Only available for some models.
     """
 
     temperature: typing.Optional[float] = pydantic.Field(default=None)

@@ -10,6 +10,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .get_phone_number_inbound_sip_trunk_config_response_model import GetPhoneNumberInboundSipTrunkConfigResponseModel
 from .get_phone_number_outbound_sip_trunk_config_response_model import GetPhoneNumberOutboundSipTrunkConfigResponseModel
+from .livekit_stack_type import LivekitStackType
 from .phone_number_agent_info import PhoneNumberAgentInfo
 
 
@@ -24,6 +25,7 @@ class GetAgentResponseModelPhoneNumbersItem_SipTrunk(UncheckedBaseModel):
     provider_config: typing.Optional[GetPhoneNumberOutboundSipTrunkConfigResponseModel] = None
     outbound_trunk: typing.Optional[GetPhoneNumberOutboundSipTrunkConfigResponseModel] = None
     inbound_trunk: typing.Optional[GetPhoneNumberInboundSipTrunkConfigResponseModel] = None
+    livekit_stack: LivekitStackType
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
