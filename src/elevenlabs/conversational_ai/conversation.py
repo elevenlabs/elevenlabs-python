@@ -622,17 +622,27 @@ class Conversation(BaseConversation):
         if self._connection:
             connection_type = self._determine_connection_type()
             if connection_type == ConnectionType.WEBRTC:
-                # For WebRTC, we need to close the connection in an async context
                 import asyncio
                 try:
-                    loop = asyncio.get_event_loop()
-                    if loop.is_running():
-                        asyncio.create_task(self._connection.close())
-                    else:
-                        loop.run_until_complete(self._connection.close())
-                except RuntimeError:
-                    # No event loop running, create a new one
-                    asyncio.run(self._connection.close())
+                    try:
+                        loop = asyncio.get_event_loop()
+                        if loop.is_running():
+                            task = asyncio.create_task(self._connection.close())
+                        else:
+                            asyncio.wait_for(
+                                loop.run_until_complete(self._connection.close()),
+                                timeout=5.0
+                            )
+                    except RuntimeError:
+                        async def cleanup():
+                            await asyncio.wait_for(self._connection.close(), timeout=5.0)
+
+                        asyncio.run(cleanup())
+
+                except asyncio.TimeoutError:
+                    print("Warning: WebRTC connection cleanup timed out")
+                except Exception as e:
+                    print(f"Warning: Error during WebRTC connection cleanup: {e}")
             self._connection = None
 
         if self.callback_end_session:
@@ -678,9 +688,7 @@ class Conversation(BaseConversation):
 
             event = UserMessageClientToOrchestratorEvent(text=text)
             try:
-                # Send through WebRTC connection
-                import asyncio
-                asyncio.create_task(self._connection.send_message(event.to_dict()))
+                self._connection.send_message_sync(event.to_dict())
             except Exception as e:
                 print(f"Error sending user message: {e}")
                 raise
@@ -768,8 +776,15 @@ class Conversation(BaseConversation):
         try:
             # Connect to WebRTC
             import asyncio
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
+
+            try:
+                loop = asyncio.get_event_loop()
+                if loop.is_closed():
+                    loop = asyncio.new_event_loop()
+                    asyncio.set_event_loop(loop)
+            except RuntimeError:
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
 
             async def webrtc_session():
                 await self._connection.connect()

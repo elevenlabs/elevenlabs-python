@@ -39,6 +39,22 @@ class BaseConnection(ABC):
         """Send audio data through the connection."""
         pass
 
+    def send_message_sync(self, message: dict) -> None:
+        """Send a message synchronously (for compatibility with sync code)."""
+        import asyncio
+        try:
+            # Try to get the current event loop
+            loop = asyncio.get_event_loop()
+            if loop.is_running():
+                # If loop is running, create a task
+                asyncio.create_task(self.send_message(message))
+            else:
+                # If loop is not running, run the coroutine
+                loop.run_until_complete(self.send_message(message))
+        except RuntimeError:
+            # No event loop, create new one
+            asyncio.run(self.send_message(message))
+
     def on_message(self, callback: Callable[[dict], Union[None, Awaitable[None]]]) -> None:
         """Set the message callback."""
         self._on_message_callback = callback
