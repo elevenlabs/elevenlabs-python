@@ -16,6 +16,8 @@ class DefaultAudioInterface(AudioInterface):
         except ImportError:
             raise ImportError("To use DefaultAudioInterface you must install pyaudio.")
         self.pyaudio = pyaudio
+        self.should_stop = threading.Event()
+        self.output_thread = None
 
     def start(self, input_callback: Callable[[bytes], None]):
         # Audio input is using callbacks from pyaudio which we simply pass through.
@@ -24,7 +26,7 @@ class DefaultAudioInterface(AudioInterface):
         # Audio output is buffered so we can handle interruptions.
         # Start a separate thread to handle writing to the output stream.
         self.output_queue: queue.Queue[bytes] = queue.Queue()
-        self.should_stop = threading.Event()
+        self.should_stop.clear()  # Reset the event in case start is called multiple times
         self.output_thread = threading.Thread(target=self._output_thread)
 
         self.p = self.pyaudio.PyAudio()
@@ -50,11 +52,15 @@ class DefaultAudioInterface(AudioInterface):
 
     def stop(self):
         self.should_stop.set()
-        self.output_thread.join()
-        self.in_stream.stop_stream()
-        self.in_stream.close()
-        self.out_stream.close()
-        self.p.terminate()
+        if self.output_thread and self.output_thread.is_alive():
+            self.output_thread.join()
+        if hasattr(self, 'in_stream'):
+            self.in_stream.stop_stream()
+            self.in_stream.close()
+        if hasattr(self, 'out_stream'):
+            self.out_stream.close()
+        if hasattr(self, 'p'):
+            self.p.terminate()
 
     def output(self, audio: bytes):
         self.output_queue.put(audio)
@@ -94,6 +100,8 @@ class AsyncDefaultAudioInterface(AsyncAudioInterface):
         except ImportError:
             raise ImportError("To use AsyncDefaultAudioInterface you must install pyaudio.")
         self.pyaudio = pyaudio
+        self.should_stop = asyncio.Event()
+        self.output_task = None
 
     async def start(self, input_callback: Callable[[bytes], Awaitable[None]]):
         # Audio input is using callbacks from pyaudio which we adapt to async
@@ -102,7 +110,7 @@ class AsyncDefaultAudioInterface(AsyncAudioInterface):
         # Audio output is buffered so we can handle interruptions.
         # Start a separate task to handle writing to the output stream.
         self.output_queue: asyncio.Queue[bytes] = asyncio.Queue()
-        self.should_stop = asyncio.Event()
+        self.should_stop.clear()  # Reset the event in case start is called multiple times
         
         self.p = self.pyaudio.PyAudio()
         self.in_stream = self.p.open(
@@ -128,11 +136,15 @@ class AsyncDefaultAudioInterface(AsyncAudioInterface):
 
     async def stop(self):
         self.should_stop.set()
-        await self.output_task
-        self.in_stream.stop_stream()
-        self.in_stream.close()
-        self.out_stream.close()
-        self.p.terminate()
+        if self.output_task and not self.output_task.done():
+            await self.output_task
+        if hasattr(self, 'in_stream'):
+            self.in_stream.stop_stream()
+            self.in_stream.close()
+        if hasattr(self, 'out_stream'):
+            self.out_stream.close()
+        if hasattr(self, 'p'):
+            self.p.terminate()
 
     async def output(self, audio: bytes):
         await self.output_queue.put(audio)
