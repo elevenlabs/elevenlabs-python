@@ -414,3 +414,48 @@ async def test_async_conversation_wss_url_generation_without_get_environment():
 
         except Exception as e:
             assert False, f"Unexpected error generating WebSocket URL: {e}"
+
+
+@pytest.mark.asyncio
+async def test_async_websocket_url_construction_edge_cases():
+    """Test WebSocket URL construction edge cases for async conversation, specifically for trailing slash handling."""
+    from elevenlabs.core.client_wrapper import SyncClientWrapper
+    from elevenlabs.conversational_ai.conversation import AsyncConversation
+
+    # Test cases with various base URL formats
+    test_cases = [
+        # Base URLs without trailing slashes (the main edge case)
+        ("https://api.eu.residency.elevenlabs.io", "wss://api.eu.residency.elevenlabs.io"),
+        ("https://api.elevenlabs.io", "wss://api.elevenlabs.io"),
+        ("http://localhost:8000", "ws://localhost:8000"),
+        # Base URLs with trailing slashes (should still work)
+        ("https://api.eu.residency.elevenlabs.io/", "wss://api.eu.residency.elevenlabs.io"),
+        ("https://api.elevenlabs.io/", "wss://api.elevenlabs.io"),
+        ("http://localhost:8000/", "ws://localhost:8000"),
+    ]
+
+    for base_url, expected_ws_base in test_cases:
+        # Test async conversation WebSocket URL construction
+        mock_client = MagicMock()
+        mock_client._client_wrapper = SyncClientWrapper(
+            base_url=base_url,
+            api_key="test_key",
+            httpx_client=MagicMock(),
+            timeout=30.0
+        )
+
+        conversation = AsyncConversation(
+            client=mock_client,
+            agent_id=TEST_AGENT_ID,
+            requires_auth=False,
+            audio_interface=MockAsyncAudioInterface()
+        )
+
+        # Test conversation URL generation
+        conv_url = conversation._get_wss_url()
+        expected_conv_url = f"{expected_ws_base}/v1/convai/conversation"
+        assert expected_conv_url in conv_url, f"Async conversation URL should contain {expected_conv_url}, got {conv_url}"
+
+        # Ensure no double slashes in the path (except after the protocol)
+        url_path = conv_url.split("://", 1)[1]  # Remove protocol
+        assert "//" not in url_path, f"Async conversation URL should not contain double slashes in path: {conv_url}"
