@@ -6,6 +6,7 @@ from typing import Callable, Optional, Awaitable, Union, Any, Literal, Dict, Tup
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
 from enum import Enum
+import urllib.parse
 
 from websockets.sync.client import connect, Connection
 import websockets
@@ -328,7 +329,6 @@ class BaseConversation:
         self._last_interrupt_id = 0
 
     def _get_wss_url(self):
-        import urllib.parse
         base_http_url = self.client._client_wrapper.get_base_url()
         base_ws_url = urllib.parse.urlparse(base_http_url)._replace(scheme="wss" if base_http_url.startswith("https") else "ws").geturl()
         # Ensure base URL ends with '/' for proper joining
