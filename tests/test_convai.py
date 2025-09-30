@@ -50,6 +50,7 @@ def test_conversation_basic_flow():
     # Mock setup
     mock_ws = create_mock_websocket()
     mock_client = MagicMock()
+    mock_client._client_wrapper.get_base_url.return_value = "https://api.elevenlabs.io"
     agent_response_callback = MagicMock()
     test_user_id = "test_user_123"
 
@@ -131,6 +132,7 @@ def test_conversation_with_dynamic_variables():
     # Mock setup
     mock_ws = create_mock_websocket()
     mock_client = MagicMock()
+    mock_client._client_wrapper.get_base_url.return_value = "https://api.elevenlabs.io"
     agent_response_callback = MagicMock()
 
     dynamic_variables = {"name": "angelo"}
@@ -180,6 +182,7 @@ def test_conversation_with_contextual_update():
     # Mock setup
     mock_ws = create_mock_websocket([])
     mock_client = MagicMock()
+    mock_client._client_wrapper.get_base_url.return_value = "https://api.elevenlabs.io"
 
     # Setup the conversation
     conversation = Conversation(
