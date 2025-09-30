@@ -3,6 +3,7 @@ import json
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
+
 from elevenlabs.conversational_ai.conversation import (
     AsyncAudioInterface,
     AsyncConversation,
