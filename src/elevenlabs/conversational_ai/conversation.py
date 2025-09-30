@@ -6,6 +6,7 @@ from typing import Callable, Optional, Awaitable, Union, Any, Literal, Dict, Tup
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
 from enum import Enum
+import urllib.parse
 
 from websockets.sync.client import connect, Connection
 import websockets
@@ -329,8 +330,11 @@ class BaseConversation:
 
     def _get_wss_url(self):
         base_http_url = self.client._client_wrapper.get_base_url()
-        base_ws_url = base_http_url.replace("https://", "wss://").replace("http://", "ws://")
-        return f"{base_ws_url}/v1/convai/conversation?agent_id={self.agent_id}&source=python_sdk&version={__version__}"
+        base_ws_url = urllib.parse.urlparse(base_http_url)._replace(scheme="wss" if base_http_url.startswith("https") else "ws").geturl()
+        # Ensure base URL ends with '/' for proper joining
+        if not base_ws_url.endswith('/'):
+            base_ws_url += '/'
+        return f"{base_ws_url}v1/convai/conversation?agent_id={self.agent_id}&source=python_sdk&version={__version__}"
 
     def _get_signed_url(self):
         response = self.client.conversational_ai.conversations.get_signed_url(agent_id=self.agent_id)

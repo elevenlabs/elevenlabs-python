@@ -3,7 +3,6 @@ from elevenlabs.conversational_ai.conversation import Conversation, AudioInterfa
 import json
 import time
 
-
 class MockAudioInterface(AudioInterface):
     def start(self, input_callback):
         print("Audio interface started")
@@ -51,6 +50,7 @@ def test_conversation_basic_flow():
     # Mock setup
     mock_ws = create_mock_websocket()
     mock_client = MagicMock()
+    mock_client._client_wrapper.get_base_url.return_value = "https://api.elevenlabs.io"
     agent_response_callback = MagicMock()
     test_user_id = "test_user_123"
 
@@ -132,6 +132,7 @@ def test_conversation_with_dynamic_variables():
     # Mock setup
     mock_ws = create_mock_websocket()
     mock_client = MagicMock()
+    mock_client._client_wrapper.get_base_url.return_value = "https://api.elevenlabs.io"
     agent_response_callback = MagicMock()
 
     dynamic_variables = {"name": "angelo"}
@@ -181,6 +182,7 @@ def test_conversation_with_contextual_update():
     # Mock setup
     mock_ws = create_mock_websocket([])
     mock_client = MagicMock()
+    mock_client._client_wrapper.get_base_url.return_value = "https://api.elevenlabs.io"
 
     # Setup the conversation
     conversation = Conversation(
@@ -256,3 +258,71 @@ def test_conversation_wss_url_generation_without_get_environment():
 
         except Exception as e:
             assert False, f"Unexpected error generating WebSocket URL: {e}"
+
+
+def test_websocket_url_construction_edge_cases():
+    """Test WebSocket URL construction edge cases, specifically for trailing slash handling."""
+    from elevenlabs.core.client_wrapper import SyncClientWrapper
+    from elevenlabs.conversational_ai.conversation import Conversation
+    from elevenlabs.realtime_tts import RealtimeTextToSpeechClient
+
+    # Test cases with various base URL formats
+    test_cases = [
+        # Base URLs without trailing slashes (the main edge case)
+        ("https://api.eu.residency.elevenlabs.io", "wss://api.eu.residency.elevenlabs.io", "wss://api.eu.residency.elevenlabs.io"),
+        ("https://api.elevenlabs.io", "wss://api.elevenlabs.io", "wss://api.elevenlabs.io"),
+        ("http://localhost:8000", "ws://localhost:8000", "wss://localhost:8000"),
+        # Base URLs with trailing slashes (should still work)
+        ("https://api.eu.residency.elevenlabs.io/", "wss://api.eu.residency.elevenlabs.io", "wss://api.eu.residency.elevenlabs.io/"),
+        ("https://api.elevenlabs.io/", "wss://api.elevenlabs.io", "wss://api.elevenlabs.io/"),
+        ("http://localhost:8000/", "ws://localhost:8000", "wss://localhost:8000/"),
+    ]
+
+    for base_url, expected_ws_base, expected_tts_ws_base in test_cases:
+        # Test conversation WebSocket URL construction
+        mock_client = MagicMock()
+        mock_client._client_wrapper = SyncClientWrapper(
+            base_url=base_url,
+            api_key="test_key",
+            httpx_client=MagicMock(),
+            timeout=30.0
+        )
+
+        conversation = Conversation(
+            client=mock_client,
+            agent_id=TEST_AGENT_ID,
+            requires_auth=False,
+            audio_interface=MockAudioInterface()
+        )
+
+        # Test conversation URL generation
+        conv_url = conversation._get_wss_url()
+        expected_conv_url = f"{expected_ws_base}/v1/convai/conversation"
+        assert expected_conv_url in conv_url, f"Conversation URL should contain {expected_conv_url}, got {conv_url}"
+
+        # Ensure no double slashes in the path (except after the protocol)
+        url_path = conv_url.split("://", 1)[1]  # Remove protocol
+        assert "//" not in url_path, f"URL should not contain double slashes in path: {conv_url}"
+
+        # Test realtime TTS WebSocket URL construction
+        realtime_client = RealtimeTextToSpeechClient(client_wrapper=mock_client._client_wrapper)
+
+        # Test the WebSocket base URL construction
+        # Note: realtime TTS always uses wss scheme, not ws
+        assert realtime_client._ws_base_url == expected_tts_ws_base, f"TTS WebSocket base URL should be {expected_tts_ws_base}, got {realtime_client._ws_base_url}"
+
+        # Test full URL construction using urljoin (simulating the actual method)
+        import urllib.parse
+        test_voice_id = "test_voice_123"
+        test_model = "eleven_turbo_v2_5"
+        test_format = "mp3_44100_128"
+        relative_path = f"v1/text-to-speech/{test_voice_id}/stream-input?model_id={test_model}&output_format={test_format}"
+
+        full_tts_url = urllib.parse.urljoin(realtime_client._ws_base_url, relative_path)
+        # For URLs with trailing slash, expect it to be preserved in the joined URL
+        expected_tts_url_base = expected_tts_ws_base.rstrip('/') + "/v1/text-to-speech/" + test_voice_id + "/stream-input"
+        assert expected_tts_url_base in full_tts_url, f"TTS URL should contain {expected_tts_url_base}, got {full_tts_url}"
+
+        # Ensure no double slashes in the path
+        tts_url_path = full_tts_url.split("://", 1)[1]
+        assert "//" not in tts_url_path, f"TTS URL should not contain double slashes in path: {full_tts_url}"
