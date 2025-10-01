@@ -91,7 +91,17 @@ class HistoryClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.history.list()
+        client.history.list(
+            page_size=1,
+            start_after_history_item_id="start_after_history_item_id",
+            voice_id="voice_id",
+            model_id="model_id",
+            date_before_unix=1,
+            date_after_unix=1,
+            sort_direction="asc",
+            search="search",
+            source="TTS",
+        )
         """
         _response = self._raw_client.list(
             page_size=page_size,
@@ -191,6 +201,17 @@ class HistoryClient:
         -------
         typing.Iterator[bytes]
             The audio file of the history item.
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.history.get_audio(
+            history_item_id="history_item_id",
+        )
         """
         with self._raw_client.get_audio(history_item_id, request_options=request_options) as r:
             yield from r.data
@@ -220,6 +241,17 @@ class HistoryClient:
         -------
         typing.Iterator[bytes]
             The requested audio file, or a zip file containing multiple audio files when multiple history items are requested.
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.history.download(
+            history_item_ids=["history_item_ids", "history_item_ids"],
+        )
         """
         with self._raw_client.download(
             history_item_ids=history_item_ids, output_format=output_format, request_options=request_options
@@ -308,7 +340,17 @@ class AsyncHistoryClient:
 
 
         async def main() -> None:
-            await client.history.list()
+            await client.history.list(
+                page_size=1,
+                start_after_history_item_id="start_after_history_item_id",
+                voice_id="voice_id",
+                model_id="model_id",
+                date_before_unix=1,
+                date_after_unix=1,
+                sort_direction="asc",
+                search="search",
+                source="TTS",
+            )
 
 
         asyncio.run(main())
@@ -427,6 +469,25 @@ class AsyncHistoryClient:
         -------
         typing.AsyncIterator[bytes]
             The audio file of the history item.
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.history.get_audio(
+                history_item_id="history_item_id",
+            )
+
+
+        asyncio.run(main())
         """
         async with self._raw_client.get_audio(history_item_id, request_options=request_options) as r:
             async for _chunk in r.data:
@@ -457,6 +518,25 @@ class AsyncHistoryClient:
         -------
         typing.AsyncIterator[bytes]
             The requested audio file, or a zip file containing multiple audio files when multiple history items are requested.
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.history.download(
+                history_item_ids=["history_item_ids", "history_item_ids"],
+            )
+
+
+        asyncio.run(main())
         """
         async with self._raw_client.download(
             history_item_ids=history_item_ids, output_format=output_format, request_options=request_options

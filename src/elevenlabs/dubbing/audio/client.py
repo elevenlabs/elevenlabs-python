@@ -43,6 +43,18 @@ class AudioClient:
         -------
         typing.Iterator[bytes]
             The dubbed audio or video file
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.dubbing.audio.get(
+            dubbing_id="dubbing_id",
+            language_code="language_code",
+        )
         """
         with self._raw_client.get(dubbing_id, language_code, request_options=request_options) as r:
             yield from r.data
@@ -84,6 +96,26 @@ class AsyncAudioClient:
         -------
         typing.AsyncIterator[bytes]
             The dubbed audio or video file
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.dubbing.audio.get(
+                dubbing_id="dubbing_id",
+                language_code="language_code",
+            )
+
+
+        asyncio.run(main())
         """
         async with self._raw_client.get(dubbing_id, language_code, request_options=request_options) as r:
             async for _chunk in r.data:

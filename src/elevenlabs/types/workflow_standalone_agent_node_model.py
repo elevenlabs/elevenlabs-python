@@ -14,6 +14,11 @@ class WorkflowStandaloneAgentNodeModel(UncheckedBaseModel):
     Position of the node in the workflow.
     """
 
+    edge_order: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    The ids of outgoing edges in the order they should be evaluated.
+    """
+
     agent_id: str
     delay_ms: typing.Optional[int] = None
     transfer_message: typing.Optional[str] = None

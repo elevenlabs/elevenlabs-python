@@ -94,7 +94,15 @@ class KnowledgeBaseClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.conversational_ai.knowledge_base.list()
+        client.conversational_ai.knowledge_base.list(
+            page_size=1,
+            search="search",
+            show_only_owned_documents=True,
+            sort_direction="asc",
+            sort_by="name",
+            use_typesense=True,
+            cursor="cursor",
+        )
         """
         _response = self._raw_client.list(
             page_size=page_size,
@@ -208,7 +216,15 @@ class AsyncKnowledgeBaseClient:
 
 
         async def main() -> None:
-            await client.conversational_ai.knowledge_base.list()
+            await client.conversational_ai.knowledge_base.list(
+                page_size=1,
+                search="search",
+                show_only_owned_documents=True,
+                sort_direction="asc",
+                sort_by="name",
+                use_typesense=True,
+                cursor="cursor",
+            )
 
 
         asyncio.run(main())

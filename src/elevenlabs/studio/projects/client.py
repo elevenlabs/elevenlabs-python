@@ -346,6 +346,7 @@ class ProjectsClient:
         )
         client.studio.projects.get(
             project_id="21m00Tcm4TlvDq8ikWAM",
+            share_id="share_id",
         )
         """
         _response = self._raw_client.get(project_id, share_id=share_id, request_options=request_options)
@@ -866,6 +867,7 @@ class AsyncProjectsClient:
         async def main() -> None:
             await client.studio.projects.get(
                 project_id="21m00Tcm4TlvDq8ikWAM",
+                share_id="share_id",
             )
 
 

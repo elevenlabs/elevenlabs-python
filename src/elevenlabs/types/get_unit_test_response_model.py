@@ -11,6 +11,7 @@ from .agent_failure_response_example import AgentFailureResponseExample
 from .agent_successful_response_example import AgentSuccessfulResponseExample
 from .conversation_history_transcript_common_model_output import ConversationHistoryTranscriptCommonModelOutput
 from .get_unit_test_response_model_dynamic_variables_value import GetUnitTestResponseModelDynamicVariablesValue
+from .test_from_conversation_metadata_output import TestFromConversationMetadataOutput
 from .unit_test_common_model_type import UnitTestCommonModelType
 from .unit_test_tool_call_evaluation_model_output import UnitTestToolCallEvaluationModelOutput
 
@@ -45,6 +46,11 @@ class GetUnitTestResponseModel(UncheckedBaseModel):
     """
 
     type: typing.Optional[UnitTestCommonModelType] = None
+    from_conversation_metadata: typing.Optional[TestFromConversationMetadataOutput] = pydantic.Field(default=None)
+    """
+    Metadata of a conversation this test was created from (if applicable).
+    """
+
     id: str
     name: str
 

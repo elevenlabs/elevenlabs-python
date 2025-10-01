@@ -30,6 +30,11 @@ class InboundSipTrunkConfigRequestModel(UncheckedBaseModel):
     Optional digest authentication credentials (username/password).
     """
 
+    remote_domains: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Domains of remote SIP servers used to validate TLS certificates.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

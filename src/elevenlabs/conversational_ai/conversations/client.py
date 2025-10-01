@@ -72,6 +72,7 @@ class ConversationsClient:
         )
         client.conversational_ai.conversations.get_signed_url(
             agent_id="21m00Tcm4TlvDq8ikWAM",
+            include_conversation_id=True,
         )
         """
         _response = self._raw_client.get_signed_url(
@@ -114,6 +115,7 @@ class ConversationsClient:
         )
         client.conversational_ai.conversations.get_webrtc_token(
             agent_id="21m00Tcm4TlvDq8ikWAM",
+            participant_name="participant_name",
         )
         """
         _response = self._raw_client.get_webrtc_token(
@@ -178,7 +180,16 @@ class ConversationsClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.conversational_ai.conversations.list()
+        client.conversational_ai.conversations.list(
+            cursor="cursor",
+            agent_id="agent_id",
+            call_successful="success",
+            call_start_before_unix=1,
+            call_start_after_unix=1,
+            user_id="user_id",
+            page_size=1,
+            summary_mode="exclude",
+        )
         """
         _response = self._raw_client.list(
             cursor=cursor,
@@ -334,6 +345,7 @@ class AsyncConversationsClient:
         async def main() -> None:
             await client.conversational_ai.conversations.get_signed_url(
                 agent_id="21m00Tcm4TlvDq8ikWAM",
+                include_conversation_id=True,
             )
 
 
@@ -384,6 +396,7 @@ class AsyncConversationsClient:
         async def main() -> None:
             await client.conversational_ai.conversations.get_webrtc_token(
                 agent_id="21m00Tcm4TlvDq8ikWAM",
+                participant_name="participant_name",
             )
 
 
@@ -456,7 +469,16 @@ class AsyncConversationsClient:
 
 
         async def main() -> None:
-            await client.conversational_ai.conversations.list()
+            await client.conversational_ai.conversations.list(
+                cursor="cursor",
+                agent_id="agent_id",
+                call_successful="success",
+                call_start_before_unix=1,
+                call_start_after_unix=1,
+                user_id="user_id",
+                page_size=1,
+                summary_mode="exclude",
+            )
 
 
         asyncio.run(main())

@@ -39,13 +39,14 @@ class MusicClient:
         self,
         *,
         output_format: typing.Optional[MusicComposeRequestOutputFormat] = None,
-        respect_sections_durations: typing.Optional[bool] = OMIT,
         prompt: typing.Optional[str] = OMIT,
         music_prompt: typing.Optional[MusicPrompt] = OMIT,
         composition_plan: typing.Optional[MusicPrompt] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
         model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
         seed: typing.Optional[int] = OMIT,
+        force_instrumental: typing.Optional[bool] = OMIT,
+        respect_sections_durations: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -55,9 +56,6 @@ class MusicClient:
         ----------
         output_format : typing.Optional[MusicComposeRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
-
-        respect_sections_durations : typing.Optional[bool]
-            Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan`. When set to true, the model will precisely respect each section's `duration_ms` from the plan. When set to false, the model may adjust individual section durations which will generally lead to better generation quality and improved latency, while always preserving the total song duration from the plan.
 
         prompt : typing.Optional[str]
             A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
@@ -77,6 +75,12 @@ class MusicClient:
         seed : typing.Optional[int]
             The seed to use for the generation.
 
+        force_instrumental : typing.Optional[bool]
+            If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+
+        respect_sections_durations : typing.Optional[bool]
+            Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan`. When set to true, the model will precisely respect each section's `duration_ms` from the plan. When set to false, the model may adjust individual section durations which will generally lead to better generation quality and improved latency, while always preserving the total song duration from the plan.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -84,16 +88,26 @@ class MusicClient:
         -------
         typing.Iterator[bytes]
             The generated audio file in the format specified
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.music.compose()
         """
         with self._raw_client.compose(
             output_format=output_format,
-            respect_sections_durations=respect_sections_durations,
             prompt=prompt,
             music_prompt=music_prompt,
             composition_plan=composition_plan,
             music_length_ms=music_length_ms,
             model_id=model_id,
             seed=seed,
+            force_instrumental=force_instrumental,
+            respect_sections_durations=respect_sections_durations,
             request_options=request_options,
         ) as r:
             yield from r.data
@@ -108,6 +122,7 @@ class MusicClient:
         music_length_ms: typing.Optional[int] = OMIT,
         model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
         seed: typing.Optional[int] = OMIT,
+        force_instrumental: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -136,6 +151,9 @@ class MusicClient:
         seed : typing.Optional[int]
             The seed to use for the generation.
 
+        force_instrumental : typing.Optional[bool]
+            If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -143,6 +161,15 @@ class MusicClient:
         -------
         typing.Iterator[bytes]
             Multipart/mixed response with JSON metadata and binary audio file
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.music.compose_detailed()
         """
         with self._raw_client.compose_detailed(
             output_format=output_format,
@@ -152,6 +179,7 @@ class MusicClient:
             music_length_ms=music_length_ms,
             model_id=model_id,
             seed=seed,
+            force_instrumental=force_instrumental,
             request_options=request_options,
         ) as r:
             yield from r.data
@@ -166,6 +194,7 @@ class MusicClient:
         music_length_ms: typing.Optional[int] = OMIT,
         model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
         seed: typing.Optional[int] = OMIT,
+        force_instrumental: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -194,6 +223,9 @@ class MusicClient:
         seed : typing.Optional[int]
             The seed to use for the generation.
 
+        force_instrumental : typing.Optional[bool]
+            If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -201,6 +233,15 @@ class MusicClient:
         -------
         typing.Iterator[bytes]
             Streaming audio data in the format specified
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.music.stream()
         """
         with self._raw_client.stream(
             output_format=output_format,
@@ -210,6 +251,7 @@ class MusicClient:
             music_length_ms=music_length_ms,
             model_id=model_id,
             seed=seed,
+            force_instrumental=force_instrumental,
             request_options=request_options,
         ) as r:
             yield from r.data
@@ -244,13 +286,14 @@ class AsyncMusicClient:
         self,
         *,
         output_format: typing.Optional[MusicComposeRequestOutputFormat] = None,
-        respect_sections_durations: typing.Optional[bool] = OMIT,
         prompt: typing.Optional[str] = OMIT,
         music_prompt: typing.Optional[MusicPrompt] = OMIT,
         composition_plan: typing.Optional[MusicPrompt] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
         model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
         seed: typing.Optional[int] = OMIT,
+        force_instrumental: typing.Optional[bool] = OMIT,
+        respect_sections_durations: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -260,9 +303,6 @@ class AsyncMusicClient:
         ----------
         output_format : typing.Optional[MusicComposeRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
-
-        respect_sections_durations : typing.Optional[bool]
-            Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan`. When set to true, the model will precisely respect each section's `duration_ms` from the plan. When set to false, the model may adjust individual section durations which will generally lead to better generation quality and improved latency, while always preserving the total song duration from the plan.
 
         prompt : typing.Optional[str]
             A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
@@ -282,6 +322,12 @@ class AsyncMusicClient:
         seed : typing.Optional[int]
             The seed to use for the generation.
 
+        force_instrumental : typing.Optional[bool]
+            If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+
+        respect_sections_durations : typing.Optional[bool]
+            Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan`. When set to true, the model will precisely respect each section's `duration_ms` from the plan. When set to false, the model may adjust individual section durations which will generally lead to better generation quality and improved latency, while always preserving the total song duration from the plan.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -289,16 +335,34 @@ class AsyncMusicClient:
         -------
         typing.AsyncIterator[bytes]
             The generated audio file in the format specified
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.music.compose()
+
+
+        asyncio.run(main())
         """
         async with self._raw_client.compose(
             output_format=output_format,
-            respect_sections_durations=respect_sections_durations,
             prompt=prompt,
             music_prompt=music_prompt,
             composition_plan=composition_plan,
             music_length_ms=music_length_ms,
             model_id=model_id,
             seed=seed,
+            force_instrumental=force_instrumental,
+            respect_sections_durations=respect_sections_durations,
             request_options=request_options,
         ) as r:
             async for _chunk in r.data:
@@ -314,6 +378,7 @@ class AsyncMusicClient:
         music_length_ms: typing.Optional[int] = OMIT,
         model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
         seed: typing.Optional[int] = OMIT,
+        force_instrumental: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -342,6 +407,9 @@ class AsyncMusicClient:
         seed : typing.Optional[int]
             The seed to use for the generation.
 
+        force_instrumental : typing.Optional[bool]
+            If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -349,6 +417,23 @@ class AsyncMusicClient:
         -------
         typing.AsyncIterator[bytes]
             Multipart/mixed response with JSON metadata and binary audio file
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.music.compose_detailed()
+
+
+        asyncio.run(main())
         """
         async with self._raw_client.compose_detailed(
             output_format=output_format,
@@ -358,6 +443,7 @@ class AsyncMusicClient:
             music_length_ms=music_length_ms,
             model_id=model_id,
             seed=seed,
+            force_instrumental=force_instrumental,
             request_options=request_options,
         ) as r:
             async for _chunk in r.data:
@@ -373,6 +459,7 @@ class AsyncMusicClient:
         music_length_ms: typing.Optional[int] = OMIT,
         model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
         seed: typing.Optional[int] = OMIT,
+        force_instrumental: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -401,6 +488,9 @@ class AsyncMusicClient:
         seed : typing.Optional[int]
             The seed to use for the generation.
 
+        force_instrumental : typing.Optional[bool]
+            If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -408,6 +498,23 @@ class AsyncMusicClient:
         -------
         typing.AsyncIterator[bytes]
             Streaming audio data in the format specified
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.music.stream()
+
+
+        asyncio.run(main())
         """
         async with self._raw_client.stream(
             output_format=output_format,
@@ -417,6 +524,7 @@ class AsyncMusicClient:
             music_length_ms=music_length_ms,
             model_id=model_id,
             seed=seed,
+            force_instrumental=force_instrumental,
             request_options=request_options,
         ) as r:
             async for _chunk in r.data:

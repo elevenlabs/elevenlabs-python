@@ -12,6 +12,7 @@ from ....core.serialization import convert_and_respect_annotation_metadata
 from ....core.unchecked_base_model import construct_type
 from ....errors.unprocessable_entity_error import UnprocessableEntityError
 from ....types.adhoc_agent_config_override_for_test_request_model import AdhocAgentConfigOverrideForTestRequestModel
+from ....types.get_test_invocations_page_response_model import GetTestInvocationsPageResponseModel
 from ....types.get_test_suite_invocation_response_model import GetTestSuiteInvocationResponseModel
 from ....types.http_validation_error import HttpValidationError
 
@@ -22,6 +23,72 @@ OMIT = typing.cast(typing.Any, ...)
 class RawInvocationsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    def list(
+        self,
+        *,
+        agent_id: str,
+        page_size: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[GetTestInvocationsPageResponseModel]:
+        """
+        Lists all test invocations with pagination support and optional search filtering.
+
+        Parameters
+        ----------
+        agent_id : str
+            Filter by agent ID
+
+        page_size : typing.Optional[int]
+            How many Tests to return at maximum. Can not exceed 100, defaults to 30.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetTestInvocationsPageResponseModel]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/convai/test-invocations",
+            method="GET",
+            params={
+                "agent_id": agent_id,
+                "page_size": page_size,
+                "cursor": cursor,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetTestInvocationsPageResponseModel,
+                    construct_type(
+                        type_=GetTestInvocationsPageResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
         self, test_invocation_id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -157,6 +224,72 @@ class RawInvocationsClient:
 class AsyncRawInvocationsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    async def list(
+        self,
+        *,
+        agent_id: str,
+        page_size: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[GetTestInvocationsPageResponseModel]:
+        """
+        Lists all test invocations with pagination support and optional search filtering.
+
+        Parameters
+        ----------
+        agent_id : str
+            Filter by agent ID
+
+        page_size : typing.Optional[int]
+            How many Tests to return at maximum. Can not exceed 100, defaults to 30.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GetTestInvocationsPageResponseModel]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/convai/test-invocations",
+            method="GET",
+            params={
+                "agent_id": agent_id,
+                "page_size": page_size,
+                "cursor": cursor,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetTestInvocationsPageResponseModel,
+                    construct_type(
+                        type_=GetTestInvocationsPageResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
         self, test_invocation_id: str, *, request_options: typing.Optional[RequestOptions] = None

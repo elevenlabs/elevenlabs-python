@@ -185,6 +185,7 @@ class RawMcpServersClient:
         *,
         approval_policy: typing.Optional[McpApprovalPolicy] = OMIT,
         force_pre_tool_speech: typing.Optional[bool] = OMIT,
+        disable_interruptions: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[McpServerResponseModel]:
         """
@@ -201,6 +202,9 @@ class RawMcpServersClient:
         force_pre_tool_speech : typing.Optional[bool]
             Whether to force pre-tool speech for all tools from this MCP server
 
+        disable_interruptions : typing.Optional[bool]
+            Whether to disable interruptions for all tools from this MCP server
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -215,6 +219,7 @@ class RawMcpServersClient:
             json={
                 "approval_policy": approval_policy,
                 "force_pre_tool_speech": force_pre_tool_speech,
+                "disable_interruptions": disable_interruptions,
             },
             headers={
                 "content-type": "application/json",
@@ -415,6 +420,7 @@ class AsyncRawMcpServersClient:
         *,
         approval_policy: typing.Optional[McpApprovalPolicy] = OMIT,
         force_pre_tool_speech: typing.Optional[bool] = OMIT,
+        disable_interruptions: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[McpServerResponseModel]:
         """
@@ -431,6 +437,9 @@ class AsyncRawMcpServersClient:
         force_pre_tool_speech : typing.Optional[bool]
             Whether to force pre-tool speech for all tools from this MCP server
 
+        disable_interruptions : typing.Optional[bool]
+            Whether to disable interruptions for all tools from this MCP server
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -445,6 +454,7 @@ class AsyncRawMcpServersClient:
             json={
                 "approval_policy": approval_policy,
                 "force_pre_tool_speech": force_pre_tool_speech,
+                "disable_interruptions": disable_interruptions,
             },
             headers={
                 "content-type": "application/json",

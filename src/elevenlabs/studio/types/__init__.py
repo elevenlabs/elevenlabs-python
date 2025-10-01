@@ -6,6 +6,9 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .body_create_podcast_v_1_studio_podcasts_post_apply_text_normalization import (
+        BodyCreatePodcastV1StudioPodcastsPostApplyTextNormalization,
+    )
     from .body_create_podcast_v_1_studio_podcasts_post_duration_scale import (
         BodyCreatePodcastV1StudioPodcastsPostDurationScale,
     )
@@ -24,6 +27,7 @@ if typing.TYPE_CHECKING:
         BodyCreatePodcastV1StudioPodcastsPostSourceItem_Url,
     )
 _dynamic_imports: typing.Dict[str, str] = {
+    "BodyCreatePodcastV1StudioPodcastsPostApplyTextNormalization": ".body_create_podcast_v_1_studio_podcasts_post_apply_text_normalization",
     "BodyCreatePodcastV1StudioPodcastsPostDurationScale": ".body_create_podcast_v_1_studio_podcasts_post_duration_scale",
     "BodyCreatePodcastV1StudioPodcastsPostMode": ".body_create_podcast_v_1_studio_podcasts_post_mode",
     "BodyCreatePodcastV1StudioPodcastsPostMode_Bulletin": ".body_create_podcast_v_1_studio_podcasts_post_mode",
@@ -56,6 +60,7 @@ def __dir__():
 
 
 __all__ = [
+    "BodyCreatePodcastV1StudioPodcastsPostApplyTextNormalization",
     "BodyCreatePodcastV1StudioPodcastsPostDurationScale",
     "BodyCreatePodcastV1StudioPodcastsPostMode",
     "BodyCreatePodcastV1StudioPodcastsPostMode_Bulletin",

@@ -246,6 +246,8 @@ class ToolsClient:
         )
         client.conversational_ai.tools.get_dependent_agents(
             tool_id="tool_id",
+            cursor="cursor",
+            page_size=1,
         )
         """
         _response = self._raw_client.get_dependent_agents(
@@ -531,6 +533,8 @@ class AsyncToolsClient:
         async def main() -> None:
             await client.conversational_ai.tools.get_dependent_agents(
                 tool_id="tool_id",
+                cursor="cursor",
+                page_size=1,
             )
 
 

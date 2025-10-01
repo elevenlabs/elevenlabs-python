@@ -63,6 +63,11 @@ class AgentPlatformSettingsResponseModel(UncheckedBaseModel):
     Testing configuration for the agent
     """
 
+    archived: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the agent is archived
+    """
+
     safety: typing.Optional[SafetyResponseModel] = None
 
     if IS_PYDANTIC_V2:

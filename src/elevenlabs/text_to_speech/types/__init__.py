@@ -6,17 +6,13 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .body_text_to_speech_full_apply_text_normalization import BodyTextToSpeechFullApplyTextNormalization
     from .body_text_to_speech_full_with_timestamps_apply_text_normalization import (
         BodyTextToSpeechFullWithTimestampsApplyTextNormalization,
     )
+    from .body_text_to_speech_stream_apply_text_normalization import BodyTextToSpeechStreamApplyTextNormalization
     from .body_text_to_speech_stream_with_timestamps_apply_text_normalization import (
         BodyTextToSpeechStreamWithTimestampsApplyTextNormalization,
-    )
-    from .body_text_to_speech_streaming_v_1_text_to_speech_voice_id_stream_post_apply_text_normalization import (
-        BodyTextToSpeechStreamingV1TextToSpeechVoiceIdStreamPostApplyTextNormalization,
-    )
-    from .body_text_to_speech_v_1_text_to_speech_voice_id_post_apply_text_normalization import (
-        BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization,
     )
     from .text_to_speech_convert_request_output_format import TextToSpeechConvertRequestOutputFormat
     from .text_to_speech_convert_with_timestamps_request_output_format import (
@@ -27,10 +23,10 @@ if typing.TYPE_CHECKING:
         TextToSpeechStreamWithTimestampsRequestOutputFormat,
     )
 _dynamic_imports: typing.Dict[str, str] = {
+    "BodyTextToSpeechFullApplyTextNormalization": ".body_text_to_speech_full_apply_text_normalization",
     "BodyTextToSpeechFullWithTimestampsApplyTextNormalization": ".body_text_to_speech_full_with_timestamps_apply_text_normalization",
+    "BodyTextToSpeechStreamApplyTextNormalization": ".body_text_to_speech_stream_apply_text_normalization",
     "BodyTextToSpeechStreamWithTimestampsApplyTextNormalization": ".body_text_to_speech_stream_with_timestamps_apply_text_normalization",
-    "BodyTextToSpeechStreamingV1TextToSpeechVoiceIdStreamPostApplyTextNormalization": ".body_text_to_speech_streaming_v_1_text_to_speech_voice_id_stream_post_apply_text_normalization",
-    "BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization": ".body_text_to_speech_v_1_text_to_speech_voice_id_post_apply_text_normalization",
     "TextToSpeechConvertRequestOutputFormat": ".text_to_speech_convert_request_output_format",
     "TextToSpeechConvertWithTimestampsRequestOutputFormat": ".text_to_speech_convert_with_timestamps_request_output_format",
     "TextToSpeechStreamRequestOutputFormat": ".text_to_speech_stream_request_output_format",
@@ -58,10 +54,10 @@ def __dir__():
 
 
 __all__ = [
+    "BodyTextToSpeechFullApplyTextNormalization",
     "BodyTextToSpeechFullWithTimestampsApplyTextNormalization",
+    "BodyTextToSpeechStreamApplyTextNormalization",
     "BodyTextToSpeechStreamWithTimestampsApplyTextNormalization",
-    "BodyTextToSpeechStreamingV1TextToSpeechVoiceIdStreamPostApplyTextNormalization",
-    "BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization",
     "TextToSpeechConvertRequestOutputFormat",
     "TextToSpeechConvertWithTimestampsRequestOutputFormat",
     "TextToSpeechStreamRequestOutputFormat",

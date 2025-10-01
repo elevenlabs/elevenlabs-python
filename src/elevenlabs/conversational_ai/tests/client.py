@@ -13,6 +13,7 @@ from ...types.create_unit_test_response_model import CreateUnitTestResponseModel
 from ...types.get_tests_page_response_model import GetTestsPageResponseModel
 from ...types.get_tests_summaries_by_ids_response_model import GetTestsSummariesByIdsResponseModel
 from ...types.get_unit_test_response_model import GetUnitTestResponseModel
+from ...types.test_from_conversation_metadata_input import TestFromConversationMetadataInput
 from ...types.unit_test_common_model_type import UnitTestCommonModelType
 from ...types.unit_test_tool_call_evaluation_model_input import UnitTestToolCallEvaluationModelInput
 from .raw_client import AsyncRawTestsClient, RawTestsClient
@@ -55,6 +56,7 @@ class TestsClient:
             typing.Dict[str, typing.Optional[CreateUnitTestRequestDynamicVariablesValue]]
         ] = OMIT,
         type: typing.Optional[UnitTestCommonModelType] = OMIT,
+        from_conversation_metadata: typing.Optional[TestFromConversationMetadataInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateUnitTestResponseModel:
         """
@@ -82,6 +84,9 @@ class TestsClient:
             Dynamic variables to replace in the agent config during testing
 
         type : typing.Optional[UnitTestCommonModelType]
+
+        from_conversation_metadata : typing.Optional[TestFromConversationMetadataInput]
+            Metadata of a conversation this test was created from (if applicable).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -133,6 +138,7 @@ class TestsClient:
             tool_call_parameters=tool_call_parameters,
             dynamic_variables=dynamic_variables,
             type=type,
+            from_conversation_metadata=from_conversation_metadata,
             request_options=request_options,
         )
         return _response.data
@@ -182,6 +188,7 @@ class TestsClient:
             typing.Dict[str, typing.Optional[UpdateUnitTestRequestDynamicVariablesValue]]
         ] = OMIT,
         type: typing.Optional[UnitTestCommonModelType] = OMIT,
+        from_conversation_metadata: typing.Optional[TestFromConversationMetadataInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetUnitTestResponseModel:
         """
@@ -212,6 +219,9 @@ class TestsClient:
             Dynamic variables to replace in the agent config during testing
 
         type : typing.Optional[UnitTestCommonModelType]
+
+        from_conversation_metadata : typing.Optional[TestFromConversationMetadataInput]
+            Metadata of a conversation this test was created from (if applicable).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -265,6 +275,7 @@ class TestsClient:
             tool_call_parameters=tool_call_parameters,
             dynamic_variables=dynamic_variables,
             type=type,
+            from_conversation_metadata=from_conversation_metadata,
             request_options=request_options,
         )
         return _response.data
@@ -372,7 +383,11 @@ class TestsClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.conversational_ai.tests.list()
+        client.conversational_ai.tests.list(
+            cursor="cursor",
+            page_size=1,
+            search="search",
+        )
         """
         _response = self._raw_client.list(
             cursor=cursor, page_size=page_size, search=search, request_options=request_options
@@ -418,6 +433,7 @@ class AsyncTestsClient:
             typing.Dict[str, typing.Optional[CreateUnitTestRequestDynamicVariablesValue]]
         ] = OMIT,
         type: typing.Optional[UnitTestCommonModelType] = OMIT,
+        from_conversation_metadata: typing.Optional[TestFromConversationMetadataInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateUnitTestResponseModel:
         """
@@ -445,6 +461,9 @@ class AsyncTestsClient:
             Dynamic variables to replace in the agent config during testing
 
         type : typing.Optional[UnitTestCommonModelType]
+
+        from_conversation_metadata : typing.Optional[TestFromConversationMetadataInput]
+            Metadata of a conversation this test was created from (if applicable).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -504,6 +523,7 @@ class AsyncTestsClient:
             tool_call_parameters=tool_call_parameters,
             dynamic_variables=dynamic_variables,
             type=type,
+            from_conversation_metadata=from_conversation_metadata,
             request_options=request_options,
         )
         return _response.data
@@ -563,6 +583,7 @@ class AsyncTestsClient:
             typing.Dict[str, typing.Optional[UpdateUnitTestRequestDynamicVariablesValue]]
         ] = OMIT,
         type: typing.Optional[UnitTestCommonModelType] = OMIT,
+        from_conversation_metadata: typing.Optional[TestFromConversationMetadataInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetUnitTestResponseModel:
         """
@@ -593,6 +614,9 @@ class AsyncTestsClient:
             Dynamic variables to replace in the agent config during testing
 
         type : typing.Optional[UnitTestCommonModelType]
+
+        from_conversation_metadata : typing.Optional[TestFromConversationMetadataInput]
+            Metadata of a conversation this test was created from (if applicable).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -654,6 +678,7 @@ class AsyncTestsClient:
             tool_call_parameters=tool_call_parameters,
             dynamic_variables=dynamic_variables,
             type=type,
+            from_conversation_metadata=from_conversation_metadata,
             request_options=request_options,
         )
         return _response.data
@@ -782,7 +807,11 @@ class AsyncTestsClient:
 
 
         async def main() -> None:
-            await client.conversational_ai.tests.list()
+            await client.conversational_ai.tests.list(
+                cursor="cursor",
+                page_size=1,
+                search="search",
+            )
 
 
         asyncio.run(main())
