@@ -74,7 +74,7 @@ class PromptAgentApiModelOutput(UncheckedBaseModel):
 
     ignore_default_personality: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Whether to ignore the default personality
+    Whether to remove the default personality lines from the system prompt
     """
 
     rag: typing.Optional[RagConfig] = pydantic.Field(default=None)

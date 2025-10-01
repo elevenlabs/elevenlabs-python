@@ -40,6 +40,17 @@ class AudioClient:
         -------
         typing.Iterator[bytes]
             Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.conversations.audio.get(
+            conversation_id="conversation_id",
+        )
         """
         with self._raw_client.get(conversation_id, request_options=request_options) as r:
             yield from r.data
@@ -78,6 +89,25 @@ class AsyncAudioClient:
         -------
         typing.AsyncIterator[bytes]
             Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.conversations.audio.get(
+                conversation_id="conversation_id",
+            )
+
+
+        asyncio.run(main())
         """
         async with self._raw_client.get(conversation_id, request_options=request_options) as r:
             async for _chunk in r.data:

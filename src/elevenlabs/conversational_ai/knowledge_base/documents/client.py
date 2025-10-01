@@ -180,6 +180,7 @@ class DocumentsClient:
         )
         client.conversational_ai.knowledge_base.documents.get(
             documentation_id="21m00Tcm4TlvDq8ikWAM",
+            agent_id="agent_id",
         )
         """
         _response = self._raw_client.get(documentation_id, agent_id=agent_id, request_options=request_options)
@@ -220,6 +221,7 @@ class DocumentsClient:
         )
         client.conversational_ai.knowledge_base.documents.delete(
             documentation_id="21m00Tcm4TlvDq8ikWAM",
+            force=True,
         )
         """
         _response = self._raw_client.delete(documentation_id, force=force, request_options=request_options)
@@ -301,6 +303,8 @@ class DocumentsClient:
         )
         client.conversational_ai.knowledge_base.documents.get_agents(
             documentation_id="21m00Tcm4TlvDq8ikWAM",
+            cursor="cursor",
+            page_size=1,
         )
         """
         _response = self._raw_client.get_agents(
@@ -537,6 +541,7 @@ class AsyncDocumentsClient:
         async def main() -> None:
             await client.conversational_ai.knowledge_base.documents.get(
                 documentation_id="21m00Tcm4TlvDq8ikWAM",
+                agent_id="agent_id",
             )
 
 
@@ -585,6 +590,7 @@ class AsyncDocumentsClient:
         async def main() -> None:
             await client.conversational_ai.knowledge_base.documents.delete(
                 documentation_id="21m00Tcm4TlvDq8ikWAM",
+                force=True,
             )
 
 
@@ -682,6 +688,8 @@ class AsyncDocumentsClient:
         async def main() -> None:
             await client.conversational_ai.knowledge_base.documents.get_agents(
                 documentation_id="21m00Tcm4TlvDq8ikWAM",
+                cursor="cursor",
+                page_size=1,
             )
 
 

@@ -14,6 +14,11 @@ class WorkflowStartNodeModel(UncheckedBaseModel):
     Position of the node in the workflow.
     """
 
+    edge_order: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    The ids of outgoing edges in the order they should be evaluated.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

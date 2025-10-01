@@ -72,7 +72,9 @@ class VoicesClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.voices.get_all()
+        client.voices.get_all(
+            show_legacy=True,
+        )
         """
         _response = self._raw_client.get_all(show_legacy=show_legacy, request_options=request_options)
         return _response.data
@@ -147,6 +149,15 @@ class VoicesClient:
             api_key="YOUR_API_KEY",
         )
         client.voices.search(
+            next_page_token="next_page_token",
+            page_size=1,
+            search="search",
+            sort="sort",
+            sort_direction="sort_direction",
+            voice_type="voice_type",
+            category="category",
+            fine_tuning_state="fine_tuning_state",
+            collection_id="collection_id",
             include_total_count=True,
         )
         """
@@ -201,6 +212,7 @@ class VoicesClient:
         )
         client.voices.get(
             voice_id="21m00Tcm4TlvDq8ikWAM",
+            with_settings=True,
         )
         """
         _response = self._raw_client.get(voice_id, with_settings=with_settings, request_options=request_options)
@@ -447,8 +459,22 @@ class VoicesClient:
             api_key="YOUR_API_KEY",
         )
         client.voices.get_shared(
+            page_size=1,
+            category="professional",
+            gender="gender",
+            age="age",
+            accent="accent",
+            language="language",
+            locale="locale",
+            search="search",
             featured=True,
+            min_notice_period_days=1,
+            include_custom_rates=True,
+            include_live_moderated=True,
             reader_app_enabled=True,
+            owner_id="owner_id",
+            sort="sort",
+            page=1,
         )
         """
         _response = self._raw_client.get_shared(
@@ -605,7 +631,9 @@ class AsyncVoicesClient:
 
 
         async def main() -> None:
-            await client.voices.get_all()
+            await client.voices.get_all(
+                show_legacy=True,
+            )
 
 
         asyncio.run(main())
@@ -688,6 +716,15 @@ class AsyncVoicesClient:
 
         async def main() -> None:
             await client.voices.search(
+                next_page_token="next_page_token",
+                page_size=1,
+                search="search",
+                sort="sort",
+                sort_direction="sort_direction",
+                voice_type="voice_type",
+                category="category",
+                fine_tuning_state="fine_tuning_state",
+                collection_id="collection_id",
                 include_total_count=True,
             )
 
@@ -750,6 +787,7 @@ class AsyncVoicesClient:
         async def main() -> None:
             await client.voices.get(
                 voice_id="21m00Tcm4TlvDq8ikWAM",
+                with_settings=True,
             )
 
 
@@ -1030,8 +1068,22 @@ class AsyncVoicesClient:
 
         async def main() -> None:
             await client.voices.get_shared(
+                page_size=1,
+                category="professional",
+                gender="gender",
+                age="age",
+                accent="accent",
+                language="language",
+                locale="locale",
+                search="search",
                 featured=True,
+                min_notice_period_days=1,
+                include_custom_rates=True,
+                include_live_moderated=True,
                 reader_app_enabled=True,
+                owner_id="owner_id",
+                sort="sort",
+                page=1,
             )
 
 

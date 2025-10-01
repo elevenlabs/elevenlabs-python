@@ -103,7 +103,9 @@ class ConversationalAiClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.conversational_ai.add_to_knowledge_base()
+        client.conversational_ai.add_to_knowledge_base(
+            agent_id="agent_id",
+        )
         """
         _response = self._raw_client.add_to_knowledge_base(
             agent_id=agent_id, name=name, url=url, file=file, request_options=request_options
@@ -436,7 +438,9 @@ class AsyncConversationalAiClient:
 
 
         async def main() -> None:
-            await client.conversational_ai.add_to_knowledge_base()
+            await client.conversational_ai.add_to_knowledge_base(
+                agent_id="agent_id",
+            )
 
 
         asyncio.run(main())

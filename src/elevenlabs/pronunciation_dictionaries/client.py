@@ -268,6 +268,18 @@ class PronunciationDictionariesClient:
         -------
         typing.Iterator[bytes]
             The PLS file containing pronunciation dictionary rules
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.pronunciation_dictionaries.download(
+            dictionary_id="dictionary_id",
+            version_id="version_id",
+        )
         """
         with self._raw_client.download(dictionary_id, version_id, request_options=request_options) as r:
             yield from r.data
@@ -313,7 +325,12 @@ class PronunciationDictionariesClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.pronunciation_dictionaries.list()
+        client.pronunciation_dictionaries.list(
+            cursor="cursor",
+            page_size=1,
+            sort="creation_time_unix",
+            sort_direction="sort_direction",
+        )
         """
         _response = self._raw_client.list(
             cursor=cursor,
@@ -603,6 +620,26 @@ class AsyncPronunciationDictionariesClient:
         -------
         typing.AsyncIterator[bytes]
             The PLS file containing pronunciation dictionary rules
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.pronunciation_dictionaries.download(
+                dictionary_id="dictionary_id",
+                version_id="version_id",
+            )
+
+
+        asyncio.run(main())
         """
         async with self._raw_client.download(dictionary_id, version_id, request_options=request_options) as r:
             async for _chunk in r.data:
@@ -654,7 +691,12 @@ class AsyncPronunciationDictionariesClient:
 
 
         async def main() -> None:
-            await client.pronunciation_dictionaries.list()
+            await client.pronunciation_dictionaries.list(
+                cursor="cursor",
+                page_size=1,
+                sort="creation_time_unix",
+                sort_direction="sort_direction",
+            )
 
 
         asyncio.run(main())

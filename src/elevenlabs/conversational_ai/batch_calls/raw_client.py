@@ -65,10 +65,10 @@ class RawBatchCallsClient:
                 "call_name": call_name,
                 "agent_id": agent_id,
                 "agent_phone_number_id": agent_phone_number_id,
-                "scheduled_time_unix": scheduled_time_unix,
                 "recipients": convert_and_respect_annotation_metadata(
                     object_=recipients, annotation=typing.Sequence[OutboundCallRecipient], direction="write"
                 ),
+                "scheduled_time_unix": scheduled_time_unix,
             },
             headers={
                 "content-type": "application/json",
@@ -353,10 +353,10 @@ class AsyncRawBatchCallsClient:
                 "call_name": call_name,
                 "agent_id": agent_id,
                 "agent_phone_number_id": agent_phone_number_id,
-                "scheduled_time_unix": scheduled_time_unix,
                 "recipients": convert_and_respect_annotation_metadata(
                     object_=recipients, annotation=typing.Sequence[OutboundCallRecipient], direction="write"
                 ),
+                "scheduled_time_unix": scheduled_time_unix,
             },
             headers={
                 "content-type": "application/json",

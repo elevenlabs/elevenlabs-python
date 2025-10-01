@@ -82,6 +82,11 @@ class UsageClient:
         client.usage.get(
             start_unix=1,
             end_unix=1,
+            include_workspace_metrics=True,
+            breakdown_type="none",
+            aggregation_interval="hour",
+            aggregation_bucket_size=1,
+            metric="credits",
         )
         """
         _response = self._raw_client.get(
@@ -173,6 +178,11 @@ class AsyncUsageClient:
             await client.usage.get(
                 start_unix=1,
                 end_unix=1,
+                include_workspace_metrics=True,
+                breakdown_type="none",
+                aggregation_interval="hour",
+                aggregation_bucket_size=1,
+                metric="credits",
             )
 
 

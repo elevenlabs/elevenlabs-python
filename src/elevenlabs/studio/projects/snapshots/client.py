@@ -126,6 +126,18 @@ class SnapshotsClient:
         -------
         typing.Iterator[bytes]
             Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.studio.projects.snapshots.stream(
+            project_id="project_id",
+            project_snapshot_id="project_snapshot_id",
+        )
         """
         with self._raw_client.stream(
             project_id, project_snapshot_id, convert_to_mpeg=convert_to_mpeg, request_options=request_options
@@ -153,6 +165,18 @@ class SnapshotsClient:
         -------
         typing.Iterator[bytes]
             Streaming archive data
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.studio.projects.snapshots.stream_archive(
+            project_id="project_id",
+            project_snapshot_id="project_snapshot_id",
+        )
         """
         with self._raw_client.stream_archive(project_id, project_snapshot_id, request_options=request_options) as r:
             yield from r.data
@@ -288,6 +312,26 @@ class AsyncSnapshotsClient:
         -------
         typing.AsyncIterator[bytes]
             Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.studio.projects.snapshots.stream(
+                project_id="project_id",
+                project_snapshot_id="project_snapshot_id",
+            )
+
+
+        asyncio.run(main())
         """
         async with self._raw_client.stream(
             project_id, project_snapshot_id, convert_to_mpeg=convert_to_mpeg, request_options=request_options
@@ -316,6 +360,26 @@ class AsyncSnapshotsClient:
         -------
         typing.AsyncIterator[bytes]
             Streaming archive data
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.studio.projects.snapshots.stream_archive(
+                project_id="project_id",
+                project_snapshot_id="project_snapshot_id",
+            )
+
+
+        asyncio.run(main())
         """
         async with self._raw_client.stream_archive(
             project_id, project_snapshot_id, request_options=request_options

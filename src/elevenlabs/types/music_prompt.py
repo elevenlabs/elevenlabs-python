@@ -11,12 +11,12 @@ from .song_section import SongSection
 class MusicPrompt(UncheckedBaseModel):
     positive_global_styles: typing.List[str] = pydantic.Field()
     """
-    The styles that should be present in the entire song.
+    The styles that should be present in the entire song. Use English language for best result.
     """
 
     negative_global_styles: typing.List[str] = pydantic.Field()
     """
-    The styles that should not be present in the entire song.
+    The styles that should not be present in the entire song. Use English language for best result.
     """
 
     sections: typing.List[SongSection] = pydantic.Field()

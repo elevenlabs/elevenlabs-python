@@ -22,6 +22,11 @@ class WorkflowOverrideAgentNodeModel(UncheckedBaseModel):
     Position of the node in the workflow.
     """
 
+    edge_order: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    The ids of outgoing edges in the order they should be evaluated.
+    """
+
     label: str
 
     if IS_PYDANTIC_V2:

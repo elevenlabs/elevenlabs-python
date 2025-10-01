@@ -140,6 +140,7 @@ class McpServersClient:
         *,
         approval_policy: typing.Optional[McpApprovalPolicy] = OMIT,
         force_pre_tool_speech: typing.Optional[bool] = OMIT,
+        disable_interruptions: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> McpServerResponseModel:
         """
@@ -155,6 +156,9 @@ class McpServersClient:
 
         force_pre_tool_speech : typing.Optional[bool]
             Whether to force pre-tool speech for all tools from this MCP server
+
+        disable_interruptions : typing.Optional[bool]
+            Whether to disable interruptions for all tools from this MCP server
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -179,6 +183,7 @@ class McpServersClient:
             mcp_server_id,
             approval_policy=approval_policy,
             force_pre_tool_speech=force_pre_tool_speech,
+            disable_interruptions=disable_interruptions,
             request_options=request_options,
         )
         return _response.data
@@ -352,6 +357,7 @@ class AsyncMcpServersClient:
         *,
         approval_policy: typing.Optional[McpApprovalPolicy] = OMIT,
         force_pre_tool_speech: typing.Optional[bool] = OMIT,
+        disable_interruptions: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> McpServerResponseModel:
         """
@@ -367,6 +373,9 @@ class AsyncMcpServersClient:
 
         force_pre_tool_speech : typing.Optional[bool]
             Whether to force pre-tool speech for all tools from this MCP server
+
+        disable_interruptions : typing.Optional[bool]
+            Whether to disable interruptions for all tools from this MCP server
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -399,6 +408,7 @@ class AsyncMcpServersClient:
             mcp_server_id,
             approval_policy=approval_policy,
             force_pre_tool_speech=force_pre_tool_speech,
+            disable_interruptions=disable_interruptions,
             request_options=request_options,
         )
         return _response.data

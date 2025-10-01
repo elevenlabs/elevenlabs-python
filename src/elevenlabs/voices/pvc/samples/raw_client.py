@@ -102,10 +102,11 @@ class RawSamplesClient:
         selected_speaker_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         trim_start_time: typing.Optional[int] = OMIT,
         trim_end_time: typing.Optional[int] = OMIT,
+        file_name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AddVoiceResponseModel]:
         """
-        Update a PVC voice sample - apply noise removal, or select speaker.
+        Update a PVC voice sample - apply noise removal, select speaker, change trim times or file name.
 
         Parameters
         ----------
@@ -127,6 +128,9 @@ class RawSamplesClient:
         trim_end_time : typing.Optional[int]
             The end time of the audio to be used for PVC training. Time should be in milliseconds
 
+        file_name : typing.Optional[str]
+            The name of the audio file to be used for PVC training.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -143,6 +147,7 @@ class RawSamplesClient:
                 "selected_speaker_ids": selected_speaker_ids,
                 "trim_start_time": trim_start_time,
                 "trim_end_time": trim_end_time,
+                "file_name": file_name,
             },
             headers={
                 "content-type": "application/json",
@@ -312,10 +317,11 @@ class AsyncRawSamplesClient:
         selected_speaker_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         trim_start_time: typing.Optional[int] = OMIT,
         trim_end_time: typing.Optional[int] = OMIT,
+        file_name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AddVoiceResponseModel]:
         """
-        Update a PVC voice sample - apply noise removal, or select speaker.
+        Update a PVC voice sample - apply noise removal, select speaker, change trim times or file name.
 
         Parameters
         ----------
@@ -337,6 +343,9 @@ class AsyncRawSamplesClient:
         trim_end_time : typing.Optional[int]
             The end time of the audio to be used for PVC training. Time should be in milliseconds
 
+        file_name : typing.Optional[str]
+            The name of the audio file to be used for PVC training.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -353,6 +362,7 @@ class AsyncRawSamplesClient:
                 "selected_speaker_ids": selected_speaker_ids,
                 "trim_start_time": trim_start_time,
                 "trim_end_time": trim_end_time,
+                "file_name": file_name,
             },
             headers={
                 "content-type": "application/json",

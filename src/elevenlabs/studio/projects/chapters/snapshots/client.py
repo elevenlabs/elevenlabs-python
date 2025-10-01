@@ -143,6 +143,19 @@ class SnapshotsClient:
         -------
         typing.Iterator[bytes]
             Streaming audio data
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.studio.projects.chapters.snapshots.stream(
+            project_id="project_id",
+            chapter_id="chapter_id",
+            chapter_snapshot_id="chapter_snapshot_id",
+        )
         """
         with self._raw_client.stream(
             project_id,
@@ -303,6 +316,27 @@ class AsyncSnapshotsClient:
         -------
         typing.AsyncIterator[bytes]
             Streaming audio data
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.studio.projects.chapters.snapshots.stream(
+                project_id="project_id",
+                chapter_id="chapter_id",
+                chapter_snapshot_id="chapter_snapshot_id",
+            )
+
+
+        asyncio.run(main())
         """
         async with self._raw_client.stream(
             project_id,

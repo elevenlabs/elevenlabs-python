@@ -121,7 +121,10 @@ class BatchCallsClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.conversational_ai.batch_calls.list()
+        client.conversational_ai.batch_calls.list(
+            limit=1,
+            last_doc="last_doc",
+        )
         """
         _response = self._raw_client.list(limit=limit, last_doc=last_doc, request_options=request_options)
         return _response.data
@@ -339,7 +342,10 @@ class AsyncBatchCallsClient:
 
 
         async def main() -> None:
-            await client.conversational_ai.batch_calls.list()
+            await client.conversational_ai.batch_calls.list(
+                limit=1,
+                last_doc="last_doc",
+            )
 
 
         asyncio.run(main())

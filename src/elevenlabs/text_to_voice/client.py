@@ -95,6 +95,7 @@ class TextToVoiceClient:
             api_key="YOUR_API_KEY",
         )
         client.text_to_voice.create_previews(
+            output_format="mp3_22050_32",
             voice_description="A sassy squeaky mouse",
         )
         """
@@ -254,6 +255,7 @@ class TextToVoiceClient:
             api_key="YOUR_API_KEY",
         )
         client.text_to_voice.design(
+            output_format="mp3_22050_32",
             voice_description="A sassy squeaky mouse",
         )
         """
@@ -351,6 +353,7 @@ class TextToVoiceClient:
         )
         client.text_to_voice.remix(
             voice_id="21m00Tcm4TlvDq8ikWAM",
+            output_format="mp3_22050_32",
             voice_description="Make the voice have a higher pitch.",
         )
         """
@@ -460,6 +463,7 @@ class AsyncTextToVoiceClient:
 
         async def main() -> None:
             await client.text_to_voice.create_previews(
+                output_format="mp3_22050_32",
                 voice_description="A sassy squeaky mouse",
             )
 
@@ -635,6 +639,7 @@ class AsyncTextToVoiceClient:
 
         async def main() -> None:
             await client.text_to_voice.design(
+                output_format="mp3_22050_32",
                 voice_description="A sassy squeaky mouse",
             )
 
@@ -740,6 +745,7 @@ class AsyncTextToVoiceClient:
         async def main() -> None:
             await client.text_to_voice.remix(
                 voice_id="21m00Tcm4TlvDq8ikWAM",
+                output_format="mp3_22050_32",
                 voice_description="Make the voice have a higher pitch.",
             )
 

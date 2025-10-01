@@ -7,6 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
+        BodyCreatePodcastV1StudioPodcastsPostApplyTextNormalization,
         BodyCreatePodcastV1StudioPodcastsPostDurationScale,
         BodyCreatePodcastV1StudioPodcastsPostMode,
         BodyCreatePodcastV1StudioPodcastsPostMode_Bulletin,
@@ -25,6 +26,7 @@ if typing.TYPE_CHECKING:
         ProjectsCreateRequestTargetAudience,
     )
 _dynamic_imports: typing.Dict[str, str] = {
+    "BodyCreatePodcastV1StudioPodcastsPostApplyTextNormalization": ".types",
     "BodyCreatePodcastV1StudioPodcastsPostDurationScale": ".types",
     "BodyCreatePodcastV1StudioPodcastsPostMode": ".types",
     "BodyCreatePodcastV1StudioPodcastsPostMode_Bulletin": ".types",
@@ -62,6 +64,7 @@ def __dir__():
 
 
 __all__ = [
+    "BodyCreatePodcastV1StudioPodcastsPostApplyTextNormalization",
     "BodyCreatePodcastV1StudioPodcastsPostDurationScale",
     "BodyCreatePodcastV1StudioPodcastsPostMode",
     "BodyCreatePodcastV1StudioPodcastsPostMode_Bulletin",

@@ -92,7 +92,17 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.history.list()
+client.history.list(
+    page_size=1,
+    start_after_history_item_id="start_after_history_item_id",
+    voice_id="voice_id",
+    model_id="model_id",
+    date_before_unix=1,
+    date_after_unix=1,
+    sort_direction="asc",
+    search="search",
+    source="TTS",
+)
 
 ```
 </dd>
@@ -321,6 +331,154 @@ client.history.delete(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.history.<a href="src/elevenlabs/history/client.py">get_audio</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the audio of an history item.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.history.get_audio(
+    history_item_id="history_item_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**history_item_id:** `str` — ID of the history item to be used. You can use the [Get generated items](/docs/api-reference/history/get-all) endpoint to retrieve a list of history items.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.history.<a href="src/elevenlabs/history/client.py">download</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Download one or more history items. If one history item ID is provided, we will return a single audio file. If more than one history item IDs are provided, we will provide the history items packed into a .zip file.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.history.download(
+    history_item_ids=["history_item_ids", "history_item_ids"],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**history_item_ids:** `typing.Sequence[str]` — A list of history items to download, you can get IDs of history items and other metadata using the GET https://api.elevenlabs.io/v1/history endpoint.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**output_format:** `typing.Optional[str]` — Output format to transcode the audio file, can be wav or default.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
     
 </dd>
 </dl>
@@ -707,7 +865,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**apply_text_normalization:** `typing.Optional[BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
+**apply_text_normalization:** `typing.Optional[BodyTextToSpeechFullApplyTextNormalization]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
     
 </dd>
 </dl>
@@ -716,6 +874,14 @@ Defaults to None.
 <dd>
 
 **apply_language_text_normalization:** `typing.Optional[bool]` — This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**hcaptcha_token:** `typing.Optional[str]` — HCaptcha token used to prevent spam, generated on the frontend either automatically or when the client solves the hCapctha challenge.
     
 </dd>
 </dl>
@@ -769,6 +935,9 @@ client = ElevenLabs(
 )
 client.text_to_speech.convert_with_timestamps(
     voice_id="21m00Tcm4TlvDq8ikWAM",
+    enable_logging=True,
+    optimize_streaming_latency=1,
+    output_format="mp3_22050_32",
     text="This is a test for the API of ElevenLabs.",
 )
 
@@ -924,6 +1093,14 @@ Defaults to None.
 <dd>
 
 **apply_language_text_normalization:** `typing.Optional[bool]` — This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**hcaptcha_token:** `typing.Optional[str]` — HCaptcha token used to prevent spam, generated on the frontend either automatically or when the client solves the hCapctha challenge.
     
 </dd>
 </dl>
@@ -1125,9 +1302,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**apply_text_normalization:** `typing.Optional[
-    BodyTextToSpeechStreamingV1TextToSpeechVoiceIdStreamPostApplyTextNormalization
-]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
+**apply_text_normalization:** `typing.Optional[BodyTextToSpeechStreamApplyTextNormalization]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
     
 </dd>
 </dl>
@@ -1136,6 +1311,14 @@ Defaults to None.
 <dd>
 
 **apply_language_text_normalization:** `typing.Optional[bool]` — This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**hcaptcha_token:** `typing.Optional[str]` — HCaptcha token used to prevent spam, generated on the frontend either automatically or when the client solves the hCapctha challenge.
     
 </dd>
 </dl>
@@ -1348,6 +1531,14 @@ Defaults to None.
 <dd>
 
 **apply_language_text_normalization:** `typing.Optional[bool]` — This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**hcaptcha_token:** `typing.Optional[str]` — HCaptcha token used to prevent spam, generated on the frontend either automatically or when the client solves the hCapctha challenge.
     
 </dd>
 </dl>
@@ -1987,6 +2178,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.text_to_voice.create_previews(
+    output_format="mp3_22050_32",
     voice_description="A sassy squeaky mouse",
 )
 
@@ -2217,6 +2409,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.text_to_voice.design(
+    output_format="mp3_22050_32",
     voice_description="A sassy squeaky mouse",
 )
 
@@ -2392,6 +2585,7 @@ client = ElevenLabs(
 )
 client.text_to_voice.remix(
     voice_id="21m00Tcm4TlvDq8ikWAM",
+    output_format="mp3_22050_32",
     voice_description="Make the voice have a higher pitch.",
 )
 
@@ -2611,7 +2805,9 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.voices.get_all()
+client.voices.get_all(
+    show_legacy=True,
+)
 
 ```
 </dd>
@@ -2680,6 +2876,15 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.voices.search(
+    next_page_token="next_page_token",
+    page_size=1,
+    search="search",
+    sort="sort",
+    sort_direction="sort_direction",
+    voice_type="voice_type",
+    category="category",
+    fine_tuning_state="fine_tuning_state",
+    collection_id="collection_id",
     include_total_count=True,
 )
 
@@ -2831,6 +3036,7 @@ client = ElevenLabs(
 )
 client.voices.get(
     voice_id="21m00Tcm4TlvDq8ikWAM",
+    with_settings=True,
 )
 
 ```
@@ -3179,8 +3385,22 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.voices.get_shared(
+    page_size=1,
+    category="professional",
+    gender="gender",
+    age="age",
+    accent="accent",
+    language="language",
+    locale="locale",
+    search="search",
     featured=True,
+    min_notice_period_days=1,
+    include_custom_rates=True,
+    include_live_moderated=True,
     reader_app_enabled=True,
+    owner_id="owner_id",
+    sort="sort",
+    page=1,
 )
 
 ```
@@ -3661,6 +3881,21 @@ long - produces podcasts longer than 7 minutes.
 <dl>
 <dd>
 
+**apply_text_normalization:** `typing.Optional[BodyCreatePodcastV1StudioPodcastsPostApplyTextNormalization]` 
+
+
+    This parameter controls text normalization with four modes: 'auto', 'on', 'apply_english' and 'off'.
+    When set to 'auto', the system will automatically decide whether to apply text normalization
+    (e.g., spelling out numbers). With 'on', text normalization will always be applied, while
+    with 'off', it will be skipped. 'apply_english' is the same as 'on' but will assume that text is in English.
+    
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -3706,7 +3941,13 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.dubbing.list()
+client.dubbing.list(
+    cursor="cursor",
+    page_size=1,
+    dubbing_status="dubbing",
+    filter_by_creator="personal",
+    order_direction="DESCENDING",
+)
 
 ```
 </dd>
@@ -3982,7 +4223,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**mode:** `typing.Optional[str]` — automatic or manual. Manual mode is only supported when creating a dubbing studio project
+**mode:** `typing.Optional[DubbingCreateRequestMode]` — The mode in which to run this Dubbing job. Defaults to automatic, use manual if specifically providing a CSV transcript to use.
     
 </dd>
 </dl>
@@ -4589,6 +4830,11 @@ client = ElevenLabs(
 client.usage.get(
     start_unix=1,
     end_unix=1,
+    include_workspace_metrics=True,
+    breakdown_type="none",
+    aggregation_interval="hour",
+    aggregation_bucket_size=1,
+    metric="credits",
 )
 
 ```
@@ -5037,6 +5283,85 @@ client.pronunciation_dictionaries.update(
 </dl>
 </details>
 
+<details><summary><code>client.pronunciation_dictionaries.<a href="src/elevenlabs/pronunciation_dictionaries/client.py">download</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a PLS file with a pronunciation dictionary version rules
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.pronunciation_dictionaries.download(
+    dictionary_id="dictionary_id",
+    version_id="version_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**dictionary_id:** `str` — The id of the pronunciation dictionary
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version_id:** `str` — The id of the version of the pronunciation dictionary
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.pronunciation_dictionaries.<a href="src/elevenlabs/pronunciation_dictionaries/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
@@ -5069,7 +5394,12 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.pronunciation_dictionaries.list()
+client.pronunciation_dictionaries.list(
+    cursor="cursor",
+    page_size=1,
+    sort="creation_time_unix",
+    sort_direction="sort_direction",
+)
 
 ```
 </dd>
@@ -5295,6 +5625,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.speech_to_text.convert(
+    enable_logging=True,
     model_id="model_id",
 )
 
@@ -5592,7 +5923,9 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.conversational_ai.add_to_knowledge_base()
+client.conversational_ai.add_to_knowledge_base(
+    agent_id="agent_id",
+)
 
 ```
 </dd>
@@ -5952,6 +6285,386 @@ client.conversational_ai.update_secret(
 </details>
 
 ## Music
+<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">compose</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Compose a song from a prompt or a composition plan.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.music.compose()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**output_format:** `typing.Optional[MusicComposeRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prompt:** `typing.Optional[str]` — A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**music_prompt:** `typing.Optional[MusicPrompt]` — A music prompt. Deprecated. Use `composition_plan` instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**composition_plan:** `typing.Optional[MusicPrompt]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**music_length_ms:** `typing.Optional[int]` — The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 10000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_id:** `typing.Optional[typing.Literal["music_v1"]]` — The model to use for the generation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**seed:** `typing.Optional[int]` — The seed to use for the generation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force_instrumental:** `typing.Optional[bool]` — If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**respect_sections_durations:** `typing.Optional[bool]` — Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan`. When set to true, the model will precisely respect each section's `duration_ms` from the plan. When set to false, the model may adjust individual section durations which will generally lead to better generation quality and improved latency, while always preserving the total song duration from the plan.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">compose_detailed</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Compose a song from a prompt or a composition plan.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.music.compose_detailed()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**output_format:** `typing.Optional[MusicComposeDetailedRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prompt:** `typing.Optional[str]` — A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**music_prompt:** `typing.Optional[MusicPrompt]` — A music prompt. Deprecated. Use `composition_plan` instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**composition_plan:** `typing.Optional[MusicPrompt]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**music_length_ms:** `typing.Optional[int]` — The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 10000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_id:** `typing.Optional[typing.Literal["music_v1"]]` — The model to use for the generation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**seed:** `typing.Optional[int]` — The seed to use for the generation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force_instrumental:** `typing.Optional[bool]` — If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">stream</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Stream a composed song from a prompt or a composition plan.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.music.stream()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**output_format:** `typing.Optional[MusicStreamRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prompt:** `typing.Optional[str]` — A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**music_prompt:** `typing.Optional[MusicPrompt]` — A music prompt. Deprecated. Use `composition_plan` instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**composition_plan:** `typing.Optional[MusicPrompt]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**music_length_ms:** `typing.Optional[int]` — The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 10000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_id:** `typing.Optional[typing.Literal["music_v1"]]` — The model to use for the generation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**seed:** `typing.Optional[int]` — The seed to use for the generation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force_instrumental:** `typing.Optional[bool]` — If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ConversationalAi Conversations
 <details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">get_signed_url</a>(...)</code></summary>
 <dl>
@@ -5987,6 +6700,7 @@ client = ElevenLabs(
 )
 client.conversational_ai.conversations.get_signed_url(
     agent_id="21m00Tcm4TlvDq8ikWAM",
+    include_conversation_id=True,
 )
 
 ```
@@ -6065,6 +6779,7 @@ client = ElevenLabs(
 )
 client.conversational_ai.conversations.get_webrtc_token(
     agent_id="21m00Tcm4TlvDq8ikWAM",
+    participant_name="participant_name",
 )
 
 ```
@@ -6141,7 +6856,16 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.conversational_ai.conversations.list()
+client.conversational_ai.conversations.list(
+    cursor="cursor",
+    agent_id="agent_id",
+    call_successful="success",
+    call_start_before_unix=1,
+    call_start_after_unix=1,
+    user_id="user_id",
+    page_size=1,
+    summary_mode="exclude",
+)
 
 ```
 </dd>
@@ -6855,7 +7579,13 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.conversational_ai.agents.list()
+client.conversational_ai.agents.list(
+    page_size=1,
+    search="search",
+    sort_direction="asc",
+    sort_by="name",
+    cursor="cursor",
+)
 
 ```
 </dd>
@@ -7443,6 +8173,14 @@ client.conversational_ai.tests.create(
 <dl>
 <dd>
 
+**from_conversation_metadata:** `typing.Optional[TestFromConversationMetadataInput]` — Metadata of a conversation this test was created from (if applicable).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -7674,6 +8412,14 @@ client.conversational_ai.tests.update(
 <dl>
 <dd>
 
+**from_conversation_metadata:** `typing.Optional[TestFromConversationMetadataInput]` — Metadata of a conversation this test was created from (if applicable).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -7858,7 +8604,11 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.conversational_ai.tests.list()
+client.conversational_ai.tests.list(
+    cursor="cursor",
+    page_size=1,
+    search="search",
+)
 
 ```
 </dd>
@@ -8413,7 +9163,15 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.conversational_ai.knowledge_base.list()
+client.conversational_ai.knowledge_base.list(
+    page_size=1,
+    search="search",
+    show_only_owned_documents=True,
+    sort_direction="asc",
+    sort_by="name",
+    use_typesense=True,
+    cursor="cursor",
+)
 
 ```
 </dd>
@@ -8913,6 +9671,8 @@ client = ElevenLabs(
 )
 client.conversational_ai.tools.get_dependent_agents(
     tool_id="tool_id",
+    cursor="cursor",
+    page_size=1,
 )
 
 ```
@@ -9478,7 +10238,10 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.conversational_ai.batch_calls.list()
+client.conversational_ai.batch_calls.list(
+    limit=1,
+    last_doc="last_doc",
+)
 
 ```
 </dd>
@@ -10107,6 +10870,14 @@ client.conversational_ai.mcp_servers.update(
 <dl>
 <dd>
 
+**disable_interruptions:** `typing.Optional[bool]` — Whether to disable interruptions for all tools from this MCP server
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -10154,6 +10925,7 @@ client = ElevenLabs(
 )
 client.conversational_ai.agents.widget.get(
     agent_id="21m00Tcm4TlvDq8ikWAM",
+    conversation_signature="conversation_signature",
 )
 
 ```
@@ -10517,6 +11289,76 @@ core.File` — See core.File for more documentation
 </details>
 
 ## ConversationalAi Conversations Audio
+<details><summary><code>client.conversational_ai.conversations.audio.<a href="src/elevenlabs/conversational_ai/conversations/audio/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the audio recording of a particular conversation
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.conversations.audio.get(
+    conversation_id="conversation_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_id:** `str` — The id of the conversation you're taking the action on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ConversationalAi Conversations Feedback
 <details><summary><code>client.conversational_ai.conversations.feedback.<a href="src/elevenlabs/conversational_ai/conversations/feedback/client.py">create</a>(...)</code></summary>
 <dl>
@@ -10995,6 +11837,7 @@ client = ElevenLabs(
 )
 client.conversational_ai.knowledge_base.documents.get(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
+    agent_id="agent_id",
 )
 
 ```
@@ -11073,6 +11916,7 @@ client = ElevenLabs(
 )
 client.conversational_ai.knowledge_base.documents.delete(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
+    force=True,
 )
 
 ```
@@ -11230,6 +12074,8 @@ client = ElevenLabs(
 )
 client.conversational_ai.knowledge_base.documents.get_agents(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
+    cursor="cursor",
+    page_size=1,
 )
 
 ```
@@ -11848,6 +12694,94 @@ client.conversational_ai.mcp_servers.tool_approvals.delete(
 </details>
 
 ## ConversationalAi Tests Invocations
+<details><summary><code>client.conversational_ai.tests.invocations.<a href="src/elevenlabs/conversational_ai/tests/invocations/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists all test invocations with pagination support and optional search filtering.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.tests.invocations.list(
+    agent_id="agent_id",
+    page_size=1,
+    cursor="cursor",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — Filter by agent ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many Tests to return at maximum. Can not exceed 100, defaults to 30.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.conversational_ai.tests.invocations.<a href="src/elevenlabs/conversational_ai/tests/invocations/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
@@ -12435,6 +13369,85 @@ client.dubbing.resource.render(
 </details>
 
 ## Dubbing Audio
+<details><summary><code>client.dubbing.audio.<a href="src/elevenlabs/dubbing/audio/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns dub as a streamed MP3 or MP4 file. If this dub has been edited using Dubbing Studio you need to use the resource render endpoint as this endpoint only returns the original automatic dub result.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.dubbing.audio.get(
+    dubbing_id="dubbing_id",
+    language_code="language_code",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**dubbing_id:** `str` — ID of the dubbing project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language_code:** `str` — ID of the language.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Dubbing Transcript
 <details><summary><code>client.dubbing.transcript.<a href="src/elevenlabs/dubbing/transcript/client.py">get_transcript_for_dub</a>(...)</code></summary>
 <dl>
@@ -14301,6 +15314,7 @@ client = ElevenLabs(
 )
 client.studio.projects.get(
     project_id="21m00Tcm4TlvDq8ikWAM",
+    share_id="share_id",
 )
 
 ```
@@ -14865,6 +15879,172 @@ client.studio.projects.snapshots.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.studio.projects.snapshots.<a href="src/elevenlabs/studio/projects/snapshots/client.py">stream</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Stream the audio from a Studio project snapshot.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.studio.projects.snapshots.stream(
+    project_id="project_id",
+    project_snapshot_id="project_snapshot_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project_snapshot_id:** `str` — The ID of the Studio project snapshot.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**convert_to_mpeg:** `typing.Optional[bool]` — Whether to convert the audio to mpeg format.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.studio.projects.snapshots.<a href="src/elevenlabs/studio/projects/snapshots/client.py">stream_archive</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a compressed archive of the Studio project's audio.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.studio.projects.snapshots.stream_archive(
+    project_id="project_id",
+    project_snapshot_id="project_snapshot_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project_snapshot_id:** `str` — The ID of the Studio project snapshot.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
     
 </dd>
 </dl>
@@ -15626,7 +16806,173 @@ client.studio.projects.chapters.snapshots.get(
 </dl>
 </details>
 
+<details><summary><code>client.studio.projects.chapters.snapshots.<a href="src/elevenlabs/studio/projects/chapters/snapshots/client.py">stream</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Stream the audio from a chapter snapshot. Use `GET /v1/studio/projects/{project_id}/chapters/{chapter_id}/snapshots` to return the snapshots of a chapter.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.studio.projects.chapters.snapshots.stream(
+    project_id="project_id",
+    chapter_id="chapter_id",
+    chapter_snapshot_id="chapter_snapshot_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**chapter_id:** `str` — The ID of the chapter to be used. You can use the [List project chapters](/docs/api-reference/studio/get-chapters) endpoint to list all the available chapters.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**chapter_snapshot_id:** `str` — The ID of the chapter snapshot to be used. You can use the [List project chapter snapshots](/docs/api-reference/studio/get-snapshots) endpoint to list all the available snapshots.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**convert_to_mpeg:** `typing.Optional[bool]` — Whether to convert the audio to mpeg format.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## TextToVoice Preview
+<details><summary><code>client.text_to_voice.preview.<a href="src/elevenlabs/text_to_voice/preview/client.py">stream</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Stream a voice preview that was created via the /v1/text-to-voice/design endpoint.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.text_to_voice.preview.stream(
+    generated_voice_id="generated_voice_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**generated_voice_id:** `str` — The generated_voice_id to stream.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## User Subscription
 <details><summary><code>client.user.subscription.<a href="src/elevenlabs/user/subscription/client.py">get</a>()</code></summary>
 <dl>
@@ -16386,7 +17732,7 @@ typing.List[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-Update a PVC voice sample - apply noise removal, or select speaker.
+Update a PVC voice sample - apply noise removal, select speaker, change trim times or file name.
 </dd>
 </dl>
 </dd>
@@ -16466,6 +17812,14 @@ client.voices.pvc.samples.update(
 <dd>
 
 **trim_end_time:** `typing.Optional[int]` — The end time of the audio to be used for PVC training. Time should be in milliseconds
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file_name:** `typing.Optional[str]` — The name of the audio file to be used for PVC training.
     
 </dd>
 </dl>
@@ -17222,6 +18576,85 @@ core.File` — See core.File for more documentation
 </details>
 
 ## Voices Samples Audio
+<details><summary><code>client.voices.samples.audio.<a href="src/elevenlabs/voices/samples/audio/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the audio corresponding to a sample attached to a voice.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.voices.samples.audio.get(
+    voice_id="voice_id",
+    sample_id="sample_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**voice_id:** `str` — ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sample_id:** `str` — ID of the sample to be used. You can use the [Get voices](/docs/api-reference/voices/get) endpoint list all the available samples for a voice.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Workspace Groups
 <details><summary><code>client.workspace.groups.<a href="src/elevenlabs/workspace/groups/client.py">search</a>(...)</code></summary>
 <dl>

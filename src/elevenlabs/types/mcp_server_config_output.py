@@ -49,6 +49,11 @@ class McpServerConfigOutput(UncheckedBaseModel):
     If true, all tools from this MCP server will require pre-tool execution speech
     """
 
+    disable_interruptions: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If true, the user will not be able to interrupt the agent while tools from this MCP server are running
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

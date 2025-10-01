@@ -20,6 +20,11 @@ class SubscriptionExtrasResponseModel(UncheckedBaseModel):
     The Convai concurrency of the user.
     """
 
+    enterprise_music_concurrency: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The Music concurrency of the user on enterprise plan.
+    """
+
     convai_chars_per_minute: typing.Optional[int] = pydantic.Field(default=None)
     """
     The Convai characters per minute of the user. This field is deprecated and will always return None.

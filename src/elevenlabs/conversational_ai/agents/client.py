@@ -277,7 +277,13 @@ class AgentsClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.conversational_ai.agents.list()
+        client.conversational_ai.agents.list(
+            page_size=1,
+            search="search",
+            sort_direction="asc",
+            sort_by="name",
+            cursor="cursor",
+        )
         """
         _response = self._raw_client.list(
             page_size=page_size,
@@ -828,7 +834,13 @@ class AsyncAgentsClient:
 
 
         async def main() -> None:
-            await client.conversational_ai.agents.list()
+            await client.conversational_ai.agents.list(
+                page_size=1,
+                search="search",
+                sort_direction="asc",
+                sort_by="name",
+                cursor="cursor",
+            )
 
 
         asyncio.run(main())

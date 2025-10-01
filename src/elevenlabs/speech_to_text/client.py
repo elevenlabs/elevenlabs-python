@@ -135,6 +135,7 @@ class SpeechToTextClient:
             api_key="YOUR_API_KEY",
         )
         client.speech_to_text.convert(
+            enable_logging=True,
             model_id="model_id",
         )
         """
@@ -290,6 +291,7 @@ class AsyncSpeechToTextClient:
 
         async def main() -> None:
             await client.speech_to_text.convert(
+                enable_logging=True,
                 model_id="model_id",
             )
 

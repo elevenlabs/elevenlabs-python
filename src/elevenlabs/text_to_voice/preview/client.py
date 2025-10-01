@@ -40,6 +40,17 @@ class PreviewClient:
         -------
         typing.Iterator[bytes]
             Streaming audio data
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.text_to_voice.preview.stream(
+            generated_voice_id="generated_voice_id",
+        )
         """
         with self._raw_client.stream(generated_voice_id, request_options=request_options) as r:
             yield from r.data
@@ -78,6 +89,25 @@ class AsyncPreviewClient:
         -------
         typing.AsyncIterator[bytes]
             Streaming audio data
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.text_to_voice.preview.stream(
+                generated_voice_id="generated_voice_id",
+            )
+
+
+        asyncio.run(main())
         """
         async with self._raw_client.stream(generated_voice_id, request_options=request_options) as r:
             async for _chunk in r.data:

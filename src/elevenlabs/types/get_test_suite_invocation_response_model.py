@@ -12,6 +12,7 @@ from .unit_test_run_response_model import UnitTestRunResponseModel
 
 class GetTestSuiteInvocationResponseModel(UncheckedBaseModel):
     id: str
+    agent_id: typing.Optional[str] = None
     created_at: typing.Optional[int] = None
     test_runs: typing.List[UnitTestRunResponseModel]
 

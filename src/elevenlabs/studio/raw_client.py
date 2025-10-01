@@ -12,6 +12,9 @@ from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.http_validation_error import HttpValidationError
 from ..types.podcast_project_response_model import PodcastProjectResponseModel
+from .types.body_create_podcast_v_1_studio_podcasts_post_apply_text_normalization import (
+    BodyCreatePodcastV1StudioPodcastsPostApplyTextNormalization,
+)
 from .types.body_create_podcast_v_1_studio_podcasts_post_duration_scale import (
     BodyCreatePodcastV1StudioPodcastsPostDurationScale,
 )
@@ -43,6 +46,7 @@ class RawStudioClient:
         instructions_prompt: typing.Optional[str] = OMIT,
         highlights: typing.Optional[typing.Sequence[str]] = OMIT,
         callback_url: typing.Optional[str] = OMIT,
+        apply_text_normalization: typing.Optional[BodyCreatePodcastV1StudioPodcastsPostApplyTextNormalization] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PodcastProjectResponseModel]:
         """
@@ -144,6 +148,14 @@ class RawStudioClient:
                 }
 
 
+        apply_text_normalization : typing.Optional[BodyCreatePodcastV1StudioPodcastsPostApplyTextNormalization]
+
+                This parameter controls text normalization with four modes: 'auto', 'on', 'apply_english' and 'off'.
+                When set to 'auto', the system will automatically decide whether to apply text normalization
+                (e.g., spelling out numbers). With 'on', text normalization will always be applied, while
+                with 'off', it will be skipped. 'apply_english' is the same as 'on' but will assume that text is in English.
+
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -171,6 +183,7 @@ class RawStudioClient:
                 "instructions_prompt": instructions_prompt,
                 "highlights": highlights,
                 "callback_url": callback_url,
+                "apply_text_normalization": apply_text_normalization,
             },
             headers={
                 "content-type": "application/json",
@@ -223,6 +236,7 @@ class AsyncRawStudioClient:
         instructions_prompt: typing.Optional[str] = OMIT,
         highlights: typing.Optional[typing.Sequence[str]] = OMIT,
         callback_url: typing.Optional[str] = OMIT,
+        apply_text_normalization: typing.Optional[BodyCreatePodcastV1StudioPodcastsPostApplyTextNormalization] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PodcastProjectResponseModel]:
         """
@@ -324,6 +338,14 @@ class AsyncRawStudioClient:
                 }
 
 
+        apply_text_normalization : typing.Optional[BodyCreatePodcastV1StudioPodcastsPostApplyTextNormalization]
+
+                This parameter controls text normalization with four modes: 'auto', 'on', 'apply_english' and 'off'.
+                When set to 'auto', the system will automatically decide whether to apply text normalization
+                (e.g., spelling out numbers). With 'on', text normalization will always be applied, while
+                with 'off', it will be skipped. 'apply_english' is the same as 'on' but will assume that text is in English.
+
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -351,6 +373,7 @@ class AsyncRawStudioClient:
                 "instructions_prompt": instructions_prompt,
                 "highlights": highlights,
                 "callback_url": callback_url,
+                "apply_text_normalization": apply_text_normalization,
             },
             headers={
                 "content-type": "application/json",
