@@ -54,20 +54,20 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PhoneNumbersUpdateResponse_SipTrunk": ".phone_numbers",
     "PhoneNumbersUpdateResponse_Twilio": ".phone_numbers",
     "UpdateUnitTestRequestDynamicVariablesValue": ".tests",
-    "agents": ".",
-    "batch_calls": ".",
-    "conversations": ".",
-    "dashboard": ".",
-    "knowledge_base": ".",
-    "llm_usage": ".",
-    "mcp_servers": ".",
-    "phone_numbers": ".",
-    "secrets": ".",
-    "settings": ".",
-    "sip_trunk": ".",
-    "tests": ".",
-    "tools": ".",
-    "twilio": ".",
+    "agents": ".agents",
+    "batch_calls": ".batch_calls",
+    "conversations": ".conversations",
+    "dashboard": ".dashboard",
+    "knowledge_base": ".knowledge_base",
+    "llm_usage": ".llm_usage",
+    "mcp_servers": ".mcp_servers",
+    "phone_numbers": ".phone_numbers",
+    "secrets": ".secrets",
+    "settings": ".settings",
+    "sip_trunk": ".sip_trunk",
+    "tests": ".tests",
+    "tools": ".tools",
+    "twilio": ".twilio",
 }
 
 
@@ -77,8 +77,10 @@ def __getattr__(attr_name: str) -> typing.Any:
         raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
     try:
         module = import_module(module_name, __package__)
-        result = getattr(module, attr_name)
-        return result
+        if module_name == f".{attr_name}":
+            return module
+        else:
+            return getattr(module, attr_name)
     except ImportError as e:
         raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
     except AttributeError as e:

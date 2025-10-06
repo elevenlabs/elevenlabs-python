@@ -330,7 +330,7 @@ class RawPronunciationDictionariesClient:
             The id of the pronunciation dictionary
 
         version_id : str
-            The id of the version of the pronunciation dictionary
+            The id of the pronunciation dictionary version
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -742,7 +742,7 @@ class AsyncRawPronunciationDictionariesClient:
             The id of the pronunciation dictionary
 
         version_id : str
-            The id of the version of the pronunciation dictionary
+            The id of the pronunciation dictionary version
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.

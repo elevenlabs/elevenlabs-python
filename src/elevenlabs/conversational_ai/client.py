@@ -8,7 +8,6 @@ from .. import core
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.add_knowledge_base_response_model import AddKnowledgeBaseResponseModel
-from ..types.post_workspace_secret_response_model import PostWorkspaceSecretResponseModel
 from ..types.rag_document_index_response_model import RagDocumentIndexResponseModel
 from ..types.rag_document_indexes_response_model import RagDocumentIndexesResponseModel
 from ..types.rag_index_overview_response_model import RagIndexOverviewResponseModel
@@ -210,44 +209,6 @@ class ConversationalAiClient:
         client.conversational_ai.rag_index_overview()
         """
         _response = self._raw_client.rag_index_overview(request_options=request_options)
-        return _response.data
-
-    def update_secret(
-        self, secret_id: str, *, name: str, value: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> PostWorkspaceSecretResponseModel:
-        """
-        Update an existing secret for the workspace
-
-        Parameters
-        ----------
-        secret_id : str
-
-        name : str
-
-        value : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        PostWorkspaceSecretResponseModel
-            Successful Response
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.conversational_ai.update_secret(
-            secret_id="secret_id",
-            name="name",
-            value="value",
-        )
-        """
-        _response = self._raw_client.update_secret(secret_id, name=name, value=value, request_options=request_options)
         return _response.data
 
     @property
@@ -572,54 +533,6 @@ class AsyncConversationalAiClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.rag_index_overview(request_options=request_options)
-        return _response.data
-
-    async def update_secret(
-        self, secret_id: str, *, name: str, value: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> PostWorkspaceSecretResponseModel:
-        """
-        Update an existing secret for the workspace
-
-        Parameters
-        ----------
-        secret_id : str
-
-        name : str
-
-        value : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        PostWorkspaceSecretResponseModel
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.conversational_ai.update_secret(
-                secret_id="secret_id",
-                name="name",
-                value="value",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.update_secret(
-            secret_id, name=name, value=value, request_options=request_options
-        )
         return _response.data
 
     @property
