@@ -18,6 +18,7 @@ ClientEvent = typing.Union[
         "mcp_connection_status",
         "agent_tool_response",
         "vad_score",
+        "agent_chat_response_part",
         "internal_turn_probability",
         "internal_tentative_agent_response",
     ],

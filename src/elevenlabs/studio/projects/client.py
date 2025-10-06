@@ -32,10 +32,10 @@ class ProjectsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawProjectsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
+        self._pronunciation_dictionaries: typing.Optional[PronunciationDictionariesClient] = None
         self._content: typing.Optional[ContentClient] = None
         self._snapshots: typing.Optional[SnapshotsClient] = None
         self._chapters: typing.Optional[ChaptersClient] = None
-        self._pronunciation_dictionaries: typing.Optional[PronunciationDictionariesClient] = None
 
     @property
     def with_raw_response(self) -> RawProjectsClient:
@@ -181,7 +181,7 @@ class ProjectsClient:
             When the Studio project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
 
         pronunciation_dictionary_locators : typing.Optional[typing.List[str]]
-            A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text. A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
+            A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text. A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'.
 
         callback_url : typing.Optional[str]
 
@@ -496,6 +496,14 @@ class ProjectsClient:
         return _response.data
 
     @property
+    def pronunciation_dictionaries(self):
+        if self._pronunciation_dictionaries is None:
+            from .pronunciation_dictionaries.client import PronunciationDictionariesClient  # noqa: E402
+
+            self._pronunciation_dictionaries = PronunciationDictionariesClient(client_wrapper=self._client_wrapper)
+        return self._pronunciation_dictionaries
+
+    @property
     def content(self):
         if self._content is None:
             from .content.client import ContentClient  # noqa: E402
@@ -519,23 +527,15 @@ class ProjectsClient:
             self._chapters = ChaptersClient(client_wrapper=self._client_wrapper)
         return self._chapters
 
-    @property
-    def pronunciation_dictionaries(self):
-        if self._pronunciation_dictionaries is None:
-            from .pronunciation_dictionaries.client import PronunciationDictionariesClient  # noqa: E402
-
-            self._pronunciation_dictionaries = PronunciationDictionariesClient(client_wrapper=self._client_wrapper)
-        return self._pronunciation_dictionaries
-
 
 class AsyncProjectsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawProjectsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
+        self._pronunciation_dictionaries: typing.Optional[AsyncPronunciationDictionariesClient] = None
         self._content: typing.Optional[AsyncContentClient] = None
         self._snapshots: typing.Optional[AsyncSnapshotsClient] = None
         self._chapters: typing.Optional[AsyncChaptersClient] = None
-        self._pronunciation_dictionaries: typing.Optional[AsyncPronunciationDictionariesClient] = None
 
     @property
     def with_raw_response(self) -> AsyncRawProjectsClient:
@@ -689,7 +689,7 @@ class AsyncProjectsClient:
             When the Studio project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
 
         pronunciation_dictionary_locators : typing.Optional[typing.List[str]]
-            A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text. A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
+            A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text. A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'.
 
         callback_url : typing.Optional[str]
 
@@ -1044,6 +1044,14 @@ class AsyncProjectsClient:
         return _response.data
 
     @property
+    def pronunciation_dictionaries(self):
+        if self._pronunciation_dictionaries is None:
+            from .pronunciation_dictionaries.client import AsyncPronunciationDictionariesClient  # noqa: E402
+
+            self._pronunciation_dictionaries = AsyncPronunciationDictionariesClient(client_wrapper=self._client_wrapper)
+        return self._pronunciation_dictionaries
+
+    @property
     def content(self):
         if self._content is None:
             from .content.client import AsyncContentClient  # noqa: E402
@@ -1066,11 +1074,3 @@ class AsyncProjectsClient:
 
             self._chapters = AsyncChaptersClient(client_wrapper=self._client_wrapper)
         return self._chapters
-
-    @property
-    def pronunciation_dictionaries(self):
-        if self._pronunciation_dictionaries is None:
-            from .pronunciation_dictionaries.client import AsyncPronunciationDictionariesClient  # noqa: E402
-
-            self._pronunciation_dictionaries = AsyncPronunciationDictionariesClient(client_wrapper=self._client_wrapper)
-        return self._pronunciation_dictionaries

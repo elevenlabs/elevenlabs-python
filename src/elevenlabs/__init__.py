@@ -2320,34 +2320,34 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkspaceWebhookResponseModel": ".types",
     "WorkspaceWebhookUsageResponseModel": ".types",
     "__version__": ".version",
-    "audio_isolation": ".",
-    "audio_native": ".",
-    "conversational_ai": ".",
-    "dubbing": ".",
-    "forced_alignment": ".",
-    "history": ".",
-    "models": ".",
-    "music": ".",
+    "audio_isolation": ".audio_isolation",
+    "audio_native": ".audio_native",
+    "conversational_ai": ".conversational_ai",
+    "dubbing": ".dubbing",
+    "forced_alignment": ".forced_alignment",
+    "history": ".history",
+    "models": ".models",
+    "music": ".music",
     "play": ".play",
-    "pronunciation_dictionaries": ".",
-    "samples": ".",
+    "pronunciation_dictionaries": ".pronunciation_dictionaries",
+    "samples": ".samples",
     "save": ".play",
-    "service_accounts": ".",
-    "speech_to_speech": ".",
-    "speech_to_text": ".",
+    "service_accounts": ".service_accounts",
+    "speech_to_speech": ".speech_to_speech",
+    "speech_to_text": ".speech_to_text",
     "stream": ".play",
-    "studio": ".",
-    "text_to_dialogue": ".",
-    "text_to_sound_effects": ".",
-    "text_to_speech": ".",
-    "text_to_voice": ".",
-    "usage": ".",
-    "user": ".",
-    "v_1_text_to_speech_voice_id_multi_stream_input": ".",
-    "v_1_text_to_speech_voice_id_stream_input": ".",
-    "voices": ".",
-    "webhooks": ".",
-    "workspace": ".",
+    "studio": ".studio",
+    "text_to_dialogue": ".text_to_dialogue",
+    "text_to_sound_effects": ".text_to_sound_effects",
+    "text_to_speech": ".text_to_speech",
+    "text_to_voice": ".text_to_voice",
+    "usage": ".usage",
+    "user": ".user",
+    "v_1_text_to_speech_voice_id_multi_stream_input": ".v_1_text_to_speech_voice_id_multi_stream_input",
+    "v_1_text_to_speech_voice_id_stream_input": ".v_1_text_to_speech_voice_id_stream_input",
+    "voices": ".voices",
+    "webhooks": ".webhooks",
+    "workspace": ".workspace",
 }
 
 
@@ -2357,8 +2357,10 @@ def __getattr__(attr_name: str) -> typing.Any:
         raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
     try:
         module = import_module(module_name, __package__)
-        result = getattr(module, attr_name)
-        return result
+        if module_name == f".{attr_name}":
+            return module
+        else:
+            return getattr(module, attr_name)
     except ImportError as e:
         raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
     except AttributeError as e:

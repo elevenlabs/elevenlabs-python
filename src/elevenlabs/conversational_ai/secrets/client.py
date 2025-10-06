@@ -117,6 +117,44 @@ class SecretsClient:
         _response = self._raw_client.delete(secret_id, request_options=request_options)
         return _response.data
 
+    def update(
+        self, secret_id: str, *, name: str, value: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> PostWorkspaceSecretResponseModel:
+        """
+        Update an existing secret for the workspace
+
+        Parameters
+        ----------
+        secret_id : str
+
+        name : str
+
+        value : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PostWorkspaceSecretResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.secrets.update(
+            secret_id="secret_id",
+            name="name",
+            value="value",
+        )
+        """
+        _response = self._raw_client.update(secret_id, name=name, value=value, request_options=request_options)
+        return _response.data
+
 
 class AsyncSecretsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -247,4 +285,50 @@ class AsyncSecretsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(secret_id, request_options=request_options)
+        return _response.data
+
+    async def update(
+        self, secret_id: str, *, name: str, value: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> PostWorkspaceSecretResponseModel:
+        """
+        Update an existing secret for the workspace
+
+        Parameters
+        ----------
+        secret_id : str
+
+        name : str
+
+        value : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PostWorkspaceSecretResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.secrets.update(
+                secret_id="secret_id",
+                name="name",
+                value="value",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update(secret_id, name=name, value=value, request_options=request_options)
         return _response.data
