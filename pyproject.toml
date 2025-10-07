@@ -43,6 +43,7 @@ pydantic-core = ">=2.18.2"
 requests = ">=2.20"
 typing_extensions = ">= 4.0.0"
 websockets = ">=11.0"
+livekit = { version = "^1.0.13", python = ">=3.9" }
 
 [tool.poetry.group.dev.dependencies]
 mypy = "==1.13.0"
