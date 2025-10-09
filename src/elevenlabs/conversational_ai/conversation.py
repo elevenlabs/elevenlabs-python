@@ -31,6 +31,15 @@ class ClientToOrchestratorEvent(str, Enum):
     USER_ACTIVITY = "user_activity"
 
 
+class AgentChatResponsePartType(str, Enum):
+    # Indicates the start of a new agent text response stream
+    START = "start"
+    # Contains a chunk of text from the ongoing agent response stream
+    DELTA = "delta"
+    # Indicates the end of the agent text response stream
+    STOP = "stop"
+
+
 class UserMessageClientToOrchestratorEvent:
     """Event for sending user text messages."""
 
@@ -382,6 +391,17 @@ class BaseConversation:
                 event = message["agent_response_event"]
                 message_handler.handle_agent_response(event["agent_response"].strip())
 
+        elif message["type"] == "agent_chat_response_part":
+            if message_handler.callback_agent_chat_response_part:
+                event = message.get("text_response_part", {})
+                text = event.get("text", "")
+                part_type_str = event.get("type", "delta")
+                try:
+                    part_type = AgentChatResponsePartType(part_type_str)
+                except ValueError:
+                    part_type = AgentChatResponsePartType.DELTA
+                message_handler.handle_agent_chat_response_part(text, part_type)
+
         elif message["type"] == "agent_response_correction":
             if message_handler.callback_agent_response_correction:
                 event = message["agent_response_correction_event"]
@@ -433,6 +453,17 @@ class BaseConversation:
                 event = message["agent_response_event"]
                 await message_handler.handle_agent_response(event["agent_response"].strip())
 
+        elif message["type"] == "agent_chat_response_part":
+            if message_handler.callback_agent_chat_response_part:
+                event = message.get("text_response_part", {})
+                text = event.get("text", "")
+                part_type_str = event.get("type", "delta")
+                try:
+                    part_type = AgentChatResponsePartType(part_type_str)
+                except ValueError:
+                    part_type = AgentChatResponsePartType.DELTA
+                await message_handler.handle_agent_chat_response_part(text, part_type)
+
         elif message["type"] == "agent_response_correction":
             if message_handler.callback_agent_response_correction:
                 event = message["agent_response_correction_event"]
@@ -470,6 +501,7 @@ class Conversation(BaseConversation):
     audio_interface: AudioInterface
     callback_agent_response: Optional[Callable[[str], None]]
     callback_agent_response_correction: Optional[Callable[[str, str], None]]
+    callback_agent_chat_response_part: Optional[Callable[[str, AgentChatResponsePartType], None]]
     callback_user_transcript: Optional[Callable[[str], None]]
     callback_latency_measurement: Optional[Callable[[int], None]]
     callback_end_session: Optional[Callable]
@@ -490,6 +522,7 @@ class Conversation(BaseConversation):
         client_tools: Optional[ClientTools] = None,
         callback_agent_response: Optional[Callable[[str], None]] = None,
         callback_agent_response_correction: Optional[Callable[[str, str], None]] = None,
+        callback_agent_chat_response_part: Optional[Callable[[str, AgentChatResponsePartType], None]] = None,
         callback_user_transcript: Optional[Callable[[str], None]] = None,
         callback_latency_measurement: Optional[Callable[[int], None]] = None,
         callback_end_session: Optional[Callable] = None,
@@ -509,6 +542,8 @@ class Conversation(BaseConversation):
             callback_agent_response_correction: Callback for agent response corrections.
                 First argument is the original response (previously given to
                 callback_agent_response), second argument is the corrected response.
+            callback_agent_chat_response_part: Callback for streaming text response chunks.
+                First argument is the text chunk, second argument is the type (START, DELTA, STOP).
             callback_user_transcript: Callback for user transcripts.
             callback_latency_measurement: Callback for latency measurements (in milliseconds).
         """
@@ -525,6 +560,7 @@ class Conversation(BaseConversation):
         self.audio_interface = audio_interface
         self.callback_agent_response = callback_agent_response
         self.callback_agent_response_correction = callback_agent_response_correction
+        self.callback_agent_chat_response_part = callback_agent_chat_response_part
         self.callback_user_transcript = callback_user_transcript
         self.callback_latency_measurement = callback_latency_measurement
         self.callback_end_session = callback_end_session
@@ -668,6 +704,7 @@ class Conversation(BaseConversation):
                 self.ws = ws
                 self.callback_agent_response = conversation.callback_agent_response
                 self.callback_agent_response_correction = conversation.callback_agent_response_correction
+                self.callback_agent_chat_response_part = conversation.callback_agent_chat_response_part
                 self.callback_user_transcript = conversation.callback_user_transcript
                 self.callback_latency_measurement = conversation.callback_latency_measurement
 
@@ -679,6 +716,9 @@ class Conversation(BaseConversation):
 
             def handle_agent_response_correction(self, original, corrected):
                 self.conversation.callback_agent_response_correction(original, corrected)
+
+            def handle_agent_chat_response_part(self, text, part_type):
+                self.conversation.callback_agent_chat_response_part(text, part_type)
 
             def handle_user_transcript(self, transcript):
                 self.conversation.callback_user_transcript(transcript)
@@ -714,6 +754,7 @@ class AsyncConversation(BaseConversation):
     audio_interface: AsyncAudioInterface
     callback_agent_response: Optional[Callable[[str], Awaitable[None]]]
     callback_agent_response_correction: Optional[Callable[[str, str], Awaitable[None]]]
+    callback_agent_chat_response_part: Optional[Callable[[str, AgentChatResponsePartType], Awaitable[None]]]
     callback_user_transcript: Optional[Callable[[str], Awaitable[None]]]
     callback_latency_measurement: Optional[Callable[[int], Awaitable[None]]]
     callback_end_session: Optional[Callable[[], Awaitable[None]]]
@@ -734,6 +775,7 @@ class AsyncConversation(BaseConversation):
         client_tools: Optional[ClientTools] = None,
         callback_agent_response: Optional[Callable[[str], Awaitable[None]]] = None,
         callback_agent_response_correction: Optional[Callable[[str, str], Awaitable[None]]] = None,
+        callback_agent_chat_response_part: Optional[Callable[[str, AgentChatResponsePartType], Awaitable[None]]] = None,
         callback_user_transcript: Optional[Callable[[str], Awaitable[None]]] = None,
         callback_latency_measurement: Optional[Callable[[int], Awaitable[None]]] = None,
         callback_end_session: Optional[Callable[[], Awaitable[None]]] = None,
@@ -753,6 +795,8 @@ class AsyncConversation(BaseConversation):
             callback_agent_response_correction: Async callback for agent response corrections.
                 First argument is the original response (previously given to
                 callback_agent_response), second argument is the corrected response.
+            callback_agent_chat_response_part: Async callback for streaming text response chunks.
+                First argument is the text chunk, second argument is the type (START, DELTA, STOP).
             callback_user_transcript: Async callback for user transcripts.
             callback_latency_measurement: Async callback for latency measurements (in milliseconds).
             callback_end_session: Async callback for when session ends.
@@ -770,6 +814,7 @@ class AsyncConversation(BaseConversation):
         self.audio_interface = audio_interface
         self.callback_agent_response = callback_agent_response
         self.callback_agent_response_correction = callback_agent_response_correction
+        self.callback_agent_chat_response_part = callback_agent_chat_response_part
         self.callback_user_transcript = callback_user_transcript
         self.callback_latency_measurement = callback_latency_measurement
         self.callback_end_session = callback_end_session
@@ -916,6 +961,7 @@ class AsyncConversation(BaseConversation):
                 self.ws = ws
                 self.callback_agent_response = conversation.callback_agent_response
                 self.callback_agent_response_correction = conversation.callback_agent_response_correction
+                self.callback_agent_chat_response_part = conversation.callback_agent_chat_response_part
                 self.callback_user_transcript = conversation.callback_user_transcript
                 self.callback_latency_measurement = conversation.callback_latency_measurement
 
@@ -927,6 +973,9 @@ class AsyncConversation(BaseConversation):
 
             async def handle_agent_response_correction(self, original, corrected):
                 await self.conversation.callback_agent_response_correction(original, corrected)
+
+            async def handle_agent_chat_response_part(self, text, part_type):
+                await self.conversation.callback_agent_chat_response_part(text, part_type)
 
             async def handle_user_transcript(self, transcript):
                 await self.conversation.callback_user_transcript(transcript)
