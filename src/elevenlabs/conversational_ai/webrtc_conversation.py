@@ -8,7 +8,8 @@ from .conversation import (
     BaseConversation,
     ConversationInitiationData,
     AsyncAudioInterface,
-    ClientTools
+    ClientTools,
+    AgentChatResponsePartType
 )
 from .base_connection import ConnectionType
 from .webrtc_connection import WebRTCConnection
@@ -36,6 +37,7 @@ class WebRTCConversation(BaseConversation):
         callback_user_transcript: Optional[Callable[[str], Awaitable[None]]] = None,
         callback_latency_measurement: Optional[Callable[[int], Awaitable[None]]] = None,
         callback_end_session: Optional[Callable[[], Awaitable[None]]] = None,
+        callback_agent_chat_response_part: Optional[Callable[[str, AgentChatResponsePartType], Awaitable[None]]] = None,
     ):
         """Initialize a WebRTC conversation.
 
@@ -53,6 +55,8 @@ class WebRTCConversation(BaseConversation):
             callback_user_transcript: Async callback for user transcripts.
             callback_latency_measurement: Async callback for latency measurements.
             callback_end_session: Async callback for when session ends.
+            callback_agent_chat_response_part: Async callback for streaming agent response parts.
+                First argument is the text chunk, second is the type (START, DELTA, or STOP).
         """
 
         # Set up configuration with WebRTC specifics
@@ -76,6 +80,7 @@ class WebRTCConversation(BaseConversation):
         self.callback_user_transcript = callback_user_transcript
         self.callback_latency_measurement = callback_latency_measurement
         self.callback_end_session = callback_end_session
+        self.callback_agent_chat_response_part = callback_agent_chat_response_part
 
         self._connection: Optional[WebRTCConnection] = None
         self._should_stop = asyncio.Event()
@@ -230,6 +235,14 @@ class WebRTCConversation(BaseConversation):
                         await self._connection.send_message(response)
 
                 self.client_tools.execute_tool(tool_name, parameters, send_response)
+
+            elif message_type == "agent_chat_response_part":
+                if self.callback_agent_chat_response_part:
+                    event = message["text_response_part"]
+                    await self.callback_agent_chat_response_part(
+                        event["text"],
+                        AgentChatResponsePartType(event["type"])
+                    )
 
         except Exception as e:
             print(f"Error handling message: {e}")

@@ -7,7 +7,8 @@ from .conversation import (
     AudioInterface,
     AsyncAudioInterface,
     ConversationInitiationData,
-    ClientTools
+    ClientTools,
+    AgentChatResponsePartType
 )
 from .webrtc_conversation import WebRTCConversation
 from .base_connection import ConnectionType
@@ -30,12 +31,14 @@ def create_conversation(
     callback_user_transcript: Optional[Callable[[str], None]] = None,
     callback_latency_measurement: Optional[Callable[[int], None]] = None,
     callback_end_session: Optional[Callable] = None,
+    callback_agent_chat_response_part: Optional[Callable[[str, AgentChatResponsePartType], None]] = None,
     # Async callbacks (for WebRTC and async websocket conversations)
     async_callback_agent_response: Optional[Callable[[str], Awaitable[None]]] = None,
     async_callback_agent_response_correction: Optional[Callable[[str, str], Awaitable[None]]] = None,
     async_callback_user_transcript: Optional[Callable[[str], Awaitable[None]]] = None,
     async_callback_latency_measurement: Optional[Callable[[int], Awaitable[None]]] = None,
     async_callback_end_session: Optional[Callable[[], Awaitable[None]]] = None,
+    async_callback_agent_chat_response_part: Optional[Callable[[str, AgentChatResponsePartType], Awaitable[None]]] = None,
 ) -> Union[Conversation, AsyncConversation, WebRTCConversation]:
     """Create a conversation with the specified connection type.
 
@@ -109,6 +112,7 @@ def create_conversation(
             callback_user_transcript=async_callback_user_transcript,
             callback_latency_measurement=async_callback_latency_measurement,
             callback_end_session=async_callback_end_session,
+            callback_agent_chat_response_part=async_callback_agent_chat_response_part,
         )
 
     elif connection_type == ConnectionType.WEBSOCKET:
@@ -119,6 +123,7 @@ def create_conversation(
             async_callback_user_transcript,
             async_callback_latency_measurement,
             async_callback_end_session,
+            async_callback_agent_chat_response_part,
         ])
 
         if has_async_callbacks or isinstance(audio_interface, AsyncAudioInterface):
@@ -136,6 +141,7 @@ def create_conversation(
                 callback_user_transcript=async_callback_user_transcript,
                 callback_latency_measurement=async_callback_latency_measurement,
                 callback_end_session=async_callback_end_session,
+                callback_agent_chat_response_part=async_callback_agent_chat_response_part,
             )
         else:
             # Use sync conversation
@@ -155,6 +161,7 @@ def create_conversation(
                 callback_user_transcript=callback_user_transcript,
                 callback_latency_measurement=callback_latency_measurement,
                 callback_end_session=callback_end_session,
+                callback_agent_chat_response_part=callback_agent_chat_response_part,
             )
 
     else:
