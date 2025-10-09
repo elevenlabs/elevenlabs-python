@@ -14,8 +14,12 @@ from websockets.exceptions import ConnectionClosedOK
 
 from ..base_client import BaseElevenLabs
 from ..version import __version__
-from .base_connection import ConnectionType
-from .connection_factory import create_connection, determine_connection_type
+
+
+class AgentChatResponsePartType(str, Enum):
+    START = "start"
+    DELTA = "delta"
+    STOP = "stop"
 
 
 class ClientToOrchestratorEvent(str, Enum):
@@ -298,15 +302,11 @@ class ConversationInitiationData:
         conversation_config_override: Optional[dict] = None,
         dynamic_variables: Optional[dict] = None,
         user_id: Optional[str] = None,
-        connection_type: Optional[ConnectionType] = None,
-        conversation_token: Optional[str] = None,
     ):
         self.extra_body = extra_body or {}
         self.conversation_config_override = conversation_config_override or {}
         self.dynamic_variables = dynamic_variables or {}
         self.user_id = user_id
-        self.connection_type = connection_type
-        self.conversation_token = conversation_token
 
 
 class BaseConversation:
@@ -348,29 +348,6 @@ class BaseConversation:
         # Append source and version query parameters to the signed URL
         separator = "&" if "?" in signed_url else "?"
         return f"{signed_url}{separator}source=python_sdk&version={__version__}"
-
-    def _determine_connection_type(self) -> ConnectionType:
-        """Determine the appropriate connection type for this conversation."""
-        return determine_connection_type(
-            connection_type=self.config.connection_type,
-            conversation_token=self.config.conversation_token
-        )
-
-    def _create_connection(self):
-        """Create the appropriate connection based on configuration."""
-        connection_type = self._determine_connection_type()
-
-        if connection_type == ConnectionType.WEBSOCKET:
-            ws_url = self._get_signed_url() if self.requires_auth else self._get_wss_url()
-            return create_connection(connection_type, ws_url=ws_url)
-        elif connection_type == ConnectionType.WEBRTC:
-            return create_connection(
-                connection_type,
-                conversation_token=self.config.conversation_token,
-                agent_id=self.agent_id
-            )
-        else:
-            raise ValueError(f"Unsupported connection type: {connection_type}")
 
     def _create_initiation_message(self):
         return json.dumps(
@@ -440,6 +417,14 @@ class BaseConversation:
             tool_name = tool_call.get("tool_name")
             parameters = {"tool_call_id": tool_call["tool_call_id"], **tool_call.get("parameters", {})}
             message_handler.handle_client_tool_call(tool_name, parameters)
+
+        elif message["type"] == "agent_chat_response_part":
+            if message_handler.callback_agent_chat_response_part:
+                event = message["text_response_part"]
+                message_handler.handle_agent_chat_response_part(
+                    event["text"],
+                    AgentChatResponsePartType(event["type"])
+                )
         else:
             pass  # Ignore all other message types.
 
@@ -491,6 +476,14 @@ class BaseConversation:
             tool_name = tool_call.get("tool_name")
             parameters = {"tool_call_id": tool_call["tool_call_id"], **tool_call.get("parameters", {})}
             message_handler.handle_client_tool_call(tool_name, parameters)
+
+        elif message["type"] == "agent_chat_response_part":
+            if message_handler.callback_agent_chat_response_part:
+                event = message["text_response_part"]
+                await message_handler.handle_agent_chat_response_part(
+                    event["text"],
+                    AgentChatResponsePartType(event["type"])
+                )
         else:
             pass  # Ignore all other message types.
 
@@ -502,6 +495,7 @@ class Conversation(BaseConversation):
     callback_user_transcript: Optional[Callable[[str], None]]
     callback_latency_measurement: Optional[Callable[[int], None]]
     callback_end_session: Optional[Callable]
+    callback_agent_chat_response_part: Optional[Callable[[str, AgentChatResponsePartType], None]]
 
     _thread: Optional[threading.Thread]
     _should_stop: threading.Event
@@ -522,6 +516,7 @@ class Conversation(BaseConversation):
         callback_user_transcript: Optional[Callable[[str], None]] = None,
         callback_latency_measurement: Optional[Callable[[int], None]] = None,
         callback_end_session: Optional[Callable] = None,
+        callback_agent_chat_response_part: Optional[Callable[[str, AgentChatResponsePartType], None]] = None,
     ):
         """Conversational AI session.
 
@@ -540,6 +535,8 @@ class Conversation(BaseConversation):
                 callback_agent_response), second argument is the corrected response.
             callback_user_transcript: Callback for user transcripts.
             callback_latency_measurement: Callback for latency measurements (in milliseconds).
+            callback_agent_chat_response_part: Callback for streaming agent response parts.
+                First argument is the text chunk, second is the type (START, DELTA, or STOP).
         """
 
         super().__init__(
@@ -557,6 +554,7 @@ class Conversation(BaseConversation):
         self.callback_user_transcript = callback_user_transcript
         self.callback_latency_measurement = callback_latency_measurement
         self.callback_end_session = callback_end_session
+        self.callback_agent_chat_response_part = callback_agent_chat_response_part
 
         self._thread = None
         self._ws: Optional[Connection] = None
@@ -699,6 +697,7 @@ class Conversation(BaseConversation):
                 self.callback_agent_response_correction = conversation.callback_agent_response_correction
                 self.callback_user_transcript = conversation.callback_user_transcript
                 self.callback_latency_measurement = conversation.callback_latency_measurement
+                self.callback_agent_chat_response_part = conversation.callback_agent_chat_response_part
 
             def handle_audio_output(self, audio):
                 self.conversation.audio_interface.output(audio)
@@ -728,6 +727,9 @@ class Conversation(BaseConversation):
             def handle_latency_measurement(self, latency):
                 self.conversation.callback_latency_measurement(latency)
 
+            def handle_agent_chat_response_part(self, text, part_type):
+                self.conversation.callback_agent_chat_response_part(text, part_type)
+
             def handle_client_tool_call(self, tool_name, parameters):
                 def send_response(response):
                     if not self.conversation._should_stop.is_set():
@@ -746,6 +748,7 @@ class AsyncConversation(BaseConversation):
     callback_user_transcript: Optional[Callable[[str], Awaitable[None]]]
     callback_latency_measurement: Optional[Callable[[int], Awaitable[None]]]
     callback_end_session: Optional[Callable[[], Awaitable[None]]]
+    callback_agent_chat_response_part: Optional[Callable[[str, AgentChatResponsePartType], Awaitable[None]]]
 
     _task: Optional[asyncio.Task]
     _should_stop: asyncio.Event
@@ -766,6 +769,7 @@ class AsyncConversation(BaseConversation):
         callback_user_transcript: Optional[Callable[[str], Awaitable[None]]] = None,
         callback_latency_measurement: Optional[Callable[[int], Awaitable[None]]] = None,
         callback_end_session: Optional[Callable[[], Awaitable[None]]] = None,
+        callback_agent_chat_response_part: Optional[Callable[[str, AgentChatResponsePartType], Awaitable[None]]] = None,
     ):
         """Async Conversational AI session.
 
@@ -785,6 +789,8 @@ class AsyncConversation(BaseConversation):
             callback_user_transcript: Async callback for user transcripts.
             callback_latency_measurement: Async callback for latency measurements (in milliseconds).
             callback_end_session: Async callback for when session ends.
+            callback_agent_chat_response_part: Async callback for streaming agent response parts.
+                First argument is the text chunk, second is the type (START, DELTA, or STOP).
         """
 
         super().__init__(
@@ -802,6 +808,7 @@ class AsyncConversation(BaseConversation):
         self.callback_user_transcript = callback_user_transcript
         self.callback_latency_measurement = callback_latency_measurement
         self.callback_end_session = callback_end_session
+        self.callback_agent_chat_response_part = callback_agent_chat_response_part
 
         self._task = None
         self._ws = None
@@ -947,6 +954,7 @@ class AsyncConversation(BaseConversation):
                 self.callback_agent_response_correction = conversation.callback_agent_response_correction
                 self.callback_user_transcript = conversation.callback_user_transcript
                 self.callback_latency_measurement = conversation.callback_latency_measurement
+                self.callback_agent_chat_response_part = conversation.callback_agent_chat_response_part
 
             async def handle_audio_output(self, audio):
                 await self.conversation.audio_interface.output(audio)
@@ -975,6 +983,9 @@ class AsyncConversation(BaseConversation):
 
             async def handle_latency_measurement(self, latency):
                 await self.conversation.callback_latency_measurement(latency)
+
+            async def handle_agent_chat_response_part(self, text, part_type):
+                await self.conversation.callback_agent_chat_response_part(text, part_type)
 
             def handle_client_tool_call(self, tool_name, parameters):
                 def send_response(response):

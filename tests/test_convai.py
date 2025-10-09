@@ -1,5 +1,5 @@
 from unittest.mock import MagicMock, patch
-from elevenlabs.conversational_ai.conversation import Conversation, AudioInterface, ConversationInitiationData
+from elevenlabs.conversational_ai.conversation import Conversation, AudioInterface, ConversationInitiationData, AgentChatResponsePartType
 import json
 import time
 
@@ -326,3 +326,72 @@ def test_websocket_url_construction_edge_cases():
         # Ensure no double slashes in the path
         tts_url_path = full_tts_url.split("://", 1)[1]
         assert "//" not in tts_url_path, f"TTS URL should not contain double slashes in path: {full_tts_url}"
+
+
+def test_conversation_with_agent_chat_response_parts():
+    # Mock setup
+    messages = [
+        {
+            "type": "conversation_initiation_metadata",
+            "conversation_initiation_metadata_event": {"conversation_id": TEST_CONVERSATION_ID},
+        },
+        {
+            "type": "agent_chat_response_part",
+            "text_response_part": {"text": "", "type": "start"}
+        },
+        {
+            "type": "agent_chat_response_part",
+            "text_response_part": {"text": "Hello", "type": "delta"}
+        },
+        {
+            "type": "agent_chat_response_part",
+            "text_response_part": {"text": " there", "type": "delta"}
+        },
+        {
+            "type": "agent_chat_response_part",
+            "text_response_part": {"text": "!", "type": "delta"}
+        },
+        {
+            "type": "agent_chat_response_part",
+            "text_response_part": {"text": "", "type": "stop"}
+        },
+    ]
+    mock_ws = create_mock_websocket(messages)
+    mock_client = MagicMock()
+    mock_client._client_wrapper.get_base_url.return_value = "https://api.elevenlabs.io"
+
+    chat_response_parts = []
+
+    def chat_response_callback(text: str, part_type: AgentChatResponsePartType):
+        chat_response_parts.append((text, part_type))
+
+    # Setup the conversation
+    conversation = Conversation(
+        client=mock_client,
+        agent_id=TEST_AGENT_ID,
+        requires_auth=False,
+        audio_interface=MockAudioInterface(),
+        callback_agent_chat_response_part=chat_response_callback,
+    )
+
+    # Run the test
+    with patch("elevenlabs.conversational_ai.conversation.connect") as mock_connect:
+        mock_connect.return_value.__enter__.return_value = mock_ws
+        conversation.start_session()
+
+        # Wait for callbacks to be called
+        timeout = 5
+        start_time = time.time()
+        while len(chat_response_parts) < 5 and time.time() - start_time < timeout:
+            time.sleep(0.1)
+
+        conversation.end_session()
+        conversation.wait_for_session_end()
+
+    # Assertions
+    assert len(chat_response_parts) == 5
+    assert chat_response_parts[0] == ("", AgentChatResponsePartType.START)
+    assert chat_response_parts[1] == ("Hello", AgentChatResponsePartType.DELTA)
+    assert chat_response_parts[2] == (" there", AgentChatResponsePartType.DELTA)
+    assert chat_response_parts[3] == ("!", AgentChatResponsePartType.DELTA)
+    assert chat_response_parts[4] == ("", AgentChatResponsePartType.STOP)
