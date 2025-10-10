@@ -32,11 +32,8 @@ class ClientToOrchestratorEvent(str, Enum):
 
 
 class AgentChatResponsePartType(str, Enum):
-    # Indicates the start of a new agent text response stream
     START = "start"
-    # Contains a chunk of text from the ongoing agent response stream
     DELTA = "delta"
-    # Indicates the end of the agent text response stream
     STOP = "stop"
 
 
