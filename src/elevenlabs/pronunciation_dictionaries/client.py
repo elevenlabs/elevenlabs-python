@@ -51,7 +51,7 @@ class PronunciationDictionariesClient:
         self,
         *,
         name: str,
-        file: typing.Optional[core.File] = OMIT,
+        file: core.File,
         description: typing.Optional[str] = OMIT,
         workspace_access: typing.Optional[PronunciationDictionariesCreateFromFileRequestWorkspaceAccess] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -64,7 +64,7 @@ class PronunciationDictionariesClient:
         name : str
             The name of the pronunciation dictionary, used for identification only.
 
-        file : typing.Optional[core.File]
+        file : core.File
             See core.File for more documentation
 
         description : typing.Optional[str]
@@ -371,7 +371,7 @@ class AsyncPronunciationDictionariesClient:
         self,
         *,
         name: str,
-        file: typing.Optional[core.File] = OMIT,
+        file: core.File,
         description: typing.Optional[str] = OMIT,
         workspace_access: typing.Optional[PronunciationDictionariesCreateFromFileRequestWorkspaceAccess] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -384,7 +384,7 @@ class AsyncPronunciationDictionariesClient:
         name : str
             The name of the pronunciation dictionary, used for identification only.
 
-        file : typing.Optional[core.File]
+        file : core.File
             See core.File for more documentation
 
         description : typing.Optional[str]

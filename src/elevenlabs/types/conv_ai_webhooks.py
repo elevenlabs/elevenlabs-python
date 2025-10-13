@@ -5,13 +5,19 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .webhook_event_type import WebhookEventType
 
 
 class ConvAiWebhooks(UncheckedBaseModel):
     post_call_webhook_id: typing.Optional[str] = None
+    events: typing.Optional[typing.List[WebhookEventType]] = pydantic.Field(default=None)
+    """
+    List of event types to send via webhook. Options: transcript, audio, call_initiation_failure.
+    """
+
     send_audio: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Whether to send audio data with post-call webhooks for ConvAI conversations
+    DEPRECATED: Use 'events' field instead. Whether to send audio data with post-call webhooks for ConvAI conversations
     """
 
     if IS_PYDANTIC_V2:

@@ -44,7 +44,7 @@ class CompositionPlanClient:
             A simple text prompt to compose a plan from.
 
         music_length_ms : typing.Optional[int]
-            The length of the composition plan to generate in milliseconds. Must be between 10000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
+            The length of the composition plan to generate in milliseconds. Must be between 3000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
         source_composition_plan : typing.Optional[MusicPrompt]
             An optional composition plan to use as a source for the new composition plan.
@@ -114,7 +114,7 @@ class AsyncCompositionPlanClient:
             A simple text prompt to compose a plan from.
 
         music_length_ms : typing.Optional[int]
-            The length of the composition plan to generate in milliseconds. Must be between 10000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
+            The length of the composition plan to generate in milliseconds. Must be between 3000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
         source_composition_plan : typing.Optional[MusicPrompt]
             An optional composition plan to use as a source for the new composition plan.

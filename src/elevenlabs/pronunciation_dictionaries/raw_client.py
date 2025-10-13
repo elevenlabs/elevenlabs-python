@@ -42,7 +42,7 @@ class RawPronunciationDictionariesClient:
         self,
         *,
         name: str,
-        file: typing.Optional[core.File] = OMIT,
+        file: core.File,
         description: typing.Optional[str] = OMIT,
         workspace_access: typing.Optional[PronunciationDictionariesCreateFromFileRequestWorkspaceAccess] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -55,7 +55,7 @@ class RawPronunciationDictionariesClient:
         name : str
             The name of the pronunciation dictionary, used for identification only.
 
-        file : typing.Optional[core.File]
+        file : core.File
             See core.File for more documentation
 
         description : typing.Optional[str]
@@ -81,7 +81,7 @@ class RawPronunciationDictionariesClient:
                 "workspace_access": workspace_access,
             },
             files={
-                **({"file": file} if file is not None else {}),
+                "file": file,
             },
             request_options=request_options,
             omit=OMIT,
@@ -454,7 +454,7 @@ class AsyncRawPronunciationDictionariesClient:
         self,
         *,
         name: str,
-        file: typing.Optional[core.File] = OMIT,
+        file: core.File,
         description: typing.Optional[str] = OMIT,
         workspace_access: typing.Optional[PronunciationDictionariesCreateFromFileRequestWorkspaceAccess] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -467,7 +467,7 @@ class AsyncRawPronunciationDictionariesClient:
         name : str
             The name of the pronunciation dictionary, used for identification only.
 
-        file : typing.Optional[core.File]
+        file : core.File
             See core.File for more documentation
 
         description : typing.Optional[str]
@@ -493,7 +493,7 @@ class AsyncRawPronunciationDictionariesClient:
                 "workspace_access": workspace_access,
             },
             files={
-                **({"file": file} if file is not None else {}),
+                "file": file,
             },
             request_options=request_options,
             omit=OMIT,
