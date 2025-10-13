@@ -2,50 +2,18 @@
 
 # isort: skip_file
 
-import typing
-from importlib import import_module
-
-if typing.TYPE_CHECKING:
-    from .body_create_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_post_permissions import (
-        BodyCreateServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysPostPermissions,
-    )
-    from .body_create_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_post_permissions_item import (
-        BodyCreateServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysPostPermissionsItem,
-    )
-    from .body_edit_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_api_key_id_patch_permissions import (
-        BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissions,
-    )
-    from .body_edit_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_api_key_id_patch_permissions_item import (
-        BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissionsItem,
-    )
-_dynamic_imports: typing.Dict[str, str] = {
-    "BodyCreateServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysPostPermissions": ".body_create_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_post_permissions",
-    "BodyCreateServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysPostPermissionsItem": ".body_create_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_post_permissions_item",
-    "BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissions": ".body_edit_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_api_key_id_patch_permissions",
-    "BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissionsItem": ".body_edit_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_api_key_id_patch_permissions_item",
-}
-
-
-def __getattr__(attr_name: str) -> typing.Any:
-    module_name = _dynamic_imports.get(attr_name)
-    if module_name is None:
-        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
-    try:
-        module = import_module(module_name, __package__)
-        if module_name == f".{attr_name}":
-            return module
-        else:
-            return getattr(module, attr_name)
-    except ImportError as e:
-        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
-    except AttributeError as e:
-        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
-
-
-def __dir__():
-    lazy_attrs = list(_dynamic_imports.keys())
-    return sorted(lazy_attrs)
-
+from .body_create_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_post_permissions import (
+    BodyCreateServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysPostPermissions,
+)
+from .body_create_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_post_permissions_item import (
+    BodyCreateServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysPostPermissionsItem,
+)
+from .body_edit_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_api_key_id_patch_permissions import (
+    BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissions,
+)
+from .body_edit_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_api_key_id_patch_permissions_item import (
+    BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissionsItem,
+)
 
 __all__ = [
     "BodyCreateServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysPostPermissions",

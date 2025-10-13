@@ -13,6 +13,11 @@ class PromptAgentApiModelOverrideConfig(UncheckedBaseModel):
     Whether to allow overriding the prompt field.
     """
 
+    llm: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to allow overriding the llm field.
+    """
+
     native_mcp_server_ids: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether to allow overriding the native_mcp_server_ids field.

@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .section_source import SectionSource
 
 
 class SongSection(UncheckedBaseModel):
@@ -31,6 +32,11 @@ class SongSection(UncheckedBaseModel):
     lines: typing.List[str] = pydantic.Field()
     """
     The lyrics of the section.
+    """
+
+    source_from: typing.Optional[SectionSource] = pydantic.Field(default=None)
+    """
+    Optional source to extract the section from. Used for inpainting. Only available to enterprise clients with access to the inpainting API.
     """
 
     if IS_PYDANTIC_V2:
