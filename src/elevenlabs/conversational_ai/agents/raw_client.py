@@ -15,6 +15,7 @@ from ...types.adhoc_agent_config_override_for_test_request_model import AdhocAge
 from ...types.agent_platform_settings_request_model import AgentPlatformSettingsRequestModel
 from ...types.agent_simulated_chat_test_response_model import AgentSimulatedChatTestResponseModel
 from ...types.agent_sort_by import AgentSortBy
+from ...types.agent_workflow_request_model import AgentWorkflowRequestModel
 from ...types.conversation_simulation_specification import ConversationSimulationSpecification
 from ...types.conversational_config import ConversationalConfig
 from ...types.create_agent_response_model import CreateAgentResponseModel
@@ -39,7 +40,7 @@ class RawAgentsClient:
         *,
         conversation_config: ConversationalConfig,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
-        workflow: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -55,7 +56,8 @@ class RawAgentsClient:
         platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
             Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
 
-        workflow : typing.Optional[typing.Optional[typing.Any]]
+        workflow : typing.Optional[AgentWorkflowRequestModel]
+            Workflow for the agent. This is used to define the flow of the conversation and how the agent interacts with tools.
 
         name : typing.Optional[str]
             A name to make the agent easier to find
@@ -81,7 +83,9 @@ class RawAgentsClient:
                 "platform_settings": convert_and_respect_annotation_metadata(
                     object_=platform_settings, annotation=AgentPlatformSettingsRequestModel, direction="write"
                 ),
-                "workflow": workflow,
+                "workflow": convert_and_respect_annotation_metadata(
+                    object_=workflow, annotation=AgentWorkflowRequestModel, direction="write"
+                ),
                 "name": name,
                 "tags": tags,
             },
@@ -118,7 +122,11 @@ class RawAgentsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
-        self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        agent_id: str,
+        *,
+        version_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetAgentResponseModel]:
         """
         Retrieve config for an agent
@@ -127,6 +135,9 @@ class RawAgentsClient:
         ----------
         agent_id : str
             The id of an agent. This is returned on agent creation.
+
+        version_id : typing.Optional[str]
+            The ID of the agent version to use
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -139,6 +150,9 @@ class RawAgentsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
             method="GET",
+            params={
+                "version_id": version_id,
+            },
             request_options=request_options,
         )
         try:
@@ -213,7 +227,7 @@ class RawAgentsClient:
         *,
         conversation_config: typing.Optional[ConversationalConfig] = OMIT,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
-        workflow: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -232,7 +246,8 @@ class RawAgentsClient:
         platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
             Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
 
-        workflow : typing.Optional[typing.Optional[typing.Any]]
+        workflow : typing.Optional[AgentWorkflowRequestModel]
+            Workflow for the agent. This is used to define the flow of the conversation and how the agent interacts with tools.
 
         name : typing.Optional[str]
             A name to make the agent easier to find
@@ -258,7 +273,9 @@ class RawAgentsClient:
                 "platform_settings": convert_and_respect_annotation_metadata(
                     object_=platform_settings, annotation=AgentPlatformSettingsRequestModel, direction="write"
                 ),
-                "workflow": workflow,
+                "workflow": convert_and_respect_annotation_metadata(
+                    object_=workflow, annotation=AgentWorkflowRequestModel, direction="write"
+                ),
                 "name": name,
                 "tags": tags,
             },
@@ -671,7 +688,7 @@ class AsyncRawAgentsClient:
         *,
         conversation_config: ConversationalConfig,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
-        workflow: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -687,7 +704,8 @@ class AsyncRawAgentsClient:
         platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
             Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
 
-        workflow : typing.Optional[typing.Optional[typing.Any]]
+        workflow : typing.Optional[AgentWorkflowRequestModel]
+            Workflow for the agent. This is used to define the flow of the conversation and how the agent interacts with tools.
 
         name : typing.Optional[str]
             A name to make the agent easier to find
@@ -713,7 +731,9 @@ class AsyncRawAgentsClient:
                 "platform_settings": convert_and_respect_annotation_metadata(
                     object_=platform_settings, annotation=AgentPlatformSettingsRequestModel, direction="write"
                 ),
-                "workflow": workflow,
+                "workflow": convert_and_respect_annotation_metadata(
+                    object_=workflow, annotation=AgentWorkflowRequestModel, direction="write"
+                ),
                 "name": name,
                 "tags": tags,
             },
@@ -750,7 +770,11 @@ class AsyncRawAgentsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
-        self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        agent_id: str,
+        *,
+        version_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetAgentResponseModel]:
         """
         Retrieve config for an agent
@@ -759,6 +783,9 @@ class AsyncRawAgentsClient:
         ----------
         agent_id : str
             The id of an agent. This is returned on agent creation.
+
+        version_id : typing.Optional[str]
+            The ID of the agent version to use
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -771,6 +798,9 @@ class AsyncRawAgentsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
             method="GET",
+            params={
+                "version_id": version_id,
+            },
             request_options=request_options,
         )
         try:
@@ -847,7 +877,7 @@ class AsyncRawAgentsClient:
         *,
         conversation_config: typing.Optional[ConversationalConfig] = OMIT,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
-        workflow: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -866,7 +896,8 @@ class AsyncRawAgentsClient:
         platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
             Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
 
-        workflow : typing.Optional[typing.Optional[typing.Any]]
+        workflow : typing.Optional[AgentWorkflowRequestModel]
+            Workflow for the agent. This is used to define the flow of the conversation and how the agent interacts with tools.
 
         name : typing.Optional[str]
             A name to make the agent easier to find
@@ -892,7 +923,9 @@ class AsyncRawAgentsClient:
                 "platform_settings": convert_and_respect_annotation_metadata(
                     object_=platform_settings, annotation=AgentPlatformSettingsRequestModel, direction="write"
                 ),
-                "workflow": workflow,
+                "workflow": convert_and_respect_annotation_metadata(
+                    object_=workflow, annotation=AgentWorkflowRequestModel, direction="write"
+                ),
                 "name": name,
                 "tags": tags,
             },

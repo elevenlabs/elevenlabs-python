@@ -47,6 +47,7 @@ class MusicClient:
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         respect_sections_durations: typing.Optional[bool] = OMIT,
+        store_for_inpainting: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -67,7 +68,7 @@ class MusicClient:
             A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
 
         music_length_ms : typing.Optional[int]
-            The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 10000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
+            The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
         model_id : typing.Optional[typing.Literal["music_v1"]]
             The model to use for the generation.
@@ -80,6 +81,9 @@ class MusicClient:
 
         respect_sections_durations : typing.Optional[bool]
             Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan`. When set to true, the model will precisely respect each section's `duration_ms` from the plan. When set to false, the model may adjust individual section durations which will generally lead to better generation quality and improved latency, while always preserving the total song duration from the plan.
+
+        store_for_inpainting : typing.Optional[bool]
+            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting API.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -108,6 +112,7 @@ class MusicClient:
             seed=seed,
             force_instrumental=force_instrumental,
             respect_sections_durations=respect_sections_durations,
+            store_for_inpainting=store_for_inpainting,
             request_options=request_options,
         ) as r:
             yield from r.data
@@ -123,6 +128,7 @@ class MusicClient:
         model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
+        store_for_inpainting: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -143,7 +149,7 @@ class MusicClient:
             A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
 
         music_length_ms : typing.Optional[int]
-            The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 10000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
+            The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
         model_id : typing.Optional[typing.Literal["music_v1"]]
             The model to use for the generation.
@@ -153,6 +159,9 @@ class MusicClient:
 
         force_instrumental : typing.Optional[bool]
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+
+        store_for_inpainting : typing.Optional[bool]
+            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting API.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -180,6 +189,7 @@ class MusicClient:
             model_id=model_id,
             seed=seed,
             force_instrumental=force_instrumental,
+            store_for_inpainting=store_for_inpainting,
             request_options=request_options,
         ) as r:
             yield from r.data
@@ -195,6 +205,7 @@ class MusicClient:
         model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
+        store_for_inpainting: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -215,7 +226,7 @@ class MusicClient:
             A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
 
         music_length_ms : typing.Optional[int]
-            The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 10000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
+            The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
         model_id : typing.Optional[typing.Literal["music_v1"]]
             The model to use for the generation.
@@ -225,6 +236,9 @@ class MusicClient:
 
         force_instrumental : typing.Optional[bool]
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+
+        store_for_inpainting : typing.Optional[bool]
+            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting API.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -252,6 +266,7 @@ class MusicClient:
             model_id=model_id,
             seed=seed,
             force_instrumental=force_instrumental,
+            store_for_inpainting=store_for_inpainting,
             request_options=request_options,
         ) as r:
             yield from r.data
@@ -294,6 +309,7 @@ class AsyncMusicClient:
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         respect_sections_durations: typing.Optional[bool] = OMIT,
+        store_for_inpainting: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -314,7 +330,7 @@ class AsyncMusicClient:
             A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
 
         music_length_ms : typing.Optional[int]
-            The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 10000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
+            The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
         model_id : typing.Optional[typing.Literal["music_v1"]]
             The model to use for the generation.
@@ -327,6 +343,9 @@ class AsyncMusicClient:
 
         respect_sections_durations : typing.Optional[bool]
             Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan`. When set to true, the model will precisely respect each section's `duration_ms` from the plan. When set to false, the model may adjust individual section durations which will generally lead to better generation quality and improved latency, while always preserving the total song duration from the plan.
+
+        store_for_inpainting : typing.Optional[bool]
+            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting API.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -363,6 +382,7 @@ class AsyncMusicClient:
             seed=seed,
             force_instrumental=force_instrumental,
             respect_sections_durations=respect_sections_durations,
+            store_for_inpainting=store_for_inpainting,
             request_options=request_options,
         ) as r:
             async for _chunk in r.data:
@@ -379,6 +399,7 @@ class AsyncMusicClient:
         model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
+        store_for_inpainting: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -399,7 +420,7 @@ class AsyncMusicClient:
             A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
 
         music_length_ms : typing.Optional[int]
-            The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 10000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
+            The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
         model_id : typing.Optional[typing.Literal["music_v1"]]
             The model to use for the generation.
@@ -409,6 +430,9 @@ class AsyncMusicClient:
 
         force_instrumental : typing.Optional[bool]
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+
+        store_for_inpainting : typing.Optional[bool]
+            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting API.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -444,6 +468,7 @@ class AsyncMusicClient:
             model_id=model_id,
             seed=seed,
             force_instrumental=force_instrumental,
+            store_for_inpainting=store_for_inpainting,
             request_options=request_options,
         ) as r:
             async for _chunk in r.data:
@@ -460,6 +485,7 @@ class AsyncMusicClient:
         model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
+        store_for_inpainting: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -480,7 +506,7 @@ class AsyncMusicClient:
             A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
 
         music_length_ms : typing.Optional[int]
-            The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 10000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
+            The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
         model_id : typing.Optional[typing.Literal["music_v1"]]
             The model to use for the generation.
@@ -490,6 +516,9 @@ class AsyncMusicClient:
 
         force_instrumental : typing.Optional[bool]
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+
+        store_for_inpainting : typing.Optional[bool]
+            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting API.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -525,6 +554,7 @@ class AsyncMusicClient:
             model_id=model_id,
             seed=seed,
             force_instrumental=force_instrumental,
+            store_for_inpainting=store_for_inpainting,
             request_options=request_options,
         ) as r:
             async for _chunk in r.data:

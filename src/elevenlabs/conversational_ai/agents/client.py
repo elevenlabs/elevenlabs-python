@@ -10,6 +10,7 @@ from ...types.adhoc_agent_config_override_for_test_request_model import AdhocAge
 from ...types.agent_platform_settings_request_model import AgentPlatformSettingsRequestModel
 from ...types.agent_simulated_chat_test_response_model import AgentSimulatedChatTestResponseModel
 from ...types.agent_sort_by import AgentSortBy
+from ...types.agent_workflow_request_model import AgentWorkflowRequestModel
 from ...types.conversation_simulation_specification import ConversationSimulationSpecification
 from ...types.conversational_config import ConversationalConfig
 from ...types.create_agent_response_model import CreateAgentResponseModel
@@ -55,7 +56,7 @@ class AgentsClient:
         *,
         conversation_config: ConversationalConfig,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
-        workflow: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -71,7 +72,8 @@ class AgentsClient:
         platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
             Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
 
-        workflow : typing.Optional[typing.Optional[typing.Any]]
+        workflow : typing.Optional[AgentWorkflowRequestModel]
+            Workflow for the agent. This is used to define the flow of the conversation and how the agent interacts with tools.
 
         name : typing.Optional[str]
             A name to make the agent easier to find
@@ -108,7 +110,13 @@ class AgentsClient:
         )
         return _response.data
 
-    def get(self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetAgentResponseModel:
+    def get(
+        self,
+        agent_id: str,
+        *,
+        version_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetAgentResponseModel:
         """
         Retrieve config for an agent
 
@@ -116,6 +124,9 @@ class AgentsClient:
         ----------
         agent_id : str
             The id of an agent. This is returned on agent creation.
+
+        version_id : typing.Optional[str]
+            The ID of the agent version to use
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -133,10 +144,11 @@ class AgentsClient:
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.agents.get(
-            agent_id="21m00Tcm4TlvDq8ikWAM",
+            agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+            version_id="version_id",
         )
         """
-        _response = self._raw_client.get(agent_id, request_options=request_options)
+        _response = self._raw_client.get(agent_id, version_id=version_id, request_options=request_options)
         return _response.data
 
     def delete(self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
@@ -163,7 +175,7 @@ class AgentsClient:
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.agents.delete(
-            agent_id="21m00Tcm4TlvDq8ikWAM",
+            agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
         )
         """
         _response = self._raw_client.delete(agent_id, request_options=request_options)
@@ -175,7 +187,7 @@ class AgentsClient:
         *,
         conversation_config: typing.Optional[ConversationalConfig] = OMIT,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
-        workflow: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -194,7 +206,8 @@ class AgentsClient:
         platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
             Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
 
-        workflow : typing.Optional[typing.Optional[typing.Any]]
+        workflow : typing.Optional[AgentWorkflowRequestModel]
+            Workflow for the agent. This is used to define the flow of the conversation and how the agent interacts with tools.
 
         name : typing.Optional[str]
             A name to make the agent easier to find
@@ -218,7 +231,7 @@ class AgentsClient:
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.agents.update(
-            agent_id="21m00Tcm4TlvDq8ikWAM",
+            agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
         )
         """
         _response = self._raw_client.update(
@@ -329,7 +342,7 @@ class AgentsClient:
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.agents.duplicate(
-            agent_id="21m00Tcm4TlvDq8ikWAM",
+            agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
         )
         """
         _response = self._raw_client.duplicate(agent_id, name=name, request_options=request_options)
@@ -381,7 +394,7 @@ class AgentsClient:
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.agents.simulate_conversation(
-            agent_id="21m00Tcm4TlvDq8ikWAM",
+            agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
             simulation_specification=ConversationSimulationSpecification(
                 simulated_user_config=AgentConfig(
                     first_message="Hello, how can I help you today?",
@@ -445,7 +458,7 @@ class AgentsClient:
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.agents.simulate_conversation_stream(
-            agent_id="21m00Tcm4TlvDq8ikWAM",
+            agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
             simulation_specification=ConversationSimulationSpecification(
                 simulated_user_config=AgentConfig(
                     first_message="Hello, how can I help you today?",
@@ -502,7 +515,7 @@ class AgentsClient:
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.agents.run_tests(
-            agent_id="21m00Tcm4TlvDq8ikWAM",
+            agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
             tests=[
                 SingleTestRunRequestModel(
                     test_id="test_id",
@@ -573,7 +586,7 @@ class AsyncAgentsClient:
         *,
         conversation_config: ConversationalConfig,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
-        workflow: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -589,7 +602,8 @@ class AsyncAgentsClient:
         platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
             Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
 
-        workflow : typing.Optional[typing.Optional[typing.Any]]
+        workflow : typing.Optional[AgentWorkflowRequestModel]
+            Workflow for the agent. This is used to define the flow of the conversation and how the agent interacts with tools.
 
         name : typing.Optional[str]
             A name to make the agent easier to find
@@ -635,7 +649,11 @@ class AsyncAgentsClient:
         return _response.data
 
     async def get(
-        self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        agent_id: str,
+        *,
+        version_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> GetAgentResponseModel:
         """
         Retrieve config for an agent
@@ -644,6 +662,9 @@ class AsyncAgentsClient:
         ----------
         agent_id : str
             The id of an agent. This is returned on agent creation.
+
+        version_id : typing.Optional[str]
+            The ID of the agent version to use
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -666,13 +687,14 @@ class AsyncAgentsClient:
 
         async def main() -> None:
             await client.conversational_ai.agents.get(
-                agent_id="21m00Tcm4TlvDq8ikWAM",
+                agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+                version_id="version_id",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get(agent_id, request_options=request_options)
+        _response = await self._raw_client.get(agent_id, version_id=version_id, request_options=request_options)
         return _response.data
 
     async def delete(self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
@@ -704,7 +726,7 @@ class AsyncAgentsClient:
 
         async def main() -> None:
             await client.conversational_ai.agents.delete(
-                agent_id="21m00Tcm4TlvDq8ikWAM",
+                agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
             )
 
 
@@ -719,7 +741,7 @@ class AsyncAgentsClient:
         *,
         conversation_config: typing.Optional[ConversationalConfig] = OMIT,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
-        workflow: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -738,7 +760,8 @@ class AsyncAgentsClient:
         platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
             Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
 
-        workflow : typing.Optional[typing.Optional[typing.Any]]
+        workflow : typing.Optional[AgentWorkflowRequestModel]
+            Workflow for the agent. This is used to define the flow of the conversation and how the agent interacts with tools.
 
         name : typing.Optional[str]
             A name to make the agent easier to find
@@ -767,7 +790,7 @@ class AsyncAgentsClient:
 
         async def main() -> None:
             await client.conversational_ai.agents.update(
-                agent_id="21m00Tcm4TlvDq8ikWAM",
+                agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
             )
 
 
@@ -894,7 +917,7 @@ class AsyncAgentsClient:
 
         async def main() -> None:
             await client.conversational_ai.agents.duplicate(
-                agent_id="21m00Tcm4TlvDq8ikWAM",
+                agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
             )
 
 
@@ -954,7 +977,7 @@ class AsyncAgentsClient:
 
         async def main() -> None:
             await client.conversational_ai.agents.simulate_conversation(
-                agent_id="21m00Tcm4TlvDq8ikWAM",
+                agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
                 simulation_specification=ConversationSimulationSpecification(
                     simulated_user_config=AgentConfig(
                         first_message="Hello, how can I help you today?",
@@ -1026,7 +1049,7 @@ class AsyncAgentsClient:
 
         async def main() -> None:
             await client.conversational_ai.agents.simulate_conversation_stream(
-                agent_id="21m00Tcm4TlvDq8ikWAM",
+                agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
                 simulation_specification=ConversationSimulationSpecification(
                     simulated_user_config=AgentConfig(
                         first_message="Hello, how can I help you today?",
@@ -1091,7 +1114,7 @@ class AsyncAgentsClient:
 
         async def main() -> None:
             await client.conversational_ai.agents.run_tests(
-                agent_id="21m00Tcm4TlvDq8ikWAM",
+                agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
                 tests=[
                     SingleTestRunRequestModel(
                         test_id="test_id",

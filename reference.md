@@ -881,14 +881,6 @@ Defaults to None.
 <dl>
 <dd>
 
-**hcaptcha_token:** `typing.Optional[str]` — HCaptcha token used to prevent spam, generated on the frontend either automatically or when the client solves the hCapctha challenge.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
     
 </dd>
@@ -1093,14 +1085,6 @@ Defaults to None.
 <dd>
 
 **apply_language_text_normalization:** `typing.Optional[bool]` — This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**hcaptcha_token:** `typing.Optional[str]` — HCaptcha token used to prevent spam, generated on the frontend either automatically or when the client solves the hCapctha challenge.
     
 </dd>
 </dl>
@@ -1318,14 +1302,6 @@ Defaults to None.
 <dl>
 <dd>
 
-**hcaptcha_token:** `typing.Optional[str]` — HCaptcha token used to prevent spam, generated on the frontend either automatically or when the client solves the hCapctha challenge.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
     
 </dd>
@@ -1531,14 +1507,6 @@ Defaults to None.
 <dd>
 
 **apply_language_text_normalization:** `typing.Optional[bool]` — This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**hcaptcha_token:** `typing.Optional[str]` — HCaptcha token used to prevent spam, generated on the frontend either automatically or when the client solves the hCapctha challenge.
     
 </dd>
 </dl>
@@ -4073,7 +4041,7 @@ client.dubbing.create()
 
 **file:** `from __future__ import annotations
 
-typing.Optional[core.File]` — See core.File for more documentation
+core.File` — See core.File for more documentation
     
 </dd>
 </dl>
@@ -4083,7 +4051,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 
 **csv_file:** `from __future__ import annotations
 
-typing.Optional[core.File]` — See core.File for more documentation
+core.File` — See core.File for more documentation
     
 </dd>
 </dl>
@@ -4093,7 +4061,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 
 **foreground_audio_file:** `from __future__ import annotations
 
-typing.Optional[core.File]` — See core.File for more documentation
+core.File` — See core.File for more documentation
     
 </dd>
 </dl>
@@ -4103,7 +4071,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 
 **background_audio_file:** `from __future__ import annotations
 
-typing.Optional[core.File]` — See core.File for more documentation
+core.File` — See core.File for more documentation
     
 </dd>
 </dl>
@@ -4616,6 +4584,14 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
+**pronunciation_dictionary_locators:** `typing.Optional[typing.List[str]]` — A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text. A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -4980,7 +4956,7 @@ client.pronunciation_dictionaries.create_from_file(
 
 **file:** `from __future__ import annotations
 
-typing.Optional[core.File]` — See core.File for more documentation
+core.File` — See core.File for more documentation
     
 </dd>
 </dl>
@@ -5651,7 +5627,9 @@ client.speech_to_text.convert(
 <dl>
 <dd>
 
-**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. This will mean log and transcript storage features are unavailable for this request. Zero retention mode may only be used by enterprise customers.
+**file:** `from __future__ import annotations
+
+core.File` — See core.File for more documentation
     
 </dd>
 </dl>
@@ -5659,9 +5637,7 @@ client.speech_to_text.convert(
 <dl>
 <dd>
 
-**file:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. This will mean log and transcript storage features are unavailable for this request. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -6277,7 +6253,7 @@ client.music.compose()
 <dl>
 <dd>
 
-**music_length_ms:** `typing.Optional[int]` — The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 10000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
+**music_length_ms:** `typing.Optional[int]` — The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
     
 </dd>
 </dl>
@@ -6310,6 +6286,14 @@ client.music.compose()
 <dd>
 
 **respect_sections_durations:** `typing.Optional[bool]` — Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan`. When set to true, the model will precisely respect each section's `duration_ms` from the plan. When set to false, the model may adjust individual section durations which will generally lead to better generation quality and improved latency, while always preserving the total song duration from the plan.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting API.
     
 </dd>
 </dl>
@@ -6409,7 +6393,7 @@ client.music.compose_detailed()
 <dl>
 <dd>
 
-**music_length_ms:** `typing.Optional[int]` — The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 10000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
+**music_length_ms:** `typing.Optional[int]` — The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
     
 </dd>
 </dl>
@@ -6434,6 +6418,14 @@ client.music.compose_detailed()
 <dd>
 
 **force_instrumental:** `typing.Optional[bool]` — If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting API.
     
 </dd>
 </dl>
@@ -6533,7 +6525,7 @@ client.music.stream()
 <dl>
 <dd>
 
-**music_length_ms:** `typing.Optional[int]` — The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 10000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
+**music_length_ms:** `typing.Optional[int]` — The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
     
 </dd>
 </dl>
@@ -6558,6 +6550,14 @@ client.music.stream()
 <dd>
 
 **force_instrumental:** `typing.Optional[bool]` — If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting API.
     
 </dd>
 </dl>
@@ -7173,7 +7173,7 @@ client.conversational_ai.agents.create(
 <dl>
 <dd>
 
-**workflow:** `typing.Optional[typing.Optional[typing.Any]]` 
+**workflow:** `typing.Optional[AgentWorkflowRequestModel]` — Workflow for the agent. This is used to define the flow of the conversation and how the agent interacts with tools.
     
 </dd>
 </dl>
@@ -7242,7 +7242,8 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.get(
-    agent_id="21m00Tcm4TlvDq8ikWAM",
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    version_id="version_id",
 )
 
 ```
@@ -7260,6 +7261,14 @@ client.conversational_ai.agents.get(
 <dd>
 
 **agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version_id:** `typing.Optional[str]` — The ID of the agent version to use
     
 </dd>
 </dl>
@@ -7312,7 +7321,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.delete(
-    agent_id="21m00Tcm4TlvDq8ikWAM",
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
 )
 
 ```
@@ -7382,7 +7391,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.update(
-    agent_id="21m00Tcm4TlvDq8ikWAM",
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
 )
 
 ```
@@ -7423,7 +7432,7 @@ client.conversational_ai.agents.update(
 <dl>
 <dd>
 
-**workflow:** `typing.Optional[typing.Optional[typing.Any]]` 
+**workflow:** `typing.Optional[AgentWorkflowRequestModel]` — Workflow for the agent. This is used to define the flow of the conversation and how the agent interacts with tools.
     
 </dd>
 </dl>
@@ -7598,7 +7607,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.duplicate(
-    agent_id="21m00Tcm4TlvDq8ikWAM",
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
 )
 
 ```
@@ -7680,7 +7689,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.simulate_conversation(
-    agent_id="21m00Tcm4TlvDq8ikWAM",
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     simulation_specification=ConversationSimulationSpecification(
         simulated_user_config=AgentConfig(
             first_message="Hello, how can I help you today?",
@@ -7785,7 +7794,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.simulate_conversation_stream(
-    agent_id="21m00Tcm4TlvDq8ikWAM",
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     simulation_specification=ConversationSimulationSpecification(
         simulated_user_config=AgentConfig(
             first_message="Hello, how can I help you today?",
@@ -7886,7 +7895,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.run_tests(
-    agent_id="21m00Tcm4TlvDq8ikWAM",
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     tests=[
         SingleTestRunRequestModel(
             test_id="test_id",
@@ -10924,7 +10933,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.widget.get(
-    agent_id="21m00Tcm4TlvDq8ikWAM",
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     conversation_signature="conversation_signature",
 )
 
@@ -11004,7 +11013,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.link.get(
-    agent_id="21m00Tcm4TlvDq8ikWAM",
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
 )
 
 ```
@@ -11241,7 +11250,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.widget.avatar.create(
-    agent_id="21m00Tcm4TlvDq8ikWAM",
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
 )
 
 ```
@@ -14155,7 +14164,7 @@ client.music.composition_plan.create(
 <dl>
 <dd>
 
-**music_length_ms:** `typing.Optional[int]` — The length of the composition plan to generate in milliseconds. Must be between 10000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
+**music_length_ms:** `typing.Optional[int]` — The length of the composition plan to generate in milliseconds. Must be between 3000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
     
 </dd>
 </dl>
@@ -14982,6 +14991,16 @@ client.studio.projects.create(
 <dl>
 <dd>
 
+**from_document:** `from __future__ import annotations
+
+core.File` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **default_title_voice_id:** `typing.Optional[str]` — The voice_id that corresponds to the default voice used for new titles.
     
 </dd>
@@ -15007,16 +15026,6 @@ client.studio.projects.create(
 <dd>
 
 **from_url:** `typing.Optional[str]` — An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' and 'from_content' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from_document:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
     
 </dd>
 </dl>
@@ -15779,7 +15788,9 @@ client.studio.projects.content.update(
 <dl>
 <dd>
 
-**from_url:** `typing.Optional[str]` — An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' and 'from_content' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
+**from_document:** `from __future__ import annotations
+
+core.File` — See core.File for more documentation
     
 </dd>
 </dl>
@@ -15787,9 +15798,7 @@ client.studio.projects.content.update(
 <dl>
 <dd>
 
-**from_document:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
+**from_url:** `typing.Optional[str]` — An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' and 'from_content' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
     
 </dd>
 </dl>

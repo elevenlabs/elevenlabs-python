@@ -41,8 +41,8 @@ class SpeechToTextClient:
         self,
         *,
         model_id: str,
+        file: core.File,
         enable_logging: typing.Optional[bool] = None,
-        file: typing.Optional[core.File] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         tag_audio_events: typing.Optional[bool] = OMIT,
         num_speakers: typing.Optional[int] = OMIT,
@@ -68,11 +68,11 @@ class SpeechToTextClient:
         model_id : str
             The ID of the model to use for transcription, currently only 'scribe_v1' and 'scribe_v1_experimental' are available.
 
+        file : core.File
+            See core.File for more documentation
+
         enable_logging : typing.Optional[bool]
             When enable_logging is set to false zero retention mode will be used for the request. This will mean log and transcript storage features are unavailable for this request. Zero retention mode may only be used by enterprise customers.
-
-        file : typing.Optional[core.File]
-            See core.File for more documentation
 
         language_code : typing.Optional[str]
             An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand. Defaults to null, in this case the language is predicted automatically.
@@ -141,8 +141,8 @@ class SpeechToTextClient:
         """
         _response = self._raw_client.convert(
             model_id=model_id,
-            enable_logging=enable_logging,
             file=file,
+            enable_logging=enable_logging,
             language_code=language_code,
             tag_audio_events=tag_audio_events,
             num_speakers=num_speakers,
@@ -192,8 +192,8 @@ class AsyncSpeechToTextClient:
         self,
         *,
         model_id: str,
+        file: core.File,
         enable_logging: typing.Optional[bool] = None,
-        file: typing.Optional[core.File] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         tag_audio_events: typing.Optional[bool] = OMIT,
         num_speakers: typing.Optional[int] = OMIT,
@@ -219,11 +219,11 @@ class AsyncSpeechToTextClient:
         model_id : str
             The ID of the model to use for transcription, currently only 'scribe_v1' and 'scribe_v1_experimental' are available.
 
+        file : core.File
+            See core.File for more documentation
+
         enable_logging : typing.Optional[bool]
             When enable_logging is set to false zero retention mode will be used for the request. This will mean log and transcript storage features are unavailable for this request. Zero retention mode may only be used by enterprise customers.
-
-        file : typing.Optional[core.File]
-            See core.File for more documentation
 
         language_code : typing.Optional[str]
             An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand. Defaults to null, in this case the language is predicted automatically.
@@ -300,8 +300,8 @@ class AsyncSpeechToTextClient:
         """
         _response = await self._raw_client.convert(
             model_id=model_id,
-            enable_logging=enable_logging,
             file=file,
+            enable_logging=enable_logging,
             language_code=language_code,
             tag_audio_events=tag_audio_events,
             num_speakers=num_speakers,
