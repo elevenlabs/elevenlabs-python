@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .async_conversation_metadata import AsyncConversationMetadata
 from .authorization_method import AuthorizationMethod
 from .conversation_charging_common_model import ConversationChargingCommonModel
 from .conversation_deletion_settings import ConversationDeletionSettings
@@ -12,6 +13,9 @@ from .conversation_history_batch_call_model import ConversationHistoryBatchCallM
 from .conversation_history_eleven_assistant_common_model import ConversationHistoryElevenAssistantCommonModel
 from .conversation_history_error_common_model import ConversationHistoryErrorCommonModel
 from .conversation_history_feedback_common_model import ConversationHistoryFeedbackCommonModel
+from .conversation_history_metadata_common_model_initiation_trigger import (
+    ConversationHistoryMetadataCommonModelInitiationTrigger,
+)
 from .conversation_history_metadata_common_model_phone_call import ConversationHistoryMetadataCommonModelPhoneCall
 from .conversation_history_rag_usage_common_model import ConversationHistoryRagUsageCommonModel
 from .conversation_initiation_source import ConversationInitiationSource
@@ -40,6 +44,8 @@ class ConversationHistoryMetadataCommonModel(UncheckedBaseModel):
     conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None
     conversation_initiation_source_version: typing.Optional[str] = None
     timezone: typing.Optional[str] = None
+    initiation_trigger: typing.Optional[ConversationHistoryMetadataCommonModelInitiationTrigger] = None
+    async_metadata: typing.Optional[AsyncConversationMetadata] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

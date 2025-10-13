@@ -9,6 +9,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_metadata_response_model import AgentMetadataResponseModel
 from .agent_platform_settings_response_model import AgentPlatformSettingsResponseModel
+from .agent_workflow_response_model import AgentWorkflowResponseModel
 from .conversational_config import ConversationalConfig
 from .get_agent_response_model_phone_numbers_item import GetAgentResponseModelPhoneNumbersItem
 from .resource_access_info import ResourceAccessInfo
@@ -45,7 +46,11 @@ class GetAgentResponseModel(UncheckedBaseModel):
     The phone numbers of the agent
     """
 
-    workflow: typing.Optional[typing.Optional[typing.Any]] = None
+    workflow: typing.Optional[AgentWorkflowResponseModel] = pydantic.Field(default=None)
+    """
+    The workflow of the agent
+    """
+
     access_info: typing.Optional[ResourceAccessInfo] = pydantic.Field(default=None)
     """
     The access information of the agent for the user
@@ -54,6 +59,11 @@ class GetAgentResponseModel(UncheckedBaseModel):
     tags: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     Agent tags used to categorize the agent
+    """
+
+    version_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    INTERNAL
     """
 
     if IS_PYDANTIC_V2:
@@ -68,5 +78,13 @@ class GetAgentResponseModel(UncheckedBaseModel):
 
 from .array_json_schema_property_output import ArrayJsonSchemaPropertyOutput  # noqa: E402, F401, I001
 from .object_json_schema_property_output import ObjectJsonSchemaPropertyOutput  # noqa: E402, F401, I001
+from .ast_and_operator_node_output import AstAndOperatorNodeOutput  # noqa: E402, F401, I001
+from .ast_equals_operator_node_output import AstEqualsOperatorNodeOutput  # noqa: E402, F401, I001
+from .ast_greater_than_operator_node_output import AstGreaterThanOperatorNodeOutput  # noqa: E402, F401, I001
+from .ast_greater_than_or_equals_operator_node_output import AstGreaterThanOrEqualsOperatorNodeOutput  # noqa: E402, F401, I001
+from .ast_less_than_operator_node_output import AstLessThanOperatorNodeOutput  # noqa: E402, F401, I001
+from .ast_less_than_or_equals_operator_node_output import AstLessThanOrEqualsOperatorNodeOutput  # noqa: E402, F401, I001
+from .ast_not_equals_operator_node_output import AstNotEqualsOperatorNodeOutput  # noqa: E402, F401, I001
+from .ast_or_operator_node_output import AstOrOperatorNodeOutput  # noqa: E402, F401, I001
 
 update_forward_refs(GetAgentResponseModel)

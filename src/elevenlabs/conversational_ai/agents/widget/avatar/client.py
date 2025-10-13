@@ -57,7 +57,7 @@ class AvatarClient:
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.agents.widget.avatar.create(
-            agent_id="21m00Tcm4TlvDq8ikWAM",
+            agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
         )
         """
         _response = self._raw_client.create(agent_id, avatar_file=avatar_file, request_options=request_options)
@@ -114,7 +114,7 @@ class AsyncAvatarClient:
 
         async def main() -> None:
             await client.conversational_ai.agents.widget.avatar.create(
-                agent_id="21m00Tcm4TlvDq8ikWAM",
+                agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
             )
 
 

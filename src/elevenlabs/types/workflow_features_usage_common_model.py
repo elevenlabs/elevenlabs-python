@@ -11,6 +11,9 @@ from .feature_status_common_model import FeatureStatusCommonModel
 class WorkflowFeaturesUsageCommonModel(UncheckedBaseModel):
     enabled: typing.Optional[bool] = None
     tool_node: typing.Optional[FeatureStatusCommonModel] = None
+    standalone_agent_node: typing.Optional[FeatureStatusCommonModel] = None
+    phone_number_node: typing.Optional[FeatureStatusCommonModel] = None
+    end_node: typing.Optional[FeatureStatusCommonModel] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

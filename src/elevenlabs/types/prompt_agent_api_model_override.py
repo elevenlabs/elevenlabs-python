@@ -5,12 +5,18 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .llm import Llm
 
 
 class PromptAgentApiModelOverride(UncheckedBaseModel):
     prompt: typing.Optional[str] = pydantic.Field(default=None)
     """
     The prompt for the agent
+    """
+
+    llm: typing.Optional[Llm] = pydantic.Field(default=None)
+    """
+    The LLM to query with the prompt and the chat history. If using data residency, the LLM must be supported in the data residency environment
     """
 
     native_mcp_server_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)

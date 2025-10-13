@@ -67,7 +67,6 @@ class TextToSpeechClient:
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToSpeechFullApplyTextNormalization] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
-        hcaptcha_token: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -133,9 +132,6 @@ class TextToSpeechClient:
         apply_language_text_normalization : typing.Optional[bool]
             This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
-        hcaptcha_token : typing.Optional[str]
-            HCaptcha token used to prevent spam, generated on the frontend either automatically or when the client solves the hCapctha challenge.
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -176,7 +172,6 @@ class TextToSpeechClient:
             use_pvc_as_ivc=use_pvc_as_ivc,
             apply_text_normalization=apply_text_normalization,
             apply_language_text_normalization=apply_language_text_normalization,
-            hcaptcha_token=hcaptcha_token,
             request_options=request_options,
         ) as r:
             yield from r.data
@@ -203,7 +198,6 @@ class TextToSpeechClient:
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToSpeechFullWithTimestampsApplyTextNormalization] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
-        hcaptcha_token: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AudioWithTimestampsResponse:
         """
@@ -269,9 +263,6 @@ class TextToSpeechClient:
         apply_language_text_normalization : typing.Optional[bool]
             This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
-        hcaptcha_token : typing.Optional[str]
-            HCaptcha token used to prevent spam, generated on the frontend either automatically or when the client solves the hCapctha challenge.
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -313,7 +304,6 @@ class TextToSpeechClient:
             use_pvc_as_ivc=use_pvc_as_ivc,
             apply_text_normalization=apply_text_normalization,
             apply_language_text_normalization=apply_language_text_normalization,
-            hcaptcha_token=hcaptcha_token,
             request_options=request_options,
         )
         return _response.data
@@ -340,7 +330,6 @@ class TextToSpeechClient:
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToSpeechStreamApplyTextNormalization] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
-        hcaptcha_token: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -406,9 +395,6 @@ class TextToSpeechClient:
         apply_language_text_normalization : typing.Optional[bool]
             This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
-        hcaptcha_token : typing.Optional[str]
-            HCaptcha token used to prevent spam, generated on the frontend either automatically or when the client solves the hCapctha challenge.
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -449,7 +435,6 @@ class TextToSpeechClient:
             use_pvc_as_ivc=use_pvc_as_ivc,
             apply_text_normalization=apply_text_normalization,
             apply_language_text_normalization=apply_language_text_normalization,
-            hcaptcha_token=hcaptcha_token,
             request_options=request_options,
         ) as r:
             yield from r.data
@@ -476,7 +461,6 @@ class TextToSpeechClient:
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToSpeechStreamWithTimestampsApplyTextNormalization] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
-        hcaptcha_token: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[StreamingAudioChunkWithTimestampsResponse]:
         """
@@ -542,9 +526,6 @@ class TextToSpeechClient:
         apply_language_text_normalization : typing.Optional[bool]
             This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
-        hcaptcha_token : typing.Optional[str]
-            HCaptcha token used to prevent spam, generated on the frontend either automatically or when the client solves the hCapctha challenge.
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -587,7 +568,6 @@ class TextToSpeechClient:
             use_pvc_as_ivc=use_pvc_as_ivc,
             apply_text_normalization=apply_text_normalization,
             apply_language_text_normalization=apply_language_text_normalization,
-            hcaptcha_token=hcaptcha_token,
             request_options=request_options,
         ) as r:
             yield from r.data
@@ -630,7 +610,6 @@ class AsyncTextToSpeechClient:
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToSpeechFullApplyTextNormalization] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
-        hcaptcha_token: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -696,9 +675,6 @@ class AsyncTextToSpeechClient:
         apply_language_text_normalization : typing.Optional[bool]
             This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
-        hcaptcha_token : typing.Optional[str]
-            HCaptcha token used to prevent spam, generated on the frontend either automatically or when the client solves the hCapctha challenge.
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -747,7 +723,6 @@ class AsyncTextToSpeechClient:
             use_pvc_as_ivc=use_pvc_as_ivc,
             apply_text_normalization=apply_text_normalization,
             apply_language_text_normalization=apply_language_text_normalization,
-            hcaptcha_token=hcaptcha_token,
             request_options=request_options,
         ) as r:
             async for _chunk in r.data:
@@ -775,7 +750,6 @@ class AsyncTextToSpeechClient:
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToSpeechFullWithTimestampsApplyTextNormalization] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
-        hcaptcha_token: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AudioWithTimestampsResponse:
         """
@@ -841,9 +815,6 @@ class AsyncTextToSpeechClient:
         apply_language_text_normalization : typing.Optional[bool]
             This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
-        hcaptcha_token : typing.Optional[str]
-            HCaptcha token used to prevent spam, generated on the frontend either automatically or when the client solves the hCapctha challenge.
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -893,7 +864,6 @@ class AsyncTextToSpeechClient:
             use_pvc_as_ivc=use_pvc_as_ivc,
             apply_text_normalization=apply_text_normalization,
             apply_language_text_normalization=apply_language_text_normalization,
-            hcaptcha_token=hcaptcha_token,
             request_options=request_options,
         )
         return _response.data
@@ -920,7 +890,6 @@ class AsyncTextToSpeechClient:
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToSpeechStreamApplyTextNormalization] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
-        hcaptcha_token: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -986,9 +955,6 @@ class AsyncTextToSpeechClient:
         apply_language_text_normalization : typing.Optional[bool]
             This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
-        hcaptcha_token : typing.Optional[str]
-            HCaptcha token used to prevent spam, generated on the frontend either automatically or when the client solves the hCapctha challenge.
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -1037,7 +1003,6 @@ class AsyncTextToSpeechClient:
             use_pvc_as_ivc=use_pvc_as_ivc,
             apply_text_normalization=apply_text_normalization,
             apply_language_text_normalization=apply_language_text_normalization,
-            hcaptcha_token=hcaptcha_token,
             request_options=request_options,
         ) as r:
             async for _chunk in r.data:
@@ -1065,7 +1030,6 @@ class AsyncTextToSpeechClient:
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToSpeechStreamWithTimestampsApplyTextNormalization] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
-        hcaptcha_token: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[StreamingAudioChunkWithTimestampsResponse]:
         """
@@ -1131,9 +1095,6 @@ class AsyncTextToSpeechClient:
         apply_language_text_normalization : typing.Optional[bool]
             This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
-        hcaptcha_token : typing.Optional[str]
-            HCaptcha token used to prevent spam, generated on the frontend either automatically or when the client solves the hCapctha challenge.
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1184,7 +1145,6 @@ class AsyncTextToSpeechClient:
             use_pvc_as_ivc=use_pvc_as_ivc,
             apply_text_normalization=apply_text_normalization,
             apply_language_text_normalization=apply_language_text_normalization,
-            hcaptcha_token=hcaptcha_token,
             request_options=request_options,
         ) as r:
             async for _chunk in r.data:

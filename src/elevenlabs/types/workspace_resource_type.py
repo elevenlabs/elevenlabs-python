@@ -17,6 +17,7 @@ WorkspaceResourceType = typing.Union[
         "workspace_auth_connections",
         "convai_phone_numbers",
         "convai_mcp_servers",
+        "convai_api_integration_connections",
         "convai_batch_calls",
         "convai_agent_response_tests",
         "convai_test_suite_invocations",

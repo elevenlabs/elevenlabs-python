@@ -10,6 +10,7 @@ from .chapter_response import ChapterResponse
 from .project_creation_meta_response_model import ProjectCreationMetaResponseModel
 from .project_extended_response_model_access_level import ProjectExtendedResponseModelAccessLevel
 from .project_extended_response_model_apply_text_normalization import ProjectExtendedResponseModelApplyTextNormalization
+from .project_extended_response_model_aspect_ratio import ProjectExtendedResponseModelAspectRatio
 from .project_extended_response_model_fiction import ProjectExtendedResponseModelFiction
 from .project_extended_response_model_quality_preset import ProjectExtendedResponseModelQualityPreset
 from .project_extended_response_model_source_type import ProjectExtendedResponseModelSourceType
@@ -173,6 +174,11 @@ class ProjectExtendedResponse(UncheckedBaseModel):
     public_share_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     The public share ID of the project.
+    """
+
+    aspect_ratio: typing.Optional[ProjectExtendedResponseModelAspectRatio] = pydantic.Field(default=None)
+    """
+    The aspect ratio of the project.
     """
 
     quality_preset: ProjectExtendedResponseModelQualityPreset = pydantic.Field()

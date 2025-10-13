@@ -2,4 +2,4 @@
 
 import typing
 
-SubscriptionResponseModelCurrency = typing.Union[typing.Literal["usd", "eur"], typing.Any]
+SubscriptionResponseModelCurrency = typing.Union[typing.Literal["usd", "eur", "inr"], typing.Any]

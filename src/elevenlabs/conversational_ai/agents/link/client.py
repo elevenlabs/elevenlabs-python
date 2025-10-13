@@ -50,7 +50,7 @@ class LinkClient:
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.agents.link.get(
-            agent_id="21m00Tcm4TlvDq8ikWAM",
+            agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
         )
         """
         _response = self._raw_client.get(agent_id, request_options=request_options)
@@ -104,7 +104,7 @@ class AsyncLinkClient:
 
         async def main() -> None:
             await client.conversational_ai.agents.link.get(
-                agent_id="21m00Tcm4TlvDq8ikWAM",
+                agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
             )
 
 
