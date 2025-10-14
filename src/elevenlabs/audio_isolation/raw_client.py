@@ -29,6 +29,7 @@ class RawAudioIsolationClient:
         *,
         audio: core.File,
         file_format: typing.Optional[AudioIsolationConvertRequestFileFormat] = OMIT,
+        preview_b_64: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
         """
@@ -41,6 +42,9 @@ class RawAudioIsolationClient:
 
         file_format : typing.Optional[AudioIsolationConvertRequestFileFormat]
             The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
+
+        preview_b_64 : typing.Optional[str]
+            Optional preview image base64 for tracking this generation.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -55,6 +59,7 @@ class RawAudioIsolationClient:
             method="POST",
             data={
                 "file_format": file_format,
+                "preview_b64": preview_b_64,
             },
             files={
                 "audio": audio,
@@ -172,6 +177,7 @@ class AsyncRawAudioIsolationClient:
         *,
         audio: core.File,
         file_format: typing.Optional[AudioIsolationConvertRequestFileFormat] = OMIT,
+        preview_b_64: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
         """
@@ -184,6 +190,9 @@ class AsyncRawAudioIsolationClient:
 
         file_format : typing.Optional[AudioIsolationConvertRequestFileFormat]
             The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
+
+        preview_b_64 : typing.Optional[str]
+            Optional preview image base64 for tracking this generation.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -198,6 +207,7 @@ class AsyncRawAudioIsolationClient:
             method="POST",
             data={
                 "file_format": file_format,
+                "preview_b64": preview_b_64,
             },
             files={
                 "audio": audio,

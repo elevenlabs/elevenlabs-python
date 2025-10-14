@@ -12,6 +12,7 @@ from .custom_llm import CustomLlm
 from .knowledge_base_locator import KnowledgeBaseLocator
 from .llm import Llm
 from .llm_reasoning_effort import LlmReasoningEffort
+from .prompt_agent_api_model_input_backup_llm_config import PromptAgentApiModelInputBackupLlmConfig
 from .prompt_agent_api_model_input_tools_item import PromptAgentApiModelInputToolsItem
 from .rag_config import RagConfig
 
@@ -30,6 +31,11 @@ class PromptAgentApiModelInput(UncheckedBaseModel):
     reasoning_effort: typing.Optional[LlmReasoningEffort] = pydantic.Field(default=None)
     """
     Reasoning effort of the model. Only available for some models.
+    """
+
+    thinking_budget: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Max number of tokens used for thinking. Use 0 to turn off if supported by the model.
     """
 
     temperature: typing.Optional[float] = pydantic.Field(default=None)
@@ -85,6 +91,11 @@ class PromptAgentApiModelInput(UncheckedBaseModel):
     timezone: typing.Optional[str] = pydantic.Field(default=None)
     """
     Timezone for displaying current time in system prompt. If set, the current time will be included in the system prompt using this timezone. Must be a valid timezone name (e.g., 'America/New_York', 'Europe/London', 'UTC').
+    """
+
+    backup_llm_config: typing.Optional[PromptAgentApiModelInputBackupLlmConfig] = pydantic.Field(default=None)
+    """
+    Configuration for backup LLM cascading. Can be disabled, use system defaults, or specify custom order.
     """
 
     tools: typing.Optional[typing.List[PromptAgentApiModelInputToolsItem]] = pydantic.Field(default=None)

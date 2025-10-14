@@ -115,10 +115,10 @@ class DubbingClient:
     def create(
         self,
         *,
-        file: typing.Optional[core.File] = OMIT,
-        csv_file: typing.Optional[core.File] = OMIT,
-        foreground_audio_file: typing.Optional[core.File] = OMIT,
-        background_audio_file: typing.Optional[core.File] = OMIT,
+        file: core.File,
+        csv_file: core.File,
+        foreground_audio_file: core.File,
+        background_audio_file: core.File,
         name: typing.Optional[str] = OMIT,
         source_url: typing.Optional[str] = OMIT,
         source_lang: typing.Optional[str] = OMIT,
@@ -142,16 +142,16 @@ class DubbingClient:
 
         Parameters
         ----------
-        file : typing.Optional[core.File]
+        file : core.File
             See core.File for more documentation
 
-        csv_file : typing.Optional[core.File]
+        csv_file : core.File
             See core.File for more documentation
 
-        foreground_audio_file : typing.Optional[core.File]
+        foreground_audio_file : core.File
             See core.File for more documentation
 
-        background_audio_file : typing.Optional[core.File]
+        background_audio_file : core.File
             See core.File for more documentation
 
         name : typing.Optional[str]
@@ -433,10 +433,10 @@ class AsyncDubbingClient:
     async def create(
         self,
         *,
-        file: typing.Optional[core.File] = OMIT,
-        csv_file: typing.Optional[core.File] = OMIT,
-        foreground_audio_file: typing.Optional[core.File] = OMIT,
-        background_audio_file: typing.Optional[core.File] = OMIT,
+        file: core.File,
+        csv_file: core.File,
+        foreground_audio_file: core.File,
+        background_audio_file: core.File,
         name: typing.Optional[str] = OMIT,
         source_url: typing.Optional[str] = OMIT,
         source_lang: typing.Optional[str] = OMIT,
@@ -460,16 +460,16 @@ class AsyncDubbingClient:
 
         Parameters
         ----------
-        file : typing.Optional[core.File]
+        file : core.File
             See core.File for more documentation
 
-        csv_file : typing.Optional[core.File]
+        csv_file : core.File
             See core.File for more documentation
 
-        foreground_audio_file : typing.Optional[core.File]
+        foreground_audio_file : core.File
             See core.File for more documentation
 
-        background_audio_file : typing.Optional[core.File]
+        background_audio_file : core.File
             See core.File for more documentation
 
         name : typing.Optional[str]

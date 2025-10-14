@@ -33,6 +33,7 @@ class AudioIsolationClient:
         *,
         audio: core.File,
         file_format: typing.Optional[AudioIsolationConvertRequestFileFormat] = OMIT,
+        preview_b_64: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -46,6 +47,9 @@ class AudioIsolationClient:
         file_format : typing.Optional[AudioIsolationConvertRequestFileFormat]
             The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
 
+        preview_b_64 : typing.Optional[str]
+            Optional preview image base64 for tracking this generation.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -54,7 +58,9 @@ class AudioIsolationClient:
         typing.Iterator[bytes]
             Successful Response
         """
-        with self._raw_client.convert(audio=audio, file_format=file_format, request_options=request_options) as r:
+        with self._raw_client.convert(
+            audio=audio, file_format=file_format, preview_b_64=preview_b_64, request_options=request_options
+        ) as r:
             yield from r.data
 
     def stream(
@@ -107,6 +113,7 @@ class AsyncAudioIsolationClient:
         *,
         audio: core.File,
         file_format: typing.Optional[AudioIsolationConvertRequestFileFormat] = OMIT,
+        preview_b_64: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -120,6 +127,9 @@ class AsyncAudioIsolationClient:
         file_format : typing.Optional[AudioIsolationConvertRequestFileFormat]
             The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
 
+        preview_b_64 : typing.Optional[str]
+            Optional preview image base64 for tracking this generation.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -128,7 +138,9 @@ class AsyncAudioIsolationClient:
         typing.AsyncIterator[bytes]
             Successful Response
         """
-        async with self._raw_client.convert(audio=audio, file_format=file_format, request_options=request_options) as r:
+        async with self._raw_client.convert(
+            audio=audio, file_format=file_format, preview_b_64=preview_b_64, request_options=request_options
+        ) as r:
             async for _chunk in r.data:
                 yield _chunk
 
