@@ -18,11 +18,6 @@ from .widget_config import WidgetConfig
 
 
 class AgentPlatformSettingsResponseModel(UncheckedBaseModel):
-    auth: typing.Optional[AuthSettings] = pydantic.Field(default=None)
-    """
-    Settings for authentication
-    """
-
     evaluation: typing.Optional[EvaluationSettings] = pydantic.Field(default=None)
     """
     Settings for evaluation
@@ -43,16 +38,6 @@ class AgentPlatformSettingsResponseModel(UncheckedBaseModel):
     Additional overrides for the agent during conversation initiation
     """
 
-    call_limits: typing.Optional[AgentCallLimits] = pydantic.Field(default=None)
-    """
-    Call limits for the agent
-    """
-
-    privacy: typing.Optional[PrivacyConfig] = pydantic.Field(default=None)
-    """
-    Privacy settings for the agent
-    """
-
     workspace_overrides: typing.Optional[AgentWorkspaceOverridesOutput] = pydantic.Field(default=None)
     """
     Workspace overrides for the agent
@@ -66,6 +51,21 @@ class AgentPlatformSettingsResponseModel(UncheckedBaseModel):
     archived: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether the agent is archived
+    """
+
+    auth: typing.Optional[AuthSettings] = pydantic.Field(default=None)
+    """
+    Settings for authentication
+    """
+
+    call_limits: typing.Optional[AgentCallLimits] = pydantic.Field(default=None)
+    """
+    Call limits for the agent
+    """
+
+    privacy: typing.Optional[PrivacyConfig] = pydantic.Field(default=None)
+    """
+    Privacy settings for the agent
     """
 
     safety: typing.Optional[SafetyResponseModel] = None

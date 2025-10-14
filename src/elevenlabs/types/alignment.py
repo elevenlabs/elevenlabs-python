@@ -24,8 +24,8 @@ class Alignment(UncheckedBaseModel):
     full audio response.
     """
 
-    chars_durations_ms: typing_extensions.Annotated[
-        typing.Optional[typing.List[int]], FieldMetadata(alias="charsDurationsMs")
+    char_durations_ms: typing_extensions.Annotated[
+        typing.Optional[typing.List[int]], FieldMetadata(alias="charDurationsMs")
     ] = pydantic.Field(default=None)
     """
     A list of durations (in milliseconds) for each character in the text as it
@@ -38,7 +38,7 @@ class Alignment(UncheckedBaseModel):
     """
     A list of characters in the text sequence. For instance, the first character is 'H'.
     Note that this list may contain spaces, punctuation, and other special characters.
-    The length of this list should be the same as the lengths of `charStartTimesMs` and `charsDurationsMs`.
+    The length of this list should be the same as the lengths of `charStartTimesMs` and `charDurationsMs`.
     """
 
     if IS_PYDANTIC_V2:
