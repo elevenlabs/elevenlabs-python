@@ -1,14 +1,14 @@
-import typing
 import os
-import httpx
-from functools import wraps
+import typing
 
-from .base_client import \
-  BaseElevenLabs, AsyncBaseElevenLabs
+import httpx
+
+from .base_client import AsyncBaseElevenLabs, BaseElevenLabs
 from .environment import ElevenLabsEnvironment
+from .music_custom import AsyncMusicClient, MusicClient
 from .realtime_tts import RealtimeTextToSpeechClient
-from .webhooks_custom import WebhooksClient, AsyncWebhooksClient
-from .music_custom import MusicClient, AsyncMusicClient
+from .speech_to_text_custom import AsyncSpeechToTextClient, SpeechToTextClient
+from .webhooks_custom import AsyncWebhooksClient, WebhooksClient
 
 
 # this is used as the default value for optional parameters
@@ -61,6 +61,7 @@ class ElevenLabs(BaseElevenLabs):
         self._text_to_speech = RealtimeTextToSpeechClient(client_wrapper=self._client_wrapper)
         self._webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
         self._music = MusicClient(client_wrapper=self._client_wrapper)
+        self._speech_to_text = SpeechToTextClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncElevenLabs(AsyncBaseElevenLabs):
@@ -105,3 +106,4 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
         )
         self._webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
         self._music = AsyncMusicClient(client_wrapper=self._client_wrapper)
+        self._speech_to_text = AsyncSpeechToTextClient(client_wrapper=self._client_wrapper)

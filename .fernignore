@@ -8,6 +8,8 @@ src/elevenlabs/realtime_tts.py
 src/elevenlabs/play.py
 src/elevenlabs/webhooks_custom.py
 src/elevenlabs/music_custom.py
+src/elevenlabs/speech_to_text_custom.py
+src/elevenlabs/realtime/
 
 # Ignore CI files
 .github/
