@@ -159,7 +159,7 @@ class ScribeRealtime:
 
     async def _connect_audio(self, options: RealtimeAudioOptions) -> RealtimeConnection:
         """Connect with manual audio chunk sending"""
-        model_id = options.get("model_id")
+        model_id = options["model_id"]
         audio_format = options.get("audio_format")
         sample_rate = options.get("sample_rate")
         commit_strategy = options.get("commit_strategy", CommitStrategy.MANUAL)
@@ -204,7 +204,7 @@ class ScribeRealtime:
 
     async def _connect_url(self, options: RealtimeUrlOptions) -> RealtimeConnection:
         """Connect with URL-based audio streaming using ffmpeg"""
-        model_id = options.get("model_id")
+        model_id = options["model_id"]
         url = options.get("url")
         commit_strategy = options.get("commit_strategy", CommitStrategy.MANUAL)
         vad_silence_threshold_secs = options.get("vad_silence_threshold_secs")
