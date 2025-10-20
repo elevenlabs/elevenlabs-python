@@ -61,11 +61,6 @@ class GetAgentResponseModel(UncheckedBaseModel):
     Agent tags used to categorize the agent
     """
 
-    version_id: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    INTERNAL
-    """
-
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
