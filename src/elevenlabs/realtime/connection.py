@@ -86,16 +86,13 @@ class RealtimeConnection:
                     data = json.loads(message)
                     message_type = data.get("message_type")
 
-                    if message_type == "session_started":
-                        self._emit(RealtimeEvents.SESSION_STARTED, data)
-                    elif message_type == "partial_transcript":
-                        self._emit(RealtimeEvents.PARTIAL_TRANSCRIPT, data)
-                    elif message_type == "final_transcript":
-                        self._emit(RealtimeEvents.FINAL_TRANSCRIPT, data)
-                    elif message_type == "error":
-                        self._emit(RealtimeEvents.ERROR, data)
-                    elif message_type == "final_transcript_with_timestamps":
-                        self._emit(RealtimeEvents.FINAL_TRANSCRIPT_WITH_TIMESTAMPS, data)
+                    # Try to match message_type to a known event
+                    try:
+                        event = RealtimeEvents(message_type)
+                        self._emit(event, data)
+                    except ValueError:
+                        # Unknown message type, ignore
+                        pass
                 except json.JSONDecodeError as e:
                     self._emit(RealtimeEvents.ERROR, {"error": f"Failed to parse message: {e}"})
         except Exception as e:
