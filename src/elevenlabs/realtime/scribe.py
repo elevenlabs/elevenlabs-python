@@ -90,16 +90,16 @@ class ScribeRealtime:
 
     Example (URL-based):
         ```python
-        scribe = ScribeRealtime(api_key="your-api-key")
-        connection = await scribe.connect({
+        connection = await elevenlabs.speech_to_text.realtime.connect({
+            "model_id": "scribe_realtime_v2",
             "url": "https://stream.example.com/audio.mp3"
         })
         ```
 
     Example (Manual chunks):
         ```python
-        scribe = ScribeRealtime(api_key="your-api-key")
-        connection = await scribe.connect({
+        connection = await elevenlabs.speech_to_text.realtime.connect({
+            "model_id": "scribe_realtime_v2",
             "audio_format": AudioFormat.PCM_16000,
             "sample_rate": 16000
         })
@@ -133,13 +133,14 @@ class ScribeRealtime:
         Example:
             ```python
             # URL-based streaming
-            connection = await scribe.connect({
+            connection = await elevenlabs.speech_to_text.realtime.connect({
+                "model_id": "scribe_realtime_v2",
                 "url": "https://stream.example.com/audio.mp3",
-                "commit_strategy": CommitStrategy.VAD
             })
 
             # Manual chunks
-            connection = await scribe.connect({
+            connection = await elevenlabs.speech_to_text.realtime.connect({
+                "model_id": "scribe_realtime_v2",
                 "audio_format": AudioFormat.PCM_16000,
                 "sample_rate": 16000,
                 "commit_strategy": CommitStrategy.MANUAL
