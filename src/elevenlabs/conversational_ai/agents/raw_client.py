@@ -122,11 +122,7 @@ class RawAgentsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
-        self,
-        agent_id: str,
-        *,
-        version_id: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetAgentResponseModel]:
         """
         Retrieve config for an agent
@@ -135,9 +131,6 @@ class RawAgentsClient:
         ----------
         agent_id : str
             The id of an agent. This is returned on agent creation.
-
-        version_id : typing.Optional[str]
-            The ID of the agent version to use
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -150,9 +143,6 @@ class RawAgentsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
             method="GET",
-            params={
-                "version_id": version_id,
-            },
             request_options=request_options,
         )
         try:
@@ -316,6 +306,7 @@ class RawAgentsClient:
         *,
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
+        archived: typing.Optional[bool] = None,
         sort_direction: typing.Optional[SortDirection] = None,
         sort_by: typing.Optional[AgentSortBy] = None,
         cursor: typing.Optional[str] = None,
@@ -331,6 +322,9 @@ class RawAgentsClient:
 
         search : typing.Optional[str]
             Search by agents name.
+
+        archived : typing.Optional[bool]
+            Filter agents by archived status
 
         sort_direction : typing.Optional[SortDirection]
             The direction to sort the results
@@ -355,6 +349,7 @@ class RawAgentsClient:
             params={
                 "page_size": page_size,
                 "search": search,
+                "archived": archived,
                 "sort_direction": sort_direction,
                 "sort_by": sort_by,
                 "cursor": cursor,
@@ -770,11 +765,7 @@ class AsyncRawAgentsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
-        self,
-        agent_id: str,
-        *,
-        version_id: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetAgentResponseModel]:
         """
         Retrieve config for an agent
@@ -783,9 +774,6 @@ class AsyncRawAgentsClient:
         ----------
         agent_id : str
             The id of an agent. This is returned on agent creation.
-
-        version_id : typing.Optional[str]
-            The ID of the agent version to use
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -798,9 +786,6 @@ class AsyncRawAgentsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
             method="GET",
-            params={
-                "version_id": version_id,
-            },
             request_options=request_options,
         )
         try:
@@ -966,6 +951,7 @@ class AsyncRawAgentsClient:
         *,
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
+        archived: typing.Optional[bool] = None,
         sort_direction: typing.Optional[SortDirection] = None,
         sort_by: typing.Optional[AgentSortBy] = None,
         cursor: typing.Optional[str] = None,
@@ -981,6 +967,9 @@ class AsyncRawAgentsClient:
 
         search : typing.Optional[str]
             Search by agents name.
+
+        archived : typing.Optional[bool]
+            Filter agents by archived status
 
         sort_direction : typing.Optional[SortDirection]
             The direction to sort the results
@@ -1005,6 +994,7 @@ class AsyncRawAgentsClient:
             params={
                 "page_size": page_size,
                 "search": search,
+                "archived": archived,
                 "sort_direction": sort_direction,
                 "sort_by": sort_by,
                 "cursor": cursor,

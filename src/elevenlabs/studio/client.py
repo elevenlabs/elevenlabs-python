@@ -49,6 +49,7 @@ class StudioClient:
         model_id: str,
         mode: BodyCreatePodcastV1StudioPodcastsPostMode,
         source: BodyCreatePodcastV1StudioPodcastsPostSource,
+        safety_identifier: typing.Optional[str] = None,
         quality_preset: typing.Optional[BodyCreatePodcastV1StudioPodcastsPostQualityPreset] = OMIT,
         duration_scale: typing.Optional[BodyCreatePodcastV1StudioPodcastsPostDurationScale] = OMIT,
         language: typing.Optional[str] = OMIT,
@@ -73,6 +74,9 @@ class StudioClient:
 
         source : BodyCreatePodcastV1StudioPodcastsPostSource
             The source content for the Podcast.
+
+        safety_identifier : typing.Optional[str]
+            Used for moderation. Your workspace must be allowlisted to use this feature.
 
         quality_preset : typing.Optional[BodyCreatePodcastV1StudioPodcastsPostQualityPreset]
             Output quality of the generated audio. Must be one of:
@@ -190,6 +194,7 @@ class StudioClient:
             api_key="YOUR_API_KEY",
         )
         client.studio.create_podcast(
+            safety_identifier="safety-identifier",
             model_id="eleven_multilingual_v2",
             mode=BodyCreatePodcastV1StudioPodcastsPostMode_Conversation(
                 conversation=PodcastConversationModeData(
@@ -206,6 +211,7 @@ class StudioClient:
             model_id=model_id,
             mode=mode,
             source=source,
+            safety_identifier=safety_identifier,
             quality_preset=quality_preset,
             duration_scale=duration_scale,
             language=language,
@@ -251,6 +257,7 @@ class AsyncStudioClient:
         model_id: str,
         mode: BodyCreatePodcastV1StudioPodcastsPostMode,
         source: BodyCreatePodcastV1StudioPodcastsPostSource,
+        safety_identifier: typing.Optional[str] = None,
         quality_preset: typing.Optional[BodyCreatePodcastV1StudioPodcastsPostQualityPreset] = OMIT,
         duration_scale: typing.Optional[BodyCreatePodcastV1StudioPodcastsPostDurationScale] = OMIT,
         language: typing.Optional[str] = OMIT,
@@ -275,6 +282,9 @@ class AsyncStudioClient:
 
         source : BodyCreatePodcastV1StudioPodcastsPostSource
             The source content for the Podcast.
+
+        safety_identifier : typing.Optional[str]
+            Used for moderation. Your workspace must be allowlisted to use this feature.
 
         quality_preset : typing.Optional[BodyCreatePodcastV1StudioPodcastsPostQualityPreset]
             Output quality of the generated audio. Must be one of:
@@ -397,6 +407,7 @@ class AsyncStudioClient:
 
         async def main() -> None:
             await client.studio.create_podcast(
+                safety_identifier="safety-identifier",
                 model_id="eleven_multilingual_v2",
                 mode=BodyCreatePodcastV1StudioPodcastsPostMode_Conversation(
                     conversation=PodcastConversationModeData(
@@ -416,6 +427,7 @@ class AsyncStudioClient:
             model_id=model_id,
             mode=mode,
             source=source,
+            safety_identifier=safety_identifier,
             quality_preset=quality_preset,
             duration_scale=duration_scale,
             language=language,

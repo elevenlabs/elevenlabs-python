@@ -11,6 +11,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .dynamic_variable_assignment import DynamicVariableAssignment
 from .dynamic_variables_config import DynamicVariablesConfig
 from .system_tool_config_output_params import SystemToolConfigOutputParams
+from .tool_execution_mode import ToolExecutionMode
 from .webhook_tool_api_schema_config_output import WebhookToolApiSchemaConfigOutput
 
 
@@ -29,6 +30,7 @@ class PromptAgentApiModelOutputToolsItem_Client(UncheckedBaseModel):
     parameters: typing.Optional["ObjectJsonSchemaPropertyOutput"] = None
     expects_response: typing.Optional[bool] = None
     dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
+    execution_mode: typing.Optional[ToolExecutionMode] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -91,6 +93,7 @@ class PromptAgentApiModelOutputToolsItem_Webhook(UncheckedBaseModel):
     assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = None
     api_schema: WebhookToolApiSchemaConfigOutput
     dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
+    execution_mode: typing.Optional[ToolExecutionMode] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

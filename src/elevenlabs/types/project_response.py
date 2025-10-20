@@ -31,6 +31,11 @@ class ProjectResponse(UncheckedBaseModel):
     The creation date of the project.
     """
 
+    created_by_user_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The user ID who created the project.
+    """
+
     default_title_voice_id: str = pydantic.Field()
     """
     The default title voice ID.

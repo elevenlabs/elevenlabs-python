@@ -3668,6 +3668,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.studio.create_podcast(
+    safety_identifier="safety-identifier",
     model_id="eleven_multilingual_v2",
     mode=BodyCreatePodcastV1StudioPodcastsPostMode_Conversation(
         conversation=PodcastConversationModeData(
@@ -3711,6 +3712,14 @@ client.studio.create_podcast(
 <dd>
 
 **source:** `BodyCreatePodcastV1StudioPodcastsPostSource` — The source content for the Podcast.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**safety_identifier:** `typing.Optional[str]` — Used for moderation. Your workspace must be allowlisted to use this feature.
     
 </dd>
 </dl>
@@ -7243,7 +7252,6 @@ client = ElevenLabs(
 )
 client.conversational_ai.agents.get(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
-    version_id="version_id",
 )
 
 ```
@@ -7261,14 +7269,6 @@ client.conversational_ai.agents.get(
 <dd>
 
 **agent_id:** `str` — The id of an agent. This is returned on agent creation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**version_id:** `typing.Optional[str]` — The ID of the agent version to use
     
 </dd>
 </dl>
@@ -7503,6 +7503,7 @@ client = ElevenLabs(
 client.conversational_ai.agents.list(
     page_size=1,
     search="search",
+    archived=True,
     sort_direction="asc",
     sort_by="name",
     cursor="cursor",
@@ -7531,6 +7532,14 @@ client.conversational_ai.agents.list(
 <dd>
 
 **search:** `typing.Optional[str]` — Search by agents name.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**archived:** `typing.Optional[bool]` — Filter agents by archived status
     
 </dd>
 </dl>

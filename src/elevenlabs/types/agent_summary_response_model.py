@@ -39,6 +39,11 @@ class AgentSummaryResponseModel(UncheckedBaseModel):
     The time of the most recent call in unix seconds, null if no calls have been made
     """
 
+    archived: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the agent is archived
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
