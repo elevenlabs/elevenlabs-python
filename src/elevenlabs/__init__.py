@@ -2964,8 +2964,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RealtimeEvents": ".realtime",
     "AudioFormat": ".realtime",
     "CommitStrategy": ".realtime",
-    "AudioOptions": ".realtime",
-    "UrlOptions": ".realtime",
+    "RealtimeAudioOptions": ".realtime",
+    "RealtimeUrlOptions": ".realtime",
 }
 
 
@@ -2995,7 +2995,7 @@ __all__ = [
     "AddKnowledgeBaseResponseModel",
     "AddProjectRequest",
     "AudioFormat",
-    "AudioOptions",
+    "RealtimeAudioOptions",
     "AddProjectResponseModel",
     "AddPronunciationDictionaryResponseModel",
     "AddPronunciationDictionaryResponseModelPermissionOnResource",
@@ -4249,7 +4249,7 @@ __all__ = [
     "UpdatePronunciationDictionariesRequest",
     "UpdateWorkspaceMemberResponseModel",
     "UrlAvatar",
-    "UrlOptions",
+    "RealtimeUrlOptions",
     "UsageAggregationInterval",
     "UsageCharactersResponseModel",
     "User",

@@ -12,6 +12,7 @@ class RealtimeEvents(str, Enum):
     SESSION_STARTED = "session_started"
     PARTIAL_TRANSCRIPT = "partial_transcript"
     FINAL_TRANSCRIPT = "final_transcript"
+    FINAL_TRANSCRIPT_WITH_TIMESTAMPS = "final_transcript_with_timestamps"
     ERROR = "error"
 
 
@@ -93,6 +94,8 @@ class RealtimeConnection:
                         self._emit(RealtimeEvents.FINAL_TRANSCRIPT, data)
                     elif message_type == "error":
                         self._emit(RealtimeEvents.ERROR, data)
+                    elif message_type == "final_transcript_with_timestamps":
+                        self._emit(RealtimeEvents.FINAL_TRANSCRIPT_WITH_TIMESTAMPS, data)
                 except json.JSONDecodeError as e:
                     self._emit(RealtimeEvents.ERROR, {"error": f"Failed to parse message: {e}"})
         except Exception as e:

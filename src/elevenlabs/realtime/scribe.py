@@ -34,11 +34,12 @@ class CommitStrategy(str, Enum):
     MANUAL = "manual"
 
 
-class AudioOptions(typing.TypedDict, total=False):
+class RealtimeAudioOptions(typing.TypedDict, total=False):
     """
     Options for providing audio chunks manually.
 
     Attributes:
+        model_id: The model ID to use for transcription (required)
         audio_format: The audio format (required)
         sample_rate: The sample rate in Hz (required)
         commit_strategy: Strategy for committing transcriptions (optional, defaults to MANUAL)
@@ -47,6 +48,7 @@ class AudioOptions(typing.TypedDict, total=False):
         min_speech_duration_ms: Minimum speech duration in milliseconds (must be between 50 and 2000)
         min_silence_duration_ms: Minimum silence duration in milliseconds (must be between 50 and 2000)
     """
+    model_id: str
     audio_format: AudioFormat
     sample_rate: int
     commit_strategy: CommitStrategy
@@ -56,11 +58,12 @@ class AudioOptions(typing.TypedDict, total=False):
     min_silence_duration_ms: int
 
 
-class UrlOptions(typing.TypedDict, total=False):
+class RealtimeUrlOptions(typing.TypedDict, total=False):
     """
     Options for streaming audio from a URL.
 
     Attributes:
+        model_id: The model ID to use for transcription (required)
         url: The URL of the audio stream (required)
         commit_strategy: Strategy for committing transcriptions (optional, defaults to MANUAL)
         vad_silence_threshold_secs: Silence threshold in seconds for VAD (must be between 0.3 and 3.0)
@@ -68,6 +71,7 @@ class UrlOptions(typing.TypedDict, total=False):
         min_speech_duration_ms: Minimum speech duration in milliseconds (must be between 50 and 2000)
         min_silence_duration_ms: Minimum silence duration in milliseconds (must be between 50 and 2000)
     """
+    model_id: str
     url: str
     commit_strategy: CommitStrategy
     vad_silence_threshold_secs: float
@@ -111,13 +115,13 @@ class ScribeRealtime:
 
     async def connect(
         self,
-        options: typing.Union[AudioOptions, UrlOptions]
+        options: typing.Union[RealtimeAudioOptions, RealtimeUrlOptions]
     ) -> RealtimeConnection:
         """
         Create a realtime transcription connection.
 
         Args:
-            options: Either AudioOptions for manual chunk sending or UrlOptions for URL streaming
+            options: Either RealtimeAudioOptions for manual chunk sending or RealtimeUrlOptions for URL streaming
 
         Returns:
             RealtimeConnection instance ready to send/receive data
@@ -145,13 +149,17 @@ class ScribeRealtime:
         # Determine if this is URL-based or manual mode
         is_url_mode = "url" in options
 
-        if is_url_mode:
-            return await self._connect_url(typing.cast(UrlOptions, options))
-        else:
-            return await self._connect_audio(typing.cast(AudioOptions, options))
+        if "model_id" not in options:
+            raise ValueError("model_id is required for realtime transcription")
 
-    async def _connect_audio(self, options: AudioOptions) -> RealtimeConnection:
+        if is_url_mode:
+            return await self._connect_url(typing.cast(RealtimeUrlOptions, options))
+        else:
+            return await self._connect_audio(typing.cast(RealtimeAudioOptions, options))
+
+    async def _connect_audio(self, options: RealtimeAudioOptions) -> RealtimeConnection:
         """Connect with manual audio chunk sending"""
+        model_id = options.get("model_id")
         audio_format = options.get("audio_format")
         sample_rate = options.get("sample_rate")
         commit_strategy = options.get("commit_strategy", CommitStrategy.MANUAL)
@@ -165,6 +173,7 @@ class ScribeRealtime:
 
         # Build WebSocket URL with query parameters
         ws_url = self._build_websocket_url(
+            model_id=model_id,
             encoding=audio_format.value,
             sample_rate=sample_rate,
             commit_strategy=commit_strategy.value,
@@ -193,8 +202,9 @@ class ScribeRealtime:
 
         return connection
 
-    async def _connect_url(self, options: UrlOptions) -> RealtimeConnection:
+    async def _connect_url(self, options: RealtimeUrlOptions) -> RealtimeConnection:
         """Connect with URL-based audio streaming using ffmpeg"""
+        model_id = options.get("model_id")
         url = options.get("url")
         commit_strategy = options.get("commit_strategy", CommitStrategy.MANUAL)
         vad_silence_threshold_secs = options.get("vad_silence_threshold_secs")
@@ -211,6 +221,7 @@ class ScribeRealtime:
 
         # Build WebSocket URL
         ws_url = self._build_websocket_url(
+            model_id=model_id,
             encoding=encoding,
             sample_rate=sample_rate,
             commit_strategy=commit_strategy.value,
@@ -312,6 +323,7 @@ class ScribeRealtime:
 
     def _build_websocket_url(
         self,
+        model_id: str,
         encoding: str,
         sample_rate: int,
         commit_strategy: str,
@@ -326,6 +338,7 @@ class ScribeRealtime:
 
         # Build query parameters
         params = [
+            f"model_id={model_id}",
             f"encoding={encoding}",
             f"sample_rate={sample_rate}",
             f"commit_strategy={commit_strategy}"
