@@ -218,6 +218,7 @@ class ScribeRealtime:
         vad_threshold = options.get("vad_threshold")
         min_speech_duration_ms = options.get("min_speech_duration_ms")
         min_silence_duration_ms = options.get("min_silence_duration_ms")
+        language_code = options.get("language_code")
 
         if not url:
             raise ValueError("url is required for URL mode")
@@ -235,7 +236,8 @@ class ScribeRealtime:
             vad_silence_threshold_secs=vad_silence_threshold_secs,
             vad_threshold=vad_threshold,
             min_speech_duration_ms=min_speech_duration_ms,
-            min_silence_duration_ms=min_silence_duration_ms
+            min_silence_duration_ms=min_silence_duration_ms,
+            language_code=language_code,
         )
 
         # Connect to WebSocket
@@ -337,7 +339,8 @@ class ScribeRealtime:
         vad_silence_threshold_secs: typing.Optional[float] = None,
         vad_threshold: typing.Optional[float] = None,
         min_speech_duration_ms: typing.Optional[int] = None,
-        min_silence_duration_ms: typing.Optional[int] = None
+        min_silence_duration_ms: typing.Optional[int] = None,
+        language_code: typing.Optional[str] = None
     ) -> str:
         """Build the WebSocket URL with query parameters"""
         # Extract base domain
@@ -360,6 +363,8 @@ class ScribeRealtime:
             params.append(f"min_speech_duration_ms={min_speech_duration_ms}")
         if min_silence_duration_ms is not None:
             params.append(f"min_silence_duration_ms={min_silence_duration_ms}")
+        if language_code is not None:
+            params.append(f"language_code={language_code}")
 
         query_string = "&".join(params)
         return f"{base}/v1/speech-to-text/realtime-beta?{query_string}"
