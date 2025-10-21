@@ -30,6 +30,7 @@ if typing.TYPE_CHECKING:
     from .agent_config_override_config import AgentConfigOverrideConfig
     from .agent_config_override_input import AgentConfigOverrideInput
     from .agent_config_override_output import AgentConfigOverrideOutput
+    from .agent_definition_source import AgentDefinitionSource
     from .agent_failure_response_example import AgentFailureResponseExample
     from .agent_metadata import AgentMetadata
     from .agent_metadata_response_model import AgentMetadataResponseModel
@@ -1321,6 +1322,7 @@ if typing.TYPE_CHECKING:
     from .token_response_model import TokenResponseModel
     from .tool import Tool
     from .tool_annotations import ToolAnnotations
+    from .tool_execution_mode import ToolExecutionMode
     from .tool_mock_config import ToolMockConfig
     from .tool_request_model import ToolRequestModel
     from .tool_request_model_tool_config import (
@@ -1434,20 +1436,7 @@ if typing.TYPE_CHECKING:
     from .webhook_usage_type import WebhookUsageType
     from .websocket_tts_client_message_multi import WebsocketTtsClientMessageMulti
     from .websocket_tts_server_message_multi import WebsocketTtsServerMessageMulti
-    from .whats_app_business_account import WhatsAppBusinessAccount
-    from .whats_app_business_account_changes_item import (
-        WhatsAppBusinessAccountChangesItem,
-        WhatsAppBusinessAccountChangesItem_Calls,
-        WhatsAppBusinessAccountChangesItem_Messages,
-    )
-    from .whats_app_call import WhatsAppCall
-    from .whats_app_call_direction import WhatsAppCallDirection
-    from .whats_app_calls import WhatsAppCalls
-    from .whats_app_change_calls import WhatsAppChangeCalls
-    from .whats_app_change_messages import WhatsAppChangeMessages
-    from .whats_app_event_request import WhatsAppEventRequest
-    from .whats_app_metadata import WhatsAppMetadata
-    from .whats_app_session import WhatsAppSession
+    from .whats_app_conversation_info import WhatsAppConversationInfo
     from .widget_config import WidgetConfig
     from .widget_config_input_avatar import (
         WidgetConfigInputAvatar,
@@ -1629,6 +1618,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentConfigOverrideConfig": ".agent_config_override_config",
     "AgentConfigOverrideInput": ".agent_config_override_input",
     "AgentConfigOverrideOutput": ".agent_config_override_output",
+    "AgentDefinitionSource": ".agent_definition_source",
     "AgentFailureResponseExample": ".agent_failure_response_example",
     "AgentMetadata": ".agent_metadata",
     "AgentMetadataResponseModel": ".agent_metadata_response_model",
@@ -2736,6 +2726,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TokenResponseModel": ".token_response_model",
     "Tool": ".tool",
     "ToolAnnotations": ".tool_annotations",
+    "ToolExecutionMode": ".tool_execution_mode",
     "ToolMockConfig": ".tool_mock_config",
     "ToolRequestModel": ".tool_request_model",
     "ToolRequestModelToolConfig": ".tool_request_model_tool_config",
@@ -2839,18 +2830,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WebhookUsageType": ".webhook_usage_type",
     "WebsocketTtsClientMessageMulti": ".websocket_tts_client_message_multi",
     "WebsocketTtsServerMessageMulti": ".websocket_tts_server_message_multi",
-    "WhatsAppBusinessAccount": ".whats_app_business_account",
-    "WhatsAppBusinessAccountChangesItem": ".whats_app_business_account_changes_item",
-    "WhatsAppBusinessAccountChangesItem_Calls": ".whats_app_business_account_changes_item",
-    "WhatsAppBusinessAccountChangesItem_Messages": ".whats_app_business_account_changes_item",
-    "WhatsAppCall": ".whats_app_call",
-    "WhatsAppCallDirection": ".whats_app_call_direction",
-    "WhatsAppCalls": ".whats_app_calls",
-    "WhatsAppChangeCalls": ".whats_app_change_calls",
-    "WhatsAppChangeMessages": ".whats_app_change_messages",
-    "WhatsAppEventRequest": ".whats_app_event_request",
-    "WhatsAppMetadata": ".whats_app_metadata",
-    "WhatsAppSession": ".whats_app_session",
+    "WhatsAppConversationInfo": ".whats_app_conversation_info",
     "WidgetConfig": ".widget_config",
     "WidgetConfigInputAvatar": ".widget_config_input_avatar",
     "WidgetConfigInputAvatar_Image": ".widget_config_input_avatar",
@@ -3026,6 +3006,7 @@ __all__ = [
     "AgentConfigOverrideConfig",
     "AgentConfigOverrideInput",
     "AgentConfigOverrideOutput",
+    "AgentDefinitionSource",
     "AgentFailureResponseExample",
     "AgentMetadata",
     "AgentMetadataResponseModel",
@@ -4133,6 +4114,7 @@ __all__ = [
     "TokenResponseModel",
     "Tool",
     "ToolAnnotations",
+    "ToolExecutionMode",
     "ToolMockConfig",
     "ToolRequestModel",
     "ToolRequestModelToolConfig",
@@ -4236,18 +4218,7 @@ __all__ = [
     "WebhookUsageType",
     "WebsocketTtsClientMessageMulti",
     "WebsocketTtsServerMessageMulti",
-    "WhatsAppBusinessAccount",
-    "WhatsAppBusinessAccountChangesItem",
-    "WhatsAppBusinessAccountChangesItem_Calls",
-    "WhatsAppBusinessAccountChangesItem_Messages",
-    "WhatsAppCall",
-    "WhatsAppCallDirection",
-    "WhatsAppCalls",
-    "WhatsAppChangeCalls",
-    "WhatsAppChangeMessages",
-    "WhatsAppEventRequest",
-    "WhatsAppMetadata",
-    "WhatsAppSession",
+    "WhatsAppConversationInfo",
     "WidgetConfig",
     "WidgetConfigInputAvatar",
     "WidgetConfigInputAvatar_Image",

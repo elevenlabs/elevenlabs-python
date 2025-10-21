@@ -9,6 +9,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .dynamic_variable_assignment import DynamicVariableAssignment
 from .dynamic_variables_config import DynamicVariablesConfig
+from .tool_execution_mode import ToolExecutionMode
 from .webhook_tool_api_schema_config_output import WebhookToolApiSchemaConfigOutput
 
 
@@ -51,6 +52,11 @@ class WebhookToolConfigOutput(UncheckedBaseModel):
     dynamic_variables: typing.Optional[DynamicVariablesConfig] = pydantic.Field(default=None)
     """
     Configuration for dynamic variables
+    """
+
+    execution_mode: typing.Optional[ToolExecutionMode] = pydantic.Field(default=None)
+    """
+    Determines when and how the tool executes: 'immediate' executes the tool right away when requested by the LLM, 'post_tool_speech' waits for the agent to finish speaking before executing, 'async' runs the tool in the background without blocking - best for long-running operations.
     """
 
     if IS_PYDANTIC_V2:

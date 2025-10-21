@@ -13,16 +13,6 @@ class CreateAgentResponseModel(UncheckedBaseModel):
     ID of the created agent
     """
 
-    main_branch_id: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    INTERNAL
-    """
-
-    initial_version_id: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    INTERNAL
-    """
-
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

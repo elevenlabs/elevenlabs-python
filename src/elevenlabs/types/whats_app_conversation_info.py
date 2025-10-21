@@ -3,22 +3,13 @@
 import typing
 
 import pydantic
-import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .whats_app_call_direction import WhatsAppCallDirection
-from .whats_app_session import WhatsAppSession
 
 
-class WhatsAppCall(UncheckedBaseModel):
-    id: str
-    event: str
-    from_: typing_extensions.Annotated[str, FieldMetadata(alias="from")]
-    to: str
-    direction: WhatsAppCallDirection
-    session: typing.Optional[WhatsAppSession] = None
-    status: typing.Optional[str] = None
+class WhatsAppConversationInfo(UncheckedBaseModel):
+    whatsapp_business_account_id: str
+    whatsapp_user_id: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

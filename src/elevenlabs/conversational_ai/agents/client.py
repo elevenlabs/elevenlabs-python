@@ -110,13 +110,7 @@ class AgentsClient:
         )
         return _response.data
 
-    def get(
-        self,
-        agent_id: str,
-        *,
-        version_id: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetAgentResponseModel:
+    def get(self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetAgentResponseModel:
         """
         Retrieve config for an agent
 
@@ -124,9 +118,6 @@ class AgentsClient:
         ----------
         agent_id : str
             The id of an agent. This is returned on agent creation.
-
-        version_id : typing.Optional[str]
-            The ID of the agent version to use
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -145,10 +136,9 @@ class AgentsClient:
         )
         client.conversational_ai.agents.get(
             agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
-            version_id="version_id",
         )
         """
-        _response = self._raw_client.get(agent_id, version_id=version_id, request_options=request_options)
+        _response = self._raw_client.get(agent_id, request_options=request_options)
         return _response.data
 
     def delete(self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
@@ -250,6 +240,7 @@ class AgentsClient:
         *,
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
+        archived: typing.Optional[bool] = None,
         sort_direction: typing.Optional[SortDirection] = None,
         sort_by: typing.Optional[AgentSortBy] = None,
         cursor: typing.Optional[str] = None,
@@ -265,6 +256,9 @@ class AgentsClient:
 
         search : typing.Optional[str]
             Search by agents name.
+
+        archived : typing.Optional[bool]
+            Filter agents by archived status
 
         sort_direction : typing.Optional[SortDirection]
             The direction to sort the results
@@ -293,6 +287,7 @@ class AgentsClient:
         client.conversational_ai.agents.list(
             page_size=1,
             search="search",
+            archived=True,
             sort_direction="asc",
             sort_by="name",
             cursor="cursor",
@@ -301,6 +296,7 @@ class AgentsClient:
         _response = self._raw_client.list(
             page_size=page_size,
             search=search,
+            archived=archived,
             sort_direction=sort_direction,
             sort_by=sort_by,
             cursor=cursor,
@@ -649,11 +645,7 @@ class AsyncAgentsClient:
         return _response.data
 
     async def get(
-        self,
-        agent_id: str,
-        *,
-        version_id: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetAgentResponseModel:
         """
         Retrieve config for an agent
@@ -662,9 +654,6 @@ class AsyncAgentsClient:
         ----------
         agent_id : str
             The id of an agent. This is returned on agent creation.
-
-        version_id : typing.Optional[str]
-            The ID of the agent version to use
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -688,13 +677,12 @@ class AsyncAgentsClient:
         async def main() -> None:
             await client.conversational_ai.agents.get(
                 agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
-                version_id="version_id",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get(agent_id, version_id=version_id, request_options=request_options)
+        _response = await self._raw_client.get(agent_id, request_options=request_options)
         return _response.data
 
     async def delete(self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
@@ -812,6 +800,7 @@ class AsyncAgentsClient:
         *,
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
+        archived: typing.Optional[bool] = None,
         sort_direction: typing.Optional[SortDirection] = None,
         sort_by: typing.Optional[AgentSortBy] = None,
         cursor: typing.Optional[str] = None,
@@ -827,6 +816,9 @@ class AsyncAgentsClient:
 
         search : typing.Optional[str]
             Search by agents name.
+
+        archived : typing.Optional[bool]
+            Filter agents by archived status
 
         sort_direction : typing.Optional[SortDirection]
             The direction to sort the results
@@ -860,6 +852,7 @@ class AsyncAgentsClient:
             await client.conversational_ai.agents.list(
                 page_size=1,
                 search="search",
+                archived=True,
                 sort_direction="asc",
                 sort_by="name",
                 cursor="cursor",
@@ -871,6 +864,7 @@ class AsyncAgentsClient:
         _response = await self._raw_client.list(
             page_size=page_size,
             search=search,
+            archived=archived,
             sort_direction=sort_direction,
             sort_by=sort_by,
             cursor=cursor,

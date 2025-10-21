@@ -38,6 +38,7 @@ class RawStudioClient:
         model_id: str,
         mode: BodyCreatePodcastV1StudioPodcastsPostMode,
         source: BodyCreatePodcastV1StudioPodcastsPostSource,
+        safety_identifier: typing.Optional[str] = None,
         quality_preset: typing.Optional[BodyCreatePodcastV1StudioPodcastsPostQualityPreset] = OMIT,
         duration_scale: typing.Optional[BodyCreatePodcastV1StudioPodcastsPostDurationScale] = OMIT,
         language: typing.Optional[str] = OMIT,
@@ -62,6 +63,9 @@ class RawStudioClient:
 
         source : BodyCreatePodcastV1StudioPodcastsPostSource
             The source content for the Podcast.
+
+        safety_identifier : typing.Optional[str]
+            Used for moderation. Your workspace must be allowlisted to use this feature.
 
         quality_preset : typing.Optional[BodyCreatePodcastV1StudioPodcastsPostQualityPreset]
             Output quality of the generated audio. Must be one of:
@@ -187,6 +191,7 @@ class RawStudioClient:
             },
             headers={
                 "content-type": "application/json",
+                "safety-identifier": str(safety_identifier) if safety_identifier is not None else None,
             },
             request_options=request_options,
             omit=OMIT,
@@ -228,6 +233,7 @@ class AsyncRawStudioClient:
         model_id: str,
         mode: BodyCreatePodcastV1StudioPodcastsPostMode,
         source: BodyCreatePodcastV1StudioPodcastsPostSource,
+        safety_identifier: typing.Optional[str] = None,
         quality_preset: typing.Optional[BodyCreatePodcastV1StudioPodcastsPostQualityPreset] = OMIT,
         duration_scale: typing.Optional[BodyCreatePodcastV1StudioPodcastsPostDurationScale] = OMIT,
         language: typing.Optional[str] = OMIT,
@@ -252,6 +258,9 @@ class AsyncRawStudioClient:
 
         source : BodyCreatePodcastV1StudioPodcastsPostSource
             The source content for the Podcast.
+
+        safety_identifier : typing.Optional[str]
+            Used for moderation. Your workspace must be allowlisted to use this feature.
 
         quality_preset : typing.Optional[BodyCreatePodcastV1StudioPodcastsPostQualityPreset]
             Output quality of the generated audio. Must be one of:
@@ -377,6 +386,7 @@ class AsyncRawStudioClient:
             },
             headers={
                 "content-type": "application/json",
+                "safety-identifier": str(safety_identifier) if safety_identifier is not None else None,
             },
             request_options=request_options,
             omit=OMIT,
