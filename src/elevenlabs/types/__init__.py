@@ -1057,9 +1057,6 @@ if typing.TYPE_CHECKING:
     from .model import Model
     from .model_rates_response_model import ModelRatesResponseModel
     from .model_settings_response_model import ModelSettingsResponseModel
-    from .moderation_status_response_model import ModerationStatusResponseModel
-    from .moderation_status_response_model_safety_status import ModerationStatusResponseModelSafetyStatus
-    from .moderation_status_response_model_warning_status import ModerationStatusResponseModelWarningStatus
     from .multichannel_speech_to_text_response_model import MultichannelSpeechToTextResponseModel
     from .multipart_music_response import MultipartMusicResponse
     from .music_prompt import MusicPrompt
@@ -1271,13 +1268,11 @@ if typing.TYPE_CHECKING:
     from .start_speaker_separation_response_model import StartSpeakerSeparationResponseModel
     from .streaming_audio_chunk_with_timestamps_response import StreamingAudioChunkWithTimestampsResponse
     from .subscription import Subscription
-    from .subscription_extras_response_model import SubscriptionExtrasResponseModel
     from .subscription_response import SubscriptionResponse
     from .subscription_response_model_billing_period import SubscriptionResponseModelBillingPeriod
     from .subscription_response_model_character_refresh_period import SubscriptionResponseModelCharacterRefreshPeriod
     from .subscription_response_model_currency import SubscriptionResponseModelCurrency
     from .subscription_status_type import SubscriptionStatusType
-    from .subscription_usage_response_model import SubscriptionUsageResponseModel
     from .supported_voice import SupportedVoice
     from .system_tool_config_input import SystemToolConfigInput
     from .system_tool_config_input_params import (
@@ -1322,6 +1317,8 @@ if typing.TYPE_CHECKING:
     from .token_response_model import TokenResponseModel
     from .tool import Tool
     from .tool_annotations import ToolAnnotations
+    from .tool_call_sound_behavior import ToolCallSoundBehavior
+    from .tool_call_sound_type import ToolCallSoundType
     from .tool_execution_mode import ToolExecutionMode
     from .tool_mock_config import ToolMockConfig
     from .tool_request_model import ToolRequestModel
@@ -2489,9 +2486,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Model": ".model",
     "ModelRatesResponseModel": ".model_rates_response_model",
     "ModelSettingsResponseModel": ".model_settings_response_model",
-    "ModerationStatusResponseModel": ".moderation_status_response_model",
-    "ModerationStatusResponseModelSafetyStatus": ".moderation_status_response_model_safety_status",
-    "ModerationStatusResponseModelWarningStatus": ".moderation_status_response_model_warning_status",
     "MultichannelSpeechToTextResponseModel": ".multichannel_speech_to_text_response_model",
     "MultipartMusicResponse": ".multipart_music_response",
     "MusicPrompt": ".music_prompt",
@@ -2679,13 +2673,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "StartSpeakerSeparationResponseModel": ".start_speaker_separation_response_model",
     "StreamingAudioChunkWithTimestampsResponse": ".streaming_audio_chunk_with_timestamps_response",
     "Subscription": ".subscription",
-    "SubscriptionExtrasResponseModel": ".subscription_extras_response_model",
     "SubscriptionResponse": ".subscription_response",
     "SubscriptionResponseModelBillingPeriod": ".subscription_response_model_billing_period",
     "SubscriptionResponseModelCharacterRefreshPeriod": ".subscription_response_model_character_refresh_period",
     "SubscriptionResponseModelCurrency": ".subscription_response_model_currency",
     "SubscriptionStatusType": ".subscription_status_type",
-    "SubscriptionUsageResponseModel": ".subscription_usage_response_model",
     "SupportedVoice": ".supported_voice",
     "SystemToolConfigInput": ".system_tool_config_input",
     "SystemToolConfigInputParams": ".system_tool_config_input_params",
@@ -2726,6 +2718,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TokenResponseModel": ".token_response_model",
     "Tool": ".tool",
     "ToolAnnotations": ".tool_annotations",
+    "ToolCallSoundBehavior": ".tool_call_sound_behavior",
+    "ToolCallSoundType": ".tool_call_sound_type",
     "ToolExecutionMode": ".tool_execution_mode",
     "ToolMockConfig": ".tool_mock_config",
     "ToolRequestModel": ".tool_request_model",
@@ -3877,9 +3871,6 @@ __all__ = [
     "Model",
     "ModelRatesResponseModel",
     "ModelSettingsResponseModel",
-    "ModerationStatusResponseModel",
-    "ModerationStatusResponseModelSafetyStatus",
-    "ModerationStatusResponseModelWarningStatus",
     "MultichannelSpeechToTextResponseModel",
     "MultipartMusicResponse",
     "MusicPrompt",
@@ -4067,13 +4058,11 @@ __all__ = [
     "StartSpeakerSeparationResponseModel",
     "StreamingAudioChunkWithTimestampsResponse",
     "Subscription",
-    "SubscriptionExtrasResponseModel",
     "SubscriptionResponse",
     "SubscriptionResponseModelBillingPeriod",
     "SubscriptionResponseModelCharacterRefreshPeriod",
     "SubscriptionResponseModelCurrency",
     "SubscriptionStatusType",
-    "SubscriptionUsageResponseModel",
     "SupportedVoice",
     "SystemToolConfigInput",
     "SystemToolConfigInputParams",
@@ -4114,6 +4103,8 @@ __all__ = [
     "TokenResponseModel",
     "Tool",
     "ToolAnnotations",
+    "ToolCallSoundBehavior",
+    "ToolCallSoundType",
     "ToolExecutionMode",
     "ToolMockConfig",
     "ToolRequestModel",

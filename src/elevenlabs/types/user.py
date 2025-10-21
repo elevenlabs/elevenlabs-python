@@ -5,7 +5,6 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .subscription_extras_response_model import SubscriptionExtrasResponseModel
 from .subscription_response import SubscriptionResponse
 
 
@@ -18,11 +17,6 @@ class User(UncheckedBaseModel):
     subscription: SubscriptionResponse = pydantic.Field()
     """
     Details of the user's subscription.
-    """
-
-    subscription_extras: typing.Optional[SubscriptionExtrasResponseModel] = pydantic.Field(default=None)
-    """
-    Optional additional details about the user's subscription.
     """
 
     is_new_user: bool = pydantic.Field()
