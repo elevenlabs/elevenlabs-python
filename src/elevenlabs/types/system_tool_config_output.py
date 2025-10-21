@@ -7,6 +7,8 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .dynamic_variable_assignment import DynamicVariableAssignment
 from .system_tool_config_output_params import SystemToolConfigOutputParams
+from .tool_call_sound_behavior import ToolCallSoundBehavior
+from .tool_call_sound_type import ToolCallSoundType
 
 
 class SystemToolConfigOutput(UncheckedBaseModel):
@@ -38,6 +40,16 @@ class SystemToolConfigOutput(UncheckedBaseModel):
     assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = pydantic.Field(default=None)
     """
     Configuration for extracting values from tool responses and assigning them to dynamic variables
+    """
+
+    tool_call_sound: typing.Optional[ToolCallSoundType] = pydantic.Field(default=None)
+    """
+    Predefined tool call sound type to play during tool execution. If not specified, no tool call sound will be played.
+    """
+
+    tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = pydantic.Field(default=None)
+    """
+    Determines when the tool call sound should play. 'auto' only plays when there's pre-tool speech, 'always' plays for every tool call.
     """
 
     params: SystemToolConfigOutputParams
