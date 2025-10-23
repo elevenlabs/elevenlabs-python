@@ -28,4 +28,15 @@ class ObjectJsonSchemaPropertyInput(UncheckedBaseModel):
 from .array_json_schema_property_input import ArrayJsonSchemaPropertyInput  # noqa: E402, F401, I001
 from .object_json_schema_property_input_properties_value import ObjectJsonSchemaPropertyInputPropertiesValue  # noqa: E402, F401, I001
 
-update_forward_refs(ObjectJsonSchemaPropertyInput)
+# update_forward_refs(ObjectJsonSchemaPropertyInput)  # Moved to _update_forward_refs_once()
+
+
+# Lazy forward reference resolution to avoid circular import issues
+_forward_refs_updated = False
+
+def _update_forward_refs_once():
+    """Update forward references after all types are imported."""
+    global _forward_refs_updated
+    if not _forward_refs_updated:
+        _forward_refs_updated = True
+        update_forward_refs(ObjectJsonSchemaPropertyInput)

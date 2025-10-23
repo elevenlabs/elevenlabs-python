@@ -30,14 +30,25 @@ class AstEqualsOperatorNodeInput(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .ast_and_operator_node_input import AstAndOperatorNodeInput  # noqa: E402, F401, I001
-from .ast_greater_than_operator_node_input import AstGreaterThanOperatorNodeInput  # noqa: E402, F401, I001
-from .ast_greater_than_or_equals_operator_node_input import AstGreaterThanOrEqualsOperatorNodeInput  # noqa: E402, F401, I001
-from .ast_less_than_operator_node_input import AstLessThanOperatorNodeInput  # noqa: E402, F401, I001
-from .ast_less_than_or_equals_operator_node_input import AstLessThanOrEqualsOperatorNodeInput  # noqa: E402, F401, I001
-from .ast_not_equals_operator_node_input import AstNotEqualsOperatorNodeInput  # noqa: E402, F401, I001
-from .ast_or_operator_node_input import AstOrOperatorNodeInput  # noqa: E402, F401, I001
-from .ast_equals_operator_node_input_left import AstEqualsOperatorNodeInputLeft  # noqa: E402, F401, I001
-from .ast_equals_operator_node_input_right import AstEqualsOperatorNodeInputRight  # noqa: E402, F401, I001
+# Circular import removed: from .ast_and_operator_node_input import AstAndOperatorNodeInput  # noqa: E402, F401, I001
+# Circular import removed: from .ast_greater_than_operator_node_input import AstGreaterThanOperatorNodeInput  # noqa: E402, F401, I001
+# Circular import removed: from .ast_greater_than_or_equals_operator_node_input import AstGreaterThanOrEqualsOperatorNodeInput  # noqa: E402, F401, I001
+# Circular import removed: from .ast_less_than_operator_node_input import AstLessThanOperatorNodeInput  # noqa: E402, F401, I001
+# Circular import removed: from .ast_less_than_or_equals_operator_node_input import AstLessThanOrEqualsOperatorNodeInput  # noqa: E402, F401, I001
+# Circular import removed: from .ast_not_equals_operator_node_input import AstNotEqualsOperatorNodeInput  # noqa: E402, F401, I001
+# Circular import removed: from .ast_or_operator_node_input import AstOrOperatorNodeInput  # noqa: E402, F401, I001
+# Circular import removed: from .ast_equals_operator_node_input_left import AstEqualsOperatorNodeInputLeft  # noqa: E402, F401, I001
+# Circular import removed: from .ast_equals_operator_node_input_right import AstEqualsOperatorNodeInputRight  # noqa: E402, F401, I001
 
-update_forward_refs(AstEqualsOperatorNodeInput)
+# update_forward_refs(AstEqualsOperatorNodeInput)  # Moved to _update_forward_refs_once()
+
+
+# Lazy forward reference resolution to avoid circular import issues
+_forward_refs_updated = False
+
+def _update_forward_refs_once():
+    """Update forward references after all types are imported."""
+    global _forward_refs_updated
+    if not _forward_refs_updated:
+        _forward_refs_updated = True
+        update_forward_refs(AstEqualsOperatorNodeInput)

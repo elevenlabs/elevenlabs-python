@@ -33,4 +33,15 @@ from .conversation_history_transcript_workflow_tools_result_common_model_input i
 from .workflow_tool_response_model_input import WorkflowToolResponseModelInput  # noqa: E402, F401, I001
 from .workflow_tool_nested_tools_step_model_input_results_item import WorkflowToolNestedToolsStepModelInputResultsItem  # noqa: E402, F401, I001
 
-update_forward_refs(WorkflowToolNestedToolsStepModelInput)
+# update_forward_refs(WorkflowToolNestedToolsStepModelInput)  # Moved to _update_forward_refs_once()
+
+
+# Lazy forward reference resolution to avoid circular import issues
+_forward_refs_updated = False
+
+def _update_forward_refs_once():
+    """Update forward references after all types are imported."""
+    global _forward_refs_updated
+    if not _forward_refs_updated:
+        _forward_refs_updated = True
+        update_forward_refs(WorkflowToolNestedToolsStepModelInput)

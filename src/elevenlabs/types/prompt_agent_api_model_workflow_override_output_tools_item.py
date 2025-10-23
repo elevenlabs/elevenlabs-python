@@ -125,5 +125,17 @@ PromptAgentApiModelWorkflowOverrideOutputToolsItem = typing_extensions.Annotated
     ],
     UnionMetadata(discriminant="type"),
 ]
-update_forward_refs(PromptAgentApiModelWorkflowOverrideOutputToolsItem_Client)
-update_forward_refs(PromptAgentApiModelWorkflowOverrideOutputToolsItem_Webhook)
+# update_forward_refs(PromptAgentApiModelWorkflowOverrideOutputToolsItem_Client)  # Moved to _update_forward_refs_once()
+# update_forward_refs(PromptAgentApiModelWorkflowOverrideOutputToolsItem_Webhook)  # Moved to _update_forward_refs_once()
+
+
+# Lazy forward reference resolution to avoid circular import issues
+_forward_refs_updated = False
+
+def _update_forward_refs_once():
+    """Update forward references after all types are imported."""
+    global _forward_refs_updated
+    if not _forward_refs_updated:
+        _forward_refs_updated = True
+        update_forward_refs(PromptAgentApiModelWorkflowOverrideOutputToolsItem_Client)
+        update_forward_refs(PromptAgentApiModelWorkflowOverrideOutputToolsItem_Webhook)

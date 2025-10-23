@@ -28,7 +28,7 @@ class WorkflowExpressionConditionModelOutputExpression_AndOperator(UncheckedBase
             extra = pydantic.Extra.allow
 
 
-from .ast_and_operator_node_output_children_item import AstAndOperatorNodeOutputChildrenItem  # noqa: E402, F401, I001
+# Circular import removed: from .ast_and_operator_node_output_children_item import AstAndOperatorNodeOutputChildrenItem  # noqa: E402, F401, I001
 
 
 class WorkflowExpressionConditionModelOutputExpression_BooleanLiteral(UncheckedBaseModel):
@@ -86,8 +86,8 @@ class WorkflowExpressionConditionModelOutputExpression_EqOperator(UncheckedBaseM
             extra = pydantic.Extra.allow
 
 
-from .ast_equals_operator_node_output_left import AstEqualsOperatorNodeOutputLeft  # noqa: E402, F401, I001
-from .ast_equals_operator_node_output_right import AstEqualsOperatorNodeOutputRight  # noqa: E402, F401, I001
+# Circular import removed: from .ast_equals_operator_node_output_left import AstEqualsOperatorNodeOutputLeft  # noqa: E402, F401, I001
+# Circular import removed: from .ast_equals_operator_node_output_right import AstEqualsOperatorNodeOutputRight  # noqa: E402, F401, I001
 
 
 class WorkflowExpressionConditionModelOutputExpression_GtOperator(UncheckedBaseModel):
@@ -109,8 +109,8 @@ class WorkflowExpressionConditionModelOutputExpression_GtOperator(UncheckedBaseM
             extra = pydantic.Extra.allow
 
 
-from .ast_greater_than_operator_node_output_left import AstGreaterThanOperatorNodeOutputLeft  # noqa: E402, F401, I001
-from .ast_greater_than_operator_node_output_right import AstGreaterThanOperatorNodeOutputRight  # noqa: E402, F401, I001
+# Circular import removed: from .ast_greater_than_operator_node_output_left import AstGreaterThanOperatorNodeOutputLeft  # noqa: E402, F401, I001
+# Circular import removed: from .ast_greater_than_operator_node_output_right import AstGreaterThanOperatorNodeOutputRight  # noqa: E402, F401, I001
 
 
 class WorkflowExpressionConditionModelOutputExpression_GteOperator(UncheckedBaseModel):
@@ -132,8 +132,8 @@ class WorkflowExpressionConditionModelOutputExpression_GteOperator(UncheckedBase
             extra = pydantic.Extra.allow
 
 
-from .ast_greater_than_or_equals_operator_node_output_left import AstGreaterThanOrEqualsOperatorNodeOutputLeft  # noqa: E402, F401, I001
-from .ast_greater_than_or_equals_operator_node_output_right import AstGreaterThanOrEqualsOperatorNodeOutputRight  # noqa: E402, F401, I001
+# Circular import removed: from .ast_greater_than_or_equals_operator_node_output_left import AstGreaterThanOrEqualsOperatorNodeOutputLeft  # noqa: E402, F401, I001
+# Circular import removed: from .ast_greater_than_or_equals_operator_node_output_right import AstGreaterThanOrEqualsOperatorNodeOutputRight  # noqa: E402, F401, I001
 
 
 class WorkflowExpressionConditionModelOutputExpression_Llm(UncheckedBaseModel):
@@ -173,8 +173,8 @@ class WorkflowExpressionConditionModelOutputExpression_LtOperator(UncheckedBaseM
             extra = pydantic.Extra.allow
 
 
-from .ast_less_than_operator_node_output_left import AstLessThanOperatorNodeOutputLeft  # noqa: E402, F401, I001
-from .ast_less_than_operator_node_output_right import AstLessThanOperatorNodeOutputRight  # noqa: E402, F401, I001
+# Circular import removed: from .ast_less_than_operator_node_output_left import AstLessThanOperatorNodeOutputLeft  # noqa: E402, F401, I001
+# Circular import removed: from .ast_less_than_operator_node_output_right import AstLessThanOperatorNodeOutputRight  # noqa: E402, F401, I001
 
 
 class WorkflowExpressionConditionModelOutputExpression_LteOperator(UncheckedBaseModel):
@@ -196,8 +196,8 @@ class WorkflowExpressionConditionModelOutputExpression_LteOperator(UncheckedBase
             extra = pydantic.Extra.allow
 
 
-from .ast_less_than_or_equals_operator_node_output_left import AstLessThanOrEqualsOperatorNodeOutputLeft  # noqa: E402, F401, I001
-from .ast_less_than_or_equals_operator_node_output_right import AstLessThanOrEqualsOperatorNodeOutputRight  # noqa: E402, F401, I001
+# Circular import removed: from .ast_less_than_or_equals_operator_node_output_left import AstLessThanOrEqualsOperatorNodeOutputLeft  # noqa: E402, F401, I001
+# Circular import removed: from .ast_less_than_or_equals_operator_node_output_right import AstLessThanOrEqualsOperatorNodeOutputRight  # noqa: E402, F401, I001
 
 
 class WorkflowExpressionConditionModelOutputExpression_NeqOperator(UncheckedBaseModel):
@@ -219,8 +219,8 @@ class WorkflowExpressionConditionModelOutputExpression_NeqOperator(UncheckedBase
             extra = pydantic.Extra.allow
 
 
-from .ast_not_equals_operator_node_output_left import AstNotEqualsOperatorNodeOutputLeft  # noqa: E402, F401, I001
-from .ast_not_equals_operator_node_output_right import AstNotEqualsOperatorNodeOutputRight  # noqa: E402, F401, I001
+# Circular import removed: from .ast_not_equals_operator_node_output_left import AstNotEqualsOperatorNodeOutputLeft  # noqa: E402, F401, I001
+# Circular import removed: from .ast_not_equals_operator_node_output_right import AstNotEqualsOperatorNodeOutputRight  # noqa: E402, F401, I001
 
 
 class WorkflowExpressionConditionModelOutputExpression_NumberLiteral(UncheckedBaseModel):
@@ -259,15 +259,15 @@ class WorkflowExpressionConditionModelOutputExpression_OrOperator(UncheckedBaseM
             extra = pydantic.Extra.allow
 
 
-from .ast_and_operator_node_output import AstAndOperatorNodeOutput  # noqa: E402, F401, I001
-from .ast_equals_operator_node_output import AstEqualsOperatorNodeOutput  # noqa: E402, F401, I001
-from .ast_greater_than_operator_node_output import AstGreaterThanOperatorNodeOutput  # noqa: E402, F401, I001
-from .ast_greater_than_or_equals_operator_node_output import AstGreaterThanOrEqualsOperatorNodeOutput  # noqa: E402, F401, I001
-from .ast_less_than_operator_node_output import AstLessThanOperatorNodeOutput  # noqa: E402, F401, I001
-from .ast_less_than_or_equals_operator_node_output import AstLessThanOrEqualsOperatorNodeOutput  # noqa: E402, F401, I001
-from .ast_not_equals_operator_node_output import AstNotEqualsOperatorNodeOutput  # noqa: E402, F401, I001
-from .ast_or_operator_node_output import AstOrOperatorNodeOutput  # noqa: E402, F401, I001
-from .ast_or_operator_node_output_children_item import AstOrOperatorNodeOutputChildrenItem  # noqa: E402, F401, I001
+# Circular import removed: from .ast_and_operator_node_output import AstAndOperatorNodeOutput  # noqa: E402, F401, I001
+# Circular import removed: from .ast_equals_operator_node_output import AstEqualsOperatorNodeOutput  # noqa: E402, F401, I001
+# Circular import removed: from .ast_greater_than_operator_node_output import AstGreaterThanOperatorNodeOutput  # noqa: E402, F401, I001
+# Circular import removed: from .ast_greater_than_or_equals_operator_node_output import AstGreaterThanOrEqualsOperatorNodeOutput  # noqa: E402, F401, I001
+# Circular import removed: from .ast_less_than_operator_node_output import AstLessThanOperatorNodeOutput  # noqa: E402, F401, I001
+# Circular import removed: from .ast_less_than_or_equals_operator_node_output import AstLessThanOrEqualsOperatorNodeOutput  # noqa: E402, F401, I001
+# Circular import removed: from .ast_not_equals_operator_node_output import AstNotEqualsOperatorNodeOutput  # noqa: E402, F401, I001
+# Circular import removed: from .ast_or_operator_node_output import AstOrOperatorNodeOutput  # noqa: E402, F401, I001
+# Circular import removed: from .ast_or_operator_node_output_children_item import AstOrOperatorNodeOutputChildrenItem  # noqa: E402, F401, I001
 
 
 class WorkflowExpressionConditionModelOutputExpression_StringLiteral(UncheckedBaseModel):
@@ -306,11 +306,29 @@ WorkflowExpressionConditionModelOutputExpression = typing_extensions.Annotated[
     ],
     UnionMetadata(discriminant="type"),
 ]
-update_forward_refs(WorkflowExpressionConditionModelOutputExpression_AndOperator)
-update_forward_refs(WorkflowExpressionConditionModelOutputExpression_EqOperator)
-update_forward_refs(WorkflowExpressionConditionModelOutputExpression_GtOperator)
-update_forward_refs(WorkflowExpressionConditionModelOutputExpression_GteOperator)
-update_forward_refs(WorkflowExpressionConditionModelOutputExpression_LtOperator)
-update_forward_refs(WorkflowExpressionConditionModelOutputExpression_LteOperator)
-update_forward_refs(WorkflowExpressionConditionModelOutputExpression_NeqOperator)
-update_forward_refs(WorkflowExpressionConditionModelOutputExpression_OrOperator)
+# update_forward_refs(WorkflowExpressionConditionModelOutputExpression_AndOperator)  # Moved to _update_forward_refs_once()
+# update_forward_refs(WorkflowExpressionConditionModelOutputExpression_EqOperator)  # Moved to _update_forward_refs_once()
+# update_forward_refs(WorkflowExpressionConditionModelOutputExpression_GtOperator)  # Moved to _update_forward_refs_once()
+# update_forward_refs(WorkflowExpressionConditionModelOutputExpression_GteOperator)  # Moved to _update_forward_refs_once()
+# update_forward_refs(WorkflowExpressionConditionModelOutputExpression_LtOperator)  # Moved to _update_forward_refs_once()
+# update_forward_refs(WorkflowExpressionConditionModelOutputExpression_LteOperator)  # Moved to _update_forward_refs_once()
+# update_forward_refs(WorkflowExpressionConditionModelOutputExpression_NeqOperator)  # Moved to _update_forward_refs_once()
+# update_forward_refs(WorkflowExpressionConditionModelOutputExpression_OrOperator)  # Moved to _update_forward_refs_once()
+
+
+# Lazy forward reference resolution to avoid circular import issues
+_forward_refs_updated = False
+
+def _update_forward_refs_once():
+    """Update forward references after all types are imported."""
+    global _forward_refs_updated
+    if not _forward_refs_updated:
+        _forward_refs_updated = True
+        update_forward_refs(WorkflowExpressionConditionModelOutputExpression_AndOperator)
+        update_forward_refs(WorkflowExpressionConditionModelOutputExpression_EqOperator)
+        update_forward_refs(WorkflowExpressionConditionModelOutputExpression_GtOperator)
+        update_forward_refs(WorkflowExpressionConditionModelOutputExpression_GteOperator)
+        update_forward_refs(WorkflowExpressionConditionModelOutputExpression_LtOperator)
+        update_forward_refs(WorkflowExpressionConditionModelOutputExpression_LteOperator)
+        update_forward_refs(WorkflowExpressionConditionModelOutputExpression_NeqOperator)
+        update_forward_refs(WorkflowExpressionConditionModelOutputExpression_OrOperator)

@@ -135,4 +135,15 @@ AgentWorkflowRequestModelNodesValue = typing_extensions.Annotated[
     ],
     UnionMetadata(discriminant="type"),
 ]
-update_forward_refs(AgentWorkflowRequestModelNodesValue_OverrideAgent)
+# update_forward_refs(AgentWorkflowRequestModelNodesValue_OverrideAgent)  # Moved to _update_forward_refs_once()
+
+
+# Lazy forward reference resolution to avoid circular import issues
+_forward_refs_updated = False
+
+def _update_forward_refs_once():
+    """Update forward references after all types are imported."""
+    global _forward_refs_updated
+    if not _forward_refs_updated:
+        _forward_refs_updated = True
+        update_forward_refs(AgentWorkflowRequestModelNodesValue_OverrideAgent)
