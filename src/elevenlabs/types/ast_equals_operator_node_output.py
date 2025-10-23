@@ -37,8 +37,10 @@ class AstEqualsOperatorNodeOutput(UncheckedBaseModel):
 # Circular import removed: from .ast_less_than_or_equals_operator_node_output import AstLessThanOrEqualsOperatorNodeOutput  # noqa: E402, F401, I001
 # Circular import removed: from .ast_not_equals_operator_node_output import AstNotEqualsOperatorNodeOutput  # noqa: E402, F401, I001
 # Circular import removed: from .ast_or_operator_node_output import AstOrOperatorNodeOutput  # noqa: E402, F401, I001
-# Circular import removed: from .ast_equals_operator_node_output_left import AstEqualsOperatorNodeOutputLeft  # noqa: E402, F401, I001
-# Circular import removed: from .ast_equals_operator_node_output_right import AstEqualsOperatorNodeOutputRight  # noqa: E402, F401, I001
+from .ast_operators_output_consolidated import (
+    AstEqualsOperatorNodeOutputLeft,
+    AstEqualsOperatorNodeOutputRight,
+)
 
 # update_forward_refs(AstEqualsOperatorNodeOutput)  # Moved to _update_forward_refs_once()
 

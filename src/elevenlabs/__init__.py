@@ -2,8 +2,13 @@
 
 # isort: skip_file
 
+import sys
 import typing
 from importlib import import_module
+
+# Increase recursion limit to handle complex Pydantic type system
+# This is necessary due to the deeply nested recursive type structures
+sys.setrecursionlimit(10000)
 
 if typing.TYPE_CHECKING:
     from .types import (
@@ -4438,3 +4443,30 @@ __all__ = [
     "webhooks",
     "workspace",
 ]
+
+# Initialize forward references after all types are imported
+# This resolves circular dependencies in recursive type structures
+def _initialize_forward_refs():
+    """Call all lazy forward ref initialization functions."""
+    try:
+        # Import modules with circular dependencies
+        from . import ast_and_operator_node_input_children_item
+        from . import ast_or_operator_node_input_children_item
+        from . import ast_and_operator_node_output_children_item
+        from . import ast_or_operator_node_output_children_item
+        
+        # Call their lazy initialization functions
+        if hasattr(ast_and_operator_node_input_children_item, '_update_forward_refs_once'):
+            ast_and_operator_node_input_children_item._update_forward_refs_once()
+        if hasattr(ast_or_operator_node_input_children_item, '_update_forward_refs_once'):
+            ast_or_operator_node_input_children_item._update_forward_refs_once()
+        if hasattr(ast_and_operator_node_output_children_item, '_update_forward_refs_once'):
+            ast_and_operator_node_output_children_item._update_forward_refs_once()
+        if hasattr(ast_or_operator_node_output_children_item, '_update_forward_refs_once'):
+            ast_or_operator_node_output_children_item._update_forward_refs_once()
+    except Exception:
+        # Best effort - don't break if forward ref resolution fails
+        pass
+
+# Call initialization
+_initialize_forward_refs()

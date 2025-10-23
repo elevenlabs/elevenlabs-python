@@ -92,6 +92,22 @@ if typing.TYPE_CHECKING:
         AstAndOperatorNodeInputChildrenItem_OrOperator,
         AstAndOperatorNodeInputChildrenItem_StringLiteral,
     )
+    from .ast_operators_input_consolidated import (
+        AstAndOperatorNodeInputChildrenItem,
+        AstEqualsOperatorNodeInputLeft,
+        AstEqualsOperatorNodeInputRight,
+        AstGreaterThanOperatorNodeInputLeft,
+        AstGreaterThanOperatorNodeInputRight,
+        AstGreaterThanOrEqualsOperatorNodeInputLeft,
+        AstGreaterThanOrEqualsOperatorNodeInputRight,
+        AstLessThanOperatorNodeInputLeft,
+        AstLessThanOperatorNodeInputRight,
+        AstLessThanOrEqualsOperatorNodeInputLeft,
+        AstLessThanOrEqualsOperatorNodeInputRight,
+        AstNotEqualsOperatorNodeInputLeft,
+        AstNotEqualsOperatorNodeInputRight,
+        AstOrOperatorNodeInputChildrenItem,
+    )
     from .ast_and_operator_node_output import AstAndOperatorNodeOutput
     from .ast_and_operator_node_output_children_item import (
         AstAndOperatorNodeOutputChildrenItem,
@@ -108,6 +124,22 @@ if typing.TYPE_CHECKING:
         AstAndOperatorNodeOutputChildrenItem_NumberLiteral,
         AstAndOperatorNodeOutputChildrenItem_OrOperator,
         AstAndOperatorNodeOutputChildrenItem_StringLiteral,
+    )
+    from .ast_operators_output_consolidated import (
+        AstAndOperatorNodeOutputChildrenItem,
+        AstEqualsOperatorNodeOutputLeft,
+        AstEqualsOperatorNodeOutputRight,
+        AstGreaterThanOperatorNodeOutputLeft,
+        AstGreaterThanOperatorNodeOutputRight,
+        AstGreaterThanOrEqualsOperatorNodeOutputLeft,
+        AstGreaterThanOrEqualsOperatorNodeOutputRight,
+        AstLessThanOperatorNodeOutputLeft,
+        AstLessThanOperatorNodeOutputRight,
+        AstLessThanOrEqualsOperatorNodeOutputLeft,
+        AstLessThanOrEqualsOperatorNodeOutputRight,
+        AstNotEqualsOperatorNodeOutputLeft,
+        AstNotEqualsOperatorNodeOutputRight,
+        AstOrOperatorNodeOutputChildrenItem,
     )
     from .ast_boolean_node_input import AstBooleanNodeInput
     from .ast_boolean_node_output import AstBooleanNodeOutput
@@ -4340,26 +4372,28 @@ __all__ = [
     "ZendeskConversationInitiationTrigger",
 ]
 
+# Runtime imports for consolidated types to avoid circular dependencies
+try:
+    from .ast_operators_input_consolidated import *
+    from .ast_operators_output_consolidated import *
+except ImportError:
+    # Fallback to individual imports if consolidated files don't exist
+    pass
+
 # Initialize forward references after all types are imported
 # This resolves circular dependencies in recursive type structures
 def _initialize_forward_refs():
     """Call all lazy forward ref initialization functions."""
     try:
-        # Import modules with circular dependencies
-        from . import ast_and_operator_node_input_children_item
-        from . import ast_or_operator_node_input_children_item
-        from . import ast_and_operator_node_output_children_item
-        from . import ast_or_operator_node_output_children_item
+        # Import consolidated modules to avoid circular dependencies
+        from . import ast_operators_input_consolidated
+        from . import ast_operators_output_consolidated
         
-        # Call their lazy initialization functions
-        if hasattr(ast_and_operator_node_input_children_item, '_update_forward_refs_once'):
-            ast_and_operator_node_input_children_item._update_forward_refs_once()
-        if hasattr(ast_or_operator_node_input_children_item, '_update_forward_refs_once'):
-            ast_or_operator_node_input_children_item._update_forward_refs_once()
-        if hasattr(ast_and_operator_node_output_children_item, '_update_forward_refs_once'):
-            ast_and_operator_node_output_children_item._update_forward_refs_once()
-        if hasattr(ast_or_operator_node_output_children_item, '_update_forward_refs_once'):
-            ast_or_operator_node_output_children_item._update_forward_refs_once()
+        # Call their lazy initialization functions if they exist
+        if hasattr(ast_operators_input_consolidated, '_update_forward_refs_once'):
+            ast_operators_input_consolidated._update_forward_refs_once()
+        if hasattr(ast_operators_output_consolidated, '_update_forward_refs_once'):
+            ast_operators_output_consolidated._update_forward_refs_once()
     except Exception:
         # Best effort - don't break if forward ref resolution fails
         pass

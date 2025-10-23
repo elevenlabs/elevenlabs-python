@@ -8,6 +8,22 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
+from .ast_operators_output_consolidated import (
+    AstAndOperatorNodeOutputChildrenItem,
+    AstEqualsOperatorNodeOutputLeft,
+    AstEqualsOperatorNodeOutputRight,
+    AstGreaterThanOperatorNodeOutputLeft,
+    AstGreaterThanOperatorNodeOutputRight,
+    AstGreaterThanOrEqualsOperatorNodeOutputLeft,
+    AstGreaterThanOrEqualsOperatorNodeOutputRight,
+    AstLessThanOperatorNodeOutputLeft,
+    AstLessThanOperatorNodeOutputRight,
+    AstLessThanOrEqualsOperatorNodeOutputLeft,
+    AstLessThanOrEqualsOperatorNodeOutputRight,
+    AstNotEqualsOperatorNodeOutputLeft,
+    AstNotEqualsOperatorNodeOutputRight,
+    AstOrOperatorNodeOutputChildrenItem,
+)
 
 
 class WorkflowExpressionConditionModelOutputExpression_AndOperator(UncheckedBaseModel):

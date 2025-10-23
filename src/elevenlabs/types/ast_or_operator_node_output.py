@@ -32,7 +32,7 @@ class AstOrOperatorNodeOutput(UncheckedBaseModel):
 # Circular import removed: from .ast_less_than_operator_node_output import AstLessThanOperatorNodeOutput  # noqa: E402, F401, I001
 # Circular import removed: from .ast_less_than_or_equals_operator_node_output import AstLessThanOrEqualsOperatorNodeOutput  # noqa: E402, F401, I001
 # Circular import removed: from .ast_not_equals_operator_node_output import AstNotEqualsOperatorNodeOutput  # noqa: E402, F401, I001
-# Circular import removed: from .ast_or_operator_node_output_children_item import AstOrOperatorNodeOutputChildrenItem  # noqa: E402, F401, I001
+from .ast_operators_output_consolidated import AstOrOperatorNodeOutputChildrenItem
 
 # update_forward_refs(AstOrOperatorNodeOutput)  # Moved to _update_forward_refs_once()
 
