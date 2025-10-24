@@ -2,8 +2,13 @@
 
 # isort: skip_file
 
+import sys
 import typing
 from importlib import import_module
+
+_REQUIRED_RECURSION_LIMIT = 10_000
+if sys.getrecursionlimit() < _REQUIRED_RECURSION_LIMIT:
+    sys.setrecursionlimit(_REQUIRED_RECURSION_LIMIT)
 
 if typing.TYPE_CHECKING:
     from .types import (
