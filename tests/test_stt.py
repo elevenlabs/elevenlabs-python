@@ -1,5 +1,5 @@
 import pytest
-from elevenlabs.client import AsyncElevenLabs, ElevenLabs
+from elevenlabs.client import ElevenLabs
 
 from .utils import DEFAULT_VOICE_FILE
 

@@ -4,8 +4,6 @@ Tests for ClientTools custom event loop functionality.
 
 import asyncio
 import pytest
-import threading
-import time
 from elevenlabs.conversational_ai.conversation import ClientTools
 
 
