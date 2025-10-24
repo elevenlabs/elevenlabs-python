@@ -19,12 +19,3 @@ assets/
 
 # Ignore custom tests
 tests/
-
-# Ignore files that were manually fixed to address bug where required file params should be optional:
-# https://github.com/elevenlabs/elevenlabs-python/issues/656
-src/elevenlabs/dubbing/client.py
-src/elevenlabs/dubbing/raw_client.py
-src/elevenlabs/pronunciation_dictionaries/client.py
-src/elevenlabs/pronunciation_dictionaries/raw_client.py
-src/elevenlabs/speech_to_text/client.py
-src/elevenlabs/speech_to_text/raw_client.py
