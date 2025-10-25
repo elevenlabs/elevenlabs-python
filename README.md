@@ -253,6 +253,106 @@ client_tools.register("calculate_sum", calculate_sum, is_async=False)
 client_tools.register("fetch_data", fetch_data, is_async=True)
 ```
 
+### WebRTC Support
+
+ElevenLabs Python SDK supports WebRTC connections for real-time, low-latency conversations using LiveKit infrastructure. WebRTC provides better audio quality, lower latency, and improved connectivity compared to traditional WebSocket connections.
+
+#### Key Benefits
+- **Lower Latency**: Direct peer-to-peer audio streaming
+- **Better Audio Quality**: Optimized for real-time audio
+- **Improved Connectivity**: NAT traversal and firewall handling
+- **Adaptive Bitrate**: Automatic quality adjustment based on network conditions
+
+#### Basic WebRTC Usage
+
+```python
+import asyncio
+from elevenlabs import ElevenLabs
+from elevenlabs.conversational_ai.conversation_factory import create_webrtc_conversation
+from elevenlabs.conversational_ai.conversation import AsyncAudioInterface
+
+class SimpleAsyncAudioInterface(AsyncAudioInterface):
+    async def start(self, input_callback):
+        print("Audio interface started")
+        self.input_callback = input_callback
+
+    async def stop(self):
+        print("Audio interface stopped")
+
+    async def output(self, audio: bytes):
+        print(f"Received audio: {len(audio)} bytes")
+
+    async def interrupt(self):
+        print("Audio interrupted")
+
+async def main():
+    client = ElevenLabs(api_key="YOUR_API_KEY")
+    audio_interface = SimpleAsyncAudioInterface()
+
+    # WebRTC conversation with automatic token fetching
+    conversation = create_webrtc_conversation(
+        client=client,
+        agent_id="your-agent-id",
+        audio_interface=audio_interface,
+    )
+
+    await conversation.start_session()
+    await conversation.send_user_message("Hello!")
+    await asyncio.sleep(10)
+    await conversation.end_session()
+
+asyncio.run(main())
+```
+
+#### Connection Type Comparison
+
+```python
+from elevenlabs.conversational_ai.conversation_factory import create_conversation
+from elevenlabs.conversational_ai.base_connection import ConnectionType
+
+# WebSocket (existing)
+ws_conversation = create_conversation(
+    client=client,
+    agent_id="your-agent-id",
+    connection_type=ConnectionType.WEBSOCKET,
+    # Uses sync AudioInterface
+)
+
+# WebRTC (new)
+webrtc_conversation = create_conversation(
+    client=client,
+    agent_id="your-agent-id",
+    connection_type=ConnectionType.WEBRTC,
+    audio_interface=AsyncAudioInterface(),  # Async interface required
+)
+```
+
+#### Authentication Methods
+
+WebRTC conversations support multiple authentication approaches:
+
+1. **Automatic Token Fetching**: Provide only `agent_id` and the SDK fetches the conversation token automatically
+2. **Explicit Token**: Provide both `agent_id` and `conversation_token` for manual token management
+
+```python
+# Automatic token fetching (recommended)
+conversation = create_webrtc_conversation(
+    client=client,
+    agent_id="your-agent-id",
+    audio_interface=audio_interface
+)
+
+# Explicit token
+conversation = create_webrtc_conversation(
+    client=client,
+    agent_id="your-agent-id",
+    conversation_token="your-conversation-token",
+    audio_interface=audio_interface
+)
+```
+
+**Requirements**: WebRTC conversations require the `livekit` dependency (`pip install livekit`), which is automatically installed with the SDK. All WebRTC conversations must use `AsyncAudioInterface` implementations.
+
 ## Languages Supported
 
 Explore [all models & languages](https://elevenlabs.io/docs/models).
