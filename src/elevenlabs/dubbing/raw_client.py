@@ -140,16 +140,16 @@ class RawDubbingClient:
 
         Parameters
         ----------
-        file : core.File
+        file : typing.Optional[core.File]
             See core.File for more documentation
 
-        csv_file : core.File
+        csv_file : typing.Optional[core.File]
             See core.File for more documentation
 
-        foreground_audio_file : core.File
+        foreground_audio_file : typing.Optional[core.File]
             See core.File for more documentation
 
-        background_audio_file : core.File
+        background_audio_file : typing.Optional[core.File]
             See core.File for more documentation
 
         name : typing.Optional[str]
@@ -230,10 +230,10 @@ class RawDubbingClient:
                 "csv_fps": csv_fps,
             },
             files={
-                "file": file,
-                "csv_file": csv_file,
-                "foreground_audio_file": foreground_audio_file,
-                "background_audio_file": background_audio_file,
+                **({"file": file} if file is not None else {}),
+                **({"csv_file": csv_file} if csv_file is not None else {}),
+                **({"foreground_audio_file": foreground_audio_file} if foreground_audio_file is not None else {}),
+                **({"background_audio_file": background_audio_file} if background_audio_file is not None else {}),
             },
             request_options=request_options,
             omit=OMIT,
@@ -481,16 +481,16 @@ class AsyncRawDubbingClient:
 
         Parameters
         ----------
-        file : core.File
+        file : typing.Optional[core.File]
             See core.File for more documentation
 
-        csv_file : core.File
+        csv_file : typing.Optional[core.File]
             See core.File for more documentation
 
-        foreground_audio_file : core.File
+        foreground_audio_file : typing.Optional[core.File]
             See core.File for more documentation
 
-        background_audio_file : core.File
+        background_audio_file : typing.Optional[core.File]
             See core.File for more documentation
 
         name : typing.Optional[str]
@@ -571,10 +571,10 @@ class AsyncRawDubbingClient:
                 "csv_fps": csv_fps,
             },
             files={
-                "file": file,
-                "csv_file": csv_file,
-                "foreground_audio_file": foreground_audio_file,
-                "background_audio_file": background_audio_file,
+                **({"file": file} if file is not None else {}),
+                **({"csv_file": csv_file} if csv_file is not None else {}),
+                **({"foreground_audio_file": foreground_audio_file} if foreground_audio_file is not None else {}),
+                **({"background_audio_file": background_audio_file} if background_audio_file is not None else {}),
             },
             request_options=request_options,
             omit=OMIT,

@@ -142,16 +142,16 @@ class DubbingClient:
 
         Parameters
         ----------
-        file : core.File
+        file : typing.Optional[core.File]
             See core.File for more documentation
 
-        csv_file : core.File
+        csv_file : typing.Optional[core.File]
             See core.File for more documentation
 
-        foreground_audio_file : core.File
+        foreground_audio_file : typing.Optional[core.File]
             See core.File for more documentation
 
-        background_audio_file : core.File
+        background_audio_file : typing.Optional[core.File]
             See core.File for more documentation
 
         name : typing.Optional[str]
@@ -460,16 +460,16 @@ class AsyncDubbingClient:
 
         Parameters
         ----------
-        file : core.File
+        file : typing.Optional[core.File]
             See core.File for more documentation
 
-        csv_file : core.File
+        csv_file : typing.Optional[core.File]
             See core.File for more documentation
 
-        foreground_audio_file : core.File
+        foreground_audio_file : typing.Optional[core.File]
             See core.File for more documentation
 
-        background_audio_file : core.File
+        background_audio_file : typing.Optional[core.File]
             See core.File for more documentation
 
         name : typing.Optional[str]

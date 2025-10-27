@@ -26,8 +26,8 @@ class RawContentClient:
         self,
         project_id: str,
         *,
-        from_document: core.File,
         from_url: typing.Optional[str] = OMIT,
+        from_document: typing.Optional[core.File] = OMIT,
         from_content_json: typing.Optional[str] = OMIT,
         auto_convert: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -40,11 +40,11 @@ class RawContentClient:
         project_id : str
             The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
 
-        from_document : core.File
-            See core.File for more documentation
-
         from_url : typing.Optional[str]
             An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' and 'from_content' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
+
+        from_document : typing.Optional[core.File]
+            See core.File for more documentation
 
         from_content_json : typing.Optional[str]
 
@@ -74,7 +74,7 @@ class RawContentClient:
                 "auto_convert": auto_convert,
             },
             files={
-                "from_document": from_document,
+                **({"from_document": from_document} if from_document is not None else {}),
             },
             request_options=request_options,
             omit=OMIT,
@@ -115,8 +115,8 @@ class AsyncRawContentClient:
         self,
         project_id: str,
         *,
-        from_document: core.File,
         from_url: typing.Optional[str] = OMIT,
+        from_document: typing.Optional[core.File] = OMIT,
         from_content_json: typing.Optional[str] = OMIT,
         auto_convert: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -129,11 +129,11 @@ class AsyncRawContentClient:
         project_id : str
             The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
 
-        from_document : core.File
-            See core.File for more documentation
-
         from_url : typing.Optional[str]
             An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' and 'from_content' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
+
+        from_document : typing.Optional[core.File]
+            See core.File for more documentation
 
         from_content_json : typing.Optional[str]
 
@@ -163,7 +163,7 @@ class AsyncRawContentClient:
                 "auto_convert": auto_convert,
             },
             files={
-                "from_document": from_document,
+                **({"from_document": from_document} if from_document is not None else {}),
             },
             request_options=request_options,
             omit=OMIT,

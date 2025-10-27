@@ -35,7 +35,15 @@ if typing.TYPE_CHECKING:
     from .agent_metadata import AgentMetadata
     from .agent_metadata_response_model import AgentMetadataResponseModel
     from .agent_platform_settings_request_model import AgentPlatformSettingsRequestModel
+    from .agent_platform_settings_request_model_guardrails import (
+        AgentPlatformSettingsRequestModelGuardrails,
+        AgentPlatformSettingsRequestModelGuardrails_1,
+    )
     from .agent_platform_settings_response_model import AgentPlatformSettingsResponseModel
+    from .agent_platform_settings_response_model_guardrails import (
+        AgentPlatformSettingsResponseModelGuardrails,
+        AgentPlatformSettingsResponseModelGuardrails_1,
+    )
     from .agent_simulated_chat_test_response_model import AgentSimulatedChatTestResponseModel
     from .agent_sort_by import AgentSortBy
     from .agent_successful_response_example import AgentSuccessfulResponseExample
@@ -985,6 +993,8 @@ if typing.TYPE_CHECKING:
     from .get_voices_response import GetVoicesResponse
     from .get_voices_v_2_response import GetVoicesV2Response
     from .get_workspace_secrets_response_model import GetWorkspaceSecretsResponseModel
+    from .guardrails_v_1_input import GuardrailsV1Input
+    from .guardrails_v_1_output import GuardrailsV1Output
     from .history_alignment_response_model import HistoryAlignmentResponseModel
     from .history_alignments_response_model import HistoryAlignmentsResponseModel
     from .history_item_response import HistoryItemResponse
@@ -1057,6 +1067,9 @@ if typing.TYPE_CHECKING:
     from .model import Model
     from .model_rates_response_model import ModelRatesResponseModel
     from .model_settings_response_model import ModelSettingsResponseModel
+    from .moderation_config import ModerationConfig
+    from .moderation_guardrail_input import ModerationGuardrailInput
+    from .moderation_guardrail_output import ModerationGuardrailOutput
     from .multichannel_speech_to_text_response_model import MultichannelSpeechToTextResponseModel
     from .multipart_music_response import MultipartMusicResponse
     from .music_prompt import MusicPrompt
@@ -1202,6 +1215,7 @@ if typing.TYPE_CHECKING:
     from .realtime_voice_settings import RealtimeVoiceSettings
     from .recording_response import RecordingResponse
     from .referenced_tool_common_model import ReferencedToolCommonModel
+    from .referenced_tool_common_model_type import ReferencedToolCommonModelType
     from .regex_parameter_evaluation_strategy import RegexParameterEvaluationStrategy
     from .remove_member_from_group_request import RemoveMemberFromGroupRequest
     from .render import Render
@@ -1313,6 +1327,7 @@ if typing.TYPE_CHECKING:
     from .text_to_speech_stream_request import TextToSpeechStreamRequest
     from .text_to_speech_stream_with_timestamps_request import TextToSpeechStreamWithTimestampsRequest
     from .text_to_speech_with_timestamps_request import TextToSpeechWithTimestampsRequest
+    from .threshold_guardrail import ThresholdGuardrail
     from .time_range import TimeRange
     from .token_response_model import TokenResponseModel
     from .tool import Tool
@@ -1325,7 +1340,6 @@ if typing.TYPE_CHECKING:
     from .tool_request_model_tool_config import (
         ToolRequestModelToolConfig,
         ToolRequestModelToolConfig_Client,
-        ToolRequestModelToolConfig_Mcp,
         ToolRequestModelToolConfig_System,
         ToolRequestModelToolConfig_Webhook,
     )
@@ -1361,6 +1375,7 @@ if typing.TYPE_CHECKING:
     from .tts_output_format import TtsOutputFormat
     from .turn_config import TurnConfig
     from .turn_config_workflow_override import TurnConfigWorkflowOverride
+    from .turn_eagerness import TurnEagerness
     from .turn_mode import TurnMode
     from .twilio_outbound_call_response import TwilioOutboundCallResponse
     from .txt_export_options import TxtExportOptions
@@ -1620,7 +1635,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentMetadata": ".agent_metadata",
     "AgentMetadataResponseModel": ".agent_metadata_response_model",
     "AgentPlatformSettingsRequestModel": ".agent_platform_settings_request_model",
+    "AgentPlatformSettingsRequestModelGuardrails": ".agent_platform_settings_request_model_guardrails",
+    "AgentPlatformSettingsRequestModelGuardrails_1": ".agent_platform_settings_request_model_guardrails",
     "AgentPlatformSettingsResponseModel": ".agent_platform_settings_response_model",
+    "AgentPlatformSettingsResponseModelGuardrails": ".agent_platform_settings_response_model_guardrails",
+    "AgentPlatformSettingsResponseModelGuardrails_1": ".agent_platform_settings_response_model_guardrails",
     "AgentSimulatedChatTestResponseModel": ".agent_simulated_chat_test_response_model",
     "AgentSortBy": ".agent_sort_by",
     "AgentSuccessfulResponseExample": ".agent_successful_response_example",
@@ -2416,6 +2435,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetVoicesResponse": ".get_voices_response",
     "GetVoicesV2Response": ".get_voices_v_2_response",
     "GetWorkspaceSecretsResponseModel": ".get_workspace_secrets_response_model",
+    "GuardrailsV1Input": ".guardrails_v_1_input",
+    "GuardrailsV1Output": ".guardrails_v_1_output",
     "HistoryAlignmentResponseModel": ".history_alignment_response_model",
     "HistoryAlignmentsResponseModel": ".history_alignments_response_model",
     "HistoryItemResponse": ".history_item_response",
@@ -2486,6 +2507,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Model": ".model",
     "ModelRatesResponseModel": ".model_rates_response_model",
     "ModelSettingsResponseModel": ".model_settings_response_model",
+    "ModerationConfig": ".moderation_config",
+    "ModerationGuardrailInput": ".moderation_guardrail_input",
+    "ModerationGuardrailOutput": ".moderation_guardrail_output",
     "MultichannelSpeechToTextResponseModel": ".multichannel_speech_to_text_response_model",
     "MultipartMusicResponse": ".multipart_music_response",
     "MusicPrompt": ".music_prompt",
@@ -2609,6 +2633,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RealtimeVoiceSettings": ".realtime_voice_settings",
     "RecordingResponse": ".recording_response",
     "ReferencedToolCommonModel": ".referenced_tool_common_model",
+    "ReferencedToolCommonModelType": ".referenced_tool_common_model_type",
     "RegexParameterEvaluationStrategy": ".regex_parameter_evaluation_strategy",
     "RemoveMemberFromGroupRequest": ".remove_member_from_group_request",
     "Render": ".render",
@@ -2714,6 +2739,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TextToSpeechStreamRequest": ".text_to_speech_stream_request",
     "TextToSpeechStreamWithTimestampsRequest": ".text_to_speech_stream_with_timestamps_request",
     "TextToSpeechWithTimestampsRequest": ".text_to_speech_with_timestamps_request",
+    "ThresholdGuardrail": ".threshold_guardrail",
     "TimeRange": ".time_range",
     "TokenResponseModel": ".token_response_model",
     "Tool": ".tool",
@@ -2725,7 +2751,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ToolRequestModel": ".tool_request_model",
     "ToolRequestModelToolConfig": ".tool_request_model_tool_config",
     "ToolRequestModelToolConfig_Client": ".tool_request_model_tool_config",
-    "ToolRequestModelToolConfig_Mcp": ".tool_request_model_tool_config",
     "ToolRequestModelToolConfig_System": ".tool_request_model_tool_config",
     "ToolRequestModelToolConfig_Webhook": ".tool_request_model_tool_config",
     "ToolResponseModel": ".tool_response_model",
@@ -2758,6 +2783,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TtsOutputFormat": ".tts_output_format",
     "TurnConfig": ".turn_config",
     "TurnConfigWorkflowOverride": ".turn_config_workflow_override",
+    "TurnEagerness": ".turn_eagerness",
     "TurnMode": ".turn_mode",
     "TwilioOutboundCallResponse": ".twilio_outbound_call_response",
     "TxtExportOptions": ".txt_export_options",
@@ -3005,7 +3031,11 @@ __all__ = [
     "AgentMetadata",
     "AgentMetadataResponseModel",
     "AgentPlatformSettingsRequestModel",
+    "AgentPlatformSettingsRequestModelGuardrails",
+    "AgentPlatformSettingsRequestModelGuardrails_1",
     "AgentPlatformSettingsResponseModel",
+    "AgentPlatformSettingsResponseModelGuardrails",
+    "AgentPlatformSettingsResponseModelGuardrails_1",
     "AgentSimulatedChatTestResponseModel",
     "AgentSortBy",
     "AgentSuccessfulResponseExample",
@@ -3801,6 +3831,8 @@ __all__ = [
     "GetVoicesResponse",
     "GetVoicesV2Response",
     "GetWorkspaceSecretsResponseModel",
+    "GuardrailsV1Input",
+    "GuardrailsV1Output",
     "HistoryAlignmentResponseModel",
     "HistoryAlignmentsResponseModel",
     "HistoryItemResponse",
@@ -3871,6 +3903,9 @@ __all__ = [
     "Model",
     "ModelRatesResponseModel",
     "ModelSettingsResponseModel",
+    "ModerationConfig",
+    "ModerationGuardrailInput",
+    "ModerationGuardrailOutput",
     "MultichannelSpeechToTextResponseModel",
     "MultipartMusicResponse",
     "MusicPrompt",
@@ -3994,6 +4029,7 @@ __all__ = [
     "RealtimeVoiceSettings",
     "RecordingResponse",
     "ReferencedToolCommonModel",
+    "ReferencedToolCommonModelType",
     "RegexParameterEvaluationStrategy",
     "RemoveMemberFromGroupRequest",
     "Render",
@@ -4099,6 +4135,7 @@ __all__ = [
     "TextToSpeechStreamRequest",
     "TextToSpeechStreamWithTimestampsRequest",
     "TextToSpeechWithTimestampsRequest",
+    "ThresholdGuardrail",
     "TimeRange",
     "TokenResponseModel",
     "Tool",
@@ -4110,7 +4147,6 @@ __all__ = [
     "ToolRequestModel",
     "ToolRequestModelToolConfig",
     "ToolRequestModelToolConfig_Client",
-    "ToolRequestModelToolConfig_Mcp",
     "ToolRequestModelToolConfig_System",
     "ToolRequestModelToolConfig_Webhook",
     "ToolResponseModel",
@@ -4143,6 +4179,7 @@ __all__ = [
     "TtsOutputFormat",
     "TurnConfig",
     "TurnConfigWorkflowOverride",
+    "TurnEagerness",
     "TurnMode",
     "TwilioOutboundCallResponse",
     "TxtExportOptions",

@@ -4050,7 +4050,7 @@ client.dubbing.create()
 
 **file:** `from __future__ import annotations
 
-core.File` — See core.File for more documentation
+typing.Optional[core.File]` — See core.File for more documentation
     
 </dd>
 </dl>
@@ -4060,7 +4060,7 @@ core.File` — See core.File for more documentation
 
 **csv_file:** `from __future__ import annotations
 
-core.File` — See core.File for more documentation
+typing.Optional[core.File]` — See core.File for more documentation
     
 </dd>
 </dl>
@@ -4070,7 +4070,7 @@ core.File` — See core.File for more documentation
 
 **foreground_audio_file:** `from __future__ import annotations
 
-core.File` — See core.File for more documentation
+typing.Optional[core.File]` — See core.File for more documentation
     
 </dd>
 </dl>
@@ -4080,7 +4080,7 @@ core.File` — See core.File for more documentation
 
 **background_audio_file:** `from __future__ import annotations
 
-core.File` — See core.File for more documentation
+typing.Optional[core.File]` — See core.File for more documentation
     
 </dd>
 </dl>
@@ -4965,7 +4965,7 @@ client.pronunciation_dictionaries.create_from_file(
 
 **file:** `from __future__ import annotations
 
-core.File` — See core.File for more documentation
+typing.Optional[core.File]` — See core.File for more documentation
     
 </dd>
 </dl>
@@ -5636,9 +5636,7 @@ client.speech_to_text.convert(
 <dl>
 <dd>
 
-**file:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. This will mean log and transcript storage features are unavailable for this request. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -5646,7 +5644,9 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. This will mean log and transcript storage features are unavailable for this request. Zero retention mode may only be used by enterprise customers.
+**file:** `from __future__ import annotations
+
+typing.Optional[core.File]` — See core.File for more documentation
     
 </dd>
 </dl>
@@ -6786,6 +6786,7 @@ client.conversational_ai.conversations.list(
     user_id="user_id",
     page_size=1,
     summary_mode="exclude",
+    search="search",
 )
 
 ```
@@ -6859,6 +6860,14 @@ client.conversational_ai.conversations.list(
 <dd>
 
 **summary_mode:** `typing.Optional[ConversationsListRequestSummaryMode]` — Whether to include transcript summaries in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Full-text or fuzzy search over transcript messages
     
 </dd>
 </dl>
@@ -10889,6 +10898,14 @@ client.conversational_ai.mcp_servers.update(
 <dd>
 
 **disable_interruptions:** `typing.Optional[bool]` — Whether to disable interruptions for all tools from this MCP server
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**execution_mode:** `typing.Optional[ToolExecutionMode]` — The execution mode for all tools from this MCP server
     
 </dd>
 </dl>
@@ -15000,16 +15017,6 @@ client.studio.projects.create(
 <dl>
 <dd>
 
-**from_document:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **default_title_voice_id:** `typing.Optional[str]` — The voice_id that corresponds to the default voice used for new titles.
     
 </dd>
@@ -15035,6 +15042,16 @@ core.File` — See core.File for more documentation
 <dd>
 
 **from_url:** `typing.Optional[str]` — An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' and 'from_content' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from_document:** `from __future__ import annotations
+
+typing.Optional[core.File]` — See core.File for more documentation
     
 </dd>
 </dl>
@@ -15797,9 +15814,7 @@ client.studio.projects.content.update(
 <dl>
 <dd>
 
-**from_document:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
+**from_url:** `typing.Optional[str]` — An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' and 'from_content' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
     
 </dd>
 </dl>
@@ -15807,7 +15822,9 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**from_url:** `typing.Optional[str]` — An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' and 'from_content' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
+**from_document:** `from __future__ import annotations
+
+typing.Optional[core.File]` — See core.File for more documentation
     
 </dd>
 </dl>

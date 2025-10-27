@@ -80,11 +80,11 @@ class RawProjectsClient:
         self,
         *,
         name: str,
-        from_document: core.File,
         default_title_voice_id: typing.Optional[str] = OMIT,
         default_paragraph_voice_id: typing.Optional[str] = OMIT,
         default_model_id: typing.Optional[str] = OMIT,
         from_url: typing.Optional[str] = OMIT,
+        from_document: typing.Optional[core.File] = OMIT,
         from_content_json: typing.Optional[str] = OMIT,
         quality_preset: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
@@ -116,9 +116,6 @@ class RawProjectsClient:
         name : str
             The name of the Studio project, used for identification only.
 
-        from_document : core.File
-            See core.File for more documentation
-
         default_title_voice_id : typing.Optional[str]
             The voice_id that corresponds to the default voice used for new titles.
 
@@ -130,6 +127,9 @@ class RawProjectsClient:
 
         from_url : typing.Optional[str]
             An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' and 'from_content' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
+
+        from_document : typing.Optional[core.File]
+            See core.File for more documentation
 
         from_content_json : typing.Optional[str]
 
@@ -302,7 +302,7 @@ class RawProjectsClient:
                 "source_type": source_type,
             },
             files={
-                "from_document": from_document,
+                **({"from_document": from_document} if from_document is not None else {}),
             },
             request_options=request_options,
             omit=OMIT,
@@ -644,11 +644,11 @@ class AsyncRawProjectsClient:
         self,
         *,
         name: str,
-        from_document: core.File,
         default_title_voice_id: typing.Optional[str] = OMIT,
         default_paragraph_voice_id: typing.Optional[str] = OMIT,
         default_model_id: typing.Optional[str] = OMIT,
         from_url: typing.Optional[str] = OMIT,
+        from_document: typing.Optional[core.File] = OMIT,
         from_content_json: typing.Optional[str] = OMIT,
         quality_preset: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
@@ -680,9 +680,6 @@ class AsyncRawProjectsClient:
         name : str
             The name of the Studio project, used for identification only.
 
-        from_document : core.File
-            See core.File for more documentation
-
         default_title_voice_id : typing.Optional[str]
             The voice_id that corresponds to the default voice used for new titles.
 
@@ -694,6 +691,9 @@ class AsyncRawProjectsClient:
 
         from_url : typing.Optional[str]
             An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' and 'from_content' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
+
+        from_document : typing.Optional[core.File]
+            See core.File for more documentation
 
         from_content_json : typing.Optional[str]
 
@@ -866,7 +866,7 @@ class AsyncRawProjectsClient:
                 "source_type": source_type,
             },
             files={
-                "from_document": from_document,
+                **({"from_document": from_document} if from_document is not None else {}),
             },
             request_options=request_options,
             omit=OMIT,

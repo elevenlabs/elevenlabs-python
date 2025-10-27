@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .turn_eagerness import TurnEagerness
 from .turn_mode import TurnMode
 
 
@@ -22,6 +23,11 @@ class TurnConfig(UncheckedBaseModel):
     mode: typing.Optional[TurnMode] = pydantic.Field(default=None)
     """
     The mode of turn detection
+    """
+
+    turn_eagerness: typing.Optional[TurnEagerness] = pydantic.Field(default=None)
+    """
+    Controls how eager the agent is to respond. Low = less eager (waits longer), Standard = default eagerness, High = more eager (responds sooner)
     """
 
     if IS_PYDANTIC_V2:

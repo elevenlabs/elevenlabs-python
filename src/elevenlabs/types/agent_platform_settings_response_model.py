@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_call_limits import AgentCallLimits
+from .agent_platform_settings_response_model_guardrails import AgentPlatformSettingsResponseModelGuardrails
 from .agent_testing_settings import AgentTestingSettings
 from .agent_workspace_overrides_output import AgentWorkspaceOverridesOutput
 from .auth_settings import AuthSettings
@@ -51,6 +52,11 @@ class AgentPlatformSettingsResponseModel(UncheckedBaseModel):
     archived: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether the agent is archived
+    """
+
+    guardrails: typing.Optional[AgentPlatformSettingsResponseModelGuardrails] = pydantic.Field(default=None)
+    """
+    Guardrails configuration for the agent
     """
 
     auth: typing.Optional[AuthSettings] = pydantic.Field(default=None)
