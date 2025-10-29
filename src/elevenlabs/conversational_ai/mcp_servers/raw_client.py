@@ -16,6 +16,10 @@ from ...types.mcp_approval_policy import McpApprovalPolicy
 from ...types.mcp_server_config_input import McpServerConfigInput
 from ...types.mcp_server_response_model import McpServerResponseModel
 from ...types.mcp_servers_response_model import McpServersResponseModel
+from ...types.tool_execution_mode import ToolExecutionMode
+from .types.mcp_server_config_update_request_model_request_headers_value import (
+    McpServerConfigUpdateRequestModelRequestHeadersValue,
+)
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -186,6 +190,10 @@ class RawMcpServersClient:
         approval_policy: typing.Optional[McpApprovalPolicy] = OMIT,
         force_pre_tool_speech: typing.Optional[bool] = OMIT,
         disable_interruptions: typing.Optional[bool] = OMIT,
+        execution_mode: typing.Optional[ToolExecutionMode] = OMIT,
+        request_headers: typing.Optional[
+            typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[McpServerResponseModel]:
         """
@@ -205,6 +213,12 @@ class RawMcpServersClient:
         disable_interruptions : typing.Optional[bool]
             Whether to disable interruptions for all tools from this MCP server
 
+        execution_mode : typing.Optional[ToolExecutionMode]
+            The execution mode for all tools from this MCP server
+
+        request_headers : typing.Optional[typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]]
+            The headers to include in requests to the MCP server
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -220,6 +234,12 @@ class RawMcpServersClient:
                 "approval_policy": approval_policy,
                 "force_pre_tool_speech": force_pre_tool_speech,
                 "disable_interruptions": disable_interruptions,
+                "execution_mode": execution_mode,
+                "request_headers": convert_and_respect_annotation_metadata(
+                    object_=request_headers,
+                    annotation=typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]],
+                    direction="write",
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -421,6 +441,10 @@ class AsyncRawMcpServersClient:
         approval_policy: typing.Optional[McpApprovalPolicy] = OMIT,
         force_pre_tool_speech: typing.Optional[bool] = OMIT,
         disable_interruptions: typing.Optional[bool] = OMIT,
+        execution_mode: typing.Optional[ToolExecutionMode] = OMIT,
+        request_headers: typing.Optional[
+            typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[McpServerResponseModel]:
         """
@@ -440,6 +464,12 @@ class AsyncRawMcpServersClient:
         disable_interruptions : typing.Optional[bool]
             Whether to disable interruptions for all tools from this MCP server
 
+        execution_mode : typing.Optional[ToolExecutionMode]
+            The execution mode for all tools from this MCP server
+
+        request_headers : typing.Optional[typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]]
+            The headers to include in requests to the MCP server
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -455,6 +485,12 @@ class AsyncRawMcpServersClient:
                 "approval_policy": approval_policy,
                 "force_pre_tool_speech": force_pre_tool_speech,
                 "disable_interruptions": disable_interruptions,
+                "execution_mode": execution_mode,
+                "request_headers": convert_and_respect_annotation_metadata(
+                    object_=request_headers,
+                    annotation=typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]],
+                    direction="write",
+                ),
             },
             headers={
                 "content-type": "application/json",

@@ -4,18 +4,36 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.audio_with_timestamps_and_voice_segments_response_model import (
+    AudioWithTimestampsAndVoiceSegmentsResponseModel,
+)
 from ..types.dialogue_input import DialogueInput
 from ..types.model_settings_response_model import ModelSettingsResponseModel
 from ..types.pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
+from ..types.streaming_audio_chunk_with_timestamps_and_voice_segments_response_model import (
+    StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel,
+)
 from .raw_client import AsyncRawTextToDialogueClient, RawTextToDialogueClient
+from .types.body_text_to_dialogue_full_with_timestamps_apply_text_normalization import (
+    BodyTextToDialogueFullWithTimestampsApplyTextNormalization,
+)
 from .types.body_text_to_dialogue_multi_voice_streaming_v_1_text_to_dialogue_stream_post_apply_text_normalization import (
     BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization,
 )
 from .types.body_text_to_dialogue_multi_voice_v_1_text_to_dialogue_post_apply_text_normalization import (
     BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization,
 )
+from .types.body_text_to_dialogue_stream_with_timestamps_apply_text_normalization import (
+    BodyTextToDialogueStreamWithTimestampsApplyTextNormalization,
+)
 from .types.text_to_dialogue_convert_request_output_format import TextToDialogueConvertRequestOutputFormat
+from .types.text_to_dialogue_convert_with_timestamps_request_output_format import (
+    TextToDialogueConvertWithTimestampsRequestOutputFormat,
+)
 from .types.text_to_dialogue_stream_request_output_format import TextToDialogueStreamRequestOutputFormat
+from .types.text_to_dialogue_stream_with_timestamps_request_output_format import (
+    TextToDialogueStreamWithTimestampsRequestOutputFormat,
+)
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -209,6 +227,180 @@ class TextToDialogueClient:
             request_options=request_options,
         ) as r:
             yield from r.data
+
+    def stream_with_timestamps(
+        self,
+        *,
+        inputs: typing.Sequence[DialogueInput],
+        output_format: typing.Optional[TextToDialogueStreamWithTimestampsRequestOutputFormat] = None,
+        model_id: typing.Optional[str] = OMIT,
+        language_code: typing.Optional[str] = OMIT,
+        settings: typing.Optional[ModelSettingsResponseModel] = OMIT,
+        pronunciation_dictionary_locators: typing.Optional[
+            typing.Sequence[PronunciationDictionaryVersionLocator]
+        ] = OMIT,
+        seed: typing.Optional[int] = OMIT,
+        apply_text_normalization: typing.Optional[BodyTextToDialogueStreamWithTimestampsApplyTextNormalization] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel]:
+        """
+        Converts a list of text and voice ID pairs into speech (dialogue) and returns a stream of JSON blobs containing audio as a base64 encoded string and timestamps
+
+        Parameters
+        ----------
+        inputs : typing.Sequence[DialogueInput]
+            A list of dialogue inputs, each containing text and a voice ID which will be converted into speech.
+
+        output_format : typing.Optional[TextToDialogueStreamWithTimestampsRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        model_id : typing.Optional[str]
+            Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
+
+        language_code : typing.Optional[str]
+            Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+
+        settings : typing.Optional[ModelSettingsResponseModel]
+            Settings controlling the dialogue generation.
+
+        pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
+            A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
+
+        seed : typing.Optional[int]
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
+
+        apply_text_normalization : typing.Optional[BodyTextToDialogueStreamWithTimestampsApplyTextNormalization]
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel]
+            Stream of transcription chunks
+
+        Examples
+        --------
+        from elevenlabs import DialogueInput, ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        response = client.text_to_dialogue.stream_with_timestamps(
+            output_format="mp3_22050_32",
+            inputs=[
+                DialogueInput(
+                    text="Hello, how are you?",
+                    voice_id="bYTqZQo3Jz7LQtmGTgwi",
+                ),
+                DialogueInput(
+                    text="I'm doing well, thank you!",
+                    voice_id="6lCwbsX1yVjD49QmpkTR",
+                ),
+            ],
+        )
+        for chunk in response:
+            yield chunk
+        """
+        with self._raw_client.stream_with_timestamps(
+            inputs=inputs,
+            output_format=output_format,
+            model_id=model_id,
+            language_code=language_code,
+            settings=settings,
+            pronunciation_dictionary_locators=pronunciation_dictionary_locators,
+            seed=seed,
+            apply_text_normalization=apply_text_normalization,
+            request_options=request_options,
+        ) as r:
+            yield from r.data
+
+    def convert_with_timestamps(
+        self,
+        *,
+        inputs: typing.Sequence[DialogueInput],
+        output_format: typing.Optional[TextToDialogueConvertWithTimestampsRequestOutputFormat] = None,
+        model_id: typing.Optional[str] = OMIT,
+        language_code: typing.Optional[str] = OMIT,
+        settings: typing.Optional[ModelSettingsResponseModel] = OMIT,
+        pronunciation_dictionary_locators: typing.Optional[
+            typing.Sequence[PronunciationDictionaryVersionLocator]
+        ] = OMIT,
+        seed: typing.Optional[int] = OMIT,
+        apply_text_normalization: typing.Optional[BodyTextToDialogueFullWithTimestampsApplyTextNormalization] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AudioWithTimestampsAndVoiceSegmentsResponseModel:
+        """
+        Generate dialogue from text with precise character-level timing information for audio-text synchronization.
+
+        Parameters
+        ----------
+        inputs : typing.Sequence[DialogueInput]
+            A list of dialogue inputs, each containing text and a voice ID which will be converted into speech.
+
+        output_format : typing.Optional[TextToDialogueConvertWithTimestampsRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        model_id : typing.Optional[str]
+            Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
+
+        language_code : typing.Optional[str]
+            Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+
+        settings : typing.Optional[ModelSettingsResponseModel]
+            Settings controlling the dialogue generation.
+
+        pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
+            A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
+
+        seed : typing.Optional[int]
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
+
+        apply_text_normalization : typing.Optional[BodyTextToDialogueFullWithTimestampsApplyTextNormalization]
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AudioWithTimestampsAndVoiceSegmentsResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import DialogueInput, ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.text_to_dialogue.convert_with_timestamps(
+            output_format="mp3_22050_32",
+            inputs=[
+                DialogueInput(
+                    text="Hello, how are you?",
+                    voice_id="bYTqZQo3Jz7LQtmGTgwi",
+                ),
+                DialogueInput(
+                    text="I'm doing well, thank you!",
+                    voice_id="6lCwbsX1yVjD49QmpkTR",
+                ),
+            ],
+        )
+        """
+        _response = self._raw_client.convert_with_timestamps(
+            inputs=inputs,
+            output_format=output_format,
+            model_id=model_id,
+            language_code=language_code,
+            settings=settings,
+            pronunciation_dictionary_locators=pronunciation_dictionary_locators,
+            seed=seed,
+            apply_text_normalization=apply_text_normalization,
+            request_options=request_options,
+        )
+        return _response.data
 
 
 class AsyncTextToDialogueClient:
@@ -417,3 +609,194 @@ class AsyncTextToDialogueClient:
         ) as r:
             async for _chunk in r.data:
                 yield _chunk
+
+    async def stream_with_timestamps(
+        self,
+        *,
+        inputs: typing.Sequence[DialogueInput],
+        output_format: typing.Optional[TextToDialogueStreamWithTimestampsRequestOutputFormat] = None,
+        model_id: typing.Optional[str] = OMIT,
+        language_code: typing.Optional[str] = OMIT,
+        settings: typing.Optional[ModelSettingsResponseModel] = OMIT,
+        pronunciation_dictionary_locators: typing.Optional[
+            typing.Sequence[PronunciationDictionaryVersionLocator]
+        ] = OMIT,
+        seed: typing.Optional[int] = OMIT,
+        apply_text_normalization: typing.Optional[BodyTextToDialogueStreamWithTimestampsApplyTextNormalization] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel]:
+        """
+        Converts a list of text and voice ID pairs into speech (dialogue) and returns a stream of JSON blobs containing audio as a base64 encoded string and timestamps
+
+        Parameters
+        ----------
+        inputs : typing.Sequence[DialogueInput]
+            A list of dialogue inputs, each containing text and a voice ID which will be converted into speech.
+
+        output_format : typing.Optional[TextToDialogueStreamWithTimestampsRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        model_id : typing.Optional[str]
+            Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
+
+        language_code : typing.Optional[str]
+            Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+
+        settings : typing.Optional[ModelSettingsResponseModel]
+            Settings controlling the dialogue generation.
+
+        pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
+            A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
+
+        seed : typing.Optional[int]
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
+
+        apply_text_normalization : typing.Optional[BodyTextToDialogueStreamWithTimestampsApplyTextNormalization]
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel]
+            Stream of transcription chunks
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs, DialogueInput
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            response = await client.text_to_dialogue.stream_with_timestamps(
+                output_format="mp3_22050_32",
+                inputs=[
+                    DialogueInput(
+                        text="Hello, how are you?",
+                        voice_id="bYTqZQo3Jz7LQtmGTgwi",
+                    ),
+                    DialogueInput(
+                        text="I'm doing well, thank you!",
+                        voice_id="6lCwbsX1yVjD49QmpkTR",
+                    ),
+                ],
+            )
+            async for chunk in response:
+                yield chunk
+
+
+        asyncio.run(main())
+        """
+        async with self._raw_client.stream_with_timestamps(
+            inputs=inputs,
+            output_format=output_format,
+            model_id=model_id,
+            language_code=language_code,
+            settings=settings,
+            pronunciation_dictionary_locators=pronunciation_dictionary_locators,
+            seed=seed,
+            apply_text_normalization=apply_text_normalization,
+            request_options=request_options,
+        ) as r:
+            async for _chunk in r.data:
+                yield _chunk
+
+    async def convert_with_timestamps(
+        self,
+        *,
+        inputs: typing.Sequence[DialogueInput],
+        output_format: typing.Optional[TextToDialogueConvertWithTimestampsRequestOutputFormat] = None,
+        model_id: typing.Optional[str] = OMIT,
+        language_code: typing.Optional[str] = OMIT,
+        settings: typing.Optional[ModelSettingsResponseModel] = OMIT,
+        pronunciation_dictionary_locators: typing.Optional[
+            typing.Sequence[PronunciationDictionaryVersionLocator]
+        ] = OMIT,
+        seed: typing.Optional[int] = OMIT,
+        apply_text_normalization: typing.Optional[BodyTextToDialogueFullWithTimestampsApplyTextNormalization] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AudioWithTimestampsAndVoiceSegmentsResponseModel:
+        """
+        Generate dialogue from text with precise character-level timing information for audio-text synchronization.
+
+        Parameters
+        ----------
+        inputs : typing.Sequence[DialogueInput]
+            A list of dialogue inputs, each containing text and a voice ID which will be converted into speech.
+
+        output_format : typing.Optional[TextToDialogueConvertWithTimestampsRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        model_id : typing.Optional[str]
+            Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
+
+        language_code : typing.Optional[str]
+            Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+
+        settings : typing.Optional[ModelSettingsResponseModel]
+            Settings controlling the dialogue generation.
+
+        pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
+            A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
+
+        seed : typing.Optional[int]
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
+
+        apply_text_normalization : typing.Optional[BodyTextToDialogueFullWithTimestampsApplyTextNormalization]
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AudioWithTimestampsAndVoiceSegmentsResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs, DialogueInput
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.text_to_dialogue.convert_with_timestamps(
+                output_format="mp3_22050_32",
+                inputs=[
+                    DialogueInput(
+                        text="Hello, how are you?",
+                        voice_id="bYTqZQo3Jz7LQtmGTgwi",
+                    ),
+                    DialogueInput(
+                        text="I'm doing well, thank you!",
+                        voice_id="6lCwbsX1yVjD49QmpkTR",
+                    ),
+                ],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.convert_with_timestamps(
+            inputs=inputs,
+            output_format=output_format,
+            model_id=model_id,
+            language_code=language_code,
+            settings=settings,
+            pronunciation_dictionary_locators=pronunciation_dictionary_locators,
+            seed=seed,
+            apply_text_normalization=apply_text_normalization,
+            request_options=request_options,
+        )
+        return _response.data

@@ -156,6 +156,7 @@ class RawConversationsClient:
         user_id: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
         summary_mode: typing.Optional[ConversationsListRequestSummaryMode] = None,
+        search: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetConversationsPageResponseModel]:
         """
@@ -187,6 +188,9 @@ class RawConversationsClient:
         summary_mode : typing.Optional[ConversationsListRequestSummaryMode]
             Whether to include transcript summaries in the response.
 
+        search : typing.Optional[str]
+            Full-text or fuzzy search over transcript messages
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -207,6 +211,7 @@ class RawConversationsClient:
                 "user_id": user_id,
                 "page_size": page_size,
                 "summary_mode": summary_mode,
+                "search": search,
             },
             request_options=request_options,
         )
@@ -476,6 +481,7 @@ class AsyncRawConversationsClient:
         user_id: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
         summary_mode: typing.Optional[ConversationsListRequestSummaryMode] = None,
+        search: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetConversationsPageResponseModel]:
         """
@@ -507,6 +513,9 @@ class AsyncRawConversationsClient:
         summary_mode : typing.Optional[ConversationsListRequestSummaryMode]
             Whether to include transcript summaries in the response.
 
+        search : typing.Optional[str]
+            Full-text or fuzzy search over transcript messages
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -527,6 +536,7 @@ class AsyncRawConversationsClient:
                 "user_id": user_id,
                 "page_size": page_size,
                 "summary_mode": summary_mode,
+                "search": search,
             },
             request_options=request_options,
         )

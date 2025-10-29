@@ -8,11 +8,6 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class VadConfig(UncheckedBaseModel):
-    background_voice_detection: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Whether to use background voice filtering
-    """
-
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

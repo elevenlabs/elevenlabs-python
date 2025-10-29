@@ -5,7 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .turn_mode import TurnMode
+from .turn_eagerness import TurnEagerness
 
 
 class TurnConfig(UncheckedBaseModel):
@@ -19,9 +19,9 @@ class TurnConfig(UncheckedBaseModel):
     Maximum wait time since the user last spoke before terminating the call
     """
 
-    mode: typing.Optional[TurnMode] = pydantic.Field(default=None)
+    turn_eagerness: typing.Optional[TurnEagerness] = pydantic.Field(default=None)
     """
-    The mode of turn detection
+    Controls how eager the agent is to respond. Low = less eager (waits longer), Standard = default eagerness, High = more eager (responds sooner)
     """
 
     if IS_PYDANTIC_V2:

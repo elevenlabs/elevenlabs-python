@@ -2,6 +2,7 @@
 
 import typing
 
+from .conv_ai_dynamic_variable import ConvAiDynamicVariable
 from .conv_ai_secret_locator import ConvAiSecretLocator
 
-McpServerConfigInputRequestHeadersValue = typing.Union[str, ConvAiSecretLocator]
+McpServerConfigInputRequestHeadersValue = typing.Union[str, ConvAiSecretLocator, ConvAiDynamicVariable]

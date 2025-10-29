@@ -5,7 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .tool_type import ToolType
+from .referenced_tool_common_model_type import ReferencedToolCommonModelType
 
 
 class ReferencedToolCommonModel(UncheckedBaseModel):
@@ -18,7 +18,7 @@ class ReferencedToolCommonModel(UncheckedBaseModel):
     The ID of the tool
     """
 
-    type: ToolType = pydantic.Field()
+    type: ReferencedToolCommonModelType = pydantic.Field()
     """
     The type of the tool
     """

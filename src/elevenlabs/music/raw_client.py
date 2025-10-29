@@ -31,11 +31,9 @@ class RawMusicClient:
         *,
         output_format: typing.Optional[MusicComposeRequestOutputFormat] = None,
         prompt: typing.Optional[str] = OMIT,
-        music_prompt: typing.Optional[MusicPrompt] = OMIT,
         composition_plan: typing.Optional[MusicPrompt] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
         model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
-        seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         respect_sections_durations: typing.Optional[bool] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
@@ -52,9 +50,6 @@ class RawMusicClient:
         prompt : typing.Optional[str]
             A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
 
-        music_prompt : typing.Optional[MusicPrompt]
-            A music prompt. Deprecated. Use `composition_plan` instead.
-
         composition_plan : typing.Optional[MusicPrompt]
             A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
 
@@ -63,9 +58,6 @@ class RawMusicClient:
 
         model_id : typing.Optional[typing.Literal["music_v1"]]
             The model to use for the generation.
-
-        seed : typing.Optional[int]
-            The seed to use for the generation.
 
         force_instrumental : typing.Optional[bool]
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
@@ -92,15 +84,11 @@ class RawMusicClient:
             },
             json={
                 "prompt": prompt,
-                "music_prompt": convert_and_respect_annotation_metadata(
-                    object_=music_prompt, annotation=MusicPrompt, direction="write"
-                ),
                 "composition_plan": convert_and_respect_annotation_metadata(
                     object_=composition_plan, annotation=MusicPrompt, direction="write"
                 ),
                 "music_length_ms": music_length_ms,
                 "model_id": model_id,
-                "seed": seed,
                 "force_instrumental": force_instrumental,
                 "respect_sections_durations": respect_sections_durations,
                 "store_for_inpainting": store_for_inpainting,
@@ -146,11 +134,9 @@ class RawMusicClient:
         *,
         output_format: typing.Optional[MusicComposeDetailedRequestOutputFormat] = None,
         prompt: typing.Optional[str] = OMIT,
-        music_prompt: typing.Optional[MusicPrompt] = OMIT,
         composition_plan: typing.Optional[MusicPrompt] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
         model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
-        seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -166,9 +152,6 @@ class RawMusicClient:
         prompt : typing.Optional[str]
             A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
 
-        music_prompt : typing.Optional[MusicPrompt]
-            A music prompt. Deprecated. Use `composition_plan` instead.
-
         composition_plan : typing.Optional[MusicPrompt]
             A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
 
@@ -177,9 +160,6 @@ class RawMusicClient:
 
         model_id : typing.Optional[typing.Literal["music_v1"]]
             The model to use for the generation.
-
-        seed : typing.Optional[int]
-            The seed to use for the generation.
 
         force_instrumental : typing.Optional[bool]
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
@@ -203,15 +183,11 @@ class RawMusicClient:
             },
             json={
                 "prompt": prompt,
-                "music_prompt": convert_and_respect_annotation_metadata(
-                    object_=music_prompt, annotation=MusicPrompt, direction="write"
-                ),
                 "composition_plan": convert_and_respect_annotation_metadata(
                     object_=composition_plan, annotation=MusicPrompt, direction="write"
                 ),
                 "music_length_ms": music_length_ms,
                 "model_id": model_id,
-                "seed": seed,
                 "force_instrumental": force_instrumental,
                 "store_for_inpainting": store_for_inpainting,
             },
@@ -256,11 +232,9 @@ class RawMusicClient:
         *,
         output_format: typing.Optional[MusicStreamRequestOutputFormat] = None,
         prompt: typing.Optional[str] = OMIT,
-        music_prompt: typing.Optional[MusicPrompt] = OMIT,
         composition_plan: typing.Optional[MusicPrompt] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
         model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
-        seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -276,9 +250,6 @@ class RawMusicClient:
         prompt : typing.Optional[str]
             A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
 
-        music_prompt : typing.Optional[MusicPrompt]
-            A music prompt. Deprecated. Use `composition_plan` instead.
-
         composition_plan : typing.Optional[MusicPrompt]
             A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
 
@@ -287,9 +258,6 @@ class RawMusicClient:
 
         model_id : typing.Optional[typing.Literal["music_v1"]]
             The model to use for the generation.
-
-        seed : typing.Optional[int]
-            The seed to use for the generation.
 
         force_instrumental : typing.Optional[bool]
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
@@ -313,15 +281,11 @@ class RawMusicClient:
             },
             json={
                 "prompt": prompt,
-                "music_prompt": convert_and_respect_annotation_metadata(
-                    object_=music_prompt, annotation=MusicPrompt, direction="write"
-                ),
                 "composition_plan": convert_and_respect_annotation_metadata(
                     object_=composition_plan, annotation=MusicPrompt, direction="write"
                 ),
                 "music_length_ms": music_length_ms,
                 "model_id": model_id,
-                "seed": seed,
                 "force_instrumental": force_instrumental,
                 "store_for_inpainting": store_for_inpainting,
             },
@@ -371,11 +335,9 @@ class AsyncRawMusicClient:
         *,
         output_format: typing.Optional[MusicComposeRequestOutputFormat] = None,
         prompt: typing.Optional[str] = OMIT,
-        music_prompt: typing.Optional[MusicPrompt] = OMIT,
         composition_plan: typing.Optional[MusicPrompt] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
         model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
-        seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         respect_sections_durations: typing.Optional[bool] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
@@ -392,9 +354,6 @@ class AsyncRawMusicClient:
         prompt : typing.Optional[str]
             A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
 
-        music_prompt : typing.Optional[MusicPrompt]
-            A music prompt. Deprecated. Use `composition_plan` instead.
-
         composition_plan : typing.Optional[MusicPrompt]
             A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
 
@@ -403,9 +362,6 @@ class AsyncRawMusicClient:
 
         model_id : typing.Optional[typing.Literal["music_v1"]]
             The model to use for the generation.
-
-        seed : typing.Optional[int]
-            The seed to use for the generation.
 
         force_instrumental : typing.Optional[bool]
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
@@ -432,15 +388,11 @@ class AsyncRawMusicClient:
             },
             json={
                 "prompt": prompt,
-                "music_prompt": convert_and_respect_annotation_metadata(
-                    object_=music_prompt, annotation=MusicPrompt, direction="write"
-                ),
                 "composition_plan": convert_and_respect_annotation_metadata(
                     object_=composition_plan, annotation=MusicPrompt, direction="write"
                 ),
                 "music_length_ms": music_length_ms,
                 "model_id": model_id,
-                "seed": seed,
                 "force_instrumental": force_instrumental,
                 "respect_sections_durations": respect_sections_durations,
                 "store_for_inpainting": store_for_inpainting,
@@ -487,11 +439,9 @@ class AsyncRawMusicClient:
         *,
         output_format: typing.Optional[MusicComposeDetailedRequestOutputFormat] = None,
         prompt: typing.Optional[str] = OMIT,
-        music_prompt: typing.Optional[MusicPrompt] = OMIT,
         composition_plan: typing.Optional[MusicPrompt] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
         model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
-        seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -507,9 +457,6 @@ class AsyncRawMusicClient:
         prompt : typing.Optional[str]
             A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
 
-        music_prompt : typing.Optional[MusicPrompt]
-            A music prompt. Deprecated. Use `composition_plan` instead.
-
         composition_plan : typing.Optional[MusicPrompt]
             A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
 
@@ -518,9 +465,6 @@ class AsyncRawMusicClient:
 
         model_id : typing.Optional[typing.Literal["music_v1"]]
             The model to use for the generation.
-
-        seed : typing.Optional[int]
-            The seed to use for the generation.
 
         force_instrumental : typing.Optional[bool]
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
@@ -544,15 +488,11 @@ class AsyncRawMusicClient:
             },
             json={
                 "prompt": prompt,
-                "music_prompt": convert_and_respect_annotation_metadata(
-                    object_=music_prompt, annotation=MusicPrompt, direction="write"
-                ),
                 "composition_plan": convert_and_respect_annotation_metadata(
                     object_=composition_plan, annotation=MusicPrompt, direction="write"
                 ),
                 "music_length_ms": music_length_ms,
                 "model_id": model_id,
-                "seed": seed,
                 "force_instrumental": force_instrumental,
                 "store_for_inpainting": store_for_inpainting,
             },
@@ -598,11 +538,9 @@ class AsyncRawMusicClient:
         *,
         output_format: typing.Optional[MusicStreamRequestOutputFormat] = None,
         prompt: typing.Optional[str] = OMIT,
-        music_prompt: typing.Optional[MusicPrompt] = OMIT,
         composition_plan: typing.Optional[MusicPrompt] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
         model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
-        seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -618,9 +556,6 @@ class AsyncRawMusicClient:
         prompt : typing.Optional[str]
             A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
 
-        music_prompt : typing.Optional[MusicPrompt]
-            A music prompt. Deprecated. Use `composition_plan` instead.
-
         composition_plan : typing.Optional[MusicPrompt]
             A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
 
@@ -629,9 +564,6 @@ class AsyncRawMusicClient:
 
         model_id : typing.Optional[typing.Literal["music_v1"]]
             The model to use for the generation.
-
-        seed : typing.Optional[int]
-            The seed to use for the generation.
 
         force_instrumental : typing.Optional[bool]
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
@@ -655,15 +587,11 @@ class AsyncRawMusicClient:
             },
             json={
                 "prompt": prompt,
-                "music_prompt": convert_and_respect_annotation_metadata(
-                    object_=music_prompt, annotation=MusicPrompt, direction="write"
-                ),
                 "composition_plan": convert_and_respect_annotation_metadata(
                     object_=composition_plan, annotation=MusicPrompt, direction="write"
                 ),
                 "music_length_ms": music_length_ms,
                 "model_id": model_id,
-                "seed": seed,
                 "force_instrumental": force_instrumental,
                 "store_for_inpainting": store_for_inpainting,
             },

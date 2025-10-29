@@ -5,6 +5,7 @@ import typing
 MetricType = typing.Union[
     typing.Literal[
         "credits",
+        "tts_characters",
         "minutes_used",
         "request_count",
         "ttfb_avg",

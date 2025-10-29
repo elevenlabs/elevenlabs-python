@@ -1801,6 +1801,280 @@ client.text_to_dialogue.stream(
 </dl>
 </details>
 
+<details><summary><code>client.text_to_dialogue.<a href="src/elevenlabs/text_to_dialogue/client.py">stream_with_timestamps</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Converts a list of text and voice ID pairs into speech (dialogue) and returns a stream of JSON blobs containing audio as a base64 encoded string and timestamps
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import DialogueInput, ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+response = client.text_to_dialogue.stream_with_timestamps(
+    output_format="mp3_22050_32",
+    inputs=[
+        DialogueInput(
+            text="Hello, how are you?",
+            voice_id="bYTqZQo3Jz7LQtmGTgwi",
+        ),
+        DialogueInput(
+            text="I'm doing well, thank you!",
+            voice_id="6lCwbsX1yVjD49QmpkTR",
+        ),
+    ],
+)
+for chunk in response.data:
+    yield chunk
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inputs:** `typing.Sequence[DialogueInput]` — A list of dialogue inputs, each containing text and a voice ID which will be converted into speech.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**output_format:** `typing.Optional[TextToDialogueStreamWithTimestampsRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_id:** `typing.Optional[str]` — Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[ModelSettingsResponseModel]` — Settings controlling the dialogue generation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pronunciation_dictionary_locators:** `typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]` — A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**seed:** `typing.Optional[int]` — If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**apply_text_normalization:** `typing.Optional[BodyTextToDialogueStreamWithTimestampsApplyTextNormalization]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.text_to_dialogue.<a href="src/elevenlabs/text_to_dialogue/client.py">convert_with_timestamps</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Generate dialogue from text with precise character-level timing information for audio-text synchronization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import DialogueInput, ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.text_to_dialogue.convert_with_timestamps(
+    output_format="mp3_22050_32",
+    inputs=[
+        DialogueInput(
+            text="Hello, how are you?",
+            voice_id="bYTqZQo3Jz7LQtmGTgwi",
+        ),
+        DialogueInput(
+            text="I'm doing well, thank you!",
+            voice_id="6lCwbsX1yVjD49QmpkTR",
+        ),
+    ],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inputs:** `typing.Sequence[DialogueInput]` — A list of dialogue inputs, each containing text and a voice ID which will be converted into speech.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**output_format:** `typing.Optional[TextToDialogueConvertWithTimestampsRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_id:** `typing.Optional[str]` — Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[ModelSettingsResponseModel]` — Settings controlling the dialogue generation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pronunciation_dictionary_locators:** `typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]` — A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**seed:** `typing.Optional[int]` — If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**apply_text_normalization:** `typing.Optional[BodyTextToDialogueFullWithTimestampsApplyTextNormalization]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## SpeechToSpeech
 <details><summary><code>client.speech_to_speech.<a href="src/elevenlabs/speech_to_speech/client.py">convert</a>(...)</code></summary>
 <dl>
@@ -4050,7 +4324,7 @@ client.dubbing.create()
 
 **file:** `from __future__ import annotations
 
-core.File` — See core.File for more documentation
+typing.Optional[core.File]` — See core.File for more documentation
     
 </dd>
 </dl>
@@ -4060,7 +4334,7 @@ core.File` — See core.File for more documentation
 
 **csv_file:** `from __future__ import annotations
 
-core.File` — See core.File for more documentation
+typing.Optional[core.File]` — See core.File for more documentation
     
 </dd>
 </dl>
@@ -4070,7 +4344,7 @@ core.File` — See core.File for more documentation
 
 **foreground_audio_file:** `from __future__ import annotations
 
-core.File` — See core.File for more documentation
+typing.Optional[core.File]` — See core.File for more documentation
     
 </dd>
 </dl>
@@ -4080,7 +4354,7 @@ core.File` — See core.File for more documentation
 
 **background_audio_file:** `from __future__ import annotations
 
-core.File` — See core.File for more documentation
+typing.Optional[core.File]` — See core.File for more documentation
     
 </dd>
 </dl>
@@ -4965,7 +5239,7 @@ client.pronunciation_dictionaries.create_from_file(
 
 **file:** `from __future__ import annotations
 
-core.File` — See core.File for more documentation
+typing.Optional[core.File]` — See core.File for more documentation
     
 </dd>
 </dl>
@@ -5636,9 +5910,7 @@ client.speech_to_text.convert(
 <dl>
 <dd>
 
-**file:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. This will mean log and transcript storage features are unavailable for this request. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -5646,7 +5918,9 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. This will mean log and transcript storage features are unavailable for this request. Zero retention mode may only be used by enterprise customers.
+**file:** `from __future__ import annotations
+
+typing.Optional[core.File]` — See core.File for more documentation
     
 </dd>
 </dl>
@@ -6246,14 +6520,6 @@ client.music.compose()
 <dl>
 <dd>
 
-**music_prompt:** `typing.Optional[MusicPrompt]` — A music prompt. Deprecated. Use `composition_plan` instead.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **composition_plan:** `typing.Optional[MusicPrompt]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
     
 </dd>
@@ -6271,14 +6537,6 @@ client.music.compose()
 <dd>
 
 **model_id:** `typing.Optional[typing.Literal["music_v1"]]` — The model to use for the generation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**seed:** `typing.Optional[int]` — The seed to use for the generation.
     
 </dd>
 </dl>
@@ -6386,14 +6644,6 @@ client.music.compose_detailed()
 <dl>
 <dd>
 
-**music_prompt:** `typing.Optional[MusicPrompt]` — A music prompt. Deprecated. Use `composition_plan` instead.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **composition_plan:** `typing.Optional[MusicPrompt]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
     
 </dd>
@@ -6411,14 +6661,6 @@ client.music.compose_detailed()
 <dd>
 
 **model_id:** `typing.Optional[typing.Literal["music_v1"]]` — The model to use for the generation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**seed:** `typing.Optional[int]` — The seed to use for the generation.
     
 </dd>
 </dl>
@@ -6518,14 +6760,6 @@ client.music.stream()
 <dl>
 <dd>
 
-**music_prompt:** `typing.Optional[MusicPrompt]` — A music prompt. Deprecated. Use `composition_plan` instead.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **composition_plan:** `typing.Optional[MusicPrompt]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
     
 </dd>
@@ -6543,14 +6777,6 @@ client.music.stream()
 <dd>
 
 **model_id:** `typing.Optional[typing.Literal["music_v1"]]` — The model to use for the generation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**seed:** `typing.Optional[int]` — The seed to use for the generation.
     
 </dd>
 </dl>
@@ -6786,6 +7012,7 @@ client.conversational_ai.conversations.list(
     user_id="user_id",
     page_size=1,
     summary_mode="exclude",
+    search="search",
 )
 
 ```
@@ -6859,6 +7086,14 @@ client.conversational_ai.conversations.list(
 <dd>
 
 **summary_mode:** `typing.Optional[ConversationsListRequestSummaryMode]` — Whether to include transcript summaries in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Full-text or fuzzy search over transcript messages
     
 </dd>
 </dl>
@@ -10889,6 +11124,27 @@ client.conversational_ai.mcp_servers.update(
 <dd>
 
 **disable_interruptions:** `typing.Optional[bool]` — Whether to disable interruptions for all tools from this MCP server
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**execution_mode:** `typing.Optional[ToolExecutionMode]` — The execution mode for all tools from this MCP server
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_headers:** `typing.Optional[
+    typing.Dict[
+        str,
+        typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue],
+    ]
+]` — The headers to include in requests to the MCP server
     
 </dd>
 </dl>
@@ -15000,16 +15256,6 @@ client.studio.projects.create(
 <dl>
 <dd>
 
-**from_document:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **default_title_voice_id:** `typing.Optional[str]` — The voice_id that corresponds to the default voice used for new titles.
     
 </dd>
@@ -15035,6 +15281,16 @@ core.File` — See core.File for more documentation
 <dd>
 
 **from_url:** `typing.Optional[str]` — An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' and 'from_content' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from_document:** `from __future__ import annotations
+
+typing.Optional[core.File]` — See core.File for more documentation
     
 </dd>
 </dl>
@@ -15797,9 +16053,7 @@ client.studio.projects.content.update(
 <dl>
 <dd>
 
-**from_document:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
+**from_url:** `typing.Optional[str]` — An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' and 'from_content' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
     
 </dd>
 </dl>
@@ -15807,7 +16061,9 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**from_url:** `typing.Optional[str]` — An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' and 'from_content' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
+**from_document:** `from __future__ import annotations
+
+typing.Optional[core.File]` — See core.File for more documentation
     
 </dd>
 </dl>
@@ -16980,6 +17236,67 @@ client.text_to_voice.preview.stream(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Tokens SingleUse
+<details><summary><code>client.tokens.single_use.<a href="src/elevenlabs/tokens/single_use/client.py">create</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Generate a time limited single-use token with embedded authentication for frontend clients.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.tokens.single_use.create()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>

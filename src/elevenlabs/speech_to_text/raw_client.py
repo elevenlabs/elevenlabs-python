@@ -58,11 +58,11 @@ class RawSpeechToTextClient:
         model_id : str
             The ID of the model to use for transcription, currently only 'scribe_v1' and 'scribe_v1_experimental' are available.
 
-        file : core.File
-            See core.File for more documentation
-
         enable_logging : typing.Optional[bool]
             When enable_logging is set to false zero retention mode will be used for the request. This will mean log and transcript storage features are unavailable for this request. Zero retention mode may only be used by enterprise customers.
+
+        file : typing.Optional[core.File]
+            See core.File for more documentation
 
         language_code : typing.Optional[str]
             An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand. Defaults to null, in this case the language is predicted automatically.
@@ -141,7 +141,7 @@ class RawSpeechToTextClient:
                 "webhook_metadata": webhook_metadata,
             },
             files={
-                "file": file,
+                **({"file": file} if file is not None else {}),
                 **(
                     {"additional_formats": (None, json.dumps(jsonable_encoder(additional_formats)), "application/json")}
                     if additional_formats is not OMIT
@@ -214,11 +214,11 @@ class AsyncRawSpeechToTextClient:
         model_id : str
             The ID of the model to use for transcription, currently only 'scribe_v1' and 'scribe_v1_experimental' are available.
 
-        file : core.File
-            See core.File for more documentation
-
         enable_logging : typing.Optional[bool]
             When enable_logging is set to false zero retention mode will be used for the request. This will mean log and transcript storage features are unavailable for this request. Zero retention mode may only be used by enterprise customers.
+
+        file : typing.Optional[core.File]
+            See core.File for more documentation
 
         language_code : typing.Optional[str]
             An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand. Defaults to null, in this case the language is predicted automatically.
@@ -297,7 +297,7 @@ class AsyncRawSpeechToTextClient:
                 "webhook_metadata": webhook_metadata,
             },
             files={
-                "file": file,
+                **({"file": file} if file is not None else {}),
                 **(
                     {"additional_formats": (None, json.dumps(jsonable_encoder(additional_formats)), "application/json")}
                     if additional_formats is not OMIT

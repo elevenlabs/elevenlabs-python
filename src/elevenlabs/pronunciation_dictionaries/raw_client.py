@@ -55,7 +55,7 @@ class RawPronunciationDictionariesClient:
         name : str
             The name of the pronunciation dictionary, used for identification only.
 
-        file : core.File
+        file : typing.Optional[core.File]
             See core.File for more documentation
 
         description : typing.Optional[str]
@@ -81,7 +81,7 @@ class RawPronunciationDictionariesClient:
                 "workspace_access": workspace_access,
             },
             files={
-                "file": file,
+                **({"file": file} if file is not None else {}),
             },
             request_options=request_options,
             omit=OMIT,
@@ -467,7 +467,7 @@ class AsyncRawPronunciationDictionariesClient:
         name : str
             The name of the pronunciation dictionary, used for identification only.
 
-        file : core.File
+        file : typing.Optional[core.File]
             See core.File for more documentation
 
         description : typing.Optional[str]
@@ -493,7 +493,7 @@ class AsyncRawPronunciationDictionariesClient:
                 "workspace_access": workspace_access,
             },
             files={
-                "file": file,
+                **({"file": file} if file is not None else {}),
             },
             request_options=request_options,
             omit=OMIT,

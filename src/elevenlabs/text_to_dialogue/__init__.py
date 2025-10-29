@@ -7,16 +7,24 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
+        BodyTextToDialogueFullWithTimestampsApplyTextNormalization,
         BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization,
         BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization,
+        BodyTextToDialogueStreamWithTimestampsApplyTextNormalization,
         TextToDialogueConvertRequestOutputFormat,
+        TextToDialogueConvertWithTimestampsRequestOutputFormat,
         TextToDialogueStreamRequestOutputFormat,
+        TextToDialogueStreamWithTimestampsRequestOutputFormat,
     )
 _dynamic_imports: typing.Dict[str, str] = {
+    "BodyTextToDialogueFullWithTimestampsApplyTextNormalization": ".types",
     "BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization": ".types",
     "BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization": ".types",
+    "BodyTextToDialogueStreamWithTimestampsApplyTextNormalization": ".types",
     "TextToDialogueConvertRequestOutputFormat": ".types",
+    "TextToDialogueConvertWithTimestampsRequestOutputFormat": ".types",
     "TextToDialogueStreamRequestOutputFormat": ".types",
+    "TextToDialogueStreamWithTimestampsRequestOutputFormat": ".types",
 }
 
 
@@ -42,8 +50,12 @@ def __dir__():
 
 
 __all__ = [
+    "BodyTextToDialogueFullWithTimestampsApplyTextNormalization",
     "BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization",
     "BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization",
+    "BodyTextToDialogueStreamWithTimestampsApplyTextNormalization",
     "TextToDialogueConvertRequestOutputFormat",
+    "TextToDialogueConvertWithTimestampsRequestOutputFormat",
     "TextToDialogueStreamRequestOutputFormat",
+    "TextToDialogueStreamWithTimestampsRequestOutputFormat",
 ]
