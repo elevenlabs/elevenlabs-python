@@ -1,19 +1,23 @@
 from abc import ABC, abstractmethod
-import base64
-import json
-import threading
-from typing import Callable, Optional, Awaitable, Union, Any, Literal, Dict, Tuple
 import asyncio
+import base64
 from concurrent.futures import ThreadPoolExecutor
 from enum import Enum
+import json
+import logging
+import threading
+from typing import Any, Awaitable, Callable, Dict, Literal, Optional, Tuple, Union
 import urllib.parse
 
-from websockets.sync.client import connect, Connection
 import websockets
 from websockets.exceptions import ConnectionClosedOK
+from websockets.sync.client import Connection, connect
 
 from ..base_client import BaseElevenLabs
 from ..version import __version__
+
+
+logger = logging.getLogger(__name__)
 
 
 class ClientToOrchestratorEvent(str, Enum):
@@ -613,7 +617,7 @@ class Conversation(BaseConversation):
         try:
             self._ws.send(json.dumps(event.to_dict()))
         except Exception as e:
-            print(f"Error sending user message: {e}")
+            logger.error(f"Error sending user message: {e}")
             raise
 
     def register_user_activity(self):
@@ -631,7 +635,7 @@ class Conversation(BaseConversation):
         try:
             self._ws.send(json.dumps(event.to_dict()))
         except Exception as e:
-            print(f"Error registering user activity: {e}")
+            logger.error(f"Error registering user activity: {e}")
             raise
 
     def send_contextual_update(self, text: str):
@@ -653,7 +657,7 @@ class Conversation(BaseConversation):
         try:
             self._ws.send(json.dumps(event.to_dict()))
         except Exception as e:
-            print(f"Error sending contextual update: {e}")
+            logger.error(f"Error sending contextual update: {e}")
             raise
 
     def _run(self, ws_url: str):
@@ -674,7 +678,7 @@ class Conversation(BaseConversation):
                 except ConnectionClosedOK:
                     self.end_session()
                 except Exception as e:
-                    print(f"Error sending user audio chunk: {e}")
+                    logger.error(f"Error sending user audio chunk: {e}")
                     self.end_session()
 
             self.audio_interface.start(input_callback)
@@ -689,7 +693,7 @@ class Conversation(BaseConversation):
                 except TimeoutError:
                     pass
                 except Exception as e:
-                    print(f"Error receiving message: {e}")
+                    logger.error(f"Error receiving message: {e}")
                     self.end_session()
 
             self._ws = None
@@ -866,7 +870,7 @@ class AsyncConversation(BaseConversation):
         try:
             await self._ws.send(json.dumps(event.to_dict()))
         except Exception as e:
-            print(f"Error sending user message: {e}")
+            logger.error(f"Error sending user message: {e}")
             raise
 
     async def register_user_activity(self):
@@ -884,7 +888,7 @@ class AsyncConversation(BaseConversation):
         try:
             await self._ws.send(json.dumps(event.to_dict()))
         except Exception as e:
-            print(f"Error registering user activity: {e}")
+            logger.error(f"Error registering user activity: {e}")
             raise
 
     async def send_contextual_update(self, text: str):
@@ -906,7 +910,7 @@ class AsyncConversation(BaseConversation):
         try:
             await self._ws.send(json.dumps(event.to_dict()))
         except Exception as e:
-            print(f"Error sending contextual update: {e}")
+            logger.error(f"Error sending contextual update: {e}")
             raise
 
     async def _run(self, ws_url: str):
@@ -926,7 +930,7 @@ class AsyncConversation(BaseConversation):
                 except ConnectionClosedOK:
                     await self.end_session()
                 except Exception as e:
-                    print(f"Error sending user audio chunk: {e}")
+                    logger.error(f"Error sending user audio chunk: {e}")
                     await self.end_session()
 
             await self.audio_interface.start(input_callback)
@@ -945,7 +949,7 @@ class AsyncConversation(BaseConversation):
                         await self.end_session()
                         break
                     except Exception as e:
-                        print(f"Error receiving message: {e}")
+                        logger.error(f"Error receiving message: {e}")
                         await self.end_session()
                         break
             finally:
