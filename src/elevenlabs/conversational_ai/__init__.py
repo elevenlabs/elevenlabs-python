@@ -23,6 +23,7 @@ if typing.TYPE_CHECKING:
         twilio,
     )
     from .conversations import ConversationsListRequestSummaryMode
+    from .mcp_servers import McpServerConfigUpdateRequestModelRequestHeadersValue
     from .phone_numbers import (
         PhoneNumbersCreateRequestBody,
         PhoneNumbersCreateRequestBody_SipTrunk,
@@ -41,6 +42,7 @@ if typing.TYPE_CHECKING:
 _dynamic_imports: typing.Dict[str, str] = {
     "ConversationsListRequestSummaryMode": ".conversations",
     "CreateUnitTestRequestDynamicVariablesValue": ".tests",
+    "McpServerConfigUpdateRequestModelRequestHeadersValue": ".mcp_servers",
     "PhoneNumbersCreateRequestBody": ".phone_numbers",
     "PhoneNumbersCreateRequestBody_SipTrunk": ".phone_numbers",
     "PhoneNumbersCreateRequestBody_Twilio": ".phone_numbers",
@@ -95,6 +97,7 @@ def __dir__():
 __all__ = [
     "ConversationsListRequestSummaryMode",
     "CreateUnitTestRequestDynamicVariablesValue",
+    "McpServerConfigUpdateRequestModelRequestHeadersValue",
     "PhoneNumbersCreateRequestBody",
     "PhoneNumbersCreateRequestBody_SipTrunk",
     "PhoneNumbersCreateRequestBody_Twilio",

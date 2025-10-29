@@ -64,7 +64,7 @@ class PronunciationDictionariesClient:
         name : str
             The name of the pronunciation dictionary, used for identification only.
 
-        file : core.File
+        file : typing.Optional[core.File]
             See core.File for more documentation
 
         description : typing.Optional[str]
@@ -384,7 +384,7 @@ class AsyncPronunciationDictionariesClient:
         name : str
             The name of the pronunciation dictionary, used for identification only.
 
-        file : core.File
+        file : typing.Optional[core.File]
             See core.File for more documentation
 
         description : typing.Optional[str]

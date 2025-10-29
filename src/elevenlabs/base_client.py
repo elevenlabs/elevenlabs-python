@@ -29,6 +29,7 @@ if typing.TYPE_CHECKING:
     from .text_to_sound_effects.client import AsyncTextToSoundEffectsClient, TextToSoundEffectsClient
     from .text_to_speech.client import AsyncTextToSpeechClient, TextToSpeechClient
     from .text_to_voice.client import AsyncTextToVoiceClient, TextToVoiceClient
+    from .tokens.client import AsyncTokensClient, TokensClient
     from .usage.client import AsyncUsageClient, UsageClient
     from .user.client import AsyncUserClient, UserClient
     from .voices.client import AsyncVoicesClient, VoicesClient
@@ -124,6 +125,7 @@ class BaseElevenLabs:
         self._forced_alignment: typing.Optional[ForcedAlignmentClient] = None
         self._conversational_ai: typing.Optional[ConversationalAiClient] = None
         self._music: typing.Optional[MusicClient] = None
+        self._tokens: typing.Optional[TokensClient] = None
         self._workspace: typing.Optional[WorkspaceClient] = None
 
     @property
@@ -339,6 +341,14 @@ class BaseElevenLabs:
         return self._music
 
     @property
+    def tokens(self):
+        if self._tokens is None:
+            from .tokens.client import TokensClient  # noqa: E402
+
+            self._tokens = TokensClient(client_wrapper=self._client_wrapper)
+        return self._tokens
+
+    @property
     def workspace(self):
         if self._workspace is None:
             from .workspace.client import WorkspaceClient  # noqa: E402
@@ -435,6 +445,7 @@ class AsyncBaseElevenLabs:
         self._forced_alignment: typing.Optional[AsyncForcedAlignmentClient] = None
         self._conversational_ai: typing.Optional[AsyncConversationalAiClient] = None
         self._music: typing.Optional[AsyncMusicClient] = None
+        self._tokens: typing.Optional[AsyncTokensClient] = None
         self._workspace: typing.Optional[AsyncWorkspaceClient] = None
 
     @property
@@ -656,6 +667,14 @@ class AsyncBaseElevenLabs:
 
             self._music = AsyncMusicClient(client_wrapper=self._client_wrapper)
         return self._music
+
+    @property
+    def tokens(self):
+        if self._tokens is None:
+            from .tokens.client import AsyncTokensClient  # noqa: E402
+
+            self._tokens = AsyncTokensClient(client_wrapper=self._client_wrapper)
+        return self._tokens
 
     @property
     def workspace(self):

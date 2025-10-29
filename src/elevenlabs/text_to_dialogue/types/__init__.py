@@ -6,19 +6,35 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .body_text_to_dialogue_full_with_timestamps_apply_text_normalization import (
+        BodyTextToDialogueFullWithTimestampsApplyTextNormalization,
+    )
     from .body_text_to_dialogue_multi_voice_streaming_v_1_text_to_dialogue_stream_post_apply_text_normalization import (
         BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization,
     )
     from .body_text_to_dialogue_multi_voice_v_1_text_to_dialogue_post_apply_text_normalization import (
         BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization,
     )
+    from .body_text_to_dialogue_stream_with_timestamps_apply_text_normalization import (
+        BodyTextToDialogueStreamWithTimestampsApplyTextNormalization,
+    )
     from .text_to_dialogue_convert_request_output_format import TextToDialogueConvertRequestOutputFormat
+    from .text_to_dialogue_convert_with_timestamps_request_output_format import (
+        TextToDialogueConvertWithTimestampsRequestOutputFormat,
+    )
     from .text_to_dialogue_stream_request_output_format import TextToDialogueStreamRequestOutputFormat
+    from .text_to_dialogue_stream_with_timestamps_request_output_format import (
+        TextToDialogueStreamWithTimestampsRequestOutputFormat,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
+    "BodyTextToDialogueFullWithTimestampsApplyTextNormalization": ".body_text_to_dialogue_full_with_timestamps_apply_text_normalization",
     "BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization": ".body_text_to_dialogue_multi_voice_streaming_v_1_text_to_dialogue_stream_post_apply_text_normalization",
     "BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization": ".body_text_to_dialogue_multi_voice_v_1_text_to_dialogue_post_apply_text_normalization",
+    "BodyTextToDialogueStreamWithTimestampsApplyTextNormalization": ".body_text_to_dialogue_stream_with_timestamps_apply_text_normalization",
     "TextToDialogueConvertRequestOutputFormat": ".text_to_dialogue_convert_request_output_format",
+    "TextToDialogueConvertWithTimestampsRequestOutputFormat": ".text_to_dialogue_convert_with_timestamps_request_output_format",
     "TextToDialogueStreamRequestOutputFormat": ".text_to_dialogue_stream_request_output_format",
+    "TextToDialogueStreamWithTimestampsRequestOutputFormat": ".text_to_dialogue_stream_with_timestamps_request_output_format",
 }
 
 
@@ -44,8 +60,12 @@ def __dir__():
 
 
 __all__ = [
+    "BodyTextToDialogueFullWithTimestampsApplyTextNormalization",
     "BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization",
     "BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization",
+    "BodyTextToDialogueStreamWithTimestampsApplyTextNormalization",
     "TextToDialogueConvertRequestOutputFormat",
+    "TextToDialogueConvertWithTimestampsRequestOutputFormat",
     "TextToDialogueStreamRequestOutputFormat",
+    "TextToDialogueStreamWithTimestampsRequestOutputFormat",
 ]

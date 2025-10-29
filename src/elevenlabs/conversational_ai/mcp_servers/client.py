@@ -10,7 +10,11 @@ from ...types.mcp_approval_policy import McpApprovalPolicy
 from ...types.mcp_server_config_input import McpServerConfigInput
 from ...types.mcp_server_response_model import McpServerResponseModel
 from ...types.mcp_servers_response_model import McpServersResponseModel
+from ...types.tool_execution_mode import ToolExecutionMode
 from .raw_client import AsyncRawMcpServersClient, RawMcpServersClient
+from .types.mcp_server_config_update_request_model_request_headers_value import (
+    McpServerConfigUpdateRequestModelRequestHeadersValue,
+)
 
 if typing.TYPE_CHECKING:
     from .approval_policy.client import ApprovalPolicyClient, AsyncApprovalPolicyClient
@@ -141,6 +145,10 @@ class McpServersClient:
         approval_policy: typing.Optional[McpApprovalPolicy] = OMIT,
         force_pre_tool_speech: typing.Optional[bool] = OMIT,
         disable_interruptions: typing.Optional[bool] = OMIT,
+        execution_mode: typing.Optional[ToolExecutionMode] = OMIT,
+        request_headers: typing.Optional[
+            typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> McpServerResponseModel:
         """
@@ -159,6 +167,12 @@ class McpServersClient:
 
         disable_interruptions : typing.Optional[bool]
             Whether to disable interruptions for all tools from this MCP server
+
+        execution_mode : typing.Optional[ToolExecutionMode]
+            The execution mode for all tools from this MCP server
+
+        request_headers : typing.Optional[typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]]
+            The headers to include in requests to the MCP server
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -184,6 +198,8 @@ class McpServersClient:
             approval_policy=approval_policy,
             force_pre_tool_speech=force_pre_tool_speech,
             disable_interruptions=disable_interruptions,
+            execution_mode=execution_mode,
+            request_headers=request_headers,
             request_options=request_options,
         )
         return _response.data
@@ -358,6 +374,10 @@ class AsyncMcpServersClient:
         approval_policy: typing.Optional[McpApprovalPolicy] = OMIT,
         force_pre_tool_speech: typing.Optional[bool] = OMIT,
         disable_interruptions: typing.Optional[bool] = OMIT,
+        execution_mode: typing.Optional[ToolExecutionMode] = OMIT,
+        request_headers: typing.Optional[
+            typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> McpServerResponseModel:
         """
@@ -376,6 +396,12 @@ class AsyncMcpServersClient:
 
         disable_interruptions : typing.Optional[bool]
             Whether to disable interruptions for all tools from this MCP server
+
+        execution_mode : typing.Optional[ToolExecutionMode]
+            The execution mode for all tools from this MCP server
+
+        request_headers : typing.Optional[typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]]
+            The headers to include in requests to the MCP server
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -409,6 +435,8 @@ class AsyncMcpServersClient:
             approval_policy=approval_policy,
             force_pre_tool_speech=force_pre_tool_speech,
             disable_interruptions=disable_interruptions,
+            execution_mode=execution_mode,
+            request_headers=request_headers,
             request_options=request_options,
         )
         return _response.data

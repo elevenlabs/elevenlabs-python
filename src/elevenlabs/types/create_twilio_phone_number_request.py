@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .region_config_request import RegionConfigRequest
 
 
 class CreateTwilioPhoneNumberRequest(UncheckedBaseModel):
@@ -36,6 +37,11 @@ class CreateTwilioPhoneNumberRequest(UncheckedBaseModel):
     token: str = pydantic.Field()
     """
     Twilio Auth Token
+    """
+
+    region_config: typing.Optional[RegionConfigRequest] = pydantic.Field(default=None)
+    """
+    Twilio Additional Region Configuration
     """
 
     if IS_PYDANTIC_V2:

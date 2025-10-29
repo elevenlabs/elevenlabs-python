@@ -558,6 +558,9 @@ if typing.TYPE_CHECKING:
     from .audio_native_project_settings_response_model_status import AudioNativeProjectSettingsResponseModelStatus
     from .audio_output import AudioOutput
     from .audio_output_multi import AudioOutputMulti
+    from .audio_with_timestamps_and_voice_segments_response_model import (
+        AudioWithTimestampsAndVoiceSegmentsResponseModel,
+    )
     from .audio_with_timestamps_response import AudioWithTimestampsResponse
     from .auth_connection_locator import AuthConnectionLocator
     from .auth_settings import AuthSettings
@@ -985,6 +988,8 @@ if typing.TYPE_CHECKING:
     from .get_voices_response import GetVoicesResponse
     from .get_voices_v_2_response import GetVoicesV2Response
     from .get_workspace_secrets_response_model import GetWorkspaceSecretsResponseModel
+    from .guardrails_v_1_input import GuardrailsV1Input
+    from .guardrails_v_1_output import GuardrailsV1Output
     from .history_alignment_response_model import HistoryAlignmentResponseModel
     from .history_alignments_response_model import HistoryAlignmentsResponseModel
     from .history_item_response import HistoryItemResponse
@@ -1057,6 +1062,9 @@ if typing.TYPE_CHECKING:
     from .model import Model
     from .model_rates_response_model import ModelRatesResponseModel
     from .model_settings_response_model import ModelSettingsResponseModel
+    from .moderation_config import ModerationConfig
+    from .moderation_guardrail_input import ModerationGuardrailInput
+    from .moderation_guardrail_output import ModerationGuardrailOutput
     from .multichannel_speech_to_text_response_model import MultichannelSpeechToTextResponseModel
     from .multipart_music_response import MultipartMusicResponse
     from .music_prompt import MusicPrompt
@@ -1202,7 +1210,9 @@ if typing.TYPE_CHECKING:
     from .realtime_voice_settings import RealtimeVoiceSettings
     from .recording_response import RecordingResponse
     from .referenced_tool_common_model import ReferencedToolCommonModel
+    from .referenced_tool_common_model_type import ReferencedToolCommonModelType
     from .regex_parameter_evaluation_strategy import RegexParameterEvaluationStrategy
+    from .region_config_request import RegionConfigRequest
     from .remove_member_from_group_request import RemoveMemberFromGroupRequest
     from .render import Render
     from .render_status import RenderStatus
@@ -1238,6 +1248,8 @@ if typing.TYPE_CHECKING:
     from .similar_voice_category import SimilarVoiceCategory
     from .similar_voices_for_speaker_response import SimilarVoicesForSpeakerResponse
     from .single_test_run_request_model import SingleTestRunRequestModel
+    from .single_use_token_response_model import SingleUseTokenResponseModel
+    from .single_use_token_type import SingleUseTokenType
     from .sip_media_encryption_enum import SipMediaEncryptionEnum
     from .sip_trunk_credentials_request_model import SipTrunkCredentialsRequestModel
     from .sip_trunk_outbound_call_response import SipTrunkOutboundCallResponse
@@ -1266,6 +1278,9 @@ if typing.TYPE_CHECKING:
     from .srt_export_options import SrtExportOptions
     from .start_pvc_voice_training_response_model import StartPvcVoiceTrainingResponseModel
     from .start_speaker_separation_response_model import StartSpeakerSeparationResponseModel
+    from .streaming_audio_chunk_with_timestamps_and_voice_segments_response_model import (
+        StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel,
+    )
     from .streaming_audio_chunk_with_timestamps_response import StreamingAudioChunkWithTimestampsResponse
     from .subscription import Subscription
     from .subscription_response import SubscriptionResponse
@@ -1313,6 +1328,7 @@ if typing.TYPE_CHECKING:
     from .text_to_speech_stream_request import TextToSpeechStreamRequest
     from .text_to_speech_stream_with_timestamps_request import TextToSpeechStreamWithTimestampsRequest
     from .text_to_speech_with_timestamps_request import TextToSpeechWithTimestampsRequest
+    from .threshold_guardrail import ThresholdGuardrail
     from .time_range import TimeRange
     from .token_response_model import TokenResponseModel
     from .tool import Tool
@@ -1325,7 +1341,6 @@ if typing.TYPE_CHECKING:
     from .tool_request_model_tool_config import (
         ToolRequestModelToolConfig,
         ToolRequestModelToolConfig_Client,
-        ToolRequestModelToolConfig_Mcp,
         ToolRequestModelToolConfig_System,
         ToolRequestModelToolConfig_Webhook,
     )
@@ -1361,8 +1376,11 @@ if typing.TYPE_CHECKING:
     from .tts_output_format import TtsOutputFormat
     from .turn_config import TurnConfig
     from .turn_config_workflow_override import TurnConfigWorkflowOverride
+    from .turn_eagerness import TurnEagerness
     from .turn_mode import TurnMode
+    from .twilio_edge_location import TwilioEdgeLocation
     from .twilio_outbound_call_response import TwilioOutboundCallResponse
+    from .twilio_region_id import TwilioRegionId
     from .txt_export_options import TxtExportOptions
     from .unit_test_common_model import UnitTestCommonModel
     from .unit_test_common_model_dynamic_variables_value import UnitTestCommonModelDynamicVariablesValue
@@ -1409,6 +1427,7 @@ if typing.TYPE_CHECKING:
     from .voice_sample import VoiceSample
     from .voice_sample_preview_response_model import VoiceSamplePreviewResponseModel
     from .voice_sample_visual_waveform_response_model import VoiceSampleVisualWaveformResponseModel
+    from .voice_segment import VoiceSegment
     from .voice_settings import VoiceSettings
     from .voice_sharing_moderation_check_response_model import VoiceSharingModerationCheckResponseModel
     from .voice_sharing_response import VoiceSharingResponse
@@ -2083,6 +2102,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AudioNativeProjectSettingsResponseModelStatus": ".audio_native_project_settings_response_model_status",
     "AudioOutput": ".audio_output",
     "AudioOutputMulti": ".audio_output_multi",
+    "AudioWithTimestampsAndVoiceSegmentsResponseModel": ".audio_with_timestamps_and_voice_segments_response_model",
     "AudioWithTimestampsResponse": ".audio_with_timestamps_response",
     "AuthConnectionLocator": ".auth_connection_locator",
     "AuthSettings": ".auth_settings",
@@ -2416,6 +2436,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetVoicesResponse": ".get_voices_response",
     "GetVoicesV2Response": ".get_voices_v_2_response",
     "GetWorkspaceSecretsResponseModel": ".get_workspace_secrets_response_model",
+    "GuardrailsV1Input": ".guardrails_v_1_input",
+    "GuardrailsV1Output": ".guardrails_v_1_output",
     "HistoryAlignmentResponseModel": ".history_alignment_response_model",
     "HistoryAlignmentsResponseModel": ".history_alignments_response_model",
     "HistoryItemResponse": ".history_item_response",
@@ -2486,6 +2508,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Model": ".model",
     "ModelRatesResponseModel": ".model_rates_response_model",
     "ModelSettingsResponseModel": ".model_settings_response_model",
+    "ModerationConfig": ".moderation_config",
+    "ModerationGuardrailInput": ".moderation_guardrail_input",
+    "ModerationGuardrailOutput": ".moderation_guardrail_output",
     "MultichannelSpeechToTextResponseModel": ".multichannel_speech_to_text_response_model",
     "MultipartMusicResponse": ".multipart_music_response",
     "MusicPrompt": ".music_prompt",
@@ -2609,7 +2634,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RealtimeVoiceSettings": ".realtime_voice_settings",
     "RecordingResponse": ".recording_response",
     "ReferencedToolCommonModel": ".referenced_tool_common_model",
+    "ReferencedToolCommonModelType": ".referenced_tool_common_model_type",
     "RegexParameterEvaluationStrategy": ".regex_parameter_evaluation_strategy",
+    "RegionConfigRequest": ".region_config_request",
     "RemoveMemberFromGroupRequest": ".remove_member_from_group_request",
     "Render": ".render",
     "RenderStatus": ".render_status",
@@ -2643,6 +2670,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SimilarVoiceCategory": ".similar_voice_category",
     "SimilarVoicesForSpeakerResponse": ".similar_voices_for_speaker_response",
     "SingleTestRunRequestModel": ".single_test_run_request_model",
+    "SingleUseTokenResponseModel": ".single_use_token_response_model",
+    "SingleUseTokenType": ".single_use_token_type",
     "SipMediaEncryptionEnum": ".sip_media_encryption_enum",
     "SipTrunkCredentialsRequestModel": ".sip_trunk_credentials_request_model",
     "SipTrunkOutboundCallResponse": ".sip_trunk_outbound_call_response",
@@ -2671,6 +2700,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SrtExportOptions": ".srt_export_options",
     "StartPvcVoiceTrainingResponseModel": ".start_pvc_voice_training_response_model",
     "StartSpeakerSeparationResponseModel": ".start_speaker_separation_response_model",
+    "StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel": ".streaming_audio_chunk_with_timestamps_and_voice_segments_response_model",
     "StreamingAudioChunkWithTimestampsResponse": ".streaming_audio_chunk_with_timestamps_response",
     "Subscription": ".subscription",
     "SubscriptionResponse": ".subscription_response",
@@ -2714,6 +2744,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TextToSpeechStreamRequest": ".text_to_speech_stream_request",
     "TextToSpeechStreamWithTimestampsRequest": ".text_to_speech_stream_with_timestamps_request",
     "TextToSpeechWithTimestampsRequest": ".text_to_speech_with_timestamps_request",
+    "ThresholdGuardrail": ".threshold_guardrail",
     "TimeRange": ".time_range",
     "TokenResponseModel": ".token_response_model",
     "Tool": ".tool",
@@ -2725,7 +2756,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ToolRequestModel": ".tool_request_model",
     "ToolRequestModelToolConfig": ".tool_request_model_tool_config",
     "ToolRequestModelToolConfig_Client": ".tool_request_model_tool_config",
-    "ToolRequestModelToolConfig_Mcp": ".tool_request_model_tool_config",
     "ToolRequestModelToolConfig_System": ".tool_request_model_tool_config",
     "ToolRequestModelToolConfig_Webhook": ".tool_request_model_tool_config",
     "ToolResponseModel": ".tool_response_model",
@@ -2758,8 +2788,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TtsOutputFormat": ".tts_output_format",
     "TurnConfig": ".turn_config",
     "TurnConfigWorkflowOverride": ".turn_config_workflow_override",
+    "TurnEagerness": ".turn_eagerness",
     "TurnMode": ".turn_mode",
+    "TwilioEdgeLocation": ".twilio_edge_location",
     "TwilioOutboundCallResponse": ".twilio_outbound_call_response",
+    "TwilioRegionId": ".twilio_region_id",
     "TxtExportOptions": ".txt_export_options",
     "UnitTestCommonModel": ".unit_test_common_model",
     "UnitTestCommonModelDynamicVariablesValue": ".unit_test_common_model_dynamic_variables_value",
@@ -2804,6 +2837,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "VoiceSample": ".voice_sample",
     "VoiceSamplePreviewResponseModel": ".voice_sample_preview_response_model",
     "VoiceSampleVisualWaveformResponseModel": ".voice_sample_visual_waveform_response_model",
+    "VoiceSegment": ".voice_segment",
     "VoiceSettings": ".voice_settings",
     "VoiceSharingModerationCheckResponseModel": ".voice_sharing_moderation_check_response_model",
     "VoiceSharingResponse": ".voice_sharing_response",
@@ -3468,6 +3502,7 @@ __all__ = [
     "AudioNativeProjectSettingsResponseModelStatus",
     "AudioOutput",
     "AudioOutputMulti",
+    "AudioWithTimestampsAndVoiceSegmentsResponseModel",
     "AudioWithTimestampsResponse",
     "AuthConnectionLocator",
     "AuthSettings",
@@ -3801,6 +3836,8 @@ __all__ = [
     "GetVoicesResponse",
     "GetVoicesV2Response",
     "GetWorkspaceSecretsResponseModel",
+    "GuardrailsV1Input",
+    "GuardrailsV1Output",
     "HistoryAlignmentResponseModel",
     "HistoryAlignmentsResponseModel",
     "HistoryItemResponse",
@@ -3871,6 +3908,9 @@ __all__ = [
     "Model",
     "ModelRatesResponseModel",
     "ModelSettingsResponseModel",
+    "ModerationConfig",
+    "ModerationGuardrailInput",
+    "ModerationGuardrailOutput",
     "MultichannelSpeechToTextResponseModel",
     "MultipartMusicResponse",
     "MusicPrompt",
@@ -3994,7 +4034,9 @@ __all__ = [
     "RealtimeVoiceSettings",
     "RecordingResponse",
     "ReferencedToolCommonModel",
+    "ReferencedToolCommonModelType",
     "RegexParameterEvaluationStrategy",
+    "RegionConfigRequest",
     "RemoveMemberFromGroupRequest",
     "Render",
     "RenderStatus",
@@ -4028,6 +4070,8 @@ __all__ = [
     "SimilarVoiceCategory",
     "SimilarVoicesForSpeakerResponse",
     "SingleTestRunRequestModel",
+    "SingleUseTokenResponseModel",
+    "SingleUseTokenType",
     "SipMediaEncryptionEnum",
     "SipTrunkCredentialsRequestModel",
     "SipTrunkOutboundCallResponse",
@@ -4056,6 +4100,7 @@ __all__ = [
     "SrtExportOptions",
     "StartPvcVoiceTrainingResponseModel",
     "StartSpeakerSeparationResponseModel",
+    "StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel",
     "StreamingAudioChunkWithTimestampsResponse",
     "Subscription",
     "SubscriptionResponse",
@@ -4099,6 +4144,7 @@ __all__ = [
     "TextToSpeechStreamRequest",
     "TextToSpeechStreamWithTimestampsRequest",
     "TextToSpeechWithTimestampsRequest",
+    "ThresholdGuardrail",
     "TimeRange",
     "TokenResponseModel",
     "Tool",
@@ -4110,7 +4156,6 @@ __all__ = [
     "ToolRequestModel",
     "ToolRequestModelToolConfig",
     "ToolRequestModelToolConfig_Client",
-    "ToolRequestModelToolConfig_Mcp",
     "ToolRequestModelToolConfig_System",
     "ToolRequestModelToolConfig_Webhook",
     "ToolResponseModel",
@@ -4143,8 +4188,11 @@ __all__ = [
     "TtsOutputFormat",
     "TurnConfig",
     "TurnConfigWorkflowOverride",
+    "TurnEagerness",
     "TurnMode",
+    "TwilioEdgeLocation",
     "TwilioOutboundCallResponse",
+    "TwilioRegionId",
     "TxtExportOptions",
     "UnitTestCommonModel",
     "UnitTestCommonModelDynamicVariablesValue",
@@ -4189,6 +4237,7 @@ __all__ = [
     "VoiceSample",
     "VoiceSamplePreviewResponseModel",
     "VoiceSampleVisualWaveformResponseModel",
+    "VoiceSegment",
     "VoiceSettings",
     "VoiceSharingModerationCheckResponseModel",
     "VoiceSharingResponse",

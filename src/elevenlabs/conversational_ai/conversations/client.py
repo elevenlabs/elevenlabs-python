@@ -134,6 +134,7 @@ class ConversationsClient:
         user_id: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
         summary_mode: typing.Optional[ConversationsListRequestSummaryMode] = None,
+        search: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationsPageResponseModel:
         """
@@ -165,6 +166,9 @@ class ConversationsClient:
         summary_mode : typing.Optional[ConversationsListRequestSummaryMode]
             Whether to include transcript summaries in the response.
 
+        search : typing.Optional[str]
+            Full-text or fuzzy search over transcript messages
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -189,6 +193,7 @@ class ConversationsClient:
             user_id="user_id",
             page_size=1,
             summary_mode="exclude",
+            search="search",
         )
         """
         _response = self._raw_client.list(
@@ -200,6 +205,7 @@ class ConversationsClient:
             user_id=user_id,
             page_size=page_size,
             summary_mode=summary_mode,
+            search=search,
             request_options=request_options,
         )
         return _response.data
@@ -418,6 +424,7 @@ class AsyncConversationsClient:
         user_id: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
         summary_mode: typing.Optional[ConversationsListRequestSummaryMode] = None,
+        search: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationsPageResponseModel:
         """
@@ -449,6 +456,9 @@ class AsyncConversationsClient:
         summary_mode : typing.Optional[ConversationsListRequestSummaryMode]
             Whether to include transcript summaries in the response.
 
+        search : typing.Optional[str]
+            Full-text or fuzzy search over transcript messages
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -478,6 +488,7 @@ class AsyncConversationsClient:
                 user_id="user_id",
                 page_size=1,
                 summary_mode="exclude",
+                search="search",
             )
 
 
@@ -492,6 +503,7 @@ class AsyncConversationsClient:
             user_id=user_id,
             page_size=page_size,
             summary_mode=summary_mode,
+            search=search,
             request_options=request_options,
         )
         return _response.data

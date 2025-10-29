@@ -31,7 +31,7 @@ class SongSection(UncheckedBaseModel):
 
     lines: typing.List[str] = pydantic.Field()
     """
-    The lyrics of the section.
+    The lyrics of the section. Max 200 characters per line.
     """
 
     source_from: typing.Optional[SectionSource] = pydantic.Field(default=None)
