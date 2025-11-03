@@ -4,6 +4,8 @@ import subprocess
 import typing
 from enum import Enum
 
+import httpx
+
 try:
     import websockets
 except ImportError:
@@ -177,8 +179,11 @@ class ScribeRealtime:
         if not audio_format or not sample_rate:
             raise ValueError("audio_format and sample_rate are required for manual audio mode")
 
+        token = await self.get_token()
+
         # Build WebSocket URL with query parameters
         ws_url = self._build_websocket_url(
+            token=token,
             model_id=model_id,
             encoding=audio_format.value,
             sample_rate=sample_rate,
@@ -191,10 +196,7 @@ class ScribeRealtime:
         )
 
         # Connect to WebSocket
-        websocket = await websockets.connect(
-            ws_url,
-            additional_headers={"xi-api-key": self.api_key}
-        )
+        websocket = await websockets.connect(ws_url)
 
         # Create connection object
         connection = RealtimeConnection(
@@ -223,12 +225,15 @@ class ScribeRealtime:
         if not url:
             raise ValueError("url is required for URL mode")
 
+        token = await self.get_token()
+
         # Default to 16kHz for URL streaming
         sample_rate = 16000
         encoding = "pcm_16000"
 
         # Build WebSocket URL
         ws_url = self._build_websocket_url(
+            token=token,
             model_id=model_id,
             encoding=encoding,
             sample_rate=sample_rate,
@@ -332,6 +337,7 @@ class ScribeRealtime:
 
     def _build_websocket_url(
         self,
+        token: str,
         model_id: str,
         encoding: str,
         sample_rate: int,
@@ -348,6 +354,7 @@ class ScribeRealtime:
 
         # Build query parameters
         params = [
+            f"token={token}",
             f"model_id={model_id}",
             f"encoding={encoding}",
             f"sample_rate={sample_rate}",
@@ -369,3 +376,29 @@ class ScribeRealtime:
         query_string = "&".join(params)
         return f"{base}/v1/speech-to-text/realtime-beta?{query_string}"
 
+    async def get_token(self) -> str:
+        """
+        Fetch a single-use token for realtime scribe WebSocket connection.
+
+        Returns:
+            str: The single-use token
+
+        Raises:
+            RuntimeError: If the token request fails
+        """
+        try:
+            # Convert WebSocket URL to HTTP URL for the token request
+            http_base_url = self.base_url.replace("wss://", "https://").replace("ws://", "http://")
+
+            async with httpx.AsyncClient() as client:
+                response = await client.post(
+                    f"{http_base_url}/v1/single-use-token/realtime_scribe",
+                    headers={"xi-api-key": self.api_key},
+                )
+
+                if not response.is_success:
+                    raise RuntimeError(f"Failed to get token: {response.status_code} {response.reason_phrase}")
+                data = response.json()
+                return data["token"]
+        except Exception as e:
+            raise RuntimeError(f"Failed to get token: {e}") from e
