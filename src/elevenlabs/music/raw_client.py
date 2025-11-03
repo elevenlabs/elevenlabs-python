@@ -4,6 +4,7 @@ import contextlib
 import typing
 from json.decoder import JSONDecodeError
 
+from .. import core
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
@@ -15,6 +16,8 @@ from ..types.http_validation_error import HttpValidationError
 from ..types.music_prompt import MusicPrompt
 from .types.music_compose_detailed_request_output_format import MusicComposeDetailedRequestOutputFormat
 from .types.music_compose_request_output_format import MusicComposeRequestOutputFormat
+from .types.music_separate_stems_request_output_format import MusicSeparateStemsRequestOutputFormat
+from .types.music_separate_stems_request_stem_variation_id import MusicSeparateStemsRequestStemVariationId
 from .types.music_stream_request_output_format import MusicStreamRequestOutputFormat
 
 # this is used as the default value for optional parameters
@@ -324,6 +327,82 @@ class RawMusicClient:
 
             yield _stream()
 
+    @contextlib.contextmanager
+    def separate_stems(
+        self,
+        *,
+        file: core.File,
+        output_format: typing.Optional[MusicSeparateStemsRequestOutputFormat] = None,
+        stem_variation_id: typing.Optional[MusicSeparateStemsRequestStemVariationId] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
+        """
+        Separate a music file into individual stems
+
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        output_format : typing.Optional[MusicSeparateStemsRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        stem_variation_id : typing.Optional[MusicSeparateStemsRequestStemVariationId]
+            The id of the stem variation to use.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Returns
+        -------
+        typing.Iterator[HttpResponse[typing.Iterator[bytes]]]
+            ZIP archive containing separated audio stems. Each stem is provided as a separate audio file in the requested output format.
+        """
+        with self._client_wrapper.httpx_client.stream(
+            "v1/music/stem-separation",
+            method="POST",
+            params={
+                "output_format": output_format,
+            },
+            data={
+                "stem_variation_id": stem_variation_id,
+            },
+            files={
+                "file": file,
+            },
+            request_options=request_options,
+            omit=OMIT,
+            force_multipart=True,
+        ) as _response:
+
+            def _stream() -> HttpResponse[typing.Iterator[bytes]]:
+                try:
+                    if 200 <= _response.status_code < 300:
+                        _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                        return HttpResponse(
+                            response=_response, data=(_chunk for _chunk in _response.iter_bytes(chunk_size=_chunk_size))
+                        )
+                    _response.read()
+                    if _response.status_code == 422:
+                        raise UnprocessableEntityError(
+                            headers=dict(_response.headers),
+                            body=typing.cast(
+                                HttpValidationError,
+                                construct_type(
+                                    type_=HttpValidationError,  # type: ignore
+                                    object_=_response.json(),
+                                ),
+                            ),
+                        )
+                    _response_json = _response.json()
+                except JSONDecodeError:
+                    raise ApiError(
+                        status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                    )
+                raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+            yield _stream()
+
 
 class AsyncRawMusicClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -600,6 +679,83 @@ class AsyncRawMusicClient:
             },
             request_options=request_options,
             omit=OMIT,
+        ) as _response:
+
+            async def _stream() -> AsyncHttpResponse[typing.AsyncIterator[bytes]]:
+                try:
+                    if 200 <= _response.status_code < 300:
+                        _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                        return AsyncHttpResponse(
+                            response=_response,
+                            data=(_chunk async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size)),
+                        )
+                    await _response.aread()
+                    if _response.status_code == 422:
+                        raise UnprocessableEntityError(
+                            headers=dict(_response.headers),
+                            body=typing.cast(
+                                HttpValidationError,
+                                construct_type(
+                                    type_=HttpValidationError,  # type: ignore
+                                    object_=_response.json(),
+                                ),
+                            ),
+                        )
+                    _response_json = _response.json()
+                except JSONDecodeError:
+                    raise ApiError(
+                        status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                    )
+                raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+            yield await _stream()
+
+    @contextlib.asynccontextmanager
+    async def separate_stems(
+        self,
+        *,
+        file: core.File,
+        output_format: typing.Optional[MusicSeparateStemsRequestOutputFormat] = None,
+        stem_variation_id: typing.Optional[MusicSeparateStemsRequestStemVariationId] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
+        """
+        Separate a music file into individual stems
+
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        output_format : typing.Optional[MusicSeparateStemsRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        stem_variation_id : typing.Optional[MusicSeparateStemsRequestStemVariationId]
+            The id of the stem variation to use.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Returns
+        -------
+        typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]
+            ZIP archive containing separated audio stems. Each stem is provided as a separate audio file in the requested output format.
+        """
+        async with self._client_wrapper.httpx_client.stream(
+            "v1/music/stem-separation",
+            method="POST",
+            params={
+                "output_format": output_format,
+            },
+            data={
+                "stem_variation_id": stem_variation_id,
+            },
+            files={
+                "file": file,
+            },
+            request_options=request_options,
+            omit=OMIT,
+            force_multipart=True,
         ) as _response:
 
             async def _stream() -> AsyncHttpResponse[typing.AsyncIterator[bytes]]:

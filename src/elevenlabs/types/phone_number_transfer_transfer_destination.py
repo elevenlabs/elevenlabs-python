@@ -24,6 +24,20 @@ class PhoneNumberTransferTransferDestination_Phone(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class PhoneNumberTransferTransferDestination_PhoneDynamicVariable(UncheckedBaseModel):
+    type: typing.Literal["phone_dynamic_variable"] = "phone_dynamic_variable"
+    phone_number: str
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class PhoneNumberTransferTransferDestination_SipUri(UncheckedBaseModel):
     type: typing.Literal["sip_uri"] = "sip_uri"
     sip_uri: str
@@ -38,7 +52,26 @@ class PhoneNumberTransferTransferDestination_SipUri(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class PhoneNumberTransferTransferDestination_SipUriDynamicVariable(UncheckedBaseModel):
+    type: typing.Literal["sip_uri_dynamic_variable"] = "sip_uri_dynamic_variable"
+    sip_uri: str
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 PhoneNumberTransferTransferDestination = typing_extensions.Annotated[
-    typing.Union[PhoneNumberTransferTransferDestination_Phone, PhoneNumberTransferTransferDestination_SipUri],
+    typing.Union[
+        PhoneNumberTransferTransferDestination_Phone,
+        PhoneNumberTransferTransferDestination_PhoneDynamicVariable,
+        PhoneNumberTransferTransferDestination_SipUri,
+        PhoneNumberTransferTransferDestination_SipUriDynamicVariable,
+    ],
     UnionMetadata(discriminant="type"),
 ]

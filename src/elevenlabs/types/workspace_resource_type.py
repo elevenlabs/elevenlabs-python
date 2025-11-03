@@ -24,6 +24,8 @@ WorkspaceResourceType = typing.Union[
         "convai_crawl_jobs",
         "convai_crawl_tasks",
         "convai_whatsapp_accounts",
+        "dashboard",
+        "dashboard_configuration",
     ],
     typing.Any,
 ]

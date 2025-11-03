@@ -33,6 +33,11 @@ class VoiceSegment(UncheckedBaseModel):
     End index in the characters array (exclusive)
     """
 
+    dialogue_input_index: int = pydantic.Field()
+    """
+    Line of the dialogue (script) that this segment is a part of.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

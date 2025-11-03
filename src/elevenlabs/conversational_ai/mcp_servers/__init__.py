@@ -7,11 +7,12 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import McpServerConfigUpdateRequestModelRequestHeadersValue
-    from . import approval_policy, tool_approvals, tools
+    from . import approval_policy, tool_approvals, tool_configs, tools
 _dynamic_imports: typing.Dict[str, str] = {
     "McpServerConfigUpdateRequestModelRequestHeadersValue": ".types",
     "approval_policy": ".approval_policy",
     "tool_approvals": ".tool_approvals",
+    "tool_configs": ".tool_configs",
     "tools": ".tools",
 }
 
@@ -37,4 +38,10 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["McpServerConfigUpdateRequestModelRequestHeadersValue", "approval_policy", "tool_approvals", "tools"]
+__all__ = [
+    "McpServerConfigUpdateRequestModelRequestHeadersValue",
+    "approval_policy",
+    "tool_approvals",
+    "tool_configs",
+    "tools",
+]

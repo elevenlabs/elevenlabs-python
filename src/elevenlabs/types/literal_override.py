@@ -5,14 +5,13 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .conversation_initiation_client_data_request_input import ConversationInitiationClientDataRequestInput
+from .literal_override_constant_value import LiteralOverrideConstantValue
 
 
-class OutboundCallRecipient(UncheckedBaseModel):
-    id: typing.Optional[str] = None
-    phone_number: typing.Optional[str] = None
-    whatsapp_user_id: typing.Optional[str] = None
-    conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = None
+class LiteralOverride(UncheckedBaseModel):
+    description: typing.Optional[str] = None
+    dynamic_variable: typing.Optional[str] = None
+    constant_value: typing.Optional[LiteralOverrideConstantValue] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

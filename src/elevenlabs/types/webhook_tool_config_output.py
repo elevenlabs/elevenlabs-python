@@ -56,11 +56,6 @@ class WebhookToolConfigOutput(UncheckedBaseModel):
     Determines when the tool call sound should play. 'auto' only plays when there's pre-tool speech, 'always' plays for every tool call.
     """
 
-    api_schema: WebhookToolApiSchemaConfigOutput = pydantic.Field()
-    """
-    The schema for the outgoing webhoook, including parameters and URL specification
-    """
-
     dynamic_variables: typing.Optional[DynamicVariablesConfig] = pydantic.Field(default=None)
     """
     Configuration for dynamic variables
@@ -69,6 +64,11 @@ class WebhookToolConfigOutput(UncheckedBaseModel):
     execution_mode: typing.Optional[ToolExecutionMode] = pydantic.Field(default=None)
     """
     Determines when and how the tool executes: 'immediate' executes the tool right away when requested by the LLM, 'post_tool_speech' waits for the agent to finish speaking before executing, 'async' runs the tool in the background without blocking - best for long-running operations.
+    """
+
+    api_schema: WebhookToolApiSchemaConfigOutput = pydantic.Field()
+    """
+    The schema for the outgoing webhoook, including parameters and URL specification
     """
 
     if IS_PYDANTIC_V2:

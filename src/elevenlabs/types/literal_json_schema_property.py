@@ -21,6 +21,11 @@ class LiteralJsonSchemaProperty(UncheckedBaseModel):
     List of allowed string values for string type parameters
     """
 
+    is_system_provided: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If true, the value will be populated by the system at runtime. Used by Api Integration Webhook tools for templating.
+    """
+
     dynamic_variable: typing.Optional[str] = pydantic.Field(default=None)
     """
     The dynamic variable of the property

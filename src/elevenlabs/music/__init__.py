@@ -9,12 +9,16 @@ if typing.TYPE_CHECKING:
     from .types import (
         MusicComposeDetailedRequestOutputFormat,
         MusicComposeRequestOutputFormat,
+        MusicSeparateStemsRequestOutputFormat,
+        MusicSeparateStemsRequestStemVariationId,
         MusicStreamRequestOutputFormat,
     )
     from . import composition_plan
 _dynamic_imports: typing.Dict[str, str] = {
     "MusicComposeDetailedRequestOutputFormat": ".types",
     "MusicComposeRequestOutputFormat": ".types",
+    "MusicSeparateStemsRequestOutputFormat": ".types",
+    "MusicSeparateStemsRequestStemVariationId": ".types",
     "MusicStreamRequestOutputFormat": ".types",
     "composition_plan": ".composition_plan",
 }
@@ -44,6 +48,8 @@ def __dir__():
 __all__ = [
     "MusicComposeDetailedRequestOutputFormat",
     "MusicComposeRequestOutputFormat",
+    "MusicSeparateStemsRequestOutputFormat",
+    "MusicSeparateStemsRequestStemVariationId",
     "MusicStreamRequestOutputFormat",
     "composition_plan",
 ]

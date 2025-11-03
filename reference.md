@@ -9523,7 +9523,7 @@ Add a new tool to the available tools in the workspace.
 from elevenlabs import (
     ElevenLabs,
     ToolRequestModel,
-    ToolRequestModelToolConfig_Client,
+    ToolRequestModelToolConfig_ApiIntegrationWebhook,
 )
 
 client = ElevenLabs(
@@ -9531,10 +9531,11 @@ client = ElevenLabs(
 )
 client.conversational_ai.tools.create(
     request=ToolRequestModel(
-        tool_config=ToolRequestModelToolConfig_Client(
+        tool_config=ToolRequestModelToolConfig_ApiIntegrationWebhook(
             name="name",
             description="description",
-            expects_response=False,
+            api_integration_id="api_integration_id",
+            api_integration_connection_id="api_integration_connection_id",
         ),
     ),
 )
@@ -9743,7 +9744,7 @@ Update tool that is available in the workspace.
 from elevenlabs import (
     ElevenLabs,
     ToolRequestModel,
-    ToolRequestModelToolConfig_Client,
+    ToolRequestModelToolConfig_ApiIntegrationWebhook,
 )
 
 client = ElevenLabs(
@@ -9752,10 +9753,11 @@ client = ElevenLabs(
 client.conversational_ai.tools.update(
     tool_id="tool_id",
     request=ToolRequestModel(
-        tool_config=ToolRequestModelToolConfig_Client(
+        tool_config=ToolRequestModelToolConfig_ApiIntegrationWebhook(
             name="name",
             description="description",
-            expects_response=False,
+            api_integration_id="api_integration_id",
+            api_integration_connection_id="api_integration_connection_id",
         ),
     ),
 )
@@ -10385,12 +10387,7 @@ client = ElevenLabs(
 client.conversational_ai.batch_calls.create(
     call_name="call_name",
     agent_id="agent_id",
-    agent_phone_number_id="agent_phone_number_id",
-    recipients=[
-        OutboundCallRecipient(
-            phone_number="phone_number",
-        )
-    ],
+    recipients=[OutboundCallRecipient()],
 )
 
 ```
@@ -10423,14 +10420,6 @@ client.conversational_ai.batch_calls.create(
 <dl>
 <dd>
 
-**agent_phone_number_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **recipients:** `typing.Sequence[OutboundCallRecipient]` 
     
 </dd>
@@ -10440,6 +10429,22 @@ client.conversational_ai.batch_calls.create(
 <dd>
 
 **scheduled_time_unix:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agent_phone_number_id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agent_whatsapp_business_account_id:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -11115,7 +11120,7 @@ client.conversational_ai.mcp_servers.update(
 <dl>
 <dd>
 
-**force_pre_tool_speech:** `typing.Optional[bool]` — Whether to force pre-tool speech for all tools from this MCP server
+**force_pre_tool_speech:** `typing.Optional[bool]` — If set, overrides the server's force_pre_tool_speech setting for this tool
     
 </dd>
 </dl>
@@ -11123,7 +11128,7 @@ client.conversational_ai.mcp_servers.update(
 <dl>
 <dd>
 
-**disable_interruptions:** `typing.Optional[bool]` — Whether to disable interruptions for all tools from this MCP server
+**disable_interruptions:** `typing.Optional[bool]` — If set, overrides the server's disable_interruptions setting for this tool
     
 </dd>
 </dl>
@@ -11131,7 +11136,23 @@ client.conversational_ai.mcp_servers.update(
 <dl>
 <dd>
 
-**execution_mode:** `typing.Optional[ToolExecutionMode]` — The execution mode for all tools from this MCP server
+**tool_call_sound:** `typing.Optional[ToolCallSoundType]` — Predefined tool call sound type to play during tool execution for all tools from this MCP server
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tool_call_sound_behavior:** `typing.Optional[ToolCallSoundBehavior]` — Determines when the tool call sound should play for all tools from this MCP server
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**execution_mode:** `typing.Optional[ToolExecutionMode]` — If set, overrides the server's execution_mode setting for this tool
     
 </dd>
 </dl>
@@ -12948,6 +12969,419 @@ client.conversational_ai.mcp_servers.tool_approvals.delete(
 <dd>
 
 **tool_name:** `str` — Name of the MCP tool to remove approval for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi McpServers ToolConfigs
+<details><summary><code>client.conversational_ai.mcp_servers.tool_configs.<a href="src/elevenlabs/conversational_ai/mcp_servers/tool_configs/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create configuration overrides for a specific MCP tool.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.mcp_servers.tool_configs.create(
+    mcp_server_id="mcp_server_id",
+    tool_name="tool_name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**mcp_server_id:** `str` — ID of the MCP Server.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tool_name:** `str` — The name of the MCP tool
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force_pre_tool_speech:** `typing.Optional[bool]` — If set, overrides the server's force_pre_tool_speech setting for this tool
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**disable_interruptions:** `typing.Optional[bool]` — If set, overrides the server's disable_interruptions setting for this tool
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tool_call_sound:** `typing.Optional[ToolCallSoundType]` — If set, overrides the server's tool_call_sound setting for this tool
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tool_call_sound_behavior:** `typing.Optional[ToolCallSoundBehavior]` — If set, overrides the server's tool_call_sound_behavior setting for this tool
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**execution_mode:** `typing.Optional[ToolExecutionMode]` — If set, overrides the server's execution_mode setting for this tool
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**assignments:** `typing.Optional[typing.Sequence[DynamicVariableAssignment]]` — Dynamic variable assignments for this MCP tool
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.mcp_servers.tool_configs.<a href="src/elevenlabs/conversational_ai/mcp_servers/tool_configs/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve configuration overrides for a specific MCP tool.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.mcp_servers.tool_configs.get(
+    mcp_server_id="mcp_server_id",
+    tool_name="tool_name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**mcp_server_id:** `str` — ID of the MCP Server.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tool_name:** `str` — Name of the MCP tool to retrieve config overrides for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.mcp_servers.tool_configs.<a href="src/elevenlabs/conversational_ai/mcp_servers/tool_configs/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove configuration overrides for a specific MCP tool.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.mcp_servers.tool_configs.delete(
+    mcp_server_id="mcp_server_id",
+    tool_name="tool_name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**mcp_server_id:** `str` — ID of the MCP Server.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tool_name:** `str` — Name of the MCP tool to remove config overrides for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.mcp_servers.tool_configs.<a href="src/elevenlabs/conversational_ai/mcp_servers/tool_configs/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update configuration overrides for a specific MCP tool.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.mcp_servers.tool_configs.update(
+    mcp_server_id="mcp_server_id",
+    tool_name="tool_name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**mcp_server_id:** `str` — ID of the MCP Server.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tool_name:** `str` — Name of the MCP tool to update config overrides for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force_pre_tool_speech:** `typing.Optional[bool]` — If set, overrides the server's force_pre_tool_speech setting for this tool
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**disable_interruptions:** `typing.Optional[bool]` — If set, overrides the server's disable_interruptions setting for this tool
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tool_call_sound:** `typing.Optional[ToolCallSoundType]` — If set, overrides the server's tool_call_sound setting for this tool
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tool_call_sound_behavior:** `typing.Optional[ToolCallSoundBehavior]` — If set, overrides the server's tool_call_sound_behavior setting for this tool
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**execution_mode:** `typing.Optional[ToolExecutionMode]` — If set, overrides the server's execution_mode setting for this tool
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**assignments:** `typing.Optional[typing.Sequence[DynamicVariableAssignment]]` — Dynamic variable assignments for this MCP tool
     
 </dd>
 </dl>

@@ -78,7 +78,7 @@ class ToolsClient:
         from elevenlabs import (
             ElevenLabs,
             ToolRequestModel,
-            ToolRequestModelToolConfig_Client,
+            ToolRequestModelToolConfig_ApiIntegrationWebhook,
         )
 
         client = ElevenLabs(
@@ -86,10 +86,11 @@ class ToolsClient:
         )
         client.conversational_ai.tools.create(
             request=ToolRequestModel(
-                tool_config=ToolRequestModelToolConfig_Client(
+                tool_config=ToolRequestModelToolConfig_ApiIntegrationWebhook(
                     name="name",
                     description="description",
-                    expects_response=False,
+                    api_integration_id="api_integration_id",
+                    api_integration_connection_id="api_integration_connection_id",
                 ),
             ),
         )
@@ -187,7 +188,7 @@ class ToolsClient:
         from elevenlabs import (
             ElevenLabs,
             ToolRequestModel,
-            ToolRequestModelToolConfig_Client,
+            ToolRequestModelToolConfig_ApiIntegrationWebhook,
         )
 
         client = ElevenLabs(
@@ -196,10 +197,11 @@ class ToolsClient:
         client.conversational_ai.tools.update(
             tool_id="tool_id",
             request=ToolRequestModel(
-                tool_config=ToolRequestModelToolConfig_Client(
+                tool_config=ToolRequestModelToolConfig_ApiIntegrationWebhook(
                     name="name",
                     description="description",
-                    expects_response=False,
+                    api_integration_id="api_integration_id",
+                    api_integration_connection_id="api_integration_connection_id",
                 ),
             ),
         )
@@ -330,7 +332,7 @@ class AsyncToolsClient:
         from elevenlabs import (
             AsyncElevenLabs,
             ToolRequestModel,
-            ToolRequestModelToolConfig_Client,
+            ToolRequestModelToolConfig_ApiIntegrationWebhook,
         )
 
         client = AsyncElevenLabs(
@@ -341,10 +343,11 @@ class AsyncToolsClient:
         async def main() -> None:
             await client.conversational_ai.tools.create(
                 request=ToolRequestModel(
-                    tool_config=ToolRequestModelToolConfig_Client(
+                    tool_config=ToolRequestModelToolConfig_ApiIntegrationWebhook(
                         name="name",
                         description="description",
-                        expects_response=False,
+                        api_integration_id="api_integration_id",
+                        api_integration_connection_id="api_integration_connection_id",
                     ),
                 ),
             )
@@ -463,7 +466,7 @@ class AsyncToolsClient:
         from elevenlabs import (
             AsyncElevenLabs,
             ToolRequestModel,
-            ToolRequestModelToolConfig_Client,
+            ToolRequestModelToolConfig_ApiIntegrationWebhook,
         )
 
         client = AsyncElevenLabs(
@@ -475,10 +478,11 @@ class AsyncToolsClient:
             await client.conversational_ai.tools.update(
                 tool_id="tool_id",
                 request=ToolRequestModel(
-                    tool_config=ToolRequestModelToolConfig_Client(
+                    tool_config=ToolRequestModelToolConfig_ApiIntegrationWebhook(
                         name="name",
                         description="description",
-                        expects_response=False,
+                        api_integration_id="api_integration_id",
+                        api_integration_connection_id="api_integration_connection_id",
                     ),
                 ),
             )
