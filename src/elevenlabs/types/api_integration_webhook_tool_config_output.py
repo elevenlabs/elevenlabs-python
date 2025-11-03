@@ -7,19 +7,15 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .api_integration_webhook_overrides_output import ApiIntegrationWebhookOverridesOutput
 from .dynamic_variable_assignment import DynamicVariableAssignment
 from .dynamic_variables_config import DynamicVariablesConfig
 from .tool_call_sound_behavior import ToolCallSoundBehavior
 from .tool_call_sound_type import ToolCallSoundType
 from .tool_execution_mode import ToolExecutionMode
-from .webhook_tool_api_schema_config_input import WebhookToolApiSchemaConfigInput
 
 
-class WebhookToolConfigInput(UncheckedBaseModel):
-    """
-    A webhook tool is a tool that calls an external webhook from our server
-    """
-
+class ApiIntegrationWebhookToolConfigOutput(UncheckedBaseModel):
     name: str
     description: str = pydantic.Field()
     """
@@ -66,9 +62,16 @@ class WebhookToolConfigInput(UncheckedBaseModel):
     Determines when and how the tool executes: 'immediate' executes the tool right away when requested by the LLM, 'post_tool_speech' waits for the agent to finish speaking before executing, 'async' runs the tool in the background without blocking - best for long-running operations.
     """
 
-    api_schema: WebhookToolApiSchemaConfigInput = pydantic.Field()
+    tool_version: typing.Optional[str] = pydantic.Field(default=None)
     """
-    The schema for the outgoing webhoook, including parameters and URL specification
+    The version of the API integration tool
+    """
+
+    api_integration_id: str
+    api_integration_connection_id: str
+    api_schema_overrides: typing.Optional[ApiIntegrationWebhookOverridesOutput] = pydantic.Field(default=None)
+    """
+    User overrides applied on top of the base api_schema
     """
 
     if IS_PYDANTIC_V2:
@@ -81,4 +84,4 @@ class WebhookToolConfigInput(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-update_forward_refs(WebhookToolConfigInput)
+update_forward_refs(ApiIntegrationWebhookToolConfigOutput)

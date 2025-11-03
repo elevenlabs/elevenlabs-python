@@ -14,6 +14,16 @@ class InvoiceResponse(UncheckedBaseModel):
     The amount due in cents.
     """
 
+    subtotal_cents: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The subtotal amount in cents before tax (exclusive of tax and discounts).
+    """
+
+    tax_cents: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The tax amount in cents.
+    """
+
     discount_percent_off: typing.Optional[float] = pydantic.Field(default=None)
     """
     The discount applied to the invoice. E.g. [20.0f] for 20% off.

@@ -24,8 +24,36 @@ class WorkflowPhoneNumberNodeModelInputTransferDestination_Phone(UncheckedBaseMo
             extra = pydantic.Extra.allow
 
 
+class WorkflowPhoneNumberNodeModelInputTransferDestination_PhoneDynamicVariable(UncheckedBaseModel):
+    type: typing.Literal["phone_dynamic_variable"] = "phone_dynamic_variable"
+    phone_number: str
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class WorkflowPhoneNumberNodeModelInputTransferDestination_SipUri(UncheckedBaseModel):
     type: typing.Literal["sip_uri"] = "sip_uri"
+    sip_uri: str
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class WorkflowPhoneNumberNodeModelInputTransferDestination_SipUriDynamicVariable(UncheckedBaseModel):
+    type: typing.Literal["sip_uri_dynamic_variable"] = "sip_uri_dynamic_variable"
     sip_uri: str
 
     if IS_PYDANTIC_V2:
@@ -41,7 +69,9 @@ class WorkflowPhoneNumberNodeModelInputTransferDestination_SipUri(UncheckedBaseM
 WorkflowPhoneNumberNodeModelInputTransferDestination = typing_extensions.Annotated[
     typing.Union[
         WorkflowPhoneNumberNodeModelInputTransferDestination_Phone,
+        WorkflowPhoneNumberNodeModelInputTransferDestination_PhoneDynamicVariable,
         WorkflowPhoneNumberNodeModelInputTransferDestination_SipUri,
+        WorkflowPhoneNumberNodeModelInputTransferDestination_SipUriDynamicVariable,
     ],
     UnionMetadata(discriminant="type"),
 ]

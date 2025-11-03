@@ -3,89 +3,73 @@
 import typing
 from json.decoder import JSONDecodeError
 
-from ...core.api_error import ApiError
-from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import jsonable_encoder
-from ...core.request_options import RequestOptions
-from ...core.serialization import convert_and_respect_annotation_metadata
-from ...core.unchecked_base_model import construct_type
-from ...errors.unprocessable_entity_error import UnprocessableEntityError
-from ...types.http_validation_error import HttpValidationError
-from ...types.mcp_approval_policy import McpApprovalPolicy
-from ...types.mcp_server_config_input import McpServerConfigInput
-from ...types.mcp_server_response_model import McpServerResponseModel
-from ...types.mcp_servers_response_model import McpServersResponseModel
-from ...types.tool_call_sound_behavior import ToolCallSoundBehavior
-from ...types.tool_call_sound_type import ToolCallSoundType
-from ...types.tool_execution_mode import ToolExecutionMode
-from .types.mcp_server_config_update_request_model_request_headers_value import (
-    McpServerConfigUpdateRequestModelRequestHeadersValue,
-)
+from ....core.api_error import ApiError
+from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ....core.http_response import AsyncHttpResponse, HttpResponse
+from ....core.jsonable_encoder import jsonable_encoder
+from ....core.request_options import RequestOptions
+from ....core.serialization import convert_and_respect_annotation_metadata
+from ....core.unchecked_base_model import construct_type
+from ....errors.conflict_error import ConflictError
+from ....errors.not_found_error import NotFoundError
+from ....errors.unprocessable_entity_error import UnprocessableEntityError
+from ....types.dynamic_variable_assignment import DynamicVariableAssignment
+from ....types.http_validation_error import HttpValidationError
+from ....types.mcp_server_response_model import McpServerResponseModel
+from ....types.mcp_tool_config_override import McpToolConfigOverride
+from ....types.tool_call_sound_behavior import ToolCallSoundBehavior
+from ....types.tool_call_sound_type import ToolCallSoundType
+from ....types.tool_execution_mode import ToolExecutionMode
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
 
-class RawMcpServersClient:
+class RawToolConfigsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[McpServersResponseModel]:
-        """
-        Retrieve all MCP server configurations available in the workspace.
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[McpServersResponseModel]
-            Successful Response
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "v1/convai/mcp-servers",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    McpServersResponseModel,
-                    construct_type(
-                        type_=McpServersResponseModel,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
     def create(
-        self, *, config: McpServerConfigInput, request_options: typing.Optional[RequestOptions] = None
+        self,
+        mcp_server_id: str,
+        *,
+        tool_name: str,
+        force_pre_tool_speech: typing.Optional[bool] = OMIT,
+        disable_interruptions: typing.Optional[bool] = OMIT,
+        tool_call_sound: typing.Optional[ToolCallSoundType] = OMIT,
+        tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = OMIT,
+        execution_mode: typing.Optional[ToolExecutionMode] = OMIT,
+        assignments: typing.Optional[typing.Sequence[DynamicVariableAssignment]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[McpServerResponseModel]:
         """
-        Create a new MCP server configuration in the workspace.
+        Create configuration overrides for a specific MCP tool.
 
         Parameters
         ----------
-        config : McpServerConfigInput
-            Configuration details for the MCP Server.
+        mcp_server_id : str
+            ID of the MCP Server.
+
+        tool_name : str
+            The name of the MCP tool
+
+        force_pre_tool_speech : typing.Optional[bool]
+            If set, overrides the server's force_pre_tool_speech setting for this tool
+
+        disable_interruptions : typing.Optional[bool]
+            If set, overrides the server's disable_interruptions setting for this tool
+
+        tool_call_sound : typing.Optional[ToolCallSoundType]
+            If set, overrides the server's tool_call_sound setting for this tool
+
+        tool_call_sound_behavior : typing.Optional[ToolCallSoundBehavior]
+            If set, overrides the server's tool_call_sound_behavior setting for this tool
+
+        execution_mode : typing.Optional[ToolExecutionMode]
+            If set, overrides the server's execution_mode setting for this tool
+
+        assignments : typing.Optional[typing.Sequence[DynamicVariableAssignment]]
+            Dynamic variable assignments for this MCP tool
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -96,12 +80,18 @@ class RawMcpServersClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v1/convai/mcp-servers",
+            f"v1/convai/mcp-servers/{jsonable_encoder(mcp_server_id)}/tool-configs",
             method="POST",
             json={
-                "config": convert_and_respect_annotation_metadata(
-                    object_=config, annotation=McpServerConfigInput, direction="write"
+                "force_pre_tool_speech": force_pre_tool_speech,
+                "disable_interruptions": disable_interruptions,
+                "tool_call_sound": tool_call_sound,
+                "tool_call_sound_behavior": tool_call_sound_behavior,
+                "execution_mode": execution_mode,
+                "assignments": convert_and_respect_annotation_metadata(
+                    object_=assignments, annotation=typing.Sequence[DynamicVariableAssignment], direction="write"
                 ),
+                "tool_name": tool_name,
             },
             headers={
                 "content-type": "application/json",
@@ -119,6 +109,17 @@ class RawMcpServersClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
@@ -136,15 +137,82 @@ class RawMcpServersClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
-        self, mcp_server_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[McpServerResponseModel]:
+        self, mcp_server_id: str, tool_name: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[McpToolConfigOverride]:
         """
-        Retrieve a specific MCP server configuration from the workspace.
+        Retrieve configuration overrides for a specific MCP tool.
 
         Parameters
         ----------
         mcp_server_id : str
             ID of the MCP Server.
+
+        tool_name : str
+            Name of the MCP tool to retrieve config overrides for.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[McpToolConfigOverride]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/convai/mcp-servers/{jsonable_encoder(mcp_server_id)}/tool-configs/{jsonable_encoder(tool_name)}",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    McpToolConfigOverride,
+                    construct_type(
+                        type_=McpToolConfigOverride,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def delete(
+        self, mcp_server_id: str, tool_name: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[McpServerResponseModel]:
+        """
+        Remove configuration overrides for a specific MCP tool.
+
+        Parameters
+        ----------
+        mcp_server_id : str
+            ID of the MCP Server.
+
+        tool_name : str
+            Name of the MCP tool to remove config overrides for.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -155,8 +223,8 @@ class RawMcpServersClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/convai/mcp-servers/{jsonable_encoder(mcp_server_id)}",
-            method="GET",
+            f"v1/convai/mcp-servers/{jsonable_encoder(mcp_server_id)}/tool-configs/{jsonable_encoder(tool_name)}",
+            method="DELETE",
             request_options=request_options,
         )
         try:
@@ -188,28 +256,26 @@ class RawMcpServersClient:
     def update(
         self,
         mcp_server_id: str,
+        tool_name: str,
         *,
-        approval_policy: typing.Optional[McpApprovalPolicy] = OMIT,
         force_pre_tool_speech: typing.Optional[bool] = OMIT,
         disable_interruptions: typing.Optional[bool] = OMIT,
         tool_call_sound: typing.Optional[ToolCallSoundType] = OMIT,
         tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = OMIT,
         execution_mode: typing.Optional[ToolExecutionMode] = OMIT,
-        request_headers: typing.Optional[
-            typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]
-        ] = OMIT,
+        assignments: typing.Optional[typing.Sequence[DynamicVariableAssignment]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[McpServerResponseModel]:
         """
-        Update the configuration settings for an MCP server.
+        Update configuration overrides for a specific MCP tool.
 
         Parameters
         ----------
         mcp_server_id : str
             ID of the MCP Server.
 
-        approval_policy : typing.Optional[McpApprovalPolicy]
-            The approval mode to set for the MCP server
+        tool_name : str
+            Name of the MCP tool to update config overrides for.
 
         force_pre_tool_speech : typing.Optional[bool]
             If set, overrides the server's force_pre_tool_speech setting for this tool
@@ -218,16 +284,16 @@ class RawMcpServersClient:
             If set, overrides the server's disable_interruptions setting for this tool
 
         tool_call_sound : typing.Optional[ToolCallSoundType]
-            Predefined tool call sound type to play during tool execution for all tools from this MCP server
+            If set, overrides the server's tool_call_sound setting for this tool
 
         tool_call_sound_behavior : typing.Optional[ToolCallSoundBehavior]
-            Determines when the tool call sound should play for all tools from this MCP server
+            If set, overrides the server's tool_call_sound_behavior setting for this tool
 
         execution_mode : typing.Optional[ToolExecutionMode]
             If set, overrides the server's execution_mode setting for this tool
 
-        request_headers : typing.Optional[typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]]
-            The headers to include in requests to the MCP server
+        assignments : typing.Optional[typing.Sequence[DynamicVariableAssignment]]
+            Dynamic variable assignments for this MCP tool
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -238,19 +304,16 @@ class RawMcpServersClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/convai/mcp-servers/{jsonable_encoder(mcp_server_id)}",
+            f"v1/convai/mcp-servers/{jsonable_encoder(mcp_server_id)}/tool-configs/{jsonable_encoder(tool_name)}",
             method="PATCH",
             json={
-                "approval_policy": approval_policy,
                 "force_pre_tool_speech": force_pre_tool_speech,
                 "disable_interruptions": disable_interruptions,
                 "tool_call_sound": tool_call_sound,
                 "tool_call_sound_behavior": tool_call_sound_behavior,
                 "execution_mode": execution_mode,
-                "request_headers": convert_and_respect_annotation_metadata(
-                    object_=request_headers,
-                    annotation=typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]],
-                    direction="write",
+                "assignments": convert_and_respect_annotation_metadata(
+                    object_=assignments, annotation=typing.Sequence[DynamicVariableAssignment], direction="write"
                 ),
             },
             headers={
@@ -269,6 +332,17 @@ class RawMcpServersClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
@@ -286,67 +360,51 @@ class RawMcpServersClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
-class AsyncRawMcpServersClient:
+class AsyncRawToolConfigsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def list(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[McpServersResponseModel]:
-        """
-        Retrieve all MCP server configurations available in the workspace.
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[McpServersResponseModel]
-            Successful Response
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "v1/convai/mcp-servers",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    McpServersResponseModel,
-                    construct_type(
-                        type_=McpServersResponseModel,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
     async def create(
-        self, *, config: McpServerConfigInput, request_options: typing.Optional[RequestOptions] = None
+        self,
+        mcp_server_id: str,
+        *,
+        tool_name: str,
+        force_pre_tool_speech: typing.Optional[bool] = OMIT,
+        disable_interruptions: typing.Optional[bool] = OMIT,
+        tool_call_sound: typing.Optional[ToolCallSoundType] = OMIT,
+        tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = OMIT,
+        execution_mode: typing.Optional[ToolExecutionMode] = OMIT,
+        assignments: typing.Optional[typing.Sequence[DynamicVariableAssignment]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[McpServerResponseModel]:
         """
-        Create a new MCP server configuration in the workspace.
+        Create configuration overrides for a specific MCP tool.
 
         Parameters
         ----------
-        config : McpServerConfigInput
-            Configuration details for the MCP Server.
+        mcp_server_id : str
+            ID of the MCP Server.
+
+        tool_name : str
+            The name of the MCP tool
+
+        force_pre_tool_speech : typing.Optional[bool]
+            If set, overrides the server's force_pre_tool_speech setting for this tool
+
+        disable_interruptions : typing.Optional[bool]
+            If set, overrides the server's disable_interruptions setting for this tool
+
+        tool_call_sound : typing.Optional[ToolCallSoundType]
+            If set, overrides the server's tool_call_sound setting for this tool
+
+        tool_call_sound_behavior : typing.Optional[ToolCallSoundBehavior]
+            If set, overrides the server's tool_call_sound_behavior setting for this tool
+
+        execution_mode : typing.Optional[ToolExecutionMode]
+            If set, overrides the server's execution_mode setting for this tool
+
+        assignments : typing.Optional[typing.Sequence[DynamicVariableAssignment]]
+            Dynamic variable assignments for this MCP tool
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -357,12 +415,18 @@ class AsyncRawMcpServersClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v1/convai/mcp-servers",
+            f"v1/convai/mcp-servers/{jsonable_encoder(mcp_server_id)}/tool-configs",
             method="POST",
             json={
-                "config": convert_and_respect_annotation_metadata(
-                    object_=config, annotation=McpServerConfigInput, direction="write"
+                "force_pre_tool_speech": force_pre_tool_speech,
+                "disable_interruptions": disable_interruptions,
+                "tool_call_sound": tool_call_sound,
+                "tool_call_sound_behavior": tool_call_sound_behavior,
+                "execution_mode": execution_mode,
+                "assignments": convert_and_respect_annotation_metadata(
+                    object_=assignments, annotation=typing.Sequence[DynamicVariableAssignment], direction="write"
                 ),
+                "tool_name": tool_name,
             },
             headers={
                 "content-type": "application/json",
@@ -380,6 +444,17 @@ class AsyncRawMcpServersClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
@@ -397,15 +472,82 @@ class AsyncRawMcpServersClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
-        self, mcp_server_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[McpServerResponseModel]:
+        self, mcp_server_id: str, tool_name: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[McpToolConfigOverride]:
         """
-        Retrieve a specific MCP server configuration from the workspace.
+        Retrieve configuration overrides for a specific MCP tool.
 
         Parameters
         ----------
         mcp_server_id : str
             ID of the MCP Server.
+
+        tool_name : str
+            Name of the MCP tool to retrieve config overrides for.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[McpToolConfigOverride]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/convai/mcp-servers/{jsonable_encoder(mcp_server_id)}/tool-configs/{jsonable_encoder(tool_name)}",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    McpToolConfigOverride,
+                    construct_type(
+                        type_=McpToolConfigOverride,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def delete(
+        self, mcp_server_id: str, tool_name: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[McpServerResponseModel]:
+        """
+        Remove configuration overrides for a specific MCP tool.
+
+        Parameters
+        ----------
+        mcp_server_id : str
+            ID of the MCP Server.
+
+        tool_name : str
+            Name of the MCP tool to remove config overrides for.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -416,8 +558,8 @@ class AsyncRawMcpServersClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/convai/mcp-servers/{jsonable_encoder(mcp_server_id)}",
-            method="GET",
+            f"v1/convai/mcp-servers/{jsonable_encoder(mcp_server_id)}/tool-configs/{jsonable_encoder(tool_name)}",
+            method="DELETE",
             request_options=request_options,
         )
         try:
@@ -449,28 +591,26 @@ class AsyncRawMcpServersClient:
     async def update(
         self,
         mcp_server_id: str,
+        tool_name: str,
         *,
-        approval_policy: typing.Optional[McpApprovalPolicy] = OMIT,
         force_pre_tool_speech: typing.Optional[bool] = OMIT,
         disable_interruptions: typing.Optional[bool] = OMIT,
         tool_call_sound: typing.Optional[ToolCallSoundType] = OMIT,
         tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = OMIT,
         execution_mode: typing.Optional[ToolExecutionMode] = OMIT,
-        request_headers: typing.Optional[
-            typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]
-        ] = OMIT,
+        assignments: typing.Optional[typing.Sequence[DynamicVariableAssignment]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[McpServerResponseModel]:
         """
-        Update the configuration settings for an MCP server.
+        Update configuration overrides for a specific MCP tool.
 
         Parameters
         ----------
         mcp_server_id : str
             ID of the MCP Server.
 
-        approval_policy : typing.Optional[McpApprovalPolicy]
-            The approval mode to set for the MCP server
+        tool_name : str
+            Name of the MCP tool to update config overrides for.
 
         force_pre_tool_speech : typing.Optional[bool]
             If set, overrides the server's force_pre_tool_speech setting for this tool
@@ -479,16 +619,16 @@ class AsyncRawMcpServersClient:
             If set, overrides the server's disable_interruptions setting for this tool
 
         tool_call_sound : typing.Optional[ToolCallSoundType]
-            Predefined tool call sound type to play during tool execution for all tools from this MCP server
+            If set, overrides the server's tool_call_sound setting for this tool
 
         tool_call_sound_behavior : typing.Optional[ToolCallSoundBehavior]
-            Determines when the tool call sound should play for all tools from this MCP server
+            If set, overrides the server's tool_call_sound_behavior setting for this tool
 
         execution_mode : typing.Optional[ToolExecutionMode]
             If set, overrides the server's execution_mode setting for this tool
 
-        request_headers : typing.Optional[typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]]
-            The headers to include in requests to the MCP server
+        assignments : typing.Optional[typing.Sequence[DynamicVariableAssignment]]
+            Dynamic variable assignments for this MCP tool
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -499,19 +639,16 @@ class AsyncRawMcpServersClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/convai/mcp-servers/{jsonable_encoder(mcp_server_id)}",
+            f"v1/convai/mcp-servers/{jsonable_encoder(mcp_server_id)}/tool-configs/{jsonable_encoder(tool_name)}",
             method="PATCH",
             json={
-                "approval_policy": approval_policy,
                 "force_pre_tool_speech": force_pre_tool_speech,
                 "disable_interruptions": disable_interruptions,
                 "tool_call_sound": tool_call_sound,
                 "tool_call_sound_behavior": tool_call_sound_behavior,
                 "execution_mode": execution_mode,
-                "request_headers": convert_and_respect_annotation_metadata(
-                    object_=request_headers,
-                    annotation=typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]],
-                    direction="write",
+                "assignments": convert_and_respect_annotation_metadata(
+                    object_=assignments, annotation=typing.Sequence[DynamicVariableAssignment], direction="write"
                 ),
             },
             headers={
@@ -530,6 +667,17 @@ class AsyncRawMcpServersClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),

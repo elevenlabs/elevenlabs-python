@@ -5,6 +5,9 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .pending_subscription_switch_response_model_next_billing_period import (
+    PendingSubscriptionSwitchResponseModelNextBillingPeriod,
+)
 from .pending_subscription_switch_response_model_next_tier import PendingSubscriptionSwitchResponseModelNextTier
 
 
@@ -13,6 +16,11 @@ class PendingSubscriptionSwitchResponseModel(UncheckedBaseModel):
     next_tier: PendingSubscriptionSwitchResponseModelNextTier = pydantic.Field()
     """
     The tier to change to.
+    """
+
+    next_billing_period: PendingSubscriptionSwitchResponseModelNextBillingPeriod = pydantic.Field()
+    """
+    The billing period to change to.
     """
 
     timestamp_seconds: int = pydantic.Field()

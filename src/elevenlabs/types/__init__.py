@@ -66,6 +66,16 @@ if typing.TYPE_CHECKING:
     from .agent_workspace_overrides_output import AgentWorkspaceOverridesOutput
     from .alignment import Alignment
     from .allowlist_item import AllowlistItem
+    from .api_integration_webhook_overrides_input import ApiIntegrationWebhookOverridesInput
+    from .api_integration_webhook_overrides_input_request_headers_value import (
+        ApiIntegrationWebhookOverridesInputRequestHeadersValue,
+    )
+    from .api_integration_webhook_overrides_output import ApiIntegrationWebhookOverridesOutput
+    from .api_integration_webhook_overrides_output_request_headers_value import (
+        ApiIntegrationWebhookOverridesOutputRequestHeadersValue,
+    )
+    from .api_integration_webhook_tool_config_input import ApiIntegrationWebhookToolConfigInput
+    from .api_integration_webhook_tool_config_output import ApiIntegrationWebhookToolConfigOutput
     from .array_json_schema_property_input import ArrayJsonSchemaPropertyInput
     from .array_json_schema_property_input_items import ArrayJsonSchemaPropertyInputItems
     from .array_json_schema_property_output import ArrayJsonSchemaPropertyOutput
@@ -1023,6 +1033,8 @@ if typing.TYPE_CHECKING:
     from .literal_json_schema_property import LiteralJsonSchemaProperty
     from .literal_json_schema_property_constant_value import LiteralJsonSchemaPropertyConstantValue
     from .literal_json_schema_property_type import LiteralJsonSchemaPropertyType
+    from .literal_override import LiteralOverride
+    from .literal_override_constant_value import LiteralOverrideConstantValue
     from .livekit_stack_type import LivekitStackType
     from .llm import Llm
     from .llm_category_usage import LlmCategoryUsage
@@ -1057,6 +1069,7 @@ if typing.TYPE_CHECKING:
     from .mcp_servers_response_model import McpServersResponseModel
     from .mcp_tool_approval_hash import McpToolApprovalHash
     from .mcp_tool_approval_policy import McpToolApprovalPolicy
+    from .mcp_tool_config_override import McpToolConfigOverride
     from .metric_record import MetricRecord
     from .metric_type import MetricType
     from .model import Model
@@ -1073,6 +1086,10 @@ if typing.TYPE_CHECKING:
     from .object_json_schema_property_input_properties_value import ObjectJsonSchemaPropertyInputPropertiesValue
     from .object_json_schema_property_output import ObjectJsonSchemaPropertyOutput
     from .object_json_schema_property_output_properties_value import ObjectJsonSchemaPropertyOutputPropertiesValue
+    from .object_override_input import ObjectOverrideInput
+    from .object_override_input_properties_value import ObjectOverrideInputPropertiesValue
+    from .object_override_output import ObjectOverrideOutput
+    from .object_override_output_properties_value import ObjectOverrideOutputPropertiesValue
     from .orb_avatar import OrbAvatar
     from .outbound_call_recipient import OutboundCallRecipient
     from .outbound_call_recipient_response_model import OutboundCallRecipientResponseModel
@@ -1081,14 +1098,20 @@ if typing.TYPE_CHECKING:
     from .pdf_export_options import PdfExportOptions
     from .pending_cancellation_response_model import PendingCancellationResponseModel
     from .pending_subscription_switch_response_model import PendingSubscriptionSwitchResponseModel
+    from .pending_subscription_switch_response_model_next_billing_period import (
+        PendingSubscriptionSwitchResponseModelNextBillingPeriod,
+    )
     from .pending_subscription_switch_response_model_next_tier import PendingSubscriptionSwitchResponseModelNextTier
     from .phone_number_agent_info import PhoneNumberAgentInfo
+    from .phone_number_dynamic_variable_transfer_destination import PhoneNumberDynamicVariableTransferDestination
     from .phone_number_transfer import PhoneNumberTransfer
     from .phone_number_transfer_destination import PhoneNumberTransferDestination
     from .phone_number_transfer_transfer_destination import (
         PhoneNumberTransferTransferDestination,
         PhoneNumberTransferTransferDestination_Phone,
+        PhoneNumberTransferTransferDestination_PhoneDynamicVariable,
         PhoneNumberTransferTransferDestination_SipUri,
+        PhoneNumberTransferTransferDestination_SipUriDynamicVariable,
     )
     from .play_dtmf_result_error_model import PlayDtmfResultErrorModel
     from .play_dtmf_result_success_model import PlayDtmfResultSuccessModel
@@ -1138,6 +1161,7 @@ if typing.TYPE_CHECKING:
     )
     from .prompt_agent_api_model_input_tools_item import (
         PromptAgentApiModelInputToolsItem,
+        PromptAgentApiModelInputToolsItem_ApiIntegrationWebhook,
         PromptAgentApiModelInputToolsItem_Client,
         PromptAgentApiModelInputToolsItem_Mcp,
         PromptAgentApiModelInputToolsItem_System,
@@ -1152,6 +1176,7 @@ if typing.TYPE_CHECKING:
     )
     from .prompt_agent_api_model_output_tools_item import (
         PromptAgentApiModelOutputToolsItem,
+        PromptAgentApiModelOutputToolsItem_ApiIntegrationWebhook,
         PromptAgentApiModelOutputToolsItem_Client,
         PromptAgentApiModelOutputToolsItem_Mcp,
         PromptAgentApiModelOutputToolsItem_System,
@@ -1165,6 +1190,7 @@ if typing.TYPE_CHECKING:
     )
     from .prompt_agent_api_model_workflow_override_input_tools_item import (
         PromptAgentApiModelWorkflowOverrideInputToolsItem,
+        PromptAgentApiModelWorkflowOverrideInputToolsItem_ApiIntegrationWebhook,
         PromptAgentApiModelWorkflowOverrideInputToolsItem_Client,
         PromptAgentApiModelWorkflowOverrideInputToolsItem_Mcp,
         PromptAgentApiModelWorkflowOverrideInputToolsItem_System,
@@ -1176,6 +1202,7 @@ if typing.TYPE_CHECKING:
     )
     from .prompt_agent_api_model_workflow_override_output_tools_item import (
         PromptAgentApiModelWorkflowOverrideOutputToolsItem,
+        PromptAgentApiModelWorkflowOverrideOutputToolsItem_ApiIntegrationWebhook,
         PromptAgentApiModelWorkflowOverrideOutputToolsItem_Client,
         PromptAgentApiModelWorkflowOverrideOutputToolsItem_Mcp,
         PromptAgentApiModelWorkflowOverrideOutputToolsItem_System,
@@ -1194,6 +1221,7 @@ if typing.TYPE_CHECKING:
         PronunciationDictionaryVersionResponseModelPermissionOnResource,
     )
     from .pydantic_pronunciation_dictionary_version_locator import PydanticPronunciationDictionaryVersionLocator
+    from .query_override import QueryOverride
     from .query_params_json_schema import QueryParamsJsonSchema
     from .rag_chunk_metadata import RagChunkMetadata
     from .rag_config import RagConfig
@@ -1254,6 +1282,7 @@ if typing.TYPE_CHECKING:
     from .sip_trunk_credentials_request_model import SipTrunkCredentialsRequestModel
     from .sip_trunk_outbound_call_response import SipTrunkOutboundCallResponse
     from .sip_trunk_transport_enum import SipTrunkTransportEnum
+    from .sip_uri_dynamic_variable_transfer_destination import SipUriDynamicVariableTransferDestination
     from .sip_uri_transfer_destination import SipUriTransferDestination
     from .skip_turn_tool_config import SkipTurnToolConfig
     from .skip_turn_tool_response_model import SkipTurnToolResponseModel
@@ -1340,6 +1369,7 @@ if typing.TYPE_CHECKING:
     from .tool_request_model import ToolRequestModel
     from .tool_request_model_tool_config import (
         ToolRequestModelToolConfig,
+        ToolRequestModelToolConfig_ApiIntegrationWebhook,
         ToolRequestModelToolConfig_Client,
         ToolRequestModelToolConfig_System,
         ToolRequestModelToolConfig_Webhook,
@@ -1347,6 +1377,7 @@ if typing.TYPE_CHECKING:
     from .tool_response_model import ToolResponseModel
     from .tool_response_model_tool_config import (
         ToolResponseModelToolConfig,
+        ToolResponseModelToolConfig_ApiIntegrationWebhook,
         ToolResponseModelToolConfig_Client,
         ToolResponseModelToolConfig_Mcp,
         ToolResponseModelToolConfig_System,
@@ -1555,13 +1586,17 @@ if typing.TYPE_CHECKING:
     from .workflow_phone_number_node_model_input_transfer_destination import (
         WorkflowPhoneNumberNodeModelInputTransferDestination,
         WorkflowPhoneNumberNodeModelInputTransferDestination_Phone,
+        WorkflowPhoneNumberNodeModelInputTransferDestination_PhoneDynamicVariable,
         WorkflowPhoneNumberNodeModelInputTransferDestination_SipUri,
+        WorkflowPhoneNumberNodeModelInputTransferDestination_SipUriDynamicVariable,
     )
     from .workflow_phone_number_node_model_output import WorkflowPhoneNumberNodeModelOutput
     from .workflow_phone_number_node_model_output_transfer_destination import (
         WorkflowPhoneNumberNodeModelOutputTransferDestination,
         WorkflowPhoneNumberNodeModelOutputTransferDestination_Phone,
+        WorkflowPhoneNumberNodeModelOutputTransferDestination_PhoneDynamicVariable,
         WorkflowPhoneNumberNodeModelOutputTransferDestination_SipUri,
+        WorkflowPhoneNumberNodeModelOutputTransferDestination_SipUriDynamicVariable,
     )
     from .workflow_result_condition_model_input import WorkflowResultConditionModelInput
     from .workflow_result_condition_model_output import WorkflowResultConditionModelOutput
@@ -1666,6 +1701,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentWorkspaceOverridesOutput": ".agent_workspace_overrides_output",
     "Alignment": ".alignment",
     "AllowlistItem": ".allowlist_item",
+    "ApiIntegrationWebhookOverridesInput": ".api_integration_webhook_overrides_input",
+    "ApiIntegrationWebhookOverridesInputRequestHeadersValue": ".api_integration_webhook_overrides_input_request_headers_value",
+    "ApiIntegrationWebhookOverridesOutput": ".api_integration_webhook_overrides_output",
+    "ApiIntegrationWebhookOverridesOutputRequestHeadersValue": ".api_integration_webhook_overrides_output_request_headers_value",
+    "ApiIntegrationWebhookToolConfigInput": ".api_integration_webhook_tool_config_input",
+    "ApiIntegrationWebhookToolConfigOutput": ".api_integration_webhook_tool_config_output",
     "ArrayJsonSchemaPropertyInput": ".array_json_schema_property_input",
     "ArrayJsonSchemaPropertyInputItems": ".array_json_schema_property_input_items",
     "ArrayJsonSchemaPropertyOutput": ".array_json_schema_property_output",
@@ -2471,6 +2512,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LiteralJsonSchemaProperty": ".literal_json_schema_property",
     "LiteralJsonSchemaPropertyConstantValue": ".literal_json_schema_property_constant_value",
     "LiteralJsonSchemaPropertyType": ".literal_json_schema_property_type",
+    "LiteralOverride": ".literal_override",
+    "LiteralOverrideConstantValue": ".literal_override_constant_value",
     "LivekitStackType": ".livekit_stack_type",
     "Llm": ".llm",
     "LlmCategoryUsage": ".llm_category_usage",
@@ -2503,6 +2546,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "McpServersResponseModel": ".mcp_servers_response_model",
     "McpToolApprovalHash": ".mcp_tool_approval_hash",
     "McpToolApprovalPolicy": ".mcp_tool_approval_policy",
+    "McpToolConfigOverride": ".mcp_tool_config_override",
     "MetricRecord": ".metric_record",
     "MetricType": ".metric_type",
     "Model": ".model",
@@ -2519,6 +2563,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ObjectJsonSchemaPropertyInputPropertiesValue": ".object_json_schema_property_input_properties_value",
     "ObjectJsonSchemaPropertyOutput": ".object_json_schema_property_output",
     "ObjectJsonSchemaPropertyOutputPropertiesValue": ".object_json_schema_property_output_properties_value",
+    "ObjectOverrideInput": ".object_override_input",
+    "ObjectOverrideInputPropertiesValue": ".object_override_input_properties_value",
+    "ObjectOverrideOutput": ".object_override_output",
+    "ObjectOverrideOutputPropertiesValue": ".object_override_output_properties_value",
     "OrbAvatar": ".orb_avatar",
     "OutboundCallRecipient": ".outbound_call_recipient",
     "OutboundCallRecipientResponseModel": ".outbound_call_recipient_response_model",
@@ -2527,13 +2575,17 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PdfExportOptions": ".pdf_export_options",
     "PendingCancellationResponseModel": ".pending_cancellation_response_model",
     "PendingSubscriptionSwitchResponseModel": ".pending_subscription_switch_response_model",
+    "PendingSubscriptionSwitchResponseModelNextBillingPeriod": ".pending_subscription_switch_response_model_next_billing_period",
     "PendingSubscriptionSwitchResponseModelNextTier": ".pending_subscription_switch_response_model_next_tier",
     "PhoneNumberAgentInfo": ".phone_number_agent_info",
+    "PhoneNumberDynamicVariableTransferDestination": ".phone_number_dynamic_variable_transfer_destination",
     "PhoneNumberTransfer": ".phone_number_transfer",
     "PhoneNumberTransferDestination": ".phone_number_transfer_destination",
     "PhoneNumberTransferTransferDestination": ".phone_number_transfer_transfer_destination",
     "PhoneNumberTransferTransferDestination_Phone": ".phone_number_transfer_transfer_destination",
+    "PhoneNumberTransferTransferDestination_PhoneDynamicVariable": ".phone_number_transfer_transfer_destination",
     "PhoneNumberTransferTransferDestination_SipUri": ".phone_number_transfer_transfer_destination",
+    "PhoneNumberTransferTransferDestination_SipUriDynamicVariable": ".phone_number_transfer_transfer_destination",
     "PlayDtmfResultErrorModel": ".play_dtmf_result_error_model",
     "PlayDtmfResultSuccessModel": ".play_dtmf_result_success_model",
     "PlayDtmfToolConfig": ".play_dtmf_tool_config",
@@ -2577,6 +2629,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PromptAgentApiModelInputBackupLlmConfig_Disabled": ".prompt_agent_api_model_input_backup_llm_config",
     "PromptAgentApiModelInputBackupLlmConfig_Override": ".prompt_agent_api_model_input_backup_llm_config",
     "PromptAgentApiModelInputToolsItem": ".prompt_agent_api_model_input_tools_item",
+    "PromptAgentApiModelInputToolsItem_ApiIntegrationWebhook": ".prompt_agent_api_model_input_tools_item",
     "PromptAgentApiModelInputToolsItem_Client": ".prompt_agent_api_model_input_tools_item",
     "PromptAgentApiModelInputToolsItem_Mcp": ".prompt_agent_api_model_input_tools_item",
     "PromptAgentApiModelInputToolsItem_System": ".prompt_agent_api_model_input_tools_item",
@@ -2587,6 +2640,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PromptAgentApiModelOutputBackupLlmConfig_Disabled": ".prompt_agent_api_model_output_backup_llm_config",
     "PromptAgentApiModelOutputBackupLlmConfig_Override": ".prompt_agent_api_model_output_backup_llm_config",
     "PromptAgentApiModelOutputToolsItem": ".prompt_agent_api_model_output_tools_item",
+    "PromptAgentApiModelOutputToolsItem_ApiIntegrationWebhook": ".prompt_agent_api_model_output_tools_item",
     "PromptAgentApiModelOutputToolsItem_Client": ".prompt_agent_api_model_output_tools_item",
     "PromptAgentApiModelOutputToolsItem_Mcp": ".prompt_agent_api_model_output_tools_item",
     "PromptAgentApiModelOutputToolsItem_System": ".prompt_agent_api_model_output_tools_item",
@@ -2596,6 +2650,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PromptAgentApiModelWorkflowOverrideInput": ".prompt_agent_api_model_workflow_override_input",
     "PromptAgentApiModelWorkflowOverrideInputBackupLlmConfig": ".prompt_agent_api_model_workflow_override_input_backup_llm_config",
     "PromptAgentApiModelWorkflowOverrideInputToolsItem": ".prompt_agent_api_model_workflow_override_input_tools_item",
+    "PromptAgentApiModelWorkflowOverrideInputToolsItem_ApiIntegrationWebhook": ".prompt_agent_api_model_workflow_override_input_tools_item",
     "PromptAgentApiModelWorkflowOverrideInputToolsItem_Client": ".prompt_agent_api_model_workflow_override_input_tools_item",
     "PromptAgentApiModelWorkflowOverrideInputToolsItem_Mcp": ".prompt_agent_api_model_workflow_override_input_tools_item",
     "PromptAgentApiModelWorkflowOverrideInputToolsItem_System": ".prompt_agent_api_model_workflow_override_input_tools_item",
@@ -2603,6 +2658,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PromptAgentApiModelWorkflowOverrideOutput": ".prompt_agent_api_model_workflow_override_output",
     "PromptAgentApiModelWorkflowOverrideOutputBackupLlmConfig": ".prompt_agent_api_model_workflow_override_output_backup_llm_config",
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem": ".prompt_agent_api_model_workflow_override_output_tools_item",
+    "PromptAgentApiModelWorkflowOverrideOutputToolsItem_ApiIntegrationWebhook": ".prompt_agent_api_model_workflow_override_output_tools_item",
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem_Client": ".prompt_agent_api_model_workflow_override_output_tools_item",
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem_Mcp": ".prompt_agent_api_model_workflow_override_output_tools_item",
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem_System": ".prompt_agent_api_model_workflow_override_output_tools_item",
@@ -2618,6 +2674,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PronunciationDictionaryVersionResponseModel": ".pronunciation_dictionary_version_response_model",
     "PronunciationDictionaryVersionResponseModelPermissionOnResource": ".pronunciation_dictionary_version_response_model_permission_on_resource",
     "PydanticPronunciationDictionaryVersionLocator": ".pydantic_pronunciation_dictionary_version_locator",
+    "QueryOverride": ".query_override",
     "QueryParamsJsonSchema": ".query_params_json_schema",
     "RagChunkMetadata": ".rag_chunk_metadata",
     "RagConfig": ".rag_config",
@@ -2676,6 +2733,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SipTrunkCredentialsRequestModel": ".sip_trunk_credentials_request_model",
     "SipTrunkOutboundCallResponse": ".sip_trunk_outbound_call_response",
     "SipTrunkTransportEnum": ".sip_trunk_transport_enum",
+    "SipUriDynamicVariableTransferDestination": ".sip_uri_dynamic_variable_transfer_destination",
     "SipUriTransferDestination": ".sip_uri_transfer_destination",
     "SkipTurnToolConfig": ".skip_turn_tool_config",
     "SkipTurnToolResponseModel": ".skip_turn_tool_response_model",
@@ -2755,11 +2813,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ToolMockConfig": ".tool_mock_config",
     "ToolRequestModel": ".tool_request_model",
     "ToolRequestModelToolConfig": ".tool_request_model_tool_config",
+    "ToolRequestModelToolConfig_ApiIntegrationWebhook": ".tool_request_model_tool_config",
     "ToolRequestModelToolConfig_Client": ".tool_request_model_tool_config",
     "ToolRequestModelToolConfig_System": ".tool_request_model_tool_config",
     "ToolRequestModelToolConfig_Webhook": ".tool_request_model_tool_config",
     "ToolResponseModel": ".tool_response_model",
     "ToolResponseModelToolConfig": ".tool_response_model_tool_config",
+    "ToolResponseModelToolConfig_ApiIntegrationWebhook": ".tool_response_model_tool_config",
     "ToolResponseModelToolConfig_Client": ".tool_response_model_tool_config",
     "ToolResponseModelToolConfig_Mcp": ".tool_response_model_tool_config",
     "ToolResponseModelToolConfig_System": ".tool_response_model_tool_config",
@@ -2942,11 +3002,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkflowPhoneNumberNodeModelInput": ".workflow_phone_number_node_model_input",
     "WorkflowPhoneNumberNodeModelInputTransferDestination": ".workflow_phone_number_node_model_input_transfer_destination",
     "WorkflowPhoneNumberNodeModelInputTransferDestination_Phone": ".workflow_phone_number_node_model_input_transfer_destination",
+    "WorkflowPhoneNumberNodeModelInputTransferDestination_PhoneDynamicVariable": ".workflow_phone_number_node_model_input_transfer_destination",
     "WorkflowPhoneNumberNodeModelInputTransferDestination_SipUri": ".workflow_phone_number_node_model_input_transfer_destination",
+    "WorkflowPhoneNumberNodeModelInputTransferDestination_SipUriDynamicVariable": ".workflow_phone_number_node_model_input_transfer_destination",
     "WorkflowPhoneNumberNodeModelOutput": ".workflow_phone_number_node_model_output",
     "WorkflowPhoneNumberNodeModelOutputTransferDestination": ".workflow_phone_number_node_model_output_transfer_destination",
     "WorkflowPhoneNumberNodeModelOutputTransferDestination_Phone": ".workflow_phone_number_node_model_output_transfer_destination",
+    "WorkflowPhoneNumberNodeModelOutputTransferDestination_PhoneDynamicVariable": ".workflow_phone_number_node_model_output_transfer_destination",
     "WorkflowPhoneNumberNodeModelOutputTransferDestination_SipUri": ".workflow_phone_number_node_model_output_transfer_destination",
+    "WorkflowPhoneNumberNodeModelOutputTransferDestination_SipUriDynamicVariable": ".workflow_phone_number_node_model_output_transfer_destination",
     "WorkflowResultConditionModelInput": ".workflow_result_condition_model_input",
     "WorkflowResultConditionModelOutput": ".workflow_result_condition_model_output",
     "WorkflowStandaloneAgentNodeModelInput": ".workflow_standalone_agent_node_model_input",
@@ -3066,6 +3130,12 @@ __all__ = [
     "AgentWorkspaceOverridesOutput",
     "Alignment",
     "AllowlistItem",
+    "ApiIntegrationWebhookOverridesInput",
+    "ApiIntegrationWebhookOverridesInputRequestHeadersValue",
+    "ApiIntegrationWebhookOverridesOutput",
+    "ApiIntegrationWebhookOverridesOutputRequestHeadersValue",
+    "ApiIntegrationWebhookToolConfigInput",
+    "ApiIntegrationWebhookToolConfigOutput",
     "ArrayJsonSchemaPropertyInput",
     "ArrayJsonSchemaPropertyInputItems",
     "ArrayJsonSchemaPropertyOutput",
@@ -3871,6 +3941,8 @@ __all__ = [
     "LiteralJsonSchemaProperty",
     "LiteralJsonSchemaPropertyConstantValue",
     "LiteralJsonSchemaPropertyType",
+    "LiteralOverride",
+    "LiteralOverrideConstantValue",
     "LivekitStackType",
     "Llm",
     "LlmCategoryUsage",
@@ -3903,6 +3975,7 @@ __all__ = [
     "McpServersResponseModel",
     "McpToolApprovalHash",
     "McpToolApprovalPolicy",
+    "McpToolConfigOverride",
     "MetricRecord",
     "MetricType",
     "Model",
@@ -3919,6 +3992,10 @@ __all__ = [
     "ObjectJsonSchemaPropertyInputPropertiesValue",
     "ObjectJsonSchemaPropertyOutput",
     "ObjectJsonSchemaPropertyOutputPropertiesValue",
+    "ObjectOverrideInput",
+    "ObjectOverrideInputPropertiesValue",
+    "ObjectOverrideOutput",
+    "ObjectOverrideOutputPropertiesValue",
     "OrbAvatar",
     "OutboundCallRecipient",
     "OutboundCallRecipientResponseModel",
@@ -3927,13 +4004,17 @@ __all__ = [
     "PdfExportOptions",
     "PendingCancellationResponseModel",
     "PendingSubscriptionSwitchResponseModel",
+    "PendingSubscriptionSwitchResponseModelNextBillingPeriod",
     "PendingSubscriptionSwitchResponseModelNextTier",
     "PhoneNumberAgentInfo",
+    "PhoneNumberDynamicVariableTransferDestination",
     "PhoneNumberTransfer",
     "PhoneNumberTransferDestination",
     "PhoneNumberTransferTransferDestination",
     "PhoneNumberTransferTransferDestination_Phone",
+    "PhoneNumberTransferTransferDestination_PhoneDynamicVariable",
     "PhoneNumberTransferTransferDestination_SipUri",
+    "PhoneNumberTransferTransferDestination_SipUriDynamicVariable",
     "PlayDtmfResultErrorModel",
     "PlayDtmfResultSuccessModel",
     "PlayDtmfToolConfig",
@@ -3977,6 +4058,7 @@ __all__ = [
     "PromptAgentApiModelInputBackupLlmConfig_Disabled",
     "PromptAgentApiModelInputBackupLlmConfig_Override",
     "PromptAgentApiModelInputToolsItem",
+    "PromptAgentApiModelInputToolsItem_ApiIntegrationWebhook",
     "PromptAgentApiModelInputToolsItem_Client",
     "PromptAgentApiModelInputToolsItem_Mcp",
     "PromptAgentApiModelInputToolsItem_System",
@@ -3987,6 +4069,7 @@ __all__ = [
     "PromptAgentApiModelOutputBackupLlmConfig_Disabled",
     "PromptAgentApiModelOutputBackupLlmConfig_Override",
     "PromptAgentApiModelOutputToolsItem",
+    "PromptAgentApiModelOutputToolsItem_ApiIntegrationWebhook",
     "PromptAgentApiModelOutputToolsItem_Client",
     "PromptAgentApiModelOutputToolsItem_Mcp",
     "PromptAgentApiModelOutputToolsItem_System",
@@ -3996,6 +4079,7 @@ __all__ = [
     "PromptAgentApiModelWorkflowOverrideInput",
     "PromptAgentApiModelWorkflowOverrideInputBackupLlmConfig",
     "PromptAgentApiModelWorkflowOverrideInputToolsItem",
+    "PromptAgentApiModelWorkflowOverrideInputToolsItem_ApiIntegrationWebhook",
     "PromptAgentApiModelWorkflowOverrideInputToolsItem_Client",
     "PromptAgentApiModelWorkflowOverrideInputToolsItem_Mcp",
     "PromptAgentApiModelWorkflowOverrideInputToolsItem_System",
@@ -4003,6 +4087,7 @@ __all__ = [
     "PromptAgentApiModelWorkflowOverrideOutput",
     "PromptAgentApiModelWorkflowOverrideOutputBackupLlmConfig",
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem",
+    "PromptAgentApiModelWorkflowOverrideOutputToolsItem_ApiIntegrationWebhook",
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem_Client",
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem_Mcp",
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem_System",
@@ -4018,6 +4103,7 @@ __all__ = [
     "PronunciationDictionaryVersionResponseModel",
     "PronunciationDictionaryVersionResponseModelPermissionOnResource",
     "PydanticPronunciationDictionaryVersionLocator",
+    "QueryOverride",
     "QueryParamsJsonSchema",
     "RagChunkMetadata",
     "RagConfig",
@@ -4076,6 +4162,7 @@ __all__ = [
     "SipTrunkCredentialsRequestModel",
     "SipTrunkOutboundCallResponse",
     "SipTrunkTransportEnum",
+    "SipUriDynamicVariableTransferDestination",
     "SipUriTransferDestination",
     "SkipTurnToolConfig",
     "SkipTurnToolResponseModel",
@@ -4155,11 +4242,13 @@ __all__ = [
     "ToolMockConfig",
     "ToolRequestModel",
     "ToolRequestModelToolConfig",
+    "ToolRequestModelToolConfig_ApiIntegrationWebhook",
     "ToolRequestModelToolConfig_Client",
     "ToolRequestModelToolConfig_System",
     "ToolRequestModelToolConfig_Webhook",
     "ToolResponseModel",
     "ToolResponseModelToolConfig",
+    "ToolResponseModelToolConfig_ApiIntegrationWebhook",
     "ToolResponseModelToolConfig_Client",
     "ToolResponseModelToolConfig_Mcp",
     "ToolResponseModelToolConfig_System",
@@ -4342,11 +4431,15 @@ __all__ = [
     "WorkflowPhoneNumberNodeModelInput",
     "WorkflowPhoneNumberNodeModelInputTransferDestination",
     "WorkflowPhoneNumberNodeModelInputTransferDestination_Phone",
+    "WorkflowPhoneNumberNodeModelInputTransferDestination_PhoneDynamicVariable",
     "WorkflowPhoneNumberNodeModelInputTransferDestination_SipUri",
+    "WorkflowPhoneNumberNodeModelInputTransferDestination_SipUriDynamicVariable",
     "WorkflowPhoneNumberNodeModelOutput",
     "WorkflowPhoneNumberNodeModelOutputTransferDestination",
     "WorkflowPhoneNumberNodeModelOutputTransferDestination_Phone",
+    "WorkflowPhoneNumberNodeModelOutputTransferDestination_PhoneDynamicVariable",
     "WorkflowPhoneNumberNodeModelOutputTransferDestination_SipUri",
+    "WorkflowPhoneNumberNodeModelOutputTransferDestination_SipUriDynamicVariable",
     "WorkflowResultConditionModelInput",
     "WorkflowResultConditionModelOutput",
     "WorkflowStandaloneAgentNodeModelInput",

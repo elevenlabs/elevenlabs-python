@@ -2,4 +2,6 @@
 
 import typing
 
-ReferencedToolCommonModelType = typing.Union[typing.Literal["system", "webhook", "client", "workflow"], typing.Any]
+ReferencedToolCommonModelType = typing.Union[
+    typing.Literal["system", "webhook", "client", "workflow", "api_integration_webhook"], typing.Any
+]

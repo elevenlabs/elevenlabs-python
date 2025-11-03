@@ -11,7 +11,8 @@ from .conversation_initiation_client_data_internal import ConversationInitiation
 
 class OutboundCallRecipientResponseModel(UncheckedBaseModel):
     id: str
-    phone_number: str
+    phone_number: typing.Optional[str] = None
+    whatsapp_user_id: typing.Optional[str] = None
     status: BatchCallRecipientStatus
     created_at_unix: int
     updated_at_unix: int

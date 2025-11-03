@@ -11,6 +11,9 @@ from .mcp_server_config_input_secret_token import McpServerConfigInputSecretToke
 from .mcp_server_config_input_url import McpServerConfigInputUrl
 from .mcp_server_transport import McpServerTransport
 from .mcp_tool_approval_hash import McpToolApprovalHash
+from .mcp_tool_config_override import McpToolConfigOverride
+from .tool_call_sound_behavior import ToolCallSoundBehavior
+from .tool_call_sound_type import ToolCallSoundType
 from .tool_execution_mode import ToolExecutionMode
 
 
@@ -52,12 +55,27 @@ class McpServerConfigInput(UncheckedBaseModel):
 
     disable_interruptions: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    If true, the user will not be able to interrupt the agent while tools from this MCP server are running
+    If true, the user will not be able to interrupt the agent while any tool from this MCP server is running.
+    """
+
+    tool_call_sound: typing.Optional[ToolCallSoundType] = pydantic.Field(default=None)
+    """
+    Predefined tool call sound type to play during tool execution for all tools from this MCP server
+    """
+
+    tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = pydantic.Field(default=None)
+    """
+    Determines when the tool call sound should play for all tools from this MCP server
     """
 
     execution_mode: typing.Optional[ToolExecutionMode] = pydantic.Field(default=None)
     """
-    Determines when and how tools from this MCP server execute: 'immediate' executes the tool right away when requested by the LLM, 'post_tool_speech' waits for the agent to finish speaking before executing, 'async' runs the tool in the background without blocking - best for long-running operations.
+    Determines when and how all tools from this MCP server execute: 'immediate' executes the tool right away when requested by the LLM, 'post_tool_speech' waits for the agent to finish speaking before executing, 'async' runs the tool in the background without blocking - best for long-running operations.
+    """
+
+    tool_config_overrides: typing.Optional[typing.List[McpToolConfigOverride]] = pydantic.Field(default=None)
+    """
+    List of per-tool configuration overrides that override the server-level defaults for specific tools
     """
 
     if IS_PYDANTIC_V2:

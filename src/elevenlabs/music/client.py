@@ -4,12 +4,15 @@ from __future__ import annotations
 
 import typing
 
+from .. import core
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.music_prompt import MusicPrompt
 from .raw_client import AsyncRawMusicClient, RawMusicClient
 from .types.music_compose_detailed_request_output_format import MusicComposeDetailedRequestOutputFormat
 from .types.music_compose_request_output_format import MusicComposeRequestOutputFormat
+from .types.music_separate_stems_request_output_format import MusicSeparateStemsRequestOutputFormat
+from .types.music_separate_stems_request_stem_variation_id import MusicSeparateStemsRequestStemVariationId
 from .types.music_stream_request_output_format import MusicStreamRequestOutputFormat
 
 if typing.TYPE_CHECKING:
@@ -238,6 +241,41 @@ class MusicClient:
             force_instrumental=force_instrumental,
             store_for_inpainting=store_for_inpainting,
             request_options=request_options,
+        ) as r:
+            yield from r.data
+
+    def separate_stems(
+        self,
+        *,
+        file: core.File,
+        output_format: typing.Optional[MusicSeparateStemsRequestOutputFormat] = None,
+        stem_variation_id: typing.Optional[MusicSeparateStemsRequestStemVariationId] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[bytes]:
+        """
+        Separate a music file into individual stems
+
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        output_format : typing.Optional[MusicSeparateStemsRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        stem_variation_id : typing.Optional[MusicSeparateStemsRequestStemVariationId]
+            The id of the stem variation to use.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Returns
+        -------
+        typing.Iterator[bytes]
+            ZIP archive containing separated audio stems. Each stem is provided as a separate audio file in the requested output format.
+        """
+        with self._raw_client.separate_stems(
+            file=file, output_format=output_format, stem_variation_id=stem_variation_id, request_options=request_options
         ) as r:
             yield from r.data
 
@@ -496,6 +534,42 @@ class AsyncMusicClient:
             force_instrumental=force_instrumental,
             store_for_inpainting=store_for_inpainting,
             request_options=request_options,
+        ) as r:
+            async for _chunk in r.data:
+                yield _chunk
+
+    async def separate_stems(
+        self,
+        *,
+        file: core.File,
+        output_format: typing.Optional[MusicSeparateStemsRequestOutputFormat] = None,
+        stem_variation_id: typing.Optional[MusicSeparateStemsRequestStemVariationId] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[bytes]:
+        """
+        Separate a music file into individual stems
+
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        output_format : typing.Optional[MusicSeparateStemsRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        stem_variation_id : typing.Optional[MusicSeparateStemsRequestStemVariationId]
+            The id of the stem variation to use.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Returns
+        -------
+        typing.AsyncIterator[bytes]
+            ZIP archive containing separated audio stems. Each stem is provided as a separate audio file in the requested output format.
+        """
+        async with self._raw_client.separate_stems(
+            file=file, output_format=output_format, stem_variation_id=stem_variation_id, request_options=request_options
         ) as r:
             async for _chunk in r.data:
                 yield _chunk

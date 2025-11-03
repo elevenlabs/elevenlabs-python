@@ -34,9 +34,10 @@ class BatchCallsClient:
         *,
         call_name: str,
         agent_id: str,
-        agent_phone_number_id: str,
         recipients: typing.Sequence[OutboundCallRecipient],
         scheduled_time_unix: typing.Optional[int] = OMIT,
+        agent_phone_number_id: typing.Optional[str] = OMIT,
+        agent_whatsapp_business_account_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BatchCallResponse:
         """
@@ -48,11 +49,13 @@ class BatchCallsClient:
 
         agent_id : str
 
-        agent_phone_number_id : str
-
         recipients : typing.Sequence[OutboundCallRecipient]
 
         scheduled_time_unix : typing.Optional[int]
+
+        agent_phone_number_id : typing.Optional[str]
+
+        agent_whatsapp_business_account_id : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -72,20 +75,16 @@ class BatchCallsClient:
         client.conversational_ai.batch_calls.create(
             call_name="call_name",
             agent_id="agent_id",
-            agent_phone_number_id="agent_phone_number_id",
-            recipients=[
-                OutboundCallRecipient(
-                    phone_number="phone_number",
-                )
-            ],
+            recipients=[OutboundCallRecipient()],
         )
         """
         _response = self._raw_client.create(
             call_name=call_name,
             agent_id=agent_id,
-            agent_phone_number_id=agent_phone_number_id,
             recipients=recipients,
             scheduled_time_unix=scheduled_time_unix,
+            agent_phone_number_id=agent_phone_number_id,
+            agent_whatsapp_business_account_id=agent_whatsapp_business_account_id,
             request_options=request_options,
         )
         return _response.data
@@ -242,9 +241,10 @@ class AsyncBatchCallsClient:
         *,
         call_name: str,
         agent_id: str,
-        agent_phone_number_id: str,
         recipients: typing.Sequence[OutboundCallRecipient],
         scheduled_time_unix: typing.Optional[int] = OMIT,
+        agent_phone_number_id: typing.Optional[str] = OMIT,
+        agent_whatsapp_business_account_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BatchCallResponse:
         """
@@ -256,11 +256,13 @@ class AsyncBatchCallsClient:
 
         agent_id : str
 
-        agent_phone_number_id : str
-
         recipients : typing.Sequence[OutboundCallRecipient]
 
         scheduled_time_unix : typing.Optional[int]
+
+        agent_phone_number_id : typing.Optional[str]
+
+        agent_whatsapp_business_account_id : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -285,12 +287,7 @@ class AsyncBatchCallsClient:
             await client.conversational_ai.batch_calls.create(
                 call_name="call_name",
                 agent_id="agent_id",
-                agent_phone_number_id="agent_phone_number_id",
-                recipients=[
-                    OutboundCallRecipient(
-                        phone_number="phone_number",
-                    )
-                ],
+                recipients=[OutboundCallRecipient()],
             )
 
 
@@ -299,9 +296,10 @@ class AsyncBatchCallsClient:
         _response = await self._raw_client.create(
             call_name=call_name,
             agent_id=agent_id,
-            agent_phone_number_id=agent_phone_number_id,
             recipients=recipients,
             scheduled_time_unix=scheduled_time_unix,
+            agent_phone_number_id=agent_phone_number_id,
+            agent_whatsapp_business_account_id=agent_whatsapp_business_account_id,
             request_options=request_options,
         )
         return _response.data
