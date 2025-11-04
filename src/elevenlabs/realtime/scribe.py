@@ -367,5 +367,5 @@ class ScribeRealtime:
             params.append(f"language_code={language_code}")
 
         query_string = "&".join(params)
-        return f"{base}/v1/speech-to-text/realtime-beta?{query_string}"
+        return f"{base}/v1/speech-to-text/realtime?{query_string}"
 
