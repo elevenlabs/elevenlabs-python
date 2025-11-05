@@ -18,4 +18,4 @@ README.md
 assets/
 
 # Ignore custom tests
-tests/
+tests/custom/
