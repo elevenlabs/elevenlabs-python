@@ -28,7 +28,7 @@ class CommitStrategy(str, Enum):
     Strategy for committing transcription results.
 
     VAD: Voice Activity Detection - automatically commits when speech ends
-    MANUAL: Manual commit - requires calling commit() to finalize transcription
+    MANUAL: Manual commit - requires calling commit() to commit the segment
     """
     VAD = "vad"
     MANUAL = "manual"
