@@ -117,7 +117,7 @@ class InvocationsClient:
         agent_id: str,
         agent_config_override: typing.Optional[AdhocAgentConfigOverrideForTestRequestModel] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Optional[typing.Any]:
+    ) -> typing.Any:
         """
         Resubmits specific test runs from a test invocation.
 
@@ -140,7 +140,7 @@ class InvocationsClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        typing.Any
             Successful Response
 
         Examples
@@ -286,7 +286,7 @@ class AsyncInvocationsClient:
         agent_id: str,
         agent_config_override: typing.Optional[AdhocAgentConfigOverrideForTestRequestModel] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Optional[typing.Any]:
+    ) -> typing.Any:
         """
         Resubmits specific test runs from a test invocation.
 
@@ -309,7 +309,7 @@ class AsyncInvocationsClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        typing.Any
             Successful Response
 
         Examples

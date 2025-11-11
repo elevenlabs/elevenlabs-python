@@ -2,4 +2,4 @@
 
 import typing
 
-TextToSpeechRequest = typing.Optional[typing.Any]
+TextToSpeechRequest = typing.Any

@@ -2,4 +2,4 @@
 
 import typing
 
-RemoveMemberFromGroupRequest = typing.Optional[typing.Any]
+RemoveMemberFromGroupRequest = typing.Any

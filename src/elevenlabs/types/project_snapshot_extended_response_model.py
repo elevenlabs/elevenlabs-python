@@ -29,12 +29,12 @@ class ProjectSnapshotExtendedResponseModel(UncheckedBaseModel):
     The name of the project snapshot.
     """
 
-    audio_upload: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    audio_upload: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     (Deprecated)
     """
 
-    zip_upload: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    zip_upload: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     (Deprecated)
     """

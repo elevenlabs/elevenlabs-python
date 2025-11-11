@@ -14,6 +14,11 @@ class TurnConfig(UncheckedBaseModel):
     Maximum wait time for the user's reply before re-engaging the user
     """
 
+    initial_wait_time: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    How long the agent will wait for the user to start the conversation if the first message is empty. If not set, uses the regular turn_timeout.
+    """
+
     silence_end_call_timeout: typing.Optional[float] = pydantic.Field(default=None)
     """
     Maximum wait time since the user last spoke before terminating the call

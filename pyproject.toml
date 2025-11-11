@@ -3,7 +3,7 @@ name = "elevenlabs"
 
 [tool.poetry]
 name = "elevenlabs"
-version = "v2.22.0"
+version = "0.0.0"
 description = ""
 readme = "README.md"
 authors = []
@@ -31,7 +31,7 @@ packages = [
     { include = "elevenlabs", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/elevenlabs/elevenlabs-python'
 
 [tool.poetry.dependencies]

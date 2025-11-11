@@ -85,6 +85,7 @@ class ClientToolConfigInput(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput  # noqa: E402, I001
+from .array_json_schema_property_input import ArrayJsonSchemaPropertyInput  # noqa: E402, F401, I001
+from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput  # noqa: E402, F401, I001
 
 update_forward_refs(ClientToolConfigInput)

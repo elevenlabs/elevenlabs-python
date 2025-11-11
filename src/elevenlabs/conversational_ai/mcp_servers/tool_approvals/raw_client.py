@@ -28,7 +28,7 @@ class RawToolApprovalsClient:
         *,
         tool_name: str,
         tool_description: str,
-        input_schema: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        input_schema: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         approval_policy: typing.Optional[McpToolApprovalPolicy] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[McpServerResponseModel]:
@@ -46,7 +46,7 @@ class RawToolApprovalsClient:
         tool_description : str
             The description of the MCP tool
 
-        input_schema : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        input_schema : typing.Optional[typing.Dict[str, typing.Any]]
             The input schema of the MCP tool (the schema defined on the MCP server before ElevenLabs does any extra processing)
 
         approval_policy : typing.Optional[McpToolApprovalPolicy]
@@ -165,7 +165,7 @@ class AsyncRawToolApprovalsClient:
         *,
         tool_name: str,
         tool_description: str,
-        input_schema: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        input_schema: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         approval_policy: typing.Optional[McpToolApprovalPolicy] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[McpServerResponseModel]:
@@ -183,7 +183,7 @@ class AsyncRawToolApprovalsClient:
         tool_description : str
             The description of the MCP tool
 
-        input_schema : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        input_schema : typing.Optional[typing.Dict[str, typing.Any]]
             The input schema of the MCP tool (the schema defined on the MCP server before ElevenLabs does any extra processing)
 
         approval_policy : typing.Optional[McpToolApprovalPolicy]

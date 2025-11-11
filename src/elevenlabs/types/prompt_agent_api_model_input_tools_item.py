@@ -49,6 +49,9 @@ class PromptAgentApiModelInputToolsItem_ApiIntegrationWebhook(UncheckedBaseModel
             extra = pydantic.Extra.allow
 
 
+from .object_override_input import ObjectOverrideInput  # noqa: E402, F401, I001
+
+
 class PromptAgentApiModelInputToolsItem_Client(UncheckedBaseModel):
     """
     The type of tool
@@ -79,7 +82,7 @@ class PromptAgentApiModelInputToolsItem_Client(UncheckedBaseModel):
 
 
 class PromptAgentApiModelInputToolsItem_Mcp(UncheckedBaseModel):
-    value: typing.Optional[typing.Any] = None
+    value: typing.Any
     type: typing.Literal["mcp"] = "mcp"
 
     if IS_PYDANTIC_V2:
@@ -145,7 +148,8 @@ class PromptAgentApiModelInputToolsItem_Webhook(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput  # noqa: E402, I001
+from .array_json_schema_property_input import ArrayJsonSchemaPropertyInput  # noqa: E402, F401, I001
+from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput  # noqa: E402, F401, I001
 
 PromptAgentApiModelInputToolsItem = typing_extensions.Annotated[
     typing.Union[

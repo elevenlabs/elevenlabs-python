@@ -22,10 +22,9 @@ class BaseClientWrapper:
 
     def get_headers(self) -> typing.Dict[str, str]:
         headers: typing.Dict[str, str] = {
-            "User-Agent": "elevenlabs/v2.22.0",
             "X-Fern-Language": "Python",
             "X-Fern-SDK-Name": "elevenlabs",
-            "X-Fern-SDK-Version": "v2.22.0",
+            "X-Fern-SDK-Version": "0.0.0",
             **(self.get_custom_headers() or {}),
         }
         if self._api_key is not None:

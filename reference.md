@@ -9522,8 +9522,12 @@ Add a new tool to the available tools in the workspace.
 ```python
 from elevenlabs import (
     ElevenLabs,
+    LiteralJsonSchemaProperty,
+    ObjectJsonSchemaPropertyInput,
+    QueryParamsJsonSchema,
     ToolRequestModel,
     ToolRequestModelToolConfig_ApiIntegrationWebhook,
+    WebhookToolApiSchemaConfigInput,
 )
 
 client = ElevenLabs(
@@ -9536,6 +9540,28 @@ client.conversational_ai.tools.create(
             description="description",
             api_integration_id="api_integration_id",
             api_integration_connection_id="api_integration_connection_id",
+            base_api_schema=WebhookToolApiSchemaConfigInput(
+                url="https://example.com/agents/{agent_id}",
+                method="GET",
+                path_params_schema={
+                    "agent_id": LiteralJsonSchemaProperty(
+                        type="string",
+                    )
+                },
+                query_params_schema=QueryParamsJsonSchema(
+                    properties={
+                        "key": LiteralJsonSchemaProperty(
+                            type="string",
+                            description="My property",
+                            is_system_provided=False,
+                            dynamic_variable="",
+                            constant_value="",
+                        )
+                    },
+                ),
+                request_body_schema=ObjectJsonSchemaPropertyInput(),
+                request_headers={"Authorization": "Bearer {api_key}"},
+            ),
         ),
     ),
 )
@@ -9743,8 +9769,12 @@ Update tool that is available in the workspace.
 ```python
 from elevenlabs import (
     ElevenLabs,
+    LiteralJsonSchemaProperty,
+    ObjectJsonSchemaPropertyInput,
+    QueryParamsJsonSchema,
     ToolRequestModel,
     ToolRequestModelToolConfig_ApiIntegrationWebhook,
+    WebhookToolApiSchemaConfigInput,
 )
 
 client = ElevenLabs(
@@ -9758,6 +9788,28 @@ client.conversational_ai.tools.update(
             description="description",
             api_integration_id="api_integration_id",
             api_integration_connection_id="api_integration_connection_id",
+            base_api_schema=WebhookToolApiSchemaConfigInput(
+                url="https://example.com/agents/{agent_id}",
+                method="GET",
+                path_params_schema={
+                    "agent_id": LiteralJsonSchemaProperty(
+                        type="string",
+                    )
+                },
+                query_params_schema=QueryParamsJsonSchema(
+                    properties={
+                        "key": LiteralJsonSchemaProperty(
+                            type="string",
+                            description="My property",
+                            is_system_provided=False,
+                            dynamic_variable="",
+                            constant_value="",
+                        )
+                    },
+                ),
+                request_body_schema=ObjectJsonSchemaPropertyInput(),
+                request_headers={"Authorization": "Bearer {api_key}"},
+            ),
         ),
     ),
 )
@@ -11714,7 +11766,7 @@ client.conversational_ai.conversations.feedback.create(
 <dl>
 <dd>
 
-**feedback:** `UserFeedbackScore` — Either 'like' or 'dislike' to indicate the feedback for the conversation.
+**feedback:** `typing.Optional[UserFeedbackScore]` — Either 'like' or 'dislike' to indicate the feedback for the conversation.
     
 </dd>
 </dl>
@@ -12881,7 +12933,7 @@ client.conversational_ai.mcp_servers.tool_approvals.create(
 <dl>
 <dd>
 
-**input_schema:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — The input schema of the MCP tool (the schema defined on the MCP server before ElevenLabs does any extra processing)
+**input_schema:** `typing.Optional[typing.Dict[str, typing.Any]]` — The input schema of the MCP tool (the schema defined on the MCP server before ElevenLabs does any extra processing)
     
 </dd>
 </dl>

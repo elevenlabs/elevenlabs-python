@@ -74,6 +74,8 @@ if typing.TYPE_CHECKING:
     from .api_integration_webhook_overrides_output_request_headers_value import (
         ApiIntegrationWebhookOverridesOutputRequestHeadersValue,
     )
+    from .api_integration_webhook_tool_config_external_input import ApiIntegrationWebhookToolConfigExternalInput
+    from .api_integration_webhook_tool_config_external_output import ApiIntegrationWebhookToolConfigExternalOutput
     from .api_integration_webhook_tool_config_input import ApiIntegrationWebhookToolConfigInput
     from .api_integration_webhook_tool_config_output import ApiIntegrationWebhookToolConfigOutput
     from .array_json_schema_property_input import ArrayJsonSchemaPropertyInput
@@ -669,6 +671,7 @@ if typing.TYPE_CHECKING:
     from .conversation_config_override_config import ConversationConfigOverrideConfig
     from .conversation_config_workflow_override import ConversationConfigWorkflowOverride
     from .conversation_deletion_settings import ConversationDeletionSettings
+    from .conversation_feedback_type import ConversationFeedbackType
     from .conversation_history_analysis_common_model import ConversationHistoryAnalysisCommonModel
     from .conversation_history_batch_call_model import ConversationHistoryBatchCallModel
     from .conversation_history_eleven_assistant_common_model import ConversationHistoryElevenAssistantCommonModel
@@ -1137,10 +1140,16 @@ if typing.TYPE_CHECKING:
         ProjectExtendedResponseModelApplyTextNormalization,
     )
     from .project_extended_response_model_aspect_ratio import ProjectExtendedResponseModelAspectRatio
+    from .project_extended_response_model_assets_item import (
+        ProjectExtendedResponseModelAssetsItem,
+        ProjectExtendedResponseModelAssetsItem_Audio,
+        ProjectExtendedResponseModelAssetsItem_Video,
+    )
     from .project_extended_response_model_fiction import ProjectExtendedResponseModelFiction
     from .project_extended_response_model_quality_preset import ProjectExtendedResponseModelQualityPreset
     from .project_extended_response_model_source_type import ProjectExtendedResponseModelSourceType
     from .project_extended_response_model_target_audience import ProjectExtendedResponseModelTargetAudience
+    from .project_external_audio_response_model import ProjectExternalAudioResponseModel
     from .project_response import ProjectResponse
     from .project_response_model_access_level import ProjectResponseModelAccessLevel
     from .project_response_model_aspect_ratio import ProjectResponseModelAspectRatio
@@ -1151,6 +1160,8 @@ if typing.TYPE_CHECKING:
     from .project_snapshot_response import ProjectSnapshotResponse
     from .project_snapshots_response import ProjectSnapshotsResponse
     from .project_state import ProjectState
+    from .project_video_response_model import ProjectVideoResponseModel
+    from .project_video_thumbnail_sheet_response_model import ProjectVideoThumbnailSheetResponseModel
     from .prompt_agent import PromptAgent
     from .prompt_agent_api_model_input import PromptAgentApiModelInput
     from .prompt_agent_api_model_input_backup_llm_config import (
@@ -1379,7 +1390,6 @@ if typing.TYPE_CHECKING:
         ToolResponseModelToolConfig,
         ToolResponseModelToolConfig_ApiIntegrationWebhook,
         ToolResponseModelToolConfig_Client,
-        ToolResponseModelToolConfig_Mcp,
         ToolResponseModelToolConfig_System,
         ToolResponseModelToolConfig_Webhook,
     )
@@ -1504,6 +1514,8 @@ if typing.TYPE_CHECKING:
         WidgetConfigResponseModelAvatar_Orb,
         WidgetConfigResponseModelAvatar_Url,
     )
+    from .widget_end_feedback_config import WidgetEndFeedbackConfig
+    from .widget_end_feedback_type import WidgetEndFeedbackType
     from .widget_expandable import WidgetExpandable
     from .widget_feedback_mode import WidgetFeedbackMode
     from .widget_language_preset import WidgetLanguagePreset
@@ -1705,6 +1717,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ApiIntegrationWebhookOverridesInputRequestHeadersValue": ".api_integration_webhook_overrides_input_request_headers_value",
     "ApiIntegrationWebhookOverridesOutput": ".api_integration_webhook_overrides_output",
     "ApiIntegrationWebhookOverridesOutputRequestHeadersValue": ".api_integration_webhook_overrides_output_request_headers_value",
+    "ApiIntegrationWebhookToolConfigExternalInput": ".api_integration_webhook_tool_config_external_input",
+    "ApiIntegrationWebhookToolConfigExternalOutput": ".api_integration_webhook_tool_config_external_output",
     "ApiIntegrationWebhookToolConfigInput": ".api_integration_webhook_tool_config_input",
     "ApiIntegrationWebhookToolConfigOutput": ".api_integration_webhook_tool_config_output",
     "ArrayJsonSchemaPropertyInput": ".array_json_schema_property_input",
@@ -2232,6 +2246,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationConfigOverrideConfig": ".conversation_config_override_config",
     "ConversationConfigWorkflowOverride": ".conversation_config_workflow_override",
     "ConversationDeletionSettings": ".conversation_deletion_settings",
+    "ConversationFeedbackType": ".conversation_feedback_type",
     "ConversationHistoryAnalysisCommonModel": ".conversation_history_analysis_common_model",
     "ConversationHistoryBatchCallModel": ".conversation_history_batch_call_model",
     "ConversationHistoryElevenAssistantCommonModel": ".conversation_history_eleven_assistant_common_model",
@@ -2608,10 +2623,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ProjectExtendedResponseModelAccessLevel": ".project_extended_response_model_access_level",
     "ProjectExtendedResponseModelApplyTextNormalization": ".project_extended_response_model_apply_text_normalization",
     "ProjectExtendedResponseModelAspectRatio": ".project_extended_response_model_aspect_ratio",
+    "ProjectExtendedResponseModelAssetsItem": ".project_extended_response_model_assets_item",
+    "ProjectExtendedResponseModelAssetsItem_Audio": ".project_extended_response_model_assets_item",
+    "ProjectExtendedResponseModelAssetsItem_Video": ".project_extended_response_model_assets_item",
     "ProjectExtendedResponseModelFiction": ".project_extended_response_model_fiction",
     "ProjectExtendedResponseModelQualityPreset": ".project_extended_response_model_quality_preset",
     "ProjectExtendedResponseModelSourceType": ".project_extended_response_model_source_type",
     "ProjectExtendedResponseModelTargetAudience": ".project_extended_response_model_target_audience",
+    "ProjectExternalAudioResponseModel": ".project_external_audio_response_model",
     "ProjectResponse": ".project_response",
     "ProjectResponseModelAccessLevel": ".project_response_model_access_level",
     "ProjectResponseModelAspectRatio": ".project_response_model_aspect_ratio",
@@ -2622,6 +2641,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ProjectSnapshotResponse": ".project_snapshot_response",
     "ProjectSnapshotsResponse": ".project_snapshots_response",
     "ProjectState": ".project_state",
+    "ProjectVideoResponseModel": ".project_video_response_model",
+    "ProjectVideoThumbnailSheetResponseModel": ".project_video_thumbnail_sheet_response_model",
     "PromptAgent": ".prompt_agent",
     "PromptAgentApiModelInput": ".prompt_agent_api_model_input",
     "PromptAgentApiModelInputBackupLlmConfig": ".prompt_agent_api_model_input_backup_llm_config",
@@ -2821,7 +2842,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ToolResponseModelToolConfig": ".tool_response_model_tool_config",
     "ToolResponseModelToolConfig_ApiIntegrationWebhook": ".tool_response_model_tool_config",
     "ToolResponseModelToolConfig_Client": ".tool_response_model_tool_config",
-    "ToolResponseModelToolConfig_Mcp": ".tool_response_model_tool_config",
     "ToolResponseModelToolConfig_System": ".tool_response_model_tool_config",
     "ToolResponseModelToolConfig_Webhook": ".tool_response_model_tool_config",
     "ToolType": ".tool_type",
@@ -2933,6 +2953,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WidgetConfigResponseModelAvatar_Image": ".widget_config_response_model_avatar",
     "WidgetConfigResponseModelAvatar_Orb": ".widget_config_response_model_avatar",
     "WidgetConfigResponseModelAvatar_Url": ".widget_config_response_model_avatar",
+    "WidgetEndFeedbackConfig": ".widget_end_feedback_config",
+    "WidgetEndFeedbackType": ".widget_end_feedback_type",
     "WidgetExpandable": ".widget_expandable",
     "WidgetFeedbackMode": ".widget_feedback_mode",
     "WidgetLanguagePreset": ".widget_language_preset",
@@ -3134,6 +3156,8 @@ __all__ = [
     "ApiIntegrationWebhookOverridesInputRequestHeadersValue",
     "ApiIntegrationWebhookOverridesOutput",
     "ApiIntegrationWebhookOverridesOutputRequestHeadersValue",
+    "ApiIntegrationWebhookToolConfigExternalInput",
+    "ApiIntegrationWebhookToolConfigExternalOutput",
     "ApiIntegrationWebhookToolConfigInput",
     "ApiIntegrationWebhookToolConfigOutput",
     "ArrayJsonSchemaPropertyInput",
@@ -3661,6 +3685,7 @@ __all__ = [
     "ConversationConfigOverrideConfig",
     "ConversationConfigWorkflowOverride",
     "ConversationDeletionSettings",
+    "ConversationFeedbackType",
     "ConversationHistoryAnalysisCommonModel",
     "ConversationHistoryBatchCallModel",
     "ConversationHistoryElevenAssistantCommonModel",
@@ -4037,10 +4062,14 @@ __all__ = [
     "ProjectExtendedResponseModelAccessLevel",
     "ProjectExtendedResponseModelApplyTextNormalization",
     "ProjectExtendedResponseModelAspectRatio",
+    "ProjectExtendedResponseModelAssetsItem",
+    "ProjectExtendedResponseModelAssetsItem_Audio",
+    "ProjectExtendedResponseModelAssetsItem_Video",
     "ProjectExtendedResponseModelFiction",
     "ProjectExtendedResponseModelQualityPreset",
     "ProjectExtendedResponseModelSourceType",
     "ProjectExtendedResponseModelTargetAudience",
+    "ProjectExternalAudioResponseModel",
     "ProjectResponse",
     "ProjectResponseModelAccessLevel",
     "ProjectResponseModelAspectRatio",
@@ -4051,6 +4080,8 @@ __all__ = [
     "ProjectSnapshotResponse",
     "ProjectSnapshotsResponse",
     "ProjectState",
+    "ProjectVideoResponseModel",
+    "ProjectVideoThumbnailSheetResponseModel",
     "PromptAgent",
     "PromptAgentApiModelInput",
     "PromptAgentApiModelInputBackupLlmConfig",
@@ -4250,7 +4281,6 @@ __all__ = [
     "ToolResponseModelToolConfig",
     "ToolResponseModelToolConfig_ApiIntegrationWebhook",
     "ToolResponseModelToolConfig_Client",
-    "ToolResponseModelToolConfig_Mcp",
     "ToolResponseModelToolConfig_System",
     "ToolResponseModelToolConfig_Webhook",
     "ToolType",
@@ -4362,6 +4392,8 @@ __all__ = [
     "WidgetConfigResponseModelAvatar_Image",
     "WidgetConfigResponseModelAvatar_Orb",
     "WidgetConfigResponseModelAvatar_Url",
+    "WidgetEndFeedbackConfig",
+    "WidgetEndFeedbackType",
     "WidgetExpandable",
     "WidgetFeedbackMode",
     "WidgetLanguagePreset",

@@ -38,6 +38,7 @@ class ToolRequestModelToolConfig_ApiIntegrationWebhook(UncheckedBaseModel):
     api_integration_id: str
     api_integration_connection_id: str
     api_schema_overrides: typing.Optional[ApiIntegrationWebhookOverridesInput] = None
+    base_api_schema: WebhookToolApiSchemaConfigInput
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -47,6 +48,9 @@ class ToolRequestModelToolConfig_ApiIntegrationWebhook(UncheckedBaseModel):
             frozen = True
             smart_union = True
             extra = pydantic.Extra.allow
+
+
+from .object_override_input import ObjectOverrideInput  # noqa: E402, F401, I001
 
 
 class ToolRequestModelToolConfig_Client(UncheckedBaseModel):
@@ -132,7 +136,8 @@ class ToolRequestModelToolConfig_Webhook(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput  # noqa: E402, I001
+from .array_json_schema_property_input import ArrayJsonSchemaPropertyInput  # noqa: E402, F401, I001
+from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput  # noqa: E402, F401, I001
 
 ToolRequestModelToolConfig = typing_extensions.Annotated[
     typing.Union[

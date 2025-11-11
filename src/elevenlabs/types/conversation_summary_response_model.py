@@ -12,6 +12,7 @@ from .evaluation_success_result import EvaluationSuccessResult
 
 class ConversationSummaryResponseModel(UncheckedBaseModel):
     agent_id: str
+    branch_id: typing.Optional[str] = None
     agent_name: typing.Optional[str] = None
     conversation_id: str
     start_time_unix_secs: int

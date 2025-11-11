@@ -243,9 +243,7 @@ class ConversationsClient:
         _response = self._raw_client.get(conversation_id, request_options=request_options)
         return _response.data
 
-    def delete(
-        self, conversation_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
+    def delete(self, conversation_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
         """
         Delete a particular conversation
 
@@ -259,7 +257,7 @@ class ConversationsClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        typing.Any
             Successful Response
 
         Examples
@@ -551,7 +549,7 @@ class AsyncConversationsClient:
 
     async def delete(
         self, conversation_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
+    ) -> typing.Any:
         """
         Delete a particular conversation
 
@@ -565,7 +563,7 @@ class AsyncConversationsClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        typing.Any
             Successful Response
 
         Examples

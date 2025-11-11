@@ -50,4 +50,10 @@ class ConversationHistoryTranscriptCommonModelInput(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .conversation_history_transcript_workflow_tools_result_common_model_input import (
+    ConversationHistoryTranscriptWorkflowToolsResultCommonModelInput,
+)  # noqa: E402, F401, I001
+from .workflow_tool_nested_tools_step_model_input import WorkflowToolNestedToolsStepModelInput  # noqa: E402, F401, I001
+from .workflow_tool_response_model_input import WorkflowToolResponseModelInput  # noqa: E402, F401, I001
+
 update_forward_refs(ConversationHistoryTranscriptCommonModelInput)
