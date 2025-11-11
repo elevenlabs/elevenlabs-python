@@ -11,8 +11,8 @@ class RealtimeEvents(str, Enum):
     CLOSE = "close"
     SESSION_STARTED = "session_started"
     PARTIAL_TRANSCRIPT = "partial_transcript"
-    FINAL_TRANSCRIPT = "final_transcript"
-    FINAL_TRANSCRIPT_WITH_TIMESTAMPS = "final_transcript_with_timestamps"
+    COMMITTED_TRANSCRIPT = "committed_transcript"
+    COMMITTED_TRANSCRIPT_WITH_TIMESTAMPS = "committed_transcript_with_timestamps"
     ERROR = "error"
 
 
@@ -31,7 +31,7 @@ class RealtimeConnection:
         })
 
         connection.on(RealtimeEvents.PARTIAL_TRANSCRIPT, lambda data: print(data))
-        connection.on(RealtimeEvents.FINAL_TRANSCRIPT, lambda data: print(data))
+        connection.on(RealtimeEvents.COMMITTED_TRANSCRIPT, lambda data: print(data))
 
         # Send audio
         connection.send({"audioBase64": audio_chunk})
@@ -132,8 +132,8 @@ class RealtimeConnection:
 
     async def commit(self) -> None:
         """
-        Commits the transcription, signaling that all audio has been sent.
-        This finalizes the transcription and triggers a FINAL_TRANSCRIPT event.
+        Commits the segment, triggering a COMMITTED_TRANSCRIPT event and clearing the buffer.
+        It's recommend to commit often when using CommitStrategy.MANUAL to keep latency low.
 
         Raises:
             RuntimeError: If the WebSocket connection is not open
@@ -148,7 +148,7 @@ class RealtimeConnection:
             for chunk in audio_chunks:
                 connection.send({"audioBase64": chunk})
 
-            # Finalize the transcription
+            # Commit the audio segment
             await connection.commit()
             ```
         """
@@ -175,8 +175,8 @@ class RealtimeConnection:
 
         Example:
             ```python
-            connection.on(RealtimeEvents.FINAL_TRANSCRIPT, async lambda data: (
-                print("Final:", data["transcript"]),
+            connection.on(RealtimeEvents.COMMITTED_TRANSCRIPT, async lambda data: (
+                print("Committed:", data["transcript"]),
                 await connection.close()
             ))
             ```

@@ -28,7 +28,7 @@ class CommitStrategy(str, Enum):
     Strategy for committing transcription results.
 
     VAD: Voice Activity Detection - automatically commits when speech ends
-    MANUAL: Manual commit - requires calling commit() to finalize transcription
+    MANUAL: Manual commit - requires calling commit() to commit the segment
     """
     VAD = "vad"
     MANUAL = "manual"
@@ -95,7 +95,7 @@ class ScribeRealtime:
     Example (URL-based):
         ```python
         connection = await elevenlabs.speech_to_text.realtime.connect({
-            "model_id": "scribe_realtime_v2",
+            "model_id": "scribe_v2_realtime",
             "url": "https://stream.example.com/audio.mp3"
         })
         ```
@@ -103,7 +103,7 @@ class ScribeRealtime:
     Example (Manual chunks):
         ```python
         connection = await elevenlabs.speech_to_text.realtime.connect({
-            "model_id": "scribe_realtime_v2",
+            "model_id": "scribe_v2_realtime",
             "audio_format": AudioFormat.PCM_16000,
             "sample_rate": 16000
         })
@@ -138,13 +138,13 @@ class ScribeRealtime:
             ```python
             # URL-based streaming
             connection = await elevenlabs.speech_to_text.realtime.connect({
-                "model_id": "scribe_realtime_v2",
+                "model_id": "scribe_v2_realtime",
                 "url": "https://stream.example.com/audio.mp3",
             })
 
             # Manual chunks
             connection = await elevenlabs.speech_to_text.realtime.connect({
-                "model_id": "scribe_realtime_v2",
+                "model_id": "scribe_v2_realtime",
                 "audio_format": AudioFormat.PCM_16000,
                 "sample_rate": 16000,
                 "commit_strategy": CommitStrategy.MANUAL
@@ -367,5 +367,5 @@ class ScribeRealtime:
             params.append(f"language_code={language_code}")
 
         query_string = "&".join(params)
-        return f"{base}/v1/speech-to-text/realtime-beta?{query_string}"
+        return f"{base}/v1/speech-to-text/realtime?{query_string}"
 
