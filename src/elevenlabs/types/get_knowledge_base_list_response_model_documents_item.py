@@ -6,7 +6,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .document_usage_mode_enum import DocumentUsageModeEnum
 from .get_knowledge_base_summary_file_response_model_dependent_agents_item import (
@@ -31,14 +30,7 @@ class GetKnowledgeBaseListResponseModelDocumentsItem_File(UncheckedBaseModel):
     access_info: ResourceAccessInfo
     dependent_agents: typing.List[GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem]
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class GetKnowledgeBaseListResponseModelDocumentsItem_Text(UncheckedBaseModel):
@@ -50,14 +42,7 @@ class GetKnowledgeBaseListResponseModelDocumentsItem_Text(UncheckedBaseModel):
     access_info: ResourceAccessInfo
     dependent_agents: typing.List[GetKnowledgeBaseSummaryTextResponseModelDependentAgentsItem]
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class GetKnowledgeBaseListResponseModelDocumentsItem_Url(UncheckedBaseModel):
@@ -70,14 +55,7 @@ class GetKnowledgeBaseListResponseModelDocumentsItem_Url(UncheckedBaseModel):
     dependent_agents: typing.List[GetKnowledgeBaseSummaryUrlResponseModelDependentAgentsItem]
     url: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 GetKnowledgeBaseListResponseModelDocumentsItem = typing_extensions.Annotated[

@@ -77,8 +77,12 @@ class ToolsClient:
         --------
         from elevenlabs import (
             ElevenLabs,
+            LiteralJsonSchemaProperty,
+            ObjectJsonSchemaPropertyInput,
+            QueryParamsJsonSchema,
             ToolRequestModel,
             ToolRequestModelToolConfig_ApiIntegrationWebhook,
+            WebhookToolApiSchemaConfigInput,
         )
 
         client = ElevenLabs(
@@ -91,6 +95,28 @@ class ToolsClient:
                     description="description",
                     api_integration_id="api_integration_id",
                     api_integration_connection_id="api_integration_connection_id",
+                    base_api_schema=WebhookToolApiSchemaConfigInput(
+                        url="https://example.com/agents/{agent_id}",
+                        method="GET",
+                        path_params_schema={
+                            "agent_id": LiteralJsonSchemaProperty(
+                                type="string",
+                            )
+                        },
+                        query_params_schema=QueryParamsJsonSchema(
+                            properties={
+                                "key": LiteralJsonSchemaProperty(
+                                    type="string",
+                                    description="My property",
+                                    is_system_provided=False,
+                                    dynamic_variable="",
+                                    constant_value="",
+                                )
+                            },
+                        ),
+                        request_body_schema=ObjectJsonSchemaPropertyInput(),
+                        request_headers={"Authorization": "Bearer {api_key}"},
+                    ),
                 ),
             ),
         )
@@ -187,8 +213,12 @@ class ToolsClient:
         --------
         from elevenlabs import (
             ElevenLabs,
+            LiteralJsonSchemaProperty,
+            ObjectJsonSchemaPropertyInput,
+            QueryParamsJsonSchema,
             ToolRequestModel,
             ToolRequestModelToolConfig_ApiIntegrationWebhook,
+            WebhookToolApiSchemaConfigInput,
         )
 
         client = ElevenLabs(
@@ -202,6 +232,28 @@ class ToolsClient:
                     description="description",
                     api_integration_id="api_integration_id",
                     api_integration_connection_id="api_integration_connection_id",
+                    base_api_schema=WebhookToolApiSchemaConfigInput(
+                        url="https://example.com/agents/{agent_id}",
+                        method="GET",
+                        path_params_schema={
+                            "agent_id": LiteralJsonSchemaProperty(
+                                type="string",
+                            )
+                        },
+                        query_params_schema=QueryParamsJsonSchema(
+                            properties={
+                                "key": LiteralJsonSchemaProperty(
+                                    type="string",
+                                    description="My property",
+                                    is_system_provided=False,
+                                    dynamic_variable="",
+                                    constant_value="",
+                                )
+                            },
+                        ),
+                        request_body_schema=ObjectJsonSchemaPropertyInput(),
+                        request_headers={"Authorization": "Bearer {api_key}"},
+                    ),
                 ),
             ),
         )
@@ -331,8 +383,12 @@ class AsyncToolsClient:
 
         from elevenlabs import (
             AsyncElevenLabs,
+            LiteralJsonSchemaProperty,
+            ObjectJsonSchemaPropertyInput,
+            QueryParamsJsonSchema,
             ToolRequestModel,
             ToolRequestModelToolConfig_ApiIntegrationWebhook,
+            WebhookToolApiSchemaConfigInput,
         )
 
         client = AsyncElevenLabs(
@@ -348,6 +404,28 @@ class AsyncToolsClient:
                         description="description",
                         api_integration_id="api_integration_id",
                         api_integration_connection_id="api_integration_connection_id",
+                        base_api_schema=WebhookToolApiSchemaConfigInput(
+                            url="https://example.com/agents/{agent_id}",
+                            method="GET",
+                            path_params_schema={
+                                "agent_id": LiteralJsonSchemaProperty(
+                                    type="string",
+                                )
+                            },
+                            query_params_schema=QueryParamsJsonSchema(
+                                properties={
+                                    "key": LiteralJsonSchemaProperty(
+                                        type="string",
+                                        description="My property",
+                                        is_system_provided=False,
+                                        dynamic_variable="",
+                                        constant_value="",
+                                    )
+                                },
+                            ),
+                            request_body_schema=ObjectJsonSchemaPropertyInput(),
+                            request_headers={"Authorization": "Bearer {api_key}"},
+                        ),
                     ),
                 ),
             )
@@ -465,8 +543,12 @@ class AsyncToolsClient:
 
         from elevenlabs import (
             AsyncElevenLabs,
+            LiteralJsonSchemaProperty,
+            ObjectJsonSchemaPropertyInput,
+            QueryParamsJsonSchema,
             ToolRequestModel,
             ToolRequestModelToolConfig_ApiIntegrationWebhook,
+            WebhookToolApiSchemaConfigInput,
         )
 
         client = AsyncElevenLabs(
@@ -483,6 +565,28 @@ class AsyncToolsClient:
                         description="description",
                         api_integration_id="api_integration_id",
                         api_integration_connection_id="api_integration_connection_id",
+                        base_api_schema=WebhookToolApiSchemaConfigInput(
+                            url="https://example.com/agents/{agent_id}",
+                            method="GET",
+                            path_params_schema={
+                                "agent_id": LiteralJsonSchemaProperty(
+                                    type="string",
+                                )
+                            },
+                            query_params_schema=QueryParamsJsonSchema(
+                                properties={
+                                    "key": LiteralJsonSchemaProperty(
+                                        type="string",
+                                        description="My property",
+                                        is_system_provided=False,
+                                        dynamic_variable="",
+                                        constant_value="",
+                                    )
+                                },
+                            ),
+                            request_body_schema=ObjectJsonSchemaPropertyInput(),
+                            request_headers={"Authorization": "Bearer {api_key}"},
+                        ),
                     ),
                 ),
             )

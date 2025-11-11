@@ -5,7 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.pydantic_utilities import update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_metadata_response_model import AgentMetadataResponseModel
 from .agent_platform_settings_response_model import AgentPlatformSettingsResponseModel
@@ -61,14 +61,17 @@ class GetAgentResponseModel(UncheckedBaseModel):
     Agent tags used to categorize the agent
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
+    version_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ID of the version the agent is on
+    """
 
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    branch_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ID of the branch the agent is on
+    """
+
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 update_forward_refs(GetAgentResponseModel)

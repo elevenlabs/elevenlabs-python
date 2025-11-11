@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .dialogue_input_response_model import DialogueInputResponseModel
 from .feedback_item import FeedbackItem
@@ -99,11 +98,4 @@ class SpeechHistoryItemResponse(UncheckedBaseModel):
     The dialogue (voice and text pairs) used to generate the audio item. If this is set then the top level `text` and `voice_id` fields will be empty.
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .test_run_metadata_test_type import TestRunMetadataTestType
 
@@ -14,11 +13,4 @@ class TestRunMetadata(UncheckedBaseModel):
     ran_by_user_email: str
     test_type: typing.Optional[TestRunMetadataTestType] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -6,7 +6,7 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.pydantic_utilities import update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 
 
@@ -18,14 +18,7 @@ class WorkflowExpressionConditionModelInputExpression_AndOperator(UncheckedBaseM
     type: typing.Literal["and_operator"] = "and_operator"
     children: typing.List["AstAndOperatorNodeInputChildrenItem"]
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 from .ast_and_operator_node_input_children_item import AstAndOperatorNodeInputChildrenItem  # noqa: E402, I001
@@ -39,14 +32,7 @@ class WorkflowExpressionConditionModelInputExpression_BooleanLiteral(UncheckedBa
     type: typing.Literal["boolean_literal"] = "boolean_literal"
     value: bool
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class WorkflowExpressionConditionModelInputExpression_DynamicVariable(UncheckedBaseModel):
@@ -57,14 +43,7 @@ class WorkflowExpressionConditionModelInputExpression_DynamicVariable(UncheckedB
     type: typing.Literal["dynamic_variable"] = "dynamic_variable"
     name: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class WorkflowExpressionConditionModelInputExpression_EqOperator(UncheckedBaseModel):
@@ -76,14 +55,7 @@ class WorkflowExpressionConditionModelInputExpression_EqOperator(UncheckedBaseMo
     left: "AstEqualsOperatorNodeInputLeft"
     right: "AstEqualsOperatorNodeInputRight"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 from .ast_equals_operator_node_input_left import AstEqualsOperatorNodeInputLeft  # noqa: E402, I001
@@ -99,14 +71,7 @@ class WorkflowExpressionConditionModelInputExpression_GtOperator(UncheckedBaseMo
     left: "AstGreaterThanOperatorNodeInputLeft"
     right: "AstGreaterThanOperatorNodeInputRight"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 from .ast_greater_than_operator_node_input_left import AstGreaterThanOperatorNodeInputLeft  # noqa: E402, I001
@@ -122,14 +87,7 @@ class WorkflowExpressionConditionModelInputExpression_GteOperator(UncheckedBaseM
     left: "AstGreaterThanOrEqualsOperatorNodeInputLeft"
     right: "AstGreaterThanOrEqualsOperatorNodeInputRight"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 from .ast_greater_than_or_equals_operator_node_input_left import AstGreaterThanOrEqualsOperatorNodeInputLeft  # noqa: E402, I001
@@ -144,14 +102,7 @@ class WorkflowExpressionConditionModelInputExpression_Llm(UncheckedBaseModel):
     type: typing.Literal["llm"] = "llm"
     prompt: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class WorkflowExpressionConditionModelInputExpression_LtOperator(UncheckedBaseModel):
@@ -163,14 +114,7 @@ class WorkflowExpressionConditionModelInputExpression_LtOperator(UncheckedBaseMo
     left: "AstLessThanOperatorNodeInputLeft"
     right: "AstLessThanOperatorNodeInputRight"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 from .ast_less_than_operator_node_input_left import AstLessThanOperatorNodeInputLeft  # noqa: E402, I001
@@ -186,14 +130,7 @@ class WorkflowExpressionConditionModelInputExpression_LteOperator(UncheckedBaseM
     left: "AstLessThanOrEqualsOperatorNodeInputLeft"
     right: "AstLessThanOrEqualsOperatorNodeInputRight"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 from .ast_less_than_or_equals_operator_node_input_left import AstLessThanOrEqualsOperatorNodeInputLeft  # noqa: E402, I001
@@ -209,14 +146,7 @@ class WorkflowExpressionConditionModelInputExpression_NeqOperator(UncheckedBaseM
     left: "AstNotEqualsOperatorNodeInputLeft"
     right: "AstNotEqualsOperatorNodeInputRight"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 from .ast_not_equals_operator_node_input_left import AstNotEqualsOperatorNodeInputLeft  # noqa: E402, I001
@@ -231,14 +161,7 @@ class WorkflowExpressionConditionModelInputExpression_NumberLiteral(UncheckedBas
     type: typing.Literal["number_literal"] = "number_literal"
     value: float
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class WorkflowExpressionConditionModelInputExpression_OrOperator(UncheckedBaseModel):
@@ -249,14 +172,7 @@ class WorkflowExpressionConditionModelInputExpression_OrOperator(UncheckedBaseMo
     type: typing.Literal["or_operator"] = "or_operator"
     children: typing.List["AstOrOperatorNodeInputChildrenItem"]
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 from .ast_or_operator_node_input_children_item import AstOrOperatorNodeInputChildrenItem  # noqa: E402, I001
@@ -270,14 +186,7 @@ class WorkflowExpressionConditionModelInputExpression_StringLiteral(UncheckedBas
     type: typing.Literal["string_literal"] = "string_literal"
     value: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 WorkflowExpressionConditionModelInputExpression = typing_extensions.Annotated[

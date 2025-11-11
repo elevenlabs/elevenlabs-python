@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .workspace_api_key_response_model_permissions_item import WorkspaceApiKeyResponseModelPermissionsItem
 
@@ -19,11 +18,4 @@ class WorkspaceApiKeyResponseModel(UncheckedBaseModel):
     character_limit: typing.Optional[int] = None
     character_count: typing.Optional[int] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

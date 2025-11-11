@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .asr_input_format import AsrInputFormat
 from .asr_provider import AsrProvider
@@ -31,11 +30,4 @@ class AsrConversationalConfigWorkflowOverride(UncheckedBaseModel):
     Keywords to boost prediction probability for
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

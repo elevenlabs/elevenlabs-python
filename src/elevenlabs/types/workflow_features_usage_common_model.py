@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .feature_status_common_model import FeatureStatusCommonModel
 
@@ -15,11 +14,4 @@ class WorkflowFeaturesUsageCommonModel(UncheckedBaseModel):
     phone_number_node: typing.Optional[FeatureStatusCommonModel] = None
     end_node: typing.Optional[FeatureStatusCommonModel] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

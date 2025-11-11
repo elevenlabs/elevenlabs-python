@@ -6,7 +6,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from ....types.inbound_sip_trunk_config_request_model import InboundSipTrunkConfigRequestModel
 from ....types.outbound_sip_trunk_config_request_model import OutboundSipTrunkConfigRequestModel
@@ -27,14 +26,7 @@ class PhoneNumbersCreateRequestBody_Twilio(UncheckedBaseModel):
     token: str
     region_config: typing.Optional[RegionConfigRequest] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class PhoneNumbersCreateRequestBody_SipTrunk(UncheckedBaseModel):
@@ -50,14 +42,7 @@ class PhoneNumbersCreateRequestBody_SipTrunk(UncheckedBaseModel):
     inbound_trunk_config: typing.Optional[InboundSipTrunkConfigRequestModel] = None
     outbound_trunk_config: typing.Optional[OutboundSipTrunkConfigRequestModel] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 PhoneNumbersCreateRequestBody = typing_extensions.Annotated[

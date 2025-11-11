@@ -5,7 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.pydantic_utilities import update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .conversation_history_analysis_common_model import ConversationHistoryAnalysisCommonModel
 from .conversation_history_metadata_common_model import ConversationHistoryMetadataCommonModel
@@ -19,6 +19,7 @@ class GetConversationResponseModel(UncheckedBaseModel):
     conversation_id: str
     status: GetConversationResponseModelStatus
     user_id: typing.Optional[str] = None
+    branch_id: typing.Optional[str] = None
     transcript: typing.List[ConversationHistoryTranscriptCommonModelOutput]
     metadata: ConversationHistoryMetadataCommonModel
     analysis: typing.Optional[ConversationHistoryAnalysisCommonModel] = None
@@ -27,14 +28,7 @@ class GetConversationResponseModel(UncheckedBaseModel):
     has_user_audio: bool
     has_response_audio: bool
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 update_forward_refs(GetConversationResponseModel)

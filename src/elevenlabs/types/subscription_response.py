@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .subscription_response_model_billing_period import SubscriptionResponseModelBillingPeriod
 from .subscription_response_model_character_refresh_period import SubscriptionResponseModelCharacterRefreshPeriod
@@ -114,11 +113,4 @@ class SubscriptionResponse(UncheckedBaseModel):
     The character refresh period of the user's subscription.
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

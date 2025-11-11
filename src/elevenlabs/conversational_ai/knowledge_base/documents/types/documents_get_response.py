@@ -6,7 +6,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from .....core.pydantic_utilities import IS_PYDANTIC_V2
 from .....core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .....types.document_usage_mode_enum import DocumentUsageModeEnum
 from .....types.knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
@@ -23,14 +22,7 @@ class DocumentsGetResponse_Url(UncheckedBaseModel):
     extracted_inner_html: str
     url: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class DocumentsGetResponse_File(UncheckedBaseModel):
@@ -42,14 +34,7 @@ class DocumentsGetResponse_File(UncheckedBaseModel):
     access_info: ResourceAccessInfo
     extracted_inner_html: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class DocumentsGetResponse_Text(UncheckedBaseModel):
@@ -61,14 +46,7 @@ class DocumentsGetResponse_Text(UncheckedBaseModel):
     access_info: ResourceAccessInfo
     extracted_inner_html: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 DocumentsGetResponse = typing_extensions.Annotated[

@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .caption_style_character_animation_model import CaptionStyleCharacterAnimationModel
 from .caption_style_horizontal_placement_model import CaptionStyleHorizontalPlacementModel
@@ -41,11 +40,4 @@ class CaptionStyleModel(UncheckedBaseModel):
     max_lines_per_section: typing.Optional[int] = None
     max_words_per_line: typing.Optional[int] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

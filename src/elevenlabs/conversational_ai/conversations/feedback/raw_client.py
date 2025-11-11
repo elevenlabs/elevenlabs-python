@@ -25,7 +25,7 @@ class RawFeedbackClient:
         self,
         conversation_id: str,
         *,
-        feedback: UserFeedbackScore,
+        feedback: typing.Optional[UserFeedbackScore] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[typing.Optional[typing.Any]]:
         """
@@ -36,7 +36,7 @@ class RawFeedbackClient:
         conversation_id : str
             The id of the conversation you're taking the action on.
 
-        feedback : UserFeedbackScore
+        feedback : typing.Optional[UserFeedbackScore]
             Either 'like' or 'dislike' to indicate the feedback for the conversation.
 
         request_options : typing.Optional[RequestOptions]
@@ -96,7 +96,7 @@ class AsyncRawFeedbackClient:
         self,
         conversation_id: str,
         *,
-        feedback: UserFeedbackScore,
+        feedback: typing.Optional[UserFeedbackScore] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[typing.Optional[typing.Any]]:
         """
@@ -107,7 +107,7 @@ class AsyncRawFeedbackClient:
         conversation_id : str
             The id of the conversation you're taking the action on.
 
-        feedback : UserFeedbackScore
+        feedback : typing.Optional[UserFeedbackScore]
             Either 'like' or 'dislike' to indicate the feedback for the conversation.
 
         request_options : typing.Optional[RequestOptions]

@@ -5,7 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.pydantic_utilities import update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .conversation_history_transcript_common_model_output import ConversationHistoryTranscriptCommonModelOutput
 from .test_condition_result_common_model import TestConditionResultCommonModel
@@ -19,6 +19,7 @@ class UnitTestRunResponseModel(UncheckedBaseModel):
     test_info: typing.Optional[UnitTestCommonModel] = None
     test_invocation_id: str
     agent_id: str
+    branch_id: typing.Optional[str] = None
     workflow_node_id: typing.Optional[str] = None
     status: TestRunStatus
     agent_responses: typing.Optional[typing.List[ConversationHistoryTranscriptCommonModelOutput]] = None
@@ -28,14 +29,7 @@ class UnitTestRunResponseModel(UncheckedBaseModel):
     last_updated_at_unix: typing.Optional[int] = None
     metadata: typing.Optional[TestRunMetadata] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 update_forward_refs(UnitTestRunResponseModel)

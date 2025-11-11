@@ -6,7 +6,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 
 
@@ -14,28 +13,14 @@ class BodyCreatePodcastV1StudioPodcastsPostSourceItem_Text(UncheckedBaseModel):
     type: typing.Literal["text"] = "text"
     text: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class BodyCreatePodcastV1StudioPodcastsPostSourceItem_Url(UncheckedBaseModel):
     type: typing.Literal["url"] = "url"
     url: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 BodyCreatePodcastV1StudioPodcastsPostSourceItem = typing_extensions.Annotated[

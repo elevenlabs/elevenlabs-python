@@ -6,7 +6,7 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.pydantic_utilities import update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 
 
@@ -18,14 +18,7 @@ class AstLessThanOrEqualsOperatorNodeOutputRight_AndOperator(UncheckedBaseModel)
     type: typing.Literal["and_operator"] = "and_operator"
     children: typing.List["AstAndOperatorNodeOutputChildrenItem"]
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class AstLessThanOrEqualsOperatorNodeOutputRight_BooleanLiteral(UncheckedBaseModel):
@@ -36,14 +29,7 @@ class AstLessThanOrEqualsOperatorNodeOutputRight_BooleanLiteral(UncheckedBaseMod
     type: typing.Literal["boolean_literal"] = "boolean_literal"
     value: bool
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class AstLessThanOrEqualsOperatorNodeOutputRight_DynamicVariable(UncheckedBaseModel):
@@ -54,14 +40,7 @@ class AstLessThanOrEqualsOperatorNodeOutputRight_DynamicVariable(UncheckedBaseMo
     type: typing.Literal["dynamic_variable"] = "dynamic_variable"
     name: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class AstLessThanOrEqualsOperatorNodeOutputRight_EqOperator(UncheckedBaseModel):
@@ -73,14 +52,7 @@ class AstLessThanOrEqualsOperatorNodeOutputRight_EqOperator(UncheckedBaseModel):
     left: "AstEqualsOperatorNodeOutputLeft"
     right: "AstEqualsOperatorNodeOutputRight"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class AstLessThanOrEqualsOperatorNodeOutputRight_GtOperator(UncheckedBaseModel):
@@ -92,14 +64,7 @@ class AstLessThanOrEqualsOperatorNodeOutputRight_GtOperator(UncheckedBaseModel):
     left: "AstGreaterThanOperatorNodeOutputLeft"
     right: "AstGreaterThanOperatorNodeOutputRight"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class AstLessThanOrEqualsOperatorNodeOutputRight_GteOperator(UncheckedBaseModel):
@@ -111,14 +76,7 @@ class AstLessThanOrEqualsOperatorNodeOutputRight_GteOperator(UncheckedBaseModel)
     left: "AstGreaterThanOrEqualsOperatorNodeOutputLeft"
     right: "AstGreaterThanOrEqualsOperatorNodeOutputRight"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class AstLessThanOrEqualsOperatorNodeOutputRight_Llm(UncheckedBaseModel):
@@ -129,14 +87,7 @@ class AstLessThanOrEqualsOperatorNodeOutputRight_Llm(UncheckedBaseModel):
     type: typing.Literal["llm"] = "llm"
     prompt: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class AstLessThanOrEqualsOperatorNodeOutputRight_LtOperator(UncheckedBaseModel):
@@ -148,14 +99,7 @@ class AstLessThanOrEqualsOperatorNodeOutputRight_LtOperator(UncheckedBaseModel):
     left: "AstLessThanOperatorNodeOutputLeft"
     right: "AstLessThanOperatorNodeOutputRight"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class AstLessThanOrEqualsOperatorNodeOutputRight_LteOperator(UncheckedBaseModel):
@@ -167,14 +111,7 @@ class AstLessThanOrEqualsOperatorNodeOutputRight_LteOperator(UncheckedBaseModel)
     left: "AstLessThanOrEqualsOperatorNodeOutputLeft"
     right: "AstLessThanOrEqualsOperatorNodeOutputRight"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class AstLessThanOrEqualsOperatorNodeOutputRight_NeqOperator(UncheckedBaseModel):
@@ -186,14 +123,7 @@ class AstLessThanOrEqualsOperatorNodeOutputRight_NeqOperator(UncheckedBaseModel)
     left: "AstNotEqualsOperatorNodeOutputLeft"
     right: "AstNotEqualsOperatorNodeOutputRight"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class AstLessThanOrEqualsOperatorNodeOutputRight_NumberLiteral(UncheckedBaseModel):
@@ -204,14 +134,7 @@ class AstLessThanOrEqualsOperatorNodeOutputRight_NumberLiteral(UncheckedBaseMode
     type: typing.Literal["number_literal"] = "number_literal"
     value: float
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class AstLessThanOrEqualsOperatorNodeOutputRight_OrOperator(UncheckedBaseModel):
@@ -222,14 +145,7 @@ class AstLessThanOrEqualsOperatorNodeOutputRight_OrOperator(UncheckedBaseModel):
     type: typing.Literal["or_operator"] = "or_operator"
     children: typing.List["AstOrOperatorNodeOutputChildrenItem"]
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class AstLessThanOrEqualsOperatorNodeOutputRight_StringLiteral(UncheckedBaseModel):
@@ -240,14 +156,7 @@ class AstLessThanOrEqualsOperatorNodeOutputRight_StringLiteral(UncheckedBaseMode
     type: typing.Literal["string_literal"] = "string_literal"
     value: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 AstLessThanOrEqualsOperatorNodeOutputRight = typing_extensions.Annotated[

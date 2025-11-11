@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .llm_usage_calculator_llm_response_model import LlmUsageCalculatorLlmResponseModel
 
@@ -11,11 +10,4 @@ from .llm_usage_calculator_llm_response_model import LlmUsageCalculatorLlmRespon
 class LlmUsageCalculatorResponseModel(UncheckedBaseModel):
     llm_prices: typing.List[LlmUsageCalculatorLlmResponseModel]
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .character_alignment_model import CharacterAlignmentModel
 
@@ -40,12 +39,9 @@ class ProjectSnapshotExtendedResponseModel(UncheckedBaseModel):
     """
 
     character_alignments: typing.List[CharacterAlignmentModel]
+    audio_duration_secs: float = pydantic.Field()
+    """
+    The total duration of the audio in seconds.
+    """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

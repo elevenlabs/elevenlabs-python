@@ -131,7 +131,10 @@ class ConversationsClient:
         call_successful: typing.Optional[EvaluationSuccessResult] = None,
         call_start_before_unix: typing.Optional[int] = None,
         call_start_after_unix: typing.Optional[int] = None,
+        call_duration_min_secs: typing.Optional[int] = None,
+        call_duration_max_secs: typing.Optional[int] = None,
         user_id: typing.Optional[str] = None,
+        tool_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         page_size: typing.Optional[int] = None,
         summary_mode: typing.Optional[ConversationsListRequestSummaryMode] = None,
         search: typing.Optional[str] = None,
@@ -157,8 +160,17 @@ class ConversationsClient:
         call_start_after_unix : typing.Optional[int]
             Unix timestamp (in seconds) to filter conversations after to this start date.
 
+        call_duration_min_secs : typing.Optional[int]
+            Minimum call duration in seconds.
+
+        call_duration_max_secs : typing.Optional[int]
+            Maximum call duration in seconds.
+
         user_id : typing.Optional[str]
             Filter conversations by the user ID who initiated them.
+
+        tool_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by tool names used during the call.
 
         page_size : typing.Optional[int]
             How many conversations to return at maximum. Can not exceed 100, defaults to 30.
@@ -190,6 +202,8 @@ class ConversationsClient:
             call_successful="success",
             call_start_before_unix=1,
             call_start_after_unix=1,
+            call_duration_min_secs=1,
+            call_duration_max_secs=1,
             user_id="user_id",
             page_size=1,
             summary_mode="exclude",
@@ -202,7 +216,10 @@ class ConversationsClient:
             call_successful=call_successful,
             call_start_before_unix=call_start_before_unix,
             call_start_after_unix=call_start_after_unix,
+            call_duration_min_secs=call_duration_min_secs,
+            call_duration_max_secs=call_duration_max_secs,
             user_id=user_id,
+            tool_names=tool_names,
             page_size=page_size,
             summary_mode=summary_mode,
             search=search,
@@ -421,7 +438,10 @@ class AsyncConversationsClient:
         call_successful: typing.Optional[EvaluationSuccessResult] = None,
         call_start_before_unix: typing.Optional[int] = None,
         call_start_after_unix: typing.Optional[int] = None,
+        call_duration_min_secs: typing.Optional[int] = None,
+        call_duration_max_secs: typing.Optional[int] = None,
         user_id: typing.Optional[str] = None,
+        tool_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         page_size: typing.Optional[int] = None,
         summary_mode: typing.Optional[ConversationsListRequestSummaryMode] = None,
         search: typing.Optional[str] = None,
@@ -447,8 +467,17 @@ class AsyncConversationsClient:
         call_start_after_unix : typing.Optional[int]
             Unix timestamp (in seconds) to filter conversations after to this start date.
 
+        call_duration_min_secs : typing.Optional[int]
+            Minimum call duration in seconds.
+
+        call_duration_max_secs : typing.Optional[int]
+            Maximum call duration in seconds.
+
         user_id : typing.Optional[str]
             Filter conversations by the user ID who initiated them.
+
+        tool_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by tool names used during the call.
 
         page_size : typing.Optional[int]
             How many conversations to return at maximum. Can not exceed 100, defaults to 30.
@@ -485,6 +514,8 @@ class AsyncConversationsClient:
                 call_successful="success",
                 call_start_before_unix=1,
                 call_start_after_unix=1,
+                call_duration_min_secs=1,
+                call_duration_max_secs=1,
                 user_id="user_id",
                 page_size=1,
                 summary_mode="exclude",
@@ -500,7 +531,10 @@ class AsyncConversationsClient:
             call_successful=call_successful,
             call_start_before_unix=call_start_before_unix,
             call_start_after_unix=call_start_after_unix,
+            call_duration_min_secs=call_duration_min_secs,
+            call_duration_max_secs=call_duration_max_secs,
             user_id=user_id,
+            tool_names=tool_names,
             page_size=page_size,
             summary_mode=summary_mode,
             search=search,

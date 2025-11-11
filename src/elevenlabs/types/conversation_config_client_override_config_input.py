@@ -3,14 +3,19 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_config_override_config import AgentConfigOverrideConfig
 from .conversation_config_override_config import ConversationConfigOverrideConfig
 from .tts_conversational_config_override_config import TtsConversationalConfigOverrideConfig
+from .turn_config_override_config import TurnConfigOverrideConfig
 
 
 class ConversationConfigClientOverrideConfigInput(UncheckedBaseModel):
+    turn: typing.Optional[TurnConfigOverrideConfig] = pydantic.Field(default=None)
+    """
+    Configures overrides for nested fields.
+    """
+
     tts: typing.Optional[TtsConversationalConfigOverrideConfig] = pydantic.Field(default=None)
     """
     Configures overrides for nested fields.
@@ -26,11 +31,4 @@ class ConversationConfigClientOverrideConfigInput(UncheckedBaseModel):
     Configures overrides for nested fields.
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

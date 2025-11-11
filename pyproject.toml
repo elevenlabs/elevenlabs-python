@@ -3,7 +3,7 @@ name = "elevenlabs"
 
 [tool.poetry]
 name = "elevenlabs"
-version = "v2.22.1"
+version = "2.22.2"
 description = ""
 readme = "README.md"
 authors = []
@@ -38,7 +38,7 @@ Repository = 'https://github.com/elevenlabs/elevenlabs-python'
 python = "^3.8"
 httpx = ">=0.21.2"
 pyaudio = { version = ">=0.2.14", optional = true}
-pydantic = ">= 1.9.2"
+pydantic = ">= 2.0.0"
 pydantic-core = ">=2.18.2"
 requests = ">=2.20"
 typing_extensions = ">= 4.0.0"

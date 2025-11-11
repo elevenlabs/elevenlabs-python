@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .generation_config import GenerationConfig
 from .pronunciation_dictionary_locator import PronunciationDictionaryLocator
@@ -44,11 +43,4 @@ class InitialiseContext(UncheckedBaseModel):
     An identifier for the text-to-speech context. If omitted, a default context ID may be assigned by the server. If provided, this message will create a new context with this ID or re-initialize an existing one with the new settings and text.
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

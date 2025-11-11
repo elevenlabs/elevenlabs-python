@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .sip_media_encryption_enum import SipMediaEncryptionEnum
 from .sip_trunk_transport_enum import SipTrunkTransportEnum
@@ -49,11 +48,4 @@ class GetPhoneNumberOutboundSipTrunkConfigResponseModel(UncheckedBaseModel):
     Whether a LiveKit SIP outbound trunk is configured
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

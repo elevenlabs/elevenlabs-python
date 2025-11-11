@@ -6,7 +6,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .llm import Llm
 
@@ -18,14 +17,7 @@ class PromptAgentApiModelOutputBackupLlmConfig_Default(UncheckedBaseModel):
 
     preference: typing.Literal["default"] = "default"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class PromptAgentApiModelOutputBackupLlmConfig_Disabled(UncheckedBaseModel):
@@ -35,14 +27,7 @@ class PromptAgentApiModelOutputBackupLlmConfig_Disabled(UncheckedBaseModel):
 
     preference: typing.Literal["disabled"] = "disabled"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class PromptAgentApiModelOutputBackupLlmConfig_Override(UncheckedBaseModel):
@@ -53,14 +38,7 @@ class PromptAgentApiModelOutputBackupLlmConfig_Override(UncheckedBaseModel):
     preference: typing.Literal["override"] = "override"
     order: typing.List[Llm]
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 PromptAgentApiModelOutputBackupLlmConfig = typing_extensions.Annotated[

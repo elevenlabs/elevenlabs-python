@@ -5,7 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.pydantic_utilities import update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .workflow_expression_condition_model_output_expression import WorkflowExpressionConditionModelOutputExpression
 
@@ -21,14 +21,7 @@ class WorkflowExpressionConditionModelOutput(UncheckedBaseModel):
     Expression to evaluate.
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 update_forward_refs(WorkflowExpressionConditionModelOutput)

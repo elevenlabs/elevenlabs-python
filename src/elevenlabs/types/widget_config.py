@@ -3,10 +3,10 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .embed_variant import EmbedVariant
 from .widget_config_output_avatar import WidgetConfigOutputAvatar
+from .widget_end_feedback_config import WidgetEndFeedbackConfig
 from .widget_expandable import WidgetExpandable
 from .widget_feedback_mode import WidgetFeedbackMode
 from .widget_language_preset import WidgetLanguagePreset
@@ -39,6 +39,11 @@ class WidgetConfig(UncheckedBaseModel):
     feedback_mode: typing.Optional[WidgetFeedbackMode] = pydantic.Field(default=None)
     """
     The feedback mode of the widget
+    """
+
+    end_feedback: typing.Optional[WidgetEndFeedbackConfig] = pydantic.Field(default=None)
+    """
+    Configuration for feedback collected at the end of the conversation
     """
 
     bg_color: typing.Optional[str] = pydantic.Field(default=None)
@@ -206,11 +211,4 @@ class WidgetConfig(UncheckedBaseModel):
     Language presets for the widget
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

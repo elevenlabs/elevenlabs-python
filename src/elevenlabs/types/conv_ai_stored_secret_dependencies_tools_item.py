@@ -6,7 +6,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .dependent_available_tool_identifier_access_level import DependentAvailableToolIdentifierAccessLevel
 
@@ -18,27 +17,13 @@ class ConvAiStoredSecretDependenciesToolsItem_Available(UncheckedBaseModel):
     created_at_unix_secs: int
     access_level: DependentAvailableToolIdentifierAccessLevel
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class ConvAiStoredSecretDependenciesToolsItem_Unknown(UncheckedBaseModel):
     type: typing.Literal["unknown"] = "unknown"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 ConvAiStoredSecretDependenciesToolsItem = typing_extensions.Annotated[

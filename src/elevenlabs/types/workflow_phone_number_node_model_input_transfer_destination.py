@@ -6,7 +6,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 
 
@@ -14,56 +13,28 @@ class WorkflowPhoneNumberNodeModelInputTransferDestination_Phone(UncheckedBaseMo
     type: typing.Literal["phone"] = "phone"
     phone_number: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class WorkflowPhoneNumberNodeModelInputTransferDestination_PhoneDynamicVariable(UncheckedBaseModel):
     type: typing.Literal["phone_dynamic_variable"] = "phone_dynamic_variable"
     phone_number: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class WorkflowPhoneNumberNodeModelInputTransferDestination_SipUri(UncheckedBaseModel):
     type: typing.Literal["sip_uri"] = "sip_uri"
     sip_uri: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class WorkflowPhoneNumberNodeModelInputTransferDestination_SipUriDynamicVariable(UncheckedBaseModel):
     type: typing.Literal["sip_uri_dynamic_variable"] = "sip_uri_dynamic_variable"
     sip_uri: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 WorkflowPhoneNumberNodeModelInputTransferDestination = typing_extensions.Annotated[

@@ -6,7 +6,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .conversation_history_sip_trunking_phone_call_model_direction import (
     ConversationHistorySipTrunkingPhoneCallModelDirection,
@@ -22,14 +21,7 @@ class ConversationHistoryMetadataCommonModelPhoneCall_SipTrunking(UncheckedBaseM
     external_number: str
     call_sid: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class ConversationHistoryMetadataCommonModelPhoneCall_Twilio(UncheckedBaseModel):
@@ -41,14 +33,7 @@ class ConversationHistoryMetadataCommonModelPhoneCall_Twilio(UncheckedBaseModel)
     stream_sid: str
     call_sid: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 ConversationHistoryMetadataCommonModelPhoneCall = typing_extensions.Annotated[

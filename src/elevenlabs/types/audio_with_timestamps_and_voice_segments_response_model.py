@@ -4,7 +4,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .character_alignment_response_model import CharacterAlignmentResponseModel
@@ -32,11 +31,4 @@ class AudioWithTimestampsAndVoiceSegmentsResponseModel(UncheckedBaseModel):
     Voice segments for the audio
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

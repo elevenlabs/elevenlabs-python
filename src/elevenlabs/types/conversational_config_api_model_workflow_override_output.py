@@ -5,7 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.pydantic_utilities import update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_config_api_model_workflow_override_output import AgentConfigApiModelWorkflowOverrideOutput
 from .asr_conversational_config_workflow_override import AsrConversationalConfigWorkflowOverride
@@ -54,14 +54,7 @@ class ConversationalConfigApiModelWorkflowOverrideOutput(UncheckedBaseModel):
     Agent specific configuration
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 update_forward_refs(ConversationalConfigApiModelWorkflowOverrideOutput)

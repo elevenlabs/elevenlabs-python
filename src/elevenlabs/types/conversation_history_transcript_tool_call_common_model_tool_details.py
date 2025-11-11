@@ -6,7 +6,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 
 
@@ -14,14 +13,7 @@ class ConversationHistoryTranscriptToolCallCommonModelToolDetails_Client(Uncheck
     type: typing.Literal["client"] = "client"
     parameters: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class ConversationHistoryTranscriptToolCallCommonModelToolDetails_Mcp(UncheckedBaseModel):
@@ -35,14 +27,7 @@ class ConversationHistoryTranscriptToolCallCommonModelToolDetails_Mcp(UncheckedB
     mcp_tool_name: typing.Optional[str] = None
     mcp_tool_description: typing.Optional[str] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class ConversationHistoryTranscriptToolCallCommonModelToolDetails_Webhook(UncheckedBaseModel):
@@ -54,14 +39,7 @@ class ConversationHistoryTranscriptToolCallCommonModelToolDetails_Webhook(Unchec
     query_params: typing.Optional[typing.Dict[str, str]] = None
     body: typing.Optional[str] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 ConversationHistoryTranscriptToolCallCommonModelToolDetails = typing_extensions.Annotated[

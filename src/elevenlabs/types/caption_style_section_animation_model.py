@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .caption_style_section_animation_model_enter_type import CaptionStyleSectionAnimationModelEnterType
 from .caption_style_section_animation_model_exit_type import CaptionStyleSectionAnimationModelExitType
@@ -13,11 +12,4 @@ class CaptionStyleSectionAnimationModel(UncheckedBaseModel):
     enter_type: CaptionStyleSectionAnimationModelEnterType
     exit_type: CaptionStyleSectionAnimationModelExitType
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

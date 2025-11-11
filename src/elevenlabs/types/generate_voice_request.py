@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .body_generate_a_random_voice_v_1_voice_generation_generate_voice_post_age import (
     BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostAge,
@@ -39,11 +38,4 @@ class GenerateVoiceRequest(UncheckedBaseModel):
     Text to generate, text length has to be between 100 and 1000.
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

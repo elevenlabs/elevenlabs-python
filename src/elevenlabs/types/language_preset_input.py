@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .conversation_config_client_override_input import ConversationConfigClientOverrideInput
 from .language_preset_translation import LanguagePresetTranslation
@@ -20,11 +19,9 @@ class LanguagePresetInput(UncheckedBaseModel):
     The translation of the first message
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
+    soft_timeout_translation: typing.Optional[LanguagePresetTranslation] = pydantic.Field(default=None)
+    """
+    The translation of the soft timeout message
+    """
 
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

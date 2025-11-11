@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .resource_metadata_response_model_anonymous_access_level_override import (
     ResourceMetadataResponseModelAnonymousAccessLevelOverride,
@@ -45,11 +44,4 @@ class ResourceMetadataResponseModel(UncheckedBaseModel):
     List of options for sharing the resource further in the workspace. These are users who don't have access to the resource yet.
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

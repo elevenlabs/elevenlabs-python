@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .inbound_sip_trunk_config_request_model import InboundSipTrunkConfigRequestModel
 from .outbound_sip_trunk_config_request_model import OutboundSipTrunkConfigRequestModel
@@ -33,11 +32,4 @@ class CreateSipTrunkPhoneNumberRequest(UncheckedBaseModel):
     inbound_trunk_config: typing.Optional[InboundSipTrunkConfigRequestModel] = None
     outbound_trunk_config: typing.Optional[OutboundSipTrunkConfigRequestModel] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

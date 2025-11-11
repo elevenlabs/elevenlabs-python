@@ -7009,6 +7009,8 @@ client.conversational_ai.conversations.list(
     call_successful="success",
     call_start_before_unix=1,
     call_start_after_unix=1,
+    call_duration_min_secs=1,
+    call_duration_max_secs=1,
     user_id="user_id",
     page_size=1,
     summary_mode="exclude",
@@ -7069,7 +7071,31 @@ client.conversational_ai.conversations.list(
 <dl>
 <dd>
 
+**call_duration_min_secs:** `typing.Optional[int]` — Minimum call duration in seconds.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**call_duration_max_secs:** `typing.Optional[int]` — Maximum call duration in seconds.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **user_id:** `typing.Optional[str]` — Filter conversations by the user ID who initiated them.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tool_names:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by tool names used during the call.
     
 </dd>
 </dl>
@@ -8178,6 +8204,14 @@ client.conversational_ai.agents.run_tests(
 <dd>
 
 **agent_config_override:** `typing.Optional[AdhocAgentConfigOverrideForTestRequestModel]` — Configuration overrides to use for testing. If not provided, the agent's default configuration will be used.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `typing.Optional[str]` — ID of the branch to run the tests on. If not provided, the tests will be run on the agent default configuration.
     
 </dd>
 </dl>
@@ -9522,8 +9556,12 @@ Add a new tool to the available tools in the workspace.
 ```python
 from elevenlabs import (
     ElevenLabs,
+    LiteralJsonSchemaProperty,
+    ObjectJsonSchemaPropertyInput,
+    QueryParamsJsonSchema,
     ToolRequestModel,
     ToolRequestModelToolConfig_ApiIntegrationWebhook,
+    WebhookToolApiSchemaConfigInput,
 )
 
 client = ElevenLabs(
@@ -9536,6 +9574,28 @@ client.conversational_ai.tools.create(
             description="description",
             api_integration_id="api_integration_id",
             api_integration_connection_id="api_integration_connection_id",
+            base_api_schema=WebhookToolApiSchemaConfigInput(
+                url="https://example.com/agents/{agent_id}",
+                method="GET",
+                path_params_schema={
+                    "agent_id": LiteralJsonSchemaProperty(
+                        type="string",
+                    )
+                },
+                query_params_schema=QueryParamsJsonSchema(
+                    properties={
+                        "key": LiteralJsonSchemaProperty(
+                            type="string",
+                            description="My property",
+                            is_system_provided=False,
+                            dynamic_variable="",
+                            constant_value="",
+                        )
+                    },
+                ),
+                request_body_schema=ObjectJsonSchemaPropertyInput(),
+                request_headers={"Authorization": "Bearer {api_key}"},
+            ),
         ),
     ),
 )
@@ -9743,8 +9803,12 @@ Update tool that is available in the workspace.
 ```python
 from elevenlabs import (
     ElevenLabs,
+    LiteralJsonSchemaProperty,
+    ObjectJsonSchemaPropertyInput,
+    QueryParamsJsonSchema,
     ToolRequestModel,
     ToolRequestModelToolConfig_ApiIntegrationWebhook,
+    WebhookToolApiSchemaConfigInput,
 )
 
 client = ElevenLabs(
@@ -9758,6 +9822,28 @@ client.conversational_ai.tools.update(
             description="description",
             api_integration_id="api_integration_id",
             api_integration_connection_id="api_integration_connection_id",
+            base_api_schema=WebhookToolApiSchemaConfigInput(
+                url="https://example.com/agents/{agent_id}",
+                method="GET",
+                path_params_schema={
+                    "agent_id": LiteralJsonSchemaProperty(
+                        type="string",
+                    )
+                },
+                query_params_schema=QueryParamsJsonSchema(
+                    properties={
+                        "key": LiteralJsonSchemaProperty(
+                            type="string",
+                            description="My property",
+                            is_system_provided=False,
+                            dynamic_variable="",
+                            constant_value="",
+                        )
+                    },
+                ),
+                request_body_schema=ObjectJsonSchemaPropertyInput(),
+                request_headers={"Authorization": "Bearer {api_key}"},
+            ),
         ),
     ),
 )
@@ -11714,7 +11800,7 @@ client.conversational_ai.conversations.feedback.create(
 <dl>
 <dd>
 
-**feedback:** `UserFeedbackScore` — Either 'like' or 'dislike' to indicate the feedback for the conversation.
+**feedback:** `typing.Optional[UserFeedbackScore]` — Either 'like' or 'dislike' to indicate the feedback for the conversation.
     
 </dd>
 </dl>
@@ -13637,6 +13723,14 @@ client.conversational_ai.tests.invocations.resubmit(
 <dd>
 
 **agent_config_override:** `typing.Optional[AdhocAgentConfigOverrideForTestRequestModel]` — Configuration overrides to use for testing. If not provided, the agent's default configuration will be used.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `typing.Optional[str]` — ID of the branch to run the tests on. If not provided, the tests will be run on the agent default configuration.
     
 </dd>
 </dl>

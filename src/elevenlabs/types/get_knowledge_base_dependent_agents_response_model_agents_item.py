@@ -6,7 +6,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .dependent_available_agent_identifier_access_level import DependentAvailableAgentIdentifierAccessLevel
 
@@ -18,27 +17,13 @@ class GetKnowledgeBaseDependentAgentsResponseModelAgentsItem_Available(Unchecked
     created_at_unix_secs: int
     access_level: DependentAvailableAgentIdentifierAccessLevel
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class GetKnowledgeBaseDependentAgentsResponseModelAgentsItem_Unknown(UncheckedBaseModel):
     type: typing.Literal["unknown"] = "unknown"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 GetKnowledgeBaseDependentAgentsResponseModelAgentsItem = typing_extensions.Annotated[

@@ -6,7 +6,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from ...types.podcast_bulletin_mode_data import PodcastBulletinModeData
 from ...types.podcast_conversation_mode_data import PodcastConversationModeData
@@ -20,14 +19,7 @@ class BodyCreatePodcastV1StudioPodcastsPostMode_Conversation(UncheckedBaseModel)
     type: typing.Literal["conversation"] = "conversation"
     conversation: PodcastConversationModeData
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class BodyCreatePodcastV1StudioPodcastsPostMode_Bulletin(UncheckedBaseModel):
@@ -38,14 +30,7 @@ class BodyCreatePodcastV1StudioPodcastsPostMode_Bulletin(UncheckedBaseModel):
     type: typing.Literal["bulletin"] = "bulletin"
     bulletin: PodcastBulletinModeData
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 BodyCreatePodcastV1StudioPodcastsPostMode = typing_extensions.Annotated[

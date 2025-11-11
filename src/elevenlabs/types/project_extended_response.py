@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .caption_style_model import CaptionStyleModel
 from .chapter_response import ChapterResponse
@@ -11,6 +10,7 @@ from .project_creation_meta_response_model import ProjectCreationMetaResponseMod
 from .project_extended_response_model_access_level import ProjectExtendedResponseModelAccessLevel
 from .project_extended_response_model_apply_text_normalization import ProjectExtendedResponseModelApplyTextNormalization
 from .project_extended_response_model_aspect_ratio import ProjectExtendedResponseModelAspectRatio
+from .project_extended_response_model_assets_item import ProjectExtendedResponseModelAssetsItem
 from .project_extended_response_model_fiction import ProjectExtendedResponseModelFiction
 from .project_extended_response_model_quality_preset import ProjectExtendedResponseModelQualityPreset
 from .project_extended_response_model_source_type import ProjectExtendedResponseModelSourceType
@@ -216,11 +216,9 @@ class ProjectExtendedResponse(UncheckedBaseModel):
     Experimental features for the project.
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
+    assets: typing.List[ProjectExtendedResponseModelAssetsItem] = pydantic.Field()
+    """
+    List of uploaded assets e.g. videos, audios.
+    """
 
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

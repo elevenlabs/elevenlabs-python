@@ -6,7 +6,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 
 
@@ -14,14 +13,7 @@ class GetConvAiDashboardSettingsResponseModelChartsItem_CallSuccess(UncheckedBas
     type: typing.Literal["call_success"] = "call_success"
     name: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class GetConvAiDashboardSettingsResponseModelChartsItem_Criteria(UncheckedBaseModel):
@@ -29,14 +21,7 @@ class GetConvAiDashboardSettingsResponseModelChartsItem_Criteria(UncheckedBaseMo
     name: str
     criteria_id: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class GetConvAiDashboardSettingsResponseModelChartsItem_DataCollection(UncheckedBaseModel):
@@ -44,14 +29,7 @@ class GetConvAiDashboardSettingsResponseModelChartsItem_DataCollection(Unchecked
     name: str
     data_collection_id: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 GetConvAiDashboardSettingsResponseModelChartsItem = typing_extensions.Annotated[

@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .generation_config import GenerationConfig
 from .realtime_voice_settings import RealtimeVoiceSettings
@@ -47,11 +46,4 @@ class SendText(UncheckedBaseModel):
     This is useful when you want to ensure that the last chunk of audio is generated even when the length of text sent is smaller than the value set in chunk_length_schedule (e.g. 120 or 50).
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

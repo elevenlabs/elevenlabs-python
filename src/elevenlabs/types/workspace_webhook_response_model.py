@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .webhook_auth_method_type import WebhookAuthMethodType
 from .workspace_webhook_usage_response_model import WorkspaceWebhookUsageResponseModel
@@ -60,11 +59,4 @@ class WorkspaceWebhookResponseModel(UncheckedBaseModel):
     The most recent time the webhook failed, failures are any non-200 codes returned by the callback URL.
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

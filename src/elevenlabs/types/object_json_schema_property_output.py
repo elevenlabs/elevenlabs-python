@@ -5,7 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.pydantic_utilities import update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
@@ -15,18 +15,9 @@ class ObjectJsonSchemaPropertyOutput(UncheckedBaseModel):
     description: typing.Optional[str] = None
     properties: typing.Optional[typing.Dict[str, "ObjectJsonSchemaPropertyOutputPropertiesValue"]] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
-
-from .array_json_schema_property_output import ArrayJsonSchemaPropertyOutput  # noqa: E402, I001
 from .object_json_schema_property_output_properties_value import ObjectJsonSchemaPropertyOutputPropertiesValue  # noqa: E402, I001
 
-update_forward_refs(ObjectJsonSchemaPropertyOutput, ArrayJsonSchemaPropertyOutput=ArrayJsonSchemaPropertyOutput)
+update_forward_refs(ObjectJsonSchemaPropertyOutput)

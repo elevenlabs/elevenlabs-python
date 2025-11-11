@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .document_usage_mode_enum import DocumentUsageModeEnum
 from .knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
@@ -18,11 +17,4 @@ class GetKnowledgeBaseTextResponseModel(UncheckedBaseModel):
     access_info: ResourceAccessInfo
     extracted_inner_html: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -851,4 +851,4 @@ pyaudio = ["pyaudio"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "b7da141a4d5cf0383830ab57e4341326054c70f2d67cc19d189d4cd1cbaf21c0"
+content-hash = "935641dae0f5e938126a805721fdb34b27a211ce5cdccedaaff3087dbc81c1f0"

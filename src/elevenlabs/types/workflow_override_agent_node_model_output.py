@@ -5,7 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.pydantic_utilities import update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .conversational_config_api_model_workflow_override_output import ConversationalConfigApiModelWorkflowOverrideOutput
 from .knowledge_base_locator import KnowledgeBaseLocator
@@ -48,14 +48,7 @@ class WorkflowOverrideAgentNodeModelOutput(UncheckedBaseModel):
     Human-readable label for the node used throughout the UI.
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 update_forward_refs(WorkflowOverrideAgentNodeModelOutput)

@@ -3,8 +3,8 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .soft_timeout_config_workflow_override import SoftTimeoutConfigWorkflowOverride
 from .turn_eagerness import TurnEagerness
 
 
@@ -14,9 +14,19 @@ class TurnConfigWorkflowOverride(UncheckedBaseModel):
     Maximum wait time for the user's reply before re-engaging the user
     """
 
+    initial_wait_time: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    How long the agent will wait for the user to start the conversation if the first message is empty. If not set, uses the regular turn_timeout.
+    """
+
     silence_end_call_timeout: typing.Optional[float] = pydantic.Field(default=None)
     """
     Maximum wait time since the user last spoke before terminating the call
+    """
+
+    soft_timeout_config: typing.Optional[SoftTimeoutConfigWorkflowOverride] = pydantic.Field(default=None)
+    """
+    Configuration for soft timeout functionality. Provides immediate feedback during longer LLM responses.
     """
 
     turn_eagerness: typing.Optional[TurnEagerness] = pydantic.Field(default=None)
@@ -24,11 +34,4 @@ class TurnConfigWorkflowOverride(UncheckedBaseModel):
     Controls how eager the agent is to respond. Low = less eager (waits longer), Standard = default eagerness, High = more eager (responds sooner)
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

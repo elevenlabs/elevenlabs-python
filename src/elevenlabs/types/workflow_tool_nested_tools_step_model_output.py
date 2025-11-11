@@ -5,7 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.pydantic_utilities import update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .conversation_history_transcript_tool_call_common_model import ConversationHistoryTranscriptToolCallCommonModel
 
@@ -17,14 +17,7 @@ class WorkflowToolNestedToolsStepModelOutput(UncheckedBaseModel):
     results: typing.List["WorkflowToolNestedToolsStepModelOutputResultsItem"]
     is_successful: bool
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 from .workflow_tool_nested_tools_step_model_output_results_item import WorkflowToolNestedToolsStepModelOutputResultsItem  # noqa: E402, I001

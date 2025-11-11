@@ -5,7 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.pydantic_utilities import update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .built_in_tools_workflow_override_input import BuiltInToolsWorkflowOverrideInput
 from .custom_llm import CustomLlm
@@ -109,14 +109,7 @@ class PromptAgentApiModelWorkflowOverrideInput(UncheckedBaseModel):
     A list of tools that the agent can use over the course of the conversation, use tool_ids instead
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 update_forward_refs(PromptAgentApiModelWorkflowOverrideInput)

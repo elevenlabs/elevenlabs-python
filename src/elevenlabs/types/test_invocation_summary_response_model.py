@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .resource_access_info import ResourceAccessInfo
 
@@ -12,6 +11,16 @@ class TestInvocationSummaryResponseModel(UncheckedBaseModel):
     id: str = pydantic.Field()
     """
     The ID of the test invocation
+    """
+
+    agent_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ID of the agent this test invocation belongs to
+    """
+
+    branch_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ID of the branch this test invocation was run on
     """
 
     created_at_unix_secs: int = pydantic.Field()
@@ -49,11 +58,4 @@ class TestInvocationSummaryResponseModel(UncheckedBaseModel):
     The access information of the test invocation
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

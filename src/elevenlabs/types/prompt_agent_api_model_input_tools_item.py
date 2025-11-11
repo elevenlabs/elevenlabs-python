@@ -6,7 +6,7 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.pydantic_utilities import update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .api_integration_webhook_overrides_input import ApiIntegrationWebhookOverridesInput
 from .dynamic_variable_assignment import DynamicVariableAssignment
@@ -39,14 +39,7 @@ class PromptAgentApiModelInputToolsItem_ApiIntegrationWebhook(UncheckedBaseModel
     api_integration_connection_id: str
     api_schema_overrides: typing.Optional[ApiIntegrationWebhookOverridesInput] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class PromptAgentApiModelInputToolsItem_Client(UncheckedBaseModel):
@@ -68,27 +61,14 @@ class PromptAgentApiModelInputToolsItem_Client(UncheckedBaseModel):
     dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
     execution_mode: typing.Optional[ToolExecutionMode] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class PromptAgentApiModelInputToolsItem_Mcp(UncheckedBaseModel):
     value: typing.Optional[typing.Any] = None
     type: typing.Literal["mcp"] = "mcp"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
 
 
 class PromptAgentApiModelInputToolsItem_System(UncheckedBaseModel):
@@ -107,14 +87,7 @@ class PromptAgentApiModelInputToolsItem_System(UncheckedBaseModel):
     tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = None
     params: SystemToolConfigInputParams
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class PromptAgentApiModelInputToolsItem_Webhook(UncheckedBaseModel):
@@ -135,14 +108,7 @@ class PromptAgentApiModelInputToolsItem_Webhook(UncheckedBaseModel):
     execution_mode: typing.Optional[ToolExecutionMode] = None
     api_schema: WebhookToolApiSchemaConfigInput
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput  # noqa: E402, I001

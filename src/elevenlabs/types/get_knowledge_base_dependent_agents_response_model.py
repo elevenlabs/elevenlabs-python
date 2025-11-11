@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .get_knowledge_base_dependent_agents_response_model_agents_item import (
     GetKnowledgeBaseDependentAgentsResponseModelAgentsItem,
@@ -15,11 +14,4 @@ class GetKnowledgeBaseDependentAgentsResponseModel(UncheckedBaseModel):
     next_cursor: typing.Optional[str] = None
     has_more: bool
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

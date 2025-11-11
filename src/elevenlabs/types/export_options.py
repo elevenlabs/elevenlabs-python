@@ -6,7 +6,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 
 
@@ -18,14 +17,7 @@ class ExportOptions_Docx(UncheckedBaseModel):
     max_segment_duration_s: typing.Optional[float] = None
     max_segment_chars: typing.Optional[int] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class ExportOptions_Html(UncheckedBaseModel):
@@ -36,14 +28,7 @@ class ExportOptions_Html(UncheckedBaseModel):
     max_segment_duration_s: typing.Optional[float] = None
     max_segment_chars: typing.Optional[int] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class ExportOptions_Pdf(UncheckedBaseModel):
@@ -54,14 +39,7 @@ class ExportOptions_Pdf(UncheckedBaseModel):
     max_segment_duration_s: typing.Optional[float] = None
     max_segment_chars: typing.Optional[int] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class ExportOptions_SegmentedJson(UncheckedBaseModel):
@@ -72,14 +50,7 @@ class ExportOptions_SegmentedJson(UncheckedBaseModel):
     max_segment_duration_s: typing.Optional[float] = None
     max_segment_chars: typing.Optional[int] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class ExportOptions_Srt(UncheckedBaseModel):
@@ -91,14 +62,7 @@ class ExportOptions_Srt(UncheckedBaseModel):
     max_segment_duration_s: typing.Optional[float] = None
     max_segment_chars: typing.Optional[int] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class ExportOptions_Txt(UncheckedBaseModel):
@@ -110,14 +74,7 @@ class ExportOptions_Txt(UncheckedBaseModel):
     max_segment_duration_s: typing.Optional[float] = None
     max_segment_chars: typing.Optional[int] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 ExportOptions = typing_extensions.Annotated[

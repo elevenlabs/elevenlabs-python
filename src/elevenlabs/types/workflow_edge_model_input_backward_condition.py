@@ -6,7 +6,7 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.pydantic_utilities import update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .workflow_expression_condition_model_input_expression import WorkflowExpressionConditionModelInputExpression
 
@@ -16,14 +16,7 @@ class WorkflowEdgeModelInputBackwardCondition_Expression(UncheckedBaseModel):
     label: typing.Optional[str] = None
     expression: WorkflowExpressionConditionModelInputExpression
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class WorkflowEdgeModelInputBackwardCondition_Llm(UncheckedBaseModel):
@@ -31,14 +24,7 @@ class WorkflowEdgeModelInputBackwardCondition_Llm(UncheckedBaseModel):
     label: typing.Optional[str] = None
     condition: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class WorkflowEdgeModelInputBackwardCondition_Result(UncheckedBaseModel):
@@ -46,28 +32,14 @@ class WorkflowEdgeModelInputBackwardCondition_Result(UncheckedBaseModel):
     label: typing.Optional[str] = None
     successful: bool
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 class WorkflowEdgeModelInputBackwardCondition_Unconditional(UncheckedBaseModel):
     type: typing.Literal["unconditional"] = "unconditional"
     label: typing.Optional[str] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 WorkflowEdgeModelInputBackwardCondition = typing_extensions.Annotated[

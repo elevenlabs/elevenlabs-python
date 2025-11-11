@@ -5,7 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.pydantic_utilities import update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_workflow_response_model_nodes_value import AgentWorkflowResponseModelNodesValue
 from .workflow_edge_model_output import WorkflowEdgeModelOutput
@@ -15,14 +15,7 @@ class AgentWorkflowResponseModel(UncheckedBaseModel):
     edges: typing.Dict[str, WorkflowEdgeModelOutput]
     nodes: typing.Dict[str, AgentWorkflowResponseModelNodesValue]
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
 
 
 update_forward_refs(AgentWorkflowResponseModel)
