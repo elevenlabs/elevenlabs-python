@@ -9,6 +9,9 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 
+if typing.TYPE_CHECKING:
+    from .ast_and_operator_node_input_children_item import AstAndOperatorNodeInputChildrenItem
+
 
 class AstOrOperatorNodeInputChildrenItem_AndOperator(UncheckedBaseModel):
     type: typing.Literal["and_operator"] = "and_operator"
@@ -226,7 +229,6 @@ AstOrOperatorNodeInputChildrenItem = typing_extensions.Annotated[
     ],
     UnionMetadata(discriminant="type"),
 ]
-from .ast_and_operator_node_input_children_item import AstAndOperatorNodeInputChildrenItem  # noqa: E402, F401, I001
 from .ast_equals_operator_node_input_left import AstEqualsOperatorNodeInputLeft  # noqa: E402, F401, I001
 from .ast_equals_operator_node_input_right import AstEqualsOperatorNodeInputRight  # noqa: E402, F401, I001
 from .ast_greater_than_operator_node_input_left import AstGreaterThanOperatorNodeInputLeft  # noqa: E402, F401, I001

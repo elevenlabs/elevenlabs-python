@@ -9,6 +9,10 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 
+if typing.TYPE_CHECKING:
+    from .ast_and_operator_node_output_children_item import AstAndOperatorNodeOutputChildrenItem
+    from .ast_or_operator_node_output_children_item import AstOrOperatorNodeOutputChildrenItem
+
 
 class AstGreaterThanOrEqualsOperatorNodeOutputRight_AndOperator(UncheckedBaseModel):
     """
@@ -278,7 +282,6 @@ AstGreaterThanOrEqualsOperatorNodeOutputRight = typing_extensions.Annotated[
     ],
     UnionMetadata(discriminant="type"),
 ]
-from .ast_and_operator_node_output_children_item import AstAndOperatorNodeOutputChildrenItem  # noqa: E402, F401, I001
 from .ast_equals_operator_node_output_left import AstEqualsOperatorNodeOutputLeft  # noqa: E402, F401, I001
 from .ast_equals_operator_node_output_right import AstEqualsOperatorNodeOutputRight  # noqa: E402, F401, I001
 from .ast_greater_than_operator_node_output_left import AstGreaterThanOperatorNodeOutputLeft  # noqa: E402, F401, I001
@@ -290,7 +293,6 @@ from .ast_less_than_or_equals_operator_node_output_left import AstLessThanOrEqua
 from .ast_less_than_or_equals_operator_node_output_right import AstLessThanOrEqualsOperatorNodeOutputRight  # noqa: E402, F401, I001
 from .ast_not_equals_operator_node_output_left import AstNotEqualsOperatorNodeOutputLeft  # noqa: E402, F401, I001
 from .ast_not_equals_operator_node_output_right import AstNotEqualsOperatorNodeOutputRight  # noqa: E402, F401, I001
-from .ast_or_operator_node_output_children_item import AstOrOperatorNodeOutputChildrenItem  # noqa: E402, F401, I001
 
 update_forward_refs(AstGreaterThanOrEqualsOperatorNodeOutputRight_AndOperator)
 update_forward_refs(AstGreaterThanOrEqualsOperatorNodeOutputRight_EqOperator)

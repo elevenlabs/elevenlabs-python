@@ -8,6 +8,9 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 
+if typing.TYPE_CHECKING:
+    from .ast_and_operator_node_output_children_item import AstAndOperatorNodeOutputChildrenItem
+
 
 class AstAndOperatorNodeOutput(UncheckedBaseModel):
     children: typing.List["AstAndOperatorNodeOutputChildrenItem"] = pydantic.Field()
@@ -32,6 +35,5 @@ from .ast_less_than_operator_node_output import AstLessThanOperatorNodeOutput  #
 from .ast_less_than_or_equals_operator_node_output import AstLessThanOrEqualsOperatorNodeOutput  # noqa: E402, F401, I001
 from .ast_not_equals_operator_node_output import AstNotEqualsOperatorNodeOutput  # noqa: E402, F401, I001
 from .ast_or_operator_node_output import AstOrOperatorNodeOutput  # noqa: E402, F401, I001
-from .ast_and_operator_node_output_children_item import AstAndOperatorNodeOutputChildrenItem  # noqa: E402, F401, I001
 
 update_forward_refs(AstAndOperatorNodeOutput)
