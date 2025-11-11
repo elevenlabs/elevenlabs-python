@@ -11,7 +11,6 @@ from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 
 if typing.TYPE_CHECKING:
     from .ast_and_operator_node_output_children_item import AstAndOperatorNodeOutputChildrenItem
-    from .ast_or_operator_node_output_children_item import AstOrOperatorNodeOutputChildrenItem
 
 
 class AstOrOperatorNodeOutputChildrenItem_AndOperator(UncheckedBaseModel):
