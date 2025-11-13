@@ -60,6 +60,10 @@ class WorkflowToolResponseModelInputStepsItem_NestedTools(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .conversation_history_transcript_workflow_tools_result_common_model_input import (
+    ConversationHistoryTranscriptWorkflowToolsResultCommonModelInput,
+)  # noqa: E402, I001
+
 WorkflowToolResponseModelInputStepsItem = typing_extensions.Annotated[
     typing.Union[
         WorkflowToolResponseModelInputStepsItem_Edge,
@@ -70,4 +74,7 @@ WorkflowToolResponseModelInputStepsItem = typing_extensions.Annotated[
 ]
 from .workflow_tool_nested_tools_step_model_input_results_item import WorkflowToolNestedToolsStepModelInputResultsItem  # noqa: E402, I001
 
-update_forward_refs(WorkflowToolResponseModelInputStepsItem_NestedTools)
+update_forward_refs(
+    WorkflowToolResponseModelInputStepsItem_NestedTools,
+    ConversationHistoryTranscriptWorkflowToolsResultCommonModelInput=ConversationHistoryTranscriptWorkflowToolsResultCommonModelInput,
+)

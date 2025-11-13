@@ -56,9 +56,7 @@ class TranscriptsClient:
         _response = self._raw_client.get(transcription_id, request_options=request_options)
         return _response.data
 
-    def delete(
-        self, transcription_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
+    def delete(self, transcription_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
         """
         Delete a previously generated transcript by its ID.
 
@@ -72,7 +70,7 @@ class TranscriptsClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        typing.Any
             Delete completed successfully.
 
         Examples
@@ -148,7 +146,7 @@ class AsyncTranscriptsClient:
 
     async def delete(
         self, transcription_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
+    ) -> typing.Any:
         """
         Delete a previously generated transcript by its ID.
 
@@ -162,7 +160,7 @@ class AsyncTranscriptsClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        typing.Any
             Delete completed successfully.
 
         Examples

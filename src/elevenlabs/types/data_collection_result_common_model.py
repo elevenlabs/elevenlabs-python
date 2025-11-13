@@ -10,7 +10,7 @@ from .literal_json_schema_property import LiteralJsonSchemaProperty
 
 class DataCollectionResultCommonModel(UncheckedBaseModel):
     data_collection_id: str
-    value: typing.Optional[typing.Optional[typing.Any]] = None
+    value: typing.Optional[typing.Any] = None
     json_schema: typing.Optional[LiteralJsonSchemaProperty] = None
     rationale: str
 

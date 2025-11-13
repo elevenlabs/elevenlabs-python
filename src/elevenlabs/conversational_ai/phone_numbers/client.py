@@ -134,9 +134,7 @@ class PhoneNumbersClient:
         _response = self._raw_client.get(phone_number_id, request_options=request_options)
         return _response.data
 
-    def delete(
-        self, phone_number_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
+    def delete(self, phone_number_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
         """
         Delete Phone Number by ID
 
@@ -150,7 +148,7 @@ class PhoneNumbersClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        typing.Any
             Successful Response
 
         Examples
@@ -365,7 +363,7 @@ class AsyncPhoneNumbersClient:
 
     async def delete(
         self, phone_number_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
+    ) -> typing.Any:
         """
         Delete Phone Number by ID
 
@@ -379,7 +377,7 @@ class AsyncPhoneNumbersClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        typing.Any
             Successful Response
 
         Examples

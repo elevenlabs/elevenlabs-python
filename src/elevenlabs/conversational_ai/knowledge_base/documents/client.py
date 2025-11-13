@@ -192,7 +192,7 @@ class DocumentsClient:
         *,
         force: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Optional[typing.Any]:
+    ) -> typing.Any:
         """
         Delete a document from the knowledge base
 
@@ -209,7 +209,7 @@ class DocumentsClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        typing.Any
             Successful Response
 
         Examples
@@ -556,7 +556,7 @@ class AsyncDocumentsClient:
         *,
         force: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Optional[typing.Any]:
+    ) -> typing.Any:
         """
         Delete a document from the knowledge base
 
@@ -573,7 +573,7 @@ class AsyncDocumentsClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        typing.Any
             Successful Response
 
         Examples
