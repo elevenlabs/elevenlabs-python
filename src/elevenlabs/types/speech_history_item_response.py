@@ -68,8 +68,8 @@ class SpeechHistoryItemResponse(UncheckedBaseModel):
     The content type of the generated item.
     """
 
-    state: typing.Optional[typing.Any] = None
-    settings: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    state: typing.Any
+    settings: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     The settings of the history item.
     """

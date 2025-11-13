@@ -5,7 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
@@ -25,5 +25,3 @@ class ObjectOverrideInput(UncheckedBaseModel):
 
 
 from .object_override_input_properties_value import ObjectOverrideInputPropertiesValue  # noqa: E402, I001
-
-update_forward_refs(ObjectOverrideInput)

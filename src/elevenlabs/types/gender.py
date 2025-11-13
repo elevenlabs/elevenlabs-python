@@ -2,4 +2,4 @@
 
 import typing
 
-Gender = typing.Optional[typing.Any]
+Gender = typing.Any

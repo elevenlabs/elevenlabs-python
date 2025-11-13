@@ -2,4 +2,4 @@
 
 import typing
 
-UpdatePronunciationDictionariesRequest = typing.Optional[typing.Any]
+UpdatePronunciationDictionariesRequest = typing.Any

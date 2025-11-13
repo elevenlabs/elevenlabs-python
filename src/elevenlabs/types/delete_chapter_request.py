@@ -2,4 +2,4 @@
 
 import typing
 
-DeleteChapterRequest = typing.Optional[typing.Any]
+DeleteChapterRequest = typing.Any

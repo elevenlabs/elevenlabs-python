@@ -2,4 +2,4 @@
 
 import typing
 
-AddSharingVoiceRequest = typing.Optional[typing.Any]
+AddSharingVoiceRequest = typing.Any

@@ -2,4 +2,4 @@
 
 import typing
 
-PromptAgent = typing.Optional[typing.Any]
+PromptAgent = typing.Any

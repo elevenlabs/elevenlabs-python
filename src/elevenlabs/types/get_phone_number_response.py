@@ -2,4 +2,4 @@
 
 import typing
 
-GetPhoneNumberResponse = typing.Optional[typing.Any]
+GetPhoneNumberResponse = typing.Any

@@ -12,6 +12,7 @@ from .evaluation_success_result import EvaluationSuccessResult
 
 class ConversationSummaryResponseModel(UncheckedBaseModel):
     agent_id: str
+    branch_id: typing.Optional[str] = None
     agent_name: typing.Optional[str] = None
     conversation_id: str
     start_time_unix_secs: int
@@ -22,6 +23,7 @@ class ConversationSummaryResponseModel(UncheckedBaseModel):
     transcript_summary: typing.Optional[str] = None
     call_summary_title: typing.Optional[str] = None
     direction: typing.Optional[ConversationSummaryResponseModelDirection] = None
+    rating: typing.Optional[float] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

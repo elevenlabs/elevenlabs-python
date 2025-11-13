@@ -604,6 +604,7 @@ class RawAgentsClient:
         *,
         tests: typing.Sequence[SingleTestRunRequestModel],
         agent_config_override: typing.Optional[AdhocAgentConfigOverrideForTestRequestModel] = OMIT,
+        branch_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetTestSuiteInvocationResponseModel]:
         """
@@ -619,6 +620,9 @@ class RawAgentsClient:
 
         agent_config_override : typing.Optional[AdhocAgentConfigOverrideForTestRequestModel]
             Configuration overrides to use for testing. If not provided, the agent's default configuration will be used.
+
+        branch_id : typing.Optional[str]
+            ID of the branch to run the tests on. If not provided, the tests will be run on the agent default configuration.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -640,6 +644,7 @@ class RawAgentsClient:
                     annotation=AdhocAgentConfigOverrideForTestRequestModel,
                     direction="write",
                 ),
+                "branch_id": branch_id,
             },
             headers={
                 "content-type": "application/json",
@@ -1249,6 +1254,7 @@ class AsyncRawAgentsClient:
         *,
         tests: typing.Sequence[SingleTestRunRequestModel],
         agent_config_override: typing.Optional[AdhocAgentConfigOverrideForTestRequestModel] = OMIT,
+        branch_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetTestSuiteInvocationResponseModel]:
         """
@@ -1264,6 +1270,9 @@ class AsyncRawAgentsClient:
 
         agent_config_override : typing.Optional[AdhocAgentConfigOverrideForTestRequestModel]
             Configuration overrides to use for testing. If not provided, the agent's default configuration will be used.
+
+        branch_id : typing.Optional[str]
+            ID of the branch to run the tests on. If not provided, the tests will be run on the agent default configuration.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1285,6 +1294,7 @@ class AsyncRawAgentsClient:
                     annotation=AdhocAgentConfigOverrideForTestRequestModel,
                     direction="write",
                 ),
+                "branch_id": branch_id,
             },
             headers={
                 "content-type": "application/json",

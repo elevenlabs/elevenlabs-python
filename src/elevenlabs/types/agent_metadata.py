@@ -9,6 +9,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 class AgentMetadata(UncheckedBaseModel):
     agent_id: str
+    branch_id: typing.Optional[str] = None
     workflow_node_id: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

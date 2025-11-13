@@ -1,0 +1,58 @@
+{
+  "cliVersion": "0.107.3",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "4.36.1",
+  "generatorConfig": {
+    "timeout_in_seconds": 240,
+    "default_bytes_stream_chunk_size": 1024,
+    "inline_request_params": false,
+    "follow_redirects_by_default": true,
+    "recursion_limit": 5000,
+    "pydantic_config": {
+      "skip_validation": true
+    },
+    "client": {
+      "class_name": "BaseElevenLabs",
+      "filename": "base_client.py",
+      "exported_class_name": "ElevenLabs",
+      "exported_filename": "client.py"
+    },
+    "extra_dependencies": {
+      "requests": ">=2.20",
+      "websockets": ">=11.0",
+      "pyaudio": {
+        "version": ">=0.2.14",
+        "optional": true
+      }
+    },
+    "extra_dev_dependencies": {
+      "types-pyaudio": "^0.2.16.20240516"
+    },
+    "extras": {
+      "pyaudio": [
+        "pyaudio"
+      ]
+    },
+    "additional_init_exports": [
+      {
+        "from": "play",
+        "imports": [
+          "play",
+          "save",
+          "stream"
+        ]
+      },
+      {
+        "from": "realtime",
+        "imports": [
+          "RealtimeEvents",
+          "RealtimeAudioOptions",
+          "RealtimeUrlOptions",
+          "AudioFormat",
+          "CommitStrategy",
+          "RealtimeConnection"
+        ]
+      }
+    ]
+  }
+}

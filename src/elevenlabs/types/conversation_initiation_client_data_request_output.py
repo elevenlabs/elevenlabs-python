@@ -14,7 +14,7 @@ from .conversation_initiation_source_info import ConversationInitiationSourceInf
 
 class ConversationInitiationClientDataRequestOutput(UncheckedBaseModel):
     conversation_config_override: typing.Optional[ConversationConfigClientOverrideOutput] = None
-    custom_llm_extra_body: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
+    custom_llm_extra_body: typing.Optional[typing.Dict[str, typing.Any]] = None
     user_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     ID of the end user participating in this conversation (for agent owner's user identification)

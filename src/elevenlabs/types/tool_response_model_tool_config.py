@@ -26,18 +26,19 @@ class ToolResponseModelToolConfig_ApiIntegrationWebhook(UncheckedBaseModel):
     type: typing.Literal["api_integration_webhook"] = "api_integration_webhook"
     name: str
     description: str
-    response_timeout_secs: typing.Optional[int] = None
-    disable_interruptions: typing.Optional[bool] = None
-    force_pre_tool_speech: typing.Optional[bool] = None
-    assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = None
+    response_timeout_secs: int
+    disable_interruptions: bool
+    force_pre_tool_speech: bool
+    assignments: typing.List[DynamicVariableAssignment]
     tool_call_sound: typing.Optional[ToolCallSoundType] = None
-    tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = None
-    dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
-    execution_mode: typing.Optional[ToolExecutionMode] = None
-    tool_version: typing.Optional[str] = None
+    tool_call_sound_behavior: ToolCallSoundBehavior
+    dynamic_variables: DynamicVariablesConfig
+    execution_mode: ToolExecutionMode
+    tool_version: str
     api_integration_id: str
     api_integration_connection_id: str
     api_schema_overrides: typing.Optional[ApiIntegrationWebhookOverridesOutput] = None
+    base_api_schema: WebhookToolApiSchemaConfigOutput
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -76,19 +77,6 @@ class ToolResponseModelToolConfig_Client(UncheckedBaseModel):
             frozen = True
             smart_union = True
             extra = pydantic.Extra.allow
-
-
-class ToolResponseModelToolConfig_Mcp(UncheckedBaseModel):
-    value: typing.Optional[typing.Any] = None
-    type: typing.Literal["mcp"] = "mcp"
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
 
 
 class ToolResponseModelToolConfig_System(UncheckedBaseModel):
@@ -151,7 +139,6 @@ ToolResponseModelToolConfig = typing_extensions.Annotated[
     typing.Union[
         ToolResponseModelToolConfig_ApiIntegrationWebhook,
         ToolResponseModelToolConfig_Client,
-        ToolResponseModelToolConfig_Mcp,
         ToolResponseModelToolConfig_System,
         ToolResponseModelToolConfig_Webhook,
     ],

@@ -2,4 +2,4 @@
 
 import typing
 
-GetPronunciationDictionaryResponse = typing.Optional[typing.Any]
+GetPronunciationDictionaryResponse = typing.Any

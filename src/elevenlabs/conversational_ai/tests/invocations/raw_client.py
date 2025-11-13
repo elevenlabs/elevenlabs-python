@@ -147,8 +147,9 @@ class RawInvocationsClient:
         test_run_ids: typing.Sequence[str],
         agent_id: str,
         agent_config_override: typing.Optional[AdhocAgentConfigOverrideForTestRequestModel] = OMIT,
+        branch_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[typing.Optional[typing.Any]]:
+    ) -> HttpResponse[typing.Any]:
         """
         Resubmits specific test runs from a test invocation.
 
@@ -166,12 +167,15 @@ class RawInvocationsClient:
         agent_config_override : typing.Optional[AdhocAgentConfigOverrideForTestRequestModel]
             Configuration overrides to use for testing. If not provided, the agent's default configuration will be used.
 
+        branch_id : typing.Optional[str]
+            ID of the branch to run the tests on. If not provided, the tests will be run on the agent default configuration.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[typing.Optional[typing.Any]]
+        HttpResponse[typing.Any]
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -185,6 +189,7 @@ class RawInvocationsClient:
                     direction="write",
                 ),
                 "agent_id": agent_id,
+                "branch_id": branch_id,
             },
             headers={
                 "content-type": "application/json",
@@ -197,9 +202,9 @@ class RawInvocationsClient:
                 return HttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.Optional[typing.Any],
+                    typing.Any,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=typing.Any,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -348,8 +353,9 @@ class AsyncRawInvocationsClient:
         test_run_ids: typing.Sequence[str],
         agent_id: str,
         agent_config_override: typing.Optional[AdhocAgentConfigOverrideForTestRequestModel] = OMIT,
+        branch_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[typing.Optional[typing.Any]]:
+    ) -> AsyncHttpResponse[typing.Any]:
         """
         Resubmits specific test runs from a test invocation.
 
@@ -367,12 +373,15 @@ class AsyncRawInvocationsClient:
         agent_config_override : typing.Optional[AdhocAgentConfigOverrideForTestRequestModel]
             Configuration overrides to use for testing. If not provided, the agent's default configuration will be used.
 
+        branch_id : typing.Optional[str]
+            ID of the branch to run the tests on. If not provided, the tests will be run on the agent default configuration.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[typing.Optional[typing.Any]]
+        AsyncHttpResponse[typing.Any]
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -386,6 +395,7 @@ class AsyncRawInvocationsClient:
                     direction="write",
                 ),
                 "agent_id": agent_id,
+                "branch_id": branch_id,
             },
             headers={
                 "content-type": "application/json",
@@ -398,9 +408,9 @@ class AsyncRawInvocationsClient:
                 return AsyncHttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.Optional[typing.Any],
+                    typing.Any,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=typing.Any,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .soft_timeout_config import SoftTimeoutConfig
 from .turn_eagerness import TurnEagerness
 
 
@@ -14,9 +15,19 @@ class TurnConfig(UncheckedBaseModel):
     Maximum wait time for the user's reply before re-engaging the user
     """
 
+    initial_wait_time: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    How long the agent will wait for the user to start the conversation if the first message is empty. If not set, uses the regular turn_timeout.
+    """
+
     silence_end_call_timeout: typing.Optional[float] = pydantic.Field(default=None)
     """
     Maximum wait time since the user last spoke before terminating the call
+    """
+
+    soft_timeout_config: typing.Optional[SoftTimeoutConfig] = pydantic.Field(default=None)
+    """
+    Configuration for soft timeout functionality. Provides immediate feedback during longer LLM responses.
     """
 
     turn_eagerness: typing.Optional[TurnEagerness] = pydantic.Field(default=None)

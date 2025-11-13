@@ -2,4 +2,4 @@
 
 import typing
 
-UpdateProjectRequest = typing.Optional[typing.Any]
+UpdateProjectRequest = typing.Any

@@ -38,6 +38,7 @@ class ToolRequestModelToolConfig_ApiIntegrationWebhook(UncheckedBaseModel):
     api_integration_id: str
     api_integration_connection_id: str
     api_schema_overrides: typing.Optional[ApiIntegrationWebhookOverridesInput] = None
+    base_api_schema: WebhookToolApiSchemaConfigInput
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

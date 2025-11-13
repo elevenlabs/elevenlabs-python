@@ -8,9 +8,15 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_config_override_config import AgentConfigOverrideConfig
 from .conversation_config_override_config import ConversationConfigOverrideConfig
 from .tts_conversational_config_override_config import TtsConversationalConfigOverrideConfig
+from .turn_config_override_config import TurnConfigOverrideConfig
 
 
 class ConversationConfigClientOverrideConfigOutput(UncheckedBaseModel):
+    turn: typing.Optional[TurnConfigOverrideConfig] = pydantic.Field(default=None)
+    """
+    Configures overrides for nested fields.
+    """
+
     tts: typing.Optional[TtsConversationalConfigOverrideConfig] = pydantic.Field(default=None)
     """
     Configures overrides for nested fields.

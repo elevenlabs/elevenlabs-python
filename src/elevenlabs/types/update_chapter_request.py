@@ -2,4 +2,4 @@
 
 import typing
 
-UpdateChapterRequest = typing.Optional[typing.Any]
+UpdateChapterRequest = typing.Any

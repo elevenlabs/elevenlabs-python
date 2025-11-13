@@ -2,4 +2,4 @@
 
 import typing
 
-Age = typing.Optional[typing.Any]
+Age = typing.Any

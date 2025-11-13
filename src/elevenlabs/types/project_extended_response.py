@@ -11,6 +11,7 @@ from .project_creation_meta_response_model import ProjectCreationMetaResponseMod
 from .project_extended_response_model_access_level import ProjectExtendedResponseModelAccessLevel
 from .project_extended_response_model_apply_text_normalization import ProjectExtendedResponseModelApplyTextNormalization
 from .project_extended_response_model_aspect_ratio import ProjectExtendedResponseModelAspectRatio
+from .project_extended_response_model_assets_item import ProjectExtendedResponseModelAssetsItem
 from .project_extended_response_model_fiction import ProjectExtendedResponseModelFiction
 from .project_extended_response_model_quality_preset import ProjectExtendedResponseModelQualityPreset
 from .project_extended_response_model_source_type import ProjectExtendedResponseModelSourceType
@@ -211,9 +212,14 @@ class ProjectExtendedResponse(UncheckedBaseModel):
     Whether text normalization is applied to the project.
     """
 
-    experimental: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    experimental: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     Experimental features for the project.
+    """
+
+    assets: typing.List[ProjectExtendedResponseModelAssetsItem] = pydantic.Field()
+    """
+    List of uploaded assets e.g. videos, audios.
     """
 
     if IS_PYDANTIC_V2:

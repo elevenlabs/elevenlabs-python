@@ -2,4 +2,4 @@
 
 import typing
 
-TextToSpeechStreamWithTimestampsRequest = typing.Optional[typing.Any]
+TextToSpeechStreamWithTimestampsRequest = typing.Any

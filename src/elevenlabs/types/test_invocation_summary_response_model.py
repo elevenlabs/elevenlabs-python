@@ -14,6 +14,16 @@ class TestInvocationSummaryResponseModel(UncheckedBaseModel):
     The ID of the test invocation
     """
 
+    agent_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ID of the agent this test invocation belongs to
+    """
+
+    branch_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ID of the branch this test invocation was run on
+    """
+
     created_at_unix_secs: int = pydantic.Field()
     """
     Creation time of the test invocation in unix seconds
