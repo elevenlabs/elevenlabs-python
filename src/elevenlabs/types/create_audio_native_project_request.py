@@ -2,4 +2,4 @@
 
 import typing
 
-CreateAudioNativeProjectRequest = typing.Optional[typing.Any]
+CreateAudioNativeProjectRequest = typing.Any

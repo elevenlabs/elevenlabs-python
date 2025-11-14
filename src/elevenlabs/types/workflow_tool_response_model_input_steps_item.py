@@ -68,6 +68,12 @@ WorkflowToolResponseModelInputStepsItem = typing_extensions.Annotated[
     ],
     UnionMetadata(discriminant="type"),
 ]
+from .conversation_history_transcript_workflow_tools_result_common_model_input import (
+    ConversationHistoryTranscriptWorkflowToolsResultCommonModelInput,
+)  # noqa: E402, I001
 from .workflow_tool_nested_tools_step_model_input_results_item import WorkflowToolNestedToolsStepModelInputResultsItem  # noqa: E402, I001
 
-update_forward_refs(WorkflowToolResponseModelInputStepsItem_NestedTools)
+update_forward_refs(
+    WorkflowToolResponseModelInputStepsItem_NestedTools,
+    ConversationHistoryTranscriptWorkflowToolsResultCommonModelInput=ConversationHistoryTranscriptWorkflowToolsResultCommonModelInput,
+)

@@ -79,7 +79,7 @@ class PromptAgentApiModelInputToolsItem_Client(UncheckedBaseModel):
 
 
 class PromptAgentApiModelInputToolsItem_Mcp(UncheckedBaseModel):
-    value: typing.Optional[typing.Any] = None
+    value: typing.Any
     type: typing.Literal["mcp"] = "mcp"
 
     if IS_PYDANTIC_V2:

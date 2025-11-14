@@ -7,24 +7,19 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class SendTextMulti(UncheckedBaseModel):
+class SoftTimeoutConfig(UncheckedBaseModel):
     """
-    Payload to send text for synthesis to an existing context.
-    """
-
-    text: str = pydantic.Field()
-    """
-    Text to synthesize. Should end with a single space.
+    Configuration for soft timeout functionality during LLM response generation.
     """
 
-    context_id: typing.Optional[str] = pydantic.Field(default=None)
+    timeout_seconds: typing.Optional[float] = pydantic.Field(default=None)
     """
-    The target context_id for this text.
+    Time in seconds before showing the predefined message while waiting for LLM response. Set to -1 to disable.
     """
 
-    flush: typing.Optional[bool] = pydantic.Field(default=None)
+    message: typing.Optional[str] = pydantic.Field(default=None)
     """
-    If true, flushes the audio buffer for the specified context. If false, the text will be appended to the buffer to be generated.
+    Message to show when soft timeout is reached while waiting for LLM response
     """
 
     if IS_PYDANTIC_V2:

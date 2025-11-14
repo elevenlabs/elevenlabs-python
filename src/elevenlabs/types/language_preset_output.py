@@ -20,6 +20,11 @@ class LanguagePresetOutput(UncheckedBaseModel):
     The translation of the first message
     """
 
+    soft_timeout_translation: typing.Optional[LanguagePresetTranslation] = pydantic.Field(default=None)
+    """
+    The translation of the soft timeout message
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

@@ -2,4 +2,4 @@
 
 import typing
 
-SpeechToTextConvertRequestWebhookMetadata = typing.Union[str, typing.Dict[str, typing.Optional[typing.Any]]]
+SpeechToTextConvertRequestWebhookMetadata = typing.Union[str, typing.Dict[str, typing.Any]]

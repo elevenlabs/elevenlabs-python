@@ -479,6 +479,7 @@ class AgentsClient:
         *,
         tests: typing.Sequence[SingleTestRunRequestModel],
         agent_config_override: typing.Optional[AdhocAgentConfigOverrideForTestRequestModel] = OMIT,
+        branch_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetTestSuiteInvocationResponseModel:
         """
@@ -494,6 +495,9 @@ class AgentsClient:
 
         agent_config_override : typing.Optional[AdhocAgentConfigOverrideForTestRequestModel]
             Configuration overrides to use for testing. If not provided, the agent's default configuration will be used.
+
+        branch_id : typing.Optional[str]
+            ID of the branch to run the tests on. If not provided, the tests will be run on the agent default configuration.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -520,7 +524,11 @@ class AgentsClient:
         )
         """
         _response = self._raw_client.run_tests(
-            agent_id, tests=tests, agent_config_override=agent_config_override, request_options=request_options
+            agent_id,
+            tests=tests,
+            agent_config_override=agent_config_override,
+            branch_id=branch_id,
+            request_options=request_options,
         )
         return _response.data
 
@@ -1071,6 +1079,7 @@ class AsyncAgentsClient:
         *,
         tests: typing.Sequence[SingleTestRunRequestModel],
         agent_config_override: typing.Optional[AdhocAgentConfigOverrideForTestRequestModel] = OMIT,
+        branch_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetTestSuiteInvocationResponseModel:
         """
@@ -1086,6 +1095,9 @@ class AsyncAgentsClient:
 
         agent_config_override : typing.Optional[AdhocAgentConfigOverrideForTestRequestModel]
             Configuration overrides to use for testing. If not provided, the agent's default configuration will be used.
+
+        branch_id : typing.Optional[str]
+            ID of the branch to run the tests on. If not provided, the tests will be run on the agent default configuration.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1120,7 +1132,11 @@ class AsyncAgentsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.run_tests(
-            agent_id, tests=tests, agent_config_override=agent_config_override, request_options=request_options
+            agent_id,
+            tests=tests,
+            agent_config_override=agent_config_override,
+            branch_id=branch_id,
+            request_options=request_options,
         )
         return _response.data
 

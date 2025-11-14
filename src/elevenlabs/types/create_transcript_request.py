@@ -2,4 +2,4 @@
 
 import typing
 
-CreateTranscriptRequest = typing.Optional[typing.Any]
+CreateTranscriptRequest = typing.Any

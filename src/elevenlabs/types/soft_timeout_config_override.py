@@ -7,19 +7,10 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class KeepContextAlive(UncheckedBaseModel):
+class SoftTimeoutConfigOverride(UncheckedBaseModel):
+    message: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Payload to keep a specific context alive by resetting its inactivity timeout. Empty text is ignored but resets the clock.
-    """
-
-    text: typing.Literal[""] = pydantic.Field(default="")
-    """
-    An empty string. This text is ignored by the server but its presence resets the inactivity timeout for the specified context.
-    """
-
-    context_id: str = pydantic.Field()
-    """
-    The identifier of the context to keep alive.
+    Message to show when soft timeout is reached while waiting for LLM response
     """
 
     if IS_PYDANTIC_V2:
