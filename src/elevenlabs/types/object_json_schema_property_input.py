@@ -24,7 +24,7 @@ class ObjectJsonSchemaPropertyInput(UncheckedBaseModel):
             smart_union = True
             extra = pydantic.Extra.allow
 
-from .array_json_schema_property_input import ArrayJsonSchemaPropertyInput  # noqa: E402, I001
+
 from .object_json_schema_property_input_properties_value import ObjectJsonSchemaPropertyInputPropertiesValue  # noqa: E402, I001
 
-update_forward_refs(ObjectJsonSchemaPropertyInput, ArrayJsonSchemaPropertyInput=ArrayJsonSchemaPropertyInput)
+update_forward_refs(ObjectJsonSchemaPropertyInput)

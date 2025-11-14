@@ -25,8 +25,6 @@ class ObjectJsonSchemaPropertyOutput(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-
-from .array_json_schema_property_output import ArrayJsonSchemaPropertyOutput  # noqa: E402, I001
 from .object_json_schema_property_output_properties_value import ObjectJsonSchemaPropertyOutputPropertiesValue  # noqa: E402, I001
 
-update_forward_refs(ObjectJsonSchemaPropertyOutput, ArrayJsonSchemaPropertyOutput=ArrayJsonSchemaPropertyOutput)
+update_forward_refs(ObjectJsonSchemaPropertyOutput)

@@ -153,7 +153,12 @@ class RawConversationsClient:
         call_successful: typing.Optional[EvaluationSuccessResult] = None,
         call_start_before_unix: typing.Optional[int] = None,
         call_start_after_unix: typing.Optional[int] = None,
+        call_duration_min_secs: typing.Optional[int] = None,
+        call_duration_max_secs: typing.Optional[int] = None,
         user_id: typing.Optional[str] = None,
+        evaluation_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        data_collection_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tool_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         page_size: typing.Optional[int] = None,
         summary_mode: typing.Optional[ConversationsListRequestSummaryMode] = None,
         search: typing.Optional[str] = None,
@@ -179,8 +184,23 @@ class RawConversationsClient:
         call_start_after_unix : typing.Optional[int]
             Unix timestamp (in seconds) to filter conversations after to this start date.
 
+        call_duration_min_secs : typing.Optional[int]
+            Minimum call duration in seconds.
+
+        call_duration_max_secs : typing.Optional[int]
+            Maximum call duration in seconds.
+
         user_id : typing.Optional[str]
             Filter conversations by the user ID who initiated them.
+
+        evaluation_params : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Evaluation filters. Repeat param. Format: criteria_id:result. Example: eval=value_framing:success
+
+        data_collection_params : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Data collection filters. Repeat param. Format: id:op:value where op is one of eq|neq|gt|gte|lt|lte|in|exists|missing. For in, pipe-delimit values.
+
+        tool_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by tool names used during the call.
 
         page_size : typing.Optional[int]
             How many conversations to return at maximum. Can not exceed 100, defaults to 30.
@@ -208,7 +228,12 @@ class RawConversationsClient:
                 "call_successful": call_successful,
                 "call_start_before_unix": call_start_before_unix,
                 "call_start_after_unix": call_start_after_unix,
+                "call_duration_min_secs": call_duration_min_secs,
+                "call_duration_max_secs": call_duration_max_secs,
                 "user_id": user_id,
+                "evaluation_params": evaluation_params,
+                "data_collection_params": data_collection_params,
+                "tool_names": tool_names,
                 "page_size": page_size,
                 "summary_mode": summary_mode,
                 "search": search,
@@ -478,7 +503,12 @@ class AsyncRawConversationsClient:
         call_successful: typing.Optional[EvaluationSuccessResult] = None,
         call_start_before_unix: typing.Optional[int] = None,
         call_start_after_unix: typing.Optional[int] = None,
+        call_duration_min_secs: typing.Optional[int] = None,
+        call_duration_max_secs: typing.Optional[int] = None,
         user_id: typing.Optional[str] = None,
+        evaluation_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        data_collection_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tool_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         page_size: typing.Optional[int] = None,
         summary_mode: typing.Optional[ConversationsListRequestSummaryMode] = None,
         search: typing.Optional[str] = None,
@@ -504,8 +534,23 @@ class AsyncRawConversationsClient:
         call_start_after_unix : typing.Optional[int]
             Unix timestamp (in seconds) to filter conversations after to this start date.
 
+        call_duration_min_secs : typing.Optional[int]
+            Minimum call duration in seconds.
+
+        call_duration_max_secs : typing.Optional[int]
+            Maximum call duration in seconds.
+
         user_id : typing.Optional[str]
             Filter conversations by the user ID who initiated them.
+
+        evaluation_params : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Evaluation filters. Repeat param. Format: criteria_id:result. Example: eval=value_framing:success
+
+        data_collection_params : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Data collection filters. Repeat param. Format: id:op:value where op is one of eq|neq|gt|gte|lt|lte|in|exists|missing. For in, pipe-delimit values.
+
+        tool_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by tool names used during the call.
 
         page_size : typing.Optional[int]
             How many conversations to return at maximum. Can not exceed 100, defaults to 30.
@@ -533,7 +578,12 @@ class AsyncRawConversationsClient:
                 "call_successful": call_successful,
                 "call_start_before_unix": call_start_before_unix,
                 "call_start_after_unix": call_start_after_unix,
+                "call_duration_min_secs": call_duration_min_secs,
+                "call_duration_max_secs": call_duration_max_secs,
                 "user_id": user_id,
+                "evaluation_params": evaluation_params,
+                "data_collection_params": data_collection_params,
+                "tool_names": tool_names,
                 "page_size": page_size,
                 "summary_mode": summary_mode,
                 "search": search,

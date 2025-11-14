@@ -13,9 +13,15 @@ from .dynamic_variables_config import DynamicVariablesConfig
 from .tool_call_sound_behavior import ToolCallSoundBehavior
 from .tool_call_sound_type import ToolCallSoundType
 from .tool_execution_mode import ToolExecutionMode
+from .webhook_tool_api_schema_config_output import WebhookToolApiSchemaConfigOutput
 
 
-class ApiIntegrationWebhookToolConfigOutput(UncheckedBaseModel):
+class ApiIntegrationWebhookToolConfigExternalOutput(UncheckedBaseModel):
+    """
+    When consumed by clients it convenient to include the base API schema even though
+    the stored tool config does not include it.
+    """
+
     name: str
     description: str = pydantic.Field()
     """
@@ -74,6 +80,11 @@ class ApiIntegrationWebhookToolConfigOutput(UncheckedBaseModel):
     User overrides applied on top of the base api_schema
     """
 
+    base_api_schema: WebhookToolApiSchemaConfigOutput = pydantic.Field()
+    """
+    The base API schema from the integration definition
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
@@ -84,4 +95,4 @@ class ApiIntegrationWebhookToolConfigOutput(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-update_forward_refs(ApiIntegrationWebhookToolConfigOutput)
+update_forward_refs(ApiIntegrationWebhookToolConfigExternalOutput)

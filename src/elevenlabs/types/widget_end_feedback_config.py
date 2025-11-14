@@ -5,17 +5,14 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .conversation_feedback_type import ConversationFeedbackType
-from .user_feedback_score import UserFeedbackScore
+from .widget_end_feedback_type import WidgetEndFeedbackType
 
 
-class ConversationHistoryFeedbackCommonModel(UncheckedBaseModel):
-    type: typing.Optional[ConversationFeedbackType] = None
-    overall_score: typing.Optional[UserFeedbackScore] = None
-    likes: typing.Optional[int] = None
-    dislikes: typing.Optional[int] = None
-    rating: typing.Optional[int] = None
-    comment: typing.Optional[str] = None
+class WidgetEndFeedbackConfig(UncheckedBaseModel):
+    type: typing.Optional[WidgetEndFeedbackType] = pydantic.Field(default=None)
+    """
+    The type of feedback to collect at the end of the conversation
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

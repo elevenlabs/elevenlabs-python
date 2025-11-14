@@ -142,6 +142,39 @@ class McpServersClient:
         _response = self._raw_client.get(mcp_server_id, request_options=request_options)
         return _response.data
 
+    def delete(
+        self, mcp_server_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Optional[typing.Any]:
+        """
+        Delete a specific MCP server configuration from the workspace.
+
+        Parameters
+        ----------
+        mcp_server_id : str
+            ID of the MCP Server.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.mcp_servers.delete(
+            mcp_server_id="mcp_server_id",
+        )
+        """
+        _response = self._raw_client.delete(mcp_server_id, request_options=request_options)
+        return _response.data
+
     def update(
         self,
         mcp_server_id: str,
@@ -388,6 +421,47 @@ class AsyncMcpServersClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get(mcp_server_id, request_options=request_options)
+        return _response.data
+
+    async def delete(
+        self, mcp_server_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Optional[typing.Any]:
+        """
+        Delete a specific MCP server configuration from the workspace.
+
+        Parameters
+        ----------
+        mcp_server_id : str
+            ID of the MCP Server.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.mcp_servers.delete(
+                mcp_server_id="mcp_server_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete(mcp_server_id, request_options=request_options)
         return _response.data
 
     async def update(

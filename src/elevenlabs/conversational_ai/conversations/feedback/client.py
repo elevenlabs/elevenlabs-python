@@ -30,7 +30,7 @@ class FeedbackClient:
         self,
         conversation_id: str,
         *,
-        feedback: UserFeedbackScore,
+        feedback: typing.Optional[UserFeedbackScore] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
@@ -41,7 +41,7 @@ class FeedbackClient:
         conversation_id : str
             The id of the conversation you're taking the action on.
 
-        feedback : UserFeedbackScore
+        feedback : typing.Optional[UserFeedbackScore]
             Either 'like' or 'dislike' to indicate the feedback for the conversation.
 
         request_options : typing.Optional[RequestOptions]
@@ -87,7 +87,7 @@ class AsyncFeedbackClient:
         self,
         conversation_id: str,
         *,
-        feedback: UserFeedbackScore,
+        feedback: typing.Optional[UserFeedbackScore] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
@@ -98,7 +98,7 @@ class AsyncFeedbackClient:
         conversation_id : str
             The id of the conversation you're taking the action on.
 
-        feedback : UserFeedbackScore
+        feedback : typing.Optional[UserFeedbackScore]
             Either 'like' or 'dislike' to indicate the feedback for the conversation.
 
         request_options : typing.Optional[RequestOptions]

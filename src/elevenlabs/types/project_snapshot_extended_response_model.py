@@ -40,6 +40,10 @@ class ProjectSnapshotExtendedResponseModel(UncheckedBaseModel):
     """
 
     character_alignments: typing.List[CharacterAlignmentModel]
+    audio_duration_secs: float = pydantic.Field()
+    """
+    The total duration of the audio in seconds.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

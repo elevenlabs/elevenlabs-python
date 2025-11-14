@@ -7,37 +7,43 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .api_integration_webhook_overrides_output import ApiIntegrationWebhookOverridesOutput
+from .api_integration_webhook_overrides_input import ApiIntegrationWebhookOverridesInput
 from .dynamic_variable_assignment import DynamicVariableAssignment
 from .dynamic_variables_config import DynamicVariablesConfig
 from .tool_call_sound_behavior import ToolCallSoundBehavior
 from .tool_call_sound_type import ToolCallSoundType
 from .tool_execution_mode import ToolExecutionMode
+from .webhook_tool_api_schema_config_input import WebhookToolApiSchemaConfigInput
 
 
-class ApiIntegrationWebhookToolConfigOutput(UncheckedBaseModel):
+class ApiIntegrationWebhookToolConfigExternalInput(UncheckedBaseModel):
+    """
+    When consumed by clients it convenient to include the base API schema even though
+    the stored tool config does not include it.
+    """
+
     name: str
     description: str = pydantic.Field()
     """
     Description of when the tool should be used and what it does.
     """
 
-    response_timeout_secs: int = pydantic.Field()
+    response_timeout_secs: typing.Optional[int] = pydantic.Field(default=None)
     """
     The maximum time in seconds to wait for the tool call to complete. Must be between 5 and 120 seconds (inclusive).
     """
 
-    disable_interruptions: bool = pydantic.Field()
+    disable_interruptions: typing.Optional[bool] = pydantic.Field(default=None)
     """
     If true, the user will not be able to interrupt the agent while this tool is running.
     """
 
-    force_pre_tool_speech: bool = pydantic.Field()
+    force_pre_tool_speech: typing.Optional[bool] = pydantic.Field(default=None)
     """
     If true, the agent will speak before the tool call.
     """
 
-    assignments: typing.List[DynamicVariableAssignment] = pydantic.Field()
+    assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = pydantic.Field(default=None)
     """
     Configuration for extracting values from tool responses and assigning them to dynamic variables
     """
@@ -47,31 +53,36 @@ class ApiIntegrationWebhookToolConfigOutput(UncheckedBaseModel):
     Predefined tool call sound type to play during tool execution. If not specified, no tool call sound will be played.
     """
 
-    tool_call_sound_behavior: ToolCallSoundBehavior = pydantic.Field()
+    tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = pydantic.Field(default=None)
     """
     Determines when the tool call sound should play. 'auto' only plays when there's pre-tool speech, 'always' plays for every tool call.
     """
 
-    dynamic_variables: DynamicVariablesConfig = pydantic.Field()
+    dynamic_variables: typing.Optional[DynamicVariablesConfig] = pydantic.Field(default=None)
     """
     Configuration for dynamic variables
     """
 
-    execution_mode: ToolExecutionMode = pydantic.Field()
+    execution_mode: typing.Optional[ToolExecutionMode] = pydantic.Field(default=None)
     """
     Determines when and how the tool executes: 'immediate' executes the tool right away when requested by the LLM, 'post_tool_speech' waits for the agent to finish speaking before executing, 'async' runs the tool in the background without blocking - best for long-running operations.
     """
 
-    tool_version: str = pydantic.Field()
+    tool_version: typing.Optional[str] = pydantic.Field(default=None)
     """
     The version of the API integration tool
     """
 
     api_integration_id: str
     api_integration_connection_id: str
-    api_schema_overrides: typing.Optional[ApiIntegrationWebhookOverridesOutput] = pydantic.Field(default=None)
+    api_schema_overrides: typing.Optional[ApiIntegrationWebhookOverridesInput] = pydantic.Field(default=None)
     """
     User overrides applied on top of the base api_schema
+    """
+
+    base_api_schema: WebhookToolApiSchemaConfigInput = pydantic.Field()
+    """
+    The base API schema from the integration definition
     """
 
     if IS_PYDANTIC_V2:
@@ -84,4 +95,4 @@ class ApiIntegrationWebhookToolConfigOutput(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-update_forward_refs(ApiIntegrationWebhookToolConfigOutput)
+update_forward_refs(ApiIntegrationWebhookToolConfigExternalInput)

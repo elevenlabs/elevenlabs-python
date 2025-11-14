@@ -3,5 +3,5 @@
 import typing
 
 ConversationHistoryTranscriptOtherToolsResultCommonModelType = typing.Union[
-    typing.Literal["client", "webhook", "mcp"], typing.Any
+    typing.Literal["client", "webhook", "mcp", "api_integration_webhook"], typing.Any
 ]

@@ -7,20 +7,16 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class PronunciationDictionaryLocator(UncheckedBaseModel):
-    """
-    Identifies a specific pronunciation dictionary to use
-    """
-
-    pronunciation_dictionary_id: str = pydantic.Field()
-    """
-    The unique identifier of the pronunciation dictionary
-    """
-
-    version_id: str = pydantic.Field()
-    """
-    The version identifier of the pronunciation dictionary
-    """
+class ProjectVoiceResponseModel(UncheckedBaseModel):
+    voice_id: str
+    alias: str
+    stability: float
+    similarity_boost: float
+    style: float
+    is_pinned: bool
+    use_speaker_boost: bool
+    volume_gain: float
+    speed: float
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

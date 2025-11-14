@@ -253,7 +253,7 @@ class MusicClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
-        Separate a music file into individual stems
+        Separate an audio file into individual stems. This endpoint might have high latency, depending on the length of the audio file.
 
         Parameters
         ----------
@@ -547,7 +547,7 @@ class AsyncMusicClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
-        Separate a music file into individual stems
+        Separate an audio file into individual stems. This endpoint might have high latency, depending on the length of the audio file.
 
         Parameters
         ----------

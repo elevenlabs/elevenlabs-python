@@ -64,7 +64,6 @@ if typing.TYPE_CHECKING:
     )
     from .agent_workspace_overrides_input import AgentWorkspaceOverridesInput
     from .agent_workspace_overrides_output import AgentWorkspaceOverridesOutput
-    from .alignment import Alignment
     from .allowlist_item import AllowlistItem
     from .api_integration_webhook_overrides_input import ApiIntegrationWebhookOverridesInput
     from .api_integration_webhook_overrides_input_request_headers_value import (
@@ -74,6 +73,8 @@ if typing.TYPE_CHECKING:
     from .api_integration_webhook_overrides_output_request_headers_value import (
         ApiIntegrationWebhookOverridesOutputRequestHeadersValue,
     )
+    from .api_integration_webhook_tool_config_external_input import ApiIntegrationWebhookToolConfigExternalInput
+    from .api_integration_webhook_tool_config_external_output import ApiIntegrationWebhookToolConfigExternalOutput
     from .api_integration_webhook_tool_config_input import ApiIntegrationWebhookToolConfigInput
     from .api_integration_webhook_tool_config_output import ApiIntegrationWebhookToolConfigOutput
     from .array_json_schema_property_input import ArrayJsonSchemaPropertyInput
@@ -566,8 +567,6 @@ if typing.TYPE_CHECKING:
     from .audio_native_edit_content_response_model import AudioNativeEditContentResponseModel
     from .audio_native_project_settings_response_model import AudioNativeProjectSettingsResponseModel
     from .audio_native_project_settings_response_model_status import AudioNativeProjectSettingsResponseModelStatus
-    from .audio_output import AudioOutput
-    from .audio_output_multi import AudioOutputMulti
     from .audio_with_timestamps_and_voice_segments_response_model import (
         AudioWithTimestampsAndVoiceSegmentsResponseModel,
     )
@@ -640,9 +639,6 @@ if typing.TYPE_CHECKING:
     from .client_event import ClientEvent
     from .client_tool_config_input import ClientToolConfigInput
     from .client_tool_config_output import ClientToolConfigOutput
-    from .close_connection import CloseConnection
-    from .close_context import CloseContext
-    from .close_socket import CloseSocket
     from .conv_ai_dynamic_variable import ConvAiDynamicVariable
     from .conv_ai_secret_locator import ConvAiSecretLocator
     from .conv_ai_stored_secret_dependencies import ConvAiStoredSecretDependencies
@@ -669,6 +665,7 @@ if typing.TYPE_CHECKING:
     from .conversation_config_override_config import ConversationConfigOverrideConfig
     from .conversation_config_workflow_override import ConversationConfigWorkflowOverride
     from .conversation_deletion_settings import ConversationDeletionSettings
+    from .conversation_feedback_type import ConversationFeedbackType
     from .conversation_history_analysis_common_model import ConversationHistoryAnalysisCommonModel
     from .conversation_history_batch_call_model import ConversationHistoryBatchCallModel
     from .conversation_history_eleven_assistant_common_model import ConversationHistoryElevenAssistantCommonModel
@@ -838,6 +835,7 @@ if typing.TYPE_CHECKING:
     from .detailed_music_response import DetailedMusicResponse
     from .dialogue_input import DialogueInput
     from .dialogue_input_response_model import DialogueInputResponseModel
+    from .discount_resposne_model import DiscountResposneModel
     from .do_dubbing_response import DoDubbingResponse
     from .document_usage_mode_enum import DocumentUsageModeEnum
     from .docx_export_options import DocxExportOptions
@@ -889,17 +887,13 @@ if typing.TYPE_CHECKING:
     from .feature_status_common_model import FeatureStatusCommonModel
     from .features_usage_common_model import FeaturesUsageCommonModel
     from .feedback_item import FeedbackItem
-    from .final_output import FinalOutput
-    from .final_output_multi import FinalOutputMulti
     from .fine_tuning_response import FineTuningResponse
     from .fine_tuning_response_model_state_value import FineTuningResponseModelStateValue
-    from .flush_context import FlushContext
     from .forced_alignment_character_response_model import ForcedAlignmentCharacterResponseModel
     from .forced_alignment_response_model import ForcedAlignmentResponseModel
     from .forced_alignment_word_response_model import ForcedAlignmentWordResponseModel
     from .gender import Gender
     from .generate_voice_request import GenerateVoiceRequest
-    from .generation_config import GenerationConfig
     from .get_agent_embed_response_model import GetAgentEmbedResponseModel
     from .get_agent_knowledgebase_size_response_model import GetAgentKnowledgebaseSizeResponseModel
     from .get_agent_link_response_model import GetAgentLinkResponseModel
@@ -1007,13 +1001,9 @@ if typing.TYPE_CHECKING:
     from .http_validation_error import HttpValidationError
     from .image_avatar import ImageAvatar
     from .inbound_sip_trunk_config_request_model import InboundSipTrunkConfigRequestModel
-    from .initialise_context import InitialiseContext
-    from .initialize_connection import InitializeConnection
-    from .initialize_connection_multi import InitializeConnectionMulti
     from .integration_type import IntegrationType
     from .invoice_response import InvoiceResponse
     from .invoice_response_model_payment_intent_status import InvoiceResponseModelPaymentIntentStatus
-    from .keep_context_alive import KeepContextAlive
     from .knowledge_base_document_chunk_response_model import KnowledgeBaseDocumentChunkResponseModel
     from .knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
     from .knowledge_base_document_type import KnowledgeBaseDocumentType
@@ -1081,7 +1071,6 @@ if typing.TYPE_CHECKING:
     from .multichannel_speech_to_text_response_model import MultichannelSpeechToTextResponseModel
     from .multipart_music_response import MultipartMusicResponse
     from .music_prompt import MusicPrompt
-    from .normalized_alignment import NormalizedAlignment
     from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput
     from .object_json_schema_property_input_properties_value import ObjectJsonSchemaPropertyInputPropertiesValue
     from .object_json_schema_property_output import ObjectJsonSchemaPropertyOutput
@@ -1137,10 +1126,16 @@ if typing.TYPE_CHECKING:
         ProjectExtendedResponseModelApplyTextNormalization,
     )
     from .project_extended_response_model_aspect_ratio import ProjectExtendedResponseModelAspectRatio
+    from .project_extended_response_model_assets_item import (
+        ProjectExtendedResponseModelAssetsItem,
+        ProjectExtendedResponseModelAssetsItem_Audio,
+        ProjectExtendedResponseModelAssetsItem_Video,
+    )
     from .project_extended_response_model_fiction import ProjectExtendedResponseModelFiction
     from .project_extended_response_model_quality_preset import ProjectExtendedResponseModelQualityPreset
     from .project_extended_response_model_source_type import ProjectExtendedResponseModelSourceType
     from .project_extended_response_model_target_audience import ProjectExtendedResponseModelTargetAudience
+    from .project_external_audio_response_model import ProjectExternalAudioResponseModel
     from .project_response import ProjectResponse
     from .project_response_model_access_level import ProjectResponseModelAccessLevel
     from .project_response_model_aspect_ratio import ProjectResponseModelAspectRatio
@@ -1151,6 +1146,9 @@ if typing.TYPE_CHECKING:
     from .project_snapshot_response import ProjectSnapshotResponse
     from .project_snapshots_response import ProjectSnapshotsResponse
     from .project_state import ProjectState
+    from .project_video_response_model import ProjectVideoResponseModel
+    from .project_video_thumbnail_sheet_response_model import ProjectVideoThumbnailSheetResponseModel
+    from .project_voice_response_model import ProjectVoiceResponseModel
     from .prompt_agent import PromptAgent
     from .prompt_agent_api_model_input import PromptAgentApiModelInput
     from .prompt_agent_api_model_input_backup_llm_config import (
@@ -1211,7 +1209,6 @@ if typing.TYPE_CHECKING:
     from .prompt_agent_db_model import PromptAgentDbModel
     from .prompt_evaluation_criteria import PromptEvaluationCriteria
     from .pronunciation_dictionary_alias_rule_request_model import PronunciationDictionaryAliasRuleRequestModel
-    from .pronunciation_dictionary_locator import PronunciationDictionaryLocator
     from .pronunciation_dictionary_locator_response_model import PronunciationDictionaryLocatorResponseModel
     from .pronunciation_dictionary_phoneme_rule_request_model import PronunciationDictionaryPhonemeRuleRequestModel
     from .pronunciation_dictionary_rules_response_model import PronunciationDictionaryRulesResponseModel
@@ -1235,7 +1232,6 @@ if typing.TYPE_CHECKING:
     from .rag_retrieval_info import RagRetrievalInfo
     from .reader_resource_response_model import ReaderResourceResponseModel
     from .reader_resource_response_model_resource_type import ReaderResourceResponseModelResourceType
-    from .realtime_voice_settings import RealtimeVoiceSettings
     from .recording_response import RecordingResponse
     from .referenced_tool_common_model import ReferencedToolCommonModel
     from .referenced_tool_common_model_type import ReferencedToolCommonModelType
@@ -1268,8 +1264,6 @@ if typing.TYPE_CHECKING:
     from .segment_translation_response import SegmentTranslationResponse
     from .segment_update_response import SegmentUpdateResponse
     from .segmented_json_export_options import SegmentedJsonExportOptions
-    from .send_text import SendText
-    from .send_text_multi import SendTextMulti
     from .share_option_response_model import ShareOptionResponseModel
     from .share_option_response_model_type import ShareOptionResponseModelType
     from .similar_voice import SimilarVoice
@@ -1286,6 +1280,10 @@ if typing.TYPE_CHECKING:
     from .sip_uri_transfer_destination import SipUriTransferDestination
     from .skip_turn_tool_config import SkipTurnToolConfig
     from .skip_turn_tool_response_model import SkipTurnToolResponseModel
+    from .soft_timeout_config import SoftTimeoutConfig
+    from .soft_timeout_config_override import SoftTimeoutConfigOverride
+    from .soft_timeout_config_override_config import SoftTimeoutConfigOverrideConfig
+    from .soft_timeout_config_workflow_override import SoftTimeoutConfigWorkflowOverride
     from .song_metadata import SongMetadata
     from .song_section import SongSection
     from .sort_direction import SortDirection
@@ -1351,8 +1349,6 @@ if typing.TYPE_CHECKING:
     from .test_run_status import TestRunStatus
     from .test_tool_result_model import TestToolResultModel
     from .tests_feature_usage_common_model import TestsFeatureUsageCommonModel
-    from .text_to_speech_apply_text_normalization_enum import TextToSpeechApplyTextNormalizationEnum
-    from .text_to_speech_output_format_enum import TextToSpeechOutputFormatEnum
     from .text_to_speech_request import TextToSpeechRequest
     from .text_to_speech_stream_request import TextToSpeechStreamRequest
     from .text_to_speech_stream_with_timestamps_request import TextToSpeechStreamWithTimestampsRequest
@@ -1379,7 +1375,6 @@ if typing.TYPE_CHECKING:
         ToolResponseModelToolConfig,
         ToolResponseModelToolConfig_ApiIntegrationWebhook,
         ToolResponseModelToolConfig_Client,
-        ToolResponseModelToolConfig_Mcp,
         ToolResponseModelToolConfig_System,
         ToolResponseModelToolConfig_Webhook,
     )
@@ -1406,6 +1401,8 @@ if typing.TYPE_CHECKING:
     from .tts_optimize_streaming_latency import TtsOptimizeStreamingLatency
     from .tts_output_format import TtsOutputFormat
     from .turn_config import TurnConfig
+    from .turn_config_override import TurnConfigOverride
+    from .turn_config_override_config import TurnConfigOverrideConfig
     from .turn_config_workflow_override import TurnConfigWorkflowOverride
     from .turn_eagerness import TurnEagerness
     from .turn_mode import TurnMode
@@ -1469,11 +1466,13 @@ if typing.TYPE_CHECKING:
     from .webhook_auth_method_type import WebhookAuthMethodType
     from .webhook_event_type import WebhookEventType
     from .webhook_tool_api_schema_config_input import WebhookToolApiSchemaConfigInput
+    from .webhook_tool_api_schema_config_input_content_type import WebhookToolApiSchemaConfigInputContentType
     from .webhook_tool_api_schema_config_input_method import WebhookToolApiSchemaConfigInputMethod
     from .webhook_tool_api_schema_config_input_request_headers_value import (
         WebhookToolApiSchemaConfigInputRequestHeadersValue,
     )
     from .webhook_tool_api_schema_config_output import WebhookToolApiSchemaConfigOutput
+    from .webhook_tool_api_schema_config_output_content_type import WebhookToolApiSchemaConfigOutputContentType
     from .webhook_tool_api_schema_config_output_method import WebhookToolApiSchemaConfigOutputMethod
     from .webhook_tool_api_schema_config_output_request_headers_value import (
         WebhookToolApiSchemaConfigOutputRequestHeadersValue,
@@ -1481,8 +1480,6 @@ if typing.TYPE_CHECKING:
     from .webhook_tool_config_input import WebhookToolConfigInput
     from .webhook_tool_config_output import WebhookToolConfigOutput
     from .webhook_usage_type import WebhookUsageType
-    from .websocket_tts_client_message_multi import WebsocketTtsClientMessageMulti
-    from .websocket_tts_server_message_multi import WebsocketTtsServerMessageMulti
     from .whats_app_conversation_info import WhatsAppConversationInfo
     from .widget_config import WidgetConfig
     from .widget_config_input_avatar import (
@@ -1504,6 +1501,8 @@ if typing.TYPE_CHECKING:
         WidgetConfigResponseModelAvatar_Orb,
         WidgetConfigResponseModelAvatar_Url,
     )
+    from .widget_end_feedback_config import WidgetEndFeedbackConfig
+    from .widget_end_feedback_type import WidgetEndFeedbackType
     from .widget_expandable import WidgetExpandable
     from .widget_feedback_mode import WidgetFeedbackMode
     from .widget_language_preset import WidgetLanguagePreset
@@ -1699,12 +1698,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentWorkflowResponseModelNodesValue_Tool": ".agent_workflow_response_model_nodes_value",
     "AgentWorkspaceOverridesInput": ".agent_workspace_overrides_input",
     "AgentWorkspaceOverridesOutput": ".agent_workspace_overrides_output",
-    "Alignment": ".alignment",
     "AllowlistItem": ".allowlist_item",
     "ApiIntegrationWebhookOverridesInput": ".api_integration_webhook_overrides_input",
     "ApiIntegrationWebhookOverridesInputRequestHeadersValue": ".api_integration_webhook_overrides_input_request_headers_value",
     "ApiIntegrationWebhookOverridesOutput": ".api_integration_webhook_overrides_output",
     "ApiIntegrationWebhookOverridesOutputRequestHeadersValue": ".api_integration_webhook_overrides_output_request_headers_value",
+    "ApiIntegrationWebhookToolConfigExternalInput": ".api_integration_webhook_tool_config_external_input",
+    "ApiIntegrationWebhookToolConfigExternalOutput": ".api_integration_webhook_tool_config_external_output",
     "ApiIntegrationWebhookToolConfigInput": ".api_integration_webhook_tool_config_input",
     "ApiIntegrationWebhookToolConfigOutput": ".api_integration_webhook_tool_config_output",
     "ArrayJsonSchemaPropertyInput": ".array_json_schema_property_input",
@@ -2141,8 +2141,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AudioNativeEditContentResponseModel": ".audio_native_edit_content_response_model",
     "AudioNativeProjectSettingsResponseModel": ".audio_native_project_settings_response_model",
     "AudioNativeProjectSettingsResponseModelStatus": ".audio_native_project_settings_response_model_status",
-    "AudioOutput": ".audio_output",
-    "AudioOutputMulti": ".audio_output_multi",
     "AudioWithTimestampsAndVoiceSegmentsResponseModel": ".audio_with_timestamps_and_voice_segments_response_model",
     "AudioWithTimestampsResponse": ".audio_with_timestamps_response",
     "AuthConnectionLocator": ".auth_connection_locator",
@@ -2207,9 +2205,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ClientEvent": ".client_event",
     "ClientToolConfigInput": ".client_tool_config_input",
     "ClientToolConfigOutput": ".client_tool_config_output",
-    "CloseConnection": ".close_connection",
-    "CloseContext": ".close_context",
-    "CloseSocket": ".close_socket",
     "ConvAiDynamicVariable": ".conv_ai_dynamic_variable",
     "ConvAiSecretLocator": ".conv_ai_secret_locator",
     "ConvAiStoredSecretDependencies": ".conv_ai_stored_secret_dependencies",
@@ -2232,6 +2227,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationConfigOverrideConfig": ".conversation_config_override_config",
     "ConversationConfigWorkflowOverride": ".conversation_config_workflow_override",
     "ConversationDeletionSettings": ".conversation_deletion_settings",
+    "ConversationFeedbackType": ".conversation_feedback_type",
     "ConversationHistoryAnalysisCommonModel": ".conversation_history_analysis_common_model",
     "ConversationHistoryBatchCallModel": ".conversation_history_batch_call_model",
     "ConversationHistoryElevenAssistantCommonModel": ".conversation_history_eleven_assistant_common_model",
@@ -2349,6 +2345,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DetailedMusicResponse": ".detailed_music_response",
     "DialogueInput": ".dialogue_input",
     "DialogueInputResponseModel": ".dialogue_input_response_model",
+    "DiscountResposneModel": ".discount_resposne_model",
     "DoDubbingResponse": ".do_dubbing_response",
     "DocumentUsageModeEnum": ".document_usage_mode_enum",
     "DocxExportOptions": ".docx_export_options",
@@ -2392,17 +2389,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FeatureStatusCommonModel": ".feature_status_common_model",
     "FeaturesUsageCommonModel": ".features_usage_common_model",
     "FeedbackItem": ".feedback_item",
-    "FinalOutput": ".final_output",
-    "FinalOutputMulti": ".final_output_multi",
     "FineTuningResponse": ".fine_tuning_response",
     "FineTuningResponseModelStateValue": ".fine_tuning_response_model_state_value",
-    "FlushContext": ".flush_context",
     "ForcedAlignmentCharacterResponseModel": ".forced_alignment_character_response_model",
     "ForcedAlignmentResponseModel": ".forced_alignment_response_model",
     "ForcedAlignmentWordResponseModel": ".forced_alignment_word_response_model",
     "Gender": ".gender",
     "GenerateVoiceRequest": ".generate_voice_request",
-    "GenerationConfig": ".generation_config",
     "GetAgentEmbedResponseModel": ".get_agent_embed_response_model",
     "GetAgentKnowledgebaseSizeResponseModel": ".get_agent_knowledgebase_size_response_model",
     "GetAgentLinkResponseModel": ".get_agent_link_response_model",
@@ -2486,13 +2479,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "HttpValidationError": ".http_validation_error",
     "ImageAvatar": ".image_avatar",
     "InboundSipTrunkConfigRequestModel": ".inbound_sip_trunk_config_request_model",
-    "InitialiseContext": ".initialise_context",
-    "InitializeConnection": ".initialize_connection",
-    "InitializeConnectionMulti": ".initialize_connection_multi",
     "IntegrationType": ".integration_type",
     "InvoiceResponse": ".invoice_response",
     "InvoiceResponseModelPaymentIntentStatus": ".invoice_response_model_payment_intent_status",
-    "KeepContextAlive": ".keep_context_alive",
     "KnowledgeBaseDocumentChunkResponseModel": ".knowledge_base_document_chunk_response_model",
     "KnowledgeBaseDocumentMetadataResponseModel": ".knowledge_base_document_metadata_response_model",
     "KnowledgeBaseDocumentType": ".knowledge_base_document_type",
@@ -2558,7 +2547,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MultichannelSpeechToTextResponseModel": ".multichannel_speech_to_text_response_model",
     "MultipartMusicResponse": ".multipart_music_response",
     "MusicPrompt": ".music_prompt",
-    "NormalizedAlignment": ".normalized_alignment",
     "ObjectJsonSchemaPropertyInput": ".object_json_schema_property_input",
     "ObjectJsonSchemaPropertyInputPropertiesValue": ".object_json_schema_property_input_properties_value",
     "ObjectJsonSchemaPropertyOutput": ".object_json_schema_property_output",
@@ -2608,10 +2596,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ProjectExtendedResponseModelAccessLevel": ".project_extended_response_model_access_level",
     "ProjectExtendedResponseModelApplyTextNormalization": ".project_extended_response_model_apply_text_normalization",
     "ProjectExtendedResponseModelAspectRatio": ".project_extended_response_model_aspect_ratio",
+    "ProjectExtendedResponseModelAssetsItem": ".project_extended_response_model_assets_item",
+    "ProjectExtendedResponseModelAssetsItem_Audio": ".project_extended_response_model_assets_item",
+    "ProjectExtendedResponseModelAssetsItem_Video": ".project_extended_response_model_assets_item",
     "ProjectExtendedResponseModelFiction": ".project_extended_response_model_fiction",
     "ProjectExtendedResponseModelQualityPreset": ".project_extended_response_model_quality_preset",
     "ProjectExtendedResponseModelSourceType": ".project_extended_response_model_source_type",
     "ProjectExtendedResponseModelTargetAudience": ".project_extended_response_model_target_audience",
+    "ProjectExternalAudioResponseModel": ".project_external_audio_response_model",
     "ProjectResponse": ".project_response",
     "ProjectResponseModelAccessLevel": ".project_response_model_access_level",
     "ProjectResponseModelAspectRatio": ".project_response_model_aspect_ratio",
@@ -2622,6 +2614,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ProjectSnapshotResponse": ".project_snapshot_response",
     "ProjectSnapshotsResponse": ".project_snapshots_response",
     "ProjectState": ".project_state",
+    "ProjectVideoResponseModel": ".project_video_response_model",
+    "ProjectVideoThumbnailSheetResponseModel": ".project_video_thumbnail_sheet_response_model",
+    "ProjectVoiceResponseModel": ".project_voice_response_model",
     "PromptAgent": ".prompt_agent",
     "PromptAgentApiModelInput": ".prompt_agent_api_model_input",
     "PromptAgentApiModelInputBackupLlmConfig": ".prompt_agent_api_model_input_backup_llm_config",
@@ -2666,7 +2661,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PromptAgentDbModel": ".prompt_agent_db_model",
     "PromptEvaluationCriteria": ".prompt_evaluation_criteria",
     "PronunciationDictionaryAliasRuleRequestModel": ".pronunciation_dictionary_alias_rule_request_model",
-    "PronunciationDictionaryLocator": ".pronunciation_dictionary_locator",
     "PronunciationDictionaryLocatorResponseModel": ".pronunciation_dictionary_locator_response_model",
     "PronunciationDictionaryPhonemeRuleRequestModel": ".pronunciation_dictionary_phoneme_rule_request_model",
     "PronunciationDictionaryRulesResponseModel": ".pronunciation_dictionary_rules_response_model",
@@ -2688,7 +2682,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RagRetrievalInfo": ".rag_retrieval_info",
     "ReaderResourceResponseModel": ".reader_resource_response_model",
     "ReaderResourceResponseModelResourceType": ".reader_resource_response_model_resource_type",
-    "RealtimeVoiceSettings": ".realtime_voice_settings",
     "RecordingResponse": ".recording_response",
     "ReferencedToolCommonModel": ".referenced_tool_common_model",
     "ReferencedToolCommonModelType": ".referenced_tool_common_model_type",
@@ -2719,8 +2712,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SegmentTranslationResponse": ".segment_translation_response",
     "SegmentUpdateResponse": ".segment_update_response",
     "SegmentedJsonExportOptions": ".segmented_json_export_options",
-    "SendText": ".send_text",
-    "SendTextMulti": ".send_text_multi",
     "ShareOptionResponseModel": ".share_option_response_model",
     "ShareOptionResponseModelType": ".share_option_response_model_type",
     "SimilarVoice": ".similar_voice",
@@ -2737,6 +2728,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SipUriTransferDestination": ".sip_uri_transfer_destination",
     "SkipTurnToolConfig": ".skip_turn_tool_config",
     "SkipTurnToolResponseModel": ".skip_turn_tool_response_model",
+    "SoftTimeoutConfig": ".soft_timeout_config",
+    "SoftTimeoutConfigOverride": ".soft_timeout_config_override",
+    "SoftTimeoutConfigOverrideConfig": ".soft_timeout_config_override_config",
+    "SoftTimeoutConfigWorkflowOverride": ".soft_timeout_config_workflow_override",
     "SongMetadata": ".song_metadata",
     "SongSection": ".song_section",
     "SortDirection": ".sort_direction",
@@ -2796,8 +2791,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TestRunStatus": ".test_run_status",
     "TestToolResultModel": ".test_tool_result_model",
     "TestsFeatureUsageCommonModel": ".tests_feature_usage_common_model",
-    "TextToSpeechApplyTextNormalizationEnum": ".text_to_speech_apply_text_normalization_enum",
-    "TextToSpeechOutputFormatEnum": ".text_to_speech_output_format_enum",
     "TextToSpeechRequest": ".text_to_speech_request",
     "TextToSpeechStreamRequest": ".text_to_speech_stream_request",
     "TextToSpeechStreamWithTimestampsRequest": ".text_to_speech_stream_with_timestamps_request",
@@ -2821,7 +2814,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ToolResponseModelToolConfig": ".tool_response_model_tool_config",
     "ToolResponseModelToolConfig_ApiIntegrationWebhook": ".tool_response_model_tool_config",
     "ToolResponseModelToolConfig_Client": ".tool_response_model_tool_config",
-    "ToolResponseModelToolConfig_Mcp": ".tool_response_model_tool_config",
     "ToolResponseModelToolConfig_System": ".tool_response_model_tool_config",
     "ToolResponseModelToolConfig_Webhook": ".tool_response_model_tool_config",
     "ToolType": ".tool_type",
@@ -2847,6 +2839,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TtsOptimizeStreamingLatency": ".tts_optimize_streaming_latency",
     "TtsOutputFormat": ".tts_output_format",
     "TurnConfig": ".turn_config",
+    "TurnConfigOverride": ".turn_config_override",
+    "TurnConfigOverrideConfig": ".turn_config_override_config",
     "TurnConfigWorkflowOverride": ".turn_config_workflow_override",
     "TurnEagerness": ".turn_eagerness",
     "TurnMode": ".turn_mode",
@@ -2908,16 +2902,16 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WebhookAuthMethodType": ".webhook_auth_method_type",
     "WebhookEventType": ".webhook_event_type",
     "WebhookToolApiSchemaConfigInput": ".webhook_tool_api_schema_config_input",
+    "WebhookToolApiSchemaConfigInputContentType": ".webhook_tool_api_schema_config_input_content_type",
     "WebhookToolApiSchemaConfigInputMethod": ".webhook_tool_api_schema_config_input_method",
     "WebhookToolApiSchemaConfigInputRequestHeadersValue": ".webhook_tool_api_schema_config_input_request_headers_value",
     "WebhookToolApiSchemaConfigOutput": ".webhook_tool_api_schema_config_output",
+    "WebhookToolApiSchemaConfigOutputContentType": ".webhook_tool_api_schema_config_output_content_type",
     "WebhookToolApiSchemaConfigOutputMethod": ".webhook_tool_api_schema_config_output_method",
     "WebhookToolApiSchemaConfigOutputRequestHeadersValue": ".webhook_tool_api_schema_config_output_request_headers_value",
     "WebhookToolConfigInput": ".webhook_tool_config_input",
     "WebhookToolConfigOutput": ".webhook_tool_config_output",
     "WebhookUsageType": ".webhook_usage_type",
-    "WebsocketTtsClientMessageMulti": ".websocket_tts_client_message_multi",
-    "WebsocketTtsServerMessageMulti": ".websocket_tts_server_message_multi",
     "WhatsAppConversationInfo": ".whats_app_conversation_info",
     "WidgetConfig": ".widget_config",
     "WidgetConfigInputAvatar": ".widget_config_input_avatar",
@@ -2933,6 +2927,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WidgetConfigResponseModelAvatar_Image": ".widget_config_response_model_avatar",
     "WidgetConfigResponseModelAvatar_Orb": ".widget_config_response_model_avatar",
     "WidgetConfigResponseModelAvatar_Url": ".widget_config_response_model_avatar",
+    "WidgetEndFeedbackConfig": ".widget_end_feedback_config",
+    "WidgetEndFeedbackType": ".widget_end_feedback_type",
     "WidgetExpandable": ".widget_expandable",
     "WidgetFeedbackMode": ".widget_feedback_mode",
     "WidgetLanguagePreset": ".widget_language_preset",
@@ -3128,12 +3124,13 @@ __all__ = [
     "AgentWorkflowResponseModelNodesValue_Tool",
     "AgentWorkspaceOverridesInput",
     "AgentWorkspaceOverridesOutput",
-    "Alignment",
     "AllowlistItem",
     "ApiIntegrationWebhookOverridesInput",
     "ApiIntegrationWebhookOverridesInputRequestHeadersValue",
     "ApiIntegrationWebhookOverridesOutput",
     "ApiIntegrationWebhookOverridesOutputRequestHeadersValue",
+    "ApiIntegrationWebhookToolConfigExternalInput",
+    "ApiIntegrationWebhookToolConfigExternalOutput",
     "ApiIntegrationWebhookToolConfigInput",
     "ApiIntegrationWebhookToolConfigOutput",
     "ArrayJsonSchemaPropertyInput",
@@ -3570,8 +3567,6 @@ __all__ = [
     "AudioNativeEditContentResponseModel",
     "AudioNativeProjectSettingsResponseModel",
     "AudioNativeProjectSettingsResponseModelStatus",
-    "AudioOutput",
-    "AudioOutputMulti",
     "AudioWithTimestampsAndVoiceSegmentsResponseModel",
     "AudioWithTimestampsResponse",
     "AuthConnectionLocator",
@@ -3636,9 +3631,6 @@ __all__ = [
     "ClientEvent",
     "ClientToolConfigInput",
     "ClientToolConfigOutput",
-    "CloseConnection",
-    "CloseContext",
-    "CloseSocket",
     "ConvAiDynamicVariable",
     "ConvAiSecretLocator",
     "ConvAiStoredSecretDependencies",
@@ -3661,6 +3653,7 @@ __all__ = [
     "ConversationConfigOverrideConfig",
     "ConversationConfigWorkflowOverride",
     "ConversationDeletionSettings",
+    "ConversationFeedbackType",
     "ConversationHistoryAnalysisCommonModel",
     "ConversationHistoryBatchCallModel",
     "ConversationHistoryElevenAssistantCommonModel",
@@ -3778,6 +3771,7 @@ __all__ = [
     "DetailedMusicResponse",
     "DialogueInput",
     "DialogueInputResponseModel",
+    "DiscountResposneModel",
     "DoDubbingResponse",
     "DocumentUsageModeEnum",
     "DocxExportOptions",
@@ -3821,17 +3815,13 @@ __all__ = [
     "FeatureStatusCommonModel",
     "FeaturesUsageCommonModel",
     "FeedbackItem",
-    "FinalOutput",
-    "FinalOutputMulti",
     "FineTuningResponse",
     "FineTuningResponseModelStateValue",
-    "FlushContext",
     "ForcedAlignmentCharacterResponseModel",
     "ForcedAlignmentResponseModel",
     "ForcedAlignmentWordResponseModel",
     "Gender",
     "GenerateVoiceRequest",
-    "GenerationConfig",
     "GetAgentEmbedResponseModel",
     "GetAgentKnowledgebaseSizeResponseModel",
     "GetAgentLinkResponseModel",
@@ -3915,13 +3905,9 @@ __all__ = [
     "HttpValidationError",
     "ImageAvatar",
     "InboundSipTrunkConfigRequestModel",
-    "InitialiseContext",
-    "InitializeConnection",
-    "InitializeConnectionMulti",
     "IntegrationType",
     "InvoiceResponse",
     "InvoiceResponseModelPaymentIntentStatus",
-    "KeepContextAlive",
     "KnowledgeBaseDocumentChunkResponseModel",
     "KnowledgeBaseDocumentMetadataResponseModel",
     "KnowledgeBaseDocumentType",
@@ -3987,7 +3973,6 @@ __all__ = [
     "MultichannelSpeechToTextResponseModel",
     "MultipartMusicResponse",
     "MusicPrompt",
-    "NormalizedAlignment",
     "ObjectJsonSchemaPropertyInput",
     "ObjectJsonSchemaPropertyInputPropertiesValue",
     "ObjectJsonSchemaPropertyOutput",
@@ -4037,10 +4022,14 @@ __all__ = [
     "ProjectExtendedResponseModelAccessLevel",
     "ProjectExtendedResponseModelApplyTextNormalization",
     "ProjectExtendedResponseModelAspectRatio",
+    "ProjectExtendedResponseModelAssetsItem",
+    "ProjectExtendedResponseModelAssetsItem_Audio",
+    "ProjectExtendedResponseModelAssetsItem_Video",
     "ProjectExtendedResponseModelFiction",
     "ProjectExtendedResponseModelQualityPreset",
     "ProjectExtendedResponseModelSourceType",
     "ProjectExtendedResponseModelTargetAudience",
+    "ProjectExternalAudioResponseModel",
     "ProjectResponse",
     "ProjectResponseModelAccessLevel",
     "ProjectResponseModelAspectRatio",
@@ -4051,6 +4040,9 @@ __all__ = [
     "ProjectSnapshotResponse",
     "ProjectSnapshotsResponse",
     "ProjectState",
+    "ProjectVideoResponseModel",
+    "ProjectVideoThumbnailSheetResponseModel",
+    "ProjectVoiceResponseModel",
     "PromptAgent",
     "PromptAgentApiModelInput",
     "PromptAgentApiModelInputBackupLlmConfig",
@@ -4095,7 +4087,6 @@ __all__ = [
     "PromptAgentDbModel",
     "PromptEvaluationCriteria",
     "PronunciationDictionaryAliasRuleRequestModel",
-    "PronunciationDictionaryLocator",
     "PronunciationDictionaryLocatorResponseModel",
     "PronunciationDictionaryPhonemeRuleRequestModel",
     "PronunciationDictionaryRulesResponseModel",
@@ -4117,7 +4108,6 @@ __all__ = [
     "RagRetrievalInfo",
     "ReaderResourceResponseModel",
     "ReaderResourceResponseModelResourceType",
-    "RealtimeVoiceSettings",
     "RecordingResponse",
     "ReferencedToolCommonModel",
     "ReferencedToolCommonModelType",
@@ -4148,8 +4138,6 @@ __all__ = [
     "SegmentTranslationResponse",
     "SegmentUpdateResponse",
     "SegmentedJsonExportOptions",
-    "SendText",
-    "SendTextMulti",
     "ShareOptionResponseModel",
     "ShareOptionResponseModelType",
     "SimilarVoice",
@@ -4166,6 +4154,10 @@ __all__ = [
     "SipUriTransferDestination",
     "SkipTurnToolConfig",
     "SkipTurnToolResponseModel",
+    "SoftTimeoutConfig",
+    "SoftTimeoutConfigOverride",
+    "SoftTimeoutConfigOverrideConfig",
+    "SoftTimeoutConfigWorkflowOverride",
     "SongMetadata",
     "SongSection",
     "SortDirection",
@@ -4225,8 +4217,6 @@ __all__ = [
     "TestRunStatus",
     "TestToolResultModel",
     "TestsFeatureUsageCommonModel",
-    "TextToSpeechApplyTextNormalizationEnum",
-    "TextToSpeechOutputFormatEnum",
     "TextToSpeechRequest",
     "TextToSpeechStreamRequest",
     "TextToSpeechStreamWithTimestampsRequest",
@@ -4250,7 +4240,6 @@ __all__ = [
     "ToolResponseModelToolConfig",
     "ToolResponseModelToolConfig_ApiIntegrationWebhook",
     "ToolResponseModelToolConfig_Client",
-    "ToolResponseModelToolConfig_Mcp",
     "ToolResponseModelToolConfig_System",
     "ToolResponseModelToolConfig_Webhook",
     "ToolType",
@@ -4276,6 +4265,8 @@ __all__ = [
     "TtsOptimizeStreamingLatency",
     "TtsOutputFormat",
     "TurnConfig",
+    "TurnConfigOverride",
+    "TurnConfigOverrideConfig",
     "TurnConfigWorkflowOverride",
     "TurnEagerness",
     "TurnMode",
@@ -4337,16 +4328,16 @@ __all__ = [
     "WebhookAuthMethodType",
     "WebhookEventType",
     "WebhookToolApiSchemaConfigInput",
+    "WebhookToolApiSchemaConfigInputContentType",
     "WebhookToolApiSchemaConfigInputMethod",
     "WebhookToolApiSchemaConfigInputRequestHeadersValue",
     "WebhookToolApiSchemaConfigOutput",
+    "WebhookToolApiSchemaConfigOutputContentType",
     "WebhookToolApiSchemaConfigOutputMethod",
     "WebhookToolApiSchemaConfigOutputRequestHeadersValue",
     "WebhookToolConfigInput",
     "WebhookToolConfigOutput",
     "WebhookUsageType",
-    "WebsocketTtsClientMessageMulti",
-    "WebsocketTtsServerMessageMulti",
     "WhatsAppConversationInfo",
     "WidgetConfig",
     "WidgetConfigInputAvatar",
@@ -4362,6 +4353,8 @@ __all__ = [
     "WidgetConfigResponseModelAvatar_Image",
     "WidgetConfigResponseModelAvatar_Orb",
     "WidgetConfigResponseModelAvatar_Url",
+    "WidgetEndFeedbackConfig",
+    "WidgetEndFeedbackType",
     "WidgetExpandable",
     "WidgetFeedbackMode",
     "WidgetLanguagePreset",
