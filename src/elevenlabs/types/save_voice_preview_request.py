@@ -2,4 +2,4 @@
 
 import typing
 
-SaveVoicePreviewRequest = typing.Optional[typing.Any]
+SaveVoicePreviewRequest = typing.Any

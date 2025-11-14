@@ -10,6 +10,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .auth_connection_locator import AuthConnectionLocator
 from .literal_json_schema_property import LiteralJsonSchemaProperty
 from .query_params_json_schema import QueryParamsJsonSchema
+from .webhook_tool_api_schema_config_input_content_type import WebhookToolApiSchemaConfigInputContentType
 from .webhook_tool_api_schema_config_input_method import WebhookToolApiSchemaConfigInputMethod
 from .webhook_tool_api_schema_config_input_request_headers_value import (
     WebhookToolApiSchemaConfigInputRequestHeadersValue,
@@ -51,6 +52,11 @@ class WebhookToolApiSchemaConfigInput(UncheckedBaseModel):
     )
     """
     Headers that should be included in the request
+    """
+
+    content_type: typing.Optional[WebhookToolApiSchemaConfigInputContentType] = pydantic.Field(default=None)
+    """
+    Content type for the request body. Only applies to POST/PUT/PATCH requests.
     """
 
     auth_connection: typing.Optional[AuthConnectionLocator] = pydantic.Field(default=None)

@@ -5,12 +5,13 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .soft_timeout_config_override import SoftTimeoutConfigOverride
 
 
-class CloseConnection(UncheckedBaseModel):
-    text: typing.Literal[""] = pydantic.Field(default="")
+class TurnConfigOverride(UncheckedBaseModel):
+    soft_timeout_config: typing.Optional[SoftTimeoutConfigOverride] = pydantic.Field(default=None)
     """
-    End the stream with an empty string
+    Configuration for soft timeout functionality. Provides immediate feedback during longer LLM responses.
     """
 
     if IS_PYDANTIC_V2:

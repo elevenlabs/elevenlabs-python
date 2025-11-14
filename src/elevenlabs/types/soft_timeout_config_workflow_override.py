@@ -3,18 +3,19 @@
 import typing
 
 import pydantic
-import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class FinalOutput(UncheckedBaseModel):
-    is_final: typing_extensions.Annotated[typing.Optional[typing.Literal[True]], FieldMetadata(alias="isFinal")] = (
-        pydantic.Field(default=None)
-    )
+class SoftTimeoutConfigWorkflowOverride(UncheckedBaseModel):
+    timeout_seconds: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Indicates if the generation is complete. If set to `True`, `audio` will be null.
+    Time in seconds before showing the predefined message while waiting for LLM response. Set to -1 to disable.
+    """
+
+    message: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Message to show when soft timeout is reached while waiting for LLM response
     """
 
     if IS_PYDANTIC_V2:

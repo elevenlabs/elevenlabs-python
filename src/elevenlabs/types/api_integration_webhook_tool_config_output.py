@@ -22,22 +22,22 @@ class ApiIntegrationWebhookToolConfigOutput(UncheckedBaseModel):
     Description of when the tool should be used and what it does.
     """
 
-    response_timeout_secs: typing.Optional[int] = pydantic.Field(default=None)
+    response_timeout_secs: int = pydantic.Field()
     """
     The maximum time in seconds to wait for the tool call to complete. Must be between 5 and 120 seconds (inclusive).
     """
 
-    disable_interruptions: typing.Optional[bool] = pydantic.Field(default=None)
+    disable_interruptions: bool = pydantic.Field()
     """
     If true, the user will not be able to interrupt the agent while this tool is running.
     """
 
-    force_pre_tool_speech: typing.Optional[bool] = pydantic.Field(default=None)
+    force_pre_tool_speech: bool = pydantic.Field()
     """
     If true, the agent will speak before the tool call.
     """
 
-    assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = pydantic.Field(default=None)
+    assignments: typing.List[DynamicVariableAssignment] = pydantic.Field()
     """
     Configuration for extracting values from tool responses and assigning them to dynamic variables
     """
@@ -47,22 +47,22 @@ class ApiIntegrationWebhookToolConfigOutput(UncheckedBaseModel):
     Predefined tool call sound type to play during tool execution. If not specified, no tool call sound will be played.
     """
 
-    tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = pydantic.Field(default=None)
+    tool_call_sound_behavior: ToolCallSoundBehavior = pydantic.Field()
     """
     Determines when the tool call sound should play. 'auto' only plays when there's pre-tool speech, 'always' plays for every tool call.
     """
 
-    dynamic_variables: typing.Optional[DynamicVariablesConfig] = pydantic.Field(default=None)
+    dynamic_variables: DynamicVariablesConfig = pydantic.Field()
     """
     Configuration for dynamic variables
     """
 
-    execution_mode: typing.Optional[ToolExecutionMode] = pydantic.Field(default=None)
+    execution_mode: ToolExecutionMode = pydantic.Field()
     """
     Determines when and how the tool executes: 'immediate' executes the tool right away when requested by the LLM, 'post_tool_speech' waits for the agent to finish speaking before executing, 'async' runs the tool in the background without blocking - best for long-running operations.
     """
 
-    tool_version: typing.Optional[str] = pydantic.Field(default=None)
+    tool_version: str = pydantic.Field()
     """
     The version of the API integration tool
     """

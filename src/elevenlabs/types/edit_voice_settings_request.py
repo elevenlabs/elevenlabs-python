@@ -2,4 +2,4 @@
 
 import typing
 
-EditVoiceSettingsRequest = typing.Optional[typing.Any]
+EditVoiceSettingsRequest = typing.Any
