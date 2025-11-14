@@ -7,24 +7,15 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class FlushContext(UncheckedBaseModel):
+class DiscountResposneModel(UncheckedBaseModel):
+    discount_percent_off: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Payload to flush the audio buffer for a specific context.
-    """
-
-    context_id: str = pydantic.Field()
-    """
-    The context_id to flush.
+    The discount applied to the invoice. E.g. [20.0f] for 20% off.
     """
 
-    text: typing.Optional[str] = pydantic.Field(default=None)
+    discount_amount_off: typing.Optional[float] = pydantic.Field(default=None)
     """
-    The text to append to the buffer to be flushed.
-    """
-
-    flush: bool = pydantic.Field()
-    """
-    If true, flushes the audio buffer for the specified context. If false, the context will remain open and the text will be appended to the buffer to be generated.
+    The discount applied to the invoice. E.g. [20.0f] for 20 cents off.
     """
 
     if IS_PYDANTIC_V2:

@@ -280,9 +280,7 @@ class TestsClient:
         )
         return _response.data
 
-    def delete(
-        self, test_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
+    def delete(self, test_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
         """
         Deletes an agent response test by ID.
 
@@ -296,7 +294,7 @@ class TestsClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        typing.Any
             Successful Response
 
         Examples
@@ -683,9 +681,7 @@ class AsyncTestsClient:
         )
         return _response.data
 
-    async def delete(
-        self, test_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
+    async def delete(self, test_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
         """
         Deletes an agent response test by ID.
 
@@ -699,7 +695,7 @@ class AsyncTestsClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        typing.Any
             Successful Response
 
         Examples

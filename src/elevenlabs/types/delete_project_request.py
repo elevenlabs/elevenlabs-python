@@ -2,4 +2,4 @@
 
 import typing
 
-DeleteProjectRequest = typing.Optional[typing.Any]
+DeleteProjectRequest = typing.Any

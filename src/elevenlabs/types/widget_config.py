@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .embed_variant import EmbedVariant
 from .widget_config_output_avatar import WidgetConfigOutputAvatar
+from .widget_end_feedback_config import WidgetEndFeedbackConfig
 from .widget_expandable import WidgetExpandable
 from .widget_feedback_mode import WidgetFeedbackMode
 from .widget_language_preset import WidgetLanguagePreset
@@ -39,6 +40,11 @@ class WidgetConfig(UncheckedBaseModel):
     feedback_mode: typing.Optional[WidgetFeedbackMode] = pydantic.Field(default=None)
     """
     The feedback mode of the widget
+    """
+
+    end_feedback: typing.Optional[WidgetEndFeedbackConfig] = pydantic.Field(default=None)
+    """
+    Configuration for feedback collected at the end of the conversation
     """
 
     bg_color: typing.Optional[str] = pydantic.Field(default=None)

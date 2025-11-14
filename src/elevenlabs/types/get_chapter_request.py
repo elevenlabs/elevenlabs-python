@@ -2,4 +2,4 @@
 
 import typing
 
-GetChapterRequest = typing.Optional[typing.Any]
+GetChapterRequest = typing.Any
