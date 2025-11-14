@@ -48,6 +48,7 @@ class RealtimeAudioOptions(typing.TypedDict, total=False):
         min_speech_duration_ms: Minimum speech duration in milliseconds (must be between 50 and 2000)
         min_silence_duration_ms: Minimum silence duration in milliseconds (must be between 50 and 2000)
         language_code: An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand.
+        include_timestamps: Whether to receive the committed_transcript_with_timestamps event after committing the segment (optional, defaults to False)
     """
     model_id: str
     audio_format: AudioFormat
@@ -58,6 +59,7 @@ class RealtimeAudioOptions(typing.TypedDict, total=False):
     min_speech_duration_ms: int
     min_silence_duration_ms: int
     language_code: str
+    include_timestamps: bool
 
 
 class RealtimeUrlOptions(typing.TypedDict, total=False):
@@ -72,7 +74,8 @@ class RealtimeUrlOptions(typing.TypedDict, total=False):
         vad_threshold: Threshold for voice activity detection (must be between 0.1 and 0.9)
         min_speech_duration_ms: Minimum speech duration in milliseconds (must be between 50 and 2000)
         min_silence_duration_ms: Minimum silence duration in milliseconds (must be between 50 and 2000)
-        An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand.
+        language_code: An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand.
+        include_timestamps: Whether to receive the committed_transcript_with_timestamps event after committing the segment (optional, defaults to False)
     """
     model_id: str
     url: str
@@ -82,6 +85,7 @@ class RealtimeUrlOptions(typing.TypedDict, total=False):
     min_speech_duration_ms: int
     min_silence_duration_ms: int
     language_code: str
+    include_timestamps: bool
 
 
 class ScribeRealtime:
@@ -173,6 +177,7 @@ class ScribeRealtime:
         min_speech_duration_ms = options.get("min_speech_duration_ms")
         min_silence_duration_ms = options.get("min_silence_duration_ms")
         language_code = options.get("language_code")
+        include_timestamps = options.get("include_timestamps", False)
 
         if not audio_format or not sample_rate:
             raise ValueError("audio_format and sample_rate are required for manual audio mode")
@@ -188,6 +193,7 @@ class ScribeRealtime:
             min_speech_duration_ms=min_speech_duration_ms,
             min_silence_duration_ms=min_silence_duration_ms,
             language_code=language_code,
+            include_timestamps=include_timestamps,
         )
 
         # Connect to WebSocket
@@ -219,6 +225,7 @@ class ScribeRealtime:
         min_speech_duration_ms = options.get("min_speech_duration_ms")
         min_silence_duration_ms = options.get("min_silence_duration_ms")
         language_code = options.get("language_code")
+        include_timestamps = options.get("include_timestamps", False)
 
         if not url:
             raise ValueError("url is required for URL mode")
@@ -238,6 +245,7 @@ class ScribeRealtime:
             min_speech_duration_ms=min_speech_duration_ms,
             min_silence_duration_ms=min_silence_duration_ms,
             language_code=language_code,
+            include_timestamps=include_timestamps,
         )
 
         # Connect to WebSocket
@@ -340,7 +348,8 @@ class ScribeRealtime:
         vad_threshold: typing.Optional[float] = None,
         min_speech_duration_ms: typing.Optional[int] = None,
         min_silence_duration_ms: typing.Optional[int] = None,
-        language_code: typing.Optional[str] = None
+        language_code: typing.Optional[str] = None,
+        include_timestamps: typing.Optional[bool] = None
     ) -> str:
         """Build the WebSocket URL with query parameters"""
         # Extract base domain
@@ -365,6 +374,8 @@ class ScribeRealtime:
             params.append(f"min_silence_duration_ms={min_silence_duration_ms}")
         if language_code is not None:
             params.append(f"language_code={language_code}")
+        if include_timestamps is not None:
+            params.append(f"include_timestamps={include_timestamps}")
 
         query_string = "&".join(params)
         return f"{base}/v1/speech-to-text/realtime?{query_string}"
