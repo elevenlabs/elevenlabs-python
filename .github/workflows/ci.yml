@@ -33,6 +33,8 @@ jobs:
       - name: Install dependencies
         run: |
           poetry install
+      - name: Verify types
+        run: poetry run python tests/verify_types.py
       - name: Test
         run: poetry run pytest .
         env:
