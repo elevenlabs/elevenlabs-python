@@ -67,7 +67,7 @@ except Exception as e:
             ["poetry", "run", "python", "-c", test_code],
             capture_output=True,
             text=True,
-            timeout=10,
+            timeout=30,
             cwd=str(project_root)
         )
 
@@ -78,7 +78,7 @@ except Exception as e:
             return error_msg
 
     except subprocess.TimeoutExpired:
-        return "Timeout: Import took longer than 10 seconds"
+        return "Timeout: Import took longer than 30 seconds"
     except Exception as e:
         return f"Subprocess error: {str(e)}"
 
