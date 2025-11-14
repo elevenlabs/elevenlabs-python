@@ -37,6 +37,8 @@ jobs:
         run: poetry run pytest .
         env:
           ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+      - name: Verify types
+        run: poetry run python tests/verify_types.py
 
   publish:
     needs: [compile, test]

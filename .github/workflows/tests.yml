@@ -41,3 +41,6 @@ jobs:
           ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
         run: |
           poetry run pytest .
+
+      - name: Verify types
+        run: poetry run python tests/verify_types.py
