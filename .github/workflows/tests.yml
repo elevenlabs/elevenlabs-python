@@ -36,11 +36,11 @@ jobs:
       - name: Install Fern
         run: npm install -g fern-api
 
+      - name: Verify types
+        run: poetry run python tests/verify_types.py
+
       - name: Test
         env:
           ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
         run: |
           poetry run pytest .
-
-      - name: Verify types
-        run: poetry run python tests/verify_types.py

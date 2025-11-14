@@ -7,10 +7,11 @@ Each type is tested in a separate Python process to avoid import cache issues.
 import subprocess
 import sys
 from pathlib import Path
+from typing import Optional
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
-def get_class_name_from_file(file_path: Path) -> str | None:
+def get_class_name_from_file(file_path: Path) -> Optional[str]:
     """Convert a file name to the expected class name using PascalCase."""
     # Remove .py extension
     name = file_path.stem
@@ -26,7 +27,7 @@ def get_class_name_from_file(file_path: Path) -> str | None:
     return class_name
 
 
-def verify_type_import_in_subprocess(module_name: str, class_name: str) -> str | None:
+def verify_type_import_in_subprocess(module_name: str, class_name: str) -> Optional[str]:
     """
     Test importing and instantiating a type in a separate subprocess.
     Returns error_message if failed, None if successful.
