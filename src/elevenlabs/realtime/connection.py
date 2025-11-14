@@ -14,6 +14,8 @@ class RealtimeEvents(str, Enum):
     COMMITTED_TRANSCRIPT = "committed_transcript"
     COMMITTED_TRANSCRIPT_WITH_TIMESTAMPS = "committed_transcript_with_timestamps"
     ERROR = "error"
+    AUTH_ERROR = "auth_error"
+    QUOTA_EXCEEDED = "quota_exceeded"
 
 
 class RealtimeConnection:
