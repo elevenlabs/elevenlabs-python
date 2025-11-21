@@ -15,6 +15,11 @@ class PlayDtmfToolConfig(UncheckedBaseModel):
     navigating phone menus, entering extensions, or inputting numeric codes.
     """
 
+    use_out_of_band_dtmf: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If true, send DTMF tones out-of-band using RFC 4733 (useful for SIP calls only). If false, send DTMF as in-band audio tones (default, works for all call types).
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

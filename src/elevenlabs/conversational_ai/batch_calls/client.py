@@ -37,7 +37,6 @@ class BatchCallsClient:
         recipients: typing.Sequence[OutboundCallRecipient],
         scheduled_time_unix: typing.Optional[int] = OMIT,
         agent_phone_number_id: typing.Optional[str] = OMIT,
-        agent_whatsapp_business_account_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BatchCallResponse:
         """
@@ -54,8 +53,6 @@ class BatchCallsClient:
         scheduled_time_unix : typing.Optional[int]
 
         agent_phone_number_id : typing.Optional[str]
-
-        agent_whatsapp_business_account_id : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -84,7 +81,6 @@ class BatchCallsClient:
             recipients=recipients,
             scheduled_time_unix=scheduled_time_unix,
             agent_phone_number_id=agent_phone_number_id,
-            agent_whatsapp_business_account_id=agent_whatsapp_business_account_id,
             request_options=request_options,
         )
         return _response.data
@@ -244,7 +240,6 @@ class AsyncBatchCallsClient:
         recipients: typing.Sequence[OutboundCallRecipient],
         scheduled_time_unix: typing.Optional[int] = OMIT,
         agent_phone_number_id: typing.Optional[str] = OMIT,
-        agent_whatsapp_business_account_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BatchCallResponse:
         """
@@ -261,8 +256,6 @@ class AsyncBatchCallsClient:
         scheduled_time_unix : typing.Optional[int]
 
         agent_phone_number_id : typing.Optional[str]
-
-        agent_whatsapp_business_account_id : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -299,7 +292,6 @@ class AsyncBatchCallsClient:
             recipients=recipients,
             scheduled_time_unix=scheduled_time_unix,
             agent_phone_number_id=agent_phone_number_id,
-            agent_whatsapp_business_account_id=agent_whatsapp_business_account_id,
             request_options=request_options,
         )
         return _response.data

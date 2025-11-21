@@ -6,12 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .transcript_get_transcript_for_dub_request_format_type import TranscriptGetTranscriptForDubRequestFormatType
-    from .transcript_get_transcript_for_dub_response import TranscriptGetTranscriptForDubResponse
-_dynamic_imports: typing.Dict[str, str] = {
-    "TranscriptGetTranscriptForDubRequestFormatType": ".transcript_get_transcript_for_dub_request_format_type",
-    "TranscriptGetTranscriptForDubResponse": ".transcript_get_transcript_for_dub_response",
-}
+    from .resource_render_request_language import ResourceRenderRequestLanguage
+_dynamic_imports: typing.Dict[str, str] = {"ResourceRenderRequestLanguage": ".resource_render_request_language"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -35,4 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["TranscriptGetTranscriptForDubRequestFormatType", "TranscriptGetTranscriptForDubResponse"]
+__all__ = ["ResourceRenderRequestLanguage"]

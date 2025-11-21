@@ -4,12 +4,7 @@ import typing
 
 TtsConversationalModel = typing.Union[
     typing.Literal[
-        "eleven_turbo_v2",
-        "eleven_turbo_v2_5",
-        "eleven_flash_v2",
-        "eleven_flash_v2_5",
-        "eleven_multilingual_v2",
-        "eleven_expressive",
+        "eleven_turbo_v2", "eleven_turbo_v2_5", "eleven_flash_v2", "eleven_flash_v2_5", "eleven_multilingual_v2"
     ],
     typing.Any,
 ]

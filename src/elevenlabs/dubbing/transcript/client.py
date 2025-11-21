@@ -6,6 +6,7 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from .raw_client import AsyncRawTranscriptClient, RawTranscriptClient
 from .types.transcript_get_transcript_for_dub_request_format_type import TranscriptGetTranscriptForDubRequestFormatType
+from .types.transcript_get_transcript_for_dub_response import TranscriptGetTranscriptForDubResponse
 
 
 class TranscriptClient:
@@ -30,7 +31,7 @@ class TranscriptClient:
         *,
         format_type: typing.Optional[TranscriptGetTranscriptForDubRequestFormatType] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> str:
+    ) -> TranscriptGetTranscriptForDubResponse:
         """
         Returns transcript for the dub as an SRT or WEBVTT file.
 
@@ -43,14 +44,14 @@ class TranscriptClient:
             ID of the language.
 
         format_type : typing.Optional[TranscriptGetTranscriptForDubRequestFormatType]
-            Format to use for the subtitle file, either 'srt' or 'webvtt'
+            Format to return transcript in. For subtitles use either 'srt' or 'webvtt', and for a full transcript use 'json'. The 'json' format is not yet supported for Dubbing Studio.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        str
+        TranscriptGetTranscriptForDubResponse
             Successful Response
 
         Examples
@@ -63,6 +64,7 @@ class TranscriptClient:
         client.dubbing.transcript.get_transcript_for_dub(
             dubbing_id="dubbing_id",
             language_code="language_code",
+            format_type="srt",
         )
         """
         _response = self._raw_client.get_transcript_for_dub(
@@ -93,7 +95,7 @@ class AsyncTranscriptClient:
         *,
         format_type: typing.Optional[TranscriptGetTranscriptForDubRequestFormatType] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> str:
+    ) -> TranscriptGetTranscriptForDubResponse:
         """
         Returns transcript for the dub as an SRT or WEBVTT file.
 
@@ -106,14 +108,14 @@ class AsyncTranscriptClient:
             ID of the language.
 
         format_type : typing.Optional[TranscriptGetTranscriptForDubRequestFormatType]
-            Format to use for the subtitle file, either 'srt' or 'webvtt'
+            Format to return transcript in. For subtitles use either 'srt' or 'webvtt', and for a full transcript use 'json'. The 'json' format is not yet supported for Dubbing Studio.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        str
+        TranscriptGetTranscriptForDubResponse
             Successful Response
 
         Examples
@@ -131,6 +133,7 @@ class AsyncTranscriptClient:
             await client.dubbing.transcript.get_transcript_for_dub(
                 dubbing_id="dubbing_id",
                 language_code="language_code",
+                format_type="srt",
             )
 
 

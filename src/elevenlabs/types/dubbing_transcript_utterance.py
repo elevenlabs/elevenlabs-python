@@ -5,23 +5,14 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .batch_call_status import BatchCallStatus
-from .telephony_provider import TelephonyProvider
+from .dubbing_transcript_word import DubbingTranscriptWord
 
 
-class BatchCallResponse(UncheckedBaseModel):
-    id: str
-    phone_number_id: typing.Optional[str] = None
-    phone_provider: typing.Optional[TelephonyProvider] = None
-    name: str
-    agent_id: str
-    created_at_unix: int
-    scheduled_time_unix: int
-    total_calls_dispatched: int
-    total_calls_scheduled: int
-    last_updated_at_unix: int
-    status: BatchCallStatus
-    agent_name: str
+class DubbingTranscriptUtterance(UncheckedBaseModel):
+    speaker_id: str
+    start_s: typing.Optional[float] = None
+    end_s: typing.Optional[float] = None
+    words: typing.Optional[typing.List[DubbingTranscriptWord]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

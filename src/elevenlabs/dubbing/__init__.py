@@ -13,13 +13,16 @@ if typing.TYPE_CHECKING:
         DubbingListRequestOrderDirection,
     )
     from . import audio, resource, transcript
-    from .transcript import TranscriptGetTranscriptForDubRequestFormatType
+    from .resource import ResourceRenderRequestLanguage
+    from .transcript import TranscriptGetTranscriptForDubRequestFormatType, TranscriptGetTranscriptForDubResponse
 _dynamic_imports: typing.Dict[str, str] = {
     "DubbingCreateRequestMode": ".types",
     "DubbingListRequestDubbingStatus": ".types",
     "DubbingListRequestFilterByCreator": ".types",
     "DubbingListRequestOrderDirection": ".types",
+    "ResourceRenderRequestLanguage": ".resource",
     "TranscriptGetTranscriptForDubRequestFormatType": ".transcript",
+    "TranscriptGetTranscriptForDubResponse": ".transcript",
     "audio": ".audio",
     "resource": ".resource",
     "transcript": ".transcript",
@@ -52,7 +55,9 @@ __all__ = [
     "DubbingListRequestDubbingStatus",
     "DubbingListRequestFilterByCreator",
     "DubbingListRequestOrderDirection",
+    "ResourceRenderRequestLanguage",
     "TranscriptGetTranscriptForDubRequestFormatType",
+    "TranscriptGetTranscriptForDubResponse",
     "audio",
     "resource",
     "transcript",

@@ -9572,12 +9572,8 @@ Add a new tool to the available tools in the workspace.
 ```python
 from elevenlabs import (
     ElevenLabs,
-    LiteralJsonSchemaProperty,
-    ObjectJsonSchemaPropertyInput,
-    QueryParamsJsonSchema,
     ToolRequestModel,
-    ToolRequestModelToolConfig_ApiIntegrationWebhook,
-    WebhookToolApiSchemaConfigInput,
+    ToolRequestModelToolConfig_Client,
 )
 
 client = ElevenLabs(
@@ -9585,33 +9581,10 @@ client = ElevenLabs(
 )
 client.conversational_ai.tools.create(
     request=ToolRequestModel(
-        tool_config=ToolRequestModelToolConfig_ApiIntegrationWebhook(
+        tool_config=ToolRequestModelToolConfig_Client(
             name="name",
             description="description",
-            api_integration_id="api_integration_id",
-            api_integration_connection_id="api_integration_connection_id",
-            base_api_schema=WebhookToolApiSchemaConfigInput(
-                url="https://example.com/agents/{agent_id}",
-                method="GET",
-                path_params_schema={
-                    "agent_id": LiteralJsonSchemaProperty(
-                        type="string",
-                    )
-                },
-                query_params_schema=QueryParamsJsonSchema(
-                    properties={
-                        "key": LiteralJsonSchemaProperty(
-                            type="string",
-                            description="My property",
-                            is_system_provided=False,
-                            dynamic_variable="",
-                            constant_value="",
-                        )
-                    },
-                ),
-                request_body_schema=ObjectJsonSchemaPropertyInput(),
-                request_headers={"Authorization": "Bearer {api_key}"},
-            ),
+            expects_response=False,
         ),
     ),
 )
@@ -9819,12 +9792,8 @@ Update tool that is available in the workspace.
 ```python
 from elevenlabs import (
     ElevenLabs,
-    LiteralJsonSchemaProperty,
-    ObjectJsonSchemaPropertyInput,
-    QueryParamsJsonSchema,
     ToolRequestModel,
-    ToolRequestModelToolConfig_ApiIntegrationWebhook,
-    WebhookToolApiSchemaConfigInput,
+    ToolRequestModelToolConfig_Client,
 )
 
 client = ElevenLabs(
@@ -9833,33 +9802,10 @@ client = ElevenLabs(
 client.conversational_ai.tools.update(
     tool_id="tool_id",
     request=ToolRequestModel(
-        tool_config=ToolRequestModelToolConfig_ApiIntegrationWebhook(
+        tool_config=ToolRequestModelToolConfig_Client(
             name="name",
             description="description",
-            api_integration_id="api_integration_id",
-            api_integration_connection_id="api_integration_connection_id",
-            base_api_schema=WebhookToolApiSchemaConfigInput(
-                url="https://example.com/agents/{agent_id}",
-                method="GET",
-                path_params_schema={
-                    "agent_id": LiteralJsonSchemaProperty(
-                        type="string",
-                    )
-                },
-                query_params_schema=QueryParamsJsonSchema(
-                    properties={
-                        "key": LiteralJsonSchemaProperty(
-                            type="string",
-                            description="My property",
-                            is_system_provided=False,
-                            dynamic_variable="",
-                            constant_value="",
-                        )
-                    },
-                ),
-                request_body_schema=ObjectJsonSchemaPropertyInput(),
-                request_headers={"Authorization": "Bearer {api_key}"},
-            ),
+            expects_response=False,
         ),
     ),
 )
@@ -10539,14 +10485,6 @@ client.conversational_ai.batch_calls.create(
 <dd>
 
 **agent_phone_number_id:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**agent_whatsapp_business_account_id:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -14220,7 +14158,7 @@ client.dubbing.resource.render(
 <dl>
 <dd>
 
-**language:** `str` — Render this language
+**language:** `ResourceRenderRequestLanguage` — The target language code to render, eg. 'es'. To render the source track use 'original'.
     
 </dd>
 </dl>
@@ -14372,6 +14310,7 @@ client = ElevenLabs(
 client.dubbing.transcript.get_transcript_for_dub(
     dubbing_id="dubbing_id",
     language_code="language_code",
+    format_type="srt",
 )
 
 ```
@@ -14404,7 +14343,7 @@ client.dubbing.transcript.get_transcript_for_dub(
 <dl>
 <dd>
 
-**format_type:** `typing.Optional[TranscriptGetTranscriptForDubRequestFormatType]` — Format to use for the subtitle file, either 'srt' or 'webvtt'
+**format_type:** `typing.Optional[TranscriptGetTranscriptForDubRequestFormatType]` — Format to return transcript in. For subtitles use either 'srt' or 'webvtt', and for a full transcript use 'json'. The 'json' format is not yet supported for Dubbing Studio.
     
 </dd>
 </dl>
@@ -17862,7 +17801,7 @@ client.text_to_voice.preview.stream(
 </details>
 
 ## Tokens SingleUse
-<details><summary><code>client.tokens.single_use.<a href="src/elevenlabs/tokens/single_use/client.py">create</a>()</code></summary>
+<details><summary><code>client.tokens.single_use.<a href="src/elevenlabs/tokens/single_use/client.py">create</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -17894,7 +17833,9 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.tokens.single_use.create()
+client.tokens.single_use.create(
+    token_type="realtime_scribe",
+)
 
 ```
 </dd>
@@ -17906,6 +17847,14 @@ client.tokens.single_use.create()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**token_type:** `SingleUseTokenType` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>

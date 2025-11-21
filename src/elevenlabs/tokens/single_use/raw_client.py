@@ -6,11 +6,13 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
+from ...core.jsonable_encoder import jsonable_encoder
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.http_validation_error import HttpValidationError
 from ...types.single_use_token_response_model import SingleUseTokenResponseModel
+from ...types.single_use_token_type import SingleUseTokenType
 
 
 class RawSingleUseClient:
@@ -18,13 +20,15 @@ class RawSingleUseClient:
         self._client_wrapper = client_wrapper
 
     def create(
-        self, *, request_options: typing.Optional[RequestOptions] = None
+        self, token_type: SingleUseTokenType, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[SingleUseTokenResponseModel]:
         """
         Generate a time limited single-use token with embedded authentication for frontend clients.
 
         Parameters
         ----------
+        token_type : SingleUseTokenType
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -34,7 +38,7 @@ class RawSingleUseClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v1/single-use-token/realtime_scribe",
+            f"v1/single-use-token/{jsonable_encoder(token_type)}",
             method="POST",
             request_options=request_options,
         )
@@ -70,13 +74,15 @@ class AsyncRawSingleUseClient:
         self._client_wrapper = client_wrapper
 
     async def create(
-        self, *, request_options: typing.Optional[RequestOptions] = None
+        self, token_type: SingleUseTokenType, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[SingleUseTokenResponseModel]:
         """
         Generate a time limited single-use token with embedded authentication for frontend clients.
 
         Parameters
         ----------
+        token_type : SingleUseTokenType
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -86,7 +92,7 @@ class AsyncRawSingleUseClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v1/single-use-token/realtime_scribe",
+            f"v1/single-use-token/{jsonable_encoder(token_type)}",
             method="POST",
             request_options=request_options,
         )

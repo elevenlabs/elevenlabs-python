@@ -8,6 +8,7 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
+from .canvas_placement import CanvasPlacement
 from .project_video_thumbnail_sheet_response_model import ProjectVideoThumbnailSheetResponseModel
 
 
@@ -41,6 +42,7 @@ class ProjectExtendedResponseModelAssetsItem_Video(UncheckedBaseModel):
     import_speech_progress: typing.Optional[float] = None
     speech_imported: typing.Optional[bool] = None
     current_snapshot_id: typing.Optional[str] = None
+    canvas_placement: typing.Optional[CanvasPlacement] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -86,7 +88,40 @@ class ProjectExtendedResponseModelAssetsItem_Audio(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class ProjectExtendedResponseModelAssetsItem_Image(UncheckedBaseModel):
+    type: typing.Literal["image"] = "image"
+    image_id: str
+    filename: str
+    signed_url: str
+    thumbnail_signed_url: str
+    source: typing.Optional[typing.Literal["upload"]] = None
+    file_size_bytes: int
+    width: int
+    height: int
+    offset_ms: int
+    duration_ms: int
+    order: str
+    canvas_placement: CanvasPlacement
+    created_at_ms: int
+    updated_at_ms: int
+    current_snapshot_id: typing.Optional[str] = None
+    source_asset_id: typing.Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 ProjectExtendedResponseModelAssetsItem = typing_extensions.Annotated[
-    typing.Union[ProjectExtendedResponseModelAssetsItem_Video, ProjectExtendedResponseModelAssetsItem_Audio],
+    typing.Union[
+        ProjectExtendedResponseModelAssetsItem_Video,
+        ProjectExtendedResponseModelAssetsItem_Audio,
+        ProjectExtendedResponseModelAssetsItem_Image,
+    ],
     UnionMetadata(discriminant="type"),
 ]

@@ -20,6 +20,7 @@ from .project_state import ProjectState
 from .project_voice_response_model import ProjectVoiceResponseModel
 from .pronunciation_dictionary_locator_response_model import PronunciationDictionaryLocatorResponseModel
 from .pronunciation_dictionary_version_response_model import PronunciationDictionaryVersionResponseModel
+from .voice import Voice
 
 
 class ProjectExtendedResponse(UncheckedBaseModel):
@@ -226,6 +227,11 @@ class ProjectExtendedResponse(UncheckedBaseModel):
     voices: typing.List[ProjectVoiceResponseModel] = pydantic.Field()
     """
     List of configured project voices.
+    """
+
+    base_voices: typing.Optional[typing.List[Voice]] = pydantic.Field(default=None)
+    """
+    List of voices used by the project.
     """
 
     if IS_PYDANTIC_V2:
