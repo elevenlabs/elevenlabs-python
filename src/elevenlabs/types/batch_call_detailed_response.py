@@ -18,7 +18,6 @@ class BatchCallDetailedResponse(UncheckedBaseModel):
     id: str
     phone_number_id: typing.Optional[str] = None
     phone_provider: typing.Optional[TelephonyProvider] = None
-    whatsapp_business_account_id: typing.Optional[str] = None
     name: str
     agent_id: str
     created_at_unix: int

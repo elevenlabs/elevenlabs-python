@@ -5,6 +5,7 @@ import typing
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.single_use_token_response_model import SingleUseTokenResponseModel
+from ...types.single_use_token_type import SingleUseTokenType
 from .raw_client import AsyncRawSingleUseClient, RawSingleUseClient
 
 
@@ -23,12 +24,16 @@ class SingleUseClient:
         """
         return self._raw_client
 
-    def create(self, *, request_options: typing.Optional[RequestOptions] = None) -> SingleUseTokenResponseModel:
+    def create(
+        self, token_type: SingleUseTokenType, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> SingleUseTokenResponseModel:
         """
         Generate a time limited single-use token with embedded authentication for frontend clients.
 
         Parameters
         ----------
+        token_type : SingleUseTokenType
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -44,9 +49,11 @@ class SingleUseClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.tokens.single_use.create()
+        client.tokens.single_use.create(
+            token_type="realtime_scribe",
+        )
         """
-        _response = self._raw_client.create(request_options=request_options)
+        _response = self._raw_client.create(token_type, request_options=request_options)
         return _response.data
 
 
@@ -65,12 +72,16 @@ class AsyncSingleUseClient:
         """
         return self._raw_client
 
-    async def create(self, *, request_options: typing.Optional[RequestOptions] = None) -> SingleUseTokenResponseModel:
+    async def create(
+        self, token_type: SingleUseTokenType, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> SingleUseTokenResponseModel:
         """
         Generate a time limited single-use token with embedded authentication for frontend clients.
 
         Parameters
         ----------
+        token_type : SingleUseTokenType
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -91,10 +102,12 @@ class AsyncSingleUseClient:
 
 
         async def main() -> None:
-            await client.tokens.single_use.create()
+            await client.tokens.single_use.create(
+                token_type="realtime_scribe",
+            )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create(request_options=request_options)
+        _response = await self._raw_client.create(token_type, request_options=request_options)
         return _response.data

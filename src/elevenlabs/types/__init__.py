@@ -73,8 +73,6 @@ if typing.TYPE_CHECKING:
     from .api_integration_webhook_overrides_output_request_headers_value import (
         ApiIntegrationWebhookOverridesOutputRequestHeadersValue,
     )
-    from .api_integration_webhook_tool_config_external_input import ApiIntegrationWebhookToolConfigExternalInput
-    from .api_integration_webhook_tool_config_external_output import ApiIntegrationWebhookToolConfigExternalOutput
     from .api_integration_webhook_tool_config_input import ApiIntegrationWebhookToolConfigInput
     from .api_integration_webhook_tool_config_output import ApiIntegrationWebhookToolConfigOutput
     from .array_json_schema_property_input import ArrayJsonSchemaPropertyInput
@@ -583,6 +581,7 @@ if typing.TYPE_CHECKING:
     from .batch_call_recipient_status import BatchCallRecipientStatus
     from .batch_call_response import BatchCallResponse
     from .batch_call_status import BatchCallStatus
+    from .batch_call_whats_app_params import BatchCallWhatsAppParams
     from .body_generate_a_random_voice_v_1_voice_generation_generate_voice_post_age import (
         BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostAge,
     )
@@ -594,6 +593,7 @@ if typing.TYPE_CHECKING:
     from .built_in_tools_output import BuiltInToolsOutput
     from .built_in_tools_workflow_override_input import BuiltInToolsWorkflowOverrideInput
     from .built_in_tools_workflow_override_output import BuiltInToolsWorkflowOverrideOutput
+    from .canvas_placement import CanvasPlacement
     from .caption_style_character_animation_model import CaptionStyleCharacterAnimationModel
     from .caption_style_character_animation_model_enter_type import CaptionStyleCharacterAnimationModelEnterType
     from .caption_style_character_animation_model_exit_type import CaptionStyleCharacterAnimationModelExitType
@@ -844,9 +844,14 @@ if typing.TYPE_CHECKING:
     from .dubbing_media_reference import DubbingMediaReference
     from .dubbing_metadata_page_response_model import DubbingMetadataPageResponseModel
     from .dubbing_metadata_response import DubbingMetadataResponse
+    from .dubbing_model import DubbingModel
     from .dubbing_release_channel import DubbingReleaseChannel
     from .dubbing_render_response_model import DubbingRenderResponseModel
     from .dubbing_resource import DubbingResource
+    from .dubbing_transcript_character import DubbingTranscriptCharacter
+    from .dubbing_transcript_response_model import DubbingTranscriptResponseModel
+    from .dubbing_transcript_utterance import DubbingTranscriptUtterance
+    from .dubbing_transcript_word import DubbingTranscriptWord
     from .dynamic_variable_assignment import DynamicVariableAssignment
     from .dynamic_variable_update_common_model import DynamicVariableUpdateCommonModel
     from .dynamic_variables_config import DynamicVariablesConfig
@@ -1129,6 +1134,7 @@ if typing.TYPE_CHECKING:
     from .project_extended_response_model_assets_item import (
         ProjectExtendedResponseModelAssetsItem,
         ProjectExtendedResponseModelAssetsItem_Audio,
+        ProjectExtendedResponseModelAssetsItem_Image,
         ProjectExtendedResponseModelAssetsItem_Video,
     )
     from .project_extended_response_model_fiction import ProjectExtendedResponseModelFiction
@@ -1136,6 +1142,7 @@ if typing.TYPE_CHECKING:
     from .project_extended_response_model_source_type import ProjectExtendedResponseModelSourceType
     from .project_extended_response_model_target_audience import ProjectExtendedResponseModelTargetAudience
     from .project_external_audio_response_model import ProjectExternalAudioResponseModel
+    from .project_image_response_model import ProjectImageResponseModel
     from .project_response import ProjectResponse
     from .project_response_model_access_level import ProjectResponseModelAccessLevel
     from .project_response_model_aspect_ratio import ProjectResponseModelAspectRatio
@@ -1315,6 +1322,7 @@ if typing.TYPE_CHECKING:
     from .subscription_response_model_character_refresh_period import SubscriptionResponseModelCharacterRefreshPeriod
     from .subscription_response_model_currency import SubscriptionResponseModelCurrency
     from .subscription_status_type import SubscriptionStatusType
+    from .suggested_audio_tag import SuggestedAudioTag
     from .supported_voice import SupportedVoice
     from .system_tool_config_input import SystemToolConfigInput
     from .system_tool_config_input_params import (
@@ -1349,6 +1357,7 @@ if typing.TYPE_CHECKING:
     from .test_run_status import TestRunStatus
     from .test_tool_result_model import TestToolResultModel
     from .tests_feature_usage_common_model import TestsFeatureUsageCommonModel
+    from .text_normalisation_type import TextNormalisationType
     from .text_to_speech_request import TextToSpeechRequest
     from .text_to_speech_stream_request import TextToSpeechStreamRequest
     from .text_to_speech_stream_with_timestamps_request import TextToSpeechStreamWithTimestampsRequest
@@ -1365,7 +1374,6 @@ if typing.TYPE_CHECKING:
     from .tool_request_model import ToolRequestModel
     from .tool_request_model_tool_config import (
         ToolRequestModelToolConfig,
-        ToolRequestModelToolConfig_ApiIntegrationWebhook,
         ToolRequestModelToolConfig_Client,
         ToolRequestModelToolConfig_System,
         ToolRequestModelToolConfig_Webhook,
@@ -1373,7 +1381,6 @@ if typing.TYPE_CHECKING:
     from .tool_response_model import ToolResponseModel
     from .tool_response_model_tool_config import (
         ToolResponseModelToolConfig,
-        ToolResponseModelToolConfig_ApiIntegrationWebhook,
         ToolResponseModelToolConfig_Client,
         ToolResponseModelToolConfig_System,
         ToolResponseModelToolConfig_Webhook,
@@ -1703,8 +1710,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ApiIntegrationWebhookOverridesInputRequestHeadersValue": ".api_integration_webhook_overrides_input_request_headers_value",
     "ApiIntegrationWebhookOverridesOutput": ".api_integration_webhook_overrides_output",
     "ApiIntegrationWebhookOverridesOutputRequestHeadersValue": ".api_integration_webhook_overrides_output_request_headers_value",
-    "ApiIntegrationWebhookToolConfigExternalInput": ".api_integration_webhook_tool_config_external_input",
-    "ApiIntegrationWebhookToolConfigExternalOutput": ".api_integration_webhook_tool_config_external_output",
     "ApiIntegrationWebhookToolConfigInput": ".api_integration_webhook_tool_config_input",
     "ApiIntegrationWebhookToolConfigOutput": ".api_integration_webhook_tool_config_output",
     "ArrayJsonSchemaPropertyInput": ".array_json_schema_property_input",
@@ -2155,6 +2160,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BatchCallRecipientStatus": ".batch_call_recipient_status",
     "BatchCallResponse": ".batch_call_response",
     "BatchCallStatus": ".batch_call_status",
+    "BatchCallWhatsAppParams": ".batch_call_whats_app_params",
     "BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostAge": ".body_generate_a_random_voice_v_1_voice_generation_generate_voice_post_age",
     "BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostGender": ".body_generate_a_random_voice_v_1_voice_generation_generate_voice_post_gender",
     "BreakdownTypes": ".breakdown_types",
@@ -2162,6 +2168,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BuiltInToolsOutput": ".built_in_tools_output",
     "BuiltInToolsWorkflowOverrideInput": ".built_in_tools_workflow_override_input",
     "BuiltInToolsWorkflowOverrideOutput": ".built_in_tools_workflow_override_output",
+    "CanvasPlacement": ".canvas_placement",
     "CaptionStyleCharacterAnimationModel": ".caption_style_character_animation_model",
     "CaptionStyleCharacterAnimationModelEnterType": ".caption_style_character_animation_model_enter_type",
     "CaptionStyleCharacterAnimationModelExitType": ".caption_style_character_animation_model_exit_type",
@@ -2354,9 +2361,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DubbingMediaReference": ".dubbing_media_reference",
     "DubbingMetadataPageResponseModel": ".dubbing_metadata_page_response_model",
     "DubbingMetadataResponse": ".dubbing_metadata_response",
+    "DubbingModel": ".dubbing_model",
     "DubbingReleaseChannel": ".dubbing_release_channel",
     "DubbingRenderResponseModel": ".dubbing_render_response_model",
     "DubbingResource": ".dubbing_resource",
+    "DubbingTranscriptCharacter": ".dubbing_transcript_character",
+    "DubbingTranscriptResponseModel": ".dubbing_transcript_response_model",
+    "DubbingTranscriptUtterance": ".dubbing_transcript_utterance",
+    "DubbingTranscriptWord": ".dubbing_transcript_word",
     "DynamicVariableAssignment": ".dynamic_variable_assignment",
     "DynamicVariableUpdateCommonModel": ".dynamic_variable_update_common_model",
     "DynamicVariablesConfig": ".dynamic_variables_config",
@@ -2598,12 +2610,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ProjectExtendedResponseModelAspectRatio": ".project_extended_response_model_aspect_ratio",
     "ProjectExtendedResponseModelAssetsItem": ".project_extended_response_model_assets_item",
     "ProjectExtendedResponseModelAssetsItem_Audio": ".project_extended_response_model_assets_item",
+    "ProjectExtendedResponseModelAssetsItem_Image": ".project_extended_response_model_assets_item",
     "ProjectExtendedResponseModelAssetsItem_Video": ".project_extended_response_model_assets_item",
     "ProjectExtendedResponseModelFiction": ".project_extended_response_model_fiction",
     "ProjectExtendedResponseModelQualityPreset": ".project_extended_response_model_quality_preset",
     "ProjectExtendedResponseModelSourceType": ".project_extended_response_model_source_type",
     "ProjectExtendedResponseModelTargetAudience": ".project_extended_response_model_target_audience",
     "ProjectExternalAudioResponseModel": ".project_external_audio_response_model",
+    "ProjectImageResponseModel": ".project_image_response_model",
     "ProjectResponse": ".project_response",
     "ProjectResponseModelAccessLevel": ".project_response_model_access_level",
     "ProjectResponseModelAspectRatio": ".project_response_model_aspect_ratio",
@@ -2761,6 +2775,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SubscriptionResponseModelCharacterRefreshPeriod": ".subscription_response_model_character_refresh_period",
     "SubscriptionResponseModelCurrency": ".subscription_response_model_currency",
     "SubscriptionStatusType": ".subscription_status_type",
+    "SuggestedAudioTag": ".suggested_audio_tag",
     "SupportedVoice": ".supported_voice",
     "SystemToolConfigInput": ".system_tool_config_input",
     "SystemToolConfigInputParams": ".system_tool_config_input_params",
@@ -2791,6 +2806,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TestRunStatus": ".test_run_status",
     "TestToolResultModel": ".test_tool_result_model",
     "TestsFeatureUsageCommonModel": ".tests_feature_usage_common_model",
+    "TextNormalisationType": ".text_normalisation_type",
     "TextToSpeechRequest": ".text_to_speech_request",
     "TextToSpeechStreamRequest": ".text_to_speech_stream_request",
     "TextToSpeechStreamWithTimestampsRequest": ".text_to_speech_stream_with_timestamps_request",
@@ -2806,13 +2822,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ToolMockConfig": ".tool_mock_config",
     "ToolRequestModel": ".tool_request_model",
     "ToolRequestModelToolConfig": ".tool_request_model_tool_config",
-    "ToolRequestModelToolConfig_ApiIntegrationWebhook": ".tool_request_model_tool_config",
     "ToolRequestModelToolConfig_Client": ".tool_request_model_tool_config",
     "ToolRequestModelToolConfig_System": ".tool_request_model_tool_config",
     "ToolRequestModelToolConfig_Webhook": ".tool_request_model_tool_config",
     "ToolResponseModel": ".tool_response_model",
     "ToolResponseModelToolConfig": ".tool_response_model_tool_config",
-    "ToolResponseModelToolConfig_ApiIntegrationWebhook": ".tool_response_model_tool_config",
     "ToolResponseModelToolConfig_Client": ".tool_response_model_tool_config",
     "ToolResponseModelToolConfig_System": ".tool_response_model_tool_config",
     "ToolResponseModelToolConfig_Webhook": ".tool_response_model_tool_config",
@@ -3129,8 +3143,6 @@ __all__ = [
     "ApiIntegrationWebhookOverridesInputRequestHeadersValue",
     "ApiIntegrationWebhookOverridesOutput",
     "ApiIntegrationWebhookOverridesOutputRequestHeadersValue",
-    "ApiIntegrationWebhookToolConfigExternalInput",
-    "ApiIntegrationWebhookToolConfigExternalOutput",
     "ApiIntegrationWebhookToolConfigInput",
     "ApiIntegrationWebhookToolConfigOutput",
     "ArrayJsonSchemaPropertyInput",
@@ -3581,6 +3593,7 @@ __all__ = [
     "BatchCallRecipientStatus",
     "BatchCallResponse",
     "BatchCallStatus",
+    "BatchCallWhatsAppParams",
     "BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostAge",
     "BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostGender",
     "BreakdownTypes",
@@ -3588,6 +3601,7 @@ __all__ = [
     "BuiltInToolsOutput",
     "BuiltInToolsWorkflowOverrideInput",
     "BuiltInToolsWorkflowOverrideOutput",
+    "CanvasPlacement",
     "CaptionStyleCharacterAnimationModel",
     "CaptionStyleCharacterAnimationModelEnterType",
     "CaptionStyleCharacterAnimationModelExitType",
@@ -3780,9 +3794,14 @@ __all__ = [
     "DubbingMediaReference",
     "DubbingMetadataPageResponseModel",
     "DubbingMetadataResponse",
+    "DubbingModel",
     "DubbingReleaseChannel",
     "DubbingRenderResponseModel",
     "DubbingResource",
+    "DubbingTranscriptCharacter",
+    "DubbingTranscriptResponseModel",
+    "DubbingTranscriptUtterance",
+    "DubbingTranscriptWord",
     "DynamicVariableAssignment",
     "DynamicVariableUpdateCommonModel",
     "DynamicVariablesConfig",
@@ -4024,12 +4043,14 @@ __all__ = [
     "ProjectExtendedResponseModelAspectRatio",
     "ProjectExtendedResponseModelAssetsItem",
     "ProjectExtendedResponseModelAssetsItem_Audio",
+    "ProjectExtendedResponseModelAssetsItem_Image",
     "ProjectExtendedResponseModelAssetsItem_Video",
     "ProjectExtendedResponseModelFiction",
     "ProjectExtendedResponseModelQualityPreset",
     "ProjectExtendedResponseModelSourceType",
     "ProjectExtendedResponseModelTargetAudience",
     "ProjectExternalAudioResponseModel",
+    "ProjectImageResponseModel",
     "ProjectResponse",
     "ProjectResponseModelAccessLevel",
     "ProjectResponseModelAspectRatio",
@@ -4187,6 +4208,7 @@ __all__ = [
     "SubscriptionResponseModelCharacterRefreshPeriod",
     "SubscriptionResponseModelCurrency",
     "SubscriptionStatusType",
+    "SuggestedAudioTag",
     "SupportedVoice",
     "SystemToolConfigInput",
     "SystemToolConfigInputParams",
@@ -4217,6 +4239,7 @@ __all__ = [
     "TestRunStatus",
     "TestToolResultModel",
     "TestsFeatureUsageCommonModel",
+    "TextNormalisationType",
     "TextToSpeechRequest",
     "TextToSpeechStreamRequest",
     "TextToSpeechStreamWithTimestampsRequest",
@@ -4232,13 +4255,11 @@ __all__ = [
     "ToolMockConfig",
     "ToolRequestModel",
     "ToolRequestModelToolConfig",
-    "ToolRequestModelToolConfig_ApiIntegrationWebhook",
     "ToolRequestModelToolConfig_Client",
     "ToolRequestModelToolConfig_System",
     "ToolRequestModelToolConfig_Webhook",
     "ToolResponseModel",
     "ToolResponseModelToolConfig",
-    "ToolResponseModelToolConfig_ApiIntegrationWebhook",
     "ToolResponseModelToolConfig_Client",
     "ToolResponseModelToolConfig_System",
     "ToolResponseModelToolConfig_Webhook",

@@ -2,4 +2,4 @@
 
 import typing
 
-TranscriptGetTranscriptForDubRequestFormatType = typing.Union[typing.Literal["srt", "webvtt"], typing.Any]
+TranscriptGetTranscriptForDubRequestFormatType = typing.Union[typing.Literal["srt", "webvtt", "json"], typing.Any]

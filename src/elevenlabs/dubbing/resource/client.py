@@ -13,6 +13,7 @@ from ...types.segment_dub_response import SegmentDubResponse
 from ...types.segment_transcription_response import SegmentTranscriptionResponse
 from ...types.segment_translation_response import SegmentTranslationResponse
 from .raw_client import AsyncRawResourceClient, RawResourceClient
+from .types.resource_render_request_language import ResourceRenderRequestLanguage
 
 if typing.TYPE_CHECKING:
     from .language.client import AsyncLanguageClient, LanguageClient
@@ -210,7 +211,7 @@ class ResourceClient:
     def render(
         self,
         dubbing_id: str,
-        language: str,
+        language: ResourceRenderRequestLanguage,
         *,
         render_type: RenderType,
         normalize_volume: typing.Optional[bool] = OMIT,
@@ -224,8 +225,8 @@ class ResourceClient:
         dubbing_id : str
             ID of the dubbing project.
 
-        language : str
-            Render this language
+        language : ResourceRenderRequestLanguage
+            The target language code to render, eg. 'es'. To render the source track use 'original'.
 
         render_type : RenderType
             The type of the render. One of ['mp4', 'aac', 'mp3', 'wav', 'aaf', 'tracks_zip', 'clips_zip']
@@ -508,7 +509,7 @@ class AsyncResourceClient:
     async def render(
         self,
         dubbing_id: str,
-        language: str,
+        language: ResourceRenderRequestLanguage,
         *,
         render_type: RenderType,
         normalize_volume: typing.Optional[bool] = OMIT,
@@ -522,8 +523,8 @@ class AsyncResourceClient:
         dubbing_id : str
             ID of the dubbing project.
 
-        language : str
-            Render this language
+        language : ResourceRenderRequestLanguage
+            The target language code to render, eg. 'es'. To render the source track use 'original'.
 
         render_type : RenderType
             The type of the render. One of ['mp4', 'aac', 'mp3', 'wav', 'aaf', 'tracks_zip', 'clips_zip']

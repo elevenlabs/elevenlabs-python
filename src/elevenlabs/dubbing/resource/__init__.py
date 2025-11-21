@@ -6,8 +6,14 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .types import ResourceRenderRequestLanguage
     from . import language, segment, speaker
-_dynamic_imports: typing.Dict[str, str] = {"language": ".language", "segment": ".segment", "speaker": ".speaker"}
+_dynamic_imports: typing.Dict[str, str] = {
+    "ResourceRenderRequestLanguage": ".types",
+    "language": ".language",
+    "segment": ".segment",
+    "speaker": ".speaker",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +37,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["language", "segment", "speaker"]
+__all__ = ["ResourceRenderRequestLanguage", "language", "segment", "speaker"]

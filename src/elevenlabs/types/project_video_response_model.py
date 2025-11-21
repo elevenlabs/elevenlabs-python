@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .canvas_placement import CanvasPlacement
 from .project_video_thumbnail_sheet_response_model import ProjectVideoThumbnailSheetResponseModel
 
 
@@ -37,6 +38,7 @@ class ProjectVideoResponseModel(UncheckedBaseModel):
     import_speech_progress: typing.Optional[float] = None
     speech_imported: typing.Optional[bool] = None
     current_snapshot_id: typing.Optional[str] = None
+    canvas_placement: typing.Optional[CanvasPlacement] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

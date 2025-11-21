@@ -2,4 +2,4 @@
 
 import typing
 
-TtsModelFamily = typing.Union[typing.Literal["turbo", "flash", "multilingual", "expressive"], typing.Any]
+TtsModelFamily = typing.Union[typing.Literal["turbo", "flash", "multilingual"], typing.Any]

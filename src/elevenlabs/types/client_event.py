@@ -16,6 +16,7 @@ ClientEvent = typing.Union[
         "client_tool_call",
         "mcp_tool_call",
         "mcp_connection_status",
+        "agent_tool_request",
         "agent_tool_response",
         "vad_score",
         "agent_chat_response_part",
