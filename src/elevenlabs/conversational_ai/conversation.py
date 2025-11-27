@@ -959,7 +959,7 @@ class AsyncConversation(BaseConversation):
         async with websockets.connect(ws_url, max_size=16 * 1024 * 1024) as ws:
             self._ws = ws
             if self.on_prem_config:
-                ws.send(self._create_on_prem_initiation_message())
+                await ws.send(self._create_on_prem_initiation_message())
             await ws.send(self._create_initiation_message())
 
             async def input_callback(audio):
