@@ -313,6 +313,25 @@ class ConversationInitiationData:
         self.user_id = user_id
 
 
+class OnPremInitiationData:
+    """Configuration options for the Conversation in on-prem mode."""
+
+    def __init__(
+        self,
+        on_prem_conversation_url: str,
+        post_call_transcription_webhook_url: Optional[str] = None,
+        post_call_audio_webhook_url: Optional[str] = None,
+        agent_config_dict: Optional[dict] = None,
+        override_agent_config_list: Optional[dict] = None,
+        tools_config_list: Optional[dict] = None,
+    ):
+        self.on_prem_conversation_url = on_prem_conversation_url
+        self.post_call_transcription_webhook_url = post_call_transcription_webhook_url
+        self.post_call_audio_webhook_url = post_call_audio_webhook_url
+        self.agent_config_dict = agent_config_dict or {}
+        self.override_agent_config_list = override_agent_config_list or {}
+        self.tools_config_list = tools_config_list or {}
+
 class BaseConversation:
     """Base class for conversation implementations with shared parameters and logic."""
 
@@ -325,6 +344,7 @@ class BaseConversation:
         requires_auth: bool,
         config: Optional[ConversationInitiationData] = None,
         client_tools: Optional[ClientTools] = None,
+        on_prem_config: Optional[OnPremInitiationData] = None,
     ):
         self.client = client
         self.agent_id = agent_id
@@ -332,6 +352,7 @@ class BaseConversation:
         self.requires_auth = requires_auth
         self.config = config or ConversationInitiationData()
         self.client_tools = client_tools or ClientTools()
+        self.on_prem_config = on_prem_config
 
         self.client_tools.start()
 
@@ -339,6 +360,9 @@ class BaseConversation:
         self._last_interrupt_id = 0
 
     def _get_wss_url(self):
+        if self.on_prem_config:
+            return self.on_prem_config.on_prem_conversation_url
+            
         base_http_url = self.client._client_wrapper.get_base_url()
         base_ws_url = urllib.parse.urlparse(base_http_url)._replace(scheme="wss" if base_http_url.startswith("https") else "ws").geturl()
         # Ensure base URL ends with '/' for proper joining
@@ -353,6 +377,18 @@ class BaseConversation:
         separator = "&" if "?" in signed_url else "?"
         return f"{signed_url}{separator}source=python_sdk&version={__version__}"
 
+    def _create_on_prem_initiation_message(self):
+        return json.dumps(
+            {
+                "type": "enclave_setup_config",
+                "agent_config_dict": self.on_prem_config.agent_config_dict,
+                "override_agent_config_list": self.on_prem_config.override_agent_config_list,
+                "tools_config_list": self.on_prem_config.tools_config_list,
+                "post_call_transcription_webhook_url": self.on_prem_config.post_call_transcription_webhook_url,
+                "post_call_audio_webhook_url": self.on_prem_config.post_call_audio_webhook_url,
+            }
+        )
+    
     def _create_initiation_message(self):
         return json.dumps(
             {
@@ -527,6 +563,7 @@ class Conversation(BaseConversation):
         callback_user_transcript: Optional[Callable[[str], None]] = None,
         callback_latency_measurement: Optional[Callable[[int], None]] = None,
         callback_end_session: Optional[Callable] = None,
+        on_prem_config: Optional[OnPremInitiationData] = None,
     ):
         """Conversational AI session.
 
@@ -556,6 +593,7 @@ class Conversation(BaseConversation):
             requires_auth=requires_auth,
             config=config,
             client_tools=client_tools,
+            on_prem_config=on_prem_config,
         )
 
         self.audio_interface = audio_interface
@@ -663,6 +701,8 @@ class Conversation(BaseConversation):
     def _run(self, ws_url: str):
         with connect(ws_url, max_size=16 * 1024 * 1024) as ws:
             self._ws = ws
+            if self.on_prem_config:
+                ws.send(self._create_on_prem_initiation_message())
             ws.send(self._create_initiation_message())
             self._ws = ws
 
@@ -780,6 +820,7 @@ class AsyncConversation(BaseConversation):
         callback_user_transcript: Optional[Callable[[str], Awaitable[None]]] = None,
         callback_latency_measurement: Optional[Callable[[int], Awaitable[None]]] = None,
         callback_end_session: Optional[Callable[[], Awaitable[None]]] = None,
+        on_prem_config: Optional[OnPremInitiationData] = None,
     ):
         """Async Conversational AI session.
 
@@ -810,6 +851,7 @@ class AsyncConversation(BaseConversation):
             requires_auth=requires_auth,
             config=config,
             client_tools=client_tools,
+            on_prem_config=on_prem_config,
         )
 
         self.audio_interface = audio_interface
@@ -916,6 +958,8 @@ class AsyncConversation(BaseConversation):
     async def _run(self, ws_url: str):
         async with websockets.connect(ws_url, max_size=16 * 1024 * 1024) as ws:
             self._ws = ws
+            if self.on_prem_config:
+                ws.send(self._create_on_prem_initiation_message())
             await ws.send(self._create_initiation_message())
 
             async def input_callback(audio):
