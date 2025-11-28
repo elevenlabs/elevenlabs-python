@@ -117,29 +117,31 @@ class RawSpeechToTextClient:
         HttpResponse[SpeechToTextConvertResponse]
             Synchronous transcription result
         """
+        data = {
+            "model_id": model_id,
+            "language_code": language_code,
+            "tag_audio_events": tag_audio_events,
+            "num_speakers": num_speakers,
+            "timestamps_granularity": timestamps_granularity,
+            "diarize": diarize,
+            "diarization_threshold": diarization_threshold,
+            "file_format": file_format,
+            "cloud_storage_url": cloud_storage_url,
+            "webhook": webhook,
+            "webhook_id": webhook_id,
+            "temperature": temperature,
+            "seed": seed,
+            "use_multi_channel": use_multi_channel,
+            "webhook_metadata": webhook_metadata,
+        }
+
         _response = self._client_wrapper.httpx_client.request(
             "v1/speech-to-text",
             method="POST",
             params={
                 "enable_logging": enable_logging,
             },
-            data={
-                "model_id": model_id,
-                "language_code": language_code,
-                "tag_audio_events": tag_audio_events,
-                "num_speakers": num_speakers,
-                "timestamps_granularity": timestamps_granularity,
-                "diarize": diarize,
-                "diarization_threshold": diarization_threshold,
-                "file_format": file_format,
-                "cloud_storage_url": cloud_storage_url,
-                "webhook": webhook,
-                "webhook_id": webhook_id,
-                "temperature": temperature,
-                "seed": seed,
-                "use_multi_channel": use_multi_channel,
-                "webhook_metadata": webhook_metadata,
-            },
+            data={k: v for k, v in data.items() if v is not None},
             files={
                 **({"file": file} if file is not None else {}),
                 **(
