@@ -33,15 +33,6 @@ jobs:
       - name: Install dependencies
         run: poetry install
 
-      # NOTE: Is fern executable needed here?
-      - uses: pnpm/action-setup@v4
-      - name: Setup node
-        uses: actions/setup-node@v6
-      - name: Install Fern
-        run: |
-          pnpm install --frozen-lockfile
-          alias fern='pnpm exec fern'
-
       - name: Verify types
         run: poetry run python tests/verify_types.py
 
