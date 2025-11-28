@@ -155,6 +155,9 @@ class RawConversationsClient:
         call_start_after_unix: typing.Optional[int] = None,
         call_duration_min_secs: typing.Optional[int] = None,
         call_duration_max_secs: typing.Optional[int] = None,
+        rating_max: typing.Optional[int] = None,
+        rating_min: typing.Optional[int] = None,
+        has_feedback_comment: typing.Optional[bool] = None,
         user_id: typing.Optional[str] = None,
         evaluation_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         data_collection_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -189,6 +192,15 @@ class RawConversationsClient:
 
         call_duration_max_secs : typing.Optional[int]
             Maximum call duration in seconds.
+
+        rating_max : typing.Optional[int]
+            Maximum overall rating (1-5).
+
+        rating_min : typing.Optional[int]
+            Minimum overall rating (1-5).
+
+        has_feedback_comment : typing.Optional[bool]
+            Filter conversations with user feedback comments.
 
         user_id : typing.Optional[str]
             Filter conversations by the user ID who initiated them.
@@ -230,6 +242,9 @@ class RawConversationsClient:
                 "call_start_after_unix": call_start_after_unix,
                 "call_duration_min_secs": call_duration_min_secs,
                 "call_duration_max_secs": call_duration_max_secs,
+                "rating_max": rating_max,
+                "rating_min": rating_min,
+                "has_feedback_comment": has_feedback_comment,
                 "user_id": user_id,
                 "evaluation_params": evaluation_params,
                 "data_collection_params": data_collection_params,
@@ -505,6 +520,9 @@ class AsyncRawConversationsClient:
         call_start_after_unix: typing.Optional[int] = None,
         call_duration_min_secs: typing.Optional[int] = None,
         call_duration_max_secs: typing.Optional[int] = None,
+        rating_max: typing.Optional[int] = None,
+        rating_min: typing.Optional[int] = None,
+        has_feedback_comment: typing.Optional[bool] = None,
         user_id: typing.Optional[str] = None,
         evaluation_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         data_collection_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -539,6 +557,15 @@ class AsyncRawConversationsClient:
 
         call_duration_max_secs : typing.Optional[int]
             Maximum call duration in seconds.
+
+        rating_max : typing.Optional[int]
+            Maximum overall rating (1-5).
+
+        rating_min : typing.Optional[int]
+            Minimum overall rating (1-5).
+
+        has_feedback_comment : typing.Optional[bool]
+            Filter conversations with user feedback comments.
 
         user_id : typing.Optional[str]
             Filter conversations by the user ID who initiated them.
@@ -580,6 +607,9 @@ class AsyncRawConversationsClient:
                 "call_start_after_unix": call_start_after_unix,
                 "call_duration_min_secs": call_duration_min_secs,
                 "call_duration_max_secs": call_duration_max_secs,
+                "rating_max": rating_max,
+                "rating_min": rating_min,
+                "has_feedback_comment": has_feedback_comment,
                 "user_id": user_id,
                 "evaluation_params": evaluation_params,
                 "data_collection_params": data_collection_params,

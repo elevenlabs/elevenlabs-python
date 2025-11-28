@@ -159,10 +159,10 @@ class RawDubbingClient:
             URL of the source video/audio file.
 
         source_lang : typing.Optional[str]
-            Source language.
+            Source language. Expects a valid iso639-1 or iso639-3 language code.
 
         target_lang : typing.Optional[str]
-            The Target language to dub the content into.
+            The Target language to dub the content into. Expects a valid iso639-1 or iso639-3 language code.
 
         target_accent : typing.Optional[str]
             [Experimental] An accent to apply when selecting voices from the library and to use to inform translation of the dialect to prefer.
@@ -500,10 +500,10 @@ class AsyncRawDubbingClient:
             URL of the source video/audio file.
 
         source_lang : typing.Optional[str]
-            Source language.
+            Source language. Expects a valid iso639-1 or iso639-3 language code.
 
         target_lang : typing.Optional[str]
-            The Target language to dub the content into.
+            The Target language to dub the content into. Expects a valid iso639-1 or iso639-3 language code.
 
         target_accent : typing.Optional[str]
             [Experimental] An accent to apply when selecting voices from the library and to use to inform translation of the dialect to prefer.

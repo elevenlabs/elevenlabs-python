@@ -5,15 +5,10 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .dubbing_transcript_character import DubbingTranscriptCharacter
 
 
-class DubbingTranscriptWord(UncheckedBaseModel):
-    text: typing.Optional[str] = None
-    word_type: typing.Optional[str] = None
-    start_s: typing.Optional[float] = None
-    end_s: typing.Optional[float] = None
-    characters: typing.Optional[typing.List[DubbingTranscriptCharacter]] = None
+class SegmentMigrationResponse(UncheckedBaseModel):
+    version: int
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

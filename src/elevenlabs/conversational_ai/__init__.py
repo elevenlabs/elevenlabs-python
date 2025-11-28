@@ -8,6 +8,7 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from . import (
         agents,
+        analytics,
         batch_calls,
         conversations,
         dashboard,
@@ -57,6 +58,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PhoneNumbersUpdateResponse_Twilio": ".phone_numbers",
     "UpdateUnitTestRequestDynamicVariablesValue": ".tests",
     "agents": ".agents",
+    "analytics": ".analytics",
     "batch_calls": ".batch_calls",
     "conversations": ".conversations",
     "dashboard": ".dashboard",
@@ -112,6 +114,7 @@ __all__ = [
     "PhoneNumbersUpdateResponse_Twilio",
     "UpdateUnitTestRequestDynamicVariablesValue",
     "agents",
+    "analytics",
     "batch_calls",
     "conversations",
     "dashboard",

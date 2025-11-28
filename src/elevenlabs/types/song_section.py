@@ -16,12 +16,12 @@ class SongSection(UncheckedBaseModel):
 
     positive_local_styles: typing.List[str] = pydantic.Field()
     """
-    The styles that should be present in this section. Use English language for best result.
+    The styles and musical directions that should be present in this section. Use English language for best result.
     """
 
     negative_local_styles: typing.List[str] = pydantic.Field()
     """
-    The styles that should not be present in this section. Use English language for best result.
+    The styles and musical directions that should not be present in this section. Use English language for best result.
     """
 
     duration_ms: int = pydantic.Field()

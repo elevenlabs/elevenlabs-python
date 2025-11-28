@@ -133,6 +133,9 @@ class ConversationsClient:
         call_start_after_unix: typing.Optional[int] = None,
         call_duration_min_secs: typing.Optional[int] = None,
         call_duration_max_secs: typing.Optional[int] = None,
+        rating_max: typing.Optional[int] = None,
+        rating_min: typing.Optional[int] = None,
+        has_feedback_comment: typing.Optional[bool] = None,
         user_id: typing.Optional[str] = None,
         evaluation_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         data_collection_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -167,6 +170,15 @@ class ConversationsClient:
 
         call_duration_max_secs : typing.Optional[int]
             Maximum call duration in seconds.
+
+        rating_max : typing.Optional[int]
+            Maximum overall rating (1-5).
+
+        rating_min : typing.Optional[int]
+            Minimum overall rating (1-5).
+
+        has_feedback_comment : typing.Optional[bool]
+            Filter conversations with user feedback comments.
 
         user_id : typing.Optional[str]
             Filter conversations by the user ID who initiated them.
@@ -212,6 +224,9 @@ class ConversationsClient:
             call_start_after_unix=1,
             call_duration_min_secs=1,
             call_duration_max_secs=1,
+            rating_max=1,
+            rating_min=1,
+            has_feedback_comment=True,
             user_id="user_id",
             page_size=1,
             summary_mode="exclude",
@@ -226,6 +241,9 @@ class ConversationsClient:
             call_start_after_unix=call_start_after_unix,
             call_duration_min_secs=call_duration_min_secs,
             call_duration_max_secs=call_duration_max_secs,
+            rating_max=rating_max,
+            rating_min=rating_min,
+            has_feedback_comment=has_feedback_comment,
             user_id=user_id,
             evaluation_params=evaluation_params,
             data_collection_params=data_collection_params,
@@ -448,6 +466,9 @@ class AsyncConversationsClient:
         call_start_after_unix: typing.Optional[int] = None,
         call_duration_min_secs: typing.Optional[int] = None,
         call_duration_max_secs: typing.Optional[int] = None,
+        rating_max: typing.Optional[int] = None,
+        rating_min: typing.Optional[int] = None,
+        has_feedback_comment: typing.Optional[bool] = None,
         user_id: typing.Optional[str] = None,
         evaluation_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         data_collection_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -482,6 +503,15 @@ class AsyncConversationsClient:
 
         call_duration_max_secs : typing.Optional[int]
             Maximum call duration in seconds.
+
+        rating_max : typing.Optional[int]
+            Maximum overall rating (1-5).
+
+        rating_min : typing.Optional[int]
+            Minimum overall rating (1-5).
+
+        has_feedback_comment : typing.Optional[bool]
+            Filter conversations with user feedback comments.
 
         user_id : typing.Optional[str]
             Filter conversations by the user ID who initiated them.
@@ -532,6 +562,9 @@ class AsyncConversationsClient:
                 call_start_after_unix=1,
                 call_duration_min_secs=1,
                 call_duration_max_secs=1,
+                rating_max=1,
+                rating_min=1,
+                has_feedback_comment=True,
                 user_id="user_id",
                 page_size=1,
                 summary_mode="exclude",
@@ -549,6 +582,9 @@ class AsyncConversationsClient:
             call_start_after_unix=call_start_after_unix,
             call_duration_min_secs=call_duration_min_secs,
             call_duration_max_secs=call_duration_max_secs,
+            rating_max=rating_max,
+            rating_min=rating_min,
+            has_feedback_comment=has_feedback_comment,
             user_id=user_id,
             evaluation_params=evaluation_params,
             data_collection_params=data_collection_params,
