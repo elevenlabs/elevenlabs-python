@@ -15,6 +15,7 @@ from ...types.dubbing_resource import DubbingResource
 from ...types.http_validation_error import HttpValidationError
 from ...types.render_type import RenderType
 from ...types.segment_dub_response import SegmentDubResponse
+from ...types.segment_migration_response import SegmentMigrationResponse
 from ...types.segment_transcription_response import SegmentTranscriptionResponse
 from ...types.segment_translation_response import SegmentTranslationResponse
 from .types.resource_render_request_language import ResourceRenderRequestLanguage
@@ -57,6 +58,73 @@ class RawResourceClient:
                     DubbingResource,
                     construct_type(
                         type_=DubbingResource,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def migrate_segments(
+        self,
+        dubbing_id: str,
+        *,
+        segment_ids: typing.Sequence[str],
+        speaker_id: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[SegmentMigrationResponse]:
+        """
+        Change the attribution of one or more segments to a different speaker.
+
+        Parameters
+        ----------
+        dubbing_id : str
+            ID of the dubbing project.
+
+        segment_ids : typing.Sequence[str]
+
+        speaker_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[SegmentMigrationResponse]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/migrate-segments",
+            method="POST",
+            json={
+                "segment_ids": segment_ids,
+                "speaker_id": speaker_id,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    SegmentMigrationResponse,
+                    construct_type(
+                        type_=SegmentMigrationResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -387,6 +455,73 @@ class AsyncRawResourceClient:
                     DubbingResource,
                     construct_type(
                         type_=DubbingResource,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def migrate_segments(
+        self,
+        dubbing_id: str,
+        *,
+        segment_ids: typing.Sequence[str],
+        speaker_id: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[SegmentMigrationResponse]:
+        """
+        Change the attribution of one or more segments to a different speaker.
+
+        Parameters
+        ----------
+        dubbing_id : str
+            ID of the dubbing project.
+
+        segment_ids : typing.Sequence[str]
+
+        speaker_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[SegmentMigrationResponse]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/dubbing/resource/{jsonable_encoder(dubbing_id)}/migrate-segments",
+            method="POST",
+            json={
+                "segment_ids": segment_ids,
+                "speaker_id": speaker_id,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    SegmentMigrationResponse,
+                    construct_type(
+                        type_=SegmentMigrationResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

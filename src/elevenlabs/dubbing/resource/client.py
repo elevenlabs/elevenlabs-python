@@ -10,6 +10,7 @@ from ...types.dubbing_render_response_model import DubbingRenderResponseModel
 from ...types.dubbing_resource import DubbingResource
 from ...types.render_type import RenderType
 from ...types.segment_dub_response import SegmentDubResponse
+from ...types.segment_migration_response import SegmentMigrationResponse
 from ...types.segment_transcription_response import SegmentTranscriptionResponse
 from ...types.segment_translation_response import SegmentTranslationResponse
 from .raw_client import AsyncRawResourceClient, RawResourceClient
@@ -71,6 +72,52 @@ class ResourceClient:
         )
         """
         _response = self._raw_client.get(dubbing_id, request_options=request_options)
+        return _response.data
+
+    def migrate_segments(
+        self,
+        dubbing_id: str,
+        *,
+        segment_ids: typing.Sequence[str],
+        speaker_id: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SegmentMigrationResponse:
+        """
+        Change the attribution of one or more segments to a different speaker.
+
+        Parameters
+        ----------
+        dubbing_id : str
+            ID of the dubbing project.
+
+        segment_ids : typing.Sequence[str]
+
+        speaker_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SegmentMigrationResponse
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.dubbing.resource.migrate_segments(
+            dubbing_id="dubbing_id",
+            segment_ids=["segment_ids"],
+            speaker_id="speaker_id",
+        )
+        """
+        _response = self._raw_client.migrate_segments(
+            dubbing_id, segment_ids=segment_ids, speaker_id=speaker_id, request_options=request_options
+        )
         return _response.data
 
     def transcribe(
@@ -345,6 +392,60 @@ class AsyncResourceClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get(dubbing_id, request_options=request_options)
+        return _response.data
+
+    async def migrate_segments(
+        self,
+        dubbing_id: str,
+        *,
+        segment_ids: typing.Sequence[str],
+        speaker_id: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SegmentMigrationResponse:
+        """
+        Change the attribution of one or more segments to a different speaker.
+
+        Parameters
+        ----------
+        dubbing_id : str
+            ID of the dubbing project.
+
+        segment_ids : typing.Sequence[str]
+
+        speaker_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SegmentMigrationResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.dubbing.resource.migrate_segments(
+                dubbing_id="dubbing_id",
+                segment_ids=["segment_ids"],
+                speaker_id="speaker_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.migrate_segments(
+            dubbing_id, segment_ids=segment_ids, speaker_id=speaker_id, request_options=request_options
+        )
         return _response.data
 
     async def transcribe(

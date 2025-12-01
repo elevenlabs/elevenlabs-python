@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .conv_ai_secret_locator import ConvAiSecretLocator
 from .custom_llm_request_headers_value import CustomLlmRequestHeadersValue
+from .custom_llmapi_type import CustomLlmapiType
 
 
 class CustomLlm(UncheckedBaseModel):
@@ -33,6 +34,11 @@ class CustomLlm(UncheckedBaseModel):
     api_version: typing.Optional[str] = pydantic.Field(default=None)
     """
     The API version to use for the request
+    """
+
+    api_type: typing.Optional[CustomLlmapiType] = pydantic.Field(default=None)
+    """
+    The API type to use (chat_completions or responses)
     """
 
     if IS_PYDANTIC_V2:

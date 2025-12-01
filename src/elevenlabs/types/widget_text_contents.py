@@ -133,6 +133,41 @@ class WidgetTextContents(UncheckedBaseModel):
     Text and ARIA label used for the copy ID button.
     """
 
+    initiate_feedback: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Text displayed to prompt the user for feedback.
+    """
+
+    request_follow_up_feedback: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Text displayed to request additional feedback details.
+    """
+
+    thanks_for_feedback: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Text displayed to thank the user for providing feedback.
+    """
+
+    thanks_for_feedback_details: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Additional text displayed explaining the value of user feedback.
+    """
+
+    follow_up_feedback_placeholder: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Placeholder text for the follow-up feedback input field.
+    """
+
+    submit: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Text and ARIA label for the submit button.
+    """
+
+    go_back: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Text and ARIA label for the go back button.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

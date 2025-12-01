@@ -7,6 +7,7 @@ import typing
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.request_options import RequestOptions
 from ....types.similar_voices_for_speaker_response import SimilarVoicesForSpeakerResponse
+from ....types.speaker_created_response import SpeakerCreatedResponse
 from ....types.speaker_updated_response import SpeakerUpdatedResponse
 from .raw_client import AsyncRawSpeakerClient, RawSpeakerClient
 
@@ -38,6 +39,7 @@ class SpeakerClient:
         dubbing_id: str,
         speaker_id: str,
         *,
+        speaker_name: typing.Optional[str] = OMIT,
         voice_id: typing.Optional[str] = OMIT,
         languages: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -52,6 +54,9 @@ class SpeakerClient:
 
         speaker_id : str
             ID of the speaker.
+
+        speaker_name : typing.Optional[str]
+            Name to attribute to this speaker.
 
         voice_id : typing.Optional[str]
             Either the identifier of a voice from the ElevenLabs voice library, or one of ['track-clone', 'clip-clone'].
@@ -80,7 +85,56 @@ class SpeakerClient:
         )
         """
         _response = self._raw_client.update(
-            dubbing_id, speaker_id, voice_id=voice_id, languages=languages, request_options=request_options
+            dubbing_id,
+            speaker_id,
+            speaker_name=speaker_name,
+            voice_id=voice_id,
+            languages=languages,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def create(
+        self,
+        dubbing_id: str,
+        *,
+        speaker_name: typing.Optional[str] = OMIT,
+        voice_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SpeakerCreatedResponse:
+        """
+        Parameters
+        ----------
+        dubbing_id : str
+            ID of the dubbing project.
+
+        speaker_name : typing.Optional[str]
+            Name to attribute to this speaker.
+
+        voice_id : typing.Optional[str]
+            Either the identifier of a voice from the ElevenLabs voice library, or one of ['track-clone', 'clip-clone'].
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SpeakerCreatedResponse
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.dubbing.resource.speaker.create(
+            dubbing_id="dubbing_id",
+        )
+        """
+        _response = self._raw_client.create(
+            dubbing_id, speaker_name=speaker_name, voice_id=voice_id, request_options=request_options
         )
         return _response.data
 
@@ -152,6 +206,7 @@ class AsyncSpeakerClient:
         dubbing_id: str,
         speaker_id: str,
         *,
+        speaker_name: typing.Optional[str] = OMIT,
         voice_id: typing.Optional[str] = OMIT,
         languages: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -166,6 +221,9 @@ class AsyncSpeakerClient:
 
         speaker_id : str
             ID of the speaker.
+
+        speaker_name : typing.Optional[str]
+            Name to attribute to this speaker.
 
         voice_id : typing.Optional[str]
             Either the identifier of a voice from the ElevenLabs voice library, or one of ['track-clone', 'clip-clone'].
@@ -202,7 +260,64 @@ class AsyncSpeakerClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.update(
-            dubbing_id, speaker_id, voice_id=voice_id, languages=languages, request_options=request_options
+            dubbing_id,
+            speaker_id,
+            speaker_name=speaker_name,
+            voice_id=voice_id,
+            languages=languages,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def create(
+        self,
+        dubbing_id: str,
+        *,
+        speaker_name: typing.Optional[str] = OMIT,
+        voice_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SpeakerCreatedResponse:
+        """
+        Parameters
+        ----------
+        dubbing_id : str
+            ID of the dubbing project.
+
+        speaker_name : typing.Optional[str]
+            Name to attribute to this speaker.
+
+        voice_id : typing.Optional[str]
+            Either the identifier of a voice from the ElevenLabs voice library, or one of ['track-clone', 'clip-clone'].
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SpeakerCreatedResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.dubbing.resource.speaker.create(
+                dubbing_id="dubbing_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.create(
+            dubbing_id, speaker_name=speaker_name, voice_id=voice_id, request_options=request_options
         )
         return _response.data
 

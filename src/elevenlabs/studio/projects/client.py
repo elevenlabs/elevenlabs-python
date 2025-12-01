@@ -104,6 +104,7 @@ class ProjectsClient:
         auto_convert: typing.Optional[bool] = OMIT,
         auto_assign_voices: typing.Optional[bool] = OMIT,
         source_type: typing.Optional[ProjectsCreateRequestSourceType] = OMIT,
+        voice_settings: typing.Optional[typing.List[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddProjectResponseModel:
         """
@@ -260,6 +261,9 @@ class ProjectsClient:
         source_type : typing.Optional[ProjectsCreateRequestSourceType]
             The type of Studio project to create.
 
+        voice_settings : typing.Optional[typing.List[str]]
+            Optional voice settings overrides for the project, encoded as a list of JSON strings.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -307,6 +311,7 @@ class ProjectsClient:
             auto_convert=auto_convert,
             auto_assign_voices=auto_assign_voices,
             source_type=source_type,
+            voice_settings=voice_settings,
             request_options=request_options,
         )
         return _response.data
@@ -612,6 +617,7 @@ class AsyncProjectsClient:
         auto_convert: typing.Optional[bool] = OMIT,
         auto_assign_voices: typing.Optional[bool] = OMIT,
         source_type: typing.Optional[ProjectsCreateRequestSourceType] = OMIT,
+        voice_settings: typing.Optional[typing.List[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddProjectResponseModel:
         """
@@ -768,6 +774,9 @@ class AsyncProjectsClient:
         source_type : typing.Optional[ProjectsCreateRequestSourceType]
             The type of Studio project to create.
 
+        voice_settings : typing.Optional[typing.List[str]]
+            Optional voice settings overrides for the project, encoded as a list of JSON strings.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -823,6 +832,7 @@ class AsyncProjectsClient:
             auto_convert=auto_convert,
             auto_assign_voices=auto_assign_voices,
             source_type=source_type,
+            voice_settings=voice_settings,
             request_options=request_options,
         )
         return _response.data

@@ -2,4 +2,4 @@
 
 import typing
 
-AgentDefinitionSource = typing.Union[typing.Literal["cli", "ui", "api", "unknown"], typing.Any]
+AgentDefinitionSource = typing.Union[typing.Literal["cli", "ui", "api", "template", "unknown"], typing.Any]

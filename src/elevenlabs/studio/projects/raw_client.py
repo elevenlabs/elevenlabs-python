@@ -106,6 +106,7 @@ class RawProjectsClient:
         auto_convert: typing.Optional[bool] = OMIT,
         auto_assign_voices: typing.Optional[bool] = OMIT,
         source_type: typing.Optional[ProjectsCreateRequestSourceType] = OMIT,
+        voice_settings: typing.Optional[typing.List[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AddProjectResponseModel]:
         """
@@ -262,6 +263,9 @@ class RawProjectsClient:
         source_type : typing.Optional[ProjectsCreateRequestSourceType]
             The type of Studio project to create.
 
+        voice_settings : typing.Optional[typing.List[str]]
+            Optional voice settings overrides for the project, encoded as a list of JSON strings.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -300,6 +304,7 @@ class RawProjectsClient:
                 "auto_convert": auto_convert,
                 "auto_assign_voices": auto_assign_voices,
                 "source_type": source_type,
+                "voice_settings": voice_settings,
             },
             files={
                 **({"from_document": from_document} if from_document is not None else {}),
@@ -670,6 +675,7 @@ class AsyncRawProjectsClient:
         auto_convert: typing.Optional[bool] = OMIT,
         auto_assign_voices: typing.Optional[bool] = OMIT,
         source_type: typing.Optional[ProjectsCreateRequestSourceType] = OMIT,
+        voice_settings: typing.Optional[typing.List[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AddProjectResponseModel]:
         """
@@ -826,6 +832,9 @@ class AsyncRawProjectsClient:
         source_type : typing.Optional[ProjectsCreateRequestSourceType]
             The type of Studio project to create.
 
+        voice_settings : typing.Optional[typing.List[str]]
+            Optional voice settings overrides for the project, encoded as a list of JSON strings.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -864,6 +873,7 @@ class AsyncRawProjectsClient:
                 "auto_convert": auto_convert,
                 "auto_assign_voices": auto_assign_voices,
                 "source_type": source_type,
+                "voice_settings": voice_settings,
             },
             files={
                 **({"from_document": from_document} if from_document is not None else {}),

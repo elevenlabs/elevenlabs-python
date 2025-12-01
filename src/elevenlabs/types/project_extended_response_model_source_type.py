@@ -3,5 +3,5 @@
 import typing
 
 ProjectExtendedResponseModelSourceType = typing.Union[
-    typing.Literal["blank", "book", "article", "genfm", "video"], typing.Any
+    typing.Literal["blank", "book", "article", "genfm", "video", "screenplay"], typing.Any
 ]
