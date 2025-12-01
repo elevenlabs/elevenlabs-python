@@ -4378,7 +4378,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**source_lang:** `typing.Optional[str]` — Source language.
+**source_lang:** `typing.Optional[str]` — Source language. Expects a valid iso639-1 or iso639-3 language code.
     
 </dd>
 </dl>
@@ -4386,7 +4386,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**target_lang:** `typing.Optional[str]` — The Target language to dub the content into.
+**target_lang:** `typing.Optional[str]` — The Target language to dub the content into. Expects a valid iso639-1 or iso639-3 language code.
     
 </dd>
 </dl>
@@ -5850,6 +5850,237 @@ client.webhooks.list(
 </dl>
 </details>
 
+<details><summary><code>client.webhooks.<a href="src/elevenlabs/webhooks/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new webhook for the workspace with the specified authentication type.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs, WebhookHmacSettings
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.webhooks.create(
+    settings=WebhookHmacSettings(
+        name="name",
+        webhook_url="webhook_url",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**settings:** `WebhookHmacSettings` — Webhook settings object containing auth_type and corresponding configuration
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.webhooks.<a href="src/elevenlabs/webhooks/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete the specified workspace webhook
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.webhooks.delete(
+    webhook_id="G007vmtq9uWYl7SUW9zGS8GZZa1K",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**webhook_id:** `str` — The unique ID for the webhook
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.webhooks.<a href="src/elevenlabs/webhooks/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the specified workspace webhook
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.webhooks.update(
+    webhook_id="G007vmtq9uWYl7SUW9zGS8GZZa1K",
+    is_disabled=True,
+    name="My Callback Webhook",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**webhook_id:** `str` — The unique ID for the webhook
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_disabled:** `bool` — Whether to disable or enable the webhook
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `str` — The display name of the webhook (used for display purposes only).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## SpeechToText
 <details><summary><code>client.speech_to_text.<a href="src/elevenlabs/speech_to_text/client.py">convert</a>(...)</code></summary>
 <dl>
@@ -7011,6 +7242,9 @@ client.conversational_ai.conversations.list(
     call_start_after_unix=1,
     call_duration_min_secs=1,
     call_duration_max_secs=1,
+    rating_max=1,
+    rating_min=1,
+    has_feedback_comment=True,
     user_id="user_id",
     page_size=1,
     summary_mode="exclude",
@@ -7080,6 +7314,30 @@ client.conversational_ai.conversations.list(
 <dd>
 
 **call_duration_max_secs:** `typing.Optional[int]` — Maximum call duration in seconds.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rating_max:** `typing.Optional[int]` — Maximum overall rating (1-5).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rating_min:** `typing.Optional[int]` — Minimum overall rating (1-5).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**has_feedback_comment:** `typing.Optional[bool]` — Filter conversations with user feedback comments.
     
 </dd>
 </dl>
@@ -11693,6 +11951,77 @@ core.File` — See core.File for more documentation
 </dl>
 </details>
 
+## ConversationalAi Analytics LiveCount
+<details><summary><code>client.conversational_ai.analytics.live_count.<a href="src/elevenlabs/conversational_ai/analytics/live_count/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the live count of the ongoing conversations.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.analytics.live_count.get(
+    agent_id="agent_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `typing.Optional[str]` — The id of an agent to restrict the analytics to.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ConversationalAi Conversations Audio
 <details><summary><code>client.conversational_ai.conversations.audio.<a href="src/elevenlabs/conversational_ai/conversations/audio/client.py">get</a>(...)</code></summary>
 <dl>
@@ -13845,6 +14174,94 @@ client.dubbing.resource.get(
 </dl>
 </details>
 
+<details><summary><code>client.dubbing.resource.<a href="src/elevenlabs/dubbing/resource/client.py">migrate_segments</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Change the attribution of one or more segments to a different speaker.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.dubbing.resource.migrate_segments(
+    dubbing_id="dubbing_id",
+    segment_ids=["segment_ids"],
+    speaker_id="speaker_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**dubbing_id:** `str` — ID of the dubbing project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**segment_ids:** `typing.Sequence[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**speaker_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.dubbing.resource.<a href="src/elevenlabs/dubbing/resource/client.py">transcribe</a>(...)</code></summary>
 <dl>
 <dd>
@@ -14702,6 +15119,14 @@ client.dubbing.resource.speaker.update(
 <dl>
 <dd>
 
+**speaker_name:** `typing.Optional[str]` — Name to attribute to this speaker.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **voice_id:** `typing.Optional[str]` — Either the identifier of a voice from the ElevenLabs voice library, or one of ['track-clone', 'clip-clone'].
     
 </dd>
@@ -14711,6 +15136,78 @@ client.dubbing.resource.speaker.update(
 <dd>
 
 **languages:** `typing.Optional[typing.Sequence[str]]` — Languages to apply these changes to. If empty, will apply to all languages.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.dubbing.resource.speaker.<a href="src/elevenlabs/dubbing/resource/speaker/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.dubbing.resource.speaker.create(
+    dubbing_id="dubbing_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**dubbing_id:** `str` — ID of the dubbing project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**speaker_name:** `typing.Optional[str]` — Name to attribute to this speaker.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**voice_id:** `typing.Optional[str]` — Either the identifier of a voice from the ElevenLabs voice library, or one of ['track-clone', 'clip-clone'].
     
 </dd>
 </dl>
@@ -16088,6 +16585,14 @@ ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate
 <dd>
 
 **source_type:** `typing.Optional[ProjectsCreateRequestSourceType]` — The type of Studio project to create.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**voice_settings:** `typing.Optional[typing.List[str]]` — Optional voice settings overrides for the project, encoded as a list of JSON strings.
     
 </dd>
 </dl>

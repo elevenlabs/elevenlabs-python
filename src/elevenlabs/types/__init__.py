@@ -809,6 +809,7 @@ if typing.TYPE_CHECKING:
     from .create_unit_test_response_model import CreateUnitTestResponseModel
     from .custom_llm import CustomLlm
     from .custom_llm_request_headers_value import CustomLlmRequestHeadersValue
+    from .custom_llmapi_type import CustomLlmapiType
     from .dashboard_call_success_chart_model import DashboardCallSuccessChartModel
     from .dashboard_criteria_chart_model import DashboardCriteriaChartModel
     from .dashboard_data_collection_chart_model import DashboardDataCollectionChartModel
@@ -825,6 +826,7 @@ if typing.TYPE_CHECKING:
     from .delete_voice_sample_response_model import DeleteVoiceSampleResponseModel
     from .delete_workspace_group_member_response_model import DeleteWorkspaceGroupMemberResponseModel
     from .delete_workspace_invite_response_model import DeleteWorkspaceInviteResponseModel
+    from .delete_workspace_webhook_response_model import DeleteWorkspaceWebhookResponseModel
     from .dependent_available_agent_identifier import DependentAvailableAgentIdentifier
     from .dependent_available_agent_identifier_access_level import DependentAvailableAgentIdentifierAccessLevel
     from .dependent_available_tool_identifier import DependentAvailableToolIdentifier
@@ -960,6 +962,7 @@ if typing.TYPE_CHECKING:
     from .get_knowledge_base_text_response_model import GetKnowledgeBaseTextResponseModel
     from .get_knowledge_base_url_response_model import GetKnowledgeBaseUrlResponseModel
     from .get_library_voices_response import GetLibraryVoicesResponse
+    from .get_live_count_response import GetLiveCountResponse
     from .get_phone_number_inbound_sip_trunk_config_response_model import (
         GetPhoneNumberInboundSipTrunkConfigResponseModel,
     )
@@ -1089,6 +1092,7 @@ if typing.TYPE_CHECKING:
     from .outbound_call_recipient_response_model import OutboundCallRecipientResponseModel
     from .outbound_sip_trunk_config_request_model import OutboundSipTrunkConfigRequestModel
     from .output_format import OutputFormat
+    from .patch_workspace_webhook_response_model import PatchWorkspaceWebhookResponseModel
     from .pdf_export_options import PdfExportOptions
     from .pending_cancellation_response_model import PendingCancellationResponseModel
     from .pending_subscription_switch_response_model import PendingSubscriptionSwitchResponseModel
@@ -1266,6 +1270,7 @@ if typing.TYPE_CHECKING:
     from .segment_create_response import SegmentCreateResponse
     from .segment_delete_response import SegmentDeleteResponse
     from .segment_dub_response import SegmentDubResponse
+    from .segment_migration_response import SegmentMigrationResponse
     from .segment_subtitle_frame import SegmentSubtitleFrame
     from .segment_transcription_response import SegmentTranscriptionResponse
     from .segment_translation_response import SegmentTranslationResponse
@@ -1295,6 +1300,7 @@ if typing.TYPE_CHECKING:
     from .song_section import SongSection
     from .sort_direction import SortDirection
     from .speaker_audio_response_model import SpeakerAudioResponseModel
+    from .speaker_created_response import SpeakerCreatedResponse
     from .speaker_response_model import SpeakerResponseModel
     from .speaker_segment import SpeakerSegment
     from .speaker_separation_response_model import SpeakerSeparationResponseModel
@@ -1472,6 +1478,7 @@ if typing.TYPE_CHECKING:
     from .voicemail_detection_tool_config import VoicemailDetectionToolConfig
     from .webhook_auth_method_type import WebhookAuthMethodType
     from .webhook_event_type import WebhookEventType
+    from .webhook_hmac_settings import WebhookHmacSettings
     from .webhook_tool_api_schema_config_input import WebhookToolApiSchemaConfigInput
     from .webhook_tool_api_schema_config_input_content_type import WebhookToolApiSchemaConfigInputContentType
     from .webhook_tool_api_schema_config_input_method import WebhookToolApiSchemaConfigInputMethod
@@ -1644,6 +1651,7 @@ if typing.TYPE_CHECKING:
     from .workspace_api_key_response_model_permissions_item import WorkspaceApiKeyResponseModelPermissionsItem
     from .workspace_batch_calls_response import WorkspaceBatchCallsResponse
     from .workspace_create_api_key_response_model import WorkspaceCreateApiKeyResponseModel
+    from .workspace_create_webhook_response_model import WorkspaceCreateWebhookResponseModel
     from .workspace_group_by_name_response_model import WorkspaceGroupByNameResponseModel
     from .workspace_resource_type import WorkspaceResourceType
     from .workspace_service_account_list_response_model import WorkspaceServiceAccountListResponseModel
@@ -2326,6 +2334,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateUnitTestResponseModel": ".create_unit_test_response_model",
     "CustomLlm": ".custom_llm",
     "CustomLlmRequestHeadersValue": ".custom_llm_request_headers_value",
+    "CustomLlmapiType": ".custom_llmapi_type",
     "DashboardCallSuccessChartModel": ".dashboard_call_success_chart_model",
     "DashboardCriteriaChartModel": ".dashboard_criteria_chart_model",
     "DashboardDataCollectionChartModel": ".dashboard_data_collection_chart_model",
@@ -2342,6 +2351,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DeleteVoiceSampleResponseModel": ".delete_voice_sample_response_model",
     "DeleteWorkspaceGroupMemberResponseModel": ".delete_workspace_group_member_response_model",
     "DeleteWorkspaceInviteResponseModel": ".delete_workspace_invite_response_model",
+    "DeleteWorkspaceWebhookResponseModel": ".delete_workspace_webhook_response_model",
     "DependentAvailableAgentIdentifier": ".dependent_available_agent_identifier",
     "DependentAvailableAgentIdentifierAccessLevel": ".dependent_available_agent_identifier_access_level",
     "DependentAvailableToolIdentifier": ".dependent_available_tool_identifier",
@@ -2455,6 +2465,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetKnowledgeBaseTextResponseModel": ".get_knowledge_base_text_response_model",
     "GetKnowledgeBaseUrlResponseModel": ".get_knowledge_base_url_response_model",
     "GetLibraryVoicesResponse": ".get_library_voices_response",
+    "GetLiveCountResponse": ".get_live_count_response",
     "GetPhoneNumberInboundSipTrunkConfigResponseModel": ".get_phone_number_inbound_sip_trunk_config_response_model",
     "GetPhoneNumberOutboundSipTrunkConfigResponseModel": ".get_phone_number_outbound_sip_trunk_config_response_model",
     "GetPhoneNumberResponse": ".get_phone_number_response",
@@ -2572,6 +2583,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OutboundCallRecipientResponseModel": ".outbound_call_recipient_response_model",
     "OutboundSipTrunkConfigRequestModel": ".outbound_sip_trunk_config_request_model",
     "OutputFormat": ".output_format",
+    "PatchWorkspaceWebhookResponseModel": ".patch_workspace_webhook_response_model",
     "PdfExportOptions": ".pdf_export_options",
     "PendingCancellationResponseModel": ".pending_cancellation_response_model",
     "PendingSubscriptionSwitchResponseModel": ".pending_subscription_switch_response_model",
@@ -2721,6 +2733,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SegmentCreateResponse": ".segment_create_response",
     "SegmentDeleteResponse": ".segment_delete_response",
     "SegmentDubResponse": ".segment_dub_response",
+    "SegmentMigrationResponse": ".segment_migration_response",
     "SegmentSubtitleFrame": ".segment_subtitle_frame",
     "SegmentTranscriptionResponse": ".segment_transcription_response",
     "SegmentTranslationResponse": ".segment_translation_response",
@@ -2750,6 +2763,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SongSection": ".song_section",
     "SortDirection": ".sort_direction",
     "SpeakerAudioResponseModel": ".speaker_audio_response_model",
+    "SpeakerCreatedResponse": ".speaker_created_response",
     "SpeakerResponseModel": ".speaker_response_model",
     "SpeakerSegment": ".speaker_segment",
     "SpeakerSeparationResponseModel": ".speaker_separation_response_model",
@@ -2915,6 +2929,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "VoicemailDetectionToolConfig": ".voicemail_detection_tool_config",
     "WebhookAuthMethodType": ".webhook_auth_method_type",
     "WebhookEventType": ".webhook_event_type",
+    "WebhookHmacSettings": ".webhook_hmac_settings",
     "WebhookToolApiSchemaConfigInput": ".webhook_tool_api_schema_config_input",
     "WebhookToolApiSchemaConfigInputContentType": ".webhook_tool_api_schema_config_input_content_type",
     "WebhookToolApiSchemaConfigInputMethod": ".webhook_tool_api_schema_config_input_method",
@@ -3053,6 +3068,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkspaceApiKeyResponseModelPermissionsItem": ".workspace_api_key_response_model_permissions_item",
     "WorkspaceBatchCallsResponse": ".workspace_batch_calls_response",
     "WorkspaceCreateApiKeyResponseModel": ".workspace_create_api_key_response_model",
+    "WorkspaceCreateWebhookResponseModel": ".workspace_create_webhook_response_model",
     "WorkspaceGroupByNameResponseModel": ".workspace_group_by_name_response_model",
     "WorkspaceResourceType": ".workspace_resource_type",
     "WorkspaceServiceAccountListResponseModel": ".workspace_service_account_list_response_model",
@@ -3759,6 +3775,7 @@ __all__ = [
     "CreateUnitTestResponseModel",
     "CustomLlm",
     "CustomLlmRequestHeadersValue",
+    "CustomLlmapiType",
     "DashboardCallSuccessChartModel",
     "DashboardCriteriaChartModel",
     "DashboardDataCollectionChartModel",
@@ -3775,6 +3792,7 @@ __all__ = [
     "DeleteVoiceSampleResponseModel",
     "DeleteWorkspaceGroupMemberResponseModel",
     "DeleteWorkspaceInviteResponseModel",
+    "DeleteWorkspaceWebhookResponseModel",
     "DependentAvailableAgentIdentifier",
     "DependentAvailableAgentIdentifierAccessLevel",
     "DependentAvailableToolIdentifier",
@@ -3888,6 +3906,7 @@ __all__ = [
     "GetKnowledgeBaseTextResponseModel",
     "GetKnowledgeBaseUrlResponseModel",
     "GetLibraryVoicesResponse",
+    "GetLiveCountResponse",
     "GetPhoneNumberInboundSipTrunkConfigResponseModel",
     "GetPhoneNumberOutboundSipTrunkConfigResponseModel",
     "GetPhoneNumberResponse",
@@ -4005,6 +4024,7 @@ __all__ = [
     "OutboundCallRecipientResponseModel",
     "OutboundSipTrunkConfigRequestModel",
     "OutputFormat",
+    "PatchWorkspaceWebhookResponseModel",
     "PdfExportOptions",
     "PendingCancellationResponseModel",
     "PendingSubscriptionSwitchResponseModel",
@@ -4154,6 +4174,7 @@ __all__ = [
     "SegmentCreateResponse",
     "SegmentDeleteResponse",
     "SegmentDubResponse",
+    "SegmentMigrationResponse",
     "SegmentSubtitleFrame",
     "SegmentTranscriptionResponse",
     "SegmentTranslationResponse",
@@ -4183,6 +4204,7 @@ __all__ = [
     "SongSection",
     "SortDirection",
     "SpeakerAudioResponseModel",
+    "SpeakerCreatedResponse",
     "SpeakerResponseModel",
     "SpeakerSegment",
     "SpeakerSeparationResponseModel",
@@ -4348,6 +4370,7 @@ __all__ = [
     "VoicemailDetectionToolConfig",
     "WebhookAuthMethodType",
     "WebhookEventType",
+    "WebhookHmacSettings",
     "WebhookToolApiSchemaConfigInput",
     "WebhookToolApiSchemaConfigInputContentType",
     "WebhookToolApiSchemaConfigInputMethod",
@@ -4486,6 +4509,7 @@ __all__ = [
     "WorkspaceApiKeyResponseModelPermissionsItem",
     "WorkspaceBatchCallsResponse",
     "WorkspaceCreateApiKeyResponseModel",
+    "WorkspaceCreateWebhookResponseModel",
     "WorkspaceGroupByNameResponseModel",
     "WorkspaceResourceType",
     "WorkspaceServiceAccountListResponseModel",

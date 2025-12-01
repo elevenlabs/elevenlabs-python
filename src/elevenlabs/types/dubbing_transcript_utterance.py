@@ -9,7 +9,8 @@ from .dubbing_transcript_word import DubbingTranscriptWord
 
 
 class DubbingTranscriptUtterance(UncheckedBaseModel):
-    speaker_id: str
+    text: typing.Optional[str] = None
+    speaker_id: typing.Optional[str] = None
     start_s: typing.Optional[float] = None
     end_s: typing.Optional[float] = None
     words: typing.Optional[typing.List[DubbingTranscriptWord]] = None
