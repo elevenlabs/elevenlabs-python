@@ -16,6 +16,17 @@ class RealtimeEvents(str, Enum):
     ERROR = "error"
     AUTH_ERROR = "auth_error"
     QUOTA_EXCEEDED = "quota_exceeded"
+    COMMIT_THROTTLED = "commit_throttled"
+    TRANSCRIBER_ERROR = "transcriber_error"
+    UNACCEPTED_TERMS_ERROR = "unaccepted_terms_error"
+    RATE_LIMITED = "rate_limited"
+    INPUT_ERROR = "input_error"
+    QUEUE_OVERFLOW = "queue_overflow"
+    RESOURCE_EXHAUSTED = "resource_exhausted"
+    SESSION_TIME_LIMIT_EXCEEDED = "session_time_limit_exceeded"
+    CHUNK_SIZE_EXCEEDED = "chunk_size_exceeded"
+    INSUFFICIENT_AUDIO_ACTIVITY = "insufficient_audio_activity"
+
 
 
 class RealtimeConnection:
@@ -92,6 +103,24 @@ class RealtimeConnection:
                     try:
                         event = RealtimeEvents(message_type)
                         self._emit(event, data)
+
+                        # Also emit generic ERROR event for specific error types
+                        error_events = {
+                            RealtimeEvents.AUTH_ERROR,
+                            RealtimeEvents.QUOTA_EXCEEDED,
+                            RealtimeEvents.COMMIT_THROTTLED,
+                            RealtimeEvents.TRANSCRIBER_ERROR,
+                            RealtimeEvents.UNACCEPTED_TERMS_ERROR,
+                            RealtimeEvents.RATE_LIMITED,
+                            RealtimeEvents.INPUT_ERROR,
+                            RealtimeEvents.QUEUE_OVERFLOW,
+                            RealtimeEvents.RESOURCE_EXHAUSTED,
+                            RealtimeEvents.SESSION_TIME_LIMIT_EXCEEDED,
+                            RealtimeEvents.CHUNK_SIZE_EXCEEDED,
+                            RealtimeEvents.INSUFFICIENT_AUDIO_ACTIVITY,
+                        }
+                        if event in error_events:
+                            self._emit(RealtimeEvents.ERROR, data)
                     except ValueError:
                         # Unknown message type, ignore
                         pass
@@ -107,7 +136,10 @@ class RealtimeConnection:
         Send an audio chunk to the server for transcription.
 
         Args:
-            data: Dictionary containing audio_base_64 key with base64-encoded audio
+            data: Dictionary containing the following keys:
+                - audio_base_64 (str): Base64-encoded audio data to transcribe
+                - previous_text (str, optional): Previous transcript text to provide context
+                  for more accurate transcription
 
         Raises:
             RuntimeError: If the WebSocket connection is not open
@@ -117,6 +149,12 @@ class RealtimeConnection:
             # Send audio chunk
             connection.send({
                 "audio_base_64": base64_encoded_audio
+            })
+
+            # Send audio chunk with context - can only be sent with the first chunk of audio
+            connection.send({
+                "audio_base_64": base64_encoded_audio,
+                "previous_text": "Previously transcribed text for context"
             })
             ```
         """
@@ -128,6 +166,7 @@ class RealtimeConnection:
             "audio_base_64": data.get("audio_base_64", ""),
             "commit": False,
             "sample_rate": self.current_sample_rate,
+            "previous_text": data.get("previous_text"),
         }
 
         await self.websocket.send(json.dumps(message))
