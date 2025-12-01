@@ -5,23 +5,26 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .song_section import SongSection
 
 
-class MusicPrompt(UncheckedBaseModel):
-    positive_global_styles: typing.List[str] = pydantic.Field()
+class WebhookHmacSettings(UncheckedBaseModel):
     """
-    The styles and musical directions that should be present in the entire song. Use English language for best result.
-    """
-
-    negative_global_styles: typing.List[str] = pydantic.Field()
-    """
-    The styles and musical directions that should not be present in the entire song. Use English language for best result.
+    Settings for creating an HMAC-authenticated webhook
     """
 
-    sections: typing.List[SongSection] = pydantic.Field()
+    auth_type: typing.Literal["hmac"] = pydantic.Field(default="hmac")
     """
-    The sections of the song.
+    The authentication type for this webhook
+    """
+
+    name: str = pydantic.Field()
+    """
+    The display name for this webhook
+    """
+
+    webhook_url: str = pydantic.Field()
+    """
+    The HTTPS callback URL that will be called when this webhook is triggered
     """
 
     if IS_PYDANTIC_V2:

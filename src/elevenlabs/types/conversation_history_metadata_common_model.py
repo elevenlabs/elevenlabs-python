@@ -37,6 +37,7 @@ class ConversationHistoryMetadataCommonModel(UncheckedBaseModel):
     batch_call: typing.Optional[ConversationHistoryBatchCallModel] = None
     termination_reason: typing.Optional[str] = None
     error: typing.Optional[ConversationHistoryErrorCommonModel] = None
+    warnings: typing.Optional[typing.List[str]] = None
     main_language: typing.Optional[str] = None
     rag_usage: typing.Optional[ConversationHistoryRagUsageCommonModel] = None
     text_only: typing.Optional[bool] = None

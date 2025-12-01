@@ -14,6 +14,10 @@ from .workflow_edge_model_output import WorkflowEdgeModelOutput
 class AgentWorkflowResponseModel(UncheckedBaseModel):
     edges: typing.Dict[str, WorkflowEdgeModelOutput]
     nodes: typing.Dict[str, AgentWorkflowResponseModelNodesValue]
+    prevent_subagent_loops: bool = pydantic.Field()
+    """
+    Whether to prevent loops in the workflow execution.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

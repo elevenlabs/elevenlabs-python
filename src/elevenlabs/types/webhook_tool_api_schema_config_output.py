@@ -18,8 +18,11 @@ from .webhook_tool_api_schema_config_output_request_headers_value import (
 
 
 class WebhookToolApiSchemaConfigOutput(UncheckedBaseModel):
+    request_headers: typing.Optional[typing.Dict[str, WebhookToolApiSchemaConfigOutputRequestHeadersValue]] = (
+        pydantic.Field(default=None)
+    )
     """
-    Configuration for a webhook that will be called by an LLM tool.
+    Headers that should be included in the request
     """
 
     url: str = pydantic.Field()
@@ -45,13 +48,6 @@ class WebhookToolApiSchemaConfigOutput(UncheckedBaseModel):
     request_body_schema: typing.Optional["ObjectJsonSchemaPropertyOutput"] = pydantic.Field(default=None)
     """
     Schema for the body parameters, if any. Used for POST/PATCH/PUT requests. The schema should be an object which will be sent as the json body
-    """
-
-    request_headers: typing.Optional[typing.Dict[str, WebhookToolApiSchemaConfigOutputRequestHeadersValue]] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Headers that should be included in the request
     """
 
     content_type: typing.Optional[WebhookToolApiSchemaConfigOutputContentType] = pydantic.Field(default=None)

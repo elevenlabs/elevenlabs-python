@@ -5,15 +5,13 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .dubbing_transcript_character import DubbingTranscriptCharacter
 
 
-class DubbingTranscriptWord(UncheckedBaseModel):
-    text: typing.Optional[str] = None
-    word_type: typing.Optional[str] = None
-    start_s: typing.Optional[float] = None
-    end_s: typing.Optional[float] = None
-    characters: typing.Optional[typing.List[DubbingTranscriptCharacter]] = None
+class PatchWorkspaceWebhookResponseModel(UncheckedBaseModel):
+    status: str = pydantic.Field()
+    """
+    The status of the workspace webhook patch request. If the request was successful, the status will be 'ok'. Otherwise an error message with status 500 will be returned.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

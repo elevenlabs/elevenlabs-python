@@ -6,7 +6,6 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .pydantic_pronunciation_dictionary_version_locator import PydanticPronunciationDictionaryVersionLocator
-from .suggested_audio_tag import SuggestedAudioTag
 from .supported_voice import SupportedVoice
 from .text_normalisation_type import TextNormalisationType
 from .tts_conversational_model import TtsConversationalModel
@@ -28,11 +27,6 @@ class TtsConversationalConfigWorkflowOverrideOutput(UncheckedBaseModel):
     supported_voices: typing.Optional[typing.List[SupportedVoice]] = pydantic.Field(default=None)
     """
     Additional supported voices for the agent
-    """
-
-    suggested_audio_tags: typing.Optional[typing.List[SuggestedAudioTag]] = pydantic.Field(default=None)
-    """
-    Suggested audio tags to boost expressive speech (only for eleven_expressive model). The agent can still use other tags not listed here.
     """
 
     agent_output_audio_format: typing.Optional[TtsOutputFormat] = pydantic.Field(default=None)
