@@ -325,6 +325,7 @@ class OnPremInitiationData:
         override_agent_config_list: Optional[List[dict]] = None,
         tools_config_list: Optional[List[dict]] = None,
         prompt_knowledge_base: Optional[List[str]] = None,
+        conversation_initiation_client_data: Optional[dict] = None,
     ):
         self.on_prem_conversation_url = on_prem_conversation_url
         self.post_call_transcription_webhook_url = post_call_transcription_webhook_url
@@ -333,6 +334,7 @@ class OnPremInitiationData:
         self.override_agent_config_list = override_agent_config_list
         self.tools_config_list = tools_config_list
         self.prompt_knowledge_base = prompt_knowledge_base
+        self.conversation_initiation_client_data = conversation_initiation_client_data
 
 class BaseConversation:
     """Base class for conversation implementations with shared parameters and logic."""
@@ -389,6 +391,7 @@ class BaseConversation:
                 "post_call_transcription_webhook_url": self.on_prem_config.post_call_transcription_webhook_url,
                 "post_call_audio_webhook_url": self.on_prem_config.post_call_audio_webhook_url,
                 "prompt_knowledge_base": self.on_prem_config.prompt_knowledge_base,
+                "conversation_initiation_client_data": self.on_prem_config.conversation_initiation_client_data,
             }
         )
     
