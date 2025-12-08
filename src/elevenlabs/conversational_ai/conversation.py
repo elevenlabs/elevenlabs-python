@@ -6,7 +6,7 @@ from enum import Enum
 import json
 import logging
 import threading
-from typing import Any, Awaitable, Callable, Dict, Literal, Optional, Tuple, Union
+from typing import Any, Awaitable, Callable, Dict, List, Literal, Optional, Tuple, Union
 import urllib.parse
 
 import websockets
@@ -322,9 +322,9 @@ class OnPremInitiationData:
         post_call_transcription_webhook_url: Optional[str] = None,
         post_call_audio_webhook_url: Optional[str] = None,
         agent_config_dict: Optional[dict] = None,
-        override_agent_config_list: Optional[list[dict]] = None,
-        tools_config_list: Optional[list[dict]] = None,
-        prompt_knowledge_base: Optional[list[str]] = None,
+        override_agent_config_list: Optional[List[dict]] = None,
+        tools_config_list: Optional[List[dict]] = None,
+        prompt_knowledge_base: Optional[List[str]] = None,
     ):
         self.on_prem_conversation_url = on_prem_conversation_url
         self.post_call_transcription_webhook_url = post_call_transcription_webhook_url
