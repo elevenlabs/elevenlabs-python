@@ -224,7 +224,7 @@ class RealtimeConnection:
         """
         await self._cleanup()
         if self.websocket:
-            await self.websocket.close()
+            await self.websocket.close(1000, "User ended session")
         if self._message_task and not self._message_task.done():
             self._message_task.cancel()
             try:
