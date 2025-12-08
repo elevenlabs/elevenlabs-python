@@ -26,6 +26,11 @@ class RagConfigWorkflowOverride(UncheckedBaseModel):
     Maximum number of RAG document chunks to initially retrieve from the vector store. These are then further filtered by vector distance and total length.
     """
 
+    query_rewrite_prompt_override: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Custom prompt for rewriting user queries before RAG retrieval. The conversation history will be automatically appended at the end. If not set, the default prompt will be used.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

@@ -2,11 +2,11 @@
 
 import typing
 
-from .body_create_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_post_permissions_item import (
-    BodyCreateServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysPostPermissionsItem,
+from .body_create_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_post_permissions_zero_item import (
+    BodyCreateServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysPostPermissionsZeroItem,
 )
 
 BodyCreateServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysPostPermissions = typing.Union[
-    typing.List[BodyCreateServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysPostPermissionsItem],
+    typing.List[BodyCreateServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysPostPermissionsZeroItem],
     typing.Literal["all"],
 ]

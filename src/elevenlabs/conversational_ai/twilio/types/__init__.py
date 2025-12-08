@@ -6,9 +6,11 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection
+    from .body_register_a_twilio_call_and_return_twi_ml_v_1_convai_twilio_register_call_post_direction import (
+        BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
-    "BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection": ".types"
+    "BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection": ".body_register_a_twilio_call_and_return_twi_ml_v_1_convai_twilio_register_call_post_direction"
 }
 
 

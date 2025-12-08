@@ -865,7 +865,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**apply_text_normalization:** `typing.Optional[BodyTextToSpeechFullApplyTextNormalization]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
+**apply_text_normalization:** `typing.Optional[BodyTextToSpeechFullApplyTextNormalization]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
     
 </dd>
 </dl>
@@ -1076,7 +1076,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**apply_text_normalization:** `typing.Optional[BodyTextToSpeechFullWithTimestampsApplyTextNormalization]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
+**apply_text_normalization:** `typing.Optional[BodyTextToSpeechFullWithTimestampsApplyTextNormalization]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
     
 </dd>
 </dl>
@@ -1286,7 +1286,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**apply_text_normalization:** `typing.Optional[BodyTextToSpeechStreamApplyTextNormalization]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
+**apply_text_normalization:** `typing.Optional[BodyTextToSpeechStreamApplyTextNormalization]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
     
 </dd>
 </dl>
@@ -1498,7 +1498,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**apply_text_normalization:** `typing.Optional[BodyTextToSpeechStreamWithTimestampsApplyTextNormalization]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
+**apply_text_normalization:** `typing.Optional[BodyTextToSpeechStreamWithTimestampsApplyTextNormalization]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
     
 </dd>
 </dl>
@@ -1644,7 +1644,7 @@ client.text_to_dialogue.convert(
 
 **apply_text_normalization:** `typing.Optional[
     BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization
-]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
+]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
     
 </dd>
 </dl>
@@ -1781,7 +1781,7 @@ client.text_to_dialogue.stream(
 
 **apply_text_normalization:** `typing.Optional[
     BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization
-]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
+]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
     
 </dd>
 </dl>
@@ -1919,7 +1919,7 @@ for chunk in response.data:
 <dl>
 <dd>
 
-**apply_text_normalization:** `typing.Optional[BodyTextToDialogueStreamWithTimestampsApplyTextNormalization]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
+**apply_text_normalization:** `typing.Optional[BodyTextToDialogueStreamWithTimestampsApplyTextNormalization]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
     
 </dd>
 </dl>
@@ -2055,7 +2055,7 @@ client.text_to_dialogue.convert_with_timestamps(
 <dl>
 <dd>
 
-**apply_text_normalization:** `typing.Optional[BodyTextToDialogueFullWithTimestampsApplyTextNormalization]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. For 'eleven_turbo_v2_5' and 'eleven_flash_v2_5' models, text normalization can only be enabled with Enterprise plans.
+**apply_text_normalization:** `typing.Optional[BodyTextToDialogueFullWithTimestampsApplyTextNormalization]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
     
 </dd>
 </dl>
@@ -3144,7 +3144,7 @@ client.voices.search(
 <dl>
 <dd>
 
-**next_page_token:** `typing.Optional[str]` — The next page token to use for pagination. Returned from the previous request.
+**next_page_token:** `typing.Optional[str]` — The next page token to use for pagination. Returned from the previous request. Use this in combination with the has_more flag for reliable pagination.
     
 </dd>
 </dl>
@@ -3216,7 +3216,7 @@ client.voices.search(
 <dl>
 <dd>
 
-**include_total_count:** `typing.Optional[bool]` — Whether to include the total count of voices found in the response. Incurs a performance cost.
+**include_total_count:** `typing.Optional[bool]` — Whether to include the total count of voices found in the response. NOTE: The total_count value is a live snapshot and may change between requests as users create, modify, or delete voices. For pagination, rely on the has_more flag instead. Only enable this when you actually need the total count (e.g., for display purposes), as it incurs a performance cost.
     
 </dd>
 </dl>
@@ -6799,6 +6799,14 @@ client.music.compose()
 <dl>
 <dd>
 
+**sign_with_c_2_pa:** `typing.Optional[bool]` — Whether to sign the generated song with C2PA. Applicable only for mp3 files.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
     
 </dd>
@@ -6908,6 +6916,22 @@ client.music.compose_detailed()
 <dd>
 
 **store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting API.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**with_timestamps:** `typing.Optional[bool]` — Whether to return the timestamps of the words in the generated song.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sign_with_c_2_pa:** `typing.Optional[bool]` — Whether to sign the generated song with C2PA. Applicable only for mp3 files.
     
 </dd>
 </dl>
@@ -7623,6 +7647,112 @@ client.conversational_ai.twilio.outbound_call(
 <dd>
 
 **to_number:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**conversation_initiation_client_data:** `typing.Optional[ConversationInitiationClientDataRequestInput]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.twilio.<a href="src/elevenlabs/conversational_ai/twilio/client.py">register_call</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Register a Twilio call and return TwiML to connect the call
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.twilio.register_call(
+    agent_id="agent_id",
+    from_number="from_number",
+    to_number="to_number",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from_number:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**to_number:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**direction:** `typing.Optional[
+    BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection
+]` 
     
 </dd>
 </dl>
@@ -14549,7 +14679,7 @@ client = ElevenLabs(
 )
 client.dubbing.resource.render(
     dubbing_id="dubbing_id",
-    language="language",
+    language="original",
     render_type="mp4",
 )
 
@@ -15135,6 +15265,30 @@ client.dubbing.resource.speaker.update(
 <dl>
 <dd>
 
+**voice_stability:** `typing.Optional[float]` — For models that support it, the voice similarity value to use. This will default to 0.65, with a valid range of [0.0, 1.0].
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**voice_similarity:** `typing.Optional[float]` — For models that support it, the voice similarity value to use. This will default to 1.0, with a valid range of [0.0, 1.0].
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**voice_style:** `typing.Optional[float]` — For models that support it, the voice style value to use. This will default to 1.0, with a valid range of [0.0, 1.0].
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **languages:** `typing.Optional[typing.Sequence[str]]` — Languages to apply these changes to. If empty, will apply to all languages.
     
 </dd>
@@ -15208,6 +15362,30 @@ client.dubbing.resource.speaker.create(
 <dd>
 
 **voice_id:** `typing.Optional[str]` — Either the identifier of a voice from the ElevenLabs voice library, or one of ['track-clone', 'clip-clone'].
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**voice_stability:** `typing.Optional[float]` — For models that support it, the voice similarity value to use. This will default to 0.65, with a valid range of [0.0, 1.0].
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**voice_similarity:** `typing.Optional[float]` — For models that support it, the voice similarity value to use. This will default to 1.0, with a valid range of [0.0, 1.0].
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**voice_style:** `typing.Optional[float]` — For models that support it, the voice style value to use. This will default to 1.0, with a valid range of [0.0, 1.0].
     
 </dd>
 </dl>
@@ -15792,7 +15970,6 @@ client = ElevenLabs(
 client.service_accounts.api_keys.create(
     service_account_user_id="service_account_user_id",
     name="name",
-    permissions=["text_to_speech"],
 )
 
 ```
@@ -15969,7 +16146,6 @@ client.service_accounts.api_keys.update(
     api_key_id="api_key_id",
     is_enabled=True,
     name="Sneaky Fox",
-    permissions=["text_to_speech"],
 )
 
 ```
@@ -16592,7 +16768,13 @@ ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate
 <dl>
 <dd>
 
-**voice_settings:** `typing.Optional[typing.List[str]]` — Optional voice settings overrides for the project, encoded as a list of JSON strings.
+**voice_settings:** `typing.Optional[typing.List[str]]` 
+
+    Optional voice settings overrides for the project, encoded as a list of JSON strings.
+
+    Example:
+    ["{\"voice_id\": \"21m00Tcm4TlvDq8ikWAM\", \"stability\": 0.7, \"similarity_boost\": 0.8, \"style\": 0.5, \"speed\": 1.0, \"use_speaker_boost\": true}"]
+    
     
 </dd>
 </dl>

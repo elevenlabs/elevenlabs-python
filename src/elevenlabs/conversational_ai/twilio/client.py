@@ -7,6 +7,9 @@ from ...core.request_options import RequestOptions
 from ...types.conversation_initiation_client_data_request_input import ConversationInitiationClientDataRequestInput
 from ...types.twilio_outbound_call_response import TwilioOutboundCallResponse
 from .raw_client import AsyncRawTwilioClient, RawTwilioClient
+from .types.body_register_a_twilio_call_and_return_twi_ml_v_1_convai_twilio_register_call_post_direction import (
+    BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection,
+)
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -74,6 +77,61 @@ class TwilioClient:
             agent_id=agent_id,
             agent_phone_number_id=agent_phone_number_id,
             to_number=to_number,
+            conversation_initiation_client_data=conversation_initiation_client_data,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def register_call(
+        self,
+        *,
+        agent_id: str,
+        from_number: str,
+        to_number: str,
+        direction: typing.Optional[BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection] = OMIT,
+        conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Register a Twilio call and return TwiML to connect the call
+
+        Parameters
+        ----------
+        agent_id : str
+
+        from_number : str
+
+        to_number : str
+
+        direction : typing.Optional[BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection]
+
+        conversation_initiation_client_data : typing.Optional[ConversationInitiationClientDataRequestInput]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.twilio.register_call(
+            agent_id="agent_id",
+            from_number="from_number",
+            to_number="to_number",
+        )
+        """
+        _response = self._raw_client.register_call(
+            agent_id=agent_id,
+            from_number=from_number,
+            to_number=to_number,
+            direction=direction,
             conversation_initiation_client_data=conversation_initiation_client_data,
             request_options=request_options,
         )
@@ -150,6 +208,69 @@ class AsyncTwilioClient:
             agent_id=agent_id,
             agent_phone_number_id=agent_phone_number_id,
             to_number=to_number,
+            conversation_initiation_client_data=conversation_initiation_client_data,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def register_call(
+        self,
+        *,
+        agent_id: str,
+        from_number: str,
+        to_number: str,
+        direction: typing.Optional[BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection] = OMIT,
+        conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Register a Twilio call and return TwiML to connect the call
+
+        Parameters
+        ----------
+        agent_id : str
+
+        from_number : str
+
+        to_number : str
+
+        direction : typing.Optional[BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection]
+
+        conversation_initiation_client_data : typing.Optional[ConversationInitiationClientDataRequestInput]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.twilio.register_call(
+                agent_id="agent_id",
+                from_number="from_number",
+                to_number="to_number",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.register_call(
+            agent_id=agent_id,
+            from_number=from_number,
+            to_number=to_number,
+            direction=direction,
             conversation_initiation_client_data=conversation_initiation_client_data,
             request_options=request_options,
         )

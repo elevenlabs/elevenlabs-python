@@ -10,7 +10,7 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 
 
-class BodyCreatePodcastV1StudioPodcastsPostSourceItem_Text(UncheckedBaseModel):
+class BodyCreatePodcastV1StudioPodcastsPostSourceTwoItem_Text(UncheckedBaseModel):
     type: typing.Literal["text"] = "text"
     text: str
 
@@ -24,7 +24,7 @@ class BodyCreatePodcastV1StudioPodcastsPostSourceItem_Text(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-class BodyCreatePodcastV1StudioPodcastsPostSourceItem_Url(UncheckedBaseModel):
+class BodyCreatePodcastV1StudioPodcastsPostSourceTwoItem_Url(UncheckedBaseModel):
     type: typing.Literal["url"] = "url"
     url: str
 
@@ -38,9 +38,9 @@ class BodyCreatePodcastV1StudioPodcastsPostSourceItem_Url(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-BodyCreatePodcastV1StudioPodcastsPostSourceItem = typing_extensions.Annotated[
+BodyCreatePodcastV1StudioPodcastsPostSourceTwoItem = typing_extensions.Annotated[
     typing.Union[
-        BodyCreatePodcastV1StudioPodcastsPostSourceItem_Text, BodyCreatePodcastV1StudioPodcastsPostSourceItem_Url
+        BodyCreatePodcastV1StudioPodcastsPostSourceTwoItem_Text, BodyCreatePodcastV1StudioPodcastsPostSourceTwoItem_Url
     ],
     UnionMetadata(discriminant="type"),
 ]

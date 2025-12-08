@@ -5,12 +5,12 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .llm import Llm
 
 
-class BackupLlmOverride(UncheckedBaseModel):
-    preference: typing.Optional[typing.Literal["override"]] = None
-    order: typing.List[Llm]
+class WordTimestamp(UncheckedBaseModel):
+    word: str
+    start_ms: int
+    end_ms: int
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -8,6 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class ConversationHistoryTranscriptToolCallWebhookDetails(UncheckedBaseModel):
+    type: typing.Optional[typing.Literal["webhook"]] = None
     method: str
     url: str
     headers: typing.Optional[typing.Dict[str, str]] = None

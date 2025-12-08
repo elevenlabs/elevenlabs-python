@@ -1,7 +1,7 @@
 {
-  "cliVersion": "0.107.3",
+  "cliVersion": "2.15.0",
   "generatorName": "fernapi/fern-python-sdk",
-  "generatorVersion": "4.41.3",
+  "generatorVersion": "4.42.0",
   "generatorConfig": {
     "timeout_in_seconds": 240,
     "default_bytes_stream_chunk_size": 1024,

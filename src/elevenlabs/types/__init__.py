@@ -582,6 +582,7 @@ if typing.TYPE_CHECKING:
     from .batch_call_response import BatchCallResponse
     from .batch_call_status import BatchCallStatus
     from .batch_call_whats_app_params import BatchCallWhatsAppParams
+    from .billing_period import BillingPeriod
     from .body_generate_a_random_voice_v_1_voice_generation_generate_voice_post_age import (
         BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostAge,
     )
@@ -635,6 +636,7 @@ if typing.TYPE_CHECKING:
     from .chapter_with_content_response_model_state import ChapterWithContentResponseModelState
     from .character_alignment_model import CharacterAlignmentModel
     from .character_alignment_response_model import CharacterAlignmentResponseModel
+    from .character_refresh_period import CharacterRefreshPeriod
     from .character_usage_response import CharacterUsageResponse
     from .client_event import ClientEvent
     from .client_tool_config_input import ClientToolConfigInput
@@ -692,6 +694,9 @@ if typing.TYPE_CHECKING:
     from .conversation_history_sip_trunking_phone_call_model_direction import (
         ConversationHistorySipTrunkingPhoneCallModelDirection,
     )
+    from .conversation_history_transcript_api_integration_webhook_tools_result_common_model import (
+        ConversationHistoryTranscriptApiIntegrationWebhookToolsResultCommonModel,
+    )
     from .conversation_history_transcript_common_model_input import ConversationHistoryTranscriptCommonModelInput
     from .conversation_history_transcript_common_model_input_role import (
         ConversationHistoryTranscriptCommonModelInputRole,
@@ -736,15 +741,31 @@ if typing.TYPE_CHECKING:
         ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToNumberTwilioSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelResult_VoicemailDetectionSuccess,
     )
+    from .conversation_history_transcript_tool_call_api_integration_webhook_details import (
+        ConversationHistoryTranscriptToolCallApiIntegrationWebhookDetails,
+    )
     from .conversation_history_transcript_tool_call_client_details import (
         ConversationHistoryTranscriptToolCallClientDetails,
     )
-    from .conversation_history_transcript_tool_call_common_model import ConversationHistoryTranscriptToolCallCommonModel
-    from .conversation_history_transcript_tool_call_common_model_tool_details import (
-        ConversationHistoryTranscriptToolCallCommonModelToolDetails,
-        ConversationHistoryTranscriptToolCallCommonModelToolDetails_Client,
-        ConversationHistoryTranscriptToolCallCommonModelToolDetails_Mcp,
-        ConversationHistoryTranscriptToolCallCommonModelToolDetails_Webhook,
+    from .conversation_history_transcript_tool_call_common_model_input import (
+        ConversationHistoryTranscriptToolCallCommonModelInput,
+    )
+    from .conversation_history_transcript_tool_call_common_model_input_tool_details import (
+        ConversationHistoryTranscriptToolCallCommonModelInputToolDetails,
+        ConversationHistoryTranscriptToolCallCommonModelInputToolDetails_ApiIntegrationWebhook,
+        ConversationHistoryTranscriptToolCallCommonModelInputToolDetails_Client,
+        ConversationHistoryTranscriptToolCallCommonModelInputToolDetails_Mcp,
+        ConversationHistoryTranscriptToolCallCommonModelInputToolDetails_Webhook,
+    )
+    from .conversation_history_transcript_tool_call_common_model_output import (
+        ConversationHistoryTranscriptToolCallCommonModelOutput,
+    )
+    from .conversation_history_transcript_tool_call_common_model_output_tool_details import (
+        ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails,
+        ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails_ApiIntegrationWebhook,
+        ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails_Client,
+        ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails_Mcp,
+        ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails_Webhook,
     )
     from .conversation_history_transcript_tool_call_mcp_details import ConversationHistoryTranscriptToolCallMcpDetails
     from .conversation_history_transcript_tool_call_webhook_details import (
@@ -837,7 +858,7 @@ if typing.TYPE_CHECKING:
     from .detailed_music_response import DetailedMusicResponse
     from .dialogue_input import DialogueInput
     from .dialogue_input_response_model import DialogueInputResponseModel
-    from .discount_resposne_model import DiscountResposneModel
+    from .discount_response_model import DiscountResponseModel
     from .do_dubbing_response import DoDubbingResponse
     from .document_usage_mode_enum import DocumentUsageModeEnum
     from .docx_export_options import DocxExportOptions
@@ -884,10 +905,6 @@ if typing.TYPE_CHECKING:
         ExportOptions_SegmentedJson,
         ExportOptions_Srt,
         ExportOptions_Txt,
-    )
-    from .extended_subscription_response_model_billing_period import ExtendedSubscriptionResponseModelBillingPeriod
-    from .extended_subscription_response_model_character_refresh_period import (
-        ExtendedSubscriptionResponseModelCharacterRefreshPeriod,
     )
     from .extended_subscription_response_model_currency import ExtendedSubscriptionResponseModelCurrency
     from .extended_subscription_response_model_pending_change import ExtendedSubscriptionResponseModelPendingChange
@@ -1096,9 +1113,6 @@ if typing.TYPE_CHECKING:
     from .pdf_export_options import PdfExportOptions
     from .pending_cancellation_response_model import PendingCancellationResponseModel
     from .pending_subscription_switch_response_model import PendingSubscriptionSwitchResponseModel
-    from .pending_subscription_switch_response_model_next_billing_period import (
-        PendingSubscriptionSwitchResponseModelNextBillingPeriod,
-    )
     from .pending_subscription_switch_response_model_next_tier import PendingSubscriptionSwitchResponseModelNextTier
     from .phone_number_agent_info import PhoneNumberAgentInfo
     from .phone_number_dynamic_variable_transfer_destination import PhoneNumberDynamicVariableTransferDestination
@@ -1324,8 +1338,6 @@ if typing.TYPE_CHECKING:
     from .streaming_audio_chunk_with_timestamps_response import StreamingAudioChunkWithTimestampsResponse
     from .subscription import Subscription
     from .subscription_response import SubscriptionResponse
-    from .subscription_response_model_billing_period import SubscriptionResponseModelBillingPeriod
-    from .subscription_response_model_character_refresh_period import SubscriptionResponseModelCharacterRefreshPeriod
     from .subscription_response_model_currency import SubscriptionResponseModelCurrency
     from .subscription_status_type import SubscriptionStatusType
     from .suggested_audio_tag import SuggestedAudioTag
@@ -1495,6 +1507,7 @@ if typing.TYPE_CHECKING:
     from .webhook_tool_config_output import WebhookToolConfigOutput
     from .webhook_usage_type import WebhookUsageType
     from .whats_app_conversation_info import WhatsAppConversationInfo
+    from .whats_app_conversation_info_direction import WhatsAppConversationInfoDirection
     from .widget_config import WidgetConfig
     from .widget_config_input_avatar import (
         WidgetConfigInputAvatar,
@@ -1524,6 +1537,7 @@ if typing.TYPE_CHECKING:
     from .widget_placement import WidgetPlacement
     from .widget_styles import WidgetStyles
     from .widget_text_contents import WidgetTextContents
+    from .word_timestamp import WordTimestamp
     from .workflow_edge_model_input import WorkflowEdgeModelInput
     from .workflow_edge_model_input_backward_condition import (
         WorkflowEdgeModelInputBackwardCondition,
@@ -2169,6 +2183,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BatchCallResponse": ".batch_call_response",
     "BatchCallStatus": ".batch_call_status",
     "BatchCallWhatsAppParams": ".batch_call_whats_app_params",
+    "BillingPeriod": ".billing_period",
     "BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostAge": ".body_generate_a_random_voice_v_1_voice_generation_generate_voice_post_age",
     "BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostGender": ".body_generate_a_random_voice_v_1_voice_generation_generate_voice_post_gender",
     "BreakdownTypes": ".breakdown_types",
@@ -2216,6 +2231,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ChapterWithContentResponseModelState": ".chapter_with_content_response_model_state",
     "CharacterAlignmentModel": ".character_alignment_model",
     "CharacterAlignmentResponseModel": ".character_alignment_response_model",
+    "CharacterRefreshPeriod": ".character_refresh_period",
     "CharacterUsageResponse": ".character_usage_response",
     "ClientEvent": ".client_event",
     "ClientToolConfigInput": ".client_tool_config_input",
@@ -2261,6 +2277,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationHistoryRagUsageCommonModel": ".conversation_history_rag_usage_common_model",
     "ConversationHistorySipTrunkingPhoneCallModel": ".conversation_history_sip_trunking_phone_call_model",
     "ConversationHistorySipTrunkingPhoneCallModelDirection": ".conversation_history_sip_trunking_phone_call_model_direction",
+    "ConversationHistoryTranscriptApiIntegrationWebhookToolsResultCommonModel": ".conversation_history_transcript_api_integration_webhook_tools_result_common_model",
     "ConversationHistoryTranscriptCommonModelInput": ".conversation_history_transcript_common_model_input",
     "ConversationHistoryTranscriptCommonModelInputRole": ".conversation_history_transcript_common_model_input_role",
     "ConversationHistoryTranscriptCommonModelInputSourceMedium": ".conversation_history_transcript_common_model_input_source_medium",
@@ -2285,12 +2302,20 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToNumberSipSuccess": ".conversation_history_transcript_system_tool_result_common_model_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToNumberTwilioSuccess": ".conversation_history_transcript_system_tool_result_common_model_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelResult_VoicemailDetectionSuccess": ".conversation_history_transcript_system_tool_result_common_model_result",
+    "ConversationHistoryTranscriptToolCallApiIntegrationWebhookDetails": ".conversation_history_transcript_tool_call_api_integration_webhook_details",
     "ConversationHistoryTranscriptToolCallClientDetails": ".conversation_history_transcript_tool_call_client_details",
-    "ConversationHistoryTranscriptToolCallCommonModel": ".conversation_history_transcript_tool_call_common_model",
-    "ConversationHistoryTranscriptToolCallCommonModelToolDetails": ".conversation_history_transcript_tool_call_common_model_tool_details",
-    "ConversationHistoryTranscriptToolCallCommonModelToolDetails_Client": ".conversation_history_transcript_tool_call_common_model_tool_details",
-    "ConversationHistoryTranscriptToolCallCommonModelToolDetails_Mcp": ".conversation_history_transcript_tool_call_common_model_tool_details",
-    "ConversationHistoryTranscriptToolCallCommonModelToolDetails_Webhook": ".conversation_history_transcript_tool_call_common_model_tool_details",
+    "ConversationHistoryTranscriptToolCallCommonModelInput": ".conversation_history_transcript_tool_call_common_model_input",
+    "ConversationHistoryTranscriptToolCallCommonModelInputToolDetails": ".conversation_history_transcript_tool_call_common_model_input_tool_details",
+    "ConversationHistoryTranscriptToolCallCommonModelInputToolDetails_ApiIntegrationWebhook": ".conversation_history_transcript_tool_call_common_model_input_tool_details",
+    "ConversationHistoryTranscriptToolCallCommonModelInputToolDetails_Client": ".conversation_history_transcript_tool_call_common_model_input_tool_details",
+    "ConversationHistoryTranscriptToolCallCommonModelInputToolDetails_Mcp": ".conversation_history_transcript_tool_call_common_model_input_tool_details",
+    "ConversationHistoryTranscriptToolCallCommonModelInputToolDetails_Webhook": ".conversation_history_transcript_tool_call_common_model_input_tool_details",
+    "ConversationHistoryTranscriptToolCallCommonModelOutput": ".conversation_history_transcript_tool_call_common_model_output",
+    "ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails": ".conversation_history_transcript_tool_call_common_model_output_tool_details",
+    "ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails_ApiIntegrationWebhook": ".conversation_history_transcript_tool_call_common_model_output_tool_details",
+    "ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails_Client": ".conversation_history_transcript_tool_call_common_model_output_tool_details",
+    "ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails_Mcp": ".conversation_history_transcript_tool_call_common_model_output_tool_details",
+    "ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails_Webhook": ".conversation_history_transcript_tool_call_common_model_output_tool_details",
     "ConversationHistoryTranscriptToolCallMcpDetails": ".conversation_history_transcript_tool_call_mcp_details",
     "ConversationHistoryTranscriptToolCallWebhookDetails": ".conversation_history_transcript_tool_call_webhook_details",
     "ConversationHistoryTranscriptWorkflowToolsResultCommonModelInput": ".conversation_history_transcript_workflow_tools_result_common_model_input",
@@ -2362,7 +2387,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DetailedMusicResponse": ".detailed_music_response",
     "DialogueInput": ".dialogue_input",
     "DialogueInputResponseModel": ".dialogue_input_response_model",
-    "DiscountResposneModel": ".discount_resposne_model",
+    "DiscountResponseModel": ".discount_response_model",
     "DoDubbingResponse": ".do_dubbing_response",
     "DocumentUsageModeEnum": ".document_usage_mode_enum",
     "DocxExportOptions": ".docx_export_options",
@@ -2404,8 +2429,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ExportOptions_SegmentedJson": ".export_options",
     "ExportOptions_Srt": ".export_options",
     "ExportOptions_Txt": ".export_options",
-    "ExtendedSubscriptionResponseModelBillingPeriod": ".extended_subscription_response_model_billing_period",
-    "ExtendedSubscriptionResponseModelCharacterRefreshPeriod": ".extended_subscription_response_model_character_refresh_period",
     "ExtendedSubscriptionResponseModelCurrency": ".extended_subscription_response_model_currency",
     "ExtendedSubscriptionResponseModelPendingChange": ".extended_subscription_response_model_pending_change",
     "FeatureStatusCommonModel": ".feature_status_common_model",
@@ -2587,7 +2610,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PdfExportOptions": ".pdf_export_options",
     "PendingCancellationResponseModel": ".pending_cancellation_response_model",
     "PendingSubscriptionSwitchResponseModel": ".pending_subscription_switch_response_model",
-    "PendingSubscriptionSwitchResponseModelNextBillingPeriod": ".pending_subscription_switch_response_model_next_billing_period",
     "PendingSubscriptionSwitchResponseModelNextTier": ".pending_subscription_switch_response_model_next_tier",
     "PhoneNumberAgentInfo": ".phone_number_agent_info",
     "PhoneNumberDynamicVariableTransferDestination": ".phone_number_dynamic_variable_transfer_destination",
@@ -2785,8 +2807,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "StreamingAudioChunkWithTimestampsResponse": ".streaming_audio_chunk_with_timestamps_response",
     "Subscription": ".subscription",
     "SubscriptionResponse": ".subscription_response",
-    "SubscriptionResponseModelBillingPeriod": ".subscription_response_model_billing_period",
-    "SubscriptionResponseModelCharacterRefreshPeriod": ".subscription_response_model_character_refresh_period",
     "SubscriptionResponseModelCurrency": ".subscription_response_model_currency",
     "SubscriptionStatusType": ".subscription_status_type",
     "SuggestedAudioTag": ".suggested_audio_tag",
@@ -2942,6 +2962,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WebhookToolConfigOutput": ".webhook_tool_config_output",
     "WebhookUsageType": ".webhook_usage_type",
     "WhatsAppConversationInfo": ".whats_app_conversation_info",
+    "WhatsAppConversationInfoDirection": ".whats_app_conversation_info_direction",
     "WidgetConfig": ".widget_config",
     "WidgetConfigInputAvatar": ".widget_config_input_avatar",
     "WidgetConfigInputAvatar_Image": ".widget_config_input_avatar",
@@ -2965,6 +2986,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WidgetPlacement": ".widget_placement",
     "WidgetStyles": ".widget_styles",
     "WidgetTextContents": ".widget_text_contents",
+    "WordTimestamp": ".word_timestamp",
     "WorkflowEdgeModelInput": ".workflow_edge_model_input",
     "WorkflowEdgeModelInputBackwardCondition": ".workflow_edge_model_input_backward_condition",
     "WorkflowEdgeModelInputBackwardCondition_Expression": ".workflow_edge_model_input_backward_condition",
@@ -3610,6 +3632,7 @@ __all__ = [
     "BatchCallResponse",
     "BatchCallStatus",
     "BatchCallWhatsAppParams",
+    "BillingPeriod",
     "BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostAge",
     "BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostGender",
     "BreakdownTypes",
@@ -3657,6 +3680,7 @@ __all__ = [
     "ChapterWithContentResponseModelState",
     "CharacterAlignmentModel",
     "CharacterAlignmentResponseModel",
+    "CharacterRefreshPeriod",
     "CharacterUsageResponse",
     "ClientEvent",
     "ClientToolConfigInput",
@@ -3702,6 +3726,7 @@ __all__ = [
     "ConversationHistoryRagUsageCommonModel",
     "ConversationHistorySipTrunkingPhoneCallModel",
     "ConversationHistorySipTrunkingPhoneCallModelDirection",
+    "ConversationHistoryTranscriptApiIntegrationWebhookToolsResultCommonModel",
     "ConversationHistoryTranscriptCommonModelInput",
     "ConversationHistoryTranscriptCommonModelInputRole",
     "ConversationHistoryTranscriptCommonModelInputSourceMedium",
@@ -3726,12 +3751,20 @@ __all__ = [
     "ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToNumberSipSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToNumberTwilioSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelResult_VoicemailDetectionSuccess",
+    "ConversationHistoryTranscriptToolCallApiIntegrationWebhookDetails",
     "ConversationHistoryTranscriptToolCallClientDetails",
-    "ConversationHistoryTranscriptToolCallCommonModel",
-    "ConversationHistoryTranscriptToolCallCommonModelToolDetails",
-    "ConversationHistoryTranscriptToolCallCommonModelToolDetails_Client",
-    "ConversationHistoryTranscriptToolCallCommonModelToolDetails_Mcp",
-    "ConversationHistoryTranscriptToolCallCommonModelToolDetails_Webhook",
+    "ConversationHistoryTranscriptToolCallCommonModelInput",
+    "ConversationHistoryTranscriptToolCallCommonModelInputToolDetails",
+    "ConversationHistoryTranscriptToolCallCommonModelInputToolDetails_ApiIntegrationWebhook",
+    "ConversationHistoryTranscriptToolCallCommonModelInputToolDetails_Client",
+    "ConversationHistoryTranscriptToolCallCommonModelInputToolDetails_Mcp",
+    "ConversationHistoryTranscriptToolCallCommonModelInputToolDetails_Webhook",
+    "ConversationHistoryTranscriptToolCallCommonModelOutput",
+    "ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails",
+    "ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails_ApiIntegrationWebhook",
+    "ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails_Client",
+    "ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails_Mcp",
+    "ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails_Webhook",
     "ConversationHistoryTranscriptToolCallMcpDetails",
     "ConversationHistoryTranscriptToolCallWebhookDetails",
     "ConversationHistoryTranscriptWorkflowToolsResultCommonModelInput",
@@ -3803,7 +3836,7 @@ __all__ = [
     "DetailedMusicResponse",
     "DialogueInput",
     "DialogueInputResponseModel",
-    "DiscountResposneModel",
+    "DiscountResponseModel",
     "DoDubbingResponse",
     "DocumentUsageModeEnum",
     "DocxExportOptions",
@@ -3845,8 +3878,6 @@ __all__ = [
     "ExportOptions_SegmentedJson",
     "ExportOptions_Srt",
     "ExportOptions_Txt",
-    "ExtendedSubscriptionResponseModelBillingPeriod",
-    "ExtendedSubscriptionResponseModelCharacterRefreshPeriod",
     "ExtendedSubscriptionResponseModelCurrency",
     "ExtendedSubscriptionResponseModelPendingChange",
     "FeatureStatusCommonModel",
@@ -4028,7 +4059,6 @@ __all__ = [
     "PdfExportOptions",
     "PendingCancellationResponseModel",
     "PendingSubscriptionSwitchResponseModel",
-    "PendingSubscriptionSwitchResponseModelNextBillingPeriod",
     "PendingSubscriptionSwitchResponseModelNextTier",
     "PhoneNumberAgentInfo",
     "PhoneNumberDynamicVariableTransferDestination",
@@ -4226,8 +4256,6 @@ __all__ = [
     "StreamingAudioChunkWithTimestampsResponse",
     "Subscription",
     "SubscriptionResponse",
-    "SubscriptionResponseModelBillingPeriod",
-    "SubscriptionResponseModelCharacterRefreshPeriod",
     "SubscriptionResponseModelCurrency",
     "SubscriptionStatusType",
     "SuggestedAudioTag",
@@ -4383,6 +4411,7 @@ __all__ = [
     "WebhookToolConfigOutput",
     "WebhookUsageType",
     "WhatsAppConversationInfo",
+    "WhatsAppConversationInfoDirection",
     "WidgetConfig",
     "WidgetConfigInputAvatar",
     "WidgetConfigInputAvatar_Image",
@@ -4406,6 +4435,7 @@ __all__ = [
     "WidgetPlacement",
     "WidgetStyles",
     "WidgetTextContents",
+    "WordTimestamp",
     "WorkflowEdgeModelInput",
     "WorkflowEdgeModelInputBackwardCondition",
     "WorkflowEdgeModelInputBackwardCondition_Expression",

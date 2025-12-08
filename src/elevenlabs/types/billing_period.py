@@ -2,6 +2,6 @@
 
 import typing
 
-SubscriptionResponseModelCharacterRefreshPeriod = typing.Union[
+BillingPeriod = typing.Union[
     typing.Literal["monthly_period", "3_month_period", "6_month_period", "annual_period"], typing.Any
 ]

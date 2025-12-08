@@ -5,7 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .discount_resposne_model import DiscountResposneModel
+from .discount_response_model import DiscountResponseModel
 from .invoice_response_model_payment_intent_status import InvoiceResponseModelPaymentIntentStatus
 
 
@@ -35,7 +35,7 @@ class InvoiceResponse(UncheckedBaseModel):
     Deprecated. Use [discounts] instead. The discount applied to the invoice. E.g. [20.0f] for 20 cents off.
     """
 
-    discounts: typing.List[DiscountResposneModel] = pydantic.Field()
+    discounts: typing.List[DiscountResponseModel] = pydantic.Field()
     """
     The discounts applied to the invoice.
     """

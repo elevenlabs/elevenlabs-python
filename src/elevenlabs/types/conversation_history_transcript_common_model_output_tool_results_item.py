@@ -2,6 +2,9 @@
 
 import typing
 
+from .conversation_history_transcript_api_integration_webhook_tools_result_common_model import (
+    ConversationHistoryTranscriptApiIntegrationWebhookToolsResultCommonModel,
+)
 from .conversation_history_transcript_other_tools_result_common_model import (
     ConversationHistoryTranscriptOtherToolsResultCommonModel,
 )
@@ -15,5 +18,6 @@ from .conversation_history_transcript_workflow_tools_result_common_model_output 
 ConversationHistoryTranscriptCommonModelOutputToolResultsItem = typing.Union[
     ConversationHistoryTranscriptOtherToolsResultCommonModel,
     ConversationHistoryTranscriptSystemToolResultCommonModel,
+    ConversationHistoryTranscriptApiIntegrationWebhookToolsResultCommonModel,
     ConversationHistoryTranscriptWorkflowToolsResultCommonModelOutput,
 ]
