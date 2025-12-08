@@ -270,7 +270,7 @@ class ScribeRealtime:
                 bufsize=0
             )
         except FileNotFoundError:
-            await websocket.close()
+            await websocket.close(1011, "ffmpeg not found")
             raise RuntimeError(
                 "ffmpeg is required for URL-based audio streaming. "
                 "Please install ffmpeg: https://ffmpeg.org/download.html"
