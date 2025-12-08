@@ -16,6 +16,11 @@ class SystemToolConfigOutput(UncheckedBaseModel):
     A system tool is a tool that is used to call a system method in the server
     """
 
+    type: typing.Optional[typing.Literal["system"]] = pydantic.Field(default=None)
+    """
+    The type of tool
+    """
+
     name: str
     description: typing.Optional[str] = pydantic.Field(default=None)
     """

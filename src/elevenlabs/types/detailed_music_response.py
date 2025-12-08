@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .music_prompt import MusicPrompt
 from .song_metadata import SongMetadata
+from .word_timestamp import WordTimestamp
 
 
 class DetailedMusicResponse(UncheckedBaseModel):
@@ -22,6 +23,11 @@ class DetailedMusicResponse(UncheckedBaseModel):
     song_metadata: SongMetadata = pydantic.Field()
     """
     The metadata of the generated song
+    """
+
+    words_timestamps: typing.Optional[typing.List[WordTimestamp]] = pydantic.Field(default=None)
+    """
+    The timestamps of the words in the generated song
     """
 
     if IS_PYDANTIC_V2:

@@ -5,8 +5,8 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .subscription_response_model_billing_period import SubscriptionResponseModelBillingPeriod
-from .subscription_response_model_character_refresh_period import SubscriptionResponseModelCharacterRefreshPeriod
+from .billing_period import BillingPeriod
+from .character_refresh_period import CharacterRefreshPeriod
 from .subscription_response_model_currency import SubscriptionResponseModelCurrency
 from .subscription_status_type import SubscriptionStatusType
 
@@ -102,14 +102,12 @@ class SubscriptionResponse(UncheckedBaseModel):
     The status of the user's subscription.
     """
 
-    billing_period: typing.Optional[SubscriptionResponseModelBillingPeriod] = pydantic.Field(default=None)
+    billing_period: typing.Optional[BillingPeriod] = pydantic.Field(default=None)
     """
     The billing period of the user's subscription.
     """
 
-    character_refresh_period: typing.Optional[SubscriptionResponseModelCharacterRefreshPeriod] = pydantic.Field(
-        default=None
-    )
+    character_refresh_period: typing.Optional[CharacterRefreshPeriod] = pydantic.Field(default=None)
     """
     The character refresh period of the user's subscription.
     """

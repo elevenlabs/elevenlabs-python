@@ -13,6 +13,9 @@ from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.conversation_initiation_client_data_request_input import ConversationInitiationClientDataRequestInput
 from ...types.http_validation_error import HttpValidationError
 from ...types.twilio_outbound_call_response import TwilioOutboundCallResponse
+from .types.body_register_a_twilio_call_and_return_twi_ml_v_1_convai_twilio_register_call_post_direction import (
+    BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection,
+)
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -97,6 +100,77 @@ class RawTwilioClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def register_call(
+        self,
+        *,
+        agent_id: str,
+        from_number: str,
+        to_number: str,
+        direction: typing.Optional[BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection] = OMIT,
+        conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[None]:
+        """
+        Register a Twilio call and return TwiML to connect the call
+
+        Parameters
+        ----------
+        agent_id : str
+
+        from_number : str
+
+        to_number : str
+
+        direction : typing.Optional[BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection]
+
+        conversation_initiation_client_data : typing.Optional[ConversationInitiationClientDataRequestInput]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[None]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/convai/twilio/register-call",
+            method="POST",
+            json={
+                "agent_id": agent_id,
+                "from_number": from_number,
+                "to_number": to_number,
+                "direction": direction,
+                "conversation_initiation_client_data": convert_and_respect_annotation_metadata(
+                    object_=conversation_initiation_client_data,
+                    annotation=ConversationInitiationClientDataRequestInput,
+                    direction="write",
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawTwilioClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -161,6 +235,77 @@ class AsyncRawTwilioClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def register_call(
+        self,
+        *,
+        agent_id: str,
+        from_number: str,
+        to_number: str,
+        direction: typing.Optional[BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection] = OMIT,
+        conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[None]:
+        """
+        Register a Twilio call and return TwiML to connect the call
+
+        Parameters
+        ----------
+        agent_id : str
+
+        from_number : str
+
+        to_number : str
+
+        direction : typing.Optional[BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection]
+
+        conversation_initiation_client_data : typing.Optional[ConversationInitiationClientDataRequestInput]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[None]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/convai/twilio/register-call",
+            method="POST",
+            json={
+                "agent_id": agent_id,
+                "from_number": from_number,
+                "to_number": to_number,
+                "direction": direction,
+                "conversation_initiation_client_data": convert_and_respect_annotation_metadata(
+                    object_=conversation_initiation_client_data,
+                    annotation=ConversationInitiationClientDataRequestInput,
+                    direction="write",
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),

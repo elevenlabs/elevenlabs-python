@@ -298,7 +298,7 @@ class ResourceClient:
         )
         client.dubbing.resource.render(
             dubbing_id="dubbing_id",
-            language="language",
+            language="original",
             render_type="mp4",
         )
         """
@@ -655,7 +655,7 @@ class AsyncResourceClient:
         async def main() -> None:
             await client.dubbing.resource.render(
                 dubbing_id="dubbing_id",
-                language="language",
+                language="original",
                 render_type="mp4",
             )
 

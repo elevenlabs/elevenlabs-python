@@ -15,7 +15,7 @@ class MultipartMusicResponse(UncheckedBaseModel):
 
     metadata: DetailedMusicResponse = pydantic.Field()
     """
-    JSON metadata containing composition plan and song metadata
+    JSON metadata about the generated audio
     """
 
     audio: str = pydantic.Field()

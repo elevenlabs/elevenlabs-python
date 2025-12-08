@@ -40,7 +40,9 @@ if typing.TYPE_CHECKING:
         PhoneNumbersUpdateResponse_Twilio,
     )
     from .tests import CreateUnitTestRequestDynamicVariablesValue, UpdateUnitTestRequestDynamicVariablesValue
+    from .twilio import BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection
 _dynamic_imports: typing.Dict[str, str] = {
+    "BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection": ".twilio",
     "ConversationsListRequestSummaryMode": ".conversations",
     "CreateUnitTestRequestDynamicVariablesValue": ".tests",
     "McpServerConfigUpdateRequestModelRequestHeadersValue": ".mcp_servers",
@@ -97,6 +99,7 @@ def __dir__():
 
 
 __all__ = [
+    "BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection",
     "ConversationsListRequestSummaryMode",
     "CreateUnitTestRequestDynamicVariablesValue",
     "McpServerConfigUpdateRequestModelRequestHeadersValue",

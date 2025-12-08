@@ -2,7 +2,7 @@
 
 import typing
 
-BodyCreateServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysPostPermissionsItem = typing.Union[
+BodyCreateServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysPostPermissionsZeroItem = typing.Union[
     typing.Literal[
         "text_to_speech",
         "speech_to_speech",

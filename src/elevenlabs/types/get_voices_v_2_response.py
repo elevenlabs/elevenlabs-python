@@ -9,10 +9,25 @@ from .voice import Voice
 
 
 class GetVoicesV2Response(UncheckedBaseModel):
-    voices: typing.List[Voice]
-    has_more: bool
-    total_count: int
-    next_page_token: typing.Optional[str] = None
+    voices: typing.List[Voice] = pydantic.Field()
+    """
+    The list of voices matching the query.
+    """
+
+    has_more: bool = pydantic.Field()
+    """
+    Indicates whether there are more voices available in subsequent pages. Use this flag (and next_page_token) for reliable pagination instead of relying on total_count.
+    """
+
+    total_count: int = pydantic.Field()
+    """
+    The total count of voices matching the query. This value is a live snapshot that reflects the current state of the database and may change between requests as users create, modify, or delete voices. For reliable pagination, use the has_more flag instead of relying on this value. Only request this field when you actually need the total count (e.g., for display purposes), as calculating it incurs a performance cost.
+    """
+
+    next_page_token: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Token to retrieve the next page of results. Pass this value to the next request to continue pagination. Null if there are no more results.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

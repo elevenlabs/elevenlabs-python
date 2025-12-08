@@ -8,9 +8,29 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
+from .conversation_history_transcript_tool_call_webhook_details import (
+    ConversationHistoryTranscriptToolCallWebhookDetails,
+)
 
 
-class ConversationHistoryTranscriptToolCallCommonModelToolDetails_Client(UncheckedBaseModel):
+class ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails_ApiIntegrationWebhook(UncheckedBaseModel):
+    type: typing.Literal["api_integration_webhook"] = "api_integration_webhook"
+    integration_id: str
+    credential_id: str
+    integration_connection_id: str
+    webhook_details: ConversationHistoryTranscriptToolCallWebhookDetails
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails_Client(UncheckedBaseModel):
     type: typing.Literal["client"] = "client"
     parameters: str
 
@@ -24,7 +44,7 @@ class ConversationHistoryTranscriptToolCallCommonModelToolDetails_Client(Uncheck
             extra = pydantic.Extra.allow
 
 
-class ConversationHistoryTranscriptToolCallCommonModelToolDetails_Mcp(UncheckedBaseModel):
+class ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails_Mcp(UncheckedBaseModel):
     type: typing.Literal["mcp"] = "mcp"
     mcp_server_id: str
     mcp_server_name: str
@@ -45,7 +65,7 @@ class ConversationHistoryTranscriptToolCallCommonModelToolDetails_Mcp(UncheckedB
             extra = pydantic.Extra.allow
 
 
-class ConversationHistoryTranscriptToolCallCommonModelToolDetails_Webhook(UncheckedBaseModel):
+class ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails_Webhook(UncheckedBaseModel):
     type: typing.Literal["webhook"] = "webhook"
     method: str
     url: str
@@ -64,11 +84,12 @@ class ConversationHistoryTranscriptToolCallCommonModelToolDetails_Webhook(Unchec
             extra = pydantic.Extra.allow
 
 
-ConversationHistoryTranscriptToolCallCommonModelToolDetails = typing_extensions.Annotated[
+ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails = typing_extensions.Annotated[
     typing.Union[
-        ConversationHistoryTranscriptToolCallCommonModelToolDetails_Client,
-        ConversationHistoryTranscriptToolCallCommonModelToolDetails_Mcp,
-        ConversationHistoryTranscriptToolCallCommonModelToolDetails_Webhook,
+        ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails_ApiIntegrationWebhook,
+        ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails_Client,
+        ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails_Mcp,
+        ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails_Webhook,
     ],
     UnionMetadata(discriminant="type"),
 ]

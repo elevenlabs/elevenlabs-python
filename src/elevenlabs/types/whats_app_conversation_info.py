@@ -5,9 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .whats_app_conversation_info_direction import WhatsAppConversationInfoDirection
 
 
 class WhatsAppConversationInfo(UncheckedBaseModel):
+    direction: typing.Optional[WhatsAppConversationInfoDirection] = None
     whatsapp_business_account_id: str
     whatsapp_user_id: str
 

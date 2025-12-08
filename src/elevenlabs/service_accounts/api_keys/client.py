@@ -107,7 +107,6 @@ class ApiKeysClient:
         client.service_accounts.api_keys.create(
             service_account_user_id="service_account_user_id",
             name="name",
-            permissions=["text_to_speech"],
         )
         """
         _response = self._raw_client.create(
@@ -206,7 +205,6 @@ class ApiKeysClient:
             api_key_id="api_key_id",
             is_enabled=True,
             name="Sneaky Fox",
-            permissions=["text_to_speech"],
         )
         """
         _response = self._raw_client.update(
@@ -323,7 +321,6 @@ class AsyncApiKeysClient:
             await client.service_accounts.api_keys.create(
                 service_account_user_id="service_account_user_id",
                 name="name",
-                permissions=["text_to_speech"],
             )
 
 
@@ -438,7 +435,6 @@ class AsyncApiKeysClient:
                 api_key_id="api_key_id",
                 is_enabled=True,
                 name="Sneaky Fox",
-                permissions=["text_to_speech"],
             )
 
 

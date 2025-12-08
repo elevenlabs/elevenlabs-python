@@ -8,7 +8,9 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
-from .conversation_history_transcript_tool_call_common_model import ConversationHistoryTranscriptToolCallCommonModel
+from .conversation_history_transcript_tool_call_common_model_input import (
+    ConversationHistoryTranscriptToolCallCommonModelInput,
+)
 
 
 class WorkflowToolResponseModelInputStepsItem_Edge(UncheckedBaseModel):
@@ -46,7 +48,7 @@ class WorkflowToolResponseModelInputStepsItem_NestedTools(UncheckedBaseModel):
     type: typing.Literal["nested_tools"] = "nested_tools"
     step_latency_secs: float
     node_id: str
-    requests: typing.List[ConversationHistoryTranscriptToolCallCommonModel]
+    requests: typing.List[ConversationHistoryTranscriptToolCallCommonModelInput]
     results: typing.List["WorkflowToolNestedToolsStepModelInputResultsItem"]
     is_successful: bool
 

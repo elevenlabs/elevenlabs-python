@@ -5,19 +5,16 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .conversation_history_transcript_tool_call_common_model_tool_details import (
-    ConversationHistoryTranscriptToolCallCommonModelToolDetails,
+from .conversation_history_transcript_tool_call_webhook_details import (
+    ConversationHistoryTranscriptToolCallWebhookDetails,
 )
-from .tool_type import ToolType
 
 
-class ConversationHistoryTranscriptToolCallCommonModel(UncheckedBaseModel):
-    type: typing.Optional[ToolType] = None
-    request_id: str
-    tool_name: str
-    params_as_json: str
-    tool_has_been_called: bool
-    tool_details: typing.Optional[ConversationHistoryTranscriptToolCallCommonModelToolDetails] = None
+class ConversationHistoryTranscriptToolCallApiIntegrationWebhookDetails(UncheckedBaseModel):
+    integration_id: str
+    credential_id: str
+    integration_connection_id: str
+    webhook_details: ConversationHistoryTranscriptToolCallWebhookDetails
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

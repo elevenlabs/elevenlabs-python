@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class DiscountResposneModel(UncheckedBaseModel):
+class DiscountResponseModel(UncheckedBaseModel):
     discount_percent_off: typing.Optional[float] = pydantic.Field(default=None)
     """
     The discount applied to the invoice. E.g. [20.0f] for 20% off.

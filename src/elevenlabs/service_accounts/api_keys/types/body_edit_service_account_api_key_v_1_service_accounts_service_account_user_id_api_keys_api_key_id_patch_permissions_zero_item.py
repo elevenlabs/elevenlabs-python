@@ -2,7 +2,7 @@
 
 import typing
 
-BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissionsItem = typing.Union[
+BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissionsZeroItem = typing.Union[
     typing.Literal[
         "text_to_speech",
         "speech_to_speech",

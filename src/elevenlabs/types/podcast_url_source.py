@@ -8,6 +8,11 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class PodcastUrlSource(UncheckedBaseModel):
+    type: typing.Literal["url"] = pydantic.Field(default="url")
+    """
+    The type of source to create.
+    """
+
     url: str = pydantic.Field()
     """
     The URL to create the podcast from.

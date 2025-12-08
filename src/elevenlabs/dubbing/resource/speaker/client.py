@@ -41,6 +41,9 @@ class SpeakerClient:
         *,
         speaker_name: typing.Optional[str] = OMIT,
         voice_id: typing.Optional[str] = OMIT,
+        voice_stability: typing.Optional[float] = OMIT,
+        voice_similarity: typing.Optional[float] = OMIT,
+        voice_style: typing.Optional[float] = OMIT,
         languages: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SpeakerUpdatedResponse:
@@ -60,6 +63,15 @@ class SpeakerClient:
 
         voice_id : typing.Optional[str]
             Either the identifier of a voice from the ElevenLabs voice library, or one of ['track-clone', 'clip-clone'].
+
+        voice_stability : typing.Optional[float]
+            For models that support it, the voice similarity value to use. This will default to 0.65, with a valid range of [0.0, 1.0].
+
+        voice_similarity : typing.Optional[float]
+            For models that support it, the voice similarity value to use. This will default to 1.0, with a valid range of [0.0, 1.0].
+
+        voice_style : typing.Optional[float]
+            For models that support it, the voice style value to use. This will default to 1.0, with a valid range of [0.0, 1.0].
 
         languages : typing.Optional[typing.Sequence[str]]
             Languages to apply these changes to. If empty, will apply to all languages.
@@ -89,6 +101,9 @@ class SpeakerClient:
             speaker_id,
             speaker_name=speaker_name,
             voice_id=voice_id,
+            voice_stability=voice_stability,
+            voice_similarity=voice_similarity,
+            voice_style=voice_style,
             languages=languages,
             request_options=request_options,
         )
@@ -100,6 +115,9 @@ class SpeakerClient:
         *,
         speaker_name: typing.Optional[str] = OMIT,
         voice_id: typing.Optional[str] = OMIT,
+        voice_stability: typing.Optional[float] = OMIT,
+        voice_similarity: typing.Optional[float] = OMIT,
+        voice_style: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SpeakerCreatedResponse:
         """
@@ -113,6 +131,15 @@ class SpeakerClient:
 
         voice_id : typing.Optional[str]
             Either the identifier of a voice from the ElevenLabs voice library, or one of ['track-clone', 'clip-clone'].
+
+        voice_stability : typing.Optional[float]
+            For models that support it, the voice similarity value to use. This will default to 0.65, with a valid range of [0.0, 1.0].
+
+        voice_similarity : typing.Optional[float]
+            For models that support it, the voice similarity value to use. This will default to 1.0, with a valid range of [0.0, 1.0].
+
+        voice_style : typing.Optional[float]
+            For models that support it, the voice style value to use. This will default to 1.0, with a valid range of [0.0, 1.0].
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -134,7 +161,13 @@ class SpeakerClient:
         )
         """
         _response = self._raw_client.create(
-            dubbing_id, speaker_name=speaker_name, voice_id=voice_id, request_options=request_options
+            dubbing_id,
+            speaker_name=speaker_name,
+            voice_id=voice_id,
+            voice_stability=voice_stability,
+            voice_similarity=voice_similarity,
+            voice_style=voice_style,
+            request_options=request_options,
         )
         return _response.data
 
@@ -208,6 +241,9 @@ class AsyncSpeakerClient:
         *,
         speaker_name: typing.Optional[str] = OMIT,
         voice_id: typing.Optional[str] = OMIT,
+        voice_stability: typing.Optional[float] = OMIT,
+        voice_similarity: typing.Optional[float] = OMIT,
+        voice_style: typing.Optional[float] = OMIT,
         languages: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SpeakerUpdatedResponse:
@@ -227,6 +263,15 @@ class AsyncSpeakerClient:
 
         voice_id : typing.Optional[str]
             Either the identifier of a voice from the ElevenLabs voice library, or one of ['track-clone', 'clip-clone'].
+
+        voice_stability : typing.Optional[float]
+            For models that support it, the voice similarity value to use. This will default to 0.65, with a valid range of [0.0, 1.0].
+
+        voice_similarity : typing.Optional[float]
+            For models that support it, the voice similarity value to use. This will default to 1.0, with a valid range of [0.0, 1.0].
+
+        voice_style : typing.Optional[float]
+            For models that support it, the voice style value to use. This will default to 1.0, with a valid range of [0.0, 1.0].
 
         languages : typing.Optional[typing.Sequence[str]]
             Languages to apply these changes to. If empty, will apply to all languages.
@@ -264,6 +309,9 @@ class AsyncSpeakerClient:
             speaker_id,
             speaker_name=speaker_name,
             voice_id=voice_id,
+            voice_stability=voice_stability,
+            voice_similarity=voice_similarity,
+            voice_style=voice_style,
             languages=languages,
             request_options=request_options,
         )
@@ -275,6 +323,9 @@ class AsyncSpeakerClient:
         *,
         speaker_name: typing.Optional[str] = OMIT,
         voice_id: typing.Optional[str] = OMIT,
+        voice_stability: typing.Optional[float] = OMIT,
+        voice_similarity: typing.Optional[float] = OMIT,
+        voice_style: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SpeakerCreatedResponse:
         """
@@ -288,6 +339,15 @@ class AsyncSpeakerClient:
 
         voice_id : typing.Optional[str]
             Either the identifier of a voice from the ElevenLabs voice library, or one of ['track-clone', 'clip-clone'].
+
+        voice_stability : typing.Optional[float]
+            For models that support it, the voice similarity value to use. This will default to 0.65, with a valid range of [0.0, 1.0].
+
+        voice_similarity : typing.Optional[float]
+            For models that support it, the voice similarity value to use. This will default to 1.0, with a valid range of [0.0, 1.0].
+
+        voice_style : typing.Optional[float]
+            For models that support it, the voice style value to use. This will default to 1.0, with a valid range of [0.0, 1.0].
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -317,7 +377,13 @@ class AsyncSpeakerClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
-            dubbing_id, speaker_name=speaker_name, voice_id=voice_id, request_options=request_options
+            dubbing_id,
+            speaker_name=speaker_name,
+            voice_id=voice_id,
+            voice_stability=voice_stability,
+            voice_similarity=voice_similarity,
+            voice_style=voice_style,
+            request_options=request_options,
         )
         return _response.data
 

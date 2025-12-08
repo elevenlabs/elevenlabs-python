@@ -8,6 +8,11 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class PodcastTextSource(UncheckedBaseModel):
+    type: typing.Literal["text"] = pydantic.Field(default="text")
+    """
+    The type of source to create.
+    """
+
     text: str = pydantic.Field()
     """
     The text to create the podcast from.

@@ -17,8 +17,8 @@ class DubbingResource(UncheckedBaseModel):
     source_language: str
     target_languages: typing.List[str]
     input: DubbingMediaReference
-    background: DubbingMediaReference
-    foreground: DubbingMediaReference
+    background: typing.Optional[DubbingMediaReference] = None
+    foreground: typing.Optional[DubbingMediaReference] = None
     speaker_tracks: typing.Dict[str, SpeakerTrack]
     speaker_segments: typing.Dict[str, SpeakerSegment]
     renders: typing.Dict[str, Render]

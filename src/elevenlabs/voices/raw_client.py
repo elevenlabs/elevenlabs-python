@@ -104,7 +104,7 @@ class RawVoicesClient:
         Parameters
         ----------
         next_page_token : typing.Optional[str]
-            The next page token to use for pagination. Returned from the previous request.
+            The next page token to use for pagination. Returned from the previous request. Use this in combination with the has_more flag for reliable pagination.
 
         page_size : typing.Optional[int]
             How many voices to return at maximum. Can not exceed 100, defaults to 10. Page 0 may include more voices due to default voices being included.
@@ -131,7 +131,7 @@ class RawVoicesClient:
             Collection ID to filter voices by.
 
         include_total_count : typing.Optional[bool]
-            Whether to include the total count of voices found in the response. Incurs a performance cost.
+            Whether to include the total count of voices found in the response. NOTE: The total_count value is a live snapshot and may change between requests as users create, modify, or delete voices. For pagination, rely on the has_more flag instead. Only enable this when you actually need the total count (e.g., for display purposes), as it incurs a performance cost.
 
         voice_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Voice IDs to lookup by. Maximum 100 voice IDs.
@@ -740,7 +740,7 @@ class AsyncRawVoicesClient:
         Parameters
         ----------
         next_page_token : typing.Optional[str]
-            The next page token to use for pagination. Returned from the previous request.
+            The next page token to use for pagination. Returned from the previous request. Use this in combination with the has_more flag for reliable pagination.
 
         page_size : typing.Optional[int]
             How many voices to return at maximum. Can not exceed 100, defaults to 10. Page 0 may include more voices due to default voices being included.
@@ -767,7 +767,7 @@ class AsyncRawVoicesClient:
             Collection ID to filter voices by.
 
         include_total_count : typing.Optional[bool]
-            Whether to include the total count of voices found in the response. Incurs a performance cost.
+            Whether to include the total count of voices found in the response. NOTE: The total_count value is a live snapshot and may change between requests as users create, modify, or delete voices. For pagination, rely on the has_more flag instead. Only enable this when you actually need the total count (e.g., for display purposes), as it incurs a performance cost.
 
         voice_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Voice IDs to lookup by. Maximum 100 voice IDs.

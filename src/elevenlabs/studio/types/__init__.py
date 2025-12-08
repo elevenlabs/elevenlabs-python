@@ -21,10 +21,10 @@ if typing.TYPE_CHECKING:
         BodyCreatePodcastV1StudioPodcastsPostQualityPreset,
     )
     from .body_create_podcast_v_1_studio_podcasts_post_source import BodyCreatePodcastV1StudioPodcastsPostSource
-    from .body_create_podcast_v_1_studio_podcasts_post_source_item import (
-        BodyCreatePodcastV1StudioPodcastsPostSourceItem,
-        BodyCreatePodcastV1StudioPodcastsPostSourceItem_Text,
-        BodyCreatePodcastV1StudioPodcastsPostSourceItem_Url,
+    from .body_create_podcast_v_1_studio_podcasts_post_source_two_item import (
+        BodyCreatePodcastV1StudioPodcastsPostSourceTwoItem,
+        BodyCreatePodcastV1StudioPodcastsPostSourceTwoItem_Text,
+        BodyCreatePodcastV1StudioPodcastsPostSourceTwoItem_Url,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "BodyCreatePodcastV1StudioPodcastsPostApplyTextNormalization": ".body_create_podcast_v_1_studio_podcasts_post_apply_text_normalization",
@@ -34,9 +34,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BodyCreatePodcastV1StudioPodcastsPostMode_Conversation": ".body_create_podcast_v_1_studio_podcasts_post_mode",
     "BodyCreatePodcastV1StudioPodcastsPostQualityPreset": ".body_create_podcast_v_1_studio_podcasts_post_quality_preset",
     "BodyCreatePodcastV1StudioPodcastsPostSource": ".body_create_podcast_v_1_studio_podcasts_post_source",
-    "BodyCreatePodcastV1StudioPodcastsPostSourceItem": ".body_create_podcast_v_1_studio_podcasts_post_source_item",
-    "BodyCreatePodcastV1StudioPodcastsPostSourceItem_Text": ".body_create_podcast_v_1_studio_podcasts_post_source_item",
-    "BodyCreatePodcastV1StudioPodcastsPostSourceItem_Url": ".body_create_podcast_v_1_studio_podcasts_post_source_item",
+    "BodyCreatePodcastV1StudioPodcastsPostSourceTwoItem": ".body_create_podcast_v_1_studio_podcasts_post_source_two_item",
+    "BodyCreatePodcastV1StudioPodcastsPostSourceTwoItem_Text": ".body_create_podcast_v_1_studio_podcasts_post_source_two_item",
+    "BodyCreatePodcastV1StudioPodcastsPostSourceTwoItem_Url": ".body_create_podcast_v_1_studio_podcasts_post_source_two_item",
 }
 
 
@@ -69,7 +69,7 @@ __all__ = [
     "BodyCreatePodcastV1StudioPodcastsPostMode_Conversation",
     "BodyCreatePodcastV1StudioPodcastsPostQualityPreset",
     "BodyCreatePodcastV1StudioPodcastsPostSource",
-    "BodyCreatePodcastV1StudioPodcastsPostSourceItem",
-    "BodyCreatePodcastV1StudioPodcastsPostSourceItem_Text",
-    "BodyCreatePodcastV1StudioPodcastsPostSourceItem_Url",
+    "BodyCreatePodcastV1StudioPodcastsPostSourceTwoItem",
+    "BodyCreatePodcastV1StudioPodcastsPostSourceTwoItem_Text",
+    "BodyCreatePodcastV1StudioPodcastsPostSourceTwoItem_Url",
 ]

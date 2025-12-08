@@ -1,9 +1,10 @@
 [project]
 name = "elevenlabs"
+dynamic = ["version"]
 
 [tool.poetry]
 name = "elevenlabs"
-version = "v2.25.0"
+version = "v2.26.0"
 description = ""
 readme = "README.md"
 authors = []
