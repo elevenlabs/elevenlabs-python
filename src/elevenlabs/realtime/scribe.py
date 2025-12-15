@@ -3,7 +3,9 @@ import base64
 import subprocess
 import typing
 from enum import Enum
-from typing import Required, overload
+from typing import overload
+
+from typing_extensions import Required
 
 try:
     from websockets.asyncio.client import connect as websocket_connect
@@ -247,13 +249,12 @@ class ScribeRealtime:
 
         # Default to 16kHz for URL streaming
         sample_rate = 16000
-        encoding = "pcm_16000"
+        audio_format = "pcm_16000"
 
         # Build WebSocket URL
         ws_url = self._build_websocket_url(
             model_id=model_id,
-            encoding=encoding,
-            sample_rate=sample_rate,
+            audio_format=audio_format,
             commit_strategy=commit_strategy.value,
             vad_silence_threshold_secs=vad_silence_threshold_secs,
             vad_threshold=vad_threshold,
