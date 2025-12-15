@@ -249,7 +249,7 @@ class ScribeRealtime:
 
         # Default to 16kHz for URL streaming
         sample_rate = 16000
-        audio_format = "pcm_16000"
+        audio_format = AudioFormat.PCM_16000
 
         # Build WebSocket URL
         ws_url = self._build_websocket_url(
