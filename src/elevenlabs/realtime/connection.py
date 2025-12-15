@@ -4,6 +4,9 @@ import subprocess
 import typing
 from enum import Enum
 
+if typing.TYPE_CHECKING:
+    from websockets.asyncio.client import ClientConnection
+
 
 class RealtimeEvents(str, Enum):
     """Events emitted by the RealtimeConnection"""
@@ -55,7 +58,7 @@ class RealtimeConnection:
         ```
     """
 
-    def __init__(self, websocket, current_sample_rate: int, ffmpeg_process: typing.Optional[subprocess.Popen] = None):
+    def __init__(self, websocket: "ClientConnection", current_sample_rate: int, ffmpeg_process: typing.Optional[subprocess.Popen] = None):
         self.websocket = websocket
         self.current_sample_rate = current_sample_rate
         self.ffmpeg_process = ffmpeg_process
