@@ -7,13 +7,21 @@ from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
 from ...core.request_options import RequestOptions
+from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.get_knowledge_base_list_response_model import GetKnowledgeBaseListResponseModel
+from ...types.get_or_create_rag_index_request_model import GetOrCreateRagIndexRequestModel
 from ...types.http_validation_error import HttpValidationError
 from ...types.knowledge_base_document_type import KnowledgeBaseDocumentType
 from ...types.knowledge_base_sort_by import KnowledgeBaseSortBy
 from ...types.sort_direction import SortDirection
+from .types.knowledge_base_get_or_create_rag_indexes_response_value import (
+    KnowledgeBaseGetOrCreateRagIndexesResponseValue,
+)
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class RawKnowledgeBaseClient:
@@ -29,6 +37,9 @@ class RawKnowledgeBaseClient:
         types: typing.Optional[
             typing.Union[KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]]
         ] = None,
+        parent_folder_id: typing.Optional[str] = None,
+        ancestor_folder_id: typing.Optional[str] = None,
+        folders_first: typing.Optional[bool] = None,
         sort_direction: typing.Optional[SortDirection] = None,
         sort_by: typing.Optional[KnowledgeBaseSortBy] = None,
         use_typesense: typing.Optional[bool] = None,
@@ -51,6 +62,15 @@ class RawKnowledgeBaseClient:
 
         types : typing.Optional[typing.Union[KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]]]
             If present, the endpoint will return only documents of the given types.
+
+        parent_folder_id : typing.Optional[str]
+            If set, the endpoint will return only documents that are direct children of the given folder.
+
+        ancestor_folder_id : typing.Optional[str]
+            If set, the endpoint will return only documents that are descendants of the given folder.
+
+        folders_first : typing.Optional[bool]
+            Whether folders should be returned first in the list of documents.
 
         sort_direction : typing.Optional[SortDirection]
             The direction to sort the results
@@ -80,6 +100,9 @@ class RawKnowledgeBaseClient:
                 "search": search,
                 "show_only_owned_documents": show_only_owned_documents,
                 "types": types,
+                "parent_folder_id": parent_folder_id,
+                "ancestor_folder_id": ancestor_folder_id,
+                "folders_first": folders_first,
                 "sort_direction": sort_direction,
                 "sort_by": sort_by,
                 "use_typesense": use_typesense,
@@ -93,6 +116,68 @@ class RawKnowledgeBaseClient:
                     GetKnowledgeBaseListResponseModel,
                     construct_type(
                         type_=GetKnowledgeBaseListResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def get_or_create_rag_indexes(
+        self,
+        *,
+        items: typing.Sequence[GetOrCreateRagIndexRequestModel],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[typing.Dict[str, KnowledgeBaseGetOrCreateRagIndexesResponseValue]]:
+        """
+        Retrieves and/or creates RAG indexes for multiple knowledge base documents in a single request.
+
+        Parameters
+        ----------
+        items : typing.Sequence[GetOrCreateRagIndexRequestModel]
+            List of requested RAG indexes.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[typing.Dict[str, KnowledgeBaseGetOrCreateRagIndexesResponseValue]]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/convai/knowledge-base/rag-index",
+            method="POST",
+            json={
+                "items": convert_and_respect_annotation_metadata(
+                    object_=items, annotation=typing.Sequence[GetOrCreateRagIndexRequestModel], direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.Dict[str, KnowledgeBaseGetOrCreateRagIndexesResponseValue],
+                    construct_type(
+                        type_=typing.Dict[str, KnowledgeBaseGetOrCreateRagIndexesResponseValue],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -127,6 +212,9 @@ class AsyncRawKnowledgeBaseClient:
         types: typing.Optional[
             typing.Union[KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]]
         ] = None,
+        parent_folder_id: typing.Optional[str] = None,
+        ancestor_folder_id: typing.Optional[str] = None,
+        folders_first: typing.Optional[bool] = None,
         sort_direction: typing.Optional[SortDirection] = None,
         sort_by: typing.Optional[KnowledgeBaseSortBy] = None,
         use_typesense: typing.Optional[bool] = None,
@@ -149,6 +237,15 @@ class AsyncRawKnowledgeBaseClient:
 
         types : typing.Optional[typing.Union[KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]]]
             If present, the endpoint will return only documents of the given types.
+
+        parent_folder_id : typing.Optional[str]
+            If set, the endpoint will return only documents that are direct children of the given folder.
+
+        ancestor_folder_id : typing.Optional[str]
+            If set, the endpoint will return only documents that are descendants of the given folder.
+
+        folders_first : typing.Optional[bool]
+            Whether folders should be returned first in the list of documents.
 
         sort_direction : typing.Optional[SortDirection]
             The direction to sort the results
@@ -178,6 +275,9 @@ class AsyncRawKnowledgeBaseClient:
                 "search": search,
                 "show_only_owned_documents": show_only_owned_documents,
                 "types": types,
+                "parent_folder_id": parent_folder_id,
+                "ancestor_folder_id": ancestor_folder_id,
+                "folders_first": folders_first,
                 "sort_direction": sort_direction,
                 "sort_by": sort_by,
                 "use_typesense": use_typesense,
@@ -191,6 +291,68 @@ class AsyncRawKnowledgeBaseClient:
                     GetKnowledgeBaseListResponseModel,
                     construct_type(
                         type_=GetKnowledgeBaseListResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_or_create_rag_indexes(
+        self,
+        *,
+        items: typing.Sequence[GetOrCreateRagIndexRequestModel],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[typing.Dict[str, KnowledgeBaseGetOrCreateRagIndexesResponseValue]]:
+        """
+        Retrieves and/or creates RAG indexes for multiple knowledge base documents in a single request.
+
+        Parameters
+        ----------
+        items : typing.Sequence[GetOrCreateRagIndexRequestModel]
+            List of requested RAG indexes.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[typing.Dict[str, KnowledgeBaseGetOrCreateRagIndexesResponseValue]]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/convai/knowledge-base/rag-index",
+            method="POST",
+            json={
+                "items": convert_and_respect_annotation_metadata(
+                    object_=items, annotation=typing.Sequence[GetOrCreateRagIndexRequestModel], direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.Dict[str, KnowledgeBaseGetOrCreateRagIndexesResponseValue],
+                    construct_type(
+                        type_=typing.Dict[str, KnowledgeBaseGetOrCreateRagIndexesResponseValue],  # type: ignore
                         object_=_response.json(),
                     ),
                 )

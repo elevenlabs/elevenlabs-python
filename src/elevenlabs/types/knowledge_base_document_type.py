@@ -2,4 +2,4 @@
 
 import typing
 
-KnowledgeBaseDocumentType = typing.Union[typing.Literal["file", "url", "text"], typing.Any]
+KnowledgeBaseDocumentType = typing.Union[typing.Literal["file", "url", "text", "folder"], typing.Any]

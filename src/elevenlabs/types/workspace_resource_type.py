@@ -30,6 +30,7 @@ WorkspaceResourceType = typing.Union[
         "convai_agent_versions_deployments",
         "dashboard",
         "dashboard_configuration",
+        "convai_agent_drafts",
     ],
     typing.Any,
 ]

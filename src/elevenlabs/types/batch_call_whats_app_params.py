@@ -8,7 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class BatchCallWhatsAppParams(UncheckedBaseModel):
-    whatsapp_business_account_id: str
+    whatsapp_phone_number_id: typing.Optional[str] = None
     whatsapp_call_permission_request_template_name: str
     whatsapp_call_permission_request_template_language_code: str
 

@@ -582,6 +582,7 @@ if typing.TYPE_CHECKING:
     from .batch_call_response import BatchCallResponse
     from .batch_call_status import BatchCallStatus
     from .batch_call_whats_app_params import BatchCallWhatsAppParams
+    from .batch_failure_response_model import BatchFailureResponseModel
     from .billing_period import BillingPeriod
     from .body_generate_a_random_voice_v_1_voice_generation_generate_voice_post_age import (
         BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostAge,
@@ -951,10 +952,12 @@ if typing.TYPE_CHECKING:
         GetKnowledgeBaseDependentAgentsResponseModelAgentsItem_Unknown,
     )
     from .get_knowledge_base_file_response_model import GetKnowledgeBaseFileResponseModel
+    from .get_knowledge_base_folder_response_model import GetKnowledgeBaseFolderResponseModel
     from .get_knowledge_base_list_response_model import GetKnowledgeBaseListResponseModel
     from .get_knowledge_base_list_response_model_documents_item import (
         GetKnowledgeBaseListResponseModelDocumentsItem,
         GetKnowledgeBaseListResponseModelDocumentsItem_File,
+        GetKnowledgeBaseListResponseModelDocumentsItem_Folder,
         GetKnowledgeBaseListResponseModelDocumentsItem_Text,
         GetKnowledgeBaseListResponseModelDocumentsItem_Url,
     )
@@ -963,6 +966,12 @@ if typing.TYPE_CHECKING:
         GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem,
         GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem_Available,
         GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem_Unknown,
+    )
+    from .get_knowledge_base_summary_folder_response_model import GetKnowledgeBaseSummaryFolderResponseModel
+    from .get_knowledge_base_summary_folder_response_model_dependent_agents_item import (
+        GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem,
+        GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem_Available,
+        GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem_Unknown,
     )
     from .get_knowledge_base_summary_text_response_model import GetKnowledgeBaseSummaryTextResponseModel
     from .get_knowledge_base_summary_text_response_model_dependent_agents_item import (
@@ -980,6 +989,7 @@ if typing.TYPE_CHECKING:
     from .get_knowledge_base_url_response_model import GetKnowledgeBaseUrlResponseModel
     from .get_library_voices_response import GetLibraryVoicesResponse
     from .get_live_count_response import GetLiveCountResponse
+    from .get_or_create_rag_index_request_model import GetOrCreateRagIndexRequestModel
     from .get_phone_number_inbound_sip_trunk_config_response_model import (
         GetPhoneNumberInboundSipTrunkConfigResponseModel,
     )
@@ -1032,8 +1042,17 @@ if typing.TYPE_CHECKING:
     from .knowledge_base_document_chunk_response_model import KnowledgeBaseDocumentChunkResponseModel
     from .knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
     from .knowledge_base_document_type import KnowledgeBaseDocumentType
+    from .knowledge_base_folder_path_segment_response_model import KnowledgeBaseFolderPathSegmentResponseModel
     from .knowledge_base_locator import KnowledgeBaseLocator
     from .knowledge_base_sort_by import KnowledgeBaseSortBy
+    from .knowledge_base_summary_batch_successful_response_model import KnowledgeBaseSummaryBatchSuccessfulResponseModel
+    from .knowledge_base_summary_batch_successful_response_model_data import (
+        KnowledgeBaseSummaryBatchSuccessfulResponseModelData,
+        KnowledgeBaseSummaryBatchSuccessfulResponseModelData_File,
+        KnowledgeBaseSummaryBatchSuccessfulResponseModelData_Folder,
+        KnowledgeBaseSummaryBatchSuccessfulResponseModelData_Text,
+        KnowledgeBaseSummaryBatchSuccessfulResponseModelData_Url,
+    )
     from .language_added_response import LanguageAddedResponse
     from .language_detection_tool_config import LanguageDetectionToolConfig
     from .language_detection_tool_result_model import LanguageDetectionToolResultModel
@@ -1251,6 +1270,7 @@ if typing.TYPE_CHECKING:
     from .rag_document_index_response_model import RagDocumentIndexResponseModel
     from .rag_document_index_usage import RagDocumentIndexUsage
     from .rag_document_indexes_response_model import RagDocumentIndexesResponseModel
+    from .rag_index_batch_successful_response_model import RagIndexBatchSuccessfulResponseModel
     from .rag_index_overview_embedding_model_response_model import RagIndexOverviewEmbeddingModelResponseModel
     from .rag_index_overview_response_model import RagIndexOverviewResponseModel
     from .rag_index_status import RagIndexStatus
@@ -2183,6 +2203,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BatchCallResponse": ".batch_call_response",
     "BatchCallStatus": ".batch_call_status",
     "BatchCallWhatsAppParams": ".batch_call_whats_app_params",
+    "BatchFailureResponseModel": ".batch_failure_response_model",
     "BillingPeriod": ".billing_period",
     "BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostAge": ".body_generate_a_random_voice_v_1_voice_generation_generate_voice_post_age",
     "BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostGender": ".body_generate_a_random_voice_v_1_voice_generation_generate_voice_post_gender",
@@ -2468,15 +2489,21 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetKnowledgeBaseDependentAgentsResponseModelAgentsItem_Available": ".get_knowledge_base_dependent_agents_response_model_agents_item",
     "GetKnowledgeBaseDependentAgentsResponseModelAgentsItem_Unknown": ".get_knowledge_base_dependent_agents_response_model_agents_item",
     "GetKnowledgeBaseFileResponseModel": ".get_knowledge_base_file_response_model",
+    "GetKnowledgeBaseFolderResponseModel": ".get_knowledge_base_folder_response_model",
     "GetKnowledgeBaseListResponseModel": ".get_knowledge_base_list_response_model",
     "GetKnowledgeBaseListResponseModelDocumentsItem": ".get_knowledge_base_list_response_model_documents_item",
     "GetKnowledgeBaseListResponseModelDocumentsItem_File": ".get_knowledge_base_list_response_model_documents_item",
+    "GetKnowledgeBaseListResponseModelDocumentsItem_Folder": ".get_knowledge_base_list_response_model_documents_item",
     "GetKnowledgeBaseListResponseModelDocumentsItem_Text": ".get_knowledge_base_list_response_model_documents_item",
     "GetKnowledgeBaseListResponseModelDocumentsItem_Url": ".get_knowledge_base_list_response_model_documents_item",
     "GetKnowledgeBaseSummaryFileResponseModel": ".get_knowledge_base_summary_file_response_model",
     "GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem": ".get_knowledge_base_summary_file_response_model_dependent_agents_item",
     "GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem_Available": ".get_knowledge_base_summary_file_response_model_dependent_agents_item",
     "GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem_Unknown": ".get_knowledge_base_summary_file_response_model_dependent_agents_item",
+    "GetKnowledgeBaseSummaryFolderResponseModel": ".get_knowledge_base_summary_folder_response_model",
+    "GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem": ".get_knowledge_base_summary_folder_response_model_dependent_agents_item",
+    "GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem_Available": ".get_knowledge_base_summary_folder_response_model_dependent_agents_item",
+    "GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem_Unknown": ".get_knowledge_base_summary_folder_response_model_dependent_agents_item",
     "GetKnowledgeBaseSummaryTextResponseModel": ".get_knowledge_base_summary_text_response_model",
     "GetKnowledgeBaseSummaryTextResponseModelDependentAgentsItem": ".get_knowledge_base_summary_text_response_model_dependent_agents_item",
     "GetKnowledgeBaseSummaryTextResponseModelDependentAgentsItem_Available": ".get_knowledge_base_summary_text_response_model_dependent_agents_item",
@@ -2489,6 +2516,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetKnowledgeBaseUrlResponseModel": ".get_knowledge_base_url_response_model",
     "GetLibraryVoicesResponse": ".get_library_voices_response",
     "GetLiveCountResponse": ".get_live_count_response",
+    "GetOrCreateRagIndexRequestModel": ".get_or_create_rag_index_request_model",
     "GetPhoneNumberInboundSipTrunkConfigResponseModel": ".get_phone_number_inbound_sip_trunk_config_response_model",
     "GetPhoneNumberOutboundSipTrunkConfigResponseModel": ".get_phone_number_outbound_sip_trunk_config_response_model",
     "GetPhoneNumberResponse": ".get_phone_number_response",
@@ -2531,8 +2559,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "KnowledgeBaseDocumentChunkResponseModel": ".knowledge_base_document_chunk_response_model",
     "KnowledgeBaseDocumentMetadataResponseModel": ".knowledge_base_document_metadata_response_model",
     "KnowledgeBaseDocumentType": ".knowledge_base_document_type",
+    "KnowledgeBaseFolderPathSegmentResponseModel": ".knowledge_base_folder_path_segment_response_model",
     "KnowledgeBaseLocator": ".knowledge_base_locator",
     "KnowledgeBaseSortBy": ".knowledge_base_sort_by",
+    "KnowledgeBaseSummaryBatchSuccessfulResponseModel": ".knowledge_base_summary_batch_successful_response_model",
+    "KnowledgeBaseSummaryBatchSuccessfulResponseModelData": ".knowledge_base_summary_batch_successful_response_model_data",
+    "KnowledgeBaseSummaryBatchSuccessfulResponseModelData_File": ".knowledge_base_summary_batch_successful_response_model_data",
+    "KnowledgeBaseSummaryBatchSuccessfulResponseModelData_Folder": ".knowledge_base_summary_batch_successful_response_model_data",
+    "KnowledgeBaseSummaryBatchSuccessfulResponseModelData_Text": ".knowledge_base_summary_batch_successful_response_model_data",
+    "KnowledgeBaseSummaryBatchSuccessfulResponseModelData_Url": ".knowledge_base_summary_batch_successful_response_model_data",
     "LanguageAddedResponse": ".language_added_response",
     "LanguageDetectionToolConfig": ".language_detection_tool_config",
     "LanguageDetectionToolResultModel": ".language_detection_tool_result_model",
@@ -2724,6 +2759,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RagDocumentIndexResponseModel": ".rag_document_index_response_model",
     "RagDocumentIndexUsage": ".rag_document_index_usage",
     "RagDocumentIndexesResponseModel": ".rag_document_indexes_response_model",
+    "RagIndexBatchSuccessfulResponseModel": ".rag_index_batch_successful_response_model",
     "RagIndexOverviewEmbeddingModelResponseModel": ".rag_index_overview_embedding_model_response_model",
     "RagIndexOverviewResponseModel": ".rag_index_overview_response_model",
     "RagIndexStatus": ".rag_index_status",
@@ -3632,6 +3668,7 @@ __all__ = [
     "BatchCallResponse",
     "BatchCallStatus",
     "BatchCallWhatsAppParams",
+    "BatchFailureResponseModel",
     "BillingPeriod",
     "BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostAge",
     "BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostGender",
@@ -3917,15 +3954,21 @@ __all__ = [
     "GetKnowledgeBaseDependentAgentsResponseModelAgentsItem_Available",
     "GetKnowledgeBaseDependentAgentsResponseModelAgentsItem_Unknown",
     "GetKnowledgeBaseFileResponseModel",
+    "GetKnowledgeBaseFolderResponseModel",
     "GetKnowledgeBaseListResponseModel",
     "GetKnowledgeBaseListResponseModelDocumentsItem",
     "GetKnowledgeBaseListResponseModelDocumentsItem_File",
+    "GetKnowledgeBaseListResponseModelDocumentsItem_Folder",
     "GetKnowledgeBaseListResponseModelDocumentsItem_Text",
     "GetKnowledgeBaseListResponseModelDocumentsItem_Url",
     "GetKnowledgeBaseSummaryFileResponseModel",
     "GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem",
     "GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem_Available",
     "GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem_Unknown",
+    "GetKnowledgeBaseSummaryFolderResponseModel",
+    "GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem",
+    "GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem_Available",
+    "GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem_Unknown",
     "GetKnowledgeBaseSummaryTextResponseModel",
     "GetKnowledgeBaseSummaryTextResponseModelDependentAgentsItem",
     "GetKnowledgeBaseSummaryTextResponseModelDependentAgentsItem_Available",
@@ -3938,6 +3981,7 @@ __all__ = [
     "GetKnowledgeBaseUrlResponseModel",
     "GetLibraryVoicesResponse",
     "GetLiveCountResponse",
+    "GetOrCreateRagIndexRequestModel",
     "GetPhoneNumberInboundSipTrunkConfigResponseModel",
     "GetPhoneNumberOutboundSipTrunkConfigResponseModel",
     "GetPhoneNumberResponse",
@@ -3980,8 +4024,15 @@ __all__ = [
     "KnowledgeBaseDocumentChunkResponseModel",
     "KnowledgeBaseDocumentMetadataResponseModel",
     "KnowledgeBaseDocumentType",
+    "KnowledgeBaseFolderPathSegmentResponseModel",
     "KnowledgeBaseLocator",
     "KnowledgeBaseSortBy",
+    "KnowledgeBaseSummaryBatchSuccessfulResponseModel",
+    "KnowledgeBaseSummaryBatchSuccessfulResponseModelData",
+    "KnowledgeBaseSummaryBatchSuccessfulResponseModelData_File",
+    "KnowledgeBaseSummaryBatchSuccessfulResponseModelData_Folder",
+    "KnowledgeBaseSummaryBatchSuccessfulResponseModelData_Text",
+    "KnowledgeBaseSummaryBatchSuccessfulResponseModelData_Url",
     "LanguageAddedResponse",
     "LanguageDetectionToolConfig",
     "LanguageDetectionToolResultModel",
@@ -4173,6 +4224,7 @@ __all__ = [
     "RagDocumentIndexResponseModel",
     "RagDocumentIndexUsage",
     "RagDocumentIndexesResponseModel",
+    "RagIndexBatchSuccessfulResponseModel",
     "RagIndexOverviewEmbeddingModelResponseModel",
     "RagIndexOverviewResponseModel",
     "RagIndexStatus",

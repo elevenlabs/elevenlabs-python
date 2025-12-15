@@ -19,6 +19,11 @@ class GetKnowledgeBaseSummaryFileResponseModel(UncheckedBaseModel):
     metadata: KnowledgeBaseDocumentMetadataResponseModel
     supported_usages: typing.List[DocumentUsageModeEnum]
     access_info: ResourceAccessInfo
+    folder_parent_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ID of the parent folder, or null if the document is at the root level.
+    """
+
     dependent_agents: typing.List[GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem]
 
     if IS_PYDANTIC_V2:

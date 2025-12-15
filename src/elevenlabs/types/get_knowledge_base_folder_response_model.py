@@ -6,14 +6,12 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .document_usage_mode_enum import DocumentUsageModeEnum
-from .get_knowledge_base_summary_url_response_model_dependent_agents_item import (
-    GetKnowledgeBaseSummaryUrlResponseModelDependentAgentsItem,
-)
 from .knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
+from .knowledge_base_folder_path_segment_response_model import KnowledgeBaseFolderPathSegmentResponseModel
 from .resource_access_info import ResourceAccessInfo
 
 
-class GetKnowledgeBaseSummaryUrlResponseModel(UncheckedBaseModel):
+class GetKnowledgeBaseFolderResponseModel(UncheckedBaseModel):
     id: str
     name: str
     metadata: KnowledgeBaseDocumentMetadataResponseModel
@@ -24,8 +22,14 @@ class GetKnowledgeBaseSummaryUrlResponseModel(UncheckedBaseModel):
     The ID of the parent folder, or null if the document is at the root level.
     """
 
-    dependent_agents: typing.List[GetKnowledgeBaseSummaryUrlResponseModelDependentAgentsItem]
-    url: str
+    folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentResponseModel]] = pydantic.Field(
+        default=None
+    )
+    """
+    The folder path segments leading to this entity, from root to parent folder.
+    """
+
+    children_count: int
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

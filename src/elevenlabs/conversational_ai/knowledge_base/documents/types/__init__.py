@@ -9,22 +9,26 @@ if typing.TYPE_CHECKING:
     from .documents_get_response import (
         DocumentsGetResponse,
         DocumentsGetResponse_File,
+        DocumentsGetResponse_Folder,
         DocumentsGetResponse_Text,
         DocumentsGetResponse_Url,
     )
     from .documents_update_response import (
         DocumentsUpdateResponse,
         DocumentsUpdateResponse_File,
+        DocumentsUpdateResponse_Folder,
         DocumentsUpdateResponse_Text,
         DocumentsUpdateResponse_Url,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "DocumentsGetResponse": ".documents_get_response",
     "DocumentsGetResponse_File": ".documents_get_response",
+    "DocumentsGetResponse_Folder": ".documents_get_response",
     "DocumentsGetResponse_Text": ".documents_get_response",
     "DocumentsGetResponse_Url": ".documents_get_response",
     "DocumentsUpdateResponse": ".documents_update_response",
     "DocumentsUpdateResponse_File": ".documents_update_response",
+    "DocumentsUpdateResponse_Folder": ".documents_update_response",
     "DocumentsUpdateResponse_Text": ".documents_update_response",
     "DocumentsUpdateResponse_Url": ".documents_update_response",
 }
@@ -54,10 +58,12 @@ def __dir__():
 __all__ = [
     "DocumentsGetResponse",
     "DocumentsGetResponse_File",
+    "DocumentsGetResponse_Folder",
     "DocumentsGetResponse_Text",
     "DocumentsGetResponse_Url",
     "DocumentsUpdateResponse",
     "DocumentsUpdateResponse_File",
+    "DocumentsUpdateResponse_Folder",
     "DocumentsUpdateResponse_Text",
     "DocumentsUpdateResponse_Url",
 ]

@@ -6477,6 +6477,66 @@ typing.Optional[core.File]` — See core.File for more documentation
 </dl>
 </details>
 
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">rag_index_overview</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Provides total size and other information of RAG indexes used by knowledgebase documents
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.rag_index_overview()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_document_rag_indexes</a>(...)</code></summary>
 <dl>
 <dd>
@@ -6610,66 +6670,6 @@ client.conversational_ai.delete_document_rag_index(
     
 </dd>
 </dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">rag_index_overview</a>()</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Provides total size and other information of RAG indexes used by knowledgebase documents
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.conversational_ai.rag_index_overview()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
 
 <dl>
 <dd>
@@ -9770,6 +9770,9 @@ client.conversational_ai.knowledge_base.list(
     page_size=1,
     search="search",
     show_only_owned_documents=True,
+    parent_folder_id="parent_folder_id",
+    ancestor_folder_id="ancestor_folder_id",
+    folders_first=True,
     sort_direction="asc",
     sort_by="name",
     use_typesense=True,
@@ -9826,6 +9829,30 @@ client.conversational_ai.knowledge_base.list(
 <dl>
 <dd>
 
+**parent_folder_id:** `typing.Optional[str]` — If set, the endpoint will return only documents that are direct children of the given folder.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ancestor_folder_id:** `typing.Optional[str]` — If set, the endpoint will return only documents that are descendants of the given folder.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**folders_first:** `typing.Optional[bool]` — Whether folders should be returned first in the list of documents.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **sort_direction:** `typing.Optional[SortDirection]` — The direction to sort the results
     
 </dd>
@@ -9851,6 +9878,82 @@ client.conversational_ai.knowledge_base.list(
 <dd>
 
 **cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.knowledge_base.<a href="src/elevenlabs/conversational_ai/knowledge_base/client.py">get_or_create_rag_indexes</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieves and/or creates RAG indexes for multiple knowledge base documents in a single request.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs, GetOrCreateRagIndexRequestModel
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.knowledge_base.get_or_create_rag_indexes(
+    items=[
+        GetOrCreateRagIndexRequestModel(
+            document_id="document_id",
+            create_if_missing=True,
+            model="e5_mistral_7b_instruct",
+        )
+    ],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**items:** `typing.Sequence[GetOrCreateRagIndexRequestModel]` — List of requested RAG indexes.
     
 </dd>
 </dl>
@@ -12499,6 +12602,14 @@ client.conversational_ai.knowledge_base.documents.create_from_url(
 <dl>
 <dd>
 
+**parent_folder_id:** `typing.Optional[str]` — If set, the created document or folder will be placed inside the given folder.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -12577,6 +12688,14 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
+**parent_folder_id:** `typing.Optional[str]` — If set, the created document or folder will be placed inside the given folder.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -12648,6 +12767,14 @@ client.conversational_ai.knowledge_base.documents.create_from_text(
 <dd>
 
 **name:** `typing.Optional[str]` — A custom, human-readable name for the document.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**parent_folder_id:** `typing.Optional[str]` — If set, the created document or folder will be placed inside the given folder.
     
 </dd>
 </dl>
@@ -13123,6 +13250,75 @@ client.conversational_ai.knowledge_base.document.compute_rag_index(
 <dd>
 
 **model:** `EmbeddingModelEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi KnowledgeBase Documents Summaries
+<details><summary><code>client.conversational_ai.knowledge_base.documents.summaries.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/summaries/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets multiple knowledge base document summaries by their IDs.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.knowledge_base.documents.summaries.get()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**document_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — The ids of knowledge base documents.
     
 </dd>
 </dl>

@@ -21,6 +21,7 @@ class BatchCallResponse(UncheckedBaseModel):
     total_calls_scheduled: int
     last_updated_at_unix: int
     status: BatchCallStatus
+    retry_count: typing.Optional[int] = None
     agent_name: str
 
     if IS_PYDANTIC_V2:
