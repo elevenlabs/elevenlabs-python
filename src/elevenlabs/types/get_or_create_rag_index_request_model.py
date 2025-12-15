@@ -5,13 +5,24 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .whats_app_conversation_info_direction import WhatsAppConversationInfoDirection
+from .embedding_model_enum import EmbeddingModelEnum
 
 
-class WhatsAppConversationInfo(UncheckedBaseModel):
-    direction: typing.Optional[WhatsAppConversationInfoDirection] = None
-    whatsapp_phone_number_id: typing.Optional[str] = None
-    whatsapp_user_id: str
+class GetOrCreateRagIndexRequestModel(UncheckedBaseModel):
+    document_id: str = pydantic.Field()
+    """
+    ID of the knowledgebase document for which to retrieve the index
+    """
+
+    create_if_missing: bool = pydantic.Field()
+    """
+    Whether to create the RAG index if it does not exist
+    """
+
+    model: EmbeddingModelEnum = pydantic.Field()
+    """
+    Embedding model to use for the RAG index
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -113,6 +113,34 @@ class ConversationalAiClient:
         )
         return _response.data
 
+    def rag_index_overview(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> RagIndexOverviewResponseModel:
+        """
+        Provides total size and other information of RAG indexes used by knowledgebase documents
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RagIndexOverviewResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.rag_index_overview()
+        """
+        _response = self._raw_client.rag_index_overview(request_options=request_options)
+        return _response.data
+
     def get_document_rag_indexes(
         self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> RagDocumentIndexesResponseModel:
@@ -183,34 +211,6 @@ class ConversationalAiClient:
         _response = self._raw_client.delete_document_rag_index(
             documentation_id, rag_index_id, request_options=request_options
         )
-        return _response.data
-
-    def rag_index_overview(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> RagIndexOverviewResponseModel:
-        """
-        Provides total size and other information of RAG indexes used by knowledgebase documents
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        RagIndexOverviewResponseModel
-            Successful Response
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.conversational_ai.rag_index_overview()
-        """
-        _response = self._raw_client.rag_index_overview(request_options=request_options)
         return _response.data
 
     @property
@@ -422,6 +422,42 @@ class AsyncConversationalAiClient:
         )
         return _response.data
 
+    async def rag_index_overview(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> RagIndexOverviewResponseModel:
+        """
+        Provides total size and other information of RAG indexes used by knowledgebase documents
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RagIndexOverviewResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.rag_index_overview()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.rag_index_overview(request_options=request_options)
+        return _response.data
+
     async def get_document_rag_indexes(
         self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> RagDocumentIndexesResponseModel:
@@ -508,42 +544,6 @@ class AsyncConversationalAiClient:
         _response = await self._raw_client.delete_document_rag_index(
             documentation_id, rag_index_id, request_options=request_options
         )
-        return _response.data
-
-    async def rag_index_overview(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> RagIndexOverviewResponseModel:
-        """
-        Provides total size and other information of RAG indexes used by knowledgebase documents
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        RagIndexOverviewResponseModel
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.conversational_ai.rag_index_overview()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.rag_index_overview(request_options=request_options)
         return _response.data
 
     @property

@@ -7,14 +7,20 @@ import typing
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.get_knowledge_base_list_response_model import GetKnowledgeBaseListResponseModel
+from ...types.get_or_create_rag_index_request_model import GetOrCreateRagIndexRequestModel
 from ...types.knowledge_base_document_type import KnowledgeBaseDocumentType
 from ...types.knowledge_base_sort_by import KnowledgeBaseSortBy
 from ...types.sort_direction import SortDirection
 from .raw_client import AsyncRawKnowledgeBaseClient, RawKnowledgeBaseClient
+from .types.knowledge_base_get_or_create_rag_indexes_response_value import (
+    KnowledgeBaseGetOrCreateRagIndexesResponseValue,
+)
 
 if typing.TYPE_CHECKING:
     from .document.client import AsyncDocumentClient, DocumentClient
     from .documents.client import AsyncDocumentsClient, DocumentsClient
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class KnowledgeBaseClient:
@@ -44,6 +50,9 @@ class KnowledgeBaseClient:
         types: typing.Optional[
             typing.Union[KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]]
         ] = None,
+        parent_folder_id: typing.Optional[str] = None,
+        ancestor_folder_id: typing.Optional[str] = None,
+        folders_first: typing.Optional[bool] = None,
         sort_direction: typing.Optional[SortDirection] = None,
         sort_by: typing.Optional[KnowledgeBaseSortBy] = None,
         use_typesense: typing.Optional[bool] = None,
@@ -66,6 +75,15 @@ class KnowledgeBaseClient:
 
         types : typing.Optional[typing.Union[KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]]]
             If present, the endpoint will return only documents of the given types.
+
+        parent_folder_id : typing.Optional[str]
+            If set, the endpoint will return only documents that are direct children of the given folder.
+
+        ancestor_folder_id : typing.Optional[str]
+            If set, the endpoint will return only documents that are descendants of the given folder.
+
+        folders_first : typing.Optional[bool]
+            Whether folders should be returned first in the list of documents.
 
         sort_direction : typing.Optional[SortDirection]
             The direction to sort the results
@@ -98,6 +116,9 @@ class KnowledgeBaseClient:
             page_size=1,
             search="search",
             show_only_owned_documents=True,
+            parent_folder_id="parent_folder_id",
+            ancestor_folder_id="ancestor_folder_id",
+            folders_first=True,
             sort_direction="asc",
             sort_by="name",
             use_typesense=True,
@@ -109,12 +130,57 @@ class KnowledgeBaseClient:
             search=search,
             show_only_owned_documents=show_only_owned_documents,
             types=types,
+            parent_folder_id=parent_folder_id,
+            ancestor_folder_id=ancestor_folder_id,
+            folders_first=folders_first,
             sort_direction=sort_direction,
             sort_by=sort_by,
             use_typesense=use_typesense,
             cursor=cursor,
             request_options=request_options,
         )
+        return _response.data
+
+    def get_or_create_rag_indexes(
+        self,
+        *,
+        items: typing.Sequence[GetOrCreateRagIndexRequestModel],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Dict[str, KnowledgeBaseGetOrCreateRagIndexesResponseValue]:
+        """
+        Retrieves and/or creates RAG indexes for multiple knowledge base documents in a single request.
+
+        Parameters
+        ----------
+        items : typing.Sequence[GetOrCreateRagIndexRequestModel]
+            List of requested RAG indexes.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Dict[str, KnowledgeBaseGetOrCreateRagIndexesResponseValue]
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs, GetOrCreateRagIndexRequestModel
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.knowledge_base.get_or_create_rag_indexes(
+            items=[
+                GetOrCreateRagIndexRequestModel(
+                    document_id="document_id",
+                    create_if_missing=True,
+                    model="e5_mistral_7b_instruct",
+                )
+            ],
+        )
+        """
+        _response = self._raw_client.get_or_create_rag_indexes(items=items, request_options=request_options)
         return _response.data
 
     @property
@@ -161,6 +227,9 @@ class AsyncKnowledgeBaseClient:
         types: typing.Optional[
             typing.Union[KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]]
         ] = None,
+        parent_folder_id: typing.Optional[str] = None,
+        ancestor_folder_id: typing.Optional[str] = None,
+        folders_first: typing.Optional[bool] = None,
         sort_direction: typing.Optional[SortDirection] = None,
         sort_by: typing.Optional[KnowledgeBaseSortBy] = None,
         use_typesense: typing.Optional[bool] = None,
@@ -183,6 +252,15 @@ class AsyncKnowledgeBaseClient:
 
         types : typing.Optional[typing.Union[KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]]]
             If present, the endpoint will return only documents of the given types.
+
+        parent_folder_id : typing.Optional[str]
+            If set, the endpoint will return only documents that are direct children of the given folder.
+
+        ancestor_folder_id : typing.Optional[str]
+            If set, the endpoint will return only documents that are descendants of the given folder.
+
+        folders_first : typing.Optional[bool]
+            Whether folders should be returned first in the list of documents.
 
         sort_direction : typing.Optional[SortDirection]
             The direction to sort the results
@@ -220,6 +298,9 @@ class AsyncKnowledgeBaseClient:
                 page_size=1,
                 search="search",
                 show_only_owned_documents=True,
+                parent_folder_id="parent_folder_id",
+                ancestor_folder_id="ancestor_folder_id",
+                folders_first=True,
                 sort_direction="asc",
                 sort_by="name",
                 use_typesense=True,
@@ -234,12 +315,65 @@ class AsyncKnowledgeBaseClient:
             search=search,
             show_only_owned_documents=show_only_owned_documents,
             types=types,
+            parent_folder_id=parent_folder_id,
+            ancestor_folder_id=ancestor_folder_id,
+            folders_first=folders_first,
             sort_direction=sort_direction,
             sort_by=sort_by,
             use_typesense=use_typesense,
             cursor=cursor,
             request_options=request_options,
         )
+        return _response.data
+
+    async def get_or_create_rag_indexes(
+        self,
+        *,
+        items: typing.Sequence[GetOrCreateRagIndexRequestModel],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Dict[str, KnowledgeBaseGetOrCreateRagIndexesResponseValue]:
+        """
+        Retrieves and/or creates RAG indexes for multiple knowledge base documents in a single request.
+
+        Parameters
+        ----------
+        items : typing.Sequence[GetOrCreateRagIndexRequestModel]
+            List of requested RAG indexes.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Dict[str, KnowledgeBaseGetOrCreateRagIndexesResponseValue]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs, GetOrCreateRagIndexRequestModel
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.knowledge_base.get_or_create_rag_indexes(
+                items=[
+                    GetOrCreateRagIndexRequestModel(
+                        document_id="document_id",
+                        create_if_missing=True,
+                        model="e5_mistral_7b_instruct",
+                    )
+                ],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_or_create_rag_indexes(items=items, request_options=request_options)
         return _response.data
 
     @property

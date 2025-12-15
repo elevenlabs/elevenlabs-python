@@ -25,7 +25,7 @@ from .knowledge_base_document_metadata_response_model import KnowledgeBaseDocume
 from .resource_access_info import ResourceAccessInfo
 
 
-class GetKnowledgeBaseListResponseModelDocumentsItem_File(UncheckedBaseModel):
+class KnowledgeBaseSummaryBatchSuccessfulResponseModelData_File(UncheckedBaseModel):
     type: typing.Literal["file"] = "file"
     id: str
     name: str
@@ -45,7 +45,7 @@ class GetKnowledgeBaseListResponseModelDocumentsItem_File(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-class GetKnowledgeBaseListResponseModelDocumentsItem_Folder(UncheckedBaseModel):
+class KnowledgeBaseSummaryBatchSuccessfulResponseModelData_Folder(UncheckedBaseModel):
     type: typing.Literal["folder"] = "folder"
     id: str
     name: str
@@ -66,7 +66,7 @@ class GetKnowledgeBaseListResponseModelDocumentsItem_Folder(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-class GetKnowledgeBaseListResponseModelDocumentsItem_Text(UncheckedBaseModel):
+class KnowledgeBaseSummaryBatchSuccessfulResponseModelData_Text(UncheckedBaseModel):
     type: typing.Literal["text"] = "text"
     id: str
     name: str
@@ -86,7 +86,7 @@ class GetKnowledgeBaseListResponseModelDocumentsItem_Text(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-class GetKnowledgeBaseListResponseModelDocumentsItem_Url(UncheckedBaseModel):
+class KnowledgeBaseSummaryBatchSuccessfulResponseModelData_Url(UncheckedBaseModel):
     type: typing.Literal["url"] = "url"
     id: str
     name: str
@@ -107,12 +107,12 @@ class GetKnowledgeBaseListResponseModelDocumentsItem_Url(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-GetKnowledgeBaseListResponseModelDocumentsItem = typing_extensions.Annotated[
+KnowledgeBaseSummaryBatchSuccessfulResponseModelData = typing_extensions.Annotated[
     typing.Union[
-        GetKnowledgeBaseListResponseModelDocumentsItem_File,
-        GetKnowledgeBaseListResponseModelDocumentsItem_Folder,
-        GetKnowledgeBaseListResponseModelDocumentsItem_Text,
-        GetKnowledgeBaseListResponseModelDocumentsItem_Url,
+        KnowledgeBaseSummaryBatchSuccessfulResponseModelData_File,
+        KnowledgeBaseSummaryBatchSuccessfulResponseModelData_Folder,
+        KnowledgeBaseSummaryBatchSuccessfulResponseModelData_Text,
+        KnowledgeBaseSummaryBatchSuccessfulResponseModelData_Url,
     ],
     UnionMetadata(discriminant="type"),
 ]

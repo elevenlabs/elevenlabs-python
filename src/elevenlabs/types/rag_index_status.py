@@ -3,6 +3,14 @@
 import typing
 
 RagIndexStatus = typing.Union[
-    typing.Literal["created", "processing", "failed", "succeeded", "rag_limit_exceeded", "document_too_small"],
+    typing.Literal[
+        "created",
+        "processing",
+        "failed",
+        "succeeded",
+        "rag_limit_exceeded",
+        "document_too_small",
+        "cannot_index_folder",
+    ],
     typing.Any,
 ]

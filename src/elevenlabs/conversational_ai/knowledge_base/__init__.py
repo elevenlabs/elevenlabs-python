@@ -6,26 +6,38 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .types import (
+        KnowledgeBaseGetOrCreateRagIndexesResponseValue,
+        KnowledgeBaseGetOrCreateRagIndexesResponseValue_Failure,
+        KnowledgeBaseGetOrCreateRagIndexesResponseValue_Success,
+    )
     from . import document, documents
     from .documents import (
         DocumentsGetResponse,
         DocumentsGetResponse_File,
+        DocumentsGetResponse_Folder,
         DocumentsGetResponse_Text,
         DocumentsGetResponse_Url,
         DocumentsUpdateResponse,
         DocumentsUpdateResponse_File,
+        DocumentsUpdateResponse_Folder,
         DocumentsUpdateResponse_Text,
         DocumentsUpdateResponse_Url,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "DocumentsGetResponse": ".documents",
     "DocumentsGetResponse_File": ".documents",
+    "DocumentsGetResponse_Folder": ".documents",
     "DocumentsGetResponse_Text": ".documents",
     "DocumentsGetResponse_Url": ".documents",
     "DocumentsUpdateResponse": ".documents",
     "DocumentsUpdateResponse_File": ".documents",
+    "DocumentsUpdateResponse_Folder": ".documents",
     "DocumentsUpdateResponse_Text": ".documents",
     "DocumentsUpdateResponse_Url": ".documents",
+    "KnowledgeBaseGetOrCreateRagIndexesResponseValue": ".types",
+    "KnowledgeBaseGetOrCreateRagIndexesResponseValue_Failure": ".types",
+    "KnowledgeBaseGetOrCreateRagIndexesResponseValue_Success": ".types",
     "document": ".document",
     "documents": ".documents",
 }
@@ -55,12 +67,17 @@ def __dir__():
 __all__ = [
     "DocumentsGetResponse",
     "DocumentsGetResponse_File",
+    "DocumentsGetResponse_Folder",
     "DocumentsGetResponse_Text",
     "DocumentsGetResponse_Url",
     "DocumentsUpdateResponse",
     "DocumentsUpdateResponse_File",
+    "DocumentsUpdateResponse_Folder",
     "DocumentsUpdateResponse_Text",
     "DocumentsUpdateResponse_Url",
+    "KnowledgeBaseGetOrCreateRagIndexesResponseValue",
+    "KnowledgeBaseGetOrCreateRagIndexesResponseValue_Failure",
+    "KnowledgeBaseGetOrCreateRagIndexesResponseValue_Success",
     "document",
     "documents",
 ]

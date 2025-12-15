@@ -9,24 +9,37 @@ if typing.TYPE_CHECKING:
     from .types import (
         DocumentsGetResponse,
         DocumentsGetResponse_File,
+        DocumentsGetResponse_Folder,
         DocumentsGetResponse_Text,
         DocumentsGetResponse_Url,
         DocumentsUpdateResponse,
         DocumentsUpdateResponse_File,
+        DocumentsUpdateResponse_Folder,
         DocumentsUpdateResponse_Text,
         DocumentsUpdateResponse_Url,
     )
-    from . import chunk
+    from . import chunk, summaries
+    from .summaries import (
+        SummariesGetResponseValue,
+        SummariesGetResponseValue_Failure,
+        SummariesGetResponseValue_Success,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
     "DocumentsGetResponse": ".types",
     "DocumentsGetResponse_File": ".types",
+    "DocumentsGetResponse_Folder": ".types",
     "DocumentsGetResponse_Text": ".types",
     "DocumentsGetResponse_Url": ".types",
     "DocumentsUpdateResponse": ".types",
     "DocumentsUpdateResponse_File": ".types",
+    "DocumentsUpdateResponse_Folder": ".types",
     "DocumentsUpdateResponse_Text": ".types",
     "DocumentsUpdateResponse_Url": ".types",
+    "SummariesGetResponseValue": ".summaries",
+    "SummariesGetResponseValue_Failure": ".summaries",
+    "SummariesGetResponseValue_Success": ".summaries",
     "chunk": ".chunk",
+    "summaries": ".summaries",
 }
 
 
@@ -54,11 +67,17 @@ def __dir__():
 __all__ = [
     "DocumentsGetResponse",
     "DocumentsGetResponse_File",
+    "DocumentsGetResponse_Folder",
     "DocumentsGetResponse_Text",
     "DocumentsGetResponse_Url",
     "DocumentsUpdateResponse",
     "DocumentsUpdateResponse_File",
+    "DocumentsUpdateResponse_Folder",
     "DocumentsUpdateResponse_Text",
     "DocumentsUpdateResponse_Url",
+    "SummariesGetResponseValue",
+    "SummariesGetResponseValue_Failure",
+    "SummariesGetResponseValue_Success",
     "chunk",
+    "summaries",
 ]

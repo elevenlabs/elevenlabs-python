@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .document_usage_mode_enum import DocumentUsageModeEnum
 from .knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
+from .knowledge_base_folder_path_segment_response_model import KnowledgeBaseFolderPathSegmentResponseModel
 from .resource_access_info import ResourceAccessInfo
 
 
@@ -16,8 +17,20 @@ class GetKnowledgeBaseUrlResponseModel(UncheckedBaseModel):
     metadata: KnowledgeBaseDocumentMetadataResponseModel
     supported_usages: typing.List[DocumentUsageModeEnum]
     access_info: ResourceAccessInfo
-    extracted_inner_html: str
+    folder_parent_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ID of the parent folder, or null if the document is at the root level.
+    """
+
+    folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentResponseModel]] = pydantic.Field(
+        default=None
+    )
+    """
+    The folder path segments leading to this entity, from root to parent folder.
+    """
+
     url: str
+    extracted_inner_html: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

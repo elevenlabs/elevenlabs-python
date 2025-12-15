@@ -22,6 +22,11 @@ class AgentConfig(UncheckedBaseModel):
     Language of the agent - used for ASR and TTS
     """
 
+    hinglish_mode: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    When enabled and language is Hindi, the agent will respond in Hinglish
+    """
+
     dynamic_variables: typing.Optional[DynamicVariablesConfig] = pydantic.Field(default=None)
     """
     Configuration for dynamic variables

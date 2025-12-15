@@ -24,6 +24,11 @@ if typing.TYPE_CHECKING:
         twilio,
     )
     from .conversations import ConversationsListRequestSummaryMode
+    from .knowledge_base import (
+        KnowledgeBaseGetOrCreateRagIndexesResponseValue,
+        KnowledgeBaseGetOrCreateRagIndexesResponseValue_Failure,
+        KnowledgeBaseGetOrCreateRagIndexesResponseValue_Success,
+    )
     from .mcp_servers import McpServerConfigUpdateRequestModelRequestHeadersValue
     from .phone_numbers import (
         PhoneNumbersCreateRequestBody,
@@ -45,6 +50,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection": ".twilio",
     "ConversationsListRequestSummaryMode": ".conversations",
     "CreateUnitTestRequestDynamicVariablesValue": ".tests",
+    "KnowledgeBaseGetOrCreateRagIndexesResponseValue": ".knowledge_base",
+    "KnowledgeBaseGetOrCreateRagIndexesResponseValue_Failure": ".knowledge_base",
+    "KnowledgeBaseGetOrCreateRagIndexesResponseValue_Success": ".knowledge_base",
     "McpServerConfigUpdateRequestModelRequestHeadersValue": ".mcp_servers",
     "PhoneNumbersCreateRequestBody": ".phone_numbers",
     "PhoneNumbersCreateRequestBody_SipTrunk": ".phone_numbers",
@@ -102,6 +110,9 @@ __all__ = [
     "BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection",
     "ConversationsListRequestSummaryMode",
     "CreateUnitTestRequestDynamicVariablesValue",
+    "KnowledgeBaseGetOrCreateRagIndexesResponseValue",
+    "KnowledgeBaseGetOrCreateRagIndexesResponseValue_Failure",
+    "KnowledgeBaseGetOrCreateRagIndexesResponseValue_Success",
     "McpServerConfigUpdateRequestModelRequestHeadersValue",
     "PhoneNumbersCreateRequestBody",
     "PhoneNumbersCreateRequestBody_SipTrunk",

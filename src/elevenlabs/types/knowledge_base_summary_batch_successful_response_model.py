@@ -5,13 +5,13 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .whats_app_conversation_info_direction import WhatsAppConversationInfoDirection
+from .knowledge_base_summary_batch_successful_response_model_data import (
+    KnowledgeBaseSummaryBatchSuccessfulResponseModelData,
+)
 
 
-class WhatsAppConversationInfo(UncheckedBaseModel):
-    direction: typing.Optional[WhatsAppConversationInfoDirection] = None
-    whatsapp_phone_number_id: typing.Optional[str] = None
-    whatsapp_user_id: str
+class KnowledgeBaseSummaryBatchSuccessfulResponseModel(UncheckedBaseModel):
+    data: KnowledgeBaseSummaryBatchSuccessfulResponseModelData
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

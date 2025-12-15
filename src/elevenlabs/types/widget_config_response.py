@@ -172,6 +172,11 @@ class WidgetConfigResponse(UncheckedBaseModel):
     Whether the user should be able to send text messages
     """
 
+    conversation_mode_toggle_enabled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to enable the conversation mode toggle in the widget
+    """
+
     default_expanded: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether the widget should be expanded by default

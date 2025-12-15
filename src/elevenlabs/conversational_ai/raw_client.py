@@ -101,6 +101,53 @@ class RawConversationalAiClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def rag_index_overview(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[RagIndexOverviewResponseModel]:
+        """
+        Provides total size and other information of RAG indexes used by knowledgebase documents
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[RagIndexOverviewResponseModel]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/convai/knowledge-base/rag-index",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    RagIndexOverviewResponseModel,
+                    construct_type(
+                        type_=RagIndexOverviewResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def get_document_rag_indexes(
         self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[RagDocumentIndexesResponseModel]:
@@ -204,53 +251,6 @@ class RawConversationalAiClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def rag_index_overview(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[RagIndexOverviewResponseModel]:
-        """
-        Provides total size and other information of RAG indexes used by knowledgebase documents
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[RagIndexOverviewResponseModel]
-            Successful Response
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "v1/convai/knowledge-base/rag-index",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    RagIndexOverviewResponseModel,
-                    construct_type(
-                        type_=RagIndexOverviewResponseModel,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
 
 class AsyncRawConversationalAiClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -312,6 +312,53 @@ class AsyncRawConversationalAiClient:
                     AddKnowledgeBaseResponseModel,
                     construct_type(
                         type_=AddKnowledgeBaseResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def rag_index_overview(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[RagIndexOverviewResponseModel]:
+        """
+        Provides total size and other information of RAG indexes used by knowledgebase documents
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[RagIndexOverviewResponseModel]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/convai/knowledge-base/rag-index",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    RagIndexOverviewResponseModel,
+                    construct_type(
+                        type_=RagIndexOverviewResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -415,53 +462,6 @@ class AsyncRawConversationalAiClient:
                     RagDocumentIndexResponseModel,
                     construct_type(
                         type_=RagDocumentIndexResponseModel,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def rag_index_overview(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[RagIndexOverviewResponseModel]:
-        """
-        Provides total size and other information of RAG indexes used by knowledgebase documents
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[RagIndexOverviewResponseModel]
-            Successful Response
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "v1/convai/knowledge-base/rag-index",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    RagIndexOverviewResponseModel,
-                    construct_type(
-                        type_=RagIndexOverviewResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
