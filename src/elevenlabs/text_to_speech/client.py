@@ -588,6 +588,26 @@ class AsyncTextToSpeechClient:
         """
         return self._raw_client
 
+    async def convert_to_bytes(
+        self,
+        voice_id: str,
+        *,
+        text: str,
+        **kwargs,
+    ) -> bytes:
+        """
+        Convert text to speech and return the full audio as bytes.
+        This is a convenience wrapper around `convert()`.
+        """
+        chunks = []
+        async for chunk in self.convert(
+            voice_id=voice_id,
+            text=text,
+            **kwargs,
+        ):
+            chunks.append(chunk)
+        return b"".join(chunks)
+
     async def convert(
         self,
         voice_id: str,
@@ -678,6 +698,7 @@ class AsyncTextToSpeechClient:
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
+        NOTE: This method returns a streaming async iterator and must be consumed using `async for`. It cannot be awaited directly.
         Returns
         -------
         typing.AsyncIterator[bytes]
