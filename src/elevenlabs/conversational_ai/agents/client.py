@@ -180,6 +180,7 @@ class AgentsClient:
         workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
+        version_description: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetAgentResponseModel:
         """
@@ -204,6 +205,9 @@ class AgentsClient:
 
         tags : typing.Optional[typing.Sequence[str]]
             Tags to help classify and filter the agent
+
+        version_description : typing.Optional[str]
+            Description for this version when publishing changes (only applicable for versioned agents)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -231,6 +235,7 @@ class AgentsClient:
             workflow=workflow,
             name=name,
             tags=tags,
+            version_description=version_description,
             request_options=request_options,
         )
         return _response.data
@@ -241,6 +246,7 @@ class AgentsClient:
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         archived: typing.Optional[bool] = None,
+        show_only_owned_agents: typing.Optional[bool] = None,
         sort_direction: typing.Optional[SortDirection] = None,
         sort_by: typing.Optional[AgentSortBy] = None,
         cursor: typing.Optional[str] = None,
@@ -259,6 +265,9 @@ class AgentsClient:
 
         archived : typing.Optional[bool]
             Filter agents by archived status
+
+        show_only_owned_agents : typing.Optional[bool]
+            If set to true, the endpoint will omit any agents that were shared with you by someone else and include only the ones you own
 
         sort_direction : typing.Optional[SortDirection]
             The direction to sort the results
@@ -288,6 +297,7 @@ class AgentsClient:
             page_size=1,
             search="search",
             archived=True,
+            show_only_owned_agents=True,
             sort_direction="asc",
             sort_by="name",
             cursor="cursor",
@@ -297,6 +307,7 @@ class AgentsClient:
             page_size=page_size,
             search=search,
             archived=archived,
+            show_only_owned_agents=show_only_owned_agents,
             sort_direction=sort_direction,
             sort_by=sort_by,
             cursor=cursor,
@@ -740,6 +751,7 @@ class AsyncAgentsClient:
         workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
+        version_description: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetAgentResponseModel:
         """
@@ -764,6 +776,9 @@ class AsyncAgentsClient:
 
         tags : typing.Optional[typing.Sequence[str]]
             Tags to help classify and filter the agent
+
+        version_description : typing.Optional[str]
+            Description for this version when publishing changes (only applicable for versioned agents)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -799,6 +814,7 @@ class AsyncAgentsClient:
             workflow=workflow,
             name=name,
             tags=tags,
+            version_description=version_description,
             request_options=request_options,
         )
         return _response.data
@@ -809,6 +825,7 @@ class AsyncAgentsClient:
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         archived: typing.Optional[bool] = None,
+        show_only_owned_agents: typing.Optional[bool] = None,
         sort_direction: typing.Optional[SortDirection] = None,
         sort_by: typing.Optional[AgentSortBy] = None,
         cursor: typing.Optional[str] = None,
@@ -827,6 +844,9 @@ class AsyncAgentsClient:
 
         archived : typing.Optional[bool]
             Filter agents by archived status
+
+        show_only_owned_agents : typing.Optional[bool]
+            If set to true, the endpoint will omit any agents that were shared with you by someone else and include only the ones you own
 
         sort_direction : typing.Optional[SortDirection]
             The direction to sort the results
@@ -861,6 +881,7 @@ class AsyncAgentsClient:
                 page_size=1,
                 search="search",
                 archived=True,
+                show_only_owned_agents=True,
                 sort_direction="asc",
                 sort_by="name",
                 cursor="cursor",
@@ -873,6 +894,7 @@ class AsyncAgentsClient:
             page_size=page_size,
             search=search,
             archived=archived,
+            show_only_owned_agents=show_only_owned_agents,
             sort_direction=sort_direction,
             sort_by=sort_by,
             cursor=cursor,

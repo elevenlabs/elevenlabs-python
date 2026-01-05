@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .widget_terms_translation import WidgetTermsTranslation
 from .widget_text_contents import WidgetTextContents
 
 
@@ -12,6 +13,26 @@ class WidgetLanguagePreset(UncheckedBaseModel):
     text_contents: typing.Optional[WidgetTextContents] = pydantic.Field(default=None)
     """
     The text contents for the selected language
+    """
+
+    terms_text: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The text to display for terms and conditions in this language
+    """
+
+    terms_html: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The HTML to display for terms and conditions in this language
+    """
+
+    terms_key: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The key to display for terms and conditions in this language
+    """
+
+    terms_translation: typing.Optional[WidgetTermsTranslation] = pydantic.Field(default=None)
+    """
+    The translation cache for the terms
     """
 
     if IS_PYDANTIC_V2:

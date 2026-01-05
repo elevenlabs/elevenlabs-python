@@ -9,6 +9,7 @@ from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.request_options import RequestOptions
 from ....types.add_knowledge_base_response_model import AddKnowledgeBaseResponseModel
 from ....types.get_knowledge_base_dependent_agents_response_model import GetKnowledgeBaseDependentAgentsResponseModel
+from ....types.knowledge_base_dependent_type import KnowledgeBaseDependentType
 from .raw_client import AsyncRawDocumentsClient, RawDocumentsClient
 from .types.documents_get_response import DocumentsGetResponse
 from .types.documents_update_response import DocumentsUpdateResponse
@@ -296,8 +297,9 @@ class DocumentsClient:
         self,
         documentation_id: str,
         *,
-        cursor: typing.Optional[str] = None,
+        dependent_type: typing.Optional[KnowledgeBaseDependentType] = None,
         page_size: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetKnowledgeBaseDependentAgentsResponseModel:
         """
@@ -308,11 +310,14 @@ class DocumentsClient:
         documentation_id : str
             The id of a document from the knowledge base. This is returned on document addition.
 
-        cursor : typing.Optional[str]
-            Used for fetching next page. Cursor is returned in the response.
+        dependent_type : typing.Optional[KnowledgeBaseDependentType]
+            Type of dependent agents to return.
 
         page_size : typing.Optional[int]
             How many documents to return at maximum. Can not exceed 100, defaults to 30.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -331,12 +336,17 @@ class DocumentsClient:
         )
         client.conversational_ai.knowledge_base.documents.get_agents(
             documentation_id="21m00Tcm4TlvDq8ikWAM",
-            cursor="cursor",
+            dependent_type="direct",
             page_size=1,
+            cursor="cursor",
         )
         """
         _response = self._raw_client.get_agents(
-            documentation_id, cursor=cursor, page_size=page_size, request_options=request_options
+            documentation_id,
+            dependent_type=dependent_type,
+            page_size=page_size,
+            cursor=cursor,
+            request_options=request_options,
         )
         return _response.data
 
@@ -711,8 +721,9 @@ class AsyncDocumentsClient:
         self,
         documentation_id: str,
         *,
-        cursor: typing.Optional[str] = None,
+        dependent_type: typing.Optional[KnowledgeBaseDependentType] = None,
         page_size: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetKnowledgeBaseDependentAgentsResponseModel:
         """
@@ -723,11 +734,14 @@ class AsyncDocumentsClient:
         documentation_id : str
             The id of a document from the knowledge base. This is returned on document addition.
 
-        cursor : typing.Optional[str]
-            Used for fetching next page. Cursor is returned in the response.
+        dependent_type : typing.Optional[KnowledgeBaseDependentType]
+            Type of dependent agents to return.
 
         page_size : typing.Optional[int]
             How many documents to return at maximum. Can not exceed 100, defaults to 30.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -751,15 +765,20 @@ class AsyncDocumentsClient:
         async def main() -> None:
             await client.conversational_ai.knowledge_base.documents.get_agents(
                 documentation_id="21m00Tcm4TlvDq8ikWAM",
-                cursor="cursor",
+                dependent_type="direct",
                 page_size=1,
+                cursor="cursor",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.get_agents(
-            documentation_id, cursor=cursor, page_size=page_size, request_options=request_options
+            documentation_id,
+            dependent_type=dependent_type,
+            page_size=page_size,
+            cursor=cursor,
+            request_options=request_options,
         )
         return _response.data
 

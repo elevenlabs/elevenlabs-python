@@ -24,6 +24,16 @@ class ConversationConfig(UncheckedBaseModel):
     The events that will be sent to the client
     """
 
+    monitoring_enabled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Enable real-time monitoring of conversations via WebSocket
+    """
+
+    monitoring_events: typing.Optional[typing.List[ClientEvent]] = pydantic.Field(default=None)
+    """
+    The events that will be sent to monitoring connections.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

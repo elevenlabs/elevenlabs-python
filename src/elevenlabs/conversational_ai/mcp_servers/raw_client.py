@@ -250,6 +250,7 @@ class RawMcpServersClient:
         request_headers: typing.Optional[
             typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]
         ] = OMIT,
+        disable_compression: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[McpServerResponseModel]:
         """
@@ -281,6 +282,9 @@ class RawMcpServersClient:
         request_headers : typing.Optional[typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]]
             The headers to include in requests to the MCP server
 
+        disable_compression : typing.Optional[bool]
+            Whether to disable HTTP compression for this MCP server
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -304,6 +308,7 @@ class RawMcpServersClient:
                     annotation=typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]],
                     direction="write",
                 ),
+                "disable_compression": disable_compression,
             },
             headers={
                 "content-type": "application/json",
@@ -563,6 +568,7 @@ class AsyncRawMcpServersClient:
         request_headers: typing.Optional[
             typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]
         ] = OMIT,
+        disable_compression: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[McpServerResponseModel]:
         """
@@ -594,6 +600,9 @@ class AsyncRawMcpServersClient:
         request_headers : typing.Optional[typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]]
             The headers to include in requests to the MCP server
 
+        disable_compression : typing.Optional[bool]
+            Whether to disable HTTP compression for this MCP server
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -617,6 +626,7 @@ class AsyncRawMcpServersClient:
                     annotation=typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]],
                     direction="write",
                 ),
+                "disable_compression": disable_compression,
             },
             headers={
                 "content-type": "application/json",

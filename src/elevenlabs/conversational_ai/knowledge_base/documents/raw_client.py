@@ -14,6 +14,7 @@ from ....errors.unprocessable_entity_error import UnprocessableEntityError
 from ....types.add_knowledge_base_response_model import AddKnowledgeBaseResponseModel
 from ....types.get_knowledge_base_dependent_agents_response_model import GetKnowledgeBaseDependentAgentsResponseModel
 from ....types.http_validation_error import HttpValidationError
+from ....types.knowledge_base_dependent_type import KnowledgeBaseDependentType
 from .types.documents_get_response import DocumentsGetResponse
 from .types.documents_update_response import DocumentsUpdateResponse
 
@@ -420,8 +421,9 @@ class RawDocumentsClient:
         self,
         documentation_id: str,
         *,
-        cursor: typing.Optional[str] = None,
+        dependent_type: typing.Optional[KnowledgeBaseDependentType] = None,
         page_size: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetKnowledgeBaseDependentAgentsResponseModel]:
         """
@@ -432,11 +434,14 @@ class RawDocumentsClient:
         documentation_id : str
             The id of a document from the knowledge base. This is returned on document addition.
 
-        cursor : typing.Optional[str]
-            Used for fetching next page. Cursor is returned in the response.
+        dependent_type : typing.Optional[KnowledgeBaseDependentType]
+            Type of dependent agents to return.
 
         page_size : typing.Optional[int]
             How many documents to return at maximum. Can not exceed 100, defaults to 30.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -450,8 +455,9 @@ class RawDocumentsClient:
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/dependent-agents",
             method="GET",
             params={
-                "cursor": cursor,
+                "dependent_type": dependent_type,
                 "page_size": page_size,
+                "cursor": cursor,
             },
             request_options=request_options,
         )
@@ -923,8 +929,9 @@ class AsyncRawDocumentsClient:
         self,
         documentation_id: str,
         *,
-        cursor: typing.Optional[str] = None,
+        dependent_type: typing.Optional[KnowledgeBaseDependentType] = None,
         page_size: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetKnowledgeBaseDependentAgentsResponseModel]:
         """
@@ -935,11 +942,14 @@ class AsyncRawDocumentsClient:
         documentation_id : str
             The id of a document from the knowledge base. This is returned on document addition.
 
-        cursor : typing.Optional[str]
-            Used for fetching next page. Cursor is returned in the response.
+        dependent_type : typing.Optional[KnowledgeBaseDependentType]
+            Type of dependent agents to return.
 
         page_size : typing.Optional[int]
             How many documents to return at maximum. Can not exceed 100, defaults to 30.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -953,8 +963,9 @@ class AsyncRawDocumentsClient:
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/dependent-agents",
             method="GET",
             params={
-                "cursor": cursor,
+                "dependent_type": dependent_type,
                 "page_size": page_size,
+                "cursor": cursor,
             },
             request_options=request_options,
         )

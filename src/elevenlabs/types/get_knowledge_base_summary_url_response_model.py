@@ -24,7 +24,11 @@ class GetKnowledgeBaseSummaryUrlResponseModel(UncheckedBaseModel):
     The ID of the parent folder, or null if the document is at the root level.
     """
 
-    dependent_agents: typing.List[GetKnowledgeBaseSummaryUrlResponseModelDependentAgentsItem]
+    dependent_agents: typing.List[GetKnowledgeBaseSummaryUrlResponseModelDependentAgentsItem] = pydantic.Field()
+    """
+    This field is deprecated and will be removed in the future, use the separate endpoint to get dependent agents instead.
+    """
+
     url: str
 
     if IS_PYDANTIC_V2:

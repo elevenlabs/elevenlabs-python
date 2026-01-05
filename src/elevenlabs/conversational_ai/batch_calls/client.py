@@ -6,6 +6,7 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.batch_call_detailed_response import BatchCallDetailedResponse
 from ...types.batch_call_response import BatchCallResponse
+from ...types.batch_call_whats_app_params import BatchCallWhatsAppParams
 from ...types.outbound_call_recipient import OutboundCallRecipient
 from ...types.workspace_batch_calls_response import WorkspaceBatchCallsResponse
 from .raw_client import AsyncRawBatchCallsClient, RawBatchCallsClient
@@ -37,6 +38,7 @@ class BatchCallsClient:
         recipients: typing.Sequence[OutboundCallRecipient],
         scheduled_time_unix: typing.Optional[int] = OMIT,
         agent_phone_number_id: typing.Optional[str] = OMIT,
+        whatsapp_params: typing.Optional[BatchCallWhatsAppParams] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BatchCallResponse:
         """
@@ -53,6 +55,8 @@ class BatchCallsClient:
         scheduled_time_unix : typing.Optional[int]
 
         agent_phone_number_id : typing.Optional[str]
+
+        whatsapp_params : typing.Optional[BatchCallWhatsAppParams]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -81,6 +85,7 @@ class BatchCallsClient:
             recipients=recipients,
             scheduled_time_unix=scheduled_time_unix,
             agent_phone_number_id=agent_phone_number_id,
+            whatsapp_params=whatsapp_params,
             request_options=request_options,
         )
         return _response.data
@@ -240,6 +245,7 @@ class AsyncBatchCallsClient:
         recipients: typing.Sequence[OutboundCallRecipient],
         scheduled_time_unix: typing.Optional[int] = OMIT,
         agent_phone_number_id: typing.Optional[str] = OMIT,
+        whatsapp_params: typing.Optional[BatchCallWhatsAppParams] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BatchCallResponse:
         """
@@ -256,6 +262,8 @@ class AsyncBatchCallsClient:
         scheduled_time_unix : typing.Optional[int]
 
         agent_phone_number_id : typing.Optional[str]
+
+        whatsapp_params : typing.Optional[BatchCallWhatsAppParams]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -292,6 +300,7 @@ class AsyncBatchCallsClient:
             recipients=recipients,
             scheduled_time_unix=scheduled_time_unix,
             agent_phone_number_id=agent_phone_number_id,
+            whatsapp_params=whatsapp_params,
             request_options=request_options,
         )
         return _response.data

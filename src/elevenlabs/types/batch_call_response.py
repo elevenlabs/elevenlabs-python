@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .batch_call_status import BatchCallStatus
+from .batch_call_whats_app_params import BatchCallWhatsAppParams
 from .telephony_provider import TelephonyProvider
 
 
@@ -13,15 +14,17 @@ class BatchCallResponse(UncheckedBaseModel):
     id: str
     phone_number_id: typing.Optional[str] = None
     phone_provider: typing.Optional[TelephonyProvider] = None
+    whatsapp_params: typing.Optional[BatchCallWhatsAppParams] = None
     name: str
     agent_id: str
     created_at_unix: int
     scheduled_time_unix: int
     total_calls_dispatched: int
     total_calls_scheduled: int
+    total_calls_finished: int
     last_updated_at_unix: int
     status: BatchCallStatus
-    retry_count: typing.Optional[int] = None
+    retry_count: int
     agent_name: str
 
     if IS_PYDANTIC_V2:

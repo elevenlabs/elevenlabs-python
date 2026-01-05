@@ -58,7 +58,7 @@ class RawMusicClient:
             A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
 
         music_length_ms : typing.Optional[int]
-            The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
+            The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
         model_id : typing.Optional[typing.Literal["music_v1"]]
             The model to use for the generation.
@@ -166,7 +166,7 @@ class RawMusicClient:
             A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
 
         music_length_ms : typing.Optional[int]
-            The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
+            The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
         model_id : typing.Optional[typing.Literal["music_v1"]]
             The model to use for the generation.
@@ -272,7 +272,7 @@ class RawMusicClient:
             A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
 
         music_length_ms : typing.Optional[int]
-            The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
+            The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
         model_id : typing.Optional[typing.Literal["music_v1"]]
             The model to use for the generation.
@@ -458,7 +458,7 @@ class AsyncRawMusicClient:
             A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
 
         music_length_ms : typing.Optional[int]
-            The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
+            The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
         model_id : typing.Optional[typing.Literal["music_v1"]]
             The model to use for the generation.
@@ -567,7 +567,7 @@ class AsyncRawMusicClient:
             A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
 
         music_length_ms : typing.Optional[int]
-            The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
+            The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
         model_id : typing.Optional[typing.Literal["music_v1"]]
             The model to use for the generation.
@@ -674,7 +674,7 @@ class AsyncRawMusicClient:
             A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
 
         music_length_ms : typing.Optional[int]
-            The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
+            The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
         model_id : typing.Optional[typing.Literal["music_v1"]]
             The model to use for the generation.

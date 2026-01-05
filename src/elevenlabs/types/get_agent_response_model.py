@@ -61,6 +61,21 @@ class GetAgentResponseModel(UncheckedBaseModel):
     Agent tags used to categorize the agent
     """
 
+    version_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ID of the version the agent is on
+    """
+
+    branch_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ID of the branch the agent is on
+    """
+
+    main_branch_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ID of the main branch for this agent
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

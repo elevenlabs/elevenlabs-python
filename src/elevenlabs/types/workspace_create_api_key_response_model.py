@@ -11,6 +11,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 class WorkspaceCreateApiKeyResponseModel(UncheckedBaseModel):
     xi_api_key: typing_extensions.Annotated[str, FieldMetadata(alias="xi-api-key")]
+    key_id: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

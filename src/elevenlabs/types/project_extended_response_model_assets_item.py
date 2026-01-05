@@ -16,7 +16,7 @@ class ProjectExtendedResponseModelAssetsItem_Video(UncheckedBaseModel):
     type: typing.Literal["video"] = "video"
     video_id: str
     filename: str
-    signed_url: str
+    signed_url: typing.Optional[str] = None
     signed_preview_url: typing.Optional[str] = None
     offset_ms: int
     duration_ms: int
@@ -43,6 +43,7 @@ class ProjectExtendedResponseModelAssetsItem_Video(UncheckedBaseModel):
     speech_imported: typing.Optional[bool] = None
     current_snapshot_id: typing.Optional[str] = None
     canvas_placement: typing.Optional[CanvasPlacement] = None
+    track_id: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -98,6 +99,7 @@ class ProjectExtendedResponseModelAssetsItem_Image(UncheckedBaseModel):
     file_size_bytes: int
     width: int
     height: int
+    track_id: typing.Optional[str] = None
     offset_ms: int
     duration_ms: int
     order: str

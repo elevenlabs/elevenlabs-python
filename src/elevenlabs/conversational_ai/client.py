@@ -29,6 +29,8 @@ if typing.TYPE_CHECKING:
     from .tests.client import AsyncTestsClient, TestsClient
     from .tools.client import AsyncToolsClient, ToolsClient
     from .twilio.client import AsyncTwilioClient, TwilioClient
+    from .whatsapp.client import AsyncWhatsappClient, WhatsappClient
+    from .whatsapp_accounts.client import AsyncWhatsappAccountsClient, WhatsappAccountsClient
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
@@ -39,6 +41,7 @@ class ConversationalAiClient:
         self._client_wrapper = client_wrapper
         self._conversations: typing.Optional[ConversationsClient] = None
         self._twilio: typing.Optional[TwilioClient] = None
+        self._whatsapp: typing.Optional[WhatsappClient] = None
         self._agents: typing.Optional[AgentsClient] = None
         self._tests: typing.Optional[TestsClient] = None
         self._phone_numbers: typing.Optional[PhoneNumbersClient] = None
@@ -50,6 +53,7 @@ class ConversationalAiClient:
         self._batch_calls: typing.Optional[BatchCallsClient] = None
         self._sip_trunk: typing.Optional[SipTrunkClient] = None
         self._mcp_servers: typing.Optional[McpServersClient] = None
+        self._whatsapp_accounts: typing.Optional[WhatsappAccountsClient] = None
         self._analytics: typing.Optional[AnalyticsClient] = None
         self._dashboard: typing.Optional[DashboardClient] = None
 
@@ -230,6 +234,14 @@ class ConversationalAiClient:
         return self._twilio
 
     @property
+    def whatsapp(self):
+        if self._whatsapp is None:
+            from .whatsapp.client import WhatsappClient  # noqa: E402
+
+            self._whatsapp = WhatsappClient(client_wrapper=self._client_wrapper)
+        return self._whatsapp
+
+    @property
     def agents(self):
         if self._agents is None:
             from .agents.client import AgentsClient  # noqa: E402
@@ -318,6 +330,14 @@ class ConversationalAiClient:
         return self._mcp_servers
 
     @property
+    def whatsapp_accounts(self):
+        if self._whatsapp_accounts is None:
+            from .whatsapp_accounts.client import WhatsappAccountsClient  # noqa: E402
+
+            self._whatsapp_accounts = WhatsappAccountsClient(client_wrapper=self._client_wrapper)
+        return self._whatsapp_accounts
+
+    @property
     def analytics(self):
         if self._analytics is None:
             from .analytics.client import AnalyticsClient  # noqa: E402
@@ -340,6 +360,7 @@ class AsyncConversationalAiClient:
         self._client_wrapper = client_wrapper
         self._conversations: typing.Optional[AsyncConversationsClient] = None
         self._twilio: typing.Optional[AsyncTwilioClient] = None
+        self._whatsapp: typing.Optional[AsyncWhatsappClient] = None
         self._agents: typing.Optional[AsyncAgentsClient] = None
         self._tests: typing.Optional[AsyncTestsClient] = None
         self._phone_numbers: typing.Optional[AsyncPhoneNumbersClient] = None
@@ -351,6 +372,7 @@ class AsyncConversationalAiClient:
         self._batch_calls: typing.Optional[AsyncBatchCallsClient] = None
         self._sip_trunk: typing.Optional[AsyncSipTrunkClient] = None
         self._mcp_servers: typing.Optional[AsyncMcpServersClient] = None
+        self._whatsapp_accounts: typing.Optional[AsyncWhatsappAccountsClient] = None
         self._analytics: typing.Optional[AsyncAnalyticsClient] = None
         self._dashboard: typing.Optional[AsyncDashboardClient] = None
 
@@ -563,6 +585,14 @@ class AsyncConversationalAiClient:
         return self._twilio
 
     @property
+    def whatsapp(self):
+        if self._whatsapp is None:
+            from .whatsapp.client import AsyncWhatsappClient  # noqa: E402
+
+            self._whatsapp = AsyncWhatsappClient(client_wrapper=self._client_wrapper)
+        return self._whatsapp
+
+    @property
     def agents(self):
         if self._agents is None:
             from .agents.client import AsyncAgentsClient  # noqa: E402
@@ -649,6 +679,14 @@ class AsyncConversationalAiClient:
 
             self._mcp_servers = AsyncMcpServersClient(client_wrapper=self._client_wrapper)
         return self._mcp_servers
+
+    @property
+    def whatsapp_accounts(self):
+        if self._whatsapp_accounts is None:
+            from .whatsapp_accounts.client import AsyncWhatsappAccountsClient  # noqa: E402
+
+            self._whatsapp_accounts = AsyncWhatsappAccountsClient(client_wrapper=self._client_wrapper)
+        return self._whatsapp_accounts
 
     @property
     def analytics(self):

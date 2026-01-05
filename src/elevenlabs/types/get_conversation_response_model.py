@@ -20,6 +20,11 @@ class GetConversationResponseModel(UncheckedBaseModel):
     status: GetConversationResponseModelStatus
     user_id: typing.Optional[str] = None
     branch_id: typing.Optional[str] = None
+    version_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ID of the agent version used for this conversation
+    """
+
     transcript: typing.List[ConversationHistoryTranscriptCommonModelOutput]
     metadata: ConversationHistoryMetadataCommonModel
     analysis: typing.Optional[ConversationHistoryAnalysisCommonModel] = None

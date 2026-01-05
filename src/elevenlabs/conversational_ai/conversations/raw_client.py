@@ -162,6 +162,7 @@ class RawConversationsClient:
         evaluation_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         data_collection_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        main_languages: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         page_size: typing.Optional[int] = None,
         summary_mode: typing.Optional[ConversationsListRequestSummaryMode] = None,
         search: typing.Optional[str] = None,
@@ -214,6 +215,9 @@ class RawConversationsClient:
         tool_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by tool names used during the call.
 
+        main_languages : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by detected main language (language code).
+
         page_size : typing.Optional[int]
             How many conversations to return at maximum. Can not exceed 100, defaults to 30.
 
@@ -249,6 +253,7 @@ class RawConversationsClient:
                 "evaluation_params": evaluation_params,
                 "data_collection_params": data_collection_params,
                 "tool_names": tool_names,
+                "main_languages": main_languages,
                 "page_size": page_size,
                 "summary_mode": summary_mode,
                 "search": search,
@@ -527,6 +532,7 @@ class AsyncRawConversationsClient:
         evaluation_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         data_collection_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        main_languages: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         page_size: typing.Optional[int] = None,
         summary_mode: typing.Optional[ConversationsListRequestSummaryMode] = None,
         search: typing.Optional[str] = None,
@@ -579,6 +585,9 @@ class AsyncRawConversationsClient:
         tool_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by tool names used during the call.
 
+        main_languages : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by detected main language (language code).
+
         page_size : typing.Optional[int]
             How many conversations to return at maximum. Can not exceed 100, defaults to 30.
 
@@ -614,6 +623,7 @@ class AsyncRawConversationsClient:
                 "evaluation_params": evaluation_params,
                 "data_collection_params": data_collection_params,
                 "tool_names": tool_names,
+                "main_languages": main_languages,
                 "page_size": page_size,
                 "summary_mode": summary_mode,
                 "search": search,

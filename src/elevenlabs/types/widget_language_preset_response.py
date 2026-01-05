@@ -15,6 +15,21 @@ class WidgetLanguagePresetResponse(UncheckedBaseModel):
     The text contents for the selected language
     """
 
+    terms_text: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The text to display for terms and conditions in this language
+    """
+
+    terms_html: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The HTML to display for terms and conditions in this language
+    """
+
+    terms_key: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The key to display for terms and conditions in this language
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

@@ -252,7 +252,7 @@ client.history.get(
 <dl>
 <dd>
 
-**history_item_id:** `str` — ID of the history item to be used. You can use the [Get generated items](/docs/api-reference/history/get-all) endpoint to retrieve a list of history items.
+**history_item_id:** `str` — ID of the history item to be used. You can use the [Get generated items](/docs/api-reference/history/list) endpoint to retrieve a list of history items.
     
 </dd>
 </dl>
@@ -322,7 +322,7 @@ client.history.delete(
 <dl>
 <dd>
 
-**history_item_id:** `str` — ID of the history item to be used. You can use the [Get generated items](/docs/api-reference/history/get-all) endpoint to retrieve a list of history items.
+**history_item_id:** `str` — ID of the history item to be used. You can use the [Get generated items](/docs/api-reference/history/list) endpoint to retrieve a list of history items.
     
 </dd>
 </dl>
@@ -392,7 +392,7 @@ client.history.get_audio(
 <dl>
 <dd>
 
-**history_item_id:** `str` — ID of the history item to be used. You can use the [Get generated items](/docs/api-reference/history/get-all) endpoint to retrieve a list of history items.
+**history_item_id:** `str` — ID of the history item to be used. You can use the [Get generated items](/docs/api-reference/history/list) endpoint to retrieve a list of history items.
     
 </dd>
 </dl>
@@ -2502,6 +2502,14 @@ client.text_to_voice.create_previews(
 <dl>
 <dd>
 
+**should_enhance:** `typing.Optional[bool]` — Whether to enhance the voice description using AI to add more detail and improve voice generation quality. When enabled, the system will automatically expand simple prompts into more detailed voice descriptions. Defaults to False
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -2734,6 +2742,14 @@ client.text_to_voice.design(
 <dd>
 
 **stream_previews:** `typing.Optional[bool]` — Determines whether the Text to Voice previews should be included in the response. If true, only the generated IDs will be returned which can then be streamed via the /v1/text-to-voice/:generated_voice_id/stream endpoint.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**should_enhance:** `typing.Optional[bool]` — Whether to enhance the voice description using AI to add more detail and improve voice generation quality. When enabled, the system will automatically expand simple prompts into more detailed voice descriptions. Defaults to False
     
 </dd>
 </dl>
@@ -3184,7 +3200,7 @@ client.voices.search(
 <dl>
 <dd>
 
-**voice_type:** `typing.Optional[str]` — Type of the voice to filter by. One of 'personal', 'community', 'default', 'workspace', 'non-default'. 'non-default' is equal to all but 'default'.
+**voice_type:** `typing.Optional[str]` — Type of the voice to filter by. One of 'personal', 'community', 'default', 'workspace', 'non-default', 'saved'. 'non-default' is equal to all but 'default'. 'saved' is equal to non-default, but includes default voices if they have been added to a collection.
     
 </dd>
 </dl>
@@ -4005,9 +4021,9 @@ client.studio.create_podcast(
 
 Output quality of the generated audio. Must be one of:
 standard - standard output format, 128kbps with 44.1kHz sample rate.
-high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the credit cost by 20%.
-ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
-ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
+high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side.
+ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side.
+ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format.
     
 </dd>
 </dl>
@@ -6759,7 +6775,7 @@ client.music.compose()
 <dl>
 <dd>
 
-**music_length_ms:** `typing.Optional[int]` — The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
+**music_length_ms:** `typing.Optional[int]` — The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
     
 </dd>
 </dl>
@@ -6891,7 +6907,7 @@ client.music.compose_detailed()
 <dl>
 <dd>
 
-**music_length_ms:** `typing.Optional[int]` — The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
+**music_length_ms:** `typing.Optional[int]` — The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
     
 </dd>
 </dl>
@@ -7023,7 +7039,7 @@ client.music.stream()
 <dl>
 <dd>
 
-**music_length_ms:** `typing.Optional[int]` — The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
+**music_length_ms:** `typing.Optional[int]` — The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
     
 </dd>
 </dl>
@@ -7394,6 +7410,14 @@ client.conversational_ai.conversations.list(
 <dd>
 
 **tool_names:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by tool names used during the call.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**main_languages:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by detected main language (language code).
     
 </dd>
 </dl>
@@ -7780,6 +7804,121 @@ client.conversational_ai.twilio.register_call(
 </dl>
 </details>
 
+## ConversationalAi Whatsapp
+<details><summary><code>client.conversational_ai.whatsapp.<a href="src/elevenlabs/conversational_ai/whatsapp/client.py">outbound_call</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Make an outbound call via WhatsApp
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.whatsapp.outbound_call(
+    whatsapp_phone_number_id="whatsapp_phone_number_id",
+    whatsapp_user_id="whatsapp_user_id",
+    whatsapp_call_permission_request_template_name="whatsapp_call_permission_request_template_name",
+    whatsapp_call_permission_request_template_language_code="whatsapp_call_permission_request_template_language_code",
+    agent_id="agent_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**whatsapp_phone_number_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**whatsapp_user_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**whatsapp_call_permission_request_template_name:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**whatsapp_call_permission_request_template_language_code:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agent_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**conversation_initiation_client_data:** `typing.Optional[ConversationInitiationClientDataRequestInput]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ConversationalAi Agents
 <details><summary><code>client.conversational_ai.agents.<a href="src/elevenlabs/conversational_ai/agents/client.py">create</a>(...)</code></summary>
 <dl>
@@ -8121,6 +8260,14 @@ client.conversational_ai.agents.update(
 <dl>
 <dd>
 
+**version_description:** `typing.Optional[str]` — Description for this version when publishing changes (only applicable for versioned agents)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -8169,6 +8316,7 @@ client.conversational_ai.agents.list(
     page_size=1,
     search="search",
     archived=True,
+    show_only_owned_agents=True,
     sort_direction="asc",
     sort_by="name",
     cursor="cursor",
@@ -8205,6 +8353,14 @@ client.conversational_ai.agents.list(
 <dd>
 
 **archived:** `typing.Optional[bool]` — Filter agents by archived status
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**show_only_owned_agents:** `typing.Optional[bool]` — If set to true, the endpoint will omit any agents that were shared with you by someone else and include only the ones you own
     
 </dd>
 </dl>
@@ -9608,6 +9764,14 @@ client.conversational_ai.phone_numbers.update(
 <dl>
 <dd>
 
+**label:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **inbound_trunk_config:** `typing.Optional[InboundSipTrunkConfigRequestModel]` 
     
 </dd>
@@ -10983,6 +11147,14 @@ client.conversational_ai.batch_calls.create(
 <dl>
 <dd>
 
+**whatsapp_params:** `typing.Optional[BatchCallWhatsAppParams]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -11767,6 +11939,381 @@ client.conversational_ai.mcp_servers.update(
         typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue],
     ]
 ]` — The headers to include in requests to the MCP server
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**disable_compression:** `typing.Optional[bool]` — Whether to disable HTTP compression for this MCP server
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi WhatsappAccounts
+<details><summary><code>client.conversational_ai.whatsapp_accounts.<a href="src/elevenlabs/conversational_ai/whatsapp_accounts/client.py">list</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all WhatsApp accounts
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.whatsapp_accounts.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.whatsapp_accounts.<a href="src/elevenlabs/conversational_ai/whatsapp_accounts/client.py">import_</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Import a WhatsApp account
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.whatsapp_accounts.import_(
+    business_account_id="business_account_id",
+    phone_number_id="phone_number_id",
+    token_code="token_code",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**business_account_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phone_number_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**token_code:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.whatsapp_accounts.<a href="src/elevenlabs/conversational_ai/whatsapp_accounts/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a WhatsApp account
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.whatsapp_accounts.get(
+    phone_number_id="phone_number_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**phone_number_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.whatsapp_accounts.<a href="src/elevenlabs/conversational_ai/whatsapp_accounts/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a WhatsApp account
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.whatsapp_accounts.delete(
+    phone_number_id="phone_number_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**phone_number_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.whatsapp_accounts.<a href="src/elevenlabs/conversational_ai/whatsapp_accounts/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a WhatsApp account
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.whatsapp_accounts.update(
+    phone_number_id="phone_number_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**phone_number_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**assigned_agent_id:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -13065,8 +13612,9 @@ client = ElevenLabs(
 )
 client.conversational_ai.knowledge_base.documents.get_agents(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
-    cursor="cursor",
+    dependent_type="direct",
     page_size=1,
+    cursor="cursor",
 )
 
 ```
@@ -13091,7 +13639,7 @@ client.conversational_ai.knowledge_base.documents.get_agents(
 <dl>
 <dd>
 
-**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+**dependent_type:** `typing.Optional[KnowledgeBaseDependentType]` — Type of dependent agents to return.
     
 </dd>
 </dl>
@@ -13100,6 +13648,14 @@ client.conversational_ai.knowledge_base.documents.get_agents(
 <dd>
 
 **page_size:** `typing.Optional[int]` — How many documents to return at maximum. Can not exceed 100, defaults to 30.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
     
 </dd>
 </dl>
@@ -14875,7 +15431,7 @@ client = ElevenLabs(
 )
 client.dubbing.resource.render(
     dubbing_id="dubbing_id",
-    language="original",
+    language="language",
     render_type="mp4",
 )
 
@@ -14901,7 +15457,7 @@ client.dubbing.resource.render(
 <dl>
 <dd>
 
-**language:** `ResourceRenderRequestLanguage` — The target language code to render, eg. 'es'. To render the source track use 'original'.
+**language:** `str` — The target language code to render, eg. 'es'. To render the source track use 'original'.
     
 </dd>
 </dl>
@@ -15853,7 +16409,7 @@ client.music.composition_plan.create(
 <dl>
 <dd>
 
-**music_length_ms:** `typing.Optional[int]` — The length of the composition plan to generate in milliseconds. Must be between 3000ms and 300000ms. Optional - if not provided, the model will choose a length based on the prompt.
+**music_length_ms:** `typing.Optional[int]` — The length of the composition plan to generate in milliseconds. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
     
 </dd>
 </dl>
@@ -16739,9 +17295,9 @@ typing.Optional[core.File]` — See core.File for more documentation
 
 Output quality of the generated audio. Must be one of:
 standard - standard output format, 128kbps with 44.1kHz sample rate.
-high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the credit cost by 20%.
-ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
-ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
+high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side.
+ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side.
+ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format.
     
 </dd>
 </dl>

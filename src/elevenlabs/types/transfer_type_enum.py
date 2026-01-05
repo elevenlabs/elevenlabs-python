@@ -2,4 +2,4 @@
 
 import typing
 
-TransferTypeEnum = typing.Union[typing.Literal["conference", "sip_refer"], typing.Any]
+TransferTypeEnum = typing.Union[typing.Literal["blind", "conference", "sip_refer"], typing.Any]

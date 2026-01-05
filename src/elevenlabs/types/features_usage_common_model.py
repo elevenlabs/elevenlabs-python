@@ -24,6 +24,7 @@ class FeaturesUsageCommonModel(UncheckedBaseModel):
     voicemail_detection: typing.Optional[FeatureStatusCommonModel] = None
     workflow: typing.Optional[WorkflowFeaturesUsageCommonModel] = None
     agent_testing: typing.Optional[TestsFeatureUsageCommonModel] = None
+    versioning: typing.Optional[FeatureStatusCommonModel] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

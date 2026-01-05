@@ -170,6 +170,7 @@ class PhoneNumbersClient:
         phone_number_id: str,
         *,
         agent_id: typing.Optional[str] = OMIT,
+        label: typing.Optional[str] = OMIT,
         inbound_trunk_config: typing.Optional[InboundSipTrunkConfigRequestModel] = OMIT,
         outbound_trunk_config: typing.Optional[OutboundSipTrunkConfigRequestModel] = OMIT,
         livekit_stack: typing.Optional[LivekitStackType] = OMIT,
@@ -184,6 +185,8 @@ class PhoneNumbersClient:
             The id of an agent. This is returned on agent creation.
 
         agent_id : typing.Optional[str]
+
+        label : typing.Optional[str]
 
         inbound_trunk_config : typing.Optional[InboundSipTrunkConfigRequestModel]
 
@@ -213,6 +216,7 @@ class PhoneNumbersClient:
         _response = self._raw_client.update(
             phone_number_id,
             agent_id=agent_id,
+            label=label,
             inbound_trunk_config=inbound_trunk_config,
             outbound_trunk_config=outbound_trunk_config,
             livekit_stack=livekit_stack,
@@ -407,6 +411,7 @@ class AsyncPhoneNumbersClient:
         phone_number_id: str,
         *,
         agent_id: typing.Optional[str] = OMIT,
+        label: typing.Optional[str] = OMIT,
         inbound_trunk_config: typing.Optional[InboundSipTrunkConfigRequestModel] = OMIT,
         outbound_trunk_config: typing.Optional[OutboundSipTrunkConfigRequestModel] = OMIT,
         livekit_stack: typing.Optional[LivekitStackType] = OMIT,
@@ -421,6 +426,8 @@ class AsyncPhoneNumbersClient:
             The id of an agent. This is returned on agent creation.
 
         agent_id : typing.Optional[str]
+
+        label : typing.Optional[str]
 
         inbound_trunk_config : typing.Optional[InboundSipTrunkConfigRequestModel]
 
@@ -458,6 +465,7 @@ class AsyncPhoneNumbersClient:
         _response = await self._raw_client.update(
             phone_number_id,
             agent_id=agent_id,
+            label=label,
             inbound_trunk_config=inbound_trunk_config,
             outbound_trunk_config=outbound_trunk_config,
             livekit_stack=livekit_stack,
