@@ -13,6 +13,11 @@ class DependentUnknownAgentIdentifier(UncheckedBaseModel):
     to which the user has no direct access.
     """
 
+    referenced_resource_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    If the agent is a transitive dependent, contains IDs of the resources that the agent depends on directly.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

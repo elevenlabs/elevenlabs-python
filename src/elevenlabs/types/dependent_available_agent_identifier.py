@@ -9,6 +9,11 @@ from .dependent_available_agent_identifier_access_level import DependentAvailabl
 
 
 class DependentAvailableAgentIdentifier(UncheckedBaseModel):
+    referenced_resource_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    If the agent is a transitive dependent, contains IDs of the resources that the agent depends on directly.
+    """
+
     id: str
     name: str
     created_at_unix_secs: int

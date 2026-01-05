@@ -18,7 +18,6 @@ from ...types.segment_dub_response import SegmentDubResponse
 from ...types.segment_migration_response import SegmentMigrationResponse
 from ...types.segment_transcription_response import SegmentTranscriptionResponse
 from ...types.segment_translation_response import SegmentTranslationResponse
-from .types.resource_render_request_language import ResourceRenderRequestLanguage
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -350,7 +349,7 @@ class RawResourceClient:
     def render(
         self,
         dubbing_id: str,
-        language: ResourceRenderRequestLanguage,
+        language: str,
         *,
         render_type: RenderType,
         normalize_volume: typing.Optional[bool] = OMIT,
@@ -364,7 +363,7 @@ class RawResourceClient:
         dubbing_id : str
             ID of the dubbing project.
 
-        language : ResourceRenderRequestLanguage
+        language : str
             The target language code to render, eg. 'es'. To render the source track use 'original'.
 
         render_type : RenderType
@@ -747,7 +746,7 @@ class AsyncRawResourceClient:
     async def render(
         self,
         dubbing_id: str,
-        language: ResourceRenderRequestLanguage,
+        language: str,
         *,
         render_type: RenderType,
         normalize_volume: typing.Optional[bool] = OMIT,
@@ -761,7 +760,7 @@ class AsyncRawResourceClient:
         dubbing_id : str
             ID of the dubbing project.
 
-        language : ResourceRenderRequestLanguage
+        language : str
             The target language code to render, eg. 'es'. To render the source track use 'original'.
 
         render_type : RenderType

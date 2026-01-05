@@ -31,6 +31,9 @@ WorkspaceResourceType = typing.Union[
         "dashboard",
         "dashboard_configuration",
         "convai_agent_drafts",
+        "resource_locators",
+        "assets",
+        "content_generations",
     ],
     typing.Any,
 ]

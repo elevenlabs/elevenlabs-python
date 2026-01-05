@@ -1026,6 +1026,7 @@ if typing.TYPE_CHECKING:
     from .get_unit_test_response_model_dynamic_variables_value import GetUnitTestResponseModelDynamicVariablesValue
     from .get_voices_response import GetVoicesResponse
     from .get_voices_v_2_response import GetVoicesV2Response
+    from .get_whats_app_account_response import GetWhatsAppAccountResponse
     from .get_workspace_secrets_response_model import GetWorkspaceSecretsResponseModel
     from .guardrails_v_1_input import GuardrailsV1Input
     from .guardrails_v_1_output import GuardrailsV1Output
@@ -1035,10 +1036,12 @@ if typing.TYPE_CHECKING:
     from .html_export_options import HtmlExportOptions
     from .http_validation_error import HttpValidationError
     from .image_avatar import ImageAvatar
+    from .import_whats_app_account_response import ImportWhatsAppAccountResponse
     from .inbound_sip_trunk_config_request_model import InboundSipTrunkConfigRequestModel
     from .integration_type import IntegrationType
     from .invoice_response import InvoiceResponse
     from .invoice_response_model_payment_intent_status import InvoiceResponseModelPaymentIntentStatus
+    from .knowledge_base_dependent_type import KnowledgeBaseDependentType
     from .knowledge_base_document_chunk_response_model import KnowledgeBaseDocumentChunkResponseModel
     from .knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
     from .knowledge_base_document_type import KnowledgeBaseDocumentType
@@ -1064,6 +1067,7 @@ if typing.TYPE_CHECKING:
     from .library_voice_response_model_category import LibraryVoiceResponseModelCategory
     from .list_mcp_tools_response_model import ListMcpToolsResponseModel
     from .list_response_meta import ListResponseMeta
+    from .list_whats_app_accounts_response import ListWhatsAppAccountsResponse
     from .literal_json_schema_property import LiteralJsonSchemaProperty
     from .literal_json_schema_property_constant_value import LiteralJsonSchemaPropertyConstantValue
     from .literal_json_schema_property_type import LiteralJsonSchemaPropertyType
@@ -1528,6 +1532,7 @@ if typing.TYPE_CHECKING:
     from .webhook_usage_type import WebhookUsageType
     from .whats_app_conversation_info import WhatsAppConversationInfo
     from .whats_app_conversation_info_direction import WhatsAppConversationInfoDirection
+    from .whats_app_outbound_call_response import WhatsAppOutboundCallResponse
     from .widget_config import WidgetConfig
     from .widget_config_input_avatar import (
         WidgetConfigInputAvatar,
@@ -1556,6 +1561,7 @@ if typing.TYPE_CHECKING:
     from .widget_language_preset_response import WidgetLanguagePresetResponse
     from .widget_placement import WidgetPlacement
     from .widget_styles import WidgetStyles
+    from .widget_terms_translation import WidgetTermsTranslation
     from .widget_text_contents import WidgetTextContents
     from .word_timestamp import WordTimestamp
     from .workflow_edge_model_input import WorkflowEdgeModelInput
@@ -2543,6 +2549,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetUnitTestResponseModelDynamicVariablesValue": ".get_unit_test_response_model_dynamic_variables_value",
     "GetVoicesResponse": ".get_voices_response",
     "GetVoicesV2Response": ".get_voices_v_2_response",
+    "GetWhatsAppAccountResponse": ".get_whats_app_account_response",
     "GetWorkspaceSecretsResponseModel": ".get_workspace_secrets_response_model",
     "GuardrailsV1Input": ".guardrails_v_1_input",
     "GuardrailsV1Output": ".guardrails_v_1_output",
@@ -2552,10 +2559,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "HtmlExportOptions": ".html_export_options",
     "HttpValidationError": ".http_validation_error",
     "ImageAvatar": ".image_avatar",
+    "ImportWhatsAppAccountResponse": ".import_whats_app_account_response",
     "InboundSipTrunkConfigRequestModel": ".inbound_sip_trunk_config_request_model",
     "IntegrationType": ".integration_type",
     "InvoiceResponse": ".invoice_response",
     "InvoiceResponseModelPaymentIntentStatus": ".invoice_response_model_payment_intent_status",
+    "KnowledgeBaseDependentType": ".knowledge_base_dependent_type",
     "KnowledgeBaseDocumentChunkResponseModel": ".knowledge_base_document_chunk_response_model",
     "KnowledgeBaseDocumentMetadataResponseModel": ".knowledge_base_document_metadata_response_model",
     "KnowledgeBaseDocumentType": ".knowledge_base_document_type",
@@ -2579,6 +2588,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LibraryVoiceResponseModelCategory": ".library_voice_response_model_category",
     "ListMcpToolsResponseModel": ".list_mcp_tools_response_model",
     "ListResponseMeta": ".list_response_meta",
+    "ListWhatsAppAccountsResponse": ".list_whats_app_accounts_response",
     "LiteralJsonSchemaProperty": ".literal_json_schema_property",
     "LiteralJsonSchemaPropertyConstantValue": ".literal_json_schema_property_constant_value",
     "LiteralJsonSchemaPropertyType": ".literal_json_schema_property_type",
@@ -2999,6 +3009,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WebhookUsageType": ".webhook_usage_type",
     "WhatsAppConversationInfo": ".whats_app_conversation_info",
     "WhatsAppConversationInfoDirection": ".whats_app_conversation_info_direction",
+    "WhatsAppOutboundCallResponse": ".whats_app_outbound_call_response",
     "WidgetConfig": ".widget_config",
     "WidgetConfigInputAvatar": ".widget_config_input_avatar",
     "WidgetConfigInputAvatar_Image": ".widget_config_input_avatar",
@@ -3021,6 +3032,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WidgetLanguagePresetResponse": ".widget_language_preset_response",
     "WidgetPlacement": ".widget_placement",
     "WidgetStyles": ".widget_styles",
+    "WidgetTermsTranslation": ".widget_terms_translation",
     "WidgetTextContents": ".widget_text_contents",
     "WordTimestamp": ".word_timestamp",
     "WorkflowEdgeModelInput": ".workflow_edge_model_input",
@@ -4008,6 +4020,7 @@ __all__ = [
     "GetUnitTestResponseModelDynamicVariablesValue",
     "GetVoicesResponse",
     "GetVoicesV2Response",
+    "GetWhatsAppAccountResponse",
     "GetWorkspaceSecretsResponseModel",
     "GuardrailsV1Input",
     "GuardrailsV1Output",
@@ -4017,10 +4030,12 @@ __all__ = [
     "HtmlExportOptions",
     "HttpValidationError",
     "ImageAvatar",
+    "ImportWhatsAppAccountResponse",
     "InboundSipTrunkConfigRequestModel",
     "IntegrationType",
     "InvoiceResponse",
     "InvoiceResponseModelPaymentIntentStatus",
+    "KnowledgeBaseDependentType",
     "KnowledgeBaseDocumentChunkResponseModel",
     "KnowledgeBaseDocumentMetadataResponseModel",
     "KnowledgeBaseDocumentType",
@@ -4044,6 +4059,7 @@ __all__ = [
     "LibraryVoiceResponseModelCategory",
     "ListMcpToolsResponseModel",
     "ListResponseMeta",
+    "ListWhatsAppAccountsResponse",
     "LiteralJsonSchemaProperty",
     "LiteralJsonSchemaPropertyConstantValue",
     "LiteralJsonSchemaPropertyType",
@@ -4464,6 +4480,7 @@ __all__ = [
     "WebhookUsageType",
     "WhatsAppConversationInfo",
     "WhatsAppConversationInfoDirection",
+    "WhatsAppOutboundCallResponse",
     "WidgetConfig",
     "WidgetConfigInputAvatar",
     "WidgetConfigInputAvatar_Image",
@@ -4486,6 +4503,7 @@ __all__ = [
     "WidgetLanguagePresetResponse",
     "WidgetPlacement",
     "WidgetStyles",
+    "WidgetTermsTranslation",
     "WidgetTextContents",
     "WordTimestamp",
     "WorkflowEdgeModelInput",

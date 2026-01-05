@@ -239,6 +239,7 @@ class RawPhoneNumbersClient:
         phone_number_id: str,
         *,
         agent_id: typing.Optional[str] = OMIT,
+        label: typing.Optional[str] = OMIT,
         inbound_trunk_config: typing.Optional[InboundSipTrunkConfigRequestModel] = OMIT,
         outbound_trunk_config: typing.Optional[OutboundSipTrunkConfigRequestModel] = OMIT,
         livekit_stack: typing.Optional[LivekitStackType] = OMIT,
@@ -253,6 +254,8 @@ class RawPhoneNumbersClient:
             The id of an agent. This is returned on agent creation.
 
         agent_id : typing.Optional[str]
+
+        label : typing.Optional[str]
 
         inbound_trunk_config : typing.Optional[InboundSipTrunkConfigRequestModel]
 
@@ -273,6 +276,7 @@ class RawPhoneNumbersClient:
             method="PATCH",
             json={
                 "agent_id": agent_id,
+                "label": label,
                 "inbound_trunk_config": convert_and_respect_annotation_metadata(
                     object_=inbound_trunk_config, annotation=InboundSipTrunkConfigRequestModel, direction="write"
                 ),
@@ -528,6 +532,7 @@ class AsyncRawPhoneNumbersClient:
         phone_number_id: str,
         *,
         agent_id: typing.Optional[str] = OMIT,
+        label: typing.Optional[str] = OMIT,
         inbound_trunk_config: typing.Optional[InboundSipTrunkConfigRequestModel] = OMIT,
         outbound_trunk_config: typing.Optional[OutboundSipTrunkConfigRequestModel] = OMIT,
         livekit_stack: typing.Optional[LivekitStackType] = OMIT,
@@ -542,6 +547,8 @@ class AsyncRawPhoneNumbersClient:
             The id of an agent. This is returned on agent creation.
 
         agent_id : typing.Optional[str]
+
+        label : typing.Optional[str]
 
         inbound_trunk_config : typing.Optional[InboundSipTrunkConfigRequestModel]
 
@@ -562,6 +569,7 @@ class AsyncRawPhoneNumbersClient:
             method="PATCH",
             json={
                 "agent_id": agent_id,
+                "label": label,
                 "inbound_trunk_config": convert_and_respect_annotation_metadata(
                     object_=inbound_trunk_config, annotation=InboundSipTrunkConfigRequestModel, direction="write"
                 ),

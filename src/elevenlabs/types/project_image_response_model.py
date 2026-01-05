@@ -17,6 +17,7 @@ class ProjectImageResponseModel(UncheckedBaseModel):
     file_size_bytes: int
     width: int
     height: int
+    track_id: typing.Optional[str] = None
     offset_ms: int
     duration_ms: int
     order: str

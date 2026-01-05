@@ -13,6 +13,7 @@ from .dependent_available_agent_identifier_access_level import DependentAvailabl
 
 class GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem_Available(UncheckedBaseModel):
     type: typing.Literal["available"] = "available"
+    referenced_resource_ids: typing.Optional[typing.List[str]] = None
     id: str
     name: str
     created_at_unix_secs: int
@@ -30,6 +31,7 @@ class GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem_Available(Unch
 
 class GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem_Unknown(UncheckedBaseModel):
     type: typing.Literal["unknown"] = "unknown"
+    referenced_resource_ids: typing.Optional[typing.List[str]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

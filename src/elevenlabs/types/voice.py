@@ -81,6 +81,11 @@ class Voice(UncheckedBaseModel):
     The verified languages of the voice.
     """
 
+    collection_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    The IDs of collections this voice belongs to.
+    """
+
     safety_control: typing.Optional[VoiceResponseModelSafetyControl] = pydantic.Field(default=None)
     """
     The safety controls of the voice.

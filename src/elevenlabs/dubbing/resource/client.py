@@ -14,7 +14,6 @@ from ...types.segment_migration_response import SegmentMigrationResponse
 from ...types.segment_transcription_response import SegmentTranscriptionResponse
 from ...types.segment_translation_response import SegmentTranslationResponse
 from .raw_client import AsyncRawResourceClient, RawResourceClient
-from .types.resource_render_request_language import ResourceRenderRequestLanguage
 
 if typing.TYPE_CHECKING:
     from .language.client import AsyncLanguageClient, LanguageClient
@@ -258,7 +257,7 @@ class ResourceClient:
     def render(
         self,
         dubbing_id: str,
-        language: ResourceRenderRequestLanguage,
+        language: str,
         *,
         render_type: RenderType,
         normalize_volume: typing.Optional[bool] = OMIT,
@@ -272,7 +271,7 @@ class ResourceClient:
         dubbing_id : str
             ID of the dubbing project.
 
-        language : ResourceRenderRequestLanguage
+        language : str
             The target language code to render, eg. 'es'. To render the source track use 'original'.
 
         render_type : RenderType
@@ -298,7 +297,7 @@ class ResourceClient:
         )
         client.dubbing.resource.render(
             dubbing_id="dubbing_id",
-            language="original",
+            language="language",
             render_type="mp4",
         )
         """
@@ -610,7 +609,7 @@ class AsyncResourceClient:
     async def render(
         self,
         dubbing_id: str,
-        language: ResourceRenderRequestLanguage,
+        language: str,
         *,
         render_type: RenderType,
         normalize_volume: typing.Optional[bool] = OMIT,
@@ -624,7 +623,7 @@ class AsyncResourceClient:
         dubbing_id : str
             ID of the dubbing project.
 
-        language : ResourceRenderRequestLanguage
+        language : str
             The target language code to render, eg. 'es'. To render the source track use 'original'.
 
         render_type : RenderType
@@ -655,7 +654,7 @@ class AsyncResourceClient:
         async def main() -> None:
             await client.dubbing.resource.render(
                 dubbing_id="dubbing_id",
-                language="original",
+                language="language",
                 render_type="mp4",
             )
 

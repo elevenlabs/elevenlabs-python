@@ -186,6 +186,7 @@ class McpServersClient:
         request_headers: typing.Optional[
             typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]
         ] = OMIT,
+        disable_compression: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> McpServerResponseModel:
         """
@@ -217,6 +218,9 @@ class McpServersClient:
         request_headers : typing.Optional[typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]]
             The headers to include in requests to the MCP server
 
+        disable_compression : typing.Optional[bool]
+            Whether to disable HTTP compression for this MCP server
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -245,6 +249,7 @@ class McpServersClient:
             tool_call_sound_behavior=tool_call_sound_behavior,
             execution_mode=execution_mode,
             request_headers=request_headers,
+            disable_compression=disable_compression,
             request_options=request_options,
         )
         return _response.data
@@ -475,6 +480,7 @@ class AsyncMcpServersClient:
         request_headers: typing.Optional[
             typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]
         ] = OMIT,
+        disable_compression: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> McpServerResponseModel:
         """
@@ -505,6 +511,9 @@ class AsyncMcpServersClient:
 
         request_headers : typing.Optional[typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]]
             The headers to include in requests to the MCP server
+
+        disable_compression : typing.Optional[bool]
+            Whether to disable HTTP compression for this MCP server
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -542,6 +551,7 @@ class AsyncMcpServersClient:
             tool_call_sound_behavior=tool_call_sound_behavior,
             execution_mode=execution_mode,
             request_headers=request_headers,
+            disable_compression=disable_compression,
             request_options=request_options,
         )
         return _response.data

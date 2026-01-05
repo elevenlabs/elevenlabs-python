@@ -126,7 +126,7 @@ class HistoryClient:
         Parameters
         ----------
         history_item_id : str
-            ID of the history item to be used. You can use the [Get generated items](/docs/api-reference/history/get-all) endpoint to retrieve a list of history items.
+            ID of the history item to be used. You can use the [Get generated items](/docs/api-reference/history/list) endpoint to retrieve a list of history items.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -159,7 +159,7 @@ class HistoryClient:
         Parameters
         ----------
         history_item_id : str
-            ID of the history item to be used. You can use the [Get generated items](/docs/api-reference/history/get-all) endpoint to retrieve a list of history items.
+            ID of the history item to be used. You can use the [Get generated items](/docs/api-reference/history/list) endpoint to retrieve a list of history items.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -192,7 +192,7 @@ class HistoryClient:
         Parameters
         ----------
         history_item_id : str
-            ID of the history item to be used. You can use the [Get generated items](/docs/api-reference/history/get-all) endpoint to retrieve a list of history items.
+            ID of the history item to be used. You can use the [Get generated items](/docs/api-reference/history/list) endpoint to retrieve a list of history items.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -378,7 +378,7 @@ class AsyncHistoryClient:
         Parameters
         ----------
         history_item_id : str
-            ID of the history item to be used. You can use the [Get generated items](/docs/api-reference/history/get-all) endpoint to retrieve a list of history items.
+            ID of the history item to be used. You can use the [Get generated items](/docs/api-reference/history/list) endpoint to retrieve a list of history items.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -419,7 +419,7 @@ class AsyncHistoryClient:
         Parameters
         ----------
         history_item_id : str
-            ID of the history item to be used. You can use the [Get generated items](/docs/api-reference/history/get-all) endpoint to retrieve a list of history items.
+            ID of the history item to be used. You can use the [Get generated items](/docs/api-reference/history/list) endpoint to retrieve a list of history items.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -460,7 +460,7 @@ class AsyncHistoryClient:
         Parameters
         ----------
         history_item_id : str
-            ID of the history item to be used. You can use the [Get generated items](/docs/api-reference/history/get-all) endpoint to retrieve a list of history items.
+            ID of the history item to be used. You can use the [Get generated items](/docs/api-reference/history/list) endpoint to retrieve a list of history items.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.

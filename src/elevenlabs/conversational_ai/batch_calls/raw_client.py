@@ -13,6 +13,7 @@ from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.batch_call_detailed_response import BatchCallDetailedResponse
 from ...types.batch_call_response import BatchCallResponse
+from ...types.batch_call_whats_app_params import BatchCallWhatsAppParams
 from ...types.http_validation_error import HttpValidationError
 from ...types.outbound_call_recipient import OutboundCallRecipient
 from ...types.workspace_batch_calls_response import WorkspaceBatchCallsResponse
@@ -33,6 +34,7 @@ class RawBatchCallsClient:
         recipients: typing.Sequence[OutboundCallRecipient],
         scheduled_time_unix: typing.Optional[int] = OMIT,
         agent_phone_number_id: typing.Optional[str] = OMIT,
+        whatsapp_params: typing.Optional[BatchCallWhatsAppParams] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[BatchCallResponse]:
         """
@@ -49,6 +51,8 @@ class RawBatchCallsClient:
         scheduled_time_unix : typing.Optional[int]
 
         agent_phone_number_id : typing.Optional[str]
+
+        whatsapp_params : typing.Optional[BatchCallWhatsAppParams]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -69,6 +73,9 @@ class RawBatchCallsClient:
                 ),
                 "scheduled_time_unix": scheduled_time_unix,
                 "agent_phone_number_id": agent_phone_number_id,
+                "whatsapp_params": convert_and_respect_annotation_metadata(
+                    object_=whatsapp_params, annotation=BatchCallWhatsAppParams, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -321,6 +328,7 @@ class AsyncRawBatchCallsClient:
         recipients: typing.Sequence[OutboundCallRecipient],
         scheduled_time_unix: typing.Optional[int] = OMIT,
         agent_phone_number_id: typing.Optional[str] = OMIT,
+        whatsapp_params: typing.Optional[BatchCallWhatsAppParams] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[BatchCallResponse]:
         """
@@ -337,6 +345,8 @@ class AsyncRawBatchCallsClient:
         scheduled_time_unix : typing.Optional[int]
 
         agent_phone_number_id : typing.Optional[str]
+
+        whatsapp_params : typing.Optional[BatchCallWhatsAppParams]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -357,6 +367,9 @@ class AsyncRawBatchCallsClient:
                 ),
                 "scheduled_time_unix": scheduled_time_unix,
                 "agent_phone_number_id": agent_phone_number_id,
+                "whatsapp_params": convert_and_respect_annotation_metadata(
+                    object_=whatsapp_params, annotation=BatchCallWhatsAppParams, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",

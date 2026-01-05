@@ -78,6 +78,11 @@ class McpServerConfigInput(UncheckedBaseModel):
     List of per-tool configuration overrides that override the server-level defaults for specific tools
     """
 
+    disable_compression: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to disable HTTP compression for this MCP server. Enable this if the server does not support compressed responses.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

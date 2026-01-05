@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .allowlist_item import AllowlistItem
 from .embed_variant import EmbedVariant
 from .widget_config_output_avatar import WidgetConfigOutputAvatar
 from .widget_end_feedback_config import WidgetEndFeedbackConfig
@@ -155,6 +156,21 @@ class WidgetConfig(UncheckedBaseModel):
     override_link: typing.Optional[str] = pydantic.Field(default=None)
     """
     The override link for the widget
+    """
+
+    markdown_link_allowed_hosts: typing.Optional[typing.List[AllowlistItem]] = pydantic.Field(default=None)
+    """
+    List of allowed hostnames for clickable markdown links. Use { hostname: '*' } to allow any domain. Empty means no links are allowed.
+    """
+
+    markdown_link_include_www: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to automatically include www. variants of allowed hosts
+    """
+
+    markdown_link_allow_http: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to allow http:// in addition to https:// for allowed hosts
     """
 
     mic_muting_enabled: typing.Optional[bool] = pydantic.Field(default=None)

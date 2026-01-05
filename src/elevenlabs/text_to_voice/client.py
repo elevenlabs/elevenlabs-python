@@ -48,6 +48,7 @@ class TextToVoiceClient:
         quality: typing.Optional[float] = OMIT,
         seed: typing.Optional[int] = OMIT,
         guidance_scale: typing.Optional[float] = OMIT,
+        should_enhance: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> VoiceDesignPreviewResponse:
         """
@@ -79,6 +80,9 @@ class TextToVoiceClient:
         guidance_scale : typing.Optional[float]
             Controls how closely the AI follows the prompt. Lower numbers give the AI more freedom to be creative, while higher numbers force it to stick more to the prompt. High numbers can cause voice to sound artificial or robotic. We recommend to use longer, more detailed prompts at lower Guidance Scale.
 
+        should_enhance : typing.Optional[bool]
+            Whether to enhance the voice description using AI to add more detail and improve voice generation quality. When enabled, the system will automatically expand simple prompts into more detailed voice descriptions. Defaults to False
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -108,6 +112,7 @@ class TextToVoiceClient:
             quality=quality,
             seed=seed,
             guidance_scale=guidance_scale,
+            should_enhance=should_enhance,
             request_options=request_options,
         )
         return _response.data
@@ -185,6 +190,7 @@ class TextToVoiceClient:
         seed: typing.Optional[int] = OMIT,
         guidance_scale: typing.Optional[float] = OMIT,
         stream_previews: typing.Optional[bool] = OMIT,
+        should_enhance: typing.Optional[bool] = OMIT,
         remixing_session_id: typing.Optional[str] = OMIT,
         remixing_session_iteration_id: typing.Optional[str] = OMIT,
         quality: typing.Optional[float] = OMIT,
@@ -223,6 +229,9 @@ class TextToVoiceClient:
 
         stream_previews : typing.Optional[bool]
             Determines whether the Text to Voice previews should be included in the response. If true, only the generated IDs will be returned which can then be streamed via the /v1/text-to-voice/:generated_voice_id/stream endpoint.
+
+        should_enhance : typing.Optional[bool]
+            Whether to enhance the voice description using AI to add more detail and improve voice generation quality. When enabled, the system will automatically expand simple prompts into more detailed voice descriptions. Defaults to False
 
         remixing_session_id : typing.Optional[str]
             The remixing session id.
@@ -269,6 +278,7 @@ class TextToVoiceClient:
             seed=seed,
             guidance_scale=guidance_scale,
             stream_previews=stream_previews,
+            should_enhance=should_enhance,
             remixing_session_id=remixing_session_id,
             remixing_session_iteration_id=remixing_session_iteration_id,
             quality=quality,
@@ -411,6 +421,7 @@ class AsyncTextToVoiceClient:
         quality: typing.Optional[float] = OMIT,
         seed: typing.Optional[int] = OMIT,
         guidance_scale: typing.Optional[float] = OMIT,
+        should_enhance: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> VoiceDesignPreviewResponse:
         """
@@ -441,6 +452,9 @@ class AsyncTextToVoiceClient:
 
         guidance_scale : typing.Optional[float]
             Controls how closely the AI follows the prompt. Lower numbers give the AI more freedom to be creative, while higher numbers force it to stick more to the prompt. High numbers can cause voice to sound artificial or robotic. We recommend to use longer, more detailed prompts at lower Guidance Scale.
+
+        should_enhance : typing.Optional[bool]
+            Whether to enhance the voice description using AI to add more detail and improve voice generation quality. When enabled, the system will automatically expand simple prompts into more detailed voice descriptions. Defaults to False
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -479,6 +493,7 @@ class AsyncTextToVoiceClient:
             quality=quality,
             seed=seed,
             guidance_scale=guidance_scale,
+            should_enhance=should_enhance,
             request_options=request_options,
         )
         return _response.data
@@ -564,6 +579,7 @@ class AsyncTextToVoiceClient:
         seed: typing.Optional[int] = OMIT,
         guidance_scale: typing.Optional[float] = OMIT,
         stream_previews: typing.Optional[bool] = OMIT,
+        should_enhance: typing.Optional[bool] = OMIT,
         remixing_session_id: typing.Optional[str] = OMIT,
         remixing_session_iteration_id: typing.Optional[str] = OMIT,
         quality: typing.Optional[float] = OMIT,
@@ -602,6 +618,9 @@ class AsyncTextToVoiceClient:
 
         stream_previews : typing.Optional[bool]
             Determines whether the Text to Voice previews should be included in the response. If true, only the generated IDs will be returned which can then be streamed via the /v1/text-to-voice/:generated_voice_id/stream endpoint.
+
+        should_enhance : typing.Optional[bool]
+            Whether to enhance the voice description using AI to add more detail and improve voice generation quality. When enabled, the system will automatically expand simple prompts into more detailed voice descriptions. Defaults to False
 
         remixing_session_id : typing.Optional[str]
             The remixing session id.
@@ -656,6 +675,7 @@ class AsyncTextToVoiceClient:
             seed=seed,
             guidance_scale=guidance_scale,
             stream_previews=stream_previews,
+            should_enhance=should_enhance,
             remixing_session_id=remixing_session_id,
             remixing_session_iteration_id=remixing_session_iteration_id,
             quality=quality,

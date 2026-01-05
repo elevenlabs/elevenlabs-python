@@ -22,6 +22,8 @@ if typing.TYPE_CHECKING:
         tests,
         tools,
         twilio,
+        whatsapp,
+        whatsapp_accounts,
     )
     from .conversations import ConversationsListRequestSummaryMode
     from .knowledge_base import (
@@ -82,6 +84,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "tests": ".tests",
     "tools": ".tools",
     "twilio": ".twilio",
+    "whatsapp": ".whatsapp",
+    "whatsapp_accounts": ".whatsapp_accounts",
 }
 
 
@@ -142,4 +146,6 @@ __all__ = [
     "tests",
     "tools",
     "twilio",
+    "whatsapp",
+    "whatsapp_accounts",
 ]
