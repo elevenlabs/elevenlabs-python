@@ -18,6 +18,11 @@ class SoftTimeoutConfigWorkflowOverride(UncheckedBaseModel):
     Message to show when soft timeout is reached while waiting for LLM response
     """
 
+    use_llm_generated_message: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If enabled, the soft timeout message will be generated dynamically instead of using the static message.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

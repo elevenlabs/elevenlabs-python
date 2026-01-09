@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .additional_format_response_model import AdditionalFormatResponseModel
+from .detected_entity import DetectedEntity
 from .speech_to_text_word_response_model import SpeechToTextWordResponseModel
 
 
@@ -49,6 +50,11 @@ class SpeechToTextChunkResponseModel(UncheckedBaseModel):
     transcription_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     The transcription ID of the response.
+    """
+
+    entities: typing.Optional[typing.List[DetectedEntity]] = pydantic.Field(default=None)
+    """
+    List of detected entities with their text, type, and character positions in the transcript.
     """
 
     if IS_PYDANTIC_V2:

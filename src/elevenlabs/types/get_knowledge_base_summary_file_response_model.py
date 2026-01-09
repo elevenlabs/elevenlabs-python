@@ -10,6 +10,9 @@ from .get_knowledge_base_summary_file_response_model_dependent_agents_item impor
     GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem,
 )
 from .knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
+from .knowledge_base_folder_path_segment_summary_response_model import (
+    KnowledgeBaseFolderPathSegmentSummaryResponseModel,
+)
 from .resource_access_info import ResourceAccessInfo
 
 
@@ -22,6 +25,13 @@ class GetKnowledgeBaseSummaryFileResponseModel(UncheckedBaseModel):
     folder_parent_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     The ID of the parent folder, or null if the document is at the root level.
+    """
+
+    folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentSummaryResponseModel]] = pydantic.Field(
+        default=None
+    )
+    """
+    The folder path segments leading to this entity, from root to parent folder.
     """
 
     dependent_agents: typing.List[GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem] = pydantic.Field()

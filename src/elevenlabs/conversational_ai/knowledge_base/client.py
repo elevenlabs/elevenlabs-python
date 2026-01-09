@@ -55,7 +55,6 @@ class KnowledgeBaseClient:
         folders_first: typing.Optional[bool] = None,
         sort_direction: typing.Optional[SortDirection] = None,
         sort_by: typing.Optional[KnowledgeBaseSortBy] = None,
-        use_typesense: typing.Optional[bool] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetKnowledgeBaseListResponseModel:
@@ -91,9 +90,6 @@ class KnowledgeBaseClient:
         sort_by : typing.Optional[KnowledgeBaseSortBy]
             The field to sort the results by
 
-        use_typesense : typing.Optional[bool]
-            If set to true, the endpoint will use typesense DB to search for the documents).
-
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
 
@@ -121,7 +117,6 @@ class KnowledgeBaseClient:
             folders_first=True,
             sort_direction="asc",
             sort_by="name",
-            use_typesense=True,
             cursor="cursor",
         )
         """
@@ -135,7 +130,6 @@ class KnowledgeBaseClient:
             folders_first=folders_first,
             sort_direction=sort_direction,
             sort_by=sort_by,
-            use_typesense=use_typesense,
             cursor=cursor,
             request_options=request_options,
         )
@@ -232,7 +226,6 @@ class AsyncKnowledgeBaseClient:
         folders_first: typing.Optional[bool] = None,
         sort_direction: typing.Optional[SortDirection] = None,
         sort_by: typing.Optional[KnowledgeBaseSortBy] = None,
-        use_typesense: typing.Optional[bool] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetKnowledgeBaseListResponseModel:
@@ -268,9 +261,6 @@ class AsyncKnowledgeBaseClient:
         sort_by : typing.Optional[KnowledgeBaseSortBy]
             The field to sort the results by
 
-        use_typesense : typing.Optional[bool]
-            If set to true, the endpoint will use typesense DB to search for the documents).
-
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
 
@@ -303,7 +293,6 @@ class AsyncKnowledgeBaseClient:
                 folders_first=True,
                 sort_direction="asc",
                 sort_by="name",
-                use_typesense=True,
                 cursor="cursor",
             )
 
@@ -320,7 +309,6 @@ class AsyncKnowledgeBaseClient:
             folders_first=folders_first,
             sort_direction=sort_direction,
             sort_by=sort_by,
-            use_typesense=use_typesense,
             cursor=cursor,
             request_options=request_options,
         )

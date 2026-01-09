@@ -104,6 +104,11 @@ class PromptAgentApiModelWorkflowOverrideOutput(UncheckedBaseModel):
     Configuration for backup LLM cascading. Can be disabled, use system defaults, or specify custom order.
     """
 
+    cascade_timeout_seconds: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Time in seconds before cascading to backup LLM. Must be between 2 and 15 seconds.
+    """
+
     tools: typing.Optional[typing.List[PromptAgentApiModelWorkflowOverrideOutputToolsItem]] = pydantic.Field(
         default=None
     )

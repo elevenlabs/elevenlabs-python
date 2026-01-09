@@ -42,7 +42,6 @@ class RawKnowledgeBaseClient:
         folders_first: typing.Optional[bool] = None,
         sort_direction: typing.Optional[SortDirection] = None,
         sort_by: typing.Optional[KnowledgeBaseSortBy] = None,
-        use_typesense: typing.Optional[bool] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetKnowledgeBaseListResponseModel]:
@@ -78,9 +77,6 @@ class RawKnowledgeBaseClient:
         sort_by : typing.Optional[KnowledgeBaseSortBy]
             The field to sort the results by
 
-        use_typesense : typing.Optional[bool]
-            If set to true, the endpoint will use typesense DB to search for the documents).
-
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
 
@@ -105,7 +101,6 @@ class RawKnowledgeBaseClient:
                 "folders_first": folders_first,
                 "sort_direction": sort_direction,
                 "sort_by": sort_by,
-                "use_typesense": use_typesense,
                 "cursor": cursor,
             },
             request_options=request_options,
@@ -217,7 +212,6 @@ class AsyncRawKnowledgeBaseClient:
         folders_first: typing.Optional[bool] = None,
         sort_direction: typing.Optional[SortDirection] = None,
         sort_by: typing.Optional[KnowledgeBaseSortBy] = None,
-        use_typesense: typing.Optional[bool] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetKnowledgeBaseListResponseModel]:
@@ -253,9 +247,6 @@ class AsyncRawKnowledgeBaseClient:
         sort_by : typing.Optional[KnowledgeBaseSortBy]
             The field to sort the results by
 
-        use_typesense : typing.Optional[bool]
-            If set to true, the endpoint will use typesense DB to search for the documents).
-
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
 
@@ -280,7 +271,6 @@ class AsyncRawKnowledgeBaseClient:
                 "folders_first": folders_first,
                 "sort_direction": sort_direction,
                 "sort_by": sort_by,
-                "use_typesense": use_typesense,
                 "cursor": cursor,
             },
             request_options=request_options,
