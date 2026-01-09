@@ -7,6 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
+        SpeechToTextConvertRequestEntityDetection,
         SpeechToTextConvertRequestFileFormat,
         SpeechToTextConvertRequestTimestampsGranularity,
         SpeechToTextConvertRequestWebhookMetadata,
@@ -15,6 +16,7 @@ if typing.TYPE_CHECKING:
     from . import transcripts
     from .transcripts import TranscriptsGetResponse
 _dynamic_imports: typing.Dict[str, str] = {
+    "SpeechToTextConvertRequestEntityDetection": ".types",
     "SpeechToTextConvertRequestFileFormat": ".types",
     "SpeechToTextConvertRequestTimestampsGranularity": ".types",
     "SpeechToTextConvertRequestWebhookMetadata": ".types",
@@ -46,6 +48,7 @@ def __dir__():
 
 
 __all__ = [
+    "SpeechToTextConvertRequestEntityDetection",
     "SpeechToTextConvertRequestFileFormat",
     "SpeechToTextConvertRequestTimestampsGranularity",
     "SpeechToTextConvertRequestWebhookMetadata",

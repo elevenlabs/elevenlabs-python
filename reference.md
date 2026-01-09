@@ -4490,7 +4490,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**mode:** `typing.Optional[DubbingCreateRequestMode]` — The mode in which to run this Dubbing job. Defaults to automatic, use manual if specifically providing a CSV transcript to use.
+**mode:** `typing.Optional[DubbingCreateRequestMode]` — The mode in which to run this Dubbing job. Defaults to automatic, use manual if specifically providing a CSV transcript to use. Note that manual mode is experimental and production use is strongly discouraged.
     
 </dd>
 </dl>
@@ -6288,6 +6288,22 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dd>
 
 **webhook_metadata:** `typing.Optional[SpeechToTextConvertRequestWebhookMetadata]` — Optional metadata to be included in the webhook response. This should be a JSON string representing an object with a maximum depth of 2 levels and maximum size of 16KB. Useful for tracking internal IDs, job references, or other contextual information.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**entity_detection:** `typing.Optional[SpeechToTextConvertRequestEntityDetection]` — Detect entities in the transcript. Can be 'all' to detect all entities, a single entity type or category string, or a list of entity types/categories. Categories include 'pii', 'phi', 'pci', 'other', 'offensive_language'. When enabled, detected entities will be returned in the 'entities' field with their text, type, and character positions.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**keyterms:** `typing.Optional[typing.List[str]]` — A list of keyterms to bias the transcription towards.           The keyterms are words or phrases you want the model to recognise more accurately.           The number of keyterms cannot exceed 100.           The length of each keyterm must be less than 50 characters.           Keyterms can contain at most 5 words (after normalisation).           For example ["hello", "world", "technical term"]
     
 </dd>
 </dl>
@@ -9939,7 +9955,6 @@ client.conversational_ai.knowledge_base.list(
     folders_first=True,
     sort_direction="asc",
     sort_by="name",
-    use_typesense=True,
     cursor="cursor",
 )
 
@@ -10026,14 +10041,6 @@ client.conversational_ai.knowledge_base.list(
 <dd>
 
 **sort_by:** `typing.Optional[KnowledgeBaseSortBy]` — The field to sort the results by
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_typesense:** `typing.Optional[bool]` — If set to true, the endpoint will use typesense DB to search for the documents).
     
 </dd>
 </dl>
@@ -17280,7 +17287,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 
 
     An optional content to initialize the Studio project with. If this is set, 'from_url' and 'from_document' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
-    
+
     Example:
     [{"name": "Chapter A", "blocks": [{"sub_type": "p", "nodes": [{"voice_id": "6lCwbsX1yVjD49QmpkT0", "text": "A", "type": "tts_node"}, {"voice_id": "6lCwbsX1yVjD49QmpkT1", "text": "B", "type": "tts_node"}]}, {"sub_type": "h1", "nodes": [{"voice_id": "6lCwbsX1yVjD49QmpkT0", "text": "C", "type": "tts_node"}, {"voice_id": "6lCwbsX1yVjD49QmpkT1", "text": "D", "type": "tts_node"}]}]}, {"name": "Chapter B", "blocks": [{"sub_type": "p", "nodes": [{"voice_id": "6lCwbsX1yVjD49QmpkT0", "text": "E", "type": "tts_node"}, {"voice_id": "6lCwbsX1yVjD49QmpkT1", "text": "F", "type": "tts_node"}]}, {"sub_type": "h2", "nodes": [{"voice_id": "6lCwbsX1yVjD49QmpkT0", "text": "G", "type": "tts_node"}, {"voice_id": "6lCwbsX1yVjD49QmpkT1", "text": "H", "type": "tts_node"}]}]}]
     
@@ -18067,7 +18074,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 
 
     An optional content to initialize the Studio project with. If this is set, 'from_url' and 'from_document' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
-    
+
     Example:
     [{"name": "Chapter A", "blocks": [{"sub_type": "p", "nodes": [{"voice_id": "6lCwbsX1yVjD49QmpkT0", "text": "A", "type": "tts_node"}, {"voice_id": "6lCwbsX1yVjD49QmpkT1", "text": "B", "type": "tts_node"}]}, {"sub_type": "h1", "nodes": [{"voice_id": "6lCwbsX1yVjD49QmpkT0", "text": "C", "type": "tts_node"}, {"voice_id": "6lCwbsX1yVjD49QmpkT1", "text": "D", "type": "tts_node"}]}]}, {"name": "Chapter B", "blocks": [{"sub_type": "p", "nodes": [{"voice_id": "6lCwbsX1yVjD49QmpkT0", "text": "E", "type": "tts_node"}, {"voice_id": "6lCwbsX1yVjD49QmpkT1", "text": "F", "type": "tts_node"}]}, {"sub_type": "h2", "nodes": [{"voice_id": "6lCwbsX1yVjD49QmpkT0", "text": "G", "type": "tts_node"}, {"voice_id": "6lCwbsX1yVjD49QmpkT1", "text": "H", "type": "tts_node"}]}]}]
     
@@ -21661,6 +21668,94 @@ client.workspace.resources.unshare(
 <dd>
 
 **workspace_api_key_id:** `typing.Optional[str]` — The ID of the target workspace API key. This isn't the same as the key itself that would you pass in the header for authentication. Workspace admins can find this in the workspace settings UI.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workspace.resources.<a href="src/elevenlabs/workspace/resources/client.py">copy_to_workspace</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Copies a workspace resource to another workspace.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.workspace.resources.copy_to_workspace(
+    resource_id="resource_id",
+    resource_type="voice",
+    target_user_id="target_user_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**resource_id:** `str` — The ID of the target resource.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**resource_type:** `WorkspaceResourceType` — Resource type of the target resource.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**target_user_id:** `str` — The ID of the target user.
     
 </dd>
 </dl>

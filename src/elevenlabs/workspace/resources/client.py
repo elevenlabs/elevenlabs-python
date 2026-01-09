@@ -197,6 +197,54 @@ class ResourcesClient:
         )
         return _response.data
 
+    def copy_to_workspace(
+        self,
+        resource_id: str,
+        *,
+        resource_type: WorkspaceResourceType,
+        target_user_id: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Any:
+        """
+        Copies a workspace resource to another workspace.
+
+        Parameters
+        ----------
+        resource_id : str
+            The ID of the target resource.
+
+        resource_type : WorkspaceResourceType
+            Resource type of the target resource.
+
+        target_user_id : str
+            The ID of the target user.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.workspace.resources.copy_to_workspace(
+            resource_id="resource_id",
+            resource_type="voice",
+            target_user_id="target_user_id",
+        )
+        """
+        _response = self._raw_client.copy_to_workspace(
+            resource_id, resource_type=resource_type, target_user_id=target_user_id, request_options=request_options
+        )
+        return _response.data
+
 
 class AsyncResourcesClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -403,5 +451,61 @@ class AsyncResourcesClient:
             group_id=group_id,
             workspace_api_key_id=workspace_api_key_id,
             request_options=request_options,
+        )
+        return _response.data
+
+    async def copy_to_workspace(
+        self,
+        resource_id: str,
+        *,
+        resource_type: WorkspaceResourceType,
+        target_user_id: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Any:
+        """
+        Copies a workspace resource to another workspace.
+
+        Parameters
+        ----------
+        resource_id : str
+            The ID of the target resource.
+
+        resource_type : WorkspaceResourceType
+            Resource type of the target resource.
+
+        target_user_id : str
+            The ID of the target user.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.workspace.resources.copy_to_workspace(
+                resource_id="resource_id",
+                resource_type="voice",
+                target_user_id="target_user_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.copy_to_workspace(
+            resource_id, resource_type=resource_type, target_user_id=target_user_id, request_options=request_options
         )
         return _response.data

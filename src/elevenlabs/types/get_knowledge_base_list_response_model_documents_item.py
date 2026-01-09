@@ -22,6 +22,9 @@ from .get_knowledge_base_summary_url_response_model_dependent_agents_item import
     GetKnowledgeBaseSummaryUrlResponseModelDependentAgentsItem,
 )
 from .knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
+from .knowledge_base_folder_path_segment_summary_response_model import (
+    KnowledgeBaseFolderPathSegmentSummaryResponseModel,
+)
 from .resource_access_info import ResourceAccessInfo
 
 
@@ -33,6 +36,7 @@ class GetKnowledgeBaseListResponseModelDocumentsItem_File(UncheckedBaseModel):
     supported_usages: typing.List[DocumentUsageModeEnum]
     access_info: ResourceAccessInfo
     folder_parent_id: typing.Optional[str] = None
+    folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentSummaryResponseModel]] = None
     dependent_agents: typing.List[GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem]
 
     if IS_PYDANTIC_V2:
@@ -53,6 +57,7 @@ class GetKnowledgeBaseListResponseModelDocumentsItem_Folder(UncheckedBaseModel):
     supported_usages: typing.List[DocumentUsageModeEnum]
     access_info: ResourceAccessInfo
     folder_parent_id: typing.Optional[str] = None
+    folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentSummaryResponseModel]] = None
     dependent_agents: typing.List[GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem]
     children_count: int
 
@@ -74,6 +79,7 @@ class GetKnowledgeBaseListResponseModelDocumentsItem_Text(UncheckedBaseModel):
     supported_usages: typing.List[DocumentUsageModeEnum]
     access_info: ResourceAccessInfo
     folder_parent_id: typing.Optional[str] = None
+    folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentSummaryResponseModel]] = None
     dependent_agents: typing.List[GetKnowledgeBaseSummaryTextResponseModelDependentAgentsItem]
 
     if IS_PYDANTIC_V2:
@@ -94,6 +100,7 @@ class GetKnowledgeBaseListResponseModelDocumentsItem_Url(UncheckedBaseModel):
     supported_usages: typing.List[DocumentUsageModeEnum]
     access_info: ResourceAccessInfo
     folder_parent_id: typing.Optional[str] = None
+    folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentSummaryResponseModel]] = None
     dependent_agents: typing.List[GetKnowledgeBaseSummaryUrlResponseModelDependentAgentsItem]
     url: str
 

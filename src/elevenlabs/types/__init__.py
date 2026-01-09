@@ -857,6 +857,7 @@ if typing.TYPE_CHECKING:
     from .dependent_unknown_agent_identifier import DependentUnknownAgentIdentifier
     from .dependent_unknown_tool_identifier import DependentUnknownToolIdentifier
     from .detailed_music_response import DetailedMusicResponse
+    from .detected_entity import DetectedEntity
     from .dialogue_input import DialogueInput
     from .dialogue_input_response_model import DialogueInputResponseModel
     from .discount_response_model import DiscountResponseModel
@@ -1046,6 +1047,9 @@ if typing.TYPE_CHECKING:
     from .knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
     from .knowledge_base_document_type import KnowledgeBaseDocumentType
     from .knowledge_base_folder_path_segment_response_model import KnowledgeBaseFolderPathSegmentResponseModel
+    from .knowledge_base_folder_path_segment_summary_response_model import (
+        KnowledgeBaseFolderPathSegmentSummaryResponseModel,
+    )
     from .knowledge_base_locator import KnowledgeBaseLocator
     from .knowledge_base_sort_by import KnowledgeBaseSortBy
     from .knowledge_base_summary_batch_successful_response_model import KnowledgeBaseSummaryBatchSuccessfulResponseModel
@@ -2412,6 +2416,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DependentUnknownAgentIdentifier": ".dependent_unknown_agent_identifier",
     "DependentUnknownToolIdentifier": ".dependent_unknown_tool_identifier",
     "DetailedMusicResponse": ".detailed_music_response",
+    "DetectedEntity": ".detected_entity",
     "DialogueInput": ".dialogue_input",
     "DialogueInputResponseModel": ".dialogue_input_response_model",
     "DiscountResponseModel": ".discount_response_model",
@@ -2569,6 +2574,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "KnowledgeBaseDocumentMetadataResponseModel": ".knowledge_base_document_metadata_response_model",
     "KnowledgeBaseDocumentType": ".knowledge_base_document_type",
     "KnowledgeBaseFolderPathSegmentResponseModel": ".knowledge_base_folder_path_segment_response_model",
+    "KnowledgeBaseFolderPathSegmentSummaryResponseModel": ".knowledge_base_folder_path_segment_summary_response_model",
     "KnowledgeBaseLocator": ".knowledge_base_locator",
     "KnowledgeBaseSortBy": ".knowledge_base_sort_by",
     "KnowledgeBaseSummaryBatchSuccessfulResponseModel": ".knowledge_base_summary_batch_successful_response_model",
@@ -3883,6 +3889,7 @@ __all__ = [
     "DependentUnknownAgentIdentifier",
     "DependentUnknownToolIdentifier",
     "DetailedMusicResponse",
+    "DetectedEntity",
     "DialogueInput",
     "DialogueInputResponseModel",
     "DiscountResponseModel",
@@ -4040,6 +4047,7 @@ __all__ = [
     "KnowledgeBaseDocumentMetadataResponseModel",
     "KnowledgeBaseDocumentType",
     "KnowledgeBaseFolderPathSegmentResponseModel",
+    "KnowledgeBaseFolderPathSegmentSummaryResponseModel",
     "KnowledgeBaseLocator",
     "KnowledgeBaseSortBy",
     "KnowledgeBaseSummaryBatchSuccessfulResponseModel",

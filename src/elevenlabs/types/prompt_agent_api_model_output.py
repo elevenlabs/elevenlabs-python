@@ -98,6 +98,11 @@ class PromptAgentApiModelOutput(UncheckedBaseModel):
     Configuration for backup LLM cascading. Can be disabled, use system defaults, or specify custom order.
     """
 
+    cascade_timeout_seconds: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Time in seconds before cascading to backup LLM. Must be between 2 and 15 seconds.
+    """
+
     tools: typing.Optional[typing.List[PromptAgentApiModelOutputToolsItem]] = pydantic.Field(default=None)
     """
     A list of tools that the agent can use over the course of the conversation, use tool_ids instead
