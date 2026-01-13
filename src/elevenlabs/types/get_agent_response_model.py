@@ -12,6 +12,7 @@ from .agent_platform_settings_response_model import AgentPlatformSettingsRespons
 from .agent_workflow_response_model import AgentWorkflowResponseModel
 from .conversational_config import ConversationalConfig
 from .get_agent_response_model_phone_numbers_item import GetAgentResponseModelPhoneNumbersItem
+from .get_whats_app_account_response import GetWhatsAppAccountResponse
 from .resource_access_info import ResourceAccessInfo
 
 
@@ -44,6 +45,11 @@ class GetAgentResponseModel(UncheckedBaseModel):
     phone_numbers: typing.Optional[typing.List[GetAgentResponseModelPhoneNumbersItem]] = pydantic.Field(default=None)
     """
     The phone numbers of the agent
+    """
+
+    whatsapp_accounts: typing.Optional[typing.List[GetWhatsAppAccountResponse]] = pydantic.Field(default=None)
+    """
+    WhatsApp accounts assigned to the agent
     """
 
     workflow: typing.Optional[AgentWorkflowResponseModel] = pydantic.Field(default=None)

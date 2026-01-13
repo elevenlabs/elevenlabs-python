@@ -14,9 +14,6 @@ from .conversation_history_batch_call_model import ConversationHistoryBatchCallM
 from .conversation_history_eleven_assistant_common_model import ConversationHistoryElevenAssistantCommonModel
 from .conversation_history_error_common_model import ConversationHistoryErrorCommonModel
 from .conversation_history_feedback_common_model import ConversationHistoryFeedbackCommonModel
-from .conversation_history_metadata_common_model_initiation_trigger import (
-    ConversationHistoryMetadataCommonModelInitiationTrigger,
-)
 from .conversation_history_metadata_common_model_phone_call import ConversationHistoryMetadataCommonModelPhoneCall
 from .conversation_history_rag_usage_common_model import ConversationHistoryRagUsageCommonModel
 from .conversation_initiation_source import ConversationInitiationSource
@@ -47,7 +44,6 @@ class ConversationHistoryMetadataCommonModel(UncheckedBaseModel):
     conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None
     conversation_initiation_source_version: typing.Optional[str] = None
     timezone: typing.Optional[str] = None
-    initiation_trigger: typing.Optional[ConversationHistoryMetadataCommonModelInitiationTrigger] = None
     async_metadata: typing.Optional[AsyncConversationMetadata] = None
     whatsapp: typing.Optional[WhatsAppConversationInfo] = None
     agent_created_from: typing.Optional[AgentDefinitionSource] = None

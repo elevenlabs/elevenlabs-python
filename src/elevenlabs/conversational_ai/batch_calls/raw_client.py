@@ -35,6 +35,7 @@ class RawBatchCallsClient:
         scheduled_time_unix: typing.Optional[int] = OMIT,
         agent_phone_number_id: typing.Optional[str] = OMIT,
         whatsapp_params: typing.Optional[BatchCallWhatsAppParams] = OMIT,
+        timezone: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[BatchCallResponse]:
         """
@@ -53,6 +54,8 @@ class RawBatchCallsClient:
         agent_phone_number_id : typing.Optional[str]
 
         whatsapp_params : typing.Optional[BatchCallWhatsAppParams]
+
+        timezone : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -76,6 +79,7 @@ class RawBatchCallsClient:
                 "whatsapp_params": convert_and_respect_annotation_metadata(
                     object_=whatsapp_params, annotation=BatchCallWhatsAppParams, direction="write"
                 ),
+                "timezone": timezone,
             },
             headers={
                 "content-type": "application/json",
@@ -329,6 +333,7 @@ class AsyncRawBatchCallsClient:
         scheduled_time_unix: typing.Optional[int] = OMIT,
         agent_phone_number_id: typing.Optional[str] = OMIT,
         whatsapp_params: typing.Optional[BatchCallWhatsAppParams] = OMIT,
+        timezone: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[BatchCallResponse]:
         """
@@ -347,6 +352,8 @@ class AsyncRawBatchCallsClient:
         agent_phone_number_id : typing.Optional[str]
 
         whatsapp_params : typing.Optional[BatchCallWhatsAppParams]
+
+        timezone : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -370,6 +377,7 @@ class AsyncRawBatchCallsClient:
                 "whatsapp_params": convert_and_respect_annotation_metadata(
                     object_=whatsapp_params, annotation=BatchCallWhatsAppParams, direction="write"
                 ),
+                "timezone": timezone,
             },
             headers={
                 "content-type": "application/json",

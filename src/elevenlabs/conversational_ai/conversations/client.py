@@ -6,6 +6,7 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...types.conversation_initiation_source import ConversationInitiationSource
 from ...types.conversation_signed_url_response_model import ConversationSignedUrlResponseModel
 from ...types.evaluation_success_result import EvaluationSuccessResult
 from ...types.get_conversation_response_model import GetConversationResponseModel
@@ -144,6 +145,7 @@ class ConversationsClient:
         page_size: typing.Optional[int] = None,
         summary_mode: typing.Optional[ConversationsListRequestSummaryMode] = None,
         search: typing.Optional[str] = None,
+        conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationsPageResponseModel:
         """
@@ -205,6 +207,8 @@ class ConversationsClient:
         search : typing.Optional[str]
             Full-text or fuzzy search over transcript messages
 
+        conversation_initiation_source : typing.Optional[ConversationInitiationSource]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -235,6 +239,7 @@ class ConversationsClient:
             page_size=1,
             summary_mode="exclude",
             search="search",
+            conversation_initiation_source="unknown",
         )
         """
         _response = self._raw_client.list(
@@ -256,6 +261,7 @@ class ConversationsClient:
             page_size=page_size,
             summary_mode=summary_mode,
             search=search,
+            conversation_initiation_source=conversation_initiation_source,
             request_options=request_options,
         )
         return _response.data
@@ -482,6 +488,7 @@ class AsyncConversationsClient:
         page_size: typing.Optional[int] = None,
         summary_mode: typing.Optional[ConversationsListRequestSummaryMode] = None,
         search: typing.Optional[str] = None,
+        conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationsPageResponseModel:
         """
@@ -543,6 +550,8 @@ class AsyncConversationsClient:
         search : typing.Optional[str]
             Full-text or fuzzy search over transcript messages
 
+        conversation_initiation_source : typing.Optional[ConversationInitiationSource]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -578,6 +587,7 @@ class AsyncConversationsClient:
                 page_size=1,
                 summary_mode="exclude",
                 search="search",
+                conversation_initiation_source="unknown",
             )
 
 
@@ -602,6 +612,7 @@ class AsyncConversationsClient:
             page_size=page_size,
             summary_mode=summary_mode,
             search=search,
+            conversation_initiation_source=conversation_initiation_source,
             request_options=request_options,
         )
         return _response.data

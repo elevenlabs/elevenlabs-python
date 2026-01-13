@@ -4,8 +4,8 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.allowed_output_formats import AllowedOutputFormats
 from .raw_client import AsyncRawTextToSoundEffectsClient, RawTextToSoundEffectsClient
-from .types.text_to_sound_effects_convert_request_output_format import TextToSoundEffectsConvertRequestOutputFormat
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -30,7 +30,7 @@ class TextToSoundEffectsClient:
         self,
         *,
         text: str,
-        output_format: typing.Optional[TextToSoundEffectsConvertRequestOutputFormat] = None,
+        output_format: typing.Optional[AllowedOutputFormats] = None,
         loop: typing.Optional[bool] = OMIT,
         duration_seconds: typing.Optional[float] = OMIT,
         prompt_influence: typing.Optional[float] = OMIT,
@@ -45,7 +45,7 @@ class TextToSoundEffectsClient:
         text : str
             The text that will get converted into a sound effect.
 
-        output_format : typing.Optional[TextToSoundEffectsConvertRequestOutputFormat]
+        output_format : typing.Optional[AllowedOutputFormats]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         loop : typing.Optional[bool]
@@ -110,7 +110,7 @@ class AsyncTextToSoundEffectsClient:
         self,
         *,
         text: str,
-        output_format: typing.Optional[TextToSoundEffectsConvertRequestOutputFormat] = None,
+        output_format: typing.Optional[AllowedOutputFormats] = None,
         loop: typing.Optional[bool] = OMIT,
         duration_seconds: typing.Optional[float] = OMIT,
         prompt_influence: typing.Optional[float] = OMIT,
@@ -125,7 +125,7 @@ class AsyncTextToSoundEffectsClient:
         text : str
             The text that will get converted into a sound effect.
 
-        output_format : typing.Optional[TextToSoundEffectsConvertRequestOutputFormat]
+        output_format : typing.Optional[AllowedOutputFormats]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         loop : typing.Optional[bool]

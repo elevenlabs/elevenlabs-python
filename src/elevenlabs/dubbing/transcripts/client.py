@@ -4,36 +4,36 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
-from .raw_client import AsyncRawTranscriptClient, RawTranscriptClient
-from .types.transcript_get_transcript_for_dub_request_format_type import TranscriptGetTranscriptForDubRequestFormatType
-from .types.transcript_get_transcript_for_dub_response import TranscriptGetTranscriptForDubResponse
+from ...types.dubbing_transcripts_response_model import DubbingTranscriptsResponseModel
+from .raw_client import AsyncRawTranscriptsClient, RawTranscriptsClient
+from .types.transcripts_get_request_format_type import TranscriptsGetRequestFormatType
 
 
-class TranscriptClient:
+class TranscriptsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawTranscriptClient(client_wrapper=client_wrapper)
+        self._raw_client = RawTranscriptsClient(client_wrapper=client_wrapper)
 
     @property
-    def with_raw_response(self) -> RawTranscriptClient:
+    def with_raw_response(self) -> RawTranscriptsClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        RawTranscriptClient
+        RawTranscriptsClient
         """
         return self._raw_client
 
-    def get_transcript_for_dub(
+    def get(
         self,
         dubbing_id: str,
         language_code: str,
+        format_type: TranscriptsGetRequestFormatType,
         *,
-        format_type: typing.Optional[TranscriptGetTranscriptForDubRequestFormatType] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> TranscriptGetTranscriptForDubResponse:
+    ) -> DubbingTranscriptsResponseModel:
         """
-        Returns transcript for the dub as an SRT or WEBVTT file.
+        Fetch the transcript for one of the languages in a dub.
 
         Parameters
         ----------
@@ -43,7 +43,7 @@ class TranscriptClient:
         language_code : str
             ISO-693 language code to retrieve the transcript for. Use 'source' to fetch the transcript of the original media.
 
-        format_type : typing.Optional[TranscriptGetTranscriptForDubRequestFormatType]
+        format_type : TranscriptsGetRequestFormatType
             Format to return transcript in. For subtitles use either 'srt' or 'webvtt', and for a full transcript use 'json'. The 'json' format is not yet supported for Dubbing Studio.
 
         request_options : typing.Optional[RequestOptions]
@@ -51,7 +51,7 @@ class TranscriptClient:
 
         Returns
         -------
-        TranscriptGetTranscriptForDubResponse
+        DubbingTranscriptsResponseModel
             Successful Response
 
         Examples
@@ -61,43 +61,41 @@ class TranscriptClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.dubbing.transcript.get_transcript_for_dub(
+        client.dubbing.transcripts.get(
             dubbing_id="dubbing_id",
             language_code="source",
             format_type="srt",
         )
         """
-        _response = self._raw_client.get_transcript_for_dub(
-            dubbing_id, language_code, format_type=format_type, request_options=request_options
-        )
+        _response = self._raw_client.get(dubbing_id, language_code, format_type, request_options=request_options)
         return _response.data
 
 
-class AsyncTranscriptClient:
+class AsyncTranscriptsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawTranscriptClient(client_wrapper=client_wrapper)
+        self._raw_client = AsyncRawTranscriptsClient(client_wrapper=client_wrapper)
 
     @property
-    def with_raw_response(self) -> AsyncRawTranscriptClient:
+    def with_raw_response(self) -> AsyncRawTranscriptsClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        AsyncRawTranscriptClient
+        AsyncRawTranscriptsClient
         """
         return self._raw_client
 
-    async def get_transcript_for_dub(
+    async def get(
         self,
         dubbing_id: str,
         language_code: str,
+        format_type: TranscriptsGetRequestFormatType,
         *,
-        format_type: typing.Optional[TranscriptGetTranscriptForDubRequestFormatType] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> TranscriptGetTranscriptForDubResponse:
+    ) -> DubbingTranscriptsResponseModel:
         """
-        Returns transcript for the dub as an SRT or WEBVTT file.
+        Fetch the transcript for one of the languages in a dub.
 
         Parameters
         ----------
@@ -107,7 +105,7 @@ class AsyncTranscriptClient:
         language_code : str
             ISO-693 language code to retrieve the transcript for. Use 'source' to fetch the transcript of the original media.
 
-        format_type : typing.Optional[TranscriptGetTranscriptForDubRequestFormatType]
+        format_type : TranscriptsGetRequestFormatType
             Format to return transcript in. For subtitles use either 'srt' or 'webvtt', and for a full transcript use 'json'. The 'json' format is not yet supported for Dubbing Studio.
 
         request_options : typing.Optional[RequestOptions]
@@ -115,7 +113,7 @@ class AsyncTranscriptClient:
 
         Returns
         -------
-        TranscriptGetTranscriptForDubResponse
+        DubbingTranscriptsResponseModel
             Successful Response
 
         Examples
@@ -130,7 +128,7 @@ class AsyncTranscriptClient:
 
 
         async def main() -> None:
-            await client.dubbing.transcript.get_transcript_for_dub(
+            await client.dubbing.transcripts.get(
                 dubbing_id="dubbing_id",
                 language_code="source",
                 format_type="srt",
@@ -139,7 +137,5 @@ class AsyncTranscriptClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_transcript_for_dub(
-            dubbing_id, language_code, format_type=format_type, request_options=request_options
-        )
+        _response = await self._raw_client.get(dubbing_id, language_code, format_type, request_options=request_options)
         return _response.data

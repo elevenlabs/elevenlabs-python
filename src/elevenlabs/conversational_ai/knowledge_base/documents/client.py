@@ -10,6 +10,7 @@ from ....core.request_options import RequestOptions
 from ....types.add_knowledge_base_response_model import AddKnowledgeBaseResponseModel
 from ....types.get_knowledge_base_dependent_agents_response_model import GetKnowledgeBaseDependentAgentsResponseModel
 from ....types.knowledge_base_dependent_type import KnowledgeBaseDependentType
+from ....types.knowledge_base_source_file_url_response_model import KnowledgeBaseSourceFileUrlResponseModel
 from .raw_client import AsyncRawDocumentsClient, RawDocumentsClient
 from .types.documents_get_response import DocumentsGetResponse
 from .types.documents_update_response import DocumentsUpdateResponse
@@ -378,6 +379,39 @@ class DocumentsClient:
         )
         """
         _response = self._raw_client.get_content(documentation_id, request_options=request_options)
+        return _response.data
+
+    def get_source_file_url(
+        self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> KnowledgeBaseSourceFileUrlResponseModel:
+        """
+        Get a signed URL to download the original source file of a file-type document from the knowledge base
+
+        Parameters
+        ----------
+        documentation_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        KnowledgeBaseSourceFileUrlResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.knowledge_base.documents.get_source_file_url(
+            documentation_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._raw_client.get_source_file_url(documentation_id, request_options=request_options)
         return _response.data
 
     @property
@@ -820,6 +854,47 @@ class AsyncDocumentsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get_content(documentation_id, request_options=request_options)
+        return _response.data
+
+    async def get_source_file_url(
+        self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> KnowledgeBaseSourceFileUrlResponseModel:
+        """
+        Get a signed URL to download the original source file of a file-type document from the knowledge base
+
+        Parameters
+        ----------
+        documentation_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        KnowledgeBaseSourceFileUrlResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.knowledge_base.documents.get_source_file_url(
+                documentation_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_source_file_url(documentation_id, request_options=request_options)
         return _response.data
 
     @property

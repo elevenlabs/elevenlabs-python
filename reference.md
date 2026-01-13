@@ -549,7 +549,7 @@ client.text_to_sound_effects.convert(
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[TextToSoundEffectsConvertRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -1594,7 +1594,7 @@ client.text_to_dialogue.convert(
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[TextToDialogueConvertRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -1731,7 +1731,7 @@ client.text_to_dialogue.stream(
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[TextToDialogueStreamRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -1871,7 +1871,7 @@ for chunk in response.data:
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[TextToDialogueStreamWithTimestampsRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -2007,7 +2007,7 @@ client.text_to_dialogue.convert_with_timestamps(
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[TextToDialogueConvertWithTimestampsRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -2446,7 +2446,7 @@ client.text_to_voice.create_previews(
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[TextToVoiceCreatePreviewsRequestOutputFormat]` — The output format of the generated audio.
+**output_format:** `typing.Optional[AllowedOutputFormats]` — The output format of the generated audio.
     
 </dd>
 </dl>
@@ -2685,7 +2685,7 @@ client.text_to_voice.design(
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[TextToVoiceDesignRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -2877,7 +2877,7 @@ client.text_to_voice.remix(
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[TextToVoiceRemixRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -6767,7 +6767,7 @@ client.music.compose()
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[MusicComposeRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -6899,7 +6899,7 @@ client.music.compose_detailed()
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[MusicComposeDetailedRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -7031,7 +7031,7 @@ client.music.stream()
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[MusicStreamRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -7305,6 +7305,7 @@ client.conversational_ai.conversations.list(
     page_size=1,
     summary_mode="exclude",
     search="search",
+    conversation_initiation_source="unknown",
 )
 
 ```
@@ -7458,6 +7459,14 @@ client.conversational_ai.conversations.list(
 <dd>
 
 **search:** `typing.Optional[str]` — Full-text or fuzzy search over transcript messages
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**conversation_initiation_source:** `typing.Optional[ConversationInitiationSource]` 
     
 </dd>
 </dl>
@@ -11162,6 +11171,14 @@ client.conversational_ai.batch_calls.create(
 <dl>
 <dd>
 
+**timezone:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -13752,6 +13769,76 @@ client.conversational_ai.knowledge_base.documents.get_content(
 </dl>
 </details>
 
+<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">get_source_file_url</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a signed URL to download the original source file of a file-type document from the knowledge base
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.knowledge_base.documents.get_source_file_url(
+    documentation_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**documentation_id:** `str` — The id of a document from the knowledge base. This is returned on document addition.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ConversationalAi KnowledgeBase Document
 <details><summary><code>client.conversational_ai.knowledge_base.document.<a href="src/elevenlabs/conversational_ai/knowledge_base/document/client.py">compute_rag_index</a>(...)</code></summary>
 <dl>
@@ -15615,7 +15702,7 @@ client = ElevenLabs(
 )
 client.dubbing.transcript.get_transcript_for_dub(
     dubbing_id="dubbing_id",
-    language_code="language_code",
+    language_code="source",
     format_type="srt",
 )
 
@@ -15641,7 +15728,7 @@ client.dubbing.transcript.get_transcript_for_dub(
 <dl>
 <dd>
 
-**language_code:** `str` — ID of the language.
+**language_code:** `str` — ISO-693 language code to retrieve the transcript for. Use 'source' to fetch the transcript of the original media.
     
 </dd>
 </dl>
@@ -15650,6 +15737,95 @@ client.dubbing.transcript.get_transcript_for_dub(
 <dd>
 
 **format_type:** `typing.Optional[TranscriptGetTranscriptForDubRequestFormatType]` — Format to return transcript in. For subtitles use either 'srt' or 'webvtt', and for a full transcript use 'json'. The 'json' format is not yet supported for Dubbing Studio.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Dubbing Transcripts
+<details><summary><code>client.dubbing.transcripts.<a href="src/elevenlabs/dubbing/transcripts/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Fetch the transcript for one of the languages in a dub.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.dubbing.transcripts.get(
+    dubbing_id="dubbing_id",
+    language_code="source",
+    format_type="srt",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**dubbing_id:** `str` — ID of the dubbing project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language_code:** `str` — ISO-693 language code to retrieve the transcript for. Use 'source' to fetch the transcript of the original media.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**format_type:** `TranscriptsGetRequestFormatType` — Format to return transcript in. For subtitles use either 'srt' or 'webvtt', and for a full transcript use 'json'. The 'json' format is not yet supported for Dubbing Studio.
     
 </dd>
 </dl>

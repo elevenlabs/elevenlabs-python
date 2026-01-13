@@ -9,29 +9,26 @@ from ...core.http_response import AsyncHttpResponse, HttpResponse
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
-from ...errors.forbidden_error import ForbiddenError
-from ...errors.not_found_error import NotFoundError
-from ...errors.too_early_error import TooEarlyError
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
+from ...types.dubbing_transcripts_response_model import DubbingTranscriptsResponseModel
 from ...types.http_validation_error import HttpValidationError
-from .types.transcript_get_transcript_for_dub_request_format_type import TranscriptGetTranscriptForDubRequestFormatType
-from .types.transcript_get_transcript_for_dub_response import TranscriptGetTranscriptForDubResponse
+from .types.transcripts_get_request_format_type import TranscriptsGetRequestFormatType
 
 
-class RawTranscriptClient:
+class RawTranscriptsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_transcript_for_dub(
+    def get(
         self,
         dubbing_id: str,
         language_code: str,
+        format_type: TranscriptsGetRequestFormatType,
         *,
-        format_type: typing.Optional[TranscriptGetTranscriptForDubRequestFormatType] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[TranscriptGetTranscriptForDubResponse]:
+    ) -> HttpResponse[DubbingTranscriptsResponseModel]:
         """
-        Returns transcript for the dub as an SRT or WEBVTT file.
+        Fetch the transcript for one of the languages in a dub.
 
         Parameters
         ----------
@@ -41,7 +38,7 @@ class RawTranscriptClient:
         language_code : str
             ISO-693 language code to retrieve the transcript for. Use 'source' to fetch the transcript of the original media.
 
-        format_type : typing.Optional[TranscriptGetTranscriptForDubRequestFormatType]
+        format_type : TranscriptsGetRequestFormatType
             Format to return transcript in. For subtitles use either 'srt' or 'webvtt', and for a full transcript use 'json'. The 'json' format is not yet supported for Dubbing Studio.
 
         request_options : typing.Optional[RequestOptions]
@@ -49,49 +46,24 @@ class RawTranscriptClient:
 
         Returns
         -------
-        HttpResponse[TranscriptGetTranscriptForDubResponse]
+        HttpResponse[DubbingTranscriptsResponseModel]
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/{jsonable_encoder(dubbing_id)}/transcript/{jsonable_encoder(language_code)}",
+            f"v1/dubbing/{jsonable_encoder(dubbing_id)}/transcripts/{jsonable_encoder(language_code)}/format/{jsonable_encoder(format_type)}",
             method="GET",
-            params={
-                "format_type": format_type,
-            },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    TranscriptGetTranscriptForDubResponse,
+                    DubbingTranscriptsResponseModel,
                     construct_type(
-                        type_=TranscriptGetTranscriptForDubResponse,  # type: ignore
+                        type_=DubbingTranscriptsResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        construct_type(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        construct_type(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
@@ -99,17 +71,6 @@ class RawTranscriptClient:
                         HttpValidationError,
                         construct_type(
                             type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 425:
-                raise TooEarlyError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        construct_type(
-                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -120,20 +81,20 @@ class RawTranscriptClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
-class AsyncRawTranscriptClient:
+class AsyncRawTranscriptsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_transcript_for_dub(
+    async def get(
         self,
         dubbing_id: str,
         language_code: str,
+        format_type: TranscriptsGetRequestFormatType,
         *,
-        format_type: typing.Optional[TranscriptGetTranscriptForDubRequestFormatType] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[TranscriptGetTranscriptForDubResponse]:
+    ) -> AsyncHttpResponse[DubbingTranscriptsResponseModel]:
         """
-        Returns transcript for the dub as an SRT or WEBVTT file.
+        Fetch the transcript for one of the languages in a dub.
 
         Parameters
         ----------
@@ -143,7 +104,7 @@ class AsyncRawTranscriptClient:
         language_code : str
             ISO-693 language code to retrieve the transcript for. Use 'source' to fetch the transcript of the original media.
 
-        format_type : typing.Optional[TranscriptGetTranscriptForDubRequestFormatType]
+        format_type : TranscriptsGetRequestFormatType
             Format to return transcript in. For subtitles use either 'srt' or 'webvtt', and for a full transcript use 'json'. The 'json' format is not yet supported for Dubbing Studio.
 
         request_options : typing.Optional[RequestOptions]
@@ -151,49 +112,24 @@ class AsyncRawTranscriptClient:
 
         Returns
         -------
-        AsyncHttpResponse[TranscriptGetTranscriptForDubResponse]
+        AsyncHttpResponse[DubbingTranscriptsResponseModel]
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/{jsonable_encoder(dubbing_id)}/transcript/{jsonable_encoder(language_code)}",
+            f"v1/dubbing/{jsonable_encoder(dubbing_id)}/transcripts/{jsonable_encoder(language_code)}/format/{jsonable_encoder(format_type)}",
             method="GET",
-            params={
-                "format_type": format_type,
-            },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    TranscriptGetTranscriptForDubResponse,
+                    DubbingTranscriptsResponseModel,
                     construct_type(
-                        type_=TranscriptGetTranscriptForDubResponse,  # type: ignore
+                        type_=DubbingTranscriptsResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 403:
-                raise ForbiddenError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        construct_type(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        construct_type(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
@@ -201,17 +137,6 @@ class AsyncRawTranscriptClient:
                         HttpValidationError,
                         construct_type(
                             type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 425:
-                raise TooEarlyError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        construct_type(
-                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

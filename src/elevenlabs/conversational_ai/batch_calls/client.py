@@ -39,6 +39,7 @@ class BatchCallsClient:
         scheduled_time_unix: typing.Optional[int] = OMIT,
         agent_phone_number_id: typing.Optional[str] = OMIT,
         whatsapp_params: typing.Optional[BatchCallWhatsAppParams] = OMIT,
+        timezone: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BatchCallResponse:
         """
@@ -57,6 +58,8 @@ class BatchCallsClient:
         agent_phone_number_id : typing.Optional[str]
 
         whatsapp_params : typing.Optional[BatchCallWhatsAppParams]
+
+        timezone : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -86,6 +89,7 @@ class BatchCallsClient:
             scheduled_time_unix=scheduled_time_unix,
             agent_phone_number_id=agent_phone_number_id,
             whatsapp_params=whatsapp_params,
+            timezone=timezone,
             request_options=request_options,
         )
         return _response.data
@@ -246,6 +250,7 @@ class AsyncBatchCallsClient:
         scheduled_time_unix: typing.Optional[int] = OMIT,
         agent_phone_number_id: typing.Optional[str] = OMIT,
         whatsapp_params: typing.Optional[BatchCallWhatsAppParams] = OMIT,
+        timezone: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BatchCallResponse:
         """
@@ -264,6 +269,8 @@ class AsyncBatchCallsClient:
         agent_phone_number_id : typing.Optional[str]
 
         whatsapp_params : typing.Optional[BatchCallWhatsAppParams]
+
+        timezone : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -301,6 +308,7 @@ class AsyncBatchCallsClient:
             scheduled_time_unix=scheduled_time_unix,
             agent_phone_number_id=agent_phone_number_id,
             whatsapp_params=whatsapp_params,
+            timezone=timezone,
             request_options=request_options,
         )
         return _response.data
