@@ -6,8 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .voice_design_request_model_model_id import VoiceDesignRequestModelModelId
-_dynamic_imports: typing.Dict[str, str] = {"VoiceDesignRequestModelModelId": ".voice_design_request_model_model_id"}
+    from .transcripts_get_request_format_type import TranscriptsGetRequestFormatType
+_dynamic_imports: typing.Dict[str, str] = {"TranscriptsGetRequestFormatType": ".transcripts_get_request_format_type"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["VoiceDesignRequestModelModelId"]
+__all__ = ["TranscriptsGetRequestFormatType"]

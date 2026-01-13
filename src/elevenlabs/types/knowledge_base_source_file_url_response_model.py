@@ -7,9 +7,10 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class DefaultConversationInitiationTrigger(UncheckedBaseModel):
+class KnowledgeBaseSourceFileUrlResponseModel(UncheckedBaseModel):
+    signed_url: str = pydantic.Field()
     """
-    Default trigger for standard conversation initiation.
+    Signed URL to download the source file directly
     """
 
     if IS_PYDANTIC_V2:

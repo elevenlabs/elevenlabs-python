@@ -5,14 +5,12 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .dubbing_transcript_utterance import DubbingTranscriptUtterance
 
 
-class ZendeskConversationInitiationTrigger(UncheckedBaseModel):
-    """
-    Trigger for Zendesk-initiated conversations.
-    """
-
-    ticket_id: int
+class DubbingTranscript(UncheckedBaseModel):
+    language: str
+    utterances: typing.List[DubbingTranscriptUtterance]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -2,7 +2,7 @@
 
 import typing
 
-MusicComposeRequestOutputFormat = typing.Union[
+AllowedOutputFormats = typing.Union[
     typing.Literal[
         "mp3_22050_32",
         "mp3_24000_48",

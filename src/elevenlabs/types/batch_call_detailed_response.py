@@ -24,6 +24,7 @@ class BatchCallDetailedResponse(UncheckedBaseModel):
     agent_id: str
     created_at_unix: int
     scheduled_time_unix: int
+    timezone: typing.Optional[str] = None
     total_calls_dispatched: int
     total_calls_scheduled: int
     total_calls_finished: int

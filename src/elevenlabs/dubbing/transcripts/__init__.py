@@ -6,10 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .text_to_sound_effects_convert_request_output_format import TextToSoundEffectsConvertRequestOutputFormat
-_dynamic_imports: typing.Dict[str, str] = {
-    "TextToSoundEffectsConvertRequestOutputFormat": ".text_to_sound_effects_convert_request_output_format"
-}
+    from .types import TranscriptsGetRequestFormatType
+_dynamic_imports: typing.Dict[str, str] = {"TranscriptsGetRequestFormatType": ".types"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -33,4 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["TextToSoundEffectsConvertRequestOutputFormat"]
+__all__ = ["TranscriptsGetRequestFormatType"]

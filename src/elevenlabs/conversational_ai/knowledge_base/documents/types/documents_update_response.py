@@ -46,6 +46,7 @@ class DocumentsUpdateResponse_File(UncheckedBaseModel):
     folder_parent_id: typing.Optional[str] = None
     folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentResponseModel]] = None
     extracted_inner_html: str
+    filename: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

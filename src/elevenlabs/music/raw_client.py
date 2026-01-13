@@ -12,13 +12,10 @@ from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
+from ..types.allowed_output_formats import AllowedOutputFormats
 from ..types.http_validation_error import HttpValidationError
 from ..types.music_prompt import MusicPrompt
-from .types.music_compose_detailed_request_output_format import MusicComposeDetailedRequestOutputFormat
-from .types.music_compose_request_output_format import MusicComposeRequestOutputFormat
-from .types.music_separate_stems_request_output_format import MusicSeparateStemsRequestOutputFormat
 from .types.music_separate_stems_request_stem_variation_id import MusicSeparateStemsRequestStemVariationId
-from .types.music_stream_request_output_format import MusicStreamRequestOutputFormat
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -32,7 +29,7 @@ class RawMusicClient:
     def compose(
         self,
         *,
-        output_format: typing.Optional[MusicComposeRequestOutputFormat] = None,
+        output_format: typing.Optional[AllowedOutputFormats] = None,
         prompt: typing.Optional[str] = OMIT,
         composition_plan: typing.Optional[MusicPrompt] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
@@ -48,7 +45,7 @@ class RawMusicClient:
 
         Parameters
         ----------
-        output_format : typing.Optional[MusicComposeRequestOutputFormat]
+        output_format : typing.Optional[AllowedOutputFormats]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         prompt : typing.Optional[str]
@@ -140,7 +137,7 @@ class RawMusicClient:
     def compose_detailed(
         self,
         *,
-        output_format: typing.Optional[MusicComposeDetailedRequestOutputFormat] = None,
+        output_format: typing.Optional[AllowedOutputFormats] = None,
         prompt: typing.Optional[str] = OMIT,
         composition_plan: typing.Optional[MusicPrompt] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
@@ -156,7 +153,7 @@ class RawMusicClient:
 
         Parameters
         ----------
-        output_format : typing.Optional[MusicComposeDetailedRequestOutputFormat]
+        output_format : typing.Optional[AllowedOutputFormats]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         prompt : typing.Optional[str]
@@ -248,7 +245,7 @@ class RawMusicClient:
     def stream(
         self,
         *,
-        output_format: typing.Optional[MusicStreamRequestOutputFormat] = None,
+        output_format: typing.Optional[AllowedOutputFormats] = None,
         prompt: typing.Optional[str] = OMIT,
         composition_plan: typing.Optional[MusicPrompt] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
@@ -262,7 +259,7 @@ class RawMusicClient:
 
         Parameters
         ----------
-        output_format : typing.Optional[MusicStreamRequestOutputFormat]
+        output_format : typing.Optional[AllowedOutputFormats]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         prompt : typing.Optional[str]
@@ -347,7 +344,7 @@ class RawMusicClient:
         self,
         *,
         file: core.File,
-        output_format: typing.Optional[MusicSeparateStemsRequestOutputFormat] = None,
+        output_format: typing.Optional[AllowedOutputFormats] = None,
         stem_variation_id: typing.Optional[MusicSeparateStemsRequestStemVariationId] = OMIT,
         sign_with_c_2_pa: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -360,7 +357,7 @@ class RawMusicClient:
         file : core.File
             See core.File for more documentation
 
-        output_format : typing.Optional[MusicSeparateStemsRequestOutputFormat]
+        output_format : typing.Optional[AllowedOutputFormats]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         stem_variation_id : typing.Optional[MusicSeparateStemsRequestStemVariationId]
@@ -432,7 +429,7 @@ class AsyncRawMusicClient:
     async def compose(
         self,
         *,
-        output_format: typing.Optional[MusicComposeRequestOutputFormat] = None,
+        output_format: typing.Optional[AllowedOutputFormats] = None,
         prompt: typing.Optional[str] = OMIT,
         composition_plan: typing.Optional[MusicPrompt] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
@@ -448,7 +445,7 @@ class AsyncRawMusicClient:
 
         Parameters
         ----------
-        output_format : typing.Optional[MusicComposeRequestOutputFormat]
+        output_format : typing.Optional[AllowedOutputFormats]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         prompt : typing.Optional[str]
@@ -541,7 +538,7 @@ class AsyncRawMusicClient:
     async def compose_detailed(
         self,
         *,
-        output_format: typing.Optional[MusicComposeDetailedRequestOutputFormat] = None,
+        output_format: typing.Optional[AllowedOutputFormats] = None,
         prompt: typing.Optional[str] = OMIT,
         composition_plan: typing.Optional[MusicPrompt] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
@@ -557,7 +554,7 @@ class AsyncRawMusicClient:
 
         Parameters
         ----------
-        output_format : typing.Optional[MusicComposeDetailedRequestOutputFormat]
+        output_format : typing.Optional[AllowedOutputFormats]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         prompt : typing.Optional[str]
@@ -650,7 +647,7 @@ class AsyncRawMusicClient:
     async def stream(
         self,
         *,
-        output_format: typing.Optional[MusicStreamRequestOutputFormat] = None,
+        output_format: typing.Optional[AllowedOutputFormats] = None,
         prompt: typing.Optional[str] = OMIT,
         composition_plan: typing.Optional[MusicPrompt] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
@@ -664,7 +661,7 @@ class AsyncRawMusicClient:
 
         Parameters
         ----------
-        output_format : typing.Optional[MusicStreamRequestOutputFormat]
+        output_format : typing.Optional[AllowedOutputFormats]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         prompt : typing.Optional[str]
@@ -750,7 +747,7 @@ class AsyncRawMusicClient:
         self,
         *,
         file: core.File,
-        output_format: typing.Optional[MusicSeparateStemsRequestOutputFormat] = None,
+        output_format: typing.Optional[AllowedOutputFormats] = None,
         stem_variation_id: typing.Optional[MusicSeparateStemsRequestStemVariationId] = OMIT,
         sign_with_c_2_pa: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -763,7 +760,7 @@ class AsyncRawMusicClient:
         file : core.File
             See core.File for more documentation
 
-        output_format : typing.Optional[MusicSeparateStemsRequestOutputFormat]
+        output_format : typing.Optional[AllowedOutputFormats]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         stem_variation_id : typing.Optional[MusicSeparateStemsRequestStemVariationId]

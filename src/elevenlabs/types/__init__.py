@@ -64,6 +64,7 @@ if typing.TYPE_CHECKING:
     )
     from .agent_workspace_overrides_input import AgentWorkspaceOverridesInput
     from .agent_workspace_overrides_output import AgentWorkspaceOverridesOutput
+    from .allowed_output_formats import AllowedOutputFormats
     from .allowlist_item import AllowlistItem
     from .api_integration_webhook_overrides_input import ApiIntegrationWebhookOverridesInput
     from .api_integration_webhook_overrides_input_request_headers_value import (
@@ -678,11 +679,6 @@ if typing.TYPE_CHECKING:
     )
     from .conversation_history_feedback_common_model import ConversationHistoryFeedbackCommonModel
     from .conversation_history_metadata_common_model import ConversationHistoryMetadataCommonModel
-    from .conversation_history_metadata_common_model_initiation_trigger import (
-        ConversationHistoryMetadataCommonModelInitiationTrigger,
-        ConversationHistoryMetadataCommonModelInitiationTrigger_Default,
-        ConversationHistoryMetadataCommonModelInitiationTrigger_Zendesk,
-    )
     from .conversation_history_metadata_common_model_phone_call import (
         ConversationHistoryMetadataCommonModelPhoneCall,
         ConversationHistoryMetadataCommonModelPhoneCall_SipTrunking,
@@ -836,7 +832,6 @@ if typing.TYPE_CHECKING:
     from .dashboard_criteria_chart_model import DashboardCriteriaChartModel
     from .dashboard_data_collection_chart_model import DashboardDataCollectionChartModel
     from .data_collection_result_common_model import DataCollectionResultCommonModel
-    from .default_conversation_initiation_trigger import DefaultConversationInitiationTrigger
     from .delete_chapter_request import DeleteChapterRequest
     from .delete_chapter_response_model import DeleteChapterResponseModel
     from .delete_dubbing_response_model import DeleteDubbingResponseModel
@@ -873,10 +868,13 @@ if typing.TYPE_CHECKING:
     from .dubbing_release_channel import DubbingReleaseChannel
     from .dubbing_render_response_model import DubbingRenderResponseModel
     from .dubbing_resource import DubbingResource
+    from .dubbing_transcript import DubbingTranscript
     from .dubbing_transcript_character import DubbingTranscriptCharacter
     from .dubbing_transcript_response_model import DubbingTranscriptResponseModel
     from .dubbing_transcript_utterance import DubbingTranscriptUtterance
     from .dubbing_transcript_word import DubbingTranscriptWord
+    from .dubbing_transcripts_response_model import DubbingTranscriptsResponseModel
+    from .dubbing_transcripts_response_model_transcript_format import DubbingTranscriptsResponseModelTranscriptFormat
     from .dynamic_variable_assignment import DynamicVariableAssignment
     from .dynamic_variable_update_common_model import DynamicVariableUpdateCommonModel
     from .dynamic_variables_config import DynamicVariablesConfig
@@ -1052,6 +1050,7 @@ if typing.TYPE_CHECKING:
     )
     from .knowledge_base_locator import KnowledgeBaseLocator
     from .knowledge_base_sort_by import KnowledgeBaseSortBy
+    from .knowledge_base_source_file_url_response_model import KnowledgeBaseSourceFileUrlResponseModel
     from .knowledge_base_summary_batch_successful_response_model import KnowledgeBaseSummaryBatchSuccessfulResponseModel
     from .knowledge_base_summary_batch_successful_response_model_data import (
         KnowledgeBaseSummaryBatchSuccessfulResponseModelData,
@@ -1703,7 +1702,6 @@ if typing.TYPE_CHECKING:
     from .workspace_webhook_list_response_model import WorkspaceWebhookListResponseModel
     from .workspace_webhook_response_model import WorkspaceWebhookResponseModel
     from .workspace_webhook_usage_response_model import WorkspaceWebhookUsageResponseModel
-    from .zendesk_conversation_initiation_trigger import ZendeskConversationInitiationTrigger
 _dynamic_imports: typing.Dict[str, str] = {
     "AddChapterResponseModel": ".add_chapter_response_model",
     "AddKnowledgeBaseResponseModel": ".add_knowledge_base_response_model",
@@ -1757,6 +1755,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentWorkflowResponseModelNodesValue_Tool": ".agent_workflow_response_model_nodes_value",
     "AgentWorkspaceOverridesInput": ".agent_workspace_overrides_input",
     "AgentWorkspaceOverridesOutput": ".agent_workspace_overrides_output",
+    "AllowedOutputFormats": ".allowed_output_formats",
     "AllowlistItem": ".allowlist_item",
     "ApiIntegrationWebhookOverridesInput": ".api_integration_webhook_overrides_input",
     "ApiIntegrationWebhookOverridesInputRequestHeadersValue": ".api_integration_webhook_overrides_input_request_headers_value",
@@ -2297,9 +2296,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationHistoryEvaluationCriteriaResultCommonModel": ".conversation_history_evaluation_criteria_result_common_model",
     "ConversationHistoryFeedbackCommonModel": ".conversation_history_feedback_common_model",
     "ConversationHistoryMetadataCommonModel": ".conversation_history_metadata_common_model",
-    "ConversationHistoryMetadataCommonModelInitiationTrigger": ".conversation_history_metadata_common_model_initiation_trigger",
-    "ConversationHistoryMetadataCommonModelInitiationTrigger_Default": ".conversation_history_metadata_common_model_initiation_trigger",
-    "ConversationHistoryMetadataCommonModelInitiationTrigger_Zendesk": ".conversation_history_metadata_common_model_initiation_trigger",
     "ConversationHistoryMetadataCommonModelPhoneCall": ".conversation_history_metadata_common_model_phone_call",
     "ConversationHistoryMetadataCommonModelPhoneCall_SipTrunking": ".conversation_history_metadata_common_model_phone_call",
     "ConversationHistoryMetadataCommonModelPhoneCall_Twilio": ".conversation_history_metadata_common_model_phone_call",
@@ -2395,7 +2391,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DashboardCriteriaChartModel": ".dashboard_criteria_chart_model",
     "DashboardDataCollectionChartModel": ".dashboard_data_collection_chart_model",
     "DataCollectionResultCommonModel": ".data_collection_result_common_model",
-    "DefaultConversationInitiationTrigger": ".default_conversation_initiation_trigger",
     "DeleteChapterRequest": ".delete_chapter_request",
     "DeleteChapterResponseModel": ".delete_chapter_response_model",
     "DeleteDubbingResponseModel": ".delete_dubbing_response_model",
@@ -2432,10 +2427,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DubbingReleaseChannel": ".dubbing_release_channel",
     "DubbingRenderResponseModel": ".dubbing_render_response_model",
     "DubbingResource": ".dubbing_resource",
+    "DubbingTranscript": ".dubbing_transcript",
     "DubbingTranscriptCharacter": ".dubbing_transcript_character",
     "DubbingTranscriptResponseModel": ".dubbing_transcript_response_model",
     "DubbingTranscriptUtterance": ".dubbing_transcript_utterance",
     "DubbingTranscriptWord": ".dubbing_transcript_word",
+    "DubbingTranscriptsResponseModel": ".dubbing_transcripts_response_model",
+    "DubbingTranscriptsResponseModelTranscriptFormat": ".dubbing_transcripts_response_model_transcript_format",
     "DynamicVariableAssignment": ".dynamic_variable_assignment",
     "DynamicVariableUpdateCommonModel": ".dynamic_variable_update_common_model",
     "DynamicVariablesConfig": ".dynamic_variables_config",
@@ -2577,6 +2575,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "KnowledgeBaseFolderPathSegmentSummaryResponseModel": ".knowledge_base_folder_path_segment_summary_response_model",
     "KnowledgeBaseLocator": ".knowledge_base_locator",
     "KnowledgeBaseSortBy": ".knowledge_base_sort_by",
+    "KnowledgeBaseSourceFileUrlResponseModel": ".knowledge_base_source_file_url_response_model",
     "KnowledgeBaseSummaryBatchSuccessfulResponseModel": ".knowledge_base_summary_batch_successful_response_model",
     "KnowledgeBaseSummaryBatchSuccessfulResponseModelData": ".knowledge_base_summary_batch_successful_response_model_data",
     "KnowledgeBaseSummaryBatchSuccessfulResponseModelData_File": ".knowledge_base_summary_batch_successful_response_model_data",
@@ -3152,7 +3151,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkspaceWebhookListResponseModel": ".workspace_webhook_list_response_model",
     "WorkspaceWebhookResponseModel": ".workspace_webhook_response_model",
     "WorkspaceWebhookUsageResponseModel": ".workspace_webhook_usage_response_model",
-    "ZendeskConversationInitiationTrigger": ".zendesk_conversation_initiation_trigger",
 }
 
 
@@ -3230,6 +3228,7 @@ __all__ = [
     "AgentWorkflowResponseModelNodesValue_Tool",
     "AgentWorkspaceOverridesInput",
     "AgentWorkspaceOverridesOutput",
+    "AllowedOutputFormats",
     "AllowlistItem",
     "ApiIntegrationWebhookOverridesInput",
     "ApiIntegrationWebhookOverridesInputRequestHeadersValue",
@@ -3770,9 +3769,6 @@ __all__ = [
     "ConversationHistoryEvaluationCriteriaResultCommonModel",
     "ConversationHistoryFeedbackCommonModel",
     "ConversationHistoryMetadataCommonModel",
-    "ConversationHistoryMetadataCommonModelInitiationTrigger",
-    "ConversationHistoryMetadataCommonModelInitiationTrigger_Default",
-    "ConversationHistoryMetadataCommonModelInitiationTrigger_Zendesk",
     "ConversationHistoryMetadataCommonModelPhoneCall",
     "ConversationHistoryMetadataCommonModelPhoneCall_SipTrunking",
     "ConversationHistoryMetadataCommonModelPhoneCall_Twilio",
@@ -3868,7 +3864,6 @@ __all__ = [
     "DashboardCriteriaChartModel",
     "DashboardDataCollectionChartModel",
     "DataCollectionResultCommonModel",
-    "DefaultConversationInitiationTrigger",
     "DeleteChapterRequest",
     "DeleteChapterResponseModel",
     "DeleteDubbingResponseModel",
@@ -3905,10 +3900,13 @@ __all__ = [
     "DubbingReleaseChannel",
     "DubbingRenderResponseModel",
     "DubbingResource",
+    "DubbingTranscript",
     "DubbingTranscriptCharacter",
     "DubbingTranscriptResponseModel",
     "DubbingTranscriptUtterance",
     "DubbingTranscriptWord",
+    "DubbingTranscriptsResponseModel",
+    "DubbingTranscriptsResponseModelTranscriptFormat",
     "DynamicVariableAssignment",
     "DynamicVariableUpdateCommonModel",
     "DynamicVariablesConfig",
@@ -4050,6 +4048,7 @@ __all__ = [
     "KnowledgeBaseFolderPathSegmentSummaryResponseModel",
     "KnowledgeBaseLocator",
     "KnowledgeBaseSortBy",
+    "KnowledgeBaseSourceFileUrlResponseModel",
     "KnowledgeBaseSummaryBatchSuccessfulResponseModel",
     "KnowledgeBaseSummaryBatchSuccessfulResponseModelData",
     "KnowledgeBaseSummaryBatchSuccessfulResponseModelData_File",
@@ -4625,5 +4624,4 @@ __all__ = [
     "WorkspaceWebhookListResponseModel",
     "WorkspaceWebhookResponseModel",
     "WorkspaceWebhookUsageResponseModel",
-    "ZendeskConversationInitiationTrigger",
 ]
