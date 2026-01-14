@@ -16,6 +16,7 @@ from ..types.get_voices_v_2_response import GetVoicesV2Response
 from ..types.voice import Voice
 from .raw_client import AsyncRawVoicesClient, RawVoicesClient
 from .types.voices_get_shared_request_category import VoicesGetSharedRequestCategory
+from .types.voices_update_request_labels import VoicesUpdateRequestLabels
 
 if typing.TYPE_CHECKING:
     from .ivc.client import AsyncIvcClient, IvcClient
@@ -259,7 +260,7 @@ class VoicesClient:
         files: typing.Optional[typing.List[core.File]] = OMIT,
         remove_background_noise: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
-        labels: typing.Optional[str] = OMIT,
+        labels: typing.Optional[VoicesUpdateRequestLabels] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EditVoiceResponseModel:
         """
@@ -282,8 +283,8 @@ class VoicesClient:
         description : typing.Optional[str]
             A description of the voice.
 
-        labels : typing.Optional[str]
-            Serialized labels dictionary for the voice.
+        labels : typing.Optional[VoicesUpdateRequestLabels]
+            Labels for the voice. Keys can be language, accent, gender, or age.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -845,7 +846,7 @@ class AsyncVoicesClient:
         files: typing.Optional[typing.List[core.File]] = OMIT,
         remove_background_noise: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
-        labels: typing.Optional[str] = OMIT,
+        labels: typing.Optional[VoicesUpdateRequestLabels] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EditVoiceResponseModel:
         """
@@ -868,8 +869,8 @@ class AsyncVoicesClient:
         description : typing.Optional[str]
             A description of the voice.
 
-        labels : typing.Optional[str]
-            Serialized labels dictionary for the voice.
+        labels : typing.Optional[VoicesUpdateRequestLabels]
+            Labels for the voice. Keys can be language, accent, gender, or age.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

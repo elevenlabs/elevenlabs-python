@@ -22,12 +22,17 @@ class DubbingMetadataResponse(UncheckedBaseModel):
 
     status: str = pydantic.Field()
     """
-    The status of the dubbing project. Either 'dubbed', 'dubbing', 'failed', or 'cloning'.
+    The state this dub is in.
+    """
+
+    source_language: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Once dubbing has completed, the ISO-639-1 code of the original media's source language.
     """
 
     target_languages: typing.List[str] = pydantic.Field()
     """
-    The target languages of the dubbing project.
+    The ISO-639-1 code of the languages this media has been dubbed into.
     """
 
     editable: typing.Optional[bool] = pydantic.Field(default=None)
@@ -42,12 +47,12 @@ class DubbingMetadataResponse(UncheckedBaseModel):
 
     media_metadata: typing.Optional[DubbingMediaMetadata] = pydantic.Field(default=None)
     """
-    The media metadata of the dubbing project.
+    Metadata, such as the length in seconds and content type, of the dubbed content.
     """
 
     error: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Optional error message if the dubbing project failed.
+    Error message indicate, if this dub has failed, what happened.
     """
 
     if IS_PYDANTIC_V2:
