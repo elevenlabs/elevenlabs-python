@@ -3502,7 +3502,7 @@ typing.Optional[typing.List[core.File]]` — See core.File for more documentatio
 <dl>
 <dd>
 
-**labels:** `typing.Optional[str]` — Serialized labels dictionary for the voice.
+**labels:** `typing.Optional[VoicesUpdateRequestLabels]` — Labels for the voice. Keys can be language, accent, gender, or age.
     
 </dd>
 </dl>
@@ -19855,7 +19855,7 @@ typing.List[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**labels:** `typing.Optional[str]` — Serialized labels dictionary for the voice.
+**labels:** `typing.Optional[IvcCreateRequestLabels]` — Labels for the voice. Keys can be language, accent, gender, or age.
     
 </dd>
 </dl>
@@ -19951,7 +19951,7 @@ client.voices.pvc.create(
 <dl>
 <dd>
 
-**labels:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` — Serialized labels dictionary for the voice.
+**labels:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` — Labels for the voice. Keys can be language, accent, gender, or age.
     
 </dd>
 </dl>
@@ -20053,7 +20053,7 @@ client.voices.pvc.update(
 <dl>
 <dd>
 
-**labels:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` — Serialized labels dictionary for the voice.
+**labels:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` — Labels for the voice. Keys can be language, accent, gender, or age.
     
 </dd>
 </dl>
