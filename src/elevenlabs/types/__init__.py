@@ -1040,6 +1040,7 @@ if typing.TYPE_CHECKING:
     from .integration_type import IntegrationType
     from .invoice_response import InvoiceResponse
     from .invoice_response_model_payment_intent_status import InvoiceResponseModelPaymentIntentStatus
+    from .invoice_response_model_payment_intent_statusses_item import InvoiceResponseModelPaymentIntentStatussesItem
     from .knowledge_base_dependent_type import KnowledgeBaseDependentType
     from .knowledge_base_document_chunk_response_model import KnowledgeBaseDocumentChunkResponseModel
     from .knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
@@ -1356,6 +1357,7 @@ if typing.TYPE_CHECKING:
     from .speech_to_text_webhook_response_model import SpeechToTextWebhookResponseModel
     from .speech_to_text_word_response_model import SpeechToTextWordResponseModel
     from .speech_to_text_word_response_model_type import SpeechToTextWordResponseModelType
+    from .spelling_patience import SpellingPatience
     from .srt_export_options import SrtExportOptions
     from .start_pvc_voice_training_response_model import StartPvcVoiceTrainingResponseModel
     from .start_speaker_separation_response_model import StartSpeakerSeparationResponseModel
@@ -2567,6 +2569,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "IntegrationType": ".integration_type",
     "InvoiceResponse": ".invoice_response",
     "InvoiceResponseModelPaymentIntentStatus": ".invoice_response_model_payment_intent_status",
+    "InvoiceResponseModelPaymentIntentStatussesItem": ".invoice_response_model_payment_intent_statusses_item",
     "KnowledgeBaseDependentType": ".knowledge_base_dependent_type",
     "KnowledgeBaseDocumentChunkResponseModel": ".knowledge_base_document_chunk_response_model",
     "KnowledgeBaseDocumentMetadataResponseModel": ".knowledge_base_document_metadata_response_model",
@@ -2851,6 +2854,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SpeechToTextWebhookResponseModel": ".speech_to_text_webhook_response_model",
     "SpeechToTextWordResponseModel": ".speech_to_text_word_response_model",
     "SpeechToTextWordResponseModelType": ".speech_to_text_word_response_model_type",
+    "SpellingPatience": ".spelling_patience",
     "SrtExportOptions": ".srt_export_options",
     "StartPvcVoiceTrainingResponseModel": ".start_pvc_voice_training_response_model",
     "StartSpeakerSeparationResponseModel": ".start_speaker_separation_response_model",
@@ -4040,6 +4044,7 @@ __all__ = [
     "IntegrationType",
     "InvoiceResponse",
     "InvoiceResponseModelPaymentIntentStatus",
+    "InvoiceResponseModelPaymentIntentStatussesItem",
     "KnowledgeBaseDependentType",
     "KnowledgeBaseDocumentChunkResponseModel",
     "KnowledgeBaseDocumentMetadataResponseModel",
@@ -4324,6 +4329,7 @@ __all__ = [
     "SpeechToTextWebhookResponseModel",
     "SpeechToTextWordResponseModel",
     "SpeechToTextWordResponseModelType",
+    "SpellingPatience",
     "SrtExportOptions",
     "StartPvcVoiceTrainingResponseModel",
     "StartSpeakerSeparationResponseModel",

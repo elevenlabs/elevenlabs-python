@@ -874,6 +874,7 @@ if typing.TYPE_CHECKING:
         IntegrationType,
         InvoiceResponse,
         InvoiceResponseModelPaymentIntentStatus,
+        InvoiceResponseModelPaymentIntentStatussesItem,
         KnowledgeBaseDependentType,
         KnowledgeBaseDocumentChunkResponseModel,
         KnowledgeBaseDocumentMetadataResponseModel,
@@ -1158,6 +1159,7 @@ if typing.TYPE_CHECKING:
         SpeechToTextWebhookResponseModel,
         SpeechToTextWordResponseModel,
         SpeechToTextWordResponseModelType,
+        SpellingPatience,
         SrtExportOptions,
         StartPvcVoiceTrainingResponseModel,
         StartSpeakerSeparationResponseModel,
@@ -1566,7 +1568,7 @@ if typing.TYPE_CHECKING:
     )
     from .text_to_voice import VoiceDesignRequestModelModelId
     from .version import __version__
-    from .voices import VoicesGetSharedRequestCategory
+    from .voices import VoicesGetSharedRequestCategory, VoicesUpdateRequestLabels
 _dynamic_imports: typing.Dict[str, str] = {
     "AddChapterResponseModel": ".types",
     "AddKnowledgeBaseResponseModel": ".types",
@@ -2471,6 +2473,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "IntegrationType": ".types",
     "InvoiceResponse": ".types",
     "InvoiceResponseModelPaymentIntentStatus": ".types",
+    "InvoiceResponseModelPaymentIntentStatussesItem": ".types",
     "KnowledgeBaseDependentType": ".types",
     "KnowledgeBaseDocumentChunkResponseModel": ".types",
     "KnowledgeBaseDocumentMetadataResponseModel": ".types",
@@ -2772,6 +2775,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SpeechToTextWebhookResponseModel": ".types",
     "SpeechToTextWordResponseModel": ".types",
     "SpeechToTextWordResponseModelType": ".types",
+    "SpellingPatience": ".types",
     "SrtExportOptions": ".types",
     "StartPvcVoiceTrainingResponseModel": ".types",
     "StartSpeakerSeparationResponseModel": ".types",
@@ -2928,6 +2932,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "VoiceVerificationResponse": ".types",
     "VoicemailDetectionToolConfig": ".types",
     "VoicesGetSharedRequestCategory": ".voices",
+    "VoicesUpdateRequestLabels": ".voices",
     "WebhookAuthMethodType": ".types",
     "WebhookEventType": ".types",
     "WebhookHmacSettings": ".types",
@@ -4037,6 +4042,7 @@ __all__ = [
     "IntegrationType",
     "InvoiceResponse",
     "InvoiceResponseModelPaymentIntentStatus",
+    "InvoiceResponseModelPaymentIntentStatussesItem",
     "KnowledgeBaseDependentType",
     "KnowledgeBaseDocumentChunkResponseModel",
     "KnowledgeBaseDocumentMetadataResponseModel",
@@ -4338,6 +4344,7 @@ __all__ = [
     "SpeechToTextWebhookResponseModel",
     "SpeechToTextWordResponseModel",
     "SpeechToTextWordResponseModelType",
+    "SpellingPatience",
     "SrtExportOptions",
     "StartPvcVoiceTrainingResponseModel",
     "StartSpeakerSeparationResponseModel",
@@ -4494,6 +4501,7 @@ __all__ = [
     "VoiceVerificationResponse",
     "VoicemailDetectionToolConfig",
     "VoicesGetSharedRequestCategory",
+    "VoicesUpdateRequestLabels",
     "WebhookAuthMethodType",
     "WebhookEventType",
     "WebhookHmacSettings",
