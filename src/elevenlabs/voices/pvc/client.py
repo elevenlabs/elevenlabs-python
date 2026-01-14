@@ -59,7 +59,7 @@ class PvcClient:
             Description to use for the created voice.
 
         labels : typing.Optional[typing.Dict[str, typing.Optional[str]]]
-            Serialized labels dictionary for the voice.
+            Labels for the voice. Keys can be language, accent, gender, or age.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -114,7 +114,7 @@ class PvcClient:
             Description to use for the created voice.
 
         labels : typing.Optional[typing.Dict[str, typing.Optional[str]]]
-            Serialized labels dictionary for the voice.
+            Labels for the voice. Keys can be language, accent, gender, or age.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -244,7 +244,7 @@ class AsyncPvcClient:
             Description to use for the created voice.
 
         labels : typing.Optional[typing.Dict[str, typing.Optional[str]]]
-            Serialized labels dictionary for the voice.
+            Labels for the voice. Keys can be language, accent, gender, or age.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -307,7 +307,7 @@ class AsyncPvcClient:
             Description to use for the created voice.
 
         labels : typing.Optional[typing.Dict[str, typing.Optional[str]]]
-            Serialized labels dictionary for the voice.
+            Labels for the voice. Keys can be language, accent, gender, or age.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
