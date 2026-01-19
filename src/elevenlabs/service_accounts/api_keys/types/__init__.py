@@ -9,20 +9,12 @@ if typing.TYPE_CHECKING:
     from .body_create_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_post_permissions import (
         BodyCreateServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysPostPermissions,
     )
-    from .body_create_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_post_permissions_zero_item import (
-        BodyCreateServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysPostPermissionsZeroItem,
-    )
     from .body_edit_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_api_key_id_patch_permissions import (
         BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissions,
     )
-    from .body_edit_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_api_key_id_patch_permissions_zero_item import (
-        BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissionsZeroItem,
-    )
 _dynamic_imports: typing.Dict[str, str] = {
     "BodyCreateServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysPostPermissions": ".body_create_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_post_permissions",
-    "BodyCreateServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysPostPermissionsZeroItem": ".body_create_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_post_permissions_zero_item",
     "BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissions": ".body_edit_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_api_key_id_patch_permissions",
-    "BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissionsZeroItem": ".body_edit_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_api_key_id_patch_permissions_zero_item",
 }
 
 
@@ -49,7 +41,5 @@ def __dir__():
 
 __all__ = [
     "BodyCreateServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysPostPermissions",
-    "BodyCreateServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysPostPermissionsZeroItem",
     "BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissions",
-    "BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissionsZeroItem",
 ]

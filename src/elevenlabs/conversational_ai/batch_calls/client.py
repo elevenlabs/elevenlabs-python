@@ -165,6 +165,35 @@ class BatchCallsClient:
         _response = self._raw_client.get(batch_id, request_options=request_options)
         return _response.data
 
+    def delete(self, batch_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Permanently delete a batch call and all recipient records. Conversations remain in history.
+
+        Parameters
+        ----------
+        batch_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.batch_calls.delete(
+            batch_id="batch_id",
+        )
+        """
+        _response = self._raw_client.delete(batch_id, request_options=request_options)
+        return _response.data
+
     def cancel(self, batch_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> BatchCallResponse:
         """
         Cancel a running batch call and set all recipients to cancelled status.
@@ -398,6 +427,43 @@ class AsyncBatchCallsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get(batch_id, request_options=request_options)
+        return _response.data
+
+    async def delete(self, batch_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Permanently delete a batch call and all recipient records. Conversations remain in history.
+
+        Parameters
+        ----------
+        batch_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.batch_calls.delete(
+                batch_id="batch_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete(batch_id, request_options=request_options)
         return _response.data
 
     async def cancel(

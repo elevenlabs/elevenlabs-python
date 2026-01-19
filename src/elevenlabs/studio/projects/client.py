@@ -16,6 +16,7 @@ from ...types.project_extended_response import ProjectExtendedResponse
 from .raw_client import AsyncRawProjectsClient, RawProjectsClient
 from .types.projects_create_request_apply_text_normalization import ProjectsCreateRequestApplyTextNormalization
 from .types.projects_create_request_fiction import ProjectsCreateRequestFiction
+from .types.projects_create_request_quality_preset import ProjectsCreateRequestQualityPreset
 from .types.projects_create_request_source_type import ProjectsCreateRequestSourceType
 from .types.projects_create_request_target_audience import ProjectsCreateRequestTargetAudience
 
@@ -84,7 +85,7 @@ class ProjectsClient:
         from_url: typing.Optional[str] = OMIT,
         from_document: typing.Optional[core.File] = OMIT,
         from_content_json: typing.Optional[str] = OMIT,
-        quality_preset: typing.Optional[str] = OMIT,
+        quality_preset: typing.Optional[ProjectsCreateRequestQualityPreset] = OMIT,
         title: typing.Optional[str] = OMIT,
         author: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
@@ -138,12 +139,12 @@ class ProjectsClient:
                 [{"name": "Chapter A", "blocks": [{"sub_type": "p", "nodes": [{"voice_id": "6lCwbsX1yVjD49QmpkT0", "text": "A", "type": "tts_node"}, {"voice_id": "6lCwbsX1yVjD49QmpkT1", "text": "B", "type": "tts_node"}]}, {"sub_type": "h1", "nodes": [{"voice_id": "6lCwbsX1yVjD49QmpkT0", "text": "C", "type": "tts_node"}, {"voice_id": "6lCwbsX1yVjD49QmpkT1", "text": "D", "type": "tts_node"}]}]}, {"name": "Chapter B", "blocks": [{"sub_type": "p", "nodes": [{"voice_id": "6lCwbsX1yVjD49QmpkT0", "text": "E", "type": "tts_node"}, {"voice_id": "6lCwbsX1yVjD49QmpkT1", "text": "F", "type": "tts_node"}]}, {"sub_type": "h2", "nodes": [{"voice_id": "6lCwbsX1yVjD49QmpkT0", "text": "G", "type": "tts_node"}, {"voice_id": "6lCwbsX1yVjD49QmpkT1", "text": "H", "type": "tts_node"}]}]}]
 
 
-        quality_preset : typing.Optional[str]
+        quality_preset : typing.Optional[ProjectsCreateRequestQualityPreset]
             Output quality of the generated audio. Must be one of:
-            standard - standard output format, 128kbps with 44.1kHz sample rate.
-            high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side.
-            ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side.
-            ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format.
+            'standard' - standard output format, 128kbps with 44.1kHz sample rate.
+            'high' - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side.
+            'ultra' - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side.
+            'ultra_lossless' - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format.
 
         title : typing.Optional[str]
             An optional name of the author of the Studio project, this will be added as metadata to the mp3 file on Studio project or chapter download.
@@ -601,7 +602,7 @@ class AsyncProjectsClient:
         from_url: typing.Optional[str] = OMIT,
         from_document: typing.Optional[core.File] = OMIT,
         from_content_json: typing.Optional[str] = OMIT,
-        quality_preset: typing.Optional[str] = OMIT,
+        quality_preset: typing.Optional[ProjectsCreateRequestQualityPreset] = OMIT,
         title: typing.Optional[str] = OMIT,
         author: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
@@ -655,12 +656,12 @@ class AsyncProjectsClient:
                 [{"name": "Chapter A", "blocks": [{"sub_type": "p", "nodes": [{"voice_id": "6lCwbsX1yVjD49QmpkT0", "text": "A", "type": "tts_node"}, {"voice_id": "6lCwbsX1yVjD49QmpkT1", "text": "B", "type": "tts_node"}]}, {"sub_type": "h1", "nodes": [{"voice_id": "6lCwbsX1yVjD49QmpkT0", "text": "C", "type": "tts_node"}, {"voice_id": "6lCwbsX1yVjD49QmpkT1", "text": "D", "type": "tts_node"}]}]}, {"name": "Chapter B", "blocks": [{"sub_type": "p", "nodes": [{"voice_id": "6lCwbsX1yVjD49QmpkT0", "text": "E", "type": "tts_node"}, {"voice_id": "6lCwbsX1yVjD49QmpkT1", "text": "F", "type": "tts_node"}]}, {"sub_type": "h2", "nodes": [{"voice_id": "6lCwbsX1yVjD49QmpkT0", "text": "G", "type": "tts_node"}, {"voice_id": "6lCwbsX1yVjD49QmpkT1", "text": "H", "type": "tts_node"}]}]}]
 
 
-        quality_preset : typing.Optional[str]
+        quality_preset : typing.Optional[ProjectsCreateRequestQualityPreset]
             Output quality of the generated audio. Must be one of:
-            standard - standard output format, 128kbps with 44.1kHz sample rate.
-            high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side.
-            ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side.
-            ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format.
+            'standard' - standard output format, 128kbps with 44.1kHz sample rate.
+            'high' - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side.
+            'ultra' - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side.
+            'ultra_lossless' - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format.
 
         title : typing.Optional[str]
             An optional name of the author of the Studio project, this will be added as metadata to the mp3 file on Studio project or chapter download.

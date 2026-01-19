@@ -26,6 +26,7 @@ if typing.TYPE_CHECKING:
     from .knowledge_base.client import AsyncKnowledgeBaseClient, KnowledgeBaseClient
     from .link.client import AsyncLinkClient, LinkClient
     from .llm_usage.client import AsyncLlmUsageClient, LlmUsageClient
+    from .summaries.client import AsyncSummariesClient, SummariesClient
     from .widget.client import AsyncWidgetClient, WidgetClient
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -35,6 +36,7 @@ class AgentsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawAgentsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
+        self._summaries: typing.Optional[SummariesClient] = None
         self._widget: typing.Optional[WidgetClient] = None
         self._link: typing.Optional[LinkClient] = None
         self._knowledge_base: typing.Optional[KnowledgeBaseClient] = None
@@ -544,6 +546,14 @@ class AgentsClient:
         return _response.data
 
     @property
+    def summaries(self):
+        if self._summaries is None:
+            from .summaries.client import SummariesClient  # noqa: E402
+
+            self._summaries = SummariesClient(client_wrapper=self._client_wrapper)
+        return self._summaries
+
+    @property
     def widget(self):
         if self._widget is None:
             from .widget.client import WidgetClient  # noqa: E402
@@ -580,6 +590,7 @@ class AsyncAgentsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawAgentsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
+        self._summaries: typing.Optional[AsyncSummariesClient] = None
         self._widget: typing.Optional[AsyncWidgetClient] = None
         self._link: typing.Optional[AsyncLinkClient] = None
         self._knowledge_base: typing.Optional[AsyncKnowledgeBaseClient] = None
@@ -1161,6 +1172,14 @@ class AsyncAgentsClient:
             request_options=request_options,
         )
         return _response.data
+
+    @property
+    def summaries(self):
+        if self._summaries is None:
+            from .summaries.client import AsyncSummariesClient  # noqa: E402
+
+            self._summaries = AsyncSummariesClient(client_wrapper=self._client_wrapper)
+        return self._summaries
 
     @property
     def widget(self):

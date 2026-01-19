@@ -10,10 +10,14 @@ from .literal_json_schema_property_type import LiteralJsonSchemaPropertyType
 
 
 class LiteralJsonSchemaProperty(UncheckedBaseModel):
+    """
+    Schema property for literal JSON types. IMPORTANT: Only ONE of the following fields can be set: description (LLM provides value), dynamic_variable (value from variable), is_system_provided (system provides value), or constant_value (fixed value). These are mutually exclusive.
+    """
+
     type: LiteralJsonSchemaPropertyType
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
-    The description of the property
+    The description of the property. When set, the LLM will provide the value based on this description. Mutually exclusive with dynamic_variable, is_system_provided, and constant_value.
     """
 
     enum: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
@@ -23,17 +27,17 @@ class LiteralJsonSchemaProperty(UncheckedBaseModel):
 
     is_system_provided: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    If true, the value will be populated by the system at runtime. Used by Api Integration Webhook tools for templating.
+    If true, the value will be populated by the system at runtime. Used by API Integration Webhook tools for templating. Mutually exclusive with description, dynamic_variable, and constant_value.
     """
 
     dynamic_variable: typing.Optional[str] = pydantic.Field(default=None)
     """
-    The dynamic variable of the property
+    The name of the dynamic variable to use for this property's value. Mutually exclusive with description, is_system_provided, and constant_value.
     """
 
     constant_value: typing.Optional[LiteralJsonSchemaPropertyConstantValue] = pydantic.Field(default=None)
     """
-    The constant value of the property
+    A constant value to use for this property. Mutually exclusive with description, dynamic_variable, and is_system_provided.
     """
 
     if IS_PYDANTIC_V2:

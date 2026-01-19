@@ -9,6 +9,7 @@ if typing.TYPE_CHECKING:
     from .types import (
         ProjectsCreateRequestApplyTextNormalization,
         ProjectsCreateRequestFiction,
+        ProjectsCreateRequestQualityPreset,
         ProjectsCreateRequestSourceType,
         ProjectsCreateRequestTargetAudience,
     )
@@ -16,6 +17,7 @@ if typing.TYPE_CHECKING:
 _dynamic_imports: typing.Dict[str, str] = {
     "ProjectsCreateRequestApplyTextNormalization": ".types",
     "ProjectsCreateRequestFiction": ".types",
+    "ProjectsCreateRequestQualityPreset": ".types",
     "ProjectsCreateRequestSourceType": ".types",
     "ProjectsCreateRequestTargetAudience": ".types",
     "chapters": ".chapters",
@@ -49,6 +51,7 @@ def __dir__():
 __all__ = [
     "ProjectsCreateRequestApplyTextNormalization",
     "ProjectsCreateRequestFiction",
+    "ProjectsCreateRequestQualityPreset",
     "ProjectsCreateRequestSourceType",
     "ProjectsCreateRequestTargetAudience",
     "chapters",

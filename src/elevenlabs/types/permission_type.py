@@ -2,7 +2,7 @@
 
 import typing
 
-WorkspaceApiKeyResponseModelPermissionsItem = typing.Union[
+PermissionType = typing.Union[
     typing.Literal[
         "text_to_speech",
         "speech_to_speech",
@@ -32,6 +32,12 @@ WorkspaceApiKeyResponseModelPermissionsItem = typing.Union[
         "convai_read",
         "convai_write",
         "music_generation",
+        "add_voice_from_voice_library",
+        "create_instant_voice_clone",
+        "create_professional_voice_clone",
+        "publish_voice_to_voice_library",
+        "share_voice_externally",
+        "create_user_api_key",
     ],
     typing.Any,
 ]

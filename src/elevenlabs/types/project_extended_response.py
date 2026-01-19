@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .caption_style_model import CaptionStyleModel
 from .chapter_response import ChapterResponse
+from .direct_publishing_read_response_model import DirectPublishingReadResponseModel
 from .project_creation_meta_response_model import ProjectCreationMetaResponseModel
 from .project_extended_response_model_access_level import ProjectExtendedResponseModelAccessLevel
 from .project_extended_response_model_apply_text_normalization import ProjectExtendedResponseModelApplyTextNormalization
@@ -232,6 +233,11 @@ class ProjectExtendedResponse(UncheckedBaseModel):
     base_voices: typing.Optional[typing.List[Voice]] = pydantic.Field(default=None)
     """
     List of voices used by the project.
+    """
+
+    publishing_read: typing.Optional[DirectPublishingReadResponseModel] = pydantic.Field(default=None)
+    """
+    The ElevenReader data if the book was published.
     """
 
     if IS_PYDANTIC_V2:

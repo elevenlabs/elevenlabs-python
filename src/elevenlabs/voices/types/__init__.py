@@ -7,7 +7,11 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .voices_get_shared_request_category import VoicesGetSharedRequestCategory
-_dynamic_imports: typing.Dict[str, str] = {"VoicesGetSharedRequestCategory": ".voices_get_shared_request_category"}
+    from .voices_update_request_labels import VoicesUpdateRequestLabels
+_dynamic_imports: typing.Dict[str, str] = {
+    "VoicesGetSharedRequestCategory": ".voices_get_shared_request_category",
+    "VoicesUpdateRequestLabels": ".voices_update_request_labels",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +35,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["VoicesGetSharedRequestCategory"]
+__all__ = ["VoicesGetSharedRequestCategory", "VoicesUpdateRequestLabels"]

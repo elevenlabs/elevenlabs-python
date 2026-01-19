@@ -6,10 +6,13 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import VoicesGetSharedRequestCategory
+    from .types import VoicesGetSharedRequestCategory, VoicesUpdateRequestLabels
     from . import ivc, pvc, samples, settings
+    from .ivc import IvcCreateRequestLabels
 _dynamic_imports: typing.Dict[str, str] = {
+    "IvcCreateRequestLabels": ".ivc",
     "VoicesGetSharedRequestCategory": ".types",
+    "VoicesUpdateRequestLabels": ".types",
     "ivc": ".ivc",
     "pvc": ".pvc",
     "samples": ".samples",
@@ -38,4 +41,12 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["VoicesGetSharedRequestCategory", "ivc", "pvc", "samples", "settings"]
+__all__ = [
+    "IvcCreateRequestLabels",
+    "VoicesGetSharedRequestCategory",
+    "VoicesUpdateRequestLabels",
+    "ivc",
+    "pvc",
+    "samples",
+    "settings",
+]
