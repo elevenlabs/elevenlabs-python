@@ -17,6 +17,10 @@ class ConversationHistoryAnalysisCommonModel(UncheckedBaseModel):
         typing.Dict[str, ConversationHistoryEvaluationCriteriaResultCommonModel]
     ] = None
     data_collection_results: typing.Optional[typing.Dict[str, DataCollectionResultCommonModel]] = None
+    evaluation_criteria_results_list: typing.Optional[
+        typing.List[ConversationHistoryEvaluationCriteriaResultCommonModel]
+    ] = None
+    data_collection_results_list: typing.Optional[typing.List[DataCollectionResultCommonModel]] = None
     call_successful: EvaluationSuccessResult
     transcript_summary: str
     call_summary_title: typing.Optional[str] = None

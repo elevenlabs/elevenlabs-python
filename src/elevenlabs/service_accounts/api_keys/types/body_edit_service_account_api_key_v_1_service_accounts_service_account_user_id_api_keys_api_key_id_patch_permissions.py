@@ -2,13 +2,8 @@
 
 import typing
 
-from .body_edit_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_api_key_id_patch_permissions_zero_item import (
-    BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissionsZeroItem,
-)
+from ....types.permission_type import PermissionType
 
 BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissions = typing.Union[
-    typing.List[
-        BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissionsZeroItem
-    ],
-    typing.Literal["all"],
+    typing.List[PermissionType], typing.Literal["all"]
 ]

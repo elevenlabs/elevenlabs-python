@@ -39,6 +39,7 @@ if typing.TYPE_CHECKING:
     from .agent_simulated_chat_test_response_model import AgentSimulatedChatTestResponseModel
     from .agent_sort_by import AgentSortBy
     from .agent_successful_response_example import AgentSuccessfulResponseExample
+    from .agent_summary_batch_successful_response_model import AgentSummaryBatchSuccessfulResponseModel
     from .agent_summary_response_model import AgentSummaryResponseModel
     from .agent_testing_settings import AgentTestingSettings
     from .agent_transfer import AgentTransfer
@@ -643,6 +644,7 @@ if typing.TYPE_CHECKING:
     from .client_event import ClientEvent
     from .client_tool_config_input import ClientToolConfigInput
     from .client_tool_config_output import ClientToolConfigOutput
+    from .contributor import Contributor
     from .conv_ai_dynamic_variable import ConvAiDynamicVariable
     from .conv_ai_secret_locator import ConvAiSecretLocator
     from .conv_ai_stored_secret_dependencies import ConvAiStoredSecretDependencies
@@ -828,6 +830,8 @@ if typing.TYPE_CHECKING:
     from .custom_llm import CustomLlm
     from .custom_llm_request_headers_value import CustomLlmRequestHeadersValue
     from .custom_llmapi_type import CustomLlmapiType
+    from .custom_sip_header import CustomSipHeader
+    from .custom_sip_header_with_dynamic_variable import CustomSipHeaderWithDynamicVariable
     from .dashboard_call_success_chart_model import DashboardCallSuccessChartModel
     from .dashboard_criteria_chart_model import DashboardCriteriaChartModel
     from .dashboard_data_collection_chart_model import DashboardDataCollectionChartModel
@@ -855,6 +859,11 @@ if typing.TYPE_CHECKING:
     from .detected_entity import DetectedEntity
     from .dialogue_input import DialogueInput
     from .dialogue_input_response_model import DialogueInputResponseModel
+    from .direct_publishing_read_response_model import DirectPublishingReadResponseModel
+    from .direct_publishing_read_response_model_display_mode import DirectPublishingReadResponseModelDisplayMode
+    from .direct_publishing_read_response_model_genre_item import DirectPublishingReadResponseModelGenreItem
+    from .direct_publishing_read_response_model_payout_type import DirectPublishingReadResponseModelPayoutType
+    from .direct_publishing_read_response_model_target_audience import DirectPublishingReadResponseModelTargetAudience
     from .discount_response_model import DiscountResponseModel
     from .do_dubbing_response import DoDubbingResponse
     from .document_usage_mode_enum import DocumentUsageModeEnum
@@ -1040,6 +1049,7 @@ if typing.TYPE_CHECKING:
     from .integration_type import IntegrationType
     from .invoice_response import InvoiceResponse
     from .invoice_response_model_payment_intent_status import InvoiceResponseModelPaymentIntentStatus
+    from .invoice_response_model_payment_intent_statusses_item import InvoiceResponseModelPaymentIntentStatussesItem
     from .knowledge_base_dependent_type import KnowledgeBaseDependentType
     from .knowledge_base_document_chunk_response_model import KnowledgeBaseDocumentChunkResponseModel
     from .knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
@@ -1140,9 +1150,15 @@ if typing.TYPE_CHECKING:
     from .pending_cancellation_response_model import PendingCancellationResponseModel
     from .pending_subscription_switch_response_model import PendingSubscriptionSwitchResponseModel
     from .pending_subscription_switch_response_model_next_tier import PendingSubscriptionSwitchResponseModelNextTier
+    from .permission_type import PermissionType
     from .phone_number_agent_info import PhoneNumberAgentInfo
     from .phone_number_dynamic_variable_transfer_destination import PhoneNumberDynamicVariableTransferDestination
     from .phone_number_transfer import PhoneNumberTransfer
+    from .phone_number_transfer_custom_sip_headers_item import (
+        PhoneNumberTransferCustomSipHeadersItem,
+        PhoneNumberTransferCustomSipHeadersItem_Dynamic,
+        PhoneNumberTransferCustomSipHeadersItem_Static,
+    )
     from .phone_number_transfer_destination import PhoneNumberTransferDestination
     from .phone_number_transfer_transfer_destination import (
         PhoneNumberTransferTransferDestination,
@@ -1165,6 +1181,7 @@ if typing.TYPE_CHECKING:
     from .position_output import PositionOutput
     from .post_agent_avatar_response_model import PostAgentAvatarResponseModel
     from .post_workspace_secret_response_model import PostWorkspaceSecretResponseModel
+    from .preview_audio_db_model import PreviewAudioDbModel
     from .privacy_config import PrivacyConfig
     from .project_creation_meta_response_model import ProjectCreationMetaResponseModel
     from .project_creation_meta_response_model_status import ProjectCreationMetaResponseModelStatus
@@ -1282,6 +1299,8 @@ if typing.TYPE_CHECKING:
     from .rag_index_overview_response_model import RagIndexOverviewResponseModel
     from .rag_index_status import RagIndexStatus
     from .rag_retrieval_info import RagRetrievalInfo
+    from .read_legal_terms import ReadLegalTerms
+    from .read_metadata_chapter_db_model import ReadMetadataChapterDbModel
     from .reader_resource_response_model import ReaderResourceResponseModel
     from .reader_resource_response_model_resource_type import ReaderResourceResponseModelResourceType
     from .recording_response import RecordingResponse
@@ -1300,11 +1319,16 @@ if typing.TYPE_CHECKING:
     from .resource_metadata_response_model_anonymous_access_level_override import (
         ResourceMetadataResponseModelAnonymousAccessLevelOverride,
     )
+    from .review_response_model import ReviewResponseModel
+    from .review_response_model_reject_reasons_item import ReviewResponseModelRejectReasonsItem
+    from .review_response_model_review_status import ReviewResponseModelReviewStatus
     from .review_status import ReviewStatus
     from .safety_common_model import SafetyCommonModel
     from .safety_evaluation import SafetyEvaluation
     from .safety_response_model import SafetyResponseModel
     from .safety_rule import SafetyRule
+    from .sample_config_db_model import SampleConfigDbModel
+    from .sample_config_db_model_parent_type import SampleConfigDbModelParentType
     from .save_voice_preview_request import SaveVoicePreviewRequest
     from .secret_dependency_type import SecretDependencyType
     from .section_source import SectionSource
@@ -1356,6 +1380,7 @@ if typing.TYPE_CHECKING:
     from .speech_to_text_webhook_response_model import SpeechToTextWebhookResponseModel
     from .speech_to_text_word_response_model import SpeechToTextWordResponseModel
     from .speech_to_text_word_response_model_type import SpeechToTextWordResponseModelType
+    from .spelling_patience import SpellingPatience
     from .srt_export_options import SrtExportOptions
     from .start_pvc_voice_training_response_model import StartPvcVoiceTrainingResponseModel
     from .start_speaker_separation_response_model import StartSpeakerSeparationResponseModel
@@ -1639,6 +1664,11 @@ if typing.TYPE_CHECKING:
     from .workflow_override_agent_node_model_input import WorkflowOverrideAgentNodeModelInput
     from .workflow_override_agent_node_model_output import WorkflowOverrideAgentNodeModelOutput
     from .workflow_phone_number_node_model_input import WorkflowPhoneNumberNodeModelInput
+    from .workflow_phone_number_node_model_input_custom_sip_headers_item import (
+        WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem,
+        WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem_Dynamic,
+        WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem_Static,
+    )
     from .workflow_phone_number_node_model_input_transfer_destination import (
         WorkflowPhoneNumberNodeModelInputTransferDestination,
         WorkflowPhoneNumberNodeModelInputTransferDestination_Phone,
@@ -1647,6 +1677,11 @@ if typing.TYPE_CHECKING:
         WorkflowPhoneNumberNodeModelInputTransferDestination_SipUriDynamicVariable,
     )
     from .workflow_phone_number_node_model_output import WorkflowPhoneNumberNodeModelOutput
+    from .workflow_phone_number_node_model_output_custom_sip_headers_item import (
+        WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem,
+        WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem_Dynamic,
+        WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem_Static,
+    )
     from .workflow_phone_number_node_model_output_transfer_destination import (
         WorkflowPhoneNumberNodeModelOutputTransferDestination,
         WorkflowPhoneNumberNodeModelOutputTransferDestination_Phone,
@@ -1691,7 +1726,6 @@ if typing.TYPE_CHECKING:
     from .workflow_unconditional_model_output import WorkflowUnconditionalModelOutput
     from .workspace_api_key_list_response_model import WorkspaceApiKeyListResponseModel
     from .workspace_api_key_response_model import WorkspaceApiKeyResponseModel
-    from .workspace_api_key_response_model_permissions_item import WorkspaceApiKeyResponseModelPermissionsItem
     from .workspace_batch_calls_response import WorkspaceBatchCallsResponse
     from .workspace_create_api_key_response_model import WorkspaceCreateApiKeyResponseModel
     from .workspace_create_webhook_response_model import WorkspaceCreateWebhookResponseModel
@@ -1734,6 +1768,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentSimulatedChatTestResponseModel": ".agent_simulated_chat_test_response_model",
     "AgentSortBy": ".agent_sort_by",
     "AgentSuccessfulResponseExample": ".agent_successful_response_example",
+    "AgentSummaryBatchSuccessfulResponseModel": ".agent_summary_batch_successful_response_model",
     "AgentSummaryResponseModel": ".agent_summary_response_model",
     "AgentTestingSettings": ".agent_testing_settings",
     "AgentTransfer": ".agent_transfer",
@@ -2266,6 +2301,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ClientEvent": ".client_event",
     "ClientToolConfigInput": ".client_tool_config_input",
     "ClientToolConfigOutput": ".client_tool_config_output",
+    "Contributor": ".contributor",
     "ConvAiDynamicVariable": ".conv_ai_dynamic_variable",
     "ConvAiSecretLocator": ".conv_ai_secret_locator",
     "ConvAiStoredSecretDependencies": ".conv_ai_stored_secret_dependencies",
@@ -2387,6 +2423,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CustomLlm": ".custom_llm",
     "CustomLlmRequestHeadersValue": ".custom_llm_request_headers_value",
     "CustomLlmapiType": ".custom_llmapi_type",
+    "CustomSipHeader": ".custom_sip_header",
+    "CustomSipHeaderWithDynamicVariable": ".custom_sip_header_with_dynamic_variable",
     "DashboardCallSuccessChartModel": ".dashboard_call_success_chart_model",
     "DashboardCriteriaChartModel": ".dashboard_criteria_chart_model",
     "DashboardDataCollectionChartModel": ".dashboard_data_collection_chart_model",
@@ -2414,6 +2452,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DetectedEntity": ".detected_entity",
     "DialogueInput": ".dialogue_input",
     "DialogueInputResponseModel": ".dialogue_input_response_model",
+    "DirectPublishingReadResponseModel": ".direct_publishing_read_response_model",
+    "DirectPublishingReadResponseModelDisplayMode": ".direct_publishing_read_response_model_display_mode",
+    "DirectPublishingReadResponseModelGenreItem": ".direct_publishing_read_response_model_genre_item",
+    "DirectPublishingReadResponseModelPayoutType": ".direct_publishing_read_response_model_payout_type",
+    "DirectPublishingReadResponseModelTargetAudience": ".direct_publishing_read_response_model_target_audience",
     "DiscountResponseModel": ".discount_response_model",
     "DoDubbingResponse": ".do_dubbing_response",
     "DocumentUsageModeEnum": ".document_usage_mode_enum",
@@ -2567,6 +2610,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "IntegrationType": ".integration_type",
     "InvoiceResponse": ".invoice_response",
     "InvoiceResponseModelPaymentIntentStatus": ".invoice_response_model_payment_intent_status",
+    "InvoiceResponseModelPaymentIntentStatussesItem": ".invoice_response_model_payment_intent_statusses_item",
     "KnowledgeBaseDependentType": ".knowledge_base_dependent_type",
     "KnowledgeBaseDocumentChunkResponseModel": ".knowledge_base_document_chunk_response_model",
     "KnowledgeBaseDocumentMetadataResponseModel": ".knowledge_base_document_metadata_response_model",
@@ -2661,9 +2705,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PendingCancellationResponseModel": ".pending_cancellation_response_model",
     "PendingSubscriptionSwitchResponseModel": ".pending_subscription_switch_response_model",
     "PendingSubscriptionSwitchResponseModelNextTier": ".pending_subscription_switch_response_model_next_tier",
+    "PermissionType": ".permission_type",
     "PhoneNumberAgentInfo": ".phone_number_agent_info",
     "PhoneNumberDynamicVariableTransferDestination": ".phone_number_dynamic_variable_transfer_destination",
     "PhoneNumberTransfer": ".phone_number_transfer",
+    "PhoneNumberTransferCustomSipHeadersItem": ".phone_number_transfer_custom_sip_headers_item",
+    "PhoneNumberTransferCustomSipHeadersItem_Dynamic": ".phone_number_transfer_custom_sip_headers_item",
+    "PhoneNumberTransferCustomSipHeadersItem_Static": ".phone_number_transfer_custom_sip_headers_item",
     "PhoneNumberTransferDestination": ".phone_number_transfer_destination",
     "PhoneNumberTransferTransferDestination": ".phone_number_transfer_transfer_destination",
     "PhoneNumberTransferTransferDestination_Phone": ".phone_number_transfer_transfer_destination",
@@ -2684,6 +2732,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PositionOutput": ".position_output",
     "PostAgentAvatarResponseModel": ".post_agent_avatar_response_model",
     "PostWorkspaceSecretResponseModel": ".post_workspace_secret_response_model",
+    "PreviewAudioDbModel": ".preview_audio_db_model",
     "PrivacyConfig": ".privacy_config",
     "ProjectCreationMetaResponseModel": ".project_creation_meta_response_model",
     "ProjectCreationMetaResponseModelStatus": ".project_creation_meta_response_model_status",
@@ -2779,6 +2828,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RagIndexOverviewResponseModel": ".rag_index_overview_response_model",
     "RagIndexStatus": ".rag_index_status",
     "RagRetrievalInfo": ".rag_retrieval_info",
+    "ReadLegalTerms": ".read_legal_terms",
+    "ReadMetadataChapterDbModel": ".read_metadata_chapter_db_model",
     "ReaderResourceResponseModel": ".reader_resource_response_model",
     "ReaderResourceResponseModelResourceType": ".reader_resource_response_model_resource_type",
     "RecordingResponse": ".recording_response",
@@ -2795,11 +2846,16 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ResourceAccessInfoRole": ".resource_access_info_role",
     "ResourceMetadataResponseModel": ".resource_metadata_response_model",
     "ResourceMetadataResponseModelAnonymousAccessLevelOverride": ".resource_metadata_response_model_anonymous_access_level_override",
+    "ReviewResponseModel": ".review_response_model",
+    "ReviewResponseModelRejectReasonsItem": ".review_response_model_reject_reasons_item",
+    "ReviewResponseModelReviewStatus": ".review_response_model_review_status",
     "ReviewStatus": ".review_status",
     "SafetyCommonModel": ".safety_common_model",
     "SafetyEvaluation": ".safety_evaluation",
     "SafetyResponseModel": ".safety_response_model",
     "SafetyRule": ".safety_rule",
+    "SampleConfigDbModel": ".sample_config_db_model",
+    "SampleConfigDbModelParentType": ".sample_config_db_model_parent_type",
     "SaveVoicePreviewRequest": ".save_voice_preview_request",
     "SecretDependencyType": ".secret_dependency_type",
     "SectionSource": ".section_source",
@@ -2851,6 +2907,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SpeechToTextWebhookResponseModel": ".speech_to_text_webhook_response_model",
     "SpeechToTextWordResponseModel": ".speech_to_text_word_response_model",
     "SpeechToTextWordResponseModelType": ".speech_to_text_word_response_model_type",
+    "SpellingPatience": ".spelling_patience",
     "SrtExportOptions": ".srt_export_options",
     "StartPvcVoiceTrainingResponseModel": ".start_pvc_voice_training_response_model",
     "StartSpeakerSeparationResponseModel": ".start_speaker_separation_response_model",
@@ -3100,12 +3157,18 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkflowOverrideAgentNodeModelInput": ".workflow_override_agent_node_model_input",
     "WorkflowOverrideAgentNodeModelOutput": ".workflow_override_agent_node_model_output",
     "WorkflowPhoneNumberNodeModelInput": ".workflow_phone_number_node_model_input",
+    "WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem": ".workflow_phone_number_node_model_input_custom_sip_headers_item",
+    "WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem_Dynamic": ".workflow_phone_number_node_model_input_custom_sip_headers_item",
+    "WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem_Static": ".workflow_phone_number_node_model_input_custom_sip_headers_item",
     "WorkflowPhoneNumberNodeModelInputTransferDestination": ".workflow_phone_number_node_model_input_transfer_destination",
     "WorkflowPhoneNumberNodeModelInputTransferDestination_Phone": ".workflow_phone_number_node_model_input_transfer_destination",
     "WorkflowPhoneNumberNodeModelInputTransferDestination_PhoneDynamicVariable": ".workflow_phone_number_node_model_input_transfer_destination",
     "WorkflowPhoneNumberNodeModelInputTransferDestination_SipUri": ".workflow_phone_number_node_model_input_transfer_destination",
     "WorkflowPhoneNumberNodeModelInputTransferDestination_SipUriDynamicVariable": ".workflow_phone_number_node_model_input_transfer_destination",
     "WorkflowPhoneNumberNodeModelOutput": ".workflow_phone_number_node_model_output",
+    "WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem": ".workflow_phone_number_node_model_output_custom_sip_headers_item",
+    "WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem_Dynamic": ".workflow_phone_number_node_model_output_custom_sip_headers_item",
+    "WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem_Static": ".workflow_phone_number_node_model_output_custom_sip_headers_item",
     "WorkflowPhoneNumberNodeModelOutputTransferDestination": ".workflow_phone_number_node_model_output_transfer_destination",
     "WorkflowPhoneNumberNodeModelOutputTransferDestination_Phone": ".workflow_phone_number_node_model_output_transfer_destination",
     "WorkflowPhoneNumberNodeModelOutputTransferDestination_PhoneDynamicVariable": ".workflow_phone_number_node_model_output_transfer_destination",
@@ -3140,7 +3203,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkflowUnconditionalModelOutput": ".workflow_unconditional_model_output",
     "WorkspaceApiKeyListResponseModel": ".workspace_api_key_list_response_model",
     "WorkspaceApiKeyResponseModel": ".workspace_api_key_response_model",
-    "WorkspaceApiKeyResponseModelPermissionsItem": ".workspace_api_key_response_model_permissions_item",
     "WorkspaceBatchCallsResponse": ".workspace_batch_calls_response",
     "WorkspaceCreateApiKeyResponseModel": ".workspace_create_api_key_response_model",
     "WorkspaceCreateWebhookResponseModel": ".workspace_create_webhook_response_model",
@@ -3207,6 +3269,7 @@ __all__ = [
     "AgentSimulatedChatTestResponseModel",
     "AgentSortBy",
     "AgentSuccessfulResponseExample",
+    "AgentSummaryBatchSuccessfulResponseModel",
     "AgentSummaryResponseModel",
     "AgentTestingSettings",
     "AgentTransfer",
@@ -3739,6 +3802,7 @@ __all__ = [
     "ClientEvent",
     "ClientToolConfigInput",
     "ClientToolConfigOutput",
+    "Contributor",
     "ConvAiDynamicVariable",
     "ConvAiSecretLocator",
     "ConvAiStoredSecretDependencies",
@@ -3860,6 +3924,8 @@ __all__ = [
     "CustomLlm",
     "CustomLlmRequestHeadersValue",
     "CustomLlmapiType",
+    "CustomSipHeader",
+    "CustomSipHeaderWithDynamicVariable",
     "DashboardCallSuccessChartModel",
     "DashboardCriteriaChartModel",
     "DashboardDataCollectionChartModel",
@@ -3887,6 +3953,11 @@ __all__ = [
     "DetectedEntity",
     "DialogueInput",
     "DialogueInputResponseModel",
+    "DirectPublishingReadResponseModel",
+    "DirectPublishingReadResponseModelDisplayMode",
+    "DirectPublishingReadResponseModelGenreItem",
+    "DirectPublishingReadResponseModelPayoutType",
+    "DirectPublishingReadResponseModelTargetAudience",
     "DiscountResponseModel",
     "DoDubbingResponse",
     "DocumentUsageModeEnum",
@@ -4040,6 +4111,7 @@ __all__ = [
     "IntegrationType",
     "InvoiceResponse",
     "InvoiceResponseModelPaymentIntentStatus",
+    "InvoiceResponseModelPaymentIntentStatussesItem",
     "KnowledgeBaseDependentType",
     "KnowledgeBaseDocumentChunkResponseModel",
     "KnowledgeBaseDocumentMetadataResponseModel",
@@ -4134,9 +4206,13 @@ __all__ = [
     "PendingCancellationResponseModel",
     "PendingSubscriptionSwitchResponseModel",
     "PendingSubscriptionSwitchResponseModelNextTier",
+    "PermissionType",
     "PhoneNumberAgentInfo",
     "PhoneNumberDynamicVariableTransferDestination",
     "PhoneNumberTransfer",
+    "PhoneNumberTransferCustomSipHeadersItem",
+    "PhoneNumberTransferCustomSipHeadersItem_Dynamic",
+    "PhoneNumberTransferCustomSipHeadersItem_Static",
     "PhoneNumberTransferDestination",
     "PhoneNumberTransferTransferDestination",
     "PhoneNumberTransferTransferDestination_Phone",
@@ -4157,6 +4233,7 @@ __all__ = [
     "PositionOutput",
     "PostAgentAvatarResponseModel",
     "PostWorkspaceSecretResponseModel",
+    "PreviewAudioDbModel",
     "PrivacyConfig",
     "ProjectCreationMetaResponseModel",
     "ProjectCreationMetaResponseModelStatus",
@@ -4252,6 +4329,8 @@ __all__ = [
     "RagIndexOverviewResponseModel",
     "RagIndexStatus",
     "RagRetrievalInfo",
+    "ReadLegalTerms",
+    "ReadMetadataChapterDbModel",
     "ReaderResourceResponseModel",
     "ReaderResourceResponseModelResourceType",
     "RecordingResponse",
@@ -4268,11 +4347,16 @@ __all__ = [
     "ResourceAccessInfoRole",
     "ResourceMetadataResponseModel",
     "ResourceMetadataResponseModelAnonymousAccessLevelOverride",
+    "ReviewResponseModel",
+    "ReviewResponseModelRejectReasonsItem",
+    "ReviewResponseModelReviewStatus",
     "ReviewStatus",
     "SafetyCommonModel",
     "SafetyEvaluation",
     "SafetyResponseModel",
     "SafetyRule",
+    "SampleConfigDbModel",
+    "SampleConfigDbModelParentType",
     "SaveVoicePreviewRequest",
     "SecretDependencyType",
     "SectionSource",
@@ -4324,6 +4408,7 @@ __all__ = [
     "SpeechToTextWebhookResponseModel",
     "SpeechToTextWordResponseModel",
     "SpeechToTextWordResponseModelType",
+    "SpellingPatience",
     "SrtExportOptions",
     "StartPvcVoiceTrainingResponseModel",
     "StartSpeakerSeparationResponseModel",
@@ -4573,12 +4658,18 @@ __all__ = [
     "WorkflowOverrideAgentNodeModelInput",
     "WorkflowOverrideAgentNodeModelOutput",
     "WorkflowPhoneNumberNodeModelInput",
+    "WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem",
+    "WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem_Dynamic",
+    "WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem_Static",
     "WorkflowPhoneNumberNodeModelInputTransferDestination",
     "WorkflowPhoneNumberNodeModelInputTransferDestination_Phone",
     "WorkflowPhoneNumberNodeModelInputTransferDestination_PhoneDynamicVariable",
     "WorkflowPhoneNumberNodeModelInputTransferDestination_SipUri",
     "WorkflowPhoneNumberNodeModelInputTransferDestination_SipUriDynamicVariable",
     "WorkflowPhoneNumberNodeModelOutput",
+    "WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem",
+    "WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem_Dynamic",
+    "WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem_Static",
     "WorkflowPhoneNumberNodeModelOutputTransferDestination",
     "WorkflowPhoneNumberNodeModelOutputTransferDestination_Phone",
     "WorkflowPhoneNumberNodeModelOutputTransferDestination_PhoneDynamicVariable",
@@ -4613,7 +4704,6 @@ __all__ = [
     "WorkflowUnconditionalModelOutput",
     "WorkspaceApiKeyListResponseModel",
     "WorkspaceApiKeyResponseModel",
-    "WorkspaceApiKeyResponseModelPermissionsItem",
     "WorkspaceBatchCallsResponse",
     "WorkspaceCreateApiKeyResponseModel",
     "WorkspaceCreateWebhookResponseModel",

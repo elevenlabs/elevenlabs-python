@@ -5,11 +5,19 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .phone_number_transfer_custom_sip_headers_item import PhoneNumberTransferCustomSipHeadersItem
 from .phone_number_transfer_transfer_destination import PhoneNumberTransferTransferDestination
 from .transfer_type_enum import TransferTypeEnum
 
 
 class PhoneNumberTransfer(UncheckedBaseModel):
+    custom_sip_headers: typing.Optional[typing.List[PhoneNumberTransferCustomSipHeadersItem]] = pydantic.Field(
+        default=None
+    )
+    """
+    Custom SIP headers to include when transferring the call. Each header can be either a static value or a dynamic variable reference.
+    """
+
     transfer_destination: typing.Optional[PhoneNumberTransferTransferDestination] = None
     phone_number: typing.Optional[str] = None
     condition: str

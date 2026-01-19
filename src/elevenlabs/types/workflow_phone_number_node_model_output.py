@@ -7,12 +7,20 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .position_output import PositionOutput
 from .transfer_type_enum import TransferTypeEnum
+from .workflow_phone_number_node_model_output_custom_sip_headers_item import (
+    WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem,
+)
 from .workflow_phone_number_node_model_output_transfer_destination import (
     WorkflowPhoneNumberNodeModelOutputTransferDestination,
 )
 
 
 class WorkflowPhoneNumberNodeModelOutput(UncheckedBaseModel):
+    custom_sip_headers: typing.List[WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem] = pydantic.Field()
+    """
+    Custom SIP headers to include when transferring the call. Each header can be either a static value or a dynamic variable reference.
+    """
+
     position: PositionOutput = pydantic.Field()
     """
     Position of the node in the workflow.

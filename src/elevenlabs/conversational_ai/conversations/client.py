@@ -43,6 +43,7 @@ class ConversationsClient:
         *,
         agent_id: str,
         include_conversation_id: typing.Optional[bool] = None,
+        branch_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ConversationSignedUrlResponseModel:
         """
@@ -55,6 +56,9 @@ class ConversationsClient:
 
         include_conversation_id : typing.Optional[bool]
             Whether to include a conversation_id with the response. If included, the conversation_signature cannot be used again.
+
+        branch_id : typing.Optional[str]
+            The ID of the branch to use
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -74,10 +78,14 @@ class ConversationsClient:
         client.conversational_ai.conversations.get_signed_url(
             agent_id="21m00Tcm4TlvDq8ikWAM",
             include_conversation_id=True,
+            branch_id="branch_id",
         )
         """
         _response = self._raw_client.get_signed_url(
-            agent_id=agent_id, include_conversation_id=include_conversation_id, request_options=request_options
+            agent_id=agent_id,
+            include_conversation_id=include_conversation_id,
+            branch_id=branch_id,
+            request_options=request_options,
         )
         return _response.data
 
@@ -86,6 +94,7 @@ class ConversationsClient:
         *,
         agent_id: str,
         participant_name: typing.Optional[str] = None,
+        branch_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TokenResponseModel:
         """
@@ -98,6 +107,9 @@ class ConversationsClient:
 
         participant_name : typing.Optional[str]
             Optional custom participant name. If not provided, user ID will be used
+
+        branch_id : typing.Optional[str]
+            The ID of the branch to use
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -117,10 +129,11 @@ class ConversationsClient:
         client.conversational_ai.conversations.get_webrtc_token(
             agent_id="21m00Tcm4TlvDq8ikWAM",
             participant_name="participant_name",
+            branch_id="branch_id",
         )
         """
         _response = self._raw_client.get_webrtc_token(
-            agent_id=agent_id, participant_name=participant_name, request_options=request_options
+            agent_id=agent_id, participant_name=participant_name, branch_id=branch_id, request_options=request_options
         )
         return _response.data
 
@@ -146,6 +159,7 @@ class ConversationsClient:
         summary_mode: typing.Optional[ConversationsListRequestSummaryMode] = None,
         search: typing.Optional[str] = None,
         conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None,
+        branch_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationsPageResponseModel:
         """
@@ -209,6 +223,9 @@ class ConversationsClient:
 
         conversation_initiation_source : typing.Optional[ConversationInitiationSource]
 
+        branch_id : typing.Optional[str]
+            Filter conversations by branch ID.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -240,6 +257,7 @@ class ConversationsClient:
             summary_mode="exclude",
             search="search",
             conversation_initiation_source="unknown",
+            branch_id="branch_id",
         )
         """
         _response = self._raw_client.list(
@@ -262,6 +280,7 @@ class ConversationsClient:
             summary_mode=summary_mode,
             search=search,
             conversation_initiation_source=conversation_initiation_source,
+            branch_id=branch_id,
             request_options=request_options,
         )
         return _response.data
@@ -370,6 +389,7 @@ class AsyncConversationsClient:
         *,
         agent_id: str,
         include_conversation_id: typing.Optional[bool] = None,
+        branch_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ConversationSignedUrlResponseModel:
         """
@@ -382,6 +402,9 @@ class AsyncConversationsClient:
 
         include_conversation_id : typing.Optional[bool]
             Whether to include a conversation_id with the response. If included, the conversation_signature cannot be used again.
+
+        branch_id : typing.Optional[str]
+            The ID of the branch to use
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -406,13 +429,17 @@ class AsyncConversationsClient:
             await client.conversational_ai.conversations.get_signed_url(
                 agent_id="21m00Tcm4TlvDq8ikWAM",
                 include_conversation_id=True,
+                branch_id="branch_id",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.get_signed_url(
-            agent_id=agent_id, include_conversation_id=include_conversation_id, request_options=request_options
+            agent_id=agent_id,
+            include_conversation_id=include_conversation_id,
+            branch_id=branch_id,
+            request_options=request_options,
         )
         return _response.data
 
@@ -421,6 +448,7 @@ class AsyncConversationsClient:
         *,
         agent_id: str,
         participant_name: typing.Optional[str] = None,
+        branch_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TokenResponseModel:
         """
@@ -433,6 +461,9 @@ class AsyncConversationsClient:
 
         participant_name : typing.Optional[str]
             Optional custom participant name. If not provided, user ID will be used
+
+        branch_id : typing.Optional[str]
+            The ID of the branch to use
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -457,13 +488,14 @@ class AsyncConversationsClient:
             await client.conversational_ai.conversations.get_webrtc_token(
                 agent_id="21m00Tcm4TlvDq8ikWAM",
                 participant_name="participant_name",
+                branch_id="branch_id",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.get_webrtc_token(
-            agent_id=agent_id, participant_name=participant_name, request_options=request_options
+            agent_id=agent_id, participant_name=participant_name, branch_id=branch_id, request_options=request_options
         )
         return _response.data
 
@@ -489,6 +521,7 @@ class AsyncConversationsClient:
         summary_mode: typing.Optional[ConversationsListRequestSummaryMode] = None,
         search: typing.Optional[str] = None,
         conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None,
+        branch_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationsPageResponseModel:
         """
@@ -552,6 +585,9 @@ class AsyncConversationsClient:
 
         conversation_initiation_source : typing.Optional[ConversationInitiationSource]
 
+        branch_id : typing.Optional[str]
+            Filter conversations by branch ID.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -588,6 +624,7 @@ class AsyncConversationsClient:
                 summary_mode="exclude",
                 search="search",
                 conversation_initiation_source="unknown",
+                branch_id="branch_id",
             )
 
 
@@ -613,6 +650,7 @@ class AsyncConversationsClient:
             summary_mode=summary_mode,
             search=search,
             conversation_initiation_source=conversation_initiation_source,
+            branch_id=branch_id,
             request_options=request_options,
         )
         return _response.data

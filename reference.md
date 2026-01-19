@@ -777,7 +777,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[TextToSpeechConvertRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[TextToSpeechConvertRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -929,7 +929,7 @@ client.text_to_speech.convert_with_timestamps(
     voice_id="21m00Tcm4TlvDq8ikWAM",
     enable_logging=True,
     optimize_streaming_latency=1,
-    output_format="mp3_22050_32",
+    output_format="alaw_8000",
     text="This is a test for the API of ElevenLabs.",
 )
 
@@ -988,7 +988,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[TextToSpeechConvertWithTimestampsRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[TextToSpeechConvertWithTimestampsRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -3502,7 +3502,7 @@ typing.Optional[typing.List[core.File]]` — See core.File for more documentatio
 <dl>
 <dd>
 
-**labels:** `typing.Optional[str]` — Serialized labels dictionary for the voice.
+**labels:** `typing.Optional[VoicesUpdateRequestLabels]` — Labels for the voice. Keys can be language, accent, gender, or age.
     
 </dd>
 </dl>
@@ -4020,10 +4020,10 @@ client.studio.create_podcast(
 **quality_preset:** `typing.Optional[BodyCreatePodcastV1StudioPodcastsPostQualityPreset]` 
 
 Output quality of the generated audio. Must be one of:
-standard - standard output format, 128kbps with 44.1kHz sample rate.
-high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side.
-ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side.
-ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format.
+'standard' - standard output format, 128kbps with 44.1kHz sample rate.
+'high' - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side.
+'ultra' - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side.
+'ultra_lossless' - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format.
     
 </dd>
 </dl>
@@ -6132,7 +6132,7 @@ client = ElevenLabs(
 )
 client.speech_to_text.convert(
     enable_logging=True,
-    model_id="model_id",
+    model_id="scribe_v1",
 )
 
 ```
@@ -6149,7 +6149,7 @@ client.speech_to_text.convert(
 <dl>
 <dd>
 
-**model_id:** `str` — The ID of the model to use for transcription, currently only 'scribe_v1' and 'scribe_v1_experimental' are available.
+**model_id:** `SpeechToTextConvertRequestModelId` — The ID of the model to use for transcription.
     
 </dd>
 </dl>
@@ -7135,6 +7135,7 @@ client = ElevenLabs(
 client.conversational_ai.conversations.get_signed_url(
     agent_id="21m00Tcm4TlvDq8ikWAM",
     include_conversation_id=True,
+    branch_id="branch_id",
 )
 
 ```
@@ -7160,6 +7161,14 @@ client.conversational_ai.conversations.get_signed_url(
 <dd>
 
 **include_conversation_id:** `typing.Optional[bool]` — Whether to include a conversation_id with the response. If included, the conversation_signature cannot be used again.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `typing.Optional[str]` — The ID of the branch to use
     
 </dd>
 </dl>
@@ -7214,6 +7223,7 @@ client = ElevenLabs(
 client.conversational_ai.conversations.get_webrtc_token(
     agent_id="21m00Tcm4TlvDq8ikWAM",
     participant_name="participant_name",
+    branch_id="branch_id",
 )
 
 ```
@@ -7239,6 +7249,14 @@ client.conversational_ai.conversations.get_webrtc_token(
 <dd>
 
 **participant_name:** `typing.Optional[str]` — Optional custom participant name. If not provided, user ID will be used
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `typing.Optional[str]` — The ID of the branch to use
     
 </dd>
 </dl>
@@ -7306,6 +7324,7 @@ client.conversational_ai.conversations.list(
     summary_mode="exclude",
     search="search",
     conversation_initiation_source="unknown",
+    branch_id="branch_id",
 )
 
 ```
@@ -7467,6 +7486,14 @@ client.conversational_ai.conversations.list(
 <dd>
 
 **conversation_initiation_source:** `typing.Optional[ConversationInitiationSource]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `typing.Optional[str]` — Filter conversations by branch ID.
     
 </dd>
 </dl>
@@ -11340,6 +11367,76 @@ client.conversational_ai.batch_calls.get(
 </dl>
 </details>
 
+<details><summary><code>client.conversational_ai.batch_calls.<a href="src/elevenlabs/conversational_ai/batch_calls/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Permanently delete a batch call and all recipient records. Conversations remain in history.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.batch_calls.delete(
+    batch_id="batch_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**batch_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.conversational_ai.batch_calls.<a href="src/elevenlabs/conversational_ai/batch_calls/client.py">cancel</a>(...)</code></summary>
 <dl>
 <dd>
@@ -12338,6 +12435,75 @@ client.conversational_ai.whatsapp_accounts.update(
 <dd>
 
 **assigned_agent_id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi Agents Summaries
+<details><summary><code>client.conversational_ai.agents.summaries.<a href="src/elevenlabs/conversational_ai/agents/summaries/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns summaries for the specified agents.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.agents.summaries.get()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — List of agent IDs to fetch summaries for
     
 </dd>
 </dl>
@@ -17474,13 +17640,13 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**quality_preset:** `typing.Optional[str]` 
+**quality_preset:** `typing.Optional[ProjectsCreateRequestQualityPreset]` 
 
 Output quality of the generated audio. Must be one of:
-standard - standard output format, 128kbps with 44.1kHz sample rate.
-high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side.
-ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side.
-ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format.
+'standard' - standard output format, 128kbps with 44.1kHz sample rate.
+'high' - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side.
+'ultra' - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side.
+'ultra_lossless' - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format.
     
 </dd>
 </dl>
@@ -19855,7 +20021,7 @@ typing.List[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**labels:** `typing.Optional[str]` — Serialized labels dictionary for the voice.
+**labels:** `typing.Optional[IvcCreateRequestLabels]` — Labels for the voice. Keys can be language, accent, gender, or age.
     
 </dd>
 </dl>
@@ -19951,7 +20117,7 @@ client.voices.pvc.create(
 <dl>
 <dd>
 
-**labels:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` — Serialized labels dictionary for the voice.
+**labels:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` — Labels for the voice. Keys can be language, accent, gender, or age.
     
 </dd>
 </dl>
@@ -20053,7 +20219,7 @@ client.voices.pvc.update(
 <dl>
 <dd>
 
-**labels:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` — Serialized labels dictionary for the voice.
+**labels:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` — Labels for the voice. Keys can be language, accent, gender, or age.
     
 </dd>
 </dl>

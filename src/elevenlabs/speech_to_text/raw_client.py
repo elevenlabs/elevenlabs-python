@@ -16,6 +16,7 @@ from ..types.additional_formats import AdditionalFormats
 from ..types.http_validation_error import HttpValidationError
 from .types.speech_to_text_convert_request_entity_detection import SpeechToTextConvertRequestEntityDetection
 from .types.speech_to_text_convert_request_file_format import SpeechToTextConvertRequestFileFormat
+from .types.speech_to_text_convert_request_model_id import SpeechToTextConvertRequestModelId
 from .types.speech_to_text_convert_request_timestamps_granularity import SpeechToTextConvertRequestTimestampsGranularity
 from .types.speech_to_text_convert_request_webhook_metadata import SpeechToTextConvertRequestWebhookMetadata
 from .types.speech_to_text_convert_response import SpeechToTextConvertResponse
@@ -31,7 +32,7 @@ class RawSpeechToTextClient:
     def convert(
         self,
         *,
-        model_id: str,
+        model_id: SpeechToTextConvertRequestModelId,
         enable_logging: typing.Optional[bool] = None,
         file: typing.Optional[core.File] = OMIT,
         language_code: typing.Optional[str] = OMIT,
@@ -58,8 +59,8 @@ class RawSpeechToTextClient:
 
         Parameters
         ----------
-        model_id : str
-            The ID of the model to use for transcription, currently only 'scribe_v1' and 'scribe_v1_experimental' are available.
+        model_id : SpeechToTextConvertRequestModelId
+            The ID of the model to use for transcription.
 
         enable_logging : typing.Optional[bool]
             When enable_logging is set to false zero retention mode will be used for the request. This will mean log and transcript storage features are unavailable for this request. Zero retention mode may only be used by enterprise customers.
@@ -197,7 +198,7 @@ class AsyncRawSpeechToTextClient:
     async def convert(
         self,
         *,
-        model_id: str,
+        model_id: SpeechToTextConvertRequestModelId,
         enable_logging: typing.Optional[bool] = None,
         file: typing.Optional[core.File] = OMIT,
         language_code: typing.Optional[str] = OMIT,
@@ -224,8 +225,8 @@ class AsyncRawSpeechToTextClient:
 
         Parameters
         ----------
-        model_id : str
-            The ID of the model to use for transcription, currently only 'scribe_v1' and 'scribe_v1_experimental' are available.
+        model_id : SpeechToTextConvertRequestModelId
+            The ID of the model to use for transcription.
 
         enable_logging : typing.Optional[bool]
             When enable_logging is set to false zero retention mode will be used for the request. This will mean log and transcript storage features are unavailable for this request. Zero retention mode may only be used by enterprise customers.

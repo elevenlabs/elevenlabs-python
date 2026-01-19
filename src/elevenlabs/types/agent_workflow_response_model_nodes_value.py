@@ -12,6 +12,9 @@ from .conversational_config_api_model_workflow_override_output import Conversati
 from .knowledge_base_locator import KnowledgeBaseLocator
 from .position_output import PositionOutput
 from .transfer_type_enum import TransferTypeEnum
+from .workflow_phone_number_node_model_output_custom_sip_headers_item import (
+    WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem,
+)
 from .workflow_phone_number_node_model_output_transfer_destination import (
     WorkflowPhoneNumberNodeModelOutputTransferDestination,
 )
@@ -55,6 +58,7 @@ class AgentWorkflowResponseModelNodesValue_OverrideAgent(UncheckedBaseModel):
 
 class AgentWorkflowResponseModelNodesValue_PhoneNumber(UncheckedBaseModel):
     type: typing.Literal["phone_number"] = "phone_number"
+    custom_sip_headers: typing.List[WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem]
     position: PositionOutput
     edge_order: typing.List[str]
     transfer_destination: WorkflowPhoneNumberNodeModelOutputTransferDestination

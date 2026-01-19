@@ -5,7 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .workspace_api_key_response_model_permissions_item import WorkspaceApiKeyResponseModelPermissionsItem
+from .permission_type import PermissionType
 
 
 class WorkspaceApiKeyResponseModel(UncheckedBaseModel):
@@ -15,9 +15,10 @@ class WorkspaceApiKeyResponseModel(UncheckedBaseModel):
     service_account_user_id: str
     created_at_unix: typing.Optional[int] = None
     is_disabled: typing.Optional[bool] = None
-    permissions: typing.Optional[typing.List[WorkspaceApiKeyResponseModelPermissionsItem]] = None
+    permissions: typing.Optional[typing.List[PermissionType]] = None
     character_limit: typing.Optional[int] = None
     character_count: typing.Optional[int] = None
+    hashed_xi_api_key: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

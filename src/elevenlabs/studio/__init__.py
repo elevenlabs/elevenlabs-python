@@ -22,6 +22,7 @@ if typing.TYPE_CHECKING:
     from .projects import (
         ProjectsCreateRequestApplyTextNormalization,
         ProjectsCreateRequestFiction,
+        ProjectsCreateRequestQualityPreset,
         ProjectsCreateRequestSourceType,
         ProjectsCreateRequestTargetAudience,
     )
@@ -38,6 +39,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BodyCreatePodcastV1StudioPodcastsPostSourceTwoItem_Url": ".types",
     "ProjectsCreateRequestApplyTextNormalization": ".projects",
     "ProjectsCreateRequestFiction": ".projects",
+    "ProjectsCreateRequestQualityPreset": ".projects",
     "ProjectsCreateRequestSourceType": ".projects",
     "ProjectsCreateRequestTargetAudience": ".projects",
     "projects": ".projects",
@@ -78,6 +80,7 @@ __all__ = [
     "BodyCreatePodcastV1StudioPodcastsPostSourceTwoItem_Url",
     "ProjectsCreateRequestApplyTextNormalization",
     "ProjectsCreateRequestFiction",
+    "ProjectsCreateRequestQualityPreset",
     "ProjectsCreateRequestSourceType",
     "ProjectsCreateRequestTargetAudience",
     "projects",
