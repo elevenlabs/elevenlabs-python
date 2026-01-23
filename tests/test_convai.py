@@ -59,12 +59,11 @@ def test_conversation_basic_flow():
     agent_response_callback = MagicMock()
     test_user_id = "test_user_123"
 
-    # Setup the conversation
-    config = ConversationInitiationData(user_id=test_user_id)
+    # Setup the conversation with user_id passed directly to the constructor
     conversation = Conversation(
         client=mock_client,
         agent_id=TEST_AGENT_ID,
-        config=config,
+        user_id=test_user_id,
         requires_auth=False,
         audio_interface=MockAudioInterface(),
         callback_agent_response=agent_response_callback,
@@ -99,7 +98,7 @@ def test_conversation_basic_flow():
     assert init_message["user_id"] == test_user_id
     agent_response_callback.assert_called_once_with("Hello there!")
     assert conversation._conversation_id == TEST_CONVERSATION_ID
-    assert conversation.config.user_id == test_user_id
+    assert conversation.user_id == test_user_id
 
 
 def test_conversation_with_auth():
