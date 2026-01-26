@@ -403,7 +403,7 @@ class BaseConversation:
                     "source": "python_sdk",
                     "version": __version__,
                 },
-                **({"user_id": self.config.user_id} if self.config.user_id else {}),
+                **({"user_id": self.user_id} if self.user_id else {}),
             }
         )
 
