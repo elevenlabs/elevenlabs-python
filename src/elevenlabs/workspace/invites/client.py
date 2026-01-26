@@ -6,10 +6,8 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.add_workspace_invite_response_model import AddWorkspaceInviteResponseModel
 from ...types.delete_workspace_invite_response_model import DeleteWorkspaceInviteResponseModel
+from ...types.seat_type import SeatType
 from .raw_client import AsyncRawInvitesClient, RawInvitesClient
-from .types.body_invite_user_v_1_workspace_invites_add_post_workspace_permission import (
-    BodyInviteUserV1WorkspaceInvitesAddPostWorkspacePermission,
-)
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -34,8 +32,9 @@ class InvitesClient:
         self,
         *,
         email: str,
+        workspace_permission: typing.Optional[str] = OMIT,
+        seat_type: typing.Optional[SeatType] = OMIT,
         group_ids: typing.Optional[typing.Sequence[str]] = OMIT,
-        workspace_permission: typing.Optional[BodyInviteUserV1WorkspaceInvitesAddPostWorkspacePermission] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddWorkspaceInviteResponseModel:
         """
@@ -46,11 +45,14 @@ class InvitesClient:
         email : str
             The email of the customer
 
+        workspace_permission : typing.Optional[str]
+            The workspace permission of the user. This is deprecated, use `seat_type` instead.
+
+        seat_type : typing.Optional[SeatType]
+            The seat type of the user
+
         group_ids : typing.Optional[typing.Sequence[str]]
             The group ids of the user
-
-        workspace_permission : typing.Optional[BodyInviteUserV1WorkspaceInvitesAddPostWorkspacePermission]
-            The workspace permission of the user
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -72,7 +74,11 @@ class InvitesClient:
         )
         """
         _response = self._raw_client.create(
-            email=email, group_ids=group_ids, workspace_permission=workspace_permission, request_options=request_options
+            email=email,
+            workspace_permission=workspace_permission,
+            seat_type=seat_type,
+            group_ids=group_ids,
+            request_options=request_options,
         )
         return _response.data
 
@@ -169,8 +175,9 @@ class AsyncInvitesClient:
         self,
         *,
         email: str,
+        workspace_permission: typing.Optional[str] = OMIT,
+        seat_type: typing.Optional[SeatType] = OMIT,
         group_ids: typing.Optional[typing.Sequence[str]] = OMIT,
-        workspace_permission: typing.Optional[BodyInviteUserV1WorkspaceInvitesAddPostWorkspacePermission] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddWorkspaceInviteResponseModel:
         """
@@ -181,11 +188,14 @@ class AsyncInvitesClient:
         email : str
             The email of the customer
 
+        workspace_permission : typing.Optional[str]
+            The workspace permission of the user. This is deprecated, use `seat_type` instead.
+
+        seat_type : typing.Optional[SeatType]
+            The seat type of the user
+
         group_ids : typing.Optional[typing.Sequence[str]]
             The group ids of the user
-
-        workspace_permission : typing.Optional[BodyInviteUserV1WorkspaceInvitesAddPostWorkspacePermission]
-            The workspace permission of the user
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -215,7 +225,11 @@ class AsyncInvitesClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
-            email=email, group_ids=group_ids, workspace_permission=workspace_permission, request_options=request_options
+            email=email,
+            workspace_permission=workspace_permission,
+            seat_type=seat_type,
+            group_ids=group_ids,
+            request_options=request_options,
         )
         return _response.data
 

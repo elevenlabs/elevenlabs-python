@@ -33,6 +33,16 @@ class SongMetadata(UncheckedBaseModel):
     Whether the song is explicit
     """
 
+    bpm: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The BPM of the song
+    """
+
+    time_signature: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The time signature of the song
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

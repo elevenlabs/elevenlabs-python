@@ -13,8 +13,11 @@ from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.get_tool_dependent_agents_response_model import GetToolDependentAgentsResponseModel
 from ...types.http_validation_error import HttpValidationError
+from ...types.sort_direction import SortDirection
 from ...types.tool_request_model import ToolRequestModel
 from ...types.tool_response_model import ToolResponseModel
+from ...types.tool_sort_by import ToolSortBy
+from ...types.tool_type_filter import ToolTypeFilter
 from ...types.tools_response_model import ToolsResponseModel
 
 # this is used as the default value for optional parameters
@@ -25,12 +28,44 @@ class RawToolsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[ToolsResponseModel]:
+    def list(
+        self,
+        *,
+        search: typing.Optional[str] = None,
+        page_size: typing.Optional[int] = None,
+        show_only_owned_documents: typing.Optional[bool] = None,
+        types: typing.Optional[typing.Union[ToolTypeFilter, typing.Sequence[ToolTypeFilter]]] = None,
+        sort_direction: typing.Optional[SortDirection] = None,
+        sort_by: typing.Optional[ToolSortBy] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[ToolsResponseModel]:
         """
         Get all available tools in the workspace.
 
         Parameters
         ----------
+        search : typing.Optional[str]
+            If specified, the endpoint returns only tools whose names start with this string.
+
+        page_size : typing.Optional[int]
+            How many documents to return at maximum. Can not exceed 100, defaults to 30.
+
+        show_only_owned_documents : typing.Optional[bool]
+            If set to true, the endpoint will return only tools owned by you (and not shared from somebody else).
+
+        types : typing.Optional[typing.Union[ToolTypeFilter, typing.Sequence[ToolTypeFilter]]]
+            If present, the endpoint will return only tools of the given types.
+
+        sort_direction : typing.Optional[SortDirection]
+            The direction to sort the results
+
+        sort_by : typing.Optional[ToolSortBy]
+            The field to sort the results by
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -42,6 +77,15 @@ class RawToolsClient:
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/tools",
             method="GET",
+            params={
+                "search": search,
+                "page_size": page_size,
+                "show_only_owned_documents": show_only_owned_documents,
+                "types": types,
+                "sort_direction": sort_direction,
+                "sort_by": sort_by,
+                "cursor": cursor,
+            },
             request_options=request_options,
         )
         try:
@@ -358,13 +402,43 @@ class AsyncRawToolsClient:
         self._client_wrapper = client_wrapper
 
     async def list(
-        self, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        search: typing.Optional[str] = None,
+        page_size: typing.Optional[int] = None,
+        show_only_owned_documents: typing.Optional[bool] = None,
+        types: typing.Optional[typing.Union[ToolTypeFilter, typing.Sequence[ToolTypeFilter]]] = None,
+        sort_direction: typing.Optional[SortDirection] = None,
+        sort_by: typing.Optional[ToolSortBy] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ToolsResponseModel]:
         """
         Get all available tools in the workspace.
 
         Parameters
         ----------
+        search : typing.Optional[str]
+            If specified, the endpoint returns only tools whose names start with this string.
+
+        page_size : typing.Optional[int]
+            How many documents to return at maximum. Can not exceed 100, defaults to 30.
+
+        show_only_owned_documents : typing.Optional[bool]
+            If set to true, the endpoint will return only tools owned by you (and not shared from somebody else).
+
+        types : typing.Optional[typing.Union[ToolTypeFilter, typing.Sequence[ToolTypeFilter]]]
+            If present, the endpoint will return only tools of the given types.
+
+        sort_direction : typing.Optional[SortDirection]
+            The direction to sort the results
+
+        sort_by : typing.Optional[ToolSortBy]
+            The field to sort the results by
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -376,6 +450,15 @@ class AsyncRawToolsClient:
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/tools",
             method="GET",
+            params={
+                "search": search,
+                "page_size": page_size,
+                "show_only_owned_documents": show_only_owned_documents,
+                "types": types,
+                "sort_direction": sort_direction,
+                "sort_by": sort_by,
+                "cursor": cursor,
+            },
             request_options=request_options,
         )
         try:

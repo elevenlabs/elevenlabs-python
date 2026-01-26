@@ -42,6 +42,7 @@ class DirectPublishingReadResponseModel(UncheckedBaseModel):
     ean: typing.Optional[str] = None
     legal_terms: typing.Optional[ReadLegalTerms] = None
     content_guidelines_terms: typing.Optional[ReadLegalTerms] = None
+    last_updated_from_project_unix: typing.Optional[int] = None
     publishing_project_id: typing.Optional[str] = None
     publishing_state: typing.Optional[str] = None
     publisher_profile_id: typing.Optional[str] = None

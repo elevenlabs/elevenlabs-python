@@ -23,6 +23,9 @@ if typing.TYPE_CHECKING:
     from .additional_formats import AdditionalFormats
     from .adhoc_agent_config_override_for_test_request_model import AdhocAgentConfigOverrideForTestRequestModel
     from .age import Age
+    from .agent_branch_basic_info import AgentBranchBasicInfo
+    from .agent_branch_response import AgentBranchResponse
+    from .agent_branch_summary import AgentBranchSummary
     from .agent_call_limits import AgentCallLimits
     from .agent_config import AgentConfig
     from .agent_config_api_model_workflow_override_input import AgentConfigApiModelWorkflowOverrideInput
@@ -31,6 +34,10 @@ if typing.TYPE_CHECKING:
     from .agent_config_override_input import AgentConfigOverrideInput
     from .agent_config_override_output import AgentConfigOverrideOutput
     from .agent_definition_source import AgentDefinitionSource
+    from .agent_deployment_percentage_strategy import AgentDeploymentPercentageStrategy
+    from .agent_deployment_request import AgentDeploymentRequest
+    from .agent_deployment_request_item import AgentDeploymentRequestItem
+    from .agent_deployment_response import AgentDeploymentResponse
     from .agent_failure_response_example import AgentFailureResponseExample
     from .agent_metadata import AgentMetadata
     from .agent_metadata_response_model import AgentMetadataResponseModel
@@ -43,6 +50,8 @@ if typing.TYPE_CHECKING:
     from .agent_summary_response_model import AgentSummaryResponseModel
     from .agent_testing_settings import AgentTestingSettings
     from .agent_transfer import AgentTransfer
+    from .agent_version_metadata import AgentVersionMetadata
+    from .agent_version_parents import AgentVersionParents
     from .agent_workflow_request_model import AgentWorkflowRequestModel
     from .agent_workflow_request_model_nodes_value import (
         AgentWorkflowRequestModelNodesValue,
@@ -592,6 +601,7 @@ if typing.TYPE_CHECKING:
     from .body_generate_a_random_voice_v_1_voice_generation_generate_voice_post_gender import (
         BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostGender,
     )
+    from .branch_protection_status import BranchProtectionStatus
     from .breakdown_types import BreakdownTypes
     from .built_in_tools_input import BuiltInToolsInput
     from .built_in_tools_output import BuiltInToolsOutput
@@ -818,6 +828,7 @@ if typing.TYPE_CHECKING:
     )
     from .convert_chapter_response_model import ConvertChapterResponseModel
     from .convert_project_response_model import ConvertProjectResponseModel
+    from .create_agent_branch_response_model import CreateAgentBranchResponseModel
     from .create_agent_response_model import CreateAgentResponseModel
     from .create_audio_native_project_request import CreateAudioNativeProjectRequest
     from .create_phone_number_response_model import CreatePhoneNumberResponseModel
@@ -1079,6 +1090,7 @@ if typing.TYPE_CHECKING:
     from .library_voice_response import LibraryVoiceResponse
     from .library_voice_response_model_category import LibraryVoiceResponseModelCategory
     from .list_mcp_tools_response_model import ListMcpToolsResponseModel
+    from .list_response_agent_branch_summary import ListResponseAgentBranchSummary
     from .list_response_meta import ListResponseMeta
     from .list_whats_app_accounts_response import ListWhatsAppAccountsResponse
     from .literal_json_schema_property import LiteralJsonSchemaProperty
@@ -1330,6 +1342,7 @@ if typing.TYPE_CHECKING:
     from .sample_config_db_model import SampleConfigDbModel
     from .sample_config_db_model_parent_type import SampleConfigDbModelParentType
     from .save_voice_preview_request import SaveVoicePreviewRequest
+    from .seat_type import SeatType
     from .secret_dependency_type import SecretDependencyType
     from .section_source import SectionSource
     from .segment_create_response import SegmentCreateResponse
@@ -1455,7 +1468,9 @@ if typing.TYPE_CHECKING:
         ToolResponseModelToolConfig_System,
         ToolResponseModelToolConfig_Webhook,
     )
+    from .tool_sort_by import ToolSortBy
     from .tool_type import ToolType
+    from .tool_type_filter import ToolTypeFilter
     from .tool_usage_stats_response_model import ToolUsageStatsResponseModel
     from .tools_response_model import ToolsResponseModel
     from .transfer_to_agent_tool_config import TransferToAgentToolConfig
@@ -1752,6 +1767,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AdditionalFormats": ".additional_formats",
     "AdhocAgentConfigOverrideForTestRequestModel": ".adhoc_agent_config_override_for_test_request_model",
     "Age": ".age",
+    "AgentBranchBasicInfo": ".agent_branch_basic_info",
+    "AgentBranchResponse": ".agent_branch_response",
+    "AgentBranchSummary": ".agent_branch_summary",
     "AgentCallLimits": ".agent_call_limits",
     "AgentConfig": ".agent_config",
     "AgentConfigApiModelWorkflowOverrideInput": ".agent_config_api_model_workflow_override_input",
@@ -1760,6 +1778,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentConfigOverrideInput": ".agent_config_override_input",
     "AgentConfigOverrideOutput": ".agent_config_override_output",
     "AgentDefinitionSource": ".agent_definition_source",
+    "AgentDeploymentPercentageStrategy": ".agent_deployment_percentage_strategy",
+    "AgentDeploymentRequest": ".agent_deployment_request",
+    "AgentDeploymentRequestItem": ".agent_deployment_request_item",
+    "AgentDeploymentResponse": ".agent_deployment_response",
     "AgentFailureResponseExample": ".agent_failure_response_example",
     "AgentMetadata": ".agent_metadata",
     "AgentMetadataResponseModel": ".agent_metadata_response_model",
@@ -1772,6 +1794,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentSummaryResponseModel": ".agent_summary_response_model",
     "AgentTestingSettings": ".agent_testing_settings",
     "AgentTransfer": ".agent_transfer",
+    "AgentVersionMetadata": ".agent_version_metadata",
+    "AgentVersionParents": ".agent_version_parents",
     "AgentWorkflowRequestModel": ".agent_workflow_request_model",
     "AgentWorkflowRequestModelNodesValue": ".agent_workflow_request_model_nodes_value",
     "AgentWorkflowRequestModelNodesValue_End": ".agent_workflow_request_model_nodes_value",
@@ -2251,6 +2275,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BillingPeriod": ".billing_period",
     "BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostAge": ".body_generate_a_random_voice_v_1_voice_generation_generate_voice_post_age",
     "BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostGender": ".body_generate_a_random_voice_v_1_voice_generation_generate_voice_post_gender",
+    "BranchProtectionStatus": ".branch_protection_status",
     "BreakdownTypes": ".breakdown_types",
     "BuiltInToolsInput": ".built_in_tools_input",
     "BuiltInToolsOutput": ".built_in_tools_output",
@@ -2411,6 +2436,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationalConfigApiModelWorkflowOverrideOutput": ".conversational_config_api_model_workflow_override_output",
     "ConvertChapterResponseModel": ".convert_chapter_response_model",
     "ConvertProjectResponseModel": ".convert_project_response_model",
+    "CreateAgentBranchResponseModel": ".create_agent_branch_response_model",
     "CreateAgentResponseModel": ".create_agent_response_model",
     "CreateAudioNativeProjectRequest": ".create_audio_native_project_request",
     "CreatePhoneNumberResponseModel": ".create_phone_number_response_model",
@@ -2636,6 +2662,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LibraryVoiceResponse": ".library_voice_response",
     "LibraryVoiceResponseModelCategory": ".library_voice_response_model_category",
     "ListMcpToolsResponseModel": ".list_mcp_tools_response_model",
+    "ListResponseAgentBranchSummary": ".list_response_agent_branch_summary",
     "ListResponseMeta": ".list_response_meta",
     "ListWhatsAppAccountsResponse": ".list_whats_app_accounts_response",
     "LiteralJsonSchemaProperty": ".literal_json_schema_property",
@@ -2857,6 +2884,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SampleConfigDbModel": ".sample_config_db_model",
     "SampleConfigDbModelParentType": ".sample_config_db_model_parent_type",
     "SaveVoicePreviewRequest": ".save_voice_preview_request",
+    "SeatType": ".seat_type",
     "SecretDependencyType": ".secret_dependency_type",
     "SectionSource": ".section_source",
     "SegmentCreateResponse": ".segment_create_response",
@@ -2972,7 +3000,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ToolResponseModelToolConfig_Client": ".tool_response_model_tool_config",
     "ToolResponseModelToolConfig_System": ".tool_response_model_tool_config",
     "ToolResponseModelToolConfig_Webhook": ".tool_response_model_tool_config",
+    "ToolSortBy": ".tool_sort_by",
     "ToolType": ".tool_type",
+    "ToolTypeFilter": ".tool_type_filter",
     "ToolUsageStatsResponseModel": ".tool_usage_stats_response_model",
     "ToolsResponseModel": ".tools_response_model",
     "TransferToAgentToolConfig": ".transfer_to_agent_tool_config",
@@ -3253,6 +3283,9 @@ __all__ = [
     "AdditionalFormats",
     "AdhocAgentConfigOverrideForTestRequestModel",
     "Age",
+    "AgentBranchBasicInfo",
+    "AgentBranchResponse",
+    "AgentBranchSummary",
     "AgentCallLimits",
     "AgentConfig",
     "AgentConfigApiModelWorkflowOverrideInput",
@@ -3261,6 +3294,10 @@ __all__ = [
     "AgentConfigOverrideInput",
     "AgentConfigOverrideOutput",
     "AgentDefinitionSource",
+    "AgentDeploymentPercentageStrategy",
+    "AgentDeploymentRequest",
+    "AgentDeploymentRequestItem",
+    "AgentDeploymentResponse",
     "AgentFailureResponseExample",
     "AgentMetadata",
     "AgentMetadataResponseModel",
@@ -3273,6 +3310,8 @@ __all__ = [
     "AgentSummaryResponseModel",
     "AgentTestingSettings",
     "AgentTransfer",
+    "AgentVersionMetadata",
+    "AgentVersionParents",
     "AgentWorkflowRequestModel",
     "AgentWorkflowRequestModelNodesValue",
     "AgentWorkflowRequestModelNodesValue_End",
@@ -3752,6 +3791,7 @@ __all__ = [
     "BillingPeriod",
     "BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostAge",
     "BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostGender",
+    "BranchProtectionStatus",
     "BreakdownTypes",
     "BuiltInToolsInput",
     "BuiltInToolsOutput",
@@ -3912,6 +3952,7 @@ __all__ = [
     "ConversationalConfigApiModelWorkflowOverrideOutput",
     "ConvertChapterResponseModel",
     "ConvertProjectResponseModel",
+    "CreateAgentBranchResponseModel",
     "CreateAgentResponseModel",
     "CreateAudioNativeProjectRequest",
     "CreatePhoneNumberResponseModel",
@@ -4137,6 +4178,7 @@ __all__ = [
     "LibraryVoiceResponse",
     "LibraryVoiceResponseModelCategory",
     "ListMcpToolsResponseModel",
+    "ListResponseAgentBranchSummary",
     "ListResponseMeta",
     "ListWhatsAppAccountsResponse",
     "LiteralJsonSchemaProperty",
@@ -4358,6 +4400,7 @@ __all__ = [
     "SampleConfigDbModel",
     "SampleConfigDbModelParentType",
     "SaveVoicePreviewRequest",
+    "SeatType",
     "SecretDependencyType",
     "SectionSource",
     "SegmentCreateResponse",
@@ -4473,7 +4516,9 @@ __all__ = [
     "ToolResponseModelToolConfig_Client",
     "ToolResponseModelToolConfig_System",
     "ToolResponseModelToolConfig_Webhook",
+    "ToolSortBy",
     "ToolType",
+    "ToolTypeFilter",
     "ToolUsageStatsResponseModel",
     "ToolsResponseModel",
     "TransferToAgentToolConfig",

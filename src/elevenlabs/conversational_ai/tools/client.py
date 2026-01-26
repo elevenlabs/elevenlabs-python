@@ -5,8 +5,11 @@ import typing
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.get_tool_dependent_agents_response_model import GetToolDependentAgentsResponseModel
+from ...types.sort_direction import SortDirection
 from ...types.tool_request_model import ToolRequestModel
 from ...types.tool_response_model import ToolResponseModel
+from ...types.tool_sort_by import ToolSortBy
+from ...types.tool_type_filter import ToolTypeFilter
 from ...types.tools_response_model import ToolsResponseModel
 from .raw_client import AsyncRawToolsClient, RawToolsClient
 
@@ -29,12 +32,44 @@ class ToolsClient:
         """
         return self._raw_client
 
-    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> ToolsResponseModel:
+    def list(
+        self,
+        *,
+        search: typing.Optional[str] = None,
+        page_size: typing.Optional[int] = None,
+        show_only_owned_documents: typing.Optional[bool] = None,
+        types: typing.Optional[typing.Union[ToolTypeFilter, typing.Sequence[ToolTypeFilter]]] = None,
+        sort_direction: typing.Optional[SortDirection] = None,
+        sort_by: typing.Optional[ToolSortBy] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ToolsResponseModel:
         """
         Get all available tools in the workspace.
 
         Parameters
         ----------
+        search : typing.Optional[str]
+            If specified, the endpoint returns only tools whose names start with this string.
+
+        page_size : typing.Optional[int]
+            How many documents to return at maximum. Can not exceed 100, defaults to 30.
+
+        show_only_owned_documents : typing.Optional[bool]
+            If set to true, the endpoint will return only tools owned by you (and not shared from somebody else).
+
+        types : typing.Optional[typing.Union[ToolTypeFilter, typing.Sequence[ToolTypeFilter]]]
+            If present, the endpoint will return only tools of the given types.
+
+        sort_direction : typing.Optional[SortDirection]
+            The direction to sort the results
+
+        sort_by : typing.Optional[ToolSortBy]
+            The field to sort the results by
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -50,9 +85,25 @@ class ToolsClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.conversational_ai.tools.list()
+        client.conversational_ai.tools.list(
+            search="search",
+            page_size=1,
+            show_only_owned_documents=True,
+            sort_direction="asc",
+            sort_by="name",
+            cursor="cursor",
+        )
         """
-        _response = self._raw_client.list(request_options=request_options)
+        _response = self._raw_client.list(
+            search=search,
+            page_size=page_size,
+            show_only_owned_documents=show_only_owned_documents,
+            types=types,
+            sort_direction=sort_direction,
+            sort_by=sort_by,
+            cursor=cursor,
+            request_options=request_options,
+        )
         return _response.data
 
     def create(
@@ -269,12 +320,44 @@ class AsyncToolsClient:
         """
         return self._raw_client
 
-    async def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> ToolsResponseModel:
+    async def list(
+        self,
+        *,
+        search: typing.Optional[str] = None,
+        page_size: typing.Optional[int] = None,
+        show_only_owned_documents: typing.Optional[bool] = None,
+        types: typing.Optional[typing.Union[ToolTypeFilter, typing.Sequence[ToolTypeFilter]]] = None,
+        sort_direction: typing.Optional[SortDirection] = None,
+        sort_by: typing.Optional[ToolSortBy] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ToolsResponseModel:
         """
         Get all available tools in the workspace.
 
         Parameters
         ----------
+        search : typing.Optional[str]
+            If specified, the endpoint returns only tools whose names start with this string.
+
+        page_size : typing.Optional[int]
+            How many documents to return at maximum. Can not exceed 100, defaults to 30.
+
+        show_only_owned_documents : typing.Optional[bool]
+            If set to true, the endpoint will return only tools owned by you (and not shared from somebody else).
+
+        types : typing.Optional[typing.Union[ToolTypeFilter, typing.Sequence[ToolTypeFilter]]]
+            If present, the endpoint will return only tools of the given types.
+
+        sort_direction : typing.Optional[SortDirection]
+            The direction to sort the results
+
+        sort_by : typing.Optional[ToolSortBy]
+            The field to sort the results by
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -295,12 +378,28 @@ class AsyncToolsClient:
 
 
         async def main() -> None:
-            await client.conversational_ai.tools.list()
+            await client.conversational_ai.tools.list(
+                search="search",
+                page_size=1,
+                show_only_owned_documents=True,
+                sort_direction="asc",
+                sort_by="name",
+                cursor="cursor",
+            )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.list(request_options=request_options)
+        _response = await self._raw_client.list(
+            search=search,
+            page_size=page_size,
+            show_only_owned_documents=show_only_owned_documents,
+            types=types,
+            sort_direction=sort_direction,
+            sort_by=sort_by,
+            cursor=cursor,
+            request_options=request_options,
+        )
         return _response.data
 
     async def create(

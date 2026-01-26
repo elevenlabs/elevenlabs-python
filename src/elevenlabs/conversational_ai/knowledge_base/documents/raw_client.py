@@ -237,6 +237,71 @@ class RawDocumentsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def create_folder(
+        self,
+        *,
+        name: str,
+        parent_folder_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[AddKnowledgeBaseResponseModel]:
+        """
+        Create a folder used for grouping documents together.
+
+        Parameters
+        ----------
+        name : str
+            A custom, human-readable name for the document.
+
+        parent_folder_id : typing.Optional[str]
+            If set, the created document or folder will be placed inside the given folder.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[AddKnowledgeBaseResponseModel]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/convai/knowledge-base/folder",
+            method="POST",
+            json={
+                "name": name,
+                "parent_folder_id": parent_folder_id,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    AddKnowledgeBaseResponseModel,
+                    construct_type(
+                        type_=AddKnowledgeBaseResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def get(
         self,
         documentation_id: str,
@@ -580,6 +645,119 @@ class RawDocumentsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def move(
+        self,
+        document_id: str,
+        *,
+        move_to: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[None]:
+        """
+        Moves the entity from one folder to another.
+
+        Parameters
+        ----------
+        document_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        move_to : typing.Optional[str]
+            The folder to move the entities to. If not set, the entities will be moved to the root folder.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[None]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/convai/knowledge-base/{jsonable_encoder(document_id)}/move",
+            method="POST",
+            json={
+                "move_to": move_to,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def bulk_move(
+        self,
+        *,
+        document_ids: typing.Sequence[str],
+        move_to: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[None]:
+        """
+        Moves multiple entities from one folder to another.
+
+        Parameters
+        ----------
+        document_ids : typing.Sequence[str]
+            The ids of documents or folders from the knowledge base.
+
+        move_to : typing.Optional[str]
+            The folder to move the entities to. If not set, the entities will be moved to the root folder.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[None]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/convai/knowledge-base/bulk-move",
+            method="POST",
+            json={
+                "document_ids": document_ids,
+                "move_to": move_to,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawDocumentsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -760,6 +938,71 @@ class AsyncRawDocumentsClient:
             method="POST",
             json={
                 "text": text,
+                "name": name,
+                "parent_folder_id": parent_folder_id,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    AddKnowledgeBaseResponseModel,
+                    construct_type(
+                        type_=AddKnowledgeBaseResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def create_folder(
+        self,
+        *,
+        name: str,
+        parent_folder_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[AddKnowledgeBaseResponseModel]:
+        """
+        Create a folder used for grouping documents together.
+
+        Parameters
+        ----------
+        name : str
+            A custom, human-readable name for the document.
+
+        parent_folder_id : typing.Optional[str]
+            If set, the created document or folder will be placed inside the given folder.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[AddKnowledgeBaseResponseModel]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/convai/knowledge-base/folder",
+            method="POST",
+            json={
                 "name": name,
                 "parent_folder_id": parent_folder_id,
             },
@@ -1122,6 +1365,119 @@ class AsyncRawDocumentsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def move(
+        self,
+        document_id: str,
+        *,
+        move_to: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[None]:
+        """
+        Moves the entity from one folder to another.
+
+        Parameters
+        ----------
+        document_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        move_to : typing.Optional[str]
+            The folder to move the entities to. If not set, the entities will be moved to the root folder.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[None]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/convai/knowledge-base/{jsonable_encoder(document_id)}/move",
+            method="POST",
+            json={
+                "move_to": move_to,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def bulk_move(
+        self,
+        *,
+        document_ids: typing.Sequence[str],
+        move_to: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[None]:
+        """
+        Moves multiple entities from one folder to another.
+
+        Parameters
+        ----------
+        document_ids : typing.Sequence[str]
+            The ids of documents or folders from the knowledge base.
+
+        move_to : typing.Optional[str]
+            The folder to move the entities to. If not set, the entities will be moved to the root folder.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[None]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/convai/knowledge-base/bulk-move",
+            method="POST",
+            json={
+                "document_ids": document_ids,
+                "move_to": move_to,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
