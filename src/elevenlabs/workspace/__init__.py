@@ -8,12 +8,8 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .resources import BodyShareWorkspaceResourceV1WorkspaceResourcesResourceIdSharePostRole
     from . import groups, invites, members, resources
-    from .invites import BodyInviteUserV1WorkspaceInvitesAddPostWorkspacePermission
-    from .members import BodyUpdateMemberV1WorkspaceMembersPostWorkspaceRole
 _dynamic_imports: typing.Dict[str, str] = {
-    "BodyInviteUserV1WorkspaceInvitesAddPostWorkspacePermission": ".invites",
     "BodyShareWorkspaceResourceV1WorkspaceResourcesResourceIdSharePostRole": ".resources",
-    "BodyUpdateMemberV1WorkspaceMembersPostWorkspaceRole": ".members",
     "groups": ".groups",
     "invites": ".invites",
     "members": ".members",
@@ -43,9 +39,7 @@ def __dir__():
 
 
 __all__ = [
-    "BodyInviteUserV1WorkspaceInvitesAddPostWorkspacePermission",
     "BodyShareWorkspaceResourceV1WorkspaceResourcesResourceIdSharePostRole",
-    "BodyUpdateMemberV1WorkspaceMembersPostWorkspaceRole",
     "groups",
     "invites",
     "members",

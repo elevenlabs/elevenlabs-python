@@ -4,11 +4,9 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...types.seat_type import SeatType
 from ...types.update_workspace_member_response_model import UpdateWorkspaceMemberResponseModel
 from .raw_client import AsyncRawMembersClient, RawMembersClient
-from .types.body_update_member_v_1_workspace_members_post_workspace_role import (
-    BodyUpdateMemberV1WorkspaceMembersPostWorkspaceRole,
-)
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -34,7 +32,8 @@ class MembersClient:
         *,
         email: str,
         is_locked: typing.Optional[bool] = OMIT,
-        workspace_role: typing.Optional[BodyUpdateMemberV1WorkspaceMembersPostWorkspaceRole] = OMIT,
+        workspace_role: typing.Optional[SeatType] = OMIT,
+        workspace_seat_type: typing.Optional[SeatType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> UpdateWorkspaceMemberResponseModel:
         """
@@ -48,8 +47,11 @@ class MembersClient:
         is_locked : typing.Optional[bool]
             Whether to lock or unlock the user account.
 
-        workspace_role : typing.Optional[BodyUpdateMemberV1WorkspaceMembersPostWorkspaceRole]
-            Role dictating permissions in the workspace.
+        workspace_role : typing.Optional[SeatType]
+            The workspace role of the user. This is deprecated, use `workspace_seat_type` instead.
+
+        workspace_seat_type : typing.Optional[SeatType]
+            The workspace seat type
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -71,7 +73,11 @@ class MembersClient:
         )
         """
         _response = self._raw_client.update(
-            email=email, is_locked=is_locked, workspace_role=workspace_role, request_options=request_options
+            email=email,
+            is_locked=is_locked,
+            workspace_role=workspace_role,
+            workspace_seat_type=workspace_seat_type,
+            request_options=request_options,
         )
         return _response.data
 
@@ -96,7 +102,8 @@ class AsyncMembersClient:
         *,
         email: str,
         is_locked: typing.Optional[bool] = OMIT,
-        workspace_role: typing.Optional[BodyUpdateMemberV1WorkspaceMembersPostWorkspaceRole] = OMIT,
+        workspace_role: typing.Optional[SeatType] = OMIT,
+        workspace_seat_type: typing.Optional[SeatType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> UpdateWorkspaceMemberResponseModel:
         """
@@ -110,8 +117,11 @@ class AsyncMembersClient:
         is_locked : typing.Optional[bool]
             Whether to lock or unlock the user account.
 
-        workspace_role : typing.Optional[BodyUpdateMemberV1WorkspaceMembersPostWorkspaceRole]
-            Role dictating permissions in the workspace.
+        workspace_role : typing.Optional[SeatType]
+            The workspace role of the user. This is deprecated, use `workspace_seat_type` instead.
+
+        workspace_seat_type : typing.Optional[SeatType]
+            The workspace seat type
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -141,6 +151,10 @@ class AsyncMembersClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.update(
-            email=email, is_locked=is_locked, workspace_role=workspace_role, request_options=request_options
+            email=email,
+            is_locked=is_locked,
+            workspace_role=workspace_role,
+            workspace_seat_type=workspace_seat_type,
+            request_options=request_options,
         )
         return _response.data

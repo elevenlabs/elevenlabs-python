@@ -31,7 +31,7 @@ class RawRulesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PronunciationDictionaryRulesResponseModel]:
         """
-        Add rules to the pronunciation dictionary
+        Add rules to the pronunciation dictionary. If a rule with the same string_to_replace already exists, it will be replaced.
 
         Parameters
         ----------
@@ -168,7 +168,7 @@ class AsyncRawRulesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PronunciationDictionaryRulesResponseModel]:
         """
-        Add rules to the pronunciation dictionary
+        Add rules to the pronunciation dictionary. If a rule with the same string_to_replace already exists, it will be replaced.
 
         Parameters
         ----------

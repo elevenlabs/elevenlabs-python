@@ -38,6 +38,7 @@ PermissionType = typing.Union[
         "publish_voice_to_voice_library",
         "share_voice_externally",
         "create_user_api_key",
+        "workspace_analytics_full_read",
     ],
     typing.Any,
 ]

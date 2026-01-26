@@ -16,6 +16,7 @@ from .get_conversation_response_model_status import GetConversationResponseModel
 
 class GetConversationResponseModel(UncheckedBaseModel):
     agent_id: str
+    agent_name: typing.Optional[str] = None
     conversation_id: str
     status: GetConversationResponseModelStatus
     user_id: typing.Optional[str] = None

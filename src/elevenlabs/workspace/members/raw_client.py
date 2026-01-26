@@ -10,10 +10,8 @@ from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.http_validation_error import HttpValidationError
+from ...types.seat_type import SeatType
 from ...types.update_workspace_member_response_model import UpdateWorkspaceMemberResponseModel
-from .types.body_update_member_v_1_workspace_members_post_workspace_role import (
-    BodyUpdateMemberV1WorkspaceMembersPostWorkspaceRole,
-)
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -28,7 +26,8 @@ class RawMembersClient:
         *,
         email: str,
         is_locked: typing.Optional[bool] = OMIT,
-        workspace_role: typing.Optional[BodyUpdateMemberV1WorkspaceMembersPostWorkspaceRole] = OMIT,
+        workspace_role: typing.Optional[SeatType] = OMIT,
+        workspace_seat_type: typing.Optional[SeatType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[UpdateWorkspaceMemberResponseModel]:
         """
@@ -42,8 +41,11 @@ class RawMembersClient:
         is_locked : typing.Optional[bool]
             Whether to lock or unlock the user account.
 
-        workspace_role : typing.Optional[BodyUpdateMemberV1WorkspaceMembersPostWorkspaceRole]
-            Role dictating permissions in the workspace.
+        workspace_role : typing.Optional[SeatType]
+            The workspace role of the user. This is deprecated, use `workspace_seat_type` instead.
+
+        workspace_seat_type : typing.Optional[SeatType]
+            The workspace seat type
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -60,6 +62,7 @@ class RawMembersClient:
                 "email": email,
                 "is_locked": is_locked,
                 "workspace_role": workspace_role,
+                "workspace_seat_type": workspace_seat_type,
             },
             headers={
                 "content-type": "application/json",
@@ -103,7 +106,8 @@ class AsyncRawMembersClient:
         *,
         email: str,
         is_locked: typing.Optional[bool] = OMIT,
-        workspace_role: typing.Optional[BodyUpdateMemberV1WorkspaceMembersPostWorkspaceRole] = OMIT,
+        workspace_role: typing.Optional[SeatType] = OMIT,
+        workspace_seat_type: typing.Optional[SeatType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[UpdateWorkspaceMemberResponseModel]:
         """
@@ -117,8 +121,11 @@ class AsyncRawMembersClient:
         is_locked : typing.Optional[bool]
             Whether to lock or unlock the user account.
 
-        workspace_role : typing.Optional[BodyUpdateMemberV1WorkspaceMembersPostWorkspaceRole]
-            Role dictating permissions in the workspace.
+        workspace_role : typing.Optional[SeatType]
+            The workspace role of the user. This is deprecated, use `workspace_seat_type` instead.
+
+        workspace_seat_type : typing.Optional[SeatType]
+            The workspace seat type
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -135,6 +142,7 @@ class AsyncRawMembersClient:
                 "email": email,
                 "is_locked": is_locked,
                 "workspace_role": workspace_role,
+                "workspace_seat_type": workspace_seat_type,
             },
             headers={
                 "content-type": "application/json",

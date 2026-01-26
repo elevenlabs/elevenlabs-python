@@ -139,6 +139,40 @@ class BaseElevenLabs:
         """
         return self._raw_client
 
+    def delete_v_1_convai_agents_agent_id_branches_branch_id(
+        self, agent_id: str, branch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        agent_id : str
+
+        branch_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.delete_v_1_convai_agents_agent_id_branches_branch_id(
+            agent_id="agent_id",
+            branch_id="branch_id",
+        )
+        """
+        _response = self._raw_client.delete_v_1_convai_agents_agent_id_branches_branch_id(
+            agent_id, branch_id, request_options=request_options
+        )
+        return _response.data
+
     def save_a_voice_preview(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Add a generated voice to the voice library.
@@ -458,6 +492,48 @@ class AsyncBaseElevenLabs:
         AsyncRawBaseElevenLabs
         """
         return self._raw_client
+
+    async def delete_v_1_convai_agents_agent_id_branches_branch_id(
+        self, agent_id: str, branch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        agent_id : str
+
+        branch_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.delete_v_1_convai_agents_agent_id_branches_branch_id(
+                agent_id="agent_id",
+                branch_id="branch_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete_v_1_convai_agents_agent_id_branches_branch_id(
+            agent_id, branch_id, request_options=request_options
+        )
+        return _response.data
 
     async def save_a_voice_preview(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """

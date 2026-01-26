@@ -12,6 +12,8 @@ from .tool_response_model import ToolResponseModel
 
 class ToolsResponseModel(UncheckedBaseModel):
     tools: typing.List[ToolResponseModel]
+    next_cursor: typing.Optional[str] = None
+    has_more: bool
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

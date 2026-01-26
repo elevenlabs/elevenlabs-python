@@ -108,6 +108,7 @@ class RawProjectsClient:
         auto_assign_voices: typing.Optional[bool] = OMIT,
         source_type: typing.Optional[ProjectsCreateRequestSourceType] = OMIT,
         voice_settings: typing.Optional[typing.List[str]] = OMIT,
+        create_publishing_read: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AddProjectResponseModel]:
         """
@@ -271,6 +272,9 @@ class RawProjectsClient:
                 ["{\\"voice_id\\": \\"21m00Tcm4TlvDq8ikWAM\\", \\"stability\\": 0.7, \\"similarity_boost\\": 0.8, \\"style\\": 0.5, \\"speed\\": 1.0, \\"use_speaker_boost\\": true}"]
 
 
+        create_publishing_read : typing.Optional[bool]
+            If true, creates a corresponding read for direct publishing in draft state
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -310,6 +314,7 @@ class RawProjectsClient:
                 "auto_assign_voices": auto_assign_voices,
                 "source_type": source_type,
                 "voice_settings": voice_settings,
+                "create_publishing_read": create_publishing_read,
             },
             files={
                 **({"from_document": from_document} if from_document is not None else {}),
@@ -681,6 +686,7 @@ class AsyncRawProjectsClient:
         auto_assign_voices: typing.Optional[bool] = OMIT,
         source_type: typing.Optional[ProjectsCreateRequestSourceType] = OMIT,
         voice_settings: typing.Optional[typing.List[str]] = OMIT,
+        create_publishing_read: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AddProjectResponseModel]:
         """
@@ -844,6 +850,9 @@ class AsyncRawProjectsClient:
                 ["{\\"voice_id\\": \\"21m00Tcm4TlvDq8ikWAM\\", \\"stability\\": 0.7, \\"similarity_boost\\": 0.8, \\"style\\": 0.5, \\"speed\\": 1.0, \\"use_speaker_boost\\": true}"]
 
 
+        create_publishing_read : typing.Optional[bool]
+            If true, creates a corresponding read for direct publishing in draft state
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -883,6 +892,7 @@ class AsyncRawProjectsClient:
                 "auto_assign_voices": auto_assign_voices,
                 "source_type": source_type,
                 "voice_settings": voice_settings,
+                "create_publishing_read": create_publishing_read,
             },
             files={
                 **({"from_document": from_document} if from_document is not None else {}),
