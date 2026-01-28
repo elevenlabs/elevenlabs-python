@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 import asyncio
 import base64
 from concurrent.futures import ThreadPoolExecutor
+from dataclasses import dataclass
 from enum import Enum
 import json
 import logging
@@ -334,6 +335,16 @@ class OnPremInitiationData:
         self.tools_config_list = tools_config_list
         self.prompt_knowledge_base = prompt_knowledge_base
 
+
+@dataclass
+class AudioEventAlignment:
+    """Audio alignment data containing character-level timing information. d"""
+
+    chars: List[str]
+    char_start_times_ms: List[int]
+    char_durations_ms: List[int]
+
+
 class BaseConversation:
     """Base class for conversation implementations with shared parameters and logic."""
 
@@ -364,12 +375,16 @@ class BaseConversation:
     def _get_wss_url(self):
         if self.on_prem_config:
             return self.on_prem_config.on_prem_conversation_url
-            
+
         base_http_url = self.client._client_wrapper.get_base_url()
-        base_ws_url = urllib.parse.urlparse(base_http_url)._replace(scheme="wss" if base_http_url.startswith("https") else "ws").geturl()
+        base_ws_url = (
+            urllib.parse.urlparse(base_http_url)
+            ._replace(scheme="wss" if base_http_url.startswith("https") else "ws")
+            .geturl()
+        )
         # Ensure base URL ends with '/' for proper joining
-        if not base_ws_url.endswith('/'):
-            base_ws_url += '/'
+        if not base_ws_url.endswith("/"):
+            base_ws_url += "/"
         return f"{base_ws_url}v1/convai/conversation?agent_id={self.agent_id}&source=python_sdk&version={__version__}"
 
     def _get_signed_url(self):
@@ -391,7 +406,7 @@ class BaseConversation:
                 "prompt_knowledge_base": self.on_prem_config.prompt_knowledge_base,
             }
         )
-    
+
     def _create_initiation_message(self):
         return json.dumps(
             {
@@ -426,6 +441,15 @@ class BaseConversation:
             audio = base64.b64decode(event["audio_base_64"])
             message_handler.handle_audio_output(audio)
 
+            if message_handler.callback_audio_alignment and "alignment" in event:
+                alignment_data = event["alignment"]
+                alignment = AudioEventAlignment(
+                    chars=alignment_data.get("chars", []),
+                    char_start_times_ms=alignment_data.get("char_start_times_ms", []),
+                    char_durations_ms=alignment_data.get("char_durations_ms", []),
+                )
+                message_handler.handle_audio_alignment(alignment)
+
         elif message["type"] == "agent_response":
             if message_handler.callback_agent_response:
                 event = message["agent_response_event"]
@@ -446,8 +470,7 @@ class BaseConversation:
             if message_handler.callback_agent_response_correction:
                 event = message["agent_response_correction_event"]
                 message_handler.handle_agent_response_correction(
-                    event["original_agent_response"].strip(),
-                    event["corrected_agent_response"].strip()
+                    event["original_agent_response"].strip(), event["corrected_agent_response"].strip()
                 )
 
         elif message["type"] == "user_transcript":
@@ -488,6 +511,15 @@ class BaseConversation:
             audio = base64.b64decode(event["audio_base_64"])
             await message_handler.handle_audio_output(audio)
 
+            if message_handler.callback_audio_alignment and "alignment" in event:
+                alignment_data = event["alignment"]
+                alignment = AudioEventAlignment(
+                    chars=alignment_data.get("chars", []),
+                    char_start_times_ms=alignment_data.get("char_start_times_ms", []),
+                    char_durations_ms=alignment_data.get("char_durations_ms", []),
+                )
+                await message_handler.handle_audio_alignment(alignment)
+
         elif message["type"] == "agent_response":
             if message_handler.callback_agent_response:
                 event = message["agent_response_event"]
@@ -508,8 +540,7 @@ class BaseConversation:
             if message_handler.callback_agent_response_correction:
                 event = message["agent_response_correction_event"]
                 await message_handler.handle_agent_response_correction(
-                    event["original_agent_response"].strip(),
-                    event["corrected_agent_response"].strip()
+                    event["original_agent_response"].strip(), event["corrected_agent_response"].strip()
                 )
 
         elif message["type"] == "user_transcript":
@@ -544,6 +575,7 @@ class Conversation(BaseConversation):
     callback_agent_chat_response_part: Optional[Callable[[str, AgentChatResponsePartType], None]]
     callback_user_transcript: Optional[Callable[[str], None]]
     callback_latency_measurement: Optional[Callable[[int], None]]
+    callback_audio_alignment: Optional[Callable[[AudioEventAlignment], None]]
     callback_end_session: Optional[Callable]
 
     _thread: Optional[threading.Thread]
@@ -565,6 +597,7 @@ class Conversation(BaseConversation):
         callback_agent_chat_response_part: Optional[Callable[[str, AgentChatResponsePartType], None]] = None,
         callback_user_transcript: Optional[Callable[[str], None]] = None,
         callback_latency_measurement: Optional[Callable[[int], None]] = None,
+        callback_audio_alignment: Optional[Callable[[AudioEventAlignment], None]] = None,
         callback_end_session: Optional[Callable] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
     ):
@@ -587,6 +620,7 @@ class Conversation(BaseConversation):
                 First argument is the text chunk, second argument is the type (START, DELTA, STOP).
             callback_user_transcript: Callback for user transcripts.
             callback_latency_measurement: Callback for latency measurements (in milliseconds).
+            callback_audio_alignment: Callback for audio alignment data with character-level timing.
         """
 
         super().__init__(
@@ -605,6 +639,7 @@ class Conversation(BaseConversation):
         self.callback_agent_chat_response_part = callback_agent_chat_response_part
         self.callback_user_transcript = callback_user_transcript
         self.callback_latency_measurement = callback_latency_measurement
+        self.callback_audio_alignment = callback_audio_alignment
         self.callback_end_session = callback_end_session
 
         self._thread = None
@@ -751,9 +786,13 @@ class Conversation(BaseConversation):
                 self.callback_agent_chat_response_part = conversation.callback_agent_chat_response_part
                 self.callback_user_transcript = conversation.callback_user_transcript
                 self.callback_latency_measurement = conversation.callback_latency_measurement
+                self.callback_audio_alignment = conversation.callback_audio_alignment
 
             def handle_audio_output(self, audio):
                 self.conversation.audio_interface.output(audio)
+
+            def handle_audio_alignment(self, alignment):
+                self.conversation.callback_audio_alignment(alignment)
 
             def handle_agent_response(self, response):
                 self.conversation.callback_agent_response(response)
@@ -801,6 +840,7 @@ class AsyncConversation(BaseConversation):
     callback_agent_chat_response_part: Optional[Callable[[str, AgentChatResponsePartType], Awaitable[None]]]
     callback_user_transcript: Optional[Callable[[str], Awaitable[None]]]
     callback_latency_measurement: Optional[Callable[[int], Awaitable[None]]]
+    callback_audio_alignment: Optional[Callable[[AudioEventAlignment], Awaitable[None]]]
     callback_end_session: Optional[Callable[[], Awaitable[None]]]
 
     _task: Optional[asyncio.Task]
@@ -822,6 +862,7 @@ class AsyncConversation(BaseConversation):
         callback_agent_chat_response_part: Optional[Callable[[str, AgentChatResponsePartType], Awaitable[None]]] = None,
         callback_user_transcript: Optional[Callable[[str], Awaitable[None]]] = None,
         callback_latency_measurement: Optional[Callable[[int], Awaitable[None]]] = None,
+        callback_audio_alignment: Optional[Callable[[AudioEventAlignment], Awaitable[None]]] = None,
         callback_end_session: Optional[Callable[[], Awaitable[None]]] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
     ):
@@ -844,6 +885,7 @@ class AsyncConversation(BaseConversation):
                 First argument is the text chunk, second argument is the type (START, DELTA, STOP).
             callback_user_transcript: Async callback for user transcripts.
             callback_latency_measurement: Async callback for latency measurements (in milliseconds).
+            callback_audio_alignment: Async callback for audio alignment data with character-level timing.
             callback_end_session: Async callback for when session ends.
         """
 
@@ -863,6 +905,7 @@ class AsyncConversation(BaseConversation):
         self.callback_agent_chat_response_part = callback_agent_chat_response_part
         self.callback_user_transcript = callback_user_transcript
         self.callback_latency_measurement = callback_latency_measurement
+        self.callback_audio_alignment = callback_audio_alignment
         self.callback_end_session = callback_end_session
 
         self._task = None
@@ -1012,9 +1055,13 @@ class AsyncConversation(BaseConversation):
                 self.callback_agent_chat_response_part = conversation.callback_agent_chat_response_part
                 self.callback_user_transcript = conversation.callback_user_transcript
                 self.callback_latency_measurement = conversation.callback_latency_measurement
+                self.callback_audio_alignment = conversation.callback_audio_alignment
 
             async def handle_audio_output(self, audio):
                 await self.conversation.audio_interface.output(audio)
+
+            async def handle_audio_alignment(self, alignment):
+                await self.conversation.callback_audio_alignment(alignment)
 
             async def handle_agent_response(self, response):
                 await self.conversation.callback_agent_response(response)
