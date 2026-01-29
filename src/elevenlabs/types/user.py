@@ -44,6 +44,11 @@ class User(UncheckedBaseModel):
     Whether the user's onboarding checklist is completed.
     """
 
+    show_compliance_terms: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to show compliance terms (ToS, Privacy Policy, biometric consent) during onboarding. Set for users signing up from the marketing site.
+    """
+
     first_name: typing.Optional[str] = pydantic.Field(default=None)
     """
     First name of the user.

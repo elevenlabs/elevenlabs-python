@@ -192,6 +192,7 @@ class BranchesClient:
         agent_id: str,
         branch_id: str,
         *,
+        name: typing.Optional[str] = OMIT,
         is_archived: typing.Optional[bool] = OMIT,
         protection_status: typing.Optional[BranchProtectionStatus] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -206,6 +207,9 @@ class BranchesClient:
 
         branch_id : str
             Unique identifier for the branch.
+
+        name : typing.Optional[str]
+            New name for the branch. Must be unique within the agent.
 
         is_archived : typing.Optional[bool]
             Whether the branch should be archived
@@ -236,6 +240,7 @@ class BranchesClient:
         _response = self._raw_client.update(
             agent_id,
             branch_id,
+            name=name,
             is_archived=is_archived,
             protection_status=protection_status,
             request_options=request_options,
@@ -500,6 +505,7 @@ class AsyncBranchesClient:
         agent_id: str,
         branch_id: str,
         *,
+        name: typing.Optional[str] = OMIT,
         is_archived: typing.Optional[bool] = OMIT,
         protection_status: typing.Optional[BranchProtectionStatus] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -514,6 +520,9 @@ class AsyncBranchesClient:
 
         branch_id : str
             Unique identifier for the branch.
+
+        name : typing.Optional[str]
+            New name for the branch. Must be unique within the agent.
 
         is_archived : typing.Optional[bool]
             Whether the branch should be archived
@@ -552,6 +561,7 @@ class AsyncBranchesClient:
         _response = await self._raw_client.update(
             agent_id,
             branch_id,
+            name=name,
             is_archived=is_archived,
             protection_status=protection_status,
             request_options=request_options,

@@ -18,6 +18,7 @@ class ConversationHistoryTranscriptWorkflowToolsResultCommonModelOutput(Unchecke
     tool_has_been_called: bool
     tool_latency_secs: typing.Optional[float] = None
     error_type: typing.Optional[str] = None
+    raw_error_message: typing.Optional[str] = None
     dynamic_variable_updates: typing.Optional[typing.List[DynamicVariableUpdateCommonModel]] = None
     type: typing.Literal["workflow"] = "workflow"
     result: typing.Optional["WorkflowToolResponseModelOutput"] = None

@@ -52,6 +52,7 @@ class TestsClient:
         failure_examples: typing.Sequence[AgentFailureResponseExample],
         name: str,
         tool_call_parameters: typing.Optional[UnitTestToolCallEvaluationModelInput] = OMIT,
+        check_any_tool_matches: typing.Optional[bool] = OMIT,
         dynamic_variables: typing.Optional[
             typing.Dict[str, typing.Optional[CreateUnitTestRequestDynamicVariablesValue]]
         ] = OMIT,
@@ -79,6 +80,9 @@ class TestsClient:
 
         tool_call_parameters : typing.Optional[UnitTestToolCallEvaluationModelInput]
             How to evaluate the agent's tool call (if any). If empty, the tool call is not evaluated.
+
+        check_any_tool_matches : typing.Optional[bool]
+            If set to True this test will pass if any tool call returned by the LLM matches the criteria. Otherwise it will fail if more than one tool is returned by the agent.
 
         dynamic_variables : typing.Optional[typing.Dict[str, typing.Optional[CreateUnitTestRequestDynamicVariablesValue]]]
             Dynamic variables to replace in the agent config during testing
@@ -136,6 +140,7 @@ class TestsClient:
             failure_examples=failure_examples,
             name=name,
             tool_call_parameters=tool_call_parameters,
+            check_any_tool_matches=check_any_tool_matches,
             dynamic_variables=dynamic_variables,
             type=type,
             from_conversation_metadata=from_conversation_metadata,
@@ -184,6 +189,7 @@ class TestsClient:
         failure_examples: typing.Sequence[AgentFailureResponseExample],
         name: str,
         tool_call_parameters: typing.Optional[UnitTestToolCallEvaluationModelInput] = OMIT,
+        check_any_tool_matches: typing.Optional[bool] = OMIT,
         dynamic_variables: typing.Optional[
             typing.Dict[str, typing.Optional[UpdateUnitTestRequestDynamicVariablesValue]]
         ] = OMIT,
@@ -214,6 +220,9 @@ class TestsClient:
 
         tool_call_parameters : typing.Optional[UnitTestToolCallEvaluationModelInput]
             How to evaluate the agent's tool call (if any). If empty, the tool call is not evaluated.
+
+        check_any_tool_matches : typing.Optional[bool]
+            If set to True this test will pass if any tool call returned by the LLM matches the criteria. Otherwise it will fail if more than one tool is returned by the agent.
 
         dynamic_variables : typing.Optional[typing.Dict[str, typing.Optional[UpdateUnitTestRequestDynamicVariablesValue]]]
             Dynamic variables to replace in the agent config during testing
@@ -273,6 +282,7 @@ class TestsClient:
             failure_examples=failure_examples,
             name=name,
             tool_call_parameters=tool_call_parameters,
+            check_any_tool_matches=check_any_tool_matches,
             dynamic_variables=dynamic_variables,
             type=type,
             from_conversation_metadata=from_conversation_metadata,
@@ -427,6 +437,7 @@ class AsyncTestsClient:
         failure_examples: typing.Sequence[AgentFailureResponseExample],
         name: str,
         tool_call_parameters: typing.Optional[UnitTestToolCallEvaluationModelInput] = OMIT,
+        check_any_tool_matches: typing.Optional[bool] = OMIT,
         dynamic_variables: typing.Optional[
             typing.Dict[str, typing.Optional[CreateUnitTestRequestDynamicVariablesValue]]
         ] = OMIT,
@@ -454,6 +465,9 @@ class AsyncTestsClient:
 
         tool_call_parameters : typing.Optional[UnitTestToolCallEvaluationModelInput]
             How to evaluate the agent's tool call (if any). If empty, the tool call is not evaluated.
+
+        check_any_tool_matches : typing.Optional[bool]
+            If set to True this test will pass if any tool call returned by the LLM matches the criteria. Otherwise it will fail if more than one tool is returned by the agent.
 
         dynamic_variables : typing.Optional[typing.Dict[str, typing.Optional[CreateUnitTestRequestDynamicVariablesValue]]]
             Dynamic variables to replace in the agent config during testing
@@ -519,6 +533,7 @@ class AsyncTestsClient:
             failure_examples=failure_examples,
             name=name,
             tool_call_parameters=tool_call_parameters,
+            check_any_tool_matches=check_any_tool_matches,
             dynamic_variables=dynamic_variables,
             type=type,
             from_conversation_metadata=from_conversation_metadata,
@@ -577,6 +592,7 @@ class AsyncTestsClient:
         failure_examples: typing.Sequence[AgentFailureResponseExample],
         name: str,
         tool_call_parameters: typing.Optional[UnitTestToolCallEvaluationModelInput] = OMIT,
+        check_any_tool_matches: typing.Optional[bool] = OMIT,
         dynamic_variables: typing.Optional[
             typing.Dict[str, typing.Optional[UpdateUnitTestRequestDynamicVariablesValue]]
         ] = OMIT,
@@ -607,6 +623,9 @@ class AsyncTestsClient:
 
         tool_call_parameters : typing.Optional[UnitTestToolCallEvaluationModelInput]
             How to evaluate the agent's tool call (if any). If empty, the tool call is not evaluated.
+
+        check_any_tool_matches : typing.Optional[bool]
+            If set to True this test will pass if any tool call returned by the LLM matches the criteria. Otherwise it will fail if more than one tool is returned by the agent.
 
         dynamic_variables : typing.Optional[typing.Dict[str, typing.Optional[UpdateUnitTestRequestDynamicVariablesValue]]]
             Dynamic variables to replace in the agent config during testing
@@ -674,6 +693,7 @@ class AsyncTestsClient:
             failure_examples=failure_examples,
             name=name,
             tool_call_parameters=tool_call_parameters,
+            check_any_tool_matches=check_any_tool_matches,
             dynamic_variables=dynamic_variables,
             type=type,
             from_conversation_metadata=from_conversation_metadata,

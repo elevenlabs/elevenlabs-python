@@ -240,6 +240,7 @@ class RawBranchesClient:
         agent_id: str,
         branch_id: str,
         *,
+        name: typing.Optional[str] = OMIT,
         is_archived: typing.Optional[bool] = OMIT,
         protection_status: typing.Optional[BranchProtectionStatus] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -254,6 +255,9 @@ class RawBranchesClient:
 
         branch_id : str
             Unique identifier for the branch.
+
+        name : typing.Optional[str]
+            New name for the branch. Must be unique within the agent.
 
         is_archived : typing.Optional[bool]
             Whether the branch should be archived
@@ -273,6 +277,7 @@ class RawBranchesClient:
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/branches/{jsonable_encoder(branch_id)}",
             method="PATCH",
             json={
+                "name": name,
                 "is_archived": is_archived,
                 "protection_status": protection_status,
             },
@@ -604,6 +609,7 @@ class AsyncRawBranchesClient:
         agent_id: str,
         branch_id: str,
         *,
+        name: typing.Optional[str] = OMIT,
         is_archived: typing.Optional[bool] = OMIT,
         protection_status: typing.Optional[BranchProtectionStatus] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -618,6 +624,9 @@ class AsyncRawBranchesClient:
 
         branch_id : str
             Unique identifier for the branch.
+
+        name : typing.Optional[str]
+            New name for the branch. Must be unique within the agent.
 
         is_archived : typing.Optional[bool]
             Whether the branch should be archived
@@ -637,6 +646,7 @@ class AsyncRawBranchesClient:
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/branches/{jsonable_encoder(branch_id)}",
             method="PATCH",
             json={
+                "name": name,
                 "is_archived": is_archived,
                 "protection_status": protection_status,
             },
