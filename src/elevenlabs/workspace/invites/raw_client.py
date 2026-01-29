@@ -12,9 +12,7 @@ from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.add_workspace_invite_response_model import AddWorkspaceInviteResponseModel
 from ...types.delete_workspace_invite_response_model import DeleteWorkspaceInviteResponseModel
 from ...types.http_validation_error import HttpValidationError
-from .types.body_invite_user_v_1_workspace_invites_add_post_workspace_permission import (
-    BodyInviteUserV1WorkspaceInvitesAddPostWorkspacePermission,
-)
+from ...types.seat_type import SeatType
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -28,8 +26,9 @@ class RawInvitesClient:
         self,
         *,
         email: str,
+        workspace_permission: typing.Optional[str] = OMIT,
+        seat_type: typing.Optional[SeatType] = OMIT,
         group_ids: typing.Optional[typing.Sequence[str]] = OMIT,
-        workspace_permission: typing.Optional[BodyInviteUserV1WorkspaceInvitesAddPostWorkspacePermission] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AddWorkspaceInviteResponseModel]:
         """
@@ -40,11 +39,14 @@ class RawInvitesClient:
         email : str
             The email of the customer
 
+        workspace_permission : typing.Optional[str]
+            The workspace permission of the user. This is deprecated, use `seat_type` instead.
+
+        seat_type : typing.Optional[SeatType]
+            The seat type of the user
+
         group_ids : typing.Optional[typing.Sequence[str]]
             The group ids of the user
-
-        workspace_permission : typing.Optional[BodyInviteUserV1WorkspaceInvitesAddPostWorkspacePermission]
-            The workspace permission of the user
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -59,8 +61,9 @@ class RawInvitesClient:
             method="POST",
             json={
                 "email": email,
-                "group_ids": group_ids,
                 "workspace_permission": workspace_permission,
+                "seat_type": seat_type,
+                "group_ids": group_ids,
             },
             headers={
                 "content-type": "application/json",
@@ -225,8 +228,9 @@ class AsyncRawInvitesClient:
         self,
         *,
         email: str,
+        workspace_permission: typing.Optional[str] = OMIT,
+        seat_type: typing.Optional[SeatType] = OMIT,
         group_ids: typing.Optional[typing.Sequence[str]] = OMIT,
-        workspace_permission: typing.Optional[BodyInviteUserV1WorkspaceInvitesAddPostWorkspacePermission] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AddWorkspaceInviteResponseModel]:
         """
@@ -237,11 +241,14 @@ class AsyncRawInvitesClient:
         email : str
             The email of the customer
 
+        workspace_permission : typing.Optional[str]
+            The workspace permission of the user. This is deprecated, use `seat_type` instead.
+
+        seat_type : typing.Optional[SeatType]
+            The seat type of the user
+
         group_ids : typing.Optional[typing.Sequence[str]]
             The group ids of the user
-
-        workspace_permission : typing.Optional[BodyInviteUserV1WorkspaceInvitesAddPostWorkspacePermission]
-            The workspace permission of the user
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -256,8 +263,9 @@ class AsyncRawInvitesClient:
             method="POST",
             json={
                 "email": email,
-                "group_ids": group_ids,
                 "workspace_permission": workspace_permission,
+                "seat_type": seat_type,
+                "group_ids": group_ids,
             },
             headers={
                 "content-type": "application/json",

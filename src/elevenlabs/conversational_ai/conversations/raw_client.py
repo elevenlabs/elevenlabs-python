@@ -10,6 +10,7 @@ from ...core.jsonable_encoder import jsonable_encoder
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
+from ...types.conversation_initiation_source import ConversationInitiationSource
 from ...types.conversation_signed_url_response_model import ConversationSignedUrlResponseModel
 from ...types.evaluation_success_result import EvaluationSuccessResult
 from ...types.get_conversation_response_model import GetConversationResponseModel
@@ -28,6 +29,7 @@ class RawConversationsClient:
         *,
         agent_id: str,
         include_conversation_id: typing.Optional[bool] = None,
+        branch_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ConversationSignedUrlResponseModel]:
         """
@@ -40,6 +42,9 @@ class RawConversationsClient:
 
         include_conversation_id : typing.Optional[bool]
             Whether to include a conversation_id with the response. If included, the conversation_signature cannot be used again.
+
+        branch_id : typing.Optional[str]
+            The ID of the branch to use
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -55,6 +60,7 @@ class RawConversationsClient:
             params={
                 "agent_id": agent_id,
                 "include_conversation_id": include_conversation_id,
+                "branch_id": branch_id,
             },
             request_options=request_options,
         )
@@ -89,6 +95,7 @@ class RawConversationsClient:
         *,
         agent_id: str,
         participant_name: typing.Optional[str] = None,
+        branch_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[TokenResponseModel]:
         """
@@ -101,6 +108,9 @@ class RawConversationsClient:
 
         participant_name : typing.Optional[str]
             Optional custom participant name. If not provided, user ID will be used
+
+        branch_id : typing.Optional[str]
+            The ID of the branch to use
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -116,6 +126,7 @@ class RawConversationsClient:
             params={
                 "agent_id": agent_id,
                 "participant_name": participant_name,
+                "branch_id": branch_id,
             },
             request_options=request_options,
         )
@@ -166,6 +177,8 @@ class RawConversationsClient:
         page_size: typing.Optional[int] = None,
         summary_mode: typing.Optional[ConversationsListRequestSummaryMode] = None,
         search: typing.Optional[str] = None,
+        conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None,
+        branch_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetConversationsPageResponseModel]:
         """
@@ -227,6 +240,11 @@ class RawConversationsClient:
         search : typing.Optional[str]
             Full-text or fuzzy search over transcript messages
 
+        conversation_initiation_source : typing.Optional[ConversationInitiationSource]
+
+        branch_id : typing.Optional[str]
+            Filter conversations by branch ID.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -257,6 +275,8 @@ class RawConversationsClient:
                 "page_size": page_size,
                 "summary_mode": summary_mode,
                 "search": search,
+                "conversation_initiation_source": conversation_initiation_source,
+                "branch_id": branch_id,
             },
             request_options=request_options,
         )
@@ -398,6 +418,7 @@ class AsyncRawConversationsClient:
         *,
         agent_id: str,
         include_conversation_id: typing.Optional[bool] = None,
+        branch_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ConversationSignedUrlResponseModel]:
         """
@@ -410,6 +431,9 @@ class AsyncRawConversationsClient:
 
         include_conversation_id : typing.Optional[bool]
             Whether to include a conversation_id with the response. If included, the conversation_signature cannot be used again.
+
+        branch_id : typing.Optional[str]
+            The ID of the branch to use
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -425,6 +449,7 @@ class AsyncRawConversationsClient:
             params={
                 "agent_id": agent_id,
                 "include_conversation_id": include_conversation_id,
+                "branch_id": branch_id,
             },
             request_options=request_options,
         )
@@ -459,6 +484,7 @@ class AsyncRawConversationsClient:
         *,
         agent_id: str,
         participant_name: typing.Optional[str] = None,
+        branch_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[TokenResponseModel]:
         """
@@ -471,6 +497,9 @@ class AsyncRawConversationsClient:
 
         participant_name : typing.Optional[str]
             Optional custom participant name. If not provided, user ID will be used
+
+        branch_id : typing.Optional[str]
+            The ID of the branch to use
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -486,6 +515,7 @@ class AsyncRawConversationsClient:
             params={
                 "agent_id": agent_id,
                 "participant_name": participant_name,
+                "branch_id": branch_id,
             },
             request_options=request_options,
         )
@@ -536,6 +566,8 @@ class AsyncRawConversationsClient:
         page_size: typing.Optional[int] = None,
         summary_mode: typing.Optional[ConversationsListRequestSummaryMode] = None,
         search: typing.Optional[str] = None,
+        conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None,
+        branch_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetConversationsPageResponseModel]:
         """
@@ -597,6 +629,11 @@ class AsyncRawConversationsClient:
         search : typing.Optional[str]
             Full-text or fuzzy search over transcript messages
 
+        conversation_initiation_source : typing.Optional[ConversationInitiationSource]
+
+        branch_id : typing.Optional[str]
+            Filter conversations by branch ID.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -627,6 +664,8 @@ class AsyncRawConversationsClient:
                 "page_size": page_size,
                 "summary_mode": summary_mode,
                 "search": search,
+                "conversation_initiation_source": conversation_initiation_source,
+                "branch_id": branch_id,
             },
             request_options=request_options,
         )

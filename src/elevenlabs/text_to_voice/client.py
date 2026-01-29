@@ -6,12 +6,10 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.allowed_output_formats import AllowedOutputFormats
 from ..types.voice import Voice
 from ..types.voice_design_preview_response import VoiceDesignPreviewResponse
 from .raw_client import AsyncRawTextToVoiceClient, RawTextToVoiceClient
-from .types.text_to_voice_create_previews_request_output_format import TextToVoiceCreatePreviewsRequestOutputFormat
-from .types.text_to_voice_design_request_output_format import TextToVoiceDesignRequestOutputFormat
-from .types.text_to_voice_remix_request_output_format import TextToVoiceRemixRequestOutputFormat
 from .types.voice_design_request_model_model_id import VoiceDesignRequestModelModelId
 
 if typing.TYPE_CHECKING:
@@ -41,7 +39,7 @@ class TextToVoiceClient:
         self,
         *,
         voice_description: str,
-        output_format: typing.Optional[TextToVoiceCreatePreviewsRequestOutputFormat] = None,
+        output_format: typing.Optional[AllowedOutputFormats] = None,
         text: typing.Optional[str] = OMIT,
         auto_generate_text: typing.Optional[bool] = OMIT,
         loudness: typing.Optional[float] = OMIT,
@@ -59,7 +57,7 @@ class TextToVoiceClient:
         voice_description : str
             Description to use for the created voice.
 
-        output_format : typing.Optional[TextToVoiceCreatePreviewsRequestOutputFormat]
+        output_format : typing.Optional[AllowedOutputFormats]
             The output format of the generated audio.
 
         text : typing.Optional[str]
@@ -182,7 +180,7 @@ class TextToVoiceClient:
         self,
         *,
         voice_description: str,
-        output_format: typing.Optional[TextToVoiceDesignRequestOutputFormat] = None,
+        output_format: typing.Optional[AllowedOutputFormats] = None,
         model_id: typing.Optional[VoiceDesignRequestModelModelId] = OMIT,
         text: typing.Optional[str] = OMIT,
         auto_generate_text: typing.Optional[bool] = OMIT,
@@ -206,7 +204,7 @@ class TextToVoiceClient:
         voice_description : str
             Description to use for the created voice.
 
-        output_format : typing.Optional[TextToVoiceDesignRequestOutputFormat]
+        output_format : typing.Optional[AllowedOutputFormats]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[VoiceDesignRequestModelModelId]
@@ -246,7 +244,7 @@ class TextToVoiceClient:
             Reference audio to use for the voice generation. The audio should be base64 encoded. Only supported when using the  eleven_ttv_v3 model.
 
         prompt_strength : typing.Optional[float]
-            Controls the balance of prompt versus reference audio when generating voice samples. 0 means almost no prompt influence, 1 means almost no reference audio influence. Only supported when using the eleven_ttv_v3 model and providing reference audio.
+            Controls the balance of prompt versus reference audio when generating voice samples. 0 means almost no prompt influence, 1 means almost no reference audio influence. Only supported when using the eleven_ttv_v3 model.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -293,7 +291,7 @@ class TextToVoiceClient:
         voice_id: str,
         *,
         voice_description: str,
-        output_format: typing.Optional[TextToVoiceRemixRequestOutputFormat] = None,
+        output_format: typing.Optional[AllowedOutputFormats] = None,
         text: typing.Optional[str] = OMIT,
         auto_generate_text: typing.Optional[bool] = OMIT,
         loudness: typing.Optional[float] = OMIT,
@@ -316,7 +314,7 @@ class TextToVoiceClient:
         voice_description : str
             Description of the changes to make to the voice.
 
-        output_format : typing.Optional[TextToVoiceRemixRequestOutputFormat]
+        output_format : typing.Optional[AllowedOutputFormats]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         text : typing.Optional[str]
@@ -344,7 +342,7 @@ class TextToVoiceClient:
             The id of the remixing session iteration where these generations should be attached to. If not provided, a new iteration will be created.
 
         prompt_strength : typing.Optional[float]
-            Controls the balance of prompt versus reference audio when generating voice samples. 0 means almost no prompt influence, 1 means almost no reference audio influence. Only supported when using the eleven_ttv_v3 model and providing reference audio.
+            Controls the balance of prompt versus reference audio when generating voice samples. 0 means almost no prompt influence, 1 means almost no reference audio influence. Only supported when using the eleven_ttv_v3 model.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -414,7 +412,7 @@ class AsyncTextToVoiceClient:
         self,
         *,
         voice_description: str,
-        output_format: typing.Optional[TextToVoiceCreatePreviewsRequestOutputFormat] = None,
+        output_format: typing.Optional[AllowedOutputFormats] = None,
         text: typing.Optional[str] = OMIT,
         auto_generate_text: typing.Optional[bool] = OMIT,
         loudness: typing.Optional[float] = OMIT,
@@ -432,7 +430,7 @@ class AsyncTextToVoiceClient:
         voice_description : str
             Description to use for the created voice.
 
-        output_format : typing.Optional[TextToVoiceCreatePreviewsRequestOutputFormat]
+        output_format : typing.Optional[AllowedOutputFormats]
             The output format of the generated audio.
 
         text : typing.Optional[str]
@@ -571,7 +569,7 @@ class AsyncTextToVoiceClient:
         self,
         *,
         voice_description: str,
-        output_format: typing.Optional[TextToVoiceDesignRequestOutputFormat] = None,
+        output_format: typing.Optional[AllowedOutputFormats] = None,
         model_id: typing.Optional[VoiceDesignRequestModelModelId] = OMIT,
         text: typing.Optional[str] = OMIT,
         auto_generate_text: typing.Optional[bool] = OMIT,
@@ -595,7 +593,7 @@ class AsyncTextToVoiceClient:
         voice_description : str
             Description to use for the created voice.
 
-        output_format : typing.Optional[TextToVoiceDesignRequestOutputFormat]
+        output_format : typing.Optional[AllowedOutputFormats]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[VoiceDesignRequestModelModelId]
@@ -635,7 +633,7 @@ class AsyncTextToVoiceClient:
             Reference audio to use for the voice generation. The audio should be base64 encoded. Only supported when using the  eleven_ttv_v3 model.
 
         prompt_strength : typing.Optional[float]
-            Controls the balance of prompt versus reference audio when generating voice samples. 0 means almost no prompt influence, 1 means almost no reference audio influence. Only supported when using the eleven_ttv_v3 model and providing reference audio.
+            Controls the balance of prompt versus reference audio when generating voice samples. 0 means almost no prompt influence, 1 means almost no reference audio influence. Only supported when using the eleven_ttv_v3 model.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -690,7 +688,7 @@ class AsyncTextToVoiceClient:
         voice_id: str,
         *,
         voice_description: str,
-        output_format: typing.Optional[TextToVoiceRemixRequestOutputFormat] = None,
+        output_format: typing.Optional[AllowedOutputFormats] = None,
         text: typing.Optional[str] = OMIT,
         auto_generate_text: typing.Optional[bool] = OMIT,
         loudness: typing.Optional[float] = OMIT,
@@ -713,7 +711,7 @@ class AsyncTextToVoiceClient:
         voice_description : str
             Description of the changes to make to the voice.
 
-        output_format : typing.Optional[TextToVoiceRemixRequestOutputFormat]
+        output_format : typing.Optional[AllowedOutputFormats]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         text : typing.Optional[str]
@@ -741,7 +739,7 @@ class AsyncTextToVoiceClient:
             The id of the remixing session iteration where these generations should be attached to. If not provided, a new iteration will be created.
 
         prompt_strength : typing.Optional[float]
-            Controls the balance of prompt versus reference audio when generating voice samples. 0 means almost no prompt influence, 1 means almost no reference audio influence. Only supported when using the eleven_ttv_v3 model and providing reference audio.
+            Controls the balance of prompt versus reference audio when generating voice samples. 0 means almost no prompt influence, 1 means almost no reference audio influence. Only supported when using the eleven_ttv_v3 model.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

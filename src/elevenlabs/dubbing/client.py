@@ -21,6 +21,7 @@ if typing.TYPE_CHECKING:
     from .audio.client import AsyncAudioClient, AudioClient
     from .resource.client import AsyncResourceClient, ResourceClient
     from .transcript.client import AsyncTranscriptClient, TranscriptClient
+    from .transcripts.client import AsyncTranscriptsClient, TranscriptsClient
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
@@ -32,6 +33,7 @@ class DubbingClient:
         self._resource: typing.Optional[ResourceClient] = None
         self._audio: typing.Optional[AudioClient] = None
         self._transcript: typing.Optional[TranscriptClient] = None
+        self._transcripts: typing.Optional[TranscriptsClient] = None
 
     @property
     def with_raw_response(self) -> RawDubbingClient:
@@ -334,6 +336,14 @@ class DubbingClient:
             self._transcript = TranscriptClient(client_wrapper=self._client_wrapper)
         return self._transcript
 
+    @property
+    def transcripts(self):
+        if self._transcripts is None:
+            from .transcripts.client import TranscriptsClient  # noqa: E402
+
+            self._transcripts = TranscriptsClient(client_wrapper=self._client_wrapper)
+        return self._transcripts
+
 
 class AsyncDubbingClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -342,6 +352,7 @@ class AsyncDubbingClient:
         self._resource: typing.Optional[AsyncResourceClient] = None
         self._audio: typing.Optional[AsyncAudioClient] = None
         self._transcript: typing.Optional[AsyncTranscriptClient] = None
+        self._transcripts: typing.Optional[AsyncTranscriptsClient] = None
 
     @property
     def with_raw_response(self) -> AsyncRawDubbingClient:
@@ -675,3 +686,11 @@ class AsyncDubbingClient:
 
             self._transcript = AsyncTranscriptClient(client_wrapper=self._client_wrapper)
         return self._transcript
+
+    @property
+    def transcripts(self):
+        if self._transcripts is None:
+            from .transcripts.client import AsyncTranscriptsClient  # noqa: E402
+
+            self._transcripts = AsyncTranscriptsClient(client_wrapper=self._client_wrapper)
+        return self._transcripts

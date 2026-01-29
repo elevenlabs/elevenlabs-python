@@ -23,6 +23,9 @@ if typing.TYPE_CHECKING:
     from .additional_formats import AdditionalFormats
     from .adhoc_agent_config_override_for_test_request_model import AdhocAgentConfigOverrideForTestRequestModel
     from .age import Age
+    from .agent_branch_basic_info import AgentBranchBasicInfo
+    from .agent_branch_response import AgentBranchResponse
+    from .agent_branch_summary import AgentBranchSummary
     from .agent_call_limits import AgentCallLimits
     from .agent_config import AgentConfig
     from .agent_config_api_model_workflow_override_input import AgentConfigApiModelWorkflowOverrideInput
@@ -31,6 +34,10 @@ if typing.TYPE_CHECKING:
     from .agent_config_override_input import AgentConfigOverrideInput
     from .agent_config_override_output import AgentConfigOverrideOutput
     from .agent_definition_source import AgentDefinitionSource
+    from .agent_deployment_percentage_strategy import AgentDeploymentPercentageStrategy
+    from .agent_deployment_request import AgentDeploymentRequest
+    from .agent_deployment_request_item import AgentDeploymentRequestItem
+    from .agent_deployment_response import AgentDeploymentResponse
     from .agent_failure_response_example import AgentFailureResponseExample
     from .agent_metadata import AgentMetadata
     from .agent_metadata_response_model import AgentMetadataResponseModel
@@ -39,9 +46,12 @@ if typing.TYPE_CHECKING:
     from .agent_simulated_chat_test_response_model import AgentSimulatedChatTestResponseModel
     from .agent_sort_by import AgentSortBy
     from .agent_successful_response_example import AgentSuccessfulResponseExample
+    from .agent_summary_batch_successful_response_model import AgentSummaryBatchSuccessfulResponseModel
     from .agent_summary_response_model import AgentSummaryResponseModel
     from .agent_testing_settings import AgentTestingSettings
     from .agent_transfer import AgentTransfer
+    from .agent_version_metadata import AgentVersionMetadata
+    from .agent_version_parents import AgentVersionParents
     from .agent_workflow_request_model import AgentWorkflowRequestModel
     from .agent_workflow_request_model_nodes_value import (
         AgentWorkflowRequestModelNodesValue,
@@ -64,6 +74,7 @@ if typing.TYPE_CHECKING:
     )
     from .agent_workspace_overrides_input import AgentWorkspaceOverridesInput
     from .agent_workspace_overrides_output import AgentWorkspaceOverridesOutput
+    from .allowed_output_formats import AllowedOutputFormats
     from .allowlist_item import AllowlistItem
     from .api_integration_webhook_overrides_input import ApiIntegrationWebhookOverridesInput
     from .api_integration_webhook_overrides_input_request_headers_value import (
@@ -590,6 +601,7 @@ if typing.TYPE_CHECKING:
     from .body_generate_a_random_voice_v_1_voice_generation_generate_voice_post_gender import (
         BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostGender,
     )
+    from .branch_protection_status import BranchProtectionStatus
     from .breakdown_types import BreakdownTypes
     from .built_in_tools_input import BuiltInToolsInput
     from .built_in_tools_output import BuiltInToolsOutput
@@ -642,6 +654,7 @@ if typing.TYPE_CHECKING:
     from .client_event import ClientEvent
     from .client_tool_config_input import ClientToolConfigInput
     from .client_tool_config_output import ClientToolConfigOutput
+    from .contributor import Contributor
     from .conv_ai_dynamic_variable import ConvAiDynamicVariable
     from .conv_ai_secret_locator import ConvAiSecretLocator
     from .conv_ai_stored_secret_dependencies import ConvAiStoredSecretDependencies
@@ -678,11 +691,6 @@ if typing.TYPE_CHECKING:
     )
     from .conversation_history_feedback_common_model import ConversationHistoryFeedbackCommonModel
     from .conversation_history_metadata_common_model import ConversationHistoryMetadataCommonModel
-    from .conversation_history_metadata_common_model_initiation_trigger import (
-        ConversationHistoryMetadataCommonModelInitiationTrigger,
-        ConversationHistoryMetadataCommonModelInitiationTrigger_Default,
-        ConversationHistoryMetadataCommonModelInitiationTrigger_Zendesk,
-    )
     from .conversation_history_metadata_common_model_phone_call import (
         ConversationHistoryMetadataCommonModelPhoneCall,
         ConversationHistoryMetadataCommonModelPhoneCall_SipTrunking,
@@ -820,6 +828,7 @@ if typing.TYPE_CHECKING:
     )
     from .convert_chapter_response_model import ConvertChapterResponseModel
     from .convert_project_response_model import ConvertProjectResponseModel
+    from .create_agent_branch_response_model import CreateAgentBranchResponseModel
     from .create_agent_response_model import CreateAgentResponseModel
     from .create_audio_native_project_request import CreateAudioNativeProjectRequest
     from .create_phone_number_response_model import CreatePhoneNumberResponseModel
@@ -832,11 +841,12 @@ if typing.TYPE_CHECKING:
     from .custom_llm import CustomLlm
     from .custom_llm_request_headers_value import CustomLlmRequestHeadersValue
     from .custom_llmapi_type import CustomLlmapiType
+    from .custom_sip_header import CustomSipHeader
+    from .custom_sip_header_with_dynamic_variable import CustomSipHeaderWithDynamicVariable
     from .dashboard_call_success_chart_model import DashboardCallSuccessChartModel
     from .dashboard_criteria_chart_model import DashboardCriteriaChartModel
     from .dashboard_data_collection_chart_model import DashboardDataCollectionChartModel
     from .data_collection_result_common_model import DataCollectionResultCommonModel
-    from .default_conversation_initiation_trigger import DefaultConversationInitiationTrigger
     from .delete_chapter_request import DeleteChapterRequest
     from .delete_chapter_response_model import DeleteChapterResponseModel
     from .delete_dubbing_response_model import DeleteDubbingResponseModel
@@ -860,6 +870,11 @@ if typing.TYPE_CHECKING:
     from .detected_entity import DetectedEntity
     from .dialogue_input import DialogueInput
     from .dialogue_input_response_model import DialogueInputResponseModel
+    from .direct_publishing_read_response_model import DirectPublishingReadResponseModel
+    from .direct_publishing_read_response_model_display_mode import DirectPublishingReadResponseModelDisplayMode
+    from .direct_publishing_read_response_model_genre_item import DirectPublishingReadResponseModelGenreItem
+    from .direct_publishing_read_response_model_payout_type import DirectPublishingReadResponseModelPayoutType
+    from .direct_publishing_read_response_model_target_audience import DirectPublishingReadResponseModelTargetAudience
     from .discount_response_model import DiscountResponseModel
     from .do_dubbing_response import DoDubbingResponse
     from .document_usage_mode_enum import DocumentUsageModeEnum
@@ -873,10 +888,13 @@ if typing.TYPE_CHECKING:
     from .dubbing_release_channel import DubbingReleaseChannel
     from .dubbing_render_response_model import DubbingRenderResponseModel
     from .dubbing_resource import DubbingResource
+    from .dubbing_transcript import DubbingTranscript
     from .dubbing_transcript_character import DubbingTranscriptCharacter
     from .dubbing_transcript_response_model import DubbingTranscriptResponseModel
     from .dubbing_transcript_utterance import DubbingTranscriptUtterance
     from .dubbing_transcript_word import DubbingTranscriptWord
+    from .dubbing_transcripts_response_model import DubbingTranscriptsResponseModel
+    from .dubbing_transcripts_response_model_transcript_format import DubbingTranscriptsResponseModelTranscriptFormat
     from .dynamic_variable_assignment import DynamicVariableAssignment
     from .dynamic_variable_update_common_model import DynamicVariableUpdateCommonModel
     from .dynamic_variables_config import DynamicVariablesConfig
@@ -1042,6 +1060,7 @@ if typing.TYPE_CHECKING:
     from .integration_type import IntegrationType
     from .invoice_response import InvoiceResponse
     from .invoice_response_model_payment_intent_status import InvoiceResponseModelPaymentIntentStatus
+    from .invoice_response_model_payment_intent_statusses_item import InvoiceResponseModelPaymentIntentStatussesItem
     from .knowledge_base_dependent_type import KnowledgeBaseDependentType
     from .knowledge_base_document_chunk_response_model import KnowledgeBaseDocumentChunkResponseModel
     from .knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
@@ -1052,6 +1071,7 @@ if typing.TYPE_CHECKING:
     )
     from .knowledge_base_locator import KnowledgeBaseLocator
     from .knowledge_base_sort_by import KnowledgeBaseSortBy
+    from .knowledge_base_source_file_url_response_model import KnowledgeBaseSourceFileUrlResponseModel
     from .knowledge_base_summary_batch_successful_response_model import KnowledgeBaseSummaryBatchSuccessfulResponseModel
     from .knowledge_base_summary_batch_successful_response_model_data import (
         KnowledgeBaseSummaryBatchSuccessfulResponseModelData,
@@ -1070,6 +1090,7 @@ if typing.TYPE_CHECKING:
     from .library_voice_response import LibraryVoiceResponse
     from .library_voice_response_model_category import LibraryVoiceResponseModelCategory
     from .list_mcp_tools_response_model import ListMcpToolsResponseModel
+    from .list_response_agent_branch_summary import ListResponseAgentBranchSummary
     from .list_response_meta import ListResponseMeta
     from .list_whats_app_accounts_response import ListWhatsAppAccountsResponse
     from .literal_json_schema_property import LiteralJsonSchemaProperty
@@ -1141,9 +1162,15 @@ if typing.TYPE_CHECKING:
     from .pending_cancellation_response_model import PendingCancellationResponseModel
     from .pending_subscription_switch_response_model import PendingSubscriptionSwitchResponseModel
     from .pending_subscription_switch_response_model_next_tier import PendingSubscriptionSwitchResponseModelNextTier
+    from .permission_type import PermissionType
     from .phone_number_agent_info import PhoneNumberAgentInfo
     from .phone_number_dynamic_variable_transfer_destination import PhoneNumberDynamicVariableTransferDestination
     from .phone_number_transfer import PhoneNumberTransfer
+    from .phone_number_transfer_custom_sip_headers_item import (
+        PhoneNumberTransferCustomSipHeadersItem,
+        PhoneNumberTransferCustomSipHeadersItem_Dynamic,
+        PhoneNumberTransferCustomSipHeadersItem_Static,
+    )
     from .phone_number_transfer_destination import PhoneNumberTransferDestination
     from .phone_number_transfer_transfer_destination import (
         PhoneNumberTransferTransferDestination,
@@ -1166,6 +1193,7 @@ if typing.TYPE_CHECKING:
     from .position_output import PositionOutput
     from .post_agent_avatar_response_model import PostAgentAvatarResponseModel
     from .post_workspace_secret_response_model import PostWorkspaceSecretResponseModel
+    from .preview_audio_db_model import PreviewAudioDbModel
     from .privacy_config import PrivacyConfig
     from .project_creation_meta_response_model import ProjectCreationMetaResponseModel
     from .project_creation_meta_response_model_status import ProjectCreationMetaResponseModelStatus
@@ -1283,6 +1311,8 @@ if typing.TYPE_CHECKING:
     from .rag_index_overview_response_model import RagIndexOverviewResponseModel
     from .rag_index_status import RagIndexStatus
     from .rag_retrieval_info import RagRetrievalInfo
+    from .read_legal_terms import ReadLegalTerms
+    from .read_metadata_chapter_db_model import ReadMetadataChapterDbModel
     from .reader_resource_response_model import ReaderResourceResponseModel
     from .reader_resource_response_model_resource_type import ReaderResourceResponseModelResourceType
     from .recording_response import RecordingResponse
@@ -1301,12 +1331,18 @@ if typing.TYPE_CHECKING:
     from .resource_metadata_response_model_anonymous_access_level_override import (
         ResourceMetadataResponseModelAnonymousAccessLevelOverride,
     )
+    from .review_response_model import ReviewResponseModel
+    from .review_response_model_reject_reasons_item import ReviewResponseModelRejectReasonsItem
+    from .review_response_model_review_status import ReviewResponseModelReviewStatus
     from .review_status import ReviewStatus
     from .safety_common_model import SafetyCommonModel
     from .safety_evaluation import SafetyEvaluation
     from .safety_response_model import SafetyResponseModel
     from .safety_rule import SafetyRule
+    from .sample_config_db_model import SampleConfigDbModel
+    from .sample_config_db_model_parent_type import SampleConfigDbModelParentType
     from .save_voice_preview_request import SaveVoicePreviewRequest
+    from .seat_type import SeatType
     from .secret_dependency_type import SecretDependencyType
     from .section_source import SectionSource
     from .segment_create_response import SegmentCreateResponse
@@ -1357,6 +1393,7 @@ if typing.TYPE_CHECKING:
     from .speech_to_text_webhook_response_model import SpeechToTextWebhookResponseModel
     from .speech_to_text_word_response_model import SpeechToTextWordResponseModel
     from .speech_to_text_word_response_model_type import SpeechToTextWordResponseModelType
+    from .spelling_patience import SpellingPatience
     from .srt_export_options import SrtExportOptions
     from .start_pvc_voice_training_response_model import StartPvcVoiceTrainingResponseModel
     from .start_speaker_separation_response_model import StartSpeakerSeparationResponseModel
@@ -1431,7 +1468,9 @@ if typing.TYPE_CHECKING:
         ToolResponseModelToolConfig_System,
         ToolResponseModelToolConfig_Webhook,
     )
+    from .tool_sort_by import ToolSortBy
     from .tool_type import ToolType
+    from .tool_type_filter import ToolTypeFilter
     from .tool_usage_stats_response_model import ToolUsageStatsResponseModel
     from .tools_response_model import ToolsResponseModel
     from .transfer_to_agent_tool_config import TransferToAgentToolConfig
@@ -1640,6 +1679,11 @@ if typing.TYPE_CHECKING:
     from .workflow_override_agent_node_model_input import WorkflowOverrideAgentNodeModelInput
     from .workflow_override_agent_node_model_output import WorkflowOverrideAgentNodeModelOutput
     from .workflow_phone_number_node_model_input import WorkflowPhoneNumberNodeModelInput
+    from .workflow_phone_number_node_model_input_custom_sip_headers_item import (
+        WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem,
+        WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem_Dynamic,
+        WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem_Static,
+    )
     from .workflow_phone_number_node_model_input_transfer_destination import (
         WorkflowPhoneNumberNodeModelInputTransferDestination,
         WorkflowPhoneNumberNodeModelInputTransferDestination_Phone,
@@ -1648,6 +1692,11 @@ if typing.TYPE_CHECKING:
         WorkflowPhoneNumberNodeModelInputTransferDestination_SipUriDynamicVariable,
     )
     from .workflow_phone_number_node_model_output import WorkflowPhoneNumberNodeModelOutput
+    from .workflow_phone_number_node_model_output_custom_sip_headers_item import (
+        WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem,
+        WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem_Dynamic,
+        WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem_Static,
+    )
     from .workflow_phone_number_node_model_output_transfer_destination import (
         WorkflowPhoneNumberNodeModelOutputTransferDestination,
         WorkflowPhoneNumberNodeModelOutputTransferDestination_Phone,
@@ -1692,7 +1741,6 @@ if typing.TYPE_CHECKING:
     from .workflow_unconditional_model_output import WorkflowUnconditionalModelOutput
     from .workspace_api_key_list_response_model import WorkspaceApiKeyListResponseModel
     from .workspace_api_key_response_model import WorkspaceApiKeyResponseModel
-    from .workspace_api_key_response_model_permissions_item import WorkspaceApiKeyResponseModelPermissionsItem
     from .workspace_batch_calls_response import WorkspaceBatchCallsResponse
     from .workspace_create_api_key_response_model import WorkspaceCreateApiKeyResponseModel
     from .workspace_create_webhook_response_model import WorkspaceCreateWebhookResponseModel
@@ -1703,7 +1751,6 @@ if typing.TYPE_CHECKING:
     from .workspace_webhook_list_response_model import WorkspaceWebhookListResponseModel
     from .workspace_webhook_response_model import WorkspaceWebhookResponseModel
     from .workspace_webhook_usage_response_model import WorkspaceWebhookUsageResponseModel
-    from .zendesk_conversation_initiation_trigger import ZendeskConversationInitiationTrigger
 _dynamic_imports: typing.Dict[str, str] = {
     "AddChapterResponseModel": ".add_chapter_response_model",
     "AddKnowledgeBaseResponseModel": ".add_knowledge_base_response_model",
@@ -1720,6 +1767,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AdditionalFormats": ".additional_formats",
     "AdhocAgentConfigOverrideForTestRequestModel": ".adhoc_agent_config_override_for_test_request_model",
     "Age": ".age",
+    "AgentBranchBasicInfo": ".agent_branch_basic_info",
+    "AgentBranchResponse": ".agent_branch_response",
+    "AgentBranchSummary": ".agent_branch_summary",
     "AgentCallLimits": ".agent_call_limits",
     "AgentConfig": ".agent_config",
     "AgentConfigApiModelWorkflowOverrideInput": ".agent_config_api_model_workflow_override_input",
@@ -1728,6 +1778,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentConfigOverrideInput": ".agent_config_override_input",
     "AgentConfigOverrideOutput": ".agent_config_override_output",
     "AgentDefinitionSource": ".agent_definition_source",
+    "AgentDeploymentPercentageStrategy": ".agent_deployment_percentage_strategy",
+    "AgentDeploymentRequest": ".agent_deployment_request",
+    "AgentDeploymentRequestItem": ".agent_deployment_request_item",
+    "AgentDeploymentResponse": ".agent_deployment_response",
     "AgentFailureResponseExample": ".agent_failure_response_example",
     "AgentMetadata": ".agent_metadata",
     "AgentMetadataResponseModel": ".agent_metadata_response_model",
@@ -1736,9 +1790,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentSimulatedChatTestResponseModel": ".agent_simulated_chat_test_response_model",
     "AgentSortBy": ".agent_sort_by",
     "AgentSuccessfulResponseExample": ".agent_successful_response_example",
+    "AgentSummaryBatchSuccessfulResponseModel": ".agent_summary_batch_successful_response_model",
     "AgentSummaryResponseModel": ".agent_summary_response_model",
     "AgentTestingSettings": ".agent_testing_settings",
     "AgentTransfer": ".agent_transfer",
+    "AgentVersionMetadata": ".agent_version_metadata",
+    "AgentVersionParents": ".agent_version_parents",
     "AgentWorkflowRequestModel": ".agent_workflow_request_model",
     "AgentWorkflowRequestModelNodesValue": ".agent_workflow_request_model_nodes_value",
     "AgentWorkflowRequestModelNodesValue_End": ".agent_workflow_request_model_nodes_value",
@@ -1757,6 +1814,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentWorkflowResponseModelNodesValue_Tool": ".agent_workflow_response_model_nodes_value",
     "AgentWorkspaceOverridesInput": ".agent_workspace_overrides_input",
     "AgentWorkspaceOverridesOutput": ".agent_workspace_overrides_output",
+    "AllowedOutputFormats": ".allowed_output_formats",
     "AllowlistItem": ".allowlist_item",
     "ApiIntegrationWebhookOverridesInput": ".api_integration_webhook_overrides_input",
     "ApiIntegrationWebhookOverridesInputRequestHeadersValue": ".api_integration_webhook_overrides_input_request_headers_value",
@@ -2217,6 +2275,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BillingPeriod": ".billing_period",
     "BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostAge": ".body_generate_a_random_voice_v_1_voice_generation_generate_voice_post_age",
     "BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostGender": ".body_generate_a_random_voice_v_1_voice_generation_generate_voice_post_gender",
+    "BranchProtectionStatus": ".branch_protection_status",
     "BreakdownTypes": ".breakdown_types",
     "BuiltInToolsInput": ".built_in_tools_input",
     "BuiltInToolsOutput": ".built_in_tools_output",
@@ -2267,6 +2326,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ClientEvent": ".client_event",
     "ClientToolConfigInput": ".client_tool_config_input",
     "ClientToolConfigOutput": ".client_tool_config_output",
+    "Contributor": ".contributor",
     "ConvAiDynamicVariable": ".conv_ai_dynamic_variable",
     "ConvAiSecretLocator": ".conv_ai_secret_locator",
     "ConvAiStoredSecretDependencies": ".conv_ai_stored_secret_dependencies",
@@ -2297,9 +2357,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationHistoryEvaluationCriteriaResultCommonModel": ".conversation_history_evaluation_criteria_result_common_model",
     "ConversationHistoryFeedbackCommonModel": ".conversation_history_feedback_common_model",
     "ConversationHistoryMetadataCommonModel": ".conversation_history_metadata_common_model",
-    "ConversationHistoryMetadataCommonModelInitiationTrigger": ".conversation_history_metadata_common_model_initiation_trigger",
-    "ConversationHistoryMetadataCommonModelInitiationTrigger_Default": ".conversation_history_metadata_common_model_initiation_trigger",
-    "ConversationHistoryMetadataCommonModelInitiationTrigger_Zendesk": ".conversation_history_metadata_common_model_initiation_trigger",
     "ConversationHistoryMetadataCommonModelPhoneCall": ".conversation_history_metadata_common_model_phone_call",
     "ConversationHistoryMetadataCommonModelPhoneCall_SipTrunking": ".conversation_history_metadata_common_model_phone_call",
     "ConversationHistoryMetadataCommonModelPhoneCall_Twilio": ".conversation_history_metadata_common_model_phone_call",
@@ -2379,6 +2436,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationalConfigApiModelWorkflowOverrideOutput": ".conversational_config_api_model_workflow_override_output",
     "ConvertChapterResponseModel": ".convert_chapter_response_model",
     "ConvertProjectResponseModel": ".convert_project_response_model",
+    "CreateAgentBranchResponseModel": ".create_agent_branch_response_model",
     "CreateAgentResponseModel": ".create_agent_response_model",
     "CreateAudioNativeProjectRequest": ".create_audio_native_project_request",
     "CreatePhoneNumberResponseModel": ".create_phone_number_response_model",
@@ -2391,11 +2449,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CustomLlm": ".custom_llm",
     "CustomLlmRequestHeadersValue": ".custom_llm_request_headers_value",
     "CustomLlmapiType": ".custom_llmapi_type",
+    "CustomSipHeader": ".custom_sip_header",
+    "CustomSipHeaderWithDynamicVariable": ".custom_sip_header_with_dynamic_variable",
     "DashboardCallSuccessChartModel": ".dashboard_call_success_chart_model",
     "DashboardCriteriaChartModel": ".dashboard_criteria_chart_model",
     "DashboardDataCollectionChartModel": ".dashboard_data_collection_chart_model",
     "DataCollectionResultCommonModel": ".data_collection_result_common_model",
-    "DefaultConversationInitiationTrigger": ".default_conversation_initiation_trigger",
     "DeleteChapterRequest": ".delete_chapter_request",
     "DeleteChapterResponseModel": ".delete_chapter_response_model",
     "DeleteDubbingResponseModel": ".delete_dubbing_response_model",
@@ -2419,6 +2478,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DetectedEntity": ".detected_entity",
     "DialogueInput": ".dialogue_input",
     "DialogueInputResponseModel": ".dialogue_input_response_model",
+    "DirectPublishingReadResponseModel": ".direct_publishing_read_response_model",
+    "DirectPublishingReadResponseModelDisplayMode": ".direct_publishing_read_response_model_display_mode",
+    "DirectPublishingReadResponseModelGenreItem": ".direct_publishing_read_response_model_genre_item",
+    "DirectPublishingReadResponseModelPayoutType": ".direct_publishing_read_response_model_payout_type",
+    "DirectPublishingReadResponseModelTargetAudience": ".direct_publishing_read_response_model_target_audience",
     "DiscountResponseModel": ".discount_response_model",
     "DoDubbingResponse": ".do_dubbing_response",
     "DocumentUsageModeEnum": ".document_usage_mode_enum",
@@ -2432,10 +2496,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DubbingReleaseChannel": ".dubbing_release_channel",
     "DubbingRenderResponseModel": ".dubbing_render_response_model",
     "DubbingResource": ".dubbing_resource",
+    "DubbingTranscript": ".dubbing_transcript",
     "DubbingTranscriptCharacter": ".dubbing_transcript_character",
     "DubbingTranscriptResponseModel": ".dubbing_transcript_response_model",
     "DubbingTranscriptUtterance": ".dubbing_transcript_utterance",
     "DubbingTranscriptWord": ".dubbing_transcript_word",
+    "DubbingTranscriptsResponseModel": ".dubbing_transcripts_response_model",
+    "DubbingTranscriptsResponseModelTranscriptFormat": ".dubbing_transcripts_response_model_transcript_format",
     "DynamicVariableAssignment": ".dynamic_variable_assignment",
     "DynamicVariableUpdateCommonModel": ".dynamic_variable_update_common_model",
     "DynamicVariablesConfig": ".dynamic_variables_config",
@@ -2569,6 +2636,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "IntegrationType": ".integration_type",
     "InvoiceResponse": ".invoice_response",
     "InvoiceResponseModelPaymentIntentStatus": ".invoice_response_model_payment_intent_status",
+    "InvoiceResponseModelPaymentIntentStatussesItem": ".invoice_response_model_payment_intent_statusses_item",
     "KnowledgeBaseDependentType": ".knowledge_base_dependent_type",
     "KnowledgeBaseDocumentChunkResponseModel": ".knowledge_base_document_chunk_response_model",
     "KnowledgeBaseDocumentMetadataResponseModel": ".knowledge_base_document_metadata_response_model",
@@ -2577,6 +2645,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "KnowledgeBaseFolderPathSegmentSummaryResponseModel": ".knowledge_base_folder_path_segment_summary_response_model",
     "KnowledgeBaseLocator": ".knowledge_base_locator",
     "KnowledgeBaseSortBy": ".knowledge_base_sort_by",
+    "KnowledgeBaseSourceFileUrlResponseModel": ".knowledge_base_source_file_url_response_model",
     "KnowledgeBaseSummaryBatchSuccessfulResponseModel": ".knowledge_base_summary_batch_successful_response_model",
     "KnowledgeBaseSummaryBatchSuccessfulResponseModelData": ".knowledge_base_summary_batch_successful_response_model_data",
     "KnowledgeBaseSummaryBatchSuccessfulResponseModelData_File": ".knowledge_base_summary_batch_successful_response_model_data",
@@ -2593,6 +2662,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LibraryVoiceResponse": ".library_voice_response",
     "LibraryVoiceResponseModelCategory": ".library_voice_response_model_category",
     "ListMcpToolsResponseModel": ".list_mcp_tools_response_model",
+    "ListResponseAgentBranchSummary": ".list_response_agent_branch_summary",
     "ListResponseMeta": ".list_response_meta",
     "ListWhatsAppAccountsResponse": ".list_whats_app_accounts_response",
     "LiteralJsonSchemaProperty": ".literal_json_schema_property",
@@ -2662,9 +2732,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PendingCancellationResponseModel": ".pending_cancellation_response_model",
     "PendingSubscriptionSwitchResponseModel": ".pending_subscription_switch_response_model",
     "PendingSubscriptionSwitchResponseModelNextTier": ".pending_subscription_switch_response_model_next_tier",
+    "PermissionType": ".permission_type",
     "PhoneNumberAgentInfo": ".phone_number_agent_info",
     "PhoneNumberDynamicVariableTransferDestination": ".phone_number_dynamic_variable_transfer_destination",
     "PhoneNumberTransfer": ".phone_number_transfer",
+    "PhoneNumberTransferCustomSipHeadersItem": ".phone_number_transfer_custom_sip_headers_item",
+    "PhoneNumberTransferCustomSipHeadersItem_Dynamic": ".phone_number_transfer_custom_sip_headers_item",
+    "PhoneNumberTransferCustomSipHeadersItem_Static": ".phone_number_transfer_custom_sip_headers_item",
     "PhoneNumberTransferDestination": ".phone_number_transfer_destination",
     "PhoneNumberTransferTransferDestination": ".phone_number_transfer_transfer_destination",
     "PhoneNumberTransferTransferDestination_Phone": ".phone_number_transfer_transfer_destination",
@@ -2685,6 +2759,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PositionOutput": ".position_output",
     "PostAgentAvatarResponseModel": ".post_agent_avatar_response_model",
     "PostWorkspaceSecretResponseModel": ".post_workspace_secret_response_model",
+    "PreviewAudioDbModel": ".preview_audio_db_model",
     "PrivacyConfig": ".privacy_config",
     "ProjectCreationMetaResponseModel": ".project_creation_meta_response_model",
     "ProjectCreationMetaResponseModelStatus": ".project_creation_meta_response_model_status",
@@ -2780,6 +2855,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RagIndexOverviewResponseModel": ".rag_index_overview_response_model",
     "RagIndexStatus": ".rag_index_status",
     "RagRetrievalInfo": ".rag_retrieval_info",
+    "ReadLegalTerms": ".read_legal_terms",
+    "ReadMetadataChapterDbModel": ".read_metadata_chapter_db_model",
     "ReaderResourceResponseModel": ".reader_resource_response_model",
     "ReaderResourceResponseModelResourceType": ".reader_resource_response_model_resource_type",
     "RecordingResponse": ".recording_response",
@@ -2796,12 +2873,18 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ResourceAccessInfoRole": ".resource_access_info_role",
     "ResourceMetadataResponseModel": ".resource_metadata_response_model",
     "ResourceMetadataResponseModelAnonymousAccessLevelOverride": ".resource_metadata_response_model_anonymous_access_level_override",
+    "ReviewResponseModel": ".review_response_model",
+    "ReviewResponseModelRejectReasonsItem": ".review_response_model_reject_reasons_item",
+    "ReviewResponseModelReviewStatus": ".review_response_model_review_status",
     "ReviewStatus": ".review_status",
     "SafetyCommonModel": ".safety_common_model",
     "SafetyEvaluation": ".safety_evaluation",
     "SafetyResponseModel": ".safety_response_model",
     "SafetyRule": ".safety_rule",
+    "SampleConfigDbModel": ".sample_config_db_model",
+    "SampleConfigDbModelParentType": ".sample_config_db_model_parent_type",
     "SaveVoicePreviewRequest": ".save_voice_preview_request",
+    "SeatType": ".seat_type",
     "SecretDependencyType": ".secret_dependency_type",
     "SectionSource": ".section_source",
     "SegmentCreateResponse": ".segment_create_response",
@@ -2852,6 +2935,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SpeechToTextWebhookResponseModel": ".speech_to_text_webhook_response_model",
     "SpeechToTextWordResponseModel": ".speech_to_text_word_response_model",
     "SpeechToTextWordResponseModelType": ".speech_to_text_word_response_model_type",
+    "SpellingPatience": ".spelling_patience",
     "SrtExportOptions": ".srt_export_options",
     "StartPvcVoiceTrainingResponseModel": ".start_pvc_voice_training_response_model",
     "StartSpeakerSeparationResponseModel": ".start_speaker_separation_response_model",
@@ -2916,7 +3000,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ToolResponseModelToolConfig_Client": ".tool_response_model_tool_config",
     "ToolResponseModelToolConfig_System": ".tool_response_model_tool_config",
     "ToolResponseModelToolConfig_Webhook": ".tool_response_model_tool_config",
+    "ToolSortBy": ".tool_sort_by",
     "ToolType": ".tool_type",
+    "ToolTypeFilter": ".tool_type_filter",
     "ToolUsageStatsResponseModel": ".tool_usage_stats_response_model",
     "ToolsResponseModel": ".tools_response_model",
     "TransferToAgentToolConfig": ".transfer_to_agent_tool_config",
@@ -3101,12 +3187,18 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkflowOverrideAgentNodeModelInput": ".workflow_override_agent_node_model_input",
     "WorkflowOverrideAgentNodeModelOutput": ".workflow_override_agent_node_model_output",
     "WorkflowPhoneNumberNodeModelInput": ".workflow_phone_number_node_model_input",
+    "WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem": ".workflow_phone_number_node_model_input_custom_sip_headers_item",
+    "WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem_Dynamic": ".workflow_phone_number_node_model_input_custom_sip_headers_item",
+    "WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem_Static": ".workflow_phone_number_node_model_input_custom_sip_headers_item",
     "WorkflowPhoneNumberNodeModelInputTransferDestination": ".workflow_phone_number_node_model_input_transfer_destination",
     "WorkflowPhoneNumberNodeModelInputTransferDestination_Phone": ".workflow_phone_number_node_model_input_transfer_destination",
     "WorkflowPhoneNumberNodeModelInputTransferDestination_PhoneDynamicVariable": ".workflow_phone_number_node_model_input_transfer_destination",
     "WorkflowPhoneNumberNodeModelInputTransferDestination_SipUri": ".workflow_phone_number_node_model_input_transfer_destination",
     "WorkflowPhoneNumberNodeModelInputTransferDestination_SipUriDynamicVariable": ".workflow_phone_number_node_model_input_transfer_destination",
     "WorkflowPhoneNumberNodeModelOutput": ".workflow_phone_number_node_model_output",
+    "WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem": ".workflow_phone_number_node_model_output_custom_sip_headers_item",
+    "WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem_Dynamic": ".workflow_phone_number_node_model_output_custom_sip_headers_item",
+    "WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem_Static": ".workflow_phone_number_node_model_output_custom_sip_headers_item",
     "WorkflowPhoneNumberNodeModelOutputTransferDestination": ".workflow_phone_number_node_model_output_transfer_destination",
     "WorkflowPhoneNumberNodeModelOutputTransferDestination_Phone": ".workflow_phone_number_node_model_output_transfer_destination",
     "WorkflowPhoneNumberNodeModelOutputTransferDestination_PhoneDynamicVariable": ".workflow_phone_number_node_model_output_transfer_destination",
@@ -3141,7 +3233,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkflowUnconditionalModelOutput": ".workflow_unconditional_model_output",
     "WorkspaceApiKeyListResponseModel": ".workspace_api_key_list_response_model",
     "WorkspaceApiKeyResponseModel": ".workspace_api_key_response_model",
-    "WorkspaceApiKeyResponseModelPermissionsItem": ".workspace_api_key_response_model_permissions_item",
     "WorkspaceBatchCallsResponse": ".workspace_batch_calls_response",
     "WorkspaceCreateApiKeyResponseModel": ".workspace_create_api_key_response_model",
     "WorkspaceCreateWebhookResponseModel": ".workspace_create_webhook_response_model",
@@ -3152,7 +3243,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkspaceWebhookListResponseModel": ".workspace_webhook_list_response_model",
     "WorkspaceWebhookResponseModel": ".workspace_webhook_response_model",
     "WorkspaceWebhookUsageResponseModel": ".workspace_webhook_usage_response_model",
-    "ZendeskConversationInitiationTrigger": ".zendesk_conversation_initiation_trigger",
 }
 
 
@@ -3193,6 +3283,9 @@ __all__ = [
     "AdditionalFormats",
     "AdhocAgentConfigOverrideForTestRequestModel",
     "Age",
+    "AgentBranchBasicInfo",
+    "AgentBranchResponse",
+    "AgentBranchSummary",
     "AgentCallLimits",
     "AgentConfig",
     "AgentConfigApiModelWorkflowOverrideInput",
@@ -3201,6 +3294,10 @@ __all__ = [
     "AgentConfigOverrideInput",
     "AgentConfigOverrideOutput",
     "AgentDefinitionSource",
+    "AgentDeploymentPercentageStrategy",
+    "AgentDeploymentRequest",
+    "AgentDeploymentRequestItem",
+    "AgentDeploymentResponse",
     "AgentFailureResponseExample",
     "AgentMetadata",
     "AgentMetadataResponseModel",
@@ -3209,9 +3306,12 @@ __all__ = [
     "AgentSimulatedChatTestResponseModel",
     "AgentSortBy",
     "AgentSuccessfulResponseExample",
+    "AgentSummaryBatchSuccessfulResponseModel",
     "AgentSummaryResponseModel",
     "AgentTestingSettings",
     "AgentTransfer",
+    "AgentVersionMetadata",
+    "AgentVersionParents",
     "AgentWorkflowRequestModel",
     "AgentWorkflowRequestModelNodesValue",
     "AgentWorkflowRequestModelNodesValue_End",
@@ -3230,6 +3330,7 @@ __all__ = [
     "AgentWorkflowResponseModelNodesValue_Tool",
     "AgentWorkspaceOverridesInput",
     "AgentWorkspaceOverridesOutput",
+    "AllowedOutputFormats",
     "AllowlistItem",
     "ApiIntegrationWebhookOverridesInput",
     "ApiIntegrationWebhookOverridesInputRequestHeadersValue",
@@ -3690,6 +3791,7 @@ __all__ = [
     "BillingPeriod",
     "BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostAge",
     "BodyGenerateARandomVoiceV1VoiceGenerationGenerateVoicePostGender",
+    "BranchProtectionStatus",
     "BreakdownTypes",
     "BuiltInToolsInput",
     "BuiltInToolsOutput",
@@ -3740,6 +3842,7 @@ __all__ = [
     "ClientEvent",
     "ClientToolConfigInput",
     "ClientToolConfigOutput",
+    "Contributor",
     "ConvAiDynamicVariable",
     "ConvAiSecretLocator",
     "ConvAiStoredSecretDependencies",
@@ -3770,9 +3873,6 @@ __all__ = [
     "ConversationHistoryEvaluationCriteriaResultCommonModel",
     "ConversationHistoryFeedbackCommonModel",
     "ConversationHistoryMetadataCommonModel",
-    "ConversationHistoryMetadataCommonModelInitiationTrigger",
-    "ConversationHistoryMetadataCommonModelInitiationTrigger_Default",
-    "ConversationHistoryMetadataCommonModelInitiationTrigger_Zendesk",
     "ConversationHistoryMetadataCommonModelPhoneCall",
     "ConversationHistoryMetadataCommonModelPhoneCall_SipTrunking",
     "ConversationHistoryMetadataCommonModelPhoneCall_Twilio",
@@ -3852,6 +3952,7 @@ __all__ = [
     "ConversationalConfigApiModelWorkflowOverrideOutput",
     "ConvertChapterResponseModel",
     "ConvertProjectResponseModel",
+    "CreateAgentBranchResponseModel",
     "CreateAgentResponseModel",
     "CreateAudioNativeProjectRequest",
     "CreatePhoneNumberResponseModel",
@@ -3864,11 +3965,12 @@ __all__ = [
     "CustomLlm",
     "CustomLlmRequestHeadersValue",
     "CustomLlmapiType",
+    "CustomSipHeader",
+    "CustomSipHeaderWithDynamicVariable",
     "DashboardCallSuccessChartModel",
     "DashboardCriteriaChartModel",
     "DashboardDataCollectionChartModel",
     "DataCollectionResultCommonModel",
-    "DefaultConversationInitiationTrigger",
     "DeleteChapterRequest",
     "DeleteChapterResponseModel",
     "DeleteDubbingResponseModel",
@@ -3892,6 +3994,11 @@ __all__ = [
     "DetectedEntity",
     "DialogueInput",
     "DialogueInputResponseModel",
+    "DirectPublishingReadResponseModel",
+    "DirectPublishingReadResponseModelDisplayMode",
+    "DirectPublishingReadResponseModelGenreItem",
+    "DirectPublishingReadResponseModelPayoutType",
+    "DirectPublishingReadResponseModelTargetAudience",
     "DiscountResponseModel",
     "DoDubbingResponse",
     "DocumentUsageModeEnum",
@@ -3905,10 +4012,13 @@ __all__ = [
     "DubbingReleaseChannel",
     "DubbingRenderResponseModel",
     "DubbingResource",
+    "DubbingTranscript",
     "DubbingTranscriptCharacter",
     "DubbingTranscriptResponseModel",
     "DubbingTranscriptUtterance",
     "DubbingTranscriptWord",
+    "DubbingTranscriptsResponseModel",
+    "DubbingTranscriptsResponseModelTranscriptFormat",
     "DynamicVariableAssignment",
     "DynamicVariableUpdateCommonModel",
     "DynamicVariablesConfig",
@@ -4042,6 +4152,7 @@ __all__ = [
     "IntegrationType",
     "InvoiceResponse",
     "InvoiceResponseModelPaymentIntentStatus",
+    "InvoiceResponseModelPaymentIntentStatussesItem",
     "KnowledgeBaseDependentType",
     "KnowledgeBaseDocumentChunkResponseModel",
     "KnowledgeBaseDocumentMetadataResponseModel",
@@ -4050,6 +4161,7 @@ __all__ = [
     "KnowledgeBaseFolderPathSegmentSummaryResponseModel",
     "KnowledgeBaseLocator",
     "KnowledgeBaseSortBy",
+    "KnowledgeBaseSourceFileUrlResponseModel",
     "KnowledgeBaseSummaryBatchSuccessfulResponseModel",
     "KnowledgeBaseSummaryBatchSuccessfulResponseModelData",
     "KnowledgeBaseSummaryBatchSuccessfulResponseModelData_File",
@@ -4066,6 +4178,7 @@ __all__ = [
     "LibraryVoiceResponse",
     "LibraryVoiceResponseModelCategory",
     "ListMcpToolsResponseModel",
+    "ListResponseAgentBranchSummary",
     "ListResponseMeta",
     "ListWhatsAppAccountsResponse",
     "LiteralJsonSchemaProperty",
@@ -4135,9 +4248,13 @@ __all__ = [
     "PendingCancellationResponseModel",
     "PendingSubscriptionSwitchResponseModel",
     "PendingSubscriptionSwitchResponseModelNextTier",
+    "PermissionType",
     "PhoneNumberAgentInfo",
     "PhoneNumberDynamicVariableTransferDestination",
     "PhoneNumberTransfer",
+    "PhoneNumberTransferCustomSipHeadersItem",
+    "PhoneNumberTransferCustomSipHeadersItem_Dynamic",
+    "PhoneNumberTransferCustomSipHeadersItem_Static",
     "PhoneNumberTransferDestination",
     "PhoneNumberTransferTransferDestination",
     "PhoneNumberTransferTransferDestination_Phone",
@@ -4158,6 +4275,7 @@ __all__ = [
     "PositionOutput",
     "PostAgentAvatarResponseModel",
     "PostWorkspaceSecretResponseModel",
+    "PreviewAudioDbModel",
     "PrivacyConfig",
     "ProjectCreationMetaResponseModel",
     "ProjectCreationMetaResponseModelStatus",
@@ -4253,6 +4371,8 @@ __all__ = [
     "RagIndexOverviewResponseModel",
     "RagIndexStatus",
     "RagRetrievalInfo",
+    "ReadLegalTerms",
+    "ReadMetadataChapterDbModel",
     "ReaderResourceResponseModel",
     "ReaderResourceResponseModelResourceType",
     "RecordingResponse",
@@ -4269,12 +4389,18 @@ __all__ = [
     "ResourceAccessInfoRole",
     "ResourceMetadataResponseModel",
     "ResourceMetadataResponseModelAnonymousAccessLevelOverride",
+    "ReviewResponseModel",
+    "ReviewResponseModelRejectReasonsItem",
+    "ReviewResponseModelReviewStatus",
     "ReviewStatus",
     "SafetyCommonModel",
     "SafetyEvaluation",
     "SafetyResponseModel",
     "SafetyRule",
+    "SampleConfigDbModel",
+    "SampleConfigDbModelParentType",
     "SaveVoicePreviewRequest",
+    "SeatType",
     "SecretDependencyType",
     "SectionSource",
     "SegmentCreateResponse",
@@ -4325,6 +4451,7 @@ __all__ = [
     "SpeechToTextWebhookResponseModel",
     "SpeechToTextWordResponseModel",
     "SpeechToTextWordResponseModelType",
+    "SpellingPatience",
     "SrtExportOptions",
     "StartPvcVoiceTrainingResponseModel",
     "StartSpeakerSeparationResponseModel",
@@ -4389,7 +4516,9 @@ __all__ = [
     "ToolResponseModelToolConfig_Client",
     "ToolResponseModelToolConfig_System",
     "ToolResponseModelToolConfig_Webhook",
+    "ToolSortBy",
     "ToolType",
+    "ToolTypeFilter",
     "ToolUsageStatsResponseModel",
     "ToolsResponseModel",
     "TransferToAgentToolConfig",
@@ -4574,12 +4703,18 @@ __all__ = [
     "WorkflowOverrideAgentNodeModelInput",
     "WorkflowOverrideAgentNodeModelOutput",
     "WorkflowPhoneNumberNodeModelInput",
+    "WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem",
+    "WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem_Dynamic",
+    "WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem_Static",
     "WorkflowPhoneNumberNodeModelInputTransferDestination",
     "WorkflowPhoneNumberNodeModelInputTransferDestination_Phone",
     "WorkflowPhoneNumberNodeModelInputTransferDestination_PhoneDynamicVariable",
     "WorkflowPhoneNumberNodeModelInputTransferDestination_SipUri",
     "WorkflowPhoneNumberNodeModelInputTransferDestination_SipUriDynamicVariable",
     "WorkflowPhoneNumberNodeModelOutput",
+    "WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem",
+    "WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem_Dynamic",
+    "WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem_Static",
     "WorkflowPhoneNumberNodeModelOutputTransferDestination",
     "WorkflowPhoneNumberNodeModelOutputTransferDestination_Phone",
     "WorkflowPhoneNumberNodeModelOutputTransferDestination_PhoneDynamicVariable",
@@ -4614,7 +4749,6 @@ __all__ = [
     "WorkflowUnconditionalModelOutput",
     "WorkspaceApiKeyListResponseModel",
     "WorkspaceApiKeyResponseModel",
-    "WorkspaceApiKeyResponseModelPermissionsItem",
     "WorkspaceBatchCallsResponse",
     "WorkspaceCreateApiKeyResponseModel",
     "WorkspaceCreateWebhookResponseModel",
@@ -4625,5 +4759,4 @@ __all__ = [
     "WorkspaceWebhookListResponseModel",
     "WorkspaceWebhookResponseModel",
     "WorkspaceWebhookUsageResponseModel",
-    "ZendeskConversationInitiationTrigger",
 ]

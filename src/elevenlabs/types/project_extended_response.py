@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .caption_style_model import CaptionStyleModel
 from .chapter_response import ChapterResponse
+from .direct_publishing_read_response_model import DirectPublishingReadResponseModel
 from .project_creation_meta_response_model import ProjectCreationMetaResponseModel
 from .project_extended_response_model_access_level import ProjectExtendedResponseModelAccessLevel
 from .project_extended_response_model_apply_text_normalization import ProjectExtendedResponseModelApplyTextNormalization
@@ -179,6 +180,13 @@ class ProjectExtendedResponse(UncheckedBaseModel):
     Global styling to be applied to all captions
     """
 
+    caption_style_template_overrides: typing.Optional[typing.Dict[str, typing.Optional[CaptionStyleModel]]] = (
+        pydantic.Field(default=None)
+    )
+    """
+    Styling changes that have been made to the provided templates
+    """
+
     public_share_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     The public share ID of the project.
@@ -232,6 +240,11 @@ class ProjectExtendedResponse(UncheckedBaseModel):
     base_voices: typing.Optional[typing.List[Voice]] = pydantic.Field(default=None)
     """
     List of voices used by the project.
+    """
+
+    publishing_read: typing.Optional[DirectPublishingReadResponseModel] = pydantic.Field(default=None)
+    """
+    The ElevenReader data if the book was published.
     """
 
     if IS_PYDANTIC_V2:

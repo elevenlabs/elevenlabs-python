@@ -6,11 +6,23 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import knowledge_base, link, llm_usage, widget
+    from . import branches, deployments, drafts, knowledge_base, link, llm_usage, summaries, widget
+    from .summaries import (
+        SummariesGetResponseValue,
+        SummariesGetResponseValue_Failure,
+        SummariesGetResponseValue_Success,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
+    "SummariesGetResponseValue": ".summaries",
+    "SummariesGetResponseValue_Failure": ".summaries",
+    "SummariesGetResponseValue_Success": ".summaries",
+    "branches": ".branches",
+    "deployments": ".deployments",
+    "drafts": ".drafts",
     "knowledge_base": ".knowledge_base",
     "link": ".link",
     "llm_usage": ".llm_usage",
+    "summaries": ".summaries",
     "widget": ".widget",
 }
 
@@ -36,4 +48,16 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["knowledge_base", "link", "llm_usage", "widget"]
+__all__ = [
+    "SummariesGetResponseValue",
+    "SummariesGetResponseValue_Failure",
+    "SummariesGetResponseValue_Success",
+    "branches",
+    "deployments",
+    "drafts",
+    "knowledge_base",
+    "link",
+    "llm_usage",
+    "summaries",
+    "widget",
+]

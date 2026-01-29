@@ -6,16 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .text_to_voice_create_previews_request_output_format import TextToVoiceCreatePreviewsRequestOutputFormat
-    from .text_to_voice_design_request_output_format import TextToVoiceDesignRequestOutputFormat
-    from .text_to_voice_remix_request_output_format import TextToVoiceRemixRequestOutputFormat
     from .voice_design_request_model_model_id import VoiceDesignRequestModelModelId
-_dynamic_imports: typing.Dict[str, str] = {
-    "TextToVoiceCreatePreviewsRequestOutputFormat": ".text_to_voice_create_previews_request_output_format",
-    "TextToVoiceDesignRequestOutputFormat": ".text_to_voice_design_request_output_format",
-    "TextToVoiceRemixRequestOutputFormat": ".text_to_voice_remix_request_output_format",
-    "VoiceDesignRequestModelModelId": ".voice_design_request_model_model_id",
-}
+_dynamic_imports: typing.Dict[str, str] = {"VoiceDesignRequestModelModelId": ".voice_design_request_model_model_id"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -39,9 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = [
-    "TextToVoiceCreatePreviewsRequestOutputFormat",
-    "TextToVoiceDesignRequestOutputFormat",
-    "TextToVoiceRemixRequestOutputFormat",
-    "VoiceDesignRequestModelModelId",
-]
+__all__ = ["VoiceDesignRequestModelModelId"]

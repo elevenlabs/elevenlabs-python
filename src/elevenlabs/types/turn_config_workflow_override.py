@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .soft_timeout_config_workflow_override import SoftTimeoutConfigWorkflowOverride
+from .spelling_patience import SpellingPatience
 from .turn_eagerness import TurnEagerness
 
 
@@ -33,6 +34,11 @@ class TurnConfigWorkflowOverride(UncheckedBaseModel):
     turn_eagerness: typing.Optional[TurnEagerness] = pydantic.Field(default=None)
     """
     Controls how eager the agent is to respond. Low = less eager (waits longer), Standard = default eagerness, High = more eager (responds sooner)
+    """
+
+    spelling_patience: typing.Optional[SpellingPatience] = pydantic.Field(default=None)
+    """
+    Controls if the agent should be more patient when user is spelling numbers and named entities. Auto = model based, Off = never wait extra
     """
 
     if IS_PYDANTIC_V2:

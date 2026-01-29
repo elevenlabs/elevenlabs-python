@@ -8,11 +8,13 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .projects_create_request_apply_text_normalization import ProjectsCreateRequestApplyTextNormalization
     from .projects_create_request_fiction import ProjectsCreateRequestFiction
+    from .projects_create_request_quality_preset import ProjectsCreateRequestQualityPreset
     from .projects_create_request_source_type import ProjectsCreateRequestSourceType
     from .projects_create_request_target_audience import ProjectsCreateRequestTargetAudience
 _dynamic_imports: typing.Dict[str, str] = {
     "ProjectsCreateRequestApplyTextNormalization": ".projects_create_request_apply_text_normalization",
     "ProjectsCreateRequestFiction": ".projects_create_request_fiction",
+    "ProjectsCreateRequestQualityPreset": ".projects_create_request_quality_preset",
     "ProjectsCreateRequestSourceType": ".projects_create_request_source_type",
     "ProjectsCreateRequestTargetAudience": ".projects_create_request_target_audience",
 }
@@ -42,6 +44,7 @@ def __dir__():
 __all__ = [
     "ProjectsCreateRequestApplyTextNormalization",
     "ProjectsCreateRequestFiction",
+    "ProjectsCreateRequestQualityPreset",
     "ProjectsCreateRequestSourceType",
     "ProjectsCreateRequestTargetAudience",
 ]

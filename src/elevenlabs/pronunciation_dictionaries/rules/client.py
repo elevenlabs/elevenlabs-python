@@ -35,7 +35,7 @@ class RulesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PronunciationDictionaryRulesResponseModel:
         """
-        Add rules to the pronunciation dictionary
+        Add rules to the pronunciation dictionary. If a rule with the same string_to_replace already exists, it will be replaced.
 
         Parameters
         ----------
@@ -145,7 +145,7 @@ class AsyncRulesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PronunciationDictionaryRulesResponseModel:
         """
-        Add rules to the pronunciation dictionary
+        Add rules to the pronunciation dictionary. If a rule with the same string_to_replace already exists, it will be replaced.
 
         Parameters
         ----------

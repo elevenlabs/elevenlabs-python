@@ -171,6 +171,13 @@ class ProjectResponse(UncheckedBaseModel):
     Global styling to be applied to all captions
     """
 
+    caption_style_template_overrides: typing.Optional[typing.Dict[str, typing.Optional[CaptionStyleModel]]] = (
+        pydantic.Field(default=None)
+    )
+    """
+    Styling changes that have been made to the provided templates
+    """
+
     public_share_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     The public share ID of the project.

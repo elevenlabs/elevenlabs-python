@@ -23,9 +23,13 @@ from ...types.sort_direction import SortDirection
 from .raw_client import AsyncRawAgentsClient, RawAgentsClient
 
 if typing.TYPE_CHECKING:
+    from .branches.client import AsyncBranchesClient, BranchesClient
+    from .deployments.client import AsyncDeploymentsClient, DeploymentsClient
+    from .drafts.client import AsyncDraftsClient, DraftsClient
     from .knowledge_base.client import AsyncKnowledgeBaseClient, KnowledgeBaseClient
     from .link.client import AsyncLinkClient, LinkClient
     from .llm_usage.client import AsyncLlmUsageClient, LlmUsageClient
+    from .summaries.client import AsyncSummariesClient, SummariesClient
     from .widget.client import AsyncWidgetClient, WidgetClient
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -35,10 +39,14 @@ class AgentsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawAgentsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
+        self._summaries: typing.Optional[SummariesClient] = None
         self._widget: typing.Optional[WidgetClient] = None
         self._link: typing.Optional[LinkClient] = None
         self._knowledge_base: typing.Optional[KnowledgeBaseClient] = None
         self._llm_usage: typing.Optional[LlmUsageClient] = None
+        self._branches: typing.Optional[BranchesClient] = None
+        self._deployments: typing.Optional[DeploymentsClient] = None
+        self._drafts: typing.Optional[DraftsClient] = None
 
     @property
     def with_raw_response(self) -> RawAgentsClient:
@@ -544,6 +552,14 @@ class AgentsClient:
         return _response.data
 
     @property
+    def summaries(self):
+        if self._summaries is None:
+            from .summaries.client import SummariesClient  # noqa: E402
+
+            self._summaries = SummariesClient(client_wrapper=self._client_wrapper)
+        return self._summaries
+
+    @property
     def widget(self):
         if self._widget is None:
             from .widget.client import WidgetClient  # noqa: E402
@@ -575,15 +591,43 @@ class AgentsClient:
             self._llm_usage = LlmUsageClient(client_wrapper=self._client_wrapper)
         return self._llm_usage
 
+    @property
+    def branches(self):
+        if self._branches is None:
+            from .branches.client import BranchesClient  # noqa: E402
+
+            self._branches = BranchesClient(client_wrapper=self._client_wrapper)
+        return self._branches
+
+    @property
+    def deployments(self):
+        if self._deployments is None:
+            from .deployments.client import DeploymentsClient  # noqa: E402
+
+            self._deployments = DeploymentsClient(client_wrapper=self._client_wrapper)
+        return self._deployments
+
+    @property
+    def drafts(self):
+        if self._drafts is None:
+            from .drafts.client import DraftsClient  # noqa: E402
+
+            self._drafts = DraftsClient(client_wrapper=self._client_wrapper)
+        return self._drafts
+
 
 class AsyncAgentsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawAgentsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
+        self._summaries: typing.Optional[AsyncSummariesClient] = None
         self._widget: typing.Optional[AsyncWidgetClient] = None
         self._link: typing.Optional[AsyncLinkClient] = None
         self._knowledge_base: typing.Optional[AsyncKnowledgeBaseClient] = None
         self._llm_usage: typing.Optional[AsyncLlmUsageClient] = None
+        self._branches: typing.Optional[AsyncBranchesClient] = None
+        self._deployments: typing.Optional[AsyncDeploymentsClient] = None
+        self._drafts: typing.Optional[AsyncDraftsClient] = None
 
     @property
     def with_raw_response(self) -> AsyncRawAgentsClient:
@@ -1163,6 +1207,14 @@ class AsyncAgentsClient:
         return _response.data
 
     @property
+    def summaries(self):
+        if self._summaries is None:
+            from .summaries.client import AsyncSummariesClient  # noqa: E402
+
+            self._summaries = AsyncSummariesClient(client_wrapper=self._client_wrapper)
+        return self._summaries
+
+    @property
     def widget(self):
         if self._widget is None:
             from .widget.client import AsyncWidgetClient  # noqa: E402
@@ -1193,3 +1245,27 @@ class AsyncAgentsClient:
 
             self._llm_usage = AsyncLlmUsageClient(client_wrapper=self._client_wrapper)
         return self._llm_usage
+
+    @property
+    def branches(self):
+        if self._branches is None:
+            from .branches.client import AsyncBranchesClient  # noqa: E402
+
+            self._branches = AsyncBranchesClient(client_wrapper=self._client_wrapper)
+        return self._branches
+
+    @property
+    def deployments(self):
+        if self._deployments is None:
+            from .deployments.client import AsyncDeploymentsClient  # noqa: E402
+
+            self._deployments = AsyncDeploymentsClient(client_wrapper=self._client_wrapper)
+        return self._deployments
+
+    @property
+    def drafts(self):
+        if self._drafts is None:
+            from .drafts.client import AsyncDraftsClient  # noqa: E402
+
+            self._drafts = AsyncDraftsClient(client_wrapper=self._client_wrapper)
+        return self._drafts

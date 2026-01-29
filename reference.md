@@ -1,4 +1,69 @@
 # Reference
+<details><summary><code>client.<a href="src/elevenlabs/base_client.py">delete_v_1_convai_agents_agent_id_branches_branch_id</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.delete_v_1_convai_agents_agent_id_branches_branch_id(
+    agent_id="agent_id",
+    branch_id="branch_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.<a href="src/elevenlabs/base_client.py">save_a_voice_preview</a>()</code></summary>
 <dl>
 <dd>
@@ -549,7 +614,7 @@ client.text_to_sound_effects.convert(
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[TextToSoundEffectsConvertRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -777,7 +842,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[TextToSpeechConvertRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[TextToSpeechConvertRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -929,7 +994,7 @@ client.text_to_speech.convert_with_timestamps(
     voice_id="21m00Tcm4TlvDq8ikWAM",
     enable_logging=True,
     optimize_streaming_latency=1,
-    output_format="mp3_22050_32",
+    output_format="alaw_8000",
     text="This is a test for the API of ElevenLabs.",
 )
 
@@ -988,7 +1053,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[TextToSpeechConvertWithTimestampsRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[TextToSpeechConvertWithTimestampsRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -1594,7 +1659,7 @@ client.text_to_dialogue.convert(
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[TextToDialogueConvertRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -1731,7 +1796,7 @@ client.text_to_dialogue.stream(
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[TextToDialogueStreamRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -1871,7 +1936,7 @@ for chunk in response.data:
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[TextToDialogueStreamWithTimestampsRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -2007,7 +2072,7 @@ client.text_to_dialogue.convert_with_timestamps(
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[TextToDialogueConvertWithTimestampsRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -2446,7 +2511,7 @@ client.text_to_voice.create_previews(
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[TextToVoiceCreatePreviewsRequestOutputFormat]` — The output format of the generated audio.
+**output_format:** `typing.Optional[AllowedOutputFormats]` — The output format of the generated audio.
     
 </dd>
 </dl>
@@ -2685,7 +2750,7 @@ client.text_to_voice.design(
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[TextToVoiceDesignRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -2789,7 +2854,7 @@ client.text_to_voice.design(
 <dl>
 <dd>
 
-**prompt_strength:** `typing.Optional[float]` — Controls the balance of prompt versus reference audio when generating voice samples. 0 means almost no prompt influence, 1 means almost no reference audio influence. Only supported when using the eleven_ttv_v3 model and providing reference audio.
+**prompt_strength:** `typing.Optional[float]` — Controls the balance of prompt versus reference audio when generating voice samples. 0 means almost no prompt influence, 1 means almost no reference audio influence. Only supported when using the eleven_ttv_v3 model.
     
 </dd>
 </dl>
@@ -2877,7 +2942,7 @@ client.text_to_voice.remix(
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[TextToVoiceRemixRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -2949,7 +3014,7 @@ client.text_to_voice.remix(
 <dl>
 <dd>
 
-**prompt_strength:** `typing.Optional[float]` — Controls the balance of prompt versus reference audio when generating voice samples. 0 means almost no prompt influence, 1 means almost no reference audio influence. Only supported when using the eleven_ttv_v3 model and providing reference audio.
+**prompt_strength:** `typing.Optional[float]` — Controls the balance of prompt versus reference audio when generating voice samples. 0 means almost no prompt influence, 1 means almost no reference audio influence. Only supported when using the eleven_ttv_v3 model.
     
 </dd>
 </dl>
@@ -3502,7 +3567,7 @@ typing.Optional[typing.List[core.File]]` — See core.File for more documentatio
 <dl>
 <dd>
 
-**labels:** `typing.Optional[str]` — Serialized labels dictionary for the voice.
+**labels:** `typing.Optional[VoicesUpdateRequestLabels]` — Labels for the voice. Keys can be language, accent, gender, or age.
     
 </dd>
 </dl>
@@ -4020,10 +4085,10 @@ client.studio.create_podcast(
 **quality_preset:** `typing.Optional[BodyCreatePodcastV1StudioPodcastsPostQualityPreset]` 
 
 Output quality of the generated audio. Must be one of:
-standard - standard output format, 128kbps with 44.1kHz sample rate.
-high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side.
-ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side.
-ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format.
+'standard' - standard output format, 128kbps with 44.1kHz sample rate.
+'high' - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side.
+'ultra' - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side.
+'ultra_lossless' - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format.
     
 </dd>
 </dl>
@@ -6132,7 +6197,7 @@ client = ElevenLabs(
 )
 client.speech_to_text.convert(
     enable_logging=True,
-    model_id="model_id",
+    model_id="scribe_v1",
 )
 
 ```
@@ -6149,7 +6214,7 @@ client.speech_to_text.convert(
 <dl>
 <dd>
 
-**model_id:** `str` — The ID of the model to use for transcription, currently only 'scribe_v1' and 'scribe_v1_experimental' are available.
+**model_id:** `SpeechToTextConvertRequestModelId` — The ID of the model to use for transcription.
     
 </dd>
 </dl>
@@ -6767,7 +6832,7 @@ client.music.compose()
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[MusicComposeRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -6899,7 +6964,7 @@ client.music.compose_detailed()
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[MusicComposeDetailedRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -7031,7 +7096,7 @@ client.music.stream()
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[MusicStreamRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -7135,6 +7200,7 @@ client = ElevenLabs(
 client.conversational_ai.conversations.get_signed_url(
     agent_id="21m00Tcm4TlvDq8ikWAM",
     include_conversation_id=True,
+    branch_id="branch_id",
 )
 
 ```
@@ -7160,6 +7226,14 @@ client.conversational_ai.conversations.get_signed_url(
 <dd>
 
 **include_conversation_id:** `typing.Optional[bool]` — Whether to include a conversation_id with the response. If included, the conversation_signature cannot be used again.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `typing.Optional[str]` — The ID of the branch to use
     
 </dd>
 </dl>
@@ -7214,6 +7288,7 @@ client = ElevenLabs(
 client.conversational_ai.conversations.get_webrtc_token(
     agent_id="21m00Tcm4TlvDq8ikWAM",
     participant_name="participant_name",
+    branch_id="branch_id",
 )
 
 ```
@@ -7239,6 +7314,14 @@ client.conversational_ai.conversations.get_webrtc_token(
 <dd>
 
 **participant_name:** `typing.Optional[str]` — Optional custom participant name. If not provided, user ID will be used
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `typing.Optional[str]` — The ID of the branch to use
     
 </dd>
 </dl>
@@ -7305,6 +7388,8 @@ client.conversational_ai.conversations.list(
     page_size=1,
     summary_mode="exclude",
     search="search",
+    conversation_initiation_source="unknown",
+    branch_id="branch_id",
 )
 
 ```
@@ -7458,6 +7543,22 @@ client.conversational_ai.conversations.list(
 <dd>
 
 **search:** `typing.Optional[str]` — Full-text or fuzzy search over transcript messages
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**conversation_initiation_source:** `typing.Optional[ConversationInitiationSource]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `typing.Optional[str]` — Filter conversations by branch ID.
     
 </dd>
 </dl>
@@ -10145,7 +10246,7 @@ client.conversational_ai.knowledge_base.get_or_create_rag_indexes(
 </details>
 
 ## ConversationalAi Tools
-<details><summary><code>client.conversational_ai.tools.<a href="src/elevenlabs/conversational_ai/tools/client.py">list</a>()</code></summary>
+<details><summary><code>client.conversational_ai.tools.<a href="src/elevenlabs/conversational_ai/tools/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -10177,7 +10278,14 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.conversational_ai.tools.list()
+client.conversational_ai.tools.list(
+    search="search",
+    page_size=1,
+    show_only_owned_documents=True,
+    sort_direction="asc",
+    sort_by="name",
+    cursor="cursor",
+)
 
 ```
 </dd>
@@ -10189,6 +10297,62 @@ client.conversational_ai.tools.list()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — If specified, the endpoint returns only tools whose names start with this string.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many documents to return at maximum. Can not exceed 100, defaults to 30.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**show_only_owned_documents:** `typing.Optional[bool]` — If set to true, the endpoint will return only tools owned by you (and not shared from somebody else).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**types:** `typing.Optional[typing.Union[ToolTypeFilter, typing.Sequence[ToolTypeFilter]]]` — If present, the endpoint will return only tools of the given types.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_direction:** `typing.Optional[SortDirection]` — The direction to sort the results
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[ToolSortBy]` — The field to sort the results by
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -11162,6 +11326,14 @@ client.conversational_ai.batch_calls.create(
 <dl>
 <dd>
 
+**timezone:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -11286,6 +11458,76 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.batch_calls.get(
+    batch_id="batch_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**batch_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.batch_calls.<a href="src/elevenlabs/conversational_ai/batch_calls/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Permanently delete a batch call and all recipient records. Conversations remain in history.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.batch_calls.delete(
     batch_id="batch_id",
 )
 
@@ -12340,6 +12582,75 @@ client.conversational_ai.whatsapp_accounts.update(
 </dl>
 </details>
 
+## ConversationalAi Agents Summaries
+<details><summary><code>client.conversational_ai.agents.summaries.<a href="src/elevenlabs/conversational_ai/agents/summaries/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns summaries for the specified agents.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.agents.summaries.get()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — List of agent IDs to fetch summaries for
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ConversationalAi Agents Widget
 <details><summary><code>client.conversational_ai.agents.widget.<a href="src/elevenlabs/conversational_ai/agents/widget/client.py">get</a>(...)</code></summary>
 <dl>
@@ -12638,6 +12949,909 @@ client.conversational_ai.agents.llm_usage.calculate(
 <dd>
 
 **rag_enabled:** `typing.Optional[bool]` — Whether RAG is enabled.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi Agents Branches
+<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of branches an agent has
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.agents.branches.list(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    include_archived=True,
+    limit=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_archived:** `typing.Optional[bool]` — Whether archived branches should be included
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[int]` — How many results at most should be returned
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new branch from a given version of main branch
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.agents.branches.create(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    parent_version_id="parent_version_id",
+    name="name",
+    description="description",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**parent_version_id:** `str` — ID of the version to branch from
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `str` — Name of the branch. It is unique within the agent.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `str` — Description for the branch
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**conversation_config:** `typing.Optional[typing.Dict[str, typing.Any]]` — Changes to apply to conversation config
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**platform_settings:** `typing.Optional[typing.Dict[str, typing.Any]]` — Changes to apply to platform settings
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**workflow:** `typing.Optional[AgentWorkflowRequestModel]` — Updated workflow definition
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get information about a single agent branch
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.agents.branches.get(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `str` — Unique identifier for the branch.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update agent branch properties such as archiving status and protection level
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.agents.branches.update(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `str` — Unique identifier for the branch.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_archived:** `typing.Optional[bool]` — Whether the branch should be archived
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**protection_status:** `typing.Optional[BranchProtectionStatus]` — The protection level for the branch
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">merge</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Merge a branch into a target branch
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.agents.branches.merge(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    source_branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+    target_branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**source_branch_id:** `str` — Unique identifier for the source branch to merge from.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**target_branch_id:** `str` — The ID of the target branch to merge into (must be the main branch).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**archive_source_branch:** `typing.Optional[bool]` — Whether to archive the source branch after merging
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi Agents Deployments
+<details><summary><code>client.conversational_ai.agents.deployments.<a href="src/elevenlabs/conversational_ai/agents/deployments/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new deployment for an agent
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import (
+    AgentDeploymentPercentageStrategy,
+    AgentDeploymentRequest,
+    AgentDeploymentRequestItem,
+    ElevenLabs,
+)
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.agents.deployments.create(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    deployment_request=AgentDeploymentRequest(
+        requests=[
+            AgentDeploymentRequestItem(
+                branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+                deployment_strategy=AgentDeploymentPercentageStrategy(
+                    traffic_percentage=0.5,
+                ),
+            )
+        ],
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**deployment_request:** `AgentDeploymentRequest` — Request to create a new deployment
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi Agents Drafts
+<details><summary><code>client.conversational_ai.agents.drafts.<a href="src/elevenlabs/conversational_ai/agents/drafts/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new draft for an agent
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import (
+    AgentWorkflowRequestModel,
+    AgentWorkflowRequestModelNodesValue_End,
+    AstAndOperatorNodeInputChildrenItem_BooleanLiteral,
+    ElevenLabs,
+    WorkflowEdgeModelInput,
+    WorkflowEdgeModelInputForwardCondition_Expression,
+    WorkflowExpressionConditionModelInputExpression_AndOperator,
+)
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.agents.drafts.create(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+    conversation_config={"key": "value"},
+    platform_settings={"key": "value"},
+    workflow=AgentWorkflowRequestModel(
+        edges={
+            "entry_to_tool_a": WorkflowEdgeModelInput(
+                source="entry_node",
+                target="tool_node_a",
+                forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
+                    expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
+                        children=[
+                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                value=True,
+                            )
+                        ],
+                    ),
+                ),
+            ),
+            "start_to_entry": WorkflowEdgeModelInput(
+                source="start_node",
+                target="entry_node",
+                forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
+                    expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
+                        children=[
+                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                value=True,
+                            )
+                        ],
+                    ),
+                ),
+            ),
+            "tool_a_to_failure": WorkflowEdgeModelInput(
+                source="tool_node_a",
+                target="failure_node",
+                forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
+                    expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
+                        children=[
+                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                value=True,
+                            )
+                        ],
+                    ),
+                ),
+            ),
+            "tool_a_to_tool_b": WorkflowEdgeModelInput(
+                source="tool_node_a",
+                target="tool_node_b",
+                forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
+                    expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
+                        children=[
+                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                value=True,
+                            )
+                        ],
+                    ),
+                ),
+            ),
+            "tool_b_to_agent_transfer": WorkflowEdgeModelInput(
+                source="tool_node_b",
+                target="success_transfer",
+                forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
+                    expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
+                        children=[
+                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                value=True,
+                            )
+                        ],
+                    ),
+                ),
+            ),
+            "tool_b_to_conversation": WorkflowEdgeModelInput(
+                source="tool_node_b",
+                target="success_conversation",
+                forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
+                    expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
+                        children=[
+                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                value=True,
+                            )
+                        ],
+                    ),
+                ),
+            ),
+            "tool_b_to_end": WorkflowEdgeModelInput(
+                source="tool_node_b",
+                target="success_end",
+                forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
+                    expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
+                        children=[
+                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                value=True,
+                            )
+                        ],
+                    ),
+                ),
+            ),
+            "tool_b_to_phone": WorkflowEdgeModelInput(
+                source="tool_node_b",
+                target="success_phone",
+                forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
+                    expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
+                        children=[
+                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                value=True,
+                            )
+                        ],
+                    ),
+                ),
+            ),
+        },
+        nodes={
+            "entry_node": AgentWorkflowRequestModelNodesValue_End(),
+            "failure_node": AgentWorkflowRequestModelNodesValue_End(),
+            "start_node": AgentWorkflowRequestModelNodesValue_End(),
+            "success_conversation": AgentWorkflowRequestModelNodesValue_End(),
+            "success_end": AgentWorkflowRequestModelNodesValue_End(),
+            "success_phone": AgentWorkflowRequestModelNodesValue_End(),
+            "success_transfer": AgentWorkflowRequestModelNodesValue_End(),
+            "tool_node_a": AgentWorkflowRequestModelNodesValue_End(),
+            "tool_node_b": AgentWorkflowRequestModelNodesValue_End(),
+        },
+    ),
+    name="name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `str` — The ID of the agent branch to use
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**conversation_config:** `typing.Dict[str, typing.Any]` — Conversation config for the draft
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**platform_settings:** `typing.Dict[str, typing.Any]` — Platform settings for the draft
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**workflow:** `AgentWorkflowRequestModel` — Workflow for the draft
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `str` — Name for the draft
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tags:** `typing.Optional[typing.Sequence[str]]` — Tags to help classify and filter the agent
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.agents.drafts.<a href="src/elevenlabs/conversational_ai/agents/drafts/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a draft for an agent
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.agents.drafts.delete(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `str` — The ID of the agent branch to use
     
 </dd>
 </dl>
@@ -13348,6 +14562,84 @@ client.conversational_ai.knowledge_base.documents.create_from_text(
 </dl>
 </details>
 
+<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">create_folder</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a folder used for grouping documents together.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.knowledge_base.documents.create_folder(
+    name="name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `str` — A custom, human-readable name for the document.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**parent_folder_id:** `typing.Optional[str]` — If set, the created document or folder will be placed inside the given folder.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
@@ -13733,6 +15025,232 @@ client.conversational_ai.knowledge_base.documents.get_content(
 <dd>
 
 **documentation_id:** `str` — The id of a document from the knowledge base. This is returned on document addition.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">get_source_file_url</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a signed URL to download the original source file of a file-type document from the knowledge base
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.knowledge_base.documents.get_source_file_url(
+    documentation_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**documentation_id:** `str` — The id of a document from the knowledge base. This is returned on document addition.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">move</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Moves the entity from one folder to another.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.knowledge_base.documents.move(
+    document_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**document_id:** `str` — The id of a document from the knowledge base. This is returned on document addition.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**move_to:** `typing.Optional[str]` — The folder to move the entities to. If not set, the entities will be moved to the root folder.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">bulk_move</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Moves multiple entities from one folder to another.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.knowledge_base.documents.bulk_move(
+    document_ids=["21m00Tcm4TlvDq8ikWAM", "31m00Tcm4TlvDq8ikWBM"],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**document_ids:** `typing.Sequence[str]` — The ids of documents or folders from the knowledge base.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**move_to:** `typing.Optional[str]` — The folder to move the entities to. If not set, the entities will be moved to the root folder.
     
 </dd>
 </dl>
@@ -15615,7 +17133,7 @@ client = ElevenLabs(
 )
 client.dubbing.transcript.get_transcript_for_dub(
     dubbing_id="dubbing_id",
-    language_code="language_code",
+    language_code="source",
     format_type="srt",
 )
 
@@ -15641,7 +17159,7 @@ client.dubbing.transcript.get_transcript_for_dub(
 <dl>
 <dd>
 
-**language_code:** `str` — ID of the language.
+**language_code:** `str` — ISO-693 language code to retrieve the transcript for. Use 'source' to fetch the transcript of the original media.
     
 </dd>
 </dl>
@@ -15650,6 +17168,95 @@ client.dubbing.transcript.get_transcript_for_dub(
 <dd>
 
 **format_type:** `typing.Optional[TranscriptGetTranscriptForDubRequestFormatType]` — Format to return transcript in. For subtitles use either 'srt' or 'webvtt', and for a full transcript use 'json'. The 'json' format is not yet supported for Dubbing Studio.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Dubbing Transcripts
+<details><summary><code>client.dubbing.transcripts.<a href="src/elevenlabs/dubbing/transcripts/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Fetch the transcript for one of the languages in a dub.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.dubbing.transcripts.get(
+    dubbing_id="dubbing_id",
+    language_code="source",
+    format_type="srt",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**dubbing_id:** `str` — ID of the dubbing project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language_code:** `str` — ISO-693 language code to retrieve the transcript for. Use 'source' to fetch the transcript of the original media.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**format_type:** `TranscriptsGetRequestFormatType` — Format to return transcript in. For subtitles use either 'srt' or 'webvtt', and for a full transcript use 'json'. The 'json' format is not yet supported for Dubbing Studio.
     
 </dd>
 </dl>
@@ -16465,7 +18072,7 @@ client.music.composition_plan.create(
 <dl>
 <dd>
 
-Add rules to the pronunciation dictionary
+Add rules to the pronunciation dictionary. If a rule with the same string_to_replace already exists, it will be replaced.
 </dd>
 </dl>
 </dd>
@@ -17298,13 +18905,13 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**quality_preset:** `typing.Optional[str]` 
+**quality_preset:** `typing.Optional[ProjectsCreateRequestQualityPreset]` 
 
 Output quality of the generated audio. Must be one of:
-standard - standard output format, 128kbps with 44.1kHz sample rate.
-high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side.
-ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side.
-ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format.
+'standard' - standard output format, 128kbps with 44.1kHz sample rate.
+'high' - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side.
+'ultra' - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side.
+'ultra_lossless' - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format.
     
 </dd>
 </dl>
@@ -17534,6 +19141,14 @@ ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate
     Example:
     ["{\"voice_id\": \"21m00Tcm4TlvDq8ikWAM\", \"stability\": 0.7, \"similarity_boost\": 0.8, \"style\": 0.5, \"speed\": 1.0, \"use_speaker_boost\": true}"]
     
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**create_publishing_read:** `typing.Optional[bool]` — If true, creates a corresponding read for direct publishing in draft state
     
 </dd>
 </dl>
@@ -19679,7 +21294,7 @@ typing.List[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**labels:** `typing.Optional[str]` — Serialized labels dictionary for the voice.
+**labels:** `typing.Optional[IvcCreateRequestLabels]` — Labels for the voice. Keys can be language, accent, gender, or age.
     
 </dd>
 </dl>
@@ -19775,7 +21390,7 @@ client.voices.pvc.create(
 <dl>
 <dd>
 
-**labels:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` — Serialized labels dictionary for the voice.
+**labels:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` — Labels for the voice. Keys can be language, accent, gender, or age.
     
 </dd>
 </dl>
@@ -19877,7 +21492,7 @@ client.voices.pvc.update(
 <dl>
 <dd>
 
-**labels:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` — Serialized labels dictionary for the voice.
+**labels:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` — Labels for the voice. Keys can be language, accent, gender, or age.
     
 </dd>
 </dl>
@@ -21129,7 +22744,7 @@ client.workspace.invites.create(
 <dl>
 <dd>
 
-**group_ids:** `typing.Optional[typing.Sequence[str]]` — The group ids of the user
+**workspace_permission:** `typing.Optional[str]` — The workspace permission of the user. This is deprecated, use `seat_type` instead.
     
 </dd>
 </dl>
@@ -21137,7 +22752,15 @@ client.workspace.invites.create(
 <dl>
 <dd>
 
-**workspace_permission:** `typing.Optional[BodyInviteUserV1WorkspaceInvitesAddPostWorkspacePermission]` — The workspace permission of the user
+**seat_type:** `typing.Optional[SeatType]` — The seat type of the user
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**group_ids:** `typing.Optional[typing.Sequence[str]]` — The group ids of the user
     
 </dd>
 </dl>
@@ -21372,7 +22995,15 @@ client.workspace.members.update(
 <dl>
 <dd>
 
-**workspace_role:** `typing.Optional[BodyUpdateMemberV1WorkspaceMembersPostWorkspaceRole]` — Role dictating permissions in the workspace.
+**workspace_role:** `typing.Optional[SeatType]` — The workspace role of the user. This is deprecated, use `workspace_seat_type` instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**workspace_seat_type:** `typing.Optional[SeatType]` — The workspace seat type
     
 </dd>
 </dl>
@@ -21668,94 +23299,6 @@ client.workspace.resources.unshare(
 <dd>
 
 **workspace_api_key_id:** `typing.Optional[str]` — The ID of the target workspace API key. This isn't the same as the key itself that would you pass in the header for authentication. Workspace admins can find this in the workspace settings UI.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.workspace.resources.<a href="src/elevenlabs/workspace/resources/client.py">copy_to_workspace</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Copies a workspace resource to another workspace.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.workspace.resources.copy_to_workspace(
-    resource_id="resource_id",
-    resource_type="voice",
-    target_user_id="target_user_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**resource_id:** `str` — The ID of the target resource.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**resource_type:** `WorkspaceResourceType` — Resource type of the target resource.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**target_user_id:** `str` — The ID of the target user.
     
 </dd>
 </dl>

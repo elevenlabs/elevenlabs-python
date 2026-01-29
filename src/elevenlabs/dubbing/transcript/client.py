@@ -41,7 +41,7 @@ class TranscriptClient:
             ID of the dubbing project.
 
         language_code : str
-            ID of the language.
+            ISO-693 language code to retrieve the transcript for. Use 'source' to fetch the transcript of the original media.
 
         format_type : typing.Optional[TranscriptGetTranscriptForDubRequestFormatType]
             Format to return transcript in. For subtitles use either 'srt' or 'webvtt', and for a full transcript use 'json'. The 'json' format is not yet supported for Dubbing Studio.
@@ -63,7 +63,7 @@ class TranscriptClient:
         )
         client.dubbing.transcript.get_transcript_for_dub(
             dubbing_id="dubbing_id",
-            language_code="language_code",
+            language_code="source",
             format_type="srt",
         )
         """
@@ -105,7 +105,7 @@ class AsyncTranscriptClient:
             ID of the dubbing project.
 
         language_code : str
-            ID of the language.
+            ISO-693 language code to retrieve the transcript for. Use 'source' to fetch the transcript of the original media.
 
         format_type : typing.Optional[TranscriptGetTranscriptForDubRequestFormatType]
             Format to return transcript in. For subtitles use either 'srt' or 'webvtt', and for a full transcript use 'json'. The 'json' format is not yet supported for Dubbing Studio.
@@ -132,7 +132,7 @@ class AsyncTranscriptClient:
         async def main() -> None:
             await client.dubbing.transcript.get_transcript_for_dub(
                 dubbing_id="dubbing_id",
-                language_code="language_code",
+                language_code="source",
                 format_type="srt",
             )
 

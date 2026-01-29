@@ -80,10 +80,10 @@ class StudioClient:
 
         quality_preset : typing.Optional[BodyCreatePodcastV1StudioPodcastsPostQualityPreset]
             Output quality of the generated audio. Must be one of:
-            standard - standard output format, 128kbps with 44.1kHz sample rate.
-            high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side.
-            ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side.
-            ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format.
+            'standard' - standard output format, 128kbps with 44.1kHz sample rate.
+            'high' - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side.
+            'ultra' - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side.
+            'ultra_lossless' - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format.
 
         duration_scale : typing.Optional[BodyCreatePodcastV1StudioPodcastsPostDurationScale]
             Duration of the generated podcast. Must be one of:
@@ -288,10 +288,10 @@ class AsyncStudioClient:
 
         quality_preset : typing.Optional[BodyCreatePodcastV1StudioPodcastsPostQualityPreset]
             Output quality of the generated audio. Must be one of:
-            standard - standard output format, 128kbps with 44.1kHz sample rate.
-            high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side.
-            ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side.
-            ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format.
+            'standard' - standard output format, 128kbps with 44.1kHz sample rate.
+            'high' - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side.
+            'ultra' - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side.
+            'ultra_lossless' - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format.
 
         duration_scale : typing.Optional[BodyCreatePodcastV1StudioPodcastsPostDurationScale]
             Duration of the generated podcast. Must be one of:

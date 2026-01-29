@@ -10,6 +10,7 @@ from ....core.request_options import RequestOptions
 from ....types.add_knowledge_base_response_model import AddKnowledgeBaseResponseModel
 from ....types.get_knowledge_base_dependent_agents_response_model import GetKnowledgeBaseDependentAgentsResponseModel
 from ....types.knowledge_base_dependent_type import KnowledgeBaseDependentType
+from ....types.knowledge_base_source_file_url_response_model import KnowledgeBaseSourceFileUrlResponseModel
 from .raw_client import AsyncRawDocumentsClient, RawDocumentsClient
 from .types.documents_get_response import DocumentsGetResponse
 from .types.documents_update_response import DocumentsUpdateResponse
@@ -172,6 +173,48 @@ class DocumentsClient:
         """
         _response = self._raw_client.create_from_text(
             text=text, name=name, parent_folder_id=parent_folder_id, request_options=request_options
+        )
+        return _response.data
+
+    def create_folder(
+        self,
+        *,
+        name: str,
+        parent_folder_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AddKnowledgeBaseResponseModel:
+        """
+        Create a folder used for grouping documents together.
+
+        Parameters
+        ----------
+        name : str
+            A custom, human-readable name for the document.
+
+        parent_folder_id : typing.Optional[str]
+            If set, the created document or folder will be placed inside the given folder.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AddKnowledgeBaseResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.knowledge_base.documents.create_folder(
+            name="name",
+        )
+        """
+        _response = self._raw_client.create_folder(
+            name=name, parent_folder_id=parent_folder_id, request_options=request_options
         )
         return _response.data
 
@@ -380,6 +423,119 @@ class DocumentsClient:
         _response = self._raw_client.get_content(documentation_id, request_options=request_options)
         return _response.data
 
+    def get_source_file_url(
+        self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> KnowledgeBaseSourceFileUrlResponseModel:
+        """
+        Get a signed URL to download the original source file of a file-type document from the knowledge base
+
+        Parameters
+        ----------
+        documentation_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        KnowledgeBaseSourceFileUrlResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.knowledge_base.documents.get_source_file_url(
+            documentation_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._raw_client.get_source_file_url(documentation_id, request_options=request_options)
+        return _response.data
+
+    def move(
+        self,
+        document_id: str,
+        *,
+        move_to: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Moves the entity from one folder to another.
+
+        Parameters
+        ----------
+        document_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        move_to : typing.Optional[str]
+            The folder to move the entities to. If not set, the entities will be moved to the root folder.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.knowledge_base.documents.move(
+            document_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._raw_client.move(document_id, move_to=move_to, request_options=request_options)
+        return _response.data
+
+    def bulk_move(
+        self,
+        *,
+        document_ids: typing.Sequence[str],
+        move_to: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Moves multiple entities from one folder to another.
+
+        Parameters
+        ----------
+        document_ids : typing.Sequence[str]
+            The ids of documents or folders from the knowledge base.
+
+        move_to : typing.Optional[str]
+            The folder to move the entities to. If not set, the entities will be moved to the root folder.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.knowledge_base.documents.bulk_move(
+            document_ids=["21m00Tcm4TlvDq8ikWAM", "31m00Tcm4TlvDq8ikWBM"],
+        )
+        """
+        _response = self._raw_client.bulk_move(
+            document_ids=document_ids, move_to=move_to, request_options=request_options
+        )
+        return _response.data
+
     @property
     def summaries(self):
         if self._summaries is None:
@@ -572,6 +728,56 @@ class AsyncDocumentsClient:
         """
         _response = await self._raw_client.create_from_text(
             text=text, name=name, parent_folder_id=parent_folder_id, request_options=request_options
+        )
+        return _response.data
+
+    async def create_folder(
+        self,
+        *,
+        name: str,
+        parent_folder_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AddKnowledgeBaseResponseModel:
+        """
+        Create a folder used for grouping documents together.
+
+        Parameters
+        ----------
+        name : str
+            A custom, human-readable name for the document.
+
+        parent_folder_id : typing.Optional[str]
+            If set, the created document or folder will be placed inside the given folder.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AddKnowledgeBaseResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.knowledge_base.documents.create_folder(
+                name="name",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.create_folder(
+            name=name, parent_folder_id=parent_folder_id, request_options=request_options
         )
         return _response.data
 
@@ -820,6 +1026,143 @@ class AsyncDocumentsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get_content(documentation_id, request_options=request_options)
+        return _response.data
+
+    async def get_source_file_url(
+        self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> KnowledgeBaseSourceFileUrlResponseModel:
+        """
+        Get a signed URL to download the original source file of a file-type document from the knowledge base
+
+        Parameters
+        ----------
+        documentation_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        KnowledgeBaseSourceFileUrlResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.knowledge_base.documents.get_source_file_url(
+                documentation_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_source_file_url(documentation_id, request_options=request_options)
+        return _response.data
+
+    async def move(
+        self,
+        document_id: str,
+        *,
+        move_to: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Moves the entity from one folder to another.
+
+        Parameters
+        ----------
+        document_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        move_to : typing.Optional[str]
+            The folder to move the entities to. If not set, the entities will be moved to the root folder.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.knowledge_base.documents.move(
+                document_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.move(document_id, move_to=move_to, request_options=request_options)
+        return _response.data
+
+    async def bulk_move(
+        self,
+        *,
+        document_ids: typing.Sequence[str],
+        move_to: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Moves multiple entities from one folder to another.
+
+        Parameters
+        ----------
+        document_ids : typing.Sequence[str]
+            The ids of documents or folders from the knowledge base.
+
+        move_to : typing.Optional[str]
+            The folder to move the entities to. If not set, the entities will be moved to the root folder.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.knowledge_base.documents.bulk_move(
+                document_ids=["21m00Tcm4TlvDq8ikWAM", "31m00Tcm4TlvDq8ikWBM"],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.bulk_move(
+            document_ids=document_ids, move_to=move_to, request_options=request_options
+        )
         return _response.data
 
     @property
