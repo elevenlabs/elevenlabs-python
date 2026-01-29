@@ -12,6 +12,7 @@ from .api_integration_webhook_overrides_input_request_headers_value import (
 )
 from .literal_override import LiteralOverride
 from .query_override import QueryOverride
+from .response_filter_mode import ResponseFilterMode
 
 
 class ApiIntegrationWebhookOverridesInput(UncheckedBaseModel):
@@ -26,6 +27,8 @@ class ApiIntegrationWebhookOverridesInput(UncheckedBaseModel):
     request_headers: typing.Optional[
         typing.Dict[str, typing.Optional[ApiIntegrationWebhookOverridesInputRequestHeadersValue]]
     ] = None
+    response_filter_mode: typing.Optional[ResponseFilterMode] = None
+    response_filters: typing.Optional[typing.List[str]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

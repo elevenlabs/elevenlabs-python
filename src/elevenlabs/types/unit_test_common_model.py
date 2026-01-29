@@ -42,6 +42,11 @@ class UnitTestCommonModel(UncheckedBaseModel):
     How to evaluate the agent's tool call (if any). If empty, the tool call is not evaluated.
     """
 
+    check_any_tool_matches: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If set to True this test will pass if any tool call returned by the LLM matches the criteria. Otherwise it will fail if more than one tool is returned by the agent.
+    """
+
     dynamic_variables: typing.Optional[typing.Dict[str, typing.Optional[UnitTestCommonModelDynamicVariablesValue]]] = (
         pydantic.Field(default=None)
     )

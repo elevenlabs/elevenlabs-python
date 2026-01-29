@@ -43,7 +43,7 @@ class InvoiceResponse(UncheckedBaseModel):
 
     next_payment_attempt_unix: int = pydantic.Field()
     """
-    The Unix timestamp of the next payment attempt.
+    The Unix timestamp of the next payment attempt. -1 when there is no next payment attempt.
     """
 
     payment_intent_status: typing.Optional[InvoiceResponseModelPaymentIntentStatus] = pydantic.Field(default=None)
