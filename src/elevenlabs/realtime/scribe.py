@@ -254,7 +254,7 @@ class ScribeRealtime:
         # Build WebSocket URL
         ws_url = self._build_websocket_url(
             model_id=model_id,
-            audio_format=audio_format,
+            audio_format=audio_format.value,
             commit_strategy=commit_strategy.value,
             vad_silence_threshold_secs=vad_silence_threshold_secs,
             vad_threshold=vad_threshold,
@@ -389,7 +389,7 @@ class ScribeRealtime:
         if language_code is not None:
             params.append(f"language_code={language_code}")
         if include_timestamps is not None:
-            params.append(f"include_timestamps={include_timestamps}")
+            params.append(f"include_timestamps={str(include_timestamps).lower()}")
 
         query_string = "&".join(params)
         return f"{base}/v1/speech-to-text/realtime?{query_string}"
