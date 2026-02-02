@@ -38,7 +38,7 @@ class InvitesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddWorkspaceInviteResponseModel:
         """
-        Sends an email invitation to join your workspace to the provided email. If the user doesn't have an account they will be prompted to create one. If the user accepts this invite they will be added as a user to your workspace and your subscription using one of your seats. This endpoint may only be called by workspace administrators. If the user is already in the workspace a 400 error will be returned.
+        Sends an email invitation to join your workspace to the provided email. If the user doesn't have an account they will be prompted to create one. If the user accepts this invite they will be added as a user to your workspace and your subscription using one of your seats. This endpoint may only be called by workspace members with the WORKSPACE_MEMBERS_INVITE permission. If the user is already in the workspace a 400 error will be returned.
 
         Parameters
         ----------
@@ -90,7 +90,7 @@ class InvitesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddWorkspaceInviteResponseModel:
         """
-        Sends email invitations to join your workspace to the provided emails. Requires all email addresses to be part of a verified domain. If the users don't have an account they will be prompted to create one. If the users accept these invites they will be added as users to your workspace and your subscription using one of your seats. This endpoint may only be called by workspace administrators.
+        Sends email invitations to join your workspace to the provided emails. Requires all email addresses to be part of a verified domain. If the users don't have an account they will be prompted to create one. If the users accept these invites they will be added as users to your workspace and your subscription using one of your seats. This endpoint may only be called by workspace members with the WORKSPACE_MEMBERS_INVITE permission.
 
         Parameters
         ----------
@@ -126,7 +126,7 @@ class InvitesClient:
         self, *, email: str, request_options: typing.Optional[RequestOptions] = None
     ) -> DeleteWorkspaceInviteResponseModel:
         """
-        Invalidates an existing email invitation. The invitation will still show up in the inbox it has been delivered to, but activating it to join the workspace won't work. This endpoint may only be called by workspace administrators.
+        Invalidates an existing email invitation. The invitation will still show up in the inbox it has been delivered to, but activating it to join the workspace won't work. This endpoint may only be called by workspace members with the WORKSPACE_MEMBERS_INVITE permission.
 
         Parameters
         ----------
@@ -181,7 +181,7 @@ class AsyncInvitesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddWorkspaceInviteResponseModel:
         """
-        Sends an email invitation to join your workspace to the provided email. If the user doesn't have an account they will be prompted to create one. If the user accepts this invite they will be added as a user to your workspace and your subscription using one of your seats. This endpoint may only be called by workspace administrators. If the user is already in the workspace a 400 error will be returned.
+        Sends an email invitation to join your workspace to the provided email. If the user doesn't have an account they will be prompted to create one. If the user accepts this invite they will be added as a user to your workspace and your subscription using one of your seats. This endpoint may only be called by workspace members with the WORKSPACE_MEMBERS_INVITE permission. If the user is already in the workspace a 400 error will be returned.
 
         Parameters
         ----------
@@ -241,7 +241,7 @@ class AsyncInvitesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddWorkspaceInviteResponseModel:
         """
-        Sends email invitations to join your workspace to the provided emails. Requires all email addresses to be part of a verified domain. If the users don't have an account they will be prompted to create one. If the users accept these invites they will be added as users to your workspace and your subscription using one of your seats. This endpoint may only be called by workspace administrators.
+        Sends email invitations to join your workspace to the provided emails. Requires all email addresses to be part of a verified domain. If the users don't have an account they will be prompted to create one. If the users accept these invites they will be added as users to your workspace and your subscription using one of your seats. This endpoint may only be called by workspace members with the WORKSPACE_MEMBERS_INVITE permission.
 
         Parameters
         ----------
@@ -287,7 +287,7 @@ class AsyncInvitesClient:
         self, *, email: str, request_options: typing.Optional[RequestOptions] = None
     ) -> DeleteWorkspaceInviteResponseModel:
         """
-        Invalidates an existing email invitation. The invitation will still show up in the inbox it has been delivered to, but activating it to join the workspace won't work. This endpoint may only be called by workspace administrators.
+        Invalidates an existing email invitation. The invitation will still show up in the inbox it has been delivered to, but activating it to join the workspace won't work. This endpoint may only be called by workspace members with the WORKSPACE_MEMBERS_INVITE permission.
 
         Parameters
         ----------

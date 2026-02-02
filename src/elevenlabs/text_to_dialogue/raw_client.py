@@ -35,6 +35,10 @@ from .types.body_text_to_dialogue_multi_voice_v_1_text_to_dialogue_post_apply_te
 from .types.body_text_to_dialogue_stream_with_timestamps_apply_text_normalization import (
     BodyTextToDialogueStreamWithTimestampsApplyTextNormalization,
 )
+from .types.text_to_dialogue_convert_request_output_format import TextToDialogueConvertRequestOutputFormat
+from .types.text_to_dialogue_convert_with_timestamps_request_output_format import (
+    TextToDialogueConvertWithTimestampsRequestOutputFormat,
+)
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -49,7 +53,7 @@ class RawTextToDialogueClient:
         self,
         *,
         inputs: typing.Sequence[DialogueInput],
-        output_format: typing.Optional[AllowedOutputFormats] = None,
+        output_format: typing.Optional[TextToDialogueConvertRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         settings: typing.Optional[ModelSettingsResponseModel] = OMIT,
@@ -70,8 +74,8 @@ class RawTextToDialogueClient:
         inputs : typing.Sequence[DialogueInput]
             A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10.
 
-        output_format : typing.Optional[AllowedOutputFormats]
-            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+        output_format : typing.Optional[TextToDialogueConvertRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
@@ -401,7 +405,7 @@ class RawTextToDialogueClient:
         self,
         *,
         inputs: typing.Sequence[DialogueInput],
-        output_format: typing.Optional[AllowedOutputFormats] = None,
+        output_format: typing.Optional[TextToDialogueConvertWithTimestampsRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         settings: typing.Optional[ModelSettingsResponseModel] = OMIT,
@@ -420,8 +424,8 @@ class RawTextToDialogueClient:
         inputs : typing.Sequence[DialogueInput]
             A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10.
 
-        output_format : typing.Optional[AllowedOutputFormats]
-            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+        output_format : typing.Optional[TextToDialogueConvertWithTimestampsRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
@@ -514,7 +518,7 @@ class AsyncRawTextToDialogueClient:
         self,
         *,
         inputs: typing.Sequence[DialogueInput],
-        output_format: typing.Optional[AllowedOutputFormats] = None,
+        output_format: typing.Optional[TextToDialogueConvertRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         settings: typing.Optional[ModelSettingsResponseModel] = OMIT,
@@ -535,8 +539,8 @@ class AsyncRawTextToDialogueClient:
         inputs : typing.Sequence[DialogueInput]
             A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10.
 
-        output_format : typing.Optional[AllowedOutputFormats]
-            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+        output_format : typing.Optional[TextToDialogueConvertRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
@@ -870,7 +874,7 @@ class AsyncRawTextToDialogueClient:
         self,
         *,
         inputs: typing.Sequence[DialogueInput],
-        output_format: typing.Optional[AllowedOutputFormats] = None,
+        output_format: typing.Optional[TextToDialogueConvertWithTimestampsRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         settings: typing.Optional[ModelSettingsResponseModel] = OMIT,
@@ -889,8 +893,8 @@ class AsyncRawTextToDialogueClient:
         inputs : typing.Sequence[DialogueInput]
             A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10.
 
-        output_format : typing.Optional[AllowedOutputFormats]
-            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+        output_format : typing.Optional[TextToDialogueConvertWithTimestampsRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.

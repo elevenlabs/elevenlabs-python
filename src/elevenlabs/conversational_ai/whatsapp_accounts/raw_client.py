@@ -12,7 +12,6 @@ from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.get_whats_app_account_response import GetWhatsAppAccountResponse
 from ...types.http_validation_error import HttpValidationError
-from ...types.import_whats_app_account_response import ImportWhatsAppAccountResponse
 from ...types.list_whats_app_accounts_response import ListWhatsAppAccountsResponse
 
 # this is used as the default value for optional parameters
@@ -22,120 +21,6 @@ OMIT = typing.cast(typing.Any, ...)
 class RawWhatsappAccountsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
-
-    def list(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[ListWhatsAppAccountsResponse]:
-        """
-        List all WhatsApp accounts
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[ListWhatsAppAccountsResponse]
-            Successful Response
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "v1/convai/whatsapp-accounts",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    ListWhatsAppAccountsResponse,
-                    construct_type(
-                        type_=ListWhatsAppAccountsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def import_(
-        self,
-        *,
-        business_account_id: str,
-        phone_number_id: str,
-        token_code: str,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[ImportWhatsAppAccountResponse]:
-        """
-        Import a WhatsApp account
-
-        Parameters
-        ----------
-        business_account_id : str
-
-        phone_number_id : str
-
-        token_code : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[ImportWhatsAppAccountResponse]
-            Successful Response
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "v1/convai/whatsapp-accounts",
-            method="POST",
-            json={
-                "business_account_id": business_account_id,
-                "phone_number_id": phone_number_id,
-                "token_code": token_code,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    ImportWhatsAppAccountResponse,
-                    construct_type(
-                        type_=ImportWhatsAppAccountResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
         self, phone_number_id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -301,14 +186,9 @@ class RawWhatsappAccountsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-
-class AsyncRawWhatsappAccountsClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
-
-    async def list(
+    def list(
         self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[ListWhatsAppAccountsResponse]:
+    ) -> HttpResponse[ListWhatsAppAccountsResponse]:
         """
         List all WhatsApp accounts
 
@@ -319,10 +199,10 @@ class AsyncRawWhatsappAccountsClient:
 
         Returns
         -------
-        AsyncHttpResponse[ListWhatsAppAccountsResponse]
+        HttpResponse[ListWhatsAppAccountsResponse]
             Successful Response
         """
-        _response = await self._client_wrapper.httpx_client.request(
+        _response = self._client_wrapper.httpx_client.request(
             "v1/convai/whatsapp-accounts",
             method="GET",
             request_options=request_options,
@@ -336,7 +216,7 @@ class AsyncRawWhatsappAccountsClient:
                         object_=_response.json(),
                     ),
                 )
-                return AsyncHttpResponse(response=_response, data=_data)
+                return HttpResponse(response=_response, data=_data)
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
@@ -353,72 +233,10 @@ class AsyncRawWhatsappAccountsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def import_(
-        self,
-        *,
-        business_account_id: str,
-        phone_number_id: str,
-        token_code: str,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[ImportWhatsAppAccountResponse]:
-        """
-        Import a WhatsApp account
 
-        Parameters
-        ----------
-        business_account_id : str
-
-        phone_number_id : str
-
-        token_code : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[ImportWhatsAppAccountResponse]
-            Successful Response
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "v1/convai/whatsapp-accounts",
-            method="POST",
-            json={
-                "business_account_id": business_account_id,
-                "phone_number_id": phone_number_id,
-                "token_code": token_code,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    ImportWhatsAppAccountResponse,
-                    construct_type(
-                        type_=ImportWhatsAppAccountResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+class AsyncRawWhatsappAccountsClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._client_wrapper = client_wrapper
 
     async def get(
         self, phone_number_id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -564,6 +382,53 @@ class AsyncRawWhatsappAccountsClient:
                     typing.Any,
                     construct_type(
                         type_=typing.Any,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def list(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[ListWhatsAppAccountsResponse]:
+        """
+        List all WhatsApp accounts
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ListWhatsAppAccountsResponse]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/convai/whatsapp-accounts",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ListWhatsAppAccountsResponse,
+                    construct_type(
+                        type_=ListWhatsAppAccountsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

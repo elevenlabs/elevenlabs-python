@@ -56,6 +56,7 @@ class DirectPublishingReadResponseModel(UncheckedBaseModel):
     payout_type: typing.Optional[DirectPublishingReadResponseModelPayoutType] = None
     list_price: typing.Optional[float] = None
     currency: typing.Optional[typing.Literal["usd"]] = None
+    original_audio_project_export_id: typing.Optional[str] = None
     original_audio_document_id: typing.Optional[str] = None
     series_id: typing.Optional[str] = None
     volume: typing.Optional[int] = None

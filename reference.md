@@ -1,4 +1,50 @@
 # Reference
+<details><summary><code>client.<a href="src/elevenlabs/base_client.py">post_v_1_convai_whatsapp_accounts</a>()</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.post_v_1_convai_whatsapp_accounts()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.<a href="src/elevenlabs/base_client.py">delete_v_1_convai_agents_agent_id_branches_branch_id</a>(...)</code></summary>
 <dl>
 <dd>
@@ -1659,7 +1705,7 @@ client.text_to_dialogue.convert(
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[TextToDialogueConvertRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -2037,7 +2083,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.text_to_dialogue.convert_with_timestamps(
-    output_format="mp3_22050_32",
+    output_format="alaw_8000",
     inputs=[
         DialogueInput(
             text="Hello, how are you?",
@@ -2072,7 +2118,7 @@ client.text_to_dialogue.convert_with_timestamps(
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[TextToDialogueConvertWithTimestampsRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -8385,6 +8431,18 @@ client.conversational_ai.agents.update(
 <dl>
 <dd>
 
+**procedure_refs:** `typing.Optional[
+    typing.Sequence[
+        BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem
+    ]
+]` — List of procedure refs used for this agent version.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -10944,7 +11002,7 @@ client.conversational_ai.settings.update()
 </details>
 
 ## ConversationalAi Secrets
-<details><summary><code>client.conversational_ai.secrets.<a href="src/elevenlabs/conversational_ai/secrets/client.py">list</a>()</code></summary>
+<details><summary><code>client.conversational_ai.secrets.<a href="src/elevenlabs/conversational_ai/secrets/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -10976,7 +11034,10 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.conversational_ai.secrets.list()
+client.conversational_ai.secrets.list(
+    page_size=1,
+    cursor="cursor",
+)
 
 ```
 </dd>
@@ -10988,6 +11049,22 @@ client.conversational_ai.secrets.list()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many documents to return at maximum. Can not exceed 100. If not provided, returns all secrets.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -12232,154 +12309,6 @@ client.conversational_ai.mcp_servers.update(
 </details>
 
 ## ConversationalAi WhatsappAccounts
-<details><summary><code>client.conversational_ai.whatsapp_accounts.<a href="src/elevenlabs/conversational_ai/whatsapp_accounts/client.py">list</a>()</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List all WhatsApp accounts
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.conversational_ai.whatsapp_accounts.list()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.conversational_ai.whatsapp_accounts.<a href="src/elevenlabs/conversational_ai/whatsapp_accounts/client.py">import_</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Import a WhatsApp account
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.conversational_ai.whatsapp_accounts.import_(
-    business_account_id="business_account_id",
-    phone_number_id="phone_number_id",
-    token_code="token_code",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**business_account_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**phone_number_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**token_code:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.conversational_ai.whatsapp_accounts.<a href="src/elevenlabs/conversational_ai/whatsapp_accounts/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
@@ -12582,6 +12511,66 @@ client.conversational_ai.whatsapp_accounts.update(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.whatsapp_accounts.<a href="src/elevenlabs/conversational_ai/whatsapp_accounts/client.py">list</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all WhatsApp accounts
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.whatsapp_accounts.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
 
 <dl>
 <dd>
@@ -22722,7 +22711,7 @@ client.workspace.groups.search(
 <dl>
 <dd>
 
-Sends an email invitation to join your workspace to the provided email. If the user doesn't have an account they will be prompted to create one. If the user accepts this invite they will be added as a user to your workspace and your subscription using one of your seats. This endpoint may only be called by workspace administrators. If the user is already in the workspace a 400 error will be returned.
+Sends an email invitation to join your workspace to the provided email. If the user doesn't have an account they will be prompted to create one. If the user accepts this invite they will be added as a user to your workspace and your subscription using one of your seats. This endpoint may only be called by workspace members with the WORKSPACE_MEMBERS_INVITE permission. If the user is already in the workspace a 400 error will be returned.
 </dd>
 </dl>
 </dd>
@@ -22816,7 +22805,7 @@ client.workspace.invites.create(
 <dl>
 <dd>
 
-Sends email invitations to join your workspace to the provided emails. Requires all email addresses to be part of a verified domain. If the users don't have an account they will be prompted to create one. If the users accept these invites they will be added as users to your workspace and your subscription using one of your seats. This endpoint may only be called by workspace administrators.
+Sends email invitations to join your workspace to the provided emails. Requires all email addresses to be part of a verified domain. If the users don't have an account they will be prompted to create one. If the users accept these invites they will be added as users to your workspace and your subscription using one of your seats. This endpoint may only be called by workspace members with the WORKSPACE_MEMBERS_INVITE permission.
 </dd>
 </dl>
 </dd>
@@ -22894,7 +22883,7 @@ client.workspace.invites.create_batch(
 <dl>
 <dd>
 
-Invalidates an existing email invitation. The invitation will still show up in the inbox it has been delivered to, but activating it to join the workspace won't work. This endpoint may only be called by workspace administrators.
+Invalidates an existing email invitation. The invitation will still show up in the inbox it has been delivered to, but activating it to join the workspace won't work. This endpoint may only be called by workspace members with the WORKSPACE_MEMBERS_INVITE permission.
 </dd>
 </dl>
 </dd>
@@ -23355,7 +23344,7 @@ client.workspace.resources.unshare(
 <dl>
 <dd>
 
-Removes a member from the specified group. This endpoint may only be called by workspace administrators.
+Removes a member from the specified group. Requires `group_members_manage` permission.
 </dd>
 </dl>
 </dd>
@@ -23434,7 +23423,7 @@ client.workspace.groups.members.remove(
 <dl>
 <dd>
 
-Adds a member of your workspace to the specified group. This endpoint may only be called by workspace administrators.
+Adds a member of your workspace to the specified group. Requires `group_members_manage` permission.
 </dd>
 </dl>
 </dd>

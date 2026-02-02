@@ -27,12 +27,24 @@ class SecretsClient:
         """
         return self._raw_client
 
-    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> GetWorkspaceSecretsResponseModel:
+    def list(
+        self,
+        *,
+        page_size: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetWorkspaceSecretsResponseModel:
         """
         Get all workspace secrets for the user
 
         Parameters
         ----------
+        page_size : typing.Optional[int]
+            How many documents to return at maximum. Can not exceed 100. If not provided, returns all secrets.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -48,9 +60,12 @@ class SecretsClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.conversational_ai.secrets.list()
+        client.conversational_ai.secrets.list(
+            page_size=1,
+            cursor="cursor",
+        )
         """
-        _response = self._raw_client.list(request_options=request_options)
+        _response = self._raw_client.list(page_size=page_size, cursor=cursor, request_options=request_options)
         return _response.data
 
     def create(
@@ -172,13 +187,23 @@ class AsyncSecretsClient:
         return self._raw_client
 
     async def list(
-        self, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        page_size: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> GetWorkspaceSecretsResponseModel:
         """
         Get all workspace secrets for the user
 
         Parameters
         ----------
+        page_size : typing.Optional[int]
+            How many documents to return at maximum. Can not exceed 100. If not provided, returns all secrets.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -199,12 +224,15 @@ class AsyncSecretsClient:
 
 
         async def main() -> None:
-            await client.conversational_ai.secrets.list()
+            await client.conversational_ai.secrets.list(
+                page_size=1,
+                cursor="cursor",
+            )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.list(request_options=request_options)
+        _response = await self._raw_client.list(page_size=page_size, cursor=cursor, request_options=request_options)
         return _response.data
 
     async def create(

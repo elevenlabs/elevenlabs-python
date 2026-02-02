@@ -5,14 +5,18 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .alignment_guardrail import AlignmentGuardrail
-from .moderation_guardrail_input import ModerationGuardrailInput
 
 
-class GuardrailsV1Input(UncheckedBaseModel):
-    version: typing.Optional[typing.Literal["1"]] = None
-    alignment: typing.Optional[AlignmentGuardrail] = None
-    moderation: typing.Optional[ModerationGuardrailInput] = None
+class ProcedureVersionRef(UncheckedBaseModel):
+    procedure_id: str = pydantic.Field()
+    """
+    Procedure ID
+    """
+
+    version_id: str = pydantic.Field()
+    """
+    Version ID of the procedure version.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

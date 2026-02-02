@@ -139,6 +139,29 @@ class BaseElevenLabs:
         """
         return self._raw_client
 
+    def post_v_1_convai_whatsapp_accounts(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.post_v_1_convai_whatsapp_accounts()
+        """
+        _response = self._raw_client.post_v_1_convai_whatsapp_accounts(request_options=request_options)
+        return _response.data
+
     def delete_v_1_convai_agents_agent_id_branches_branch_id(
         self, agent_id: str, branch_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
@@ -492,6 +515,39 @@ class AsyncBaseElevenLabs:
         AsyncRawBaseElevenLabs
         """
         return self._raw_client
+
+    async def post_v_1_convai_whatsapp_accounts(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.post_v_1_convai_whatsapp_accounts()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.post_v_1_convai_whatsapp_accounts(request_options=request_options)
+        return _response.data
 
     async def delete_v_1_convai_agents_agent_id_branches_branch_id(
         self, agent_id: str, branch_id: str, *, request_options: typing.Optional[RequestOptions] = None
