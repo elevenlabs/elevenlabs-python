@@ -25,6 +25,7 @@ if typing.TYPE_CHECKING:
         whatsapp,
         whatsapp_accounts,
     )
+    from .agents import BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem
     from .conversations import ConversationsListRequestSummaryMode
     from .knowledge_base import (
         KnowledgeBaseGetOrCreateRagIndexesResponseValue,
@@ -49,6 +50,7 @@ if typing.TYPE_CHECKING:
     from .tests import CreateUnitTestRequestDynamicVariablesValue, UpdateUnitTestRequestDynamicVariablesValue
     from .twilio import BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection
 _dynamic_imports: typing.Dict[str, str] = {
+    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem": ".agents",
     "BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection": ".twilio",
     "ConversationsListRequestSummaryMode": ".conversations",
     "CreateUnitTestRequestDynamicVariablesValue": ".tests",
@@ -111,6 +113,7 @@ def __dir__():
 
 
 __all__ = [
+    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem",
     "BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection",
     "ConversationsListRequestSummaryMode",
     "CreateUnitTestRequestDynamicVariablesValue",

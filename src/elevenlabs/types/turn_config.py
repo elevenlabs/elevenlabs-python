@@ -41,6 +41,11 @@ class TurnConfig(UncheckedBaseModel):
     Controls if the agent should be more patient when user is spelling numbers and named entities. Auto = model based, Off = never wait extra
     """
 
+    speculative_turn: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    When enabled, starts generating LLM responses during silence before full turn confidence is reached, reducing perceived latency. May increase LLM costs.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

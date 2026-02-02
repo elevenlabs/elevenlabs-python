@@ -26,6 +26,9 @@ from ...types.http_validation_error import HttpValidationError
 from ...types.prompt_evaluation_criteria import PromptEvaluationCriteria
 from ...types.single_test_run_request_model import SingleTestRunRequestModel
 from ...types.sort_direction import SortDirection
+from .types.body_patches_an_agent_settings_v_1_convai_agents_agent_id_patch_procedure_refs_item import (
+    BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem,
+)
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -221,6 +224,9 @@ class RawAgentsClient:
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         version_description: typing.Optional[str] = OMIT,
+        procedure_refs: typing.Optional[
+            typing.Sequence[BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem]
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetAgentResponseModel]:
         """
@@ -249,6 +255,9 @@ class RawAgentsClient:
         version_description : typing.Optional[str]
             Description for this version when publishing changes (only applicable for versioned agents)
 
+        procedure_refs : typing.Optional[typing.Sequence[BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem]]
+            List of procedure refs used for this agent version.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -273,6 +282,11 @@ class RawAgentsClient:
                 "name": name,
                 "tags": tags,
                 "version_description": version_description,
+                "procedure_refs": convert_and_respect_annotation_metadata(
+                    object_=procedure_refs,
+                    annotation=typing.Sequence[BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem],
+                    direction="write",
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -881,6 +895,9 @@ class AsyncRawAgentsClient:
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         version_description: typing.Optional[str] = OMIT,
+        procedure_refs: typing.Optional[
+            typing.Sequence[BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem]
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetAgentResponseModel]:
         """
@@ -909,6 +926,9 @@ class AsyncRawAgentsClient:
         version_description : typing.Optional[str]
             Description for this version when publishing changes (only applicable for versioned agents)
 
+        procedure_refs : typing.Optional[typing.Sequence[BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem]]
+            List of procedure refs used for this agent version.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -933,6 +953,11 @@ class AsyncRawAgentsClient:
                 "name": name,
                 "tags": tags,
                 "version_description": version_description,
+                "procedure_refs": convert_and_respect_annotation_metadata(
+                    object_=procedure_refs,
+                    annotation=typing.Sequence[BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem],
+                    direction="write",
+                ),
             },
             headers={
                 "content-type": "application/json",

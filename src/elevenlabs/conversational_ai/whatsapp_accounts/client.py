@@ -5,7 +5,6 @@ import typing
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.get_whats_app_account_response import GetWhatsAppAccountResponse
-from ...types.import_whats_app_account_response import ImportWhatsAppAccountResponse
 from ...types.list_whats_app_accounts_response import ListWhatsAppAccountsResponse
 from .raw_client import AsyncRawWhatsappAccountsClient, RawWhatsappAccountsClient
 
@@ -27,80 +26,6 @@ class WhatsappAccountsClient:
         RawWhatsappAccountsClient
         """
         return self._raw_client
-
-    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> ListWhatsAppAccountsResponse:
-        """
-        List all WhatsApp accounts
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ListWhatsAppAccountsResponse
-            Successful Response
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.conversational_ai.whatsapp_accounts.list()
-        """
-        _response = self._raw_client.list(request_options=request_options)
-        return _response.data
-
-    def import_(
-        self,
-        *,
-        business_account_id: str,
-        phone_number_id: str,
-        token_code: str,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> ImportWhatsAppAccountResponse:
-        """
-        Import a WhatsApp account
-
-        Parameters
-        ----------
-        business_account_id : str
-
-        phone_number_id : str
-
-        token_code : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ImportWhatsAppAccountResponse
-            Successful Response
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.conversational_ai.whatsapp_accounts.import_(
-            business_account_id="business_account_id",
-            phone_number_id="phone_number_id",
-            token_code="token_code",
-        )
-        """
-        _response = self._raw_client.import_(
-            business_account_id=business_account_id,
-            phone_number_id=phone_number_id,
-            token_code=token_code,
-            request_options=request_options,
-        )
-        return _response.data
 
     def get(
         self, phone_number_id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -204,23 +129,7 @@ class WhatsappAccountsClient:
         )
         return _response.data
 
-
-class AsyncWhatsappAccountsClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawWhatsappAccountsClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawWhatsappAccountsClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawWhatsappAccountsClient
-        """
-        return self._raw_client
-
-    async def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> ListWhatsAppAccountsResponse:
+    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> ListWhatsAppAccountsResponse:
         """
         List all WhatsApp accounts
 
@@ -236,79 +145,31 @@ class AsyncWhatsappAccountsClient:
 
         Examples
         --------
-        import asyncio
+        from elevenlabs import ElevenLabs
 
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
+        client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-
-
-        async def main() -> None:
-            await client.conversational_ai.whatsapp_accounts.list()
-
-
-        asyncio.run(main())
+        client.conversational_ai.whatsapp_accounts.list()
         """
-        _response = await self._raw_client.list(request_options=request_options)
+        _response = self._raw_client.list(request_options=request_options)
         return _response.data
 
-    async def import_(
-        self,
-        *,
-        business_account_id: str,
-        phone_number_id: str,
-        token_code: str,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> ImportWhatsAppAccountResponse:
+
+class AsyncWhatsappAccountsClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._raw_client = AsyncRawWhatsappAccountsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawWhatsappAccountsClient:
         """
-        Import a WhatsApp account
-
-        Parameters
-        ----------
-        business_account_id : str
-
-        phone_number_id : str
-
-        token_code : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+        Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        ImportWhatsAppAccountResponse
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.conversational_ai.whatsapp_accounts.import_(
-                business_account_id="business_account_id",
-                phone_number_id="phone_number_id",
-                token_code="token_code",
-            )
-
-
-        asyncio.run(main())
+        AsyncRawWhatsappAccountsClient
         """
-        _response = await self._raw_client.import_(
-            business_account_id=business_account_id,
-            phone_number_id=phone_number_id,
-            token_code=token_code,
-            request_options=request_options,
-        )
-        return _response.data
+        return self._raw_client
 
     async def get(
         self, phone_number_id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -436,4 +297,38 @@ class AsyncWhatsappAccountsClient:
         _response = await self._raw_client.update(
             phone_number_id, assigned_agent_id=assigned_agent_id, request_options=request_options
         )
+        return _response.data
+
+    async def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> ListWhatsAppAccountsResponse:
+        """
+        List all WhatsApp accounts
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListWhatsAppAccountsResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.whatsapp_accounts.list()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.list(request_options=request_options)
         return _response.data

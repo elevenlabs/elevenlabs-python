@@ -74,6 +74,7 @@ if typing.TYPE_CHECKING:
     )
     from .agent_workspace_overrides_input import AgentWorkspaceOverridesInput
     from .agent_workspace_overrides_output import AgentWorkspaceOverridesOutput
+    from .alignment_guardrail import AlignmentGuardrail
     from .allowed_output_formats import AllowedOutputFormats
     from .allowlist_item import AllowlistItem
     from .api_integration_webhook_overrides_input import ApiIntegrationWebhookOverridesInput
@@ -1055,7 +1056,6 @@ if typing.TYPE_CHECKING:
     from .html_export_options import HtmlExportOptions
     from .http_validation_error import HttpValidationError
     from .image_avatar import ImageAvatar
-    from .import_whats_app_account_response import ImportWhatsAppAccountResponse
     from .inbound_sip_trunk_config_request_model import InboundSipTrunkConfigRequestModel
     from .integration_type import IntegrationType
     from .invoice_response import InvoiceResponse
@@ -1144,6 +1144,7 @@ if typing.TYPE_CHECKING:
     from .multichannel_speech_to_text_response_model import MultichannelSpeechToTextResponseModel
     from .multipart_music_response import MultipartMusicResponse
     from .music_prompt import MusicPrompt
+    from .non_streaming_output_formats import NonStreamingOutputFormats
     from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput
     from .object_json_schema_property_input_properties_value import ObjectJsonSchemaPropertyInputPropertiesValue
     from .object_json_schema_property_output import ObjectJsonSchemaPropertyOutput
@@ -1195,6 +1196,8 @@ if typing.TYPE_CHECKING:
     from .post_workspace_secret_response_model import PostWorkspaceSecretResponseModel
     from .preview_audio_db_model import PreviewAudioDbModel
     from .privacy_config import PrivacyConfig
+    from .procedure_draft_ref import ProcedureDraftRef
+    from .procedure_version_ref import ProcedureVersionRef
     from .project_creation_meta_response_model import ProjectCreationMetaResponseModel
     from .project_creation_meta_response_model_status import ProjectCreationMetaResponseModelStatus
     from .project_creation_meta_response_model_type import ProjectCreationMetaResponseModelType
@@ -1815,6 +1818,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentWorkflowResponseModelNodesValue_Tool": ".agent_workflow_response_model_nodes_value",
     "AgentWorkspaceOverridesInput": ".agent_workspace_overrides_input",
     "AgentWorkspaceOverridesOutput": ".agent_workspace_overrides_output",
+    "AlignmentGuardrail": ".alignment_guardrail",
     "AllowedOutputFormats": ".allowed_output_formats",
     "AllowlistItem": ".allowlist_item",
     "ApiIntegrationWebhookOverridesInput": ".api_integration_webhook_overrides_input",
@@ -2632,7 +2636,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "HtmlExportOptions": ".html_export_options",
     "HttpValidationError": ".http_validation_error",
     "ImageAvatar": ".image_avatar",
-    "ImportWhatsAppAccountResponse": ".import_whats_app_account_response",
     "InboundSipTrunkConfigRequestModel": ".inbound_sip_trunk_config_request_model",
     "IntegrationType": ".integration_type",
     "InvoiceResponse": ".invoice_response",
@@ -2715,6 +2718,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MultichannelSpeechToTextResponseModel": ".multichannel_speech_to_text_response_model",
     "MultipartMusicResponse": ".multipart_music_response",
     "MusicPrompt": ".music_prompt",
+    "NonStreamingOutputFormats": ".non_streaming_output_formats",
     "ObjectJsonSchemaPropertyInput": ".object_json_schema_property_input",
     "ObjectJsonSchemaPropertyInputPropertiesValue": ".object_json_schema_property_input_properties_value",
     "ObjectJsonSchemaPropertyOutput": ".object_json_schema_property_output",
@@ -2762,6 +2766,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PostWorkspaceSecretResponseModel": ".post_workspace_secret_response_model",
     "PreviewAudioDbModel": ".preview_audio_db_model",
     "PrivacyConfig": ".privacy_config",
+    "ProcedureDraftRef": ".procedure_draft_ref",
+    "ProcedureVersionRef": ".procedure_version_ref",
     "ProjectCreationMetaResponseModel": ".project_creation_meta_response_model",
     "ProjectCreationMetaResponseModelStatus": ".project_creation_meta_response_model_status",
     "ProjectCreationMetaResponseModelType": ".project_creation_meta_response_model_type",
@@ -3332,6 +3338,7 @@ __all__ = [
     "AgentWorkflowResponseModelNodesValue_Tool",
     "AgentWorkspaceOverridesInput",
     "AgentWorkspaceOverridesOutput",
+    "AlignmentGuardrail",
     "AllowedOutputFormats",
     "AllowlistItem",
     "ApiIntegrationWebhookOverridesInput",
@@ -4149,7 +4156,6 @@ __all__ = [
     "HtmlExportOptions",
     "HttpValidationError",
     "ImageAvatar",
-    "ImportWhatsAppAccountResponse",
     "InboundSipTrunkConfigRequestModel",
     "IntegrationType",
     "InvoiceResponse",
@@ -4232,6 +4238,7 @@ __all__ = [
     "MultichannelSpeechToTextResponseModel",
     "MultipartMusicResponse",
     "MusicPrompt",
+    "NonStreamingOutputFormats",
     "ObjectJsonSchemaPropertyInput",
     "ObjectJsonSchemaPropertyInputPropertiesValue",
     "ObjectJsonSchemaPropertyOutput",
@@ -4279,6 +4286,8 @@ __all__ = [
     "PostWorkspaceSecretResponseModel",
     "PreviewAudioDbModel",
     "PrivacyConfig",
+    "ProcedureDraftRef",
+    "ProcedureVersionRef",
     "ProjectCreationMetaResponseModel",
     "ProjectCreationMetaResponseModelStatus",
     "ProjectCreationMetaResponseModelType",

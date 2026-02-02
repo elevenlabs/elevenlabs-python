@@ -23,13 +23,23 @@ class RawSecretsClient:
         self._client_wrapper = client_wrapper
 
     def list(
-        self, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        page_size: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetWorkspaceSecretsResponseModel]:
         """
         Get all workspace secrets for the user
 
         Parameters
         ----------
+        page_size : typing.Optional[int]
+            How many documents to return at maximum. Can not exceed 100. If not provided, returns all secrets.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -41,6 +51,10 @@ class RawSecretsClient:
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/secrets",
             method="GET",
+            params={
+                "page_size": page_size,
+                "cursor": cursor,
+            },
             request_options=request_options,
         )
         try:
@@ -236,13 +250,23 @@ class AsyncRawSecretsClient:
         self._client_wrapper = client_wrapper
 
     async def list(
-        self, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        page_size: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetWorkspaceSecretsResponseModel]:
         """
         Get all workspace secrets for the user
 
         Parameters
         ----------
+        page_size : typing.Optional[int]
+            How many documents to return at maximum. Can not exceed 100. If not provided, returns all secrets.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -254,6 +278,10 @@ class AsyncRawSecretsClient:
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/secrets",
             method="GET",
+            params={
+                "page_size": page_size,
+                "cursor": cursor,
+            },
             request_options=request_options,
         )
         try:

@@ -5,11 +5,13 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .alignment_guardrail import AlignmentGuardrail
 from .moderation_guardrail_output import ModerationGuardrailOutput
 
 
 class GuardrailsV1Output(UncheckedBaseModel):
     version: typing.Optional[typing.Literal["1"]] = None
+    alignment: typing.Optional[AlignmentGuardrail] = None
     moderation: typing.Optional[ModerationGuardrailOutput] = None
 
     if IS_PYDANTIC_V2:

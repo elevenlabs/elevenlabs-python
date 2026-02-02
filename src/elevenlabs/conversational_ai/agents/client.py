@@ -21,6 +21,9 @@ from ...types.prompt_evaluation_criteria import PromptEvaluationCriteria
 from ...types.single_test_run_request_model import SingleTestRunRequestModel
 from ...types.sort_direction import SortDirection
 from .raw_client import AsyncRawAgentsClient, RawAgentsClient
+from .types.body_patches_an_agent_settings_v_1_convai_agents_agent_id_patch_procedure_refs_item import (
+    BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem,
+)
 
 if typing.TYPE_CHECKING:
     from .branches.client import AsyncBranchesClient, BranchesClient
@@ -189,6 +192,9 @@ class AgentsClient:
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         version_description: typing.Optional[str] = OMIT,
+        procedure_refs: typing.Optional[
+            typing.Sequence[BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem]
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetAgentResponseModel:
         """
@@ -217,6 +223,9 @@ class AgentsClient:
         version_description : typing.Optional[str]
             Description for this version when publishing changes (only applicable for versioned agents)
 
+        procedure_refs : typing.Optional[typing.Sequence[BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem]]
+            List of procedure refs used for this agent version.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -244,6 +253,7 @@ class AgentsClient:
             name=name,
             tags=tags,
             version_description=version_description,
+            procedure_refs=procedure_refs,
             request_options=request_options,
         )
         return _response.data
@@ -796,6 +806,9 @@ class AsyncAgentsClient:
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         version_description: typing.Optional[str] = OMIT,
+        procedure_refs: typing.Optional[
+            typing.Sequence[BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem]
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetAgentResponseModel:
         """
@@ -823,6 +836,9 @@ class AsyncAgentsClient:
 
         version_description : typing.Optional[str]
             Description for this version when publishing changes (only applicable for versioned agents)
+
+        procedure_refs : typing.Optional[typing.Sequence[BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem]]
+            List of procedure refs used for this agent version.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -859,6 +875,7 @@ class AsyncAgentsClient:
             name=name,
             tags=tags,
             version_description=version_description,
+            procedure_refs=procedure_refs,
             request_options=request_options,
         )
         return _response.data

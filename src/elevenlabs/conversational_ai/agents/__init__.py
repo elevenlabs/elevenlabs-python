@@ -6,6 +6,7 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .types import BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem
     from . import branches, deployments, drafts, knowledge_base, link, llm_usage, summaries, widget
     from .summaries import (
         SummariesGetResponseValue,
@@ -13,6 +14,7 @@ if typing.TYPE_CHECKING:
         SummariesGetResponseValue_Success,
     )
 _dynamic_imports: typing.Dict[str, str] = {
+    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem": ".types",
     "SummariesGetResponseValue": ".summaries",
     "SummariesGetResponseValue_Failure": ".summaries",
     "SummariesGetResponseValue_Success": ".summaries",
@@ -49,6 +51,7 @@ def __dir__():
 
 
 __all__ = [
+    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem",
     "SummariesGetResponseValue",
     "SummariesGetResponseValue_Failure",
     "SummariesGetResponseValue_Success",

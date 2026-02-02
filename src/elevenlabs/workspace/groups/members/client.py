@@ -31,7 +31,7 @@ class MembersClient:
         self, group_id: str, *, email: str, request_options: typing.Optional[RequestOptions] = None
     ) -> DeleteWorkspaceGroupMemberResponseModel:
         """
-        Removes a member from the specified group. This endpoint may only be called by workspace administrators.
+        Removes a member from the specified group. Requires `group_members_manage` permission.
 
         Parameters
         ----------
@@ -68,7 +68,7 @@ class MembersClient:
         self, group_id: str, *, email: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AddWorkspaceGroupMemberResponseModel:
         """
-        Adds a member of your workspace to the specified group. This endpoint may only be called by workspace administrators.
+        Adds a member of your workspace to the specified group. Requires `group_members_manage` permission.
 
         Parameters
         ----------
@@ -121,7 +121,7 @@ class AsyncMembersClient:
         self, group_id: str, *, email: str, request_options: typing.Optional[RequestOptions] = None
     ) -> DeleteWorkspaceGroupMemberResponseModel:
         """
-        Removes a member from the specified group. This endpoint may only be called by workspace administrators.
+        Removes a member from the specified group. Requires `group_members_manage` permission.
 
         Parameters
         ----------
@@ -166,7 +166,7 @@ class AsyncMembersClient:
         self, group_id: str, *, email: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AddWorkspaceGroupMemberResponseModel:
         """
-        Adds a member of your workspace to the specified group. This endpoint may only be called by workspace administrators.
+        Adds a member of your workspace to the specified group. Requires `group_members_manage` permission.
 
         Parameters
         ----------
