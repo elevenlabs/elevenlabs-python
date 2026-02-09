@@ -2,4 +2,4 @@
 
 import typing
 
-BanReasonType = typing.Union[typing.Literal["safety", "manual"], typing.Any]
+TurnModel = typing.Union[typing.Literal["turn_v2", "turn_v3"], typing.Any]

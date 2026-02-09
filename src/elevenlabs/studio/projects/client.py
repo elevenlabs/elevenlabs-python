@@ -13,6 +13,7 @@ from ...types.delete_project_response_model import DeleteProjectResponseModel
 from ...types.edit_project_response_model import EditProjectResponseModel
 from ...types.get_projects_response import GetProjectsResponse
 from ...types.project_extended_response import ProjectExtendedResponse
+from ...types.project_muted_tracks_response_model import ProjectMutedTracksResponseModel
 from .raw_client import AsyncRawProjectsClient, RawProjectsClient
 from .types.projects_create_request_apply_text_normalization import ProjectsCreateRequestApplyTextNormalization
 from .types.projects_create_request_fiction import ProjectsCreateRequestFiction
@@ -508,6 +509,39 @@ class ProjectsClient:
         )
         """
         _response = self._raw_client.convert(project_id, request_options=request_options)
+        return _response.data
+
+    def get_muted_tracks(
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ProjectMutedTracksResponseModel:
+        """
+        Returns a list of chapter IDs that have muted tracks in a project.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ProjectMutedTracksResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.studio.projects.get_muted_tracks(
+            project_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._raw_client.get_muted_tracks(project_id, request_options=request_options)
         return _response.data
 
     @property
@@ -1070,6 +1104,47 @@ class AsyncProjectsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.convert(project_id, request_options=request_options)
+        return _response.data
+
+    async def get_muted_tracks(
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ProjectMutedTracksResponseModel:
+        """
+        Returns a list of chapter IDs that have muted tracks in a project.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ProjectMutedTracksResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.studio.projects.get_muted_tracks(
+                project_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_muted_tracks(project_id, request_options=request_options)
         return _response.data
 
     @property

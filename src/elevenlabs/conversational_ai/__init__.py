@@ -49,9 +49,19 @@ if typing.TYPE_CHECKING:
     )
     from .tests import CreateUnitTestRequestDynamicVariablesValue, UpdateUnitTestRequestDynamicVariablesValue
     from .twilio import BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection
+    from .whatsapp import (
+        BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem,
+        BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Body,
+        BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Button,
+        BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Header,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
     "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem": ".agents",
     "BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection": ".twilio",
+    "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem": ".whatsapp",
+    "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Body": ".whatsapp",
+    "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Button": ".whatsapp",
+    "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Header": ".whatsapp",
     "ConversationsListRequestSummaryMode": ".conversations",
     "CreateUnitTestRequestDynamicVariablesValue": ".tests",
     "KnowledgeBaseGetOrCreateRagIndexesResponseValue": ".knowledge_base",
@@ -115,6 +125,10 @@ def __dir__():
 __all__ = [
     "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem",
     "BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection",
+    "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem",
+    "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Body",
+    "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Button",
+    "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Header",
     "ConversationsListRequestSummaryMode",
     "CreateUnitTestRequestDynamicVariablesValue",
     "KnowledgeBaseGetOrCreateRagIndexesResponseValue",

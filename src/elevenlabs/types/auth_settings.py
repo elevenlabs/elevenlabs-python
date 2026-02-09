@@ -19,6 +19,11 @@ class AuthSettings(UncheckedBaseModel):
     A list of hosts that are allowed to start conversations with the agent
     """
 
+    require_origin_header: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    When enabled, connections with no origin header will be rejected. If the allowlist is empty, this option has no effect.
+    """
+
     shareable_token: typing.Optional[str] = pydantic.Field(default=None)
     """
     A shareable token that can be used to start a conversation with the agent

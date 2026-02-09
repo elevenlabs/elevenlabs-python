@@ -21,12 +21,12 @@ class CreateTwilioPhoneNumberRequest(UncheckedBaseModel):
 
     supports_inbound: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Whether this phone number supports inbound calls
+    This field is deprecated and will be removed in the future. Whether this phone number supports inbound calls
     """
 
     supports_outbound: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Whether this phone number supports outbound calls
+    This field is deprecated and will be removed in the future. Whether this phone number supports outbound calls
     """
 
     sid: str = pydantic.Field()

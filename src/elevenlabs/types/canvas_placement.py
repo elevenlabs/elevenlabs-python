@@ -12,8 +12,8 @@ class CanvasPlacement(UncheckedBaseModel):
     Defines asset positioning and transformation on canvas.
     """
 
-    x: typing.Optional[float] = None
-    y: typing.Optional[float] = None
+    x_relative: typing.Optional[float] = None
+    y_relative: typing.Optional[float] = None
     scale_x: typing.Optional[float] = None
     scale_y: typing.Optional[float] = None
     pivot_x: typing.Optional[float] = None

@@ -8,8 +8,8 @@ from .conversation_history_transcript_api_integration_webhook_tools_result_commo
 from .conversation_history_transcript_other_tools_result_common_model import (
     ConversationHistoryTranscriptOtherToolsResultCommonModel,
 )
-from .conversation_history_transcript_system_tool_result_common_model import (
-    ConversationHistoryTranscriptSystemToolResultCommonModel,
+from .conversation_history_transcript_system_tool_result_common_model_output import (
+    ConversationHistoryTranscriptSystemToolResultCommonModelOutput,
 )
 from .conversation_history_transcript_workflow_tools_result_common_model_output import (
     ConversationHistoryTranscriptWorkflowToolsResultCommonModelOutput,
@@ -17,7 +17,7 @@ from .conversation_history_transcript_workflow_tools_result_common_model_output 
 
 ConversationHistoryTranscriptCommonModelOutputToolResultsItem = typing.Union[
     ConversationHistoryTranscriptOtherToolsResultCommonModel,
-    ConversationHistoryTranscriptSystemToolResultCommonModel,
+    ConversationHistoryTranscriptSystemToolResultCommonModelOutput,
     ConversationHistoryTranscriptApiIntegrationWebhookToolsResultCommonModel,
     ConversationHistoryTranscriptWorkflowToolsResultCommonModelOutput,
 ]

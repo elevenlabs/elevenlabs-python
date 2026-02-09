@@ -12,6 +12,7 @@ class WhatsAppConversationInfo(UncheckedBaseModel):
     direction: typing.Optional[WhatsAppConversationInfoDirection] = None
     whatsapp_phone_number_id: typing.Optional[str] = None
     whatsapp_user_id: str
+    awaiting_first_user_message: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

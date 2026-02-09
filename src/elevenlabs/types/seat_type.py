@@ -2,4 +2,4 @@
 
 import typing
 
-SeatType = typing.Union[typing.Literal["workspace_admin", "workspace_member"], typing.Any]
+SeatType = typing.Union[typing.Literal["workspace_admin", "workspace_member", "workspace_lite_member"], typing.Any]

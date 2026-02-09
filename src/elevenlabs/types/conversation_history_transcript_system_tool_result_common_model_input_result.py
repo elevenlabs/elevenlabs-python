@@ -8,9 +8,10 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
+from .transfer_to_agent_tool_result_success_model_branch_info import TransferToAgentToolResultSuccessModelBranchInfo
 
 
-class ConversationHistoryTranscriptSystemToolResultCommonModelResult_EndCallSuccess(UncheckedBaseModel):
+class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_EndCallSuccess(UncheckedBaseModel):
     result_type: typing.Literal["end_call_success"] = "end_call_success"
     status: typing.Optional[typing.Literal["success"]] = None
     reason: typing.Optional[str] = None
@@ -26,7 +27,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelResult_EndCallSucc
             extra = pydantic.Extra.allow
 
 
-class ConversationHistoryTranscriptSystemToolResultCommonModelResult_LanguageDetectionSuccess(UncheckedBaseModel):
+class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_LanguageDetectionSuccess(UncheckedBaseModel):
     result_type: typing.Literal["language_detection_success"] = "language_detection_success"
     status: typing.Optional[typing.Literal["success"]] = None
     reason: typing.Optional[str] = None
@@ -42,7 +43,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelResult_LanguageDet
             extra = pydantic.Extra.allow
 
 
-class ConversationHistoryTranscriptSystemToolResultCommonModelResult_PlayDtmfError(UncheckedBaseModel):
+class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfError(UncheckedBaseModel):
     result_type: typing.Literal["play_dtmf_error"] = "play_dtmf_error"
     status: typing.Optional[typing.Literal["error"]] = None
     error: str
@@ -58,7 +59,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelResult_PlayDtmfErr
             extra = pydantic.Extra.allow
 
 
-class ConversationHistoryTranscriptSystemToolResultCommonModelResult_PlayDtmfSuccess(UncheckedBaseModel):
+class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfSuccess(UncheckedBaseModel):
     result_type: typing.Literal["play_dtmf_success"] = "play_dtmf_success"
     status: typing.Optional[typing.Literal["success"]] = None
     dtmf_tones: str
@@ -74,7 +75,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelResult_PlayDtmfSuc
             extra = pydantic.Extra.allow
 
 
-class ConversationHistoryTranscriptSystemToolResultCommonModelResult_SkipTurnSuccess(UncheckedBaseModel):
+class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_SkipTurnSuccess(UncheckedBaseModel):
     result_type: typing.Literal["skip_turn_success"] = "skip_turn_success"
     status: typing.Optional[typing.Literal["success"]] = None
     reason: typing.Optional[str] = None
@@ -89,7 +90,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelResult_SkipTurnSuc
             extra = pydantic.Extra.allow
 
 
-class ConversationHistoryTranscriptSystemToolResultCommonModelResult_TestingToolResult(UncheckedBaseModel):
+class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TestingToolResult(UncheckedBaseModel):
     result_type: typing.Literal["testing_tool_result"] = "testing_tool_result"
     status: typing.Optional[typing.Literal["success"]] = None
     reason: typing.Optional[str] = None
@@ -104,7 +105,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelResult_TestingTool
             extra = pydantic.Extra.allow
 
 
-class ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToAgentError(UncheckedBaseModel):
+class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToAgentError(UncheckedBaseModel):
     result_type: typing.Literal["transfer_to_agent_error"] = "transfer_to_agent_error"
     status: typing.Optional[typing.Literal["error"]] = None
     from_agent: str
@@ -120,7 +121,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToA
             extra = pydantic.Extra.allow
 
 
-class ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToAgentSuccess(UncheckedBaseModel):
+class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToAgentSuccess(UncheckedBaseModel):
     result_type: typing.Literal["transfer_to_agent_success"] = "transfer_to_agent_success"
     status: typing.Optional[typing.Literal["success"]] = None
     from_agent: str
@@ -129,6 +130,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToA
     delay_ms: typing.Optional[int] = None
     transfer_message: typing.Optional[str] = None
     enable_transferred_agent_first_message: typing.Optional[bool] = None
+    branch_info: typing.Optional[TransferToAgentToolResultSuccessModelBranchInfo] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -140,7 +142,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToA
             extra = pydantic.Extra.allow
 
 
-class ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToNumberError(UncheckedBaseModel):
+class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToNumberError(UncheckedBaseModel):
     result_type: typing.Literal["transfer_to_number_error"] = "transfer_to_number_error"
     status: typing.Optional[typing.Literal["error"]] = None
     error: str
@@ -156,7 +158,9 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToN
             extra = pydantic.Extra.allow
 
 
-class ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToNumberSipSuccess(UncheckedBaseModel):
+class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToNumberSipSuccess(
+    UncheckedBaseModel
+):
     result_type: typing.Literal["transfer_to_number_sip_success"] = "transfer_to_number_sip_success"
     status: typing.Optional[typing.Literal["success"]] = None
     transfer_number: str
@@ -173,7 +177,9 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToN
             extra = pydantic.Extra.allow
 
 
-class ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToNumberTwilioSuccess(UncheckedBaseModel):
+class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToNumberTwilioSuccess(
+    UncheckedBaseModel
+):
     result_type: typing.Literal["transfer_to_number_twilio_success"] = "transfer_to_number_twilio_success"
     status: typing.Optional[typing.Literal["success"]] = None
     transfer_number: str
@@ -193,7 +199,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToN
             extra = pydantic.Extra.allow
 
 
-class ConversationHistoryTranscriptSystemToolResultCommonModelResult_VoicemailDetectionSuccess(UncheckedBaseModel):
+class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_VoicemailDetectionSuccess(UncheckedBaseModel):
     result_type: typing.Literal["voicemail_detection_success"] = "voicemail_detection_success"
     status: typing.Optional[typing.Literal["success"]] = None
     voicemail_message: typing.Optional[str] = None
@@ -209,20 +215,20 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelResult_VoicemailDe
             extra = pydantic.Extra.allow
 
 
-ConversationHistoryTranscriptSystemToolResultCommonModelResult = typing_extensions.Annotated[
+ConversationHistoryTranscriptSystemToolResultCommonModelInputResult = typing_extensions.Annotated[
     typing.Union[
-        ConversationHistoryTranscriptSystemToolResultCommonModelResult_EndCallSuccess,
-        ConversationHistoryTranscriptSystemToolResultCommonModelResult_LanguageDetectionSuccess,
-        ConversationHistoryTranscriptSystemToolResultCommonModelResult_PlayDtmfError,
-        ConversationHistoryTranscriptSystemToolResultCommonModelResult_PlayDtmfSuccess,
-        ConversationHistoryTranscriptSystemToolResultCommonModelResult_SkipTurnSuccess,
-        ConversationHistoryTranscriptSystemToolResultCommonModelResult_TestingToolResult,
-        ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToAgentError,
-        ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToAgentSuccess,
-        ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToNumberError,
-        ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToNumberSipSuccess,
-        ConversationHistoryTranscriptSystemToolResultCommonModelResult_TransferToNumberTwilioSuccess,
-        ConversationHistoryTranscriptSystemToolResultCommonModelResult_VoicemailDetectionSuccess,
+        ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_EndCallSuccess,
+        ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_LanguageDetectionSuccess,
+        ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfError,
+        ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfSuccess,
+        ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_SkipTurnSuccess,
+        ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TestingToolResult,
+        ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToAgentError,
+        ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToAgentSuccess,
+        ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToNumberError,
+        ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToNumberSipSuccess,
+        ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToNumberTwilioSuccess,
+        ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_VoicemailDetectionSuccess,
     ],
     UnionMetadata(discriminant="result_type"),
 ]

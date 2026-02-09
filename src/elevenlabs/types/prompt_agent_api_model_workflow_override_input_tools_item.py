@@ -14,6 +14,7 @@ from .dynamic_variables_config import DynamicVariablesConfig
 from .system_tool_config_input_params import SystemToolConfigInputParams
 from .tool_call_sound_behavior import ToolCallSoundBehavior
 from .tool_call_sound_type import ToolCallSoundType
+from .tool_error_handling_mode import ToolErrorHandlingMode
 from .tool_execution_mode import ToolExecutionMode
 from .webhook_tool_api_schema_config_input import WebhookToolApiSchemaConfigInput
 
@@ -32,6 +33,7 @@ class PromptAgentApiModelWorkflowOverrideInputToolsItem_ApiIntegrationWebhook(Un
     assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = None
     tool_call_sound: typing.Optional[ToolCallSoundType] = None
     tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = None
+    tool_error_handling_mode: typing.Optional[ToolErrorHandlingMode] = None
     dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
     execution_mode: typing.Optional[ToolExecutionMode] = None
     tool_version: typing.Optional[str] = None
@@ -63,6 +65,7 @@ class PromptAgentApiModelWorkflowOverrideInputToolsItem_Client(UncheckedBaseMode
     assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = None
     tool_call_sound: typing.Optional[ToolCallSoundType] = None
     tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = None
+    tool_error_handling_mode: typing.Optional[ToolErrorHandlingMode] = None
     parameters: typing.Optional["ObjectJsonSchemaPropertyInput"] = None
     expects_response: typing.Optional[bool] = None
     dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
@@ -105,6 +108,7 @@ class PromptAgentApiModelWorkflowOverrideInputToolsItem_System(UncheckedBaseMode
     assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = None
     tool_call_sound: typing.Optional[ToolCallSoundType] = None
     tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = None
+    tool_error_handling_mode: typing.Optional[ToolErrorHandlingMode] = None
     params: SystemToolConfigInputParams
 
     if IS_PYDANTIC_V2:
@@ -131,6 +135,7 @@ class PromptAgentApiModelWorkflowOverrideInputToolsItem_Webhook(UncheckedBaseMod
     assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = None
     tool_call_sound: typing.Optional[ToolCallSoundType] = None
     tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = None
+    tool_error_handling_mode: typing.Optional[ToolErrorHandlingMode] = None
     dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
     execution_mode: typing.Optional[ToolExecutionMode] = None
     api_schema: WebhookToolApiSchemaConfigInput
