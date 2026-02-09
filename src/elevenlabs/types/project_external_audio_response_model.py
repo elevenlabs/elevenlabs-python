@@ -28,6 +28,7 @@ class ProjectExternalAudioResponseModel(UncheckedBaseModel):
     pending_block_ids: typing.List[str]
     import_speech_progress: typing.Optional[float] = None
     speech_imported: typing.Optional[bool] = None
+    dub_audio_progress: typing.Optional[float] = None
     current_snapshot_id: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

@@ -12,6 +12,7 @@ from .dynamic_variable_assignment import DynamicVariableAssignment
 from .dynamic_variables_config import DynamicVariablesConfig
 from .tool_call_sound_behavior import ToolCallSoundBehavior
 from .tool_call_sound_type import ToolCallSoundType
+from .tool_error_handling_mode import ToolErrorHandlingMode
 from .tool_execution_mode import ToolExecutionMode
 
 
@@ -50,6 +51,11 @@ class ApiIntegrationWebhookToolConfigOutput(UncheckedBaseModel):
     tool_call_sound_behavior: ToolCallSoundBehavior = pydantic.Field()
     """
     Determines when the tool call sound should play. 'auto' only plays when there's pre-tool speech, 'always' plays for every tool call.
+    """
+
+    tool_error_handling_mode: ToolErrorHandlingMode = pydantic.Field()
+    """
+    Controls how tool errors are processed before being shared with the agent. 'auto' determines handling based on tool type (summarized for native integrations, hide for others), 'summarized' sends an LLM-generated summary, 'passthrough' sends the raw error, 'hide' does not share the error with the agent.
     """
 
     dynamic_variables: DynamicVariablesConfig = pydantic.Field()

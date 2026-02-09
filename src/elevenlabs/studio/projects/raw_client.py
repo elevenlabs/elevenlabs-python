@@ -18,6 +18,7 @@ from ...types.edit_project_response_model import EditProjectResponseModel
 from ...types.get_projects_response import GetProjectsResponse
 from ...types.http_validation_error import HttpValidationError
 from ...types.project_extended_response import ProjectExtendedResponse
+from ...types.project_muted_tracks_response_model import ProjectMutedTracksResponseModel
 from .types.projects_create_request_apply_text_normalization import ProjectsCreateRequestApplyTextNormalization
 from .types.projects_create_request_fiction import ProjectsCreateRequestFiction
 from .types.projects_create_request_quality_preset import ProjectsCreateRequestQualityPreset
@@ -603,6 +604,56 @@ class RawProjectsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def get_muted_tracks(
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[ProjectMutedTracksResponseModel]:
+        """
+        Returns a list of chapter IDs that have muted tracks in a project.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[ProjectMutedTracksResponseModel]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/studio/projects/{jsonable_encoder(project_id)}/muted-tracks",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ProjectMutedTracksResponseModel,
+                    construct_type(
+                        type_=ProjectMutedTracksResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawProjectsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -1161,6 +1212,56 @@ class AsyncRawProjectsClient:
                     ConvertProjectResponseModel,
                     construct_type(
                         type_=ConvertProjectResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_muted_tracks(
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[ProjectMutedTracksResponseModel]:
+        """
+        Returns a list of chapter IDs that have muted tracks in a project.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ProjectMutedTracksResponseModel]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/studio/projects/{jsonable_encoder(project_id)}/muted-tracks",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ProjectMutedTracksResponseModel,
+                    construct_type(
+                        type_=ProjectMutedTracksResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

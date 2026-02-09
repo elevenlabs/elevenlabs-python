@@ -10,8 +10,8 @@ from .conversation_history_transcript_api_integration_webhook_tools_result_commo
 from .conversation_history_transcript_other_tools_result_common_model import (
     ConversationHistoryTranscriptOtherToolsResultCommonModel,
 )
-from .conversation_history_transcript_system_tool_result_common_model import (
-    ConversationHistoryTranscriptSystemToolResultCommonModel,
+from .conversation_history_transcript_system_tool_result_common_model_output import (
+    ConversationHistoryTranscriptSystemToolResultCommonModelOutput,
 )
 
 if typing.TYPE_CHECKING:
@@ -20,7 +20,7 @@ if typing.TYPE_CHECKING:
     )
 WorkflowToolNestedToolsStepModelOutputResultsItem = typing.Union[
     ConversationHistoryTranscriptOtherToolsResultCommonModel,
-    ConversationHistoryTranscriptSystemToolResultCommonModel,
+    ConversationHistoryTranscriptSystemToolResultCommonModelOutput,
     ConversationHistoryTranscriptApiIntegrationWebhookToolsResultCommonModel,
     "ConversationHistoryTranscriptWorkflowToolsResultCommonModelOutput",
 ]

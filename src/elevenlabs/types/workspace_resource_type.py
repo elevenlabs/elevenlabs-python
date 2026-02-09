@@ -34,6 +34,7 @@ WorkspaceResourceType = typing.Union[
         "resource_locators",
         "assets",
         "content_generations",
+        "content_templates",
     ],
     typing.Any,
 ]

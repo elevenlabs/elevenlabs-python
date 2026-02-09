@@ -5,13 +5,13 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .conversation_history_transcript_system_tool_result_common_model_result import (
-    ConversationHistoryTranscriptSystemToolResultCommonModelResult,
+from .conversation_history_transcript_system_tool_result_common_model_input_result import (
+    ConversationHistoryTranscriptSystemToolResultCommonModelInputResult,
 )
 from .dynamic_variable_update_common_model import DynamicVariableUpdateCommonModel
 
 
-class ConversationHistoryTranscriptSystemToolResultCommonModel(UncheckedBaseModel):
+class ConversationHistoryTranscriptSystemToolResultCommonModelInput(UncheckedBaseModel):
     request_id: str
     tool_name: str
     result_value: str
@@ -22,7 +22,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModel(UncheckedBaseMode
     raw_error_message: typing.Optional[str] = None
     dynamic_variable_updates: typing.Optional[typing.List[DynamicVariableUpdateCommonModel]] = None
     type: typing.Literal["system"] = "system"
-    result: typing.Optional[ConversationHistoryTranscriptSystemToolResultCommonModelResult] = None
+    result: typing.Optional[ConversationHistoryTranscriptSystemToolResultCommonModelInputResult] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

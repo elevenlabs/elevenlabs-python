@@ -19,6 +19,7 @@ ConversationInitiationSource = typing.Union[
         "whatsapp",
         "flutter_sdk",
         "zendesk_integration",
+        "slack_integration",
     ],
     typing.Any,
 ]

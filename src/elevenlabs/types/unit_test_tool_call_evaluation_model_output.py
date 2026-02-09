@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .referenced_tool_common_model import ReferencedToolCommonModel
 from .unit_test_tool_call_parameter import UnitTestToolCallParameter
+from .unit_test_workflow_node_transition_evaluation_node_id import UnitTestWorkflowNodeTransitionEvaluationNodeId
 
 
 class UnitTestToolCallEvaluationModelOutput(UncheckedBaseModel):
@@ -23,6 +24,13 @@ class UnitTestToolCallEvaluationModelOutput(UncheckedBaseModel):
     verify_absence: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether to verify that the tool was NOT called.
+    """
+
+    workflow_node_transition: typing.Optional[UnitTestWorkflowNodeTransitionEvaluationNodeId] = pydantic.Field(
+        default=None
+    )
+    """
+    Configuration for testing workflow node transitions. When set, the test will verify the agent transitions to the specified workflow node.
     """
 
     if IS_PYDANTIC_V2:

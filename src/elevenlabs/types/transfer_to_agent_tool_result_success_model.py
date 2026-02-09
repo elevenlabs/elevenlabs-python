@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .transfer_to_agent_tool_result_success_model_branch_info import TransferToAgentToolResultSuccessModelBranchInfo
 
 
 class TransferToAgentToolResultSuccessModel(UncheckedBaseModel):
@@ -15,6 +16,7 @@ class TransferToAgentToolResultSuccessModel(UncheckedBaseModel):
     delay_ms: typing.Optional[int] = None
     transfer_message: typing.Optional[str] = None
     enable_transferred_agent_first_message: typing.Optional[bool] = None
+    branch_info: typing.Optional[TransferToAgentToolResultSuccessModelBranchInfo] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -13,6 +13,7 @@ from .conversation_history_transcript_common_model_output import ConversationHis
 class TestFromConversationMetadataOutput(UncheckedBaseModel):
     conversation_id: str
     agent_id: str
+    branch_id: typing.Optional[str] = None
     workflow_node_id: typing.Optional[str] = None
     original_agent_reply: typing.Optional[typing.List[ConversationHistoryTranscriptCommonModelOutput]] = None
 

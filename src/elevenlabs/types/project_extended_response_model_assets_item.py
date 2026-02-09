@@ -41,6 +41,7 @@ class ProjectExtendedResponseModelAssetsItem_Video(UncheckedBaseModel):
     pending_block_ids: typing.List[str]
     import_speech_progress: typing.Optional[float] = None
     speech_imported: typing.Optional[bool] = None
+    dub_audio_progress: typing.Optional[float] = None
     audio_track_ready: typing.Optional[bool] = None
     current_snapshot_id: typing.Optional[str] = None
     canvas_placement: typing.Optional[CanvasPlacement] = None
@@ -78,6 +79,7 @@ class ProjectExtendedResponseModelAssetsItem_Audio(UncheckedBaseModel):
     pending_block_ids: typing.List[str]
     import_speech_progress: typing.Optional[float] = None
     speech_imported: typing.Optional[bool] = None
+    dub_audio_progress: typing.Optional[float] = None
     current_snapshot_id: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

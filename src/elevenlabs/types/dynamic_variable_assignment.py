@@ -27,6 +27,11 @@ class DynamicVariableAssignment(UncheckedBaseModel):
     Dot notation path to extract the value from the source (e.g., 'user.name' or 'data.0.id')
     """
 
+    sanitize: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If true, this assignment's value will be removed from the tool response before sending to the LLM and transcript, but still processed for variable assignment.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

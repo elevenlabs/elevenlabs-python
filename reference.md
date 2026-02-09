@@ -1,50 +1,4 @@
 # Reference
-<details><summary><code>client.<a href="src/elevenlabs/base_client.py">post_v_1_convai_whatsapp_accounts</a>()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.post_v_1_convai_whatsapp_accounts()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.<a href="src/elevenlabs/base_client.py">delete_v_1_convai_agents_agent_id_branches_branch_id</a>(...)</code></summary>
 <dl>
 <dd>
@@ -6406,7 +6360,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**entity_detection:** `typing.Optional[SpeechToTextConvertRequestEntityDetection]` — Detect entities in the transcript. Can be 'all' to detect all entities, a single entity type or category string, or a list of entity types/categories. Categories include 'pii', 'phi', 'pci', 'other', 'offensive_language'. When enabled, detected entities will be returned in the 'entities' field with their text, type, and character positions.
+**entity_detection:** `typing.Optional[SpeechToTextConvertRequestEntityDetection]` — Detect entities in the transcript. Can be 'all' to detect all entities, a single entity type or category string, or a list of entity types/categories. Categories include 'pii', 'phi', 'pci', 'other', 'offensive_language'. When enabled, detected entities will be returned in the 'entities' field with their text, type, and character positions. Usage of this parameter will incur additional costs.
     
 </dd>
 </dl>
@@ -6414,7 +6368,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**keyterms:** `typing.Optional[typing.List[str]]` — A list of keyterms to bias the transcription towards.           The keyterms are words or phrases you want the model to recognise more accurately.           The number of keyterms cannot exceed 100.           The length of each keyterm must be less than 50 characters.           Keyterms can contain at most 5 words (after normalisation).           For example ["hello", "world", "technical term"]
+**keyterms:** `typing.Optional[typing.List[str]]` — A list of keyterms to bias the transcription towards.           The keyterms are words or phrases you want the model to recognise more accurately.           The number of keyterms cannot exceed 100.           The length of each keyterm must be less than 50 characters.           Keyterms can contain at most 5 words (after normalisation).           For example ["hello", "world", "technical term"].           Usage of this parameter will incur additional costs.  
     
 </dd>
 </dl>
@@ -8047,6 +8001,142 @@ client.conversational_ai.whatsapp.outbound_call(
 <dd>
 
 **whatsapp_call_permission_request_template_language_code:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agent_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**conversation_initiation_client_data:** `typing.Optional[ConversationInitiationClientDataRequestInput]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.whatsapp.<a href="src/elevenlabs/conversational_ai/whatsapp/client.py">outbound_message</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Send an outbound message via WhatsApp
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs, WhatsAppTemplateTextParam
+from elevenlabs.conversational_ai.whatsapp import (
+    BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Body,
+)
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.whatsapp.outbound_message(
+    whatsapp_phone_number_id="whatsapp_phone_number_id",
+    whatsapp_user_id="whatsapp_user_id",
+    template_name="template_name",
+    template_language_code="template_language_code",
+    template_params=[
+        BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Body(
+            parameters=[
+                WhatsAppTemplateTextParam(
+                    text="text",
+                )
+            ],
+        )
+    ],
+    agent_id="agent_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**whatsapp_phone_number_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**whatsapp_user_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**template_name:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**template_language_code:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**template_params:** `typing.Sequence[
+    BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem
+]` 
     
 </dd>
 </dl>
@@ -19510,6 +19600,76 @@ client.studio.projects.convert(
 <dd>
 
 **project_id:** `str` — The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.studio.projects.<a href="src/elevenlabs/studio/projects/client.py">get_muted_tracks</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of chapter IDs that have muted tracks in a project.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.studio.projects.get_muted_tracks(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
     
 </dd>
 </dl>
