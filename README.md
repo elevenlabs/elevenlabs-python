@@ -24,19 +24,24 @@ pip install elevenlabs
 
 ### Main Models
 
-1. **Eleven Multilingual v2** (`eleven_multilingual_v2`)
+1. **Eleven v3** (`eleven_v3`)
+    - Dramatic delivery and performances
+    - 70+ languages supported
+    - Supported for natural multi-speaker dialogue
+
+2. **Eleven Multilingual v2** (`eleven_multilingual_v2`)
 
     - Excels in stability, language diversity, and accent accuracy
     - Supports 29 languages
     - Recommended for most use cases
 
-2. **Eleven Flash v2.5** (`eleven_flash_v2_5`)
+3. **Eleven Flash v2.5** (`eleven_flash_v2_5`)
 
     - Ultra-low latency
     - Supports 32 languages
     - Faster model, 50% lower price per character
 
-2. **Eleven Turbo v2.5** (`eleven_turbo_v2_5`)
+4. **Eleven Turbo v2.5** (`eleven_turbo_v2_5`)
 
     - Good balance of quality and latency
     - Ideal for developer use cases where speed is crucial
@@ -51,12 +56,12 @@ from elevenlabs.play import play
 
 load_dotenv()
 
-client = ElevenLabs()
+elevenlabs = ElevenLabs()
 
-audio = client.text_to_speech.convert(
+audio = elevenlabs.text_to_speech.convert(
     text="The first move is what sets everything in motion.",
     voice_id="JBFqnCBsd6RMkjVDRZzb",
-    model_id="eleven_multilingual_v2",
+    model_id="eleven_v3",
     output_format="mp3_44100_128",
 )
 
@@ -71,23 +76,23 @@ play(audio)
 
 ## Voices
 
-List all your available voices with `voices()`.
+List all your available voices with `search()`.
 
 ```py
 from elevenlabs.client import ElevenLabs
 
-client = ElevenLabs(
+elevenlabs = ElevenLabs(
   api_key="YOUR_API_KEY",
 )
 
-response = client.voices.search()
+response = elevenlabs.voices.search()
 print(response.voices)
 ```
 
 For information about the structure of the voices output, please refer to the [official ElevenLabs API documentation for Get Voices](https://elevenlabs.io/docs/api-reference/get-voices).
 
 Build a voice object with custom settings to personalize the voice style, or call
-`client.voices.get_settings("your-voice-id")` to get the default settings for the voice.
+`elevenlabs.voices.settings.get("your-voice-id")` to get the default settings for the voice.
 
 </details>
 
@@ -99,11 +104,11 @@ Clone your voice in an instant. Note that voice cloning requires an API key, see
 from elevenlabs.client import ElevenLabs
 from elevenlabs.play import play
 
-client = ElevenLabs(
+elevenlabs = ElevenLabs(
   api_key="YOUR_API_KEY",
 )
 
-voice = client.voices.ivc.create(
+voice = elevenlabs.voices.ivc.create(
     name="Alex",
     description="An old American male voice with a slight hoarseness in his throat. Perfect for news", # Optional
     files=["./sample_0.mp3", "./sample_1.mp3", "./sample_2.mp3"],
@@ -118,9 +123,11 @@ Stream audio in real-time, as it's being generated.
 from elevenlabs import stream
 from elevenlabs.client import ElevenLabs
 
-client = ElevenLabs()
+elevenlabs = ElevenLabs(
+  api_key="YOUR_API_KEY",
+)
 
-audio_stream = client.text_to_speech.stream(
+audio_stream = elevenlabs.text_to_speech.stream(
     text="This is a test",
     voice_id="JBFqnCBsd6RMkjVDRZzb",
     model_id="eleven_multilingual_v2"
@@ -145,20 +152,20 @@ import asyncio
 
 from elevenlabs.client import AsyncElevenLabs
 
-eleven = AsyncElevenLabs(
+elevenlabs = AsyncElevenLabs(
   api_key="MY_API_KEY"
 )
 
 async def print_models() -> None:
-    models = await eleven.models.list()
+    models = await elevenlabs.models.list()
     print(models)
 
 asyncio.run(print_models())
 ```
 
-## Conversational AI
+## ElevenAgents
 
-Build interactive AI agents with real-time audio capabilities using ElevenLabs Conversational AI.
+Build interactive AI agents with real-time audio capabilities using ElevenAgents.
 
 ### Basic Usage
 
@@ -167,14 +174,16 @@ from elevenlabs.client import ElevenLabs
 from elevenlabs.conversational_ai.conversation import Conversation, ClientTools
 from elevenlabs.conversational_ai.default_audio_interface import DefaultAudioInterface
 
-client = ElevenLabs(api_key="YOUR_API_KEY")
+elevenlabs = ElevenLabs(
+  api_key="YOUR_API_KEY",
+)
 
 # Create audio interface for real-time audio input/output
 audio_interface = DefaultAudioInterface()
 
 # Create conversation
 conversation = Conversation(
-    client=client,
+    client=elevenlabs,
     agent_id="your-agent-id",
     requires_auth=True,
     audio_interface=audio_interface,
@@ -195,6 +204,10 @@ For advanced use cases involving context propagation, resource reuse, or specifi
 import asyncio
 from elevenlabs.conversational_ai.conversation import ClientTools
 
+elevenlabs = ElevenLabs(
+  api_key="YOUR_API_KEY",
+)
+
 async def main():
     # Get the current event loop
     custom_loop = asyncio.get_running_loop()
@@ -212,7 +225,7 @@ async def main():
 
     # Use with conversation
     conversation = Conversation(
-        client=client,
+        client=elevenlabs,
         agent_id="your-agent-id",
         requires_auth=True,
         audio_interface=audio_interface,
