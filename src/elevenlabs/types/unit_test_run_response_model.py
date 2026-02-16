@@ -11,12 +11,12 @@ from .conversation_history_transcript_common_model_output import ConversationHis
 from .test_condition_result_common_model import TestConditionResultCommonModel
 from .test_run_metadata import TestRunMetadata
 from .test_run_status import TestRunStatus
-from .unit_test_common_model import UnitTestCommonModel
+from .unit_test_run_response_model_test_info import UnitTestRunResponseModelTestInfo
 
 
 class UnitTestRunResponseModel(UncheckedBaseModel):
     test_run_id: str
-    test_info: typing.Optional[UnitTestCommonModel] = None
+    test_info: typing.Optional[UnitTestRunResponseModelTestInfo] = None
     test_invocation_id: str
     agent_id: str
     branch_id: typing.Optional[str] = None

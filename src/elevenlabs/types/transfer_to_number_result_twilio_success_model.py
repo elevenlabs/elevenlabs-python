@@ -14,6 +14,7 @@ class TransferToNumberResultTwilioSuccessModel(UncheckedBaseModel):
     client_message: typing.Optional[str] = None
     agent_message: str
     conference_name: str
+    post_dial_digits: typing.Optional[str] = None
     note: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

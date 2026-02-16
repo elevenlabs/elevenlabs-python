@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .phone_number_transfer_custom_sip_headers_item import PhoneNumberTransferCustomSipHeadersItem
+from .phone_number_transfer_post_dial_digits import PhoneNumberTransferPostDialDigits
 from .phone_number_transfer_transfer_destination import PhoneNumberTransferTransferDestination
 from .transfer_type_enum import TransferTypeEnum
 
@@ -22,6 +23,10 @@ class PhoneNumberTransfer(UncheckedBaseModel):
     phone_number: typing.Optional[str] = None
     condition: str
     transfer_type: typing.Optional[TransferTypeEnum] = None
+    post_dial_digits: typing.Optional[PhoneNumberTransferPostDialDigits] = pydantic.Field(default=None)
+    """
+    DTMF digits to send after call connects (e.g., 'ww1234' for extension). Can be either a static value or a dynamic variable reference. Use 'w' for 0.5s pause. Only supported for Twilio transfers.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

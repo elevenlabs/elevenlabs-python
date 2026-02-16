@@ -15,6 +15,7 @@ from .transfer_type_enum import TransferTypeEnum
 from .workflow_phone_number_node_model_input_custom_sip_headers_item import (
     WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem,
 )
+from .workflow_phone_number_node_model_input_post_dial_digits import WorkflowPhoneNumberNodeModelInputPostDialDigits
 from .workflow_phone_number_node_model_input_transfer_destination import (
     WorkflowPhoneNumberNodeModelInputTransferDestination,
 )
@@ -63,6 +64,7 @@ class AgentWorkflowRequestModelNodesValue_PhoneNumber(UncheckedBaseModel):
     edge_order: typing.Optional[typing.List[str]] = None
     transfer_destination: WorkflowPhoneNumberNodeModelInputTransferDestination
     transfer_type: typing.Optional[TransferTypeEnum] = None
+    post_dial_digits: typing.Optional[WorkflowPhoneNumberNodeModelInputPostDialDigits] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

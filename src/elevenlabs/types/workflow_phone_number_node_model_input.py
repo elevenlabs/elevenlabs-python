@@ -10,6 +10,7 @@ from .transfer_type_enum import TransferTypeEnum
 from .workflow_phone_number_node_model_input_custom_sip_headers_item import (
     WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem,
 )
+from .workflow_phone_number_node_model_input_post_dial_digits import WorkflowPhoneNumberNodeModelInputPostDialDigits
 from .workflow_phone_number_node_model_input_transfer_destination import (
     WorkflowPhoneNumberNodeModelInputTransferDestination,
 )
@@ -35,6 +36,10 @@ class WorkflowPhoneNumberNodeModelInput(UncheckedBaseModel):
 
     transfer_destination: WorkflowPhoneNumberNodeModelInputTransferDestination
     transfer_type: typing.Optional[TransferTypeEnum] = None
+    post_dial_digits: typing.Optional[WorkflowPhoneNumberNodeModelInputPostDialDigits] = pydantic.Field(default=None)
+    """
+    DTMF digits to send after call connects (e.g., 'ww1234' for extension). Can be either a static value or a dynamic variable reference. Use 'w' for 0.5s pause.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -30,6 +30,11 @@ class TtsConversationalConfigOutput(UncheckedBaseModel):
     Additional supported voices for the agent
     """
 
+    expressive_mode: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    When enabled, applies expressive audio tags prompt. Automatically disabled for non-v3 models.
+    """
+
     suggested_audio_tags: typing.Optional[typing.List[SuggestedAudioTag]] = pydantic.Field(default=None)
     """
     Suggested audio tags to boost expressive speech (for eleven_v3 and eleven_v3_conversational models). The agent can still use other tags not listed here.

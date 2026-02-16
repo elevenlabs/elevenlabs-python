@@ -12,6 +12,9 @@ from ..types.get_pronunciation_dictionaries_metadata_response_model import (
     GetPronunciationDictionariesMetadataResponseModel,
 )
 from ..types.get_pronunciation_dictionary_metadata_response import GetPronunciationDictionaryMetadataResponse
+from ..types.get_pronunciation_dictionary_with_rules_response_model import (
+    GetPronunciationDictionaryWithRulesResponseModel,
+)
 from .raw_client import AsyncRawPronunciationDictionariesClient, RawPronunciationDictionariesClient
 from .types.body_add_a_pronunciation_dictionary_v_1_pronunciation_dictionaries_add_from_rules_post_rules_item import (
     BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem,
@@ -170,7 +173,7 @@ class PronunciationDictionariesClient:
 
     def get(
         self, pronunciation_dictionary_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetPronunciationDictionaryMetadataResponse:
+    ) -> GetPronunciationDictionaryWithRulesResponseModel:
         """
         Get metadata for a pronunciation dictionary
 
@@ -184,7 +187,7 @@ class PronunciationDictionariesClient:
 
         Returns
         -------
-        GetPronunciationDictionaryMetadataResponse
+        GetPronunciationDictionaryWithRulesResponseModel
             Successful Response
 
         Examples
@@ -218,7 +221,7 @@ class PronunciationDictionariesClient:
             The id of the pronunciation dictionary
 
         archived : typing.Optional[bool]
-            The name of the pronunciation dictionary, used for identification only.
+            Whether to archive the pronunciation dictionary.
 
         name : typing.Optional[str]
             The name of the pronunciation dictionary, used for identification only.
@@ -506,7 +509,7 @@ class AsyncPronunciationDictionariesClient:
 
     async def get(
         self, pronunciation_dictionary_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetPronunciationDictionaryMetadataResponse:
+    ) -> GetPronunciationDictionaryWithRulesResponseModel:
         """
         Get metadata for a pronunciation dictionary
 
@@ -520,7 +523,7 @@ class AsyncPronunciationDictionariesClient:
 
         Returns
         -------
-        GetPronunciationDictionaryMetadataResponse
+        GetPronunciationDictionaryWithRulesResponseModel
             Successful Response
 
         Examples
@@ -562,7 +565,7 @@ class AsyncPronunciationDictionariesClient:
             The id of the pronunciation dictionary
 
         archived : typing.Optional[bool]
-            The name of the pronunciation dictionary, used for identification only.
+            Whether to archive the pronunciation dictionary.
 
         name : typing.Optional[str]
             The name of the pronunciation dictionary, used for identification only.

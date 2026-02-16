@@ -125,7 +125,12 @@ class RawAgentsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
-        self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        agent_id: str,
+        *,
+        version_id: typing.Optional[str] = None,
+        branch_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetAgentResponseModel]:
         """
         Retrieve config for an agent
@@ -134,6 +139,12 @@ class RawAgentsClient:
         ----------
         agent_id : str
             The id of an agent. This is returned on agent creation.
+
+        version_id : typing.Optional[str]
+            The ID of the agent version to use
+
+        branch_id : typing.Optional[str]
+            The ID of the branch to use
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -146,6 +157,10 @@ class RawAgentsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
             method="GET",
+            params={
+                "version_id": version_id,
+                "branch_id": branch_id,
+            },
             request_options=request_options,
         )
         try:
@@ -218,6 +233,7 @@ class RawAgentsClient:
         self,
         agent_id: str,
         *,
+        branch_id: typing.Optional[str] = None,
         conversation_config: typing.Optional[ConversationalConfig] = OMIT,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
         workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
@@ -236,6 +252,9 @@ class RawAgentsClient:
         ----------
         agent_id : str
             The id of an agent. This is returned on agent creation.
+
+        branch_id : typing.Optional[str]
+            The ID of the branch to use
 
         conversation_config : typing.Optional[ConversationalConfig]
             Conversation configuration for an agent
@@ -269,6 +288,9 @@ class RawAgentsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
             method="PATCH",
+            params={
+                "branch_id": branch_id,
+            },
             json={
                 "conversation_config": convert_and_respect_annotation_metadata(
                     object_=conversation_config, annotation=ConversationalConfig, direction="write"
@@ -794,7 +816,12 @@ class AsyncRawAgentsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
-        self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        agent_id: str,
+        *,
+        version_id: typing.Optional[str] = None,
+        branch_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetAgentResponseModel]:
         """
         Retrieve config for an agent
@@ -803,6 +830,12 @@ class AsyncRawAgentsClient:
         ----------
         agent_id : str
             The id of an agent. This is returned on agent creation.
+
+        version_id : typing.Optional[str]
+            The ID of the agent version to use
+
+        branch_id : typing.Optional[str]
+            The ID of the branch to use
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -815,6 +848,10 @@ class AsyncRawAgentsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
             method="GET",
+            params={
+                "version_id": version_id,
+                "branch_id": branch_id,
+            },
             request_options=request_options,
         )
         try:
@@ -889,6 +926,7 @@ class AsyncRawAgentsClient:
         self,
         agent_id: str,
         *,
+        branch_id: typing.Optional[str] = None,
         conversation_config: typing.Optional[ConversationalConfig] = OMIT,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
         workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
@@ -907,6 +945,9 @@ class AsyncRawAgentsClient:
         ----------
         agent_id : str
             The id of an agent. This is returned on agent creation.
+
+        branch_id : typing.Optional[str]
+            The ID of the branch to use
 
         conversation_config : typing.Optional[ConversationalConfig]
             Conversation configuration for an agent
@@ -940,6 +981,9 @@ class AsyncRawAgentsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
             method="PATCH",
+            params={
+                "branch_id": branch_id,
+            },
             json={
                 "conversation_config": convert_and_respect_annotation_metadata(
                     object_=conversation_config, annotation=ConversationalConfig, direction="write"

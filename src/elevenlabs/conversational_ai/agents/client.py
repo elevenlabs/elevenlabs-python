@@ -121,7 +121,14 @@ class AgentsClient:
         )
         return _response.data
 
-    def get(self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetAgentResponseModel:
+    def get(
+        self,
+        agent_id: str,
+        *,
+        version_id: typing.Optional[str] = None,
+        branch_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetAgentResponseModel:
         """
         Retrieve config for an agent
 
@@ -129,6 +136,12 @@ class AgentsClient:
         ----------
         agent_id : str
             The id of an agent. This is returned on agent creation.
+
+        version_id : typing.Optional[str]
+            The ID of the agent version to use
+
+        branch_id : typing.Optional[str]
+            The ID of the branch to use
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -147,9 +160,13 @@ class AgentsClient:
         )
         client.conversational_ai.agents.get(
             agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+            version_id="version_id",
+            branch_id="branch_id",
         )
         """
-        _response = self._raw_client.get(agent_id, request_options=request_options)
+        _response = self._raw_client.get(
+            agent_id, version_id=version_id, branch_id=branch_id, request_options=request_options
+        )
         return _response.data
 
     def delete(self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
@@ -186,6 +203,7 @@ class AgentsClient:
         self,
         agent_id: str,
         *,
+        branch_id: typing.Optional[str] = None,
         conversation_config: typing.Optional[ConversationalConfig] = OMIT,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
         workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
@@ -204,6 +222,9 @@ class AgentsClient:
         ----------
         agent_id : str
             The id of an agent. This is returned on agent creation.
+
+        branch_id : typing.Optional[str]
+            The ID of the branch to use
 
         conversation_config : typing.Optional[ConversationalConfig]
             Conversation configuration for an agent
@@ -243,10 +264,12 @@ class AgentsClient:
         )
         client.conversational_ai.agents.update(
             agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+            branch_id="branch_id",
         )
         """
         _response = self._raw_client.update(
             agent_id,
+            branch_id=branch_id,
             conversation_config=conversation_config,
             platform_settings=platform_settings,
             workflow=workflow,
@@ -718,7 +741,12 @@ class AsyncAgentsClient:
         return _response.data
 
     async def get(
-        self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        agent_id: str,
+        *,
+        version_id: typing.Optional[str] = None,
+        branch_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> GetAgentResponseModel:
         """
         Retrieve config for an agent
@@ -727,6 +755,12 @@ class AsyncAgentsClient:
         ----------
         agent_id : str
             The id of an agent. This is returned on agent creation.
+
+        version_id : typing.Optional[str]
+            The ID of the agent version to use
+
+        branch_id : typing.Optional[str]
+            The ID of the branch to use
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -750,12 +784,16 @@ class AsyncAgentsClient:
         async def main() -> None:
             await client.conversational_ai.agents.get(
                 agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+                version_id="version_id",
+                branch_id="branch_id",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get(agent_id, request_options=request_options)
+        _response = await self._raw_client.get(
+            agent_id, version_id=version_id, branch_id=branch_id, request_options=request_options
+        )
         return _response.data
 
     async def delete(self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
@@ -800,6 +838,7 @@ class AsyncAgentsClient:
         self,
         agent_id: str,
         *,
+        branch_id: typing.Optional[str] = None,
         conversation_config: typing.Optional[ConversationalConfig] = OMIT,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
         workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
@@ -818,6 +857,9 @@ class AsyncAgentsClient:
         ----------
         agent_id : str
             The id of an agent. This is returned on agent creation.
+
+        branch_id : typing.Optional[str]
+            The ID of the branch to use
 
         conversation_config : typing.Optional[ConversationalConfig]
             Conversation configuration for an agent
@@ -862,6 +904,7 @@ class AsyncAgentsClient:
         async def main() -> None:
             await client.conversational_ai.agents.update(
                 agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+                branch_id="branch_id",
             )
 
 
@@ -869,6 +912,7 @@ class AsyncAgentsClient:
         """
         _response = await self._raw_client.update(
             agent_id,
+            branch_id=branch_id,
             conversation_config=conversation_config,
             platform_settings=platform_settings,
             workflow=workflow,
