@@ -6,13 +6,17 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .alignment_guardrail import AlignmentGuardrail
+from .content_guardrail_input import ContentGuardrailInput
+from .custom_guardrail_input import CustomGuardrailInput
 from .moderation_guardrail_input import ModerationGuardrailInput
 
 
 class GuardrailsV1Input(UncheckedBaseModel):
     version: typing.Optional[typing.Literal["1"]] = None
     alignment: typing.Optional[AlignmentGuardrail] = None
+    content: typing.Optional[ContentGuardrailInput] = None
     moderation: typing.Optional[ModerationGuardrailInput] = None
+    custom: typing.Optional[CustomGuardrailInput] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

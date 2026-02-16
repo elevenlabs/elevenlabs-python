@@ -17,7 +17,6 @@ from .get_conversation_response_model_status import GetConversationResponseModel
 class GetConversationResponseModel(UncheckedBaseModel):
     agent_id: str
     agent_name: typing.Optional[str] = None
-    conversation_id: str
     status: GetConversationResponseModelStatus
     user_id: typing.Optional[str] = None
     branch_id: typing.Optional[str] = None
@@ -30,6 +29,7 @@ class GetConversationResponseModel(UncheckedBaseModel):
     metadata: ConversationHistoryMetadataCommonModel
     analysis: typing.Optional[ConversationHistoryAnalysisCommonModel] = None
     conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestOutput] = None
+    conversation_id: str
     has_audio: bool
     has_user_audio: bool
     has_response_audio: bool

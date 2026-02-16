@@ -44,6 +44,11 @@ class BuiltInToolsWorkflowOverrideInput(UncheckedBaseModel):
     The voicemail detection tool
     """
 
+    search_documentation: typing.Optional[SystemToolConfigInput] = pydantic.Field(default=None)
+    """
+    The search documentation tool for RAG
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

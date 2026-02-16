@@ -5,13 +5,13 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .similar_voice_category import SimilarVoiceCategory
+from .voice_category import VoiceCategory
 
 
 class SimilarVoice(UncheckedBaseModel):
     voice_id: str
     name: str
-    category: SimilarVoiceCategory
+    category: VoiceCategory
     description: typing.Optional[str] = None
     preview_url: typing.Optional[str] = None
 

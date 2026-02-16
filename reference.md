@@ -3034,7 +3034,7 @@ client.text_to_voice.remix(
 </dl>
 </details>
 
-## user
+## User
 <details><summary><code>client.user.<a href="src/elevenlabs/user/client.py">get</a>()</code></summary>
 <dl>
 <dd>
@@ -5134,7 +5134,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 </dl>
 </details>
 
-## usage
+## Usage
 <details><summary><code>client.usage.<a href="src/elevenlabs/usage/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
@@ -5595,7 +5595,7 @@ client.pronunciation_dictionaries.update(
 <dl>
 <dd>
 
-**archived:** `typing.Optional[bool]` — The name of the pronunciation dictionary, used for identification only.
+**archived:** `typing.Optional[bool]` — Whether to archive the pronunciation dictionary.
     
 </dd>
 </dl>
@@ -8309,6 +8309,8 @@ client = ElevenLabs(
 )
 client.conversational_ai.agents.get(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    version_id="version_id",
+    branch_id="branch_id",
 )
 
 ```
@@ -8326,6 +8328,22 @@ client.conversational_ai.agents.get(
 <dd>
 
 **agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version_id:** `typing.Optional[str]` — The ID of the agent version to use
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `typing.Optional[str]` — The ID of the branch to use
     
 </dd>
 </dl>
@@ -8449,6 +8467,7 @@ client = ElevenLabs(
 )
 client.conversational_ai.agents.update(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    branch_id="branch_id",
 )
 
 ```
@@ -8466,6 +8485,14 @@ client.conversational_ai.agents.update(
 <dd>
 
 **agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `typing.Optional[str]` — The ID of the branch to use
     
 </dd>
 </dl>
@@ -9084,35 +9111,16 @@ Creates a new agent response test.
 <dd>
 
 ```python
-from elevenlabs import (
-    AgentFailureResponseExample,
-    AgentSuccessfulResponseExample,
-    ConversationHistoryTranscriptCommonModelInput,
-    ElevenLabs,
-)
+from elevenlabs import ElevenLabs
+from elevenlabs.conversational_ai.tests import TestsCreateRequestBody_Llm
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.tests.create(
-    chat_history=[
-        ConversationHistoryTranscriptCommonModelInput(
-            role="user",
-            time_in_call_secs=1,
-        )
-    ],
-    success_condition="success_condition",
-    success_examples=[
-        AgentSuccessfulResponseExample(
-            response="response",
-        )
-    ],
-    failure_examples=[
-        AgentFailureResponseExample(
-            response="response",
-        )
-    ],
-    name="name",
+    request=TestsCreateRequestBody_Llm(
+        name="name",
+    ),
 )
 
 ```
@@ -9129,83 +9137,7 @@ client.conversational_ai.tests.create(
 <dl>
 <dd>
 
-**chat_history:** `typing.Sequence[ConversationHistoryTranscriptCommonModelInput]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**success_condition:** `str` — A prompt that evaluates whether the agent's response is successful. Should return True or False.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**success_examples:** `typing.Sequence[AgentSuccessfulResponseExample]` — Non-empty list of example responses that should be considered successful
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**failure_examples:** `typing.Sequence[AgentFailureResponseExample]` — Non-empty list of example responses that should be considered failures
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tool_call_parameters:** `typing.Optional[UnitTestToolCallEvaluationModelInput]` — How to evaluate the agent's tool call (if any). If empty, the tool call is not evaluated.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**check_any_tool_matches:** `typing.Optional[bool]` — If set to True this test will pass if any tool call returned by the LLM matches the criteria. Otherwise it will fail if more than one tool is returned by the agent.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**dynamic_variables:** `typing.Optional[
-    typing.Dict[
-        str, typing.Optional[CreateUnitTestRequestDynamicVariablesValue]
-    ]
-]` — Dynamic variables to replace in the agent config during testing
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**type:** `typing.Optional[UnitTestCommonModelType]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from_conversation_metadata:** `typing.Optional[TestFromConversationMetadataInput]` — Metadata of a conversation this test was created from (if applicable).
+**request:** `TestsCreateRequestBody` 
     
 </dd>
 </dl>
@@ -9322,36 +9254,17 @@ Updates an agent response test by ID.
 <dd>
 
 ```python
-from elevenlabs import (
-    AgentFailureResponseExample,
-    AgentSuccessfulResponseExample,
-    ConversationHistoryTranscriptCommonModelInput,
-    ElevenLabs,
-)
+from elevenlabs import ElevenLabs
+from elevenlabs.conversational_ai.tests import TestsUpdateRequestBody_Llm
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.tests.update(
     test_id="TeaqRRdTcIfIu2i7BYfT",
-    chat_history=[
-        ConversationHistoryTranscriptCommonModelInput(
-            role="user",
-            time_in_call_secs=1,
-        )
-    ],
-    success_condition="success_condition",
-    success_examples=[
-        AgentSuccessfulResponseExample(
-            response="response",
-        )
-    ],
-    failure_examples=[
-        AgentFailureResponseExample(
-            response="response",
-        )
-    ],
-    name="name",
+    request=TestsUpdateRequestBody_Llm(
+        name="name",
+    ),
 )
 
 ```
@@ -9376,83 +9289,7 @@ client.conversational_ai.tests.update(
 <dl>
 <dd>
 
-**chat_history:** `typing.Sequence[ConversationHistoryTranscriptCommonModelInput]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**success_condition:** `str` — A prompt that evaluates whether the agent's response is successful. Should return True or False.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**success_examples:** `typing.Sequence[AgentSuccessfulResponseExample]` — Non-empty list of example responses that should be considered successful
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**failure_examples:** `typing.Sequence[AgentFailureResponseExample]` — Non-empty list of example responses that should be considered failures
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tool_call_parameters:** `typing.Optional[UnitTestToolCallEvaluationModelInput]` — How to evaluate the agent's tool call (if any). If empty, the tool call is not evaluated.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**check_any_tool_matches:** `typing.Optional[bool]` — If set to True this test will pass if any tool call returned by the LLM matches the criteria. Otherwise it will fail if more than one tool is returned by the agent.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**dynamic_variables:** `typing.Optional[
-    typing.Dict[
-        str, typing.Optional[UpdateUnitTestRequestDynamicVariablesValue]
-    ]
-]` — Dynamic variables to replace in the agent config during testing
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**type:** `typing.Optional[UnitTestCommonModelType]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from_conversation_metadata:** `typing.Optional[TestFromConversationMetadataInput]` — Metadata of a conversation this test was created from (if applicable).
+**request:** `TestsUpdateRequestBody` 
     
 </dd>
 </dl>
@@ -9681,6 +9518,122 @@ client.conversational_ai.tests.list(
 <dd>
 
 **search:** `typing.Optional[str]` — Search query to filter tests by name.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi Users
+<details><summary><code>client.conversational_ai.users.<a href="src/elevenlabs/conversational_ai/users/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get distinct users from conversations with pagination.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.users.list(
+    agent_id="agent_id",
+    call_start_before_unix=1,
+    call_start_after_unix=1,
+    search="search",
+    page_size=1,
+    cursor="cursor",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `typing.Optional[str]` — The id of the agent you're taking the action on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**call_start_before_unix:** `typing.Optional[int]` — Unix timestamp (in seconds) to filter conversations up to this start date.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**call_start_after_unix:** `typing.Optional[int]` — Unix timestamp (in seconds) to filter conversations after to this start date.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Search/filter by user ID (exact match).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many users to return at maximum. Defaults to 30.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
     
 </dd>
 </dl>
@@ -14834,7 +14787,7 @@ client.conversational_ai.knowledge_base.documents.get(
 <dl>
 <dd>
 
-Delete a document from the knowledge base
+Delete a document or folder from the knowledge base.
 </dd>
 </dl>
 </dd>
@@ -14881,7 +14834,7 @@ client.conversational_ai.knowledge_base.documents.delete(
 <dl>
 <dd>
 
-**force:** `typing.Optional[bool]` — If set to true, the document will be deleted regardless of whether it is used by any agents and it will be deleted from the dependent agents.
+**force:** `typing.Optional[bool]` — If set to true, the document or folder will be deleted regardless of whether it is used by any agents and it will be removed from the dependent agents. For non-empty folders, this will also delete all child documents and folders.
     
 </dd>
 </dl>

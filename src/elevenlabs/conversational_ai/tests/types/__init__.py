@@ -6,11 +6,47 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .create_unit_test_request_dynamic_variables_value import CreateUnitTestRequestDynamicVariablesValue
-    from .update_unit_test_request_dynamic_variables_value import UpdateUnitTestRequestDynamicVariablesValue
+    from .tests_create_request_body import (
+        TestsCreateRequestBody,
+        TestsCreateRequestBody_Llm,
+        TestsCreateRequestBody_Simulation,
+        TestsCreateRequestBody_Tool,
+    )
+    from .tests_get_response import (
+        TestsGetResponse,
+        TestsGetResponse_Llm,
+        TestsGetResponse_Simulation,
+        TestsGetResponse_Tool,
+    )
+    from .tests_update_request_body import (
+        TestsUpdateRequestBody,
+        TestsUpdateRequestBody_Llm,
+        TestsUpdateRequestBody_Simulation,
+        TestsUpdateRequestBody_Tool,
+    )
+    from .tests_update_response import (
+        TestsUpdateResponse,
+        TestsUpdateResponse_Llm,
+        TestsUpdateResponse_Simulation,
+        TestsUpdateResponse_Tool,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
-    "CreateUnitTestRequestDynamicVariablesValue": ".create_unit_test_request_dynamic_variables_value",
-    "UpdateUnitTestRequestDynamicVariablesValue": ".update_unit_test_request_dynamic_variables_value",
+    "TestsCreateRequestBody": ".tests_create_request_body",
+    "TestsCreateRequestBody_Llm": ".tests_create_request_body",
+    "TestsCreateRequestBody_Simulation": ".tests_create_request_body",
+    "TestsCreateRequestBody_Tool": ".tests_create_request_body",
+    "TestsGetResponse": ".tests_get_response",
+    "TestsGetResponse_Llm": ".tests_get_response",
+    "TestsGetResponse_Simulation": ".tests_get_response",
+    "TestsGetResponse_Tool": ".tests_get_response",
+    "TestsUpdateRequestBody": ".tests_update_request_body",
+    "TestsUpdateRequestBody_Llm": ".tests_update_request_body",
+    "TestsUpdateRequestBody_Simulation": ".tests_update_request_body",
+    "TestsUpdateRequestBody_Tool": ".tests_update_request_body",
+    "TestsUpdateResponse": ".tests_update_response",
+    "TestsUpdateResponse_Llm": ".tests_update_response",
+    "TestsUpdateResponse_Simulation": ".tests_update_response",
+    "TestsUpdateResponse_Tool": ".tests_update_response",
 }
 
 
@@ -35,4 +71,21 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["CreateUnitTestRequestDynamicVariablesValue", "UpdateUnitTestRequestDynamicVariablesValue"]
+__all__ = [
+    "TestsCreateRequestBody",
+    "TestsCreateRequestBody_Llm",
+    "TestsCreateRequestBody_Simulation",
+    "TestsCreateRequestBody_Tool",
+    "TestsGetResponse",
+    "TestsGetResponse_Llm",
+    "TestsGetResponse_Simulation",
+    "TestsGetResponse_Tool",
+    "TestsUpdateRequestBody",
+    "TestsUpdateRequestBody_Llm",
+    "TestsUpdateRequestBody_Simulation",
+    "TestsUpdateRequestBody_Tool",
+    "TestsUpdateResponse",
+    "TestsUpdateResponse_Llm",
+    "TestsUpdateResponse_Simulation",
+    "TestsUpdateResponse_Tool",
+]

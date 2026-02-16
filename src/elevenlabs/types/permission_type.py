@@ -42,6 +42,7 @@ PermissionType = typing.Union[
         "webhooks_write",
         "service_account_write",
         "group_members_manage",
+        "workspace_members_read",
         "workspace_members_invite",
         "workspace_members_remove",
         "terms_of_service_accept",

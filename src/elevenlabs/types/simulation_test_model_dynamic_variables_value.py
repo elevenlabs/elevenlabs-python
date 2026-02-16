@@ -2,4 +2,4 @@
 
 import typing
 
-UnitTestCommonModelDynamicVariablesValue = typing.Union[str, float, int, bool]
+SimulationTestModelDynamicVariablesValue = typing.Union[str, float, int, bool]

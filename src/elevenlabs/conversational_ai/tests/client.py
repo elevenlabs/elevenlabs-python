@@ -6,19 +6,14 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
-from ...types.agent_failure_response_example import AgentFailureResponseExample
-from ...types.agent_successful_response_example import AgentSuccessfulResponseExample
-from ...types.conversation_history_transcript_common_model_input import ConversationHistoryTranscriptCommonModelInput
-from ...types.create_unit_test_response_model import CreateUnitTestResponseModel
+from ...types.create_agent_test_response_model import CreateAgentTestResponseModel
 from ...types.get_tests_page_response_model import GetTestsPageResponseModel
 from ...types.get_tests_summaries_by_ids_response_model import GetTestsSummariesByIdsResponseModel
-from ...types.get_unit_test_response_model import GetUnitTestResponseModel
-from ...types.test_from_conversation_metadata_input import TestFromConversationMetadataInput
-from ...types.unit_test_common_model_type import UnitTestCommonModelType
-from ...types.unit_test_tool_call_evaluation_model_input import UnitTestToolCallEvaluationModelInput
 from .raw_client import AsyncRawTestsClient, RawTestsClient
-from .types.create_unit_test_request_dynamic_variables_value import CreateUnitTestRequestDynamicVariablesValue
-from .types.update_unit_test_request_dynamic_variables_value import UpdateUnitTestRequestDynamicVariablesValue
+from .types.tests_create_request_body import TestsCreateRequestBody
+from .types.tests_get_response import TestsGetResponse
+from .types.tests_update_request_body import TestsUpdateRequestBody
+from .types.tests_update_response import TestsUpdateResponse
 
 if typing.TYPE_CHECKING:
     from .invocations.client import AsyncInvocationsClient, InvocationsClient
@@ -44,111 +39,41 @@ class TestsClient:
         return self._raw_client
 
     def create(
-        self,
-        *,
-        chat_history: typing.Sequence[ConversationHistoryTranscriptCommonModelInput],
-        success_condition: str,
-        success_examples: typing.Sequence[AgentSuccessfulResponseExample],
-        failure_examples: typing.Sequence[AgentFailureResponseExample],
-        name: str,
-        tool_call_parameters: typing.Optional[UnitTestToolCallEvaluationModelInput] = OMIT,
-        check_any_tool_matches: typing.Optional[bool] = OMIT,
-        dynamic_variables: typing.Optional[
-            typing.Dict[str, typing.Optional[CreateUnitTestRequestDynamicVariablesValue]]
-        ] = OMIT,
-        type: typing.Optional[UnitTestCommonModelType] = OMIT,
-        from_conversation_metadata: typing.Optional[TestFromConversationMetadataInput] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> CreateUnitTestResponseModel:
+        self, *, request: TestsCreateRequestBody, request_options: typing.Optional[RequestOptions] = None
+    ) -> CreateAgentTestResponseModel:
         """
         Creates a new agent response test.
 
         Parameters
         ----------
-        chat_history : typing.Sequence[ConversationHistoryTranscriptCommonModelInput]
-
-        success_condition : str
-            A prompt that evaluates whether the agent's response is successful. Should return True or False.
-
-        success_examples : typing.Sequence[AgentSuccessfulResponseExample]
-            Non-empty list of example responses that should be considered successful
-
-        failure_examples : typing.Sequence[AgentFailureResponseExample]
-            Non-empty list of example responses that should be considered failures
-
-        name : str
-
-        tool_call_parameters : typing.Optional[UnitTestToolCallEvaluationModelInput]
-            How to evaluate the agent's tool call (if any). If empty, the tool call is not evaluated.
-
-        check_any_tool_matches : typing.Optional[bool]
-            If set to True this test will pass if any tool call returned by the LLM matches the criteria. Otherwise it will fail if more than one tool is returned by the agent.
-
-        dynamic_variables : typing.Optional[typing.Dict[str, typing.Optional[CreateUnitTestRequestDynamicVariablesValue]]]
-            Dynamic variables to replace in the agent config during testing
-
-        type : typing.Optional[UnitTestCommonModelType]
-
-        from_conversation_metadata : typing.Optional[TestFromConversationMetadataInput]
-            Metadata of a conversation this test was created from (if applicable).
+        request : TestsCreateRequestBody
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        CreateUnitTestResponseModel
+        CreateAgentTestResponseModel
             Successful Response
 
         Examples
         --------
-        from elevenlabs import (
-            AgentFailureResponseExample,
-            AgentSuccessfulResponseExample,
-            ConversationHistoryTranscriptCommonModelInput,
-            ElevenLabs,
-        )
+        from elevenlabs import ElevenLabs
+        from elevenlabs.conversational_ai.tests import TestsCreateRequestBody_Llm
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.tests.create(
-            chat_history=[
-                ConversationHistoryTranscriptCommonModelInput(
-                    role="user",
-                    time_in_call_secs=1,
-                )
-            ],
-            success_condition="success_condition",
-            success_examples=[
-                AgentSuccessfulResponseExample(
-                    response="response",
-                )
-            ],
-            failure_examples=[
-                AgentFailureResponseExample(
-                    response="response",
-                )
-            ],
-            name="name",
+            request=TestsCreateRequestBody_Llm(
+                name="name",
+            ),
         )
         """
-        _response = self._raw_client.create(
-            chat_history=chat_history,
-            success_condition=success_condition,
-            success_examples=success_examples,
-            failure_examples=failure_examples,
-            name=name,
-            tool_call_parameters=tool_call_parameters,
-            check_any_tool_matches=check_any_tool_matches,
-            dynamic_variables=dynamic_variables,
-            type=type,
-            from_conversation_metadata=from_conversation_metadata,
-            request_options=request_options,
-        )
+        _response = self._raw_client.create(request=request, request_options=request_options)
         return _response.data
 
-    def get(self, test_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetUnitTestResponseModel:
+    def get(self, test_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> TestsGetResponse:
         """
         Gets an agent response test by ID.
 
@@ -162,7 +87,7 @@ class TestsClient:
 
         Returns
         -------
-        GetUnitTestResponseModel
+        TestsGetResponse
             Successful Response
 
         Examples
@@ -180,23 +105,8 @@ class TestsClient:
         return _response.data
 
     def update(
-        self,
-        test_id: str,
-        *,
-        chat_history: typing.Sequence[ConversationHistoryTranscriptCommonModelInput],
-        success_condition: str,
-        success_examples: typing.Sequence[AgentSuccessfulResponseExample],
-        failure_examples: typing.Sequence[AgentFailureResponseExample],
-        name: str,
-        tool_call_parameters: typing.Optional[UnitTestToolCallEvaluationModelInput] = OMIT,
-        check_any_tool_matches: typing.Optional[bool] = OMIT,
-        dynamic_variables: typing.Optional[
-            typing.Dict[str, typing.Optional[UpdateUnitTestRequestDynamicVariablesValue]]
-        ] = OMIT,
-        type: typing.Optional[UnitTestCommonModelType] = OMIT,
-        from_conversation_metadata: typing.Optional[TestFromConversationMetadataInput] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetUnitTestResponseModel:
+        self, test_id: str, *, request: TestsUpdateRequestBody, request_options: typing.Optional[RequestOptions] = None
+    ) -> TestsUpdateResponse:
         """
         Updates an agent response test by ID.
 
@@ -205,89 +115,32 @@ class TestsClient:
         test_id : str
             The id of a chat response test. This is returned on test creation.
 
-        chat_history : typing.Sequence[ConversationHistoryTranscriptCommonModelInput]
-
-        success_condition : str
-            A prompt that evaluates whether the agent's response is successful. Should return True or False.
-
-        success_examples : typing.Sequence[AgentSuccessfulResponseExample]
-            Non-empty list of example responses that should be considered successful
-
-        failure_examples : typing.Sequence[AgentFailureResponseExample]
-            Non-empty list of example responses that should be considered failures
-
-        name : str
-
-        tool_call_parameters : typing.Optional[UnitTestToolCallEvaluationModelInput]
-            How to evaluate the agent's tool call (if any). If empty, the tool call is not evaluated.
-
-        check_any_tool_matches : typing.Optional[bool]
-            If set to True this test will pass if any tool call returned by the LLM matches the criteria. Otherwise it will fail if more than one tool is returned by the agent.
-
-        dynamic_variables : typing.Optional[typing.Dict[str, typing.Optional[UpdateUnitTestRequestDynamicVariablesValue]]]
-            Dynamic variables to replace in the agent config during testing
-
-        type : typing.Optional[UnitTestCommonModelType]
-
-        from_conversation_metadata : typing.Optional[TestFromConversationMetadataInput]
-            Metadata of a conversation this test was created from (if applicable).
+        request : TestsUpdateRequestBody
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        GetUnitTestResponseModel
+        TestsUpdateResponse
             Successful Response
 
         Examples
         --------
-        from elevenlabs import (
-            AgentFailureResponseExample,
-            AgentSuccessfulResponseExample,
-            ConversationHistoryTranscriptCommonModelInput,
-            ElevenLabs,
-        )
+        from elevenlabs import ElevenLabs
+        from elevenlabs.conversational_ai.tests import TestsUpdateRequestBody_Llm
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.tests.update(
             test_id="TeaqRRdTcIfIu2i7BYfT",
-            chat_history=[
-                ConversationHistoryTranscriptCommonModelInput(
-                    role="user",
-                    time_in_call_secs=1,
-                )
-            ],
-            success_condition="success_condition",
-            success_examples=[
-                AgentSuccessfulResponseExample(
-                    response="response",
-                )
-            ],
-            failure_examples=[
-                AgentFailureResponseExample(
-                    response="response",
-                )
-            ],
-            name="name",
+            request=TestsUpdateRequestBody_Llm(
+                name="name",
+            ),
         )
         """
-        _response = self._raw_client.update(
-            test_id,
-            chat_history=chat_history,
-            success_condition=success_condition,
-            success_examples=success_examples,
-            failure_examples=failure_examples,
-            name=name,
-            tool_call_parameters=tool_call_parameters,
-            check_any_tool_matches=check_any_tool_matches,
-            dynamic_variables=dynamic_variables,
-            type=type,
-            from_conversation_metadata=from_conversation_metadata,
-            request_options=request_options,
-        )
+        _response = self._raw_client.update(test_id, request=request, request_options=request_options)
         return _response.data
 
     def delete(self, test_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
@@ -429,72 +282,29 @@ class AsyncTestsClient:
         return self._raw_client
 
     async def create(
-        self,
-        *,
-        chat_history: typing.Sequence[ConversationHistoryTranscriptCommonModelInput],
-        success_condition: str,
-        success_examples: typing.Sequence[AgentSuccessfulResponseExample],
-        failure_examples: typing.Sequence[AgentFailureResponseExample],
-        name: str,
-        tool_call_parameters: typing.Optional[UnitTestToolCallEvaluationModelInput] = OMIT,
-        check_any_tool_matches: typing.Optional[bool] = OMIT,
-        dynamic_variables: typing.Optional[
-            typing.Dict[str, typing.Optional[CreateUnitTestRequestDynamicVariablesValue]]
-        ] = OMIT,
-        type: typing.Optional[UnitTestCommonModelType] = OMIT,
-        from_conversation_metadata: typing.Optional[TestFromConversationMetadataInput] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> CreateUnitTestResponseModel:
+        self, *, request: TestsCreateRequestBody, request_options: typing.Optional[RequestOptions] = None
+    ) -> CreateAgentTestResponseModel:
         """
         Creates a new agent response test.
 
         Parameters
         ----------
-        chat_history : typing.Sequence[ConversationHistoryTranscriptCommonModelInput]
-
-        success_condition : str
-            A prompt that evaluates whether the agent's response is successful. Should return True or False.
-
-        success_examples : typing.Sequence[AgentSuccessfulResponseExample]
-            Non-empty list of example responses that should be considered successful
-
-        failure_examples : typing.Sequence[AgentFailureResponseExample]
-            Non-empty list of example responses that should be considered failures
-
-        name : str
-
-        tool_call_parameters : typing.Optional[UnitTestToolCallEvaluationModelInput]
-            How to evaluate the agent's tool call (if any). If empty, the tool call is not evaluated.
-
-        check_any_tool_matches : typing.Optional[bool]
-            If set to True this test will pass if any tool call returned by the LLM matches the criteria. Otherwise it will fail if more than one tool is returned by the agent.
-
-        dynamic_variables : typing.Optional[typing.Dict[str, typing.Optional[CreateUnitTestRequestDynamicVariablesValue]]]
-            Dynamic variables to replace in the agent config during testing
-
-        type : typing.Optional[UnitTestCommonModelType]
-
-        from_conversation_metadata : typing.Optional[TestFromConversationMetadataInput]
-            Metadata of a conversation this test was created from (if applicable).
+        request : TestsCreateRequestBody
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        CreateUnitTestResponseModel
+        CreateAgentTestResponseModel
             Successful Response
 
         Examples
         --------
         import asyncio
 
-        from elevenlabs import (
-            AgentFailureResponseExample,
-            AgentSuccessfulResponseExample,
-            AsyncElevenLabs,
-            ConversationHistoryTranscriptCommonModelInput,
-        )
+        from elevenlabs import AsyncElevenLabs
+        from elevenlabs.conversational_ai.tests import TestsCreateRequestBody_Llm
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
@@ -503,47 +313,18 @@ class AsyncTestsClient:
 
         async def main() -> None:
             await client.conversational_ai.tests.create(
-                chat_history=[
-                    ConversationHistoryTranscriptCommonModelInput(
-                        role="user",
-                        time_in_call_secs=1,
-                    )
-                ],
-                success_condition="success_condition",
-                success_examples=[
-                    AgentSuccessfulResponseExample(
-                        response="response",
-                    )
-                ],
-                failure_examples=[
-                    AgentFailureResponseExample(
-                        response="response",
-                    )
-                ],
-                name="name",
+                request=TestsCreateRequestBody_Llm(
+                    name="name",
+                ),
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create(
-            chat_history=chat_history,
-            success_condition=success_condition,
-            success_examples=success_examples,
-            failure_examples=failure_examples,
-            name=name,
-            tool_call_parameters=tool_call_parameters,
-            check_any_tool_matches=check_any_tool_matches,
-            dynamic_variables=dynamic_variables,
-            type=type,
-            from_conversation_metadata=from_conversation_metadata,
-            request_options=request_options,
-        )
+        _response = await self._raw_client.create(request=request, request_options=request_options)
         return _response.data
 
-    async def get(
-        self, test_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetUnitTestResponseModel:
+    async def get(self, test_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> TestsGetResponse:
         """
         Gets an agent response test by ID.
 
@@ -557,7 +338,7 @@ class AsyncTestsClient:
 
         Returns
         -------
-        GetUnitTestResponseModel
+        TestsGetResponse
             Successful Response
 
         Examples
@@ -583,23 +364,8 @@ class AsyncTestsClient:
         return _response.data
 
     async def update(
-        self,
-        test_id: str,
-        *,
-        chat_history: typing.Sequence[ConversationHistoryTranscriptCommonModelInput],
-        success_condition: str,
-        success_examples: typing.Sequence[AgentSuccessfulResponseExample],
-        failure_examples: typing.Sequence[AgentFailureResponseExample],
-        name: str,
-        tool_call_parameters: typing.Optional[UnitTestToolCallEvaluationModelInput] = OMIT,
-        check_any_tool_matches: typing.Optional[bool] = OMIT,
-        dynamic_variables: typing.Optional[
-            typing.Dict[str, typing.Optional[UpdateUnitTestRequestDynamicVariablesValue]]
-        ] = OMIT,
-        type: typing.Optional[UnitTestCommonModelType] = OMIT,
-        from_conversation_metadata: typing.Optional[TestFromConversationMetadataInput] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetUnitTestResponseModel:
+        self, test_id: str, *, request: TestsUpdateRequestBody, request_options: typing.Optional[RequestOptions] = None
+    ) -> TestsUpdateResponse:
         """
         Updates an agent response test by ID.
 
@@ -608,51 +374,22 @@ class AsyncTestsClient:
         test_id : str
             The id of a chat response test. This is returned on test creation.
 
-        chat_history : typing.Sequence[ConversationHistoryTranscriptCommonModelInput]
-
-        success_condition : str
-            A prompt that evaluates whether the agent's response is successful. Should return True or False.
-
-        success_examples : typing.Sequence[AgentSuccessfulResponseExample]
-            Non-empty list of example responses that should be considered successful
-
-        failure_examples : typing.Sequence[AgentFailureResponseExample]
-            Non-empty list of example responses that should be considered failures
-
-        name : str
-
-        tool_call_parameters : typing.Optional[UnitTestToolCallEvaluationModelInput]
-            How to evaluate the agent's tool call (if any). If empty, the tool call is not evaluated.
-
-        check_any_tool_matches : typing.Optional[bool]
-            If set to True this test will pass if any tool call returned by the LLM matches the criteria. Otherwise it will fail if more than one tool is returned by the agent.
-
-        dynamic_variables : typing.Optional[typing.Dict[str, typing.Optional[UpdateUnitTestRequestDynamicVariablesValue]]]
-            Dynamic variables to replace in the agent config during testing
-
-        type : typing.Optional[UnitTestCommonModelType]
-
-        from_conversation_metadata : typing.Optional[TestFromConversationMetadataInput]
-            Metadata of a conversation this test was created from (if applicable).
+        request : TestsUpdateRequestBody
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        GetUnitTestResponseModel
+        TestsUpdateResponse
             Successful Response
 
         Examples
         --------
         import asyncio
 
-        from elevenlabs import (
-            AgentFailureResponseExample,
-            AgentSuccessfulResponseExample,
-            AsyncElevenLabs,
-            ConversationHistoryTranscriptCommonModelInput,
-        )
+        from elevenlabs import AsyncElevenLabs
+        from elevenlabs.conversational_ai.tests import TestsUpdateRequestBody_Llm
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
@@ -662,43 +399,15 @@ class AsyncTestsClient:
         async def main() -> None:
             await client.conversational_ai.tests.update(
                 test_id="TeaqRRdTcIfIu2i7BYfT",
-                chat_history=[
-                    ConversationHistoryTranscriptCommonModelInput(
-                        role="user",
-                        time_in_call_secs=1,
-                    )
-                ],
-                success_condition="success_condition",
-                success_examples=[
-                    AgentSuccessfulResponseExample(
-                        response="response",
-                    )
-                ],
-                failure_examples=[
-                    AgentFailureResponseExample(
-                        response="response",
-                    )
-                ],
-                name="name",
+                request=TestsUpdateRequestBody_Llm(
+                    name="name",
+                ),
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.update(
-            test_id,
-            chat_history=chat_history,
-            success_condition=success_condition,
-            success_examples=success_examples,
-            failure_examples=failure_examples,
-            name=name,
-            tool_call_parameters=tool_call_parameters,
-            check_any_tool_matches=check_any_tool_matches,
-            dynamic_variables=dynamic_variables,
-            type=type,
-            from_conversation_metadata=from_conversation_metadata,
-            request_options=request_options,
-        )
+        _response = await self._raw_client.update(test_id, request=request, request_options=request_options)
         return _response.data
 
     async def delete(self, test_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:

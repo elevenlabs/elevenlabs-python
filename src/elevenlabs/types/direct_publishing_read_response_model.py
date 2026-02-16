@@ -50,7 +50,7 @@ class DirectPublishingReadResponseModel(UncheckedBaseModel):
     publisher: typing.Optional[str] = None
     copyright: typing.Optional[str] = None
     subtitle: typing.Optional[str] = None
-    distribution_territories: typing.Optional[typing.List[typing.Literal["worldwide"]]] = None
+    distribution_territories: typing.Optional[typing.List[str]] = None
     edition: typing.Optional[str] = None
     contributors: typing.Optional[typing.List[Contributor]] = None
     payout_type: typing.Optional[DirectPublishingReadResponseModelPayoutType] = None

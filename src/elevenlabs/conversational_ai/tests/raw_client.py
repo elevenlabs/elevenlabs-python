@@ -11,19 +11,14 @@ from ...core.request_options import RequestOptions
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
-from ...types.agent_failure_response_example import AgentFailureResponseExample
-from ...types.agent_successful_response_example import AgentSuccessfulResponseExample
-from ...types.conversation_history_transcript_common_model_input import ConversationHistoryTranscriptCommonModelInput
-from ...types.create_unit_test_response_model import CreateUnitTestResponseModel
+from ...types.create_agent_test_response_model import CreateAgentTestResponseModel
 from ...types.get_tests_page_response_model import GetTestsPageResponseModel
 from ...types.get_tests_summaries_by_ids_response_model import GetTestsSummariesByIdsResponseModel
-from ...types.get_unit_test_response_model import GetUnitTestResponseModel
 from ...types.http_validation_error import HttpValidationError
-from ...types.test_from_conversation_metadata_input import TestFromConversationMetadataInput
-from ...types.unit_test_common_model_type import UnitTestCommonModelType
-from ...types.unit_test_tool_call_evaluation_model_input import UnitTestToolCallEvaluationModelInput
-from .types.create_unit_test_request_dynamic_variables_value import CreateUnitTestRequestDynamicVariablesValue
-from .types.update_unit_test_request_dynamic_variables_value import UpdateUnitTestRequestDynamicVariablesValue
+from .types.tests_create_request_body import TestsCreateRequestBody
+from .types.tests_get_response import TestsGetResponse
+from .types.tests_update_request_body import TestsUpdateRequestBody
+from .types.tests_update_response import TestsUpdateResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -34,95 +29,29 @@ class RawTestsClient:
         self._client_wrapper = client_wrapper
 
     def create(
-        self,
-        *,
-        chat_history: typing.Sequence[ConversationHistoryTranscriptCommonModelInput],
-        success_condition: str,
-        success_examples: typing.Sequence[AgentSuccessfulResponseExample],
-        failure_examples: typing.Sequence[AgentFailureResponseExample],
-        name: str,
-        tool_call_parameters: typing.Optional[UnitTestToolCallEvaluationModelInput] = OMIT,
-        check_any_tool_matches: typing.Optional[bool] = OMIT,
-        dynamic_variables: typing.Optional[
-            typing.Dict[str, typing.Optional[CreateUnitTestRequestDynamicVariablesValue]]
-        ] = OMIT,
-        type: typing.Optional[UnitTestCommonModelType] = OMIT,
-        from_conversation_metadata: typing.Optional[TestFromConversationMetadataInput] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[CreateUnitTestResponseModel]:
+        self, *, request: TestsCreateRequestBody, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[CreateAgentTestResponseModel]:
         """
         Creates a new agent response test.
 
         Parameters
         ----------
-        chat_history : typing.Sequence[ConversationHistoryTranscriptCommonModelInput]
-
-        success_condition : str
-            A prompt that evaluates whether the agent's response is successful. Should return True or False.
-
-        success_examples : typing.Sequence[AgentSuccessfulResponseExample]
-            Non-empty list of example responses that should be considered successful
-
-        failure_examples : typing.Sequence[AgentFailureResponseExample]
-            Non-empty list of example responses that should be considered failures
-
-        name : str
-
-        tool_call_parameters : typing.Optional[UnitTestToolCallEvaluationModelInput]
-            How to evaluate the agent's tool call (if any). If empty, the tool call is not evaluated.
-
-        check_any_tool_matches : typing.Optional[bool]
-            If set to True this test will pass if any tool call returned by the LLM matches the criteria. Otherwise it will fail if more than one tool is returned by the agent.
-
-        dynamic_variables : typing.Optional[typing.Dict[str, typing.Optional[CreateUnitTestRequestDynamicVariablesValue]]]
-            Dynamic variables to replace in the agent config during testing
-
-        type : typing.Optional[UnitTestCommonModelType]
-
-        from_conversation_metadata : typing.Optional[TestFromConversationMetadataInput]
-            Metadata of a conversation this test was created from (if applicable).
+        request : TestsCreateRequestBody
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[CreateUnitTestResponseModel]
+        HttpResponse[CreateAgentTestResponseModel]
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/agent-testing/create",
             method="POST",
-            json={
-                "chat_history": convert_and_respect_annotation_metadata(
-                    object_=chat_history,
-                    annotation=typing.Sequence[ConversationHistoryTranscriptCommonModelInput],
-                    direction="write",
-                ),
-                "success_condition": success_condition,
-                "success_examples": convert_and_respect_annotation_metadata(
-                    object_=success_examples,
-                    annotation=typing.Sequence[AgentSuccessfulResponseExample],
-                    direction="write",
-                ),
-                "failure_examples": convert_and_respect_annotation_metadata(
-                    object_=failure_examples, annotation=typing.Sequence[AgentFailureResponseExample], direction="write"
-                ),
-                "tool_call_parameters": convert_and_respect_annotation_metadata(
-                    object_=tool_call_parameters, annotation=UnitTestToolCallEvaluationModelInput, direction="write"
-                ),
-                "check_any_tool_matches": check_any_tool_matches,
-                "dynamic_variables": convert_and_respect_annotation_metadata(
-                    object_=dynamic_variables,
-                    annotation=typing.Dict[str, typing.Optional[CreateUnitTestRequestDynamicVariablesValue]],
-                    direction="write",
-                ),
-                "type": type,
-                "from_conversation_metadata": convert_and_respect_annotation_metadata(
-                    object_=from_conversation_metadata, annotation=TestFromConversationMetadataInput, direction="write"
-                ),
-                "name": name,
-            },
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=TestsCreateRequestBody, direction="write"
+            ),
             headers={
                 "content-type": "application/json",
             },
@@ -132,9 +61,9 @@ class RawTestsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    CreateUnitTestResponseModel,
+                    CreateAgentTestResponseModel,
                     construct_type(
-                        type_=CreateUnitTestResponseModel,  # type: ignore
+                        type_=CreateAgentTestResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -157,7 +86,7 @@ class RawTestsClient:
 
     def get(
         self, test_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[GetUnitTestResponseModel]:
+    ) -> HttpResponse[TestsGetResponse]:
         """
         Gets an agent response test by ID.
 
@@ -171,7 +100,7 @@ class RawTestsClient:
 
         Returns
         -------
-        HttpResponse[GetUnitTestResponseModel]
+        HttpResponse[TestsGetResponse]
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -182,9 +111,9 @@ class RawTestsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    GetUnitTestResponseModel,
+                    TestsGetResponse,
                     construct_type(
-                        type_=GetUnitTestResponseModel,  # type: ignore
+                        type_=TestsGetResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -206,23 +135,8 @@ class RawTestsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update(
-        self,
-        test_id: str,
-        *,
-        chat_history: typing.Sequence[ConversationHistoryTranscriptCommonModelInput],
-        success_condition: str,
-        success_examples: typing.Sequence[AgentSuccessfulResponseExample],
-        failure_examples: typing.Sequence[AgentFailureResponseExample],
-        name: str,
-        tool_call_parameters: typing.Optional[UnitTestToolCallEvaluationModelInput] = OMIT,
-        check_any_tool_matches: typing.Optional[bool] = OMIT,
-        dynamic_variables: typing.Optional[
-            typing.Dict[str, typing.Optional[UpdateUnitTestRequestDynamicVariablesValue]]
-        ] = OMIT,
-        type: typing.Optional[UnitTestCommonModelType] = OMIT,
-        from_conversation_metadata: typing.Optional[TestFromConversationMetadataInput] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[GetUnitTestResponseModel]:
+        self, test_id: str, *, request: TestsUpdateRequestBody, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[TestsUpdateResponse]:
         """
         Updates an agent response test by ID.
 
@@ -231,74 +145,22 @@ class RawTestsClient:
         test_id : str
             The id of a chat response test. This is returned on test creation.
 
-        chat_history : typing.Sequence[ConversationHistoryTranscriptCommonModelInput]
-
-        success_condition : str
-            A prompt that evaluates whether the agent's response is successful. Should return True or False.
-
-        success_examples : typing.Sequence[AgentSuccessfulResponseExample]
-            Non-empty list of example responses that should be considered successful
-
-        failure_examples : typing.Sequence[AgentFailureResponseExample]
-            Non-empty list of example responses that should be considered failures
-
-        name : str
-
-        tool_call_parameters : typing.Optional[UnitTestToolCallEvaluationModelInput]
-            How to evaluate the agent's tool call (if any). If empty, the tool call is not evaluated.
-
-        check_any_tool_matches : typing.Optional[bool]
-            If set to True this test will pass if any tool call returned by the LLM matches the criteria. Otherwise it will fail if more than one tool is returned by the agent.
-
-        dynamic_variables : typing.Optional[typing.Dict[str, typing.Optional[UpdateUnitTestRequestDynamicVariablesValue]]]
-            Dynamic variables to replace in the agent config during testing
-
-        type : typing.Optional[UnitTestCommonModelType]
-
-        from_conversation_metadata : typing.Optional[TestFromConversationMetadataInput]
-            Metadata of a conversation this test was created from (if applicable).
+        request : TestsUpdateRequestBody
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[GetUnitTestResponseModel]
+        HttpResponse[TestsUpdateResponse]
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agent-testing/{jsonable_encoder(test_id)}",
             method="PUT",
-            json={
-                "chat_history": convert_and_respect_annotation_metadata(
-                    object_=chat_history,
-                    annotation=typing.Sequence[ConversationHistoryTranscriptCommonModelInput],
-                    direction="write",
-                ),
-                "success_condition": success_condition,
-                "success_examples": convert_and_respect_annotation_metadata(
-                    object_=success_examples,
-                    annotation=typing.Sequence[AgentSuccessfulResponseExample],
-                    direction="write",
-                ),
-                "failure_examples": convert_and_respect_annotation_metadata(
-                    object_=failure_examples, annotation=typing.Sequence[AgentFailureResponseExample], direction="write"
-                ),
-                "tool_call_parameters": convert_and_respect_annotation_metadata(
-                    object_=tool_call_parameters, annotation=UnitTestToolCallEvaluationModelInput, direction="write"
-                ),
-                "check_any_tool_matches": check_any_tool_matches,
-                "dynamic_variables": convert_and_respect_annotation_metadata(
-                    object_=dynamic_variables,
-                    annotation=typing.Dict[str, typing.Optional[UpdateUnitTestRequestDynamicVariablesValue]],
-                    direction="write",
-                ),
-                "type": type,
-                "from_conversation_metadata": convert_and_respect_annotation_metadata(
-                    object_=from_conversation_metadata, annotation=TestFromConversationMetadataInput, direction="write"
-                ),
-                "name": name,
-            },
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=TestsUpdateRequestBody, direction="write"
+            ),
             headers={
                 "content-type": "application/json",
             },
@@ -308,9 +170,9 @@ class RawTestsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    GetUnitTestResponseModel,
+                    TestsUpdateResponse,
                     construct_type(
-                        type_=GetUnitTestResponseModel,  # type: ignore
+                        type_=TestsUpdateResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -512,95 +374,29 @@ class AsyncRawTestsClient:
         self._client_wrapper = client_wrapper
 
     async def create(
-        self,
-        *,
-        chat_history: typing.Sequence[ConversationHistoryTranscriptCommonModelInput],
-        success_condition: str,
-        success_examples: typing.Sequence[AgentSuccessfulResponseExample],
-        failure_examples: typing.Sequence[AgentFailureResponseExample],
-        name: str,
-        tool_call_parameters: typing.Optional[UnitTestToolCallEvaluationModelInput] = OMIT,
-        check_any_tool_matches: typing.Optional[bool] = OMIT,
-        dynamic_variables: typing.Optional[
-            typing.Dict[str, typing.Optional[CreateUnitTestRequestDynamicVariablesValue]]
-        ] = OMIT,
-        type: typing.Optional[UnitTestCommonModelType] = OMIT,
-        from_conversation_metadata: typing.Optional[TestFromConversationMetadataInput] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[CreateUnitTestResponseModel]:
+        self, *, request: TestsCreateRequestBody, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[CreateAgentTestResponseModel]:
         """
         Creates a new agent response test.
 
         Parameters
         ----------
-        chat_history : typing.Sequence[ConversationHistoryTranscriptCommonModelInput]
-
-        success_condition : str
-            A prompt that evaluates whether the agent's response is successful. Should return True or False.
-
-        success_examples : typing.Sequence[AgentSuccessfulResponseExample]
-            Non-empty list of example responses that should be considered successful
-
-        failure_examples : typing.Sequence[AgentFailureResponseExample]
-            Non-empty list of example responses that should be considered failures
-
-        name : str
-
-        tool_call_parameters : typing.Optional[UnitTestToolCallEvaluationModelInput]
-            How to evaluate the agent's tool call (if any). If empty, the tool call is not evaluated.
-
-        check_any_tool_matches : typing.Optional[bool]
-            If set to True this test will pass if any tool call returned by the LLM matches the criteria. Otherwise it will fail if more than one tool is returned by the agent.
-
-        dynamic_variables : typing.Optional[typing.Dict[str, typing.Optional[CreateUnitTestRequestDynamicVariablesValue]]]
-            Dynamic variables to replace in the agent config during testing
-
-        type : typing.Optional[UnitTestCommonModelType]
-
-        from_conversation_metadata : typing.Optional[TestFromConversationMetadataInput]
-            Metadata of a conversation this test was created from (if applicable).
+        request : TestsCreateRequestBody
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[CreateUnitTestResponseModel]
+        AsyncHttpResponse[CreateAgentTestResponseModel]
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/agent-testing/create",
             method="POST",
-            json={
-                "chat_history": convert_and_respect_annotation_metadata(
-                    object_=chat_history,
-                    annotation=typing.Sequence[ConversationHistoryTranscriptCommonModelInput],
-                    direction="write",
-                ),
-                "success_condition": success_condition,
-                "success_examples": convert_and_respect_annotation_metadata(
-                    object_=success_examples,
-                    annotation=typing.Sequence[AgentSuccessfulResponseExample],
-                    direction="write",
-                ),
-                "failure_examples": convert_and_respect_annotation_metadata(
-                    object_=failure_examples, annotation=typing.Sequence[AgentFailureResponseExample], direction="write"
-                ),
-                "tool_call_parameters": convert_and_respect_annotation_metadata(
-                    object_=tool_call_parameters, annotation=UnitTestToolCallEvaluationModelInput, direction="write"
-                ),
-                "check_any_tool_matches": check_any_tool_matches,
-                "dynamic_variables": convert_and_respect_annotation_metadata(
-                    object_=dynamic_variables,
-                    annotation=typing.Dict[str, typing.Optional[CreateUnitTestRequestDynamicVariablesValue]],
-                    direction="write",
-                ),
-                "type": type,
-                "from_conversation_metadata": convert_and_respect_annotation_metadata(
-                    object_=from_conversation_metadata, annotation=TestFromConversationMetadataInput, direction="write"
-                ),
-                "name": name,
-            },
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=TestsCreateRequestBody, direction="write"
+            ),
             headers={
                 "content-type": "application/json",
             },
@@ -610,9 +406,9 @@ class AsyncRawTestsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    CreateUnitTestResponseModel,
+                    CreateAgentTestResponseModel,
                     construct_type(
-                        type_=CreateUnitTestResponseModel,  # type: ignore
+                        type_=CreateAgentTestResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -635,7 +431,7 @@ class AsyncRawTestsClient:
 
     async def get(
         self, test_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[GetUnitTestResponseModel]:
+    ) -> AsyncHttpResponse[TestsGetResponse]:
         """
         Gets an agent response test by ID.
 
@@ -649,7 +445,7 @@ class AsyncRawTestsClient:
 
         Returns
         -------
-        AsyncHttpResponse[GetUnitTestResponseModel]
+        AsyncHttpResponse[TestsGetResponse]
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -660,9 +456,9 @@ class AsyncRawTestsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    GetUnitTestResponseModel,
+                    TestsGetResponse,
                     construct_type(
-                        type_=GetUnitTestResponseModel,  # type: ignore
+                        type_=TestsGetResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -684,23 +480,8 @@ class AsyncRawTestsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update(
-        self,
-        test_id: str,
-        *,
-        chat_history: typing.Sequence[ConversationHistoryTranscriptCommonModelInput],
-        success_condition: str,
-        success_examples: typing.Sequence[AgentSuccessfulResponseExample],
-        failure_examples: typing.Sequence[AgentFailureResponseExample],
-        name: str,
-        tool_call_parameters: typing.Optional[UnitTestToolCallEvaluationModelInput] = OMIT,
-        check_any_tool_matches: typing.Optional[bool] = OMIT,
-        dynamic_variables: typing.Optional[
-            typing.Dict[str, typing.Optional[UpdateUnitTestRequestDynamicVariablesValue]]
-        ] = OMIT,
-        type: typing.Optional[UnitTestCommonModelType] = OMIT,
-        from_conversation_metadata: typing.Optional[TestFromConversationMetadataInput] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[GetUnitTestResponseModel]:
+        self, test_id: str, *, request: TestsUpdateRequestBody, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[TestsUpdateResponse]:
         """
         Updates an agent response test by ID.
 
@@ -709,74 +490,22 @@ class AsyncRawTestsClient:
         test_id : str
             The id of a chat response test. This is returned on test creation.
 
-        chat_history : typing.Sequence[ConversationHistoryTranscriptCommonModelInput]
-
-        success_condition : str
-            A prompt that evaluates whether the agent's response is successful. Should return True or False.
-
-        success_examples : typing.Sequence[AgentSuccessfulResponseExample]
-            Non-empty list of example responses that should be considered successful
-
-        failure_examples : typing.Sequence[AgentFailureResponseExample]
-            Non-empty list of example responses that should be considered failures
-
-        name : str
-
-        tool_call_parameters : typing.Optional[UnitTestToolCallEvaluationModelInput]
-            How to evaluate the agent's tool call (if any). If empty, the tool call is not evaluated.
-
-        check_any_tool_matches : typing.Optional[bool]
-            If set to True this test will pass if any tool call returned by the LLM matches the criteria. Otherwise it will fail if more than one tool is returned by the agent.
-
-        dynamic_variables : typing.Optional[typing.Dict[str, typing.Optional[UpdateUnitTestRequestDynamicVariablesValue]]]
-            Dynamic variables to replace in the agent config during testing
-
-        type : typing.Optional[UnitTestCommonModelType]
-
-        from_conversation_metadata : typing.Optional[TestFromConversationMetadataInput]
-            Metadata of a conversation this test was created from (if applicable).
+        request : TestsUpdateRequestBody
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[GetUnitTestResponseModel]
+        AsyncHttpResponse[TestsUpdateResponse]
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agent-testing/{jsonable_encoder(test_id)}",
             method="PUT",
-            json={
-                "chat_history": convert_and_respect_annotation_metadata(
-                    object_=chat_history,
-                    annotation=typing.Sequence[ConversationHistoryTranscriptCommonModelInput],
-                    direction="write",
-                ),
-                "success_condition": success_condition,
-                "success_examples": convert_and_respect_annotation_metadata(
-                    object_=success_examples,
-                    annotation=typing.Sequence[AgentSuccessfulResponseExample],
-                    direction="write",
-                ),
-                "failure_examples": convert_and_respect_annotation_metadata(
-                    object_=failure_examples, annotation=typing.Sequence[AgentFailureResponseExample], direction="write"
-                ),
-                "tool_call_parameters": convert_and_respect_annotation_metadata(
-                    object_=tool_call_parameters, annotation=UnitTestToolCallEvaluationModelInput, direction="write"
-                ),
-                "check_any_tool_matches": check_any_tool_matches,
-                "dynamic_variables": convert_and_respect_annotation_metadata(
-                    object_=dynamic_variables,
-                    annotation=typing.Dict[str, typing.Optional[UpdateUnitTestRequestDynamicVariablesValue]],
-                    direction="write",
-                ),
-                "type": type,
-                "from_conversation_metadata": convert_and_respect_annotation_metadata(
-                    object_=from_conversation_metadata, annotation=TestFromConversationMetadataInput, direction="write"
-                ),
-                "name": name,
-            },
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=TestsUpdateRequestBody, direction="write"
+            ),
             headers={
                 "content-type": "application/json",
             },
@@ -786,9 +515,9 @@ class AsyncRawTestsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    GetUnitTestResponseModel,
+                    TestsUpdateResponse,
                     construct_type(
-                        type_=GetUnitTestResponseModel,  # type: ignore
+                        type_=TestsUpdateResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
