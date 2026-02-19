@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .pending_clip_task import PendingClipTask
 
 
 class ProjectExternalAudioResponseModel(UncheckedBaseModel):
@@ -29,6 +30,7 @@ class ProjectExternalAudioResponseModel(UncheckedBaseModel):
     import_speech_progress: typing.Optional[float] = None
     speech_imported: typing.Optional[bool] = None
     dub_audio_progress: typing.Optional[float] = None
+    pending_task: typing.Optional[PendingClipTask] = None
     current_snapshot_id: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

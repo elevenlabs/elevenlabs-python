@@ -369,7 +369,7 @@ class RawDocumentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[typing.Any]:
         """
-        Delete a document from the knowledge base
+        Delete a document or folder from the knowledge base.
 
         Parameters
         ----------
@@ -377,7 +377,7 @@ class RawDocumentsClient:
             The id of a document from the knowledge base. This is returned on document addition.
 
         force : typing.Optional[bool]
-            If set to true, the document will be deleted regardless of whether it is used by any agents and it will be deleted from the dependent agents.
+            If set to true, the document or folder will be deleted regardless of whether it is used by any agents and it will be removed from the dependent agents. For non-empty folders, this will also delete all child documents and folders.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1105,7 +1105,7 @@ class AsyncRawDocumentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[typing.Any]:
         """
-        Delete a document from the knowledge base
+        Delete a document or folder from the knowledge base.
 
         Parameters
         ----------
@@ -1113,7 +1113,7 @@ class AsyncRawDocumentsClient:
             The id of a document from the knowledge base. This is returned on document addition.
 
         force : typing.Optional[bool]
-            If set to true, the document will be deleted regardless of whether it is used by any agents and it will be deleted from the dependent agents.
+            If set to true, the document or folder will be deleted regardless of whether it is used by any agents and it will be removed from the dependent agents. For non-empty folders, this will also delete all child documents and folders.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

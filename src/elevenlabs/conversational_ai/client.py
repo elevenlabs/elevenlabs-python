@@ -29,6 +29,7 @@ if typing.TYPE_CHECKING:
     from .tests.client import AsyncTestsClient, TestsClient
     from .tools.client import AsyncToolsClient, ToolsClient
     from .twilio.client import AsyncTwilioClient, TwilioClient
+    from .users.client import AsyncUsersClient, UsersClient
     from .whatsapp.client import AsyncWhatsappClient, WhatsappClient
     from .whatsapp_accounts.client import AsyncWhatsappAccountsClient, WhatsappAccountsClient
 # this is used as the default value for optional parameters
@@ -44,6 +45,7 @@ class ConversationalAiClient:
         self._whatsapp: typing.Optional[WhatsappClient] = None
         self._agents: typing.Optional[AgentsClient] = None
         self._tests: typing.Optional[TestsClient] = None
+        self._users: typing.Optional[UsersClient] = None
         self._phone_numbers: typing.Optional[PhoneNumbersClient] = None
         self._llm_usage: typing.Optional[LlmUsageClient] = None
         self._knowledge_base: typing.Optional[KnowledgeBaseClient] = None
@@ -258,6 +260,14 @@ class ConversationalAiClient:
         return self._tests
 
     @property
+    def users(self):
+        if self._users is None:
+            from .users.client import UsersClient  # noqa: E402
+
+            self._users = UsersClient(client_wrapper=self._client_wrapper)
+        return self._users
+
+    @property
     def phone_numbers(self):
         if self._phone_numbers is None:
             from .phone_numbers.client import PhoneNumbersClient  # noqa: E402
@@ -363,6 +373,7 @@ class AsyncConversationalAiClient:
         self._whatsapp: typing.Optional[AsyncWhatsappClient] = None
         self._agents: typing.Optional[AsyncAgentsClient] = None
         self._tests: typing.Optional[AsyncTestsClient] = None
+        self._users: typing.Optional[AsyncUsersClient] = None
         self._phone_numbers: typing.Optional[AsyncPhoneNumbersClient] = None
         self._llm_usage: typing.Optional[AsyncLlmUsageClient] = None
         self._knowledge_base: typing.Optional[AsyncKnowledgeBaseClient] = None
@@ -607,6 +618,14 @@ class AsyncConversationalAiClient:
 
             self._tests = AsyncTestsClient(client_wrapper=self._client_wrapper)
         return self._tests
+
+    @property
+    def users(self):
+        if self._users is None:
+            from .users.client import AsyncUsersClient  # noqa: E402
+
+            self._users = AsyncUsersClient(client_wrapper=self._client_wrapper)
+        return self._users
 
     @property
     def phone_numbers(self):

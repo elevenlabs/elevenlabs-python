@@ -2,4 +2,4 @@
 
 import typing
 
-TestRunMetadataTestType = typing.Union[typing.Literal["llm", "tool_call"], typing.Any]
+TestRunMetadataTestType = typing.Union[typing.Literal["llm", "tool_call", "simulation"], typing.Any]

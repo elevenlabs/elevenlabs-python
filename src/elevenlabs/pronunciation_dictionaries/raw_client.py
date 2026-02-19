@@ -18,6 +18,9 @@ from ..types.get_pronunciation_dictionaries_metadata_response_model import (
     GetPronunciationDictionariesMetadataResponseModel,
 )
 from ..types.get_pronunciation_dictionary_metadata_response import GetPronunciationDictionaryMetadataResponse
+from ..types.get_pronunciation_dictionary_with_rules_response_model import (
+    GetPronunciationDictionaryWithRulesResponseModel,
+)
 from ..types.http_validation_error import HttpValidationError
 from .types.body_add_a_pronunciation_dictionary_v_1_pronunciation_dictionaries_add_from_rules_post_rules_item import (
     BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem,
@@ -200,7 +203,7 @@ class RawPronunciationDictionariesClient:
 
     def get(
         self, pronunciation_dictionary_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[GetPronunciationDictionaryMetadataResponse]:
+    ) -> HttpResponse[GetPronunciationDictionaryWithRulesResponseModel]:
         """
         Get metadata for a pronunciation dictionary
 
@@ -214,7 +217,7 @@ class RawPronunciationDictionariesClient:
 
         Returns
         -------
-        HttpResponse[GetPronunciationDictionaryMetadataResponse]
+        HttpResponse[GetPronunciationDictionaryWithRulesResponseModel]
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -225,9 +228,9 @@ class RawPronunciationDictionariesClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    GetPronunciationDictionaryMetadataResponse,
+                    GetPronunciationDictionaryWithRulesResponseModel,
                     construct_type(
-                        type_=GetPronunciationDictionaryMetadataResponse,  # type: ignore
+                        type_=GetPronunciationDictionaryWithRulesResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -265,7 +268,7 @@ class RawPronunciationDictionariesClient:
             The id of the pronunciation dictionary
 
         archived : typing.Optional[bool]
-            The name of the pronunciation dictionary, used for identification only.
+            Whether to archive the pronunciation dictionary.
 
         name : typing.Optional[str]
             The name of the pronunciation dictionary, used for identification only.
@@ -612,7 +615,7 @@ class AsyncRawPronunciationDictionariesClient:
 
     async def get(
         self, pronunciation_dictionary_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[GetPronunciationDictionaryMetadataResponse]:
+    ) -> AsyncHttpResponse[GetPronunciationDictionaryWithRulesResponseModel]:
         """
         Get metadata for a pronunciation dictionary
 
@@ -626,7 +629,7 @@ class AsyncRawPronunciationDictionariesClient:
 
         Returns
         -------
-        AsyncHttpResponse[GetPronunciationDictionaryMetadataResponse]
+        AsyncHttpResponse[GetPronunciationDictionaryWithRulesResponseModel]
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -637,9 +640,9 @@ class AsyncRawPronunciationDictionariesClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    GetPronunciationDictionaryMetadataResponse,
+                    GetPronunciationDictionaryWithRulesResponseModel,
                     construct_type(
-                        type_=GetPronunciationDictionaryMetadataResponse,  # type: ignore
+                        type_=GetPronunciationDictionaryWithRulesResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -677,7 +680,7 @@ class AsyncRawPronunciationDictionariesClient:
             The id of the pronunciation dictionary
 
         archived : typing.Optional[bool]
-            The name of the pronunciation dictionary, used for identification only.
+            Whether to archive the pronunciation dictionary.
 
         name : typing.Optional[str]
             The name of the pronunciation dictionary, used for identification only.

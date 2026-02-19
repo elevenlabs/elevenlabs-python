@@ -9,7 +9,10 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .agent_transfer import AgentTransfer
+from .merging_strategy import MergingStrategy
+from .multi_source_config_json import MultiSourceConfigJson
 from .phone_number_transfer import PhoneNumberTransfer
+from .source_config_json import SourceConfigJson
 
 
 class SystemToolConfigOutputParams_EndCall(UncheckedBaseModel):
@@ -41,6 +44,28 @@ class SystemToolConfigOutputParams_LanguageDetection(UncheckedBaseModel):
 class SystemToolConfigOutputParams_PlayKeypadTouchTone(UncheckedBaseModel):
     system_tool_type: typing.Literal["play_keypad_touch_tone"] = "play_keypad_touch_tone"
     use_out_of_band_dtmf: typing.Optional[bool] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class SystemToolConfigOutputParams_SearchDocumentation(UncheckedBaseModel):
+    system_tool_type: typing.Literal["search_documentation"] = "search_documentation"
+    use_multi_source: typing.Optional[bool] = None
+    multi_source_config: typing.Optional[MultiSourceConfigJson] = None
+    use_decomposition: typing.Optional[bool] = None
+    use_reformulation: typing.Optional[bool] = None
+    synthesize_response: typing.Optional[bool] = None
+    merging_strategy: typing.Optional[MergingStrategy] = None
+    final_top_k: typing.Optional[int] = None
+    source_names: typing.Optional[typing.List[str]] = None
+    source_overrides: typing.Optional[typing.List[SourceConfigJson]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -113,6 +138,7 @@ SystemToolConfigOutputParams = typing_extensions.Annotated[
         SystemToolConfigOutputParams_EndCall,
         SystemToolConfigOutputParams_LanguageDetection,
         SystemToolConfigOutputParams_PlayKeypadTouchTone,
+        SystemToolConfigOutputParams_SearchDocumentation,
         SystemToolConfigOutputParams_SkipTurn,
         SystemToolConfigOutputParams_TransferToAgent,
         SystemToolConfigOutputParams_TransferToNumber,

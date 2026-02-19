@@ -7,6 +7,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .default_sharing_group_response_model import DefaultSharingGroupResponseModel
 from .workspace_api_key_response_model import WorkspaceApiKeyResponseModel
 
 
@@ -15,6 +16,7 @@ class WorkspaceServiceAccountResponseModel(UncheckedBaseModel):
     name: str
     created_at_unix: typing.Optional[int] = None
     api_keys: typing_extensions.Annotated[typing.List[WorkspaceApiKeyResponseModel], FieldMetadata(alias="api-keys")]
+    default_sharing_groups: typing.Optional[typing.List[DefaultSharingGroupResponseModel]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

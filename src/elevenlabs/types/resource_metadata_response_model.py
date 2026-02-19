@@ -18,6 +18,11 @@ class ResourceMetadataResponseModel(UncheckedBaseModel):
     The ID of the resource.
     """
 
+    resource_name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The name of the resource, if available.
+    """
+
     resource_type: WorkspaceResourceType = pydantic.Field()
     """
     The type of the resource.

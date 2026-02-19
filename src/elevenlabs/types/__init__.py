@@ -663,6 +663,9 @@ if typing.TYPE_CHECKING:
     from .close_socket import CloseSocket
     from .committed_transcript_payload import CommittedTranscriptPayload
     from .committed_transcript_with_timestamps_payload import CommittedTranscriptWithTimestampsPayload
+    from .content_config import ContentConfig
+    from .content_guardrail_input import ContentGuardrailInput
+    from .content_guardrail_output import ContentGuardrailOutput
     from .contributor import Contributor
     from .conv_ai_dynamic_variable import ConvAiDynamicVariable
     from .conv_ai_secret_locator import ConvAiSecretLocator
@@ -846,6 +849,7 @@ if typing.TYPE_CHECKING:
     from .conversation_token_db_model import ConversationTokenDbModel
     from .conversation_token_purpose import ConversationTokenPurpose
     from .conversation_turn_metrics import ConversationTurnMetrics
+    from .conversation_user_response_model import ConversationUserResponseModel
     from .conversational_config import ConversationalConfig
     from .conversational_config_api_model_workflow_override_input import (
         ConversationalConfigApiModelWorkflowOverrideInput,
@@ -857,14 +861,29 @@ if typing.TYPE_CHECKING:
     from .convert_project_response_model import ConvertProjectResponseModel
     from .create_agent_branch_response_model import CreateAgentBranchResponseModel
     from .create_agent_response_model import CreateAgentResponseModel
+    from .create_agent_test_response_model import CreateAgentTestResponseModel
     from .create_audio_native_project_request import CreateAudioNativeProjectRequest
     from .create_phone_number_response_model import CreatePhoneNumberResponseModel
     from .create_previously_generated_voice_request import CreatePreviouslyGeneratedVoiceRequest
     from .create_pronunciation_dictionary_response_model import CreatePronunciationDictionaryResponseModel
+    from .create_response_unit_test_request import CreateResponseUnitTestRequest
+    from .create_response_unit_test_request_dynamic_variables_value import (
+        CreateResponseUnitTestRequestDynamicVariablesValue,
+    )
+    from .create_simulation_test_request import CreateSimulationTestRequest
+    from .create_simulation_test_request_dynamic_variables_value import CreateSimulationTestRequestDynamicVariablesValue
     from .create_sip_trunk_phone_number_request import CreateSipTrunkPhoneNumberRequest
+    from .create_tool_call_unit_test_request import CreateToolCallUnitTestRequest
+    from .create_tool_call_unit_test_request_dynamic_variables_value import (
+        CreateToolCallUnitTestRequestDynamicVariablesValue,
+    )
     from .create_transcript_request import CreateTranscriptRequest
     from .create_twilio_phone_number_request import CreateTwilioPhoneNumberRequest
-    from .create_unit_test_response_model import CreateUnitTestResponseModel
+    from .custom_guardrail_config import CustomGuardrailConfig
+    from .custom_guardrail_config_model import CustomGuardrailConfigModel
+    from .custom_guardrail_input import CustomGuardrailInput
+    from .custom_guardrail_output import CustomGuardrailOutput
+    from .custom_guardrails_config import CustomGuardrailsConfig
     from .custom_llm import CustomLlm
     from .custom_llm_request_headers_value import CustomLlmRequestHeadersValue
     from .custom_llmapi_type import CustomLlmapiType
@@ -874,6 +893,8 @@ if typing.TYPE_CHECKING:
     from .dashboard_criteria_chart_model import DashboardCriteriaChartModel
     from .dashboard_data_collection_chart_model import DashboardDataCollectionChartModel
     from .data_collection_result_common_model import DataCollectionResultCommonModel
+    from .default_sharing_group_response_model import DefaultSharingGroupResponseModel
+    from .default_sharing_group_response_model_permission_level import DefaultSharingGroupResponseModelPermissionLevel
     from .delete_chapter_request import DeleteChapterRequest
     from .delete_chapter_response_model import DeleteChapterResponseModel
     from .delete_dubbing_response_model import DeleteDubbingResponseModel
@@ -993,6 +1014,7 @@ if typing.TYPE_CHECKING:
     from .get_conv_ai_settings_response_model import GetConvAiSettingsResponseModel
     from .get_conversation_response_model import GetConversationResponseModel
     from .get_conversation_response_model_status import GetConversationResponseModelStatus
+    from .get_conversation_users_page_response_model import GetConversationUsersPageResponseModel
     from .get_conversations_page_response_model import GetConversationsPageResponseModel
     from .get_knowledge_base_dependent_agents_response_model import GetKnowledgeBaseDependentAgentsResponseModel
     from .get_knowledge_base_dependent_agents_response_model_agents_item import (
@@ -1060,19 +1082,38 @@ if typing.TYPE_CHECKING:
         GetPronunciationDictionaryMetadataResponseModelPermissionOnResource,
     )
     from .get_pronunciation_dictionary_response import GetPronunciationDictionaryResponse
+    from .get_pronunciation_dictionary_with_rules_response_model import GetPronunciationDictionaryWithRulesResponseModel
+    from .get_pronunciation_dictionary_with_rules_response_model_permission_on_resource import (
+        GetPronunciationDictionaryWithRulesResponseModelPermissionOnResource,
+    )
+    from .get_pronunciation_dictionary_with_rules_response_model_rules_item import (
+        GetPronunciationDictionaryWithRulesResponseModelRulesItem,
+        GetPronunciationDictionaryWithRulesResponseModelRulesItem_Alias,
+        GetPronunciationDictionaryWithRulesResponseModelRulesItem_Phoneme,
+    )
+    from .get_response_unit_test_response_model import GetResponseUnitTestResponseModel
+    from .get_response_unit_test_response_model_dynamic_variables_value import (
+        GetResponseUnitTestResponseModelDynamicVariablesValue,
+    )
+    from .get_simulation_test_response_model import GetSimulationTestResponseModel
+    from .get_simulation_test_response_model_dynamic_variables_value import (
+        GetSimulationTestResponseModelDynamicVariablesValue,
+    )
     from .get_speech_history_response import GetSpeechHistoryResponse
     from .get_test_invocations_page_response_model import GetTestInvocationsPageResponseModel
     from .get_test_suite_invocation_response_model import GetTestSuiteInvocationResponseModel
     from .get_tests_page_response_model import GetTestsPageResponseModel
     from .get_tests_summaries_by_ids_response_model import GetTestsSummariesByIdsResponseModel
+    from .get_tool_call_unit_test_response_model import GetToolCallUnitTestResponseModel
+    from .get_tool_call_unit_test_response_model_dynamic_variables_value import (
+        GetToolCallUnitTestResponseModelDynamicVariablesValue,
+    )
     from .get_tool_dependent_agents_response_model import GetToolDependentAgentsResponseModel
     from .get_tool_dependent_agents_response_model_agents_item import (
         GetToolDependentAgentsResponseModelAgentsItem,
         GetToolDependentAgentsResponseModelAgentsItem_Available,
         GetToolDependentAgentsResponseModelAgentsItem_Unknown,
     )
-    from .get_unit_test_response_model import GetUnitTestResponseModel
-    from .get_unit_test_response_model_dynamic_variables_value import GetUnitTestResponseModelDynamicVariablesValue
     from .get_voices_response import GetVoicesResponse
     from .get_voices_v_2_response import GetVoicesV2Response
     from .get_whats_app_account_response import GetWhatsAppAccountResponse
@@ -1167,6 +1208,7 @@ if typing.TYPE_CHECKING:
     from .mcp_tool_approval_hash import McpToolApprovalHash
     from .mcp_tool_approval_policy import McpToolApprovalPolicy
     from .mcp_tool_config_override import McpToolConfigOverride
+    from .merging_strategy import MergingStrategy
     from .metric_record import MetricRecord
     from .metric_type import MetricType
     from .model import Model
@@ -1175,6 +1217,7 @@ if typing.TYPE_CHECKING:
     from .moderation_config import ModerationConfig
     from .moderation_guardrail_input import ModerationGuardrailInput
     from .moderation_guardrail_output import ModerationGuardrailOutput
+    from .multi_source_config_json import MultiSourceConfigJson
     from .multichannel_speech_to_text_response_model import MultichannelSpeechToTextResponseModel
     from .multipart_music_response import MultipartMusicResponse
     from .music_prompt import MusicPrompt
@@ -1197,6 +1240,8 @@ if typing.TYPE_CHECKING:
     from .patch_workspace_webhook_response_model import PatchWorkspaceWebhookResponseModel
     from .pdf_export_options import PdfExportOptions
     from .pending_cancellation_response_model import PendingCancellationResponseModel
+    from .pending_clip_task import PendingClipTask
+    from .pending_clip_task_type import PendingClipTaskType
     from .pending_subscription_switch_response_model import PendingSubscriptionSwitchResponseModel
     from .pending_subscription_switch_response_model_next_tier import PendingSubscriptionSwitchResponseModelNextTier
     from .permission_type import PermissionType
@@ -1209,6 +1254,11 @@ if typing.TYPE_CHECKING:
         PhoneNumberTransferCustomSipHeadersItem_Static,
     )
     from .phone_number_transfer_destination import PhoneNumberTransferDestination
+    from .phone_number_transfer_post_dial_digits import (
+        PhoneNumberTransferPostDialDigits,
+        PhoneNumberTransferPostDialDigits_Dynamic,
+        PhoneNumberTransferPostDialDigits_Static,
+    )
     from .phone_number_transfer_transfer_destination import (
         PhoneNumberTransferTransferDestination,
         PhoneNumberTransferTransferDestination_Phone,
@@ -1229,6 +1279,8 @@ if typing.TYPE_CHECKING:
     from .position_input import PositionInput
     from .position_output import PositionOutput
     from .post_agent_avatar_response_model import PostAgentAvatarResponseModel
+    from .post_dial_digits_dynamic_variable import PostDialDigitsDynamicVariable
+    from .post_dial_digits_static import PostDialDigitsStatic
     from .post_workspace_secret_response_model import PostWorkspaceSecretResponseModel
     from .preview_audio_db_model import PreviewAudioDbModel
     from .privacy_config import PrivacyConfig
@@ -1329,9 +1381,11 @@ if typing.TYPE_CHECKING:
     from .prompt_agent_db_model import PromptAgentDbModel
     from .prompt_evaluation_criteria import PromptEvaluationCriteria
     from .pronunciation_dictionary_alias_rule_request_model import PronunciationDictionaryAliasRuleRequestModel
+    from .pronunciation_dictionary_alias_rule_response_model import PronunciationDictionaryAliasRuleResponseModel
     from .pronunciation_dictionary_locator import PronunciationDictionaryLocator
     from .pronunciation_dictionary_locator_response_model import PronunciationDictionaryLocatorResponseModel
     from .pronunciation_dictionary_phoneme_rule_request_model import PronunciationDictionaryPhonemeRuleRequestModel
+    from .pronunciation_dictionary_phoneme_rule_response_model import PronunciationDictionaryPhonemeRuleResponseModel
     from .pronunciation_dictionary_rules_response_model import PronunciationDictionaryRulesResponseModel
     from .pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
     from .pronunciation_dictionary_version_response_model import PronunciationDictionaryVersionResponseModel
@@ -1374,6 +1428,8 @@ if typing.TYPE_CHECKING:
         ResourceMetadataResponseModelAnonymousAccessLevelOverride,
     )
     from .response_filter_mode import ResponseFilterMode
+    from .response_unit_test_model import ResponseUnitTestModel
+    from .response_unit_test_model_dynamic_variables_value import ResponseUnitTestModelDynamicVariablesValue
     from .review_response_model import ReviewResponseModel
     from .review_response_model_reject_reasons_item import ReviewResponseModelRejectReasonsItem
     from .review_response_model_review_status import ReviewResponseModelReviewStatus
@@ -1398,6 +1454,8 @@ if typing.TYPE_CHECKING:
     from .scribe_throttled_error_payload import ScribeThrottledErrorPayload
     from .scribe_transcriber_error_payload import ScribeTranscriberErrorPayload
     from .scribe_unaccepted_terms_error_payload import ScribeUnacceptedTermsErrorPayload
+    from .search_documentation_tool_config_input import SearchDocumentationToolConfigInput
+    from .search_documentation_tool_config_output import SearchDocumentationToolConfigOutput
     from .seat_type import SeatType
     from .secret_dependency_type import SecretDependencyType
     from .section_source import SectionSource
@@ -1418,8 +1476,9 @@ if typing.TYPE_CHECKING:
     from .share_option_response_model import ShareOptionResponseModel
     from .share_option_response_model_type import ShareOptionResponseModelType
     from .similar_voice import SimilarVoice
-    from .similar_voice_category import SimilarVoiceCategory
     from .similar_voices_for_speaker_response import SimilarVoicesForSpeakerResponse
+    from .simulation_test_model import SimulationTestModel
+    from .simulation_test_model_dynamic_variables_value import SimulationTestModelDynamicVariablesValue
     from .single_test_run_request_model import SingleTestRunRequestModel
     from .single_use_token_response_model import SingleUseTokenResponseModel
     from .single_use_token_type import SingleUseTokenType
@@ -1438,6 +1497,8 @@ if typing.TYPE_CHECKING:
     from .song_metadata import SongMetadata
     from .song_section import SongSection
     from .sort_direction import SortDirection
+    from .source_config_json import SourceConfigJson
+    from .source_retrieval_config import SourceRetrievalConfig
     from .speaker_audio_response_model import SpeakerAudioResponseModel
     from .speaker_created_response import SpeakerCreatedResponse
     from .speaker_response_model import SpeakerResponseModel
@@ -1474,6 +1535,7 @@ if typing.TYPE_CHECKING:
         SystemToolConfigInputParams_EndCall,
         SystemToolConfigInputParams_LanguageDetection,
         SystemToolConfigInputParams_PlayKeypadTouchTone,
+        SystemToolConfigInputParams_SearchDocumentation,
         SystemToolConfigInputParams_SkipTurn,
         SystemToolConfigInputParams_TransferToAgent,
         SystemToolConfigInputParams_TransferToNumber,
@@ -1485,6 +1547,7 @@ if typing.TYPE_CHECKING:
         SystemToolConfigOutputParams_EndCall,
         SystemToolConfigOutputParams_LanguageDetection,
         SystemToolConfigOutputParams_PlayKeypadTouchTone,
+        SystemToolConfigOutputParams_SearchDocumentation,
         SystemToolConfigOutputParams_SkipTurn,
         SystemToolConfigOutputParams_TransferToAgent,
         SystemToolConfigOutputParams_TransferToNumber,
@@ -1500,6 +1563,7 @@ if typing.TYPE_CHECKING:
     from .test_run_metadata_test_type import TestRunMetadataTestType
     from .test_run_status import TestRunStatus
     from .test_tool_result_model import TestToolResultModel
+    from .test_type import TestType
     from .tests_feature_usage_common_model import TestsFeatureUsageCommonModel
     from .text_normalisation_type import TextNormalisationType
     from .text_to_speech_apply_text_normalization_enum import TextToSpeechApplyTextNormalizationEnum
@@ -1515,6 +1579,8 @@ if typing.TYPE_CHECKING:
     from .tool_annotations import ToolAnnotations
     from .tool_call_sound_behavior import ToolCallSoundBehavior
     from .tool_call_sound_type import ToolCallSoundType
+    from .tool_call_unit_test_model import ToolCallUnitTestModel
+    from .tool_call_unit_test_model_dynamic_variables_value import ToolCallUnitTestModelDynamicVariablesValue
     from .tool_error_handling_mode import ToolErrorHandlingMode
     from .tool_execution_mode import ToolExecutionMode
     from .tool_mock_config import ToolMockConfig
@@ -1522,6 +1588,7 @@ if typing.TYPE_CHECKING:
     from .tool_request_model_tool_config import (
         ToolRequestModelToolConfig,
         ToolRequestModelToolConfig_Client,
+        ToolRequestModelToolConfig_Mcp,
         ToolRequestModelToolConfig_System,
         ToolRequestModelToolConfig_Webhook,
     )
@@ -1529,6 +1596,7 @@ if typing.TYPE_CHECKING:
     from .tool_response_model_tool_config import (
         ToolResponseModelToolConfig,
         ToolResponseModelToolConfig_Client,
+        ToolResponseModelToolConfig_Mcp,
         ToolResponseModelToolConfig_System,
         ToolResponseModelToolConfig_Webhook,
     )
@@ -1576,10 +1644,13 @@ if typing.TYPE_CHECKING:
     from .twilio_outbound_call_response import TwilioOutboundCallResponse
     from .twilio_region_id import TwilioRegionId
     from .txt_export_options import TxtExportOptions
-    from .unit_test_common_model import UnitTestCommonModel
-    from .unit_test_common_model_dynamic_variables_value import UnitTestCommonModelDynamicVariablesValue
-    from .unit_test_common_model_type import UnitTestCommonModelType
     from .unit_test_run_response_model import UnitTestRunResponseModel
+    from .unit_test_run_response_model_test_info import (
+        UnitTestRunResponseModelTestInfo,
+        UnitTestRunResponseModelTestInfo_Llm,
+        UnitTestRunResponseModelTestInfo_Simulation,
+        UnitTestRunResponseModelTestInfo_Tool,
+    )
     from .unit_test_summary_response_model import UnitTestSummaryResponseModel
     from .unit_test_tool_call_evaluation_model_input import UnitTestToolCallEvaluationModelInput
     from .unit_test_tool_call_evaluation_model_output import UnitTestToolCallEvaluationModelOutput
@@ -1596,6 +1667,16 @@ if typing.TYPE_CHECKING:
     from .update_chapter_request import UpdateChapterRequest
     from .update_project_request import UpdateProjectRequest
     from .update_pronunciation_dictionaries_request import UpdatePronunciationDictionariesRequest
+    from .update_response_unit_test_request import UpdateResponseUnitTestRequest
+    from .update_response_unit_test_request_dynamic_variables_value import (
+        UpdateResponseUnitTestRequestDynamicVariablesValue,
+    )
+    from .update_simulation_test_request import UpdateSimulationTestRequest
+    from .update_simulation_test_request_dynamic_variables_value import UpdateSimulationTestRequestDynamicVariablesValue
+    from .update_tool_call_unit_test_request import UpdateToolCallUnitTestRequest
+    from .update_tool_call_unit_test_request_dynamic_variables_value import (
+        UpdateToolCallUnitTestRequestDynamicVariablesValue,
+    )
     from .update_workspace_member_response_model import UpdateWorkspaceMemberResponseModel
     from .url_avatar import UrlAvatar
     from .usage_aggregation_interval import UsageAggregationInterval
@@ -1612,6 +1693,7 @@ if typing.TYPE_CHECKING:
     from .verified_voice_language_response_model import VerifiedVoiceLanguageResponseModel
     from .verify_pvc_voice_captcha_response_model import VerifyPvcVoiceCaptchaResponseModel
     from .voice import Voice
+    from .voice_category import VoiceCategory
     from .voice_design_preview_response import VoiceDesignPreviewResponse
     from .voice_generation_parameter_option_response import VoiceGenerationParameterOptionResponse
     from .voice_generation_parameter_response import VoiceGenerationParameterResponse
@@ -1779,6 +1861,11 @@ if typing.TYPE_CHECKING:
         WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem_Dynamic,
         WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem_Static,
     )
+    from .workflow_phone_number_node_model_input_post_dial_digits import (
+        WorkflowPhoneNumberNodeModelInputPostDialDigits,
+        WorkflowPhoneNumberNodeModelInputPostDialDigits_Dynamic,
+        WorkflowPhoneNumberNodeModelInputPostDialDigits_Static,
+    )
     from .workflow_phone_number_node_model_input_transfer_destination import (
         WorkflowPhoneNumberNodeModelInputTransferDestination,
         WorkflowPhoneNumberNodeModelInputTransferDestination_Phone,
@@ -1791,6 +1878,11 @@ if typing.TYPE_CHECKING:
         WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem,
         WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem_Dynamic,
         WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem_Static,
+    )
+    from .workflow_phone_number_node_model_output_post_dial_digits import (
+        WorkflowPhoneNumberNodeModelOutputPostDialDigits,
+        WorkflowPhoneNumberNodeModelOutputPostDialDigits_Dynamic,
+        WorkflowPhoneNumberNodeModelOutputPostDialDigits_Static,
     )
     from .workflow_phone_number_node_model_output_transfer_destination import (
         WorkflowPhoneNumberNodeModelOutputTransferDestination,
@@ -1840,6 +1932,9 @@ if typing.TYPE_CHECKING:
     from .workspace_create_api_key_response_model import WorkspaceCreateApiKeyResponseModel
     from .workspace_create_webhook_response_model import WorkspaceCreateWebhookResponseModel
     from .workspace_group_by_name_response_model import WorkspaceGroupByNameResponseModel
+    from .workspace_group_permission import WorkspaceGroupPermission
+    from .workspace_group_response_model import WorkspaceGroupResponseModel
+    from .workspace_group_response_model_group_usage_limit import WorkspaceGroupResponseModelGroupUsageLimit
     from .workspace_resource_type import WorkspaceResourceType
     from .workspace_service_account_list_response_model import WorkspaceServiceAccountListResponseModel
     from .workspace_service_account_response_model import WorkspaceServiceAccountResponseModel
@@ -2430,6 +2525,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CloseSocket": ".close_socket",
     "CommittedTranscriptPayload": ".committed_transcript_payload",
     "CommittedTranscriptWithTimestampsPayload": ".committed_transcript_with_timestamps_payload",
+    "ContentConfig": ".content_config",
+    "ContentGuardrailInput": ".content_guardrail_input",
+    "ContentGuardrailOutput": ".content_guardrail_output",
     "Contributor": ".contributor",
     "ConvAiDynamicVariable": ".conv_ai_dynamic_variable",
     "ConvAiSecretLocator": ".conv_ai_secret_locator",
@@ -2549,6 +2647,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationTokenDbModel": ".conversation_token_db_model",
     "ConversationTokenPurpose": ".conversation_token_purpose",
     "ConversationTurnMetrics": ".conversation_turn_metrics",
+    "ConversationUserResponseModel": ".conversation_user_response_model",
     "ConversationalConfig": ".conversational_config",
     "ConversationalConfigApiModelWorkflowOverrideInput": ".conversational_config_api_model_workflow_override_input",
     "ConversationalConfigApiModelWorkflowOverrideOutput": ".conversational_config_api_model_workflow_override_output",
@@ -2556,14 +2655,25 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConvertProjectResponseModel": ".convert_project_response_model",
     "CreateAgentBranchResponseModel": ".create_agent_branch_response_model",
     "CreateAgentResponseModel": ".create_agent_response_model",
+    "CreateAgentTestResponseModel": ".create_agent_test_response_model",
     "CreateAudioNativeProjectRequest": ".create_audio_native_project_request",
     "CreatePhoneNumberResponseModel": ".create_phone_number_response_model",
     "CreatePreviouslyGeneratedVoiceRequest": ".create_previously_generated_voice_request",
     "CreatePronunciationDictionaryResponseModel": ".create_pronunciation_dictionary_response_model",
+    "CreateResponseUnitTestRequest": ".create_response_unit_test_request",
+    "CreateResponseUnitTestRequestDynamicVariablesValue": ".create_response_unit_test_request_dynamic_variables_value",
+    "CreateSimulationTestRequest": ".create_simulation_test_request",
+    "CreateSimulationTestRequestDynamicVariablesValue": ".create_simulation_test_request_dynamic_variables_value",
     "CreateSipTrunkPhoneNumberRequest": ".create_sip_trunk_phone_number_request",
+    "CreateToolCallUnitTestRequest": ".create_tool_call_unit_test_request",
+    "CreateToolCallUnitTestRequestDynamicVariablesValue": ".create_tool_call_unit_test_request_dynamic_variables_value",
     "CreateTranscriptRequest": ".create_transcript_request",
     "CreateTwilioPhoneNumberRequest": ".create_twilio_phone_number_request",
-    "CreateUnitTestResponseModel": ".create_unit_test_response_model",
+    "CustomGuardrailConfig": ".custom_guardrail_config",
+    "CustomGuardrailConfigModel": ".custom_guardrail_config_model",
+    "CustomGuardrailInput": ".custom_guardrail_input",
+    "CustomGuardrailOutput": ".custom_guardrail_output",
+    "CustomGuardrailsConfig": ".custom_guardrails_config",
     "CustomLlm": ".custom_llm",
     "CustomLlmRequestHeadersValue": ".custom_llm_request_headers_value",
     "CustomLlmapiType": ".custom_llmapi_type",
@@ -2573,6 +2683,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DashboardCriteriaChartModel": ".dashboard_criteria_chart_model",
     "DashboardDataCollectionChartModel": ".dashboard_data_collection_chart_model",
     "DataCollectionResultCommonModel": ".data_collection_result_common_model",
+    "DefaultSharingGroupResponseModel": ".default_sharing_group_response_model",
+    "DefaultSharingGroupResponseModelPermissionLevel": ".default_sharing_group_response_model_permission_level",
     "DeleteChapterRequest": ".delete_chapter_request",
     "DeleteChapterResponseModel": ".delete_chapter_response_model",
     "DeleteDubbingResponseModel": ".delete_dubbing_response_model",
@@ -2682,6 +2794,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetConvAiSettingsResponseModel": ".get_conv_ai_settings_response_model",
     "GetConversationResponseModel": ".get_conversation_response_model",
     "GetConversationResponseModelStatus": ".get_conversation_response_model_status",
+    "GetConversationUsersPageResponseModel": ".get_conversation_users_page_response_model",
     "GetConversationsPageResponseModel": ".get_conversations_page_response_model",
     "GetKnowledgeBaseDependentAgentsResponseModel": ".get_knowledge_base_dependent_agents_response_model",
     "GetKnowledgeBaseDependentAgentsResponseModelAgentsItem": ".get_knowledge_base_dependent_agents_response_model_agents_item",
@@ -2729,17 +2842,26 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetPronunciationDictionaryMetadataResponse": ".get_pronunciation_dictionary_metadata_response",
     "GetPronunciationDictionaryMetadataResponseModelPermissionOnResource": ".get_pronunciation_dictionary_metadata_response_model_permission_on_resource",
     "GetPronunciationDictionaryResponse": ".get_pronunciation_dictionary_response",
+    "GetPronunciationDictionaryWithRulesResponseModel": ".get_pronunciation_dictionary_with_rules_response_model",
+    "GetPronunciationDictionaryWithRulesResponseModelPermissionOnResource": ".get_pronunciation_dictionary_with_rules_response_model_permission_on_resource",
+    "GetPronunciationDictionaryWithRulesResponseModelRulesItem": ".get_pronunciation_dictionary_with_rules_response_model_rules_item",
+    "GetPronunciationDictionaryWithRulesResponseModelRulesItem_Alias": ".get_pronunciation_dictionary_with_rules_response_model_rules_item",
+    "GetPronunciationDictionaryWithRulesResponseModelRulesItem_Phoneme": ".get_pronunciation_dictionary_with_rules_response_model_rules_item",
+    "GetResponseUnitTestResponseModel": ".get_response_unit_test_response_model",
+    "GetResponseUnitTestResponseModelDynamicVariablesValue": ".get_response_unit_test_response_model_dynamic_variables_value",
+    "GetSimulationTestResponseModel": ".get_simulation_test_response_model",
+    "GetSimulationTestResponseModelDynamicVariablesValue": ".get_simulation_test_response_model_dynamic_variables_value",
     "GetSpeechHistoryResponse": ".get_speech_history_response",
     "GetTestInvocationsPageResponseModel": ".get_test_invocations_page_response_model",
     "GetTestSuiteInvocationResponseModel": ".get_test_suite_invocation_response_model",
     "GetTestsPageResponseModel": ".get_tests_page_response_model",
     "GetTestsSummariesByIdsResponseModel": ".get_tests_summaries_by_ids_response_model",
+    "GetToolCallUnitTestResponseModel": ".get_tool_call_unit_test_response_model",
+    "GetToolCallUnitTestResponseModelDynamicVariablesValue": ".get_tool_call_unit_test_response_model_dynamic_variables_value",
     "GetToolDependentAgentsResponseModel": ".get_tool_dependent_agents_response_model",
     "GetToolDependentAgentsResponseModelAgentsItem": ".get_tool_dependent_agents_response_model_agents_item",
     "GetToolDependentAgentsResponseModelAgentsItem_Available": ".get_tool_dependent_agents_response_model_agents_item",
     "GetToolDependentAgentsResponseModelAgentsItem_Unknown": ".get_tool_dependent_agents_response_model_agents_item",
-    "GetUnitTestResponseModel": ".get_unit_test_response_model",
-    "GetUnitTestResponseModelDynamicVariablesValue": ".get_unit_test_response_model_dynamic_variables_value",
     "GetVoicesResponse": ".get_voices_response",
     "GetVoicesV2Response": ".get_voices_v_2_response",
     "GetWhatsAppAccountResponse": ".get_whats_app_account_response",
@@ -2828,6 +2950,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "McpToolApprovalHash": ".mcp_tool_approval_hash",
     "McpToolApprovalPolicy": ".mcp_tool_approval_policy",
     "McpToolConfigOverride": ".mcp_tool_config_override",
+    "MergingStrategy": ".merging_strategy",
     "MetricRecord": ".metric_record",
     "MetricType": ".metric_type",
     "Model": ".model",
@@ -2836,6 +2959,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ModerationConfig": ".moderation_config",
     "ModerationGuardrailInput": ".moderation_guardrail_input",
     "ModerationGuardrailOutput": ".moderation_guardrail_output",
+    "MultiSourceConfigJson": ".multi_source_config_json",
     "MultichannelSpeechToTextResponseModel": ".multichannel_speech_to_text_response_model",
     "MultipartMusicResponse": ".multipart_music_response",
     "MusicPrompt": ".music_prompt",
@@ -2858,6 +2982,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PatchWorkspaceWebhookResponseModel": ".patch_workspace_webhook_response_model",
     "PdfExportOptions": ".pdf_export_options",
     "PendingCancellationResponseModel": ".pending_cancellation_response_model",
+    "PendingClipTask": ".pending_clip_task",
+    "PendingClipTaskType": ".pending_clip_task_type",
     "PendingSubscriptionSwitchResponseModel": ".pending_subscription_switch_response_model",
     "PendingSubscriptionSwitchResponseModelNextTier": ".pending_subscription_switch_response_model_next_tier",
     "PermissionType": ".permission_type",
@@ -2868,6 +2994,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PhoneNumberTransferCustomSipHeadersItem_Dynamic": ".phone_number_transfer_custom_sip_headers_item",
     "PhoneNumberTransferCustomSipHeadersItem_Static": ".phone_number_transfer_custom_sip_headers_item",
     "PhoneNumberTransferDestination": ".phone_number_transfer_destination",
+    "PhoneNumberTransferPostDialDigits": ".phone_number_transfer_post_dial_digits",
+    "PhoneNumberTransferPostDialDigits_Dynamic": ".phone_number_transfer_post_dial_digits",
+    "PhoneNumberTransferPostDialDigits_Static": ".phone_number_transfer_post_dial_digits",
     "PhoneNumberTransferTransferDestination": ".phone_number_transfer_transfer_destination",
     "PhoneNumberTransferTransferDestination_Phone": ".phone_number_transfer_transfer_destination",
     "PhoneNumberTransferTransferDestination_PhoneDynamicVariable": ".phone_number_transfer_transfer_destination",
@@ -2886,6 +3015,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PositionInput": ".position_input",
     "PositionOutput": ".position_output",
     "PostAgentAvatarResponseModel": ".post_agent_avatar_response_model",
+    "PostDialDigitsDynamicVariable": ".post_dial_digits_dynamic_variable",
+    "PostDialDigitsStatic": ".post_dial_digits_static",
     "PostWorkspaceSecretResponseModel": ".post_workspace_secret_response_model",
     "PreviewAudioDbModel": ".preview_audio_db_model",
     "PrivacyConfig": ".privacy_config",
@@ -2966,9 +3097,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PromptAgentDbModel": ".prompt_agent_db_model",
     "PromptEvaluationCriteria": ".prompt_evaluation_criteria",
     "PronunciationDictionaryAliasRuleRequestModel": ".pronunciation_dictionary_alias_rule_request_model",
+    "PronunciationDictionaryAliasRuleResponseModel": ".pronunciation_dictionary_alias_rule_response_model",
     "PronunciationDictionaryLocator": ".pronunciation_dictionary_locator",
     "PronunciationDictionaryLocatorResponseModel": ".pronunciation_dictionary_locator_response_model",
     "PronunciationDictionaryPhonemeRuleRequestModel": ".pronunciation_dictionary_phoneme_rule_request_model",
+    "PronunciationDictionaryPhonemeRuleResponseModel": ".pronunciation_dictionary_phoneme_rule_response_model",
     "PronunciationDictionaryRulesResponseModel": ".pronunciation_dictionary_rules_response_model",
     "PronunciationDictionaryVersionLocator": ".pronunciation_dictionary_version_locator",
     "PronunciationDictionaryVersionResponseModel": ".pronunciation_dictionary_version_response_model",
@@ -3007,6 +3140,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ResourceMetadataResponseModel": ".resource_metadata_response_model",
     "ResourceMetadataResponseModelAnonymousAccessLevelOverride": ".resource_metadata_response_model_anonymous_access_level_override",
     "ResponseFilterMode": ".response_filter_mode",
+    "ResponseUnitTestModel": ".response_unit_test_model",
+    "ResponseUnitTestModelDynamicVariablesValue": ".response_unit_test_model_dynamic_variables_value",
     "ReviewResponseModel": ".review_response_model",
     "ReviewResponseModelRejectReasonsItem": ".review_response_model_reject_reasons_item",
     "ReviewResponseModelReviewStatus": ".review_response_model_review_status",
@@ -3031,6 +3166,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ScribeThrottledErrorPayload": ".scribe_throttled_error_payload",
     "ScribeTranscriberErrorPayload": ".scribe_transcriber_error_payload",
     "ScribeUnacceptedTermsErrorPayload": ".scribe_unaccepted_terms_error_payload",
+    "SearchDocumentationToolConfigInput": ".search_documentation_tool_config_input",
+    "SearchDocumentationToolConfigOutput": ".search_documentation_tool_config_output",
     "SeatType": ".seat_type",
     "SecretDependencyType": ".secret_dependency_type",
     "SectionSource": ".section_source",
@@ -3051,8 +3188,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ShareOptionResponseModel": ".share_option_response_model",
     "ShareOptionResponseModelType": ".share_option_response_model_type",
     "SimilarVoice": ".similar_voice",
-    "SimilarVoiceCategory": ".similar_voice_category",
     "SimilarVoicesForSpeakerResponse": ".similar_voices_for_speaker_response",
+    "SimulationTestModel": ".simulation_test_model",
+    "SimulationTestModelDynamicVariablesValue": ".simulation_test_model_dynamic_variables_value",
     "SingleTestRunRequestModel": ".single_test_run_request_model",
     "SingleUseTokenResponseModel": ".single_use_token_response_model",
     "SingleUseTokenType": ".single_use_token_type",
@@ -3071,6 +3209,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SongMetadata": ".song_metadata",
     "SongSection": ".song_section",
     "SortDirection": ".sort_direction",
+    "SourceConfigJson": ".source_config_json",
+    "SourceRetrievalConfig": ".source_retrieval_config",
     "SpeakerAudioResponseModel": ".speaker_audio_response_model",
     "SpeakerCreatedResponse": ".speaker_created_response",
     "SpeakerResponseModel": ".speaker_response_model",
@@ -3104,6 +3244,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SystemToolConfigInputParams_EndCall": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_LanguageDetection": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_PlayKeypadTouchTone": ".system_tool_config_input_params",
+    "SystemToolConfigInputParams_SearchDocumentation": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_SkipTurn": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_TransferToAgent": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_TransferToNumber": ".system_tool_config_input_params",
@@ -3113,6 +3254,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SystemToolConfigOutputParams_EndCall": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_LanguageDetection": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_PlayKeypadTouchTone": ".system_tool_config_output_params",
+    "SystemToolConfigOutputParams_SearchDocumentation": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_SkipTurn": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_TransferToAgent": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_TransferToNumber": ".system_tool_config_output_params",
@@ -3127,6 +3269,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TestRunMetadataTestType": ".test_run_metadata_test_type",
     "TestRunStatus": ".test_run_status",
     "TestToolResultModel": ".test_tool_result_model",
+    "TestType": ".test_type",
     "TestsFeatureUsageCommonModel": ".tests_feature_usage_common_model",
     "TextNormalisationType": ".text_normalisation_type",
     "TextToSpeechApplyTextNormalizationEnum": ".text_to_speech_apply_text_normalization_enum",
@@ -3142,17 +3285,21 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ToolAnnotations": ".tool_annotations",
     "ToolCallSoundBehavior": ".tool_call_sound_behavior",
     "ToolCallSoundType": ".tool_call_sound_type",
+    "ToolCallUnitTestModel": ".tool_call_unit_test_model",
+    "ToolCallUnitTestModelDynamicVariablesValue": ".tool_call_unit_test_model_dynamic_variables_value",
     "ToolErrorHandlingMode": ".tool_error_handling_mode",
     "ToolExecutionMode": ".tool_execution_mode",
     "ToolMockConfig": ".tool_mock_config",
     "ToolRequestModel": ".tool_request_model",
     "ToolRequestModelToolConfig": ".tool_request_model_tool_config",
     "ToolRequestModelToolConfig_Client": ".tool_request_model_tool_config",
+    "ToolRequestModelToolConfig_Mcp": ".tool_request_model_tool_config",
     "ToolRequestModelToolConfig_System": ".tool_request_model_tool_config",
     "ToolRequestModelToolConfig_Webhook": ".tool_request_model_tool_config",
     "ToolResponseModel": ".tool_response_model",
     "ToolResponseModelToolConfig": ".tool_response_model_tool_config",
     "ToolResponseModelToolConfig_Client": ".tool_response_model_tool_config",
+    "ToolResponseModelToolConfig_Mcp": ".tool_response_model_tool_config",
     "ToolResponseModelToolConfig_System": ".tool_response_model_tool_config",
     "ToolResponseModelToolConfig_Webhook": ".tool_response_model_tool_config",
     "ToolSortBy": ".tool_sort_by",
@@ -3197,10 +3344,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TwilioOutboundCallResponse": ".twilio_outbound_call_response",
     "TwilioRegionId": ".twilio_region_id",
     "TxtExportOptions": ".txt_export_options",
-    "UnitTestCommonModel": ".unit_test_common_model",
-    "UnitTestCommonModelDynamicVariablesValue": ".unit_test_common_model_dynamic_variables_value",
-    "UnitTestCommonModelType": ".unit_test_common_model_type",
     "UnitTestRunResponseModel": ".unit_test_run_response_model",
+    "UnitTestRunResponseModelTestInfo": ".unit_test_run_response_model_test_info",
+    "UnitTestRunResponseModelTestInfo_Llm": ".unit_test_run_response_model_test_info",
+    "UnitTestRunResponseModelTestInfo_Simulation": ".unit_test_run_response_model_test_info",
+    "UnitTestRunResponseModelTestInfo_Tool": ".unit_test_run_response_model_test_info",
     "UnitTestSummaryResponseModel": ".unit_test_summary_response_model",
     "UnitTestToolCallEvaluationModelInput": ".unit_test_tool_call_evaluation_model_input",
     "UnitTestToolCallEvaluationModelOutput": ".unit_test_tool_call_evaluation_model_output",
@@ -3215,6 +3363,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateChapterRequest": ".update_chapter_request",
     "UpdateProjectRequest": ".update_project_request",
     "UpdatePronunciationDictionariesRequest": ".update_pronunciation_dictionaries_request",
+    "UpdateResponseUnitTestRequest": ".update_response_unit_test_request",
+    "UpdateResponseUnitTestRequestDynamicVariablesValue": ".update_response_unit_test_request_dynamic_variables_value",
+    "UpdateSimulationTestRequest": ".update_simulation_test_request",
+    "UpdateSimulationTestRequestDynamicVariablesValue": ".update_simulation_test_request_dynamic_variables_value",
+    "UpdateToolCallUnitTestRequest": ".update_tool_call_unit_test_request",
+    "UpdateToolCallUnitTestRequestDynamicVariablesValue": ".update_tool_call_unit_test_request_dynamic_variables_value",
     "UpdateWorkspaceMemberResponseModel": ".update_workspace_member_response_model",
     "UrlAvatar": ".url_avatar",
     "UsageAggregationInterval": ".usage_aggregation_interval",
@@ -3231,6 +3385,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "VerifiedVoiceLanguageResponseModel": ".verified_voice_language_response_model",
     "VerifyPvcVoiceCaptchaResponseModel": ".verify_pvc_voice_captcha_response_model",
     "Voice": ".voice",
+    "VoiceCategory": ".voice_category",
     "VoiceDesignPreviewResponse": ".voice_design_preview_response",
     "VoiceGenerationParameterOptionResponse": ".voice_generation_parameter_option_response",
     "VoiceGenerationParameterResponse": ".voice_generation_parameter_response",
@@ -3372,6 +3527,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem": ".workflow_phone_number_node_model_input_custom_sip_headers_item",
     "WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem_Dynamic": ".workflow_phone_number_node_model_input_custom_sip_headers_item",
     "WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem_Static": ".workflow_phone_number_node_model_input_custom_sip_headers_item",
+    "WorkflowPhoneNumberNodeModelInputPostDialDigits": ".workflow_phone_number_node_model_input_post_dial_digits",
+    "WorkflowPhoneNumberNodeModelInputPostDialDigits_Dynamic": ".workflow_phone_number_node_model_input_post_dial_digits",
+    "WorkflowPhoneNumberNodeModelInputPostDialDigits_Static": ".workflow_phone_number_node_model_input_post_dial_digits",
     "WorkflowPhoneNumberNodeModelInputTransferDestination": ".workflow_phone_number_node_model_input_transfer_destination",
     "WorkflowPhoneNumberNodeModelInputTransferDestination_Phone": ".workflow_phone_number_node_model_input_transfer_destination",
     "WorkflowPhoneNumberNodeModelInputTransferDestination_PhoneDynamicVariable": ".workflow_phone_number_node_model_input_transfer_destination",
@@ -3381,6 +3539,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem": ".workflow_phone_number_node_model_output_custom_sip_headers_item",
     "WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem_Dynamic": ".workflow_phone_number_node_model_output_custom_sip_headers_item",
     "WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem_Static": ".workflow_phone_number_node_model_output_custom_sip_headers_item",
+    "WorkflowPhoneNumberNodeModelOutputPostDialDigits": ".workflow_phone_number_node_model_output_post_dial_digits",
+    "WorkflowPhoneNumberNodeModelOutputPostDialDigits_Dynamic": ".workflow_phone_number_node_model_output_post_dial_digits",
+    "WorkflowPhoneNumberNodeModelOutputPostDialDigits_Static": ".workflow_phone_number_node_model_output_post_dial_digits",
     "WorkflowPhoneNumberNodeModelOutputTransferDestination": ".workflow_phone_number_node_model_output_transfer_destination",
     "WorkflowPhoneNumberNodeModelOutputTransferDestination_Phone": ".workflow_phone_number_node_model_output_transfer_destination",
     "WorkflowPhoneNumberNodeModelOutputTransferDestination_PhoneDynamicVariable": ".workflow_phone_number_node_model_output_transfer_destination",
@@ -3419,6 +3580,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkspaceCreateApiKeyResponseModel": ".workspace_create_api_key_response_model",
     "WorkspaceCreateWebhookResponseModel": ".workspace_create_webhook_response_model",
     "WorkspaceGroupByNameResponseModel": ".workspace_group_by_name_response_model",
+    "WorkspaceGroupPermission": ".workspace_group_permission",
+    "WorkspaceGroupResponseModel": ".workspace_group_response_model",
+    "WorkspaceGroupResponseModelGroupUsageLimit": ".workspace_group_response_model_group_usage_limit",
     "WorkspaceResourceType": ".workspace_resource_type",
     "WorkspaceServiceAccountListResponseModel": ".workspace_service_account_list_response_model",
     "WorkspaceServiceAccountResponseModel": ".workspace_service_account_response_model",
@@ -4033,6 +4197,9 @@ __all__ = [
     "CloseSocket",
     "CommittedTranscriptPayload",
     "CommittedTranscriptWithTimestampsPayload",
+    "ContentConfig",
+    "ContentGuardrailInput",
+    "ContentGuardrailOutput",
     "Contributor",
     "ConvAiDynamicVariable",
     "ConvAiSecretLocator",
@@ -4152,6 +4319,7 @@ __all__ = [
     "ConversationTokenDbModel",
     "ConversationTokenPurpose",
     "ConversationTurnMetrics",
+    "ConversationUserResponseModel",
     "ConversationalConfig",
     "ConversationalConfigApiModelWorkflowOverrideInput",
     "ConversationalConfigApiModelWorkflowOverrideOutput",
@@ -4159,14 +4327,25 @@ __all__ = [
     "ConvertProjectResponseModel",
     "CreateAgentBranchResponseModel",
     "CreateAgentResponseModel",
+    "CreateAgentTestResponseModel",
     "CreateAudioNativeProjectRequest",
     "CreatePhoneNumberResponseModel",
     "CreatePreviouslyGeneratedVoiceRequest",
     "CreatePronunciationDictionaryResponseModel",
+    "CreateResponseUnitTestRequest",
+    "CreateResponseUnitTestRequestDynamicVariablesValue",
+    "CreateSimulationTestRequest",
+    "CreateSimulationTestRequestDynamicVariablesValue",
     "CreateSipTrunkPhoneNumberRequest",
+    "CreateToolCallUnitTestRequest",
+    "CreateToolCallUnitTestRequestDynamicVariablesValue",
     "CreateTranscriptRequest",
     "CreateTwilioPhoneNumberRequest",
-    "CreateUnitTestResponseModel",
+    "CustomGuardrailConfig",
+    "CustomGuardrailConfigModel",
+    "CustomGuardrailInput",
+    "CustomGuardrailOutput",
+    "CustomGuardrailsConfig",
     "CustomLlm",
     "CustomLlmRequestHeadersValue",
     "CustomLlmapiType",
@@ -4176,6 +4355,8 @@ __all__ = [
     "DashboardCriteriaChartModel",
     "DashboardDataCollectionChartModel",
     "DataCollectionResultCommonModel",
+    "DefaultSharingGroupResponseModel",
+    "DefaultSharingGroupResponseModelPermissionLevel",
     "DeleteChapterRequest",
     "DeleteChapterResponseModel",
     "DeleteDubbingResponseModel",
@@ -4285,6 +4466,7 @@ __all__ = [
     "GetConvAiSettingsResponseModel",
     "GetConversationResponseModel",
     "GetConversationResponseModelStatus",
+    "GetConversationUsersPageResponseModel",
     "GetConversationsPageResponseModel",
     "GetKnowledgeBaseDependentAgentsResponseModel",
     "GetKnowledgeBaseDependentAgentsResponseModelAgentsItem",
@@ -4332,17 +4514,26 @@ __all__ = [
     "GetPronunciationDictionaryMetadataResponse",
     "GetPronunciationDictionaryMetadataResponseModelPermissionOnResource",
     "GetPronunciationDictionaryResponse",
+    "GetPronunciationDictionaryWithRulesResponseModel",
+    "GetPronunciationDictionaryWithRulesResponseModelPermissionOnResource",
+    "GetPronunciationDictionaryWithRulesResponseModelRulesItem",
+    "GetPronunciationDictionaryWithRulesResponseModelRulesItem_Alias",
+    "GetPronunciationDictionaryWithRulesResponseModelRulesItem_Phoneme",
+    "GetResponseUnitTestResponseModel",
+    "GetResponseUnitTestResponseModelDynamicVariablesValue",
+    "GetSimulationTestResponseModel",
+    "GetSimulationTestResponseModelDynamicVariablesValue",
     "GetSpeechHistoryResponse",
     "GetTestInvocationsPageResponseModel",
     "GetTestSuiteInvocationResponseModel",
     "GetTestsPageResponseModel",
     "GetTestsSummariesByIdsResponseModel",
+    "GetToolCallUnitTestResponseModel",
+    "GetToolCallUnitTestResponseModelDynamicVariablesValue",
     "GetToolDependentAgentsResponseModel",
     "GetToolDependentAgentsResponseModelAgentsItem",
     "GetToolDependentAgentsResponseModelAgentsItem_Available",
     "GetToolDependentAgentsResponseModelAgentsItem_Unknown",
-    "GetUnitTestResponseModel",
-    "GetUnitTestResponseModelDynamicVariablesValue",
     "GetVoicesResponse",
     "GetVoicesV2Response",
     "GetWhatsAppAccountResponse",
@@ -4431,6 +4622,7 @@ __all__ = [
     "McpToolApprovalHash",
     "McpToolApprovalPolicy",
     "McpToolConfigOverride",
+    "MergingStrategy",
     "MetricRecord",
     "MetricType",
     "Model",
@@ -4439,6 +4631,7 @@ __all__ = [
     "ModerationConfig",
     "ModerationGuardrailInput",
     "ModerationGuardrailOutput",
+    "MultiSourceConfigJson",
     "MultichannelSpeechToTextResponseModel",
     "MultipartMusicResponse",
     "MusicPrompt",
@@ -4461,6 +4654,8 @@ __all__ = [
     "PatchWorkspaceWebhookResponseModel",
     "PdfExportOptions",
     "PendingCancellationResponseModel",
+    "PendingClipTask",
+    "PendingClipTaskType",
     "PendingSubscriptionSwitchResponseModel",
     "PendingSubscriptionSwitchResponseModelNextTier",
     "PermissionType",
@@ -4471,6 +4666,9 @@ __all__ = [
     "PhoneNumberTransferCustomSipHeadersItem_Dynamic",
     "PhoneNumberTransferCustomSipHeadersItem_Static",
     "PhoneNumberTransferDestination",
+    "PhoneNumberTransferPostDialDigits",
+    "PhoneNumberTransferPostDialDigits_Dynamic",
+    "PhoneNumberTransferPostDialDigits_Static",
     "PhoneNumberTransferTransferDestination",
     "PhoneNumberTransferTransferDestination_Phone",
     "PhoneNumberTransferTransferDestination_PhoneDynamicVariable",
@@ -4489,6 +4687,8 @@ __all__ = [
     "PositionInput",
     "PositionOutput",
     "PostAgentAvatarResponseModel",
+    "PostDialDigitsDynamicVariable",
+    "PostDialDigitsStatic",
     "PostWorkspaceSecretResponseModel",
     "PreviewAudioDbModel",
     "PrivacyConfig",
@@ -4569,9 +4769,11 @@ __all__ = [
     "PromptAgentDbModel",
     "PromptEvaluationCriteria",
     "PronunciationDictionaryAliasRuleRequestModel",
+    "PronunciationDictionaryAliasRuleResponseModel",
     "PronunciationDictionaryLocator",
     "PronunciationDictionaryLocatorResponseModel",
     "PronunciationDictionaryPhonemeRuleRequestModel",
+    "PronunciationDictionaryPhonemeRuleResponseModel",
     "PronunciationDictionaryRulesResponseModel",
     "PronunciationDictionaryVersionLocator",
     "PronunciationDictionaryVersionResponseModel",
@@ -4610,6 +4812,8 @@ __all__ = [
     "ResourceMetadataResponseModel",
     "ResourceMetadataResponseModelAnonymousAccessLevelOverride",
     "ResponseFilterMode",
+    "ResponseUnitTestModel",
+    "ResponseUnitTestModelDynamicVariablesValue",
     "ReviewResponseModel",
     "ReviewResponseModelRejectReasonsItem",
     "ReviewResponseModelReviewStatus",
@@ -4634,6 +4838,8 @@ __all__ = [
     "ScribeThrottledErrorPayload",
     "ScribeTranscriberErrorPayload",
     "ScribeUnacceptedTermsErrorPayload",
+    "SearchDocumentationToolConfigInput",
+    "SearchDocumentationToolConfigOutput",
     "SeatType",
     "SecretDependencyType",
     "SectionSource",
@@ -4654,8 +4860,9 @@ __all__ = [
     "ShareOptionResponseModel",
     "ShareOptionResponseModelType",
     "SimilarVoice",
-    "SimilarVoiceCategory",
     "SimilarVoicesForSpeakerResponse",
+    "SimulationTestModel",
+    "SimulationTestModelDynamicVariablesValue",
     "SingleTestRunRequestModel",
     "SingleUseTokenResponseModel",
     "SingleUseTokenType",
@@ -4674,6 +4881,8 @@ __all__ = [
     "SongMetadata",
     "SongSection",
     "SortDirection",
+    "SourceConfigJson",
+    "SourceRetrievalConfig",
     "SpeakerAudioResponseModel",
     "SpeakerCreatedResponse",
     "SpeakerResponseModel",
@@ -4707,6 +4916,7 @@ __all__ = [
     "SystemToolConfigInputParams_EndCall",
     "SystemToolConfigInputParams_LanguageDetection",
     "SystemToolConfigInputParams_PlayKeypadTouchTone",
+    "SystemToolConfigInputParams_SearchDocumentation",
     "SystemToolConfigInputParams_SkipTurn",
     "SystemToolConfigInputParams_TransferToAgent",
     "SystemToolConfigInputParams_TransferToNumber",
@@ -4716,6 +4926,7 @@ __all__ = [
     "SystemToolConfigOutputParams_EndCall",
     "SystemToolConfigOutputParams_LanguageDetection",
     "SystemToolConfigOutputParams_PlayKeypadTouchTone",
+    "SystemToolConfigOutputParams_SearchDocumentation",
     "SystemToolConfigOutputParams_SkipTurn",
     "SystemToolConfigOutputParams_TransferToAgent",
     "SystemToolConfigOutputParams_TransferToNumber",
@@ -4730,6 +4941,7 @@ __all__ = [
     "TestRunMetadataTestType",
     "TestRunStatus",
     "TestToolResultModel",
+    "TestType",
     "TestsFeatureUsageCommonModel",
     "TextNormalisationType",
     "TextToSpeechApplyTextNormalizationEnum",
@@ -4745,17 +4957,21 @@ __all__ = [
     "ToolAnnotations",
     "ToolCallSoundBehavior",
     "ToolCallSoundType",
+    "ToolCallUnitTestModel",
+    "ToolCallUnitTestModelDynamicVariablesValue",
     "ToolErrorHandlingMode",
     "ToolExecutionMode",
     "ToolMockConfig",
     "ToolRequestModel",
     "ToolRequestModelToolConfig",
     "ToolRequestModelToolConfig_Client",
+    "ToolRequestModelToolConfig_Mcp",
     "ToolRequestModelToolConfig_System",
     "ToolRequestModelToolConfig_Webhook",
     "ToolResponseModel",
     "ToolResponseModelToolConfig",
     "ToolResponseModelToolConfig_Client",
+    "ToolResponseModelToolConfig_Mcp",
     "ToolResponseModelToolConfig_System",
     "ToolResponseModelToolConfig_Webhook",
     "ToolSortBy",
@@ -4800,10 +5016,11 @@ __all__ = [
     "TwilioOutboundCallResponse",
     "TwilioRegionId",
     "TxtExportOptions",
-    "UnitTestCommonModel",
-    "UnitTestCommonModelDynamicVariablesValue",
-    "UnitTestCommonModelType",
     "UnitTestRunResponseModel",
+    "UnitTestRunResponseModelTestInfo",
+    "UnitTestRunResponseModelTestInfo_Llm",
+    "UnitTestRunResponseModelTestInfo_Simulation",
+    "UnitTestRunResponseModelTestInfo_Tool",
     "UnitTestSummaryResponseModel",
     "UnitTestToolCallEvaluationModelInput",
     "UnitTestToolCallEvaluationModelOutput",
@@ -4818,6 +5035,12 @@ __all__ = [
     "UpdateChapterRequest",
     "UpdateProjectRequest",
     "UpdatePronunciationDictionariesRequest",
+    "UpdateResponseUnitTestRequest",
+    "UpdateResponseUnitTestRequestDynamicVariablesValue",
+    "UpdateSimulationTestRequest",
+    "UpdateSimulationTestRequestDynamicVariablesValue",
+    "UpdateToolCallUnitTestRequest",
+    "UpdateToolCallUnitTestRequestDynamicVariablesValue",
     "UpdateWorkspaceMemberResponseModel",
     "UrlAvatar",
     "UsageAggregationInterval",
@@ -4834,6 +5057,7 @@ __all__ = [
     "VerifiedVoiceLanguageResponseModel",
     "VerifyPvcVoiceCaptchaResponseModel",
     "Voice",
+    "VoiceCategory",
     "VoiceDesignPreviewResponse",
     "VoiceGenerationParameterOptionResponse",
     "VoiceGenerationParameterResponse",
@@ -4975,6 +5199,9 @@ __all__ = [
     "WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem",
     "WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem_Dynamic",
     "WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem_Static",
+    "WorkflowPhoneNumberNodeModelInputPostDialDigits",
+    "WorkflowPhoneNumberNodeModelInputPostDialDigits_Dynamic",
+    "WorkflowPhoneNumberNodeModelInputPostDialDigits_Static",
     "WorkflowPhoneNumberNodeModelInputTransferDestination",
     "WorkflowPhoneNumberNodeModelInputTransferDestination_Phone",
     "WorkflowPhoneNumberNodeModelInputTransferDestination_PhoneDynamicVariable",
@@ -4984,6 +5211,9 @@ __all__ = [
     "WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem",
     "WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem_Dynamic",
     "WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem_Static",
+    "WorkflowPhoneNumberNodeModelOutputPostDialDigits",
+    "WorkflowPhoneNumberNodeModelOutputPostDialDigits_Dynamic",
+    "WorkflowPhoneNumberNodeModelOutputPostDialDigits_Static",
     "WorkflowPhoneNumberNodeModelOutputTransferDestination",
     "WorkflowPhoneNumberNodeModelOutputTransferDestination_Phone",
     "WorkflowPhoneNumberNodeModelOutputTransferDestination_PhoneDynamicVariable",
@@ -5022,6 +5252,9 @@ __all__ = [
     "WorkspaceCreateApiKeyResponseModel",
     "WorkspaceCreateWebhookResponseModel",
     "WorkspaceGroupByNameResponseModel",
+    "WorkspaceGroupPermission",
+    "WorkspaceGroupResponseModel",
+    "WorkspaceGroupResponseModelGroupUsageLimit",
     "WorkspaceResourceType",
     "WorkspaceServiceAccountListResponseModel",
     "WorkspaceServiceAccountResponseModel",

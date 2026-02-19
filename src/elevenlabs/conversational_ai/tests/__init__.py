@@ -6,11 +6,42 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import CreateUnitTestRequestDynamicVariablesValue, UpdateUnitTestRequestDynamicVariablesValue
+    from .types import (
+        TestsCreateRequestBody,
+        TestsCreateRequestBody_Llm,
+        TestsCreateRequestBody_Simulation,
+        TestsCreateRequestBody_Tool,
+        TestsGetResponse,
+        TestsGetResponse_Llm,
+        TestsGetResponse_Simulation,
+        TestsGetResponse_Tool,
+        TestsUpdateRequestBody,
+        TestsUpdateRequestBody_Llm,
+        TestsUpdateRequestBody_Simulation,
+        TestsUpdateRequestBody_Tool,
+        TestsUpdateResponse,
+        TestsUpdateResponse_Llm,
+        TestsUpdateResponse_Simulation,
+        TestsUpdateResponse_Tool,
+    )
     from . import invocations
 _dynamic_imports: typing.Dict[str, str] = {
-    "CreateUnitTestRequestDynamicVariablesValue": ".types",
-    "UpdateUnitTestRequestDynamicVariablesValue": ".types",
+    "TestsCreateRequestBody": ".types",
+    "TestsCreateRequestBody_Llm": ".types",
+    "TestsCreateRequestBody_Simulation": ".types",
+    "TestsCreateRequestBody_Tool": ".types",
+    "TestsGetResponse": ".types",
+    "TestsGetResponse_Llm": ".types",
+    "TestsGetResponse_Simulation": ".types",
+    "TestsGetResponse_Tool": ".types",
+    "TestsUpdateRequestBody": ".types",
+    "TestsUpdateRequestBody_Llm": ".types",
+    "TestsUpdateRequestBody_Simulation": ".types",
+    "TestsUpdateRequestBody_Tool": ".types",
+    "TestsUpdateResponse": ".types",
+    "TestsUpdateResponse_Llm": ".types",
+    "TestsUpdateResponse_Simulation": ".types",
+    "TestsUpdateResponse_Tool": ".types",
     "invocations": ".invocations",
 }
 
@@ -36,4 +67,22 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["CreateUnitTestRequestDynamicVariablesValue", "UpdateUnitTestRequestDynamicVariablesValue", "invocations"]
+__all__ = [
+    "TestsCreateRequestBody",
+    "TestsCreateRequestBody_Llm",
+    "TestsCreateRequestBody_Simulation",
+    "TestsCreateRequestBody_Tool",
+    "TestsGetResponse",
+    "TestsGetResponse_Llm",
+    "TestsGetResponse_Simulation",
+    "TestsGetResponse_Tool",
+    "TestsUpdateRequestBody",
+    "TestsUpdateRequestBody_Llm",
+    "TestsUpdateRequestBody_Simulation",
+    "TestsUpdateRequestBody_Tool",
+    "TestsUpdateResponse",
+    "TestsUpdateResponse_Llm",
+    "TestsUpdateResponse_Simulation",
+    "TestsUpdateResponse_Tool",
+    "invocations",
+]
