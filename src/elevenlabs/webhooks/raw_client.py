@@ -189,7 +189,13 @@ class RawWebhooksClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update(
-        self, webhook_id: str, *, is_disabled: bool, name: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        webhook_id: str,
+        *,
+        is_disabled: bool,
+        name: str,
+        retry_enabled: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PatchWorkspaceWebhookResponseModel]:
         """
         Update the specified workspace webhook
@@ -205,6 +211,9 @@ class RawWebhooksClient:
         name : str
             The display name of the webhook (used for display purposes only).
 
+        retry_enabled : typing.Optional[bool]
+            Whether to enable automatic retries for transient failures (5xx, 429, timeout)
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -219,6 +228,7 @@ class RawWebhooksClient:
             json={
                 "is_disabled": is_disabled,
                 "name": name,
+                "retry_enabled": retry_enabled,
             },
             headers={
                 "content-type": "application/json",
@@ -420,7 +430,13 @@ class AsyncRawWebhooksClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update(
-        self, webhook_id: str, *, is_disabled: bool, name: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        webhook_id: str,
+        *,
+        is_disabled: bool,
+        name: str,
+        retry_enabled: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PatchWorkspaceWebhookResponseModel]:
         """
         Update the specified workspace webhook
@@ -436,6 +452,9 @@ class AsyncRawWebhooksClient:
         name : str
             The display name of the webhook (used for display purposes only).
 
+        retry_enabled : typing.Optional[bool]
+            Whether to enable automatic retries for transient failures (5xx, 429, timeout)
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -450,6 +469,7 @@ class AsyncRawWebhooksClient:
             json={
                 "is_disabled": is_disabled,
                 "name": name,
+                "retry_enabled": retry_enabled,
             },
             headers={
                 "content-type": "application/json",

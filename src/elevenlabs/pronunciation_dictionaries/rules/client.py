@@ -70,6 +70,8 @@ class RulesClient:
             rules=[
                 PronunciationDictionaryRule_Alias(
                     string_to_replace="Thailand",
+                    case_sensitive=True,
+                    word_boundaries=True,
                     alias="tie-land",
                 )
             ],
@@ -185,6 +187,8 @@ class AsyncRulesClient:
                 rules=[
                     PronunciationDictionaryRule_Alias(
                         string_to_replace="Thailand",
+                        case_sensitive=True,
+                        word_boundaries=True,
                         alias="tie-land",
                     )
                 ],

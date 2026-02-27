@@ -10,6 +10,9 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .api_integration_webhook_overrides_input_request_headers_value import (
     ApiIntegrationWebhookOverridesInputRequestHeadersValue,
 )
+from .api_integration_webhook_overrides_input_schema_overrides_value import (
+    ApiIntegrationWebhookOverridesInputSchemaOverridesValue,
+)
 from .literal_override import LiteralOverride
 from .query_override import QueryOverride
 from .response_filter_mode import ResponseFilterMode
@@ -21,6 +24,9 @@ class ApiIntegrationWebhookOverridesInput(UncheckedBaseModel):
     configuring an API Integration Webhook Tool.
     """
 
+    schema_overrides: typing.Optional[
+        typing.Dict[str, typing.Optional[ApiIntegrationWebhookOverridesInputSchemaOverridesValue]]
+    ] = None
     path_params_schema: typing.Optional[typing.Dict[str, typing.Optional[LiteralOverride]]] = None
     query_params_schema: typing.Optional[QueryOverride] = None
     request_body_schema: typing.Optional["ObjectOverrideInput"] = None

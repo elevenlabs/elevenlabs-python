@@ -28,6 +28,8 @@ WorkspaceResourceType = typing.Union[
         "convai_agent_versions",
         "convai_agent_branches",
         "convai_agent_versions_deployments",
+        "convai_memory_entries",
+        "convai_coaching_proposals",
         "dashboard",
         "dashboard_configuration",
         "convai_agent_drafts",
@@ -35,6 +37,7 @@ WorkspaceResourceType = typing.Union[
         "assets",
         "content_generations",
         "content_templates",
+        "songs",
     ],
     typing.Any,
 ]

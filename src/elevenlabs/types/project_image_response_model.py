@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .canvas_placement import CanvasPlacement
+from .clip_animation import ClipAnimation
 
 
 class ProjectImageResponseModel(UncheckedBaseModel):
@@ -22,6 +23,7 @@ class ProjectImageResponseModel(UncheckedBaseModel):
     duration_ms: int
     order: str
     canvas_placement: CanvasPlacement
+    animation: typing.Optional[ClipAnimation] = None
     created_at_ms: int
     updated_at_ms: int
     current_snapshot_id: typing.Optional[str] = None

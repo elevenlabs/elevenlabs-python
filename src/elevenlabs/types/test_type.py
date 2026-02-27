@@ -2,4 +2,4 @@
 
 import typing
 
-TestType = typing.Union[typing.Literal["llm", "tool", "simulation"], typing.Any]
+TestType = typing.Union[typing.Literal["llm", "tool", "simulation", "folder"], typing.Any]

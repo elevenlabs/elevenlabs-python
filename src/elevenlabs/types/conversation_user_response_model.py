@@ -12,8 +12,9 @@ class ConversationUserResponseModel(UncheckedBaseModel):
     last_contact_unix_secs: int
     first_contact_unix_secs: int
     conversation_count: int
-    last_agent_id: typing.Optional[str] = None
-    last_agent_name: typing.Optional[str] = None
+    last_contact_agent_id: typing.Optional[str] = None
+    last_contact_conversation_id: typing.Optional[str] = None
+    last_contact_agent_name: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

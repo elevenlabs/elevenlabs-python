@@ -323,6 +323,7 @@ class VoicesClient:
         voice_id: str,
         *,
         new_name: str,
+        bookmarked: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddVoiceResponseModel:
         """
@@ -338,6 +339,8 @@ class VoicesClient:
 
         new_name : str
             The name that identifies this voice. This will be displayed in the dropdown of the website.
+
+        bookmarked : typing.Optional[bool]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -360,7 +363,9 @@ class VoicesClient:
             new_name="John Smith",
         )
         """
-        _response = self._raw_client.share(public_user_id, voice_id, new_name=new_name, request_options=request_options)
+        _response = self._raw_client.share(
+            public_user_id, voice_id, new_name=new_name, bookmarked=bookmarked, request_options=request_options
+        )
         return _response.data
 
     def get_shared(
@@ -917,6 +922,7 @@ class AsyncVoicesClient:
         voice_id: str,
         *,
         new_name: str,
+        bookmarked: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddVoiceResponseModel:
         """
@@ -932,6 +938,8 @@ class AsyncVoicesClient:
 
         new_name : str
             The name that identifies this voice. This will be displayed in the dropdown of the website.
+
+        bookmarked : typing.Optional[bool]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -963,7 +971,7 @@ class AsyncVoicesClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.share(
-            public_user_id, voice_id, new_name=new_name, request_options=request_options
+            public_user_id, voice_id, new_name=new_name, bookmarked=bookmarked, request_options=request_options
         )
         return _response.data
 

@@ -26,6 +26,11 @@ class RagConfigWorkflowOverride(UncheckedBaseModel):
     Maximum number of RAG document chunks to initially retrieve from the vector store. These are then further filtered by vector distance and total length.
     """
 
+    num_candidates: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of candidates evaluated in ANN vector search. Higher number means better results, but higher latency. Minimum recommended value is 100. If disabled, the default value is used.
+    """
+
     query_rewrite_prompt_override: typing.Optional[str] = pydantic.Field(default=None)
     """
     Custom prompt for rewriting user queries before RAG retrieval. The conversation history will be automatically appended at the end. If not set, the default prompt will be used.

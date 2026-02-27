@@ -11,6 +11,7 @@ from .agent_metadata_response_model import AgentMetadataResponseModel
 from .agent_platform_settings_response_model import AgentPlatformSettingsResponseModel
 from .agent_workflow_response_model import AgentWorkflowResponseModel
 from .conversational_config import ConversationalConfig
+from .get_agent_response_model_coaching_settings import GetAgentResponseModelCoachingSettings
 from .get_agent_response_model_phone_numbers_item import GetAgentResponseModelPhoneNumbersItem
 from .get_whats_app_account_response import GetWhatsAppAccountResponse
 from .resource_access_info import ResourceAccessInfo
@@ -80,6 +81,11 @@ class GetAgentResponseModel(UncheckedBaseModel):
     main_branch_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     The ID of the main branch for this agent
+    """
+
+    coaching_settings: typing.Optional[GetAgentResponseModelCoachingSettings] = pydantic.Field(default=None)
+    """
+    Coaching settings for the agent if configured
     """
 
     if IS_PYDANTIC_V2:

@@ -13,6 +13,7 @@ if typing.TYPE_CHECKING:
         conversations,
         dashboard,
         knowledge_base,
+        llm,
         llm_usage,
         mcp_servers,
         phone_numbers,
@@ -26,7 +27,14 @@ if typing.TYPE_CHECKING:
         whatsapp,
         whatsapp_accounts,
     )
-    from .agents import BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem
+    from .agents import (
+        BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings,
+        BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings_Coached,
+        BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings_None,
+        BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings,
+        BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings_Coached,
+        BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings_None,
+    )
     from .conversations import ConversationsListRequestSummaryMode
     from .knowledge_base import (
         KnowledgeBaseGetOrCreateRagIndexesResponseValue,
@@ -57,6 +65,7 @@ if typing.TYPE_CHECKING:
         TestsGetResponse_Llm,
         TestsGetResponse_Simulation,
         TestsGetResponse_Tool,
+        TestsListRequestSortMode,
         TestsUpdateRequestBody,
         TestsUpdateRequestBody_Llm,
         TestsUpdateRequestBody_Simulation,
@@ -74,7 +83,12 @@ if typing.TYPE_CHECKING:
         BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Header,
     )
 _dynamic_imports: typing.Dict[str, str] = {
-    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem": ".agents",
+    "BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings": ".agents",
+    "BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings_Coached": ".agents",
+    "BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings_None": ".agents",
+    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings": ".agents",
+    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings_Coached": ".agents",
+    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings_None": ".agents",
     "BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection": ".twilio",
     "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem": ".whatsapp",
     "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Body": ".whatsapp",
@@ -105,6 +119,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TestsGetResponse_Llm": ".tests",
     "TestsGetResponse_Simulation": ".tests",
     "TestsGetResponse_Tool": ".tests",
+    "TestsListRequestSortMode": ".tests",
     "TestsUpdateRequestBody": ".tests",
     "TestsUpdateRequestBody_Llm": ".tests",
     "TestsUpdateRequestBody_Simulation": ".tests",
@@ -119,6 +134,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "conversations": ".conversations",
     "dashboard": ".dashboard",
     "knowledge_base": ".knowledge_base",
+    "llm": ".llm",
     "llm_usage": ".llm_usage",
     "mcp_servers": ".mcp_servers",
     "phone_numbers": ".phone_numbers",
@@ -156,7 +172,12 @@ def __dir__():
 
 
 __all__ = [
-    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem",
+    "BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings",
+    "BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings_Coached",
+    "BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings_None",
+    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings",
+    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings_Coached",
+    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings_None",
     "BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection",
     "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem",
     "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Body",
@@ -187,6 +208,7 @@ __all__ = [
     "TestsGetResponse_Llm",
     "TestsGetResponse_Simulation",
     "TestsGetResponse_Tool",
+    "TestsListRequestSortMode",
     "TestsUpdateRequestBody",
     "TestsUpdateRequestBody_Llm",
     "TestsUpdateRequestBody_Simulation",
@@ -201,6 +223,7 @@ __all__ = [
     "conversations",
     "dashboard",
     "knowledge_base",
+    "llm",
     "llm_usage",
     "mcp_servers",
     "phone_numbers",

@@ -3663,6 +3663,14 @@ client.voices.share(
 <dl>
 <dd>
 
+**bookmarked:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -5134,6 +5142,76 @@ typing.Optional[core.File]` — See core.File for more documentation
 </dl>
 </details>
 
+<details><summary><code>client.audio_native.<a href="src/elevenlabs/audio_native/client.py">update_content_from_url</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Finds an AudioNative project matching the provided URL, extracts content from the URL, updates the project content, and queues it for conversion and auto-publishing.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.audio_native.update_content_from_url(
+    url="https://elevenlabs.io/blog/the_first_ai_that_can_laugh/",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**url:** `str` — URL of the page to extract content from.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Usage
 <details><summary><code>client.usage.<a href="src/elevenlabs/usage/client.py">get</a>(...)</code></summary>
 <dl>
@@ -5395,6 +5473,8 @@ client.pronunciation_dictionaries.create_from_rules(
     rules=[
         BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem_Alias(
             string_to_replace="Thailand",
+            case_sensitive=True,
+            word_boundaries=True,
             alias="tie-land",
         )
     ],
@@ -6150,6 +6230,14 @@ client.webhooks.update(
 <dl>
 <dd>
 
+**retry_enabled:** `typing.Optional[bool]` — Whether to enable automatic retries for transient failures (5xx, 429, timeout)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -6872,6 +6960,14 @@ client.music.compose()
 <dl>
 <dd>
 
+**seed:** `typing.Optional[int]` — Random seed to initialize the music generation process. Providing the same seed with the same parameters can help achieve more consistent results, but exact reproducibility is not guaranteed and outputs may change across system updates. Cannot be used in conjunction with prompt.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **force_instrumental:** `typing.Optional[bool]` — If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
     
 </dd>
@@ -7004,6 +7100,14 @@ client.music.compose_detailed()
 <dl>
 <dd>
 
+**seed:** `typing.Optional[int]` — Random seed to initialize the music generation process. Providing the same seed with the same parameters can help achieve more consistent results, but exact reproducibility is not guaranteed and outputs may change across system updates. Cannot be used in conjunction with prompt.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **force_instrumental:** `typing.Optional[bool]` — If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
     
 </dd>
@@ -7129,6 +7233,14 @@ client.music.stream()
 <dd>
 
 **model_id:** `typing.Optional[typing.Literal["music_v1"]]` — The model to use for the generation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**seed:** `typing.Optional[int]` — Random seed to initialize the music generation process. Providing the same seed with the same parameters can help achieve more consistent results, but exact reproducibility is not guaranteed and outputs may change across system updates. Cannot be used in conjunction with prompt.
     
 </dd>
 </dl>
@@ -7803,6 +7915,14 @@ client.conversational_ai.twilio.outbound_call(
 <dl>
 <dd>
 
+**call_recording_enabled:** `typing.Optional[bool]` — Whether let Twilio record the call.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -8263,6 +8383,14 @@ client.conversational_ai.agents.create(
 <dl>
 <dd>
 
+**coaching_settings:** `typing.Optional[BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -8540,7 +8668,9 @@ client.conversational_ai.agents.update(
 <dl>
 <dd>
 
-**version_description:** `typing.Optional[str]` — Description for this version when publishing changes (only applicable for versioned agents)
+**coaching_settings:** `typing.Optional[
+    BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings
+]` 
     
 </dd>
 </dl>
@@ -8548,11 +8678,7 @@ client.conversational_ai.agents.update(
 <dl>
 <dd>
 
-**procedure_refs:** `typing.Optional[
-    typing.Sequence[
-        BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem
-    ]
-]` — List of procedure refs used for this agent version.
+**version_description:** `typing.Optional[str]` — Description for this version when publishing changes (only applicable for versioned agents)
     
 </dd>
 </dl>
@@ -9485,6 +9611,9 @@ client.conversational_ai.tests.list(
     cursor="cursor",
     page_size=1,
     search="search",
+    parent_folder_id="parent_folder_id",
+    include_folders=True,
+    sort_mode="default",
 )
 
 ```
@@ -9518,6 +9647,30 @@ client.conversational_ai.tests.list(
 <dd>
 
 **search:** `typing.Optional[str]` — Search query to filter tests by name.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**parent_folder_id:** `typing.Optional[str]` — Filter by parent folder ID. Use 'root' to get items in the root folder.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_folders:** `typing.Optional[bool]` — Whether to include folders in the response. Defaults to false.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_mode:** `typing.Optional[TestsListRequestSortMode]` — Sort mode for listing tests. Use 'folders_first' to place folders before tests.
     
 </dd>
 </dl>
@@ -10131,6 +10284,67 @@ client.conversational_ai.llm_usage.calculate(
 </dl>
 </details>
 
+## ConversationalAi Llm
+<details><summary><code>client.conversational_ai.llm.<a href="src/elevenlabs/conversational_ai/llm/client.py">list</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of available LLM models that can be used with agents, including their capabilities and any deprecation status. The response is filtered based on the data residency of the deployment and any compliance requirements (e.g. HIPAA) of the workspace subscription.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.llm.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ConversationalAi KnowledgeBase
 <details><summary><code>client.conversational_ai.knowledge_base.<a href="src/elevenlabs/conversational_ai/knowledge_base/client.py">list</a>(...)</code></summary>
 <dl>
@@ -10298,7 +10512,7 @@ client.conversational_ai.knowledge_base.list(
 <dl>
 <dd>
 
-Retrieves and/or creates RAG indexes for multiple knowledge base documents in a single request.
+Retrieves and/or creates RAG indexes for multiple knowledge base documents in a single request. Maximum 100 items per request.
 </dd>
 </dl>
 </dd>
@@ -10342,7 +10556,7 @@ client.conversational_ai.knowledge_base.get_or_create_rag_indexes(
 <dl>
 <dd>
 
-**items:** `typing.Sequence[GetOrCreateRagIndexRequestModel]` — List of requested RAG indexes.
+**items:** `typing.Sequence[GetOrCreateRagIndexRequestModel]` — List of requested RAG indexes. Minimum 1, maximum 100 items.
     
 </dd>
 </dl>
@@ -12339,6 +12553,22 @@ client.conversational_ai.mcp_servers.update(
 <dl>
 <dd>
 
+**secret_token:** `typing.Optional[ConvAiSecretLocator]` — Optional secret token for authentication with this MCP server
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auth_connection:** `typing.Optional[AuthConnectionLocator]` — Optional auth connection to use for authentication with this MCP server
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -14230,6 +14460,501 @@ client.conversational_ai.conversations.feedback.create(
 </dl>
 </details>
 
+## ConversationalAi Conversations Messages
+<details><summary><code>client.conversational_ai.conversations.messages.<a href="src/elevenlabs/conversational_ai/conversations/messages/client.py">text_search</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Search through conversation transcript messages by full-text and fuzzy search
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.conversations.messages.text_search(
+    text_query="refund policy",
+    agent_id="agent_id",
+    call_successful="success",
+    call_start_before_unix=1,
+    call_start_after_unix=1,
+    call_duration_min_secs=1,
+    call_duration_max_secs=1,
+    rating_max=1,
+    rating_min=1,
+    has_feedback_comment=True,
+    user_id="user_id",
+    page_size=1,
+    summary_mode="exclude",
+    conversation_initiation_source="unknown",
+    branch_id="branch_id",
+    cursor="cursor",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**text_query:** `str` — The search query text for full-text and fuzzy matching
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agent_id:** `typing.Optional[str]` — The id of the agent you're taking the action on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**call_successful:** `typing.Optional[EvaluationSuccessResult]` — The result of the success evaluation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**call_start_before_unix:** `typing.Optional[int]` — Unix timestamp (in seconds) to filter conversations up to this start date.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**call_start_after_unix:** `typing.Optional[int]` — Unix timestamp (in seconds) to filter conversations after to this start date.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**call_duration_min_secs:** `typing.Optional[int]` — Minimum call duration in seconds.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**call_duration_max_secs:** `typing.Optional[int]` — Maximum call duration in seconds.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rating_max:** `typing.Optional[int]` — Maximum overall rating (1-5).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rating_min:** `typing.Optional[int]` — Minimum overall rating (1-5).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**has_feedback_comment:** `typing.Optional[bool]` — Filter conversations with user feedback comments.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_id:** `typing.Optional[str]` — Filter conversations by the user ID who initiated them.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**evaluation_params:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Evaluation filters. Repeat param. Format: criteria_id:result. Example: eval=value_framing:success
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**data_collection_params:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Data collection filters. Repeat param. Format: id:op:value where op is one of eq|neq|gt|gte|lt|lte|in|exists|missing. For in, pipe-delimit values.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tool_names:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by tool names used during the call.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**main_languages:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by detected main language (language code).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — Number of results per page. Max 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**summary_mode:** `typing.Optional[MessagesTextSearchRequestSummaryMode]` — Whether to include transcript summaries in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**conversation_initiation_source:** `typing.Optional[ConversationInitiationSource]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `typing.Optional[str]` — Filter conversations by branch ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.conversations.messages.<a href="src/elevenlabs/conversational_ai/conversations/messages/client.py">search</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Search conversation transcripts by semantic similarity to surface relevant messages based on meaning and intent, rather than exact keyword matches
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.conversations.messages.search(
+    text_query="Customer asking to cancel and get money back",
+    agent_id="agent_id",
+    page_size=1,
+    cursor="cursor",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**text_query:** `str` — The search query text for semantic similarity matching
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agent_id:** `typing.Optional[str]` — The id of the agent you're taking the action on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — Number of results per page. Max 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi Conversations Files
+<details><summary><code>client.conversational_ai.conversations.files.<a href="src/elevenlabs/conversational_ai/conversations/files/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Upload an image or PDF file for a conversation. Returns a unique file ID that can be used to reference the file in the conversation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.conversations.files.create(
+    conversation_id="conversation_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file:** `from __future__ import annotations
+
+core.File` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.conversations.files.<a href="src/elevenlabs/conversational_ai/conversations/files/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove a file upload from a conversation. Only possible if the file hasn't already been used in the conversation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.conversations.files.delete(
+    conversation_id="conversation_id",
+    file_id="file_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ConversationalAi Dashboard Settings
 <details><summary><code>client.conversational_ai.dashboard.settings.<a href="src/elevenlabs/conversational_ai/dashboard/settings/client.py">get</a>()</code></summary>
 <dl>
@@ -16006,6 +16731,21 @@ client.conversational_ai.mcp_servers.tool_configs.create(
 <dl>
 <dd>
 
+**input_overrides:** `typing.Optional[
+    typing.Dict[
+        str,
+        typing.Optional[
+            McpToolConfigOverrideCreateRequestModelInputOverridesValue
+        ],
+    ]
+]` — Mapping of json path to input override configuration
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -16284,6 +17024,21 @@ client.conversational_ai.mcp_servers.tool_configs.update(
 <dd>
 
 **assignments:** `typing.Optional[typing.Sequence[DynamicVariableAssignment]]` — Dynamic variable assignments for this MCP tool
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**input_overrides:** `typing.Optional[
+    typing.Dict[
+        str,
+        typing.Optional[
+            McpToolConfigOverrideUpdateRequestModelInputOverridesValue
+        ],
+    ]
+]` — Mapping of json path to input override configuration
     
 </dd>
 </dl>
@@ -18156,6 +18911,8 @@ client.pronunciation_dictionaries.rules.add(
     rules=[
         PronunciationDictionaryRule_Alias(
             string_to_replace="Thailand",
+            case_sensitive=True,
+            word_boundaries=True,
             alias="tie-land",
         )
     ],

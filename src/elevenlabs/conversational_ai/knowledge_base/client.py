@@ -142,12 +142,12 @@ class KnowledgeBaseClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Dict[str, KnowledgeBaseGetOrCreateRagIndexesResponseValue]:
         """
-        Retrieves and/or creates RAG indexes for multiple knowledge base documents in a single request.
+        Retrieves and/or creates RAG indexes for multiple knowledge base documents in a single request. Maximum 100 items per request.
 
         Parameters
         ----------
         items : typing.Sequence[GetOrCreateRagIndexRequestModel]
-            List of requested RAG indexes.
+            List of requested RAG indexes. Minimum 1, maximum 100 items.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -321,12 +321,12 @@ class AsyncKnowledgeBaseClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Dict[str, KnowledgeBaseGetOrCreateRagIndexesResponseValue]:
         """
-        Retrieves and/or creates RAG indexes for multiple knowledge base documents in a single request.
+        Retrieves and/or creates RAG indexes for multiple knowledge base documents in a single request. Maximum 100 items per request.
 
         Parameters
         ----------
         items : typing.Sequence[GetOrCreateRagIndexRequestModel]
-            List of requested RAG indexes.
+            List of requested RAG indexes. Minimum 1, maximum 100 items.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

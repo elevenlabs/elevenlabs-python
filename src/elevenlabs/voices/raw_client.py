@@ -389,6 +389,7 @@ class RawVoicesClient:
         voice_id: str,
         *,
         new_name: str,
+        bookmarked: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AddVoiceResponseModel]:
         """
@@ -405,6 +406,8 @@ class RawVoicesClient:
         new_name : str
             The name that identifies this voice. This will be displayed in the dropdown of the website.
 
+        bookmarked : typing.Optional[bool]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -418,6 +421,7 @@ class RawVoicesClient:
             method="POST",
             json={
                 "new_name": new_name,
+                "bookmarked": bookmarked,
             },
             headers={
                 "content-type": "application/json",
@@ -1025,6 +1029,7 @@ class AsyncRawVoicesClient:
         voice_id: str,
         *,
         new_name: str,
+        bookmarked: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AddVoiceResponseModel]:
         """
@@ -1041,6 +1046,8 @@ class AsyncRawVoicesClient:
         new_name : str
             The name that identifies this voice. This will be displayed in the dropdown of the website.
 
+        bookmarked : typing.Optional[bool]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1054,6 +1061,7 @@ class AsyncRawVoicesClient:
             method="POST",
             json={
                 "new_name": new_name,
+                "bookmarked": bookmarked,
             },
             headers={
                 "content-type": "application/json",

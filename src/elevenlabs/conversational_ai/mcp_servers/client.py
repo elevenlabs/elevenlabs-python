@@ -6,6 +6,8 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...types.auth_connection_locator import AuthConnectionLocator
+from ...types.conv_ai_secret_locator import ConvAiSecretLocator
 from ...types.mcp_approval_policy import McpApprovalPolicy
 from ...types.mcp_server_config_input import McpServerConfigInput
 from ...types.mcp_server_response_model import McpServerResponseModel
@@ -187,6 +189,8 @@ class McpServersClient:
             typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]
         ] = OMIT,
         disable_compression: typing.Optional[bool] = OMIT,
+        secret_token: typing.Optional[ConvAiSecretLocator] = OMIT,
+        auth_connection: typing.Optional[AuthConnectionLocator] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> McpServerResponseModel:
         """
@@ -221,6 +225,12 @@ class McpServersClient:
         disable_compression : typing.Optional[bool]
             Whether to disable HTTP compression for this MCP server
 
+        secret_token : typing.Optional[ConvAiSecretLocator]
+            Optional secret token for authentication with this MCP server
+
+        auth_connection : typing.Optional[AuthConnectionLocator]
+            Optional auth connection to use for authentication with this MCP server
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -250,6 +260,8 @@ class McpServersClient:
             execution_mode=execution_mode,
             request_headers=request_headers,
             disable_compression=disable_compression,
+            secret_token=secret_token,
+            auth_connection=auth_connection,
             request_options=request_options,
         )
         return _response.data
@@ -481,6 +493,8 @@ class AsyncMcpServersClient:
             typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]
         ] = OMIT,
         disable_compression: typing.Optional[bool] = OMIT,
+        secret_token: typing.Optional[ConvAiSecretLocator] = OMIT,
+        auth_connection: typing.Optional[AuthConnectionLocator] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> McpServerResponseModel:
         """
@@ -514,6 +528,12 @@ class AsyncMcpServersClient:
 
         disable_compression : typing.Optional[bool]
             Whether to disable HTTP compression for this MCP server
+
+        secret_token : typing.Optional[ConvAiSecretLocator]
+            Optional secret token for authentication with this MCP server
+
+        auth_connection : typing.Optional[AuthConnectionLocator]
+            Optional auth connection to use for authentication with this MCP server
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -552,6 +572,8 @@ class AsyncMcpServersClient:
             execution_mode=execution_mode,
             request_headers=request_headers,
             disable_compression=disable_compression,
+            secret_token=secret_token,
+            auth_connection=auth_connection,
             request_options=request_options,
         )
         return _response.data

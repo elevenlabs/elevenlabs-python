@@ -13,6 +13,8 @@ from ...core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 class BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem_Alias(UncheckedBaseModel):
     type: typing.Literal["alias"] = "alias"
     string_to_replace: str
+    case_sensitive: typing.Optional[bool] = None
+    word_boundaries: typing.Optional[bool] = None
     alias: str
 
     if IS_PYDANTIC_V2:
@@ -28,6 +30,8 @@ class BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPost
 class BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem_Phoneme(UncheckedBaseModel):
     type: typing.Literal["phoneme"] = "phoneme"
     string_to_replace: str
+    case_sensitive: typing.Optional[bool] = None
+    word_boundaries: typing.Optional[bool] = None
     phoneme: str
     alphabet: str
 

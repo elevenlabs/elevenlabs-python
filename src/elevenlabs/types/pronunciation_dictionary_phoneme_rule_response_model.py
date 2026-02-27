@@ -9,6 +9,16 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 class PronunciationDictionaryPhonemeRuleResponseModel(UncheckedBaseModel):
     string_to_replace: str
+    case_sensitive: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the rule matches case-sensitively.
+    """
+
+    word_boundaries: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the rule only matches at word boundaries.
+    """
+
     phoneme: str
     alphabet: str
 

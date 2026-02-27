@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .pending_clip_task import PendingClipTask
+from .project_external_audio_response_model_source_context import ProjectExternalAudioResponseModelSourceContext
 
 
 class ProjectExternalAudioResponseModel(UncheckedBaseModel):
@@ -27,11 +28,12 @@ class ProjectExternalAudioResponseModel(UncheckedBaseModel):
     source_external_audio_id: typing.Optional[str] = None
     source_asset_id: typing.Optional[str] = None
     pending_block_ids: typing.List[str]
-    import_speech_progress: typing.Optional[float] = None
+    pending_external_audio_ids: typing.List[str]
     speech_imported: typing.Optional[bool] = None
-    dub_audio_progress: typing.Optional[float] = None
     pending_task: typing.Optional[PendingClipTask] = None
     current_snapshot_id: typing.Optional[str] = None
+    source_context: typing.Optional[ProjectExternalAudioResponseModelSourceContext] = None
+    import_speech_progress: typing.Optional[float] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -39,6 +39,7 @@ class TestsCreateRequestBody_Llm(UncheckedBaseModel):
     success_examples: typing.Optional[typing.List[AgentSuccessfulResponseExample]] = None
     failure_examples: typing.Optional[typing.List[AgentFailureResponseExample]] = None
     name: str
+    parent_folder_id: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -64,6 +65,7 @@ class TestsCreateRequestBody_Tool(UncheckedBaseModel):
     tool_call_parameters: typing.Optional[UnitTestToolCallEvaluationModelInput] = None
     check_any_tool_matches: typing.Optional[bool] = None
     name: str
+    parent_folder_id: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -90,6 +92,7 @@ class TestsCreateRequestBody_Simulation(UncheckedBaseModel):
     simulation_scenario: typing.Optional[str] = None
     simulation_max_turns: typing.Optional[int] = None
     name: str
+    parent_folder_id: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

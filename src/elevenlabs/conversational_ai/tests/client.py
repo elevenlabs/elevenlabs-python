@@ -12,6 +12,7 @@ from ...types.get_tests_summaries_by_ids_response_model import GetTestsSummaries
 from .raw_client import AsyncRawTestsClient, RawTestsClient
 from .types.tests_create_request_body import TestsCreateRequestBody
 from .types.tests_get_response import TestsGetResponse
+from .types.tests_list_request_sort_mode import TestsListRequestSortMode
 from .types.tests_update_request_body import TestsUpdateRequestBody
 from .types.tests_update_response import TestsUpdateResponse
 
@@ -213,6 +214,9 @@ class TestsClient:
         cursor: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
+        parent_folder_id: typing.Optional[str] = None,
+        include_folders: typing.Optional[bool] = None,
+        sort_mode: typing.Optional[TestsListRequestSortMode] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetTestsPageResponseModel:
         """
@@ -228,6 +232,15 @@ class TestsClient:
 
         search : typing.Optional[str]
             Search query to filter tests by name.
+
+        parent_folder_id : typing.Optional[str]
+            Filter by parent folder ID. Use 'root' to get items in the root folder.
+
+        include_folders : typing.Optional[bool]
+            Whether to include folders in the response. Defaults to false.
+
+        sort_mode : typing.Optional[TestsListRequestSortMode]
+            Sort mode for listing tests. Use 'folders_first' to place folders before tests.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -248,10 +261,19 @@ class TestsClient:
             cursor="cursor",
             page_size=1,
             search="search",
+            parent_folder_id="parent_folder_id",
+            include_folders=True,
+            sort_mode="default",
         )
         """
         _response = self._raw_client.list(
-            cursor=cursor, page_size=page_size, search=search, request_options=request_options
+            cursor=cursor,
+            page_size=page_size,
+            search=search,
+            parent_folder_id=parent_folder_id,
+            include_folders=include_folders,
+            sort_mode=sort_mode,
+            request_options=request_options,
         )
         return _response.data
 
@@ -496,6 +518,9 @@ class AsyncTestsClient:
         cursor: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
+        parent_folder_id: typing.Optional[str] = None,
+        include_folders: typing.Optional[bool] = None,
+        sort_mode: typing.Optional[TestsListRequestSortMode] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetTestsPageResponseModel:
         """
@@ -511,6 +536,15 @@ class AsyncTestsClient:
 
         search : typing.Optional[str]
             Search query to filter tests by name.
+
+        parent_folder_id : typing.Optional[str]
+            Filter by parent folder ID. Use 'root' to get items in the root folder.
+
+        include_folders : typing.Optional[bool]
+            Whether to include folders in the response. Defaults to false.
+
+        sort_mode : typing.Optional[TestsListRequestSortMode]
+            Sort mode for listing tests. Use 'folders_first' to place folders before tests.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -536,13 +570,22 @@ class AsyncTestsClient:
                 cursor="cursor",
                 page_size=1,
                 search="search",
+                parent_folder_id="parent_folder_id",
+                include_folders=True,
+                sort_mode="default",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
-            cursor=cursor, page_size=page_size, search=search, request_options=request_options
+            cursor=cursor,
+            page_size=page_size,
+            search=search,
+            parent_folder_id=parent_folder_id,
+            include_folders=include_folders,
+            sort_mode=sort_mode,
+            request_options=request_options,
         )
         return _response.data
 

@@ -14,7 +14,7 @@ class ContentConfig(UncheckedBaseModel):
     harassment: typing.Optional[ThresholdGuardrail] = None
     self_harm: typing.Optional[ThresholdGuardrail] = None
     profanity: typing.Optional[ThresholdGuardrail] = None
-    religion_and_politics: typing.Optional[ThresholdGuardrail] = None
+    religion_or_politics: typing.Optional[ThresholdGuardrail] = None
     medical_and_legal_information: typing.Optional[ThresholdGuardrail] = None
 
     if IS_PYDANTIC_V2:

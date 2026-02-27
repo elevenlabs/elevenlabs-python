@@ -13,6 +13,16 @@ class PronunciationDictionaryPhonemeRuleRequestModel(UncheckedBaseModel):
     The string to replace. Must be a non-empty string.
     """
 
+    case_sensitive: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the rule should match case-sensitively.
+    """
+
+    word_boundaries: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the rule should only match at word boundaries.
+    """
+
     phoneme: str = pydantic.Field()
     """
     The phoneme rule.

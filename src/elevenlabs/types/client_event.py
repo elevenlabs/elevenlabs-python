@@ -21,6 +21,7 @@ ClientEvent = typing.Union[
         "agent_response_metadata",
         "vad_score",
         "agent_chat_response_part",
+        "client_error",
         "internal_turn_probability",
         "internal_tentative_agent_response",
     ],

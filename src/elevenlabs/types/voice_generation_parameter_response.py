@@ -2,26 +2,4 @@
 
 import typing
 
-import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
-from .voice_generation_parameter_option_response import VoiceGenerationParameterOptionResponse
-
-
-class VoiceGenerationParameterResponse(UncheckedBaseModel):
-    genders: typing.List[VoiceGenerationParameterOptionResponse]
-    accents: typing.List[VoiceGenerationParameterOptionResponse]
-    ages: typing.List[VoiceGenerationParameterOptionResponse]
-    minimum_characters: int
-    maximum_characters: int
-    minimum_accent_strength: float
-    maximum_accent_strength: float
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+VoiceGenerationParameterResponse = typing.Any

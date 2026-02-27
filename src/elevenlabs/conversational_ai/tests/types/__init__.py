@@ -18,6 +18,7 @@ if typing.TYPE_CHECKING:
         TestsGetResponse_Simulation,
         TestsGetResponse_Tool,
     )
+    from .tests_list_request_sort_mode import TestsListRequestSortMode
     from .tests_update_request_body import (
         TestsUpdateRequestBody,
         TestsUpdateRequestBody_Llm,
@@ -39,6 +40,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TestsGetResponse_Llm": ".tests_get_response",
     "TestsGetResponse_Simulation": ".tests_get_response",
     "TestsGetResponse_Tool": ".tests_get_response",
+    "TestsListRequestSortMode": ".tests_list_request_sort_mode",
     "TestsUpdateRequestBody": ".tests_update_request_body",
     "TestsUpdateRequestBody_Llm": ".tests_update_request_body",
     "TestsUpdateRequestBody_Simulation": ".tests_update_request_body",
@@ -80,6 +82,7 @@ __all__ = [
     "TestsGetResponse_Llm",
     "TestsGetResponse_Simulation",
     "TestsGetResponse_Tool",
+    "TestsListRequestSortMode",
     "TestsUpdateRequestBody",
     "TestsUpdateRequestBody_Llm",
     "TestsUpdateRequestBody_Simulation",
