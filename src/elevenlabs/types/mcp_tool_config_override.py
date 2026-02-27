@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .dynamic_variable_assignment import DynamicVariableAssignment
+from .mcp_tool_config_override_input_overrides_value import McpToolConfigOverrideInputOverridesValue
 from .tool_call_sound_behavior import ToolCallSoundBehavior
 from .tool_call_sound_type import ToolCallSoundType
 from .tool_execution_mode import ToolExecutionMode
@@ -45,6 +46,13 @@ class McpToolConfigOverride(UncheckedBaseModel):
     assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = pydantic.Field(default=None)
     """
     Dynamic variable assignments for this MCP tool
+    """
+
+    input_overrides: typing.Optional[typing.Dict[str, typing.Optional[McpToolConfigOverrideInputOverridesValue]]] = (
+        pydantic.Field(default=None)
+    )
+    """
+    Mapping of json path to input override configuration
     """
 
     if IS_PYDANTIC_V2:

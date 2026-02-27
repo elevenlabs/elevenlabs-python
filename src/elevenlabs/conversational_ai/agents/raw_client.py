@@ -26,8 +26,11 @@ from ...types.http_validation_error import HttpValidationError
 from ...types.prompt_evaluation_criteria import PromptEvaluationCriteria
 from ...types.single_test_run_request_model import SingleTestRunRequestModel
 from ...types.sort_direction import SortDirection
-from .types.body_patches_an_agent_settings_v_1_convai_agents_agent_id_patch_procedure_refs_item import (
-    BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem,
+from .types.body_create_agent_v_1_convai_agents_create_post_coaching_settings import (
+    BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings,
+)
+from .types.body_patches_an_agent_settings_v_1_convai_agents_agent_id_patch_coaching_settings import (
+    BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings,
 )
 
 # this is used as the default value for optional parameters
@@ -46,6 +49,7 @@ class RawAgentsClient:
         workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
+        coaching_settings: typing.Optional[BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[CreateAgentResponseModel]:
         """
@@ -67,6 +71,8 @@ class RawAgentsClient:
 
         tags : typing.Optional[typing.Sequence[str]]
             Tags to help classify and filter the agent
+
+        coaching_settings : typing.Optional[BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -91,6 +97,11 @@ class RawAgentsClient:
                 ),
                 "name": name,
                 "tags": tags,
+                "coaching_settings": convert_and_respect_annotation_metadata(
+                    object_=coaching_settings,
+                    annotation=BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings,
+                    direction="write",
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -239,10 +250,8 @@ class RawAgentsClient:
         workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
+        coaching_settings: typing.Optional[BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings] = OMIT,
         version_description: typing.Optional[str] = OMIT,
-        procedure_refs: typing.Optional[
-            typing.Sequence[BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem]
-        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetAgentResponseModel]:
         """
@@ -271,11 +280,10 @@ class RawAgentsClient:
         tags : typing.Optional[typing.Sequence[str]]
             Tags to help classify and filter the agent
 
+        coaching_settings : typing.Optional[BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings]
+
         version_description : typing.Optional[str]
             Description for this version when publishing changes (only applicable for versioned agents)
-
-        procedure_refs : typing.Optional[typing.Sequence[BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem]]
-            List of procedure refs used for this agent version.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -303,12 +311,12 @@ class RawAgentsClient:
                 ),
                 "name": name,
                 "tags": tags,
-                "version_description": version_description,
-                "procedure_refs": convert_and_respect_annotation_metadata(
-                    object_=procedure_refs,
-                    annotation=typing.Sequence[BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem],
+                "coaching_settings": convert_and_respect_annotation_metadata(
+                    object_=coaching_settings,
+                    annotation=BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings,
                     direction="write",
                 ),
+                "version_description": version_description,
             },
             headers={
                 "content-type": "application/json",
@@ -737,6 +745,7 @@ class AsyncRawAgentsClient:
         workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
+        coaching_settings: typing.Optional[BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[CreateAgentResponseModel]:
         """
@@ -758,6 +767,8 @@ class AsyncRawAgentsClient:
 
         tags : typing.Optional[typing.Sequence[str]]
             Tags to help classify and filter the agent
+
+        coaching_settings : typing.Optional[BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -782,6 +793,11 @@ class AsyncRawAgentsClient:
                 ),
                 "name": name,
                 "tags": tags,
+                "coaching_settings": convert_and_respect_annotation_metadata(
+                    object_=coaching_settings,
+                    annotation=BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings,
+                    direction="write",
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -932,10 +948,8 @@ class AsyncRawAgentsClient:
         workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
+        coaching_settings: typing.Optional[BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings] = OMIT,
         version_description: typing.Optional[str] = OMIT,
-        procedure_refs: typing.Optional[
-            typing.Sequence[BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem]
-        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetAgentResponseModel]:
         """
@@ -964,11 +978,10 @@ class AsyncRawAgentsClient:
         tags : typing.Optional[typing.Sequence[str]]
             Tags to help classify and filter the agent
 
+        coaching_settings : typing.Optional[BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings]
+
         version_description : typing.Optional[str]
             Description for this version when publishing changes (only applicable for versioned agents)
-
-        procedure_refs : typing.Optional[typing.Sequence[BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem]]
-            List of procedure refs used for this agent version.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -996,12 +1009,12 @@ class AsyncRawAgentsClient:
                 ),
                 "name": name,
                 "tags": tags,
-                "version_description": version_description,
-                "procedure_refs": convert_and_respect_annotation_metadata(
-                    object_=procedure_refs,
-                    annotation=typing.Sequence[BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem],
+                "coaching_settings": convert_and_respect_annotation_metadata(
+                    object_=coaching_settings,
+                    annotation=BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings,
                     direction="write",
                 ),
+                "version_description": version_description,
             },
             headers={
                 "content-type": "application/json",

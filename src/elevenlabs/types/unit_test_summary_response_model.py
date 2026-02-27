@@ -5,6 +5,8 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .agent_test_entity_type import AgentTestEntityType
+from .agent_test_folder_path_segment_response_model import AgentTestFolderPathSegmentResponseModel
 from .resource_access_info import ResourceAccessInfo
 from .test_type import TestType
 
@@ -37,7 +39,27 @@ class UnitTestSummaryResponseModel(UncheckedBaseModel):
 
     type: TestType = pydantic.Field()
     """
-    Type of the test
+    Type of the test or entity
+    """
+
+    entity_type: typing.Optional[AgentTestEntityType] = pydantic.Field(default=None)
+    """
+    The type of entity (test or folder)
+    """
+
+    folder_parent_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ID of the parent folder
+    """
+
+    folder_path: typing.Optional[typing.List[AgentTestFolderPathSegmentResponseModel]] = pydantic.Field(default=None)
+    """
+    The folder path segments from root to this entity
+    """
+
+    children_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of direct children (tests and subfolders) for folders only
     """
 
     if IS_PYDANTIC_V2:

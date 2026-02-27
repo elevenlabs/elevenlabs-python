@@ -7,16 +7,12 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class ProcedureVersionRef(UncheckedBaseModel):
-    procedure_id: str = pydantic.Field()
+class UpdateClientParams(UncheckedBaseModel):
     """
-    Procedure ID
+    Update an existing client's information.
     """
 
-    version_id: str = pydantic.Field()
-    """
-    Version ID of the procedure version.
-    """
+    smb_tool_type: typing.Optional[typing.Literal["update_client"]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

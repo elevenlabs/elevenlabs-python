@@ -5,15 +5,17 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .alignment_guardrail import AlignmentGuardrail
 from .content_guardrail_input import ContentGuardrailInput
 from .custom_guardrail_input import CustomGuardrailInput
+from .focus_guardrail import FocusGuardrail
 from .moderation_guardrail_input import ModerationGuardrailInput
+from .prompt_injection_guardrail import PromptInjectionGuardrail
 
 
 class GuardrailsV1Input(UncheckedBaseModel):
     version: typing.Optional[typing.Literal["1"]] = None
-    alignment: typing.Optional[AlignmentGuardrail] = None
+    focus: typing.Optional[FocusGuardrail] = None
+    prompt_injection: typing.Optional[PromptInjectionGuardrail] = None
     content: typing.Optional[ContentGuardrailInput] = None
     moderation: typing.Optional[ModerationGuardrailInput] = None
     custom: typing.Optional[CustomGuardrailInput] = None

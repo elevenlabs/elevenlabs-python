@@ -8,6 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .allowlist_item import AllowlistItem
 from .embed_variant import EmbedVariant
 from .widget_config_response_model_avatar import WidgetConfigResponseModelAvatar
+from .widget_config_response_model_syntax_highlight_theme import WidgetConfigResponseModelSyntaxHighlightTheme
 from .widget_end_feedback_config import WidgetEndFeedbackConfig
 from .widget_expandable import WidgetExpandable
 from .widget_feedback_mode import WidgetFeedbackMode
@@ -201,6 +202,33 @@ class WidgetConfigResponse(UncheckedBaseModel):
     always_expanded: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether the widget should always be expanded
+    """
+
+    dismissible: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the widget can be dismissed by the user
+    """
+
+    show_agent_status: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to show agent working/done/error status during tool use
+    """
+
+    show_conversation_id: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to show the conversation ID after disconnection.
+    """
+
+    strip_audio_tags: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to strip audio markup from messages.
+    """
+
+    syntax_highlight_theme: typing.Optional[WidgetConfigResponseModelSyntaxHighlightTheme] = pydantic.Field(
+        default=None
+    )
+    """
+    Theme for code block syntax highlighting. Defaults to auto-detection by the widget when not set.
     """
 
     text_contents: typing.Optional[WidgetTextContents] = pydantic.Field(default=None)

@@ -8,8 +8,26 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .types import McpServerConfigUpdateRequestModelRequestHeadersValue
     from . import approval_policy, tool_approvals, tool_configs, tools
+    from .tool_configs import (
+        McpToolConfigOverrideCreateRequestModelInputOverridesValue,
+        McpToolConfigOverrideCreateRequestModelInputOverridesValue_Constant,
+        McpToolConfigOverrideCreateRequestModelInputOverridesValue_DynamicVariable,
+        McpToolConfigOverrideCreateRequestModelInputOverridesValue_Llm,
+        McpToolConfigOverrideUpdateRequestModelInputOverridesValue,
+        McpToolConfigOverrideUpdateRequestModelInputOverridesValue_Constant,
+        McpToolConfigOverrideUpdateRequestModelInputOverridesValue_DynamicVariable,
+        McpToolConfigOverrideUpdateRequestModelInputOverridesValue_Llm,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
     "McpServerConfigUpdateRequestModelRequestHeadersValue": ".types",
+    "McpToolConfigOverrideCreateRequestModelInputOverridesValue": ".tool_configs",
+    "McpToolConfigOverrideCreateRequestModelInputOverridesValue_Constant": ".tool_configs",
+    "McpToolConfigOverrideCreateRequestModelInputOverridesValue_DynamicVariable": ".tool_configs",
+    "McpToolConfigOverrideCreateRequestModelInputOverridesValue_Llm": ".tool_configs",
+    "McpToolConfigOverrideUpdateRequestModelInputOverridesValue": ".tool_configs",
+    "McpToolConfigOverrideUpdateRequestModelInputOverridesValue_Constant": ".tool_configs",
+    "McpToolConfigOverrideUpdateRequestModelInputOverridesValue_DynamicVariable": ".tool_configs",
+    "McpToolConfigOverrideUpdateRequestModelInputOverridesValue_Llm": ".tool_configs",
     "approval_policy": ".approval_policy",
     "tool_approvals": ".tool_approvals",
     "tool_configs": ".tool_configs",
@@ -40,6 +58,14 @@ def __dir__():
 
 __all__ = [
     "McpServerConfigUpdateRequestModelRequestHeadersValue",
+    "McpToolConfigOverrideCreateRequestModelInputOverridesValue",
+    "McpToolConfigOverrideCreateRequestModelInputOverridesValue_Constant",
+    "McpToolConfigOverrideCreateRequestModelInputOverridesValue_DynamicVariable",
+    "McpToolConfigOverrideCreateRequestModelInputOverridesValue_Llm",
+    "McpToolConfigOverrideUpdateRequestModelInputOverridesValue",
+    "McpToolConfigOverrideUpdateRequestModelInputOverridesValue_Constant",
+    "McpToolConfigOverrideUpdateRequestModelInputOverridesValue_DynamicVariable",
+    "McpToolConfigOverrideUpdateRequestModelInputOverridesValue_Llm",
     "approval_policy",
     "tool_approvals",
     "tool_configs",

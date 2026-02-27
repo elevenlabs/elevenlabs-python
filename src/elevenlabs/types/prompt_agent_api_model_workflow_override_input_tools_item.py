@@ -94,6 +94,19 @@ class PromptAgentApiModelWorkflowOverrideInputToolsItem_Mcp(UncheckedBaseModel):
             smart_union = True
 
 
+class PromptAgentApiModelWorkflowOverrideInputToolsItem_Smb(UncheckedBaseModel):
+    value: typing.Any
+    type: typing.Literal["smb"] = "smb"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+
+
 class PromptAgentApiModelWorkflowOverrideInputToolsItem_System(UncheckedBaseModel):
     """
     The type of tool
@@ -157,6 +170,7 @@ PromptAgentApiModelWorkflowOverrideInputToolsItem = typing_extensions.Annotated[
         PromptAgentApiModelWorkflowOverrideInputToolsItem_ApiIntegrationWebhook,
         PromptAgentApiModelWorkflowOverrideInputToolsItem_Client,
         PromptAgentApiModelWorkflowOverrideInputToolsItem_Mcp,
+        PromptAgentApiModelWorkflowOverrideInputToolsItem_Smb,
         PromptAgentApiModelWorkflowOverrideInputToolsItem_System,
         PromptAgentApiModelWorkflowOverrideInputToolsItem_Webhook,
     ],

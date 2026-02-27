@@ -9,7 +9,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .conversation_history_analysis_common_model import ConversationHistoryAnalysisCommonModel
 from .conversation_history_metadata_common_model import ConversationHistoryMetadataCommonModel
-from .conversation_history_transcript_common_model_output import ConversationHistoryTranscriptCommonModelOutput
+from .conversation_history_transcript_response_model import ConversationHistoryTranscriptResponseModel
 from .conversation_initiation_client_data_request_output import ConversationInitiationClientDataRequestOutput
 from .get_conversation_response_model_status import GetConversationResponseModelStatus
 
@@ -25,7 +25,6 @@ class GetConversationResponseModel(UncheckedBaseModel):
     The ID of the agent version used for this conversation
     """
 
-    transcript: typing.List[ConversationHistoryTranscriptCommonModelOutput]
     metadata: ConversationHistoryMetadataCommonModel
     analysis: typing.Optional[ConversationHistoryAnalysisCommonModel] = None
     conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestOutput] = None
@@ -33,6 +32,7 @@ class GetConversationResponseModel(UncheckedBaseModel):
     has_audio: bool
     has_user_audio: bool
     has_response_audio: bool
+    transcript: typing.List[ConversationHistoryTranscriptResponseModel]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

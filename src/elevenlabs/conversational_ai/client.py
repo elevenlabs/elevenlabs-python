@@ -20,6 +20,7 @@ if typing.TYPE_CHECKING:
     from .conversations.client import AsyncConversationsClient, ConversationsClient
     from .dashboard.client import AsyncDashboardClient, DashboardClient
     from .knowledge_base.client import AsyncKnowledgeBaseClient, KnowledgeBaseClient
+    from .llm.client import AsyncLlmClient, LlmClient
     from .llm_usage.client import AsyncLlmUsageClient, LlmUsageClient
     from .mcp_servers.client import AsyncMcpServersClient, McpServersClient
     from .phone_numbers.client import AsyncPhoneNumbersClient, PhoneNumbersClient
@@ -48,6 +49,7 @@ class ConversationalAiClient:
         self._users: typing.Optional[UsersClient] = None
         self._phone_numbers: typing.Optional[PhoneNumbersClient] = None
         self._llm_usage: typing.Optional[LlmUsageClient] = None
+        self._llm: typing.Optional[LlmClient] = None
         self._knowledge_base: typing.Optional[KnowledgeBaseClient] = None
         self._tools: typing.Optional[ToolsClient] = None
         self._settings: typing.Optional[SettingsClient] = None
@@ -284,6 +286,14 @@ class ConversationalAiClient:
         return self._llm_usage
 
     @property
+    def llm(self):
+        if self._llm is None:
+            from .llm.client import LlmClient  # noqa: E402
+
+            self._llm = LlmClient(client_wrapper=self._client_wrapper)
+        return self._llm
+
+    @property
     def knowledge_base(self):
         if self._knowledge_base is None:
             from .knowledge_base.client import KnowledgeBaseClient  # noqa: E402
@@ -376,6 +386,7 @@ class AsyncConversationalAiClient:
         self._users: typing.Optional[AsyncUsersClient] = None
         self._phone_numbers: typing.Optional[AsyncPhoneNumbersClient] = None
         self._llm_usage: typing.Optional[AsyncLlmUsageClient] = None
+        self._llm: typing.Optional[AsyncLlmClient] = None
         self._knowledge_base: typing.Optional[AsyncKnowledgeBaseClient] = None
         self._tools: typing.Optional[AsyncToolsClient] = None
         self._settings: typing.Optional[AsyncSettingsClient] = None
@@ -642,6 +653,14 @@ class AsyncConversationalAiClient:
 
             self._llm_usage = AsyncLlmUsageClient(client_wrapper=self._client_wrapper)
         return self._llm_usage
+
+    @property
+    def llm(self):
+        if self._llm is None:
+            from .llm.client import AsyncLlmClient  # noqa: E402
+
+            self._llm = AsyncLlmClient(client_wrapper=self._client_wrapper)
+        return self._llm
 
     @property
     def knowledge_base(self):

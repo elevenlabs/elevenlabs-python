@@ -32,6 +32,7 @@ class RawTwilioClient:
         agent_phone_number_id: str,
         to_number: str,
         conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = OMIT,
+        call_recording_enabled: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[TwilioOutboundCallResponse]:
         """
@@ -46,6 +47,9 @@ class RawTwilioClient:
         to_number : str
 
         conversation_initiation_client_data : typing.Optional[ConversationInitiationClientDataRequestInput]
+
+        call_recording_enabled : typing.Optional[bool]
+            Whether let Twilio record the call.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -67,6 +71,7 @@ class RawTwilioClient:
                     annotation=ConversationInitiationClientDataRequestInput,
                     direction="write",
                 ),
+                "call_recording_enabled": call_recording_enabled,
             },
             headers={
                 "content-type": "application/json",
@@ -183,6 +188,7 @@ class AsyncRawTwilioClient:
         agent_phone_number_id: str,
         to_number: str,
         conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = OMIT,
+        call_recording_enabled: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[TwilioOutboundCallResponse]:
         """
@@ -197,6 +203,9 @@ class AsyncRawTwilioClient:
         to_number : str
 
         conversation_initiation_client_data : typing.Optional[ConversationInitiationClientDataRequestInput]
+
+        call_recording_enabled : typing.Optional[bool]
+            Whether let Twilio record the call.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -218,6 +227,7 @@ class AsyncRawTwilioClient:
                     annotation=ConversationInitiationClientDataRequestInput,
                     direction="write",
                 ),
+                "call_recording_enabled": call_recording_enabled,
             },
             headers={
                 "content-type": "application/json",

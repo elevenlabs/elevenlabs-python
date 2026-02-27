@@ -16,6 +16,7 @@ class WorkspaceGroupResponseModel(UncheckedBaseModel):
     permissions: typing.Optional[typing.List[WorkspaceGroupPermission]] = None
     group_usage_limit: typing.Optional[WorkspaceGroupResponseModelGroupUsageLimit] = None
     character_count: typing.Optional[int] = None
+    scim_external_id: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

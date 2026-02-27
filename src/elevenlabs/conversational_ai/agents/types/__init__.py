@@ -6,11 +6,23 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .body_patches_an_agent_settings_v_1_convai_agents_agent_id_patch_procedure_refs_item import (
-        BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem,
+    from .body_create_agent_v_1_convai_agents_create_post_coaching_settings import (
+        BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings,
+        BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings_Coached,
+        BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings_None,
+    )
+    from .body_patches_an_agent_settings_v_1_convai_agents_agent_id_patch_coaching_settings import (
+        BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings,
+        BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings_Coached,
+        BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings_None,
     )
 _dynamic_imports: typing.Dict[str, str] = {
-    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem": ".body_patches_an_agent_settings_v_1_convai_agents_agent_id_patch_procedure_refs_item"
+    "BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings": ".body_create_agent_v_1_convai_agents_create_post_coaching_settings",
+    "BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings_Coached": ".body_create_agent_v_1_convai_agents_create_post_coaching_settings",
+    "BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings_None": ".body_create_agent_v_1_convai_agents_create_post_coaching_settings",
+    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings": ".body_patches_an_agent_settings_v_1_convai_agents_agent_id_patch_coaching_settings",
+    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings_Coached": ".body_patches_an_agent_settings_v_1_convai_agents_agent_id_patch_coaching_settings",
+    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings_None": ".body_patches_an_agent_settings_v_1_convai_agents_agent_id_patch_coaching_settings",
 }
 
 
@@ -35,4 +47,11 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchProcedureRefsItem"]
+__all__ = [
+    "BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings",
+    "BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings_Coached",
+    "BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings_None",
+    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings",
+    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings_Coached",
+    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings_None",
+]

@@ -8,11 +8,9 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_metadata import AgentMetadata
+from .chat_source_medium import ChatSourceMedium
 from .conversation_history_multivoice_message_model import ConversationHistoryMultivoiceMessageModel
 from .conversation_history_transcript_common_model_input_role import ConversationHistoryTranscriptCommonModelInputRole
-from .conversation_history_transcript_common_model_input_source_medium import (
-    ConversationHistoryTranscriptCommonModelInputSourceMedium,
-)
 from .conversation_history_transcript_common_model_input_tool_results_item import (
     ConversationHistoryTranscriptCommonModelInputToolResultsItem,
 )
@@ -40,7 +38,7 @@ class ConversationHistoryTranscriptCommonModelInput(UncheckedBaseModel):
     llm_usage: typing.Optional[LlmUsageInput] = None
     interrupted: typing.Optional[bool] = None
     original_message: typing.Optional[str] = None
-    source_medium: typing.Optional[ConversationHistoryTranscriptCommonModelInputSourceMedium] = None
+    source_medium: typing.Optional[ChatSourceMedium] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

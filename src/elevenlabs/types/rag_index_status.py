@@ -4,6 +4,7 @@ import typing
 
 RagIndexStatus = typing.Union[
     typing.Literal[
+        "new",
         "created",
         "processing",
         "failed",

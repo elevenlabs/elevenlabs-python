@@ -133,7 +133,13 @@ class WebhooksClient:
         return _response.data
 
     def update(
-        self, webhook_id: str, *, is_disabled: bool, name: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        webhook_id: str,
+        *,
+        is_disabled: bool,
+        name: str,
+        retry_enabled: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> PatchWorkspaceWebhookResponseModel:
         """
         Update the specified workspace webhook
@@ -148,6 +154,9 @@ class WebhooksClient:
 
         name : str
             The display name of the webhook (used for display purposes only).
+
+        retry_enabled : typing.Optional[bool]
+            Whether to enable automatic retries for transient failures (5xx, 429, timeout)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -171,7 +180,7 @@ class WebhooksClient:
         )
         """
         _response = self._raw_client.update(
-            webhook_id, is_disabled=is_disabled, name=name, request_options=request_options
+            webhook_id, is_disabled=is_disabled, name=name, retry_enabled=retry_enabled, request_options=request_options
         )
         return _response.data
 
@@ -318,7 +327,13 @@ class AsyncWebhooksClient:
         return _response.data
 
     async def update(
-        self, webhook_id: str, *, is_disabled: bool, name: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        webhook_id: str,
+        *,
+        is_disabled: bool,
+        name: str,
+        retry_enabled: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> PatchWorkspaceWebhookResponseModel:
         """
         Update the specified workspace webhook
@@ -333,6 +348,9 @@ class AsyncWebhooksClient:
 
         name : str
             The display name of the webhook (used for display purposes only).
+
+        retry_enabled : typing.Optional[bool]
+            Whether to enable automatic retries for transient failures (5xx, 429, timeout)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -364,6 +382,6 @@ class AsyncWebhooksClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.update(
-            webhook_id, is_disabled=is_disabled, name=name, request_options=request_options
+            webhook_id, is_disabled=is_disabled, name=name, retry_enabled=retry_enabled, request_options=request_options
         )
         return _response.data

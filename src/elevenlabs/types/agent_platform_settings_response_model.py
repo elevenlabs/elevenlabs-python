@@ -12,7 +12,7 @@ from .auth_settings import AuthSettings
 from .conversation_initiation_client_data_config_output import ConversationInitiationClientDataConfigOutput
 from .evaluation_settings import EvaluationSettings
 from .literal_json_schema_property import LiteralJsonSchemaProperty
-from .privacy_config import PrivacyConfig
+from .privacy_config_output import PrivacyConfigOutput
 from .safety_response_model import SafetyResponseModel
 from .widget_config import WidgetConfig
 
@@ -53,6 +53,11 @@ class AgentPlatformSettingsResponseModel(UncheckedBaseModel):
     Whether the agent is archived
     """
 
+    summary_language: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Language for all conversation analysis outputs (summaries, titles, evaluation rationales, data collection rationales). If not set, the language will be inferred from the conversation. Must be one of the supported conversation languages.
+    """
+
     auth: typing.Optional[AuthSettings] = pydantic.Field(default=None)
     """
     Settings for authentication
@@ -63,7 +68,7 @@ class AgentPlatformSettingsResponseModel(UncheckedBaseModel):
     Call limits for the agent
     """
 
-    privacy: typing.Optional[PrivacyConfig] = pydantic.Field(default=None)
+    privacy: typing.Optional[PrivacyConfigOutput] = pydantic.Field(default=None)
     """
     Privacy settings for the agent
     """

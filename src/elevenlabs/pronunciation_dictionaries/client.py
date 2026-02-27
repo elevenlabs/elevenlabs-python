@@ -156,6 +156,8 @@ class PronunciationDictionariesClient:
             rules=[
                 BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem_Alias(
                     string_to_replace="Thailand",
+                    case_sensitive=True,
+                    word_boundaries=True,
                     alias="tie-land",
                 )
             ],
@@ -489,6 +491,8 @@ class AsyncPronunciationDictionariesClient:
                 rules=[
                     BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem_Alias(
                         string_to_replace="Thailand",
+                        case_sensitive=True,
+                        word_boundaries=True,
                         alias="tie-land",
                     )
                 ],

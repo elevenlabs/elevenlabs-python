@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .seat_type import SeatType
 from .subscription_response import SubscriptionResponse
 
 
@@ -77,6 +78,11 @@ class User(UncheckedBaseModel):
     created_at: int = pydantic.Field()
     """
     The unix timestamp of the user's creation. 0 if the user was created before the unix timestamp was added.
+    """
+
+    seat_type: SeatType = pydantic.Field()
+    """
+    The seat type of the user.
     """
 
     if IS_PYDANTIC_V2:

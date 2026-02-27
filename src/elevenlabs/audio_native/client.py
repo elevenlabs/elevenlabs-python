@@ -222,6 +222,39 @@ class AudioNativeClient:
         )
         return _response.data
 
+    def update_content_from_url(
+        self, *, url: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> AudioNativeEditContentResponseModel:
+        """
+        Finds an AudioNative project matching the provided URL, extracts content from the URL, updates the project content, and queues it for conversion and auto-publishing.
+
+        Parameters
+        ----------
+        url : str
+            URL of the page to extract content from.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AudioNativeEditContentResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.audio_native.update_content_from_url(
+            url="https://elevenlabs.io/blog/the_first_ai_that_can_laugh/",
+        )
+        """
+        _response = self._raw_client.update_content_from_url(url=url, request_options=request_options)
+        return _response.data
+
 
 class AsyncAudioNativeClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -452,4 +485,45 @@ class AsyncAudioNativeClient:
         _response = await self._raw_client.update(
             project_id, file=file, auto_convert=auto_convert, auto_publish=auto_publish, request_options=request_options
         )
+        return _response.data
+
+    async def update_content_from_url(
+        self, *, url: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> AudioNativeEditContentResponseModel:
+        """
+        Finds an AudioNative project matching the provided URL, extracts content from the URL, updates the project content, and queues it for conversion and auto-publishing.
+
+        Parameters
+        ----------
+        url : str
+            URL of the page to extract content from.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AudioNativeEditContentResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.audio_native.update_content_from_url(
+                url="https://elevenlabs.io/blog/the_first_ai_that_can_laugh/",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update_content_from_url(url=url, request_options=request_options)
         return _response.data

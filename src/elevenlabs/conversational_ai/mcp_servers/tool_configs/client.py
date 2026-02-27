@@ -11,6 +11,12 @@ from ....types.tool_call_sound_behavior import ToolCallSoundBehavior
 from ....types.tool_call_sound_type import ToolCallSoundType
 from ....types.tool_execution_mode import ToolExecutionMode
 from .raw_client import AsyncRawToolConfigsClient, RawToolConfigsClient
+from .types.mcp_tool_config_override_create_request_model_input_overrides_value import (
+    McpToolConfigOverrideCreateRequestModelInputOverridesValue,
+)
+from .types.mcp_tool_config_override_update_request_model_input_overrides_value import (
+    McpToolConfigOverrideUpdateRequestModelInputOverridesValue,
+)
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -42,6 +48,9 @@ class ToolConfigsClient:
         tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = OMIT,
         execution_mode: typing.Optional[ToolExecutionMode] = OMIT,
         assignments: typing.Optional[typing.Sequence[DynamicVariableAssignment]] = OMIT,
+        input_overrides: typing.Optional[
+            typing.Dict[str, typing.Optional[McpToolConfigOverrideCreateRequestModelInputOverridesValue]]
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> McpServerResponseModel:
         """
@@ -73,6 +82,9 @@ class ToolConfigsClient:
         assignments : typing.Optional[typing.Sequence[DynamicVariableAssignment]]
             Dynamic variable assignments for this MCP tool
 
+        input_overrides : typing.Optional[typing.Dict[str, typing.Optional[McpToolConfigOverrideCreateRequestModelInputOverridesValue]]]
+            Mapping of json path to input override configuration
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -102,6 +114,7 @@ class ToolConfigsClient:
             tool_call_sound_behavior=tool_call_sound_behavior,
             execution_mode=execution_mode,
             assignments=assignments,
+            input_overrides=input_overrides,
             request_options=request_options,
         )
         return _response.data
@@ -191,6 +204,9 @@ class ToolConfigsClient:
         tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = OMIT,
         execution_mode: typing.Optional[ToolExecutionMode] = OMIT,
         assignments: typing.Optional[typing.Sequence[DynamicVariableAssignment]] = OMIT,
+        input_overrides: typing.Optional[
+            typing.Dict[str, typing.Optional[McpToolConfigOverrideUpdateRequestModelInputOverridesValue]]
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> McpServerResponseModel:
         """
@@ -222,6 +238,9 @@ class ToolConfigsClient:
         assignments : typing.Optional[typing.Sequence[DynamicVariableAssignment]]
             Dynamic variable assignments for this MCP tool
 
+        input_overrides : typing.Optional[typing.Dict[str, typing.Optional[McpToolConfigOverrideUpdateRequestModelInputOverridesValue]]]
+            Mapping of json path to input override configuration
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -251,6 +270,7 @@ class ToolConfigsClient:
             tool_call_sound_behavior=tool_call_sound_behavior,
             execution_mode=execution_mode,
             assignments=assignments,
+            input_overrides=input_overrides,
             request_options=request_options,
         )
         return _response.data
@@ -282,6 +302,9 @@ class AsyncToolConfigsClient:
         tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = OMIT,
         execution_mode: typing.Optional[ToolExecutionMode] = OMIT,
         assignments: typing.Optional[typing.Sequence[DynamicVariableAssignment]] = OMIT,
+        input_overrides: typing.Optional[
+            typing.Dict[str, typing.Optional[McpToolConfigOverrideCreateRequestModelInputOverridesValue]]
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> McpServerResponseModel:
         """
@@ -312,6 +335,9 @@ class AsyncToolConfigsClient:
 
         assignments : typing.Optional[typing.Sequence[DynamicVariableAssignment]]
             Dynamic variable assignments for this MCP tool
+
+        input_overrides : typing.Optional[typing.Dict[str, typing.Optional[McpToolConfigOverrideCreateRequestModelInputOverridesValue]]]
+            Mapping of json path to input override configuration
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -350,6 +376,7 @@ class AsyncToolConfigsClient:
             tool_call_sound_behavior=tool_call_sound_behavior,
             execution_mode=execution_mode,
             assignments=assignments,
+            input_overrides=input_overrides,
             request_options=request_options,
         )
         return _response.data
@@ -455,6 +482,9 @@ class AsyncToolConfigsClient:
         tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = OMIT,
         execution_mode: typing.Optional[ToolExecutionMode] = OMIT,
         assignments: typing.Optional[typing.Sequence[DynamicVariableAssignment]] = OMIT,
+        input_overrides: typing.Optional[
+            typing.Dict[str, typing.Optional[McpToolConfigOverrideUpdateRequestModelInputOverridesValue]]
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> McpServerResponseModel:
         """
@@ -485,6 +515,9 @@ class AsyncToolConfigsClient:
 
         assignments : typing.Optional[typing.Sequence[DynamicVariableAssignment]]
             Dynamic variable assignments for this MCP tool
+
+        input_overrides : typing.Optional[typing.Dict[str, typing.Optional[McpToolConfigOverrideUpdateRequestModelInputOverridesValue]]]
+            Mapping of json path to input override configuration
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -523,6 +556,7 @@ class AsyncToolConfigsClient:
             tool_call_sound_behavior=tool_call_sound_behavior,
             execution_mode=execution_mode,
             assignments=assignments,
+            input_overrides=input_overrides,
             request_options=request_options,
         )
         return _response.data

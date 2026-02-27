@@ -43,6 +43,7 @@ class MusicClient:
         composition_plan: typing.Optional[MusicPrompt] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
         model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
+        seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         respect_sections_durations: typing.Optional[bool] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
@@ -68,6 +69,9 @@ class MusicClient:
 
         model_id : typing.Optional[typing.Literal["music_v1"]]
             The model to use for the generation.
+
+        seed : typing.Optional[int]
+            Random seed to initialize the music generation process. Providing the same seed with the same parameters can help achieve more consistent results, but exact reproducibility is not guaranteed and outputs may change across system updates. Cannot be used in conjunction with prompt.
 
         force_instrumental : typing.Optional[bool]
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
@@ -104,6 +108,7 @@ class MusicClient:
             composition_plan=composition_plan,
             music_length_ms=music_length_ms,
             model_id=model_id,
+            seed=seed,
             force_instrumental=force_instrumental,
             respect_sections_durations=respect_sections_durations,
             store_for_inpainting=store_for_inpainting,
@@ -120,6 +125,7 @@ class MusicClient:
         composition_plan: typing.Optional[MusicPrompt] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
         model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
+        seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         with_timestamps: typing.Optional[bool] = OMIT,
@@ -145,6 +151,9 @@ class MusicClient:
 
         model_id : typing.Optional[typing.Literal["music_v1"]]
             The model to use for the generation.
+
+        seed : typing.Optional[int]
+            Random seed to initialize the music generation process. Providing the same seed with the same parameters can help achieve more consistent results, but exact reproducibility is not guaranteed and outputs may change across system updates. Cannot be used in conjunction with prompt.
 
         force_instrumental : typing.Optional[bool]
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
@@ -181,6 +190,7 @@ class MusicClient:
             composition_plan=composition_plan,
             music_length_ms=music_length_ms,
             model_id=model_id,
+            seed=seed,
             force_instrumental=force_instrumental,
             store_for_inpainting=store_for_inpainting,
             with_timestamps=with_timestamps,
@@ -197,6 +207,7 @@ class MusicClient:
         composition_plan: typing.Optional[MusicPrompt] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
         model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
+        seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -220,6 +231,9 @@ class MusicClient:
 
         model_id : typing.Optional[typing.Literal["music_v1"]]
             The model to use for the generation.
+
+        seed : typing.Optional[int]
+            Random seed to initialize the music generation process. Providing the same seed with the same parameters can help achieve more consistent results, but exact reproducibility is not guaranteed and outputs may change across system updates. Cannot be used in conjunction with prompt.
 
         force_instrumental : typing.Optional[bool]
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
@@ -250,6 +264,7 @@ class MusicClient:
             composition_plan=composition_plan,
             music_length_ms=music_length_ms,
             model_id=model_id,
+            seed=seed,
             force_instrumental=force_instrumental,
             store_for_inpainting=store_for_inpainting,
             request_options=request_options,
@@ -333,6 +348,7 @@ class AsyncMusicClient:
         composition_plan: typing.Optional[MusicPrompt] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
         model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
+        seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         respect_sections_durations: typing.Optional[bool] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
@@ -358,6 +374,9 @@ class AsyncMusicClient:
 
         model_id : typing.Optional[typing.Literal["music_v1"]]
             The model to use for the generation.
+
+        seed : typing.Optional[int]
+            Random seed to initialize the music generation process. Providing the same seed with the same parameters can help achieve more consistent results, but exact reproducibility is not guaranteed and outputs may change across system updates. Cannot be used in conjunction with prompt.
 
         force_instrumental : typing.Optional[bool]
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
@@ -402,6 +421,7 @@ class AsyncMusicClient:
             composition_plan=composition_plan,
             music_length_ms=music_length_ms,
             model_id=model_id,
+            seed=seed,
             force_instrumental=force_instrumental,
             respect_sections_durations=respect_sections_durations,
             store_for_inpainting=store_for_inpainting,
@@ -419,6 +439,7 @@ class AsyncMusicClient:
         composition_plan: typing.Optional[MusicPrompt] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
         model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
+        seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         with_timestamps: typing.Optional[bool] = OMIT,
@@ -444,6 +465,9 @@ class AsyncMusicClient:
 
         model_id : typing.Optional[typing.Literal["music_v1"]]
             The model to use for the generation.
+
+        seed : typing.Optional[int]
+            Random seed to initialize the music generation process. Providing the same seed with the same parameters can help achieve more consistent results, but exact reproducibility is not guaranteed and outputs may change across system updates. Cannot be used in conjunction with prompt.
 
         force_instrumental : typing.Optional[bool]
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
@@ -488,6 +512,7 @@ class AsyncMusicClient:
             composition_plan=composition_plan,
             music_length_ms=music_length_ms,
             model_id=model_id,
+            seed=seed,
             force_instrumental=force_instrumental,
             store_for_inpainting=store_for_inpainting,
             with_timestamps=with_timestamps,
@@ -505,6 +530,7 @@ class AsyncMusicClient:
         composition_plan: typing.Optional[MusicPrompt] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
         model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
+        seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -528,6 +554,9 @@ class AsyncMusicClient:
 
         model_id : typing.Optional[typing.Literal["music_v1"]]
             The model to use for the generation.
+
+        seed : typing.Optional[int]
+            Random seed to initialize the music generation process. Providing the same seed with the same parameters can help achieve more consistent results, but exact reproducibility is not guaranteed and outputs may change across system updates. Cannot be used in conjunction with prompt.
 
         force_instrumental : typing.Optional[bool]
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
@@ -566,6 +595,7 @@ class AsyncMusicClient:
             composition_plan=composition_plan,
             music_length_ms=music_length_ms,
             model_id=model_id,
+            seed=seed,
             force_instrumental=force_instrumental,
             store_for_inpainting=store_for_inpainting,
             request_options=request_options,

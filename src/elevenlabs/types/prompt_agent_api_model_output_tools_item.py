@@ -94,6 +94,19 @@ class PromptAgentApiModelOutputToolsItem_Mcp(UncheckedBaseModel):
             smart_union = True
 
 
+class PromptAgentApiModelOutputToolsItem_Smb(UncheckedBaseModel):
+    value: typing.Any
+    type: typing.Literal["smb"] = "smb"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+
+
 class PromptAgentApiModelOutputToolsItem_System(UncheckedBaseModel):
     """
     The type of tool
@@ -157,6 +170,7 @@ PromptAgentApiModelOutputToolsItem = typing_extensions.Annotated[
         PromptAgentApiModelOutputToolsItem_ApiIntegrationWebhook,
         PromptAgentApiModelOutputToolsItem_Client,
         PromptAgentApiModelOutputToolsItem_Mcp,
+        PromptAgentApiModelOutputToolsItem_Smb,
         PromptAgentApiModelOutputToolsItem_System,
         PromptAgentApiModelOutputToolsItem_Webhook,
     ],

@@ -126,6 +126,11 @@ class Voice(UncheckedBaseModel):
     The creation time of the voice in Unix time.
     """
 
+    is_bookmarked: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the voice is bookmarked by the current user. Only relevant for community (library-copied) voices.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

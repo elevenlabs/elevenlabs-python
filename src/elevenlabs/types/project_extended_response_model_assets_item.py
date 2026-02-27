@@ -9,7 +9,10 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .canvas_placement import CanvasPlacement
+from .clip_animation import ClipAnimation
+from .generation_source_context import GenerationSourceContext
 from .pending_clip_task import PendingClipTask
+from .project_external_audio_response_model_source_context import ProjectExternalAudioResponseModelSourceContext
 from .project_video_thumbnail_sheet_response_model import ProjectVideoThumbnailSheetResponseModel
 
 
@@ -23,11 +26,12 @@ class ProjectExtendedResponseModelAssetsItem_Video(UncheckedBaseModel):
     duration_ms: int
     volume_gain_db: float
     muted: bool
+    fade_in_ms: typing.Optional[int] = None
+    fade_out_ms: typing.Optional[int] = None
     width: int
     height: int
     codec: str
     order: str
-    preview_job_progress: float
     created_at_ms: int
     updated_at_ms: int
     error: typing.Optional[str] = None
@@ -40,15 +44,18 @@ class ProjectExtendedResponseModelAssetsItem_Video(UncheckedBaseModel):
     source_video_id: typing.Optional[str] = None
     source_asset_id: typing.Optional[str] = None
     pending_block_ids: typing.List[str]
-    import_speech_progress: typing.Optional[float] = None
+    pending_external_audio_ids: typing.List[str]
     speech_imported: typing.Optional[bool] = None
-    dub_audio_progress: typing.Optional[float] = None
     pending_task: typing.Optional[PendingClipTask] = None
     audio_track_ready: typing.Optional[bool] = None
     export_format_ready: typing.Optional[bool] = None
     current_snapshot_id: typing.Optional[str] = None
+    source_context: typing.Optional[GenerationSourceContext] = None
     canvas_placement: typing.Optional[CanvasPlacement] = None
+    animation: typing.Optional[ClipAnimation] = None
     track_id: typing.Optional[str] = None
+    preview_job_progress: typing.Optional[float] = None
+    import_speech_progress: typing.Optional[float] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -80,11 +87,12 @@ class ProjectExtendedResponseModelAssetsItem_Audio(UncheckedBaseModel):
     source_external_audio_id: typing.Optional[str] = None
     source_asset_id: typing.Optional[str] = None
     pending_block_ids: typing.List[str]
-    import_speech_progress: typing.Optional[float] = None
+    pending_external_audio_ids: typing.List[str]
     speech_imported: typing.Optional[bool] = None
-    dub_audio_progress: typing.Optional[float] = None
     pending_task: typing.Optional[PendingClipTask] = None
     current_snapshot_id: typing.Optional[str] = None
+    source_context: typing.Optional[ProjectExternalAudioResponseModelSourceContext] = None
+    import_speech_progress: typing.Optional[float] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -111,6 +119,7 @@ class ProjectExtendedResponseModelAssetsItem_Image(UncheckedBaseModel):
     duration_ms: int
     order: str
     canvas_placement: CanvasPlacement
+    animation: typing.Optional[ClipAnimation] = None
     created_at_ms: int
     updated_at_ms: int
     current_snapshot_id: typing.Optional[str] = None

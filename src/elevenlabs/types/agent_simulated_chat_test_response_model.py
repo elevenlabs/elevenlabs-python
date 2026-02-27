@@ -8,11 +8,11 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .conversation_history_analysis_common_model import ConversationHistoryAnalysisCommonModel
-from .conversation_history_transcript_common_model_output import ConversationHistoryTranscriptCommonModelOutput
+from .conversation_history_transcript_response_model import ConversationHistoryTranscriptResponseModel
 
 
 class AgentSimulatedChatTestResponseModel(UncheckedBaseModel):
-    simulated_conversation: typing.List[ConversationHistoryTranscriptCommonModelOutput]
+    simulated_conversation: typing.List[ConversationHistoryTranscriptResponseModel]
     analysis: ConversationHistoryAnalysisCommonModel
 
     if IS_PYDANTIC_V2:

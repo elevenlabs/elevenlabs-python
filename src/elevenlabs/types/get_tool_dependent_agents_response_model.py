@@ -5,11 +5,13 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .dependent_branch_info import DependentBranchInfo
 from .get_tool_dependent_agents_response_model_agents_item import GetToolDependentAgentsResponseModelAgentsItem
 
 
 class GetToolDependentAgentsResponseModel(UncheckedBaseModel):
     agents: typing.List[GetToolDependentAgentsResponseModelAgentsItem]
+    branches: typing.Optional[typing.List[DependentBranchInfo]] = None
     next_cursor: typing.Optional[str] = None
     has_more: bool
 

@@ -20,6 +20,12 @@ from ....types.mcp_tool_config_override import McpToolConfigOverride
 from ....types.tool_call_sound_behavior import ToolCallSoundBehavior
 from ....types.tool_call_sound_type import ToolCallSoundType
 from ....types.tool_execution_mode import ToolExecutionMode
+from .types.mcp_tool_config_override_create_request_model_input_overrides_value import (
+    McpToolConfigOverrideCreateRequestModelInputOverridesValue,
+)
+from .types.mcp_tool_config_override_update_request_model_input_overrides_value import (
+    McpToolConfigOverrideUpdateRequestModelInputOverridesValue,
+)
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -40,6 +46,9 @@ class RawToolConfigsClient:
         tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = OMIT,
         execution_mode: typing.Optional[ToolExecutionMode] = OMIT,
         assignments: typing.Optional[typing.Sequence[DynamicVariableAssignment]] = OMIT,
+        input_overrides: typing.Optional[
+            typing.Dict[str, typing.Optional[McpToolConfigOverrideCreateRequestModelInputOverridesValue]]
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[McpServerResponseModel]:
         """
@@ -71,6 +80,9 @@ class RawToolConfigsClient:
         assignments : typing.Optional[typing.Sequence[DynamicVariableAssignment]]
             Dynamic variable assignments for this MCP tool
 
+        input_overrides : typing.Optional[typing.Dict[str, typing.Optional[McpToolConfigOverrideCreateRequestModelInputOverridesValue]]]
+            Mapping of json path to input override configuration
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -90,6 +102,13 @@ class RawToolConfigsClient:
                 "execution_mode": execution_mode,
                 "assignments": convert_and_respect_annotation_metadata(
                     object_=assignments, annotation=typing.Sequence[DynamicVariableAssignment], direction="write"
+                ),
+                "input_overrides": convert_and_respect_annotation_metadata(
+                    object_=input_overrides,
+                    annotation=typing.Dict[
+                        str, typing.Optional[McpToolConfigOverrideCreateRequestModelInputOverridesValue]
+                    ],
+                    direction="write",
                 ),
                 "tool_name": tool_name,
             },
@@ -264,6 +283,9 @@ class RawToolConfigsClient:
         tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = OMIT,
         execution_mode: typing.Optional[ToolExecutionMode] = OMIT,
         assignments: typing.Optional[typing.Sequence[DynamicVariableAssignment]] = OMIT,
+        input_overrides: typing.Optional[
+            typing.Dict[str, typing.Optional[McpToolConfigOverrideUpdateRequestModelInputOverridesValue]]
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[McpServerResponseModel]:
         """
@@ -295,6 +317,9 @@ class RawToolConfigsClient:
         assignments : typing.Optional[typing.Sequence[DynamicVariableAssignment]]
             Dynamic variable assignments for this MCP tool
 
+        input_overrides : typing.Optional[typing.Dict[str, typing.Optional[McpToolConfigOverrideUpdateRequestModelInputOverridesValue]]]
+            Mapping of json path to input override configuration
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -314,6 +339,13 @@ class RawToolConfigsClient:
                 "execution_mode": execution_mode,
                 "assignments": convert_and_respect_annotation_metadata(
                     object_=assignments, annotation=typing.Sequence[DynamicVariableAssignment], direction="write"
+                ),
+                "input_overrides": convert_and_respect_annotation_metadata(
+                    object_=input_overrides,
+                    annotation=typing.Dict[
+                        str, typing.Optional[McpToolConfigOverrideUpdateRequestModelInputOverridesValue]
+                    ],
+                    direction="write",
                 ),
             },
             headers={
@@ -375,6 +407,9 @@ class AsyncRawToolConfigsClient:
         tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = OMIT,
         execution_mode: typing.Optional[ToolExecutionMode] = OMIT,
         assignments: typing.Optional[typing.Sequence[DynamicVariableAssignment]] = OMIT,
+        input_overrides: typing.Optional[
+            typing.Dict[str, typing.Optional[McpToolConfigOverrideCreateRequestModelInputOverridesValue]]
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[McpServerResponseModel]:
         """
@@ -406,6 +441,9 @@ class AsyncRawToolConfigsClient:
         assignments : typing.Optional[typing.Sequence[DynamicVariableAssignment]]
             Dynamic variable assignments for this MCP tool
 
+        input_overrides : typing.Optional[typing.Dict[str, typing.Optional[McpToolConfigOverrideCreateRequestModelInputOverridesValue]]]
+            Mapping of json path to input override configuration
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -425,6 +463,13 @@ class AsyncRawToolConfigsClient:
                 "execution_mode": execution_mode,
                 "assignments": convert_and_respect_annotation_metadata(
                     object_=assignments, annotation=typing.Sequence[DynamicVariableAssignment], direction="write"
+                ),
+                "input_overrides": convert_and_respect_annotation_metadata(
+                    object_=input_overrides,
+                    annotation=typing.Dict[
+                        str, typing.Optional[McpToolConfigOverrideCreateRequestModelInputOverridesValue]
+                    ],
+                    direction="write",
                 ),
                 "tool_name": tool_name,
             },
@@ -599,6 +644,9 @@ class AsyncRawToolConfigsClient:
         tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = OMIT,
         execution_mode: typing.Optional[ToolExecutionMode] = OMIT,
         assignments: typing.Optional[typing.Sequence[DynamicVariableAssignment]] = OMIT,
+        input_overrides: typing.Optional[
+            typing.Dict[str, typing.Optional[McpToolConfigOverrideUpdateRequestModelInputOverridesValue]]
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[McpServerResponseModel]:
         """
@@ -630,6 +678,9 @@ class AsyncRawToolConfigsClient:
         assignments : typing.Optional[typing.Sequence[DynamicVariableAssignment]]
             Dynamic variable assignments for this MCP tool
 
+        input_overrides : typing.Optional[typing.Dict[str, typing.Optional[McpToolConfigOverrideUpdateRequestModelInputOverridesValue]]]
+            Mapping of json path to input override configuration
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -649,6 +700,13 @@ class AsyncRawToolConfigsClient:
                 "execution_mode": execution_mode,
                 "assignments": convert_and_respect_annotation_metadata(
                     object_=assignments, annotation=typing.Sequence[DynamicVariableAssignment], direction="write"
+                ),
+                "input_overrides": convert_and_respect_annotation_metadata(
+                    object_=input_overrides,
+                    annotation=typing.Dict[
+                        str, typing.Optional[McpToolConfigOverrideUpdateRequestModelInputOverridesValue]
+                    ],
+                    direction="write",
                 ),
             },
             headers={

@@ -18,6 +18,8 @@ from .types.conversations_list_request_summary_mode import ConversationsListRequ
 if typing.TYPE_CHECKING:
     from .audio.client import AsyncAudioClient, AudioClient
     from .feedback.client import AsyncFeedbackClient, FeedbackClient
+    from .files.client import AsyncFilesClient, FilesClient
+    from .messages.client import AsyncMessagesClient, MessagesClient
 
 
 class ConversationsClient:
@@ -26,6 +28,8 @@ class ConversationsClient:
         self._client_wrapper = client_wrapper
         self._audio: typing.Optional[AudioClient] = None
         self._feedback: typing.Optional[FeedbackClient] = None
+        self._messages: typing.Optional[MessagesClient] = None
+        self._files: typing.Optional[FilesClient] = None
 
     @property
     def with_raw_response(self) -> RawConversationsClient:
@@ -365,6 +369,22 @@ class ConversationsClient:
             self._feedback = FeedbackClient(client_wrapper=self._client_wrapper)
         return self._feedback
 
+    @property
+    def messages(self):
+        if self._messages is None:
+            from .messages.client import MessagesClient  # noqa: E402
+
+            self._messages = MessagesClient(client_wrapper=self._client_wrapper)
+        return self._messages
+
+    @property
+    def files(self):
+        if self._files is None:
+            from .files.client import FilesClient  # noqa: E402
+
+            self._files = FilesClient(client_wrapper=self._client_wrapper)
+        return self._files
+
 
 class AsyncConversationsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -372,6 +392,8 @@ class AsyncConversationsClient:
         self._client_wrapper = client_wrapper
         self._audio: typing.Optional[AsyncAudioClient] = None
         self._feedback: typing.Optional[AsyncFeedbackClient] = None
+        self._messages: typing.Optional[AsyncMessagesClient] = None
+        self._files: typing.Optional[AsyncFilesClient] = None
 
     @property
     def with_raw_response(self) -> AsyncRawConversationsClient:
@@ -752,3 +774,19 @@ class AsyncConversationsClient:
 
             self._feedback = AsyncFeedbackClient(client_wrapper=self._client_wrapper)
         return self._feedback
+
+    @property
+    def messages(self):
+        if self._messages is None:
+            from .messages.client import AsyncMessagesClient  # noqa: E402
+
+            self._messages = AsyncMessagesClient(client_wrapper=self._client_wrapper)
+        return self._messages
+
+    @property
+    def files(self):
+        if self._files is None:
+            from .files.client import AsyncFilesClient  # noqa: E402
+
+            self._files = AsyncFilesClient(client_wrapper=self._client_wrapper)
+        return self._files

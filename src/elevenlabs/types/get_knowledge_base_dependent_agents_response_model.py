@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .dependent_branch_info import DependentBranchInfo
 from .get_knowledge_base_dependent_agents_response_model_agents_item import (
     GetKnowledgeBaseDependentAgentsResponseModelAgentsItem,
 )
@@ -12,6 +13,7 @@ from .get_knowledge_base_dependent_agents_response_model_agents_item import (
 
 class GetKnowledgeBaseDependentAgentsResponseModel(UncheckedBaseModel):
     agents: typing.List[GetKnowledgeBaseDependentAgentsResponseModelAgentsItem]
+    branches: typing.Optional[typing.List[DependentBranchInfo]] = None
     next_cursor: typing.Optional[str] = None
     has_more: bool
 

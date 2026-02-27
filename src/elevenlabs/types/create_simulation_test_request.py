@@ -42,6 +42,10 @@ class CreateSimulationTestRequest(UncheckedBaseModel):
     """
 
     name: str
+    parent_folder_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ID of the parent folder. If not provided, the test will be created at the root level.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

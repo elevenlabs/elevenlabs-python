@@ -7,11 +7,15 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import ConversationsListRequestSummaryMode
-    from . import audio, feedback
+    from . import audio, feedback, files, messages
+    from .messages import MessagesTextSearchRequestSummaryMode
 _dynamic_imports: typing.Dict[str, str] = {
     "ConversationsListRequestSummaryMode": ".types",
+    "MessagesTextSearchRequestSummaryMode": ".messages",
     "audio": ".audio",
     "feedback": ".feedback",
+    "files": ".files",
+    "messages": ".messages",
 }
 
 
@@ -36,4 +40,11 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["ConversationsListRequestSummaryMode", "audio", "feedback"]
+__all__ = [
+    "ConversationsListRequestSummaryMode",
+    "MessagesTextSearchRequestSummaryMode",
+    "audio",
+    "feedback",
+    "files",
+    "messages",
+]

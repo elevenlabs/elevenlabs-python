@@ -3,7 +3,9 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
@@ -166,6 +168,61 @@ class WidgetTextContents(UncheckedBaseModel):
     go_back: typing.Optional[str] = pydantic.Field(default=None)
     """
     Text and ARIA label for the go back button.
+    """
+
+    send_message: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Text and ARIA label for the send message button.
+    """
+
+    text_mode: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Text and ARIA label for the switch to text mode button.
+    """
+
+    voice_mode: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Text and ARIA label for the switch to voice mode button.
+    """
+
+    switched_to_text_mode: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Toast notification displayed when switching to text mode.
+    """
+
+    switched_to_voice_mode: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Toast notification displayed when switching to voice mode.
+    """
+
+    copy_: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="copy")] = pydantic.Field(default=None)
+    """
+    Text and ARIA label for the copy button.
+    """
+
+    download: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Text and ARIA label for the download button.
+    """
+
+    wrap: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Text and ARIA label for the wrap toggle button.
+    """
+
+    agent_working: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Status text displayed when the agent is processing a tool call.
+    """
+
+    agent_done: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Status text displayed when the agent finishes processing a tool call.
+    """
+
+    agent_error: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Status text displayed when the agent encounters an error during a tool call.
     """
 
     if IS_PYDANTIC_V2:

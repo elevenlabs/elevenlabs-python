@@ -5,9 +5,10 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .conversation_history_redaction_config import ConversationHistoryRedactionConfig
 
 
-class PrivacyConfig(UncheckedBaseModel):
+class PrivacyConfigInput(UncheckedBaseModel):
     record_voice: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether to record the conversation
@@ -36,6 +37,11 @@ class PrivacyConfig(UncheckedBaseModel):
     zero_retention_mode: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether to enable zero retention mode - no PII data is stored
+    """
+
+    conversation_history_redaction: typing.Optional[ConversationHistoryRedactionConfig] = pydantic.Field(default=None)
+    """
+    Config for PII redaction in the conversation history
     """
 
     if IS_PYDANTIC_V2:

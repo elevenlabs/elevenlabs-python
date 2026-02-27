@@ -37,6 +37,7 @@ class TwilioClient:
         agent_phone_number_id: str,
         to_number: str,
         conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = OMIT,
+        call_recording_enabled: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TwilioOutboundCallResponse:
         """
@@ -51,6 +52,9 @@ class TwilioClient:
         to_number : str
 
         conversation_initiation_client_data : typing.Optional[ConversationInitiationClientDataRequestInput]
+
+        call_recording_enabled : typing.Optional[bool]
+            Whether let Twilio record the call.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -78,6 +82,7 @@ class TwilioClient:
             agent_phone_number_id=agent_phone_number_id,
             to_number=to_number,
             conversation_initiation_client_data=conversation_initiation_client_data,
+            call_recording_enabled=call_recording_enabled,
             request_options=request_options,
         )
         return _response.data
@@ -160,6 +165,7 @@ class AsyncTwilioClient:
         agent_phone_number_id: str,
         to_number: str,
         conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = OMIT,
+        call_recording_enabled: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TwilioOutboundCallResponse:
         """
@@ -174,6 +180,9 @@ class AsyncTwilioClient:
         to_number : str
 
         conversation_initiation_client_data : typing.Optional[ConversationInitiationClientDataRequestInput]
+
+        call_recording_enabled : typing.Optional[bool]
+            Whether let Twilio record the call.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -209,6 +218,7 @@ class AsyncTwilioClient:
             agent_phone_number_id=agent_phone_number_id,
             to_number=to_number,
             conversation_initiation_client_data=conversation_initiation_client_data,
+            call_recording_enabled=call_recording_enabled,
             request_options=request_options,
         )
         return _response.data
