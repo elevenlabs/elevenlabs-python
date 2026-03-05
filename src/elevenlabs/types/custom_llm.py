@@ -23,7 +23,7 @@ class CustomLlm(UncheckedBaseModel):
 
     api_key: typing.Optional[ConvAiSecretLocator] = pydantic.Field(default=None)
     """
-    The API key for authentication
+    The API key for authentication. Either a workspace secret reference {'secret_id': '...'} or an environment variable reference {'env_var_label': '...'}.
     """
 
     request_headers: typing.Optional[typing.Dict[str, CustomLlmRequestHeadersValue]] = pydantic.Field(default=None)

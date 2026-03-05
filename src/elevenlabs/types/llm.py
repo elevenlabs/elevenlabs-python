@@ -27,6 +27,7 @@ Llm = typing.Union[
         "gemini-3-pro-preview",
         "gemini-3-flash-preview",
         "claude-sonnet-4-5",
+        "claude-sonnet-4-6",
         "claude-sonnet-4",
         "claude-haiku-4-5",
         "claude-3-7-sonnet",

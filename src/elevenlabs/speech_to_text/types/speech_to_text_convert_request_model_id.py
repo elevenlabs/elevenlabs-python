@@ -2,4 +2,4 @@
 
 import typing
 
-SpeechToTextConvertRequestModelId = typing.Union[typing.Literal["scribe_v1", "scribe_v2"], typing.Any]
+SpeechToTextConvertRequestModelId = typing.Union[typing.Literal["scribe_v2", "scribe_v1"], typing.Any]

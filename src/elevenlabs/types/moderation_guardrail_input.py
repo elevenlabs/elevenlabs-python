@@ -5,10 +5,12 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .guardrail_execution_mode import GuardrailExecutionMode
 from .moderation_config import ModerationConfig
 
 
 class ModerationGuardrailInput(UncheckedBaseModel):
+    execution_mode: typing.Optional[GuardrailExecutionMode] = None
     config: typing.Optional[ModerationConfig] = None
 
     if IS_PYDANTIC_V2:

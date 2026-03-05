@@ -663,6 +663,7 @@ if typing.TYPE_CHECKING:
     from .character_refresh_period import CharacterRefreshPeriod
     from .character_usage_response import CharacterUsageResponse
     from .chat_source_medium import ChatSourceMedium
+    from .check_service_availability_params import CheckServiceAvailabilityParams
     from .client_event import ClientEvent
     from .client_tool_config_input import ClientToolConfigInput
     from .client_tool_config_output import ClientToolConfigOutput
@@ -882,7 +883,9 @@ if typing.TYPE_CHECKING:
     from .create_agent_branch_response_model import CreateAgentBranchResponseModel
     from .create_agent_response_model import CreateAgentResponseModel
     from .create_agent_test_response_model import CreateAgentTestResponseModel
+    from .create_asset_params import CreateAssetParams
     from .create_audio_native_project_request import CreateAudioNativeProjectRequest
+    from .create_client_appointment_params import CreateClientAppointmentParams
     from .create_client_params import CreateClientParams
     from .create_phone_number_response_model import CreatePhoneNumberResponseModel
     from .create_previously_generated_voice_request import CreatePreviouslyGeneratedVoiceRequest
@@ -904,10 +907,10 @@ if typing.TYPE_CHECKING:
     from .create_transcript_request import CreateTranscriptRequest
     from .create_twilio_phone_number_request import CreateTwilioPhoneNumberRequest
     from .custom_guardrail_config import CustomGuardrailConfig
-    from .custom_guardrail_config_model import CustomGuardrailConfigModel
     from .custom_guardrail_input import CustomGuardrailInput
     from .custom_guardrail_output import CustomGuardrailOutput
-    from .custom_guardrails_config import CustomGuardrailsConfig
+    from .custom_guardrails_config_input import CustomGuardrailsConfigInput
+    from .custom_guardrails_config_output import CustomGuardrailsConfigOutput
     from .custom_llm import CustomLlm
     from .custom_llm_request_headers_value import CustomLlmRequestHeadersValue
     from .custom_llmapi_type import CustomLlmapiType
@@ -919,6 +922,8 @@ if typing.TYPE_CHECKING:
     from .data_collection_result_common_model import DataCollectionResultCommonModel
     from .default_sharing_group_response_model import DefaultSharingGroupResponseModel
     from .default_sharing_group_response_model_permission_level import DefaultSharingGroupResponseModelPermissionLevel
+    from .delete_asset_params import DeleteAssetParams
+    from .delete_calendar_event_params import DeleteCalendarEventParams
     from .delete_chapter_request import DeleteChapterRequest
     from .delete_chapter_response_model import DeleteChapterResponseModel
     from .delete_client_params import DeleteClientParams
@@ -1042,6 +1047,7 @@ if typing.TYPE_CHECKING:
     from .get_chapter_snapshots_request import GetChapterSnapshotsRequest
     from .get_chapters_request import GetChaptersRequest
     from .get_chapters_response import GetChaptersResponse
+    from .get_client_appointments_params import GetClientAppointmentsParams
     from .get_client_by_phone_params import GetClientByPhoneParams
     from .get_conv_ai_dashboard_settings_response_model import GetConvAiDashboardSettingsResponseModel
     from .get_conv_ai_dashboard_settings_response_model_charts_item import (
@@ -1157,6 +1163,7 @@ if typing.TYPE_CHECKING:
     from .get_voices_v_2_response import GetVoicesV2Response
     from .get_whats_app_account_response import GetWhatsAppAccountResponse
     from .get_workspace_secrets_response_model import GetWorkspaceSecretsResponseModel
+    from .guardrail_execution_mode import GuardrailExecutionMode
     from .guardrails_v_1_input import GuardrailsV1Input
     from .guardrails_v_1_output import GuardrailsV1Output
     from .history_alignment_response_model import HistoryAlignmentResponseModel
@@ -1204,6 +1211,7 @@ if typing.TYPE_CHECKING:
     from .library_voice_response import LibraryVoiceResponse
     from .library_voice_response_model_category import LibraryVoiceResponseModelCategory
     from .list_assets_params import ListAssetsParams
+    from .list_calendar_events_params import ListCalendarEventsParams
     from .list_clients_params import ListClientsParams
     from .list_mcp_tools_response_model import ListMcpToolsResponseModel
     from .list_products_params import ListProductsParams
@@ -1281,6 +1289,7 @@ if typing.TYPE_CHECKING:
     from .multipart_music_response import MultipartMusicResponse
     from .music_explore_song_source_context import MusicExploreSongSourceContext
     from .music_prompt import MusicPrompt
+    from .music_upload_response import MusicUploadResponse
     from .no_coaching_settings import NoCoachingSettings
     from .non_streaming_output_formats import NonStreamingOutputFormats
     from .normalized_alignment import NormalizedAlignment
@@ -1494,6 +1503,8 @@ if typing.TYPE_CHECKING:
     from .render_status import RenderStatus
     from .render_type import RenderType
     from .request_pvc_manual_verification_response_model import RequestPvcManualVerificationResponseModel
+    from .required_constraint import RequiredConstraint
+    from .required_constraints import RequiredConstraints
     from .resource_access_info import ResourceAccessInfo
     from .resource_access_info_role import ResourceAccessInfoRole
     from .resource_metadata_response_model import ResourceMetadataResponseModel
@@ -1604,6 +1615,8 @@ if typing.TYPE_CHECKING:
         StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel,
     )
     from .streaming_audio_chunk_with_timestamps_response import StreamingAudioChunkWithTimestampsResponse
+    from .studio_agent_settings_model import StudioAgentSettingsModel
+    from .studio_agent_tool_settings_model import StudioAgentToolSettingsModel
     from .studio_clip_reference import StudioClipReference
     from .studio_clip_reference_clip_type import StudioClipReferenceClipType
     from .subscription import Subscription
@@ -1636,6 +1649,7 @@ if typing.TYPE_CHECKING:
         SystemToolConfigOutputParams_TransferToNumber,
         SystemToolConfigOutputParams_VoicemailDetection,
     )
+    from .telephony_call_config import TelephonyCallConfig
     from .telephony_provider import TelephonyProvider
     from .test_condition_rationale_common_model import TestConditionRationaleCommonModel
     from .test_condition_result_common_model import TestConditionResultCommonModel
@@ -1746,7 +1760,9 @@ if typing.TYPE_CHECKING:
         UnitTestToolCallParameterEval_Regex,
     )
     from .unit_test_workflow_node_transition_evaluation_node_id import UnitTestWorkflowNodeTransitionEvaluationNodeId
+    from .update_asset_params import UpdateAssetParams
     from .update_audio_native_project_request import UpdateAudioNativeProjectRequest
+    from .update_calendar_event_params import UpdateCalendarEventParams
     from .update_chapter_request import UpdateChapterRequest
     from .update_client_params import UpdateClientParams
     from .update_product_params import UpdateProductParams
@@ -1797,6 +1813,7 @@ if typing.TYPE_CHECKING:
     from .voice_sharing_response import VoiceSharingResponse
     from .voice_sharing_response_model_category import VoiceSharingResponseModelCategory
     from .voice_sharing_state import VoiceSharingState
+    from .voice_statistics_response_model import VoiceStatisticsResponseModel
     from .voice_verification_response import VoiceVerificationResponse
     from .voicemail_detection_tool_config import VoicemailDetectionToolConfig
     from .webhook_auth_method_type import WebhookAuthMethodType
@@ -2615,6 +2632,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CharacterRefreshPeriod": ".character_refresh_period",
     "CharacterUsageResponse": ".character_usage_response",
     "ChatSourceMedium": ".chat_source_medium",
+    "CheckServiceAvailabilityParams": ".check_service_availability_params",
     "ClientEvent": ".client_event",
     "ClientToolConfigInput": ".client_tool_config_input",
     "ClientToolConfigOutput": ".client_tool_config_output",
@@ -2766,7 +2784,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateAgentBranchResponseModel": ".create_agent_branch_response_model",
     "CreateAgentResponseModel": ".create_agent_response_model",
     "CreateAgentTestResponseModel": ".create_agent_test_response_model",
+    "CreateAssetParams": ".create_asset_params",
     "CreateAudioNativeProjectRequest": ".create_audio_native_project_request",
+    "CreateClientAppointmentParams": ".create_client_appointment_params",
     "CreateClientParams": ".create_client_params",
     "CreatePhoneNumberResponseModel": ".create_phone_number_response_model",
     "CreatePreviouslyGeneratedVoiceRequest": ".create_previously_generated_voice_request",
@@ -2784,10 +2804,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateTranscriptRequest": ".create_transcript_request",
     "CreateTwilioPhoneNumberRequest": ".create_twilio_phone_number_request",
     "CustomGuardrailConfig": ".custom_guardrail_config",
-    "CustomGuardrailConfigModel": ".custom_guardrail_config_model",
     "CustomGuardrailInput": ".custom_guardrail_input",
     "CustomGuardrailOutput": ".custom_guardrail_output",
-    "CustomGuardrailsConfig": ".custom_guardrails_config",
+    "CustomGuardrailsConfigInput": ".custom_guardrails_config_input",
+    "CustomGuardrailsConfigOutput": ".custom_guardrails_config_output",
     "CustomLlm": ".custom_llm",
     "CustomLlmRequestHeadersValue": ".custom_llm_request_headers_value",
     "CustomLlmapiType": ".custom_llmapi_type",
@@ -2799,6 +2819,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DataCollectionResultCommonModel": ".data_collection_result_common_model",
     "DefaultSharingGroupResponseModel": ".default_sharing_group_response_model",
     "DefaultSharingGroupResponseModelPermissionLevel": ".default_sharing_group_response_model_permission_level",
+    "DeleteAssetParams": ".delete_asset_params",
+    "DeleteCalendarEventParams": ".delete_calendar_event_params",
     "DeleteChapterRequest": ".delete_chapter_request",
     "DeleteChapterResponseModel": ".delete_chapter_response_model",
     "DeleteClientParams": ".delete_client_params",
@@ -2912,6 +2934,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetChapterSnapshotsRequest": ".get_chapter_snapshots_request",
     "GetChaptersRequest": ".get_chapters_request",
     "GetChaptersResponse": ".get_chapters_response",
+    "GetClientAppointmentsParams": ".get_client_appointments_params",
     "GetClientByPhoneParams": ".get_client_by_phone_params",
     "GetConvAiDashboardSettingsResponseModel": ".get_conv_ai_dashboard_settings_response_model",
     "GetConvAiDashboardSettingsResponseModelChartsItem": ".get_conv_ai_dashboard_settings_response_model_charts_item",
@@ -2993,6 +3016,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetVoicesV2Response": ".get_voices_v_2_response",
     "GetWhatsAppAccountResponse": ".get_whats_app_account_response",
     "GetWorkspaceSecretsResponseModel": ".get_workspace_secrets_response_model",
+    "GuardrailExecutionMode": ".guardrail_execution_mode",
     "GuardrailsV1Input": ".guardrails_v_1_input",
     "GuardrailsV1Output": ".guardrails_v_1_output",
     "HistoryAlignmentResponseModel": ".history_alignment_response_model",
@@ -3036,6 +3060,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LibraryVoiceResponse": ".library_voice_response",
     "LibraryVoiceResponseModelCategory": ".library_voice_response_model_category",
     "ListAssetsParams": ".list_assets_params",
+    "ListCalendarEventsParams": ".list_calendar_events_params",
     "ListClientsParams": ".list_clients_params",
     "ListMcpToolsResponseModel": ".list_mcp_tools_response_model",
     "ListProductsParams": ".list_products_params",
@@ -3109,6 +3134,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MultipartMusicResponse": ".multipart_music_response",
     "MusicExploreSongSourceContext": ".music_explore_song_source_context",
     "MusicPrompt": ".music_prompt",
+    "MusicUploadResponse": ".music_upload_response",
     "NoCoachingSettings": ".no_coaching_settings",
     "NonStreamingOutputFormats": ".non_streaming_output_formats",
     "NormalizedAlignment": ".normalized_alignment",
@@ -3292,6 +3318,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RenderStatus": ".render_status",
     "RenderType": ".render_type",
     "RequestPvcManualVerificationResponseModel": ".request_pvc_manual_verification_response_model",
+    "RequiredConstraint": ".required_constraint",
+    "RequiredConstraints": ".required_constraints",
     "ResourceAccessInfo": ".resource_access_info",
     "ResourceAccessInfoRole": ".resource_access_info_role",
     "ResourceMetadataResponseModel": ".resource_metadata_response_model",
@@ -3398,6 +3426,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "StartSpeakerSeparationResponseModel": ".start_speaker_separation_response_model",
     "StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel": ".streaming_audio_chunk_with_timestamps_and_voice_segments_response_model",
     "StreamingAudioChunkWithTimestampsResponse": ".streaming_audio_chunk_with_timestamps_response",
+    "StudioAgentSettingsModel": ".studio_agent_settings_model",
+    "StudioAgentToolSettingsModel": ".studio_agent_tool_settings_model",
     "StudioClipReference": ".studio_clip_reference",
     "StudioClipReferenceClipType": ".studio_clip_reference_clip_type",
     "Subscription": ".subscription",
@@ -3426,6 +3456,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SystemToolConfigOutputParams_TransferToAgent": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_TransferToNumber": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_VoicemailDetection": ".system_tool_config_output_params",
+    "TelephonyCallConfig": ".telephony_call_config",
     "TelephonyProvider": ".telephony_provider",
     "TestConditionRationaleCommonModel": ".test_condition_rationale_common_model",
     "TestConditionResultCommonModel": ".test_condition_result_common_model",
@@ -3526,7 +3557,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UnitTestToolCallParameterEval_Llm": ".unit_test_tool_call_parameter_eval",
     "UnitTestToolCallParameterEval_Regex": ".unit_test_tool_call_parameter_eval",
     "UnitTestWorkflowNodeTransitionEvaluationNodeId": ".unit_test_workflow_node_transition_evaluation_node_id",
+    "UpdateAssetParams": ".update_asset_params",
     "UpdateAudioNativeProjectRequest": ".update_audio_native_project_request",
+    "UpdateCalendarEventParams": ".update_calendar_event_params",
     "UpdateChapterRequest": ".update_chapter_request",
     "UpdateClientParams": ".update_client_params",
     "UpdateProductParams": ".update_product_params",
@@ -3573,6 +3606,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "VoiceSharingResponse": ".voice_sharing_response",
     "VoiceSharingResponseModelCategory": ".voice_sharing_response_model_category",
     "VoiceSharingState": ".voice_sharing_state",
+    "VoiceStatisticsResponseModel": ".voice_statistics_response_model",
     "VoiceVerificationResponse": ".voice_verification_response",
     "VoicemailDetectionToolConfig": ".voicemail_detection_tool_config",
     "WebhookAuthMethodType": ".webhook_auth_method_type",
@@ -4371,6 +4405,7 @@ __all__ = [
     "CharacterRefreshPeriod",
     "CharacterUsageResponse",
     "ChatSourceMedium",
+    "CheckServiceAvailabilityParams",
     "ClientEvent",
     "ClientToolConfigInput",
     "ClientToolConfigOutput",
@@ -4522,7 +4557,9 @@ __all__ = [
     "CreateAgentBranchResponseModel",
     "CreateAgentResponseModel",
     "CreateAgentTestResponseModel",
+    "CreateAssetParams",
     "CreateAudioNativeProjectRequest",
+    "CreateClientAppointmentParams",
     "CreateClientParams",
     "CreatePhoneNumberResponseModel",
     "CreatePreviouslyGeneratedVoiceRequest",
@@ -4540,10 +4577,10 @@ __all__ = [
     "CreateTranscriptRequest",
     "CreateTwilioPhoneNumberRequest",
     "CustomGuardrailConfig",
-    "CustomGuardrailConfigModel",
     "CustomGuardrailInput",
     "CustomGuardrailOutput",
-    "CustomGuardrailsConfig",
+    "CustomGuardrailsConfigInput",
+    "CustomGuardrailsConfigOutput",
     "CustomLlm",
     "CustomLlmRequestHeadersValue",
     "CustomLlmapiType",
@@ -4555,6 +4592,8 @@ __all__ = [
     "DataCollectionResultCommonModel",
     "DefaultSharingGroupResponseModel",
     "DefaultSharingGroupResponseModelPermissionLevel",
+    "DeleteAssetParams",
+    "DeleteCalendarEventParams",
     "DeleteChapterRequest",
     "DeleteChapterResponseModel",
     "DeleteClientParams",
@@ -4668,6 +4707,7 @@ __all__ = [
     "GetChapterSnapshotsRequest",
     "GetChaptersRequest",
     "GetChaptersResponse",
+    "GetClientAppointmentsParams",
     "GetClientByPhoneParams",
     "GetConvAiDashboardSettingsResponseModel",
     "GetConvAiDashboardSettingsResponseModelChartsItem",
@@ -4749,6 +4789,7 @@ __all__ = [
     "GetVoicesV2Response",
     "GetWhatsAppAccountResponse",
     "GetWorkspaceSecretsResponseModel",
+    "GuardrailExecutionMode",
     "GuardrailsV1Input",
     "GuardrailsV1Output",
     "HistoryAlignmentResponseModel",
@@ -4792,6 +4833,7 @@ __all__ = [
     "LibraryVoiceResponse",
     "LibraryVoiceResponseModelCategory",
     "ListAssetsParams",
+    "ListCalendarEventsParams",
     "ListClientsParams",
     "ListMcpToolsResponseModel",
     "ListProductsParams",
@@ -4865,6 +4907,7 @@ __all__ = [
     "MultipartMusicResponse",
     "MusicExploreSongSourceContext",
     "MusicPrompt",
+    "MusicUploadResponse",
     "NoCoachingSettings",
     "NonStreamingOutputFormats",
     "NormalizedAlignment",
@@ -5048,6 +5091,8 @@ __all__ = [
     "RenderStatus",
     "RenderType",
     "RequestPvcManualVerificationResponseModel",
+    "RequiredConstraint",
+    "RequiredConstraints",
     "ResourceAccessInfo",
     "ResourceAccessInfoRole",
     "ResourceMetadataResponseModel",
@@ -5154,6 +5199,8 @@ __all__ = [
     "StartSpeakerSeparationResponseModel",
     "StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel",
     "StreamingAudioChunkWithTimestampsResponse",
+    "StudioAgentSettingsModel",
+    "StudioAgentToolSettingsModel",
     "StudioClipReference",
     "StudioClipReferenceClipType",
     "Subscription",
@@ -5182,6 +5229,7 @@ __all__ = [
     "SystemToolConfigOutputParams_TransferToAgent",
     "SystemToolConfigOutputParams_TransferToNumber",
     "SystemToolConfigOutputParams_VoicemailDetection",
+    "TelephonyCallConfig",
     "TelephonyProvider",
     "TestConditionRationaleCommonModel",
     "TestConditionResultCommonModel",
@@ -5282,7 +5330,9 @@ __all__ = [
     "UnitTestToolCallParameterEval_Llm",
     "UnitTestToolCallParameterEval_Regex",
     "UnitTestWorkflowNodeTransitionEvaluationNodeId",
+    "UpdateAssetParams",
     "UpdateAudioNativeProjectRequest",
+    "UpdateCalendarEventParams",
     "UpdateChapterRequest",
     "UpdateClientParams",
     "UpdateProductParams",
@@ -5329,6 +5379,7 @@ __all__ = [
     "VoiceSharingResponse",
     "VoiceSharingResponseModelCategory",
     "VoiceSharingState",
+    "VoiceStatisticsResponseModel",
     "VoiceVerificationResponse",
     "VoicemailDetectionToolConfig",
     "WebhookAuthMethodType",

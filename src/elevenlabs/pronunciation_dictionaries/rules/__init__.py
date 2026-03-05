@@ -7,11 +7,17 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
+        BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem,
+        BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Alias,
+        BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Phoneme,
         PronunciationDictionaryRule,
         PronunciationDictionaryRule_Alias,
         PronunciationDictionaryRule_Phoneme,
     )
 _dynamic_imports: typing.Dict[str, str] = {
+    "BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem": ".types",
+    "BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Alias": ".types",
+    "BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Phoneme": ".types",
     "PronunciationDictionaryRule": ".types",
     "PronunciationDictionaryRule_Alias": ".types",
     "PronunciationDictionaryRule_Phoneme": ".types",
@@ -39,4 +45,11 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["PronunciationDictionaryRule", "PronunciationDictionaryRule_Alias", "PronunciationDictionaryRule_Phoneme"]
+__all__ = [
+    "BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem",
+    "BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Alias",
+    "BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Phoneme",
+    "PronunciationDictionaryRule",
+    "PronunciationDictionaryRule_Alias",
+    "PronunciationDictionaryRule_Phoneme",
+]

@@ -5,15 +5,10 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .custom_guardrail_config import CustomGuardrailConfig
 
 
-class CustomGuardrailsConfig(UncheckedBaseModel):
-    """
-    Config container for custom guardrails list
-    """
-
-    configs: typing.Optional[typing.List[CustomGuardrailConfig]] = None
+class UpdateCalendarEventParams(UncheckedBaseModel):
+    smb_tool_type: typing.Optional[typing.Literal["update_calendar_event"]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

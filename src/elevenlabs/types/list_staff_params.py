@@ -8,6 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class ListStaffParams(UncheckedBaseModel):
+    list_kwargs: typing.Optional[typing.Dict[str, typing.Any]] = None
     smb_tool_type: typing.Optional[typing.Literal["list_staff"]] = None
 
     if IS_PYDANTIC_V2:

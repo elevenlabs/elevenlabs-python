@@ -5,7 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .custom_guardrails_config import CustomGuardrailsConfig
+from .custom_guardrails_config_output import CustomGuardrailsConfigOutput
 
 
 class CustomGuardrailOutput(UncheckedBaseModel):
@@ -13,7 +13,7 @@ class CustomGuardrailOutput(UncheckedBaseModel):
     Container for custom guardrails, matching ModerationGuardrail pattern
     """
 
-    config: typing.Optional[CustomGuardrailsConfig] = None
+    config: typing.Optional[CustomGuardrailsConfigOutput] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

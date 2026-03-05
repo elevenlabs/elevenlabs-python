@@ -5,7 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .custom_guardrail_config_model import CustomGuardrailConfigModel
+from .guardrail_execution_mode import GuardrailExecutionMode
 
 
 class CustomGuardrailConfig(UncheckedBaseModel):
@@ -24,10 +24,7 @@ class CustomGuardrailConfig(UncheckedBaseModel):
     Instruction describing what to block, e.g. 'don't talk about politics'
     """
 
-    model: CustomGuardrailConfigModel = pydantic.Field()
-    """
-    LLM model to use for custom guardrail evaluation
-    """
+    execution_mode: typing.Optional[GuardrailExecutionMode] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

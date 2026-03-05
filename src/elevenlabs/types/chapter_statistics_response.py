@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .voice_statistics_response_model import VoiceStatisticsResponseModel
 
 
 class ChapterStatisticsResponse(UncheckedBaseModel):
@@ -26,6 +27,11 @@ class ChapterStatisticsResponse(UncheckedBaseModel):
     paragraphs_unconverted: int = pydantic.Field()
     """
     The number of unconverted paragraphs.
+    """
+
+    voice_statistics: typing.Optional[typing.List[VoiceStatisticsResponseModel]] = pydantic.Field(default=None)
+    """
+    Per-voice breakdown of character counts.
     """
 
     if IS_PYDANTIC_V2:

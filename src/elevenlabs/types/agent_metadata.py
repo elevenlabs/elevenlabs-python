@@ -11,6 +11,7 @@ class AgentMetadata(UncheckedBaseModel):
     agent_id: str
     branch_id: typing.Optional[str] = None
     workflow_node_id: typing.Optional[str] = None
+    version_id: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

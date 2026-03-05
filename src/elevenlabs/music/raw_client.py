@@ -15,6 +15,7 @@ from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.allowed_output_formats import AllowedOutputFormats
 from ..types.http_validation_error import HttpValidationError
 from ..types.music_prompt import MusicPrompt
+from ..types.music_upload_response import MusicUploadResponse
 from .types.music_separate_stems_request_stem_variation_id import MusicSeparateStemsRequestStemVariationId
 
 # this is used as the default value for optional parameters
@@ -71,7 +72,7 @@ class RawMusicClient:
             Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan`. When set to true, the model will precisely respect each section's `duration_ms` from the plan. When set to false, the model may adjust individual section durations which will generally lead to better generation quality and improved latency, while always preserving the total song duration from the plan.
 
         store_for_inpainting : typing.Optional[bool]
-            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting API.
+            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
 
         sign_with_c_2_pa : typing.Optional[bool]
             Whether to sign the generated song with C2PA. Applicable only for mp3 files.
@@ -181,7 +182,7 @@ class RawMusicClient:
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
 
         store_for_inpainting : typing.Optional[bool]
-            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting API.
+            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
 
         with_timestamps : typing.Optional[bool]
             Whether to return the timestamps of the words in the generated song.
@@ -292,7 +293,7 @@ class RawMusicClient:
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
 
         store_for_inpainting : typing.Optional[bool]
-            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting API.
+            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -353,6 +354,71 @@ class RawMusicClient:
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
             yield _stream()
+
+    def upload(
+        self,
+        *,
+        file: core.File,
+        extract_composition_plan: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[MusicUploadResponse]:
+        """
+        Upload a music file to be later used for inpainting. Only available to enterprise clients with access to the inpainting feature.
+
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        extract_composition_plan : typing.Optional[bool]
+            Whether to generate and return the composition plan for the uploaded song. If True, the response will include the composition_plan but will increase the latency.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[MusicUploadResponse]
+            Successfully uploaded music file with optional composition plan
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/music/upload",
+            method="POST",
+            data={
+                "extract_composition_plan": extract_composition_plan,
+            },
+            files={
+                "file": file,
+            },
+            request_options=request_options,
+            omit=OMIT,
+            force_multipart=True,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    MusicUploadResponse,
+                    construct_type(
+                        type_=MusicUploadResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     @contextlib.contextmanager
     def separate_stems(
@@ -486,7 +552,7 @@ class AsyncRawMusicClient:
             Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan`. When set to true, the model will precisely respect each section's `duration_ms` from the plan. When set to false, the model may adjust individual section durations which will generally lead to better generation quality and improved latency, while always preserving the total song duration from the plan.
 
         store_for_inpainting : typing.Optional[bool]
-            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting API.
+            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
 
         sign_with_c_2_pa : typing.Optional[bool]
             Whether to sign the generated song with C2PA. Applicable only for mp3 files.
@@ -597,7 +663,7 @@ class AsyncRawMusicClient:
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
 
         store_for_inpainting : typing.Optional[bool]
-            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting API.
+            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
 
         with_timestamps : typing.Optional[bool]
             Whether to return the timestamps of the words in the generated song.
@@ -709,7 +775,7 @@ class AsyncRawMusicClient:
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
 
         store_for_inpainting : typing.Optional[bool]
-            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting API.
+            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -771,6 +837,71 @@ class AsyncRawMusicClient:
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
             yield await _stream()
+
+    async def upload(
+        self,
+        *,
+        file: core.File,
+        extract_composition_plan: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[MusicUploadResponse]:
+        """
+        Upload a music file to be later used for inpainting. Only available to enterprise clients with access to the inpainting feature.
+
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        extract_composition_plan : typing.Optional[bool]
+            Whether to generate and return the composition plan for the uploaded song. If True, the response will include the composition_plan but will increase the latency.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[MusicUploadResponse]
+            Successfully uploaded music file with optional composition plan
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/music/upload",
+            method="POST",
+            data={
+                "extract_composition_plan": extract_composition_plan,
+            },
+            files={
+                "file": file,
+            },
+            request_options=request_options,
+            omit=OMIT,
+            force_multipart=True,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    MusicUploadResponse,
+                    construct_type(
+                        type_=MusicUploadResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     @contextlib.asynccontextmanager
     async def separate_stems(

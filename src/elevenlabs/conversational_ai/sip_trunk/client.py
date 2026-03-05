@@ -6,6 +6,7 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.conversation_initiation_client_data_request_input import ConversationInitiationClientDataRequestInput
 from ...types.sip_trunk_outbound_call_response import SipTrunkOutboundCallResponse
+from ...types.telephony_call_config import TelephonyCallConfig
 from .raw_client import AsyncRawSipTrunkClient, RawSipTrunkClient
 
 # this is used as the default value for optional parameters
@@ -34,6 +35,7 @@ class SipTrunkClient:
         agent_phone_number_id: str,
         to_number: str,
         conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = OMIT,
+        telephony_call_config: typing.Optional[TelephonyCallConfig] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SipTrunkOutboundCallResponse:
         """
@@ -48,6 +50,8 @@ class SipTrunkClient:
         to_number : str
 
         conversation_initiation_client_data : typing.Optional[ConversationInitiationClientDataRequestInput]
+
+        telephony_call_config : typing.Optional[TelephonyCallConfig]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -75,6 +79,7 @@ class SipTrunkClient:
             agent_phone_number_id=agent_phone_number_id,
             to_number=to_number,
             conversation_initiation_client_data=conversation_initiation_client_data,
+            telephony_call_config=telephony_call_config,
             request_options=request_options,
         )
         return _response.data
@@ -102,6 +107,7 @@ class AsyncSipTrunkClient:
         agent_phone_number_id: str,
         to_number: str,
         conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = OMIT,
+        telephony_call_config: typing.Optional[TelephonyCallConfig] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SipTrunkOutboundCallResponse:
         """
@@ -116,6 +122,8 @@ class AsyncSipTrunkClient:
         to_number : str
 
         conversation_initiation_client_data : typing.Optional[ConversationInitiationClientDataRequestInput]
+
+        telephony_call_config : typing.Optional[TelephonyCallConfig]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -151,6 +159,7 @@ class AsyncSipTrunkClient:
             agent_phone_number_id=agent_phone_number_id,
             to_number=to_number,
             conversation_initiation_client_data=conversation_initiation_client_data,
+            telephony_call_config=telephony_call_config,
             request_options=request_options,
         )
         return _response.data

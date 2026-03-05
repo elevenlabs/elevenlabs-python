@@ -5,6 +5,7 @@ import typing
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.conversation_initiation_client_data_request_input import ConversationInitiationClientDataRequestInput
+from ...types.telephony_call_config import TelephonyCallConfig
 from ...types.twilio_outbound_call_response import TwilioOutboundCallResponse
 from .raw_client import AsyncRawTwilioClient, RawTwilioClient
 from .types.body_register_a_twilio_call_and_return_twi_ml_v_1_convai_twilio_register_call_post_direction import (
@@ -38,6 +39,7 @@ class TwilioClient:
         to_number: str,
         conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = OMIT,
         call_recording_enabled: typing.Optional[bool] = OMIT,
+        telephony_call_config: typing.Optional[TelephonyCallConfig] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TwilioOutboundCallResponse:
         """
@@ -55,6 +57,8 @@ class TwilioClient:
 
         call_recording_enabled : typing.Optional[bool]
             Whether let Twilio record the call.
+
+        telephony_call_config : typing.Optional[TelephonyCallConfig]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -83,6 +87,7 @@ class TwilioClient:
             to_number=to_number,
             conversation_initiation_client_data=conversation_initiation_client_data,
             call_recording_enabled=call_recording_enabled,
+            telephony_call_config=telephony_call_config,
             request_options=request_options,
         )
         return _response.data
@@ -166,6 +171,7 @@ class AsyncTwilioClient:
         to_number: str,
         conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = OMIT,
         call_recording_enabled: typing.Optional[bool] = OMIT,
+        telephony_call_config: typing.Optional[TelephonyCallConfig] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TwilioOutboundCallResponse:
         """
@@ -183,6 +189,8 @@ class AsyncTwilioClient:
 
         call_recording_enabled : typing.Optional[bool]
             Whether let Twilio record the call.
+
+        telephony_call_config : typing.Optional[TelephonyCallConfig]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -219,6 +227,7 @@ class AsyncTwilioClient:
             to_number=to_number,
             conversation_initiation_client_data=conversation_initiation_client_data,
             call_recording_enabled=call_recording_enabled,
+            telephony_call_config=telephony_call_config,
             request_options=request_options,
         )
         return _response.data

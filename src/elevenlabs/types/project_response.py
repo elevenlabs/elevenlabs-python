@@ -13,6 +13,7 @@ from .project_response_model_fiction import ProjectResponseModelFiction
 from .project_response_model_source_type import ProjectResponseModelSourceType
 from .project_response_model_target_audience import ProjectResponseModelTargetAudience
 from .project_state import ProjectState
+from .studio_agent_settings_model import StudioAgentSettingsModel
 
 
 class ProjectResponse(UncheckedBaseModel):
@@ -186,6 +187,11 @@ class ProjectResponse(UncheckedBaseModel):
     aspect_ratio: typing.Optional[ProjectResponseModelAspectRatio] = pydantic.Field(default=None)
     """
     The aspect ratio of the project.
+    """
+
+    agent_settings: typing.Optional[StudioAgentSettingsModel] = pydantic.Field(default=None)
+    """
+    Agent-related settings for the project
     """
 
     if IS_PYDANTIC_V2:

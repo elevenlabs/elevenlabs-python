@@ -6,6 +6,9 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.pronunciation_dictionary_rules_response_model import PronunciationDictionaryRulesResponseModel
 from .raw_client import AsyncRawRulesClient, RawRulesClient
+from .types.body_set_rules_on_the_pronunciation_dictionary_v_1_pronunciation_dictionaries_pronunciation_dictionary_id_set_rules_post_rules_item import (
+    BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem,
+)
 from .types.pronunciation_dictionary_rule import PronunciationDictionaryRule
 
 # this is used as the default value for optional parameters
@@ -26,6 +29,61 @@ class RulesClient:
         RawRulesClient
         """
         return self._raw_client
+
+    def set(
+        self,
+        pronunciation_dictionary_id: str,
+        *,
+        rules: typing.Sequence[
+            BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem
+        ],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PronunciationDictionaryRulesResponseModel:
+        """
+        Replaces all existing rules on the pronunciation dictionary with the provided ones.
+
+        Parameters
+        ----------
+        pronunciation_dictionary_id : str
+            The id of the pronunciation dictionary
+
+        rules : typing.Sequence[BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem]
+            List of pronunciation rules. Rule can be either:
+                an alias rule: {'string_to_replace': 'a', 'type': 'alias', 'alias': 'b', }
+                or a phoneme rule: {'string_to_replace': 'a', 'type': 'phoneme', 'phoneme': 'b', 'alphabet': 'ipa' }
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PronunciationDictionaryRulesResponseModel
+            Successfully set rules on the pronunciation dictionary
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+        from elevenlabs.pronunciation_dictionaries.rules import (
+            BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Alias,
+        )
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.pronunciation_dictionaries.rules.set(
+            pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
+            rules=[
+                BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Alias(
+                    string_to_replace="Thailand",
+                    case_sensitive=True,
+                    word_boundaries=True,
+                    alias="tie-land",
+                )
+            ],
+        )
+        """
+        _response = self._raw_client.set(pronunciation_dictionary_id, rules=rules, request_options=request_options)
+        return _response.data
 
     def add(
         self,
@@ -138,6 +196,71 @@ class AsyncRulesClient:
         AsyncRawRulesClient
         """
         return self._raw_client
+
+    async def set(
+        self,
+        pronunciation_dictionary_id: str,
+        *,
+        rules: typing.Sequence[
+            BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem
+        ],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PronunciationDictionaryRulesResponseModel:
+        """
+        Replaces all existing rules on the pronunciation dictionary with the provided ones.
+
+        Parameters
+        ----------
+        pronunciation_dictionary_id : str
+            The id of the pronunciation dictionary
+
+        rules : typing.Sequence[BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem]
+            List of pronunciation rules. Rule can be either:
+                an alias rule: {'string_to_replace': 'a', 'type': 'alias', 'alias': 'b', }
+                or a phoneme rule: {'string_to_replace': 'a', 'type': 'phoneme', 'phoneme': 'b', 'alphabet': 'ipa' }
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PronunciationDictionaryRulesResponseModel
+            Successfully set rules on the pronunciation dictionary
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+        from elevenlabs.pronunciation_dictionaries.rules import (
+            BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Alias,
+        )
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.pronunciation_dictionaries.rules.set(
+                pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
+                rules=[
+                    BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Alias(
+                        string_to_replace="Thailand",
+                        case_sensitive=True,
+                        word_boundaries=True,
+                        alias="tie-land",
+                    )
+                ],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.set(
+            pronunciation_dictionary_id, rules=rules, request_options=request_options
+        )
+        return _response.data
 
     async def add(
         self,

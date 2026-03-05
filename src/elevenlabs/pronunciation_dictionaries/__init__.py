@@ -16,6 +16,9 @@ if typing.TYPE_CHECKING:
     )
     from . import rules
     from .rules import (
+        BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem,
+        BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Alias,
+        BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Phoneme,
         PronunciationDictionaryRule,
         PronunciationDictionaryRule_Alias,
         PronunciationDictionaryRule_Phoneme,
@@ -25,6 +28,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem_Alias": ".types",
     "BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem_Phoneme": ".types",
     "BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostWorkspaceAccess": ".types",
+    "BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem": ".rules",
+    "BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Alias": ".rules",
+    "BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Phoneme": ".rules",
     "PronunciationDictionariesCreateFromFileRequestWorkspaceAccess": ".types",
     "PronunciationDictionariesListRequestSort": ".types",
     "PronunciationDictionaryRule": ".rules",
@@ -60,6 +66,9 @@ __all__ = [
     "BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem_Alias",
     "BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem_Phoneme",
     "BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostWorkspaceAccess",
+    "BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem",
+    "BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Alias",
+    "BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Phoneme",
     "PronunciationDictionariesCreateFromFileRequestWorkspaceAccess",
     "PronunciationDictionariesListRequestSort",
     "PronunciationDictionaryRule",

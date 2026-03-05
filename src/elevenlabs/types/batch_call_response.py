@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .batch_call_status import BatchCallStatus
 from .batch_call_whats_app_params import BatchCallWhatsAppParams
+from .telephony_call_config import TelephonyCallConfig
 from .telephony_provider import TelephonyProvider
 
 
@@ -26,6 +27,7 @@ class BatchCallResponse(UncheckedBaseModel):
     last_updated_at_unix: int
     status: BatchCallStatus
     retry_count: int
+    telephony_call_config: TelephonyCallConfig
     agent_name: str
 
     if IS_PYDANTIC_V2:

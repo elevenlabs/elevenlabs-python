@@ -6,12 +6,20 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .body_set_rules_on_the_pronunciation_dictionary_v_1_pronunciation_dictionaries_pronunciation_dictionary_id_set_rules_post_rules_item import (
+        BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem,
+        BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Alias,
+        BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Phoneme,
+    )
     from .pronunciation_dictionary_rule import (
         PronunciationDictionaryRule,
         PronunciationDictionaryRule_Alias,
         PronunciationDictionaryRule_Phoneme,
     )
 _dynamic_imports: typing.Dict[str, str] = {
+    "BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem": ".body_set_rules_on_the_pronunciation_dictionary_v_1_pronunciation_dictionaries_pronunciation_dictionary_id_set_rules_post_rules_item",
+    "BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Alias": ".body_set_rules_on_the_pronunciation_dictionary_v_1_pronunciation_dictionaries_pronunciation_dictionary_id_set_rules_post_rules_item",
+    "BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Phoneme": ".body_set_rules_on_the_pronunciation_dictionary_v_1_pronunciation_dictionaries_pronunciation_dictionary_id_set_rules_post_rules_item",
     "PronunciationDictionaryRule": ".pronunciation_dictionary_rule",
     "PronunciationDictionaryRule_Alias": ".pronunciation_dictionary_rule",
     "PronunciationDictionaryRule_Phoneme": ".pronunciation_dictionary_rule",
@@ -39,4 +47,11 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["PronunciationDictionaryRule", "PronunciationDictionaryRule_Alias", "PronunciationDictionaryRule_Phoneme"]
+__all__ = [
+    "BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem",
+    "BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Alias",
+    "BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Phoneme",
+    "PronunciationDictionaryRule",
+    "PronunciationDictionaryRule_Alias",
+    "PronunciationDictionaryRule_Phoneme",
+]
