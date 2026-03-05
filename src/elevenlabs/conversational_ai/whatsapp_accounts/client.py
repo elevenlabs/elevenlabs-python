@@ -94,6 +94,7 @@ class WhatsappAccountsClient:
         phone_number_id: str,
         *,
         assigned_agent_id: typing.Optional[str] = OMIT,
+        enable_messaging: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Any:
         """
@@ -104,6 +105,8 @@ class WhatsappAccountsClient:
         phone_number_id : str
 
         assigned_agent_id : typing.Optional[str]
+
+        enable_messaging : typing.Optional[bool]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -125,7 +128,10 @@ class WhatsappAccountsClient:
         )
         """
         _response = self._raw_client.update(
-            phone_number_id, assigned_agent_id=assigned_agent_id, request_options=request_options
+            phone_number_id,
+            assigned_agent_id=assigned_agent_id,
+            enable_messaging=enable_messaging,
+            request_options=request_options,
         )
         return _response.data
 
@@ -256,6 +262,7 @@ class AsyncWhatsappAccountsClient:
         phone_number_id: str,
         *,
         assigned_agent_id: typing.Optional[str] = OMIT,
+        enable_messaging: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Any:
         """
@@ -266,6 +273,8 @@ class AsyncWhatsappAccountsClient:
         phone_number_id : str
 
         assigned_agent_id : typing.Optional[str]
+
+        enable_messaging : typing.Optional[bool]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -295,7 +304,10 @@ class AsyncWhatsappAccountsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.update(
-            phone_number_id, assigned_agent_id=assigned_agent_id, request_options=request_options
+            phone_number_id,
+            assigned_agent_id=assigned_agent_id,
+            enable_messaging=enable_messaging,
+            request_options=request_options,
         )
         return _response.data
 

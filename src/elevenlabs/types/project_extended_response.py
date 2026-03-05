@@ -21,6 +21,7 @@ from .project_state import ProjectState
 from .project_voice_response_model import ProjectVoiceResponseModel
 from .pronunciation_dictionary_locator_response_model import PronunciationDictionaryLocatorResponseModel
 from .pronunciation_dictionary_version_response_model import PronunciationDictionaryVersionResponseModel
+from .studio_agent_settings_model import StudioAgentSettingsModel
 from .voice import Voice
 
 
@@ -195,6 +196,11 @@ class ProjectExtendedResponse(UncheckedBaseModel):
     aspect_ratio: typing.Optional[ProjectExtendedResponseModelAspectRatio] = pydantic.Field(default=None)
     """
     The aspect ratio of the project.
+    """
+
+    agent_settings: typing.Optional[StudioAgentSettingsModel] = pydantic.Field(default=None)
+    """
+    Agent-related settings for the project
     """
 
     quality_preset: ProjectExtendedResponseModelQualityPreset = pydantic.Field()

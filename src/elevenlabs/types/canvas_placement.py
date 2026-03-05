@@ -20,6 +20,10 @@ class CanvasPlacement(UncheckedBaseModel):
     pivot_y: typing.Optional[float] = None
     skew_x: typing.Optional[float] = None
     skew_y: typing.Optional[float] = None
+    crop_top: typing.Optional[float] = None
+    crop_right: typing.Optional[float] = None
+    crop_bottom: typing.Optional[float] = None
+    crop_left: typing.Optional[float] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

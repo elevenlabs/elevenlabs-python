@@ -15,6 +15,7 @@ from ...types.create_agent_test_response_model import CreateAgentTestResponseMod
 from ...types.get_tests_page_response_model import GetTestsPageResponseModel
 from ...types.get_tests_summaries_by_ids_response_model import GetTestsSummariesByIdsResponseModel
 from ...types.http_validation_error import HttpValidationError
+from ...types.test_type import TestType
 from .types.tests_create_request_body import TestsCreateRequestBody
 from .types.tests_get_response import TestsGetResponse
 from .types.tests_list_request_sort_mode import TestsListRequestSortMode
@@ -310,6 +311,7 @@ class RawTestsClient:
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         parent_folder_id: typing.Optional[str] = None,
+        types: typing.Optional[typing.Union[TestType, typing.Sequence[TestType]]] = None,
         include_folders: typing.Optional[bool] = None,
         sort_mode: typing.Optional[TestsListRequestSortMode] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -331,8 +333,11 @@ class RawTestsClient:
         parent_folder_id : typing.Optional[str]
             Filter by parent folder ID. Use 'root' to get items in the root folder.
 
+        types : typing.Optional[typing.Union[TestType, typing.Sequence[TestType]]]
+            If present, the endpoint will return only tests/folders of the given types.
+
         include_folders : typing.Optional[bool]
-            Whether to include folders in the response. Defaults to false.
+            Deprecated. Use the `types` query param and include `folder` instead.
 
         sort_mode : typing.Optional[TestsListRequestSortMode]
             Sort mode for listing tests. Use 'folders_first' to place folders before tests.
@@ -353,6 +358,7 @@ class RawTestsClient:
                 "page_size": page_size,
                 "search": search,
                 "parent_folder_id": parent_folder_id,
+                "types": types,
                 "include_folders": include_folders,
                 "sort_mode": sort_mode,
             },
@@ -670,6 +676,7 @@ class AsyncRawTestsClient:
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         parent_folder_id: typing.Optional[str] = None,
+        types: typing.Optional[typing.Union[TestType, typing.Sequence[TestType]]] = None,
         include_folders: typing.Optional[bool] = None,
         sort_mode: typing.Optional[TestsListRequestSortMode] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -691,8 +698,11 @@ class AsyncRawTestsClient:
         parent_folder_id : typing.Optional[str]
             Filter by parent folder ID. Use 'root' to get items in the root folder.
 
+        types : typing.Optional[typing.Union[TestType, typing.Sequence[TestType]]]
+            If present, the endpoint will return only tests/folders of the given types.
+
         include_folders : typing.Optional[bool]
-            Whether to include folders in the response. Defaults to false.
+            Deprecated. Use the `types` query param and include `folder` instead.
 
         sort_mode : typing.Optional[TestsListRequestSortMode]
             Sort mode for listing tests. Use 'folders_first' to place folders before tests.
@@ -713,6 +723,7 @@ class AsyncRawTestsClient:
                 "page_size": page_size,
                 "search": search,
                 "parent_folder_id": parent_folder_id,
+                "types": types,
                 "include_folders": include_folders,
                 "sort_mode": sort_mode,
             },

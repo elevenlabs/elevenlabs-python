@@ -13,6 +13,9 @@ from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.http_validation_error import HttpValidationError
 from ...types.pronunciation_dictionary_rules_response_model import PronunciationDictionaryRulesResponseModel
+from .types.body_set_rules_on_the_pronunciation_dictionary_v_1_pronunciation_dictionaries_pronunciation_dictionary_id_set_rules_post_rules_item import (
+    BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem,
+)
 from .types.pronunciation_dictionary_rule import PronunciationDictionaryRule
 
 # this is used as the default value for optional parameters
@@ -22,6 +25,80 @@ OMIT = typing.cast(typing.Any, ...)
 class RawRulesClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    def set(
+        self,
+        pronunciation_dictionary_id: str,
+        *,
+        rules: typing.Sequence[
+            BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem
+        ],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[PronunciationDictionaryRulesResponseModel]:
+        """
+        Replaces all existing rules on the pronunciation dictionary with the provided ones.
+
+        Parameters
+        ----------
+        pronunciation_dictionary_id : str
+            The id of the pronunciation dictionary
+
+        rules : typing.Sequence[BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem]
+            List of pronunciation rules. Rule can be either:
+                an alias rule: {'string_to_replace': 'a', 'type': 'alias', 'alias': 'b', }
+                or a phoneme rule: {'string_to_replace': 'a', 'type': 'phoneme', 'phoneme': 'b', 'alphabet': 'ipa' }
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[PronunciationDictionaryRulesResponseModel]
+            Successfully set rules on the pronunciation dictionary
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}/set-rules",
+            method="POST",
+            json={
+                "rules": convert_and_respect_annotation_metadata(
+                    object_=rules,
+                    annotation=typing.Sequence[
+                        BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem
+                    ],
+                    direction="write",
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    PronunciationDictionaryRulesResponseModel,
+                    construct_type(
+                        type_=PronunciationDictionaryRulesResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def add(
         self,
@@ -159,6 +236,80 @@ class RawRulesClient:
 class AsyncRawRulesClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    async def set(
+        self,
+        pronunciation_dictionary_id: str,
+        *,
+        rules: typing.Sequence[
+            BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem
+        ],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[PronunciationDictionaryRulesResponseModel]:
+        """
+        Replaces all existing rules on the pronunciation dictionary with the provided ones.
+
+        Parameters
+        ----------
+        pronunciation_dictionary_id : str
+            The id of the pronunciation dictionary
+
+        rules : typing.Sequence[BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem]
+            List of pronunciation rules. Rule can be either:
+                an alias rule: {'string_to_replace': 'a', 'type': 'alias', 'alias': 'b', }
+                or a phoneme rule: {'string_to_replace': 'a', 'type': 'phoneme', 'phoneme': 'b', 'alphabet': 'ipa' }
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[PronunciationDictionaryRulesResponseModel]
+            Successfully set rules on the pronunciation dictionary
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}/set-rules",
+            method="POST",
+            json={
+                "rules": convert_and_respect_annotation_metadata(
+                    object_=rules,
+                    annotation=typing.Sequence[
+                        BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem
+                    ],
+                    direction="write",
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    PronunciationDictionaryRulesResponseModel,
+                    construct_type(
+                        type_=PronunciationDictionaryRulesResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def add(
         self,

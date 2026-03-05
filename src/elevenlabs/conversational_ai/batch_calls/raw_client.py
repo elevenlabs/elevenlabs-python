@@ -16,6 +16,7 @@ from ...types.batch_call_response import BatchCallResponse
 from ...types.batch_call_whats_app_params import BatchCallWhatsAppParams
 from ...types.http_validation_error import HttpValidationError
 from ...types.outbound_call_recipient import OutboundCallRecipient
+from ...types.telephony_call_config import TelephonyCallConfig
 from ...types.workspace_batch_calls_response import WorkspaceBatchCallsResponse
 
 # this is used as the default value for optional parameters
@@ -36,6 +37,7 @@ class RawBatchCallsClient:
         agent_phone_number_id: typing.Optional[str] = OMIT,
         whatsapp_params: typing.Optional[BatchCallWhatsAppParams] = OMIT,
         timezone: typing.Optional[str] = OMIT,
+        telephony_call_config: typing.Optional[TelephonyCallConfig] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[BatchCallResponse]:
         """
@@ -56,6 +58,8 @@ class RawBatchCallsClient:
         whatsapp_params : typing.Optional[BatchCallWhatsAppParams]
 
         timezone : typing.Optional[str]
+
+        telephony_call_config : typing.Optional[TelephonyCallConfig]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -80,6 +84,9 @@ class RawBatchCallsClient:
                     object_=whatsapp_params, annotation=BatchCallWhatsAppParams, direction="write"
                 ),
                 "timezone": timezone,
+                "telephony_call_config": convert_and_respect_annotation_metadata(
+                    object_=telephony_call_config, annotation=TelephonyCallConfig, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -373,6 +380,7 @@ class AsyncRawBatchCallsClient:
         agent_phone_number_id: typing.Optional[str] = OMIT,
         whatsapp_params: typing.Optional[BatchCallWhatsAppParams] = OMIT,
         timezone: typing.Optional[str] = OMIT,
+        telephony_call_config: typing.Optional[TelephonyCallConfig] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[BatchCallResponse]:
         """
@@ -393,6 +401,8 @@ class AsyncRawBatchCallsClient:
         whatsapp_params : typing.Optional[BatchCallWhatsAppParams]
 
         timezone : typing.Optional[str]
+
+        telephony_call_config : typing.Optional[TelephonyCallConfig]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -417,6 +427,9 @@ class AsyncRawBatchCallsClient:
                     object_=whatsapp_params, annotation=BatchCallWhatsAppParams, direction="write"
                 ),
                 "timezone": timezone,
+                "telephony_call_config": convert_and_respect_annotation_metadata(
+                    object_=telephony_call_config, annotation=TelephonyCallConfig, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",

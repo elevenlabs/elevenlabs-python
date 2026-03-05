@@ -13,6 +13,7 @@ from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.conversation_initiation_client_data_request_input import ConversationInitiationClientDataRequestInput
 from ...types.http_validation_error import HttpValidationError
 from ...types.sip_trunk_outbound_call_response import SipTrunkOutboundCallResponse
+from ...types.telephony_call_config import TelephonyCallConfig
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -29,6 +30,7 @@ class RawSipTrunkClient:
         agent_phone_number_id: str,
         to_number: str,
         conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = OMIT,
+        telephony_call_config: typing.Optional[TelephonyCallConfig] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SipTrunkOutboundCallResponse]:
         """
@@ -43,6 +45,8 @@ class RawSipTrunkClient:
         to_number : str
 
         conversation_initiation_client_data : typing.Optional[ConversationInitiationClientDataRequestInput]
+
+        telephony_call_config : typing.Optional[TelephonyCallConfig]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -63,6 +67,9 @@ class RawSipTrunkClient:
                     object_=conversation_initiation_client_data,
                     annotation=ConversationInitiationClientDataRequestInput,
                     direction="write",
+                ),
+                "telephony_call_config": convert_and_respect_annotation_metadata(
+                    object_=telephony_call_config, annotation=TelephonyCallConfig, direction="write"
                 ),
             },
             headers={
@@ -109,6 +116,7 @@ class AsyncRawSipTrunkClient:
         agent_phone_number_id: str,
         to_number: str,
         conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = OMIT,
+        telephony_call_config: typing.Optional[TelephonyCallConfig] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SipTrunkOutboundCallResponse]:
         """
@@ -123,6 +131,8 @@ class AsyncRawSipTrunkClient:
         to_number : str
 
         conversation_initiation_client_data : typing.Optional[ConversationInitiationClientDataRequestInput]
+
+        telephony_call_config : typing.Optional[TelephonyCallConfig]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -143,6 +153,9 @@ class AsyncRawSipTrunkClient:
                     object_=conversation_initiation_client_data,
                     annotation=ConversationInitiationClientDataRequestInput,
                     direction="write",
+                ),
+                "telephony_call_config": convert_and_respect_annotation_metadata(
+                    object_=telephony_call_config, annotation=TelephonyCallConfig, direction="write"
                 ),
             },
             headers={

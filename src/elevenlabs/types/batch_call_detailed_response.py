@@ -8,6 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .batch_call_status import BatchCallStatus
 from .batch_call_whats_app_params import BatchCallWhatsAppParams
 from .outbound_call_recipient_response_model import OutboundCallRecipientResponseModel
+from .telephony_call_config import TelephonyCallConfig
 from .telephony_provider import TelephonyProvider
 
 
@@ -31,6 +32,7 @@ class BatchCallDetailedResponse(UncheckedBaseModel):
     last_updated_at_unix: int
     status: BatchCallStatus
     retry_count: int
+    telephony_call_config: TelephonyCallConfig
     agent_name: str
     recipients: typing.List[OutboundCallRecipientResponseModel]
 

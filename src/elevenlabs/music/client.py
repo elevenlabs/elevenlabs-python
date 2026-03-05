@@ -9,6 +9,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.allowed_output_formats import AllowedOutputFormats
 from ..types.music_prompt import MusicPrompt
+from ..types.music_upload_response import MusicUploadResponse
 from .raw_client import AsyncRawMusicClient, RawMusicClient
 from .types.music_separate_stems_request_stem_variation_id import MusicSeparateStemsRequestStemVariationId
 
@@ -80,7 +81,7 @@ class MusicClient:
             Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan`. When set to true, the model will precisely respect each section's `duration_ms` from the plan. When set to false, the model may adjust individual section durations which will generally lead to better generation quality and improved latency, while always preserving the total song duration from the plan.
 
         store_for_inpainting : typing.Optional[bool]
-            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting API.
+            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
 
         sign_with_c_2_pa : typing.Optional[bool]
             Whether to sign the generated song with C2PA. Applicable only for mp3 files.
@@ -159,7 +160,7 @@ class MusicClient:
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
 
         store_for_inpainting : typing.Optional[bool]
-            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting API.
+            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
 
         with_timestamps : typing.Optional[bool]
             Whether to return the timestamps of the words in the generated song.
@@ -239,7 +240,7 @@ class MusicClient:
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
 
         store_for_inpainting : typing.Optional[bool]
-            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting API.
+            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -270,6 +271,46 @@ class MusicClient:
             request_options=request_options,
         ) as r:
             yield from r.data
+
+    def upload(
+        self,
+        *,
+        file: core.File,
+        extract_composition_plan: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> MusicUploadResponse:
+        """
+        Upload a music file to be later used for inpainting. Only available to enterprise clients with access to the inpainting feature.
+
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        extract_composition_plan : typing.Optional[bool]
+            Whether to generate and return the composition plan for the uploaded song. If True, the response will include the composition_plan but will increase the latency.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        MusicUploadResponse
+            Successfully uploaded music file with optional composition plan
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.music.upload()
+        """
+        _response = self._raw_client.upload(
+            file=file, extract_composition_plan=extract_composition_plan, request_options=request_options
+        )
+        return _response.data
 
     def separate_stems(
         self,
@@ -385,7 +426,7 @@ class AsyncMusicClient:
             Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan`. When set to true, the model will precisely respect each section's `duration_ms` from the plan. When set to false, the model may adjust individual section durations which will generally lead to better generation quality and improved latency, while always preserving the total song duration from the plan.
 
         store_for_inpainting : typing.Optional[bool]
-            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting API.
+            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
 
         sign_with_c_2_pa : typing.Optional[bool]
             Whether to sign the generated song with C2PA. Applicable only for mp3 files.
@@ -473,7 +514,7 @@ class AsyncMusicClient:
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
 
         store_for_inpainting : typing.Optional[bool]
-            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting API.
+            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
 
         with_timestamps : typing.Optional[bool]
             Whether to return the timestamps of the words in the generated song.
@@ -562,7 +603,7 @@ class AsyncMusicClient:
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
 
         store_for_inpainting : typing.Optional[bool]
-            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting API.
+            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -602,6 +643,54 @@ class AsyncMusicClient:
         ) as r:
             async for _chunk in r.data:
                 yield _chunk
+
+    async def upload(
+        self,
+        *,
+        file: core.File,
+        extract_composition_plan: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> MusicUploadResponse:
+        """
+        Upload a music file to be later used for inpainting. Only available to enterprise clients with access to the inpainting feature.
+
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        extract_composition_plan : typing.Optional[bool]
+            Whether to generate and return the composition plan for the uploaded song. If True, the response will include the composition_plan but will increase the latency.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        MusicUploadResponse
+            Successfully uploaded music file with optional composition plan
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.music.upload()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.upload(
+            file=file, extract_composition_plan=extract_composition_plan, request_options=request_options
+        )
+        return _response.data
 
     async def separate_stems(
         self,

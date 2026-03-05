@@ -8,6 +8,7 @@ from ...types.batch_call_detailed_response import BatchCallDetailedResponse
 from ...types.batch_call_response import BatchCallResponse
 from ...types.batch_call_whats_app_params import BatchCallWhatsAppParams
 from ...types.outbound_call_recipient import OutboundCallRecipient
+from ...types.telephony_call_config import TelephonyCallConfig
 from ...types.workspace_batch_calls_response import WorkspaceBatchCallsResponse
 from .raw_client import AsyncRawBatchCallsClient, RawBatchCallsClient
 
@@ -40,6 +41,7 @@ class BatchCallsClient:
         agent_phone_number_id: typing.Optional[str] = OMIT,
         whatsapp_params: typing.Optional[BatchCallWhatsAppParams] = OMIT,
         timezone: typing.Optional[str] = OMIT,
+        telephony_call_config: typing.Optional[TelephonyCallConfig] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BatchCallResponse:
         """
@@ -60,6 +62,8 @@ class BatchCallsClient:
         whatsapp_params : typing.Optional[BatchCallWhatsAppParams]
 
         timezone : typing.Optional[str]
+
+        telephony_call_config : typing.Optional[TelephonyCallConfig]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -90,6 +94,7 @@ class BatchCallsClient:
             agent_phone_number_id=agent_phone_number_id,
             whatsapp_params=whatsapp_params,
             timezone=timezone,
+            telephony_call_config=telephony_call_config,
             request_options=request_options,
         )
         return _response.data
@@ -280,6 +285,7 @@ class AsyncBatchCallsClient:
         agent_phone_number_id: typing.Optional[str] = OMIT,
         whatsapp_params: typing.Optional[BatchCallWhatsAppParams] = OMIT,
         timezone: typing.Optional[str] = OMIT,
+        telephony_call_config: typing.Optional[TelephonyCallConfig] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BatchCallResponse:
         """
@@ -300,6 +306,8 @@ class AsyncBatchCallsClient:
         whatsapp_params : typing.Optional[BatchCallWhatsAppParams]
 
         timezone : typing.Optional[str]
+
+        telephony_call_config : typing.Optional[TelephonyCallConfig]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -338,6 +346,7 @@ class AsyncBatchCallsClient:
             agent_phone_number_id=agent_phone_number_id,
             whatsapp_params=whatsapp_params,
             timezone=timezone,
+            telephony_call_config=telephony_call_config,
             request_options=request_options,
         )
         return _response.data

@@ -69,6 +69,7 @@ class AgentsClient:
         self,
         *,
         conversation_config: ConversationalConfig,
+        enable_versioning: typing.Optional[bool] = None,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
         workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
@@ -83,6 +84,9 @@ class AgentsClient:
         ----------
         conversation_config : ConversationalConfig
             Conversation configuration for an agent
+
+        enable_versioning : typing.Optional[bool]
+            Enable versioning for the agent
 
         platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
             Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
@@ -114,11 +118,13 @@ class AgentsClient:
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.agents.create(
+            enable_versioning=True,
             conversation_config=ConversationalConfig(),
         )
         """
         _response = self._raw_client.create(
             conversation_config=conversation_config,
+            enable_versioning=enable_versioning,
             platform_settings=platform_settings,
             workflow=workflow,
             name=name,
@@ -210,6 +216,7 @@ class AgentsClient:
         self,
         agent_id: str,
         *,
+        enable_versioning_if_not_enabled: typing.Optional[bool] = None,
         branch_id: typing.Optional[str] = None,
         conversation_config: typing.Optional[ConversationalConfig] = OMIT,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
@@ -227,6 +234,9 @@ class AgentsClient:
         ----------
         agent_id : str
             The id of an agent. This is returned on agent creation.
+
+        enable_versioning_if_not_enabled : typing.Optional[bool]
+            Enable versioning for the agent, if not already enabled
 
         branch_id : typing.Optional[str]
             The ID of the branch to use
@@ -268,11 +278,13 @@ class AgentsClient:
         )
         client.conversational_ai.agents.update(
             agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+            enable_versioning_if_not_enabled=True,
             branch_id="branch_id",
         )
         """
         _response = self._raw_client.update(
             agent_id,
+            enable_versioning_if_not_enabled=enable_versioning_if_not_enabled,
             branch_id=branch_id,
             conversation_config=conversation_config,
             platform_settings=platform_settings,
@@ -681,6 +693,7 @@ class AsyncAgentsClient:
         self,
         *,
         conversation_config: ConversationalConfig,
+        enable_versioning: typing.Optional[bool] = None,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
         workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
@@ -695,6 +708,9 @@ class AsyncAgentsClient:
         ----------
         conversation_config : ConversationalConfig
             Conversation configuration for an agent
+
+        enable_versioning : typing.Optional[bool]
+            Enable versioning for the agent
 
         platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
             Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
@@ -731,6 +747,7 @@ class AsyncAgentsClient:
 
         async def main() -> None:
             await client.conversational_ai.agents.create(
+                enable_versioning=True,
                 conversation_config=ConversationalConfig(),
             )
 
@@ -739,6 +756,7 @@ class AsyncAgentsClient:
         """
         _response = await self._raw_client.create(
             conversation_config=conversation_config,
+            enable_versioning=enable_versioning,
             platform_settings=platform_settings,
             workflow=workflow,
             name=name,
@@ -846,6 +864,7 @@ class AsyncAgentsClient:
         self,
         agent_id: str,
         *,
+        enable_versioning_if_not_enabled: typing.Optional[bool] = None,
         branch_id: typing.Optional[str] = None,
         conversation_config: typing.Optional[ConversationalConfig] = OMIT,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
@@ -863,6 +882,9 @@ class AsyncAgentsClient:
         ----------
         agent_id : str
             The id of an agent. This is returned on agent creation.
+
+        enable_versioning_if_not_enabled : typing.Optional[bool]
+            Enable versioning for the agent, if not already enabled
 
         branch_id : typing.Optional[str]
             The ID of the branch to use
@@ -909,6 +931,7 @@ class AsyncAgentsClient:
         async def main() -> None:
             await client.conversational_ai.agents.update(
                 agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+                enable_versioning_if_not_enabled=True,
                 branch_id="branch_id",
             )
 
@@ -917,6 +940,7 @@ class AsyncAgentsClient:
         """
         _response = await self._raw_client.update(
             agent_id,
+            enable_versioning_if_not_enabled=enable_versioning_if_not_enabled,
             branch_id=branch_id,
             conversation_config=conversation_config,
             platform_settings=platform_settings,

@@ -45,6 +45,7 @@ class RawAgentsClient:
         self,
         *,
         conversation_config: ConversationalConfig,
+        enable_versioning: typing.Optional[bool] = None,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
         workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
@@ -59,6 +60,9 @@ class RawAgentsClient:
         ----------
         conversation_config : ConversationalConfig
             Conversation configuration for an agent
+
+        enable_versioning : typing.Optional[bool]
+            Enable versioning for the agent
 
         platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
             Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
@@ -85,6 +89,9 @@ class RawAgentsClient:
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/agents/create",
             method="POST",
+            params={
+                "enable_versioning": enable_versioning,
+            },
             json={
                 "conversation_config": convert_and_respect_annotation_metadata(
                     object_=conversation_config, annotation=ConversationalConfig, direction="write"
@@ -244,6 +251,7 @@ class RawAgentsClient:
         self,
         agent_id: str,
         *,
+        enable_versioning_if_not_enabled: typing.Optional[bool] = None,
         branch_id: typing.Optional[str] = None,
         conversation_config: typing.Optional[ConversationalConfig] = OMIT,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
@@ -261,6 +269,9 @@ class RawAgentsClient:
         ----------
         agent_id : str
             The id of an agent. This is returned on agent creation.
+
+        enable_versioning_if_not_enabled : typing.Optional[bool]
+            Enable versioning for the agent, if not already enabled
 
         branch_id : typing.Optional[str]
             The ID of the branch to use
@@ -297,6 +308,7 @@ class RawAgentsClient:
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
             method="PATCH",
             params={
+                "enable_versioning_if_not_enabled": enable_versioning_if_not_enabled,
                 "branch_id": branch_id,
             },
             json={
@@ -741,6 +753,7 @@ class AsyncRawAgentsClient:
         self,
         *,
         conversation_config: ConversationalConfig,
+        enable_versioning: typing.Optional[bool] = None,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
         workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
@@ -755,6 +768,9 @@ class AsyncRawAgentsClient:
         ----------
         conversation_config : ConversationalConfig
             Conversation configuration for an agent
+
+        enable_versioning : typing.Optional[bool]
+            Enable versioning for the agent
 
         platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
             Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
@@ -781,6 +797,9 @@ class AsyncRawAgentsClient:
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/agents/create",
             method="POST",
+            params={
+                "enable_versioning": enable_versioning,
+            },
             json={
                 "conversation_config": convert_and_respect_annotation_metadata(
                     object_=conversation_config, annotation=ConversationalConfig, direction="write"
@@ -942,6 +961,7 @@ class AsyncRawAgentsClient:
         self,
         agent_id: str,
         *,
+        enable_versioning_if_not_enabled: typing.Optional[bool] = None,
         branch_id: typing.Optional[str] = None,
         conversation_config: typing.Optional[ConversationalConfig] = OMIT,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
@@ -959,6 +979,9 @@ class AsyncRawAgentsClient:
         ----------
         agent_id : str
             The id of an agent. This is returned on agent creation.
+
+        enable_versioning_if_not_enabled : typing.Optional[bool]
+            Enable versioning for the agent, if not already enabled
 
         branch_id : typing.Optional[str]
             The ID of the branch to use
@@ -995,6 +1018,7 @@ class AsyncRawAgentsClient:
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
             method="PATCH",
             params={
+                "enable_versioning_if_not_enabled": enable_versioning_if_not_enabled,
                 "branch_id": branch_id,
             },
             json={

@@ -127,6 +127,7 @@ class RawWhatsappAccountsClient:
         phone_number_id: str,
         *,
         assigned_agent_id: typing.Optional[str] = OMIT,
+        enable_messaging: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[typing.Any]:
         """
@@ -137,6 +138,8 @@ class RawWhatsappAccountsClient:
         phone_number_id : str
 
         assigned_agent_id : typing.Optional[str]
+
+        enable_messaging : typing.Optional[bool]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -151,6 +154,7 @@ class RawWhatsappAccountsClient:
             method="PATCH",
             json={
                 "assigned_agent_id": assigned_agent_id,
+                "enable_messaging": enable_messaging,
             },
             headers={
                 "content-type": "application/json",
@@ -343,6 +347,7 @@ class AsyncRawWhatsappAccountsClient:
         phone_number_id: str,
         *,
         assigned_agent_id: typing.Optional[str] = OMIT,
+        enable_messaging: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[typing.Any]:
         """
@@ -353,6 +358,8 @@ class AsyncRawWhatsappAccountsClient:
         phone_number_id : str
 
         assigned_agent_id : typing.Optional[str]
+
+        enable_messaging : typing.Optional[bool]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -367,6 +374,7 @@ class AsyncRawWhatsappAccountsClient:
             method="PATCH",
             json={
                 "assigned_agent_id": assigned_agent_id,
+                "enable_messaging": enable_messaging,
             },
             headers={
                 "content-type": "application/json",

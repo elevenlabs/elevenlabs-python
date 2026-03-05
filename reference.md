@@ -6285,7 +6285,7 @@ client = ElevenLabs(
 )
 client.speech_to_text.convert(
     enable_logging=True,
-    model_id="scribe_v1",
+    model_id="scribe_v2",
 )
 
 ```
@@ -6984,7 +6984,7 @@ client.music.compose()
 <dl>
 <dd>
 
-**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting API.
+**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
     
 </dd>
 </dl>
@@ -7116,7 +7116,7 @@ client.music.compose_detailed()
 <dl>
 <dd>
 
-**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting API.
+**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
     
 </dd>
 </dl>
@@ -7256,7 +7256,7 @@ client.music.stream()
 <dl>
 <dd>
 
-**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting API.
+**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
     
 </dd>
 </dl>
@@ -7265,6 +7265,84 @@ client.music.stream()
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">upload</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Upload a music file to be later used for inpainting. Only available to enterprise clients with access to the inpainting feature.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.music.upload()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**file:** `from __future__ import annotations
+
+core.File` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**extract_composition_plan:** `typing.Optional[bool]` — Whether to generate and return the composition plan for the uploaded song. If True, the response will include the composition_plan but will increase the latency.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>
@@ -7923,6 +8001,14 @@ client.conversational_ai.twilio.outbound_call(
 <dl>
 <dd>
 
+**telephony_call_config:** `typing.Optional[TelephonyCallConfig]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -8326,6 +8412,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.create(
+    enable_versioning=True,
     conversation_config=ConversationalConfig(),
 )
 
@@ -8344,6 +8431,14 @@ client.conversational_ai.agents.create(
 <dd>
 
 **conversation_config:** `ConversationalConfig` — Conversation configuration for an agent
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enable_versioning:** `typing.Optional[bool]` — Enable versioning for the agent
     
 </dd>
 </dl>
@@ -8595,6 +8690,7 @@ client = ElevenLabs(
 )
 client.conversational_ai.agents.update(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    enable_versioning_if_not_enabled=True,
     branch_id="branch_id",
 )
 
@@ -8613,6 +8709,14 @@ client.conversational_ai.agents.update(
 <dd>
 
 **agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enable_versioning_if_not_enabled:** `typing.Optional[bool]` — Enable versioning for the agent, if not already enabled
     
 </dd>
 </dl>
@@ -9662,7 +9766,15 @@ client.conversational_ai.tests.list(
 <dl>
 <dd>
 
-**include_folders:** `typing.Optional[bool]` — Whether to include folders in the response. Defaults to false.
+**types:** `typing.Optional[typing.Union[TestType, typing.Sequence[TestType]]]` — If present, the endpoint will return only tests/folders of the given types.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_folders:** `typing.Optional[bool]` — Deprecated. Use the `types` query param and include `folder` instead.
     
 </dd>
 </dl>
@@ -11684,6 +11796,14 @@ client.conversational_ai.batch_calls.create(
 <dl>
 <dd>
 
+**telephony_call_config:** `typing.Optional[TelephonyCallConfig]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -12133,6 +12253,14 @@ client.conversational_ai.sip_trunk.outbound_call(
 <dd>
 
 **conversation_initiation_client_data:** `typing.Optional[ConversationInitiationClientDataRequestInput]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**telephony_call_config:** `typing.Optional[TelephonyCallConfig]` 
     
 </dd>
 </dl>
@@ -12781,6 +12909,14 @@ client.conversational_ai.whatsapp_accounts.update(
 <dd>
 
 **assigned_agent_id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enable_messaging:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -18871,6 +19007,101 @@ client.music.composition_plan.create(
 </details>
 
 ## PronunciationDictionaries Rules
+<details><summary><code>client.pronunciation_dictionaries.rules.<a href="src/elevenlabs/pronunciation_dictionaries/rules/client.py">set</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Replaces all existing rules on the pronunciation dictionary with the provided ones.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.pronunciation_dictionaries.rules import (
+    BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Alias,
+)
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.pronunciation_dictionaries.rules.set(
+    pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
+    rules=[
+        BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Alias(
+            string_to_replace="Thailand",
+            case_sensitive=True,
+            word_boundaries=True,
+            alias="tie-land",
+        )
+    ],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pronunciation_dictionary_id:** `str` — The id of the pronunciation dictionary
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rules:** `typing.Sequence[
+    BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem
+]` 
+
+List of pronunciation rules. Rule can be either:
+    an alias rule: {'string_to_replace': 'a', 'type': 'alias', 'alias': 'b', }
+    or a phoneme rule: {'string_to_replace': 'a', 'type': 'phoneme', 'phoneme': 'b', 'alphabet': 'ipa' }
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.pronunciation_dictionaries.rules.<a href="src/elevenlabs/pronunciation_dictionaries/rules/client.py">add</a>(...)</code></summary>
 <dl>
 <dd>

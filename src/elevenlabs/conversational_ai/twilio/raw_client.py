@@ -12,6 +12,7 @@ from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.conversation_initiation_client_data_request_input import ConversationInitiationClientDataRequestInput
 from ...types.http_validation_error import HttpValidationError
+from ...types.telephony_call_config import TelephonyCallConfig
 from ...types.twilio_outbound_call_response import TwilioOutboundCallResponse
 from .types.body_register_a_twilio_call_and_return_twi_ml_v_1_convai_twilio_register_call_post_direction import (
     BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection,
@@ -33,6 +34,7 @@ class RawTwilioClient:
         to_number: str,
         conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = OMIT,
         call_recording_enabled: typing.Optional[bool] = OMIT,
+        telephony_call_config: typing.Optional[TelephonyCallConfig] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[TwilioOutboundCallResponse]:
         """
@@ -50,6 +52,8 @@ class RawTwilioClient:
 
         call_recording_enabled : typing.Optional[bool]
             Whether let Twilio record the call.
+
+        telephony_call_config : typing.Optional[TelephonyCallConfig]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -72,6 +76,9 @@ class RawTwilioClient:
                     direction="write",
                 ),
                 "call_recording_enabled": call_recording_enabled,
+                "telephony_call_config": convert_and_respect_annotation_metadata(
+                    object_=telephony_call_config, annotation=TelephonyCallConfig, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -189,6 +196,7 @@ class AsyncRawTwilioClient:
         to_number: str,
         conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = OMIT,
         call_recording_enabled: typing.Optional[bool] = OMIT,
+        telephony_call_config: typing.Optional[TelephonyCallConfig] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[TwilioOutboundCallResponse]:
         """
@@ -206,6 +214,8 @@ class AsyncRawTwilioClient:
 
         call_recording_enabled : typing.Optional[bool]
             Whether let Twilio record the call.
+
+        telephony_call_config : typing.Optional[TelephonyCallConfig]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -228,6 +238,9 @@ class AsyncRawTwilioClient:
                     direction="write",
                 ),
                 "call_recording_enabled": call_recording_enabled,
+                "telephony_call_config": convert_and_respect_annotation_metadata(
+                    object_=telephony_call_config, annotation=TelephonyCallConfig, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",

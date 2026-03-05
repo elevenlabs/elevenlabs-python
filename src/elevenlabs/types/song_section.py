@@ -36,7 +36,7 @@ class SongSection(UncheckedBaseModel):
 
     source_from: typing.Optional[SectionSource] = pydantic.Field(default=None)
     """
-    Optional source to extract the section from. Used for inpainting. Only available to enterprise clients with access to the inpainting API.
+    Optional source to extract the section from. Used for inpainting. Only available to enterprise clients with access to the inpainting feature.
     """
 
     if IS_PYDANTIC_V2:
