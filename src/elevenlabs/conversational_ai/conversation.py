@@ -34,6 +34,7 @@ class ClientToOrchestratorEvent(str, Enum):
     # User text message.
     USER_MESSAGE = "user_message"
     USER_ACTIVITY = "user_activity"
+    MULTIMODAL_MESSAGE = "multimodal_message"
 
 
 class AgentChatResponsePartType(str, Enum):
@@ -72,6 +73,38 @@ class ContextualUpdateClientToOrchestratorEvent:
 
     def to_dict(self) -> dict:
         return {"type": self.type, "text": self.text}
+
+
+class MultimodalMessageFile:
+    """File component of a multimodal message."""
+
+    def __init__(self, file_id: str):
+        self.type: Literal["file_input"] = "file_input"
+        self.file_id = file_id
+
+    def to_dict(self) -> dict:
+        return {"type": self.type, "file_id": self.file_id}
+
+
+class MultimodalMessageClientToOrchestratorEvent:
+    """Event for sending multimodal messages combining text and a file reference."""
+
+    def __init__(
+        self,
+        text: Optional[str] = None,
+        file_id: Optional[str] = None,
+    ):
+        self.type: Literal[ClientToOrchestratorEvent.MULTIMODAL_MESSAGE] = ClientToOrchestratorEvent.MULTIMODAL_MESSAGE
+        self.text = text
+        self.file_id = file_id
+
+    def to_dict(self) -> dict:
+        result: Dict[str, Any] = {"type": self.type}
+        if self.text:
+            result["text"] = UserMessageClientToOrchestratorEvent(text=self.text).to_dict()
+        if self.file_id:
+            result["file"] = MultimodalMessageFile(file_id=self.file_id).to_dict()
+        return result
 
 
 class AudioInterface(ABC):
@@ -736,6 +769,33 @@ class Conversation(BaseConversation):
             logger.error(f"Error sending contextual update: {e}")
             raise
 
+    def send_multimodal_message(
+        self,
+        text: Optional[str] = None,
+        file_id: Optional[str] = None,
+    ):
+        """Send a multimodal message combining text and/or a file reference.
+
+        Args:
+            text: Optional text message to include.
+            file_id: Optional file ID to include (must be a previously uploaded file).
+
+        Raises:
+            RuntimeError: If the session is not active or websocket is not connected.
+            ValueError: If neither text nor file_id is provided.
+        """
+        if not self._ws:
+            raise RuntimeError("Session not started or websocket not connected.")
+        if not text and not file_id:
+            raise ValueError("At least one of text or file_id must be provided.")
+
+        event = MultimodalMessageClientToOrchestratorEvent(text=text, file_id=file_id)
+        try:
+            self._ws.send(json.dumps(event.to_dict()))
+        except Exception as e:
+            logger.error(f"Error sending multimodal message: {e}")
+            raise
+
     def _run(self, ws_url: str):
         with connect(ws_url, max_size=16 * 1024 * 1024) as ws:
             self._ws = ws
@@ -999,6 +1059,33 @@ class AsyncConversation(BaseConversation):
             await self._ws.send(json.dumps(event.to_dict()))
         except Exception as e:
             logger.error(f"Error sending contextual update: {e}")
+            raise
+
+    async def send_multimodal_message(
+        self,
+        text: Optional[str] = None,
+        file_id: Optional[str] = None,
+    ):
+        """Send a multimodal message combining text and/or a file reference.
+
+        Args:
+            text: Optional text message to include.
+            file_id: Optional file ID to include (must be a previously uploaded file).
+
+        Raises:
+            RuntimeError: If the session is not active or websocket is not connected.
+            ValueError: If neither text nor file_id is provided.
+        """
+        if not self._ws:
+            raise RuntimeError("Session not started or websocket not connected.")
+        if not text and not file_id:
+            raise ValueError("At least one of text or file_id must be provided.")
+
+        event = MultimodalMessageClientToOrchestratorEvent(text=text, file_id=file_id)
+        try:
+            await self._ws.send(json.dumps(event.to_dict()))
+        except Exception as e:
+            logger.error(f"Error sending multimodal message: {e}")
             raise
 
     async def _run(self, ws_url: str):
