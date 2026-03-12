@@ -150,6 +150,7 @@ class RawMusicClient:
         model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
+        respect_sections_durations: typing.Optional[bool] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         with_timestamps: typing.Optional[bool] = OMIT,
         sign_with_c_2_pa: typing.Optional[bool] = OMIT,
@@ -180,6 +181,9 @@ class RawMusicClient:
 
         force_instrumental : typing.Optional[bool]
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+
+        respect_sections_durations : typing.Optional[bool]
+            Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan`. When set to true, the model will precisely respect each section's `duration_ms` from the plan. When set to false, the model may adjust individual section durations which will generally lead to better generation quality and improved latency, while always preserving the total song duration from the plan.
 
         store_for_inpainting : typing.Optional[bool]
             Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
@@ -213,6 +217,7 @@ class RawMusicClient:
                 "model_id": model_id,
                 "seed": seed,
                 "force_instrumental": force_instrumental,
+                "respect_sections_durations": respect_sections_durations,
                 "store_for_inpainting": store_for_inpainting,
                 "with_timestamps": with_timestamps,
                 "sign_with_c2pa": sign_with_c_2_pa,
@@ -631,6 +636,7 @@ class AsyncRawMusicClient:
         model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
+        respect_sections_durations: typing.Optional[bool] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         with_timestamps: typing.Optional[bool] = OMIT,
         sign_with_c_2_pa: typing.Optional[bool] = OMIT,
@@ -661,6 +667,9 @@ class AsyncRawMusicClient:
 
         force_instrumental : typing.Optional[bool]
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+
+        respect_sections_durations : typing.Optional[bool]
+            Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan`. When set to true, the model will precisely respect each section's `duration_ms` from the plan. When set to false, the model may adjust individual section durations which will generally lead to better generation quality and improved latency, while always preserving the total song duration from the plan.
 
         store_for_inpainting : typing.Optional[bool]
             Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
@@ -694,6 +703,7 @@ class AsyncRawMusicClient:
                 "model_id": model_id,
                 "seed": seed,
                 "force_instrumental": force_instrumental,
+                "respect_sections_durations": respect_sections_durations,
                 "store_for_inpainting": store_for_inpainting,
                 "with_timestamps": with_timestamps,
                 "sign_with_c2pa": sign_with_c_2_pa,

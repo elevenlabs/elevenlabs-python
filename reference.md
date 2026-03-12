@@ -5200,6 +5200,22 @@ client.audio_native.update_content_from_url(
 <dl>
 <dd>
 
+**author:** `typing.Optional[str]` — Author used in the player and inserted at the start of the uploaded article. If not provided, the default author set in the Player settings is used.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Title used in the player and inserted at the top of the uploaded article. If not provided, the default title set in the Player settings is used.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -6456,6 +6472,14 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
+**no_verbatim:** `typing.Optional[bool]` — If true, the transcription will not have any filler words, false starts and non-speech sounds. Only supported with scribe_v2 model.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **keyterms:** `typing.Optional[typing.List[str]]` — A list of keyterms to bias the transcription towards.           The keyterms are words or phrases you want the model to recognise more accurately.           The number of keyterms cannot exceed 100.           The length of each keyterm must be less than 50 characters.           Keyterms can contain at most 5 words (after normalisation).           For example ["hello", "world", "technical term"].           Usage of this parameter will incur additional costs.  
     
 </dd>
@@ -7109,6 +7133,14 @@ client.music.compose_detailed()
 <dd>
 
 **force_instrumental:** `typing.Optional[bool]` — If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**respect_sections_durations:** `typing.Optional[bool]` — Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan`. When set to true, the model will precisely respect each section's `duration_ms` from the plan. When set to false, the model may adjust individual section durations which will generally lead to better generation quality and improved latency, while always preserving the total song duration from the plan.
     
 </dd>
 </dl>
@@ -8478,14 +8510,6 @@ client.conversational_ai.agents.create(
 <dl>
 <dd>
 
-**coaching_settings:** `typing.Optional[BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -8765,16 +8789,6 @@ client.conversational_ai.agents.update(
 <dd>
 
 **tags:** `typing.Optional[typing.Sequence[str]]` — Tags to help classify and filter the agent
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**coaching_settings:** `typing.Optional[
-    BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings
-]` 
     
 </dd>
 </dl>
@@ -9837,10 +9851,12 @@ client = ElevenLabs(
 )
 client.conversational_ai.users.list(
     agent_id="agent_id",
+    branch_id="branch_id",
     call_start_before_unix=1,
     call_start_after_unix=1,
     search="search",
     page_size=1,
+    sort_by="last_contact_unix_secs",
     cursor="cursor",
 )
 
@@ -9859,6 +9875,14 @@ client.conversational_ai.users.list(
 <dd>
 
 **agent_id:** `typing.Optional[str]` — The id of the agent you're taking the action on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `typing.Optional[str]` — Filter conversations by branch ID.
     
 </dd>
 </dl>
@@ -9891,6 +9915,14 @@ client.conversational_ai.users.list(
 <dd>
 
 **page_size:** `typing.Optional[int]` — How many users to return at maximum. Defaults to 30.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[UsersSortBy]` — The field to sort the results by. Defaults to last_contact_unix_secs.
     
 </dd>
 </dl>
@@ -11804,6 +11836,14 @@ client.conversational_ai.batch_calls.create(
 <dl>
 <dd>
 
+**target_concurrency_limit:** `typing.Optional[int]` — Maximum number of simultaneous calls for this batch. When set, dispatch is governed by this limit rather than workspace/agent capacity percentages.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -12917,6 +12957,14 @@ client.conversational_ai.whatsapp_accounts.update(
 <dd>
 
 **enable_messaging:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enable_audio_message_response:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -23729,6 +23777,66 @@ client.voices.samples.audio.get(
 </details>
 
 ## Workspace Groups
+<details><summary><code>client.workspace.groups.<a href="src/elevenlabs/workspace/groups/client.py">list</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all groups in the workspace
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.workspace.groups.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.workspace.groups.<a href="src/elevenlabs/workspace/groups/client.py">search</a>(...)</code></summary>
 <dl>
 <dd>
@@ -23945,6 +24053,14 @@ client.workspace.invites.create_batch(
 <dd>
 
 **emails:** `typing.Sequence[str]` — The email of the customer
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**seat_type:** `typing.Optional[SeatType]` — The seat type of the user
     
 </dd>
 </dl>

@@ -5,11 +5,14 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .video_analysis_result import VideoAnalysisResult
+from .video_analysis_status import VideoAnalysisStatus
 
 
-class NoCoachingSettings(UncheckedBaseModel):
-    type: typing.Optional[typing.Literal["none"]] = None
-    memory_base_id: typing.Optional[str] = None
+class VideoAnalysis(UncheckedBaseModel):
+    status: VideoAnalysisStatus
+    data: typing.Optional[VideoAnalysisResult] = None
+    updated_at_ms: typing.Optional[int] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

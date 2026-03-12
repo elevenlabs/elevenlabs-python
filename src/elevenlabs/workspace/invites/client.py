@@ -86,6 +86,7 @@ class InvitesClient:
         self,
         *,
         emails: typing.Sequence[str],
+        seat_type: typing.Optional[SeatType] = OMIT,
         group_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddWorkspaceInviteResponseModel:
@@ -96,6 +97,9 @@ class InvitesClient:
         ----------
         emails : typing.Sequence[str]
             The email of the customer
+
+        seat_type : typing.Optional[SeatType]
+            The seat type of the user
 
         group_ids : typing.Optional[typing.Sequence[str]]
             The group ids of the user
@@ -119,7 +123,9 @@ class InvitesClient:
             emails=["emails"],
         )
         """
-        _response = self._raw_client.create_batch(emails=emails, group_ids=group_ids, request_options=request_options)
+        _response = self._raw_client.create_batch(
+            emails=emails, seat_type=seat_type, group_ids=group_ids, request_options=request_options
+        )
         return _response.data
 
     def delete(
@@ -237,6 +243,7 @@ class AsyncInvitesClient:
         self,
         *,
         emails: typing.Sequence[str],
+        seat_type: typing.Optional[SeatType] = OMIT,
         group_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddWorkspaceInviteResponseModel:
@@ -247,6 +254,9 @@ class AsyncInvitesClient:
         ----------
         emails : typing.Sequence[str]
             The email of the customer
+
+        seat_type : typing.Optional[SeatType]
+            The seat type of the user
 
         group_ids : typing.Optional[typing.Sequence[str]]
             The group ids of the user
@@ -279,7 +289,7 @@ class AsyncInvitesClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create_batch(
-            emails=emails, group_ids=group_ids, request_options=request_options
+            emails=emails, seat_type=seat_type, group_ids=group_ids, request_options=request_options
         )
         return _response.data
 

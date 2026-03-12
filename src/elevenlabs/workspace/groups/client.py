@@ -7,6 +7,7 @@ import typing
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.workspace_group_by_name_response_model import WorkspaceGroupByNameResponseModel
+from ...types.workspace_group_response_model import WorkspaceGroupResponseModel
 from .raw_client import AsyncRawGroupsClient, RawGroupsClient
 
 if typing.TYPE_CHECKING:
@@ -29,6 +30,34 @@ class GroupsClient:
         RawGroupsClient
         """
         return self._raw_client
+
+    def list(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Dict[str, WorkspaceGroupResponseModel]:
+        """
+        Get all groups in the workspace
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Dict[str, WorkspaceGroupResponseModel]
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.workspace.groups.list()
+        """
+        _response = self._raw_client.list(request_options=request_options)
+        return _response.data
 
     def search(
         self, *, name: str, request_options: typing.Optional[RequestOptions] = None
@@ -88,6 +117,42 @@ class AsyncGroupsClient:
         AsyncRawGroupsClient
         """
         return self._raw_client
+
+    async def list(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Dict[str, WorkspaceGroupResponseModel]:
+        """
+        Get all groups in the workspace
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Dict[str, WorkspaceGroupResponseModel]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.workspace.groups.list()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.list(request_options=request_options)
+        return _response.data
 
     async def search(
         self, *, name: str, request_options: typing.Optional[RequestOptions] = None

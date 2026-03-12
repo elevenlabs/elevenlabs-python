@@ -95,6 +95,7 @@ class WhatsappAccountsClient:
         *,
         assigned_agent_id: typing.Optional[str] = OMIT,
         enable_messaging: typing.Optional[bool] = OMIT,
+        enable_audio_message_response: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Any:
         """
@@ -107,6 +108,8 @@ class WhatsappAccountsClient:
         assigned_agent_id : typing.Optional[str]
 
         enable_messaging : typing.Optional[bool]
+
+        enable_audio_message_response : typing.Optional[bool]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -131,6 +134,7 @@ class WhatsappAccountsClient:
             phone_number_id,
             assigned_agent_id=assigned_agent_id,
             enable_messaging=enable_messaging,
+            enable_audio_message_response=enable_audio_message_response,
             request_options=request_options,
         )
         return _response.data
@@ -263,6 +267,7 @@ class AsyncWhatsappAccountsClient:
         *,
         assigned_agent_id: typing.Optional[str] = OMIT,
         enable_messaging: typing.Optional[bool] = OMIT,
+        enable_audio_message_response: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Any:
         """
@@ -275,6 +280,8 @@ class AsyncWhatsappAccountsClient:
         assigned_agent_id : typing.Optional[str]
 
         enable_messaging : typing.Optional[bool]
+
+        enable_audio_message_response : typing.Optional[bool]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -307,6 +314,7 @@ class AsyncWhatsappAccountsClient:
             phone_number_id,
             assigned_agent_id=assigned_agent_id,
             enable_messaging=enable_messaging,
+            enable_audio_message_response=enable_audio_message_response,
             request_options=request_options,
         )
         return _response.data

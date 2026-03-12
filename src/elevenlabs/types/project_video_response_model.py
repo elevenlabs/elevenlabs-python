@@ -10,6 +10,7 @@ from .clip_animation import ClipAnimation
 from .generation_source_context import GenerationSourceContext
 from .pending_clip_task import PendingClipTask
 from .project_video_thumbnail_sheet_response_model import ProjectVideoThumbnailSheetResponseModel
+from .video_analysis import VideoAnalysis
 
 
 class ProjectVideoResponseModel(UncheckedBaseModel):
@@ -46,8 +47,10 @@ class ProjectVideoResponseModel(UncheckedBaseModel):
     export_format_ready: typing.Optional[bool] = None
     current_snapshot_id: typing.Optional[str] = None
     source_context: typing.Optional[GenerationSourceContext] = None
+    analysis: typing.Optional[VideoAnalysis] = None
     canvas_placement: typing.Optional[CanvasPlacement] = None
     animation: typing.Optional[ClipAnimation] = None
+    playback_speed: typing.Optional[float] = None
     track_id: typing.Optional[str] = None
     preview_job_progress: typing.Optional[float] = None
     import_speech_progress: typing.Optional[float] = None

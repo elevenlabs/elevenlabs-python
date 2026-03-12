@@ -28,6 +28,7 @@ class GetConversationResponseModel(UncheckedBaseModel):
     metadata: ConversationHistoryMetadataCommonModel
     analysis: typing.Optional[ConversationHistoryAnalysisCommonModel] = None
     conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestOutput] = None
+    environment: typing.Optional[str] = None
     conversation_id: str
     has_audio: bool
     has_user_audio: bool

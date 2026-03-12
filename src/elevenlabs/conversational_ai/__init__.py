@@ -27,14 +27,6 @@ if typing.TYPE_CHECKING:
         whatsapp,
         whatsapp_accounts,
     )
-    from .agents import (
-        BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings,
-        BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings_Coached,
-        BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings_None,
-        BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings,
-        BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings_Coached,
-        BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings_None,
-    )
     from .conversations import ConversationsListRequestSummaryMode
     from .knowledge_base import (
         KnowledgeBaseGetOrCreateRagIndexesResponseValue,
@@ -83,12 +75,6 @@ if typing.TYPE_CHECKING:
         BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Header,
     )
 _dynamic_imports: typing.Dict[str, str] = {
-    "BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings": ".agents",
-    "BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings_Coached": ".agents",
-    "BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings_None": ".agents",
-    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings": ".agents",
-    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings_Coached": ".agents",
-    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings_None": ".agents",
     "BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection": ".twilio",
     "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem": ".whatsapp",
     "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Body": ".whatsapp",
@@ -172,12 +158,6 @@ def __dir__():
 
 
 __all__ = [
-    "BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings",
-    "BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings_Coached",
-    "BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings_None",
-    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings",
-    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings_Coached",
-    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings_None",
     "BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection",
     "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem",
     "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Body",

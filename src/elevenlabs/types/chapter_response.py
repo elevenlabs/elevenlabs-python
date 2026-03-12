@@ -45,6 +45,11 @@ class ChapterResponse(UncheckedBaseModel):
     Whether the chapter has a video.
     """
 
+    has_visual_content: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the chapter has any visual content (video, image, or text clips).
+    """
+
     voice_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     List of voice ids used by the chapter

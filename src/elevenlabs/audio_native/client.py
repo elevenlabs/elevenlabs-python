@@ -223,7 +223,12 @@ class AudioNativeClient:
         return _response.data
 
     def update_content_from_url(
-        self, *, url: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        url: str,
+        author: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AudioNativeEditContentResponseModel:
         """
         Finds an AudioNative project matching the provided URL, extracts content from the URL, updates the project content, and queues it for conversion and auto-publishing.
@@ -232,6 +237,12 @@ class AudioNativeClient:
         ----------
         url : str
             URL of the page to extract content from.
+
+        author : typing.Optional[str]
+            Author used in the player and inserted at the start of the uploaded article. If not provided, the default author set in the Player settings is used.
+
+        title : typing.Optional[str]
+            Title used in the player and inserted at the top of the uploaded article. If not provided, the default title set in the Player settings is used.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -252,7 +263,9 @@ class AudioNativeClient:
             url="https://elevenlabs.io/blog/the_first_ai_that_can_laugh/",
         )
         """
-        _response = self._raw_client.update_content_from_url(url=url, request_options=request_options)
+        _response = self._raw_client.update_content_from_url(
+            url=url, author=author, title=title, request_options=request_options
+        )
         return _response.data
 
 
@@ -488,7 +501,12 @@ class AsyncAudioNativeClient:
         return _response.data
 
     async def update_content_from_url(
-        self, *, url: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        url: str,
+        author: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AudioNativeEditContentResponseModel:
         """
         Finds an AudioNative project matching the provided URL, extracts content from the URL, updates the project content, and queues it for conversion and auto-publishing.
@@ -497,6 +515,12 @@ class AsyncAudioNativeClient:
         ----------
         url : str
             URL of the page to extract content from.
+
+        author : typing.Optional[str]
+            Author used in the player and inserted at the start of the uploaded article. If not provided, the default author set in the Player settings is used.
+
+        title : typing.Optional[str]
+            Title used in the player and inserted at the top of the uploaded article. If not provided, the default title set in the Player settings is used.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -525,5 +549,7 @@ class AsyncAudioNativeClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.update_content_from_url(url=url, request_options=request_options)
+        _response = await self._raw_client.update_content_from_url(
+            url=url, author=author, title=title, request_options=request_options
+        )
         return _response.data

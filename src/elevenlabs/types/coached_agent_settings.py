@@ -8,6 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CoachedAgentSettings(UncheckedBaseModel):
+    type: typing.Optional[typing.Literal["coached"]] = None
     memory_base_id: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

@@ -7,9 +7,17 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class NoCoachingSettings(UncheckedBaseModel):
-    type: typing.Optional[typing.Literal["none"]] = None
-    memory_base_id: typing.Optional[str] = None
+class VideoSegment(UncheckedBaseModel):
+    start_ms: int
+    end_ms: int
+    description: str
+    subjects: typing.Optional[typing.List[str]] = None
+    shot_type: typing.Optional[str] = None
+    camera_movement: typing.Optional[str] = None
+    transition_in: typing.Optional[str] = None
+    has_speech: typing.Optional[bool] = None
+    has_music: typing.Optional[bool] = None
+    pacing: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

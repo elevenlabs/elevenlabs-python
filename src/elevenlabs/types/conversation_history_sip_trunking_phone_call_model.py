@@ -16,6 +16,7 @@ class ConversationHistorySipTrunkingPhoneCallModel(UncheckedBaseModel):
     agent_number: str
     external_number: str
     call_sid: str
+    sip_header_dynamic_variables: typing.Optional[typing.Dict[str, str]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

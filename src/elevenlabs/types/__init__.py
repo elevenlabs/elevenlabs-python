@@ -43,6 +43,7 @@ if typing.TYPE_CHECKING:
     from .agent_metadata_response_model import AgentMetadataResponseModel
     from .agent_platform_settings_request_model import AgentPlatformSettingsRequestModel
     from .agent_platform_settings_response_model import AgentPlatformSettingsResponseModel
+    from .agent_prompt_change_tool_config import AgentPromptChangeToolConfig
     from .agent_simulated_chat_test_response_model import AgentSimulatedChatTestResponseModel
     from .agent_sort_by import AgentSortBy
     from .agent_successful_response_example import AgentSuccessfulResponseExample
@@ -663,6 +664,7 @@ if typing.TYPE_CHECKING:
     from .character_refresh_period import CharacterRefreshPeriod
     from .character_usage_response import CharacterUsageResponse
     from .chat_source_medium import ChatSourceMedium
+    from .check_rental_availability_params import CheckRentalAvailabilityParams
     from .check_service_availability_params import CheckServiceAvailabilityParams
     from .client_event import ClientEvent
     from .client_tool_config_input import ClientToolConfigInput
@@ -891,6 +893,7 @@ if typing.TYPE_CHECKING:
     from .create_previously_generated_voice_request import CreatePreviouslyGeneratedVoiceRequest
     from .create_product_params import CreateProductParams
     from .create_pronunciation_dictionary_response_model import CreatePronunciationDictionaryResponseModel
+    from .create_rental_booking_params import CreateRentalBookingParams
     from .create_response_unit_test_request import CreateResponseUnitTestRequest
     from .create_response_unit_test_request_dynamic_variables_value import (
         CreateResponseUnitTestRequestDynamicVariablesValue,
@@ -1030,12 +1033,6 @@ if typing.TYPE_CHECKING:
     from .get_agent_knowledgebase_size_response_model import GetAgentKnowledgebaseSizeResponseModel
     from .get_agent_link_response_model import GetAgentLinkResponseModel
     from .get_agent_response_model import GetAgentResponseModel
-    from .get_agent_response_model_coaching_settings import (
-        GetAgentResponseModelCoachingSettings,
-        GetAgentResponseModelCoachingSettings_Coached,
-        GetAgentResponseModelCoachingSettings_Coaching,
-        GetAgentResponseModelCoachingSettings_None,
-    )
     from .get_agent_response_model_phone_numbers_item import (
         GetAgentResponseModelPhoneNumbersItem,
         GetAgentResponseModelPhoneNumbersItem_SipTrunk,
@@ -1215,6 +1212,7 @@ if typing.TYPE_CHECKING:
     from .list_clients_params import ListClientsParams
     from .list_mcp_tools_response_model import ListMcpToolsResponseModel
     from .list_products_params import ListProductsParams
+    from .list_rental_services_params import ListRentalServicesParams
     from .list_response_agent_branch_summary import ListResponseAgentBranchSummary
     from .list_response_meta import ListResponseMeta
     from .list_services_params import ListServicesParams
@@ -1273,6 +1271,10 @@ if typing.TYPE_CHECKING:
         McpToolConfigOverrideInputOverridesValue_DynamicVariable,
         McpToolConfigOverrideInputOverridesValue_Llm,
     )
+    from .memory_entry_create_tool_config import MemoryEntryCreateToolConfig
+    from .memory_entry_delete_tool_config import MemoryEntryDeleteToolConfig
+    from .memory_entry_search_tool_config import MemoryEntrySearchToolConfig
+    from .memory_entry_update_tool_config import MemoryEntryUpdateToolConfig
     from .merging_strategy import MergingStrategy
     from .messages_search_response import MessagesSearchResponse
     from .messages_search_result import MessagesSearchResult
@@ -1544,8 +1546,6 @@ if typing.TYPE_CHECKING:
     from .scribe_transcriber_error_payload import ScribeTranscriberErrorPayload
     from .scribe_unaccepted_terms_error_payload import ScribeUnacceptedTermsErrorPayload
     from .search_clients_params import SearchClientsParams
-    from .search_documentation_tool_config_input import SearchDocumentationToolConfigInput
-    from .search_documentation_tool_config_output import SearchDocumentationToolConfigOutput
     from .seat_type import SeatType
     from .secret_dependency_type import SecretDependencyType
     from .section_source import SectionSource
@@ -1619,6 +1619,8 @@ if typing.TYPE_CHECKING:
     from .studio_agent_tool_settings_model import StudioAgentToolSettingsModel
     from .studio_clip_reference import StudioClipReference
     from .studio_clip_reference_clip_type import StudioClipReferenceClipType
+    from .studio_text_style_outline_model import StudioTextStyleOutlineModel
+    from .studio_text_style_shadow_model import StudioTextStyleShadowModel
     from .subscription import Subscription
     from .subscription_response import SubscriptionResponse
     from .subscription_response_model_currency import SubscriptionResponseModelCurrency
@@ -1628,10 +1630,14 @@ if typing.TYPE_CHECKING:
     from .system_tool_config_input import SystemToolConfigInput
     from .system_tool_config_input_params import (
         SystemToolConfigInputParams,
+        SystemToolConfigInputParams_AgentPromptChange,
         SystemToolConfigInputParams_EndCall,
         SystemToolConfigInputParams_LanguageDetection,
+        SystemToolConfigInputParams_MemoryEntryCreate,
+        SystemToolConfigInputParams_MemoryEntryDelete,
+        SystemToolConfigInputParams_MemoryEntrySearch,
+        SystemToolConfigInputParams_MemoryEntryUpdate,
         SystemToolConfigInputParams_PlayKeypadTouchTone,
-        SystemToolConfigInputParams_SearchDocumentation,
         SystemToolConfigInputParams_SkipTurn,
         SystemToolConfigInputParams_TransferToAgent,
         SystemToolConfigInputParams_TransferToNumber,
@@ -1640,10 +1646,14 @@ if typing.TYPE_CHECKING:
     from .system_tool_config_output import SystemToolConfigOutput
     from .system_tool_config_output_params import (
         SystemToolConfigOutputParams,
+        SystemToolConfigOutputParams_AgentPromptChange,
         SystemToolConfigOutputParams_EndCall,
         SystemToolConfigOutputParams_LanguageDetection,
+        SystemToolConfigOutputParams_MemoryEntryCreate,
+        SystemToolConfigOutputParams_MemoryEntryDelete,
+        SystemToolConfigOutputParams_MemoryEntrySearch,
+        SystemToolConfigOutputParams_MemoryEntryUpdate,
         SystemToolConfigOutputParams_PlayKeypadTouchTone,
-        SystemToolConfigOutputParams_SearchDocumentation,
         SystemToolConfigOutputParams_SkipTurn,
         SystemToolConfigOutputParams_TransferToAgent,
         SystemToolConfigOutputParams_TransferToNumber,
@@ -1787,6 +1797,7 @@ if typing.TYPE_CHECKING:
     from .user import User
     from .user_feedback import UserFeedback
     from .user_feedback_score import UserFeedbackScore
+    from .users_sort_by import UsersSortBy
     from .utterance_response_model import UtteranceResponseModel
     from .vad_config import VadConfig
     from .vad_config_workflow_override import VadConfigWorkflowOverride
@@ -1795,6 +1806,14 @@ if typing.TYPE_CHECKING:
     from .verification_attempt_response import VerificationAttemptResponse
     from .verified_voice_language_response_model import VerifiedVoiceLanguageResponseModel
     from .verify_pvc_voice_captcha_response_model import VerifyPvcVoiceCaptchaResponseModel
+    from .video_analysis import VideoAnalysis
+    from .video_analysis_result import VideoAnalysisResult
+    from .video_analysis_status import VideoAnalysisStatus
+    from .video_key_moment import VideoKeyMoment
+    from .video_segment import VideoSegment
+    from .video_subject import VideoSubject
+    from .video_transcription import VideoTranscription
+    from .video_transcription_word import VideoTranscriptionWord
     from .voice import Voice
     from .voice_category import VoiceCategory
     from .voice_design_preview_response import VoiceDesignPreviewResponse
@@ -2084,6 +2103,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentMetadataResponseModel": ".agent_metadata_response_model",
     "AgentPlatformSettingsRequestModel": ".agent_platform_settings_request_model",
     "AgentPlatformSettingsResponseModel": ".agent_platform_settings_response_model",
+    "AgentPromptChangeToolConfig": ".agent_prompt_change_tool_config",
     "AgentSimulatedChatTestResponseModel": ".agent_simulated_chat_test_response_model",
     "AgentSortBy": ".agent_sort_by",
     "AgentSuccessfulResponseExample": ".agent_successful_response_example",
@@ -2632,6 +2652,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CharacterRefreshPeriod": ".character_refresh_period",
     "CharacterUsageResponse": ".character_usage_response",
     "ChatSourceMedium": ".chat_source_medium",
+    "CheckRentalAvailabilityParams": ".check_rental_availability_params",
     "CheckServiceAvailabilityParams": ".check_service_availability_params",
     "ClientEvent": ".client_event",
     "ClientToolConfigInput": ".client_tool_config_input",
@@ -2792,6 +2813,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreatePreviouslyGeneratedVoiceRequest": ".create_previously_generated_voice_request",
     "CreateProductParams": ".create_product_params",
     "CreatePronunciationDictionaryResponseModel": ".create_pronunciation_dictionary_response_model",
+    "CreateRentalBookingParams": ".create_rental_booking_params",
     "CreateResponseUnitTestRequest": ".create_response_unit_test_request",
     "CreateResponseUnitTestRequestDynamicVariablesValue": ".create_response_unit_test_request_dynamic_variables_value",
     "CreateServiceParams": ".create_service_params",
@@ -2921,10 +2943,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetAgentKnowledgebaseSizeResponseModel": ".get_agent_knowledgebase_size_response_model",
     "GetAgentLinkResponseModel": ".get_agent_link_response_model",
     "GetAgentResponseModel": ".get_agent_response_model",
-    "GetAgentResponseModelCoachingSettings": ".get_agent_response_model_coaching_settings",
-    "GetAgentResponseModelCoachingSettings_Coached": ".get_agent_response_model_coaching_settings",
-    "GetAgentResponseModelCoachingSettings_Coaching": ".get_agent_response_model_coaching_settings",
-    "GetAgentResponseModelCoachingSettings_None": ".get_agent_response_model_coaching_settings",
     "GetAgentResponseModelPhoneNumbersItem": ".get_agent_response_model_phone_numbers_item",
     "GetAgentResponseModelPhoneNumbersItem_SipTrunk": ".get_agent_response_model_phone_numbers_item",
     "GetAgentResponseModelPhoneNumbersItem_Twilio": ".get_agent_response_model_phone_numbers_item",
@@ -3064,6 +3082,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListClientsParams": ".list_clients_params",
     "ListMcpToolsResponseModel": ".list_mcp_tools_response_model",
     "ListProductsParams": ".list_products_params",
+    "ListRentalServicesParams": ".list_rental_services_params",
     "ListResponseAgentBranchSummary": ".list_response_agent_branch_summary",
     "ListResponseMeta": ".list_response_meta",
     "ListServicesParams": ".list_services_params",
@@ -3118,6 +3137,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "McpToolConfigOverrideInputOverridesValue_Constant": ".mcp_tool_config_override_input_overrides_value",
     "McpToolConfigOverrideInputOverridesValue_DynamicVariable": ".mcp_tool_config_override_input_overrides_value",
     "McpToolConfigOverrideInputOverridesValue_Llm": ".mcp_tool_config_override_input_overrides_value",
+    "MemoryEntryCreateToolConfig": ".memory_entry_create_tool_config",
+    "MemoryEntryDeleteToolConfig": ".memory_entry_delete_tool_config",
+    "MemoryEntrySearchToolConfig": ".memory_entry_search_tool_config",
+    "MemoryEntryUpdateToolConfig": ".memory_entry_update_tool_config",
     "MergingStrategy": ".merging_strategy",
     "MessagesSearchResponse": ".messages_search_response",
     "MessagesSearchResult": ".messages_search_result",
@@ -3357,8 +3380,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ScribeTranscriberErrorPayload": ".scribe_transcriber_error_payload",
     "ScribeUnacceptedTermsErrorPayload": ".scribe_unaccepted_terms_error_payload",
     "SearchClientsParams": ".search_clients_params",
-    "SearchDocumentationToolConfigInput": ".search_documentation_tool_config_input",
-    "SearchDocumentationToolConfigOutput": ".search_documentation_tool_config_output",
     "SeatType": ".seat_type",
     "SecretDependencyType": ".secret_dependency_type",
     "SectionSource": ".section_source",
@@ -3430,6 +3451,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "StudioAgentToolSettingsModel": ".studio_agent_tool_settings_model",
     "StudioClipReference": ".studio_clip_reference",
     "StudioClipReferenceClipType": ".studio_clip_reference_clip_type",
+    "StudioTextStyleOutlineModel": ".studio_text_style_outline_model",
+    "StudioTextStyleShadowModel": ".studio_text_style_shadow_model",
     "Subscription": ".subscription",
     "SubscriptionResponse": ".subscription_response",
     "SubscriptionResponseModelCurrency": ".subscription_response_model_currency",
@@ -3438,20 +3461,28 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SupportedVoice": ".supported_voice",
     "SystemToolConfigInput": ".system_tool_config_input",
     "SystemToolConfigInputParams": ".system_tool_config_input_params",
+    "SystemToolConfigInputParams_AgentPromptChange": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_EndCall": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_LanguageDetection": ".system_tool_config_input_params",
+    "SystemToolConfigInputParams_MemoryEntryCreate": ".system_tool_config_input_params",
+    "SystemToolConfigInputParams_MemoryEntryDelete": ".system_tool_config_input_params",
+    "SystemToolConfigInputParams_MemoryEntrySearch": ".system_tool_config_input_params",
+    "SystemToolConfigInputParams_MemoryEntryUpdate": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_PlayKeypadTouchTone": ".system_tool_config_input_params",
-    "SystemToolConfigInputParams_SearchDocumentation": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_SkipTurn": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_TransferToAgent": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_TransferToNumber": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_VoicemailDetection": ".system_tool_config_input_params",
     "SystemToolConfigOutput": ".system_tool_config_output",
     "SystemToolConfigOutputParams": ".system_tool_config_output_params",
+    "SystemToolConfigOutputParams_AgentPromptChange": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_EndCall": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_LanguageDetection": ".system_tool_config_output_params",
+    "SystemToolConfigOutputParams_MemoryEntryCreate": ".system_tool_config_output_params",
+    "SystemToolConfigOutputParams_MemoryEntryDelete": ".system_tool_config_output_params",
+    "SystemToolConfigOutputParams_MemoryEntrySearch": ".system_tool_config_output_params",
+    "SystemToolConfigOutputParams_MemoryEntryUpdate": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_PlayKeypadTouchTone": ".system_tool_config_output_params",
-    "SystemToolConfigOutputParams_SearchDocumentation": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_SkipTurn": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_TransferToAgent": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_TransferToNumber": ".system_tool_config_output_params",
@@ -3580,6 +3611,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "User": ".user",
     "UserFeedback": ".user_feedback",
     "UserFeedbackScore": ".user_feedback_score",
+    "UsersSortBy": ".users_sort_by",
     "UtteranceResponseModel": ".utterance_response_model",
     "VadConfig": ".vad_config",
     "VadConfigWorkflowOverride": ".vad_config_workflow_override",
@@ -3588,6 +3620,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "VerificationAttemptResponse": ".verification_attempt_response",
     "VerifiedVoiceLanguageResponseModel": ".verified_voice_language_response_model",
     "VerifyPvcVoiceCaptchaResponseModel": ".verify_pvc_voice_captcha_response_model",
+    "VideoAnalysis": ".video_analysis",
+    "VideoAnalysisResult": ".video_analysis_result",
+    "VideoAnalysisStatus": ".video_analysis_status",
+    "VideoKeyMoment": ".video_key_moment",
+    "VideoSegment": ".video_segment",
+    "VideoSubject": ".video_subject",
+    "VideoTranscription": ".video_transcription",
+    "VideoTranscriptionWord": ".video_transcription_word",
     "Voice": ".voice",
     "VoiceCategory": ".voice_category",
     "VoiceDesignPreviewResponse": ".voice_design_preview_response",
@@ -3857,6 +3897,7 @@ __all__ = [
     "AgentMetadataResponseModel",
     "AgentPlatformSettingsRequestModel",
     "AgentPlatformSettingsResponseModel",
+    "AgentPromptChangeToolConfig",
     "AgentSimulatedChatTestResponseModel",
     "AgentSortBy",
     "AgentSuccessfulResponseExample",
@@ -4405,6 +4446,7 @@ __all__ = [
     "CharacterRefreshPeriod",
     "CharacterUsageResponse",
     "ChatSourceMedium",
+    "CheckRentalAvailabilityParams",
     "CheckServiceAvailabilityParams",
     "ClientEvent",
     "ClientToolConfigInput",
@@ -4565,6 +4607,7 @@ __all__ = [
     "CreatePreviouslyGeneratedVoiceRequest",
     "CreateProductParams",
     "CreatePronunciationDictionaryResponseModel",
+    "CreateRentalBookingParams",
     "CreateResponseUnitTestRequest",
     "CreateResponseUnitTestRequestDynamicVariablesValue",
     "CreateServiceParams",
@@ -4694,10 +4737,6 @@ __all__ = [
     "GetAgentKnowledgebaseSizeResponseModel",
     "GetAgentLinkResponseModel",
     "GetAgentResponseModel",
-    "GetAgentResponseModelCoachingSettings",
-    "GetAgentResponseModelCoachingSettings_Coached",
-    "GetAgentResponseModelCoachingSettings_Coaching",
-    "GetAgentResponseModelCoachingSettings_None",
     "GetAgentResponseModelPhoneNumbersItem",
     "GetAgentResponseModelPhoneNumbersItem_SipTrunk",
     "GetAgentResponseModelPhoneNumbersItem_Twilio",
@@ -4837,6 +4876,7 @@ __all__ = [
     "ListClientsParams",
     "ListMcpToolsResponseModel",
     "ListProductsParams",
+    "ListRentalServicesParams",
     "ListResponseAgentBranchSummary",
     "ListResponseMeta",
     "ListServicesParams",
@@ -4891,6 +4931,10 @@ __all__ = [
     "McpToolConfigOverrideInputOverridesValue_Constant",
     "McpToolConfigOverrideInputOverridesValue_DynamicVariable",
     "McpToolConfigOverrideInputOverridesValue_Llm",
+    "MemoryEntryCreateToolConfig",
+    "MemoryEntryDeleteToolConfig",
+    "MemoryEntrySearchToolConfig",
+    "MemoryEntryUpdateToolConfig",
     "MergingStrategy",
     "MessagesSearchResponse",
     "MessagesSearchResult",
@@ -5130,8 +5174,6 @@ __all__ = [
     "ScribeTranscriberErrorPayload",
     "ScribeUnacceptedTermsErrorPayload",
     "SearchClientsParams",
-    "SearchDocumentationToolConfigInput",
-    "SearchDocumentationToolConfigOutput",
     "SeatType",
     "SecretDependencyType",
     "SectionSource",
@@ -5203,6 +5245,8 @@ __all__ = [
     "StudioAgentToolSettingsModel",
     "StudioClipReference",
     "StudioClipReferenceClipType",
+    "StudioTextStyleOutlineModel",
+    "StudioTextStyleShadowModel",
     "Subscription",
     "SubscriptionResponse",
     "SubscriptionResponseModelCurrency",
@@ -5211,20 +5255,28 @@ __all__ = [
     "SupportedVoice",
     "SystemToolConfigInput",
     "SystemToolConfigInputParams",
+    "SystemToolConfigInputParams_AgentPromptChange",
     "SystemToolConfigInputParams_EndCall",
     "SystemToolConfigInputParams_LanguageDetection",
+    "SystemToolConfigInputParams_MemoryEntryCreate",
+    "SystemToolConfigInputParams_MemoryEntryDelete",
+    "SystemToolConfigInputParams_MemoryEntrySearch",
+    "SystemToolConfigInputParams_MemoryEntryUpdate",
     "SystemToolConfigInputParams_PlayKeypadTouchTone",
-    "SystemToolConfigInputParams_SearchDocumentation",
     "SystemToolConfigInputParams_SkipTurn",
     "SystemToolConfigInputParams_TransferToAgent",
     "SystemToolConfigInputParams_TransferToNumber",
     "SystemToolConfigInputParams_VoicemailDetection",
     "SystemToolConfigOutput",
     "SystemToolConfigOutputParams",
+    "SystemToolConfigOutputParams_AgentPromptChange",
     "SystemToolConfigOutputParams_EndCall",
     "SystemToolConfigOutputParams_LanguageDetection",
+    "SystemToolConfigOutputParams_MemoryEntryCreate",
+    "SystemToolConfigOutputParams_MemoryEntryDelete",
+    "SystemToolConfigOutputParams_MemoryEntrySearch",
+    "SystemToolConfigOutputParams_MemoryEntryUpdate",
     "SystemToolConfigOutputParams_PlayKeypadTouchTone",
-    "SystemToolConfigOutputParams_SearchDocumentation",
     "SystemToolConfigOutputParams_SkipTurn",
     "SystemToolConfigOutputParams_TransferToAgent",
     "SystemToolConfigOutputParams_TransferToNumber",
@@ -5353,6 +5405,7 @@ __all__ = [
     "User",
     "UserFeedback",
     "UserFeedbackScore",
+    "UsersSortBy",
     "UtteranceResponseModel",
     "VadConfig",
     "VadConfigWorkflowOverride",
@@ -5361,6 +5414,14 @@ __all__ = [
     "VerificationAttemptResponse",
     "VerifiedVoiceLanguageResponseModel",
     "VerifyPvcVoiceCaptchaResponseModel",
+    "VideoAnalysis",
+    "VideoAnalysisResult",
+    "VideoAnalysisStatus",
+    "VideoKeyMoment",
+    "VideoSegment",
+    "VideoSubject",
+    "VideoTranscription",
+    "VideoTranscriptionWord",
     "Voice",
     "VoiceCategory",
     "VoiceDesignPreviewResponse",

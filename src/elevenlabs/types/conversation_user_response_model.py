@@ -12,7 +12,7 @@ class ConversationUserResponseModel(UncheckedBaseModel):
     last_contact_unix_secs: int
     first_contact_unix_secs: int
     conversation_count: int
-    last_contact_agent_id: str
+    last_contact_agent_id: typing.Optional[str] = None
     last_contact_conversation_id: str
     last_contact_agent_name: typing.Optional[str] = None
 

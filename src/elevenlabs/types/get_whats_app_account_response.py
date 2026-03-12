@@ -15,6 +15,7 @@ class GetWhatsAppAccountResponse(UncheckedBaseModel):
     phone_number: str
     assigned_agent_id: typing.Optional[str] = None
     enable_messaging: typing.Optional[bool] = None
+    enable_audio_message_response: typing.Optional[bool] = None
     assigned_agent_name: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
