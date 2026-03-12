@@ -61,6 +61,7 @@ class SpeechToTextClient:
         use_multi_channel: typing.Optional[bool] = OMIT,
         webhook_metadata: typing.Optional[SpeechToTextConvertRequestWebhookMetadata] = OMIT,
         entity_detection: typing.Optional[SpeechToTextConvertRequestEntityDetection] = OMIT,
+        no_verbatim: typing.Optional[bool] = OMIT,
         keyterms: typing.Optional[typing.List[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SpeechToTextConvertResponse:
@@ -126,6 +127,9 @@ class SpeechToTextClient:
         entity_detection : typing.Optional[SpeechToTextConvertRequestEntityDetection]
             Detect entities in the transcript. Can be 'all' to detect all entities, a single entity type or category string, or a list of entity types/categories. Categories include 'pii', 'phi', 'pci', 'other', 'offensive_language'. When enabled, detected entities will be returned in the 'entities' field with their text, type, and character positions. Usage of this parameter will incur additional costs.
 
+        no_verbatim : typing.Optional[bool]
+            If true, the transcription will not have any filler words, false starts and non-speech sounds. Only supported with scribe_v2 model.
+
         keyterms : typing.Optional[typing.List[str]]
             A list of keyterms to bias the transcription towards.           The keyterms are words or phrases you want the model to recognise more accurately.           The number of keyterms cannot exceed 100.           The length of each keyterm must be less than 50 characters.           Keyterms can contain at most 5 words (after normalisation).           For example ["hello", "world", "technical term"].           Usage of this parameter will incur additional costs.
 
@@ -169,6 +173,7 @@ class SpeechToTextClient:
             use_multi_channel=use_multi_channel,
             webhook_metadata=webhook_metadata,
             entity_detection=entity_detection,
+            no_verbatim=no_verbatim,
             keyterms=keyterms,
             request_options=request_options,
         )
@@ -222,6 +227,7 @@ class AsyncSpeechToTextClient:
         use_multi_channel: typing.Optional[bool] = OMIT,
         webhook_metadata: typing.Optional[SpeechToTextConvertRequestWebhookMetadata] = OMIT,
         entity_detection: typing.Optional[SpeechToTextConvertRequestEntityDetection] = OMIT,
+        no_verbatim: typing.Optional[bool] = OMIT,
         keyterms: typing.Optional[typing.List[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SpeechToTextConvertResponse:
@@ -287,6 +293,9 @@ class AsyncSpeechToTextClient:
         entity_detection : typing.Optional[SpeechToTextConvertRequestEntityDetection]
             Detect entities in the transcript. Can be 'all' to detect all entities, a single entity type or category string, or a list of entity types/categories. Categories include 'pii', 'phi', 'pci', 'other', 'offensive_language'. When enabled, detected entities will be returned in the 'entities' field with their text, type, and character positions. Usage of this parameter will incur additional costs.
 
+        no_verbatim : typing.Optional[bool]
+            If true, the transcription will not have any filler words, false starts and non-speech sounds. Only supported with scribe_v2 model.
+
         keyterms : typing.Optional[typing.List[str]]
             A list of keyterms to bias the transcription towards.           The keyterms are words or phrases you want the model to recognise more accurately.           The number of keyterms cannot exceed 100.           The length of each keyterm must be less than 50 characters.           Keyterms can contain at most 5 words (after normalisation).           For example ["hello", "world", "technical term"].           Usage of this parameter will incur additional costs.
 
@@ -338,6 +347,7 @@ class AsyncSpeechToTextClient:
             use_multi_channel=use_multi_channel,
             webhook_metadata=webhook_metadata,
             entity_detection=entity_detection,
+            no_verbatim=no_verbatim,
             keyterms=keyterms,
             request_options=request_options,
         )

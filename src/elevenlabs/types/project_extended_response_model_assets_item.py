@@ -14,6 +14,7 @@ from .generation_source_context import GenerationSourceContext
 from .pending_clip_task import PendingClipTask
 from .project_external_audio_response_model_source_context import ProjectExternalAudioResponseModelSourceContext
 from .project_video_thumbnail_sheet_response_model import ProjectVideoThumbnailSheetResponseModel
+from .video_analysis import VideoAnalysis
 
 
 class ProjectExtendedResponseModelAssetsItem_Video(UncheckedBaseModel):
@@ -51,8 +52,10 @@ class ProjectExtendedResponseModelAssetsItem_Video(UncheckedBaseModel):
     export_format_ready: typing.Optional[bool] = None
     current_snapshot_id: typing.Optional[str] = None
     source_context: typing.Optional[GenerationSourceContext] = None
+    analysis: typing.Optional[VideoAnalysis] = None
     canvas_placement: typing.Optional[CanvasPlacement] = None
     animation: typing.Optional[ClipAnimation] = None
+    playback_speed: typing.Optional[float] = None
     track_id: typing.Optional[str] = None
     preview_job_progress: typing.Optional[float] = None
     import_speech_progress: typing.Optional[float] = None

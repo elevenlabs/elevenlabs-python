@@ -11,6 +11,7 @@ from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.get_conversation_users_page_response_model import GetConversationUsersPageResponseModel
 from ...types.http_validation_error import HttpValidationError
+from ...types.users_sort_by import UsersSortBy
 
 
 class RawUsersClient:
@@ -21,10 +22,12 @@ class RawUsersClient:
         self,
         *,
         agent_id: typing.Optional[str] = None,
+        branch_id: typing.Optional[str] = None,
         call_start_before_unix: typing.Optional[int] = None,
         call_start_after_unix: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
+        sort_by: typing.Optional[UsersSortBy] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetConversationUsersPageResponseModel]:
@@ -35,6 +38,9 @@ class RawUsersClient:
         ----------
         agent_id : typing.Optional[str]
             The id of the agent you're taking the action on.
+
+        branch_id : typing.Optional[str]
+            Filter conversations by branch ID.
 
         call_start_before_unix : typing.Optional[int]
             Unix timestamp (in seconds) to filter conversations up to this start date.
@@ -47,6 +53,9 @@ class RawUsersClient:
 
         page_size : typing.Optional[int]
             How many users to return at maximum. Defaults to 30.
+
+        sort_by : typing.Optional[UsersSortBy]
+            The field to sort the results by. Defaults to last_contact_unix_secs.
 
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
@@ -64,10 +73,12 @@ class RawUsersClient:
             method="GET",
             params={
                 "agent_id": agent_id,
+                "branch_id": branch_id,
                 "call_start_before_unix": call_start_before_unix,
                 "call_start_after_unix": call_start_after_unix,
                 "search": search,
                 "page_size": page_size,
+                "sort_by": sort_by,
                 "cursor": cursor,
             },
             request_options=request_options,
@@ -107,10 +118,12 @@ class AsyncRawUsersClient:
         self,
         *,
         agent_id: typing.Optional[str] = None,
+        branch_id: typing.Optional[str] = None,
         call_start_before_unix: typing.Optional[int] = None,
         call_start_after_unix: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
+        sort_by: typing.Optional[UsersSortBy] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetConversationUsersPageResponseModel]:
@@ -121,6 +134,9 @@ class AsyncRawUsersClient:
         ----------
         agent_id : typing.Optional[str]
             The id of the agent you're taking the action on.
+
+        branch_id : typing.Optional[str]
+            Filter conversations by branch ID.
 
         call_start_before_unix : typing.Optional[int]
             Unix timestamp (in seconds) to filter conversations up to this start date.
@@ -133,6 +149,9 @@ class AsyncRawUsersClient:
 
         page_size : typing.Optional[int]
             How many users to return at maximum. Defaults to 30.
+
+        sort_by : typing.Optional[UsersSortBy]
+            The field to sort the results by. Defaults to last_contact_unix_secs.
 
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
@@ -150,10 +169,12 @@ class AsyncRawUsersClient:
             method="GET",
             params={
                 "agent_id": agent_id,
+                "branch_id": branch_id,
                 "call_start_before_unix": call_start_before_unix,
                 "call_start_after_unix": call_start_after_unix,
                 "search": search,
                 "page_size": page_size,
+                "sort_by": sort_by,
                 "cursor": cursor,
             },
             request_options=request_options,

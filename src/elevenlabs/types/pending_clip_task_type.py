@@ -3,5 +3,5 @@
 import typing
 
 PendingClipTaskType = typing.Union[
-    typing.Literal["preprocessing", "speech_import", "dubbing", "video_to_music"], typing.Any
+    typing.Literal["preprocessing", "speech_import", "dubbing", "video_to_music", "media_generation"], typing.Any
 ]

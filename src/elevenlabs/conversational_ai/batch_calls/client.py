@@ -42,6 +42,7 @@ class BatchCallsClient:
         whatsapp_params: typing.Optional[BatchCallWhatsAppParams] = OMIT,
         timezone: typing.Optional[str] = OMIT,
         telephony_call_config: typing.Optional[TelephonyCallConfig] = OMIT,
+        target_concurrency_limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BatchCallResponse:
         """
@@ -64,6 +65,9 @@ class BatchCallsClient:
         timezone : typing.Optional[str]
 
         telephony_call_config : typing.Optional[TelephonyCallConfig]
+
+        target_concurrency_limit : typing.Optional[int]
+            Maximum number of simultaneous calls for this batch. When set, dispatch is governed by this limit rather than workspace/agent capacity percentages.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -95,6 +99,7 @@ class BatchCallsClient:
             whatsapp_params=whatsapp_params,
             timezone=timezone,
             telephony_call_config=telephony_call_config,
+            target_concurrency_limit=target_concurrency_limit,
             request_options=request_options,
         )
         return _response.data
@@ -286,6 +291,7 @@ class AsyncBatchCallsClient:
         whatsapp_params: typing.Optional[BatchCallWhatsAppParams] = OMIT,
         timezone: typing.Optional[str] = OMIT,
         telephony_call_config: typing.Optional[TelephonyCallConfig] = OMIT,
+        target_concurrency_limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BatchCallResponse:
         """
@@ -308,6 +314,9 @@ class AsyncBatchCallsClient:
         timezone : typing.Optional[str]
 
         telephony_call_config : typing.Optional[TelephonyCallConfig]
+
+        target_concurrency_limit : typing.Optional[int]
+            Maximum number of simultaneous calls for this batch. When set, dispatch is governed by this limit rather than workspace/agent capacity percentages.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -347,6 +356,7 @@ class AsyncBatchCallsClient:
             whatsapp_params=whatsapp_params,
             timezone=timezone,
             telephony_call_config=telephony_call_config,
+            target_concurrency_limit=target_concurrency_limit,
             request_options=request_options,
         )
         return _response.data

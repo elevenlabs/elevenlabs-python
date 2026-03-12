@@ -128,6 +128,7 @@ class RawWhatsappAccountsClient:
         *,
         assigned_agent_id: typing.Optional[str] = OMIT,
         enable_messaging: typing.Optional[bool] = OMIT,
+        enable_audio_message_response: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[typing.Any]:
         """
@@ -140,6 +141,8 @@ class RawWhatsappAccountsClient:
         assigned_agent_id : typing.Optional[str]
 
         enable_messaging : typing.Optional[bool]
+
+        enable_audio_message_response : typing.Optional[bool]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -155,6 +158,7 @@ class RawWhatsappAccountsClient:
             json={
                 "assigned_agent_id": assigned_agent_id,
                 "enable_messaging": enable_messaging,
+                "enable_audio_message_response": enable_audio_message_response,
             },
             headers={
                 "content-type": "application/json",
@@ -348,6 +352,7 @@ class AsyncRawWhatsappAccountsClient:
         *,
         assigned_agent_id: typing.Optional[str] = OMIT,
         enable_messaging: typing.Optional[bool] = OMIT,
+        enable_audio_message_response: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[typing.Any]:
         """
@@ -360,6 +365,8 @@ class AsyncRawWhatsappAccountsClient:
         assigned_agent_id : typing.Optional[str]
 
         enable_messaging : typing.Optional[bool]
+
+        enable_audio_message_response : typing.Optional[bool]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -375,6 +382,7 @@ class AsyncRawWhatsappAccountsClient:
             json={
                 "assigned_agent_id": assigned_agent_id,
                 "enable_messaging": enable_messaging,
+                "enable_audio_message_response": enable_audio_message_response,
             },
             headers={
                 "content-type": "application/json",

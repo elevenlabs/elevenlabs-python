@@ -21,12 +21,6 @@ from ...types.prompt_evaluation_criteria import PromptEvaluationCriteria
 from ...types.single_test_run_request_model import SingleTestRunRequestModel
 from ...types.sort_direction import SortDirection
 from .raw_client import AsyncRawAgentsClient, RawAgentsClient
-from .types.body_create_agent_v_1_convai_agents_create_post_coaching_settings import (
-    BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings,
-)
-from .types.body_patches_an_agent_settings_v_1_convai_agents_agent_id_patch_coaching_settings import (
-    BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings,
-)
 
 if typing.TYPE_CHECKING:
     from .branches.client import AsyncBranchesClient, BranchesClient
@@ -74,7 +68,6 @@ class AgentsClient:
         workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
-        coaching_settings: typing.Optional[BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateAgentResponseModel:
         """
@@ -99,8 +92,6 @@ class AgentsClient:
 
         tags : typing.Optional[typing.Sequence[str]]
             Tags to help classify and filter the agent
-
-        coaching_settings : typing.Optional[BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -129,7 +120,6 @@ class AgentsClient:
             workflow=workflow,
             name=name,
             tags=tags,
-            coaching_settings=coaching_settings,
             request_options=request_options,
         )
         return _response.data
@@ -223,7 +213,6 @@ class AgentsClient:
         workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
-        coaching_settings: typing.Optional[BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings] = OMIT,
         version_description: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetAgentResponseModel:
@@ -255,8 +244,6 @@ class AgentsClient:
 
         tags : typing.Optional[typing.Sequence[str]]
             Tags to help classify and filter the agent
-
-        coaching_settings : typing.Optional[BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings]
 
         version_description : typing.Optional[str]
             Description for this version when publishing changes (only applicable for versioned agents)
@@ -291,7 +278,6 @@ class AgentsClient:
             workflow=workflow,
             name=name,
             tags=tags,
-            coaching_settings=coaching_settings,
             version_description=version_description,
             request_options=request_options,
         )
@@ -698,7 +684,6 @@ class AsyncAgentsClient:
         workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
-        coaching_settings: typing.Optional[BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateAgentResponseModel:
         """
@@ -723,8 +708,6 @@ class AsyncAgentsClient:
 
         tags : typing.Optional[typing.Sequence[str]]
             Tags to help classify and filter the agent
-
-        coaching_settings : typing.Optional[BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -761,7 +744,6 @@ class AsyncAgentsClient:
             workflow=workflow,
             name=name,
             tags=tags,
-            coaching_settings=coaching_settings,
             request_options=request_options,
         )
         return _response.data
@@ -871,7 +853,6 @@ class AsyncAgentsClient:
         workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
-        coaching_settings: typing.Optional[BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings] = OMIT,
         version_description: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetAgentResponseModel:
@@ -903,8 +884,6 @@ class AsyncAgentsClient:
 
         tags : typing.Optional[typing.Sequence[str]]
             Tags to help classify and filter the agent
-
-        coaching_settings : typing.Optional[BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings]
 
         version_description : typing.Optional[str]
             Description for this version when publishing changes (only applicable for versioned agents)
@@ -947,7 +926,6 @@ class AsyncAgentsClient:
             workflow=workflow,
             name=name,
             tags=tags,
-            coaching_settings=coaching_settings,
             version_description=version_description,
             request_options=request_options,
         )

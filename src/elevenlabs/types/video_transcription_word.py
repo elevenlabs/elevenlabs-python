@@ -7,9 +7,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class NoCoachingSettings(UncheckedBaseModel):
-    type: typing.Optional[typing.Literal["none"]] = None
-    memory_base_id: typing.Optional[str] = None
+class VideoTranscriptionWord(UncheckedBaseModel):
+    speaker_id: typing.Optional[str] = None
+    text: str
+    start_ms: int
+    end_ms: int
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

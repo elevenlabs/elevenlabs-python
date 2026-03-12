@@ -101,6 +101,7 @@ class RawInvitesClient:
         self,
         *,
         emails: typing.Sequence[str],
+        seat_type: typing.Optional[SeatType] = OMIT,
         group_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AddWorkspaceInviteResponseModel]:
@@ -111,6 +112,9 @@ class RawInvitesClient:
         ----------
         emails : typing.Sequence[str]
             The email of the customer
+
+        seat_type : typing.Optional[SeatType]
+            The seat type of the user
 
         group_ids : typing.Optional[typing.Sequence[str]]
             The group ids of the user
@@ -128,6 +132,7 @@ class RawInvitesClient:
             method="POST",
             json={
                 "emails": emails,
+                "seat_type": seat_type,
                 "group_ids": group_ids,
             },
             headers={
@@ -303,6 +308,7 @@ class AsyncRawInvitesClient:
         self,
         *,
         emails: typing.Sequence[str],
+        seat_type: typing.Optional[SeatType] = OMIT,
         group_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AddWorkspaceInviteResponseModel]:
@@ -313,6 +319,9 @@ class AsyncRawInvitesClient:
         ----------
         emails : typing.Sequence[str]
             The email of the customer
+
+        seat_type : typing.Optional[SeatType]
+            The seat type of the user
 
         group_ids : typing.Optional[typing.Sequence[str]]
             The group ids of the user
@@ -330,6 +339,7 @@ class AsyncRawInvitesClient:
             method="POST",
             json={
                 "emails": emails,
+                "seat_type": seat_type,
                 "group_ids": group_ids,
             },
             headers={

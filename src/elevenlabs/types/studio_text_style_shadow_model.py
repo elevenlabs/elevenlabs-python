@@ -7,9 +7,13 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class NoCoachingSettings(UncheckedBaseModel):
-    type: typing.Optional[typing.Literal["none"]] = None
-    memory_base_id: typing.Optional[str] = None
+class StudioTextStyleShadowModel(UncheckedBaseModel):
+    enabled: bool
+    color: str
+    opacity: float
+    blur: float
+    offset_x: float
+    offset_y: float
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

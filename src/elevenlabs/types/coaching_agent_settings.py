@@ -12,6 +12,7 @@ class CoachingAgentSettings(UncheckedBaseModel):
     Runtime-only settings for the virtual coach. Not stored in the database.
     """
 
+    type: typing.Optional[typing.Literal["coaching"]] = None
     coached_agent_id: str
     memory_base_id: typing.Optional[str] = None
 

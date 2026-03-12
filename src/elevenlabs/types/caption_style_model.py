@@ -14,6 +14,8 @@ from .caption_style_section_animation_model import CaptionStyleSectionAnimationM
 from .caption_style_template_model import CaptionStyleTemplateModel
 from .caption_style_vertical_placement_model import CaptionStyleVerticalPlacementModel
 from .caption_style_word_animation_model import CaptionStyleWordAnimationModel
+from .studio_text_style_outline_model import StudioTextStyleOutlineModel
+from .studio_text_style_shadow_model import StudioTextStyleShadowModel
 
 
 class CaptionStyleModel(UncheckedBaseModel):
@@ -24,6 +26,8 @@ class CaptionStyleModel(UncheckedBaseModel):
     text_align: typing.Optional[CaptionStyleModelTextAlign] = None
     text_style: typing.Optional[CaptionStyleModelTextStyle] = None
     text_weight: typing.Optional[CaptionStyleModelTextWeight] = None
+    text_shadow: typing.Optional[StudioTextStyleShadowModel] = None
+    text_outline: typing.Optional[StudioTextStyleOutlineModel] = None
     background_enabled: typing.Optional[bool] = None
     background_color: typing.Optional[str] = None
     background_opacity: typing.Optional[float] = None

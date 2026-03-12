@@ -6,14 +6,6 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import (
-        BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings,
-        BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings_Coached,
-        BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings_None,
-        BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings,
-        BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings_Coached,
-        BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings_None,
-    )
     from . import branches, deployments, drafts, knowledge_base, link, llm_usage, summaries, widget
     from .summaries import (
         SummariesGetResponseValue,
@@ -21,12 +13,6 @@ if typing.TYPE_CHECKING:
         SummariesGetResponseValue_Success,
     )
 _dynamic_imports: typing.Dict[str, str] = {
-    "BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings": ".types",
-    "BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings_Coached": ".types",
-    "BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings_None": ".types",
-    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings": ".types",
-    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings_Coached": ".types",
-    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings_None": ".types",
     "SummariesGetResponseValue": ".summaries",
     "SummariesGetResponseValue_Failure": ".summaries",
     "SummariesGetResponseValue_Success": ".summaries",
@@ -63,12 +49,6 @@ def __dir__():
 
 
 __all__ = [
-    "BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings",
-    "BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings_Coached",
-    "BodyCreateAgentV1ConvaiAgentsCreatePostCoachingSettings_None",
-    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings",
-    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings_Coached",
-    "BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchCoachingSettings_None",
     "SummariesGetResponseValue",
     "SummariesGetResponseValue_Failure",
     "SummariesGetResponseValue_Success",

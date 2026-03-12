@@ -5,6 +5,7 @@ import typing
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.get_conversation_users_page_response_model import GetConversationUsersPageResponseModel
+from ...types.users_sort_by import UsersSortBy
 from .raw_client import AsyncRawUsersClient, RawUsersClient
 
 
@@ -27,10 +28,12 @@ class UsersClient:
         self,
         *,
         agent_id: typing.Optional[str] = None,
+        branch_id: typing.Optional[str] = None,
         call_start_before_unix: typing.Optional[int] = None,
         call_start_after_unix: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
+        sort_by: typing.Optional[UsersSortBy] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationUsersPageResponseModel:
@@ -41,6 +44,9 @@ class UsersClient:
         ----------
         agent_id : typing.Optional[str]
             The id of the agent you're taking the action on.
+
+        branch_id : typing.Optional[str]
+            Filter conversations by branch ID.
 
         call_start_before_unix : typing.Optional[int]
             Unix timestamp (in seconds) to filter conversations up to this start date.
@@ -53,6 +59,9 @@ class UsersClient:
 
         page_size : typing.Optional[int]
             How many users to return at maximum. Defaults to 30.
+
+        sort_by : typing.Optional[UsersSortBy]
+            The field to sort the results by. Defaults to last_contact_unix_secs.
 
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
@@ -74,19 +83,23 @@ class UsersClient:
         )
         client.conversational_ai.users.list(
             agent_id="agent_id",
+            branch_id="branch_id",
             call_start_before_unix=1,
             call_start_after_unix=1,
             search="search",
             page_size=1,
+            sort_by="last_contact_unix_secs",
             cursor="cursor",
         )
         """
         _response = self._raw_client.list(
             agent_id=agent_id,
+            branch_id=branch_id,
             call_start_before_unix=call_start_before_unix,
             call_start_after_unix=call_start_after_unix,
             search=search,
             page_size=page_size,
+            sort_by=sort_by,
             cursor=cursor,
             request_options=request_options,
         )
@@ -112,10 +125,12 @@ class AsyncUsersClient:
         self,
         *,
         agent_id: typing.Optional[str] = None,
+        branch_id: typing.Optional[str] = None,
         call_start_before_unix: typing.Optional[int] = None,
         call_start_after_unix: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
+        sort_by: typing.Optional[UsersSortBy] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationUsersPageResponseModel:
@@ -126,6 +141,9 @@ class AsyncUsersClient:
         ----------
         agent_id : typing.Optional[str]
             The id of the agent you're taking the action on.
+
+        branch_id : typing.Optional[str]
+            Filter conversations by branch ID.
 
         call_start_before_unix : typing.Optional[int]
             Unix timestamp (in seconds) to filter conversations up to this start date.
@@ -138,6 +156,9 @@ class AsyncUsersClient:
 
         page_size : typing.Optional[int]
             How many users to return at maximum. Defaults to 30.
+
+        sort_by : typing.Optional[UsersSortBy]
+            The field to sort the results by. Defaults to last_contact_unix_secs.
 
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
@@ -164,10 +185,12 @@ class AsyncUsersClient:
         async def main() -> None:
             await client.conversational_ai.users.list(
                 agent_id="agent_id",
+                branch_id="branch_id",
                 call_start_before_unix=1,
                 call_start_after_unix=1,
                 search="search",
                 page_size=1,
+                sort_by="last_contact_unix_secs",
                 cursor="cursor",
             )
 
@@ -176,10 +199,12 @@ class AsyncUsersClient:
         """
         _response = await self._raw_client.list(
             agent_id=agent_id,
+            branch_id=branch_id,
             call_start_before_unix=call_start_before_unix,
             call_start_after_unix=call_start_after_unix,
             search=search,
             page_size=page_size,
+            sort_by=sort_by,
             cursor=cursor,
             request_options=request_options,
         )

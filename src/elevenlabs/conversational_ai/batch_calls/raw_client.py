@@ -38,6 +38,7 @@ class RawBatchCallsClient:
         whatsapp_params: typing.Optional[BatchCallWhatsAppParams] = OMIT,
         timezone: typing.Optional[str] = OMIT,
         telephony_call_config: typing.Optional[TelephonyCallConfig] = OMIT,
+        target_concurrency_limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[BatchCallResponse]:
         """
@@ -60,6 +61,9 @@ class RawBatchCallsClient:
         timezone : typing.Optional[str]
 
         telephony_call_config : typing.Optional[TelephonyCallConfig]
+
+        target_concurrency_limit : typing.Optional[int]
+            Maximum number of simultaneous calls for this batch. When set, dispatch is governed by this limit rather than workspace/agent capacity percentages.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -87,6 +91,7 @@ class RawBatchCallsClient:
                 "telephony_call_config": convert_and_respect_annotation_metadata(
                     object_=telephony_call_config, annotation=TelephonyCallConfig, direction="write"
                 ),
+                "target_concurrency_limit": target_concurrency_limit,
             },
             headers={
                 "content-type": "application/json",
@@ -381,6 +386,7 @@ class AsyncRawBatchCallsClient:
         whatsapp_params: typing.Optional[BatchCallWhatsAppParams] = OMIT,
         timezone: typing.Optional[str] = OMIT,
         telephony_call_config: typing.Optional[TelephonyCallConfig] = OMIT,
+        target_concurrency_limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[BatchCallResponse]:
         """
@@ -403,6 +409,9 @@ class AsyncRawBatchCallsClient:
         timezone : typing.Optional[str]
 
         telephony_call_config : typing.Optional[TelephonyCallConfig]
+
+        target_concurrency_limit : typing.Optional[int]
+            Maximum number of simultaneous calls for this batch. When set, dispatch is governed by this limit rather than workspace/agent capacity percentages.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -430,6 +439,7 @@ class AsyncRawBatchCallsClient:
                 "telephony_call_config": convert_and_respect_annotation_metadata(
                     object_=telephony_call_config, annotation=TelephonyCallConfig, direction="write"
                 ),
+                "target_concurrency_limit": target_concurrency_limit,
             },
             headers={
                 "content-type": "application/json",

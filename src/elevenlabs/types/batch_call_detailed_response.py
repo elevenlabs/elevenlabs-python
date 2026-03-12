@@ -33,6 +33,11 @@ class BatchCallDetailedResponse(UncheckedBaseModel):
     status: BatchCallStatus
     retry_count: int
     telephony_call_config: TelephonyCallConfig
+    target_concurrency_limit: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Maximum number of simultaneous calls for this batch. When set, dispatch is governed by this limit rather than workspace/agent capacity percentages.
+    """
+
     agent_name: str
     recipients: typing.List[OutboundCallRecipientResponseModel]
 

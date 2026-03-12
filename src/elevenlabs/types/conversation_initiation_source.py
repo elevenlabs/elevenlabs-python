@@ -20,6 +20,7 @@ ConversationInitiationSource = typing.Union[
         "flutter_sdk",
         "zendesk_integration",
         "slack_integration",
+        "template_preview",
     ],
     typing.Any,
 ]

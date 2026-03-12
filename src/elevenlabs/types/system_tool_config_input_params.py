@@ -9,11 +9,20 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .agent_transfer import AgentTransfer
-from .merging_strategy import MergingStrategy
-from .multi_source_config_json import MultiSourceConfigJson
 from .phone_number_transfer import PhoneNumberTransfer
-from .source_config_json import SourceConfigJson
-from .source_retrieval_config import SourceRetrievalConfig
+
+
+class SystemToolConfigInputParams_AgentPromptChange(UncheckedBaseModel):
+    system_tool_type: typing.Literal["agent_prompt_change"] = "agent_prompt_change"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class SystemToolConfigInputParams_EndCall(UncheckedBaseModel):
@@ -42,9 +51,8 @@ class SystemToolConfigInputParams_LanguageDetection(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-class SystemToolConfigInputParams_PlayKeypadTouchTone(UncheckedBaseModel):
-    system_tool_type: typing.Literal["play_keypad_touch_tone"] = "play_keypad_touch_tone"
-    use_out_of_band_dtmf: typing.Optional[bool] = None
+class SystemToolConfigInputParams_MemoryEntryCreate(UncheckedBaseModel):
+    system_tool_type: typing.Literal["memory_entry_create"] = "memory_entry_create"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -56,18 +64,48 @@ class SystemToolConfigInputParams_PlayKeypadTouchTone(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-class SystemToolConfigInputParams_SearchDocumentation(UncheckedBaseModel):
-    system_tool_type: typing.Literal["search_documentation"] = "search_documentation"
-    use_multi_source: typing.Optional[bool] = None
-    multi_source_config: typing.Optional[MultiSourceConfigJson] = None
-    use_decomposition: typing.Optional[bool] = None
-    use_reformulation: typing.Optional[bool] = None
-    synthesize_response: typing.Optional[bool] = None
-    merging_strategy: typing.Optional[MergingStrategy] = None
-    final_top_k: typing.Optional[int] = None
-    source_names: typing.Optional[typing.List[str]] = None
-    source_overrides: typing.Optional[typing.List[SourceConfigJson]] = None
-    source_configs: typing.Optional[typing.List[SourceRetrievalConfig]] = None
+class SystemToolConfigInputParams_MemoryEntryDelete(UncheckedBaseModel):
+    system_tool_type: typing.Literal["memory_entry_delete"] = "memory_entry_delete"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class SystemToolConfigInputParams_MemoryEntrySearch(UncheckedBaseModel):
+    system_tool_type: typing.Literal["memory_entry_search"] = "memory_entry_search"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class SystemToolConfigInputParams_MemoryEntryUpdate(UncheckedBaseModel):
+    system_tool_type: typing.Literal["memory_entry_update"] = "memory_entry_update"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class SystemToolConfigInputParams_PlayKeypadTouchTone(UncheckedBaseModel):
+    system_tool_type: typing.Literal["play_keypad_touch_tone"] = "play_keypad_touch_tone"
+    use_out_of_band_dtmf: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -137,10 +175,14 @@ class SystemToolConfigInputParams_VoicemailDetection(UncheckedBaseModel):
 
 SystemToolConfigInputParams = typing_extensions.Annotated[
     typing.Union[
+        SystemToolConfigInputParams_AgentPromptChange,
         SystemToolConfigInputParams_EndCall,
         SystemToolConfigInputParams_LanguageDetection,
+        SystemToolConfigInputParams_MemoryEntryCreate,
+        SystemToolConfigInputParams_MemoryEntryDelete,
+        SystemToolConfigInputParams_MemoryEntrySearch,
+        SystemToolConfigInputParams_MemoryEntryUpdate,
         SystemToolConfigInputParams_PlayKeypadTouchTone,
-        SystemToolConfigInputParams_SearchDocumentation,
         SystemToolConfigInputParams_SkipTurn,
         SystemToolConfigInputParams_TransferToAgent,
         SystemToolConfigInputParams_TransferToNumber,
