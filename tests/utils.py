@@ -6,7 +6,7 @@ from typing import Sequence, Generator
 
 IN_GITHUB = "GITHUB_ACTIONS" in os.environ
 
-DEFAULT_VOICE = "21m00Tcm4TlvDq8ikWAM"
+DEFAULT_VOICE = "IRHApOXLvnW57QJPQH2P"
 DEFAULT_TEXT = "Hello"
 DEFAULT_MODEL = "eleven_multilingual_v2"
 DEFAULT_VOICE_FILE = "tests/fixtures/voice_sample.mp3"

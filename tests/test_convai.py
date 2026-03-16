@@ -129,7 +129,7 @@ def test_conversation_with_auth():
         conversation.wait_for_session_end()
 
     # Assertions
-    mock_client.conversational_ai.conversations.get_signed_url.assert_called_once_with(agent_id=TEST_AGENT_ID)
+    mock_client.conversational_ai.conversations.get_signed_url.assert_called_once_with(agent_id=TEST_AGENT_ID, environment=None)
 
 
 def test_conversation_with_dynamic_variables():
