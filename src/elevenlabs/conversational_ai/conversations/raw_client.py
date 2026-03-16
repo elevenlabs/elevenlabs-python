@@ -30,6 +30,7 @@ class RawConversationsClient:
         agent_id: str,
         include_conversation_id: typing.Optional[bool] = None,
         branch_id: typing.Optional[str] = None,
+        environment: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ConversationSignedUrlResponseModel]:
         """
@@ -46,6 +47,9 @@ class RawConversationsClient:
         branch_id : typing.Optional[str]
             The ID of the branch to use
 
+        environment : typing.Optional[str]
+            The environment to use. Defaults to "production" on the server.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -61,6 +65,7 @@ class RawConversationsClient:
                 "agent_id": agent_id,
                 "include_conversation_id": include_conversation_id,
                 "branch_id": branch_id,
+                "environment": environment,
             },
             request_options=request_options,
         )
@@ -96,6 +101,7 @@ class RawConversationsClient:
         agent_id: str,
         participant_name: typing.Optional[str] = None,
         branch_id: typing.Optional[str] = None,
+        environment: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[TokenResponseModel]:
         """
@@ -112,6 +118,9 @@ class RawConversationsClient:
         branch_id : typing.Optional[str]
             The ID of the branch to use
 
+        environment : typing.Optional[str]
+            The environment to use. Defaults to "production" on the server.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -127,6 +136,7 @@ class RawConversationsClient:
                 "agent_id": agent_id,
                 "participant_name": participant_name,
                 "branch_id": branch_id,
+                "environment": environment,
             },
             request_options=request_options,
         )
@@ -419,6 +429,7 @@ class AsyncRawConversationsClient:
         agent_id: str,
         include_conversation_id: typing.Optional[bool] = None,
         branch_id: typing.Optional[str] = None,
+        environment: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ConversationSignedUrlResponseModel]:
         """
@@ -435,6 +446,9 @@ class AsyncRawConversationsClient:
         branch_id : typing.Optional[str]
             The ID of the branch to use
 
+        environment : typing.Optional[str]
+            The environment to use. Defaults to "production" on the server.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -450,6 +464,7 @@ class AsyncRawConversationsClient:
                 "agent_id": agent_id,
                 "include_conversation_id": include_conversation_id,
                 "branch_id": branch_id,
+                "environment": environment,
             },
             request_options=request_options,
         )
@@ -485,6 +500,7 @@ class AsyncRawConversationsClient:
         agent_id: str,
         participant_name: typing.Optional[str] = None,
         branch_id: typing.Optional[str] = None,
+        environment: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[TokenResponseModel]:
         """
@@ -501,6 +517,9 @@ class AsyncRawConversationsClient:
         branch_id : typing.Optional[str]
             The ID of the branch to use
 
+        environment : typing.Optional[str]
+            The environment to use. Defaults to "production" on the server.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -516,6 +535,7 @@ class AsyncRawConversationsClient:
                 "agent_id": agent_id,
                 "participant_name": participant_name,
                 "branch_id": branch_id,
+                "environment": environment,
             },
             request_options=request_options,
         )

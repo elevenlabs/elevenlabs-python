@@ -391,6 +391,7 @@ class BaseConversation:
         config: Optional[ConversationInitiationData] = None,
         client_tools: Optional[ClientTools] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
+        environment: Optional[str] = None,
     ):
         self.client = client
         self.agent_id = agent_id
@@ -399,6 +400,7 @@ class BaseConversation:
         self.config = config or ConversationInitiationData()
         self.client_tools = client_tools or ClientTools()
         self.on_prem_config = on_prem_config
+        self.environment = environment
 
         self.client_tools.start()
 
@@ -418,10 +420,16 @@ class BaseConversation:
         # Ensure base URL ends with '/' for proper joining
         if not base_ws_url.endswith("/"):
             base_ws_url += "/"
-        return f"{base_ws_url}v1/convai/conversation?agent_id={self.agent_id}&source=python_sdk&version={__version__}"
+        url = f"{base_ws_url}v1/convai/conversation?agent_id={self.agent_id}&source=python_sdk&version={__version__}"
+        if self.environment:
+            url += f"&environment={self.environment}"
+        return url
 
     def _get_signed_url(self):
-        response = self.client.conversational_ai.conversations.get_signed_url(agent_id=self.agent_id)
+        response = self.client.conversational_ai.conversations.get_signed_url(
+            agent_id=self.agent_id,
+            environment=self.environment,
+        )
         signed_url = response.signed_url
         # Append source and version query parameters to the signed URL
         separator = "&" if "?" in signed_url else "?"
@@ -633,6 +641,7 @@ class Conversation(BaseConversation):
         callback_audio_alignment: Optional[Callable[[AudioEventAlignment], None]] = None,
         callback_end_session: Optional[Callable] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
+        environment: Optional[str] = None,
     ):
         """Conversational AI session.
 
@@ -654,6 +663,7 @@ class Conversation(BaseConversation):
             callback_user_transcript: Callback for user transcripts.
             callback_latency_measurement: Callback for latency measurements (in milliseconds).
             callback_audio_alignment: Callback for audio alignment data with character-level timing.
+            environment: The environment to use. Defaults to "production" on the server.
         """
 
         super().__init__(
@@ -664,6 +674,7 @@ class Conversation(BaseConversation):
             config=config,
             client_tools=client_tools,
             on_prem_config=on_prem_config,
+            environment=environment,
         )
 
         self.audio_interface = audio_interface
@@ -925,6 +936,7 @@ class AsyncConversation(BaseConversation):
         callback_audio_alignment: Optional[Callable[[AudioEventAlignment], Awaitable[None]]] = None,
         callback_end_session: Optional[Callable[[], Awaitable[None]]] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
+        environment: Optional[str] = None,
     ):
         """Async Conversational AI session.
 
@@ -947,6 +959,7 @@ class AsyncConversation(BaseConversation):
             callback_latency_measurement: Async callback for latency measurements (in milliseconds).
             callback_audio_alignment: Async callback for audio alignment data with character-level timing.
             callback_end_session: Async callback for when session ends.
+            environment: The environment to use. Defaults to "production" on the server.
         """
 
         super().__init__(
@@ -957,6 +970,7 @@ class AsyncConversation(BaseConversation):
             config=config,
             client_tools=client_tools,
             on_prem_config=on_prem_config,
+            environment=environment,
         )
 
         self.audio_interface = audio_interface

@@ -48,6 +48,7 @@ class ConversationsClient:
         agent_id: str,
         include_conversation_id: typing.Optional[bool] = None,
         branch_id: typing.Optional[str] = None,
+        environment: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ConversationSignedUrlResponseModel:
         """
@@ -63,6 +64,9 @@ class ConversationsClient:
 
         branch_id : typing.Optional[str]
             The ID of the branch to use
+
+        environment : typing.Optional[str]
+            The environment to use. Defaults to "production" on the server.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -89,6 +93,7 @@ class ConversationsClient:
             agent_id=agent_id,
             include_conversation_id=include_conversation_id,
             branch_id=branch_id,
+            environment=environment,
             request_options=request_options,
         )
         return _response.data
@@ -99,6 +104,7 @@ class ConversationsClient:
         agent_id: str,
         participant_name: typing.Optional[str] = None,
         branch_id: typing.Optional[str] = None,
+        environment: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TokenResponseModel:
         """
@@ -114,6 +120,9 @@ class ConversationsClient:
 
         branch_id : typing.Optional[str]
             The ID of the branch to use
+
+        environment : typing.Optional[str]
+            The environment to use. Defaults to "production" on the server.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -137,7 +146,7 @@ class ConversationsClient:
         )
         """
         _response = self._raw_client.get_webrtc_token(
-            agent_id=agent_id, participant_name=participant_name, branch_id=branch_id, request_options=request_options
+            agent_id=agent_id, participant_name=participant_name, branch_id=branch_id, environment=environment, request_options=request_options
         )
         return _response.data
 
@@ -412,6 +421,7 @@ class AsyncConversationsClient:
         agent_id: str,
         include_conversation_id: typing.Optional[bool] = None,
         branch_id: typing.Optional[str] = None,
+        environment: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ConversationSignedUrlResponseModel:
         """
@@ -427,6 +437,9 @@ class AsyncConversationsClient:
 
         branch_id : typing.Optional[str]
             The ID of the branch to use
+
+        environment : typing.Optional[str]
+            The environment to use. Defaults to "production" on the server.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -461,6 +474,7 @@ class AsyncConversationsClient:
             agent_id=agent_id,
             include_conversation_id=include_conversation_id,
             branch_id=branch_id,
+            environment=environment,
             request_options=request_options,
         )
         return _response.data
@@ -471,6 +485,7 @@ class AsyncConversationsClient:
         agent_id: str,
         participant_name: typing.Optional[str] = None,
         branch_id: typing.Optional[str] = None,
+        environment: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TokenResponseModel:
         """
@@ -486,6 +501,9 @@ class AsyncConversationsClient:
 
         branch_id : typing.Optional[str]
             The ID of the branch to use
+
+        environment : typing.Optional[str]
+            The environment to use. Defaults to "production" on the server.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -517,7 +535,7 @@ class AsyncConversationsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get_webrtc_token(
-            agent_id=agent_id, participant_name=participant_name, branch_id=branch_id, request_options=request_options
+            agent_id=agent_id, participant_name=participant_name, branch_id=branch_id, environment=environment, request_options=request_options
         )
         return _response.data
 
