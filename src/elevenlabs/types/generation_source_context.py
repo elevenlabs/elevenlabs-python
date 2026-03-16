@@ -5,11 +5,12 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .generation_source_context_source_type import GenerationSourceContextSourceType
 from .reference_video import ReferenceVideo
 
 
 class GenerationSourceContext(UncheckedBaseModel):
-    source_type: typing.Optional[typing.Literal["generation"]] = None
+    source_type: typing.Optional[GenerationSourceContextSourceType] = None
     generation_id: str
     prompt: typing.Optional[str] = None
     model_id: str

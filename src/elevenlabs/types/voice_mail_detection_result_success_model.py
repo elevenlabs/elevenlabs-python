@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .voice_mail_detection_result_success_model_status import VoiceMailDetectionResultSuccessModelStatus
 
 
 class VoiceMailDetectionResultSuccessModel(UncheckedBaseModel):
-    status: typing.Optional[typing.Literal["success"]] = None
+    status: typing.Optional[VoiceMailDetectionResultSuccessModelStatus] = None
     voicemail_message: typing.Optional[str] = None
     reason: typing.Optional[str] = None
 

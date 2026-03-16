@@ -107,6 +107,7 @@ class ApiKeysClient:
         client.service_accounts.api_keys.create(
             service_account_user_id="service_account_user_id",
             name="name",
+            permissions="all",
         )
         """
         _response = self._raw_client.create(
@@ -205,6 +206,7 @@ class ApiKeysClient:
             api_key_id="api_key_id",
             is_enabled=True,
             name="Sneaky Fox",
+            permissions="all",
         )
         """
         _response = self._raw_client.update(
@@ -321,6 +323,7 @@ class AsyncApiKeysClient:
             await client.service_accounts.api_keys.create(
                 service_account_user_id="service_account_user_id",
                 name="name",
+                permissions="all",
             )
 
 
@@ -435,6 +438,7 @@ class AsyncApiKeysClient:
                 api_key_id="api_key_id",
                 is_enabled=True,
                 name="Sneaky Fox",
+                permissions="all",
             )
 
 

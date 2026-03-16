@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .podcast_text_source_type import PodcastTextSourceType
 
 
 class PodcastTextSource(UncheckedBaseModel):
-    type: typing.Literal["text"] = pydantic.Field(default="text")
+    type: PodcastTextSourceType = pydantic.Field()
     """
     The type of source to create.
     """

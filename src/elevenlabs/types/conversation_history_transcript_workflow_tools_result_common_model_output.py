@@ -7,6 +7,9 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .conversation_history_transcript_workflow_tools_result_common_model_output_type import (
+    ConversationHistoryTranscriptWorkflowToolsResultCommonModelOutputType,
+)
 from .dynamic_variable_update_common_model import DynamicVariableUpdateCommonModel
 
 
@@ -20,7 +23,7 @@ class ConversationHistoryTranscriptWorkflowToolsResultCommonModelOutput(Unchecke
     error_type: typing.Optional[str] = None
     raw_error_message: typing.Optional[str] = None
     dynamic_variable_updates: typing.Optional[typing.List[DynamicVariableUpdateCommonModel]] = None
-    type: typing.Literal["workflow"] = "workflow"
+    type: ConversationHistoryTranscriptWorkflowToolsResultCommonModelOutputType
     result: typing.Optional["WorkflowToolResponseModelOutput"] = None
 
     if IS_PYDANTIC_V2:
@@ -33,6 +36,15 @@ class ConversationHistoryTranscriptWorkflowToolsResultCommonModelOutput(Unchecke
             extra = pydantic.Extra.allow
 
 
+from .workflow_tool_nested_tools_step_model_output import WorkflowToolNestedToolsStepModelOutput  # noqa: E402, I001
+from .workflow_tool_nested_tools_step_model_output_results_item import WorkflowToolNestedToolsStepModelOutputResultsItem  # noqa: E402, I001
 from .workflow_tool_response_model_output import WorkflowToolResponseModelOutput  # noqa: E402, I001
+from .workflow_tool_response_model_output_steps_item import WorkflowToolResponseModelOutputStepsItem  # noqa: E402, I001
 
-update_forward_refs(ConversationHistoryTranscriptWorkflowToolsResultCommonModelOutput)
+update_forward_refs(
+    ConversationHistoryTranscriptWorkflowToolsResultCommonModelOutput,
+    WorkflowToolNestedToolsStepModelOutput=WorkflowToolNestedToolsStepModelOutput,
+    WorkflowToolNestedToolsStepModelOutputResultsItem=WorkflowToolNestedToolsStepModelOutputResultsItem,
+    WorkflowToolResponseModelOutput=WorkflowToolResponseModelOutput,
+    WorkflowToolResponseModelOutputStepsItem=WorkflowToolResponseModelOutputStepsItem,
+)

@@ -8,12 +8,24 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
+from .end_call_tool_result_model_status import EndCallToolResultModelStatus
+from .language_detection_tool_result_model_status import LanguageDetectionToolResultModelStatus
+from .play_dtmf_result_error_model_status import PlayDtmfResultErrorModelStatus
+from .play_dtmf_result_success_model_status import PlayDtmfResultSuccessModelStatus
+from .skip_turn_tool_response_model_status import SkipTurnToolResponseModelStatus
+from .test_tool_result_model_status import TestToolResultModelStatus
+from .transfer_to_agent_tool_result_error_model_status import TransferToAgentToolResultErrorModelStatus
 from .transfer_to_agent_tool_result_success_model_branch_info import TransferToAgentToolResultSuccessModelBranchInfo
+from .transfer_to_agent_tool_result_success_model_status import TransferToAgentToolResultSuccessModelStatus
+from .transfer_to_number_result_error_model_status import TransferToNumberResultErrorModelStatus
+from .transfer_to_number_result_sip_success_model_status import TransferToNumberResultSipSuccessModelStatus
+from .transfer_to_number_result_twilio_success_model_status import TransferToNumberResultTwilioSuccessModelStatus
+from .voice_mail_detection_result_success_model_status import VoiceMailDetectionResultSuccessModelStatus
 
 
 class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndCallSuccess(UncheckedBaseModel):
     result_type: typing.Literal["end_call_success"] = "end_call_success"
-    status: typing.Optional[typing.Literal["success"]] = None
+    status: typing.Optional[EndCallToolResultModelStatus] = None
     reason: typing.Optional[str] = None
     message: typing.Optional[str] = None
 
@@ -29,7 +41,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndCa
 
 class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_LanguageDetectionSuccess(UncheckedBaseModel):
     result_type: typing.Literal["language_detection_success"] = "language_detection_success"
-    status: typing.Optional[typing.Literal["success"]] = None
+    status: typing.Optional[LanguageDetectionToolResultModelStatus] = None
     reason: typing.Optional[str] = None
     language: typing.Optional[str] = None
 
@@ -45,7 +57,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Langu
 
 class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfError(UncheckedBaseModel):
     result_type: typing.Literal["play_dtmf_error"] = "play_dtmf_error"
-    status: typing.Optional[typing.Literal["error"]] = None
+    status: typing.Optional[PlayDtmfResultErrorModelStatus] = None
     error: str
     details: typing.Optional[str] = None
 
@@ -61,7 +73,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayD
 
 class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfSuccess(UncheckedBaseModel):
     result_type: typing.Literal["play_dtmf_success"] = "play_dtmf_success"
-    status: typing.Optional[typing.Literal["success"]] = None
+    status: typing.Optional[PlayDtmfResultSuccessModelStatus] = None
     dtmf_tones: str
     reason: typing.Optional[str] = None
 
@@ -77,7 +89,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayD
 
 class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_SkipTurnSuccess(UncheckedBaseModel):
     result_type: typing.Literal["skip_turn_success"] = "skip_turn_success"
-    status: typing.Optional[typing.Literal["success"]] = None
+    status: typing.Optional[SkipTurnToolResponseModelStatus] = None
     reason: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
@@ -92,7 +104,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_SkipT
 
 class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TestingToolResult(UncheckedBaseModel):
     result_type: typing.Literal["testing_tool_result"] = "testing_tool_result"
-    status: typing.Optional[typing.Literal["success"]] = None
+    status: typing.Optional[TestToolResultModelStatus] = None
     reason: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
@@ -107,7 +119,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Testi
 
 class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentError(UncheckedBaseModel):
     result_type: typing.Literal["transfer_to_agent_error"] = "transfer_to_agent_error"
-    status: typing.Optional[typing.Literal["error"]] = None
+    status: typing.Optional[TransferToAgentToolResultErrorModelStatus] = None
     from_agent: str
     error: str
 
@@ -123,7 +135,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Trans
 
 class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentSuccess(UncheckedBaseModel):
     result_type: typing.Literal["transfer_to_agent_success"] = "transfer_to_agent_success"
-    status: typing.Optional[typing.Literal["success"]] = None
+    status: typing.Optional[TransferToAgentToolResultSuccessModelStatus] = None
     from_agent: str
     to_agent: str
     condition: str
@@ -144,7 +156,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Trans
 
 class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberError(UncheckedBaseModel):
     result_type: typing.Literal["transfer_to_number_error"] = "transfer_to_number_error"
-    status: typing.Optional[typing.Literal["error"]] = None
+    status: typing.Optional[TransferToNumberResultErrorModelStatus] = None
     error: str
     details: typing.Optional[str] = None
 
@@ -162,7 +174,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Trans
     UncheckedBaseModel
 ):
     result_type: typing.Literal["transfer_to_number_sip_success"] = "transfer_to_number_sip_success"
-    status: typing.Optional[typing.Literal["success"]] = None
+    status: typing.Optional[TransferToNumberResultSipSuccessModelStatus] = None
     transfer_number: str
     reason: typing.Optional[str] = None
     note: typing.Optional[str] = None
@@ -181,7 +193,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Trans
     UncheckedBaseModel
 ):
     result_type: typing.Literal["transfer_to_number_twilio_success"] = "transfer_to_number_twilio_success"
-    status: typing.Optional[typing.Literal["success"]] = None
+    status: typing.Optional[TransferToNumberResultTwilioSuccessModelStatus] = None
     transfer_number: str
     reason: typing.Optional[str] = None
     client_message: typing.Optional[str] = None
@@ -204,7 +216,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Voice
     UncheckedBaseModel
 ):
     result_type: typing.Literal["voicemail_detection_success"] = "voicemail_detection_success"
-    status: typing.Optional[typing.Literal["success"]] = None
+    status: typing.Optional[VoiceMailDetectionResultSuccessModelStatus] = None
     voicemail_message: typing.Optional[str] = None
     reason: typing.Optional[str] = None
 

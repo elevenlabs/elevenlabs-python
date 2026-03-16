@@ -21,6 +21,7 @@ class ConversationSummaryResponseModel(UncheckedBaseModel):
     call_duration_secs: int
     message_count: int
     status: ConversationSummaryResponseModelStatus
+    termination_reason: typing.Optional[str] = None
     call_successful: EvaluationSuccessResult
     transcript_summary: typing.Optional[str] = None
     call_summary_title: typing.Optional[str] = None

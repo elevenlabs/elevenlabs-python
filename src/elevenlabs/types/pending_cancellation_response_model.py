@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .pending_cancellation_response_model_kind import PendingCancellationResponseModelKind
 
 
 class PendingCancellationResponseModel(UncheckedBaseModel):
-    kind: typing.Optional[typing.Literal["cancellation"]] = None
+    kind: typing.Optional[PendingCancellationResponseModelKind] = None
     timestamp_seconds: int = pydantic.Field()
     """
     The timestamp of the cancellation.

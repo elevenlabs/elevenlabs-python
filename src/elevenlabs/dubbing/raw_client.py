@@ -8,6 +8,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.jsonable_encoder import jsonable_encoder
+from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
@@ -19,7 +20,9 @@ from ..types.http_validation_error import HttpValidationError
 from .types.dubbing_create_request_mode import DubbingCreateRequestMode
 from .types.dubbing_list_request_dubbing_status import DubbingListRequestDubbingStatus
 from .types.dubbing_list_request_filter_by_creator import DubbingListRequestFilterByCreator
+from .types.dubbing_list_request_order_by import DubbingListRequestOrderBy
 from .types.dubbing_list_request_order_direction import DubbingListRequestOrderDirection
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -36,7 +39,7 @@ class RawDubbingClient:
         page_size: typing.Optional[int] = None,
         dubbing_status: typing.Optional[DubbingListRequestDubbingStatus] = None,
         filter_by_creator: typing.Optional[DubbingListRequestFilterByCreator] = None,
-        order_by: typing.Optional[typing.Literal["created_at"]] = None,
+        order_by: typing.Optional[DubbingListRequestOrderBy] = None,
         order_direction: typing.Optional[DubbingListRequestOrderDirection] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DubbingMetadataPageResponseModel]:
@@ -57,7 +60,7 @@ class RawDubbingClient:
         filter_by_creator : typing.Optional[DubbingListRequestFilterByCreator]
             Filters who created the resources being listed, whether it was the user running the request or someone else that shared the resource with them.
 
-        order_by : typing.Optional[typing.Literal["created_at"]]
+        order_by : typing.Optional[DubbingListRequestOrderBy]
             The field to use for ordering results from this query.
 
         order_direction : typing.Optional[DubbingListRequestOrderDirection]
@@ -108,6 +111,10 @@ class RawDubbingClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
@@ -263,6 +270,10 @@ class RawDubbingClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
@@ -313,6 +324,10 @@ class RawDubbingClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
@@ -363,6 +378,10 @@ class RawDubbingClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -377,7 +396,7 @@ class AsyncRawDubbingClient:
         page_size: typing.Optional[int] = None,
         dubbing_status: typing.Optional[DubbingListRequestDubbingStatus] = None,
         filter_by_creator: typing.Optional[DubbingListRequestFilterByCreator] = None,
-        order_by: typing.Optional[typing.Literal["created_at"]] = None,
+        order_by: typing.Optional[DubbingListRequestOrderBy] = None,
         order_direction: typing.Optional[DubbingListRequestOrderDirection] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DubbingMetadataPageResponseModel]:
@@ -398,7 +417,7 @@ class AsyncRawDubbingClient:
         filter_by_creator : typing.Optional[DubbingListRequestFilterByCreator]
             Filters who created the resources being listed, whether it was the user running the request or someone else that shared the resource with them.
 
-        order_by : typing.Optional[typing.Literal["created_at"]]
+        order_by : typing.Optional[DubbingListRequestOrderBy]
             The field to use for ordering results from this query.
 
         order_direction : typing.Optional[DubbingListRequestOrderDirection]
@@ -449,6 +468,10 @@ class AsyncRawDubbingClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
@@ -604,6 +627,10 @@ class AsyncRawDubbingClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -654,6 +681,10 @@ class AsyncRawDubbingClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -704,4 +735,8 @@ class AsyncRawDubbingClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

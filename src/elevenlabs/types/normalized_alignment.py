@@ -15,25 +15,21 @@ class NormalizedAlignment(UncheckedBaseModel):
     """
 
     char_start_times_ms: typing_extensions.Annotated[
-        typing.Optional[typing.List[int]], FieldMetadata(alias="charStartTimesMs")
-    ] = pydantic.Field(default=None)
-    """
-    A list of starting times (in milliseconds) for each character in the normalized text as it
-    corresponds to the audio. For instance, the character 'H' starts at time 0 ms in the audio.
-    Note these times are relative to the returned chunk from the model, and not the
-    full audio response.
-    """
-
+        typing.Optional[typing.List[int]],
+        FieldMetadata(alias="charStartTimesMs"),
+        pydantic.Field(
+            alias="charStartTimesMs",
+            description="A list of starting times (in milliseconds) for each character in the normalized text as it\ncorresponds to the audio. For instance, the character 'H' starts at time 0 ms in the audio.\nNote these times are relative to the returned chunk from the model, and not the\nfull audio response.",
+        ),
+    ] = None
     char_durations_ms: typing_extensions.Annotated[
-        typing.Optional[typing.List[int]], FieldMetadata(alias="charDurationsMs")
-    ] = pydantic.Field(default=None)
-    """
-    A list of durations (in milliseconds) for each character in the normalized text as it
-    corresponds to the audio. For instance, the character 'H' lasts for 3 ms in the audio.
-    Note these times are relative to the returned chunk from the model, and not the
-    full audio response.
-    """
-
+        typing.Optional[typing.List[int]],
+        FieldMetadata(alias="charDurationsMs"),
+        pydantic.Field(
+            alias="charDurationsMs",
+            description="A list of durations (in milliseconds) for each character in the normalized text as it\ncorresponds to the audio. For instance, the character 'H' lasts for 3 ms in the audio.\nNote these times are relative to the returned chunk from the model, and not the\nfull audio response.",
+        ),
+    ] = None
     chars: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     A list of characters in the normalized text sequence. For instance, the first character is 'H'.

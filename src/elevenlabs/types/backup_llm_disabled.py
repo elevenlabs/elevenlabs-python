@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .backup_llm_disabled_preference import BackupLlmDisabledPreference
 
 
 class BackupLlmDisabled(UncheckedBaseModel):
-    preference: typing.Optional[typing.Literal["disabled"]] = None
+    preference: typing.Optional[BackupLlmDisabledPreference] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

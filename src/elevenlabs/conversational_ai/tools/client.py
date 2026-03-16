@@ -179,7 +179,13 @@ class ToolsClient:
         _response = self._raw_client.get(tool_id, request_options=request_options)
         return _response.data
 
-    def delete(self, tool_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+    def delete(
+        self,
+        tool_id: str,
+        *,
+        force: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Any:
         """
         Delete tool from the workspace.
 
@@ -187,6 +193,9 @@ class ToolsClient:
         ----------
         tool_id : str
             ID of the requested tool.
+
+        force : typing.Optional[bool]
+            If set to true, the tool will be deleted regardless of whether it is used by any agents and it will be removed from the dependent agents and branches.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -205,9 +214,10 @@ class ToolsClient:
         )
         client.conversational_ai.tools.delete(
             tool_id="tool_id",
+            force=True,
         )
         """
-        _response = self._raw_client.delete(tool_id, request_options=request_options)
+        _response = self._raw_client.delete(tool_id, force=force, request_options=request_options)
         return _response.data
 
     def update(
@@ -491,7 +501,13 @@ class AsyncToolsClient:
         _response = await self._raw_client.get(tool_id, request_options=request_options)
         return _response.data
 
-    async def delete(self, tool_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+    async def delete(
+        self,
+        tool_id: str,
+        *,
+        force: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Any:
         """
         Delete tool from the workspace.
 
@@ -499,6 +515,9 @@ class AsyncToolsClient:
         ----------
         tool_id : str
             ID of the requested tool.
+
+        force : typing.Optional[bool]
+            If set to true, the tool will be deleted regardless of whether it is used by any agents and it will be removed from the dependent agents and branches.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -522,12 +541,13 @@ class AsyncToolsClient:
         async def main() -> None:
             await client.conversational_ai.tools.delete(
                 tool_id="tool_id",
+                force=True,
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.delete(tool_id, request_options=request_options)
+        _response = await self._raw_client.delete(tool_id, force=force, request_options=request_options)
         return _response.data
 
     async def update(

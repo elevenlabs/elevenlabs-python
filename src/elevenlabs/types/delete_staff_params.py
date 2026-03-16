@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .delete_staff_params_smb_tool_type import DeleteStaffParamsSmbToolType
 
 
 class DeleteStaffParams(UncheckedBaseModel):
@@ -12,7 +13,7 @@ class DeleteStaffParams(UncheckedBaseModel):
     Delete an existing staff member from the system.
     """
 
-    smb_tool_type: typing.Optional[typing.Literal["delete_staff"]] = None
+    smb_tool_type: typing.Optional[DeleteStaffParamsSmbToolType] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -217,24 +217,216 @@ AstOrOperatorNodeInputChildrenItem = typing_extensions.Annotated[
     UnionMetadata(discriminant="type"),
 ]
 from .ast_and_operator_node_input_children_item import AstAndOperatorNodeInputChildrenItem  # noqa: E402, I001
+from .ast_equals_operator_node_input import AstEqualsOperatorNodeInput  # noqa: E402, I001
 from .ast_equals_operator_node_input_left import AstEqualsOperatorNodeInputLeft  # noqa: E402, I001
 from .ast_equals_operator_node_input_right import AstEqualsOperatorNodeInputRight  # noqa: E402, I001
+from .ast_greater_than_operator_node_input import AstGreaterThanOperatorNodeInput  # noqa: E402, I001
 from .ast_greater_than_operator_node_input_left import AstGreaterThanOperatorNodeInputLeft  # noqa: E402, I001
 from .ast_greater_than_operator_node_input_right import AstGreaterThanOperatorNodeInputRight  # noqa: E402, I001
+from .ast_greater_than_or_equals_operator_node_input import AstGreaterThanOrEqualsOperatorNodeInput  # noqa: E402, I001
 from .ast_greater_than_or_equals_operator_node_input_left import AstGreaterThanOrEqualsOperatorNodeInputLeft  # noqa: E402, I001
 from .ast_greater_than_or_equals_operator_node_input_right import AstGreaterThanOrEqualsOperatorNodeInputRight  # noqa: E402, I001
+from .ast_less_than_operator_node_input import AstLessThanOperatorNodeInput  # noqa: E402, I001
 from .ast_less_than_operator_node_input_left import AstLessThanOperatorNodeInputLeft  # noqa: E402, I001
 from .ast_less_than_operator_node_input_right import AstLessThanOperatorNodeInputRight  # noqa: E402, I001
+from .ast_less_than_or_equals_operator_node_input import AstLessThanOrEqualsOperatorNodeInput  # noqa: E402, I001
 from .ast_less_than_or_equals_operator_node_input_left import AstLessThanOrEqualsOperatorNodeInputLeft  # noqa: E402, I001
 from .ast_less_than_or_equals_operator_node_input_right import AstLessThanOrEqualsOperatorNodeInputRight  # noqa: E402, I001
+from .ast_not_equals_operator_node_input import AstNotEqualsOperatorNodeInput  # noqa: E402, I001
 from .ast_not_equals_operator_node_input_left import AstNotEqualsOperatorNodeInputLeft  # noqa: E402, I001
 from .ast_not_equals_operator_node_input_right import AstNotEqualsOperatorNodeInputRight  # noqa: E402, I001
+from .ast_or_operator_node_input import AstOrOperatorNodeInput  # noqa: E402, I001
+from .ast_and_operator_node_input import AstAndOperatorNodeInput  # noqa: E402, I001
 
-update_forward_refs(AstOrOperatorNodeInputChildrenItem_AndOperator)
-update_forward_refs(AstOrOperatorNodeInputChildrenItem_EqOperator)
-update_forward_refs(AstOrOperatorNodeInputChildrenItem_GtOperator)
-update_forward_refs(AstOrOperatorNodeInputChildrenItem_GteOperator)
-update_forward_refs(AstOrOperatorNodeInputChildrenItem_LtOperator)
-update_forward_refs(AstOrOperatorNodeInputChildrenItem_LteOperator)
-update_forward_refs(AstOrOperatorNodeInputChildrenItem_NeqOperator)
-update_forward_refs(AstOrOperatorNodeInputChildrenItem_OrOperator)
+update_forward_refs(
+    AstOrOperatorNodeInputChildrenItem_AndOperator,
+    AstAndOperatorNodeInputChildrenItem=AstAndOperatorNodeInputChildrenItem,
+    AstEqualsOperatorNodeInput=AstEqualsOperatorNodeInput,
+    AstEqualsOperatorNodeInputLeft=AstEqualsOperatorNodeInputLeft,
+    AstEqualsOperatorNodeInputRight=AstEqualsOperatorNodeInputRight,
+    AstGreaterThanOperatorNodeInput=AstGreaterThanOperatorNodeInput,
+    AstGreaterThanOperatorNodeInputLeft=AstGreaterThanOperatorNodeInputLeft,
+    AstGreaterThanOperatorNodeInputRight=AstGreaterThanOperatorNodeInputRight,
+    AstGreaterThanOrEqualsOperatorNodeInput=AstGreaterThanOrEqualsOperatorNodeInput,
+    AstGreaterThanOrEqualsOperatorNodeInputLeft=AstGreaterThanOrEqualsOperatorNodeInputLeft,
+    AstGreaterThanOrEqualsOperatorNodeInputRight=AstGreaterThanOrEqualsOperatorNodeInputRight,
+    AstLessThanOperatorNodeInput=AstLessThanOperatorNodeInput,
+    AstLessThanOperatorNodeInputLeft=AstLessThanOperatorNodeInputLeft,
+    AstLessThanOperatorNodeInputRight=AstLessThanOperatorNodeInputRight,
+    AstLessThanOrEqualsOperatorNodeInput=AstLessThanOrEqualsOperatorNodeInput,
+    AstLessThanOrEqualsOperatorNodeInputLeft=AstLessThanOrEqualsOperatorNodeInputLeft,
+    AstLessThanOrEqualsOperatorNodeInputRight=AstLessThanOrEqualsOperatorNodeInputRight,
+    AstNotEqualsOperatorNodeInput=AstNotEqualsOperatorNodeInput,
+    AstNotEqualsOperatorNodeInputLeft=AstNotEqualsOperatorNodeInputLeft,
+    AstNotEqualsOperatorNodeInputRight=AstNotEqualsOperatorNodeInputRight,
+    AstOrOperatorNodeInput=AstOrOperatorNodeInput,
+    AstOrOperatorNodeInputChildrenItem=AstOrOperatorNodeInputChildrenItem,
+)
+update_forward_refs(
+    AstOrOperatorNodeInputChildrenItem_EqOperator,
+    AstAndOperatorNodeInput=AstAndOperatorNodeInput,
+    AstAndOperatorNodeInputChildrenItem=AstAndOperatorNodeInputChildrenItem,
+    AstEqualsOperatorNodeInputLeft=AstEqualsOperatorNodeInputLeft,
+    AstEqualsOperatorNodeInputRight=AstEqualsOperatorNodeInputRight,
+    AstGreaterThanOperatorNodeInput=AstGreaterThanOperatorNodeInput,
+    AstGreaterThanOperatorNodeInputLeft=AstGreaterThanOperatorNodeInputLeft,
+    AstGreaterThanOperatorNodeInputRight=AstGreaterThanOperatorNodeInputRight,
+    AstGreaterThanOrEqualsOperatorNodeInput=AstGreaterThanOrEqualsOperatorNodeInput,
+    AstGreaterThanOrEqualsOperatorNodeInputLeft=AstGreaterThanOrEqualsOperatorNodeInputLeft,
+    AstGreaterThanOrEqualsOperatorNodeInputRight=AstGreaterThanOrEqualsOperatorNodeInputRight,
+    AstLessThanOperatorNodeInput=AstLessThanOperatorNodeInput,
+    AstLessThanOperatorNodeInputLeft=AstLessThanOperatorNodeInputLeft,
+    AstLessThanOperatorNodeInputRight=AstLessThanOperatorNodeInputRight,
+    AstLessThanOrEqualsOperatorNodeInput=AstLessThanOrEqualsOperatorNodeInput,
+    AstLessThanOrEqualsOperatorNodeInputLeft=AstLessThanOrEqualsOperatorNodeInputLeft,
+    AstLessThanOrEqualsOperatorNodeInputRight=AstLessThanOrEqualsOperatorNodeInputRight,
+    AstNotEqualsOperatorNodeInput=AstNotEqualsOperatorNodeInput,
+    AstNotEqualsOperatorNodeInputLeft=AstNotEqualsOperatorNodeInputLeft,
+    AstNotEqualsOperatorNodeInputRight=AstNotEqualsOperatorNodeInputRight,
+    AstOrOperatorNodeInput=AstOrOperatorNodeInput,
+    AstOrOperatorNodeInputChildrenItem=AstOrOperatorNodeInputChildrenItem,
+)
+update_forward_refs(
+    AstOrOperatorNodeInputChildrenItem_GtOperator,
+    AstAndOperatorNodeInput=AstAndOperatorNodeInput,
+    AstAndOperatorNodeInputChildrenItem=AstAndOperatorNodeInputChildrenItem,
+    AstEqualsOperatorNodeInput=AstEqualsOperatorNodeInput,
+    AstEqualsOperatorNodeInputLeft=AstEqualsOperatorNodeInputLeft,
+    AstEqualsOperatorNodeInputRight=AstEqualsOperatorNodeInputRight,
+    AstGreaterThanOperatorNodeInputLeft=AstGreaterThanOperatorNodeInputLeft,
+    AstGreaterThanOperatorNodeInputRight=AstGreaterThanOperatorNodeInputRight,
+    AstGreaterThanOrEqualsOperatorNodeInput=AstGreaterThanOrEqualsOperatorNodeInput,
+    AstGreaterThanOrEqualsOperatorNodeInputLeft=AstGreaterThanOrEqualsOperatorNodeInputLeft,
+    AstGreaterThanOrEqualsOperatorNodeInputRight=AstGreaterThanOrEqualsOperatorNodeInputRight,
+    AstLessThanOperatorNodeInput=AstLessThanOperatorNodeInput,
+    AstLessThanOperatorNodeInputLeft=AstLessThanOperatorNodeInputLeft,
+    AstLessThanOperatorNodeInputRight=AstLessThanOperatorNodeInputRight,
+    AstLessThanOrEqualsOperatorNodeInput=AstLessThanOrEqualsOperatorNodeInput,
+    AstLessThanOrEqualsOperatorNodeInputLeft=AstLessThanOrEqualsOperatorNodeInputLeft,
+    AstLessThanOrEqualsOperatorNodeInputRight=AstLessThanOrEqualsOperatorNodeInputRight,
+    AstNotEqualsOperatorNodeInput=AstNotEqualsOperatorNodeInput,
+    AstNotEqualsOperatorNodeInputLeft=AstNotEqualsOperatorNodeInputLeft,
+    AstNotEqualsOperatorNodeInputRight=AstNotEqualsOperatorNodeInputRight,
+    AstOrOperatorNodeInput=AstOrOperatorNodeInput,
+    AstOrOperatorNodeInputChildrenItem=AstOrOperatorNodeInputChildrenItem,
+)
+update_forward_refs(
+    AstOrOperatorNodeInputChildrenItem_GteOperator,
+    AstAndOperatorNodeInput=AstAndOperatorNodeInput,
+    AstAndOperatorNodeInputChildrenItem=AstAndOperatorNodeInputChildrenItem,
+    AstEqualsOperatorNodeInput=AstEqualsOperatorNodeInput,
+    AstEqualsOperatorNodeInputLeft=AstEqualsOperatorNodeInputLeft,
+    AstEqualsOperatorNodeInputRight=AstEqualsOperatorNodeInputRight,
+    AstGreaterThanOperatorNodeInput=AstGreaterThanOperatorNodeInput,
+    AstGreaterThanOperatorNodeInputLeft=AstGreaterThanOperatorNodeInputLeft,
+    AstGreaterThanOperatorNodeInputRight=AstGreaterThanOperatorNodeInputRight,
+    AstGreaterThanOrEqualsOperatorNodeInputLeft=AstGreaterThanOrEqualsOperatorNodeInputLeft,
+    AstGreaterThanOrEqualsOperatorNodeInputRight=AstGreaterThanOrEqualsOperatorNodeInputRight,
+    AstLessThanOperatorNodeInput=AstLessThanOperatorNodeInput,
+    AstLessThanOperatorNodeInputLeft=AstLessThanOperatorNodeInputLeft,
+    AstLessThanOperatorNodeInputRight=AstLessThanOperatorNodeInputRight,
+    AstLessThanOrEqualsOperatorNodeInput=AstLessThanOrEqualsOperatorNodeInput,
+    AstLessThanOrEqualsOperatorNodeInputLeft=AstLessThanOrEqualsOperatorNodeInputLeft,
+    AstLessThanOrEqualsOperatorNodeInputRight=AstLessThanOrEqualsOperatorNodeInputRight,
+    AstNotEqualsOperatorNodeInput=AstNotEqualsOperatorNodeInput,
+    AstNotEqualsOperatorNodeInputLeft=AstNotEqualsOperatorNodeInputLeft,
+    AstNotEqualsOperatorNodeInputRight=AstNotEqualsOperatorNodeInputRight,
+    AstOrOperatorNodeInput=AstOrOperatorNodeInput,
+    AstOrOperatorNodeInputChildrenItem=AstOrOperatorNodeInputChildrenItem,
+)
+update_forward_refs(
+    AstOrOperatorNodeInputChildrenItem_LtOperator,
+    AstAndOperatorNodeInput=AstAndOperatorNodeInput,
+    AstAndOperatorNodeInputChildrenItem=AstAndOperatorNodeInputChildrenItem,
+    AstEqualsOperatorNodeInput=AstEqualsOperatorNodeInput,
+    AstEqualsOperatorNodeInputLeft=AstEqualsOperatorNodeInputLeft,
+    AstEqualsOperatorNodeInputRight=AstEqualsOperatorNodeInputRight,
+    AstGreaterThanOperatorNodeInput=AstGreaterThanOperatorNodeInput,
+    AstGreaterThanOperatorNodeInputLeft=AstGreaterThanOperatorNodeInputLeft,
+    AstGreaterThanOperatorNodeInputRight=AstGreaterThanOperatorNodeInputRight,
+    AstGreaterThanOrEqualsOperatorNodeInput=AstGreaterThanOrEqualsOperatorNodeInput,
+    AstGreaterThanOrEqualsOperatorNodeInputLeft=AstGreaterThanOrEqualsOperatorNodeInputLeft,
+    AstGreaterThanOrEqualsOperatorNodeInputRight=AstGreaterThanOrEqualsOperatorNodeInputRight,
+    AstLessThanOperatorNodeInputLeft=AstLessThanOperatorNodeInputLeft,
+    AstLessThanOperatorNodeInputRight=AstLessThanOperatorNodeInputRight,
+    AstLessThanOrEqualsOperatorNodeInput=AstLessThanOrEqualsOperatorNodeInput,
+    AstLessThanOrEqualsOperatorNodeInputLeft=AstLessThanOrEqualsOperatorNodeInputLeft,
+    AstLessThanOrEqualsOperatorNodeInputRight=AstLessThanOrEqualsOperatorNodeInputRight,
+    AstNotEqualsOperatorNodeInput=AstNotEqualsOperatorNodeInput,
+    AstNotEqualsOperatorNodeInputLeft=AstNotEqualsOperatorNodeInputLeft,
+    AstNotEqualsOperatorNodeInputRight=AstNotEqualsOperatorNodeInputRight,
+    AstOrOperatorNodeInput=AstOrOperatorNodeInput,
+    AstOrOperatorNodeInputChildrenItem=AstOrOperatorNodeInputChildrenItem,
+)
+update_forward_refs(
+    AstOrOperatorNodeInputChildrenItem_LteOperator,
+    AstAndOperatorNodeInput=AstAndOperatorNodeInput,
+    AstAndOperatorNodeInputChildrenItem=AstAndOperatorNodeInputChildrenItem,
+    AstEqualsOperatorNodeInput=AstEqualsOperatorNodeInput,
+    AstEqualsOperatorNodeInputLeft=AstEqualsOperatorNodeInputLeft,
+    AstEqualsOperatorNodeInputRight=AstEqualsOperatorNodeInputRight,
+    AstGreaterThanOperatorNodeInput=AstGreaterThanOperatorNodeInput,
+    AstGreaterThanOperatorNodeInputLeft=AstGreaterThanOperatorNodeInputLeft,
+    AstGreaterThanOperatorNodeInputRight=AstGreaterThanOperatorNodeInputRight,
+    AstGreaterThanOrEqualsOperatorNodeInput=AstGreaterThanOrEqualsOperatorNodeInput,
+    AstGreaterThanOrEqualsOperatorNodeInputLeft=AstGreaterThanOrEqualsOperatorNodeInputLeft,
+    AstGreaterThanOrEqualsOperatorNodeInputRight=AstGreaterThanOrEqualsOperatorNodeInputRight,
+    AstLessThanOperatorNodeInput=AstLessThanOperatorNodeInput,
+    AstLessThanOperatorNodeInputLeft=AstLessThanOperatorNodeInputLeft,
+    AstLessThanOperatorNodeInputRight=AstLessThanOperatorNodeInputRight,
+    AstLessThanOrEqualsOperatorNodeInputLeft=AstLessThanOrEqualsOperatorNodeInputLeft,
+    AstLessThanOrEqualsOperatorNodeInputRight=AstLessThanOrEqualsOperatorNodeInputRight,
+    AstNotEqualsOperatorNodeInput=AstNotEqualsOperatorNodeInput,
+    AstNotEqualsOperatorNodeInputLeft=AstNotEqualsOperatorNodeInputLeft,
+    AstNotEqualsOperatorNodeInputRight=AstNotEqualsOperatorNodeInputRight,
+    AstOrOperatorNodeInput=AstOrOperatorNodeInput,
+    AstOrOperatorNodeInputChildrenItem=AstOrOperatorNodeInputChildrenItem,
+)
+update_forward_refs(
+    AstOrOperatorNodeInputChildrenItem_NeqOperator,
+    AstAndOperatorNodeInput=AstAndOperatorNodeInput,
+    AstAndOperatorNodeInputChildrenItem=AstAndOperatorNodeInputChildrenItem,
+    AstEqualsOperatorNodeInput=AstEqualsOperatorNodeInput,
+    AstEqualsOperatorNodeInputLeft=AstEqualsOperatorNodeInputLeft,
+    AstEqualsOperatorNodeInputRight=AstEqualsOperatorNodeInputRight,
+    AstGreaterThanOperatorNodeInput=AstGreaterThanOperatorNodeInput,
+    AstGreaterThanOperatorNodeInputLeft=AstGreaterThanOperatorNodeInputLeft,
+    AstGreaterThanOperatorNodeInputRight=AstGreaterThanOperatorNodeInputRight,
+    AstGreaterThanOrEqualsOperatorNodeInput=AstGreaterThanOrEqualsOperatorNodeInput,
+    AstGreaterThanOrEqualsOperatorNodeInputLeft=AstGreaterThanOrEqualsOperatorNodeInputLeft,
+    AstGreaterThanOrEqualsOperatorNodeInputRight=AstGreaterThanOrEqualsOperatorNodeInputRight,
+    AstLessThanOperatorNodeInput=AstLessThanOperatorNodeInput,
+    AstLessThanOperatorNodeInputLeft=AstLessThanOperatorNodeInputLeft,
+    AstLessThanOperatorNodeInputRight=AstLessThanOperatorNodeInputRight,
+    AstLessThanOrEqualsOperatorNodeInput=AstLessThanOrEqualsOperatorNodeInput,
+    AstLessThanOrEqualsOperatorNodeInputLeft=AstLessThanOrEqualsOperatorNodeInputLeft,
+    AstLessThanOrEqualsOperatorNodeInputRight=AstLessThanOrEqualsOperatorNodeInputRight,
+    AstNotEqualsOperatorNodeInputLeft=AstNotEqualsOperatorNodeInputLeft,
+    AstNotEqualsOperatorNodeInputRight=AstNotEqualsOperatorNodeInputRight,
+    AstOrOperatorNodeInput=AstOrOperatorNodeInput,
+    AstOrOperatorNodeInputChildrenItem=AstOrOperatorNodeInputChildrenItem,
+)
+update_forward_refs(
+    AstOrOperatorNodeInputChildrenItem_OrOperator,
+    AstAndOperatorNodeInput=AstAndOperatorNodeInput,
+    AstAndOperatorNodeInputChildrenItem=AstAndOperatorNodeInputChildrenItem,
+    AstEqualsOperatorNodeInput=AstEqualsOperatorNodeInput,
+    AstEqualsOperatorNodeInputLeft=AstEqualsOperatorNodeInputLeft,
+    AstEqualsOperatorNodeInputRight=AstEqualsOperatorNodeInputRight,
+    AstGreaterThanOperatorNodeInput=AstGreaterThanOperatorNodeInput,
+    AstGreaterThanOperatorNodeInputLeft=AstGreaterThanOperatorNodeInputLeft,
+    AstGreaterThanOperatorNodeInputRight=AstGreaterThanOperatorNodeInputRight,
+    AstGreaterThanOrEqualsOperatorNodeInput=AstGreaterThanOrEqualsOperatorNodeInput,
+    AstGreaterThanOrEqualsOperatorNodeInputLeft=AstGreaterThanOrEqualsOperatorNodeInputLeft,
+    AstGreaterThanOrEqualsOperatorNodeInputRight=AstGreaterThanOrEqualsOperatorNodeInputRight,
+    AstLessThanOperatorNodeInput=AstLessThanOperatorNodeInput,
+    AstLessThanOperatorNodeInputLeft=AstLessThanOperatorNodeInputLeft,
+    AstLessThanOperatorNodeInputRight=AstLessThanOperatorNodeInputRight,
+    AstLessThanOrEqualsOperatorNodeInput=AstLessThanOrEqualsOperatorNodeInput,
+    AstLessThanOrEqualsOperatorNodeInputLeft=AstLessThanOrEqualsOperatorNodeInputLeft,
+    AstLessThanOrEqualsOperatorNodeInputRight=AstLessThanOrEqualsOperatorNodeInputRight,
+    AstNotEqualsOperatorNodeInput=AstNotEqualsOperatorNodeInput,
+    AstNotEqualsOperatorNodeInputLeft=AstNotEqualsOperatorNodeInputLeft,
+    AstNotEqualsOperatorNodeInputRight=AstNotEqualsOperatorNodeInputRight,
+    AstOrOperatorNodeInputChildrenItem=AstOrOperatorNodeInputChildrenItem,
+)

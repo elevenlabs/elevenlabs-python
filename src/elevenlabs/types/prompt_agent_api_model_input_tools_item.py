@@ -163,8 +163,6 @@ class PromptAgentApiModelInputToolsItem_Webhook(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput  # noqa: E402, I001
-
 PromptAgentApiModelInputToolsItem = typing_extensions.Annotated[
     typing.Union[
         PromptAgentApiModelInputToolsItem_ApiIntegrationWebhook,
@@ -176,6 +174,17 @@ PromptAgentApiModelInputToolsItem = typing_extensions.Annotated[
     ],
     UnionMetadata(discriminant="type"),
 ]
+from .array_json_schema_property_input import ArrayJsonSchemaPropertyInput  # noqa: E402, I001
+from .array_json_schema_property_input_items import ArrayJsonSchemaPropertyInputItems  # noqa: E402, I001
+from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput  # noqa: E402, I001
+from .object_json_schema_property_input_properties_value import ObjectJsonSchemaPropertyInputPropertiesValue  # noqa: E402, I001
+
 update_forward_refs(PromptAgentApiModelInputToolsItem_ApiIntegrationWebhook)
-update_forward_refs(PromptAgentApiModelInputToolsItem_Client)
+update_forward_refs(
+    PromptAgentApiModelInputToolsItem_Client,
+    ArrayJsonSchemaPropertyInput=ArrayJsonSchemaPropertyInput,
+    ArrayJsonSchemaPropertyInputItems=ArrayJsonSchemaPropertyInputItems,
+    ObjectJsonSchemaPropertyInput=ObjectJsonSchemaPropertyInput,
+    ObjectJsonSchemaPropertyInputPropertiesValue=ObjectJsonSchemaPropertyInputPropertiesValue,
+)
 update_forward_refs(PromptAgentApiModelInputToolsItem_Webhook)

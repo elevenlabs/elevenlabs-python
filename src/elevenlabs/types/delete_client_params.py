@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .delete_client_params_smb_tool_type import DeleteClientParamsSmbToolType
 
 
 class DeleteClientParams(UncheckedBaseModel):
@@ -12,7 +13,7 @@ class DeleteClientParams(UncheckedBaseModel):
     Delete an existing client from the system.
     """
 
-    smb_tool_type: typing.Optional[typing.Literal["delete_client"]] = None
+    smb_tool_type: typing.Optional[DeleteClientParamsSmbToolType] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -5,11 +5,12 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .whats_app_template_text_param_type import WhatsAppTemplateTextParamType
 
 
 class WhatsAppTemplateTextParam(UncheckedBaseModel):
     parameter_name: typing.Optional[str] = None
-    type: typing.Optional[typing.Literal["text"]] = None
+    type: typing.Optional[WhatsAppTemplateTextParamType] = None
     text: str
 
     if IS_PYDANTIC_V2:

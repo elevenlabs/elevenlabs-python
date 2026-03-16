@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .play_dtmf_result_error_model_status import PlayDtmfResultErrorModelStatus
 
 
 class PlayDtmfResultErrorModel(UncheckedBaseModel):
-    status: typing.Optional[typing.Literal["error"]] = None
+    status: typing.Optional[PlayDtmfResultErrorModelStatus] = None
     error: str
     details: typing.Optional[str] = None
 

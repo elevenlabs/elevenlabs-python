@@ -35,13 +35,14 @@ class WebsocketTtsClientMessageMulti(UncheckedBaseModel):
     Generation config. Can only be provided in the first message for a given context_id (or first message overall if context_id is not used/default).
     """
 
-    xi_api_key: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="xi-api-key")] = pydantic.Field(
-        default=None
-    )
-    """
-    Your ElevenLabs API key. Can only be provided in the first message for a given context_id if not present in the header.
-    """
-
+    xi_api_key: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="xi-api-key"),
+        pydantic.Field(
+            alias="xi-api-key",
+            description="Your ElevenLabs API key. Can only be provided in the first message for a given context_id if not present in the header.",
+        ),
+    ] = None
     authorization: typing.Optional[str] = pydantic.Field(default=None)
     """
     Your authorization bearer token. Can only be provided in the first message for a given context_id if not present in the header.
@@ -59,13 +60,14 @@ class WebsocketTtsClientMessageMulti(UncheckedBaseModel):
     Optional list of pronunciation dictionary locators. Can only be provided in the first message for a given context_id.
     """
 
-    context_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="contextId")] = pydantic.Field(
-        default=None
-    )
-    """
-    An identifier for the text-to-speech context. Allows managing multiple independent audio generation streams over a single WebSocket connection. If omitted, a default context is used.
-    """
-
+    context_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="contextId"),
+        pydantic.Field(
+            alias="contextId",
+            description="An identifier for the text-to-speech context. Allows managing multiple independent audio generation streams over a single WebSocket connection. If omitted, a default context is used.",
+        ),
+    ] = None
     close_context: typing.Optional[bool] = pydantic.Field(default=None)
     """
     If true, closes the specified `contextId`. No further audio will be generated for this context. The `text` field is ignored.

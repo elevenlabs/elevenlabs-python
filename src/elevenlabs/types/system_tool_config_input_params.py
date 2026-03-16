@@ -106,6 +106,7 @@ class SystemToolConfigInputParams_MemoryEntryUpdate(UncheckedBaseModel):
 class SystemToolConfigInputParams_PlayKeypadTouchTone(UncheckedBaseModel):
     system_tool_type: typing.Literal["play_keypad_touch_tone"] = "play_keypad_touch_tone"
     use_out_of_band_dtmf: typing.Optional[bool] = None
+    suppress_turn_after_dtmf: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -7,6 +7,7 @@ from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
 from ...core.jsonable_encoder import jsonable_encoder
+from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
@@ -18,6 +19,7 @@ from ...types.get_conversations_page_response_model import GetConversationsPageR
 from ...types.http_validation_error import HttpValidationError
 from ...types.token_response_model import TokenResponseModel
 from .types.conversations_list_request_summary_mode import ConversationsListRequestSummaryMode
+from pydantic import ValidationError
 
 
 class RawConversationsClient:
@@ -30,7 +32,6 @@ class RawConversationsClient:
         agent_id: str,
         include_conversation_id: typing.Optional[bool] = None,
         branch_id: typing.Optional[str] = None,
-        environment: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ConversationSignedUrlResponseModel]:
         """
@@ -47,9 +48,6 @@ class RawConversationsClient:
         branch_id : typing.Optional[str]
             The ID of the branch to use
 
-        environment : typing.Optional[str]
-            The environment to use. Defaults to "production" on the server.
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -65,7 +63,6 @@ class RawConversationsClient:
                 "agent_id": agent_id,
                 "include_conversation_id": include_conversation_id,
                 "branch_id": branch_id,
-                "environment": environment,
             },
             request_options=request_options,
         )
@@ -93,6 +90,10 @@ class RawConversationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_webrtc_token(
@@ -101,7 +102,6 @@ class RawConversationsClient:
         agent_id: str,
         participant_name: typing.Optional[str] = None,
         branch_id: typing.Optional[str] = None,
-        environment: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[TokenResponseModel]:
         """
@@ -118,9 +118,6 @@ class RawConversationsClient:
         branch_id : typing.Optional[str]
             The ID of the branch to use
 
-        environment : typing.Optional[str]
-            The environment to use. Defaults to "production" on the server.
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -136,7 +133,6 @@ class RawConversationsClient:
                 "agent_id": agent_id,
                 "participant_name": participant_name,
                 "branch_id": branch_id,
-                "environment": environment,
             },
             request_options=request_options,
         )
@@ -164,6 +160,10 @@ class RawConversationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def list(
@@ -183,6 +183,8 @@ class RawConversationsClient:
         evaluation_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         data_collection_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tool_names_successful: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tool_names_errored: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         main_languages: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         page_size: typing.Optional[int] = None,
         summary_mode: typing.Optional[ConversationsListRequestSummaryMode] = None,
@@ -238,6 +240,12 @@ class RawConversationsClient:
         tool_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by tool names used during the call.
 
+        tool_names_successful : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by tool names that had successful calls.
+
+        tool_names_errored : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by tool names that had errored calls.
+
         main_languages : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by detected main language (language code).
 
@@ -281,6 +289,8 @@ class RawConversationsClient:
                 "evaluation_params": evaluation_params,
                 "data_collection_params": data_collection_params,
                 "tool_names": tool_names,
+                "tool_names_successful": tool_names_successful,
+                "tool_names_errored": tool_names_errored,
                 "main_languages": main_languages,
                 "page_size": page_size,
                 "summary_mode": summary_mode,
@@ -314,6 +324,10 @@ class RawConversationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
@@ -364,6 +378,10 @@ class RawConversationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
@@ -416,6 +434,10 @@ class RawConversationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -429,7 +451,6 @@ class AsyncRawConversationsClient:
         agent_id: str,
         include_conversation_id: typing.Optional[bool] = None,
         branch_id: typing.Optional[str] = None,
-        environment: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ConversationSignedUrlResponseModel]:
         """
@@ -446,9 +467,6 @@ class AsyncRawConversationsClient:
         branch_id : typing.Optional[str]
             The ID of the branch to use
 
-        environment : typing.Optional[str]
-            The environment to use. Defaults to "production" on the server.
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -464,7 +482,6 @@ class AsyncRawConversationsClient:
                 "agent_id": agent_id,
                 "include_conversation_id": include_conversation_id,
                 "branch_id": branch_id,
-                "environment": environment,
             },
             request_options=request_options,
         )
@@ -492,6 +509,10 @@ class AsyncRawConversationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_webrtc_token(
@@ -500,7 +521,6 @@ class AsyncRawConversationsClient:
         agent_id: str,
         participant_name: typing.Optional[str] = None,
         branch_id: typing.Optional[str] = None,
-        environment: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[TokenResponseModel]:
         """
@@ -517,9 +537,6 @@ class AsyncRawConversationsClient:
         branch_id : typing.Optional[str]
             The ID of the branch to use
 
-        environment : typing.Optional[str]
-            The environment to use. Defaults to "production" on the server.
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -535,7 +552,6 @@ class AsyncRawConversationsClient:
                 "agent_id": agent_id,
                 "participant_name": participant_name,
                 "branch_id": branch_id,
-                "environment": environment,
             },
             request_options=request_options,
         )
@@ -563,6 +579,10 @@ class AsyncRawConversationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def list(
@@ -582,6 +602,8 @@ class AsyncRawConversationsClient:
         evaluation_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         data_collection_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tool_names_successful: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tool_names_errored: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         main_languages: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         page_size: typing.Optional[int] = None,
         summary_mode: typing.Optional[ConversationsListRequestSummaryMode] = None,
@@ -637,6 +659,12 @@ class AsyncRawConversationsClient:
         tool_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by tool names used during the call.
 
+        tool_names_successful : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by tool names that had successful calls.
+
+        tool_names_errored : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by tool names that had errored calls.
+
         main_languages : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by detected main language (language code).
 
@@ -680,6 +708,8 @@ class AsyncRawConversationsClient:
                 "evaluation_params": evaluation_params,
                 "data_collection_params": data_collection_params,
                 "tool_names": tool_names,
+                "tool_names_successful": tool_names_successful,
+                "tool_names_errored": tool_names_errored,
                 "main_languages": main_languages,
                 "page_size": page_size,
                 "summary_mode": summary_mode,
@@ -713,6 +743,10 @@ class AsyncRawConversationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -763,6 +797,10 @@ class AsyncRawConversationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -815,4 +853,8 @@ class AsyncRawConversationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

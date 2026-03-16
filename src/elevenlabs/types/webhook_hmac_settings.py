@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .webhook_hmac_settings_auth_type import WebhookHmacSettingsAuthType
 
 
 class WebhookHmacSettings(UncheckedBaseModel):
@@ -12,7 +13,7 @@ class WebhookHmacSettings(UncheckedBaseModel):
     Settings for creating an HMAC-authenticated webhook
     """
 
-    auth_type: typing.Literal["hmac"] = pydantic.Field(default="hmac")
+    auth_type: WebhookHmacSettingsAuthType = pydantic.Field()
     """
     The authentication type for this webhook
     """

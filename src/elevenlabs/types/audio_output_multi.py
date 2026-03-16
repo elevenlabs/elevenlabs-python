@@ -22,15 +22,16 @@ class AudioOutputMulti(UncheckedBaseModel):
     """
 
     normalized_alignment: typing_extensions.Annotated[
-        typing.Optional[NormalizedAlignment], FieldMetadata(alias="normalizedAlignment")
+        typing.Optional[NormalizedAlignment],
+        FieldMetadata(alias="normalizedAlignment"),
+        pydantic.Field(alias="normalizedAlignment"),
     ] = None
     alignment: typing.Optional[Alignment] = None
-    context_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="contextId")] = pydantic.Field(
-        default=None
-    )
-    """
-    The contextId for which this audio is.
-    """
+    context_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="contextId"),
+        pydantic.Field(alias="contextId", description="The contextId for which this audio is."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

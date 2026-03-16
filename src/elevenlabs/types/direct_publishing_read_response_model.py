@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .contributor import Contributor
+from .direct_publishing_read_response_model_currency import DirectPublishingReadResponseModelCurrency
 from .direct_publishing_read_response_model_display_mode import DirectPublishingReadResponseModelDisplayMode
 from .direct_publishing_read_response_model_genre_item import DirectPublishingReadResponseModelGenreItem
 from .direct_publishing_read_response_model_payout_type import DirectPublishingReadResponseModelPayoutType
@@ -55,7 +56,7 @@ class DirectPublishingReadResponseModel(UncheckedBaseModel):
     contributors: typing.Optional[typing.List[Contributor]] = None
     payout_type: typing.Optional[DirectPublishingReadResponseModelPayoutType] = None
     list_price: typing.Optional[float] = None
-    currency: typing.Optional[typing.Literal["usd"]] = None
+    currency: typing.Optional[DirectPublishingReadResponseModelCurrency] = None
     original_audio_project_export_id: typing.Optional[str] = None
     original_audio_document_id: typing.Optional[str] = None
     series_id: typing.Optional[str] = None

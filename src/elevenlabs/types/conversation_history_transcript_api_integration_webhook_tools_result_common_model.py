@@ -5,6 +5,9 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .conversation_history_transcript_api_integration_webhook_tools_result_common_model_type import (
+    ConversationHistoryTranscriptApiIntegrationWebhookToolsResultCommonModelType,
+)
 from .dynamic_variable_update_common_model import DynamicVariableUpdateCommonModel
 
 
@@ -18,7 +21,7 @@ class ConversationHistoryTranscriptApiIntegrationWebhookToolsResultCommonModel(U
     error_type: typing.Optional[str] = None
     raw_error_message: typing.Optional[str] = None
     dynamic_variable_updates: typing.Optional[typing.List[DynamicVariableUpdateCommonModel]] = None
-    type: typing.Literal["api_integration_webhook"] = "api_integration_webhook"
+    type: ConversationHistoryTranscriptApiIntegrationWebhookToolsResultCommonModelType
     integration_id: str
     credential_id: str
     integration_connection_id: str

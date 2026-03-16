@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .update_staff_params_smb_tool_type import UpdateStaffParamsSmbToolType
 
 
 class UpdateStaffParams(UncheckedBaseModel):
@@ -12,7 +13,7 @@ class UpdateStaffParams(UncheckedBaseModel):
     Update an existing staff member's information.
     """
 
-    smb_tool_type: typing.Optional[typing.Literal["update_staff"]] = None
+    smb_tool_type: typing.Optional[UpdateStaffParamsSmbToolType] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

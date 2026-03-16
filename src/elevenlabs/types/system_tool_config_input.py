@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .dynamic_variable_assignment import DynamicVariableAssignment
 from .system_tool_config_input_params import SystemToolConfigInputParams
+from .system_tool_config_input_type import SystemToolConfigInputType
 from .tool_call_sound_behavior import ToolCallSoundBehavior
 from .tool_call_sound_type import ToolCallSoundType
 from .tool_error_handling_mode import ToolErrorHandlingMode
@@ -17,7 +18,7 @@ class SystemToolConfigInput(UncheckedBaseModel):
     A system tool is a tool that is used to call a system method in the server
     """
 
-    type: typing.Optional[typing.Literal["system"]] = pydantic.Field(default=None)
+    type: typing.Optional[SystemToolConfigInputType] = pydantic.Field(default=None)
     """
     The type of tool
     """

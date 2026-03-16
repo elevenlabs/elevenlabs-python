@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .post_workspace_secret_response_model_type import PostWorkspaceSecretResponseModelType
 
 
 class PostWorkspaceSecretResponseModel(UncheckedBaseModel):
-    type: typing.Literal["stored"] = "stored"
+    type: PostWorkspaceSecretResponseModelType
     secret_id: str
     name: str
 

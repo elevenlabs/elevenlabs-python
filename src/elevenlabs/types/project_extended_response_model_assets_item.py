@@ -13,6 +13,7 @@ from .clip_animation import ClipAnimation
 from .generation_source_context import GenerationSourceContext
 from .pending_clip_task import PendingClipTask
 from .project_external_audio_response_model_source_context import ProjectExternalAudioResponseModelSourceContext
+from .project_image_response_model_source import ProjectImageResponseModelSource
 from .project_video_thumbnail_sheet_response_model import ProjectVideoThumbnailSheetResponseModel
 from .video_analysis import VideoAnalysis
 
@@ -74,7 +75,7 @@ class ProjectExtendedResponseModelAssetsItem_Audio(UncheckedBaseModel):
     type: typing.Literal["audio"] = "audio"
     external_audio_id: str
     filename: str
-    signed_url: str
+    signed_url: typing.Optional[str] = None
     offset_ms: int
     duration_ms: int
     start_time_ms: int
@@ -93,6 +94,7 @@ class ProjectExtendedResponseModelAssetsItem_Audio(UncheckedBaseModel):
     pending_external_audio_ids: typing.List[str]
     speech_imported: typing.Optional[bool] = None
     pending_task: typing.Optional[PendingClipTask] = None
+    error: typing.Optional[str] = None
     current_snapshot_id: typing.Optional[str] = None
     source_context: typing.Optional[ProjectExternalAudioResponseModelSourceContext] = None
     import_speech_progress: typing.Optional[float] = None
@@ -113,7 +115,7 @@ class ProjectExtendedResponseModelAssetsItem_Image(UncheckedBaseModel):
     filename: str
     signed_url: str
     thumbnail_signed_url: str
-    source: typing.Optional[typing.Literal["upload"]] = None
+    source: typing.Optional[ProjectImageResponseModelSource] = None
     file_size_bytes: int
     width: int
     height: int

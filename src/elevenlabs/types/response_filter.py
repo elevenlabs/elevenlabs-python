@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .response_filter_content_type import ResponseFilterContentType
 from .response_filter_mode import ResponseFilterMode
 
 
@@ -23,7 +24,7 @@ class ResponseFilter(UncheckedBaseModel):
     Dot notation paths to include when mode is 'allow' (e.g., ['ticket.id', 'ticket.status']).
     """
 
-    content_type: typing.Optional[typing.Literal["application/json"]] = pydantic.Field(default=None)
+    content_type: typing.Optional[ResponseFilterContentType] = pydantic.Field(default=None)
     """
     Content type for response filtering. Only 'application/json' responses are filtered.
     """

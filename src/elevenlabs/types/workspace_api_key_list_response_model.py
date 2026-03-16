@@ -11,7 +11,9 @@ from .workspace_api_key_response_model import WorkspaceApiKeyResponseModel
 
 
 class WorkspaceApiKeyListResponseModel(UncheckedBaseModel):
-    api_keys: typing_extensions.Annotated[typing.List[WorkspaceApiKeyResponseModel], FieldMetadata(alias="api-keys")]
+    api_keys: typing_extensions.Annotated[
+        typing.List[WorkspaceApiKeyResponseModel], FieldMetadata(alias="api-keys"), pydantic.Field(alias="api-keys")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

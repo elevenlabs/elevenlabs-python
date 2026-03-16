@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .end_call_tool_result_model_status import EndCallToolResultModelStatus
 
 
 class EndCallToolResultModel(UncheckedBaseModel):
-    status: typing.Optional[typing.Literal["success"]] = None
+    status: typing.Optional[EndCallToolResultModelStatus] = None
     reason: typing.Optional[str] = None
     message: typing.Optional[str] = None
 
