@@ -9,11 +9,13 @@ if typing.TYPE_CHECKING:
     from .dubbing_create_request_mode import DubbingCreateRequestMode
     from .dubbing_list_request_dubbing_status import DubbingListRequestDubbingStatus
     from .dubbing_list_request_filter_by_creator import DubbingListRequestFilterByCreator
+    from .dubbing_list_request_order_by import DubbingListRequestOrderBy
     from .dubbing_list_request_order_direction import DubbingListRequestOrderDirection
 _dynamic_imports: typing.Dict[str, str] = {
     "DubbingCreateRequestMode": ".dubbing_create_request_mode",
     "DubbingListRequestDubbingStatus": ".dubbing_list_request_dubbing_status",
     "DubbingListRequestFilterByCreator": ".dubbing_list_request_filter_by_creator",
+    "DubbingListRequestOrderBy": ".dubbing_list_request_order_by",
     "DubbingListRequestOrderDirection": ".dubbing_list_request_order_direction",
 }
 
@@ -43,5 +45,6 @@ __all__ = [
     "DubbingCreateRequestMode",
     "DubbingListRequestDubbingStatus",
     "DubbingListRequestFilterByCreator",
+    "DubbingListRequestOrderBy",
     "DubbingListRequestOrderDirection",
 ]

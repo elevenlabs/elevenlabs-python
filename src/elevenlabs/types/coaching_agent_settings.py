@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .coaching_agent_settings_type import CoachingAgentSettingsType
 
 
 class CoachingAgentSettings(UncheckedBaseModel):
@@ -12,7 +13,7 @@ class CoachingAgentSettings(UncheckedBaseModel):
     Runtime-only settings for the virtual coach. Not stored in the database.
     """
 
-    type: typing.Optional[typing.Literal["coaching"]] = None
+    type: typing.Optional[CoachingAgentSettingsType] = None
     coached_agent_id: str
     memory_base_id: typing.Optional[str] = None
 

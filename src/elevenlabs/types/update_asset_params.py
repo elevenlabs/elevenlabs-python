@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .update_asset_params_smb_tool_type import UpdateAssetParamsSmbToolType
 
 
 class UpdateAssetParams(UncheckedBaseModel):
-    smb_tool_type: typing.Optional[typing.Literal["update_asset"]] = None
+    smb_tool_type: typing.Optional[UpdateAssetParamsSmbToolType] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -91,6 +91,7 @@ class WebhooksClient:
         )
         client.webhooks.create(
             settings=WebhookHmacSettings(
+                auth_type="hmac",
                 name="name",
                 webhook_url="webhook_url",
             ),
@@ -274,6 +275,7 @@ class AsyncWebhooksClient:
         async def main() -> None:
             await client.webhooks.create(
                 settings=WebhookHmacSettings(
+                    auth_type="hmac",
                     name="name",
                     webhook_url="webhook_url",
                 ),

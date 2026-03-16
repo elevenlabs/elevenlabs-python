@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .canvas_placement import CanvasPlacement
 from .clip_animation import ClipAnimation
+from .project_image_response_model_source import ProjectImageResponseModelSource
 
 
 class ProjectImageResponseModel(UncheckedBaseModel):
@@ -14,7 +15,7 @@ class ProjectImageResponseModel(UncheckedBaseModel):
     filename: str
     signed_url: str
     thumbnail_signed_url: str
-    source: typing.Optional[typing.Literal["upload"]] = None
+    source: typing.Optional[ProjectImageResponseModelSource] = None
     file_size_bytes: int
     width: int
     height: int

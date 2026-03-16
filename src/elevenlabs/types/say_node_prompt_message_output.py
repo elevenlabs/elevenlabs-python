@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .say_node_prompt_message_output_type import SayNodePromptMessageOutputType
 
 
 class SayNodePromptMessageOutput(UncheckedBaseModel):
-    type: typing.Literal["prompt"] = "prompt"
+    type: SayNodePromptMessageOutputType
     prompt: str = pydantic.Field()
     """
     LLM prompt describing what message should be generated.

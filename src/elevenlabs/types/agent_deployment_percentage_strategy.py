@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .agent_deployment_percentage_strategy_type import AgentDeploymentPercentageStrategyType
 
 
 class AgentDeploymentPercentageStrategy(UncheckedBaseModel):
-    type: typing.Optional[typing.Literal["percentage"]] = None
+    type: typing.Optional[AgentDeploymentPercentageStrategyType] = None
     traffic_percentage: float = pydantic.Field()
     """
     Traffic percentage to deploy

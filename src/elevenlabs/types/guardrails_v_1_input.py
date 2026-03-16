@@ -8,16 +8,15 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .content_guardrail_input import ContentGuardrailInput
 from .custom_guardrail_input import CustomGuardrailInput
 from .focus_guardrail import FocusGuardrail
-from .moderation_guardrail_input import ModerationGuardrailInput
+from .guardrails_v_1_input_version import GuardrailsV1InputVersion
 from .prompt_injection_guardrail import PromptInjectionGuardrail
 
 
 class GuardrailsV1Input(UncheckedBaseModel):
-    version: typing.Optional[typing.Literal["1"]] = None
+    version: typing.Optional[GuardrailsV1InputVersion] = None
     focus: typing.Optional[FocusGuardrail] = None
     prompt_injection: typing.Optional[PromptInjectionGuardrail] = None
     content: typing.Optional[ContentGuardrailInput] = None
-    moderation: typing.Optional[ModerationGuardrailInput] = None
     custom: typing.Optional[CustomGuardrailInput] = None
 
     if IS_PYDANTIC_V2:

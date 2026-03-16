@@ -6,10 +6,11 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .conv_ai_stored_secret_dependencies import ConvAiStoredSecretDependencies
+from .conv_ai_workspace_stored_secret_config_type import ConvAiWorkspaceStoredSecretConfigType
 
 
 class ConvAiWorkspaceStoredSecretConfig(UncheckedBaseModel):
-    type: typing.Literal["stored"] = "stored"
+    type: ConvAiWorkspaceStoredSecretConfigType
     secret_id: str
     name: str
     used_by: ConvAiStoredSecretDependencies

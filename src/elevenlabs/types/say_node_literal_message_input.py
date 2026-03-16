@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .say_node_literal_message_input_type import SayNodeLiteralMessageInputType
 
 
 class SayNodeLiteralMessageInput(UncheckedBaseModel):
-    type: typing.Optional[typing.Literal["literal"]] = None
+    type: typing.Optional[SayNodeLiteralMessageInputType] = None
     text: str = pydantic.Field()
     """
     Literal text message to be spoken by the agent.

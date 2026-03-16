@@ -2,4 +2,6 @@
 
 import typing
 
-WorkspaceGroupResponseModelGroupUsageLimit = typing.Union[int, typing.Literal["unlimited"]]
+from .workspace_group_response_model_group_usage_limit_one import WorkspaceGroupResponseModelGroupUsageLimitOne
+
+WorkspaceGroupResponseModelGroupUsageLimit = typing.Union[int, WorkspaceGroupResponseModelGroupUsageLimitOne]

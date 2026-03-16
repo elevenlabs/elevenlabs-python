@@ -48,6 +48,7 @@ if typing.TYPE_CHECKING:
         PhoneNumbersUpdateResponse_SipTrunk,
         PhoneNumbersUpdateResponse_Twilio,
     )
+    from .secrets import PatchWorkspaceSecretRequestType, PostWorkspaceSecretRequestType
     from .tests import (
         TestsCreateRequestBody,
         TestsCreateRequestBody_Llm,
@@ -85,6 +86,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "KnowledgeBaseGetOrCreateRagIndexesResponseValue_Failure": ".knowledge_base",
     "KnowledgeBaseGetOrCreateRagIndexesResponseValue_Success": ".knowledge_base",
     "McpServerConfigUpdateRequestModelRequestHeadersValue": ".mcp_servers",
+    "PatchWorkspaceSecretRequestType": ".secrets",
     "PhoneNumbersCreateRequestBody": ".phone_numbers",
     "PhoneNumbersCreateRequestBody_SipTrunk": ".phone_numbers",
     "PhoneNumbersCreateRequestBody_Twilio": ".phone_numbers",
@@ -97,6 +99,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PhoneNumbersUpdateResponse": ".phone_numbers",
     "PhoneNumbersUpdateResponse_SipTrunk": ".phone_numbers",
     "PhoneNumbersUpdateResponse_Twilio": ".phone_numbers",
+    "PostWorkspaceSecretRequestType": ".secrets",
     "TestsCreateRequestBody": ".tests",
     "TestsCreateRequestBody_Llm": ".tests",
     "TestsCreateRequestBody_Simulation": ".tests",
@@ -168,6 +171,7 @@ __all__ = [
     "KnowledgeBaseGetOrCreateRagIndexesResponseValue_Failure",
     "KnowledgeBaseGetOrCreateRagIndexesResponseValue_Success",
     "McpServerConfigUpdateRequestModelRequestHeadersValue",
+    "PatchWorkspaceSecretRequestType",
     "PhoneNumbersCreateRequestBody",
     "PhoneNumbersCreateRequestBody_SipTrunk",
     "PhoneNumbersCreateRequestBody_Twilio",
@@ -180,6 +184,7 @@ __all__ = [
     "PhoneNumbersUpdateResponse",
     "PhoneNumbersUpdateResponse_SipTrunk",
     "PhoneNumbersUpdateResponse_Twilio",
+    "PostWorkspaceSecretRequestType",
     "TestsCreateRequestBody",
     "TestsCreateRequestBody_Llm",
     "TestsCreateRequestBody_Simulation",

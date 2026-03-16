@@ -62,6 +62,7 @@ class SettingsClient:
         webhooks: typing.Optional[ConvAiWebhooks] = OMIT,
         can_use_mcp_servers: typing.Optional[bool] = OMIT,
         rag_retention_period_days: typing.Optional[int] = OMIT,
+        conversation_embedding_retention_days: typing.Optional[int] = OMIT,
         default_livekit_stack: typing.Optional[LivekitStackType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConvAiSettingsResponseModel:
@@ -78,6 +79,9 @@ class SettingsClient:
             Whether the workspace can use MCP servers
 
         rag_retention_period_days : typing.Optional[int]
+
+        conversation_embedding_retention_days : typing.Optional[int]
+            Days to retain conversation embeddings. None means use the system default (30 days).
 
         default_livekit_stack : typing.Optional[LivekitStackType]
 
@@ -103,6 +107,7 @@ class SettingsClient:
             webhooks=webhooks,
             can_use_mcp_servers=can_use_mcp_servers,
             rag_retention_period_days=rag_retention_period_days,
+            conversation_embedding_retention_days=conversation_embedding_retention_days,
             default_livekit_stack=default_livekit_stack,
             request_options=request_options,
         )
@@ -165,6 +170,7 @@ class AsyncSettingsClient:
         webhooks: typing.Optional[ConvAiWebhooks] = OMIT,
         can_use_mcp_servers: typing.Optional[bool] = OMIT,
         rag_retention_period_days: typing.Optional[int] = OMIT,
+        conversation_embedding_retention_days: typing.Optional[int] = OMIT,
         default_livekit_stack: typing.Optional[LivekitStackType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConvAiSettingsResponseModel:
@@ -181,6 +187,9 @@ class AsyncSettingsClient:
             Whether the workspace can use MCP servers
 
         rag_retention_period_days : typing.Optional[int]
+
+        conversation_embedding_retention_days : typing.Optional[int]
+            Days to retain conversation embeddings. None means use the system default (30 days).
 
         default_livekit_stack : typing.Optional[LivekitStackType]
 
@@ -214,6 +223,7 @@ class AsyncSettingsClient:
             webhooks=webhooks,
             can_use_mcp_servers=can_use_mcp_servers,
             rag_retention_period_days=rag_retention_period_days,
+            conversation_embedding_retention_days=conversation_embedding_retention_days,
             default_livekit_stack=default_livekit_stack,
             request_options=request_options,
         )

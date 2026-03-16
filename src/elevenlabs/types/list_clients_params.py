@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .list_clients_params_smb_tool_type import ListClientsParamsSmbToolType
 
 
 class ListClientsParams(UncheckedBaseModel):
@@ -12,7 +13,7 @@ class ListClientsParams(UncheckedBaseModel):
     List clients ordered by most recently updated, with an optional limit.
     """
 
-    smb_tool_type: typing.Optional[typing.Literal["list_clients"]] = None
+    smb_tool_type: typing.Optional[ListClientsParamsSmbToolType] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

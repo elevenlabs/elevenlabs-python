@@ -5,10 +5,13 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .unit_test_workflow_node_transition_evaluation_node_id_type import (
+    UnitTestWorkflowNodeTransitionEvaluationNodeIdType,
+)
 
 
 class UnitTestWorkflowNodeTransitionEvaluationNodeId(UncheckedBaseModel):
-    type: typing.Optional[typing.Literal["node_id"]] = None
+    type: typing.Optional[UnitTestWorkflowNodeTransitionEvaluationNodeIdType] = None
     agent_id: str = pydantic.Field()
     """
     The ID of the agent whose workflow contains the target node.

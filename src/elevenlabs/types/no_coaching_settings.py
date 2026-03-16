@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .no_coaching_settings_type import NoCoachingSettingsType
 
 
 class NoCoachingSettings(UncheckedBaseModel):
-    type: typing.Optional[typing.Literal["none"]] = None
+    type: typing.Optional[NoCoachingSettingsType] = None
     memory_base_id: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

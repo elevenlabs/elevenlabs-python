@@ -47,5 +47,10 @@ class ApiIntegrationWebhookOverridesInput(UncheckedBaseModel):
 
 
 from .object_override_input import ObjectOverrideInput  # noqa: E402, I001
+from .object_override_input_properties_value import ObjectOverrideInputPropertiesValue  # noqa: E402, I001
 
-update_forward_refs(ApiIntegrationWebhookOverridesInput)
+update_forward_refs(
+    ApiIntegrationWebhookOverridesInput,
+    ObjectOverrideInput=ObjectOverrideInput,
+    ObjectOverrideInputPropertiesValue=ObjectOverrideInputPropertiesValue,
+)

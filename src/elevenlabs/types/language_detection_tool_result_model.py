@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .language_detection_tool_result_model_status import LanguageDetectionToolResultModelStatus
 
 
 class LanguageDetectionToolResultModel(UncheckedBaseModel):
-    status: typing.Optional[typing.Literal["success"]] = None
+    status: typing.Optional[LanguageDetectionToolResultModelStatus] = None
     reason: typing.Optional[str] = None
     language: typing.Optional[str] = None
 

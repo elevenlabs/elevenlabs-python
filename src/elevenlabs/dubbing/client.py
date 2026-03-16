@@ -15,6 +15,7 @@ from .raw_client import AsyncRawDubbingClient, RawDubbingClient
 from .types.dubbing_create_request_mode import DubbingCreateRequestMode
 from .types.dubbing_list_request_dubbing_status import DubbingListRequestDubbingStatus
 from .types.dubbing_list_request_filter_by_creator import DubbingListRequestFilterByCreator
+from .types.dubbing_list_request_order_by import DubbingListRequestOrderBy
 from .types.dubbing_list_request_order_direction import DubbingListRequestOrderDirection
 
 if typing.TYPE_CHECKING:
@@ -53,7 +54,7 @@ class DubbingClient:
         page_size: typing.Optional[int] = None,
         dubbing_status: typing.Optional[DubbingListRequestDubbingStatus] = None,
         filter_by_creator: typing.Optional[DubbingListRequestFilterByCreator] = None,
-        order_by: typing.Optional[typing.Literal["created_at"]] = None,
+        order_by: typing.Optional[DubbingListRequestOrderBy] = None,
         order_direction: typing.Optional[DubbingListRequestOrderDirection] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingMetadataPageResponseModel:
@@ -74,7 +75,7 @@ class DubbingClient:
         filter_by_creator : typing.Optional[DubbingListRequestFilterByCreator]
             Filters who created the resources being listed, whether it was the user running the request or someone else that shared the resource with them.
 
-        order_by : typing.Optional[typing.Literal["created_at"]]
+        order_by : typing.Optional[DubbingListRequestOrderBy]
             The field to use for ordering results from this query.
 
         order_direction : typing.Optional[DubbingListRequestOrderDirection]
@@ -100,6 +101,7 @@ class DubbingClient:
             page_size=1,
             dubbing_status="dubbing",
             filter_by_creator="personal",
+            order_by="created_at",
             order_direction="DESCENDING",
         )
         """
@@ -372,7 +374,7 @@ class AsyncDubbingClient:
         page_size: typing.Optional[int] = None,
         dubbing_status: typing.Optional[DubbingListRequestDubbingStatus] = None,
         filter_by_creator: typing.Optional[DubbingListRequestFilterByCreator] = None,
-        order_by: typing.Optional[typing.Literal["created_at"]] = None,
+        order_by: typing.Optional[DubbingListRequestOrderBy] = None,
         order_direction: typing.Optional[DubbingListRequestOrderDirection] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingMetadataPageResponseModel:
@@ -393,7 +395,7 @@ class AsyncDubbingClient:
         filter_by_creator : typing.Optional[DubbingListRequestFilterByCreator]
             Filters who created the resources being listed, whether it was the user running the request or someone else that shared the resource with them.
 
-        order_by : typing.Optional[typing.Literal["created_at"]]
+        order_by : typing.Optional[DubbingListRequestOrderBy]
             The field to use for ordering results from this query.
 
         order_direction : typing.Optional[DubbingListRequestOrderDirection]
@@ -424,6 +426,7 @@ class AsyncDubbingClient:
                 page_size=1,
                 dubbing_status="dubbing",
                 filter_by_creator="personal",
+                order_by="created_at",
                 order_direction="DESCENDING",
             )
 

@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .prompt_evaluation_criteria_type import PromptEvaluationCriteriaType
 
 
 class PromptEvaluationCriteria(UncheckedBaseModel):
@@ -18,7 +19,7 @@ class PromptEvaluationCriteria(UncheckedBaseModel):
     """
 
     name: str
-    type: typing.Optional[typing.Literal["prompt"]] = pydantic.Field(default=None)
+    type: typing.Optional[PromptEvaluationCriteriaType] = pydantic.Field(default=None)
     """
     The type of evaluation criteria
     """

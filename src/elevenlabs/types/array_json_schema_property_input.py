@@ -7,10 +7,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .array_json_schema_property_input_type import ArrayJsonSchemaPropertyInputType
 
 
 class ArrayJsonSchemaPropertyInput(UncheckedBaseModel):
-    type: typing.Optional[typing.Literal["array"]] = None
+    type: typing.Optional[ArrayJsonSchemaPropertyInputType] = None
     description: typing.Optional[str] = None
     items: "ArrayJsonSchemaPropertyInputItems"
 
@@ -24,7 +25,13 @@ class ArrayJsonSchemaPropertyInput(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput  # noqa: E402, I001
 from .array_json_schema_property_input_items import ArrayJsonSchemaPropertyInputItems  # noqa: E402, I001
+from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput  # noqa: E402, I001
+from .object_json_schema_property_input_properties_value import ObjectJsonSchemaPropertyInputPropertiesValue  # noqa: E402, I001
 
-update_forward_refs(ArrayJsonSchemaPropertyInput, ObjectJsonSchemaPropertyInput=ObjectJsonSchemaPropertyInput)
+update_forward_refs(
+    ArrayJsonSchemaPropertyInput,
+    ArrayJsonSchemaPropertyInputItems=ArrayJsonSchemaPropertyInputItems,
+    ObjectJsonSchemaPropertyInput=ObjectJsonSchemaPropertyInput,
+    ObjectJsonSchemaPropertyInputPropertiesValue=ObjectJsonSchemaPropertyInputPropertiesValue,
+)

@@ -5,17 +5,17 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .threshold_guardrail import ThresholdGuardrail
+from .content_threshold_guardrail import ContentThresholdGuardrail
 
 
 class ContentConfig(UncheckedBaseModel):
-    sexual: typing.Optional[ThresholdGuardrail] = None
-    violence: typing.Optional[ThresholdGuardrail] = None
-    harassment: typing.Optional[ThresholdGuardrail] = None
-    self_harm: typing.Optional[ThresholdGuardrail] = None
-    profanity: typing.Optional[ThresholdGuardrail] = None
-    religion_or_politics: typing.Optional[ThresholdGuardrail] = None
-    medical_and_legal_information: typing.Optional[ThresholdGuardrail] = None
+    sexual: typing.Optional[ContentThresholdGuardrail] = None
+    violence: typing.Optional[ContentThresholdGuardrail] = None
+    harassment: typing.Optional[ContentThresholdGuardrail] = None
+    self_harm: typing.Optional[ContentThresholdGuardrail] = None
+    profanity: typing.Optional[ContentThresholdGuardrail] = None
+    religion_or_politics: typing.Optional[ContentThresholdGuardrail] = None
+    medical_and_legal_information: typing.Optional[ContentThresholdGuardrail] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

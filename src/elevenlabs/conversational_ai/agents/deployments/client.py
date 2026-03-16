@@ -72,6 +72,7 @@ class DeploymentsClient:
                     AgentDeploymentRequestItem(
                         branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
                         deployment_strategy=AgentDeploymentPercentageStrategy(
+                            type="percentage",
                             traffic_percentage=0.5,
                         ),
                     )
@@ -150,6 +151,7 @@ class AsyncDeploymentsClient:
                         AgentDeploymentRequestItem(
                             branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
                             deployment_strategy=AgentDeploymentPercentageStrategy(
+                                type="percentage",
                                 traffic_percentage=0.5,
                             ),
                         )
