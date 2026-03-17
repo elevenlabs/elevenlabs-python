@@ -12,6 +12,7 @@ import urllib.parse
 
 import websockets
 from websockets.exceptions import ConnectionClosedOK
+from websockets.asyncio.client import ClientConnection
 from websockets.sync.client import Connection, connect
 
 from ..base_client import BaseElevenLabs
@@ -916,7 +917,7 @@ class AsyncConversation(BaseConversation):
 
     _task: Optional[asyncio.Task]
     _should_stop: asyncio.Event
-    _ws: Optional[websockets.WebSocketClientProtocol]
+    _ws: Optional[ClientConnection]
 
     def __init__(
         self,
