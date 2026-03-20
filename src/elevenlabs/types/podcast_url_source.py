@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .podcast_url_source_type import PodcastUrlSourceType
 
 
 class PodcastUrlSource(UncheckedBaseModel):
-    type: typing.Literal["url"] = pydantic.Field(default="url")
+    type: PodcastUrlSourceType = pydantic.Field()
     """
     The type of source to create.
     """

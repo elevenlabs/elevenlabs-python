@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .chapter_content_paragraph_tts_node_input_model_type import ChapterContentParagraphTtsNodeInputModelType
 
 
 class ChapterContentParagraphTtsNodeInputModel(UncheckedBaseModel):
-    type: typing.Literal["tts_node"] = "tts_node"
+    type: ChapterContentParagraphTtsNodeInputModelType
     text: str
     voice_id: str
 

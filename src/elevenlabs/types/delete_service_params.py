@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .delete_service_params_smb_tool_type import DeleteServiceParamsSmbToolType
 
 
 class DeleteServiceParams(UncheckedBaseModel):
@@ -12,7 +13,7 @@ class DeleteServiceParams(UncheckedBaseModel):
     Delete an existing service from the system.
     """
 
-    smb_tool_type: typing.Optional[typing.Literal["delete_service"]] = None
+    smb_tool_type: typing.Optional[DeleteServiceParamsSmbToolType] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

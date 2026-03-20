@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .check_rental_availability_params_smb_tool_type import CheckRentalAvailabilityParamsSmbToolType
 
 
 class CheckRentalAvailabilityParams(UncheckedBaseModel):
-    smb_tool_type: typing.Optional[typing.Literal["check_rental_availability"]] = None
+    smb_tool_type: typing.Optional[CheckRentalAvailabilityParamsSmbToolType] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

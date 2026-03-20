@@ -6,6 +6,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
+from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
@@ -17,6 +18,7 @@ from ...types.twilio_outbound_call_response import TwilioOutboundCallResponse
 from .types.body_register_a_twilio_call_and_return_twi_ml_v_1_convai_twilio_register_call_post_direction import (
     BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection,
 )
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -110,6 +112,10 @@ class RawTwilioClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def register_call(
@@ -121,7 +127,7 @@ class RawTwilioClient:
         direction: typing.Optional[BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection] = OMIT,
         conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[None]:
+    ) -> HttpResponse[str]:
         """
         Register a Twilio call and return TwiML to connect the call
 
@@ -142,7 +148,8 @@ class RawTwilioClient:
 
         Returns
         -------
-        HttpResponse[None]
+        HttpResponse[str]
+            Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/twilio/register-call",
@@ -166,7 +173,7 @@ class RawTwilioClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return HttpResponse(response=_response, data=None)
+                return HttpResponse(response=_response, data=_response.text)  # type: ignore
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
@@ -181,6 +188,10 @@ class RawTwilioClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -272,6 +283,10 @@ class AsyncRawTwilioClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def register_call(
@@ -283,7 +298,7 @@ class AsyncRawTwilioClient:
         direction: typing.Optional[BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection] = OMIT,
         conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[None]:
+    ) -> AsyncHttpResponse[str]:
         """
         Register a Twilio call and return TwiML to connect the call
 
@@ -304,7 +319,8 @@ class AsyncRawTwilioClient:
 
         Returns
         -------
-        AsyncHttpResponse[None]
+        AsyncHttpResponse[str]
+            Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/twilio/register-call",
@@ -328,7 +344,7 @@ class AsyncRawTwilioClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return AsyncHttpResponse(response=_response, data=None)
+                return AsyncHttpResponse(response=_response, data=_response.text)  # type: ignore
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
@@ -343,4 +359,8 @@ class AsyncRawTwilioClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

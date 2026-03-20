@@ -11,6 +11,7 @@ from .agent_workspace_overrides_input import AgentWorkspaceOverridesInput
 from .auth_settings import AuthSettings
 from .conversation_initiation_client_data_config_input import ConversationInitiationClientDataConfigInput
 from .evaluation_settings import EvaluationSettings
+from .guardrails_v_1_input import GuardrailsV1Input
 from .literal_json_schema_property import LiteralJsonSchemaProperty
 from .privacy_config_input import PrivacyConfigInput
 from .widget_config import WidgetConfig
@@ -50,6 +51,11 @@ class AgentPlatformSettingsRequestModel(UncheckedBaseModel):
     archived: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether the agent is archived
+    """
+
+    guardrails: typing.Optional[GuardrailsV1Input] = pydantic.Field(default=None)
+    """
+    Guardrails configuration for the agent
     """
 
     summary_language: typing.Optional[str] = pydantic.Field(default=None)

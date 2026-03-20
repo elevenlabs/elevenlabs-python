@@ -19,6 +19,11 @@ class GetConvAiSettingsResponseModel(UncheckedBaseModel):
     """
 
     rag_retention_period_days: typing.Optional[int] = None
+    conversation_embedding_retention_days: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Days to retain conversation embeddings. None means use the system default (30 days).
+    """
+
     default_livekit_stack: typing.Optional[LivekitStackType] = None
 
     if IS_PYDANTIC_V2:

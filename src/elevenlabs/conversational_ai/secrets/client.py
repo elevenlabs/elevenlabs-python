@@ -7,6 +7,8 @@ from ...core.request_options import RequestOptions
 from ...types.get_workspace_secrets_response_model import GetWorkspaceSecretsResponseModel
 from ...types.post_workspace_secret_response_model import PostWorkspaceSecretResponseModel
 from .raw_client import AsyncRawSecretsClient, RawSecretsClient
+from .types.patch_workspace_secret_request_type import PatchWorkspaceSecretRequestType
+from .types.post_workspace_secret_request_type import PostWorkspaceSecretRequestType
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -69,13 +71,20 @@ class SecretsClient:
         return _response.data
 
     def create(
-        self, *, name: str, value: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        type: PostWorkspaceSecretRequestType,
+        name: str,
+        value: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> PostWorkspaceSecretResponseModel:
         """
         Create a new secret for the workspace
 
         Parameters
         ----------
+        type : PostWorkspaceSecretRequestType
+
         name : str
 
         value : str
@@ -96,11 +105,12 @@ class SecretsClient:
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.secrets.create(
+            type="new",
             name="name",
             value="value",
         )
         """
-        _response = self._raw_client.create(name=name, value=value, request_options=request_options)
+        _response = self._raw_client.create(type=type, name=name, value=value, request_options=request_options)
         return _response.data
 
     def delete(self, secret_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
@@ -133,7 +143,13 @@ class SecretsClient:
         return _response.data
 
     def update(
-        self, secret_id: str, *, name: str, value: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        secret_id: str,
+        *,
+        type: PatchWorkspaceSecretRequestType,
+        name: str,
+        value: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> PostWorkspaceSecretResponseModel:
         """
         Update an existing secret for the workspace
@@ -141,6 +157,8 @@ class SecretsClient:
         Parameters
         ----------
         secret_id : str
+
+        type : PatchWorkspaceSecretRequestType
 
         name : str
 
@@ -163,11 +181,14 @@ class SecretsClient:
         )
         client.conversational_ai.secrets.update(
             secret_id="secret_id",
+            type="update",
             name="name",
             value="value",
         )
         """
-        _response = self._raw_client.update(secret_id, name=name, value=value, request_options=request_options)
+        _response = self._raw_client.update(
+            secret_id, type=type, name=name, value=value, request_options=request_options
+        )
         return _response.data
 
 
@@ -236,13 +257,20 @@ class AsyncSecretsClient:
         return _response.data
 
     async def create(
-        self, *, name: str, value: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        type: PostWorkspaceSecretRequestType,
+        name: str,
+        value: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> PostWorkspaceSecretResponseModel:
         """
         Create a new secret for the workspace
 
         Parameters
         ----------
+        type : PostWorkspaceSecretRequestType
+
         name : str
 
         value : str
@@ -268,6 +296,7 @@ class AsyncSecretsClient:
 
         async def main() -> None:
             await client.conversational_ai.secrets.create(
+                type="new",
                 name="name",
                 value="value",
             )
@@ -275,7 +304,7 @@ class AsyncSecretsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create(name=name, value=value, request_options=request_options)
+        _response = await self._raw_client.create(type=type, name=name, value=value, request_options=request_options)
         return _response.data
 
     async def delete(self, secret_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
@@ -316,7 +345,13 @@ class AsyncSecretsClient:
         return _response.data
 
     async def update(
-        self, secret_id: str, *, name: str, value: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        secret_id: str,
+        *,
+        type: PatchWorkspaceSecretRequestType,
+        name: str,
+        value: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> PostWorkspaceSecretResponseModel:
         """
         Update an existing secret for the workspace
@@ -324,6 +359,8 @@ class AsyncSecretsClient:
         Parameters
         ----------
         secret_id : str
+
+        type : PatchWorkspaceSecretRequestType
 
         name : str
 
@@ -351,6 +388,7 @@ class AsyncSecretsClient:
         async def main() -> None:
             await client.conversational_ai.secrets.update(
                 secret_id="secret_id",
+                type="update",
                 name="name",
                 value="value",
             )
@@ -358,5 +396,7 @@ class AsyncSecretsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.update(secret_id, name=name, value=value, request_options=request_options)
+        _response = await self._raw_client.update(
+            secret_id, type=type, name=name, value=value, request_options=request_options
+        )
         return _response.data

@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .transfer_to_number_result_sip_success_model_status import TransferToNumberResultSipSuccessModelStatus
 
 
 class TransferToNumberResultSipSuccessModel(UncheckedBaseModel):
-    status: typing.Optional[typing.Literal["success"]] = None
+    status: typing.Optional[TransferToNumberResultSipSuccessModelStatus] = None
     transfer_number: str
     reason: typing.Optional[str] = None
     note: typing.Optional[str] = None

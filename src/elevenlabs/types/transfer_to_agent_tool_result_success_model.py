@@ -6,10 +6,11 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .transfer_to_agent_tool_result_success_model_branch_info import TransferToAgentToolResultSuccessModelBranchInfo
+from .transfer_to_agent_tool_result_success_model_status import TransferToAgentToolResultSuccessModelStatus
 
 
 class TransferToAgentToolResultSuccessModel(UncheckedBaseModel):
-    status: typing.Optional[typing.Literal["success"]] = None
+    status: typing.Optional[TransferToAgentToolResultSuccessModelStatus] = None
     from_agent: str
     to_agent: str
     condition: str

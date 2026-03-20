@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .test_tool_result_model_status import TestToolResultModelStatus
 
 
 class TestToolResultModel(UncheckedBaseModel):
-    status: typing.Optional[typing.Literal["success"]] = None
+    status: typing.Optional[TestToolResultModelStatus] = None
     reason: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

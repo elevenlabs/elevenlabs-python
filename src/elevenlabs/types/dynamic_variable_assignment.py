@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .dynamic_variable_assignment_source import DynamicVariableAssignmentSource
 
 
 class DynamicVariableAssignment(UncheckedBaseModel):
@@ -12,7 +13,7 @@ class DynamicVariableAssignment(UncheckedBaseModel):
     Configuration for extracting values from tool responses and assigning them to dynamic variables.
     """
 
-    source: typing.Optional[typing.Literal["response"]] = pydantic.Field(default=None)
+    source: typing.Optional[DynamicVariableAssignmentSource] = pydantic.Field(default=None)
     """
     The source to extract the value from. Currently only 'response' is supported.
     """

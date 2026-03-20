@@ -15,6 +15,7 @@ class GetTestSuiteInvocationResponseModel(UncheckedBaseModel):
     agent_id: typing.Optional[str] = None
     branch_id: typing.Optional[str] = None
     created_at: typing.Optional[int] = None
+    folder_id: typing.Optional[str] = None
     test_runs: typing.List[UnitTestRunResponseModel]
 
     if IS_PYDANTIC_V2:

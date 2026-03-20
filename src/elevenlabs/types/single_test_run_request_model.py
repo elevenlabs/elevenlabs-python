@@ -18,6 +18,16 @@ class SingleTestRunRequestModel(UncheckedBaseModel):
     ID of the workflow node to run the test on. If not provided, the test will be run on the agent's default workflow node.
     """
 
+    root_folder_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    ID of the root folder to run the test on. If not provided, the test will be run on the agent's default folder.
+    """
+
+    root_folder_name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Name of the root folder to run the test on. If not provided, the test will be run on the agent's default folder.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

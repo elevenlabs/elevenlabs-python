@@ -5,11 +5,12 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .backup_llm_override_preference import BackupLlmOverridePreference
 from .llm import Llm
 
 
 class BackupLlmOverride(UncheckedBaseModel):
-    preference: typing.Optional[typing.Literal["override"]] = None
+    preference: typing.Optional[BackupLlmOverridePreference] = None
     order: typing.List[Llm]
 
     if IS_PYDANTIC_V2:

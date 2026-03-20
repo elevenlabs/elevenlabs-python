@@ -5,11 +5,12 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .agent_successful_response_example_type import AgentSuccessfulResponseExampleType
 
 
 class AgentSuccessfulResponseExample(UncheckedBaseModel):
     response: str
-    type: typing.Literal["success"] = "success"
+    type: AgentSuccessfulResponseExampleType
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

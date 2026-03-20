@@ -3,7 +3,11 @@
 import typing
 
 from ....types.permission_type import PermissionType
+from .body_create_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_post_permissions_one import (
+    BodyCreateServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysPostPermissionsOne,
+)
 
 BodyCreateServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysPostPermissions = typing.Union[
-    typing.List[PermissionType], typing.Literal["all"]
+    typing.List[PermissionType],
+    BodyCreateServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysPostPermissionsOne,
 ]

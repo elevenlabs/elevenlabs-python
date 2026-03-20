@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .skip_turn_tool_response_model_status import SkipTurnToolResponseModelStatus
 
 
 class SkipTurnToolResponseModel(UncheckedBaseModel):
-    status: typing.Optional[typing.Literal["success"]] = None
+    status: typing.Optional[SkipTurnToolResponseModelStatus] = None
     reason: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

@@ -8,6 +8,9 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .conversation_history_transcript_system_tool_result_common_model_output_result import (
     ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult,
 )
+from .conversation_history_transcript_system_tool_result_common_model_output_type import (
+    ConversationHistoryTranscriptSystemToolResultCommonModelOutputType,
+)
 from .dynamic_variable_update_common_model import DynamicVariableUpdateCommonModel
 
 
@@ -21,7 +24,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutput(UncheckedBa
     error_type: typing.Optional[str] = None
     raw_error_message: typing.Optional[str] = None
     dynamic_variable_updates: typing.Optional[typing.List[DynamicVariableUpdateCommonModel]] = None
-    type: typing.Literal["system"] = "system"
+    type: ConversationHistoryTranscriptSystemToolResultCommonModelOutputType
     result: typing.Optional[ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult] = None
 
     if IS_PYDANTIC_V2:

@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .transfer_to_number_result_twilio_success_model_status import TransferToNumberResultTwilioSuccessModelStatus
 
 
 class TransferToNumberResultTwilioSuccessModel(UncheckedBaseModel):
-    status: typing.Optional[typing.Literal["success"]] = None
+    status: typing.Optional[TransferToNumberResultTwilioSuccessModelStatus] = None
     transfer_number: str
     reason: typing.Optional[str] = None
     client_message: typing.Optional[str] = None

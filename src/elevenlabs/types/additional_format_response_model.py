@@ -25,11 +25,11 @@ class AdditionalFormatResponseModel(UncheckedBaseModel):
     The content type of the additional format.
     """
 
-    is_base_64_encoded: typing_extensions.Annotated[bool, FieldMetadata(alias="is_base64_encoded")] = pydantic.Field()
-    """
-    Whether the content is base64 encoded.
-    """
-
+    is_base_64_encoded: typing_extensions.Annotated[
+        bool,
+        FieldMetadata(alias="is_base64_encoded"),
+        pydantic.Field(alias="is_base64_encoded", description="Whether the content is base64 encoded."),
+    ]
     content: str = pydantic.Field()
     """
     The content of the additional format.

@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .play_dtmf_result_success_model_status import PlayDtmfResultSuccessModelStatus
 
 
 class PlayDtmfResultSuccessModel(UncheckedBaseModel):
-    status: typing.Optional[typing.Literal["success"]] = None
+    status: typing.Optional[PlayDtmfResultSuccessModelStatus] = None
     dtmf_tones: str
     reason: typing.Optional[str] = None
 

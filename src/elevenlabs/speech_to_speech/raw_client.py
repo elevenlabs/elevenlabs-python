@@ -9,6 +9,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.jsonable_encoder import jsonable_encoder
+from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
@@ -17,6 +18,7 @@ from .types.speech_to_speech_convert_request_file_format import SpeechToSpeechCo
 from .types.speech_to_speech_convert_request_output_format import SpeechToSpeechConvertRequestOutputFormat
 from .types.speech_to_speech_stream_request_file_format import SpeechToSpeechStreamRequestFileFormat
 from .types.speech_to_speech_stream_request_output_format import SpeechToSpeechStreamRequestOutputFormat
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -139,6 +141,13 @@ class RawSpeechToSpeechClient:
                     raise ApiError(
                         status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
                     )
+                except ValidationError as e:
+                    raise ParsingError(
+                        status_code=_response.status_code,
+                        headers=dict(_response.headers),
+                        body=_response.json(),
+                        cause=e,
+                    )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
             yield _stream()
@@ -255,6 +264,13 @@ class RawSpeechToSpeechClient:
                 except JSONDecodeError:
                     raise ApiError(
                         status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                    )
+                except ValidationError as e:
+                    raise ParsingError(
+                        status_code=_response.status_code,
+                        headers=dict(_response.headers),
+                        body=_response.json(),
+                        cause=e,
                     )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
@@ -379,6 +395,13 @@ class AsyncRawSpeechToSpeechClient:
                     raise ApiError(
                         status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
                     )
+                except ValidationError as e:
+                    raise ParsingError(
+                        status_code=_response.status_code,
+                        headers=dict(_response.headers),
+                        body=_response.json(),
+                        cause=e,
+                    )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
             yield await _stream()
@@ -496,6 +519,13 @@ class AsyncRawSpeechToSpeechClient:
                 except JSONDecodeError:
                     raise ApiError(
                         status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                    )
+                except ValidationError as e:
+                    raise ParsingError(
+                        status_code=_response.status_code,
+                        headers=dict(_response.headers),
+                        body=_response.json(),
+                        cause=e,
                     )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 

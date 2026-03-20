@@ -7,12 +7,16 @@ from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
 from ...core.jsonable_encoder import jsonable_encoder
+from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.get_workspace_secrets_response_model import GetWorkspaceSecretsResponseModel
 from ...types.http_validation_error import HttpValidationError
 from ...types.post_workspace_secret_response_model import PostWorkspaceSecretResponseModel
+from .types.patch_workspace_secret_request_type import PatchWorkspaceSecretRequestType
+from .types.post_workspace_secret_request_type import PostWorkspaceSecretRequestType
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -81,16 +85,27 @@ class RawSecretsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
-        self, *, name: str, value: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        type: PostWorkspaceSecretRequestType,
+        name: str,
+        value: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PostWorkspaceSecretResponseModel]:
         """
         Create a new secret for the workspace
 
         Parameters
         ----------
+        type : PostWorkspaceSecretRequestType
+
         name : str
 
         value : str
@@ -107,9 +122,9 @@ class RawSecretsClient:
             "v1/convai/secrets",
             method="POST",
             json={
+                "type": type,
                 "name": name,
                 "value": value,
-                "type": "new",
             },
             headers={
                 "content-type": "application/json",
@@ -141,6 +156,10 @@ class RawSecretsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(self, secret_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
@@ -180,10 +199,20 @@ class RawSecretsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update(
-        self, secret_id: str, *, name: str, value: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        secret_id: str,
+        *,
+        type: PatchWorkspaceSecretRequestType,
+        name: str,
+        value: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PostWorkspaceSecretResponseModel]:
         """
         Update an existing secret for the workspace
@@ -191,6 +220,8 @@ class RawSecretsClient:
         Parameters
         ----------
         secret_id : str
+
+        type : PatchWorkspaceSecretRequestType
 
         name : str
 
@@ -208,9 +239,9 @@ class RawSecretsClient:
             f"v1/convai/secrets/{jsonable_encoder(secret_id)}",
             method="PATCH",
             json={
+                "type": type,
                 "name": name,
                 "value": value,
-                "type": "update",
             },
             headers={
                 "content-type": "application/json",
@@ -242,6 +273,10 @@ class RawSecretsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -308,16 +343,27 @@ class AsyncRawSecretsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
-        self, *, name: str, value: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        type: PostWorkspaceSecretRequestType,
+        name: str,
+        value: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PostWorkspaceSecretResponseModel]:
         """
         Create a new secret for the workspace
 
         Parameters
         ----------
+        type : PostWorkspaceSecretRequestType
+
         name : str
 
         value : str
@@ -334,9 +380,9 @@ class AsyncRawSecretsClient:
             "v1/convai/secrets",
             method="POST",
             json={
+                "type": type,
                 "name": name,
                 "value": value,
-                "type": "new",
             },
             headers={
                 "content-type": "application/json",
@@ -368,6 +414,10 @@ class AsyncRawSecretsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -409,10 +459,20 @@ class AsyncRawSecretsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update(
-        self, secret_id: str, *, name: str, value: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        secret_id: str,
+        *,
+        type: PatchWorkspaceSecretRequestType,
+        name: str,
+        value: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PostWorkspaceSecretResponseModel]:
         """
         Update an existing secret for the workspace
@@ -420,6 +480,8 @@ class AsyncRawSecretsClient:
         Parameters
         ----------
         secret_id : str
+
+        type : PatchWorkspaceSecretRequestType
 
         name : str
 
@@ -437,9 +499,9 @@ class AsyncRawSecretsClient:
             f"v1/convai/secrets/{jsonable_encoder(secret_id)}",
             method="PATCH",
             json={
+                "type": type,
                 "name": name,
                 "value": value,
-                "type": "update",
             },
             headers={
                 "content-type": "application/json",
@@ -471,4 +533,8 @@ class AsyncRawSecretsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

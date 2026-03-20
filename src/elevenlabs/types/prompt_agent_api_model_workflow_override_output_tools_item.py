@@ -163,8 +163,6 @@ class PromptAgentApiModelWorkflowOverrideOutputToolsItem_Webhook(UncheckedBaseMo
             extra = pydantic.Extra.allow
 
 
-from .object_json_schema_property_output import ObjectJsonSchemaPropertyOutput  # noqa: E402, I001
-
 PromptAgentApiModelWorkflowOverrideOutputToolsItem = typing_extensions.Annotated[
     typing.Union[
         PromptAgentApiModelWorkflowOverrideOutputToolsItem_ApiIntegrationWebhook,
@@ -176,6 +174,17 @@ PromptAgentApiModelWorkflowOverrideOutputToolsItem = typing_extensions.Annotated
     ],
     UnionMetadata(discriminant="type"),
 ]
+from .array_json_schema_property_output import ArrayJsonSchemaPropertyOutput  # noqa: E402, I001
+from .array_json_schema_property_output_items import ArrayJsonSchemaPropertyOutputItems  # noqa: E402, I001
+from .object_json_schema_property_output import ObjectJsonSchemaPropertyOutput  # noqa: E402, I001
+from .object_json_schema_property_output_properties_value import ObjectJsonSchemaPropertyOutputPropertiesValue  # noqa: E402, I001
+
 update_forward_refs(PromptAgentApiModelWorkflowOverrideOutputToolsItem_ApiIntegrationWebhook)
-update_forward_refs(PromptAgentApiModelWorkflowOverrideOutputToolsItem_Client)
+update_forward_refs(
+    PromptAgentApiModelWorkflowOverrideOutputToolsItem_Client,
+    ArrayJsonSchemaPropertyOutput=ArrayJsonSchemaPropertyOutput,
+    ArrayJsonSchemaPropertyOutputItems=ArrayJsonSchemaPropertyOutputItems,
+    ObjectJsonSchemaPropertyOutput=ObjectJsonSchemaPropertyOutput,
+    ObjectJsonSchemaPropertyOutputPropertiesValue=ObjectJsonSchemaPropertyOutputPropertiesValue,
+)
 update_forward_refs(PromptAgentApiModelWorkflowOverrideOutputToolsItem_Webhook)

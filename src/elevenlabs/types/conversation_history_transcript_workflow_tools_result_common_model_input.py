@@ -7,6 +7,9 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .conversation_history_transcript_workflow_tools_result_common_model_input_type import (
+    ConversationHistoryTranscriptWorkflowToolsResultCommonModelInputType,
+)
 from .dynamic_variable_update_common_model import DynamicVariableUpdateCommonModel
 
 
@@ -20,7 +23,7 @@ class ConversationHistoryTranscriptWorkflowToolsResultCommonModelInput(Unchecked
     error_type: typing.Optional[str] = None
     raw_error_message: typing.Optional[str] = None
     dynamic_variable_updates: typing.Optional[typing.List[DynamicVariableUpdateCommonModel]] = None
-    type: typing.Literal["workflow"] = "workflow"
+    type: ConversationHistoryTranscriptWorkflowToolsResultCommonModelInputType
     result: typing.Optional["WorkflowToolResponseModelInput"] = None
 
     if IS_PYDANTIC_V2:
@@ -33,6 +36,15 @@ class ConversationHistoryTranscriptWorkflowToolsResultCommonModelInput(Unchecked
             extra = pydantic.Extra.allow
 
 
+from .workflow_tool_nested_tools_step_model_input import WorkflowToolNestedToolsStepModelInput  # noqa: E402, I001
+from .workflow_tool_nested_tools_step_model_input_results_item import WorkflowToolNestedToolsStepModelInputResultsItem  # noqa: E402, I001
 from .workflow_tool_response_model_input import WorkflowToolResponseModelInput  # noqa: E402, I001
+from .workflow_tool_response_model_input_steps_item import WorkflowToolResponseModelInputStepsItem  # noqa: E402, I001
 
-update_forward_refs(ConversationHistoryTranscriptWorkflowToolsResultCommonModelInput)
+update_forward_refs(
+    ConversationHistoryTranscriptWorkflowToolsResultCommonModelInput,
+    WorkflowToolNestedToolsStepModelInput=WorkflowToolNestedToolsStepModelInput,
+    WorkflowToolNestedToolsStepModelInputResultsItem=WorkflowToolNestedToolsStepModelInputResultsItem,
+    WorkflowToolResponseModelInput=WorkflowToolResponseModelInput,
+    WorkflowToolResponseModelInputStepsItem=WorkflowToolResponseModelInputStepsItem,
+)

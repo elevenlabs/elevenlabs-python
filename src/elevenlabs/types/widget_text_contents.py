@@ -195,11 +195,11 @@ class WidgetTextContents(UncheckedBaseModel):
     Toast notification displayed when switching to voice mode.
     """
 
-    copy_: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="copy")] = pydantic.Field(default=None)
-    """
-    Text and ARIA label for the copy button.
-    """
-
+    copy_: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="copy"),
+        pydantic.Field(alias="copy", description="Text and ARIA label for the copy button."),
+    ] = None
     download: typing.Optional[str] = pydantic.Field(default=None)
     """
     Text and ARIA label for the download button.

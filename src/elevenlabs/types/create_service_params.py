@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .create_service_params_smb_tool_type import CreateServiceParamsSmbToolType
 
 
 class CreateServiceParams(UncheckedBaseModel):
@@ -12,7 +13,7 @@ class CreateServiceParams(UncheckedBaseModel):
     Create a new service in the system.
     """
 
-    smb_tool_type: typing.Optional[typing.Literal["create_service"]] = None
+    smb_tool_type: typing.Optional[CreateServiceParamsSmbToolType] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

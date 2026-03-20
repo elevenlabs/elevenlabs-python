@@ -47,5 +47,10 @@ class ApiIntegrationWebhookOverridesOutput(UncheckedBaseModel):
 
 
 from .object_override_output import ObjectOverrideOutput  # noqa: E402, I001
+from .object_override_output_properties_value import ObjectOverrideOutputPropertiesValue  # noqa: E402, I001
 
-update_forward_refs(ApiIntegrationWebhookOverridesOutput)
+update_forward_refs(
+    ApiIntegrationWebhookOverridesOutput,
+    ObjectOverrideOutput=ObjectOverrideOutput,
+    ObjectOverrideOutputPropertiesValue=ObjectOverrideOutputPropertiesValue,
+)

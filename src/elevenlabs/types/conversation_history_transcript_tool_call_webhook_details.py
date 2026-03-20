@@ -5,10 +5,13 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .conversation_history_transcript_tool_call_webhook_details_type import (
+    ConversationHistoryTranscriptToolCallWebhookDetailsType,
+)
 
 
 class ConversationHistoryTranscriptToolCallWebhookDetails(UncheckedBaseModel):
-    type: typing.Optional[typing.Literal["webhook"]] = None
+    type: typing.Optional[ConversationHistoryTranscriptToolCallWebhookDetailsType] = None
     method: str
     url: str
     headers: typing.Optional[typing.Dict[str, str]] = None

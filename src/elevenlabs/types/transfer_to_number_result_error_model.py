@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .transfer_to_number_result_error_model_status import TransferToNumberResultErrorModelStatus
 
 
 class TransferToNumberResultErrorModel(UncheckedBaseModel):
-    status: typing.Optional[typing.Literal["error"]] = None
+    status: typing.Optional[TransferToNumberResultErrorModelStatus] = None
     error: str
     details: typing.Optional[str] = None
 

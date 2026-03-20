@@ -9,6 +9,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.jsonable_encoder import jsonable_encoder
+from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
@@ -20,6 +21,7 @@ from .types.speech_to_text_convert_request_model_id import SpeechToTextConvertRe
 from .types.speech_to_text_convert_request_timestamps_granularity import SpeechToTextConvertRequestTimestampsGranularity
 from .types.speech_to_text_convert_request_webhook_metadata import SpeechToTextConvertRequestWebhookMetadata
 from .types.speech_to_text_convert_response import SpeechToTextConvertResponse
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -152,10 +154,14 @@ class RawSpeechToTextClient:
                 "temperature": temperature,
                 "seed": seed,
                 "use_multi_channel": use_multi_channel,
-                "webhook_metadata": webhook_metadata,
-                "entity_detection": entity_detection,
+                "webhook_metadata": json.dumps(jsonable_encoder(webhook_metadata))
+                if webhook_metadata is not OMIT
+                else OMIT,
+                "entity_detection": json.dumps(jsonable_encoder(entity_detection))
+                if entity_detection is not OMIT
+                else OMIT,
                 "no_verbatim": no_verbatim,
-                "keyterms": keyterms,
+                "keyterms": json.dumps(jsonable_encoder(keyterms)) if keyterms is not OMIT else OMIT,
             },
             files={
                 **({"file": file} if file is not None else {}),
@@ -193,6 +199,10 @@ class RawSpeechToTextClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -323,10 +333,14 @@ class AsyncRawSpeechToTextClient:
                 "temperature": temperature,
                 "seed": seed,
                 "use_multi_channel": use_multi_channel,
-                "webhook_metadata": webhook_metadata,
-                "entity_detection": entity_detection,
+                "webhook_metadata": json.dumps(jsonable_encoder(webhook_metadata))
+                if webhook_metadata is not OMIT
+                else OMIT,
+                "entity_detection": json.dumps(jsonable_encoder(entity_detection))
+                if entity_detection is not OMIT
+                else OMIT,
                 "no_verbatim": no_verbatim,
-                "keyterms": keyterms,
+                "keyterms": json.dumps(jsonable_encoder(keyterms)) if keyterms is not OMIT else OMIT,
             },
             files={
                 **({"file": file} if file is not None else {}),
@@ -364,4 +378,8 @@ class AsyncRawSpeechToTextClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

@@ -6,11 +6,12 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .billing_period import BillingPeriod
+from .pending_subscription_switch_response_model_kind import PendingSubscriptionSwitchResponseModelKind
 from .pending_subscription_switch_response_model_next_tier import PendingSubscriptionSwitchResponseModelNextTier
 
 
 class PendingSubscriptionSwitchResponseModel(UncheckedBaseModel):
-    kind: typing.Optional[typing.Literal["change"]] = None
+    kind: typing.Optional[PendingSubscriptionSwitchResponseModelKind] = None
     next_tier: PendingSubscriptionSwitchResponseModelNextTier = pydantic.Field()
     """
     The tier to change to.
