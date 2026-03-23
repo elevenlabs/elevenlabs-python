@@ -5,12 +5,18 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .llm_literal_json_schema_property import LlmLiteralJsonSchemaProperty
 
 
 class AstllmNodeOutput(UncheckedBaseModel):
+    value_schema: LlmLiteralJsonSchemaProperty = pydantic.Field()
+    """
+    JSON schema describing the value that the LLM should extract.
+    """
+
     prompt: str = pydantic.Field()
     """
-    The prompt to evaluate to a boolean value.
+    The prompt to evaluate to a boolean value. Deprecated. Use a boolean schema instead.
     """
 
     if IS_PYDANTIC_V2:

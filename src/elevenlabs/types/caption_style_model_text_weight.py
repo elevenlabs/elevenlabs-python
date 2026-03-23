@@ -2,4 +2,4 @@
 
 import typing
 
-CaptionStyleModelTextWeight = typing.Union[typing.Literal["normal", "bold"], typing.Any]
+CaptionStyleModelTextWeight = typing.Union[typing.Literal["normal", "bold", "900"], typing.Any]

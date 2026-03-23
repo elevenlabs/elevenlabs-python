@@ -29,6 +29,7 @@ class DirectPublishingReadResponseModel(UncheckedBaseModel):
     description: typing.Optional[str] = None
     article_image_url: typing.Optional[str] = None
     language: typing.Optional[str] = None
+    locale: typing.Optional[str] = None
     display_mode: typing.Optional[DirectPublishingReadResponseModelDisplayMode] = None
     genre: typing.Optional[typing.List[DirectPublishingReadResponseModelGenreItem]] = None
     fiction: typing.Optional[str] = None

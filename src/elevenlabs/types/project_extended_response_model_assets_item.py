@@ -74,7 +74,7 @@ class ProjectExtendedResponseModelAssetsItem_Audio(UncheckedBaseModel):
     type: typing.Literal["audio"] = "audio"
     external_audio_id: str
     filename: str
-    signed_url: str
+    signed_url: typing.Optional[str] = None
     offset_ms: int
     duration_ms: int
     start_time_ms: int
@@ -93,6 +93,7 @@ class ProjectExtendedResponseModelAssetsItem_Audio(UncheckedBaseModel):
     pending_external_audio_ids: typing.List[str]
     speech_imported: typing.Optional[bool] = None
     pending_task: typing.Optional[PendingClipTask] = None
+    error: typing.Optional[str] = None
     current_snapshot_id: typing.Optional[str] = None
     source_context: typing.Optional[ProjectExternalAudioResponseModelSourceContext] = None
     import_speech_progress: typing.Optional[float] = None

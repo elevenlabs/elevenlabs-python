@@ -43,6 +43,11 @@ class GetSimulationTestResponseModel(UncheckedBaseModel):
     Maximum number of conversation turns for simulation tests.
     """
 
+    simulation_environment: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The environment to use when running this simulation test. If not provided, defaults to 'production'.
+    """
+
     id: str
     name: str
 

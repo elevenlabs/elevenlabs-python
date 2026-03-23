@@ -12,19 +12,6 @@ from .agent_transfer import AgentTransfer
 from .phone_number_transfer import PhoneNumberTransfer
 
 
-class SystemToolConfigInputParams_AgentPromptChange(UncheckedBaseModel):
-    system_tool_type: typing.Literal["agent_prompt_change"] = "agent_prompt_change"
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
-
-
 class SystemToolConfigInputParams_EndCall(UncheckedBaseModel):
     system_tool_type: typing.Literal["end_call"] = "end_call"
 
@@ -51,61 +38,10 @@ class SystemToolConfigInputParams_LanguageDetection(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-class SystemToolConfigInputParams_MemoryEntryCreate(UncheckedBaseModel):
-    system_tool_type: typing.Literal["memory_entry_create"] = "memory_entry_create"
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
-
-
-class SystemToolConfigInputParams_MemoryEntryDelete(UncheckedBaseModel):
-    system_tool_type: typing.Literal["memory_entry_delete"] = "memory_entry_delete"
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
-
-
-class SystemToolConfigInputParams_MemoryEntrySearch(UncheckedBaseModel):
-    system_tool_type: typing.Literal["memory_entry_search"] = "memory_entry_search"
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
-
-
-class SystemToolConfigInputParams_MemoryEntryUpdate(UncheckedBaseModel):
-    system_tool_type: typing.Literal["memory_entry_update"] = "memory_entry_update"
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
-
-
 class SystemToolConfigInputParams_PlayKeypadTouchTone(UncheckedBaseModel):
     system_tool_type: typing.Literal["play_keypad_touch_tone"] = "play_keypad_touch_tone"
     use_out_of_band_dtmf: typing.Optional[bool] = None
+    suppress_turn_after_dtmf: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -175,13 +111,8 @@ class SystemToolConfigInputParams_VoicemailDetection(UncheckedBaseModel):
 
 SystemToolConfigInputParams = typing_extensions.Annotated[
     typing.Union[
-        SystemToolConfigInputParams_AgentPromptChange,
         SystemToolConfigInputParams_EndCall,
         SystemToolConfigInputParams_LanguageDetection,
-        SystemToolConfigInputParams_MemoryEntryCreate,
-        SystemToolConfigInputParams_MemoryEntryDelete,
-        SystemToolConfigInputParams_MemoryEntrySearch,
-        SystemToolConfigInputParams_MemoryEntryUpdate,
         SystemToolConfigInputParams_PlayKeypadTouchTone,
         SystemToolConfigInputParams_SkipTurn,
         SystemToolConfigInputParams_TransferToAgent,

@@ -15,9 +15,9 @@ from .conversation_history_transcript_tool_call_webhook_details import (
 
 class ConversationHistoryTranscriptToolCallCommonModelInputToolDetails_ApiIntegrationWebhook(UncheckedBaseModel):
     type: typing.Literal["api_integration_webhook"] = "api_integration_webhook"
-    integration_id: str
-    credential_id: str
-    integration_connection_id: str
+    integration_id: typing.Optional[str] = None
+    credential_id: typing.Optional[str] = None
+    integration_connection_id: typing.Optional[str] = None
     webhook_details: ConversationHistoryTranscriptToolCallWebhookDetails
 
     if IS_PYDANTIC_V2:

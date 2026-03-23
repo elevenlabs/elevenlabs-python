@@ -10,6 +10,7 @@ from ..core.request_options import RequestOptions
 from ..types.additional_formats import AdditionalFormats
 from .raw_client import AsyncRawSpeechToTextClient, RawSpeechToTextClient
 from .types.speech_to_text_convert_request_entity_detection import SpeechToTextConvertRequestEntityDetection
+from .types.speech_to_text_convert_request_entity_redaction import SpeechToTextConvertRequestEntityRedaction
 from .types.speech_to_text_convert_request_file_format import SpeechToTextConvertRequestFileFormat
 from .types.speech_to_text_convert_request_model_id import SpeechToTextConvertRequestModelId
 from .types.speech_to_text_convert_request_timestamps_granularity import SpeechToTextConvertRequestTimestampsGranularity
@@ -62,6 +63,8 @@ class SpeechToTextClient:
         webhook_metadata: typing.Optional[SpeechToTextConvertRequestWebhookMetadata] = OMIT,
         entity_detection: typing.Optional[SpeechToTextConvertRequestEntityDetection] = OMIT,
         no_verbatim: typing.Optional[bool] = OMIT,
+        entity_redaction: typing.Optional[SpeechToTextConvertRequestEntityRedaction] = OMIT,
+        entity_redaction_mode: typing.Optional[str] = OMIT,
         keyterms: typing.Optional[typing.List[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SpeechToTextConvertResponse:
@@ -130,8 +133,14 @@ class SpeechToTextClient:
         no_verbatim : typing.Optional[bool]
             If true, the transcription will not have any filler words, false starts and non-speech sounds. Only supported with scribe_v2 model.
 
+        entity_redaction : typing.Optional[SpeechToTextConvertRequestEntityRedaction]
+            Redact entities from the transcript text. Accepts the same format as entity_detection: 'all', a category ('pii', 'phi'), or specific entity types. Must be a subset of entity_detection. When redaction is enabled, the entities field will not be returned.
+
+        entity_redaction_mode : typing.Optional[str]
+            How to format redacted entities. 'redacted' replaces with {REDACTED}, 'entity_type' replaces with {ENTITY_TYPE}, 'enumerated_entity_type' replaces with {ENTITY_TYPE_N} where N enumerates each occurrence. Only used when entity_redaction is set.
+
         keyterms : typing.Optional[typing.List[str]]
-            A list of keyterms to bias the transcription towards.           The keyterms are words or phrases you want the model to recognise more accurately.           The number of keyterms cannot exceed 100.           The length of each keyterm must be less than 50 characters.           Keyterms can contain at most 5 words (after normalisation).           For example ["hello", "world", "technical term"].           Usage of this parameter will incur additional costs.
+            A list of keyterms to bias the transcription towards.           The keyterms are words or phrases you want the model to recognise more accurately.           The number of keyterms cannot exceed 1000.           The length of each keyterm must be less than 50 characters.           Keyterms can contain at most 5 words (after normalisation).           For example ["hello", "world", "technical term"].           Usage of this parameter will incur additional costs.           When more than 100 keyterms are provided, a minimum billable duration of 20 seconds applies per request.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -174,6 +183,8 @@ class SpeechToTextClient:
             webhook_metadata=webhook_metadata,
             entity_detection=entity_detection,
             no_verbatim=no_verbatim,
+            entity_redaction=entity_redaction,
+            entity_redaction_mode=entity_redaction_mode,
             keyterms=keyterms,
             request_options=request_options,
         )
@@ -228,6 +239,8 @@ class AsyncSpeechToTextClient:
         webhook_metadata: typing.Optional[SpeechToTextConvertRequestWebhookMetadata] = OMIT,
         entity_detection: typing.Optional[SpeechToTextConvertRequestEntityDetection] = OMIT,
         no_verbatim: typing.Optional[bool] = OMIT,
+        entity_redaction: typing.Optional[SpeechToTextConvertRequestEntityRedaction] = OMIT,
+        entity_redaction_mode: typing.Optional[str] = OMIT,
         keyterms: typing.Optional[typing.List[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SpeechToTextConvertResponse:
@@ -296,8 +309,14 @@ class AsyncSpeechToTextClient:
         no_verbatim : typing.Optional[bool]
             If true, the transcription will not have any filler words, false starts and non-speech sounds. Only supported with scribe_v2 model.
 
+        entity_redaction : typing.Optional[SpeechToTextConvertRequestEntityRedaction]
+            Redact entities from the transcript text. Accepts the same format as entity_detection: 'all', a category ('pii', 'phi'), or specific entity types. Must be a subset of entity_detection. When redaction is enabled, the entities field will not be returned.
+
+        entity_redaction_mode : typing.Optional[str]
+            How to format redacted entities. 'redacted' replaces with {REDACTED}, 'entity_type' replaces with {ENTITY_TYPE}, 'enumerated_entity_type' replaces with {ENTITY_TYPE_N} where N enumerates each occurrence. Only used when entity_redaction is set.
+
         keyterms : typing.Optional[typing.List[str]]
-            A list of keyterms to bias the transcription towards.           The keyterms are words or phrases you want the model to recognise more accurately.           The number of keyterms cannot exceed 100.           The length of each keyterm must be less than 50 characters.           Keyterms can contain at most 5 words (after normalisation).           For example ["hello", "world", "technical term"].           Usage of this parameter will incur additional costs.
+            A list of keyterms to bias the transcription towards.           The keyterms are words or phrases you want the model to recognise more accurately.           The number of keyterms cannot exceed 1000.           The length of each keyterm must be less than 50 characters.           Keyterms can contain at most 5 words (after normalisation).           For example ["hello", "world", "technical term"].           Usage of this parameter will incur additional costs.           When more than 100 keyterms are provided, a minimum billable duration of 20 seconds applies per request.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -348,6 +367,8 @@ class AsyncSpeechToTextClient:
             webhook_metadata=webhook_metadata,
             entity_detection=entity_detection,
             no_verbatim=no_verbatim,
+            entity_redaction=entity_redaction,
+            entity_redaction_mode=entity_redaction_mode,
             keyterms=keyterms,
             request_options=request_options,
         )

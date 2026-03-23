@@ -47,6 +47,7 @@ class KnowledgeBaseClient:
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         show_only_owned_documents: typing.Optional[bool] = None,
+        created_by_user_id: typing.Optional[str] = None,
         types: typing.Optional[
             typing.Union[KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]]
         ] = None,
@@ -70,7 +71,10 @@ class KnowledgeBaseClient:
             If specified, the endpoint returns only such knowledge base documents whose names start with this string.
 
         show_only_owned_documents : typing.Optional[bool]
-            If set to true, the endpoint will return only documents owned by you (and not shared from somebody else).
+            If set to true, the endpoint will return only documents owned by you (and not shared from somebody else). Deprecated: use created_by_user_id instead.
+
+        created_by_user_id : typing.Optional[str]
+            Filter documents by creator user ID. When set, only documents created by this user are returned. Takes precedence over show_only_owned_documents. Use '@me' to refer to the authenticated user.
 
         types : typing.Optional[typing.Union[KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]]]
             If present, the endpoint will return only documents of the given types.
@@ -112,6 +116,7 @@ class KnowledgeBaseClient:
             page_size=1,
             search="search",
             show_only_owned_documents=True,
+            created_by_user_id="created_by_user_id",
             parent_folder_id="parent_folder_id",
             ancestor_folder_id="ancestor_folder_id",
             folders_first=True,
@@ -124,6 +129,7 @@ class KnowledgeBaseClient:
             page_size=page_size,
             search=search,
             show_only_owned_documents=show_only_owned_documents,
+            created_by_user_id=created_by_user_id,
             types=types,
             parent_folder_id=parent_folder_id,
             ancestor_folder_id=ancestor_folder_id,
@@ -218,6 +224,7 @@ class AsyncKnowledgeBaseClient:
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         show_only_owned_documents: typing.Optional[bool] = None,
+        created_by_user_id: typing.Optional[str] = None,
         types: typing.Optional[
             typing.Union[KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]]
         ] = None,
@@ -241,7 +248,10 @@ class AsyncKnowledgeBaseClient:
             If specified, the endpoint returns only such knowledge base documents whose names start with this string.
 
         show_only_owned_documents : typing.Optional[bool]
-            If set to true, the endpoint will return only documents owned by you (and not shared from somebody else).
+            If set to true, the endpoint will return only documents owned by you (and not shared from somebody else). Deprecated: use created_by_user_id instead.
+
+        created_by_user_id : typing.Optional[str]
+            Filter documents by creator user ID. When set, only documents created by this user are returned. Takes precedence over show_only_owned_documents. Use '@me' to refer to the authenticated user.
 
         types : typing.Optional[typing.Union[KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]]]
             If present, the endpoint will return only documents of the given types.
@@ -288,6 +298,7 @@ class AsyncKnowledgeBaseClient:
                 page_size=1,
                 search="search",
                 show_only_owned_documents=True,
+                created_by_user_id="created_by_user_id",
                 parent_folder_id="parent_folder_id",
                 ancestor_folder_id="ancestor_folder_id",
                 folders_first=True,
@@ -303,6 +314,7 @@ class AsyncKnowledgeBaseClient:
             page_size=page_size,
             search=search,
             show_only_owned_documents=show_only_owned_documents,
+            created_by_user_id=created_by_user_id,
             types=types,
             parent_folder_id=parent_folder_id,
             ancestor_folder_id=ancestor_folder_id,

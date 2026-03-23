@@ -3,6 +3,7 @@
 import typing
 
 from .conv_ai_dynamic_variable import ConvAiDynamicVariable
+from .conv_ai_env_var_locator import ConvAiEnvVarLocator
 from .conv_ai_secret_locator import ConvAiSecretLocator
 
-CustomLlmRequestHeadersValue = typing.Union[str, ConvAiSecretLocator, ConvAiDynamicVariable]
+CustomLlmRequestHeadersValue = typing.Union[str, ConvAiSecretLocator, ConvAiDynamicVariable, ConvAiEnvVarLocator]

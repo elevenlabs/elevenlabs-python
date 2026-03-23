@@ -12,6 +12,13 @@ if typing.TYPE_CHECKING:
         KnowledgeBaseGetOrCreateRagIndexesResponseValue_Success,
     )
     from . import document, documents
+    from .document import (
+        DocumentRefreshResponse,
+        DocumentRefreshResponse_File,
+        DocumentRefreshResponse_Folder,
+        DocumentRefreshResponse_Text,
+        DocumentRefreshResponse_Url,
+    )
     from .documents import (
         DocumentsGetResponse,
         DocumentsGetResponse_File,
@@ -25,6 +32,11 @@ if typing.TYPE_CHECKING:
         DocumentsUpdateResponse_Url,
     )
 _dynamic_imports: typing.Dict[str, str] = {
+    "DocumentRefreshResponse": ".document",
+    "DocumentRefreshResponse_File": ".document",
+    "DocumentRefreshResponse_Folder": ".document",
+    "DocumentRefreshResponse_Text": ".document",
+    "DocumentRefreshResponse_Url": ".document",
     "DocumentsGetResponse": ".documents",
     "DocumentsGetResponse_File": ".documents",
     "DocumentsGetResponse_Folder": ".documents",
@@ -65,6 +77,11 @@ def __dir__():
 
 
 __all__ = [
+    "DocumentRefreshResponse",
+    "DocumentRefreshResponse_File",
+    "DocumentRefreshResponse_Folder",
+    "DocumentRefreshResponse_Text",
+    "DocumentRefreshResponse_Url",
     "DocumentsGetResponse",
     "DocumentsGetResponse_File",
     "DocumentsGetResponse_Folder",

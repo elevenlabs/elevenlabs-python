@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import typing
 
-from .conversation_history_transcript_api_integration_webhook_tools_result_common_model import (
-    ConversationHistoryTranscriptApiIntegrationWebhookToolsResultCommonModel,
+from .conversation_history_transcript_api_integration_webhook_tools_result_common_model_input import (
+    ConversationHistoryTranscriptApiIntegrationWebhookToolsResultCommonModelInput,
 )
 from .conversation_history_transcript_other_tools_result_common_model import (
     ConversationHistoryTranscriptOtherToolsResultCommonModel,
@@ -21,6 +21,6 @@ if typing.TYPE_CHECKING:
 WorkflowToolNestedToolsStepModelInputResultsItem = typing.Union[
     ConversationHistoryTranscriptOtherToolsResultCommonModel,
     ConversationHistoryTranscriptSystemToolResultCommonModelInput,
-    ConversationHistoryTranscriptApiIntegrationWebhookToolsResultCommonModel,
+    ConversationHistoryTranscriptApiIntegrationWebhookToolsResultCommonModelInput,
     "ConversationHistoryTranscriptWorkflowToolsResultCommonModelInput",
 ]

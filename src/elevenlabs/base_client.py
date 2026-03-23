@@ -15,6 +15,7 @@ if typing.TYPE_CHECKING:
     from .audio_native.client import AsyncAudioNativeClient, AudioNativeClient
     from .conversational_ai.client import AsyncConversationalAiClient, ConversationalAiClient
     from .dubbing.client import AsyncDubbingClient, DubbingClient
+    from .environment_variables.client import AsyncEnvironmentVariablesClient, EnvironmentVariablesClient
     from .forced_alignment.client import AsyncForcedAlignmentClient, ForcedAlignmentClient
     from .history.client import AsyncHistoryClient, HistoryClient
     from .models.client import AsyncModelsClient, ModelsClient
@@ -124,6 +125,7 @@ class BaseElevenLabs:
         self._speech_to_text: typing.Optional[SpeechToTextClient] = None
         self._forced_alignment: typing.Optional[ForcedAlignmentClient] = None
         self._conversational_ai: typing.Optional[ConversationalAiClient] = None
+        self._environment_variables: typing.Optional[EnvironmentVariablesClient] = None
         self._music: typing.Optional[MusicClient] = None
         self._tokens: typing.Optional[TokensClient] = None
         self._workspace: typing.Optional[WorkspaceClient] = None
@@ -367,6 +369,14 @@ class BaseElevenLabs:
         return self._conversational_ai
 
     @property
+    def environment_variables(self):
+        if self._environment_variables is None:
+            from .environment_variables.client import EnvironmentVariablesClient  # noqa: E402
+
+            self._environment_variables = EnvironmentVariablesClient(client_wrapper=self._client_wrapper)
+        return self._environment_variables
+
+    @property
     def music(self):
         if self._music is None:
             from .music.client import MusicClient  # noqa: E402
@@ -478,6 +488,7 @@ class AsyncBaseElevenLabs:
         self._speech_to_text: typing.Optional[AsyncSpeechToTextClient] = None
         self._forced_alignment: typing.Optional[AsyncForcedAlignmentClient] = None
         self._conversational_ai: typing.Optional[AsyncConversationalAiClient] = None
+        self._environment_variables: typing.Optional[AsyncEnvironmentVariablesClient] = None
         self._music: typing.Optional[AsyncMusicClient] = None
         self._tokens: typing.Optional[AsyncTokensClient] = None
         self._workspace: typing.Optional[AsyncWorkspaceClient] = None
@@ -735,6 +746,14 @@ class AsyncBaseElevenLabs:
 
             self._conversational_ai = AsyncConversationalAiClient(client_wrapper=self._client_wrapper)
         return self._conversational_ai
+
+    @property
+    def environment_variables(self):
+        if self._environment_variables is None:
+            from .environment_variables.client import AsyncEnvironmentVariablesClient  # noqa: E402
+
+            self._environment_variables = AsyncEnvironmentVariablesClient(client_wrapper=self._client_wrapper)
+        return self._environment_variables
 
     @property
     def music(self):

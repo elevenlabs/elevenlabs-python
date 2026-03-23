@@ -3,6 +3,9 @@
 import typing
 
 from ....types.conv_ai_dynamic_variable import ConvAiDynamicVariable
+from ....types.conv_ai_env_var_locator import ConvAiEnvVarLocator
 from ....types.conv_ai_secret_locator import ConvAiSecretLocator
 
-McpServerConfigUpdateRequestModelRequestHeadersValue = typing.Union[str, ConvAiSecretLocator, ConvAiDynamicVariable]
+McpServerConfigUpdateRequestModelRequestHeadersValue = typing.Union[
+    str, ConvAiSecretLocator, ConvAiDynamicVariable, ConvAiEnvVarLocator
+]

@@ -10,6 +10,7 @@ from .....core.jsonable_encoder import jsonable_encoder
 from .....core.request_options import RequestOptions
 from .....core.unchecked_base_model import construct_type
 from .....errors.unprocessable_entity_error import UnprocessableEntityError
+from .....types.embedding_model_enum import EmbeddingModelEnum
 from .....types.http_validation_error import HttpValidationError
 from .....types.knowledge_base_document_chunk_response_model import KnowledgeBaseDocumentChunkResponseModel
 
@@ -19,7 +20,12 @@ class RawChunkClient:
         self._client_wrapper = client_wrapper
 
     def get(
-        self, documentation_id: str, chunk_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        documentation_id: str,
+        chunk_id: str,
+        *,
+        embedding_model: typing.Optional[EmbeddingModelEnum] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[KnowledgeBaseDocumentChunkResponseModel]:
         """
         Get details about a specific documentation part used by RAG.
@@ -32,6 +38,9 @@ class RawChunkClient:
         chunk_id : str
             The id of a document RAG chunk from the knowledge base.
 
+        embedding_model : typing.Optional[EmbeddingModelEnum]
+            The embedding model used to retrieve the chunk.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -43,6 +52,9 @@ class RawChunkClient:
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/chunk/{jsonable_encoder(chunk_id)}",
             method="GET",
+            params={
+                "embedding_model": embedding_model,
+            },
             request_options=request_options,
         )
         try:
@@ -77,7 +89,12 @@ class AsyncRawChunkClient:
         self._client_wrapper = client_wrapper
 
     async def get(
-        self, documentation_id: str, chunk_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        documentation_id: str,
+        chunk_id: str,
+        *,
+        embedding_model: typing.Optional[EmbeddingModelEnum] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[KnowledgeBaseDocumentChunkResponseModel]:
         """
         Get details about a specific documentation part used by RAG.
@@ -90,6 +107,9 @@ class AsyncRawChunkClient:
         chunk_id : str
             The id of a document RAG chunk from the knowledge base.
 
+        embedding_model : typing.Optional[EmbeddingModelEnum]
+            The embedding model used to retrieve the chunk.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -101,6 +121,9 @@ class AsyncRawChunkClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/chunk/{jsonable_encoder(chunk_id)}",
             method="GET",
+            params={
+                "embedding_model": embedding_model,
+            },
             request_options=request_options,
         )
         try:

@@ -5,8 +5,8 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .auth_connection_locator import AuthConnectionLocator
 from .mcp_approval_policy import McpApprovalPolicy
+from .mcp_server_config_output_auth_connection import McpServerConfigOutputAuthConnection
 from .mcp_server_config_output_request_headers_value import McpServerConfigOutputRequestHeadersValue
 from .mcp_server_config_output_secret_token import McpServerConfigOutputSecretToken
 from .mcp_server_config_output_url import McpServerConfigOutputUrl
@@ -47,7 +47,7 @@ class McpServerConfigOutput(UncheckedBaseModel):
     The headers included in the request
     """
 
-    auth_connection: typing.Optional[AuthConnectionLocator] = pydantic.Field(default=None)
+    auth_connection: typing.Optional[McpServerConfigOutputAuthConnection] = pydantic.Field(default=None)
     """
     Optional auth connection to use for authentication with this MCP server
     """

@@ -2,22 +2,7 @@
 
 import typing
 
-import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from .astllm_node_input_prompt import AstllmNodeInputPrompt
+from .astllm_node_input_value_schema import AstllmNodeInputValueSchema
 
-
-class AstllmNodeInput(UncheckedBaseModel):
-    prompt: str = pydantic.Field()
-    """
-    The prompt to evaluate to a boolean value.
-    """
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+AstllmNodeInput = typing.Union[AstllmNodeInputValueSchema, AstllmNodeInputPrompt]

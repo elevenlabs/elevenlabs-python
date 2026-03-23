@@ -43,6 +43,8 @@ class MessagesClient:
         evaluation_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         data_collection_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tool_names_successful: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tool_names_errored: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         main_languages: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         page_size: typing.Optional[int] = None,
         summary_mode: typing.Optional[MessagesTextSearchRequestSummaryMode] = None,
@@ -97,6 +99,12 @@ class MessagesClient:
 
         tool_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by tool names used during the call.
+
+        tool_names_successful : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by tool names that had successful calls.
+
+        tool_names_errored : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by tool names that had errored calls.
 
         main_languages : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by detected main language (language code).
@@ -164,6 +172,8 @@ class MessagesClient:
             evaluation_params=evaluation_params,
             data_collection_params=data_collection_params,
             tool_names=tool_names,
+            tool_names_successful=tool_names_successful,
+            tool_names_errored=tool_names_errored,
             main_languages=main_languages,
             page_size=page_size,
             summary_mode=summary_mode,
@@ -264,6 +274,8 @@ class AsyncMessagesClient:
         evaluation_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         data_collection_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tool_names_successful: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tool_names_errored: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         main_languages: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         page_size: typing.Optional[int] = None,
         summary_mode: typing.Optional[MessagesTextSearchRequestSummaryMode] = None,
@@ -318,6 +330,12 @@ class AsyncMessagesClient:
 
         tool_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by tool names used during the call.
+
+        tool_names_successful : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by tool names that had successful calls.
+
+        tool_names_errored : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by tool names that had errored calls.
 
         main_languages : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by detected main language (language code).
@@ -393,6 +411,8 @@ class AsyncMessagesClient:
             evaluation_params=evaluation_params,
             data_collection_params=data_collection_params,
             tool_names=tool_names,
+            tool_names_successful=tool_names_successful,
+            tool_names_errored=tool_names_errored,
             main_languages=main_languages,
             page_size=page_size,
             summary_mode=summary_mode,

@@ -6,11 +6,13 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .mcp_server_config_update_request_model_auth_connection import McpServerConfigUpdateRequestModelAuthConnection
     from .mcp_server_config_update_request_model_request_headers_value import (
         McpServerConfigUpdateRequestModelRequestHeadersValue,
     )
 _dynamic_imports: typing.Dict[str, str] = {
-    "McpServerConfigUpdateRequestModelRequestHeadersValue": ".mcp_server_config_update_request_model_request_headers_value"
+    "McpServerConfigUpdateRequestModelAuthConnection": ".mcp_server_config_update_request_model_auth_connection",
+    "McpServerConfigUpdateRequestModelRequestHeadersValue": ".mcp_server_config_update_request_model_request_headers_value",
 }
 
 
@@ -35,4 +37,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["McpServerConfigUpdateRequestModelRequestHeadersValue"]
+__all__ = ["McpServerConfigUpdateRequestModelAuthConnection", "McpServerConfigUpdateRequestModelRequestHeadersValue"]

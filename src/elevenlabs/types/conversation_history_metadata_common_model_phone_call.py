@@ -8,15 +8,12 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
-from .conversation_history_sip_trunking_phone_call_model_direction import (
-    ConversationHistorySipTrunkingPhoneCallModelDirection,
-)
-from .conversation_history_twilio_phone_call_model_direction import ConversationHistoryTwilioPhoneCallModelDirection
+from .telephony_direction import TelephonyDirection
 
 
 class ConversationHistoryMetadataCommonModelPhoneCall_SipTrunking(UncheckedBaseModel):
     type: typing.Literal["sip_trunking"] = "sip_trunking"
-    direction: ConversationHistorySipTrunkingPhoneCallModelDirection
+    direction: TelephonyDirection
     phone_number_id: str
     agent_number: str
     external_number: str
@@ -35,7 +32,7 @@ class ConversationHistoryMetadataCommonModelPhoneCall_SipTrunking(UncheckedBaseM
 
 class ConversationHistoryMetadataCommonModelPhoneCall_Twilio(UncheckedBaseModel):
     type: typing.Literal["twilio"] = "twilio"
-    direction: ConversationHistoryTwilioPhoneCallModelDirection
+    direction: TelephonyDirection
     phone_number_id: str
     agent_number: str
     external_number: str

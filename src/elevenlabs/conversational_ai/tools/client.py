@@ -38,6 +38,7 @@ class ToolsClient:
         search: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
         show_only_owned_documents: typing.Optional[bool] = None,
+        created_by_user_id: typing.Optional[str] = None,
         types: typing.Optional[typing.Union[ToolTypeFilter, typing.Sequence[ToolTypeFilter]]] = None,
         sort_direction: typing.Optional[SortDirection] = None,
         sort_by: typing.Optional[ToolSortBy] = None,
@@ -56,7 +57,10 @@ class ToolsClient:
             How many documents to return at maximum. Can not exceed 100, defaults to 30.
 
         show_only_owned_documents : typing.Optional[bool]
-            If set to true, the endpoint will return only tools owned by you (and not shared from somebody else).
+            If set to true, the endpoint will return only tools owned by you (and not shared from somebody else). Deprecated: use created_by_user_id instead.
+
+        created_by_user_id : typing.Optional[str]
+            Filter tools by creator user ID. When set, only tools created by this user are returned. Takes precedence over show_only_owned_documents. Use '@me' to refer to the authenticated user.
 
         types : typing.Optional[typing.Union[ToolTypeFilter, typing.Sequence[ToolTypeFilter]]]
             If present, the endpoint will return only tools of the given types.
@@ -89,6 +93,7 @@ class ToolsClient:
             search="search",
             page_size=1,
             show_only_owned_documents=True,
+            created_by_user_id="created_by_user_id",
             sort_direction="asc",
             sort_by="name",
             cursor="cursor",
@@ -98,6 +103,7 @@ class ToolsClient:
             search=search,
             page_size=page_size,
             show_only_owned_documents=show_only_owned_documents,
+            created_by_user_id=created_by_user_id,
             types=types,
             sort_direction=sort_direction,
             sort_by=sort_by,
@@ -179,7 +185,13 @@ class ToolsClient:
         _response = self._raw_client.get(tool_id, request_options=request_options)
         return _response.data
 
-    def delete(self, tool_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+    def delete(
+        self,
+        tool_id: str,
+        *,
+        force: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Any:
         """
         Delete tool from the workspace.
 
@@ -187,6 +199,9 @@ class ToolsClient:
         ----------
         tool_id : str
             ID of the requested tool.
+
+        force : typing.Optional[bool]
+            If set to true, the tool will be deleted regardless of whether it is used by any agents and it will be removed from the dependent agents and branches.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -205,9 +220,10 @@ class ToolsClient:
         )
         client.conversational_ai.tools.delete(
             tool_id="tool_id",
+            force=True,
         )
         """
-        _response = self._raw_client.delete(tool_id, request_options=request_options)
+        _response = self._raw_client.delete(tool_id, force=force, request_options=request_options)
         return _response.data
 
     def update(
@@ -326,6 +342,7 @@ class AsyncToolsClient:
         search: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
         show_only_owned_documents: typing.Optional[bool] = None,
+        created_by_user_id: typing.Optional[str] = None,
         types: typing.Optional[typing.Union[ToolTypeFilter, typing.Sequence[ToolTypeFilter]]] = None,
         sort_direction: typing.Optional[SortDirection] = None,
         sort_by: typing.Optional[ToolSortBy] = None,
@@ -344,7 +361,10 @@ class AsyncToolsClient:
             How many documents to return at maximum. Can not exceed 100, defaults to 30.
 
         show_only_owned_documents : typing.Optional[bool]
-            If set to true, the endpoint will return only tools owned by you (and not shared from somebody else).
+            If set to true, the endpoint will return only tools owned by you (and not shared from somebody else). Deprecated: use created_by_user_id instead.
+
+        created_by_user_id : typing.Optional[str]
+            Filter tools by creator user ID. When set, only tools created by this user are returned. Takes precedence over show_only_owned_documents. Use '@me' to refer to the authenticated user.
 
         types : typing.Optional[typing.Union[ToolTypeFilter, typing.Sequence[ToolTypeFilter]]]
             If present, the endpoint will return only tools of the given types.
@@ -382,6 +402,7 @@ class AsyncToolsClient:
                 search="search",
                 page_size=1,
                 show_only_owned_documents=True,
+                created_by_user_id="created_by_user_id",
                 sort_direction="asc",
                 sort_by="name",
                 cursor="cursor",
@@ -394,6 +415,7 @@ class AsyncToolsClient:
             search=search,
             page_size=page_size,
             show_only_owned_documents=show_only_owned_documents,
+            created_by_user_id=created_by_user_id,
             types=types,
             sort_direction=sort_direction,
             sort_by=sort_by,
@@ -491,7 +513,13 @@ class AsyncToolsClient:
         _response = await self._raw_client.get(tool_id, request_options=request_options)
         return _response.data
 
-    async def delete(self, tool_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+    async def delete(
+        self,
+        tool_id: str,
+        *,
+        force: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Any:
         """
         Delete tool from the workspace.
 
@@ -499,6 +527,9 @@ class AsyncToolsClient:
         ----------
         tool_id : str
             ID of the requested tool.
+
+        force : typing.Optional[bool]
+            If set to true, the tool will be deleted regardless of whether it is used by any agents and it will be removed from the dependent agents and branches.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -522,12 +553,13 @@ class AsyncToolsClient:
         async def main() -> None:
             await client.conversational_ai.tools.delete(
                 tool_id="tool_id",
+                force=True,
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.delete(tool_id, request_options=request_options)
+        _response = await self._raw_client.delete(tool_id, force=force, request_options=request_options)
         return _response.data
 
     async def update(

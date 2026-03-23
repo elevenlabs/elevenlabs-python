@@ -6,7 +6,6 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
-from ...types.auth_connection_locator import AuthConnectionLocator
 from ...types.conv_ai_secret_locator import ConvAiSecretLocator
 from ...types.mcp_approval_policy import McpApprovalPolicy
 from ...types.mcp_server_config_input import McpServerConfigInput
@@ -16,6 +15,9 @@ from ...types.tool_call_sound_behavior import ToolCallSoundBehavior
 from ...types.tool_call_sound_type import ToolCallSoundType
 from ...types.tool_execution_mode import ToolExecutionMode
 from .raw_client import AsyncRawMcpServersClient, RawMcpServersClient
+from .types.mcp_server_config_update_request_model_auth_connection import (
+    McpServerConfigUpdateRequestModelAuthConnection,
+)
 from .types.mcp_server_config_update_request_model_request_headers_value import (
     McpServerConfigUpdateRequestModelRequestHeadersValue,
 )
@@ -190,7 +192,7 @@ class McpServersClient:
         ] = OMIT,
         disable_compression: typing.Optional[bool] = OMIT,
         secret_token: typing.Optional[ConvAiSecretLocator] = OMIT,
-        auth_connection: typing.Optional[AuthConnectionLocator] = OMIT,
+        auth_connection: typing.Optional[McpServerConfigUpdateRequestModelAuthConnection] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> McpServerResponseModel:
         """
@@ -228,7 +230,7 @@ class McpServersClient:
         secret_token : typing.Optional[ConvAiSecretLocator]
             Optional secret token for authentication with this MCP server
 
-        auth_connection : typing.Optional[AuthConnectionLocator]
+        auth_connection : typing.Optional[McpServerConfigUpdateRequestModelAuthConnection]
             Optional auth connection to use for authentication with this MCP server
 
         request_options : typing.Optional[RequestOptions]
@@ -494,7 +496,7 @@ class AsyncMcpServersClient:
         ] = OMIT,
         disable_compression: typing.Optional[bool] = OMIT,
         secret_token: typing.Optional[ConvAiSecretLocator] = OMIT,
-        auth_connection: typing.Optional[AuthConnectionLocator] = OMIT,
+        auth_connection: typing.Optional[McpServerConfigUpdateRequestModelAuthConnection] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> McpServerResponseModel:
         """
@@ -532,7 +534,7 @@ class AsyncMcpServersClient:
         secret_token : typing.Optional[ConvAiSecretLocator]
             Optional secret token for authentication with this MCP server
 
-        auth_connection : typing.Optional[AuthConnectionLocator]
+        auth_connection : typing.Optional[McpServerConfigUpdateRequestModelAuthConnection]
             Optional auth connection to use for authentication with this MCP server
 
         request_options : typing.Optional[RequestOptions]

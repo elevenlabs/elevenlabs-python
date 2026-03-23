@@ -33,7 +33,10 @@ if typing.TYPE_CHECKING:
         KnowledgeBaseGetOrCreateRagIndexesResponseValue_Failure,
         KnowledgeBaseGetOrCreateRagIndexesResponseValue_Success,
     )
-    from .mcp_servers import McpServerConfigUpdateRequestModelRequestHeadersValue
+    from .mcp_servers import (
+        McpServerConfigUpdateRequestModelAuthConnection,
+        McpServerConfigUpdateRequestModelRequestHeadersValue,
+    )
     from .phone_numbers import (
         PhoneNumbersCreateRequestBody,
         PhoneNumbersCreateRequestBody_SipTrunk,
@@ -67,7 +70,6 @@ if typing.TYPE_CHECKING:
         TestsUpdateResponse_Simulation,
         TestsUpdateResponse_Tool,
     )
-    from .twilio import BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection
     from .whatsapp import (
         BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem,
         BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Body,
@@ -75,7 +77,6 @@ if typing.TYPE_CHECKING:
         BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Header,
     )
 _dynamic_imports: typing.Dict[str, str] = {
-    "BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection": ".twilio",
     "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem": ".whatsapp",
     "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Body": ".whatsapp",
     "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Button": ".whatsapp",
@@ -84,6 +85,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "KnowledgeBaseGetOrCreateRagIndexesResponseValue": ".knowledge_base",
     "KnowledgeBaseGetOrCreateRagIndexesResponseValue_Failure": ".knowledge_base",
     "KnowledgeBaseGetOrCreateRagIndexesResponseValue_Success": ".knowledge_base",
+    "McpServerConfigUpdateRequestModelAuthConnection": ".mcp_servers",
     "McpServerConfigUpdateRequestModelRequestHeadersValue": ".mcp_servers",
     "PhoneNumbersCreateRequestBody": ".phone_numbers",
     "PhoneNumbersCreateRequestBody_SipTrunk": ".phone_numbers",
@@ -158,7 +160,6 @@ def __dir__():
 
 
 __all__ = [
-    "BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection",
     "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem",
     "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Body",
     "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Button",
@@ -167,6 +168,7 @@ __all__ = [
     "KnowledgeBaseGetOrCreateRagIndexesResponseValue",
     "KnowledgeBaseGetOrCreateRagIndexesResponseValue_Failure",
     "KnowledgeBaseGetOrCreateRagIndexesResponseValue_Success",
+    "McpServerConfigUpdateRequestModelAuthConnection",
     "McpServerConfigUpdateRequestModelRequestHeadersValue",
     "PhoneNumbersCreateRequestBody",
     "PhoneNumbersCreateRequestBody_SipTrunk",

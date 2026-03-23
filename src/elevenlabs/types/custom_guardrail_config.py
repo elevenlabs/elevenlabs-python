@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .custom_guardrail_config_trigger_action import CustomGuardrailConfigTriggerAction
 from .guardrail_execution_mode import GuardrailExecutionMode
 
 
@@ -25,6 +26,7 @@ class CustomGuardrailConfig(UncheckedBaseModel):
     """
 
     execution_mode: typing.Optional[GuardrailExecutionMode] = None
+    trigger_action: typing.Optional[CustomGuardrailConfigTriggerAction] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

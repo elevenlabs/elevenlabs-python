@@ -34,6 +34,7 @@ class RawToolsClient:
         search: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
         show_only_owned_documents: typing.Optional[bool] = None,
+        created_by_user_id: typing.Optional[str] = None,
         types: typing.Optional[typing.Union[ToolTypeFilter, typing.Sequence[ToolTypeFilter]]] = None,
         sort_direction: typing.Optional[SortDirection] = None,
         sort_by: typing.Optional[ToolSortBy] = None,
@@ -52,7 +53,10 @@ class RawToolsClient:
             How many documents to return at maximum. Can not exceed 100, defaults to 30.
 
         show_only_owned_documents : typing.Optional[bool]
-            If set to true, the endpoint will return only tools owned by you (and not shared from somebody else).
+            If set to true, the endpoint will return only tools owned by you (and not shared from somebody else). Deprecated: use created_by_user_id instead.
+
+        created_by_user_id : typing.Optional[str]
+            Filter tools by creator user ID. When set, only tools created by this user are returned. Takes precedence over show_only_owned_documents. Use '@me' to refer to the authenticated user.
 
         types : typing.Optional[typing.Union[ToolTypeFilter, typing.Sequence[ToolTypeFilter]]]
             If present, the endpoint will return only tools of the given types.
@@ -81,6 +85,7 @@ class RawToolsClient:
                 "search": search,
                 "page_size": page_size,
                 "show_only_owned_documents": show_only_owned_documents,
+                "created_by_user_id": created_by_user_id,
                 "types": types,
                 "sort_direction": sort_direction,
                 "sort_by": sort_by,
@@ -221,7 +226,11 @@ class RawToolsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
-        self, tool_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        tool_id: str,
+        *,
+        force: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[typing.Any]:
         """
         Delete tool from the workspace.
@@ -230,6 +239,9 @@ class RawToolsClient:
         ----------
         tool_id : str
             ID of the requested tool.
+
+        force : typing.Optional[bool]
+            If set to true, the tool will be deleted regardless of whether it is used by any agents and it will be removed from the dependent agents and branches.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -242,6 +254,9 @@ class RawToolsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/tools/{jsonable_encoder(tool_id)}",
             method="DELETE",
+            params={
+                "force": force,
+            },
             request_options=request_options,
         )
         try:
@@ -407,6 +422,7 @@ class AsyncRawToolsClient:
         search: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
         show_only_owned_documents: typing.Optional[bool] = None,
+        created_by_user_id: typing.Optional[str] = None,
         types: typing.Optional[typing.Union[ToolTypeFilter, typing.Sequence[ToolTypeFilter]]] = None,
         sort_direction: typing.Optional[SortDirection] = None,
         sort_by: typing.Optional[ToolSortBy] = None,
@@ -425,7 +441,10 @@ class AsyncRawToolsClient:
             How many documents to return at maximum. Can not exceed 100, defaults to 30.
 
         show_only_owned_documents : typing.Optional[bool]
-            If set to true, the endpoint will return only tools owned by you (and not shared from somebody else).
+            If set to true, the endpoint will return only tools owned by you (and not shared from somebody else). Deprecated: use created_by_user_id instead.
+
+        created_by_user_id : typing.Optional[str]
+            Filter tools by creator user ID. When set, only tools created by this user are returned. Takes precedence over show_only_owned_documents. Use '@me' to refer to the authenticated user.
 
         types : typing.Optional[typing.Union[ToolTypeFilter, typing.Sequence[ToolTypeFilter]]]
             If present, the endpoint will return only tools of the given types.
@@ -454,6 +473,7 @@ class AsyncRawToolsClient:
                 "search": search,
                 "page_size": page_size,
                 "show_only_owned_documents": show_only_owned_documents,
+                "created_by_user_id": created_by_user_id,
                 "types": types,
                 "sort_direction": sort_direction,
                 "sort_by": sort_by,
@@ -594,7 +614,11 @@ class AsyncRawToolsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
-        self, tool_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        tool_id: str,
+        *,
+        force: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[typing.Any]:
         """
         Delete tool from the workspace.
@@ -603,6 +627,9 @@ class AsyncRawToolsClient:
         ----------
         tool_id : str
             ID of the requested tool.
+
+        force : typing.Optional[bool]
+            If set to true, the tool will be deleted regardless of whether it is used by any agents and it will be removed from the dependent agents and branches.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -615,6 +642,9 @@ class AsyncRawToolsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/tools/{jsonable_encoder(tool_id)}",
             method="DELETE",
+            params={
+                "force": force,
+            },
             request_options=request_options,
         )
         try:

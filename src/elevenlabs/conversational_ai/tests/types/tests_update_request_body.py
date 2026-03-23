@@ -91,6 +91,7 @@ class TestsUpdateRequestBody_Simulation(UncheckedBaseModel):
     success_condition: typing.Optional[str] = None
     simulation_scenario: typing.Optional[str] = None
     simulation_max_turns: typing.Optional[int] = None
+    simulation_environment: typing.Optional[str] = None
     name: str
     parent_folder_id: typing.Optional[str] = None
 

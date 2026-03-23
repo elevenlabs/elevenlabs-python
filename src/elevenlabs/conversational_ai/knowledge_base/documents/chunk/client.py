@@ -4,6 +4,7 @@ import typing
 
 from .....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .....core.request_options import RequestOptions
+from .....types.embedding_model_enum import EmbeddingModelEnum
 from .....types.knowledge_base_document_chunk_response_model import KnowledgeBaseDocumentChunkResponseModel
 from .raw_client import AsyncRawChunkClient, RawChunkClient
 
@@ -24,7 +25,12 @@ class ChunkClient:
         return self._raw_client
 
     def get(
-        self, documentation_id: str, chunk_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        documentation_id: str,
+        chunk_id: str,
+        *,
+        embedding_model: typing.Optional[EmbeddingModelEnum] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> KnowledgeBaseDocumentChunkResponseModel:
         """
         Get details about a specific documentation part used by RAG.
@@ -36,6 +42,9 @@ class ChunkClient:
 
         chunk_id : str
             The id of a document RAG chunk from the knowledge base.
+
+        embedding_model : typing.Optional[EmbeddingModelEnum]
+            The embedding model used to retrieve the chunk.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -55,9 +64,12 @@ class ChunkClient:
         client.conversational_ai.knowledge_base.documents.chunk.get(
             documentation_id="21m00Tcm4TlvDq8ikWAM",
             chunk_id="chunk_id",
+            embedding_model="e5_mistral_7b_instruct",
         )
         """
-        _response = self._raw_client.get(documentation_id, chunk_id, request_options=request_options)
+        _response = self._raw_client.get(
+            documentation_id, chunk_id, embedding_model=embedding_model, request_options=request_options
+        )
         return _response.data
 
 
@@ -77,7 +89,12 @@ class AsyncChunkClient:
         return self._raw_client
 
     async def get(
-        self, documentation_id: str, chunk_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        documentation_id: str,
+        chunk_id: str,
+        *,
+        embedding_model: typing.Optional[EmbeddingModelEnum] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> KnowledgeBaseDocumentChunkResponseModel:
         """
         Get details about a specific documentation part used by RAG.
@@ -89,6 +106,9 @@ class AsyncChunkClient:
 
         chunk_id : str
             The id of a document RAG chunk from the knowledge base.
+
+        embedding_model : typing.Optional[EmbeddingModelEnum]
+            The embedding model used to retrieve the chunk.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -113,10 +133,13 @@ class AsyncChunkClient:
             await client.conversational_ai.knowledge_base.documents.chunk.get(
                 documentation_id="21m00Tcm4TlvDq8ikWAM",
                 chunk_id="chunk_id",
+                embedding_model="e5_mistral_7b_instruct",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get(documentation_id, chunk_id, request_options=request_options)
+        _response = await self._raw_client.get(
+            documentation_id, chunk_id, embedding_model=embedding_model, request_options=request_options
+        )
         return _response.data

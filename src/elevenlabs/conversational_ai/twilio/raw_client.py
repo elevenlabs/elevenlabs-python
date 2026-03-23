@@ -13,10 +13,8 @@ from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.conversation_initiation_client_data_request_input import ConversationInitiationClientDataRequestInput
 from ...types.http_validation_error import HttpValidationError
 from ...types.telephony_call_config import TelephonyCallConfig
+from ...types.telephony_direction import TelephonyDirection
 from ...types.twilio_outbound_call_response import TwilioOutboundCallResponse
-from .types.body_register_a_twilio_call_and_return_twi_ml_v_1_convai_twilio_register_call_post_direction import (
-    BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection,
-)
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -118,7 +116,7 @@ class RawTwilioClient:
         agent_id: str,
         from_number: str,
         to_number: str,
-        direction: typing.Optional[BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection] = OMIT,
+        direction: typing.Optional[TelephonyDirection] = OMIT,
         conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[None]:
@@ -133,7 +131,7 @@ class RawTwilioClient:
 
         to_number : str
 
-        direction : typing.Optional[BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection]
+        direction : typing.Optional[TelephonyDirection]
 
         conversation_initiation_client_data : typing.Optional[ConversationInitiationClientDataRequestInput]
 
@@ -280,7 +278,7 @@ class AsyncRawTwilioClient:
         agent_id: str,
         from_number: str,
         to_number: str,
-        direction: typing.Optional[BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection] = OMIT,
+        direction: typing.Optional[TelephonyDirection] = OMIT,
         conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[None]:
@@ -295,7 +293,7 @@ class AsyncRawTwilioClient:
 
         to_number : str
 
-        direction : typing.Optional[BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection]
+        direction : typing.Optional[TelephonyDirection]
 
         conversation_initiation_client_data : typing.Optional[ConversationInitiationClientDataRequestInput]
 

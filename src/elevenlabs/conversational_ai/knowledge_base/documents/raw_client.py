@@ -33,6 +33,8 @@ class RawDocumentsClient:
         url: str,
         name: typing.Optional[str] = OMIT,
         parent_folder_id: typing.Optional[str] = OMIT,
+        enable_auto_sync: typing.Optional[bool] = OMIT,
+        auto_remove: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AddKnowledgeBaseResponseModel]:
         """
@@ -49,6 +51,12 @@ class RawDocumentsClient:
         parent_folder_id : typing.Optional[str]
             If set, the created document or folder will be placed inside the given folder.
 
+        enable_auto_sync : typing.Optional[bool]
+            Whether to enable auto-sync for this URL document.
+
+        auto_remove : typing.Optional[bool]
+            Whether to automatically remove the document if the URL becomes unavailable. Only applicable when auto-sync is enabled.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -64,6 +72,8 @@ class RawDocumentsClient:
                 "url": url,
                 "name": name,
                 "parent_folder_id": parent_folder_id,
+                "enable_auto_sync": enable_auto_sync,
+                "auto_remove": auto_remove,
             },
             headers={
                 "content-type": "application/json",
@@ -242,6 +252,8 @@ class RawDocumentsClient:
         *,
         name: str,
         parent_folder_id: typing.Optional[str] = OMIT,
+        enable_auto_sync: typing.Optional[bool] = OMIT,
+        auto_remove: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AddKnowledgeBaseResponseModel]:
         """
@@ -254,6 +266,12 @@ class RawDocumentsClient:
 
         parent_folder_id : typing.Optional[str]
             If set, the created document or folder will be placed inside the given folder.
+
+        enable_auto_sync : typing.Optional[bool]
+            Whether to enable auto-sync for this URL document.
+
+        auto_remove : typing.Optional[bool]
+            Whether to automatically remove the document if the URL becomes unavailable. Only applicable when auto-sync is enabled.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -269,6 +287,8 @@ class RawDocumentsClient:
             json={
                 "name": name,
                 "parent_folder_id": parent_folder_id,
+                "enable_auto_sync": enable_auto_sync,
+                "auto_remove": auto_remove,
             },
             headers={
                 "content-type": "application/json",
@@ -769,6 +789,8 @@ class AsyncRawDocumentsClient:
         url: str,
         name: typing.Optional[str] = OMIT,
         parent_folder_id: typing.Optional[str] = OMIT,
+        enable_auto_sync: typing.Optional[bool] = OMIT,
+        auto_remove: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AddKnowledgeBaseResponseModel]:
         """
@@ -785,6 +807,12 @@ class AsyncRawDocumentsClient:
         parent_folder_id : typing.Optional[str]
             If set, the created document or folder will be placed inside the given folder.
 
+        enable_auto_sync : typing.Optional[bool]
+            Whether to enable auto-sync for this URL document.
+
+        auto_remove : typing.Optional[bool]
+            Whether to automatically remove the document if the URL becomes unavailable. Only applicable when auto-sync is enabled.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -800,6 +828,8 @@ class AsyncRawDocumentsClient:
                 "url": url,
                 "name": name,
                 "parent_folder_id": parent_folder_id,
+                "enable_auto_sync": enable_auto_sync,
+                "auto_remove": auto_remove,
             },
             headers={
                 "content-type": "application/json",
@@ -978,6 +1008,8 @@ class AsyncRawDocumentsClient:
         *,
         name: str,
         parent_folder_id: typing.Optional[str] = OMIT,
+        enable_auto_sync: typing.Optional[bool] = OMIT,
+        auto_remove: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AddKnowledgeBaseResponseModel]:
         """
@@ -990,6 +1022,12 @@ class AsyncRawDocumentsClient:
 
         parent_folder_id : typing.Optional[str]
             If set, the created document or folder will be placed inside the given folder.
+
+        enable_auto_sync : typing.Optional[bool]
+            Whether to enable auto-sync for this URL document.
+
+        auto_remove : typing.Optional[bool]
+            Whether to automatically remove the document if the URL becomes unavailable. Only applicable when auto-sync is enabled.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1005,6 +1043,8 @@ class AsyncRawDocumentsClient:
             json={
                 "name": name,
                 "parent_folder_id": parent_folder_id,
+                "enable_auto_sync": enable_auto_sync,
+                "auto_remove": auto_remove,
             },
             headers={
                 "content-type": "application/json",

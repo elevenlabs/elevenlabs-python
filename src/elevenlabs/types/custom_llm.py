@@ -5,7 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .conv_ai_secret_locator import ConvAiSecretLocator
+from .custom_llm_api_key import CustomLlmApiKey
 from .custom_llm_request_headers_value import CustomLlmRequestHeadersValue
 from .custom_llmapi_type import CustomLlmapiType
 
@@ -21,7 +21,7 @@ class CustomLlm(UncheckedBaseModel):
     The model ID to be used if URL serves multiple models
     """
 
-    api_key: typing.Optional[ConvAiSecretLocator] = pydantic.Field(default=None)
+    api_key: typing.Optional[CustomLlmApiKey] = pydantic.Field(default=None)
     """
     The API key for authentication. Either a workspace secret reference {'secret_id': '...'} or an environment variable reference {'env_var_label': '...'}.
     """

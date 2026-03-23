@@ -99,6 +99,11 @@ class SpeechHistoryItemResponse(UncheckedBaseModel):
     The dialogue (voice and text pairs) used to generate the audio item. If this is set then the top level `text` and `voice_id` fields will be empty.
     """
 
+    output_format: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The output format the audio was originally generated in.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
