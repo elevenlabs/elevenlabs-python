@@ -7,6 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .speech_to_text_convert_request_entity_detection import SpeechToTextConvertRequestEntityDetection
+    from .speech_to_text_convert_request_entity_redaction import SpeechToTextConvertRequestEntityRedaction
     from .speech_to_text_convert_request_file_format import SpeechToTextConvertRequestFileFormat
     from .speech_to_text_convert_request_model_id import SpeechToTextConvertRequestModelId
     from .speech_to_text_convert_request_timestamps_granularity import SpeechToTextConvertRequestTimestampsGranularity
@@ -14,6 +15,7 @@ if typing.TYPE_CHECKING:
     from .speech_to_text_convert_response import SpeechToTextConvertResponse
 _dynamic_imports: typing.Dict[str, str] = {
     "SpeechToTextConvertRequestEntityDetection": ".speech_to_text_convert_request_entity_detection",
+    "SpeechToTextConvertRequestEntityRedaction": ".speech_to_text_convert_request_entity_redaction",
     "SpeechToTextConvertRequestFileFormat": ".speech_to_text_convert_request_file_format",
     "SpeechToTextConvertRequestModelId": ".speech_to_text_convert_request_model_id",
     "SpeechToTextConvertRequestTimestampsGranularity": ".speech_to_text_convert_request_timestamps_granularity",
@@ -45,6 +47,7 @@ def __dir__():
 
 __all__ = [
     "SpeechToTextConvertRequestEntityDetection",
+    "SpeechToTextConvertRequestEntityRedaction",
     "SpeechToTextConvertRequestFileFormat",
     "SpeechToTextConvertRequestModelId",
     "SpeechToTextConvertRequestTimestampsGranularity",

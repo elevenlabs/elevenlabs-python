@@ -7,7 +7,9 @@ import typing
 import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
+from .astllm_node_input import AstllmNodeInput
 
 
 class AstEqualsOperatorNodeInputLeft_AndOperator(UncheckedBaseModel):
@@ -35,6 +37,30 @@ class AstEqualsOperatorNodeInputLeft_BooleanLiteral(UncheckedBaseModel):
 
     type: typing.Literal["boolean_literal"] = "boolean_literal"
     value: bool
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class AstEqualsOperatorNodeInputLeft_ConditionalOperator(UncheckedBaseModel):
+    """
+    Left operand of the binary operator.
+    """
+
+    type: typing.Literal["conditional_operator"] = "conditional_operator"
+    condition: "AstConditionalOperatorNodeInputCondition"
+    true_expression: typing_extensions.Annotated[
+        "AstConditionalOperatorNodeInputTrueExpression", FieldMetadata(alias="trueExpression")
+    ]
+    false_expression: typing_extensions.Annotated[
+        "AstConditionalOperatorNodeInputFalseExpression", FieldMetadata(alias="falseExpression")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -122,21 +148,16 @@ class AstEqualsOperatorNodeInputLeft_GteOperator(UncheckedBaseModel):
 
 
 class AstEqualsOperatorNodeInputLeft_Llm(UncheckedBaseModel):
-    """
-    Left operand of the binary operator.
-    """
-
+    value: AstllmNodeInput
     type: typing.Literal["llm"] = "llm"
-    prompt: str
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:
             frozen = True
             smart_union = True
-            extra = pydantic.Extra.allow
 
 
 class AstEqualsOperatorNodeInputLeft_LtOperator(UncheckedBaseModel):
@@ -254,6 +275,7 @@ AstEqualsOperatorNodeInputLeft = typing_extensions.Annotated[
     typing.Union[
         AstEqualsOperatorNodeInputLeft_AndOperator,
         AstEqualsOperatorNodeInputLeft_BooleanLiteral,
+        AstEqualsOperatorNodeInputLeft_ConditionalOperator,
         AstEqualsOperatorNodeInputLeft_DynamicVariable,
         AstEqualsOperatorNodeInputLeft_EqOperator,
         AstEqualsOperatorNodeInputLeft_GtOperator,
@@ -269,6 +291,9 @@ AstEqualsOperatorNodeInputLeft = typing_extensions.Annotated[
     UnionMetadata(discriminant="type"),
 ]
 from .ast_and_operator_node_input_children_item import AstAndOperatorNodeInputChildrenItem  # noqa: E402, I001
+from .ast_conditional_operator_node_input_condition import AstConditionalOperatorNodeInputCondition  # noqa: E402, I001
+from .ast_conditional_operator_node_input_true_expression import AstConditionalOperatorNodeInputTrueExpression  # noqa: E402, I001
+from .ast_conditional_operator_node_input_false_expression import AstConditionalOperatorNodeInputFalseExpression  # noqa: E402, I001
 from .ast_equals_operator_node_input_right import AstEqualsOperatorNodeInputRight  # noqa: E402, I001
 from .ast_greater_than_operator_node_input_left import AstGreaterThanOperatorNodeInputLeft  # noqa: E402, I001
 from .ast_greater_than_operator_node_input_right import AstGreaterThanOperatorNodeInputRight  # noqa: E402, I001
@@ -283,6 +308,7 @@ from .ast_not_equals_operator_node_input_right import AstNotEqualsOperatorNodeIn
 from .ast_or_operator_node_input_children_item import AstOrOperatorNodeInputChildrenItem  # noqa: E402, I001
 
 update_forward_refs(AstEqualsOperatorNodeInputLeft_AndOperator)
+update_forward_refs(AstEqualsOperatorNodeInputLeft_ConditionalOperator)
 update_forward_refs(AstEqualsOperatorNodeInputLeft_EqOperator)
 update_forward_refs(AstEqualsOperatorNodeInputLeft_GtOperator)
 update_forward_refs(AstEqualsOperatorNodeInputLeft_GteOperator)

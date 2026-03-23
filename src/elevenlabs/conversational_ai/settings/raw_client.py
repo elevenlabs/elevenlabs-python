@@ -78,6 +78,7 @@ class RawSettingsClient:
         webhooks: typing.Optional[ConvAiWebhooks] = OMIT,
         can_use_mcp_servers: typing.Optional[bool] = OMIT,
         rag_retention_period_days: typing.Optional[int] = OMIT,
+        conversation_embedding_retention_days: typing.Optional[int] = OMIT,
         default_livekit_stack: typing.Optional[LivekitStackType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetConvAiSettingsResponseModel]:
@@ -94,6 +95,9 @@ class RawSettingsClient:
             Whether the workspace can use MCP servers
 
         rag_retention_period_days : typing.Optional[int]
+
+        conversation_embedding_retention_days : typing.Optional[int]
+            Days to retain conversation embeddings. None means use the system default (30 days).
 
         default_livekit_stack : typing.Optional[LivekitStackType]
 
@@ -119,6 +123,7 @@ class RawSettingsClient:
                 ),
                 "can_use_mcp_servers": can_use_mcp_servers,
                 "rag_retention_period_days": rag_retention_period_days,
+                "conversation_embedding_retention_days": conversation_embedding_retention_days,
                 "default_livekit_stack": default_livekit_stack,
             },
             headers={
@@ -212,6 +217,7 @@ class AsyncRawSettingsClient:
         webhooks: typing.Optional[ConvAiWebhooks] = OMIT,
         can_use_mcp_servers: typing.Optional[bool] = OMIT,
         rag_retention_period_days: typing.Optional[int] = OMIT,
+        conversation_embedding_retention_days: typing.Optional[int] = OMIT,
         default_livekit_stack: typing.Optional[LivekitStackType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetConvAiSettingsResponseModel]:
@@ -228,6 +234,9 @@ class AsyncRawSettingsClient:
             Whether the workspace can use MCP servers
 
         rag_retention_period_days : typing.Optional[int]
+
+        conversation_embedding_retention_days : typing.Optional[int]
+            Days to retain conversation embeddings. None means use the system default (30 days).
 
         default_livekit_stack : typing.Optional[LivekitStackType]
 
@@ -253,6 +262,7 @@ class AsyncRawSettingsClient:
                 ),
                 "can_use_mcp_servers": can_use_mcp_servers,
                 "rag_retention_period_days": rag_retention_period_days,
+                "conversation_embedding_retention_days": conversation_embedding_retention_days,
                 "default_livekit_stack": default_livekit_stack,
             },
             headers={

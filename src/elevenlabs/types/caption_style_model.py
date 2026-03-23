@@ -8,7 +8,9 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .caption_style_character_animation_model import CaptionStyleCharacterAnimationModel
 from .caption_style_horizontal_placement_model import CaptionStyleHorizontalPlacementModel
 from .caption_style_model_text_align import CaptionStyleModelTextAlign
+from .caption_style_model_text_blend_mode import CaptionStyleModelTextBlendMode
 from .caption_style_model_text_style import CaptionStyleModelTextStyle
+from .caption_style_model_text_transform import CaptionStyleModelTextTransform
 from .caption_style_model_text_weight import CaptionStyleModelTextWeight
 from .caption_style_section_animation_model import CaptionStyleSectionAnimationModel
 from .caption_style_template_model import CaptionStyleTemplateModel
@@ -26,6 +28,8 @@ class CaptionStyleModel(UncheckedBaseModel):
     text_align: typing.Optional[CaptionStyleModelTextAlign] = None
     text_style: typing.Optional[CaptionStyleModelTextStyle] = None
     text_weight: typing.Optional[CaptionStyleModelTextWeight] = None
+    text_transform: typing.Optional[CaptionStyleModelTextTransform] = None
+    text_blend_mode: typing.Optional[CaptionStyleModelTextBlendMode] = None
     text_shadow: typing.Optional[StudioTextStyleShadowModel] = None
     text_outline: typing.Optional[StudioTextStyleOutlineModel] = None
     background_enabled: typing.Optional[bool] = None

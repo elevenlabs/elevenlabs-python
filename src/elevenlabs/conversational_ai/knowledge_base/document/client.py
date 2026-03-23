@@ -7,6 +7,7 @@ from ....core.request_options import RequestOptions
 from ....types.embedding_model_enum import EmbeddingModelEnum
 from ....types.rag_document_index_response_model import RagDocumentIndexResponseModel
 from .raw_client import AsyncRawDocumentClient, RawDocumentClient
+from .types.document_refresh_response import DocumentRefreshResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -26,6 +27,39 @@ class DocumentClient:
         RawDocumentClient
         """
         return self._raw_client
+
+    def refresh(
+        self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> DocumentRefreshResponse:
+        """
+        Manually refresh a URL document by re-fetching its content from the source URL.
+
+        Parameters
+        ----------
+        documentation_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DocumentRefreshResponse
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.knowledge_base.document.refresh(
+            documentation_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._raw_client.refresh(documentation_id, request_options=request_options)
+        return _response.data
 
     def compute_rag_index(
         self,
@@ -82,6 +116,47 @@ class AsyncDocumentClient:
         AsyncRawDocumentClient
         """
         return self._raw_client
+
+    async def refresh(
+        self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> DocumentRefreshResponse:
+        """
+        Manually refresh a URL document by re-fetching its content from the source URL.
+
+        Parameters
+        ----------
+        documentation_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DocumentRefreshResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.knowledge_base.document.refresh(
+                documentation_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.refresh(documentation_id, request_options=request_options)
+        return _response.data
 
     async def compute_rag_index(
         self,

@@ -11,7 +11,6 @@ from ...core.request_options import RequestOptions
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
-from ...types.auth_connection_locator import AuthConnectionLocator
 from ...types.conv_ai_secret_locator import ConvAiSecretLocator
 from ...types.http_validation_error import HttpValidationError
 from ...types.mcp_approval_policy import McpApprovalPolicy
@@ -21,6 +20,9 @@ from ...types.mcp_servers_response_model import McpServersResponseModel
 from ...types.tool_call_sound_behavior import ToolCallSoundBehavior
 from ...types.tool_call_sound_type import ToolCallSoundType
 from ...types.tool_execution_mode import ToolExecutionMode
+from .types.mcp_server_config_update_request_model_auth_connection import (
+    McpServerConfigUpdateRequestModelAuthConnection,
+)
 from .types.mcp_server_config_update_request_model_request_headers_value import (
     McpServerConfigUpdateRequestModelRequestHeadersValue,
 )
@@ -254,7 +256,7 @@ class RawMcpServersClient:
         ] = OMIT,
         disable_compression: typing.Optional[bool] = OMIT,
         secret_token: typing.Optional[ConvAiSecretLocator] = OMIT,
-        auth_connection: typing.Optional[AuthConnectionLocator] = OMIT,
+        auth_connection: typing.Optional[McpServerConfigUpdateRequestModelAuthConnection] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[McpServerResponseModel]:
         """
@@ -292,7 +294,7 @@ class RawMcpServersClient:
         secret_token : typing.Optional[ConvAiSecretLocator]
             Optional secret token for authentication with this MCP server
 
-        auth_connection : typing.Optional[AuthConnectionLocator]
+        auth_connection : typing.Optional[McpServerConfigUpdateRequestModelAuthConnection]
             Optional auth connection to use for authentication with this MCP server
 
         request_options : typing.Optional[RequestOptions]
@@ -323,7 +325,9 @@ class RawMcpServersClient:
                     object_=secret_token, annotation=ConvAiSecretLocator, direction="write"
                 ),
                 "auth_connection": convert_and_respect_annotation_metadata(
-                    object_=auth_connection, annotation=AuthConnectionLocator, direction="write"
+                    object_=auth_connection,
+                    annotation=McpServerConfigUpdateRequestModelAuthConnection,
+                    direction="write",
                 ),
             },
             headers={
@@ -586,7 +590,7 @@ class AsyncRawMcpServersClient:
         ] = OMIT,
         disable_compression: typing.Optional[bool] = OMIT,
         secret_token: typing.Optional[ConvAiSecretLocator] = OMIT,
-        auth_connection: typing.Optional[AuthConnectionLocator] = OMIT,
+        auth_connection: typing.Optional[McpServerConfigUpdateRequestModelAuthConnection] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[McpServerResponseModel]:
         """
@@ -624,7 +628,7 @@ class AsyncRawMcpServersClient:
         secret_token : typing.Optional[ConvAiSecretLocator]
             Optional secret token for authentication with this MCP server
 
-        auth_connection : typing.Optional[AuthConnectionLocator]
+        auth_connection : typing.Optional[McpServerConfigUpdateRequestModelAuthConnection]
             Optional auth connection to use for authentication with this MCP server
 
         request_options : typing.Optional[RequestOptions]
@@ -655,7 +659,9 @@ class AsyncRawMcpServersClient:
                     object_=secret_token, annotation=ConvAiSecretLocator, direction="write"
                 ),
                 "auth_connection": convert_and_respect_annotation_metadata(
-                    object_=auth_connection, annotation=AuthConnectionLocator, direction="write"
+                    object_=auth_connection,
+                    annotation=McpServerConfigUpdateRequestModelAuthConnection,
+                    direction="write",
                 ),
             },
             headers={

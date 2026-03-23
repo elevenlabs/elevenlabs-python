@@ -5,11 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .conversation_history_twilio_phone_call_model_direction import ConversationHistoryTwilioPhoneCallModelDirection
+from .telephony_direction import TelephonyDirection
 
 
 class ConversationHistoryTwilioPhoneCallModel(UncheckedBaseModel):
-    direction: ConversationHistoryTwilioPhoneCallModelDirection
+    direction: TelephonyDirection
     phone_number_id: str
     agent_number: str
     external_number: str

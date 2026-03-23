@@ -6,12 +6,14 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .content_config import ContentConfig
+from .content_guardrail_input_trigger_action import ContentGuardrailInputTriggerAction
 from .guardrail_execution_mode import GuardrailExecutionMode
 
 
 class ContentGuardrailInput(UncheckedBaseModel):
     execution_mode: typing.Optional[GuardrailExecutionMode] = None
     config: typing.Optional[ContentConfig] = None
+    trigger_action: typing.Optional[ContentGuardrailInputTriggerAction] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

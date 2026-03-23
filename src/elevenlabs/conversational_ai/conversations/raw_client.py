@@ -48,7 +48,7 @@ class RawConversationsClient:
             The ID of the branch to use
 
         environment : typing.Optional[str]
-            The environment to use. Defaults to "production" on the server.
+            The environment to use for resolving environment variables (e.g. 'production', 'staging'). Defaults to 'production'.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -119,7 +119,7 @@ class RawConversationsClient:
             The ID of the branch to use
 
         environment : typing.Optional[str]
-            The environment to use. Defaults to "production" on the server.
+            The environment to use for resolving environment variables (e.g. 'production', 'staging'). Defaults to 'production'.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -183,6 +183,8 @@ class RawConversationsClient:
         evaluation_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         data_collection_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tool_names_successful: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tool_names_errored: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         main_languages: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         page_size: typing.Optional[int] = None,
         summary_mode: typing.Optional[ConversationsListRequestSummaryMode] = None,
@@ -238,6 +240,12 @@ class RawConversationsClient:
         tool_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by tool names used during the call.
 
+        tool_names_successful : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by tool names that had successful calls.
+
+        tool_names_errored : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by tool names that had errored calls.
+
         main_languages : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by detected main language (language code).
 
@@ -281,6 +289,8 @@ class RawConversationsClient:
                 "evaluation_params": evaluation_params,
                 "data_collection_params": data_collection_params,
                 "tool_names": tool_names,
+                "tool_names_successful": tool_names_successful,
+                "tool_names_errored": tool_names_errored,
                 "main_languages": main_languages,
                 "page_size": page_size,
                 "summary_mode": summary_mode,
@@ -447,7 +457,7 @@ class AsyncRawConversationsClient:
             The ID of the branch to use
 
         environment : typing.Optional[str]
-            The environment to use. Defaults to "production" on the server.
+            The environment to use for resolving environment variables (e.g. 'production', 'staging'). Defaults to 'production'.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -518,7 +528,7 @@ class AsyncRawConversationsClient:
             The ID of the branch to use
 
         environment : typing.Optional[str]
-            The environment to use. Defaults to "production" on the server.
+            The environment to use for resolving environment variables (e.g. 'production', 'staging'). Defaults to 'production'.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -582,6 +592,8 @@ class AsyncRawConversationsClient:
         evaluation_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         data_collection_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tool_names_successful: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tool_names_errored: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         main_languages: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         page_size: typing.Optional[int] = None,
         summary_mode: typing.Optional[ConversationsListRequestSummaryMode] = None,
@@ -637,6 +649,12 @@ class AsyncRawConversationsClient:
         tool_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by tool names used during the call.
 
+        tool_names_successful : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by tool names that had successful calls.
+
+        tool_names_errored : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by tool names that had errored calls.
+
         main_languages : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by detected main language (language code).
 
@@ -680,6 +698,8 @@ class AsyncRawConversationsClient:
                 "evaluation_params": evaluation_params,
                 "data_collection_params": data_collection_params,
                 "tool_names": tool_names,
+                "tool_names_successful": tool_names_successful,
+                "tool_names_errored": tool_names_errored,
                 "main_languages": main_languages,
                 "page_size": page_size,
                 "summary_mode": summary_mode,

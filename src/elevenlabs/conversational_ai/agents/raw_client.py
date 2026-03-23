@@ -347,6 +347,7 @@ class RawAgentsClient:
         search: typing.Optional[str] = None,
         archived: typing.Optional[bool] = None,
         show_only_owned_agents: typing.Optional[bool] = None,
+        created_by_user_id: typing.Optional[str] = None,
         sort_direction: typing.Optional[SortDirection] = None,
         sort_by: typing.Optional[AgentSortBy] = None,
         cursor: typing.Optional[str] = None,
@@ -367,7 +368,10 @@ class RawAgentsClient:
             Filter agents by archived status
 
         show_only_owned_agents : typing.Optional[bool]
-            If set to true, the endpoint will omit any agents that were shared with you by someone else and include only the ones you own
+            If set to true, the endpoint will omit any agents that were shared with you by someone else and include only the ones you own. Deprecated: use created_by_user_id instead.
+
+        created_by_user_id : typing.Optional[str]
+            Filter agents by creator user ID. When set, only agents created by this user are returned. Takes precedence over show_only_owned_agents. Use '@me' to refer to the authenticated user.
 
         sort_direction : typing.Optional[SortDirection]
             The direction to sort the results
@@ -394,6 +398,7 @@ class RawAgentsClient:
                 "search": search,
                 "archived": archived,
                 "show_only_owned_agents": show_only_owned_agents,
+                "created_by_user_id": created_by_user_id,
                 "sort_direction": sort_direction,
                 "sort_by": sort_by,
                 "cursor": cursor,
@@ -1041,6 +1046,7 @@ class AsyncRawAgentsClient:
         search: typing.Optional[str] = None,
         archived: typing.Optional[bool] = None,
         show_only_owned_agents: typing.Optional[bool] = None,
+        created_by_user_id: typing.Optional[str] = None,
         sort_direction: typing.Optional[SortDirection] = None,
         sort_by: typing.Optional[AgentSortBy] = None,
         cursor: typing.Optional[str] = None,
@@ -1061,7 +1067,10 @@ class AsyncRawAgentsClient:
             Filter agents by archived status
 
         show_only_owned_agents : typing.Optional[bool]
-            If set to true, the endpoint will omit any agents that were shared with you by someone else and include only the ones you own
+            If set to true, the endpoint will omit any agents that were shared with you by someone else and include only the ones you own. Deprecated: use created_by_user_id instead.
+
+        created_by_user_id : typing.Optional[str]
+            Filter agents by creator user ID. When set, only agents created by this user are returned. Takes precedence over show_only_owned_agents. Use '@me' to refer to the authenticated user.
 
         sort_direction : typing.Optional[SortDirection]
             The direction to sort the results
@@ -1088,6 +1097,7 @@ class AsyncRawAgentsClient:
                 "search": search,
                 "archived": archived,
                 "show_only_owned_agents": show_only_owned_agents,
+                "created_by_user_id": created_by_user_id,
                 "sort_direction": sort_direction,
                 "sort_by": sort_by,
                 "cursor": cursor,

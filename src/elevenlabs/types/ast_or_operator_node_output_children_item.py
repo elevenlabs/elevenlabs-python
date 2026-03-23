@@ -7,7 +7,9 @@ import typing
 import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
+from .llm_literal_json_schema_property import LlmLiteralJsonSchemaProperty
 
 
 class AstOrOperatorNodeOutputChildrenItem_AndOperator(UncheckedBaseModel):
@@ -27,6 +29,26 @@ class AstOrOperatorNodeOutputChildrenItem_AndOperator(UncheckedBaseModel):
 class AstOrOperatorNodeOutputChildrenItem_BooleanLiteral(UncheckedBaseModel):
     type: typing.Literal["boolean_literal"] = "boolean_literal"
     value: bool
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class AstOrOperatorNodeOutputChildrenItem_ConditionalOperator(UncheckedBaseModel):
+    type: typing.Literal["conditional_operator"] = "conditional_operator"
+    condition: "AstConditionalOperatorNodeOutputCondition"
+    true_expression: typing_extensions.Annotated[
+        "AstConditionalOperatorNodeOutputTrueExpression", FieldMetadata(alias="trueExpression")
+    ]
+    false_expression: typing_extensions.Annotated[
+        "AstConditionalOperatorNodeOutputFalseExpression", FieldMetadata(alias="falseExpression")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -99,6 +121,7 @@ class AstOrOperatorNodeOutputChildrenItem_GteOperator(UncheckedBaseModel):
 
 class AstOrOperatorNodeOutputChildrenItem_Llm(UncheckedBaseModel):
     type: typing.Literal["llm"] = "llm"
+    value_schema: LlmLiteralJsonSchemaProperty
     prompt: str
 
     if IS_PYDANTIC_V2:
@@ -202,6 +225,7 @@ AstOrOperatorNodeOutputChildrenItem = typing_extensions.Annotated[
     typing.Union[
         AstOrOperatorNodeOutputChildrenItem_AndOperator,
         AstOrOperatorNodeOutputChildrenItem_BooleanLiteral,
+        AstOrOperatorNodeOutputChildrenItem_ConditionalOperator,
         AstOrOperatorNodeOutputChildrenItem_DynamicVariable,
         AstOrOperatorNodeOutputChildrenItem_EqOperator,
         AstOrOperatorNodeOutputChildrenItem_GtOperator,
@@ -217,6 +241,9 @@ AstOrOperatorNodeOutputChildrenItem = typing_extensions.Annotated[
     UnionMetadata(discriminant="type"),
 ]
 from .ast_and_operator_node_output_children_item import AstAndOperatorNodeOutputChildrenItem  # noqa: E402, I001
+from .ast_conditional_operator_node_output_condition import AstConditionalOperatorNodeOutputCondition  # noqa: E402, I001
+from .ast_conditional_operator_node_output_true_expression import AstConditionalOperatorNodeOutputTrueExpression  # noqa: E402, I001
+from .ast_conditional_operator_node_output_false_expression import AstConditionalOperatorNodeOutputFalseExpression  # noqa: E402, I001
 from .ast_equals_operator_node_output_left import AstEqualsOperatorNodeOutputLeft  # noqa: E402, I001
 from .ast_equals_operator_node_output_right import AstEqualsOperatorNodeOutputRight  # noqa: E402, I001
 from .ast_greater_than_operator_node_output_left import AstGreaterThanOperatorNodeOutputLeft  # noqa: E402, I001
@@ -231,6 +258,7 @@ from .ast_not_equals_operator_node_output_left import AstNotEqualsOperatorNodeOu
 from .ast_not_equals_operator_node_output_right import AstNotEqualsOperatorNodeOutputRight  # noqa: E402, I001
 
 update_forward_refs(AstOrOperatorNodeOutputChildrenItem_AndOperator)
+update_forward_refs(AstOrOperatorNodeOutputChildrenItem_ConditionalOperator)
 update_forward_refs(AstOrOperatorNodeOutputChildrenItem_EqOperator)
 update_forward_refs(AstOrOperatorNodeOutputChildrenItem_GtOperator)
 update_forward_refs(AstOrOperatorNodeOutputChildrenItem_GteOperator)

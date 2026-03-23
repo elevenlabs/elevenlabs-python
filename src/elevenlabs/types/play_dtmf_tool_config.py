@@ -17,7 +17,12 @@ class PlayDtmfToolConfig(UncheckedBaseModel):
 
     use_out_of_band_dtmf: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    If true, send DTMF tones out-of-band using RFC 4733 (useful for SIP calls only). If false, send DTMF as in-band audio tones (default, works for all call types).
+    If true, send DTMF tones out-of-band using RFC 4733 (useful for SIP calls only). If false, send DTMF as in-band audio tones (works for all call types).
+    """
+
+    suppress_turn_after_dtmf: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If true, the agent will not generate further speech after playing DTMF tones. This prevents the agent's speech from interfering with IVR systems.
     """
 
     if IS_PYDANTIC_V2:

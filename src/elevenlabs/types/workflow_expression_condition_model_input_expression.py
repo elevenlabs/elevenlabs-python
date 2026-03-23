@@ -7,7 +7,9 @@ import typing
 import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
+from .astllm_node_input import AstllmNodeInput
 
 
 class WorkflowExpressionConditionModelInputExpression_AndOperator(UncheckedBaseModel):
@@ -47,6 +49,35 @@ class WorkflowExpressionConditionModelInputExpression_BooleanLiteral(UncheckedBa
             frozen = True
             smart_union = True
             extra = pydantic.Extra.allow
+
+
+class WorkflowExpressionConditionModelInputExpression_ConditionalOperator(UncheckedBaseModel):
+    """
+    Expression to evaluate.
+    """
+
+    type: typing.Literal["conditional_operator"] = "conditional_operator"
+    condition: "AstConditionalOperatorNodeInputCondition"
+    true_expression: typing_extensions.Annotated[
+        "AstConditionalOperatorNodeInputTrueExpression", FieldMetadata(alias="trueExpression")
+    ]
+    false_expression: typing_extensions.Annotated[
+        "AstConditionalOperatorNodeInputFalseExpression", FieldMetadata(alias="falseExpression")
+    ]
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+from .ast_conditional_operator_node_input_condition import AstConditionalOperatorNodeInputCondition  # noqa: E402, I001
+from .ast_conditional_operator_node_input_true_expression import AstConditionalOperatorNodeInputTrueExpression  # noqa: E402, I001
+from .ast_conditional_operator_node_input_false_expression import AstConditionalOperatorNodeInputFalseExpression  # noqa: E402, I001
 
 
 class WorkflowExpressionConditionModelInputExpression_DynamicVariable(UncheckedBaseModel):
@@ -137,21 +168,16 @@ from .ast_greater_than_or_equals_operator_node_input_right import AstGreaterThan
 
 
 class WorkflowExpressionConditionModelInputExpression_Llm(UncheckedBaseModel):
-    """
-    Expression to evaluate.
-    """
-
+    value: AstllmNodeInput
     type: typing.Literal["llm"] = "llm"
-    prompt: str
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:
             frozen = True
             smart_union = True
-            extra = pydantic.Extra.allow
 
 
 class WorkflowExpressionConditionModelInputExpression_LtOperator(UncheckedBaseModel):
@@ -284,6 +310,7 @@ WorkflowExpressionConditionModelInputExpression = typing_extensions.Annotated[
     typing.Union[
         WorkflowExpressionConditionModelInputExpression_AndOperator,
         WorkflowExpressionConditionModelInputExpression_BooleanLiteral,
+        WorkflowExpressionConditionModelInputExpression_ConditionalOperator,
         WorkflowExpressionConditionModelInputExpression_DynamicVariable,
         WorkflowExpressionConditionModelInputExpression_EqOperator,
         WorkflowExpressionConditionModelInputExpression_GtOperator,
@@ -299,6 +326,7 @@ WorkflowExpressionConditionModelInputExpression = typing_extensions.Annotated[
     UnionMetadata(discriminant="type"),
 ]
 update_forward_refs(WorkflowExpressionConditionModelInputExpression_AndOperator)
+update_forward_refs(WorkflowExpressionConditionModelInputExpression_ConditionalOperator)
 update_forward_refs(WorkflowExpressionConditionModelInputExpression_EqOperator)
 update_forward_refs(WorkflowExpressionConditionModelInputExpression_GtOperator)
 update_forward_refs(WorkflowExpressionConditionModelInputExpression_GteOperator)

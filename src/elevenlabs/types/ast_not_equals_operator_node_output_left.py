@@ -7,7 +7,9 @@ import typing
 import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
+from .llm_literal_json_schema_property import LlmLiteralJsonSchemaProperty
 
 
 class AstNotEqualsOperatorNodeOutputLeft_AndOperator(UncheckedBaseModel):
@@ -35,6 +37,30 @@ class AstNotEqualsOperatorNodeOutputLeft_BooleanLiteral(UncheckedBaseModel):
 
     type: typing.Literal["boolean_literal"] = "boolean_literal"
     value: bool
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class AstNotEqualsOperatorNodeOutputLeft_ConditionalOperator(UncheckedBaseModel):
+    """
+    Left operand of the binary operator.
+    """
+
+    type: typing.Literal["conditional_operator"] = "conditional_operator"
+    condition: "AstConditionalOperatorNodeOutputCondition"
+    true_expression: typing_extensions.Annotated[
+        "AstConditionalOperatorNodeOutputTrueExpression", FieldMetadata(alias="trueExpression")
+    ]
+    false_expression: typing_extensions.Annotated[
+        "AstConditionalOperatorNodeOutputFalseExpression", FieldMetadata(alias="falseExpression")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -127,6 +153,7 @@ class AstNotEqualsOperatorNodeOutputLeft_Llm(UncheckedBaseModel):
     """
 
     type: typing.Literal["llm"] = "llm"
+    value_schema: LlmLiteralJsonSchemaProperty
     prompt: str
 
     if IS_PYDANTIC_V2:
@@ -254,6 +281,7 @@ AstNotEqualsOperatorNodeOutputLeft = typing_extensions.Annotated[
     typing.Union[
         AstNotEqualsOperatorNodeOutputLeft_AndOperator,
         AstNotEqualsOperatorNodeOutputLeft_BooleanLiteral,
+        AstNotEqualsOperatorNodeOutputLeft_ConditionalOperator,
         AstNotEqualsOperatorNodeOutputLeft_DynamicVariable,
         AstNotEqualsOperatorNodeOutputLeft_EqOperator,
         AstNotEqualsOperatorNodeOutputLeft_GtOperator,
@@ -269,6 +297,9 @@ AstNotEqualsOperatorNodeOutputLeft = typing_extensions.Annotated[
     UnionMetadata(discriminant="type"),
 ]
 from .ast_and_operator_node_output_children_item import AstAndOperatorNodeOutputChildrenItem  # noqa: E402, I001
+from .ast_conditional_operator_node_output_condition import AstConditionalOperatorNodeOutputCondition  # noqa: E402, I001
+from .ast_conditional_operator_node_output_true_expression import AstConditionalOperatorNodeOutputTrueExpression  # noqa: E402, I001
+from .ast_conditional_operator_node_output_false_expression import AstConditionalOperatorNodeOutputFalseExpression  # noqa: E402, I001
 from .ast_equals_operator_node_output_left import AstEqualsOperatorNodeOutputLeft  # noqa: E402, I001
 from .ast_equals_operator_node_output_right import AstEqualsOperatorNodeOutputRight  # noqa: E402, I001
 from .ast_greater_than_operator_node_output_left import AstGreaterThanOperatorNodeOutputLeft  # noqa: E402, I001
@@ -283,6 +314,7 @@ from .ast_not_equals_operator_node_output_right import AstNotEqualsOperatorNodeO
 from .ast_or_operator_node_output_children_item import AstOrOperatorNodeOutputChildrenItem  # noqa: E402, I001
 
 update_forward_refs(AstNotEqualsOperatorNodeOutputLeft_AndOperator)
+update_forward_refs(AstNotEqualsOperatorNodeOutputLeft_ConditionalOperator)
 update_forward_refs(AstNotEqualsOperatorNodeOutputLeft_EqOperator)
 update_forward_refs(AstNotEqualsOperatorNodeOutputLeft_GtOperator)
 update_forward_refs(AstNotEqualsOperatorNodeOutputLeft_GteOperator)

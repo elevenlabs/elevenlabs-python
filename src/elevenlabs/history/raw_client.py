@@ -12,7 +12,6 @@ from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
 from ..errors.bad_request_error import BadRequestError
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
-from ..types.bad_request_error_body import BadRequestErrorBody
 from ..types.delete_history_item_response import DeleteHistoryItemResponse
 from ..types.get_speech_history_response import GetSpeechHistoryResponse
 from ..types.http_validation_error import HttpValidationError
@@ -331,9 +330,9 @@ class RawHistoryClient:
                         raise BadRequestError(
                             headers=dict(_response.headers),
                             body=typing.cast(
-                                BadRequestErrorBody,
+                                typing.Any,
                                 construct_type(
-                                    type_=BadRequestErrorBody,  # type: ignore
+                                    type_=typing.Any,  # type: ignore
                                     object_=_response.json(),
                                 ),
                             ),
@@ -668,9 +667,9 @@ class AsyncRawHistoryClient:
                         raise BadRequestError(
                             headers=dict(_response.headers),
                             body=typing.cast(
-                                BadRequestErrorBody,
+                                typing.Any,
                                 construct_type(
-                                    type_=BadRequestErrorBody,  # type: ignore
+                                    type_=typing.Any,  # type: ignore
                                     object_=_response.json(),
                                 ),
                             ),

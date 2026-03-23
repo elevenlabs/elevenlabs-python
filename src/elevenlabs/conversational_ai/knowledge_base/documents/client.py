@@ -46,6 +46,8 @@ class DocumentsClient:
         url: str,
         name: typing.Optional[str] = OMIT,
         parent_folder_id: typing.Optional[str] = OMIT,
+        enable_auto_sync: typing.Optional[bool] = OMIT,
+        auto_remove: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddKnowledgeBaseResponseModel:
         """
@@ -61,6 +63,12 @@ class DocumentsClient:
 
         parent_folder_id : typing.Optional[str]
             If set, the created document or folder will be placed inside the given folder.
+
+        enable_auto_sync : typing.Optional[bool]
+            Whether to enable auto-sync for this URL document.
+
+        auto_remove : typing.Optional[bool]
+            Whether to automatically remove the document if the URL becomes unavailable. Only applicable when auto-sync is enabled.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -82,7 +90,12 @@ class DocumentsClient:
         )
         """
         _response = self._raw_client.create_from_url(
-            url=url, name=name, parent_folder_id=parent_folder_id, request_options=request_options
+            url=url,
+            name=name,
+            parent_folder_id=parent_folder_id,
+            enable_auto_sync=enable_auto_sync,
+            auto_remove=auto_remove,
+            request_options=request_options,
         )
         return _response.data
 
@@ -181,6 +194,8 @@ class DocumentsClient:
         *,
         name: str,
         parent_folder_id: typing.Optional[str] = OMIT,
+        enable_auto_sync: typing.Optional[bool] = OMIT,
+        auto_remove: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddKnowledgeBaseResponseModel:
         """
@@ -193,6 +208,12 @@ class DocumentsClient:
 
         parent_folder_id : typing.Optional[str]
             If set, the created document or folder will be placed inside the given folder.
+
+        enable_auto_sync : typing.Optional[bool]
+            Whether to enable auto-sync for this URL document.
+
+        auto_remove : typing.Optional[bool]
+            Whether to automatically remove the document if the URL becomes unavailable. Only applicable when auto-sync is enabled.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -214,7 +235,11 @@ class DocumentsClient:
         )
         """
         _response = self._raw_client.create_folder(
-            name=name, parent_folder_id=parent_folder_id, request_options=request_options
+            name=name,
+            parent_folder_id=parent_folder_id,
+            enable_auto_sync=enable_auto_sync,
+            auto_remove=auto_remove,
+            request_options=request_options,
         )
         return _response.data
 
@@ -577,6 +602,8 @@ class AsyncDocumentsClient:
         url: str,
         name: typing.Optional[str] = OMIT,
         parent_folder_id: typing.Optional[str] = OMIT,
+        enable_auto_sync: typing.Optional[bool] = OMIT,
+        auto_remove: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddKnowledgeBaseResponseModel:
         """
@@ -592,6 +619,12 @@ class AsyncDocumentsClient:
 
         parent_folder_id : typing.Optional[str]
             If set, the created document or folder will be placed inside the given folder.
+
+        enable_auto_sync : typing.Optional[bool]
+            Whether to enable auto-sync for this URL document.
+
+        auto_remove : typing.Optional[bool]
+            Whether to automatically remove the document if the URL becomes unavailable. Only applicable when auto-sync is enabled.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -621,7 +654,12 @@ class AsyncDocumentsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create_from_url(
-            url=url, name=name, parent_folder_id=parent_folder_id, request_options=request_options
+            url=url,
+            name=name,
+            parent_folder_id=parent_folder_id,
+            enable_auto_sync=enable_auto_sync,
+            auto_remove=auto_remove,
+            request_options=request_options,
         )
         return _response.data
 
@@ -736,6 +774,8 @@ class AsyncDocumentsClient:
         *,
         name: str,
         parent_folder_id: typing.Optional[str] = OMIT,
+        enable_auto_sync: typing.Optional[bool] = OMIT,
+        auto_remove: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddKnowledgeBaseResponseModel:
         """
@@ -748,6 +788,12 @@ class AsyncDocumentsClient:
 
         parent_folder_id : typing.Optional[str]
             If set, the created document or folder will be placed inside the given folder.
+
+        enable_auto_sync : typing.Optional[bool]
+            Whether to enable auto-sync for this URL document.
+
+        auto_remove : typing.Optional[bool]
+            Whether to automatically remove the document if the URL becomes unavailable. Only applicable when auto-sync is enabled.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -777,7 +823,11 @@ class AsyncDocumentsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create_folder(
-            name=name, parent_folder_id=parent_folder_id, request_options=request_options
+            name=name,
+            parent_folder_id=parent_folder_id,
+            enable_auto_sync=enable_auto_sync,
+            auto_remove=auto_remove,
+            request_options=request_options,
         )
         return _response.data
 

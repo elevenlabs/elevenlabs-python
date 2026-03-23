@@ -11,6 +11,8 @@ class PreviewAudioDbModel(UncheckedBaseModel):
     voice_id: str
     text: str
     audio_url: str
+    hls_manifest_url: typing.Optional[str] = None
+    dash_manifest_url: typing.Optional[str] = None
     is_auto_generated: typing.Optional[bool] = None
     generated_at_unix: typing.Optional[int] = None
 

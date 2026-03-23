@@ -7,9 +7,42 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .resources import BodyShareWorkspaceResourceV1WorkspaceResourcesResourceIdSharePostRole
-    from . import groups, invites, members, resources
+    from . import auth_connections, groups, invites, members, resources
+    from .auth_connections import (
+        AuthConnectionsCreateRequestBody,
+        AuthConnectionsCreateRequestBody_BasicAuth,
+        AuthConnectionsCreateRequestBody_CustomHeaderAuth,
+        AuthConnectionsCreateRequestBody_Oauth2ClientCredentials,
+        AuthConnectionsCreateRequestBody_Oauth2Jwt,
+        AuthConnectionsCreateRequestBody_PrivateKeyJwt,
+        AuthConnectionsCreateResponse,
+        AuthConnectionsCreateResponse_ApiIntegrationOauth2AuthCode,
+        AuthConnectionsCreateResponse_BasicAuth,
+        AuthConnectionsCreateResponse_BearerAuth,
+        AuthConnectionsCreateResponse_CustomHeaderAuth,
+        AuthConnectionsCreateResponse_Oauth2ClientCredentials,
+        AuthConnectionsCreateResponse_Oauth2Jwt,
+        AuthConnectionsCreateResponse_PrivateKeyJwt,
+        AuthConnectionsCreateResponse_WhatsappAuth,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
+    "AuthConnectionsCreateRequestBody": ".auth_connections",
+    "AuthConnectionsCreateRequestBody_BasicAuth": ".auth_connections",
+    "AuthConnectionsCreateRequestBody_CustomHeaderAuth": ".auth_connections",
+    "AuthConnectionsCreateRequestBody_Oauth2ClientCredentials": ".auth_connections",
+    "AuthConnectionsCreateRequestBody_Oauth2Jwt": ".auth_connections",
+    "AuthConnectionsCreateRequestBody_PrivateKeyJwt": ".auth_connections",
+    "AuthConnectionsCreateResponse": ".auth_connections",
+    "AuthConnectionsCreateResponse_ApiIntegrationOauth2AuthCode": ".auth_connections",
+    "AuthConnectionsCreateResponse_BasicAuth": ".auth_connections",
+    "AuthConnectionsCreateResponse_BearerAuth": ".auth_connections",
+    "AuthConnectionsCreateResponse_CustomHeaderAuth": ".auth_connections",
+    "AuthConnectionsCreateResponse_Oauth2ClientCredentials": ".auth_connections",
+    "AuthConnectionsCreateResponse_Oauth2Jwt": ".auth_connections",
+    "AuthConnectionsCreateResponse_PrivateKeyJwt": ".auth_connections",
+    "AuthConnectionsCreateResponse_WhatsappAuth": ".auth_connections",
     "BodyShareWorkspaceResourceV1WorkspaceResourcesResourceIdSharePostRole": ".resources",
+    "auth_connections": ".auth_connections",
     "groups": ".groups",
     "invites": ".invites",
     "members": ".members",
@@ -39,7 +72,23 @@ def __dir__():
 
 
 __all__ = [
+    "AuthConnectionsCreateRequestBody",
+    "AuthConnectionsCreateRequestBody_BasicAuth",
+    "AuthConnectionsCreateRequestBody_CustomHeaderAuth",
+    "AuthConnectionsCreateRequestBody_Oauth2ClientCredentials",
+    "AuthConnectionsCreateRequestBody_Oauth2Jwt",
+    "AuthConnectionsCreateRequestBody_PrivateKeyJwt",
+    "AuthConnectionsCreateResponse",
+    "AuthConnectionsCreateResponse_ApiIntegrationOauth2AuthCode",
+    "AuthConnectionsCreateResponse_BasicAuth",
+    "AuthConnectionsCreateResponse_BearerAuth",
+    "AuthConnectionsCreateResponse_CustomHeaderAuth",
+    "AuthConnectionsCreateResponse_Oauth2ClientCredentials",
+    "AuthConnectionsCreateResponse_Oauth2Jwt",
+    "AuthConnectionsCreateResponse_PrivateKeyJwt",
+    "AuthConnectionsCreateResponse_WhatsappAuth",
     "BodyShareWorkspaceResourceV1WorkspaceResourcesResourceIdSharePostRole",
+    "auth_connections",
     "groups",
     "invites",
     "members",

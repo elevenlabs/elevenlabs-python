@@ -8,6 +8,7 @@ import pydantic
 import typing_extensions
 from .....core.pydantic_utilities import IS_PYDANTIC_V2
 from .....core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
+from .....types.auto_sync_info import AutoSyncInfo
 from .....types.document_usage_mode_enum import DocumentUsageModeEnum
 from .....types.knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
 from .....types.knowledge_base_folder_path_segment_response_model import KnowledgeBaseFolderPathSegmentResponseModel
@@ -25,6 +26,7 @@ class DocumentsGetResponse_Url(UncheckedBaseModel):
     folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentResponseModel]] = None
     url: str
     extracted_inner_html: str
+    auto_sync_info: typing.Optional[AutoSyncInfo] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -89,6 +91,7 @@ class DocumentsGetResponse_Folder(UncheckedBaseModel):
     folder_parent_id: typing.Optional[str] = None
     folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentResponseModel]] = None
     children_count: int
+    auto_sync_info: typing.Optional[AutoSyncInfo] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

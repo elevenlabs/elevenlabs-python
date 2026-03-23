@@ -41,6 +41,11 @@ class SimulationTestModel(UncheckedBaseModel):
     Maximum number of conversation turns for simulation tests.
     """
 
+    simulation_environment: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The environment to use when running this simulation test. If not provided, defaults to 'production'.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

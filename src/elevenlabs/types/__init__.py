@@ -43,7 +43,6 @@ if typing.TYPE_CHECKING:
     from .agent_metadata_response_model import AgentMetadataResponseModel
     from .agent_platform_settings_request_model import AgentPlatformSettingsRequestModel
     from .agent_platform_settings_response_model import AgentPlatformSettingsResponseModel
-    from .agent_prompt_change_tool_config import AgentPromptChangeToolConfig
     from .agent_simulated_chat_test_response_model import AgentSimulatedChatTestResponseModel
     from .agent_sort_by import AgentSortBy
     from .agent_successful_response_example import AgentSuccessfulResponseExample
@@ -80,6 +79,10 @@ if typing.TYPE_CHECKING:
     from .alignment import Alignment
     from .allowed_output_formats import AllowedOutputFormats
     from .allowlist_item import AllowlistItem
+    from .api_integration_o_auth_2_auth_code_response import ApiIntegrationOAuth2AuthCodeResponse
+    from .api_integration_o_auth_2_auth_code_response_scope_separator import (
+        ApiIntegrationOAuth2AuthCodeResponseScopeSeparator,
+    )
     from .api_integration_webhook_overrides_input import ApiIntegrationWebhookOverridesInput
     from .api_integration_webhook_overrides_input_request_headers_value import (
         ApiIntegrationWebhookOverridesInputRequestHeadersValue,
@@ -116,6 +119,7 @@ if typing.TYPE_CHECKING:
         AstAndOperatorNodeInputChildrenItem,
         AstAndOperatorNodeInputChildrenItem_AndOperator,
         AstAndOperatorNodeInputChildrenItem_BooleanLiteral,
+        AstAndOperatorNodeInputChildrenItem_ConditionalOperator,
         AstAndOperatorNodeInputChildrenItem_DynamicVariable,
         AstAndOperatorNodeInputChildrenItem_EqOperator,
         AstAndOperatorNodeInputChildrenItem_GtOperator,
@@ -133,6 +137,7 @@ if typing.TYPE_CHECKING:
         AstAndOperatorNodeOutputChildrenItem,
         AstAndOperatorNodeOutputChildrenItem_AndOperator,
         AstAndOperatorNodeOutputChildrenItem_BooleanLiteral,
+        AstAndOperatorNodeOutputChildrenItem_ConditionalOperator,
         AstAndOperatorNodeOutputChildrenItem_DynamicVariable,
         AstAndOperatorNodeOutputChildrenItem_EqOperator,
         AstAndOperatorNodeOutputChildrenItem_GtOperator,
@@ -147,6 +152,110 @@ if typing.TYPE_CHECKING:
     )
     from .ast_boolean_node_input import AstBooleanNodeInput
     from .ast_boolean_node_output import AstBooleanNodeOutput
+    from .ast_conditional_operator_node_input import AstConditionalOperatorNodeInput
+    from .ast_conditional_operator_node_input_condition import (
+        AstConditionalOperatorNodeInputCondition,
+        AstConditionalOperatorNodeInputCondition_AndOperator,
+        AstConditionalOperatorNodeInputCondition_BooleanLiteral,
+        AstConditionalOperatorNodeInputCondition_ConditionalOperator,
+        AstConditionalOperatorNodeInputCondition_DynamicVariable,
+        AstConditionalOperatorNodeInputCondition_EqOperator,
+        AstConditionalOperatorNodeInputCondition_GtOperator,
+        AstConditionalOperatorNodeInputCondition_GteOperator,
+        AstConditionalOperatorNodeInputCondition_Llm,
+        AstConditionalOperatorNodeInputCondition_LtOperator,
+        AstConditionalOperatorNodeInputCondition_LteOperator,
+        AstConditionalOperatorNodeInputCondition_NeqOperator,
+        AstConditionalOperatorNodeInputCondition_NumberLiteral,
+        AstConditionalOperatorNodeInputCondition_OrOperator,
+        AstConditionalOperatorNodeInputCondition_StringLiteral,
+    )
+    from .ast_conditional_operator_node_input_false_expression import (
+        AstConditionalOperatorNodeInputFalseExpression,
+        AstConditionalOperatorNodeInputFalseExpression_AndOperator,
+        AstConditionalOperatorNodeInputFalseExpression_BooleanLiteral,
+        AstConditionalOperatorNodeInputFalseExpression_ConditionalOperator,
+        AstConditionalOperatorNodeInputFalseExpression_DynamicVariable,
+        AstConditionalOperatorNodeInputFalseExpression_EqOperator,
+        AstConditionalOperatorNodeInputFalseExpression_GtOperator,
+        AstConditionalOperatorNodeInputFalseExpression_GteOperator,
+        AstConditionalOperatorNodeInputFalseExpression_Llm,
+        AstConditionalOperatorNodeInputFalseExpression_LtOperator,
+        AstConditionalOperatorNodeInputFalseExpression_LteOperator,
+        AstConditionalOperatorNodeInputFalseExpression_NeqOperator,
+        AstConditionalOperatorNodeInputFalseExpression_NumberLiteral,
+        AstConditionalOperatorNodeInputFalseExpression_OrOperator,
+        AstConditionalOperatorNodeInputFalseExpression_StringLiteral,
+    )
+    from .ast_conditional_operator_node_input_true_expression import (
+        AstConditionalOperatorNodeInputTrueExpression,
+        AstConditionalOperatorNodeInputTrueExpression_AndOperator,
+        AstConditionalOperatorNodeInputTrueExpression_BooleanLiteral,
+        AstConditionalOperatorNodeInputTrueExpression_ConditionalOperator,
+        AstConditionalOperatorNodeInputTrueExpression_DynamicVariable,
+        AstConditionalOperatorNodeInputTrueExpression_EqOperator,
+        AstConditionalOperatorNodeInputTrueExpression_GtOperator,
+        AstConditionalOperatorNodeInputTrueExpression_GteOperator,
+        AstConditionalOperatorNodeInputTrueExpression_Llm,
+        AstConditionalOperatorNodeInputTrueExpression_LtOperator,
+        AstConditionalOperatorNodeInputTrueExpression_LteOperator,
+        AstConditionalOperatorNodeInputTrueExpression_NeqOperator,
+        AstConditionalOperatorNodeInputTrueExpression_NumberLiteral,
+        AstConditionalOperatorNodeInputTrueExpression_OrOperator,
+        AstConditionalOperatorNodeInputTrueExpression_StringLiteral,
+    )
+    from .ast_conditional_operator_node_output import AstConditionalOperatorNodeOutput
+    from .ast_conditional_operator_node_output_condition import (
+        AstConditionalOperatorNodeOutputCondition,
+        AstConditionalOperatorNodeOutputCondition_AndOperator,
+        AstConditionalOperatorNodeOutputCondition_BooleanLiteral,
+        AstConditionalOperatorNodeOutputCondition_ConditionalOperator,
+        AstConditionalOperatorNodeOutputCondition_DynamicVariable,
+        AstConditionalOperatorNodeOutputCondition_EqOperator,
+        AstConditionalOperatorNodeOutputCondition_GtOperator,
+        AstConditionalOperatorNodeOutputCondition_GteOperator,
+        AstConditionalOperatorNodeOutputCondition_Llm,
+        AstConditionalOperatorNodeOutputCondition_LtOperator,
+        AstConditionalOperatorNodeOutputCondition_LteOperator,
+        AstConditionalOperatorNodeOutputCondition_NeqOperator,
+        AstConditionalOperatorNodeOutputCondition_NumberLiteral,
+        AstConditionalOperatorNodeOutputCondition_OrOperator,
+        AstConditionalOperatorNodeOutputCondition_StringLiteral,
+    )
+    from .ast_conditional_operator_node_output_false_expression import (
+        AstConditionalOperatorNodeOutputFalseExpression,
+        AstConditionalOperatorNodeOutputFalseExpression_AndOperator,
+        AstConditionalOperatorNodeOutputFalseExpression_BooleanLiteral,
+        AstConditionalOperatorNodeOutputFalseExpression_ConditionalOperator,
+        AstConditionalOperatorNodeOutputFalseExpression_DynamicVariable,
+        AstConditionalOperatorNodeOutputFalseExpression_EqOperator,
+        AstConditionalOperatorNodeOutputFalseExpression_GtOperator,
+        AstConditionalOperatorNodeOutputFalseExpression_GteOperator,
+        AstConditionalOperatorNodeOutputFalseExpression_Llm,
+        AstConditionalOperatorNodeOutputFalseExpression_LtOperator,
+        AstConditionalOperatorNodeOutputFalseExpression_LteOperator,
+        AstConditionalOperatorNodeOutputFalseExpression_NeqOperator,
+        AstConditionalOperatorNodeOutputFalseExpression_NumberLiteral,
+        AstConditionalOperatorNodeOutputFalseExpression_OrOperator,
+        AstConditionalOperatorNodeOutputFalseExpression_StringLiteral,
+    )
+    from .ast_conditional_operator_node_output_true_expression import (
+        AstConditionalOperatorNodeOutputTrueExpression,
+        AstConditionalOperatorNodeOutputTrueExpression_AndOperator,
+        AstConditionalOperatorNodeOutputTrueExpression_BooleanLiteral,
+        AstConditionalOperatorNodeOutputTrueExpression_ConditionalOperator,
+        AstConditionalOperatorNodeOutputTrueExpression_DynamicVariable,
+        AstConditionalOperatorNodeOutputTrueExpression_EqOperator,
+        AstConditionalOperatorNodeOutputTrueExpression_GtOperator,
+        AstConditionalOperatorNodeOutputTrueExpression_GteOperator,
+        AstConditionalOperatorNodeOutputTrueExpression_Llm,
+        AstConditionalOperatorNodeOutputTrueExpression_LtOperator,
+        AstConditionalOperatorNodeOutputTrueExpression_LteOperator,
+        AstConditionalOperatorNodeOutputTrueExpression_NeqOperator,
+        AstConditionalOperatorNodeOutputTrueExpression_NumberLiteral,
+        AstConditionalOperatorNodeOutputTrueExpression_OrOperator,
+        AstConditionalOperatorNodeOutputTrueExpression_StringLiteral,
+    )
     from .ast_dynamic_variable_node_input import AstDynamicVariableNodeInput
     from .ast_dynamic_variable_node_output import AstDynamicVariableNodeOutput
     from .ast_equals_operator_node_input import AstEqualsOperatorNodeInput
@@ -154,6 +263,7 @@ if typing.TYPE_CHECKING:
         AstEqualsOperatorNodeInputLeft,
         AstEqualsOperatorNodeInputLeft_AndOperator,
         AstEqualsOperatorNodeInputLeft_BooleanLiteral,
+        AstEqualsOperatorNodeInputLeft_ConditionalOperator,
         AstEqualsOperatorNodeInputLeft_DynamicVariable,
         AstEqualsOperatorNodeInputLeft_EqOperator,
         AstEqualsOperatorNodeInputLeft_GtOperator,
@@ -170,6 +280,7 @@ if typing.TYPE_CHECKING:
         AstEqualsOperatorNodeInputRight,
         AstEqualsOperatorNodeInputRight_AndOperator,
         AstEqualsOperatorNodeInputRight_BooleanLiteral,
+        AstEqualsOperatorNodeInputRight_ConditionalOperator,
         AstEqualsOperatorNodeInputRight_DynamicVariable,
         AstEqualsOperatorNodeInputRight_EqOperator,
         AstEqualsOperatorNodeInputRight_GtOperator,
@@ -187,6 +298,7 @@ if typing.TYPE_CHECKING:
         AstEqualsOperatorNodeOutputLeft,
         AstEqualsOperatorNodeOutputLeft_AndOperator,
         AstEqualsOperatorNodeOutputLeft_BooleanLiteral,
+        AstEqualsOperatorNodeOutputLeft_ConditionalOperator,
         AstEqualsOperatorNodeOutputLeft_DynamicVariable,
         AstEqualsOperatorNodeOutputLeft_EqOperator,
         AstEqualsOperatorNodeOutputLeft_GtOperator,
@@ -203,6 +315,7 @@ if typing.TYPE_CHECKING:
         AstEqualsOperatorNodeOutputRight,
         AstEqualsOperatorNodeOutputRight_AndOperator,
         AstEqualsOperatorNodeOutputRight_BooleanLiteral,
+        AstEqualsOperatorNodeOutputRight_ConditionalOperator,
         AstEqualsOperatorNodeOutputRight_DynamicVariable,
         AstEqualsOperatorNodeOutputRight_EqOperator,
         AstEqualsOperatorNodeOutputRight_GtOperator,
@@ -220,6 +333,7 @@ if typing.TYPE_CHECKING:
         AstGreaterThanOperatorNodeInputLeft,
         AstGreaterThanOperatorNodeInputLeft_AndOperator,
         AstGreaterThanOperatorNodeInputLeft_BooleanLiteral,
+        AstGreaterThanOperatorNodeInputLeft_ConditionalOperator,
         AstGreaterThanOperatorNodeInputLeft_DynamicVariable,
         AstGreaterThanOperatorNodeInputLeft_EqOperator,
         AstGreaterThanOperatorNodeInputLeft_GtOperator,
@@ -236,6 +350,7 @@ if typing.TYPE_CHECKING:
         AstGreaterThanOperatorNodeInputRight,
         AstGreaterThanOperatorNodeInputRight_AndOperator,
         AstGreaterThanOperatorNodeInputRight_BooleanLiteral,
+        AstGreaterThanOperatorNodeInputRight_ConditionalOperator,
         AstGreaterThanOperatorNodeInputRight_DynamicVariable,
         AstGreaterThanOperatorNodeInputRight_EqOperator,
         AstGreaterThanOperatorNodeInputRight_GtOperator,
@@ -253,6 +368,7 @@ if typing.TYPE_CHECKING:
         AstGreaterThanOperatorNodeOutputLeft,
         AstGreaterThanOperatorNodeOutputLeft_AndOperator,
         AstGreaterThanOperatorNodeOutputLeft_BooleanLiteral,
+        AstGreaterThanOperatorNodeOutputLeft_ConditionalOperator,
         AstGreaterThanOperatorNodeOutputLeft_DynamicVariable,
         AstGreaterThanOperatorNodeOutputLeft_EqOperator,
         AstGreaterThanOperatorNodeOutputLeft_GtOperator,
@@ -269,6 +385,7 @@ if typing.TYPE_CHECKING:
         AstGreaterThanOperatorNodeOutputRight,
         AstGreaterThanOperatorNodeOutputRight_AndOperator,
         AstGreaterThanOperatorNodeOutputRight_BooleanLiteral,
+        AstGreaterThanOperatorNodeOutputRight_ConditionalOperator,
         AstGreaterThanOperatorNodeOutputRight_DynamicVariable,
         AstGreaterThanOperatorNodeOutputRight_EqOperator,
         AstGreaterThanOperatorNodeOutputRight_GtOperator,
@@ -286,6 +403,7 @@ if typing.TYPE_CHECKING:
         AstGreaterThanOrEqualsOperatorNodeInputLeft,
         AstGreaterThanOrEqualsOperatorNodeInputLeft_AndOperator,
         AstGreaterThanOrEqualsOperatorNodeInputLeft_BooleanLiteral,
+        AstGreaterThanOrEqualsOperatorNodeInputLeft_ConditionalOperator,
         AstGreaterThanOrEqualsOperatorNodeInputLeft_DynamicVariable,
         AstGreaterThanOrEqualsOperatorNodeInputLeft_EqOperator,
         AstGreaterThanOrEqualsOperatorNodeInputLeft_GtOperator,
@@ -302,6 +420,7 @@ if typing.TYPE_CHECKING:
         AstGreaterThanOrEqualsOperatorNodeInputRight,
         AstGreaterThanOrEqualsOperatorNodeInputRight_AndOperator,
         AstGreaterThanOrEqualsOperatorNodeInputRight_BooleanLiteral,
+        AstGreaterThanOrEqualsOperatorNodeInputRight_ConditionalOperator,
         AstGreaterThanOrEqualsOperatorNodeInputRight_DynamicVariable,
         AstGreaterThanOrEqualsOperatorNodeInputRight_EqOperator,
         AstGreaterThanOrEqualsOperatorNodeInputRight_GtOperator,
@@ -319,6 +438,7 @@ if typing.TYPE_CHECKING:
         AstGreaterThanOrEqualsOperatorNodeOutputLeft,
         AstGreaterThanOrEqualsOperatorNodeOutputLeft_AndOperator,
         AstGreaterThanOrEqualsOperatorNodeOutputLeft_BooleanLiteral,
+        AstGreaterThanOrEqualsOperatorNodeOutputLeft_ConditionalOperator,
         AstGreaterThanOrEqualsOperatorNodeOutputLeft_DynamicVariable,
         AstGreaterThanOrEqualsOperatorNodeOutputLeft_EqOperator,
         AstGreaterThanOrEqualsOperatorNodeOutputLeft_GtOperator,
@@ -335,6 +455,7 @@ if typing.TYPE_CHECKING:
         AstGreaterThanOrEqualsOperatorNodeOutputRight,
         AstGreaterThanOrEqualsOperatorNodeOutputRight_AndOperator,
         AstGreaterThanOrEqualsOperatorNodeOutputRight_BooleanLiteral,
+        AstGreaterThanOrEqualsOperatorNodeOutputRight_ConditionalOperator,
         AstGreaterThanOrEqualsOperatorNodeOutputRight_DynamicVariable,
         AstGreaterThanOrEqualsOperatorNodeOutputRight_EqOperator,
         AstGreaterThanOrEqualsOperatorNodeOutputRight_GtOperator,
@@ -352,6 +473,7 @@ if typing.TYPE_CHECKING:
         AstLessThanOperatorNodeInputLeft,
         AstLessThanOperatorNodeInputLeft_AndOperator,
         AstLessThanOperatorNodeInputLeft_BooleanLiteral,
+        AstLessThanOperatorNodeInputLeft_ConditionalOperator,
         AstLessThanOperatorNodeInputLeft_DynamicVariable,
         AstLessThanOperatorNodeInputLeft_EqOperator,
         AstLessThanOperatorNodeInputLeft_GtOperator,
@@ -368,6 +490,7 @@ if typing.TYPE_CHECKING:
         AstLessThanOperatorNodeInputRight,
         AstLessThanOperatorNodeInputRight_AndOperator,
         AstLessThanOperatorNodeInputRight_BooleanLiteral,
+        AstLessThanOperatorNodeInputRight_ConditionalOperator,
         AstLessThanOperatorNodeInputRight_DynamicVariable,
         AstLessThanOperatorNodeInputRight_EqOperator,
         AstLessThanOperatorNodeInputRight_GtOperator,
@@ -385,6 +508,7 @@ if typing.TYPE_CHECKING:
         AstLessThanOperatorNodeOutputLeft,
         AstLessThanOperatorNodeOutputLeft_AndOperator,
         AstLessThanOperatorNodeOutputLeft_BooleanLiteral,
+        AstLessThanOperatorNodeOutputLeft_ConditionalOperator,
         AstLessThanOperatorNodeOutputLeft_DynamicVariable,
         AstLessThanOperatorNodeOutputLeft_EqOperator,
         AstLessThanOperatorNodeOutputLeft_GtOperator,
@@ -401,6 +525,7 @@ if typing.TYPE_CHECKING:
         AstLessThanOperatorNodeOutputRight,
         AstLessThanOperatorNodeOutputRight_AndOperator,
         AstLessThanOperatorNodeOutputRight_BooleanLiteral,
+        AstLessThanOperatorNodeOutputRight_ConditionalOperator,
         AstLessThanOperatorNodeOutputRight_DynamicVariable,
         AstLessThanOperatorNodeOutputRight_EqOperator,
         AstLessThanOperatorNodeOutputRight_GtOperator,
@@ -418,6 +543,7 @@ if typing.TYPE_CHECKING:
         AstLessThanOrEqualsOperatorNodeInputLeft,
         AstLessThanOrEqualsOperatorNodeInputLeft_AndOperator,
         AstLessThanOrEqualsOperatorNodeInputLeft_BooleanLiteral,
+        AstLessThanOrEqualsOperatorNodeInputLeft_ConditionalOperator,
         AstLessThanOrEqualsOperatorNodeInputLeft_DynamicVariable,
         AstLessThanOrEqualsOperatorNodeInputLeft_EqOperator,
         AstLessThanOrEqualsOperatorNodeInputLeft_GtOperator,
@@ -434,6 +560,7 @@ if typing.TYPE_CHECKING:
         AstLessThanOrEqualsOperatorNodeInputRight,
         AstLessThanOrEqualsOperatorNodeInputRight_AndOperator,
         AstLessThanOrEqualsOperatorNodeInputRight_BooleanLiteral,
+        AstLessThanOrEqualsOperatorNodeInputRight_ConditionalOperator,
         AstLessThanOrEqualsOperatorNodeInputRight_DynamicVariable,
         AstLessThanOrEqualsOperatorNodeInputRight_EqOperator,
         AstLessThanOrEqualsOperatorNodeInputRight_GtOperator,
@@ -451,6 +578,7 @@ if typing.TYPE_CHECKING:
         AstLessThanOrEqualsOperatorNodeOutputLeft,
         AstLessThanOrEqualsOperatorNodeOutputLeft_AndOperator,
         AstLessThanOrEqualsOperatorNodeOutputLeft_BooleanLiteral,
+        AstLessThanOrEqualsOperatorNodeOutputLeft_ConditionalOperator,
         AstLessThanOrEqualsOperatorNodeOutputLeft_DynamicVariable,
         AstLessThanOrEqualsOperatorNodeOutputLeft_EqOperator,
         AstLessThanOrEqualsOperatorNodeOutputLeft_GtOperator,
@@ -467,6 +595,7 @@ if typing.TYPE_CHECKING:
         AstLessThanOrEqualsOperatorNodeOutputRight,
         AstLessThanOrEqualsOperatorNodeOutputRight_AndOperator,
         AstLessThanOrEqualsOperatorNodeOutputRight_BooleanLiteral,
+        AstLessThanOrEqualsOperatorNodeOutputRight_ConditionalOperator,
         AstLessThanOrEqualsOperatorNodeOutputRight_DynamicVariable,
         AstLessThanOrEqualsOperatorNodeOutputRight_EqOperator,
         AstLessThanOrEqualsOperatorNodeOutputRight_GtOperator,
@@ -484,6 +613,7 @@ if typing.TYPE_CHECKING:
         AstNotEqualsOperatorNodeInputLeft,
         AstNotEqualsOperatorNodeInputLeft_AndOperator,
         AstNotEqualsOperatorNodeInputLeft_BooleanLiteral,
+        AstNotEqualsOperatorNodeInputLeft_ConditionalOperator,
         AstNotEqualsOperatorNodeInputLeft_DynamicVariable,
         AstNotEqualsOperatorNodeInputLeft_EqOperator,
         AstNotEqualsOperatorNodeInputLeft_GtOperator,
@@ -500,6 +630,7 @@ if typing.TYPE_CHECKING:
         AstNotEqualsOperatorNodeInputRight,
         AstNotEqualsOperatorNodeInputRight_AndOperator,
         AstNotEqualsOperatorNodeInputRight_BooleanLiteral,
+        AstNotEqualsOperatorNodeInputRight_ConditionalOperator,
         AstNotEqualsOperatorNodeInputRight_DynamicVariable,
         AstNotEqualsOperatorNodeInputRight_EqOperator,
         AstNotEqualsOperatorNodeInputRight_GtOperator,
@@ -517,6 +648,7 @@ if typing.TYPE_CHECKING:
         AstNotEqualsOperatorNodeOutputLeft,
         AstNotEqualsOperatorNodeOutputLeft_AndOperator,
         AstNotEqualsOperatorNodeOutputLeft_BooleanLiteral,
+        AstNotEqualsOperatorNodeOutputLeft_ConditionalOperator,
         AstNotEqualsOperatorNodeOutputLeft_DynamicVariable,
         AstNotEqualsOperatorNodeOutputLeft_EqOperator,
         AstNotEqualsOperatorNodeOutputLeft_GtOperator,
@@ -533,6 +665,7 @@ if typing.TYPE_CHECKING:
         AstNotEqualsOperatorNodeOutputRight,
         AstNotEqualsOperatorNodeOutputRight_AndOperator,
         AstNotEqualsOperatorNodeOutputRight_BooleanLiteral,
+        AstNotEqualsOperatorNodeOutputRight_ConditionalOperator,
         AstNotEqualsOperatorNodeOutputRight_DynamicVariable,
         AstNotEqualsOperatorNodeOutputRight_EqOperator,
         AstNotEqualsOperatorNodeOutputRight_GtOperator,
@@ -552,6 +685,7 @@ if typing.TYPE_CHECKING:
         AstOrOperatorNodeInputChildrenItem,
         AstOrOperatorNodeInputChildrenItem_AndOperator,
         AstOrOperatorNodeInputChildrenItem_BooleanLiteral,
+        AstOrOperatorNodeInputChildrenItem_ConditionalOperator,
         AstOrOperatorNodeInputChildrenItem_DynamicVariable,
         AstOrOperatorNodeInputChildrenItem_EqOperator,
         AstOrOperatorNodeInputChildrenItem_GtOperator,
@@ -569,6 +703,7 @@ if typing.TYPE_CHECKING:
         AstOrOperatorNodeOutputChildrenItem,
         AstOrOperatorNodeOutputChildrenItem_AndOperator,
         AstOrOperatorNodeOutputChildrenItem_BooleanLiteral,
+        AstOrOperatorNodeOutputChildrenItem_ConditionalOperator,
         AstOrOperatorNodeOutputChildrenItem_DynamicVariable,
         AstOrOperatorNodeOutputChildrenItem_EqOperator,
         AstOrOperatorNodeOutputChildrenItem_GtOperator,
@@ -584,6 +719,8 @@ if typing.TYPE_CHECKING:
     from .ast_string_node_input import AstStringNodeInput
     from .ast_string_node_output import AstStringNodeOutput
     from .astllm_node_input import AstllmNodeInput
+    from .astllm_node_input_prompt import AstllmNodeInputPrompt
+    from .astllm_node_input_value_schema import AstllmNodeInputValueSchema
     from .astllm_node_output import AstllmNodeOutput
     from .async_conversation_metadata import AsyncConversationMetadata
     from .async_conversation_metadata_delivery_status import AsyncConversationMetadataDeliveryStatus
@@ -599,19 +736,33 @@ if typing.TYPE_CHECKING:
         AudioWithTimestampsAndVoiceSegmentsResponseModel,
     )
     from .audio_with_timestamps_response import AudioWithTimestampsResponse
+    from .auth_connection_dependencies import AuthConnectionDependencies
+    from .auth_connection_dependencies_mcp_servers_item import (
+        AuthConnectionDependenciesMcpServersItem,
+        AuthConnectionDependenciesMcpServersItem_Available,
+        AuthConnectionDependenciesMcpServersItem_Unknown,
+    )
+    from .auth_connection_dependencies_tools_item import (
+        AuthConnectionDependenciesToolsItem,
+        AuthConnectionDependenciesToolsItem_Available,
+        AuthConnectionDependenciesToolsItem_Unknown,
+    )
     from .auth_connection_locator import AuthConnectionLocator
     from .auth_settings import AuthSettings
     from .authorization_method import AuthorizationMethod
+    from .auto_sync_info import AutoSyncInfo
     from .backup_llm_default import BackupLlmDefault
     from .backup_llm_disabled import BackupLlmDisabled
     from .backup_llm_override import BackupLlmOverride
     from .bad_request_error_body import BadRequestErrorBody
+    from .basic_auth_response import BasicAuthResponse
     from .batch_call_detailed_response import BatchCallDetailedResponse
     from .batch_call_recipient_status import BatchCallRecipientStatus
     from .batch_call_response import BatchCallResponse
     from .batch_call_status import BatchCallStatus
     from .batch_call_whats_app_params import BatchCallWhatsAppParams
     from .batch_failure_response_model import BatchFailureResponseModel
+    from .bearer_auth_response import BearerAuthResponse
     from .billing_period import BillingPeriod
     from .branch_protection_status import BranchProtectionStatus
     from .breakdown_types import BreakdownTypes
@@ -627,7 +778,9 @@ if typing.TYPE_CHECKING:
     from .caption_style_horizontal_placement_model_align import CaptionStyleHorizontalPlacementModelAlign
     from .caption_style_model import CaptionStyleModel
     from .caption_style_model_text_align import CaptionStyleModelTextAlign
+    from .caption_style_model_text_blend_mode import CaptionStyleModelTextBlendMode
     from .caption_style_model_text_style import CaptionStyleModelTextStyle
+    from .caption_style_model_text_transform import CaptionStyleModelTextTransform
     from .caption_style_model_text_weight import CaptionStyleModelTextWeight
     from .caption_style_section_animation_model import CaptionStyleSectionAnimationModel
     from .caption_style_section_animation_model_enter_type import CaptionStyleSectionAnimationModelEnterType
@@ -684,9 +837,22 @@ if typing.TYPE_CHECKING:
     from .constant_schema_override_constant_value import ConstantSchemaOverrideConstantValue
     from .content_config import ContentConfig
     from .content_guardrail_input import ContentGuardrailInput
+    from .content_guardrail_input_trigger_action import (
+        ContentGuardrailInputTriggerAction,
+        ContentGuardrailInputTriggerAction_EndCall,
+        ContentGuardrailInputTriggerAction_Retry,
+    )
     from .content_guardrail_output import ContentGuardrailOutput
+    from .content_guardrail_output_trigger_action import (
+        ContentGuardrailOutputTriggerAction,
+        ContentGuardrailOutputTriggerAction_EndCall,
+        ContentGuardrailOutputTriggerAction_Retry,
+    )
+    from .content_threshold_guardrail import ContentThresholdGuardrail
+    from .content_threshold_guardrail_threshold import ContentThresholdGuardrailThreshold
     from .contributor import Contributor
     from .conv_ai_dynamic_variable import ConvAiDynamicVariable
+    from .conv_ai_env_var_locator import ConvAiEnvVarLocator
     from .conv_ai_file_upload_response_model import ConvAiFileUploadResponseModel
     from .conv_ai_secret_locator import ConvAiSecretLocator
     from .conv_ai_stored_secret_dependencies import ConvAiStoredSecretDependencies
@@ -733,11 +899,11 @@ if typing.TYPE_CHECKING:
     from .conversation_history_rag_usage_common_model import ConversationHistoryRagUsageCommonModel
     from .conversation_history_redaction_config import ConversationHistoryRedactionConfig
     from .conversation_history_sip_trunking_phone_call_model import ConversationHistorySipTrunkingPhoneCallModel
-    from .conversation_history_sip_trunking_phone_call_model_direction import (
-        ConversationHistorySipTrunkingPhoneCallModelDirection,
+    from .conversation_history_transcript_api_integration_webhook_tools_result_common_model_input import (
+        ConversationHistoryTranscriptApiIntegrationWebhookToolsResultCommonModelInput,
     )
-    from .conversation_history_transcript_api_integration_webhook_tools_result_common_model import (
-        ConversationHistoryTranscriptApiIntegrationWebhookToolsResultCommonModel,
+    from .conversation_history_transcript_api_integration_webhook_tools_result_common_model_output import (
+        ConversationHistoryTranscriptApiIntegrationWebhookToolsResultCommonModelOutput,
     )
     from .conversation_history_transcript_common_model_input import ConversationHistoryTranscriptCommonModelInput
     from .conversation_history_transcript_common_model_input_role import (
@@ -803,8 +969,11 @@ if typing.TYPE_CHECKING:
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberTwilioSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_VoicemailDetectionSuccess,
     )
-    from .conversation_history_transcript_tool_call_api_integration_webhook_details import (
-        ConversationHistoryTranscriptToolCallApiIntegrationWebhookDetails,
+    from .conversation_history_transcript_tool_call_api_integration_webhook_details_input import (
+        ConversationHistoryTranscriptToolCallApiIntegrationWebhookDetailsInput,
+    )
+    from .conversation_history_transcript_tool_call_api_integration_webhook_details_output import (
+        ConversationHistoryTranscriptToolCallApiIntegrationWebhookDetailsOutput,
     )
     from .conversation_history_transcript_tool_call_client_details import (
         ConversationHistoryTranscriptToolCallClientDetails,
@@ -840,7 +1009,6 @@ if typing.TYPE_CHECKING:
         ConversationHistoryTranscriptWorkflowToolsResultCommonModelOutput,
     )
     from .conversation_history_twilio_phone_call_model import ConversationHistoryTwilioPhoneCallModel
-    from .conversation_history_twilio_phone_call_model_direction import ConversationHistoryTwilioPhoneCallModelDirection
     from .conversation_initiation_client_data_config_input import ConversationInitiationClientDataConfigInput
     from .conversation_initiation_client_data_config_output import ConversationInitiationClientDataConfigOutput
     from .conversation_initiation_client_data_internal import ConversationInitiationClientDataInternal
@@ -867,7 +1035,6 @@ if typing.TYPE_CHECKING:
         ConversationSimulationSpecificationDynamicVariablesValue,
     )
     from .conversation_summary_response_model import ConversationSummaryResponseModel
-    from .conversation_summary_response_model_direction import ConversationSummaryResponseModelDirection
     from .conversation_summary_response_model_status import ConversationSummaryResponseModelStatus
     from .conversation_token_db_model import ConversationTokenDbModel
     from .conversation_token_purpose import ConversationTokenPurpose
@@ -887,10 +1054,18 @@ if typing.TYPE_CHECKING:
     from .create_agent_test_response_model import CreateAgentTestResponseModel
     from .create_asset_params import CreateAssetParams
     from .create_audio_native_project_request import CreateAudioNativeProjectRequest
+    from .create_auth_connection_environment_variable_request import CreateAuthConnectionEnvironmentVariableRequest
+    from .create_basic_auth_request import CreateBasicAuthRequest
     from .create_client_appointment_params import CreateClientAppointmentParams
     from .create_client_params import CreateClientParams
+    from .create_custom_header_auth_request import CreateCustomHeaderAuthRequest
+    from .create_o_auth_2_client_creds_request import CreateOAuth2ClientCredsRequest
+    from .create_o_auth_2_jwt_request import CreateOAuth2JwtRequest
+    from .create_o_auth_2_jwt_request_algorithm import CreateOAuth2JwtRequestAlgorithm
     from .create_phone_number_response_model import CreatePhoneNumberResponseModel
     from .create_previously_generated_voice_request import CreatePreviouslyGeneratedVoiceRequest
+    from .create_private_key_jwt_request import CreatePrivateKeyJwtRequest
+    from .create_private_key_jwt_request_algorithm import CreatePrivateKeyJwtRequestAlgorithm
     from .create_product_params import CreateProductParams
     from .create_pronunciation_dictionary_response_model import CreatePronunciationDictionaryResponseModel
     from .create_rental_booking_params import CreateRentalBookingParams
@@ -898,11 +1073,13 @@ if typing.TYPE_CHECKING:
     from .create_response_unit_test_request_dynamic_variables_value import (
         CreateResponseUnitTestRequestDynamicVariablesValue,
     )
+    from .create_secret_environment_variable_request import CreateSecretEnvironmentVariableRequest
     from .create_service_params import CreateServiceParams
     from .create_simulation_test_request import CreateSimulationTestRequest
     from .create_simulation_test_request_dynamic_variables_value import CreateSimulationTestRequestDynamicVariablesValue
     from .create_sip_trunk_phone_number_request import CreateSipTrunkPhoneNumberRequest
     from .create_staff_params import CreateStaffParams
+    from .create_string_environment_variable_request import CreateStringEnvironmentVariableRequest
     from .create_tool_call_unit_test_request import CreateToolCallUnitTestRequest
     from .create_tool_call_unit_test_request_dynamic_variables_value import (
         CreateToolCallUnitTestRequestDynamicVariablesValue,
@@ -910,11 +1087,18 @@ if typing.TYPE_CHECKING:
     from .create_transcript_request import CreateTranscriptRequest
     from .create_twilio_phone_number_request import CreateTwilioPhoneNumberRequest
     from .custom_guardrail_config import CustomGuardrailConfig
+    from .custom_guardrail_config_trigger_action import (
+        CustomGuardrailConfigTriggerAction,
+        CustomGuardrailConfigTriggerAction_EndCall,
+        CustomGuardrailConfigTriggerAction_Retry,
+    )
     from .custom_guardrail_input import CustomGuardrailInput
     from .custom_guardrail_output import CustomGuardrailOutput
     from .custom_guardrails_config_input import CustomGuardrailsConfigInput
     from .custom_guardrails_config_output import CustomGuardrailsConfigOutput
+    from .custom_header_auth_response import CustomHeaderAuthResponse
     from .custom_llm import CustomLlm
+    from .custom_llm_api_key import CustomLlmApiKey
     from .custom_llm_request_headers_value import CustomLlmRequestHeadersValue
     from .custom_llmapi_type import CustomLlmapiType
     from .custom_sip_header import CustomSipHeader
@@ -945,11 +1129,15 @@ if typing.TYPE_CHECKING:
     from .delete_workspace_webhook_response_model import DeleteWorkspaceWebhookResponseModel
     from .dependent_available_agent_identifier import DependentAvailableAgentIdentifier
     from .dependent_available_agent_identifier_access_level import DependentAvailableAgentIdentifierAccessLevel
+    from .dependent_available_mcp_server_identifier import DependentAvailableMcpServerIdentifier
+    from .dependent_available_mcp_server_identifier_access_level import DependentAvailableMcpServerIdentifierAccessLevel
     from .dependent_available_tool_identifier import DependentAvailableToolIdentifier
     from .dependent_available_tool_identifier_access_level import DependentAvailableToolIdentifierAccessLevel
     from .dependent_branch_info import DependentBranchInfo
+    from .dependent_integration_connection_identifier import DependentIntegrationConnectionIdentifier
     from .dependent_phone_number_identifier import DependentPhoneNumberIdentifier
     from .dependent_unknown_agent_identifier import DependentUnknownAgentIdentifier
+    from .dependent_unknown_mcp_server_identifier import DependentUnknownMcpServerIdentifier
     from .dependent_unknown_tool_identifier import DependentUnknownToolIdentifier
     from .detailed_music_response import DetailedMusicResponse
     from .detected_entity import DetectedEntity
@@ -999,6 +1187,16 @@ if typing.TYPE_CHECKING:
     from .embedding_model_enum import EmbeddingModelEnum
     from .end_call_tool_config import EndCallToolConfig
     from .end_call_tool_result_model import EndCallToolResultModel
+    from .end_call_trigger_action import EndCallTriggerAction
+    from .environment_auth_connection_locator import EnvironmentAuthConnectionLocator
+    from .environment_variable_auth_connection_value import EnvironmentVariableAuthConnectionValue
+    from .environment_variable_auth_connection_value_request import EnvironmentVariableAuthConnectionValueRequest
+    from .environment_variable_response import EnvironmentVariableResponse
+    from .environment_variable_response_type import EnvironmentVariableResponseType
+    from .environment_variable_response_values import EnvironmentVariableResponseValues
+    from .environment_variable_secret_value import EnvironmentVariableSecretValue
+    from .environment_variable_secret_value_request import EnvironmentVariableSecretValueRequest
+    from .environment_variables_list_response import EnvironmentVariablesListResponse
     from .evaluation_settings import EvaluationSettings
     from .evaluation_success_result import EvaluationSuccessResult
     from .exact_parameter_evaluation_strategy import ExactParameterEvaluationStrategy
@@ -1208,6 +1406,18 @@ if typing.TYPE_CHECKING:
     from .library_voice_response import LibraryVoiceResponse
     from .library_voice_response_model_category import LibraryVoiceResponseModelCategory
     from .list_assets_params import ListAssetsParams
+    from .list_auth_connections_response import ListAuthConnectionsResponse
+    from .list_auth_connections_response_auth_connections_item import (
+        ListAuthConnectionsResponseAuthConnectionsItem,
+        ListAuthConnectionsResponseAuthConnectionsItem_ApiIntegrationOauth2AuthCode,
+        ListAuthConnectionsResponseAuthConnectionsItem_BasicAuth,
+        ListAuthConnectionsResponseAuthConnectionsItem_BearerAuth,
+        ListAuthConnectionsResponseAuthConnectionsItem_CustomHeaderAuth,
+        ListAuthConnectionsResponseAuthConnectionsItem_Oauth2ClientCredentials,
+        ListAuthConnectionsResponseAuthConnectionsItem_Oauth2Jwt,
+        ListAuthConnectionsResponseAuthConnectionsItem_PrivateKeyJwt,
+        ListAuthConnectionsResponseAuthConnectionsItem_WhatsappAuth,
+    )
     from .list_calendar_events_params import ListCalendarEventsParams
     from .list_clients_params import ListClientsParams
     from .list_mcp_tools_response_model import ListMcpToolsResponseModel
@@ -1233,6 +1443,8 @@ if typing.TYPE_CHECKING:
     from .llm_input_output_tokens_usage import LlmInputOutputTokensUsage
     from .llm_list_response_model_input import LlmListResponseModelInput
     from .llm_list_response_model_output import LlmListResponseModelOutput
+    from .llm_literal_json_schema_property import LlmLiteralJsonSchemaProperty
+    from .llm_literal_json_schema_property_type import LlmLiteralJsonSchemaPropertyType
     from .llm_parameter_evaluation_strategy import LlmParameterEvaluationStrategy
     from .llm_reasoning_effort import LlmReasoningEffort
     from .llm_schema_override import LlmSchemaOverride
@@ -1246,10 +1458,12 @@ if typing.TYPE_CHECKING:
     from .match_anything_parameter_evaluation_strategy import MatchAnythingParameterEvaluationStrategy
     from .mcp_approval_policy import McpApprovalPolicy
     from .mcp_server_config_input import McpServerConfigInput
+    from .mcp_server_config_input_auth_connection import McpServerConfigInputAuthConnection
     from .mcp_server_config_input_request_headers_value import McpServerConfigInputRequestHeadersValue
     from .mcp_server_config_input_secret_token import McpServerConfigInputSecretToken
     from .mcp_server_config_input_url import McpServerConfigInputUrl
     from .mcp_server_config_output import McpServerConfigOutput
+    from .mcp_server_config_output_auth_connection import McpServerConfigOutputAuthConnection
     from .mcp_server_config_output_request_headers_value import McpServerConfigOutputRequestHeadersValue
     from .mcp_server_config_output_secret_token import McpServerConfigOutputSecretToken
     from .mcp_server_config_output_url import McpServerConfigOutputUrl
@@ -1271,10 +1485,6 @@ if typing.TYPE_CHECKING:
         McpToolConfigOverrideInputOverridesValue_DynamicVariable,
         McpToolConfigOverrideInputOverridesValue_Llm,
     )
-    from .memory_entry_create_tool_config import MemoryEntryCreateToolConfig
-    from .memory_entry_delete_tool_config import MemoryEntryDeleteToolConfig
-    from .memory_entry_search_tool_config import MemoryEntrySearchToolConfig
-    from .memory_entry_update_tool_config import MemoryEntryUpdateToolConfig
     from .merging_strategy import MergingStrategy
     from .messages_search_response import MessagesSearchResponse
     from .messages_search_result import MessagesSearchResult
@@ -1295,6 +1505,9 @@ if typing.TYPE_CHECKING:
     from .no_coaching_settings import NoCoachingSettings
     from .non_streaming_output_formats import NonStreamingOutputFormats
     from .normalized_alignment import NormalizedAlignment
+    from .o_auth_2_client_creds_response import OAuth2ClientCredsResponse
+    from .o_auth_2_jwt_response import OAuth2JwtResponse
+    from .o_auth_2_jwt_response_algorithm import OAuth2JwtResponseAlgorithm
     from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput
     from .object_json_schema_property_input_properties_value import ObjectJsonSchemaPropertyInputPropertiesValue
     from .object_json_schema_property_output import ObjectJsonSchemaPropertyOutput
@@ -1357,6 +1570,8 @@ if typing.TYPE_CHECKING:
     from .preview_audio_db_model import PreviewAudioDbModel
     from .privacy_config_input import PrivacyConfigInput
     from .privacy_config_output import PrivacyConfigOutput
+    from .private_key_jwt_response import PrivateKeyJwtResponse
+    from .private_key_jwt_response_algorithm import PrivateKeyJwtResponseAlgorithm
     from .procedure_ref_response_model import ProcedureRefResponseModel
     from .project_creation_meta_response_model import ProjectCreationMetaResponseModel
     from .project_creation_meta_response_model_status import ProjectCreationMetaResponseModelStatus
@@ -1517,6 +1732,7 @@ if typing.TYPE_CHECKING:
     from .response_filter_mode import ResponseFilterMode
     from .response_unit_test_model import ResponseUnitTestModel
     from .response_unit_test_model_dynamic_variables_value import ResponseUnitTestModelDynamicVariablesValue
+    from .retry_trigger_action import RetryTriggerAction
     from .review_response_model import ReviewResponseModel
     from .review_response_model_reject_reasons_item import ReviewResponseModelRejectReasonsItem
     from .review_response_model_review_status import ReviewResponseModelReviewStatus
@@ -1630,13 +1846,8 @@ if typing.TYPE_CHECKING:
     from .system_tool_config_input import SystemToolConfigInput
     from .system_tool_config_input_params import (
         SystemToolConfigInputParams,
-        SystemToolConfigInputParams_AgentPromptChange,
         SystemToolConfigInputParams_EndCall,
         SystemToolConfigInputParams_LanguageDetection,
-        SystemToolConfigInputParams_MemoryEntryCreate,
-        SystemToolConfigInputParams_MemoryEntryDelete,
-        SystemToolConfigInputParams_MemoryEntrySearch,
-        SystemToolConfigInputParams_MemoryEntryUpdate,
         SystemToolConfigInputParams_PlayKeypadTouchTone,
         SystemToolConfigInputParams_SkipTurn,
         SystemToolConfigInputParams_TransferToAgent,
@@ -1646,13 +1857,8 @@ if typing.TYPE_CHECKING:
     from .system_tool_config_output import SystemToolConfigOutput
     from .system_tool_config_output_params import (
         SystemToolConfigOutputParams,
-        SystemToolConfigOutputParams_AgentPromptChange,
         SystemToolConfigOutputParams_EndCall,
         SystemToolConfigOutputParams_LanguageDetection,
-        SystemToolConfigOutputParams_MemoryEntryCreate,
-        SystemToolConfigOutputParams_MemoryEntryDelete,
-        SystemToolConfigOutputParams_MemoryEntrySearch,
-        SystemToolConfigOutputParams_MemoryEntryUpdate,
         SystemToolConfigOutputParams_PlayKeypadTouchTone,
         SystemToolConfigOutputParams_SkipTurn,
         SystemToolConfigOutputParams_TransferToAgent,
@@ -1660,6 +1866,7 @@ if typing.TYPE_CHECKING:
         SystemToolConfigOutputParams_VoicemailDetection,
     )
     from .telephony_call_config import TelephonyCallConfig
+    from .telephony_direction import TelephonyDirection
     from .telephony_provider import TelephonyProvider
     from .test_condition_rationale_common_model import TestConditionRationaleCommonModel
     from .test_condition_result_common_model import TestConditionResultCommonModel
@@ -1839,12 +2046,14 @@ if typing.TYPE_CHECKING:
     from .webhook_event_type import WebhookEventType
     from .webhook_hmac_settings import WebhookHmacSettings
     from .webhook_tool_api_schema_config_input import WebhookToolApiSchemaConfigInput
+    from .webhook_tool_api_schema_config_input_auth_connection import WebhookToolApiSchemaConfigInputAuthConnection
     from .webhook_tool_api_schema_config_input_content_type import WebhookToolApiSchemaConfigInputContentType
     from .webhook_tool_api_schema_config_input_method import WebhookToolApiSchemaConfigInputMethod
     from .webhook_tool_api_schema_config_input_request_headers_value import (
         WebhookToolApiSchemaConfigInputRequestHeadersValue,
     )
     from .webhook_tool_api_schema_config_output import WebhookToolApiSchemaConfigOutput
+    from .webhook_tool_api_schema_config_output_auth_connection import WebhookToolApiSchemaConfigOutputAuthConnection
     from .webhook_tool_api_schema_config_output_content_type import WebhookToolApiSchemaConfigOutputContentType
     from .webhook_tool_api_schema_config_output_method import WebhookToolApiSchemaConfigOutputMethod
     from .webhook_tool_api_schema_config_output_request_headers_value import (
@@ -1855,6 +2064,7 @@ if typing.TYPE_CHECKING:
     from .webhook_usage_type import WebhookUsageType
     from .websocket_tts_client_message_multi import WebsocketTtsClientMessageMulti
     from .websocket_tts_server_message_multi import WebsocketTtsServerMessageMulti
+    from .whats_app_auth_response import WhatsAppAuthResponse
     from .whats_app_conversation_info import WhatsAppConversationInfo
     from .whats_app_conversation_info_direction import WhatsAppConversationInfoDirection
     from .whats_app_outbound_call_response import WhatsAppOutboundCallResponse
@@ -1947,6 +2157,7 @@ if typing.TYPE_CHECKING:
         WorkflowExpressionConditionModelInputExpression,
         WorkflowExpressionConditionModelInputExpression_AndOperator,
         WorkflowExpressionConditionModelInputExpression_BooleanLiteral,
+        WorkflowExpressionConditionModelInputExpression_ConditionalOperator,
         WorkflowExpressionConditionModelInputExpression_DynamicVariable,
         WorkflowExpressionConditionModelInputExpression_EqOperator,
         WorkflowExpressionConditionModelInputExpression_GtOperator,
@@ -1964,6 +2175,7 @@ if typing.TYPE_CHECKING:
         WorkflowExpressionConditionModelOutputExpression,
         WorkflowExpressionConditionModelOutputExpression_AndOperator,
         WorkflowExpressionConditionModelOutputExpression_BooleanLiteral,
+        WorkflowExpressionConditionModelOutputExpression_ConditionalOperator,
         WorkflowExpressionConditionModelOutputExpression_DynamicVariable,
         WorkflowExpressionConditionModelOutputExpression_EqOperator,
         WorkflowExpressionConditionModelOutputExpression_GtOperator,
@@ -2103,7 +2315,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentMetadataResponseModel": ".agent_metadata_response_model",
     "AgentPlatformSettingsRequestModel": ".agent_platform_settings_request_model",
     "AgentPlatformSettingsResponseModel": ".agent_platform_settings_response_model",
-    "AgentPromptChangeToolConfig": ".agent_prompt_change_tool_config",
     "AgentSimulatedChatTestResponseModel": ".agent_simulated_chat_test_response_model",
     "AgentSortBy": ".agent_sort_by",
     "AgentSuccessfulResponseExample": ".agent_successful_response_example",
@@ -2136,6 +2347,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Alignment": ".alignment",
     "AllowedOutputFormats": ".allowed_output_formats",
     "AllowlistItem": ".allowlist_item",
+    "ApiIntegrationOAuth2AuthCodeResponse": ".api_integration_o_auth_2_auth_code_response",
+    "ApiIntegrationOAuth2AuthCodeResponseScopeSeparator": ".api_integration_o_auth_2_auth_code_response_scope_separator",
     "ApiIntegrationWebhookOverridesInput": ".api_integration_webhook_overrides_input",
     "ApiIntegrationWebhookOverridesInputRequestHeadersValue": ".api_integration_webhook_overrides_input_request_headers_value",
     "ApiIntegrationWebhookOverridesInputSchemaOverridesValue": ".api_integration_webhook_overrides_input_schema_overrides_value",
@@ -2163,6 +2376,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstAndOperatorNodeInputChildrenItem": ".ast_and_operator_node_input_children_item",
     "AstAndOperatorNodeInputChildrenItem_AndOperator": ".ast_and_operator_node_input_children_item",
     "AstAndOperatorNodeInputChildrenItem_BooleanLiteral": ".ast_and_operator_node_input_children_item",
+    "AstAndOperatorNodeInputChildrenItem_ConditionalOperator": ".ast_and_operator_node_input_children_item",
     "AstAndOperatorNodeInputChildrenItem_DynamicVariable": ".ast_and_operator_node_input_children_item",
     "AstAndOperatorNodeInputChildrenItem_EqOperator": ".ast_and_operator_node_input_children_item",
     "AstAndOperatorNodeInputChildrenItem_GtOperator": ".ast_and_operator_node_input_children_item",
@@ -2178,6 +2392,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstAndOperatorNodeOutputChildrenItem": ".ast_and_operator_node_output_children_item",
     "AstAndOperatorNodeOutputChildrenItem_AndOperator": ".ast_and_operator_node_output_children_item",
     "AstAndOperatorNodeOutputChildrenItem_BooleanLiteral": ".ast_and_operator_node_output_children_item",
+    "AstAndOperatorNodeOutputChildrenItem_ConditionalOperator": ".ast_and_operator_node_output_children_item",
     "AstAndOperatorNodeOutputChildrenItem_DynamicVariable": ".ast_and_operator_node_output_children_item",
     "AstAndOperatorNodeOutputChildrenItem_EqOperator": ".ast_and_operator_node_output_children_item",
     "AstAndOperatorNodeOutputChildrenItem_GtOperator": ".ast_and_operator_node_output_children_item",
@@ -2191,12 +2406,105 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstAndOperatorNodeOutputChildrenItem_StringLiteral": ".ast_and_operator_node_output_children_item",
     "AstBooleanNodeInput": ".ast_boolean_node_input",
     "AstBooleanNodeOutput": ".ast_boolean_node_output",
+    "AstConditionalOperatorNodeInput": ".ast_conditional_operator_node_input",
+    "AstConditionalOperatorNodeInputCondition": ".ast_conditional_operator_node_input_condition",
+    "AstConditionalOperatorNodeInputCondition_AndOperator": ".ast_conditional_operator_node_input_condition",
+    "AstConditionalOperatorNodeInputCondition_BooleanLiteral": ".ast_conditional_operator_node_input_condition",
+    "AstConditionalOperatorNodeInputCondition_ConditionalOperator": ".ast_conditional_operator_node_input_condition",
+    "AstConditionalOperatorNodeInputCondition_DynamicVariable": ".ast_conditional_operator_node_input_condition",
+    "AstConditionalOperatorNodeInputCondition_EqOperator": ".ast_conditional_operator_node_input_condition",
+    "AstConditionalOperatorNodeInputCondition_GtOperator": ".ast_conditional_operator_node_input_condition",
+    "AstConditionalOperatorNodeInputCondition_GteOperator": ".ast_conditional_operator_node_input_condition",
+    "AstConditionalOperatorNodeInputCondition_Llm": ".ast_conditional_operator_node_input_condition",
+    "AstConditionalOperatorNodeInputCondition_LtOperator": ".ast_conditional_operator_node_input_condition",
+    "AstConditionalOperatorNodeInputCondition_LteOperator": ".ast_conditional_operator_node_input_condition",
+    "AstConditionalOperatorNodeInputCondition_NeqOperator": ".ast_conditional_operator_node_input_condition",
+    "AstConditionalOperatorNodeInputCondition_NumberLiteral": ".ast_conditional_operator_node_input_condition",
+    "AstConditionalOperatorNodeInputCondition_OrOperator": ".ast_conditional_operator_node_input_condition",
+    "AstConditionalOperatorNodeInputCondition_StringLiteral": ".ast_conditional_operator_node_input_condition",
+    "AstConditionalOperatorNodeInputFalseExpression": ".ast_conditional_operator_node_input_false_expression",
+    "AstConditionalOperatorNodeInputFalseExpression_AndOperator": ".ast_conditional_operator_node_input_false_expression",
+    "AstConditionalOperatorNodeInputFalseExpression_BooleanLiteral": ".ast_conditional_operator_node_input_false_expression",
+    "AstConditionalOperatorNodeInputFalseExpression_ConditionalOperator": ".ast_conditional_operator_node_input_false_expression",
+    "AstConditionalOperatorNodeInputFalseExpression_DynamicVariable": ".ast_conditional_operator_node_input_false_expression",
+    "AstConditionalOperatorNodeInputFalseExpression_EqOperator": ".ast_conditional_operator_node_input_false_expression",
+    "AstConditionalOperatorNodeInputFalseExpression_GtOperator": ".ast_conditional_operator_node_input_false_expression",
+    "AstConditionalOperatorNodeInputFalseExpression_GteOperator": ".ast_conditional_operator_node_input_false_expression",
+    "AstConditionalOperatorNodeInputFalseExpression_Llm": ".ast_conditional_operator_node_input_false_expression",
+    "AstConditionalOperatorNodeInputFalseExpression_LtOperator": ".ast_conditional_operator_node_input_false_expression",
+    "AstConditionalOperatorNodeInputFalseExpression_LteOperator": ".ast_conditional_operator_node_input_false_expression",
+    "AstConditionalOperatorNodeInputFalseExpression_NeqOperator": ".ast_conditional_operator_node_input_false_expression",
+    "AstConditionalOperatorNodeInputFalseExpression_NumberLiteral": ".ast_conditional_operator_node_input_false_expression",
+    "AstConditionalOperatorNodeInputFalseExpression_OrOperator": ".ast_conditional_operator_node_input_false_expression",
+    "AstConditionalOperatorNodeInputFalseExpression_StringLiteral": ".ast_conditional_operator_node_input_false_expression",
+    "AstConditionalOperatorNodeInputTrueExpression": ".ast_conditional_operator_node_input_true_expression",
+    "AstConditionalOperatorNodeInputTrueExpression_AndOperator": ".ast_conditional_operator_node_input_true_expression",
+    "AstConditionalOperatorNodeInputTrueExpression_BooleanLiteral": ".ast_conditional_operator_node_input_true_expression",
+    "AstConditionalOperatorNodeInputTrueExpression_ConditionalOperator": ".ast_conditional_operator_node_input_true_expression",
+    "AstConditionalOperatorNodeInputTrueExpression_DynamicVariable": ".ast_conditional_operator_node_input_true_expression",
+    "AstConditionalOperatorNodeInputTrueExpression_EqOperator": ".ast_conditional_operator_node_input_true_expression",
+    "AstConditionalOperatorNodeInputTrueExpression_GtOperator": ".ast_conditional_operator_node_input_true_expression",
+    "AstConditionalOperatorNodeInputTrueExpression_GteOperator": ".ast_conditional_operator_node_input_true_expression",
+    "AstConditionalOperatorNodeInputTrueExpression_Llm": ".ast_conditional_operator_node_input_true_expression",
+    "AstConditionalOperatorNodeInputTrueExpression_LtOperator": ".ast_conditional_operator_node_input_true_expression",
+    "AstConditionalOperatorNodeInputTrueExpression_LteOperator": ".ast_conditional_operator_node_input_true_expression",
+    "AstConditionalOperatorNodeInputTrueExpression_NeqOperator": ".ast_conditional_operator_node_input_true_expression",
+    "AstConditionalOperatorNodeInputTrueExpression_NumberLiteral": ".ast_conditional_operator_node_input_true_expression",
+    "AstConditionalOperatorNodeInputTrueExpression_OrOperator": ".ast_conditional_operator_node_input_true_expression",
+    "AstConditionalOperatorNodeInputTrueExpression_StringLiteral": ".ast_conditional_operator_node_input_true_expression",
+    "AstConditionalOperatorNodeOutput": ".ast_conditional_operator_node_output",
+    "AstConditionalOperatorNodeOutputCondition": ".ast_conditional_operator_node_output_condition",
+    "AstConditionalOperatorNodeOutputCondition_AndOperator": ".ast_conditional_operator_node_output_condition",
+    "AstConditionalOperatorNodeOutputCondition_BooleanLiteral": ".ast_conditional_operator_node_output_condition",
+    "AstConditionalOperatorNodeOutputCondition_ConditionalOperator": ".ast_conditional_operator_node_output_condition",
+    "AstConditionalOperatorNodeOutputCondition_DynamicVariable": ".ast_conditional_operator_node_output_condition",
+    "AstConditionalOperatorNodeOutputCondition_EqOperator": ".ast_conditional_operator_node_output_condition",
+    "AstConditionalOperatorNodeOutputCondition_GtOperator": ".ast_conditional_operator_node_output_condition",
+    "AstConditionalOperatorNodeOutputCondition_GteOperator": ".ast_conditional_operator_node_output_condition",
+    "AstConditionalOperatorNodeOutputCondition_Llm": ".ast_conditional_operator_node_output_condition",
+    "AstConditionalOperatorNodeOutputCondition_LtOperator": ".ast_conditional_operator_node_output_condition",
+    "AstConditionalOperatorNodeOutputCondition_LteOperator": ".ast_conditional_operator_node_output_condition",
+    "AstConditionalOperatorNodeOutputCondition_NeqOperator": ".ast_conditional_operator_node_output_condition",
+    "AstConditionalOperatorNodeOutputCondition_NumberLiteral": ".ast_conditional_operator_node_output_condition",
+    "AstConditionalOperatorNodeOutputCondition_OrOperator": ".ast_conditional_operator_node_output_condition",
+    "AstConditionalOperatorNodeOutputCondition_StringLiteral": ".ast_conditional_operator_node_output_condition",
+    "AstConditionalOperatorNodeOutputFalseExpression": ".ast_conditional_operator_node_output_false_expression",
+    "AstConditionalOperatorNodeOutputFalseExpression_AndOperator": ".ast_conditional_operator_node_output_false_expression",
+    "AstConditionalOperatorNodeOutputFalseExpression_BooleanLiteral": ".ast_conditional_operator_node_output_false_expression",
+    "AstConditionalOperatorNodeOutputFalseExpression_ConditionalOperator": ".ast_conditional_operator_node_output_false_expression",
+    "AstConditionalOperatorNodeOutputFalseExpression_DynamicVariable": ".ast_conditional_operator_node_output_false_expression",
+    "AstConditionalOperatorNodeOutputFalseExpression_EqOperator": ".ast_conditional_operator_node_output_false_expression",
+    "AstConditionalOperatorNodeOutputFalseExpression_GtOperator": ".ast_conditional_operator_node_output_false_expression",
+    "AstConditionalOperatorNodeOutputFalseExpression_GteOperator": ".ast_conditional_operator_node_output_false_expression",
+    "AstConditionalOperatorNodeOutputFalseExpression_Llm": ".ast_conditional_operator_node_output_false_expression",
+    "AstConditionalOperatorNodeOutputFalseExpression_LtOperator": ".ast_conditional_operator_node_output_false_expression",
+    "AstConditionalOperatorNodeOutputFalseExpression_LteOperator": ".ast_conditional_operator_node_output_false_expression",
+    "AstConditionalOperatorNodeOutputFalseExpression_NeqOperator": ".ast_conditional_operator_node_output_false_expression",
+    "AstConditionalOperatorNodeOutputFalseExpression_NumberLiteral": ".ast_conditional_operator_node_output_false_expression",
+    "AstConditionalOperatorNodeOutputFalseExpression_OrOperator": ".ast_conditional_operator_node_output_false_expression",
+    "AstConditionalOperatorNodeOutputFalseExpression_StringLiteral": ".ast_conditional_operator_node_output_false_expression",
+    "AstConditionalOperatorNodeOutputTrueExpression": ".ast_conditional_operator_node_output_true_expression",
+    "AstConditionalOperatorNodeOutputTrueExpression_AndOperator": ".ast_conditional_operator_node_output_true_expression",
+    "AstConditionalOperatorNodeOutputTrueExpression_BooleanLiteral": ".ast_conditional_operator_node_output_true_expression",
+    "AstConditionalOperatorNodeOutputTrueExpression_ConditionalOperator": ".ast_conditional_operator_node_output_true_expression",
+    "AstConditionalOperatorNodeOutputTrueExpression_DynamicVariable": ".ast_conditional_operator_node_output_true_expression",
+    "AstConditionalOperatorNodeOutputTrueExpression_EqOperator": ".ast_conditional_operator_node_output_true_expression",
+    "AstConditionalOperatorNodeOutputTrueExpression_GtOperator": ".ast_conditional_operator_node_output_true_expression",
+    "AstConditionalOperatorNodeOutputTrueExpression_GteOperator": ".ast_conditional_operator_node_output_true_expression",
+    "AstConditionalOperatorNodeOutputTrueExpression_Llm": ".ast_conditional_operator_node_output_true_expression",
+    "AstConditionalOperatorNodeOutputTrueExpression_LtOperator": ".ast_conditional_operator_node_output_true_expression",
+    "AstConditionalOperatorNodeOutputTrueExpression_LteOperator": ".ast_conditional_operator_node_output_true_expression",
+    "AstConditionalOperatorNodeOutputTrueExpression_NeqOperator": ".ast_conditional_operator_node_output_true_expression",
+    "AstConditionalOperatorNodeOutputTrueExpression_NumberLiteral": ".ast_conditional_operator_node_output_true_expression",
+    "AstConditionalOperatorNodeOutputTrueExpression_OrOperator": ".ast_conditional_operator_node_output_true_expression",
+    "AstConditionalOperatorNodeOutputTrueExpression_StringLiteral": ".ast_conditional_operator_node_output_true_expression",
     "AstDynamicVariableNodeInput": ".ast_dynamic_variable_node_input",
     "AstDynamicVariableNodeOutput": ".ast_dynamic_variable_node_output",
     "AstEqualsOperatorNodeInput": ".ast_equals_operator_node_input",
     "AstEqualsOperatorNodeInputLeft": ".ast_equals_operator_node_input_left",
     "AstEqualsOperatorNodeInputLeft_AndOperator": ".ast_equals_operator_node_input_left",
     "AstEqualsOperatorNodeInputLeft_BooleanLiteral": ".ast_equals_operator_node_input_left",
+    "AstEqualsOperatorNodeInputLeft_ConditionalOperator": ".ast_equals_operator_node_input_left",
     "AstEqualsOperatorNodeInputLeft_DynamicVariable": ".ast_equals_operator_node_input_left",
     "AstEqualsOperatorNodeInputLeft_EqOperator": ".ast_equals_operator_node_input_left",
     "AstEqualsOperatorNodeInputLeft_GtOperator": ".ast_equals_operator_node_input_left",
@@ -2211,6 +2519,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstEqualsOperatorNodeInputRight": ".ast_equals_operator_node_input_right",
     "AstEqualsOperatorNodeInputRight_AndOperator": ".ast_equals_operator_node_input_right",
     "AstEqualsOperatorNodeInputRight_BooleanLiteral": ".ast_equals_operator_node_input_right",
+    "AstEqualsOperatorNodeInputRight_ConditionalOperator": ".ast_equals_operator_node_input_right",
     "AstEqualsOperatorNodeInputRight_DynamicVariable": ".ast_equals_operator_node_input_right",
     "AstEqualsOperatorNodeInputRight_EqOperator": ".ast_equals_operator_node_input_right",
     "AstEqualsOperatorNodeInputRight_GtOperator": ".ast_equals_operator_node_input_right",
@@ -2226,6 +2535,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstEqualsOperatorNodeOutputLeft": ".ast_equals_operator_node_output_left",
     "AstEqualsOperatorNodeOutputLeft_AndOperator": ".ast_equals_operator_node_output_left",
     "AstEqualsOperatorNodeOutputLeft_BooleanLiteral": ".ast_equals_operator_node_output_left",
+    "AstEqualsOperatorNodeOutputLeft_ConditionalOperator": ".ast_equals_operator_node_output_left",
     "AstEqualsOperatorNodeOutputLeft_DynamicVariable": ".ast_equals_operator_node_output_left",
     "AstEqualsOperatorNodeOutputLeft_EqOperator": ".ast_equals_operator_node_output_left",
     "AstEqualsOperatorNodeOutputLeft_GtOperator": ".ast_equals_operator_node_output_left",
@@ -2240,6 +2550,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstEqualsOperatorNodeOutputRight": ".ast_equals_operator_node_output_right",
     "AstEqualsOperatorNodeOutputRight_AndOperator": ".ast_equals_operator_node_output_right",
     "AstEqualsOperatorNodeOutputRight_BooleanLiteral": ".ast_equals_operator_node_output_right",
+    "AstEqualsOperatorNodeOutputRight_ConditionalOperator": ".ast_equals_operator_node_output_right",
     "AstEqualsOperatorNodeOutputRight_DynamicVariable": ".ast_equals_operator_node_output_right",
     "AstEqualsOperatorNodeOutputRight_EqOperator": ".ast_equals_operator_node_output_right",
     "AstEqualsOperatorNodeOutputRight_GtOperator": ".ast_equals_operator_node_output_right",
@@ -2255,6 +2566,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstGreaterThanOperatorNodeInputLeft": ".ast_greater_than_operator_node_input_left",
     "AstGreaterThanOperatorNodeInputLeft_AndOperator": ".ast_greater_than_operator_node_input_left",
     "AstGreaterThanOperatorNodeInputLeft_BooleanLiteral": ".ast_greater_than_operator_node_input_left",
+    "AstGreaterThanOperatorNodeInputLeft_ConditionalOperator": ".ast_greater_than_operator_node_input_left",
     "AstGreaterThanOperatorNodeInputLeft_DynamicVariable": ".ast_greater_than_operator_node_input_left",
     "AstGreaterThanOperatorNodeInputLeft_EqOperator": ".ast_greater_than_operator_node_input_left",
     "AstGreaterThanOperatorNodeInputLeft_GtOperator": ".ast_greater_than_operator_node_input_left",
@@ -2269,6 +2581,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstGreaterThanOperatorNodeInputRight": ".ast_greater_than_operator_node_input_right",
     "AstGreaterThanOperatorNodeInputRight_AndOperator": ".ast_greater_than_operator_node_input_right",
     "AstGreaterThanOperatorNodeInputRight_BooleanLiteral": ".ast_greater_than_operator_node_input_right",
+    "AstGreaterThanOperatorNodeInputRight_ConditionalOperator": ".ast_greater_than_operator_node_input_right",
     "AstGreaterThanOperatorNodeInputRight_DynamicVariable": ".ast_greater_than_operator_node_input_right",
     "AstGreaterThanOperatorNodeInputRight_EqOperator": ".ast_greater_than_operator_node_input_right",
     "AstGreaterThanOperatorNodeInputRight_GtOperator": ".ast_greater_than_operator_node_input_right",
@@ -2284,6 +2597,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstGreaterThanOperatorNodeOutputLeft": ".ast_greater_than_operator_node_output_left",
     "AstGreaterThanOperatorNodeOutputLeft_AndOperator": ".ast_greater_than_operator_node_output_left",
     "AstGreaterThanOperatorNodeOutputLeft_BooleanLiteral": ".ast_greater_than_operator_node_output_left",
+    "AstGreaterThanOperatorNodeOutputLeft_ConditionalOperator": ".ast_greater_than_operator_node_output_left",
     "AstGreaterThanOperatorNodeOutputLeft_DynamicVariable": ".ast_greater_than_operator_node_output_left",
     "AstGreaterThanOperatorNodeOutputLeft_EqOperator": ".ast_greater_than_operator_node_output_left",
     "AstGreaterThanOperatorNodeOutputLeft_GtOperator": ".ast_greater_than_operator_node_output_left",
@@ -2298,6 +2612,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstGreaterThanOperatorNodeOutputRight": ".ast_greater_than_operator_node_output_right",
     "AstGreaterThanOperatorNodeOutputRight_AndOperator": ".ast_greater_than_operator_node_output_right",
     "AstGreaterThanOperatorNodeOutputRight_BooleanLiteral": ".ast_greater_than_operator_node_output_right",
+    "AstGreaterThanOperatorNodeOutputRight_ConditionalOperator": ".ast_greater_than_operator_node_output_right",
     "AstGreaterThanOperatorNodeOutputRight_DynamicVariable": ".ast_greater_than_operator_node_output_right",
     "AstGreaterThanOperatorNodeOutputRight_EqOperator": ".ast_greater_than_operator_node_output_right",
     "AstGreaterThanOperatorNodeOutputRight_GtOperator": ".ast_greater_than_operator_node_output_right",
@@ -2313,6 +2628,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstGreaterThanOrEqualsOperatorNodeInputLeft": ".ast_greater_than_or_equals_operator_node_input_left",
     "AstGreaterThanOrEqualsOperatorNodeInputLeft_AndOperator": ".ast_greater_than_or_equals_operator_node_input_left",
     "AstGreaterThanOrEqualsOperatorNodeInputLeft_BooleanLiteral": ".ast_greater_than_or_equals_operator_node_input_left",
+    "AstGreaterThanOrEqualsOperatorNodeInputLeft_ConditionalOperator": ".ast_greater_than_or_equals_operator_node_input_left",
     "AstGreaterThanOrEqualsOperatorNodeInputLeft_DynamicVariable": ".ast_greater_than_or_equals_operator_node_input_left",
     "AstGreaterThanOrEqualsOperatorNodeInputLeft_EqOperator": ".ast_greater_than_or_equals_operator_node_input_left",
     "AstGreaterThanOrEqualsOperatorNodeInputLeft_GtOperator": ".ast_greater_than_or_equals_operator_node_input_left",
@@ -2327,6 +2643,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstGreaterThanOrEqualsOperatorNodeInputRight": ".ast_greater_than_or_equals_operator_node_input_right",
     "AstGreaterThanOrEqualsOperatorNodeInputRight_AndOperator": ".ast_greater_than_or_equals_operator_node_input_right",
     "AstGreaterThanOrEqualsOperatorNodeInputRight_BooleanLiteral": ".ast_greater_than_or_equals_operator_node_input_right",
+    "AstGreaterThanOrEqualsOperatorNodeInputRight_ConditionalOperator": ".ast_greater_than_or_equals_operator_node_input_right",
     "AstGreaterThanOrEqualsOperatorNodeInputRight_DynamicVariable": ".ast_greater_than_or_equals_operator_node_input_right",
     "AstGreaterThanOrEqualsOperatorNodeInputRight_EqOperator": ".ast_greater_than_or_equals_operator_node_input_right",
     "AstGreaterThanOrEqualsOperatorNodeInputRight_GtOperator": ".ast_greater_than_or_equals_operator_node_input_right",
@@ -2342,6 +2659,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstGreaterThanOrEqualsOperatorNodeOutputLeft": ".ast_greater_than_or_equals_operator_node_output_left",
     "AstGreaterThanOrEqualsOperatorNodeOutputLeft_AndOperator": ".ast_greater_than_or_equals_operator_node_output_left",
     "AstGreaterThanOrEqualsOperatorNodeOutputLeft_BooleanLiteral": ".ast_greater_than_or_equals_operator_node_output_left",
+    "AstGreaterThanOrEqualsOperatorNodeOutputLeft_ConditionalOperator": ".ast_greater_than_or_equals_operator_node_output_left",
     "AstGreaterThanOrEqualsOperatorNodeOutputLeft_DynamicVariable": ".ast_greater_than_or_equals_operator_node_output_left",
     "AstGreaterThanOrEqualsOperatorNodeOutputLeft_EqOperator": ".ast_greater_than_or_equals_operator_node_output_left",
     "AstGreaterThanOrEqualsOperatorNodeOutputLeft_GtOperator": ".ast_greater_than_or_equals_operator_node_output_left",
@@ -2356,6 +2674,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstGreaterThanOrEqualsOperatorNodeOutputRight": ".ast_greater_than_or_equals_operator_node_output_right",
     "AstGreaterThanOrEqualsOperatorNodeOutputRight_AndOperator": ".ast_greater_than_or_equals_operator_node_output_right",
     "AstGreaterThanOrEqualsOperatorNodeOutputRight_BooleanLiteral": ".ast_greater_than_or_equals_operator_node_output_right",
+    "AstGreaterThanOrEqualsOperatorNodeOutputRight_ConditionalOperator": ".ast_greater_than_or_equals_operator_node_output_right",
     "AstGreaterThanOrEqualsOperatorNodeOutputRight_DynamicVariable": ".ast_greater_than_or_equals_operator_node_output_right",
     "AstGreaterThanOrEqualsOperatorNodeOutputRight_EqOperator": ".ast_greater_than_or_equals_operator_node_output_right",
     "AstGreaterThanOrEqualsOperatorNodeOutputRight_GtOperator": ".ast_greater_than_or_equals_operator_node_output_right",
@@ -2371,6 +2690,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstLessThanOperatorNodeInputLeft": ".ast_less_than_operator_node_input_left",
     "AstLessThanOperatorNodeInputLeft_AndOperator": ".ast_less_than_operator_node_input_left",
     "AstLessThanOperatorNodeInputLeft_BooleanLiteral": ".ast_less_than_operator_node_input_left",
+    "AstLessThanOperatorNodeInputLeft_ConditionalOperator": ".ast_less_than_operator_node_input_left",
     "AstLessThanOperatorNodeInputLeft_DynamicVariable": ".ast_less_than_operator_node_input_left",
     "AstLessThanOperatorNodeInputLeft_EqOperator": ".ast_less_than_operator_node_input_left",
     "AstLessThanOperatorNodeInputLeft_GtOperator": ".ast_less_than_operator_node_input_left",
@@ -2385,6 +2705,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstLessThanOperatorNodeInputRight": ".ast_less_than_operator_node_input_right",
     "AstLessThanOperatorNodeInputRight_AndOperator": ".ast_less_than_operator_node_input_right",
     "AstLessThanOperatorNodeInputRight_BooleanLiteral": ".ast_less_than_operator_node_input_right",
+    "AstLessThanOperatorNodeInputRight_ConditionalOperator": ".ast_less_than_operator_node_input_right",
     "AstLessThanOperatorNodeInputRight_DynamicVariable": ".ast_less_than_operator_node_input_right",
     "AstLessThanOperatorNodeInputRight_EqOperator": ".ast_less_than_operator_node_input_right",
     "AstLessThanOperatorNodeInputRight_GtOperator": ".ast_less_than_operator_node_input_right",
@@ -2400,6 +2721,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstLessThanOperatorNodeOutputLeft": ".ast_less_than_operator_node_output_left",
     "AstLessThanOperatorNodeOutputLeft_AndOperator": ".ast_less_than_operator_node_output_left",
     "AstLessThanOperatorNodeOutputLeft_BooleanLiteral": ".ast_less_than_operator_node_output_left",
+    "AstLessThanOperatorNodeOutputLeft_ConditionalOperator": ".ast_less_than_operator_node_output_left",
     "AstLessThanOperatorNodeOutputLeft_DynamicVariable": ".ast_less_than_operator_node_output_left",
     "AstLessThanOperatorNodeOutputLeft_EqOperator": ".ast_less_than_operator_node_output_left",
     "AstLessThanOperatorNodeOutputLeft_GtOperator": ".ast_less_than_operator_node_output_left",
@@ -2414,6 +2736,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstLessThanOperatorNodeOutputRight": ".ast_less_than_operator_node_output_right",
     "AstLessThanOperatorNodeOutputRight_AndOperator": ".ast_less_than_operator_node_output_right",
     "AstLessThanOperatorNodeOutputRight_BooleanLiteral": ".ast_less_than_operator_node_output_right",
+    "AstLessThanOperatorNodeOutputRight_ConditionalOperator": ".ast_less_than_operator_node_output_right",
     "AstLessThanOperatorNodeOutputRight_DynamicVariable": ".ast_less_than_operator_node_output_right",
     "AstLessThanOperatorNodeOutputRight_EqOperator": ".ast_less_than_operator_node_output_right",
     "AstLessThanOperatorNodeOutputRight_GtOperator": ".ast_less_than_operator_node_output_right",
@@ -2429,6 +2752,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstLessThanOrEqualsOperatorNodeInputLeft": ".ast_less_than_or_equals_operator_node_input_left",
     "AstLessThanOrEqualsOperatorNodeInputLeft_AndOperator": ".ast_less_than_or_equals_operator_node_input_left",
     "AstLessThanOrEqualsOperatorNodeInputLeft_BooleanLiteral": ".ast_less_than_or_equals_operator_node_input_left",
+    "AstLessThanOrEqualsOperatorNodeInputLeft_ConditionalOperator": ".ast_less_than_or_equals_operator_node_input_left",
     "AstLessThanOrEqualsOperatorNodeInputLeft_DynamicVariable": ".ast_less_than_or_equals_operator_node_input_left",
     "AstLessThanOrEqualsOperatorNodeInputLeft_EqOperator": ".ast_less_than_or_equals_operator_node_input_left",
     "AstLessThanOrEqualsOperatorNodeInputLeft_GtOperator": ".ast_less_than_or_equals_operator_node_input_left",
@@ -2443,6 +2767,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstLessThanOrEqualsOperatorNodeInputRight": ".ast_less_than_or_equals_operator_node_input_right",
     "AstLessThanOrEqualsOperatorNodeInputRight_AndOperator": ".ast_less_than_or_equals_operator_node_input_right",
     "AstLessThanOrEqualsOperatorNodeInputRight_BooleanLiteral": ".ast_less_than_or_equals_operator_node_input_right",
+    "AstLessThanOrEqualsOperatorNodeInputRight_ConditionalOperator": ".ast_less_than_or_equals_operator_node_input_right",
     "AstLessThanOrEqualsOperatorNodeInputRight_DynamicVariable": ".ast_less_than_or_equals_operator_node_input_right",
     "AstLessThanOrEqualsOperatorNodeInputRight_EqOperator": ".ast_less_than_or_equals_operator_node_input_right",
     "AstLessThanOrEqualsOperatorNodeInputRight_GtOperator": ".ast_less_than_or_equals_operator_node_input_right",
@@ -2458,6 +2783,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstLessThanOrEqualsOperatorNodeOutputLeft": ".ast_less_than_or_equals_operator_node_output_left",
     "AstLessThanOrEqualsOperatorNodeOutputLeft_AndOperator": ".ast_less_than_or_equals_operator_node_output_left",
     "AstLessThanOrEqualsOperatorNodeOutputLeft_BooleanLiteral": ".ast_less_than_or_equals_operator_node_output_left",
+    "AstLessThanOrEqualsOperatorNodeOutputLeft_ConditionalOperator": ".ast_less_than_or_equals_operator_node_output_left",
     "AstLessThanOrEqualsOperatorNodeOutputLeft_DynamicVariable": ".ast_less_than_or_equals_operator_node_output_left",
     "AstLessThanOrEqualsOperatorNodeOutputLeft_EqOperator": ".ast_less_than_or_equals_operator_node_output_left",
     "AstLessThanOrEqualsOperatorNodeOutputLeft_GtOperator": ".ast_less_than_or_equals_operator_node_output_left",
@@ -2472,6 +2798,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstLessThanOrEqualsOperatorNodeOutputRight": ".ast_less_than_or_equals_operator_node_output_right",
     "AstLessThanOrEqualsOperatorNodeOutputRight_AndOperator": ".ast_less_than_or_equals_operator_node_output_right",
     "AstLessThanOrEqualsOperatorNodeOutputRight_BooleanLiteral": ".ast_less_than_or_equals_operator_node_output_right",
+    "AstLessThanOrEqualsOperatorNodeOutputRight_ConditionalOperator": ".ast_less_than_or_equals_operator_node_output_right",
     "AstLessThanOrEqualsOperatorNodeOutputRight_DynamicVariable": ".ast_less_than_or_equals_operator_node_output_right",
     "AstLessThanOrEqualsOperatorNodeOutputRight_EqOperator": ".ast_less_than_or_equals_operator_node_output_right",
     "AstLessThanOrEqualsOperatorNodeOutputRight_GtOperator": ".ast_less_than_or_equals_operator_node_output_right",
@@ -2487,6 +2814,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstNotEqualsOperatorNodeInputLeft": ".ast_not_equals_operator_node_input_left",
     "AstNotEqualsOperatorNodeInputLeft_AndOperator": ".ast_not_equals_operator_node_input_left",
     "AstNotEqualsOperatorNodeInputLeft_BooleanLiteral": ".ast_not_equals_operator_node_input_left",
+    "AstNotEqualsOperatorNodeInputLeft_ConditionalOperator": ".ast_not_equals_operator_node_input_left",
     "AstNotEqualsOperatorNodeInputLeft_DynamicVariable": ".ast_not_equals_operator_node_input_left",
     "AstNotEqualsOperatorNodeInputLeft_EqOperator": ".ast_not_equals_operator_node_input_left",
     "AstNotEqualsOperatorNodeInputLeft_GtOperator": ".ast_not_equals_operator_node_input_left",
@@ -2501,6 +2829,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstNotEqualsOperatorNodeInputRight": ".ast_not_equals_operator_node_input_right",
     "AstNotEqualsOperatorNodeInputRight_AndOperator": ".ast_not_equals_operator_node_input_right",
     "AstNotEqualsOperatorNodeInputRight_BooleanLiteral": ".ast_not_equals_operator_node_input_right",
+    "AstNotEqualsOperatorNodeInputRight_ConditionalOperator": ".ast_not_equals_operator_node_input_right",
     "AstNotEqualsOperatorNodeInputRight_DynamicVariable": ".ast_not_equals_operator_node_input_right",
     "AstNotEqualsOperatorNodeInputRight_EqOperator": ".ast_not_equals_operator_node_input_right",
     "AstNotEqualsOperatorNodeInputRight_GtOperator": ".ast_not_equals_operator_node_input_right",
@@ -2516,6 +2845,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstNotEqualsOperatorNodeOutputLeft": ".ast_not_equals_operator_node_output_left",
     "AstNotEqualsOperatorNodeOutputLeft_AndOperator": ".ast_not_equals_operator_node_output_left",
     "AstNotEqualsOperatorNodeOutputLeft_BooleanLiteral": ".ast_not_equals_operator_node_output_left",
+    "AstNotEqualsOperatorNodeOutputLeft_ConditionalOperator": ".ast_not_equals_operator_node_output_left",
     "AstNotEqualsOperatorNodeOutputLeft_DynamicVariable": ".ast_not_equals_operator_node_output_left",
     "AstNotEqualsOperatorNodeOutputLeft_EqOperator": ".ast_not_equals_operator_node_output_left",
     "AstNotEqualsOperatorNodeOutputLeft_GtOperator": ".ast_not_equals_operator_node_output_left",
@@ -2530,6 +2860,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstNotEqualsOperatorNodeOutputRight": ".ast_not_equals_operator_node_output_right",
     "AstNotEqualsOperatorNodeOutputRight_AndOperator": ".ast_not_equals_operator_node_output_right",
     "AstNotEqualsOperatorNodeOutputRight_BooleanLiteral": ".ast_not_equals_operator_node_output_right",
+    "AstNotEqualsOperatorNodeOutputRight_ConditionalOperator": ".ast_not_equals_operator_node_output_right",
     "AstNotEqualsOperatorNodeOutputRight_DynamicVariable": ".ast_not_equals_operator_node_output_right",
     "AstNotEqualsOperatorNodeOutputRight_EqOperator": ".ast_not_equals_operator_node_output_right",
     "AstNotEqualsOperatorNodeOutputRight_GtOperator": ".ast_not_equals_operator_node_output_right",
@@ -2547,6 +2878,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstOrOperatorNodeInputChildrenItem": ".ast_or_operator_node_input_children_item",
     "AstOrOperatorNodeInputChildrenItem_AndOperator": ".ast_or_operator_node_input_children_item",
     "AstOrOperatorNodeInputChildrenItem_BooleanLiteral": ".ast_or_operator_node_input_children_item",
+    "AstOrOperatorNodeInputChildrenItem_ConditionalOperator": ".ast_or_operator_node_input_children_item",
     "AstOrOperatorNodeInputChildrenItem_DynamicVariable": ".ast_or_operator_node_input_children_item",
     "AstOrOperatorNodeInputChildrenItem_EqOperator": ".ast_or_operator_node_input_children_item",
     "AstOrOperatorNodeInputChildrenItem_GtOperator": ".ast_or_operator_node_input_children_item",
@@ -2562,6 +2894,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstOrOperatorNodeOutputChildrenItem": ".ast_or_operator_node_output_children_item",
     "AstOrOperatorNodeOutputChildrenItem_AndOperator": ".ast_or_operator_node_output_children_item",
     "AstOrOperatorNodeOutputChildrenItem_BooleanLiteral": ".ast_or_operator_node_output_children_item",
+    "AstOrOperatorNodeOutputChildrenItem_ConditionalOperator": ".ast_or_operator_node_output_children_item",
     "AstOrOperatorNodeOutputChildrenItem_DynamicVariable": ".ast_or_operator_node_output_children_item",
     "AstOrOperatorNodeOutputChildrenItem_EqOperator": ".ast_or_operator_node_output_children_item",
     "AstOrOperatorNodeOutputChildrenItem_GtOperator": ".ast_or_operator_node_output_children_item",
@@ -2576,6 +2909,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstStringNodeInput": ".ast_string_node_input",
     "AstStringNodeOutput": ".ast_string_node_output",
     "AstllmNodeInput": ".astllm_node_input",
+    "AstllmNodeInputPrompt": ".astllm_node_input_prompt",
+    "AstllmNodeInputValueSchema": ".astllm_node_input_value_schema",
     "AstllmNodeOutput": ".astllm_node_output",
     "AsyncConversationMetadata": ".async_conversation_metadata",
     "AsyncConversationMetadataDeliveryStatus": ".async_conversation_metadata_delivery_status",
@@ -2589,19 +2924,29 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AudioOutputMulti": ".audio_output_multi",
     "AudioWithTimestampsAndVoiceSegmentsResponseModel": ".audio_with_timestamps_and_voice_segments_response_model",
     "AudioWithTimestampsResponse": ".audio_with_timestamps_response",
+    "AuthConnectionDependencies": ".auth_connection_dependencies",
+    "AuthConnectionDependenciesMcpServersItem": ".auth_connection_dependencies_mcp_servers_item",
+    "AuthConnectionDependenciesMcpServersItem_Available": ".auth_connection_dependencies_mcp_servers_item",
+    "AuthConnectionDependenciesMcpServersItem_Unknown": ".auth_connection_dependencies_mcp_servers_item",
+    "AuthConnectionDependenciesToolsItem": ".auth_connection_dependencies_tools_item",
+    "AuthConnectionDependenciesToolsItem_Available": ".auth_connection_dependencies_tools_item",
+    "AuthConnectionDependenciesToolsItem_Unknown": ".auth_connection_dependencies_tools_item",
     "AuthConnectionLocator": ".auth_connection_locator",
     "AuthSettings": ".auth_settings",
     "AuthorizationMethod": ".authorization_method",
+    "AutoSyncInfo": ".auto_sync_info",
     "BackupLlmDefault": ".backup_llm_default",
     "BackupLlmDisabled": ".backup_llm_disabled",
     "BackupLlmOverride": ".backup_llm_override",
     "BadRequestErrorBody": ".bad_request_error_body",
+    "BasicAuthResponse": ".basic_auth_response",
     "BatchCallDetailedResponse": ".batch_call_detailed_response",
     "BatchCallRecipientStatus": ".batch_call_recipient_status",
     "BatchCallResponse": ".batch_call_response",
     "BatchCallStatus": ".batch_call_status",
     "BatchCallWhatsAppParams": ".batch_call_whats_app_params",
     "BatchFailureResponseModel": ".batch_failure_response_model",
+    "BearerAuthResponse": ".bearer_auth_response",
     "BillingPeriod": ".billing_period",
     "BranchProtectionStatus": ".branch_protection_status",
     "BreakdownTypes": ".breakdown_types",
@@ -2617,7 +2962,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CaptionStyleHorizontalPlacementModelAlign": ".caption_style_horizontal_placement_model_align",
     "CaptionStyleModel": ".caption_style_model",
     "CaptionStyleModelTextAlign": ".caption_style_model_text_align",
+    "CaptionStyleModelTextBlendMode": ".caption_style_model_text_blend_mode",
     "CaptionStyleModelTextStyle": ".caption_style_model_text_style",
+    "CaptionStyleModelTextTransform": ".caption_style_model_text_transform",
     "CaptionStyleModelTextWeight": ".caption_style_model_text_weight",
     "CaptionStyleSectionAnimationModel": ".caption_style_section_animation_model",
     "CaptionStyleSectionAnimationModelEnterType": ".caption_style_section_animation_model_enter_type",
@@ -2672,9 +3019,18 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConstantSchemaOverrideConstantValue": ".constant_schema_override_constant_value",
     "ContentConfig": ".content_config",
     "ContentGuardrailInput": ".content_guardrail_input",
+    "ContentGuardrailInputTriggerAction": ".content_guardrail_input_trigger_action",
+    "ContentGuardrailInputTriggerAction_EndCall": ".content_guardrail_input_trigger_action",
+    "ContentGuardrailInputTriggerAction_Retry": ".content_guardrail_input_trigger_action",
     "ContentGuardrailOutput": ".content_guardrail_output",
+    "ContentGuardrailOutputTriggerAction": ".content_guardrail_output_trigger_action",
+    "ContentGuardrailOutputTriggerAction_EndCall": ".content_guardrail_output_trigger_action",
+    "ContentGuardrailOutputTriggerAction_Retry": ".content_guardrail_output_trigger_action",
+    "ContentThresholdGuardrail": ".content_threshold_guardrail",
+    "ContentThresholdGuardrailThreshold": ".content_threshold_guardrail_threshold",
     "Contributor": ".contributor",
     "ConvAiDynamicVariable": ".conv_ai_dynamic_variable",
+    "ConvAiEnvVarLocator": ".conv_ai_env_var_locator",
     "ConvAiFileUploadResponseModel": ".conv_ai_file_upload_response_model",
     "ConvAiSecretLocator": ".conv_ai_secret_locator",
     "ConvAiStoredSecretDependencies": ".conv_ai_stored_secret_dependencies",
@@ -2713,8 +3069,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationHistoryRagUsageCommonModel": ".conversation_history_rag_usage_common_model",
     "ConversationHistoryRedactionConfig": ".conversation_history_redaction_config",
     "ConversationHistorySipTrunkingPhoneCallModel": ".conversation_history_sip_trunking_phone_call_model",
-    "ConversationHistorySipTrunkingPhoneCallModelDirection": ".conversation_history_sip_trunking_phone_call_model_direction",
-    "ConversationHistoryTranscriptApiIntegrationWebhookToolsResultCommonModel": ".conversation_history_transcript_api_integration_webhook_tools_result_common_model",
+    "ConversationHistoryTranscriptApiIntegrationWebhookToolsResultCommonModelInput": ".conversation_history_transcript_api_integration_webhook_tools_result_common_model_input",
+    "ConversationHistoryTranscriptApiIntegrationWebhookToolsResultCommonModelOutput": ".conversation_history_transcript_api_integration_webhook_tools_result_common_model_output",
     "ConversationHistoryTranscriptCommonModelInput": ".conversation_history_transcript_common_model_input",
     "ConversationHistoryTranscriptCommonModelInputRole": ".conversation_history_transcript_common_model_input_role",
     "ConversationHistoryTranscriptCommonModelInputToolResultsItem": ".conversation_history_transcript_common_model_input_tool_results_item",
@@ -2755,7 +3111,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberSipSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberTwilioSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_VoicemailDetectionSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
-    "ConversationHistoryTranscriptToolCallApiIntegrationWebhookDetails": ".conversation_history_transcript_tool_call_api_integration_webhook_details",
+    "ConversationHistoryTranscriptToolCallApiIntegrationWebhookDetailsInput": ".conversation_history_transcript_tool_call_api_integration_webhook_details_input",
+    "ConversationHistoryTranscriptToolCallApiIntegrationWebhookDetailsOutput": ".conversation_history_transcript_tool_call_api_integration_webhook_details_output",
     "ConversationHistoryTranscriptToolCallClientDetails": ".conversation_history_transcript_tool_call_client_details",
     "ConversationHistoryTranscriptToolCallCommonModelInput": ".conversation_history_transcript_tool_call_common_model_input",
     "ConversationHistoryTranscriptToolCallCommonModelInputToolDetails": ".conversation_history_transcript_tool_call_common_model_input_tool_details",
@@ -2774,7 +3131,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationHistoryTranscriptWorkflowToolsResultCommonModelInput": ".conversation_history_transcript_workflow_tools_result_common_model_input",
     "ConversationHistoryTranscriptWorkflowToolsResultCommonModelOutput": ".conversation_history_transcript_workflow_tools_result_common_model_output",
     "ConversationHistoryTwilioPhoneCallModel": ".conversation_history_twilio_phone_call_model",
-    "ConversationHistoryTwilioPhoneCallModelDirection": ".conversation_history_twilio_phone_call_model_direction",
     "ConversationInitiationClientDataConfigInput": ".conversation_initiation_client_data_config_input",
     "ConversationInitiationClientDataConfigOutput": ".conversation_initiation_client_data_config_output",
     "ConversationInitiationClientDataInternal": ".conversation_initiation_client_data_internal",
@@ -2791,7 +3147,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationSimulationSpecification": ".conversation_simulation_specification",
     "ConversationSimulationSpecificationDynamicVariablesValue": ".conversation_simulation_specification_dynamic_variables_value",
     "ConversationSummaryResponseModel": ".conversation_summary_response_model",
-    "ConversationSummaryResponseModelDirection": ".conversation_summary_response_model_direction",
     "ConversationSummaryResponseModelStatus": ".conversation_summary_response_model_status",
     "ConversationTokenDbModel": ".conversation_token_db_model",
     "ConversationTokenPurpose": ".conversation_token_purpose",
@@ -2807,30 +3162,45 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateAgentTestResponseModel": ".create_agent_test_response_model",
     "CreateAssetParams": ".create_asset_params",
     "CreateAudioNativeProjectRequest": ".create_audio_native_project_request",
+    "CreateAuthConnectionEnvironmentVariableRequest": ".create_auth_connection_environment_variable_request",
+    "CreateBasicAuthRequest": ".create_basic_auth_request",
     "CreateClientAppointmentParams": ".create_client_appointment_params",
     "CreateClientParams": ".create_client_params",
+    "CreateCustomHeaderAuthRequest": ".create_custom_header_auth_request",
+    "CreateOAuth2ClientCredsRequest": ".create_o_auth_2_client_creds_request",
+    "CreateOAuth2JwtRequest": ".create_o_auth_2_jwt_request",
+    "CreateOAuth2JwtRequestAlgorithm": ".create_o_auth_2_jwt_request_algorithm",
     "CreatePhoneNumberResponseModel": ".create_phone_number_response_model",
     "CreatePreviouslyGeneratedVoiceRequest": ".create_previously_generated_voice_request",
+    "CreatePrivateKeyJwtRequest": ".create_private_key_jwt_request",
+    "CreatePrivateKeyJwtRequestAlgorithm": ".create_private_key_jwt_request_algorithm",
     "CreateProductParams": ".create_product_params",
     "CreatePronunciationDictionaryResponseModel": ".create_pronunciation_dictionary_response_model",
     "CreateRentalBookingParams": ".create_rental_booking_params",
     "CreateResponseUnitTestRequest": ".create_response_unit_test_request",
     "CreateResponseUnitTestRequestDynamicVariablesValue": ".create_response_unit_test_request_dynamic_variables_value",
+    "CreateSecretEnvironmentVariableRequest": ".create_secret_environment_variable_request",
     "CreateServiceParams": ".create_service_params",
     "CreateSimulationTestRequest": ".create_simulation_test_request",
     "CreateSimulationTestRequestDynamicVariablesValue": ".create_simulation_test_request_dynamic_variables_value",
     "CreateSipTrunkPhoneNumberRequest": ".create_sip_trunk_phone_number_request",
     "CreateStaffParams": ".create_staff_params",
+    "CreateStringEnvironmentVariableRequest": ".create_string_environment_variable_request",
     "CreateToolCallUnitTestRequest": ".create_tool_call_unit_test_request",
     "CreateToolCallUnitTestRequestDynamicVariablesValue": ".create_tool_call_unit_test_request_dynamic_variables_value",
     "CreateTranscriptRequest": ".create_transcript_request",
     "CreateTwilioPhoneNumberRequest": ".create_twilio_phone_number_request",
     "CustomGuardrailConfig": ".custom_guardrail_config",
+    "CustomGuardrailConfigTriggerAction": ".custom_guardrail_config_trigger_action",
+    "CustomGuardrailConfigTriggerAction_EndCall": ".custom_guardrail_config_trigger_action",
+    "CustomGuardrailConfigTriggerAction_Retry": ".custom_guardrail_config_trigger_action",
     "CustomGuardrailInput": ".custom_guardrail_input",
     "CustomGuardrailOutput": ".custom_guardrail_output",
     "CustomGuardrailsConfigInput": ".custom_guardrails_config_input",
     "CustomGuardrailsConfigOutput": ".custom_guardrails_config_output",
+    "CustomHeaderAuthResponse": ".custom_header_auth_response",
     "CustomLlm": ".custom_llm",
+    "CustomLlmApiKey": ".custom_llm_api_key",
     "CustomLlmRequestHeadersValue": ".custom_llm_request_headers_value",
     "CustomLlmapiType": ".custom_llmapi_type",
     "CustomSipHeader": ".custom_sip_header",
@@ -2861,11 +3231,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DeleteWorkspaceWebhookResponseModel": ".delete_workspace_webhook_response_model",
     "DependentAvailableAgentIdentifier": ".dependent_available_agent_identifier",
     "DependentAvailableAgentIdentifierAccessLevel": ".dependent_available_agent_identifier_access_level",
+    "DependentAvailableMcpServerIdentifier": ".dependent_available_mcp_server_identifier",
+    "DependentAvailableMcpServerIdentifierAccessLevel": ".dependent_available_mcp_server_identifier_access_level",
     "DependentAvailableToolIdentifier": ".dependent_available_tool_identifier",
     "DependentAvailableToolIdentifierAccessLevel": ".dependent_available_tool_identifier_access_level",
     "DependentBranchInfo": ".dependent_branch_info",
+    "DependentIntegrationConnectionIdentifier": ".dependent_integration_connection_identifier",
     "DependentPhoneNumberIdentifier": ".dependent_phone_number_identifier",
     "DependentUnknownAgentIdentifier": ".dependent_unknown_agent_identifier",
+    "DependentUnknownMcpServerIdentifier": ".dependent_unknown_mcp_server_identifier",
     "DependentUnknownToolIdentifier": ".dependent_unknown_tool_identifier",
     "DetailedMusicResponse": ".detailed_music_response",
     "DetectedEntity": ".detected_entity",
@@ -2911,6 +3285,16 @@ _dynamic_imports: typing.Dict[str, str] = {
     "EmbeddingModelEnum": ".embedding_model_enum",
     "EndCallToolConfig": ".end_call_tool_config",
     "EndCallToolResultModel": ".end_call_tool_result_model",
+    "EndCallTriggerAction": ".end_call_trigger_action",
+    "EnvironmentAuthConnectionLocator": ".environment_auth_connection_locator",
+    "EnvironmentVariableAuthConnectionValue": ".environment_variable_auth_connection_value",
+    "EnvironmentVariableAuthConnectionValueRequest": ".environment_variable_auth_connection_value_request",
+    "EnvironmentVariableResponse": ".environment_variable_response",
+    "EnvironmentVariableResponseType": ".environment_variable_response_type",
+    "EnvironmentVariableResponseValues": ".environment_variable_response_values",
+    "EnvironmentVariableSecretValue": ".environment_variable_secret_value",
+    "EnvironmentVariableSecretValueRequest": ".environment_variable_secret_value_request",
+    "EnvironmentVariablesListResponse": ".environment_variables_list_response",
     "EvaluationSettings": ".evaluation_settings",
     "EvaluationSuccessResult": ".evaluation_success_result",
     "ExactParameterEvaluationStrategy": ".exact_parameter_evaluation_strategy",
@@ -3078,6 +3462,16 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LibraryVoiceResponse": ".library_voice_response",
     "LibraryVoiceResponseModelCategory": ".library_voice_response_model_category",
     "ListAssetsParams": ".list_assets_params",
+    "ListAuthConnectionsResponse": ".list_auth_connections_response",
+    "ListAuthConnectionsResponseAuthConnectionsItem": ".list_auth_connections_response_auth_connections_item",
+    "ListAuthConnectionsResponseAuthConnectionsItem_ApiIntegrationOauth2AuthCode": ".list_auth_connections_response_auth_connections_item",
+    "ListAuthConnectionsResponseAuthConnectionsItem_BasicAuth": ".list_auth_connections_response_auth_connections_item",
+    "ListAuthConnectionsResponseAuthConnectionsItem_BearerAuth": ".list_auth_connections_response_auth_connections_item",
+    "ListAuthConnectionsResponseAuthConnectionsItem_CustomHeaderAuth": ".list_auth_connections_response_auth_connections_item",
+    "ListAuthConnectionsResponseAuthConnectionsItem_Oauth2ClientCredentials": ".list_auth_connections_response_auth_connections_item",
+    "ListAuthConnectionsResponseAuthConnectionsItem_Oauth2Jwt": ".list_auth_connections_response_auth_connections_item",
+    "ListAuthConnectionsResponseAuthConnectionsItem_PrivateKeyJwt": ".list_auth_connections_response_auth_connections_item",
+    "ListAuthConnectionsResponseAuthConnectionsItem_WhatsappAuth": ".list_auth_connections_response_auth_connections_item",
     "ListCalendarEventsParams": ".list_calendar_events_params",
     "ListClientsParams": ".list_clients_params",
     "ListMcpToolsResponseModel": ".list_mcp_tools_response_model",
@@ -3103,6 +3497,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LlmInputOutputTokensUsage": ".llm_input_output_tokens_usage",
     "LlmListResponseModelInput": ".llm_list_response_model_input",
     "LlmListResponseModelOutput": ".llm_list_response_model_output",
+    "LlmLiteralJsonSchemaProperty": ".llm_literal_json_schema_property",
+    "LlmLiteralJsonSchemaPropertyType": ".llm_literal_json_schema_property_type",
     "LlmParameterEvaluationStrategy": ".llm_parameter_evaluation_strategy",
     "LlmReasoningEffort": ".llm_reasoning_effort",
     "LlmSchemaOverride": ".llm_schema_override",
@@ -3116,10 +3512,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MatchAnythingParameterEvaluationStrategy": ".match_anything_parameter_evaluation_strategy",
     "McpApprovalPolicy": ".mcp_approval_policy",
     "McpServerConfigInput": ".mcp_server_config_input",
+    "McpServerConfigInputAuthConnection": ".mcp_server_config_input_auth_connection",
     "McpServerConfigInputRequestHeadersValue": ".mcp_server_config_input_request_headers_value",
     "McpServerConfigInputSecretToken": ".mcp_server_config_input_secret_token",
     "McpServerConfigInputUrl": ".mcp_server_config_input_url",
     "McpServerConfigOutput": ".mcp_server_config_output",
+    "McpServerConfigOutputAuthConnection": ".mcp_server_config_output_auth_connection",
     "McpServerConfigOutputRequestHeadersValue": ".mcp_server_config_output_request_headers_value",
     "McpServerConfigOutputSecretToken": ".mcp_server_config_output_secret_token",
     "McpServerConfigOutputUrl": ".mcp_server_config_output_url",
@@ -3137,10 +3535,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "McpToolConfigOverrideInputOverridesValue_Constant": ".mcp_tool_config_override_input_overrides_value",
     "McpToolConfigOverrideInputOverridesValue_DynamicVariable": ".mcp_tool_config_override_input_overrides_value",
     "McpToolConfigOverrideInputOverridesValue_Llm": ".mcp_tool_config_override_input_overrides_value",
-    "MemoryEntryCreateToolConfig": ".memory_entry_create_tool_config",
-    "MemoryEntryDeleteToolConfig": ".memory_entry_delete_tool_config",
-    "MemoryEntrySearchToolConfig": ".memory_entry_search_tool_config",
-    "MemoryEntryUpdateToolConfig": ".memory_entry_update_tool_config",
     "MergingStrategy": ".merging_strategy",
     "MessagesSearchResponse": ".messages_search_response",
     "MessagesSearchResult": ".messages_search_result",
@@ -3161,6 +3555,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "NoCoachingSettings": ".no_coaching_settings",
     "NonStreamingOutputFormats": ".non_streaming_output_formats",
     "NormalizedAlignment": ".normalized_alignment",
+    "OAuth2ClientCredsResponse": ".o_auth_2_client_creds_response",
+    "OAuth2JwtResponse": ".o_auth_2_jwt_response",
+    "OAuth2JwtResponseAlgorithm": ".o_auth_2_jwt_response_algorithm",
     "ObjectJsonSchemaPropertyInput": ".object_json_schema_property_input",
     "ObjectJsonSchemaPropertyInputPropertiesValue": ".object_json_schema_property_input_properties_value",
     "ObjectJsonSchemaPropertyOutput": ".object_json_schema_property_output",
@@ -3217,6 +3614,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PreviewAudioDbModel": ".preview_audio_db_model",
     "PrivacyConfigInput": ".privacy_config_input",
     "PrivacyConfigOutput": ".privacy_config_output",
+    "PrivateKeyJwtResponse": ".private_key_jwt_response",
+    "PrivateKeyJwtResponseAlgorithm": ".private_key_jwt_response_algorithm",
     "ProcedureRefResponseModel": ".procedure_ref_response_model",
     "ProjectCreationMetaResponseModel": ".project_creation_meta_response_model",
     "ProjectCreationMetaResponseModelStatus": ".project_creation_meta_response_model_status",
@@ -3351,6 +3750,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ResponseFilterMode": ".response_filter_mode",
     "ResponseUnitTestModel": ".response_unit_test_model",
     "ResponseUnitTestModelDynamicVariablesValue": ".response_unit_test_model_dynamic_variables_value",
+    "RetryTriggerAction": ".retry_trigger_action",
     "ReviewResponseModel": ".review_response_model",
     "ReviewResponseModelRejectReasonsItem": ".review_response_model_reject_reasons_item",
     "ReviewResponseModelReviewStatus": ".review_response_model_review_status",
@@ -3461,13 +3861,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SupportedVoice": ".supported_voice",
     "SystemToolConfigInput": ".system_tool_config_input",
     "SystemToolConfigInputParams": ".system_tool_config_input_params",
-    "SystemToolConfigInputParams_AgentPromptChange": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_EndCall": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_LanguageDetection": ".system_tool_config_input_params",
-    "SystemToolConfigInputParams_MemoryEntryCreate": ".system_tool_config_input_params",
-    "SystemToolConfigInputParams_MemoryEntryDelete": ".system_tool_config_input_params",
-    "SystemToolConfigInputParams_MemoryEntrySearch": ".system_tool_config_input_params",
-    "SystemToolConfigInputParams_MemoryEntryUpdate": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_PlayKeypadTouchTone": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_SkipTurn": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_TransferToAgent": ".system_tool_config_input_params",
@@ -3475,19 +3870,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SystemToolConfigInputParams_VoicemailDetection": ".system_tool_config_input_params",
     "SystemToolConfigOutput": ".system_tool_config_output",
     "SystemToolConfigOutputParams": ".system_tool_config_output_params",
-    "SystemToolConfigOutputParams_AgentPromptChange": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_EndCall": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_LanguageDetection": ".system_tool_config_output_params",
-    "SystemToolConfigOutputParams_MemoryEntryCreate": ".system_tool_config_output_params",
-    "SystemToolConfigOutputParams_MemoryEntryDelete": ".system_tool_config_output_params",
-    "SystemToolConfigOutputParams_MemoryEntrySearch": ".system_tool_config_output_params",
-    "SystemToolConfigOutputParams_MemoryEntryUpdate": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_PlayKeypadTouchTone": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_SkipTurn": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_TransferToAgent": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_TransferToNumber": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_VoicemailDetection": ".system_tool_config_output_params",
     "TelephonyCallConfig": ".telephony_call_config",
+    "TelephonyDirection": ".telephony_direction",
     "TelephonyProvider": ".telephony_provider",
     "TestConditionRationaleCommonModel": ".test_condition_rationale_common_model",
     "TestConditionResultCommonModel": ".test_condition_result_common_model",
@@ -3653,10 +4044,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WebhookEventType": ".webhook_event_type",
     "WebhookHmacSettings": ".webhook_hmac_settings",
     "WebhookToolApiSchemaConfigInput": ".webhook_tool_api_schema_config_input",
+    "WebhookToolApiSchemaConfigInputAuthConnection": ".webhook_tool_api_schema_config_input_auth_connection",
     "WebhookToolApiSchemaConfigInputContentType": ".webhook_tool_api_schema_config_input_content_type",
     "WebhookToolApiSchemaConfigInputMethod": ".webhook_tool_api_schema_config_input_method",
     "WebhookToolApiSchemaConfigInputRequestHeadersValue": ".webhook_tool_api_schema_config_input_request_headers_value",
     "WebhookToolApiSchemaConfigOutput": ".webhook_tool_api_schema_config_output",
+    "WebhookToolApiSchemaConfigOutputAuthConnection": ".webhook_tool_api_schema_config_output_auth_connection",
     "WebhookToolApiSchemaConfigOutputContentType": ".webhook_tool_api_schema_config_output_content_type",
     "WebhookToolApiSchemaConfigOutputMethod": ".webhook_tool_api_schema_config_output_method",
     "WebhookToolApiSchemaConfigOutputRequestHeadersValue": ".webhook_tool_api_schema_config_output_request_headers_value",
@@ -3665,6 +4058,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WebhookUsageType": ".webhook_usage_type",
     "WebsocketTtsClientMessageMulti": ".websocket_tts_client_message_multi",
     "WebsocketTtsServerMessageMulti": ".websocket_tts_server_message_multi",
+    "WhatsAppAuthResponse": ".whats_app_auth_response",
     "WhatsAppConversationInfo": ".whats_app_conversation_info",
     "WhatsAppConversationInfoDirection": ".whats_app_conversation_info_direction",
     "WhatsAppOutboundCallResponse": ".whats_app_outbound_call_response",
@@ -3740,6 +4134,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkflowExpressionConditionModelInputExpression": ".workflow_expression_condition_model_input_expression",
     "WorkflowExpressionConditionModelInputExpression_AndOperator": ".workflow_expression_condition_model_input_expression",
     "WorkflowExpressionConditionModelInputExpression_BooleanLiteral": ".workflow_expression_condition_model_input_expression",
+    "WorkflowExpressionConditionModelInputExpression_ConditionalOperator": ".workflow_expression_condition_model_input_expression",
     "WorkflowExpressionConditionModelInputExpression_DynamicVariable": ".workflow_expression_condition_model_input_expression",
     "WorkflowExpressionConditionModelInputExpression_EqOperator": ".workflow_expression_condition_model_input_expression",
     "WorkflowExpressionConditionModelInputExpression_GtOperator": ".workflow_expression_condition_model_input_expression",
@@ -3755,6 +4150,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkflowExpressionConditionModelOutputExpression": ".workflow_expression_condition_model_output_expression",
     "WorkflowExpressionConditionModelOutputExpression_AndOperator": ".workflow_expression_condition_model_output_expression",
     "WorkflowExpressionConditionModelOutputExpression_BooleanLiteral": ".workflow_expression_condition_model_output_expression",
+    "WorkflowExpressionConditionModelOutputExpression_ConditionalOperator": ".workflow_expression_condition_model_output_expression",
     "WorkflowExpressionConditionModelOutputExpression_DynamicVariable": ".workflow_expression_condition_model_output_expression",
     "WorkflowExpressionConditionModelOutputExpression_EqOperator": ".workflow_expression_condition_model_output_expression",
     "WorkflowExpressionConditionModelOutputExpression_GtOperator": ".workflow_expression_condition_model_output_expression",
@@ -3897,7 +4293,6 @@ __all__ = [
     "AgentMetadataResponseModel",
     "AgentPlatformSettingsRequestModel",
     "AgentPlatformSettingsResponseModel",
-    "AgentPromptChangeToolConfig",
     "AgentSimulatedChatTestResponseModel",
     "AgentSortBy",
     "AgentSuccessfulResponseExample",
@@ -3930,6 +4325,8 @@ __all__ = [
     "Alignment",
     "AllowedOutputFormats",
     "AllowlistItem",
+    "ApiIntegrationOAuth2AuthCodeResponse",
+    "ApiIntegrationOAuth2AuthCodeResponseScopeSeparator",
     "ApiIntegrationWebhookOverridesInput",
     "ApiIntegrationWebhookOverridesInputRequestHeadersValue",
     "ApiIntegrationWebhookOverridesInputSchemaOverridesValue",
@@ -3957,6 +4354,7 @@ __all__ = [
     "AstAndOperatorNodeInputChildrenItem",
     "AstAndOperatorNodeInputChildrenItem_AndOperator",
     "AstAndOperatorNodeInputChildrenItem_BooleanLiteral",
+    "AstAndOperatorNodeInputChildrenItem_ConditionalOperator",
     "AstAndOperatorNodeInputChildrenItem_DynamicVariable",
     "AstAndOperatorNodeInputChildrenItem_EqOperator",
     "AstAndOperatorNodeInputChildrenItem_GtOperator",
@@ -3972,6 +4370,7 @@ __all__ = [
     "AstAndOperatorNodeOutputChildrenItem",
     "AstAndOperatorNodeOutputChildrenItem_AndOperator",
     "AstAndOperatorNodeOutputChildrenItem_BooleanLiteral",
+    "AstAndOperatorNodeOutputChildrenItem_ConditionalOperator",
     "AstAndOperatorNodeOutputChildrenItem_DynamicVariable",
     "AstAndOperatorNodeOutputChildrenItem_EqOperator",
     "AstAndOperatorNodeOutputChildrenItem_GtOperator",
@@ -3985,12 +4384,105 @@ __all__ = [
     "AstAndOperatorNodeOutputChildrenItem_StringLiteral",
     "AstBooleanNodeInput",
     "AstBooleanNodeOutput",
+    "AstConditionalOperatorNodeInput",
+    "AstConditionalOperatorNodeInputCondition",
+    "AstConditionalOperatorNodeInputCondition_AndOperator",
+    "AstConditionalOperatorNodeInputCondition_BooleanLiteral",
+    "AstConditionalOperatorNodeInputCondition_ConditionalOperator",
+    "AstConditionalOperatorNodeInputCondition_DynamicVariable",
+    "AstConditionalOperatorNodeInputCondition_EqOperator",
+    "AstConditionalOperatorNodeInputCondition_GtOperator",
+    "AstConditionalOperatorNodeInputCondition_GteOperator",
+    "AstConditionalOperatorNodeInputCondition_Llm",
+    "AstConditionalOperatorNodeInputCondition_LtOperator",
+    "AstConditionalOperatorNodeInputCondition_LteOperator",
+    "AstConditionalOperatorNodeInputCondition_NeqOperator",
+    "AstConditionalOperatorNodeInputCondition_NumberLiteral",
+    "AstConditionalOperatorNodeInputCondition_OrOperator",
+    "AstConditionalOperatorNodeInputCondition_StringLiteral",
+    "AstConditionalOperatorNodeInputFalseExpression",
+    "AstConditionalOperatorNodeInputFalseExpression_AndOperator",
+    "AstConditionalOperatorNodeInputFalseExpression_BooleanLiteral",
+    "AstConditionalOperatorNodeInputFalseExpression_ConditionalOperator",
+    "AstConditionalOperatorNodeInputFalseExpression_DynamicVariable",
+    "AstConditionalOperatorNodeInputFalseExpression_EqOperator",
+    "AstConditionalOperatorNodeInputFalseExpression_GtOperator",
+    "AstConditionalOperatorNodeInputFalseExpression_GteOperator",
+    "AstConditionalOperatorNodeInputFalseExpression_Llm",
+    "AstConditionalOperatorNodeInputFalseExpression_LtOperator",
+    "AstConditionalOperatorNodeInputFalseExpression_LteOperator",
+    "AstConditionalOperatorNodeInputFalseExpression_NeqOperator",
+    "AstConditionalOperatorNodeInputFalseExpression_NumberLiteral",
+    "AstConditionalOperatorNodeInputFalseExpression_OrOperator",
+    "AstConditionalOperatorNodeInputFalseExpression_StringLiteral",
+    "AstConditionalOperatorNodeInputTrueExpression",
+    "AstConditionalOperatorNodeInputTrueExpression_AndOperator",
+    "AstConditionalOperatorNodeInputTrueExpression_BooleanLiteral",
+    "AstConditionalOperatorNodeInputTrueExpression_ConditionalOperator",
+    "AstConditionalOperatorNodeInputTrueExpression_DynamicVariable",
+    "AstConditionalOperatorNodeInputTrueExpression_EqOperator",
+    "AstConditionalOperatorNodeInputTrueExpression_GtOperator",
+    "AstConditionalOperatorNodeInputTrueExpression_GteOperator",
+    "AstConditionalOperatorNodeInputTrueExpression_Llm",
+    "AstConditionalOperatorNodeInputTrueExpression_LtOperator",
+    "AstConditionalOperatorNodeInputTrueExpression_LteOperator",
+    "AstConditionalOperatorNodeInputTrueExpression_NeqOperator",
+    "AstConditionalOperatorNodeInputTrueExpression_NumberLiteral",
+    "AstConditionalOperatorNodeInputTrueExpression_OrOperator",
+    "AstConditionalOperatorNodeInputTrueExpression_StringLiteral",
+    "AstConditionalOperatorNodeOutput",
+    "AstConditionalOperatorNodeOutputCondition",
+    "AstConditionalOperatorNodeOutputCondition_AndOperator",
+    "AstConditionalOperatorNodeOutputCondition_BooleanLiteral",
+    "AstConditionalOperatorNodeOutputCondition_ConditionalOperator",
+    "AstConditionalOperatorNodeOutputCondition_DynamicVariable",
+    "AstConditionalOperatorNodeOutputCondition_EqOperator",
+    "AstConditionalOperatorNodeOutputCondition_GtOperator",
+    "AstConditionalOperatorNodeOutputCondition_GteOperator",
+    "AstConditionalOperatorNodeOutputCondition_Llm",
+    "AstConditionalOperatorNodeOutputCondition_LtOperator",
+    "AstConditionalOperatorNodeOutputCondition_LteOperator",
+    "AstConditionalOperatorNodeOutputCondition_NeqOperator",
+    "AstConditionalOperatorNodeOutputCondition_NumberLiteral",
+    "AstConditionalOperatorNodeOutputCondition_OrOperator",
+    "AstConditionalOperatorNodeOutputCondition_StringLiteral",
+    "AstConditionalOperatorNodeOutputFalseExpression",
+    "AstConditionalOperatorNodeOutputFalseExpression_AndOperator",
+    "AstConditionalOperatorNodeOutputFalseExpression_BooleanLiteral",
+    "AstConditionalOperatorNodeOutputFalseExpression_ConditionalOperator",
+    "AstConditionalOperatorNodeOutputFalseExpression_DynamicVariable",
+    "AstConditionalOperatorNodeOutputFalseExpression_EqOperator",
+    "AstConditionalOperatorNodeOutputFalseExpression_GtOperator",
+    "AstConditionalOperatorNodeOutputFalseExpression_GteOperator",
+    "AstConditionalOperatorNodeOutputFalseExpression_Llm",
+    "AstConditionalOperatorNodeOutputFalseExpression_LtOperator",
+    "AstConditionalOperatorNodeOutputFalseExpression_LteOperator",
+    "AstConditionalOperatorNodeOutputFalseExpression_NeqOperator",
+    "AstConditionalOperatorNodeOutputFalseExpression_NumberLiteral",
+    "AstConditionalOperatorNodeOutputFalseExpression_OrOperator",
+    "AstConditionalOperatorNodeOutputFalseExpression_StringLiteral",
+    "AstConditionalOperatorNodeOutputTrueExpression",
+    "AstConditionalOperatorNodeOutputTrueExpression_AndOperator",
+    "AstConditionalOperatorNodeOutputTrueExpression_BooleanLiteral",
+    "AstConditionalOperatorNodeOutputTrueExpression_ConditionalOperator",
+    "AstConditionalOperatorNodeOutputTrueExpression_DynamicVariable",
+    "AstConditionalOperatorNodeOutputTrueExpression_EqOperator",
+    "AstConditionalOperatorNodeOutputTrueExpression_GtOperator",
+    "AstConditionalOperatorNodeOutputTrueExpression_GteOperator",
+    "AstConditionalOperatorNodeOutputTrueExpression_Llm",
+    "AstConditionalOperatorNodeOutputTrueExpression_LtOperator",
+    "AstConditionalOperatorNodeOutputTrueExpression_LteOperator",
+    "AstConditionalOperatorNodeOutputTrueExpression_NeqOperator",
+    "AstConditionalOperatorNodeOutputTrueExpression_NumberLiteral",
+    "AstConditionalOperatorNodeOutputTrueExpression_OrOperator",
+    "AstConditionalOperatorNodeOutputTrueExpression_StringLiteral",
     "AstDynamicVariableNodeInput",
     "AstDynamicVariableNodeOutput",
     "AstEqualsOperatorNodeInput",
     "AstEqualsOperatorNodeInputLeft",
     "AstEqualsOperatorNodeInputLeft_AndOperator",
     "AstEqualsOperatorNodeInputLeft_BooleanLiteral",
+    "AstEqualsOperatorNodeInputLeft_ConditionalOperator",
     "AstEqualsOperatorNodeInputLeft_DynamicVariable",
     "AstEqualsOperatorNodeInputLeft_EqOperator",
     "AstEqualsOperatorNodeInputLeft_GtOperator",
@@ -4005,6 +4497,7 @@ __all__ = [
     "AstEqualsOperatorNodeInputRight",
     "AstEqualsOperatorNodeInputRight_AndOperator",
     "AstEqualsOperatorNodeInputRight_BooleanLiteral",
+    "AstEqualsOperatorNodeInputRight_ConditionalOperator",
     "AstEqualsOperatorNodeInputRight_DynamicVariable",
     "AstEqualsOperatorNodeInputRight_EqOperator",
     "AstEqualsOperatorNodeInputRight_GtOperator",
@@ -4020,6 +4513,7 @@ __all__ = [
     "AstEqualsOperatorNodeOutputLeft",
     "AstEqualsOperatorNodeOutputLeft_AndOperator",
     "AstEqualsOperatorNodeOutputLeft_BooleanLiteral",
+    "AstEqualsOperatorNodeOutputLeft_ConditionalOperator",
     "AstEqualsOperatorNodeOutputLeft_DynamicVariable",
     "AstEqualsOperatorNodeOutputLeft_EqOperator",
     "AstEqualsOperatorNodeOutputLeft_GtOperator",
@@ -4034,6 +4528,7 @@ __all__ = [
     "AstEqualsOperatorNodeOutputRight",
     "AstEqualsOperatorNodeOutputRight_AndOperator",
     "AstEqualsOperatorNodeOutputRight_BooleanLiteral",
+    "AstEqualsOperatorNodeOutputRight_ConditionalOperator",
     "AstEqualsOperatorNodeOutputRight_DynamicVariable",
     "AstEqualsOperatorNodeOutputRight_EqOperator",
     "AstEqualsOperatorNodeOutputRight_GtOperator",
@@ -4049,6 +4544,7 @@ __all__ = [
     "AstGreaterThanOperatorNodeInputLeft",
     "AstGreaterThanOperatorNodeInputLeft_AndOperator",
     "AstGreaterThanOperatorNodeInputLeft_BooleanLiteral",
+    "AstGreaterThanOperatorNodeInputLeft_ConditionalOperator",
     "AstGreaterThanOperatorNodeInputLeft_DynamicVariable",
     "AstGreaterThanOperatorNodeInputLeft_EqOperator",
     "AstGreaterThanOperatorNodeInputLeft_GtOperator",
@@ -4063,6 +4559,7 @@ __all__ = [
     "AstGreaterThanOperatorNodeInputRight",
     "AstGreaterThanOperatorNodeInputRight_AndOperator",
     "AstGreaterThanOperatorNodeInputRight_BooleanLiteral",
+    "AstGreaterThanOperatorNodeInputRight_ConditionalOperator",
     "AstGreaterThanOperatorNodeInputRight_DynamicVariable",
     "AstGreaterThanOperatorNodeInputRight_EqOperator",
     "AstGreaterThanOperatorNodeInputRight_GtOperator",
@@ -4078,6 +4575,7 @@ __all__ = [
     "AstGreaterThanOperatorNodeOutputLeft",
     "AstGreaterThanOperatorNodeOutputLeft_AndOperator",
     "AstGreaterThanOperatorNodeOutputLeft_BooleanLiteral",
+    "AstGreaterThanOperatorNodeOutputLeft_ConditionalOperator",
     "AstGreaterThanOperatorNodeOutputLeft_DynamicVariable",
     "AstGreaterThanOperatorNodeOutputLeft_EqOperator",
     "AstGreaterThanOperatorNodeOutputLeft_GtOperator",
@@ -4092,6 +4590,7 @@ __all__ = [
     "AstGreaterThanOperatorNodeOutputRight",
     "AstGreaterThanOperatorNodeOutputRight_AndOperator",
     "AstGreaterThanOperatorNodeOutputRight_BooleanLiteral",
+    "AstGreaterThanOperatorNodeOutputRight_ConditionalOperator",
     "AstGreaterThanOperatorNodeOutputRight_DynamicVariable",
     "AstGreaterThanOperatorNodeOutputRight_EqOperator",
     "AstGreaterThanOperatorNodeOutputRight_GtOperator",
@@ -4107,6 +4606,7 @@ __all__ = [
     "AstGreaterThanOrEqualsOperatorNodeInputLeft",
     "AstGreaterThanOrEqualsOperatorNodeInputLeft_AndOperator",
     "AstGreaterThanOrEqualsOperatorNodeInputLeft_BooleanLiteral",
+    "AstGreaterThanOrEqualsOperatorNodeInputLeft_ConditionalOperator",
     "AstGreaterThanOrEqualsOperatorNodeInputLeft_DynamicVariable",
     "AstGreaterThanOrEqualsOperatorNodeInputLeft_EqOperator",
     "AstGreaterThanOrEqualsOperatorNodeInputLeft_GtOperator",
@@ -4121,6 +4621,7 @@ __all__ = [
     "AstGreaterThanOrEqualsOperatorNodeInputRight",
     "AstGreaterThanOrEqualsOperatorNodeInputRight_AndOperator",
     "AstGreaterThanOrEqualsOperatorNodeInputRight_BooleanLiteral",
+    "AstGreaterThanOrEqualsOperatorNodeInputRight_ConditionalOperator",
     "AstGreaterThanOrEqualsOperatorNodeInputRight_DynamicVariable",
     "AstGreaterThanOrEqualsOperatorNodeInputRight_EqOperator",
     "AstGreaterThanOrEqualsOperatorNodeInputRight_GtOperator",
@@ -4136,6 +4637,7 @@ __all__ = [
     "AstGreaterThanOrEqualsOperatorNodeOutputLeft",
     "AstGreaterThanOrEqualsOperatorNodeOutputLeft_AndOperator",
     "AstGreaterThanOrEqualsOperatorNodeOutputLeft_BooleanLiteral",
+    "AstGreaterThanOrEqualsOperatorNodeOutputLeft_ConditionalOperator",
     "AstGreaterThanOrEqualsOperatorNodeOutputLeft_DynamicVariable",
     "AstGreaterThanOrEqualsOperatorNodeOutputLeft_EqOperator",
     "AstGreaterThanOrEqualsOperatorNodeOutputLeft_GtOperator",
@@ -4150,6 +4652,7 @@ __all__ = [
     "AstGreaterThanOrEqualsOperatorNodeOutputRight",
     "AstGreaterThanOrEqualsOperatorNodeOutputRight_AndOperator",
     "AstGreaterThanOrEqualsOperatorNodeOutputRight_BooleanLiteral",
+    "AstGreaterThanOrEqualsOperatorNodeOutputRight_ConditionalOperator",
     "AstGreaterThanOrEqualsOperatorNodeOutputRight_DynamicVariable",
     "AstGreaterThanOrEqualsOperatorNodeOutputRight_EqOperator",
     "AstGreaterThanOrEqualsOperatorNodeOutputRight_GtOperator",
@@ -4165,6 +4668,7 @@ __all__ = [
     "AstLessThanOperatorNodeInputLeft",
     "AstLessThanOperatorNodeInputLeft_AndOperator",
     "AstLessThanOperatorNodeInputLeft_BooleanLiteral",
+    "AstLessThanOperatorNodeInputLeft_ConditionalOperator",
     "AstLessThanOperatorNodeInputLeft_DynamicVariable",
     "AstLessThanOperatorNodeInputLeft_EqOperator",
     "AstLessThanOperatorNodeInputLeft_GtOperator",
@@ -4179,6 +4683,7 @@ __all__ = [
     "AstLessThanOperatorNodeInputRight",
     "AstLessThanOperatorNodeInputRight_AndOperator",
     "AstLessThanOperatorNodeInputRight_BooleanLiteral",
+    "AstLessThanOperatorNodeInputRight_ConditionalOperator",
     "AstLessThanOperatorNodeInputRight_DynamicVariable",
     "AstLessThanOperatorNodeInputRight_EqOperator",
     "AstLessThanOperatorNodeInputRight_GtOperator",
@@ -4194,6 +4699,7 @@ __all__ = [
     "AstLessThanOperatorNodeOutputLeft",
     "AstLessThanOperatorNodeOutputLeft_AndOperator",
     "AstLessThanOperatorNodeOutputLeft_BooleanLiteral",
+    "AstLessThanOperatorNodeOutputLeft_ConditionalOperator",
     "AstLessThanOperatorNodeOutputLeft_DynamicVariable",
     "AstLessThanOperatorNodeOutputLeft_EqOperator",
     "AstLessThanOperatorNodeOutputLeft_GtOperator",
@@ -4208,6 +4714,7 @@ __all__ = [
     "AstLessThanOperatorNodeOutputRight",
     "AstLessThanOperatorNodeOutputRight_AndOperator",
     "AstLessThanOperatorNodeOutputRight_BooleanLiteral",
+    "AstLessThanOperatorNodeOutputRight_ConditionalOperator",
     "AstLessThanOperatorNodeOutputRight_DynamicVariable",
     "AstLessThanOperatorNodeOutputRight_EqOperator",
     "AstLessThanOperatorNodeOutputRight_GtOperator",
@@ -4223,6 +4730,7 @@ __all__ = [
     "AstLessThanOrEqualsOperatorNodeInputLeft",
     "AstLessThanOrEqualsOperatorNodeInputLeft_AndOperator",
     "AstLessThanOrEqualsOperatorNodeInputLeft_BooleanLiteral",
+    "AstLessThanOrEqualsOperatorNodeInputLeft_ConditionalOperator",
     "AstLessThanOrEqualsOperatorNodeInputLeft_DynamicVariable",
     "AstLessThanOrEqualsOperatorNodeInputLeft_EqOperator",
     "AstLessThanOrEqualsOperatorNodeInputLeft_GtOperator",
@@ -4237,6 +4745,7 @@ __all__ = [
     "AstLessThanOrEqualsOperatorNodeInputRight",
     "AstLessThanOrEqualsOperatorNodeInputRight_AndOperator",
     "AstLessThanOrEqualsOperatorNodeInputRight_BooleanLiteral",
+    "AstLessThanOrEqualsOperatorNodeInputRight_ConditionalOperator",
     "AstLessThanOrEqualsOperatorNodeInputRight_DynamicVariable",
     "AstLessThanOrEqualsOperatorNodeInputRight_EqOperator",
     "AstLessThanOrEqualsOperatorNodeInputRight_GtOperator",
@@ -4252,6 +4761,7 @@ __all__ = [
     "AstLessThanOrEqualsOperatorNodeOutputLeft",
     "AstLessThanOrEqualsOperatorNodeOutputLeft_AndOperator",
     "AstLessThanOrEqualsOperatorNodeOutputLeft_BooleanLiteral",
+    "AstLessThanOrEqualsOperatorNodeOutputLeft_ConditionalOperator",
     "AstLessThanOrEqualsOperatorNodeOutputLeft_DynamicVariable",
     "AstLessThanOrEqualsOperatorNodeOutputLeft_EqOperator",
     "AstLessThanOrEqualsOperatorNodeOutputLeft_GtOperator",
@@ -4266,6 +4776,7 @@ __all__ = [
     "AstLessThanOrEqualsOperatorNodeOutputRight",
     "AstLessThanOrEqualsOperatorNodeOutputRight_AndOperator",
     "AstLessThanOrEqualsOperatorNodeOutputRight_BooleanLiteral",
+    "AstLessThanOrEqualsOperatorNodeOutputRight_ConditionalOperator",
     "AstLessThanOrEqualsOperatorNodeOutputRight_DynamicVariable",
     "AstLessThanOrEqualsOperatorNodeOutputRight_EqOperator",
     "AstLessThanOrEqualsOperatorNodeOutputRight_GtOperator",
@@ -4281,6 +4792,7 @@ __all__ = [
     "AstNotEqualsOperatorNodeInputLeft",
     "AstNotEqualsOperatorNodeInputLeft_AndOperator",
     "AstNotEqualsOperatorNodeInputLeft_BooleanLiteral",
+    "AstNotEqualsOperatorNodeInputLeft_ConditionalOperator",
     "AstNotEqualsOperatorNodeInputLeft_DynamicVariable",
     "AstNotEqualsOperatorNodeInputLeft_EqOperator",
     "AstNotEqualsOperatorNodeInputLeft_GtOperator",
@@ -4295,6 +4807,7 @@ __all__ = [
     "AstNotEqualsOperatorNodeInputRight",
     "AstNotEqualsOperatorNodeInputRight_AndOperator",
     "AstNotEqualsOperatorNodeInputRight_BooleanLiteral",
+    "AstNotEqualsOperatorNodeInputRight_ConditionalOperator",
     "AstNotEqualsOperatorNodeInputRight_DynamicVariable",
     "AstNotEqualsOperatorNodeInputRight_EqOperator",
     "AstNotEqualsOperatorNodeInputRight_GtOperator",
@@ -4310,6 +4823,7 @@ __all__ = [
     "AstNotEqualsOperatorNodeOutputLeft",
     "AstNotEqualsOperatorNodeOutputLeft_AndOperator",
     "AstNotEqualsOperatorNodeOutputLeft_BooleanLiteral",
+    "AstNotEqualsOperatorNodeOutputLeft_ConditionalOperator",
     "AstNotEqualsOperatorNodeOutputLeft_DynamicVariable",
     "AstNotEqualsOperatorNodeOutputLeft_EqOperator",
     "AstNotEqualsOperatorNodeOutputLeft_GtOperator",
@@ -4324,6 +4838,7 @@ __all__ = [
     "AstNotEqualsOperatorNodeOutputRight",
     "AstNotEqualsOperatorNodeOutputRight_AndOperator",
     "AstNotEqualsOperatorNodeOutputRight_BooleanLiteral",
+    "AstNotEqualsOperatorNodeOutputRight_ConditionalOperator",
     "AstNotEqualsOperatorNodeOutputRight_DynamicVariable",
     "AstNotEqualsOperatorNodeOutputRight_EqOperator",
     "AstNotEqualsOperatorNodeOutputRight_GtOperator",
@@ -4341,6 +4856,7 @@ __all__ = [
     "AstOrOperatorNodeInputChildrenItem",
     "AstOrOperatorNodeInputChildrenItem_AndOperator",
     "AstOrOperatorNodeInputChildrenItem_BooleanLiteral",
+    "AstOrOperatorNodeInputChildrenItem_ConditionalOperator",
     "AstOrOperatorNodeInputChildrenItem_DynamicVariable",
     "AstOrOperatorNodeInputChildrenItem_EqOperator",
     "AstOrOperatorNodeInputChildrenItem_GtOperator",
@@ -4356,6 +4872,7 @@ __all__ = [
     "AstOrOperatorNodeOutputChildrenItem",
     "AstOrOperatorNodeOutputChildrenItem_AndOperator",
     "AstOrOperatorNodeOutputChildrenItem_BooleanLiteral",
+    "AstOrOperatorNodeOutputChildrenItem_ConditionalOperator",
     "AstOrOperatorNodeOutputChildrenItem_DynamicVariable",
     "AstOrOperatorNodeOutputChildrenItem_EqOperator",
     "AstOrOperatorNodeOutputChildrenItem_GtOperator",
@@ -4370,6 +4887,8 @@ __all__ = [
     "AstStringNodeInput",
     "AstStringNodeOutput",
     "AstllmNodeInput",
+    "AstllmNodeInputPrompt",
+    "AstllmNodeInputValueSchema",
     "AstllmNodeOutput",
     "AsyncConversationMetadata",
     "AsyncConversationMetadataDeliveryStatus",
@@ -4383,19 +4902,29 @@ __all__ = [
     "AudioOutputMulti",
     "AudioWithTimestampsAndVoiceSegmentsResponseModel",
     "AudioWithTimestampsResponse",
+    "AuthConnectionDependencies",
+    "AuthConnectionDependenciesMcpServersItem",
+    "AuthConnectionDependenciesMcpServersItem_Available",
+    "AuthConnectionDependenciesMcpServersItem_Unknown",
+    "AuthConnectionDependenciesToolsItem",
+    "AuthConnectionDependenciesToolsItem_Available",
+    "AuthConnectionDependenciesToolsItem_Unknown",
     "AuthConnectionLocator",
     "AuthSettings",
     "AuthorizationMethod",
+    "AutoSyncInfo",
     "BackupLlmDefault",
     "BackupLlmDisabled",
     "BackupLlmOverride",
     "BadRequestErrorBody",
+    "BasicAuthResponse",
     "BatchCallDetailedResponse",
     "BatchCallRecipientStatus",
     "BatchCallResponse",
     "BatchCallStatus",
     "BatchCallWhatsAppParams",
     "BatchFailureResponseModel",
+    "BearerAuthResponse",
     "BillingPeriod",
     "BranchProtectionStatus",
     "BreakdownTypes",
@@ -4411,7 +4940,9 @@ __all__ = [
     "CaptionStyleHorizontalPlacementModelAlign",
     "CaptionStyleModel",
     "CaptionStyleModelTextAlign",
+    "CaptionStyleModelTextBlendMode",
     "CaptionStyleModelTextStyle",
+    "CaptionStyleModelTextTransform",
     "CaptionStyleModelTextWeight",
     "CaptionStyleSectionAnimationModel",
     "CaptionStyleSectionAnimationModelEnterType",
@@ -4466,9 +4997,18 @@ __all__ = [
     "ConstantSchemaOverrideConstantValue",
     "ContentConfig",
     "ContentGuardrailInput",
+    "ContentGuardrailInputTriggerAction",
+    "ContentGuardrailInputTriggerAction_EndCall",
+    "ContentGuardrailInputTriggerAction_Retry",
     "ContentGuardrailOutput",
+    "ContentGuardrailOutputTriggerAction",
+    "ContentGuardrailOutputTriggerAction_EndCall",
+    "ContentGuardrailOutputTriggerAction_Retry",
+    "ContentThresholdGuardrail",
+    "ContentThresholdGuardrailThreshold",
     "Contributor",
     "ConvAiDynamicVariable",
+    "ConvAiEnvVarLocator",
     "ConvAiFileUploadResponseModel",
     "ConvAiSecretLocator",
     "ConvAiStoredSecretDependencies",
@@ -4507,8 +5047,8 @@ __all__ = [
     "ConversationHistoryRagUsageCommonModel",
     "ConversationHistoryRedactionConfig",
     "ConversationHistorySipTrunkingPhoneCallModel",
-    "ConversationHistorySipTrunkingPhoneCallModelDirection",
-    "ConversationHistoryTranscriptApiIntegrationWebhookToolsResultCommonModel",
+    "ConversationHistoryTranscriptApiIntegrationWebhookToolsResultCommonModelInput",
+    "ConversationHistoryTranscriptApiIntegrationWebhookToolsResultCommonModelOutput",
     "ConversationHistoryTranscriptCommonModelInput",
     "ConversationHistoryTranscriptCommonModelInputRole",
     "ConversationHistoryTranscriptCommonModelInputToolResultsItem",
@@ -4549,7 +5089,8 @@ __all__ = [
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberSipSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberTwilioSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_VoicemailDetectionSuccess",
-    "ConversationHistoryTranscriptToolCallApiIntegrationWebhookDetails",
+    "ConversationHistoryTranscriptToolCallApiIntegrationWebhookDetailsInput",
+    "ConversationHistoryTranscriptToolCallApiIntegrationWebhookDetailsOutput",
     "ConversationHistoryTranscriptToolCallClientDetails",
     "ConversationHistoryTranscriptToolCallCommonModelInput",
     "ConversationHistoryTranscriptToolCallCommonModelInputToolDetails",
@@ -4568,7 +5109,6 @@ __all__ = [
     "ConversationHistoryTranscriptWorkflowToolsResultCommonModelInput",
     "ConversationHistoryTranscriptWorkflowToolsResultCommonModelOutput",
     "ConversationHistoryTwilioPhoneCallModel",
-    "ConversationHistoryTwilioPhoneCallModelDirection",
     "ConversationInitiationClientDataConfigInput",
     "ConversationInitiationClientDataConfigOutput",
     "ConversationInitiationClientDataInternal",
@@ -4585,7 +5125,6 @@ __all__ = [
     "ConversationSimulationSpecification",
     "ConversationSimulationSpecificationDynamicVariablesValue",
     "ConversationSummaryResponseModel",
-    "ConversationSummaryResponseModelDirection",
     "ConversationSummaryResponseModelStatus",
     "ConversationTokenDbModel",
     "ConversationTokenPurpose",
@@ -4601,30 +5140,45 @@ __all__ = [
     "CreateAgentTestResponseModel",
     "CreateAssetParams",
     "CreateAudioNativeProjectRequest",
+    "CreateAuthConnectionEnvironmentVariableRequest",
+    "CreateBasicAuthRequest",
     "CreateClientAppointmentParams",
     "CreateClientParams",
+    "CreateCustomHeaderAuthRequest",
+    "CreateOAuth2ClientCredsRequest",
+    "CreateOAuth2JwtRequest",
+    "CreateOAuth2JwtRequestAlgorithm",
     "CreatePhoneNumberResponseModel",
     "CreatePreviouslyGeneratedVoiceRequest",
+    "CreatePrivateKeyJwtRequest",
+    "CreatePrivateKeyJwtRequestAlgorithm",
     "CreateProductParams",
     "CreatePronunciationDictionaryResponseModel",
     "CreateRentalBookingParams",
     "CreateResponseUnitTestRequest",
     "CreateResponseUnitTestRequestDynamicVariablesValue",
+    "CreateSecretEnvironmentVariableRequest",
     "CreateServiceParams",
     "CreateSimulationTestRequest",
     "CreateSimulationTestRequestDynamicVariablesValue",
     "CreateSipTrunkPhoneNumberRequest",
     "CreateStaffParams",
+    "CreateStringEnvironmentVariableRequest",
     "CreateToolCallUnitTestRequest",
     "CreateToolCallUnitTestRequestDynamicVariablesValue",
     "CreateTranscriptRequest",
     "CreateTwilioPhoneNumberRequest",
     "CustomGuardrailConfig",
+    "CustomGuardrailConfigTriggerAction",
+    "CustomGuardrailConfigTriggerAction_EndCall",
+    "CustomGuardrailConfigTriggerAction_Retry",
     "CustomGuardrailInput",
     "CustomGuardrailOutput",
     "CustomGuardrailsConfigInput",
     "CustomGuardrailsConfigOutput",
+    "CustomHeaderAuthResponse",
     "CustomLlm",
+    "CustomLlmApiKey",
     "CustomLlmRequestHeadersValue",
     "CustomLlmapiType",
     "CustomSipHeader",
@@ -4655,11 +5209,15 @@ __all__ = [
     "DeleteWorkspaceWebhookResponseModel",
     "DependentAvailableAgentIdentifier",
     "DependentAvailableAgentIdentifierAccessLevel",
+    "DependentAvailableMcpServerIdentifier",
+    "DependentAvailableMcpServerIdentifierAccessLevel",
     "DependentAvailableToolIdentifier",
     "DependentAvailableToolIdentifierAccessLevel",
     "DependentBranchInfo",
+    "DependentIntegrationConnectionIdentifier",
     "DependentPhoneNumberIdentifier",
     "DependentUnknownAgentIdentifier",
+    "DependentUnknownMcpServerIdentifier",
     "DependentUnknownToolIdentifier",
     "DetailedMusicResponse",
     "DetectedEntity",
@@ -4705,6 +5263,16 @@ __all__ = [
     "EmbeddingModelEnum",
     "EndCallToolConfig",
     "EndCallToolResultModel",
+    "EndCallTriggerAction",
+    "EnvironmentAuthConnectionLocator",
+    "EnvironmentVariableAuthConnectionValue",
+    "EnvironmentVariableAuthConnectionValueRequest",
+    "EnvironmentVariableResponse",
+    "EnvironmentVariableResponseType",
+    "EnvironmentVariableResponseValues",
+    "EnvironmentVariableSecretValue",
+    "EnvironmentVariableSecretValueRequest",
+    "EnvironmentVariablesListResponse",
     "EvaluationSettings",
     "EvaluationSuccessResult",
     "ExactParameterEvaluationStrategy",
@@ -4872,6 +5440,16 @@ __all__ = [
     "LibraryVoiceResponse",
     "LibraryVoiceResponseModelCategory",
     "ListAssetsParams",
+    "ListAuthConnectionsResponse",
+    "ListAuthConnectionsResponseAuthConnectionsItem",
+    "ListAuthConnectionsResponseAuthConnectionsItem_ApiIntegrationOauth2AuthCode",
+    "ListAuthConnectionsResponseAuthConnectionsItem_BasicAuth",
+    "ListAuthConnectionsResponseAuthConnectionsItem_BearerAuth",
+    "ListAuthConnectionsResponseAuthConnectionsItem_CustomHeaderAuth",
+    "ListAuthConnectionsResponseAuthConnectionsItem_Oauth2ClientCredentials",
+    "ListAuthConnectionsResponseAuthConnectionsItem_Oauth2Jwt",
+    "ListAuthConnectionsResponseAuthConnectionsItem_PrivateKeyJwt",
+    "ListAuthConnectionsResponseAuthConnectionsItem_WhatsappAuth",
     "ListCalendarEventsParams",
     "ListClientsParams",
     "ListMcpToolsResponseModel",
@@ -4897,6 +5475,8 @@ __all__ = [
     "LlmInputOutputTokensUsage",
     "LlmListResponseModelInput",
     "LlmListResponseModelOutput",
+    "LlmLiteralJsonSchemaProperty",
+    "LlmLiteralJsonSchemaPropertyType",
     "LlmParameterEvaluationStrategy",
     "LlmReasoningEffort",
     "LlmSchemaOverride",
@@ -4910,10 +5490,12 @@ __all__ = [
     "MatchAnythingParameterEvaluationStrategy",
     "McpApprovalPolicy",
     "McpServerConfigInput",
+    "McpServerConfigInputAuthConnection",
     "McpServerConfigInputRequestHeadersValue",
     "McpServerConfigInputSecretToken",
     "McpServerConfigInputUrl",
     "McpServerConfigOutput",
+    "McpServerConfigOutputAuthConnection",
     "McpServerConfigOutputRequestHeadersValue",
     "McpServerConfigOutputSecretToken",
     "McpServerConfigOutputUrl",
@@ -4931,10 +5513,6 @@ __all__ = [
     "McpToolConfigOverrideInputOverridesValue_Constant",
     "McpToolConfigOverrideInputOverridesValue_DynamicVariable",
     "McpToolConfigOverrideInputOverridesValue_Llm",
-    "MemoryEntryCreateToolConfig",
-    "MemoryEntryDeleteToolConfig",
-    "MemoryEntrySearchToolConfig",
-    "MemoryEntryUpdateToolConfig",
     "MergingStrategy",
     "MessagesSearchResponse",
     "MessagesSearchResult",
@@ -4955,6 +5533,9 @@ __all__ = [
     "NoCoachingSettings",
     "NonStreamingOutputFormats",
     "NormalizedAlignment",
+    "OAuth2ClientCredsResponse",
+    "OAuth2JwtResponse",
+    "OAuth2JwtResponseAlgorithm",
     "ObjectJsonSchemaPropertyInput",
     "ObjectJsonSchemaPropertyInputPropertiesValue",
     "ObjectJsonSchemaPropertyOutput",
@@ -5011,6 +5592,8 @@ __all__ = [
     "PreviewAudioDbModel",
     "PrivacyConfigInput",
     "PrivacyConfigOutput",
+    "PrivateKeyJwtResponse",
+    "PrivateKeyJwtResponseAlgorithm",
     "ProcedureRefResponseModel",
     "ProjectCreationMetaResponseModel",
     "ProjectCreationMetaResponseModelStatus",
@@ -5145,6 +5728,7 @@ __all__ = [
     "ResponseFilterMode",
     "ResponseUnitTestModel",
     "ResponseUnitTestModelDynamicVariablesValue",
+    "RetryTriggerAction",
     "ReviewResponseModel",
     "ReviewResponseModelRejectReasonsItem",
     "ReviewResponseModelReviewStatus",
@@ -5255,13 +5839,8 @@ __all__ = [
     "SupportedVoice",
     "SystemToolConfigInput",
     "SystemToolConfigInputParams",
-    "SystemToolConfigInputParams_AgentPromptChange",
     "SystemToolConfigInputParams_EndCall",
     "SystemToolConfigInputParams_LanguageDetection",
-    "SystemToolConfigInputParams_MemoryEntryCreate",
-    "SystemToolConfigInputParams_MemoryEntryDelete",
-    "SystemToolConfigInputParams_MemoryEntrySearch",
-    "SystemToolConfigInputParams_MemoryEntryUpdate",
     "SystemToolConfigInputParams_PlayKeypadTouchTone",
     "SystemToolConfigInputParams_SkipTurn",
     "SystemToolConfigInputParams_TransferToAgent",
@@ -5269,19 +5848,15 @@ __all__ = [
     "SystemToolConfigInputParams_VoicemailDetection",
     "SystemToolConfigOutput",
     "SystemToolConfigOutputParams",
-    "SystemToolConfigOutputParams_AgentPromptChange",
     "SystemToolConfigOutputParams_EndCall",
     "SystemToolConfigOutputParams_LanguageDetection",
-    "SystemToolConfigOutputParams_MemoryEntryCreate",
-    "SystemToolConfigOutputParams_MemoryEntryDelete",
-    "SystemToolConfigOutputParams_MemoryEntrySearch",
-    "SystemToolConfigOutputParams_MemoryEntryUpdate",
     "SystemToolConfigOutputParams_PlayKeypadTouchTone",
     "SystemToolConfigOutputParams_SkipTurn",
     "SystemToolConfigOutputParams_TransferToAgent",
     "SystemToolConfigOutputParams_TransferToNumber",
     "SystemToolConfigOutputParams_VoicemailDetection",
     "TelephonyCallConfig",
+    "TelephonyDirection",
     "TelephonyProvider",
     "TestConditionRationaleCommonModel",
     "TestConditionResultCommonModel",
@@ -5447,10 +6022,12 @@ __all__ = [
     "WebhookEventType",
     "WebhookHmacSettings",
     "WebhookToolApiSchemaConfigInput",
+    "WebhookToolApiSchemaConfigInputAuthConnection",
     "WebhookToolApiSchemaConfigInputContentType",
     "WebhookToolApiSchemaConfigInputMethod",
     "WebhookToolApiSchemaConfigInputRequestHeadersValue",
     "WebhookToolApiSchemaConfigOutput",
+    "WebhookToolApiSchemaConfigOutputAuthConnection",
     "WebhookToolApiSchemaConfigOutputContentType",
     "WebhookToolApiSchemaConfigOutputMethod",
     "WebhookToolApiSchemaConfigOutputRequestHeadersValue",
@@ -5459,6 +6036,7 @@ __all__ = [
     "WebhookUsageType",
     "WebsocketTtsClientMessageMulti",
     "WebsocketTtsServerMessageMulti",
+    "WhatsAppAuthResponse",
     "WhatsAppConversationInfo",
     "WhatsAppConversationInfoDirection",
     "WhatsAppOutboundCallResponse",
@@ -5534,6 +6112,7 @@ __all__ = [
     "WorkflowExpressionConditionModelInputExpression",
     "WorkflowExpressionConditionModelInputExpression_AndOperator",
     "WorkflowExpressionConditionModelInputExpression_BooleanLiteral",
+    "WorkflowExpressionConditionModelInputExpression_ConditionalOperator",
     "WorkflowExpressionConditionModelInputExpression_DynamicVariable",
     "WorkflowExpressionConditionModelInputExpression_EqOperator",
     "WorkflowExpressionConditionModelInputExpression_GtOperator",
@@ -5549,6 +6128,7 @@ __all__ = [
     "WorkflowExpressionConditionModelOutputExpression",
     "WorkflowExpressionConditionModelOutputExpression_AndOperator",
     "WorkflowExpressionConditionModelOutputExpression_BooleanLiteral",
+    "WorkflowExpressionConditionModelOutputExpression_ConditionalOperator",
     "WorkflowExpressionConditionModelOutputExpression_DynamicVariable",
     "WorkflowExpressionConditionModelOutputExpression_EqOperator",
     "WorkflowExpressionConditionModelOutputExpression_GtOperator",

@@ -79,6 +79,7 @@ class TestsUpdateResponse_Simulation(UncheckedBaseModel):
     success_condition: typing.Optional[str] = None
     simulation_scenario: typing.Optional[str] = None
     simulation_max_turns: typing.Optional[int] = None
+    simulation_environment: typing.Optional[str] = None
     id: str
     name: str
 

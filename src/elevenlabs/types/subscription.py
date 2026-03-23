@@ -134,6 +134,16 @@ class Subscription(UncheckedBaseModel):
     The pending change for the user.
     """
 
+    has_used_starter_coupon_on_account: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    True if any workspace owned by this user's auth account has redeemed the starter first-month discount coupon.
+    """
+
+    has_used_creator_coupon_on_account: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    True if any workspace owned by this user's auth account has redeemed the creator first-month discount coupon.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

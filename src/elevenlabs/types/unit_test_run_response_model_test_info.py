@@ -49,6 +49,7 @@ class UnitTestRunResponseModelTestInfo_Simulation(UncheckedBaseModel):
     success_condition: typing.Optional[str] = None
     simulation_scenario: typing.Optional[str] = None
     simulation_max_turns: typing.Optional[int] = None
+    simulation_environment: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

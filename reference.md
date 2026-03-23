@@ -6480,7 +6480,23 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**keyterms:** `typing.Optional[typing.List[str]]` — A list of keyterms to bias the transcription towards.           The keyterms are words or phrases you want the model to recognise more accurately.           The number of keyterms cannot exceed 100.           The length of each keyterm must be less than 50 characters.           Keyterms can contain at most 5 words (after normalisation).           For example ["hello", "world", "technical term"].           Usage of this parameter will incur additional costs.  
+**entity_redaction:** `typing.Optional[SpeechToTextConvertRequestEntityRedaction]` — Redact entities from the transcript text. Accepts the same format as entity_detection: 'all', a category ('pii', 'phi'), or specific entity types. Must be a subset of entity_detection. When redaction is enabled, the entities field will not be returned.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**entity_redaction_mode:** `typing.Optional[str]` — How to format redacted entities. 'redacted' replaces with {REDACTED}, 'entity_type' replaces with {ENTITY_TYPE}, 'enumerated_entity_type' replaces with {ENTITY_TYPE_N} where N enumerates each occurrence. Only used when entity_redaction is set.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**keyterms:** `typing.Optional[typing.List[str]]` — A list of keyterms to bias the transcription towards.           The keyterms are words or phrases you want the model to recognise more accurately.           The number of keyterms cannot exceed 1000.           The length of each keyterm must be less than 50 characters.           Keyterms can contain at most 5 words (after normalisation).           For example ["hello", "world", "technical term"].           Usage of this parameter will incur additional costs.           When more than 100 keyterms are provided, a minimum billable duration of 20 seconds applies per request.
     
 </dd>
 </dl>
@@ -6876,6 +6892,338 @@ client.conversational_ai.delete_document_rag_index(
 <dd>
 
 **rag_index_id:** `str` — The id of RAG index of document from the knowledge base.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## EnvironmentVariables
+<details><summary><code>client.environment_variables.<a href="src/elevenlabs/environment_variables/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all environment variables for the workspace with optional filtering
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.environment_variables.list(
+    cursor="cursor",
+    page_size=1,
+    label="label",
+    environment="environment",
+    type="string",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Pagination cursor from previous response
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — Number of items to return (1-100)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**label:** `typing.Optional[str]` — Filter by exact label match
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**environment:** `typing.Optional[str]` — Filter to only return variables that have this environment. When specified, the values dict in the response will only contain this environment.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `typing.Optional[EnvironmentVariablesListRequestType]` — Filter by variable type
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.environment_variables.<a href="src/elevenlabs/environment_variables/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new environment variable for the workspace
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment_variables import (
+    EnvironmentVariablesCreateRequestBody_String,
+)
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.environment_variables.create(
+    request=EnvironmentVariablesCreateRequestBody_String(
+        label="label",
+        values={"key": "value"},
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `EnvironmentVariablesCreateRequestBody` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.environment_variables.<a href="src/elevenlabs/environment_variables/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a specific environment variable by ID
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.environment_variables.get(
+    env_var_id="env_var_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**env_var_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.environment_variables.<a href="src/elevenlabs/environment_variables/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Replace an environment variable's values. Use null to remove an environment (except production).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.environment_variables.update(
+    env_var_id="env_var_id",
+    values={},
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**env_var_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**values:** `typing.Dict[str, typing.Optional[UpdateEnvironmentVariableRequestValuesValue]]` — Values to replace. Set to null to remove an environment (except 'production').
     
 </dd>
 </dl>
@@ -7423,6 +7771,7 @@ client.conversational_ai.conversations.get_signed_url(
     agent_id="21m00Tcm4TlvDq8ikWAM",
     include_conversation_id=True,
     branch_id="branch_id",
+    environment="environment",
 )
 
 ```
@@ -7456,6 +7805,14 @@ client.conversational_ai.conversations.get_signed_url(
 <dd>
 
 **branch_id:** `typing.Optional[str]` — The ID of the branch to use
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**environment:** `typing.Optional[str]` — The environment to use for resolving environment variables (e.g. 'production', 'staging'). Defaults to 'production'.
     
 </dd>
 </dl>
@@ -7511,6 +7868,7 @@ client.conversational_ai.conversations.get_webrtc_token(
     agent_id="21m00Tcm4TlvDq8ikWAM",
     participant_name="participant_name",
     branch_id="branch_id",
+    environment="environment",
 )
 
 ```
@@ -7544,6 +7902,14 @@ client.conversational_ai.conversations.get_webrtc_token(
 <dd>
 
 **branch_id:** `typing.Optional[str]` — The ID of the branch to use
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**environment:** `typing.Optional[str]` — The environment to use for resolving environment variables (e.g. 'production', 'staging'). Defaults to 'production'.
     
 </dd>
 </dl>
@@ -7733,6 +8099,22 @@ client.conversational_ai.conversations.list(
 <dd>
 
 **tool_names:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by tool names used during the call.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tool_names_successful:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by tool names that had successful calls.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tool_names_errored:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by tool names that had errored calls.
     
 </dd>
 </dl>
@@ -8129,9 +8511,7 @@ client.conversational_ai.twilio.register_call(
 <dl>
 <dd>
 
-**direction:** `typing.Optional[
-    BodyRegisterATwilioCallAndReturnTwiMlV1ConvaiTwilioRegisterCallPostDirection
-]` 
+**direction:** `typing.Optional[TelephonyDirection]` 
     
 </dd>
 </dl>
@@ -8853,6 +9233,7 @@ client.conversational_ai.agents.list(
     search="search",
     archived=True,
     show_only_owned_agents=True,
+    created_by_user_id="created_by_user_id",
     sort_direction="asc",
     sort_by="name",
     cursor="cursor",
@@ -8896,7 +9277,15 @@ client.conversational_ai.agents.list(
 <dl>
 <dd>
 
-**show_only_owned_agents:** `typing.Optional[bool]` — If set to true, the endpoint will omit any agents that were shared with you by someone else and include only the ones you own
+**show_only_owned_agents:** `typing.Optional[bool]` — If set to true, the endpoint will omit any agents that were shared with you by someone else and include only the ones you own. Deprecated: use created_by_user_id instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_by_user_id:** `typing.Optional[str]` — Filter agents by creator user ID. When set, only agents created by this user are returned. Takes precedence over show_only_owned_agents. Use '@me' to refer to the authenticated user.
     
 </dd>
 </dl>
@@ -10526,6 +10915,7 @@ client.conversational_ai.knowledge_base.list(
     page_size=1,
     search="search",
     show_only_owned_documents=True,
+    created_by_user_id="created_by_user_id",
     parent_folder_id="parent_folder_id",
     ancestor_folder_id="ancestor_folder_id",
     folders_first=True,
@@ -10564,7 +10954,15 @@ client.conversational_ai.knowledge_base.list(
 <dl>
 <dd>
 
-**show_only_owned_documents:** `typing.Optional[bool]` — If set to true, the endpoint will return only documents owned by you (and not shared from somebody else).
+**show_only_owned_documents:** `typing.Optional[bool]` — If set to true, the endpoint will return only documents owned by you (and not shared from somebody else). Deprecated: use created_by_user_id instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_by_user_id:** `typing.Optional[str]` — Filter documents by creator user ID. When set, only documents created by this user are returned. Takes precedence over show_only_owned_documents. Use '@me' to refer to the authenticated user.
     
 </dd>
 </dl>
@@ -10757,6 +11155,7 @@ client.conversational_ai.tools.list(
     search="search",
     page_size=1,
     show_only_owned_documents=True,
+    created_by_user_id="created_by_user_id",
     sort_direction="asc",
     sort_by="name",
     cursor="cursor",
@@ -10792,7 +11191,15 @@ client.conversational_ai.tools.list(
 <dl>
 <dd>
 
-**show_only_owned_documents:** `typing.Optional[bool]` — If set to true, the endpoint will return only tools owned by you (and not shared from somebody else).
+**show_only_owned_documents:** `typing.Optional[bool]` — If set to true, the endpoint will return only tools owned by you (and not shared from somebody else). Deprecated: use created_by_user_id instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_by_user_id:** `typing.Optional[str]` — Filter tools by creator user ID. When set, only tools created by this user are returned. Takes precedence over show_only_owned_documents. Use '@me' to refer to the authenticated user.
     
 </dd>
 </dl>
@@ -11028,6 +11435,7 @@ client = ElevenLabs(
 )
 client.conversational_ai.tools.delete(
     tool_id="tool_id",
+    force=True,
 )
 
 ```
@@ -11045,6 +11453,14 @@ client.conversational_ai.tools.delete(
 <dd>
 
 **tool_id:** `str` — ID of the requested tool.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force:** `typing.Optional[bool]` — If set to true, the tool will be deleted regardless of whether it is used by any agents and it will be removed from the dependent agents and branches.
     
 </dd>
 </dl>
@@ -11375,6 +11791,14 @@ client.conversational_ai.settings.update()
 <dd>
 
 **rag_retention_period_days:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**conversation_embedding_retention_days:** `typing.Optional[int]` — Days to retain conversation embeddings. None means use the system default (30 days).
     
 </dd>
 </dl>
@@ -12729,7 +13153,7 @@ client.conversational_ai.mcp_servers.update(
 <dl>
 <dd>
 
-**auth_connection:** `typing.Optional[AuthConnectionLocator]` — Optional auth connection to use for authentication with this MCP server
+**auth_connection:** `typing.Optional[McpServerConfigUpdateRequestModelAuthConnection]` — Optional auth connection to use for authentication with this MCP server
     
 </dd>
 </dl>
@@ -14822,6 +15246,22 @@ client.conversational_ai.conversations.messages.text_search(
 <dl>
 <dd>
 
+**tool_names_successful:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by tool names that had successful calls.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tool_names_errored:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by tool names that had errored calls.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **main_languages:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by detected main language (language code).
     
 </dd>
@@ -15343,6 +15783,22 @@ client.conversational_ai.knowledge_base.documents.create_from_url(
 <dl>
 <dd>
 
+**enable_auto_sync:** `typing.Optional[bool]` — Whether to enable auto-sync for this URL document.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auto_remove:** `typing.Optional[bool]` — Whether to automatically remove the document if the URL becomes unavailable. Only applicable when auto-sync is enabled.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -15586,6 +16042,22 @@ client.conversational_ai.knowledge_base.documents.create_folder(
 <dd>
 
 **parent_folder_id:** `typing.Optional[str]` — If set, the created document or folder will be placed inside the given folder.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enable_auto_sync:** `typing.Optional[bool]` — Whether to enable auto-sync for this URL document.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auto_remove:** `typing.Optional[bool]` — Whether to automatically remove the document if the URL becomes unavailable. Only applicable when auto-sync is enabled.
     
 </dd>
 </dl>
@@ -16236,6 +16708,76 @@ client.conversational_ai.knowledge_base.documents.bulk_move(
 </details>
 
 ## ConversationalAi KnowledgeBase Document
+<details><summary><code>client.conversational_ai.knowledge_base.document.<a href="src/elevenlabs/conversational_ai/knowledge_base/document/client.py">refresh</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Manually refresh a URL document by re-fetching its content from the source URL.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.knowledge_base.document.refresh(
+    documentation_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**documentation_id:** `str` — The id of a document from the knowledge base. This is returned on document addition.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.conversational_ai.knowledge_base.document.<a href="src/elevenlabs/conversational_ai/knowledge_base/document/client.py">compute_rag_index</a>(...)</code></summary>
 <dl>
 <dd>
@@ -16420,6 +16962,7 @@ client = ElevenLabs(
 client.conversational_ai.knowledge_base.documents.chunk.get(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
     chunk_id="chunk_id",
+    embedding_model="e5_mistral_7b_instruct",
 )
 
 ```
@@ -16445,6 +16988,14 @@ client.conversational_ai.knowledge_base.documents.chunk.get(
 <dd>
 
 **chunk_id:** `str` — The id of a document RAG chunk from the knowledge base.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**embedding_model:** `typing.Optional[EmbeddingModelEnum]` — The embedding model used to retrieve the chunk.
     
 </dd>
 </dl>
@@ -23765,6 +24316,216 @@ client.voices.samples.audio.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Workspace AuthConnections
+<details><summary><code>client.workspace.auth_connections.<a href="src/elevenlabs/workspace/auth_connections/client.py">list</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all auth connections for the workspace
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.workspace.auth_connections.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workspace.auth_connections.<a href="src/elevenlabs/workspace/auth_connections/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new OAuth2 auth connection for the workspace
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.workspace.auth_connections import (
+    AuthConnectionsCreateRequestBody_Oauth2ClientCredentials,
+)
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.workspace.auth_connections.create(
+    request=AuthConnectionsCreateRequestBody_Oauth2ClientCredentials(
+        name="name",
+        provider="provider",
+        client_id="client_id",
+        token_url="token_url",
+        client_secret="client_secret",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AuthConnectionsCreateRequestBody` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workspace.auth_connections.<a href="src/elevenlabs/workspace/auth_connections/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete an auth connection
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.workspace.auth_connections.delete(
+    auth_connection_id="auth_connection_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**auth_connection_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>
