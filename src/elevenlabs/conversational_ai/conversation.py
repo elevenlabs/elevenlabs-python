@@ -680,7 +680,11 @@ class Conversation(BaseConversation):
 
         self.audio_interface = audio_interface
         if audio_interface is None:
-            self.config.conversation_config_override.setdefault("text_only", True)
+            if "text_only" not in self.config.conversation_config_override:
+                self.config.conversation_config_override = {
+                    **self.config.conversation_config_override,
+                    "text_only": True,
+                }
         self.callback_agent_response = callback_agent_response
         self.callback_agent_response_correction = callback_agent_response_correction
         self.callback_agent_chat_response_part = callback_agent_chat_response_part
@@ -983,7 +987,11 @@ class AsyncConversation(BaseConversation):
 
         self.audio_interface = audio_interface
         if audio_interface is None:
-            self.config.conversation_config_override.setdefault("text_only", True)
+            if "text_only" not in self.config.conversation_config_override:
+                self.config.conversation_config_override = {
+                    **self.config.conversation_config_override,
+                    "text_only": True,
+                }
         self.callback_agent_response = callback_agent_response
         self.callback_agent_response_correction = callback_agent_response_correction
         self.callback_agent_chat_response_part = callback_agent_chat_response_part
