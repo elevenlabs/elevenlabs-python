@@ -388,6 +388,7 @@ class BaseConversation:
         user_id: Optional[str] = None,
         *,
         requires_auth: bool,
+        audio_interface=None,
         config: Optional[ConversationInitiationData] = None,
         client_tools: Optional[ClientTools] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
@@ -397,7 +398,16 @@ class BaseConversation:
         self.agent_id = agent_id
         self.user_id = user_id
         self.requires_auth = requires_auth
-        self.config = config or ConversationInitiationData()
+        # Copy the config so we never mutate the caller's original object
+        src = config or ConversationInitiationData()
+        self.config = ConversationInitiationData(
+            extra_body=dict(src.extra_body),
+            conversation_config_override=dict(src.conversation_config_override),
+            dynamic_variables=dict(src.dynamic_variables),
+            user_id=src.user_id,
+        )
+        if audio_interface is None:
+            self.config.conversation_config_override.setdefault("text_only", True)
         self.client_tools = client_tools or ClientTools()
         self.on_prem_config = on_prem_config
         self.environment = environment
@@ -610,7 +620,7 @@ class BaseConversation:
 
 
 class Conversation(BaseConversation):
-    audio_interface: AudioInterface
+    audio_interface: Optional[AudioInterface]
     callback_agent_response: Optional[Callable[[str], None]]
     callback_agent_response_correction: Optional[Callable[[str, str], None]]
     callback_agent_chat_response_part: Optional[Callable[[str, AgentChatResponsePartType], None]]
@@ -630,7 +640,7 @@ class Conversation(BaseConversation):
         user_id: Optional[str] = None,
         *,
         requires_auth: bool,
-        audio_interface: AudioInterface,
+        audio_interface: Optional[AudioInterface] = None,
         config: Optional[ConversationInitiationData] = None,
         client_tools: Optional[ClientTools] = None,
         callback_agent_response: Optional[Callable[[str], None]] = None,
@@ -653,6 +663,7 @@ class Conversation(BaseConversation):
             user_id: The ID of the user conversing with the agent.
             requires_auth: Whether the agent requires authentication.
             audio_interface: The audio interface to use for input and output.
+                Can be omitted for text-only (chat) mode.
             client_tools: The client tools to use for the conversation.
             callback_agent_response: Callback for agent responses.
             callback_agent_response_correction: Callback for agent response corrections.
@@ -671,6 +682,7 @@ class Conversation(BaseConversation):
             agent_id=agent_id,
             user_id=user_id,
             requires_auth=requires_auth,
+            audio_interface=audio_interface,
             config=config,
             client_tools=client_tools,
             on_prem_config=on_prem_config,
@@ -701,7 +713,8 @@ class Conversation(BaseConversation):
 
     def end_session(self):
         """Ends the conversation session and cleans up resources."""
-        self.audio_interface.stop()
+        if self.audio_interface is not None:
+            self.audio_interface.stop()
         self.client_tools.stop()
         self._ws = None
         self._should_stop.set()
@@ -830,7 +843,8 @@ class Conversation(BaseConversation):
                     logger.error(f"Error sending user audio chunk: {e}")
                     self.end_session()
 
-            self.audio_interface.start(input_callback)
+            if self.audio_interface is not None:
+                self.audio_interface.start(input_callback)
             while not self._should_stop.is_set():
                 try:
                     message = json.loads(ws.recv(timeout=0.5))
@@ -860,7 +874,8 @@ class Conversation(BaseConversation):
                 self.callback_audio_alignment = conversation.callback_audio_alignment
 
             def handle_audio_output(self, audio):
-                self.conversation.audio_interface.output(audio)
+                if self.conversation.audio_interface is not None:
+                    self.conversation.audio_interface.output(audio)
 
             def handle_audio_alignment(self, alignment):
                 self.conversation.callback_audio_alignment(alignment)
@@ -878,7 +893,8 @@ class Conversation(BaseConversation):
                 self.conversation.callback_user_transcript(transcript)
 
             def handle_interruption(self):
-                self.conversation.audio_interface.interrupt()
+                if self.conversation.audio_interface is not None:
+                    self.conversation.audio_interface.interrupt()
 
             def handle_ping(self, event):
                 self.ws.send(
@@ -905,7 +921,7 @@ class Conversation(BaseConversation):
 
 
 class AsyncConversation(BaseConversation):
-    audio_interface: AsyncAudioInterface
+    audio_interface: Optional[AsyncAudioInterface]
     callback_agent_response: Optional[Callable[[str], Awaitable[None]]]
     callback_agent_response_correction: Optional[Callable[[str, str], Awaitable[None]]]
     callback_agent_chat_response_part: Optional[Callable[[str, AgentChatResponsePartType], Awaitable[None]]]
@@ -925,7 +941,7 @@ class AsyncConversation(BaseConversation):
         user_id: Optional[str] = None,
         *,
         requires_auth: bool,
-        audio_interface: AsyncAudioInterface,
+        audio_interface: Optional[AsyncAudioInterface] = None,
         config: Optional[ConversationInitiationData] = None,
         client_tools: Optional[ClientTools] = None,
         callback_agent_response: Optional[Callable[[str], Awaitable[None]]] = None,
@@ -948,6 +964,7 @@ class AsyncConversation(BaseConversation):
             user_id: The ID of the user conversing with the agent.
             requires_auth: Whether the agent requires authentication.
             audio_interface: The async audio interface to use for input and output.
+                Can be omitted for text-only (chat) mode.
             client_tools: The client tools to use for the conversation.
             callback_agent_response: Async callback for agent responses.
             callback_agent_response_correction: Async callback for agent response corrections.
@@ -967,6 +984,7 @@ class AsyncConversation(BaseConversation):
             agent_id=agent_id,
             user_id=user_id,
             requires_auth=requires_auth,
+            audio_interface=audio_interface,
             config=config,
             client_tools=client_tools,
             on_prem_config=on_prem_config,
@@ -996,7 +1014,8 @@ class AsyncConversation(BaseConversation):
 
     async def end_session(self):
         """Ends the conversation session and cleans up resources."""
-        await self.audio_interface.stop()
+        if self.audio_interface is not None:
+            await self.audio_interface.stop()
         self.client_tools.stop()
         self._ws = None
         self._should_stop.set()
@@ -1124,7 +1143,8 @@ class AsyncConversation(BaseConversation):
                     logger.error(f"Error sending user audio chunk: {e}")
                     await self.end_session()
 
-            await self.audio_interface.start(input_callback)
+            if self.audio_interface is not None:
+                await self.audio_interface.start(input_callback)
 
             try:
                 while not self._should_stop.is_set():
@@ -1159,7 +1179,8 @@ class AsyncConversation(BaseConversation):
                 self.callback_audio_alignment = conversation.callback_audio_alignment
 
             async def handle_audio_output(self, audio):
-                await self.conversation.audio_interface.output(audio)
+                if self.conversation.audio_interface is not None:
+                    await self.conversation.audio_interface.output(audio)
 
             async def handle_audio_alignment(self, alignment):
                 await self.conversation.callback_audio_alignment(alignment)
@@ -1177,7 +1198,8 @@ class AsyncConversation(BaseConversation):
                 await self.conversation.callback_user_transcript(transcript)
 
             async def handle_interruption(self):
-                await self.conversation.audio_interface.interrupt()
+                if self.conversation.audio_interface is not None:
+                    await self.conversation.audio_interface.interrupt()
 
             async def handle_ping(self, event):
                 await self.ws.send(

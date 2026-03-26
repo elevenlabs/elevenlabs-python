@@ -398,3 +398,68 @@ def test_conversation_streaming_text_response():
     assert streaming_calls[3] == ("!", AgentChatResponsePartType.DELTA)
 
     assert streaming_calls[4] == ("", AgentChatResponsePartType.STOP)
+
+
+def test_text_only_mode_auto_sets_config():
+    """When audio_interface is None, text_only should be auto-set in config."""
+    mock_ws = create_mock_websocket()
+    mock_client = MagicMock()
+    mock_client._client_wrapper.get_base_url.return_value = "https://api.elevenlabs.io"
+
+    conversation = Conversation(
+        client=mock_client,
+        agent_id=TEST_AGENT_ID,
+        requires_auth=False,
+        audio_interface=None,
+    )
+
+    assert conversation.config.conversation_config_override.get("text_only") is True
+
+    with patch("elevenlabs.conversational_ai.conversation.connect") as mock_connect:
+        mock_connect.return_value.__enter__.return_value = mock_ws
+        conversation.start_session()
+        conversation.end_session()
+        conversation.wait_for_session_end()
+
+    send_calls = [call[0][0] for call in mock_ws.send.call_args_list]
+    init_messages = [json.loads(call) for call in send_calls if 'conversation_initiation_client_data' in call]
+    assert len(init_messages) == 1
+    assert init_messages[0]["conversation_config_override"]["text_only"] is True
+
+
+def test_text_only_mode_preserves_explicit_override():
+    """When user explicitly sets text_only=False, the override should be preserved."""
+    mock_client = MagicMock()
+    mock_client._client_wrapper.get_base_url.return_value = "https://api.elevenlabs.io"
+
+    config = ConversationInitiationData(conversation_config_override={"text_only": False})
+    conversation = Conversation(
+        client=mock_client,
+        config=config,
+        agent_id=TEST_AGENT_ID,
+        requires_auth=False,
+        audio_interface=None,
+    )
+
+    assert conversation.config.conversation_config_override["text_only"] is False
+
+
+def test_text_only_mode_does_not_mutate_original_config():
+    """Setting text_only should not mutate the caller's original config dict."""
+    mock_client = MagicMock()
+    mock_client._client_wrapper.get_base_url.return_value = "https://api.elevenlabs.io"
+
+    original_override = {"some_setting": "value"}
+    config = ConversationInitiationData(conversation_config_override=original_override)
+
+    Conversation(
+        client=mock_client,
+        config=config,
+        agent_id=TEST_AGENT_ID,
+        requires_auth=False,
+        audio_interface=None,
+    )
+
+    assert "text_only" not in original_override
+    # The ConversationInitiationData object itself should also be unmodified
+    assert "text_only" not in config.conversation_config_override
