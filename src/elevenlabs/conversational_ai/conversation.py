@@ -388,6 +388,7 @@ class BaseConversation:
         user_id: Optional[str] = None,
         *,
         requires_auth: bool,
+        audio_interface=None,
         config: Optional[ConversationInitiationData] = None,
         client_tools: Optional[ClientTools] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
@@ -397,7 +398,16 @@ class BaseConversation:
         self.agent_id = agent_id
         self.user_id = user_id
         self.requires_auth = requires_auth
-        self.config = config or ConversationInitiationData()
+        # Copy the config so we never mutate the caller's original object
+        src = config or ConversationInitiationData()
+        self.config = ConversationInitiationData(
+            extra_body=dict(src.extra_body),
+            conversation_config_override=dict(src.conversation_config_override),
+            dynamic_variables=dict(src.dynamic_variables),
+            user_id=src.user_id,
+        )
+        if audio_interface is None:
+            self.config.conversation_config_override.setdefault("text_only", True)
         self.client_tools = client_tools or ClientTools()
         self.on_prem_config = on_prem_config
         self.environment = environment
@@ -672,6 +682,7 @@ class Conversation(BaseConversation):
             agent_id=agent_id,
             user_id=user_id,
             requires_auth=requires_auth,
+            audio_interface=audio_interface,
             config=config,
             client_tools=client_tools,
             on_prem_config=on_prem_config,
@@ -679,12 +690,6 @@ class Conversation(BaseConversation):
         )
 
         self.audio_interface = audio_interface
-        if audio_interface is None:
-            if "text_only" not in self.config.conversation_config_override:
-                self.config.conversation_config_override = {
-                    **self.config.conversation_config_override,
-                    "text_only": True,
-                }
         self.callback_agent_response = callback_agent_response
         self.callback_agent_response_correction = callback_agent_response_correction
         self.callback_agent_chat_response_part = callback_agent_chat_response_part
@@ -979,6 +984,7 @@ class AsyncConversation(BaseConversation):
             agent_id=agent_id,
             user_id=user_id,
             requires_auth=requires_auth,
+            audio_interface=audio_interface,
             config=config,
             client_tools=client_tools,
             on_prem_config=on_prem_config,
@@ -986,12 +992,6 @@ class AsyncConversation(BaseConversation):
         )
 
         self.audio_interface = audio_interface
-        if audio_interface is None:
-            if "text_only" not in self.config.conversation_config_override:
-                self.config.conversation_config_override = {
-                    **self.config.conversation_config_override,
-                    "text_only": True,
-                }
         self.callback_agent_response = callback_agent_response
         self.callback_agent_response_correction = callback_agent_response_correction
         self.callback_agent_chat_response_part = callback_agent_chat_response_part

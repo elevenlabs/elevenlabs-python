@@ -461,3 +461,5 @@ def test_text_only_mode_does_not_mutate_original_config():
     )
 
     assert "text_only" not in original_override
+    # The ConversationInitiationData object itself should also be unmodified
+    assert "text_only" not in config.conversation_config_override
