@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .client_event import ClientEvent
+from .file_input_config_workflow_override import FileInputConfigWorkflowOverride
 
 
 class ConversationConfigWorkflowOverride(UncheckedBaseModel):
@@ -22,6 +23,11 @@ class ConversationConfigWorkflowOverride(UncheckedBaseModel):
     client_events: typing.Optional[typing.List[ClientEvent]] = pydantic.Field(default=None)
     """
     The events that will be sent to the client
+    """
+
+    file_input: typing.Optional[FileInputConfigWorkflowOverride] = pydantic.Field(default=None)
+    """
+    Configuration for file input (image/PDF uploads) during conversations.
     """
 
     monitoring_enabled: typing.Optional[bool] = pydantic.Field(default=None)

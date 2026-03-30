@@ -7,7 +7,7 @@
     "default_bytes_stream_chunk_size": 1024,
     "inline_request_params": false,
     "follow_redirects_by_default": true,
-    "recursion_limit": 5000,
+    "recursion_limit": 10000,
     "pydantic_config": {
       "skip_validation": true
     },

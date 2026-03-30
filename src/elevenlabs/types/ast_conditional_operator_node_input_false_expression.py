@@ -12,6 +12,25 @@ from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .astllm_node_input import AstllmNodeInput
 
 
+class AstConditionalOperatorNodeInputFalseExpression_AddOperator(UncheckedBaseModel):
+    """
+    Expression selected if the condition is false.
+    """
+
+    type: typing.Literal["add_operator"] = "add_operator"
+    left: "AstAdditionOperatorNodeInputLeft"
+    right: "AstAdditionOperatorNodeInputRight"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class AstConditionalOperatorNodeInputFalseExpression_AndOperator(UncheckedBaseModel):
     """
     Expression selected if the condition is false.
@@ -61,6 +80,25 @@ class AstConditionalOperatorNodeInputFalseExpression_ConditionalOperator(Uncheck
     false_expression: typing_extensions.Annotated[
         "AstConditionalOperatorNodeInputFalseExpression", FieldMetadata(alias="falseExpression")
     ]
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class AstConditionalOperatorNodeInputFalseExpression_DivOperator(UncheckedBaseModel):
+    """
+    Expression selected if the condition is false.
+    """
+
+    type: typing.Literal["div_operator"] = "div_operator"
+    left: "AstDivisionOperatorNodeInputLeft"
+    right: "AstDivisionOperatorNodeInputRight"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -198,6 +236,25 @@ class AstConditionalOperatorNodeInputFalseExpression_LteOperator(UncheckedBaseMo
             extra = pydantic.Extra.allow
 
 
+class AstConditionalOperatorNodeInputFalseExpression_MulOperator(UncheckedBaseModel):
+    """
+    Expression selected if the condition is false.
+    """
+
+    type: typing.Literal["mul_operator"] = "mul_operator"
+    left: "AstMultiplicationOperatorNodeInputLeft"
+    right: "AstMultiplicationOperatorNodeInputRight"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class AstConditionalOperatorNodeInputFalseExpression_NeqOperator(UncheckedBaseModel):
     """
     Expression selected if the condition is false.
@@ -271,11 +328,32 @@ class AstConditionalOperatorNodeInputFalseExpression_StringLiteral(UncheckedBase
             extra = pydantic.Extra.allow
 
 
+class AstConditionalOperatorNodeInputFalseExpression_SubOperator(UncheckedBaseModel):
+    """
+    Expression selected if the condition is false.
+    """
+
+    type: typing.Literal["sub_operator"] = "sub_operator"
+    left: "AstSubtractionOperatorNodeInputLeft"
+    right: "AstSubtractionOperatorNodeInputRight"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 AstConditionalOperatorNodeInputFalseExpression = typing_extensions.Annotated[
     typing.Union[
+        AstConditionalOperatorNodeInputFalseExpression_AddOperator,
         AstConditionalOperatorNodeInputFalseExpression_AndOperator,
         AstConditionalOperatorNodeInputFalseExpression_BooleanLiteral,
         AstConditionalOperatorNodeInputFalseExpression_ConditionalOperator,
+        AstConditionalOperatorNodeInputFalseExpression_DivOperator,
         AstConditionalOperatorNodeInputFalseExpression_DynamicVariable,
         AstConditionalOperatorNodeInputFalseExpression_EqOperator,
         AstConditionalOperatorNodeInputFalseExpression_GtOperator,
@@ -283,16 +361,22 @@ AstConditionalOperatorNodeInputFalseExpression = typing_extensions.Annotated[
         AstConditionalOperatorNodeInputFalseExpression_Llm,
         AstConditionalOperatorNodeInputFalseExpression_LtOperator,
         AstConditionalOperatorNodeInputFalseExpression_LteOperator,
+        AstConditionalOperatorNodeInputFalseExpression_MulOperator,
         AstConditionalOperatorNodeInputFalseExpression_NeqOperator,
         AstConditionalOperatorNodeInputFalseExpression_NumberLiteral,
         AstConditionalOperatorNodeInputFalseExpression_OrOperator,
         AstConditionalOperatorNodeInputFalseExpression_StringLiteral,
+        AstConditionalOperatorNodeInputFalseExpression_SubOperator,
     ],
     UnionMetadata(discriminant="type"),
 ]
+from .ast_addition_operator_node_input_left import AstAdditionOperatorNodeInputLeft  # noqa: E402, I001
+from .ast_addition_operator_node_input_right import AstAdditionOperatorNodeInputRight  # noqa: E402, I001
 from .ast_and_operator_node_input_children_item import AstAndOperatorNodeInputChildrenItem  # noqa: E402, I001
 from .ast_conditional_operator_node_input_condition import AstConditionalOperatorNodeInputCondition  # noqa: E402, I001
 from .ast_conditional_operator_node_input_true_expression import AstConditionalOperatorNodeInputTrueExpression  # noqa: E402, I001
+from .ast_division_operator_node_input_left import AstDivisionOperatorNodeInputLeft  # noqa: E402, I001
+from .ast_division_operator_node_input_right import AstDivisionOperatorNodeInputRight  # noqa: E402, I001
 from .ast_equals_operator_node_input_left import AstEqualsOperatorNodeInputLeft  # noqa: E402, I001
 from .ast_equals_operator_node_input_right import AstEqualsOperatorNodeInputRight  # noqa: E402, I001
 from .ast_greater_than_operator_node_input_left import AstGreaterThanOperatorNodeInputLeft  # noqa: E402, I001
@@ -303,16 +387,24 @@ from .ast_less_than_operator_node_input_left import AstLessThanOperatorNodeInput
 from .ast_less_than_operator_node_input_right import AstLessThanOperatorNodeInputRight  # noqa: E402, I001
 from .ast_less_than_or_equals_operator_node_input_left import AstLessThanOrEqualsOperatorNodeInputLeft  # noqa: E402, I001
 from .ast_less_than_or_equals_operator_node_input_right import AstLessThanOrEqualsOperatorNodeInputRight  # noqa: E402, I001
+from .ast_multiplication_operator_node_input_left import AstMultiplicationOperatorNodeInputLeft  # noqa: E402, I001
+from .ast_multiplication_operator_node_input_right import AstMultiplicationOperatorNodeInputRight  # noqa: E402, I001
 from .ast_not_equals_operator_node_input_left import AstNotEqualsOperatorNodeInputLeft  # noqa: E402, I001
 from .ast_not_equals_operator_node_input_right import AstNotEqualsOperatorNodeInputRight  # noqa: E402, I001
 from .ast_or_operator_node_input_children_item import AstOrOperatorNodeInputChildrenItem  # noqa: E402, I001
+from .ast_subtraction_operator_node_input_left import AstSubtractionOperatorNodeInputLeft  # noqa: E402, I001
+from .ast_subtraction_operator_node_input_right import AstSubtractionOperatorNodeInputRight  # noqa: E402, I001
 
+update_forward_refs(AstConditionalOperatorNodeInputFalseExpression_AddOperator)
 update_forward_refs(AstConditionalOperatorNodeInputFalseExpression_AndOperator)
 update_forward_refs(AstConditionalOperatorNodeInputFalseExpression_ConditionalOperator)
+update_forward_refs(AstConditionalOperatorNodeInputFalseExpression_DivOperator)
 update_forward_refs(AstConditionalOperatorNodeInputFalseExpression_EqOperator)
 update_forward_refs(AstConditionalOperatorNodeInputFalseExpression_GtOperator)
 update_forward_refs(AstConditionalOperatorNodeInputFalseExpression_GteOperator)
 update_forward_refs(AstConditionalOperatorNodeInputFalseExpression_LtOperator)
 update_forward_refs(AstConditionalOperatorNodeInputFalseExpression_LteOperator)
+update_forward_refs(AstConditionalOperatorNodeInputFalseExpression_MulOperator)
 update_forward_refs(AstConditionalOperatorNodeInputFalseExpression_NeqOperator)
 update_forward_refs(AstConditionalOperatorNodeInputFalseExpression_OrOperator)
+update_forward_refs(AstConditionalOperatorNodeInputFalseExpression_SubOperator)

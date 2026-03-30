@@ -21,6 +21,16 @@ class ConversationInitiationClientDataRequestInput(UncheckedBaseModel):
     """
 
     source_info: typing.Optional[ConversationInitiationSourceInfo] = None
+    branch_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    ID of the agent branch to use for this conversation
+    """
+
+    environment: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Environment to use for resolving environment variables
+    """
+
     dynamic_variables: typing.Optional[
         typing.Dict[str, typing.Optional[ConversationInitiationClientDataRequestInputDynamicVariablesValue]]
     ] = None

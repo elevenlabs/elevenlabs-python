@@ -5,13 +5,19 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .literal_override_constant_value import LiteralOverrideConstantValue
+from .unit_test_tool_call_parameter import UnitTestToolCallParameter
 
 
-class LiteralOverride(UncheckedBaseModel):
-    description: typing.Optional[str] = None
-    dynamic_variable: typing.Optional[str] = None
-    constant_value: typing.Optional[LiteralOverrideConstantValue] = None
+class ToolResponseMockConfigInput(UncheckedBaseModel):
+    parameter_conditions: typing.Optional[typing.List[UnitTestToolCallParameter]] = pydantic.Field(default=None)
+    """
+    If the list is empty, the mock will always activate.
+    """
+
+    mock_result: str = pydantic.Field()
+    """
+    The return value the LLM sees when this mock is active.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -5,12 +5,12 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .literal_override import LiteralOverride
 
 
-class QueryOverride(UncheckedBaseModel):
-    properties: typing.Optional[typing.Dict[str, typing.Optional[LiteralOverride]]] = None
-    required: typing.Optional[typing.List[str]] = None
+class AudioKeyMoment(UncheckedBaseModel):
+    timestamp_ms: int
+    type: str
+    description: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

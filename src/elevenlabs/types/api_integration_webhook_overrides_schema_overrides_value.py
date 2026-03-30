@@ -11,7 +11,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .constant_schema_override_constant_value import ConstantSchemaOverrideConstantValue
 
 
-class ApiIntegrationWebhookOverridesInputSchemaOverridesValue_Constant(UncheckedBaseModel):
+class ApiIntegrationWebhookOverridesSchemaOverridesValue_Constant(UncheckedBaseModel):
     source: typing.Literal["constant"] = "constant"
     constant_value: ConstantSchemaOverrideConstantValue
 
@@ -25,7 +25,7 @@ class ApiIntegrationWebhookOverridesInputSchemaOverridesValue_Constant(Unchecked
             extra = pydantic.Extra.allow
 
 
-class ApiIntegrationWebhookOverridesInputSchemaOverridesValue_DynamicVariable(UncheckedBaseModel):
+class ApiIntegrationWebhookOverridesSchemaOverridesValue_DynamicVariable(UncheckedBaseModel):
     source: typing.Literal["dynamic_variable"] = "dynamic_variable"
     dynamic_variable: str
 
@@ -39,7 +39,7 @@ class ApiIntegrationWebhookOverridesInputSchemaOverridesValue_DynamicVariable(Un
             extra = pydantic.Extra.allow
 
 
-class ApiIntegrationWebhookOverridesInputSchemaOverridesValue_Llm(UncheckedBaseModel):
+class ApiIntegrationWebhookOverridesSchemaOverridesValue_Llm(UncheckedBaseModel):
     source: typing.Literal["llm"] = "llm"
     prompt: typing.Optional[str] = None
 
@@ -53,11 +53,11 @@ class ApiIntegrationWebhookOverridesInputSchemaOverridesValue_Llm(UncheckedBaseM
             extra = pydantic.Extra.allow
 
 
-ApiIntegrationWebhookOverridesInputSchemaOverridesValue = typing_extensions.Annotated[
+ApiIntegrationWebhookOverridesSchemaOverridesValue = typing_extensions.Annotated[
     typing.Union[
-        ApiIntegrationWebhookOverridesInputSchemaOverridesValue_Constant,
-        ApiIntegrationWebhookOverridesInputSchemaOverridesValue_DynamicVariable,
-        ApiIntegrationWebhookOverridesInputSchemaOverridesValue_Llm,
+        ApiIntegrationWebhookOverridesSchemaOverridesValue_Constant,
+        ApiIntegrationWebhookOverridesSchemaOverridesValue_DynamicVariable,
+        ApiIntegrationWebhookOverridesSchemaOverridesValue_Llm,
     ],
     UnionMetadata(discriminant="source"),
 ]

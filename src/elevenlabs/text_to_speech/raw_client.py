@@ -14,7 +14,6 @@ from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.audio_with_timestamps_response import AudioWithTimestampsResponse
-from ..types.http_validation_error import HttpValidationError
 from ..types.pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
 from ..types.streaming_audio_chunk_with_timestamps_response import StreamingAudioChunkWithTimestampsResponse
 from ..types.voice_settings import VoiceSettings
@@ -187,9 +186,9 @@ class RawTextToSpeechClient:
                         raise UnprocessableEntityError(
                             headers=dict(_response.headers),
                             body=typing.cast(
-                                HttpValidationError,
+                                typing.Any,
                                 construct_type(
-                                    type_=HttpValidationError,  # type: ignore
+                                    type_=typing.Any,  # type: ignore
                                     object_=_response.json(),
                                 ),
                             ),
@@ -347,9 +346,9 @@ class RawTextToSpeechClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -503,9 +502,9 @@ class RawTextToSpeechClient:
                         raise UnprocessableEntityError(
                             headers=dict(_response.headers),
                             body=typing.cast(
-                                HttpValidationError,
+                                typing.Any,
                                 construct_type(
-                                    type_=HttpValidationError,  # type: ignore
+                                    type_=typing.Any,  # type: ignore
                                     object_=_response.json(),
                                 ),
                             ),
@@ -677,9 +676,9 @@ class RawTextToSpeechClient:
                         raise UnprocessableEntityError(
                             headers=dict(_response.headers),
                             body=typing.cast(
-                                HttpValidationError,
+                                typing.Any,
                                 construct_type(
-                                    type_=HttpValidationError,  # type: ignore
+                                    type_=typing.Any,  # type: ignore
                                     object_=_response.json(),
                                 ),
                             ),
@@ -843,9 +842,9 @@ class AsyncRawTextToSpeechClient:
                         raise UnprocessableEntityError(
                             headers=dict(_response.headers),
                             body=typing.cast(
-                                HttpValidationError,
+                                typing.Any,
                                 construct_type(
-                                    type_=HttpValidationError,  # type: ignore
+                                    type_=typing.Any,  # type: ignore
                                     object_=_response.json(),
                                 ),
                             ),
@@ -1003,9 +1002,9 @@ class AsyncRawTextToSpeechClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -1160,9 +1159,9 @@ class AsyncRawTextToSpeechClient:
                         raise UnprocessableEntityError(
                             headers=dict(_response.headers),
                             body=typing.cast(
-                                HttpValidationError,
+                                typing.Any,
                                 construct_type(
-                                    type_=HttpValidationError,  # type: ignore
+                                    type_=typing.Any,  # type: ignore
                                     object_=_response.json(),
                                 ),
                             ),
@@ -1334,9 +1333,9 @@ class AsyncRawTextToSpeechClient:
                         raise UnprocessableEntityError(
                             headers=dict(_response.headers),
                             body=typing.cast(
-                                HttpValidationError,
+                                typing.Any,
                                 construct_type(
-                                    type_=HttpValidationError,  # type: ignore
+                                    type_=typing.Any,  # type: ignore
                                     object_=_response.json(),
                                 ),
                             ),

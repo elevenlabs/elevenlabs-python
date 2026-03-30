@@ -77,11 +77,13 @@ class DraftsClient:
         from elevenlabs import (
             AgentWorkflowRequestModel,
             AgentWorkflowRequestModelNodesValue_End,
+            AstAdditionOperatorNodeInputLeft_AndOperator,
+            AstAdditionOperatorNodeInputRight_AndOperator,
             AstAndOperatorNodeInputChildrenItem_BooleanLiteral,
             ElevenLabs,
             WorkflowEdgeModelInput,
             WorkflowEdgeModelInputForwardCondition_Expression,
-            WorkflowExpressionConditionModelInputExpression_AndOperator,
+            WorkflowExpressionConditionModelInputExpression_AddOperator,
         )
 
         client = ElevenLabs(
@@ -98,12 +100,21 @@ class DraftsClient:
                         source="entry_node",
                         target="tool_node_a",
                         forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                            expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
-                                children=[
-                                    AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
-                                        value=True,
-                                    )
-                                ],
+                            expression=WorkflowExpressionConditionModelInputExpression_AddOperator(
+                                left=AstAdditionOperatorNodeInputLeft_AndOperator(
+                                    children=[
+                                        AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                            value=True,
+                                        )
+                                    ],
+                                ),
+                                right=AstAdditionOperatorNodeInputRight_AndOperator(
+                                    children=[
+                                        AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                            value=True,
+                                        )
+                                    ],
+                                ),
                             ),
                         ),
                     ),
@@ -111,12 +122,21 @@ class DraftsClient:
                         source="start_node",
                         target="entry_node",
                         forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                            expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
-                                children=[
-                                    AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
-                                        value=True,
-                                    )
-                                ],
+                            expression=WorkflowExpressionConditionModelInputExpression_AddOperator(
+                                left=AstAdditionOperatorNodeInputLeft_AndOperator(
+                                    children=[
+                                        AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                            value=True,
+                                        )
+                                    ],
+                                ),
+                                right=AstAdditionOperatorNodeInputRight_AndOperator(
+                                    children=[
+                                        AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                            value=True,
+                                        )
+                                    ],
+                                ),
                             ),
                         ),
                     ),
@@ -124,12 +144,21 @@ class DraftsClient:
                         source="tool_node_a",
                         target="failure_node",
                         forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                            expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
-                                children=[
-                                    AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
-                                        value=True,
-                                    )
-                                ],
+                            expression=WorkflowExpressionConditionModelInputExpression_AddOperator(
+                                left=AstAdditionOperatorNodeInputLeft_AndOperator(
+                                    children=[
+                                        AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                            value=True,
+                                        )
+                                    ],
+                                ),
+                                right=AstAdditionOperatorNodeInputRight_AndOperator(
+                                    children=[
+                                        AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                            value=True,
+                                        )
+                                    ],
+                                ),
                             ),
                         ),
                     ),
@@ -137,12 +166,21 @@ class DraftsClient:
                         source="tool_node_a",
                         target="tool_node_b",
                         forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                            expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
-                                children=[
-                                    AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
-                                        value=True,
-                                    )
-                                ],
+                            expression=WorkflowExpressionConditionModelInputExpression_AddOperator(
+                                left=AstAdditionOperatorNodeInputLeft_AndOperator(
+                                    children=[
+                                        AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                            value=True,
+                                        )
+                                    ],
+                                ),
+                                right=AstAdditionOperatorNodeInputRight_AndOperator(
+                                    children=[
+                                        AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                            value=True,
+                                        )
+                                    ],
+                                ),
                             ),
                         ),
                     ),
@@ -150,12 +188,21 @@ class DraftsClient:
                         source="tool_node_b",
                         target="success_transfer",
                         forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                            expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
-                                children=[
-                                    AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
-                                        value=True,
-                                    )
-                                ],
+                            expression=WorkflowExpressionConditionModelInputExpression_AddOperator(
+                                left=AstAdditionOperatorNodeInputLeft_AndOperator(
+                                    children=[
+                                        AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                            value=True,
+                                        )
+                                    ],
+                                ),
+                                right=AstAdditionOperatorNodeInputRight_AndOperator(
+                                    children=[
+                                        AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                            value=True,
+                                        )
+                                    ],
+                                ),
                             ),
                         ),
                     ),
@@ -163,12 +210,21 @@ class DraftsClient:
                         source="tool_node_b",
                         target="success_conversation",
                         forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                            expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
-                                children=[
-                                    AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
-                                        value=True,
-                                    )
-                                ],
+                            expression=WorkflowExpressionConditionModelInputExpression_AddOperator(
+                                left=AstAdditionOperatorNodeInputLeft_AndOperator(
+                                    children=[
+                                        AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                            value=True,
+                                        )
+                                    ],
+                                ),
+                                right=AstAdditionOperatorNodeInputRight_AndOperator(
+                                    children=[
+                                        AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                            value=True,
+                                        )
+                                    ],
+                                ),
                             ),
                         ),
                     ),
@@ -176,12 +232,21 @@ class DraftsClient:
                         source="tool_node_b",
                         target="success_end",
                         forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                            expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
-                                children=[
-                                    AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
-                                        value=True,
-                                    )
-                                ],
+                            expression=WorkflowExpressionConditionModelInputExpression_AddOperator(
+                                left=AstAdditionOperatorNodeInputLeft_AndOperator(
+                                    children=[
+                                        AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                            value=True,
+                                        )
+                                    ],
+                                ),
+                                right=AstAdditionOperatorNodeInputRight_AndOperator(
+                                    children=[
+                                        AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                            value=True,
+                                        )
+                                    ],
+                                ),
                             ),
                         ),
                     ),
@@ -189,12 +254,21 @@ class DraftsClient:
                         source="tool_node_b",
                         target="success_phone",
                         forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                            expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
-                                children=[
-                                    AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
-                                        value=True,
-                                    )
-                                ],
+                            expression=WorkflowExpressionConditionModelInputExpression_AddOperator(
+                                left=AstAdditionOperatorNodeInputLeft_AndOperator(
+                                    children=[
+                                        AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                            value=True,
+                                        )
+                                    ],
+                                ),
+                                right=AstAdditionOperatorNodeInputRight_AndOperator(
+                                    children=[
+                                        AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                            value=True,
+                                        )
+                                    ],
+                                ),
                             ),
                         ),
                     ),
@@ -332,11 +406,13 @@ class AsyncDraftsClient:
         from elevenlabs import (
             AgentWorkflowRequestModel,
             AgentWorkflowRequestModelNodesValue_End,
+            AstAdditionOperatorNodeInputLeft_AndOperator,
+            AstAdditionOperatorNodeInputRight_AndOperator,
             AstAndOperatorNodeInputChildrenItem_BooleanLiteral,
             AsyncElevenLabs,
             WorkflowEdgeModelInput,
             WorkflowEdgeModelInputForwardCondition_Expression,
-            WorkflowExpressionConditionModelInputExpression_AndOperator,
+            WorkflowExpressionConditionModelInputExpression_AddOperator,
         )
 
         client = AsyncElevenLabs(
@@ -356,12 +432,21 @@ class AsyncDraftsClient:
                             source="entry_node",
                             target="tool_node_a",
                             forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                                expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
-                                    children=[
-                                        AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
-                                            value=True,
-                                        )
-                                    ],
+                                expression=WorkflowExpressionConditionModelInputExpression_AddOperator(
+                                    left=AstAdditionOperatorNodeInputLeft_AndOperator(
+                                        children=[
+                                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                                value=True,
+                                            )
+                                        ],
+                                    ),
+                                    right=AstAdditionOperatorNodeInputRight_AndOperator(
+                                        children=[
+                                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                                value=True,
+                                            )
+                                        ],
+                                    ),
                                 ),
                             ),
                         ),
@@ -369,12 +454,21 @@ class AsyncDraftsClient:
                             source="start_node",
                             target="entry_node",
                             forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                                expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
-                                    children=[
-                                        AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
-                                            value=True,
-                                        )
-                                    ],
+                                expression=WorkflowExpressionConditionModelInputExpression_AddOperator(
+                                    left=AstAdditionOperatorNodeInputLeft_AndOperator(
+                                        children=[
+                                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                                value=True,
+                                            )
+                                        ],
+                                    ),
+                                    right=AstAdditionOperatorNodeInputRight_AndOperator(
+                                        children=[
+                                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                                value=True,
+                                            )
+                                        ],
+                                    ),
                                 ),
                             ),
                         ),
@@ -382,12 +476,21 @@ class AsyncDraftsClient:
                             source="tool_node_a",
                             target="failure_node",
                             forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                                expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
-                                    children=[
-                                        AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
-                                            value=True,
-                                        )
-                                    ],
+                                expression=WorkflowExpressionConditionModelInputExpression_AddOperator(
+                                    left=AstAdditionOperatorNodeInputLeft_AndOperator(
+                                        children=[
+                                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                                value=True,
+                                            )
+                                        ],
+                                    ),
+                                    right=AstAdditionOperatorNodeInputRight_AndOperator(
+                                        children=[
+                                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                                value=True,
+                                            )
+                                        ],
+                                    ),
                                 ),
                             ),
                         ),
@@ -395,12 +498,21 @@ class AsyncDraftsClient:
                             source="tool_node_a",
                             target="tool_node_b",
                             forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                                expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
-                                    children=[
-                                        AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
-                                            value=True,
-                                        )
-                                    ],
+                                expression=WorkflowExpressionConditionModelInputExpression_AddOperator(
+                                    left=AstAdditionOperatorNodeInputLeft_AndOperator(
+                                        children=[
+                                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                                value=True,
+                                            )
+                                        ],
+                                    ),
+                                    right=AstAdditionOperatorNodeInputRight_AndOperator(
+                                        children=[
+                                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                                value=True,
+                                            )
+                                        ],
+                                    ),
                                 ),
                             ),
                         ),
@@ -408,12 +520,21 @@ class AsyncDraftsClient:
                             source="tool_node_b",
                             target="success_transfer",
                             forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                                expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
-                                    children=[
-                                        AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
-                                            value=True,
-                                        )
-                                    ],
+                                expression=WorkflowExpressionConditionModelInputExpression_AddOperator(
+                                    left=AstAdditionOperatorNodeInputLeft_AndOperator(
+                                        children=[
+                                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                                value=True,
+                                            )
+                                        ],
+                                    ),
+                                    right=AstAdditionOperatorNodeInputRight_AndOperator(
+                                        children=[
+                                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                                value=True,
+                                            )
+                                        ],
+                                    ),
                                 ),
                             ),
                         ),
@@ -421,12 +542,21 @@ class AsyncDraftsClient:
                             source="tool_node_b",
                             target="success_conversation",
                             forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                                expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
-                                    children=[
-                                        AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
-                                            value=True,
-                                        )
-                                    ],
+                                expression=WorkflowExpressionConditionModelInputExpression_AddOperator(
+                                    left=AstAdditionOperatorNodeInputLeft_AndOperator(
+                                        children=[
+                                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                                value=True,
+                                            )
+                                        ],
+                                    ),
+                                    right=AstAdditionOperatorNodeInputRight_AndOperator(
+                                        children=[
+                                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                                value=True,
+                                            )
+                                        ],
+                                    ),
                                 ),
                             ),
                         ),
@@ -434,12 +564,21 @@ class AsyncDraftsClient:
                             source="tool_node_b",
                             target="success_end",
                             forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                                expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
-                                    children=[
-                                        AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
-                                            value=True,
-                                        )
-                                    ],
+                                expression=WorkflowExpressionConditionModelInputExpression_AddOperator(
+                                    left=AstAdditionOperatorNodeInputLeft_AndOperator(
+                                        children=[
+                                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                                value=True,
+                                            )
+                                        ],
+                                    ),
+                                    right=AstAdditionOperatorNodeInputRight_AndOperator(
+                                        children=[
+                                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                                value=True,
+                                            )
+                                        ],
+                                    ),
                                 ),
                             ),
                         ),
@@ -447,12 +586,21 @@ class AsyncDraftsClient:
                             source="tool_node_b",
                             target="success_phone",
                             forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                                expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
-                                    children=[
-                                        AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
-                                            value=True,
-                                        )
-                                    ],
+                                expression=WorkflowExpressionConditionModelInputExpression_AddOperator(
+                                    left=AstAdditionOperatorNodeInputLeft_AndOperator(
+                                        children=[
+                                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                                value=True,
+                                            )
+                                        ],
+                                    ),
+                                    right=AstAdditionOperatorNodeInputRight_AndOperator(
+                                        children=[
+                                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
+                                                value=True,
+                                            )
+                                        ],
+                                    ),
                                 ),
                             ),
                         ),

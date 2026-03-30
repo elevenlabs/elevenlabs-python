@@ -9,6 +9,7 @@ from .api_integration_o_auth_2_auth_code_response_scope_separator import (
     ApiIntegrationOAuth2AuthCodeResponseScopeSeparator,
 )
 from .auth_connection_dependencies import AuthConnectionDependencies
+from .o_auth_connection_status import OAuthConnectionStatus
 
 
 class ApiIntegrationOAuth2AuthCodeResponse(UncheckedBaseModel):
@@ -32,6 +33,21 @@ class ApiIntegrationOAuth2AuthCodeResponse(UncheckedBaseModel):
 
     integration_id: str
     credential_id: str
+    status: typing.Optional[OAuthConnectionStatus] = pydantic.Field(default=None)
+    """
+    Current health status of the OAuth connection
+    """
+
+    status_detail: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Human-readable detail about the current status, e.g. the error message on refresh failure
+    """
+
+    status_updated_at: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    ISO 8601 timestamp of the last status change
+    """
+
     id: str
     used_by: typing.Optional[AuthConnectionDependencies] = None
 

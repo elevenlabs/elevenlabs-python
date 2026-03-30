@@ -8,12 +8,18 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .tool_request_model_tool_config import ToolRequestModelToolConfig
+from .tool_response_mock_config_input import ToolResponseMockConfigInput
 
 
 class ToolRequestModel(UncheckedBaseModel):
     tool_config: ToolRequestModelToolConfig = pydantic.Field()
     """
     Configuration for the tool
+    """
+
+    response_mocks: typing.Optional[typing.List[ToolResponseMockConfigInput]] = pydantic.Field(default=None)
+    """
+    Mock responses with optional parameter conditions. Evaluated top-to-bottom; first match wins.
     """
 
     if IS_PYDANTIC_V2:

@@ -12,6 +12,29 @@ from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .llm_literal_json_schema_property import LlmLiteralJsonSchemaProperty
 
 
+class WorkflowExpressionConditionModelOutputExpression_AddOperator(UncheckedBaseModel):
+    """
+    Expression to evaluate.
+    """
+
+    type: typing.Literal["add_operator"] = "add_operator"
+    left: "AstAdditionOperatorNodeOutputLeft"
+    right: "AstAdditionOperatorNodeOutputRight"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+from .ast_addition_operator_node_output_left import AstAdditionOperatorNodeOutputLeft  # noqa: E402, I001
+from .ast_addition_operator_node_output_right import AstAdditionOperatorNodeOutputRight  # noqa: E402, I001
+
+
 class WorkflowExpressionConditionModelOutputExpression_AndOperator(UncheckedBaseModel):
     """
     Expression to evaluate.
@@ -78,6 +101,29 @@ class WorkflowExpressionConditionModelOutputExpression_ConditionalOperator(Unche
 from .ast_conditional_operator_node_output_condition import AstConditionalOperatorNodeOutputCondition  # noqa: E402, I001
 from .ast_conditional_operator_node_output_true_expression import AstConditionalOperatorNodeOutputTrueExpression  # noqa: E402, I001
 from .ast_conditional_operator_node_output_false_expression import AstConditionalOperatorNodeOutputFalseExpression  # noqa: E402, I001
+
+
+class WorkflowExpressionConditionModelOutputExpression_DivOperator(UncheckedBaseModel):
+    """
+    Expression to evaluate.
+    """
+
+    type: typing.Literal["div_operator"] = "div_operator"
+    left: "AstDivisionOperatorNodeOutputLeft"
+    right: "AstDivisionOperatorNodeOutputRight"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+from .ast_division_operator_node_output_left import AstDivisionOperatorNodeOutputLeft  # noqa: E402, I001
+from .ast_division_operator_node_output_right import AstDivisionOperatorNodeOutputRight  # noqa: E402, I001
 
 
 class WorkflowExpressionConditionModelOutputExpression_DynamicVariable(UncheckedBaseModel):
@@ -232,6 +278,29 @@ from .ast_less_than_or_equals_operator_node_output_left import AstLessThanOrEqua
 from .ast_less_than_or_equals_operator_node_output_right import AstLessThanOrEqualsOperatorNodeOutputRight  # noqa: E402, I001
 
 
+class WorkflowExpressionConditionModelOutputExpression_MulOperator(UncheckedBaseModel):
+    """
+    Expression to evaluate.
+    """
+
+    type: typing.Literal["mul_operator"] = "mul_operator"
+    left: "AstMultiplicationOperatorNodeOutputLeft"
+    right: "AstMultiplicationOperatorNodeOutputRight"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+from .ast_multiplication_operator_node_output_left import AstMultiplicationOperatorNodeOutputLeft  # noqa: E402, I001
+from .ast_multiplication_operator_node_output_right import AstMultiplicationOperatorNodeOutputRight  # noqa: E402, I001
+
+
 class WorkflowExpressionConditionModelOutputExpression_NeqOperator(UncheckedBaseModel):
     """
     Expression to evaluate.
@@ -312,11 +381,35 @@ class WorkflowExpressionConditionModelOutputExpression_StringLiteral(UncheckedBa
             extra = pydantic.Extra.allow
 
 
+class WorkflowExpressionConditionModelOutputExpression_SubOperator(UncheckedBaseModel):
+    """
+    Expression to evaluate.
+    """
+
+    type: typing.Literal["sub_operator"] = "sub_operator"
+    left: "AstSubtractionOperatorNodeOutputLeft"
+    right: "AstSubtractionOperatorNodeOutputRight"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+from .ast_subtraction_operator_node_output_left import AstSubtractionOperatorNodeOutputLeft  # noqa: E402, I001
+from .ast_subtraction_operator_node_output_right import AstSubtractionOperatorNodeOutputRight  # noqa: E402, I001
+
 WorkflowExpressionConditionModelOutputExpression = typing_extensions.Annotated[
     typing.Union[
+        WorkflowExpressionConditionModelOutputExpression_AddOperator,
         WorkflowExpressionConditionModelOutputExpression_AndOperator,
         WorkflowExpressionConditionModelOutputExpression_BooleanLiteral,
         WorkflowExpressionConditionModelOutputExpression_ConditionalOperator,
+        WorkflowExpressionConditionModelOutputExpression_DivOperator,
         WorkflowExpressionConditionModelOutputExpression_DynamicVariable,
         WorkflowExpressionConditionModelOutputExpression_EqOperator,
         WorkflowExpressionConditionModelOutputExpression_GtOperator,
@@ -324,19 +417,25 @@ WorkflowExpressionConditionModelOutputExpression = typing_extensions.Annotated[
         WorkflowExpressionConditionModelOutputExpression_Llm,
         WorkflowExpressionConditionModelOutputExpression_LtOperator,
         WorkflowExpressionConditionModelOutputExpression_LteOperator,
+        WorkflowExpressionConditionModelOutputExpression_MulOperator,
         WorkflowExpressionConditionModelOutputExpression_NeqOperator,
         WorkflowExpressionConditionModelOutputExpression_NumberLiteral,
         WorkflowExpressionConditionModelOutputExpression_OrOperator,
         WorkflowExpressionConditionModelOutputExpression_StringLiteral,
+        WorkflowExpressionConditionModelOutputExpression_SubOperator,
     ],
     UnionMetadata(discriminant="type"),
 ]
+update_forward_refs(WorkflowExpressionConditionModelOutputExpression_AddOperator)
 update_forward_refs(WorkflowExpressionConditionModelOutputExpression_AndOperator)
 update_forward_refs(WorkflowExpressionConditionModelOutputExpression_ConditionalOperator)
+update_forward_refs(WorkflowExpressionConditionModelOutputExpression_DivOperator)
 update_forward_refs(WorkflowExpressionConditionModelOutputExpression_EqOperator)
 update_forward_refs(WorkflowExpressionConditionModelOutputExpression_GtOperator)
 update_forward_refs(WorkflowExpressionConditionModelOutputExpression_GteOperator)
 update_forward_refs(WorkflowExpressionConditionModelOutputExpression_LtOperator)
 update_forward_refs(WorkflowExpressionConditionModelOutputExpression_LteOperator)
+update_forward_refs(WorkflowExpressionConditionModelOutputExpression_MulOperator)
 update_forward_refs(WorkflowExpressionConditionModelOutputExpression_NeqOperator)
 update_forward_refs(WorkflowExpressionConditionModelOutputExpression_OrOperator)
+update_forward_refs(WorkflowExpressionConditionModelOutputExpression_SubOperator)
