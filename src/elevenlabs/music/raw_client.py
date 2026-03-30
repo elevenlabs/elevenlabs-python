@@ -11,9 +11,9 @@ from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
+from ..errors.forbidden_error import ForbiddenError
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.allowed_output_formats import AllowedOutputFormats
-from ..types.http_validation_error import HttpValidationError
 from ..types.music_prompt import MusicPrompt
 from ..types.music_upload_response import MusicUploadResponse
 from .types.music_separate_stems_request_stem_variation_id import MusicSeparateStemsRequestStemVariationId
@@ -25,6 +25,103 @@ OMIT = typing.cast(typing.Any, ...)
 class RawMusicClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    @contextlib.contextmanager
+    def video_to_music(
+        self,
+        *,
+        videos: typing.List[core.File],
+        output_format: typing.Optional[AllowedOutputFormats] = None,
+        description: typing.Optional[str] = OMIT,
+        tags: typing.Optional[typing.List[str]] = OMIT,
+        sign_with_c_2_pa: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
+        """
+        Generate background music from one or more video files. Videos are combined in order. Optional description and style tags influence the generated music.
+
+        Parameters
+        ----------
+        videos : typing.List[core.File]
+            See core.File for more documentation
+
+        output_format : typing.Optional[AllowedOutputFormats]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        description : typing.Optional[str]
+            Optional text description of the music you want. A maximum of 1000 characters is allowed.
+
+        tags : typing.Optional[typing.List[str]]
+            Optional list of style tags (e.g. ['upbeat', 'cinematic']). A maximum of 10 tags is allowed.
+
+        sign_with_c_2_pa : typing.Optional[bool]
+            Whether to sign the generated song with C2PA. Applicable only for mp3 files.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Returns
+        -------
+        typing.Iterator[HttpResponse[typing.Iterator[bytes]]]
+            Generated audio file matching the video. Content-Type and file extension depend on the output_format parameter (default mp3).
+        """
+        with self._client_wrapper.httpx_client.stream(
+            "v1/music/video-to-music",
+            method="POST",
+            params={
+                "output_format": output_format,
+            },
+            data={
+                "description": description,
+                "tags": tags,
+                "sign_with_c2pa": sign_with_c_2_pa,
+            },
+            files={
+                "videos": videos,
+            },
+            request_options=request_options,
+            omit=OMIT,
+            force_multipart=True,
+        ) as _response:
+
+            def _stream() -> HttpResponse[typing.Iterator[bytes]]:
+                try:
+                    if 200 <= _response.status_code < 300:
+                        _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                        return HttpResponse(
+                            response=_response, data=(_chunk for _chunk in _response.iter_bytes(chunk_size=_chunk_size))
+                        )
+                    _response.read()
+                    if _response.status_code == 403:
+                        raise ForbiddenError(
+                            headers=dict(_response.headers),
+                            body=typing.cast(
+                                typing.Any,
+                                construct_type(
+                                    type_=typing.Any,  # type: ignore
+                                    object_=_response.json(),
+                                ),
+                            ),
+                        )
+                    if _response.status_code == 422:
+                        raise UnprocessableEntityError(
+                            headers=dict(_response.headers),
+                            body=typing.cast(
+                                typing.Any,
+                                construct_type(
+                                    type_=typing.Any,  # type: ignore
+                                    object_=_response.json(),
+                                ),
+                            ),
+                        )
+                    _response_json = _response.json()
+                except JSONDecodeError:
+                    raise ApiError(
+                        status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                    )
+                raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+            yield _stream()
 
     @contextlib.contextmanager
     def compose(
@@ -123,9 +220,9 @@ class RawMusicClient:
                         raise UnprocessableEntityError(
                             headers=dict(_response.headers),
                             body=typing.cast(
-                                HttpValidationError,
+                                typing.Any,
                                 construct_type(
-                                    type_=HttpValidationError,  # type: ignore
+                                    type_=typing.Any,  # type: ignore
                                     object_=_response.json(),
                                 ),
                             ),
@@ -241,9 +338,9 @@ class RawMusicClient:
                         raise UnprocessableEntityError(
                             headers=dict(_response.headers),
                             body=typing.cast(
-                                HttpValidationError,
+                                typing.Any,
                                 construct_type(
-                                    type_=HttpValidationError,  # type: ignore
+                                    type_=typing.Any,  # type: ignore
                                     object_=_response.json(),
                                 ),
                             ),
@@ -344,9 +441,9 @@ class RawMusicClient:
                         raise UnprocessableEntityError(
                             headers=dict(_response.headers),
                             body=typing.cast(
-                                HttpValidationError,
+                                typing.Any,
                                 construct_type(
-                                    type_=HttpValidationError,  # type: ignore
+                                    type_=typing.Any,  # type: ignore
                                     object_=_response.json(),
                                 ),
                             ),
@@ -413,9 +510,9 @@ class RawMusicClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -490,9 +587,9 @@ class RawMusicClient:
                         raise UnprocessableEntityError(
                             headers=dict(_response.headers),
                             body=typing.cast(
-                                HttpValidationError,
+                                typing.Any,
                                 construct_type(
-                                    type_=HttpValidationError,  # type: ignore
+                                    type_=typing.Any,  # type: ignore
                                     object_=_response.json(),
                                 ),
                             ),
@@ -510,6 +607,104 @@ class RawMusicClient:
 class AsyncRawMusicClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    @contextlib.asynccontextmanager
+    async def video_to_music(
+        self,
+        *,
+        videos: typing.List[core.File],
+        output_format: typing.Optional[AllowedOutputFormats] = None,
+        description: typing.Optional[str] = OMIT,
+        tags: typing.Optional[typing.List[str]] = OMIT,
+        sign_with_c_2_pa: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
+        """
+        Generate background music from one or more video files. Videos are combined in order. Optional description and style tags influence the generated music.
+
+        Parameters
+        ----------
+        videos : typing.List[core.File]
+            See core.File for more documentation
+
+        output_format : typing.Optional[AllowedOutputFormats]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        description : typing.Optional[str]
+            Optional text description of the music you want. A maximum of 1000 characters is allowed.
+
+        tags : typing.Optional[typing.List[str]]
+            Optional list of style tags (e.g. ['upbeat', 'cinematic']). A maximum of 10 tags is allowed.
+
+        sign_with_c_2_pa : typing.Optional[bool]
+            Whether to sign the generated song with C2PA. Applicable only for mp3 files.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Returns
+        -------
+        typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]
+            Generated audio file matching the video. Content-Type and file extension depend on the output_format parameter (default mp3).
+        """
+        async with self._client_wrapper.httpx_client.stream(
+            "v1/music/video-to-music",
+            method="POST",
+            params={
+                "output_format": output_format,
+            },
+            data={
+                "description": description,
+                "tags": tags,
+                "sign_with_c2pa": sign_with_c_2_pa,
+            },
+            files={
+                "videos": videos,
+            },
+            request_options=request_options,
+            omit=OMIT,
+            force_multipart=True,
+        ) as _response:
+
+            async def _stream() -> AsyncHttpResponse[typing.AsyncIterator[bytes]]:
+                try:
+                    if 200 <= _response.status_code < 300:
+                        _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                        return AsyncHttpResponse(
+                            response=_response,
+                            data=(_chunk async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size)),
+                        )
+                    await _response.aread()
+                    if _response.status_code == 403:
+                        raise ForbiddenError(
+                            headers=dict(_response.headers),
+                            body=typing.cast(
+                                typing.Any,
+                                construct_type(
+                                    type_=typing.Any,  # type: ignore
+                                    object_=_response.json(),
+                                ),
+                            ),
+                        )
+                    if _response.status_code == 422:
+                        raise UnprocessableEntityError(
+                            headers=dict(_response.headers),
+                            body=typing.cast(
+                                typing.Any,
+                                construct_type(
+                                    type_=typing.Any,  # type: ignore
+                                    object_=_response.json(),
+                                ),
+                            ),
+                        )
+                    _response_json = _response.json()
+                except JSONDecodeError:
+                    raise ApiError(
+                        status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                    )
+                raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+            yield await _stream()
 
     @contextlib.asynccontextmanager
     async def compose(
@@ -609,9 +804,9 @@ class AsyncRawMusicClient:
                         raise UnprocessableEntityError(
                             headers=dict(_response.headers),
                             body=typing.cast(
-                                HttpValidationError,
+                                typing.Any,
                                 construct_type(
-                                    type_=HttpValidationError,  # type: ignore
+                                    type_=typing.Any,  # type: ignore
                                     object_=_response.json(),
                                 ),
                             ),
@@ -728,9 +923,9 @@ class AsyncRawMusicClient:
                         raise UnprocessableEntityError(
                             headers=dict(_response.headers),
                             body=typing.cast(
-                                HttpValidationError,
+                                typing.Any,
                                 construct_type(
-                                    type_=HttpValidationError,  # type: ignore
+                                    type_=typing.Any,  # type: ignore
                                     object_=_response.json(),
                                 ),
                             ),
@@ -832,9 +1027,9 @@ class AsyncRawMusicClient:
                         raise UnprocessableEntityError(
                             headers=dict(_response.headers),
                             body=typing.cast(
-                                HttpValidationError,
+                                typing.Any,
                                 construct_type(
-                                    type_=HttpValidationError,  # type: ignore
+                                    type_=typing.Any,  # type: ignore
                                     object_=_response.json(),
                                 ),
                             ),
@@ -901,9 +1096,9 @@ class AsyncRawMusicClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -979,9 +1174,9 @@ class AsyncRawMusicClient:
                         raise UnprocessableEntityError(
                             headers=dict(_response.headers),
                             body=typing.cast(
-                                HttpValidationError,
+                                typing.Any,
                                 construct_type(
-                                    type_=HttpValidationError,  # type: ignore
+                                    type_=typing.Any,  # type: ignore
                                     object_=_response.json(),
                                 ),
                             ),

@@ -10,6 +10,7 @@ from .conversation_initiation_client_data_internal_dynamic_variables_value impor
     ConversationInitiationClientDataInternalDynamicVariablesValue,
 )
 from .conversation_initiation_source_info import ConversationInitiationSourceInfo
+from .orchestrator_tool_mock_behavior_config import OrchestratorToolMockBehaviorConfig
 
 
 class ConversationInitiationClientDataInternal(UncheckedBaseModel):
@@ -21,9 +22,23 @@ class ConversationInitiationClientDataInternal(UncheckedBaseModel):
     """
 
     source_info: typing.Optional[ConversationInitiationSourceInfo] = None
+    branch_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    ID of the agent branch to use for this conversation
+    """
+
+    environment: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Environment to use for resolving environment variables
+    """
+
     dynamic_variables: typing.Optional[
         typing.Dict[str, typing.Optional[ConversationInitiationClientDataInternalDynamicVariablesValue]]
     ] = None
+    tool_mock_config: typing.Optional[OrchestratorToolMockBehaviorConfig] = pydantic.Field(default=None)
+    """
+    Configuration for which tools to mock and fallback behavior
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

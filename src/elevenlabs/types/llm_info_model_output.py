@@ -56,6 +56,11 @@ class LlmInfoModelOutput(UncheckedBaseModel):
     Deprecation information if this model is deprecated or scheduled for deprecation. Null if the model is not affected.
     """
 
+    model_score: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    The model's benchmark score. Null if no score is available.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

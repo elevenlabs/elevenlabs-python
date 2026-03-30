@@ -20,6 +20,7 @@ from ....types.create_simulation_test_request_dynamic_variables_value import (
 from ....types.create_tool_call_unit_test_request_dynamic_variables_value import (
     CreateToolCallUnitTestRequestDynamicVariablesValue,
 )
+from ....types.simulation_tool_mock_behavior_config import SimulationToolMockBehaviorConfig
 from ....types.test_from_conversation_metadata_input import TestFromConversationMetadataInput
 from ....types.unit_test_tool_call_evaluation_model_input import UnitTestToolCallEvaluationModelInput
 
@@ -92,6 +93,7 @@ class TestsCreateRequestBody_Simulation(UncheckedBaseModel):
     simulation_scenario: typing.Optional[str] = None
     simulation_max_turns: typing.Optional[int] = None
     simulation_environment: typing.Optional[str] = None
+    tool_mock_config: typing.Optional[SimulationToolMockBehaviorConfig] = None
     name: str
     parent_folder_id: typing.Optional[str] = None
 

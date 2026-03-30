@@ -13,6 +13,7 @@ from .api_integration_o_auth_2_auth_code_response_scope_separator import (
 )
 from .auth_connection_dependencies import AuthConnectionDependencies
 from .o_auth_2_jwt_response_algorithm import OAuth2JwtResponseAlgorithm
+from .o_auth_connection_status import OAuthConnectionStatus
 from .private_key_jwt_response_algorithm import PrivateKeyJwtResponseAlgorithm
 
 
@@ -30,6 +31,9 @@ class ListAuthConnectionsResponseAuthConnectionsItem_ApiIntegrationOauth2AuthCod
     expires_at: str
     integration_id: str
     credential_id: str
+    status: typing.Optional[OAuthConnectionStatus] = None
+    status_detail: typing.Optional[str] = None
+    status_updated_at: typing.Optional[str] = None
     id: str
     used_by: typing.Optional[AuthConnectionDependencies] = None
 

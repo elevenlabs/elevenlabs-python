@@ -13,6 +13,7 @@ from ....types.api_integration_o_auth_2_auth_code_response_scope_separator impor
 )
 from ....types.auth_connection_dependencies import AuthConnectionDependencies
 from ....types.o_auth_2_jwt_response_algorithm import OAuth2JwtResponseAlgorithm
+from ....types.o_auth_connection_status import OAuthConnectionStatus
 from ....types.private_key_jwt_response_algorithm import PrivateKeyJwtResponseAlgorithm
 
 
@@ -179,6 +180,9 @@ class AuthConnectionsCreateResponse_ApiIntegrationOauth2AuthCode(UncheckedBaseMo
     expires_at: str
     integration_id: str
     credential_id: str
+    status: typing.Optional[OAuthConnectionStatus] = None
+    status_detail: typing.Optional[str] = None
+    status_updated_at: typing.Optional[str] = None
     id: str
     used_by: typing.Optional[AuthConnectionDependencies] = None
 

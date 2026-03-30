@@ -12,6 +12,21 @@ from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .llm_literal_json_schema_property import LlmLiteralJsonSchemaProperty
 
 
+class AstOrOperatorNodeOutputChildrenItem_AddOperator(UncheckedBaseModel):
+    type: typing.Literal["add_operator"] = "add_operator"
+    left: "AstAdditionOperatorNodeOutputLeft"
+    right: "AstAdditionOperatorNodeOutputRight"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class AstOrOperatorNodeOutputChildrenItem_AndOperator(UncheckedBaseModel):
     type: typing.Literal["and_operator"] = "and_operator"
     children: typing.List["AstAndOperatorNodeOutputChildrenItem"]
@@ -49,6 +64,21 @@ class AstOrOperatorNodeOutputChildrenItem_ConditionalOperator(UncheckedBaseModel
     false_expression: typing_extensions.Annotated[
         "AstConditionalOperatorNodeOutputFalseExpression", FieldMetadata(alias="falseExpression")
     ]
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class AstOrOperatorNodeOutputChildrenItem_DivOperator(UncheckedBaseModel):
+    type: typing.Literal["div_operator"] = "div_operator"
+    left: "AstDivisionOperatorNodeOutputLeft"
+    right: "AstDivisionOperatorNodeOutputRight"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -164,6 +194,21 @@ class AstOrOperatorNodeOutputChildrenItem_LteOperator(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class AstOrOperatorNodeOutputChildrenItem_MulOperator(UncheckedBaseModel):
+    type: typing.Literal["mul_operator"] = "mul_operator"
+    left: "AstMultiplicationOperatorNodeOutputLeft"
+    right: "AstMultiplicationOperatorNodeOutputRight"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class AstOrOperatorNodeOutputChildrenItem_NeqOperator(UncheckedBaseModel):
     type: typing.Literal["neq_operator"] = "neq_operator"
     left: "AstNotEqualsOperatorNodeOutputLeft"
@@ -221,11 +266,28 @@ class AstOrOperatorNodeOutputChildrenItem_StringLiteral(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class AstOrOperatorNodeOutputChildrenItem_SubOperator(UncheckedBaseModel):
+    type: typing.Literal["sub_operator"] = "sub_operator"
+    left: "AstSubtractionOperatorNodeOutputLeft"
+    right: "AstSubtractionOperatorNodeOutputRight"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 AstOrOperatorNodeOutputChildrenItem = typing_extensions.Annotated[
     typing.Union[
+        AstOrOperatorNodeOutputChildrenItem_AddOperator,
         AstOrOperatorNodeOutputChildrenItem_AndOperator,
         AstOrOperatorNodeOutputChildrenItem_BooleanLiteral,
         AstOrOperatorNodeOutputChildrenItem_ConditionalOperator,
+        AstOrOperatorNodeOutputChildrenItem_DivOperator,
         AstOrOperatorNodeOutputChildrenItem_DynamicVariable,
         AstOrOperatorNodeOutputChildrenItem_EqOperator,
         AstOrOperatorNodeOutputChildrenItem_GtOperator,
@@ -233,17 +295,23 @@ AstOrOperatorNodeOutputChildrenItem = typing_extensions.Annotated[
         AstOrOperatorNodeOutputChildrenItem_Llm,
         AstOrOperatorNodeOutputChildrenItem_LtOperator,
         AstOrOperatorNodeOutputChildrenItem_LteOperator,
+        AstOrOperatorNodeOutputChildrenItem_MulOperator,
         AstOrOperatorNodeOutputChildrenItem_NeqOperator,
         AstOrOperatorNodeOutputChildrenItem_NumberLiteral,
         AstOrOperatorNodeOutputChildrenItem_OrOperator,
         AstOrOperatorNodeOutputChildrenItem_StringLiteral,
+        AstOrOperatorNodeOutputChildrenItem_SubOperator,
     ],
     UnionMetadata(discriminant="type"),
 ]
+from .ast_addition_operator_node_output_left import AstAdditionOperatorNodeOutputLeft  # noqa: E402, I001
+from .ast_addition_operator_node_output_right import AstAdditionOperatorNodeOutputRight  # noqa: E402, I001
 from .ast_and_operator_node_output_children_item import AstAndOperatorNodeOutputChildrenItem  # noqa: E402, I001
 from .ast_conditional_operator_node_output_condition import AstConditionalOperatorNodeOutputCondition  # noqa: E402, I001
 from .ast_conditional_operator_node_output_true_expression import AstConditionalOperatorNodeOutputTrueExpression  # noqa: E402, I001
 from .ast_conditional_operator_node_output_false_expression import AstConditionalOperatorNodeOutputFalseExpression  # noqa: E402, I001
+from .ast_division_operator_node_output_left import AstDivisionOperatorNodeOutputLeft  # noqa: E402, I001
+from .ast_division_operator_node_output_right import AstDivisionOperatorNodeOutputRight  # noqa: E402, I001
 from .ast_equals_operator_node_output_left import AstEqualsOperatorNodeOutputLeft  # noqa: E402, I001
 from .ast_equals_operator_node_output_right import AstEqualsOperatorNodeOutputRight  # noqa: E402, I001
 from .ast_greater_than_operator_node_output_left import AstGreaterThanOperatorNodeOutputLeft  # noqa: E402, I001
@@ -254,15 +322,23 @@ from .ast_less_than_operator_node_output_left import AstLessThanOperatorNodeOutp
 from .ast_less_than_operator_node_output_right import AstLessThanOperatorNodeOutputRight  # noqa: E402, I001
 from .ast_less_than_or_equals_operator_node_output_left import AstLessThanOrEqualsOperatorNodeOutputLeft  # noqa: E402, I001
 from .ast_less_than_or_equals_operator_node_output_right import AstLessThanOrEqualsOperatorNodeOutputRight  # noqa: E402, I001
+from .ast_multiplication_operator_node_output_left import AstMultiplicationOperatorNodeOutputLeft  # noqa: E402, I001
+from .ast_multiplication_operator_node_output_right import AstMultiplicationOperatorNodeOutputRight  # noqa: E402, I001
 from .ast_not_equals_operator_node_output_left import AstNotEqualsOperatorNodeOutputLeft  # noqa: E402, I001
 from .ast_not_equals_operator_node_output_right import AstNotEqualsOperatorNodeOutputRight  # noqa: E402, I001
+from .ast_subtraction_operator_node_output_left import AstSubtractionOperatorNodeOutputLeft  # noqa: E402, I001
+from .ast_subtraction_operator_node_output_right import AstSubtractionOperatorNodeOutputRight  # noqa: E402, I001
 
+update_forward_refs(AstOrOperatorNodeOutputChildrenItem_AddOperator)
 update_forward_refs(AstOrOperatorNodeOutputChildrenItem_AndOperator)
 update_forward_refs(AstOrOperatorNodeOutputChildrenItem_ConditionalOperator)
+update_forward_refs(AstOrOperatorNodeOutputChildrenItem_DivOperator)
 update_forward_refs(AstOrOperatorNodeOutputChildrenItem_EqOperator)
 update_forward_refs(AstOrOperatorNodeOutputChildrenItem_GtOperator)
 update_forward_refs(AstOrOperatorNodeOutputChildrenItem_GteOperator)
 update_forward_refs(AstOrOperatorNodeOutputChildrenItem_LtOperator)
 update_forward_refs(AstOrOperatorNodeOutputChildrenItem_LteOperator)
+update_forward_refs(AstOrOperatorNodeOutputChildrenItem_MulOperator)
 update_forward_refs(AstOrOperatorNodeOutputChildrenItem_NeqOperator)
 update_forward_refs(AstOrOperatorNodeOutputChildrenItem_OrOperator)
+update_forward_refs(AstOrOperatorNodeOutputChildrenItem_SubOperator)

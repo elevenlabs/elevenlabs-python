@@ -24,6 +24,7 @@ class ProjectImageResponseModel(UncheckedBaseModel):
     order: str
     canvas_placement: CanvasPlacement
     animation: typing.Optional[ClipAnimation] = None
+    opacity: typing.Optional[float] = None
     created_at_ms: int
     updated_at_ms: int
     current_snapshot_id: typing.Optional[str] = None

@@ -4,4 +4,4 @@ import typing
 
 from .conv_ai_dynamic_variable import ConvAiDynamicVariable
 
-ApiIntegrationWebhookOverridesInputRequestHeadersValue = typing.Union[str, ConvAiDynamicVariable]
+ApiIntegrationWebhookOverridesRequestHeadersValue = typing.Union[str, ConvAiDynamicVariable]

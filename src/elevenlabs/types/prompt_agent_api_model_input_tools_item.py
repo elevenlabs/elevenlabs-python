@@ -8,7 +8,7 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
-from .api_integration_webhook_overrides_input import ApiIntegrationWebhookOverridesInput
+from .api_integration_webhook_overrides import ApiIntegrationWebhookOverrides
 from .dynamic_variable_assignment import DynamicVariableAssignment
 from .dynamic_variables_config import DynamicVariablesConfig
 from .system_tool_config_input_params import SystemToolConfigInputParams
@@ -39,7 +39,7 @@ class PromptAgentApiModelInputToolsItem_ApiIntegrationWebhook(UncheckedBaseModel
     tool_version: typing.Optional[str] = None
     api_integration_id: str
     api_integration_connection_id: str
-    api_schema_overrides: typing.Optional[ApiIntegrationWebhookOverridesInput] = None
+    api_schema_overrides: typing.Optional[ApiIntegrationWebhookOverrides] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -176,6 +176,5 @@ PromptAgentApiModelInputToolsItem = typing_extensions.Annotated[
     ],
     UnionMetadata(discriminant="type"),
 ]
-update_forward_refs(PromptAgentApiModelInputToolsItem_ApiIntegrationWebhook)
 update_forward_refs(PromptAgentApiModelInputToolsItem_Client)
 update_forward_refs(PromptAgentApiModelInputToolsItem_Webhook)

@@ -115,6 +115,7 @@ class BaseElevenLabs:
         self._user: typing.Optional[UserClient] = None
         self._voices: typing.Optional[VoicesClient] = None
         self._studio: typing.Optional[StudioClient] = None
+        self._music: typing.Optional[MusicClient] = None
         self._dubbing: typing.Optional[DubbingClient] = None
         self._models: typing.Optional[ModelsClient] = None
         self._audio_native: typing.Optional[AudioNativeClient] = None
@@ -126,7 +127,6 @@ class BaseElevenLabs:
         self._forced_alignment: typing.Optional[ForcedAlignmentClient] = None
         self._conversational_ai: typing.Optional[ConversationalAiClient] = None
         self._environment_variables: typing.Optional[EnvironmentVariablesClient] = None
-        self._music: typing.Optional[MusicClient] = None
         self._tokens: typing.Optional[TokensClient] = None
         self._workspace: typing.Optional[WorkspaceClient] = None
 
@@ -289,6 +289,14 @@ class BaseElevenLabs:
         return self._studio
 
     @property
+    def music(self):
+        if self._music is None:
+            from .music.client import MusicClient  # noqa: E402
+
+            self._music = MusicClient(client_wrapper=self._client_wrapper)
+        return self._music
+
+    @property
     def dubbing(self):
         if self._dubbing is None:
             from .dubbing.client import DubbingClient  # noqa: E402
@@ -375,14 +383,6 @@ class BaseElevenLabs:
 
             self._environment_variables = EnvironmentVariablesClient(client_wrapper=self._client_wrapper)
         return self._environment_variables
-
-    @property
-    def music(self):
-        if self._music is None:
-            from .music.client import MusicClient  # noqa: E402
-
-            self._music = MusicClient(client_wrapper=self._client_wrapper)
-        return self._music
 
     @property
     def tokens(self):
@@ -478,6 +478,7 @@ class AsyncBaseElevenLabs:
         self._user: typing.Optional[AsyncUserClient] = None
         self._voices: typing.Optional[AsyncVoicesClient] = None
         self._studio: typing.Optional[AsyncStudioClient] = None
+        self._music: typing.Optional[AsyncMusicClient] = None
         self._dubbing: typing.Optional[AsyncDubbingClient] = None
         self._models: typing.Optional[AsyncModelsClient] = None
         self._audio_native: typing.Optional[AsyncAudioNativeClient] = None
@@ -489,7 +490,6 @@ class AsyncBaseElevenLabs:
         self._forced_alignment: typing.Optional[AsyncForcedAlignmentClient] = None
         self._conversational_ai: typing.Optional[AsyncConversationalAiClient] = None
         self._environment_variables: typing.Optional[AsyncEnvironmentVariablesClient] = None
-        self._music: typing.Optional[AsyncMusicClient] = None
         self._tokens: typing.Optional[AsyncTokensClient] = None
         self._workspace: typing.Optional[AsyncWorkspaceClient] = None
 
@@ -668,6 +668,14 @@ class AsyncBaseElevenLabs:
         return self._studio
 
     @property
+    def music(self):
+        if self._music is None:
+            from .music.client import AsyncMusicClient  # noqa: E402
+
+            self._music = AsyncMusicClient(client_wrapper=self._client_wrapper)
+        return self._music
+
+    @property
     def dubbing(self):
         if self._dubbing is None:
             from .dubbing.client import AsyncDubbingClient  # noqa: E402
@@ -754,14 +762,6 @@ class AsyncBaseElevenLabs:
 
             self._environment_variables = AsyncEnvironmentVariablesClient(client_wrapper=self._client_wrapper)
         return self._environment_variables
-
-    @property
-    def music(self):
-        if self._music is None:
-            from .music.client import AsyncMusicClient  # noqa: E402
-
-            self._music = AsyncMusicClient(client_wrapper=self._client_wrapper)
-        return self._music
 
     @property
     def tokens(self):

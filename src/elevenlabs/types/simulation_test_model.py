@@ -9,6 +9,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .conversation_history_transcript_common_model_output import ConversationHistoryTranscriptCommonModelOutput
 from .simulation_test_model_dynamic_variables_value import SimulationTestModelDynamicVariablesValue
+from .simulation_tool_mock_behavior_config import SimulationToolMockBehaviorConfig
 from .test_from_conversation_metadata_output import TestFromConversationMetadataOutput
 
 
@@ -44,6 +45,11 @@ class SimulationTestModel(UncheckedBaseModel):
     simulation_environment: typing.Optional[str] = pydantic.Field(default=None)
     """
     The environment to use when running this simulation test. If not provided, defaults to 'production'.
+    """
+
+    tool_mock_config: typing.Optional[SimulationToolMockBehaviorConfig] = pydantic.Field(default=None)
+    """
+    Configuration for which tools to mock and fallback behavior.
     """
 
     if IS_PYDANTIC_V2:

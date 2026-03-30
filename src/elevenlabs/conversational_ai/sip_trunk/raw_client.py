@@ -11,7 +11,6 @@ from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.conversation_initiation_client_data_request_input import ConversationInitiationClientDataRequestInput
-from ...types.http_validation_error import HttpValidationError
 from ...types.sip_trunk_outbound_call_response import SipTrunkOutboundCallResponse
 from ...types.telephony_call_config import TelephonyCallConfig
 
@@ -92,9 +91,9 @@ class RawSipTrunkClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -178,9 +177,9 @@ class AsyncRawSipTrunkClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

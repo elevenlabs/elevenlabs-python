@@ -19,6 +19,11 @@ class AgentConfigOverrideConfig(UncheckedBaseModel):
     Whether to allow overriding the language field.
     """
 
+    max_conversation_duration_message: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to allow overriding the max_conversation_duration_message field.
+    """
+
     prompt: typing.Optional[PromptAgentApiModelOverrideConfig] = pydantic.Field(default=None)
     """
     Configures overrides for nested fields.

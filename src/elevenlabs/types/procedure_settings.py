@@ -5,13 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .video_transcription_word import VideoTranscriptionWord
+from .procedure_compiler_mode import ProcedureCompilerMode
 
 
-class VideoTranscription(UncheckedBaseModel):
-    language_code: str
-    text: str
-    words: typing.List[VideoTranscriptionWord]
+class ProcedureSettings(UncheckedBaseModel):
+    compiler_mode: typing.Optional[ProcedureCompilerMode] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
