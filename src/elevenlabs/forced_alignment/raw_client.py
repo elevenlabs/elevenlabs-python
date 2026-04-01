@@ -11,7 +11,6 @@ from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.forced_alignment_response_model import ForcedAlignmentResponseModel
-from ..types.http_validation_error import HttpValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -22,12 +21,7 @@ class RawForcedAlignmentClient:
         self._client_wrapper = client_wrapper
 
     def create(
-        self,
-        *,
-        file: core.File,
-        text: str,
-        enabled_spooled_file: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, file: core.File, text: str, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[ForcedAlignmentResponseModel]:
         """
         Force align an audio file to text. Use this endpoint to get the timing information for each character and word in an audio file based on a provided text transcript.
@@ -39,9 +33,6 @@ class RawForcedAlignmentClient:
 
         text : str
             The text to align with the audio. The input text can be in any format, however diarization is not supported at this time.
-
-        enabled_spooled_file : typing.Optional[bool]
-            If true, the file will be streamed to the server and processed in chunks. This is useful for large files that cannot be loaded into memory. The default is false.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -56,7 +47,6 @@ class RawForcedAlignmentClient:
             method="POST",
             data={
                 "text": text,
-                "enabled_spooled_file": enabled_spooled_file,
             },
             files={
                 "file": file,
@@ -79,9 +69,9 @@ class RawForcedAlignmentClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -97,12 +87,7 @@ class AsyncRawForcedAlignmentClient:
         self._client_wrapper = client_wrapper
 
     async def create(
-        self,
-        *,
-        file: core.File,
-        text: str,
-        enabled_spooled_file: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, file: core.File, text: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[ForcedAlignmentResponseModel]:
         """
         Force align an audio file to text. Use this endpoint to get the timing information for each character and word in an audio file based on a provided text transcript.
@@ -114,9 +99,6 @@ class AsyncRawForcedAlignmentClient:
 
         text : str
             The text to align with the audio. The input text can be in any format, however diarization is not supported at this time.
-
-        enabled_spooled_file : typing.Optional[bool]
-            If true, the file will be streamed to the server and processed in chunks. This is useful for large files that cannot be loaded into memory. The default is false.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -131,7 +113,6 @@ class AsyncRawForcedAlignmentClient:
             method="POST",
             data={
                 "text": text,
-                "enabled_spooled_file": enabled_spooled_file,
             },
             files={
                 "file": file,
@@ -154,9 +135,9 @@ class AsyncRawForcedAlignmentClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

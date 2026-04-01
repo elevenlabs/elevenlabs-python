@@ -19,6 +19,11 @@ class AgentConfigOverrideInput(UncheckedBaseModel):
     Language of the agent - used for ASR and TTS
     """
 
+    max_conversation_duration_message: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    If non-empty, the message the agent will send when max conversation duration is reached.
+    """
+
     prompt: typing.Optional[PromptAgentApiModelOverride] = pydantic.Field(default=None)
     """
     The prompt for the agent

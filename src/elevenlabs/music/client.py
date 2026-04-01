@@ -36,6 +36,54 @@ class MusicClient:
         """
         return self._raw_client
 
+    def video_to_music(
+        self,
+        *,
+        videos: typing.List[core.File],
+        output_format: typing.Optional[AllowedOutputFormats] = None,
+        description: typing.Optional[str] = OMIT,
+        tags: typing.Optional[typing.List[str]] = OMIT,
+        sign_with_c_2_pa: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[bytes]:
+        """
+        Generate background music from one or more video files. Videos are combined in order. Optional description and style tags influence the generated music.
+
+        Parameters
+        ----------
+        videos : typing.List[core.File]
+            See core.File for more documentation
+
+        output_format : typing.Optional[AllowedOutputFormats]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        description : typing.Optional[str]
+            Optional text description of the music you want. A maximum of 1000 characters is allowed.
+
+        tags : typing.Optional[typing.List[str]]
+            Optional list of style tags (e.g. ['upbeat', 'cinematic']). A maximum of 10 tags is allowed.
+
+        sign_with_c_2_pa : typing.Optional[bool]
+            Whether to sign the generated song with C2PA. Applicable only for mp3 files.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Returns
+        -------
+        typing.Iterator[bytes]
+            Generated audio file matching the video. Content-Type and file extension depend on the output_format parameter (default mp3).
+        """
+        with self._raw_client.video_to_music(
+            videos=videos,
+            output_format=output_format,
+            description=description,
+            tags=tags,
+            sign_with_c_2_pa=sign_with_c_2_pa,
+            request_options=request_options,
+        ) as r:
+            yield from r.data
+
     def compose(
         self,
         *,
@@ -385,6 +433,55 @@ class AsyncMusicClient:
         AsyncRawMusicClient
         """
         return self._raw_client
+
+    async def video_to_music(
+        self,
+        *,
+        videos: typing.List[core.File],
+        output_format: typing.Optional[AllowedOutputFormats] = None,
+        description: typing.Optional[str] = OMIT,
+        tags: typing.Optional[typing.List[str]] = OMIT,
+        sign_with_c_2_pa: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[bytes]:
+        """
+        Generate background music from one or more video files. Videos are combined in order. Optional description and style tags influence the generated music.
+
+        Parameters
+        ----------
+        videos : typing.List[core.File]
+            See core.File for more documentation
+
+        output_format : typing.Optional[AllowedOutputFormats]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        description : typing.Optional[str]
+            Optional text description of the music you want. A maximum of 1000 characters is allowed.
+
+        tags : typing.Optional[typing.List[str]]
+            Optional list of style tags (e.g. ['upbeat', 'cinematic']). A maximum of 10 tags is allowed.
+
+        sign_with_c_2_pa : typing.Optional[bool]
+            Whether to sign the generated song with C2PA. Applicable only for mp3 files.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Returns
+        -------
+        typing.AsyncIterator[bytes]
+            Generated audio file matching the video. Content-Type and file extension depend on the output_format parameter (default mp3).
+        """
+        async with self._raw_client.video_to_music(
+            videos=videos,
+            output_format=output_format,
+            description=description,
+            tags=tags,
+            sign_with_c_2_pa=sign_with_c_2_pa,
+            request_options=request_options,
+        ) as r:
+            async for _chunk in r.data:
+                yield _chunk
 
     async def compose(
         self,

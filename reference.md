@@ -1,69 +1,4 @@
 # Reference
-<details><summary><code>client.<a href="src/elevenlabs/base_client.py">delete_v_1_convai_agents_agent_id_branches_branch_id</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.delete_v_1_convai_agents_agent_id_branches_branch_id(
-    agent_id="agent_id",
-    branch_id="branch_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**agent_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**branch_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.<a href="src/elevenlabs/base_client.py">save_a_voice_preview</a>()</code></summary>
 <dl>
 <dd>
@@ -946,6 +881,14 @@ Defaults to None.
 <dl>
 <dd>
 
+**avatar_context:** `typing.Optional[AvatarContextRequestModel]` — Avatar context when this generation is made from the Avatars video editor.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
     
 </dd>
@@ -1367,6 +1310,14 @@ Defaults to None.
 <dl>
 <dd>
 
+**avatar_context:** `typing.Optional[AvatarContextRequestModel]` — Avatar context when this generation is made from the Avatars video editor.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
     
 </dd>
@@ -1717,6 +1668,14 @@ client.text_to_dialogue.convert(
 <dl>
 <dd>
 
+**avatar_context:** `typing.Optional[AvatarContextRequestModel]` — Avatar context when this generation is made from the Avatars video editor.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
     
 </dd>
@@ -1847,6 +1806,14 @@ client.text_to_dialogue.stream(
 **apply_text_normalization:** `typing.Optional[
     BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization
 ]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**avatar_context:** `typing.Optional[AvatarContextRequestModel]` — Avatar context when this generation is made from the Avatars video editor.
     
 </dd>
 </dl>
@@ -4248,6 +4215,497 @@ long - produces podcasts longer than 7 minutes.
 </dl>
 </details>
 
+## Music
+<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">compose</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Compose a song from a prompt or a composition plan.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.music.compose()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prompt:** `typing.Optional[str]` — A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**composition_plan:** `typing.Optional[MusicPrompt]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**music_length_ms:** `typing.Optional[int]` — The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_id:** `typing.Optional[typing.Literal["music_v1"]]` — The model to use for the generation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**seed:** `typing.Optional[int]` — Random seed to initialize the music generation process. Providing the same seed with the same parameters can help achieve more consistent results, but exact reproducibility is not guaranteed and outputs may change across system updates. Cannot be used in conjunction with prompt.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force_instrumental:** `typing.Optional[bool]` — If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**respect_sections_durations:** `typing.Optional[bool]` — Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan`. When set to true, the model will precisely respect each section's `duration_ms` from the plan. When set to false, the model may adjust individual section durations which will generally lead to better generation quality and improved latency, while always preserving the total song duration from the plan.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sign_with_c_2_pa:** `typing.Optional[bool]` — Whether to sign the generated song with C2PA. Applicable only for mp3 files.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">compose_detailed</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Compose a song from a prompt or a composition plan.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.music.compose_detailed()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prompt:** `typing.Optional[str]` — A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**composition_plan:** `typing.Optional[MusicPrompt]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**music_length_ms:** `typing.Optional[int]` — The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_id:** `typing.Optional[typing.Literal["music_v1"]]` — The model to use for the generation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**seed:** `typing.Optional[int]` — Random seed to initialize the music generation process. Providing the same seed with the same parameters can help achieve more consistent results, but exact reproducibility is not guaranteed and outputs may change across system updates. Cannot be used in conjunction with prompt.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force_instrumental:** `typing.Optional[bool]` — If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**respect_sections_durations:** `typing.Optional[bool]` — Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan`. When set to true, the model will precisely respect each section's `duration_ms` from the plan. When set to false, the model may adjust individual section durations which will generally lead to better generation quality and improved latency, while always preserving the total song duration from the plan.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**with_timestamps:** `typing.Optional[bool]` — Whether to return the timestamps of the words in the generated song.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sign_with_c_2_pa:** `typing.Optional[bool]` — Whether to sign the generated song with C2PA. Applicable only for mp3 files.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">stream</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Stream a composed song from a prompt or a composition plan.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.music.stream()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prompt:** `typing.Optional[str]` — A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**composition_plan:** `typing.Optional[MusicPrompt]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**music_length_ms:** `typing.Optional[int]` — The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_id:** `typing.Optional[typing.Literal["music_v1"]]` — The model to use for the generation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**seed:** `typing.Optional[int]` — Random seed to initialize the music generation process. Providing the same seed with the same parameters can help achieve more consistent results, but exact reproducibility is not guaranteed and outputs may change across system updates. Cannot be used in conjunction with prompt.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force_instrumental:** `typing.Optional[bool]` — If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">upload</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Upload a music file to be later used for inpainting. Only available to enterprise clients with access to the inpainting feature.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.music.upload()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**file:** `from __future__ import annotations
+
+core.File` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**extract_composition_plan:** `typing.Optional[bool]` — Whether to generate and return the composition plan for the uploaded song. If True, the response will include the composition_plan but will increase the latency.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Dubbing
 <details><summary><code>client.dubbing.<a href="src/elevenlabs/dubbing/client.py">list</a>(...)</code></summary>
 <dl>
@@ -6416,6 +6874,14 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
+**source_url:** `typing.Optional[str]` — The URL of an audio or video file to transcribe. Supports hosted video or audio files, YouTube video URLs, TikTok video URLs, and other video hosting services.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **webhook:** `typing.Optional[bool]` — Whether to send the transcription result to configured speech-to-text webhooks.  If set the request will return early without the transcription, which will be delivered later via webhook.
     
 </dd>
@@ -6578,14 +7044,6 @@ core.File` — See core.File for more documentation
 <dd>
 
 **text:** `str` — The text to align with the audio. The input text can be in any format, however diarization is not supported at this time.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**enabled_spooled_file:** `typing.Optional[bool]` — If true, the file will be streamed to the server and processed in chunks. This is useful for large files that cannot be loaded into memory. The default is false.
     
 </dd>
 </dl>
@@ -7224,497 +7682,6 @@ client.environment_variables.update(
 <dd>
 
 **values:** `typing.Dict[str, typing.Optional[UpdateEnvironmentVariableRequestValuesValue]]` — Values to replace. Set to null to remove an environment (except 'production').
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Music
-<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">compose</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Compose a song from a prompt or a composition plan.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.music.compose()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prompt:** `typing.Optional[str]` — A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**composition_plan:** `typing.Optional[MusicPrompt]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**music_length_ms:** `typing.Optional[int]` — The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**model_id:** `typing.Optional[typing.Literal["music_v1"]]` — The model to use for the generation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**seed:** `typing.Optional[int]` — Random seed to initialize the music generation process. Providing the same seed with the same parameters can help achieve more consistent results, but exact reproducibility is not guaranteed and outputs may change across system updates. Cannot be used in conjunction with prompt.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**force_instrumental:** `typing.Optional[bool]` — If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**respect_sections_durations:** `typing.Optional[bool]` — Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan`. When set to true, the model will precisely respect each section's `duration_ms` from the plan. When set to false, the model may adjust individual section durations which will generally lead to better generation quality and improved latency, while always preserving the total song duration from the plan.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sign_with_c_2_pa:** `typing.Optional[bool]` — Whether to sign the generated song with C2PA. Applicable only for mp3 files.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">compose_detailed</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Compose a song from a prompt or a composition plan.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.music.compose_detailed()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prompt:** `typing.Optional[str]` — A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**composition_plan:** `typing.Optional[MusicPrompt]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**music_length_ms:** `typing.Optional[int]` — The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**model_id:** `typing.Optional[typing.Literal["music_v1"]]` — The model to use for the generation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**seed:** `typing.Optional[int]` — Random seed to initialize the music generation process. Providing the same seed with the same parameters can help achieve more consistent results, but exact reproducibility is not guaranteed and outputs may change across system updates. Cannot be used in conjunction with prompt.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**force_instrumental:** `typing.Optional[bool]` — If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**respect_sections_durations:** `typing.Optional[bool]` — Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan`. When set to true, the model will precisely respect each section's `duration_ms` from the plan. When set to false, the model may adjust individual section durations which will generally lead to better generation quality and improved latency, while always preserving the total song duration from the plan.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**with_timestamps:** `typing.Optional[bool]` — Whether to return the timestamps of the words in the generated song.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sign_with_c_2_pa:** `typing.Optional[bool]` — Whether to sign the generated song with C2PA. Applicable only for mp3 files.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">stream</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Stream a composed song from a prompt or a composition plan.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.music.stream()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prompt:** `typing.Optional[str]` — A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**composition_plan:** `typing.Optional[MusicPrompt]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**music_length_ms:** `typing.Optional[int]` — The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**model_id:** `typing.Optional[typing.Literal["music_v1"]]` — The model to use for the generation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**seed:** `typing.Optional[int]` — Random seed to initialize the music generation process. Providing the same seed with the same parameters can help achieve more consistent results, but exact reproducibility is not guaranteed and outputs may change across system updates. Cannot be used in conjunction with prompt.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**force_instrumental:** `typing.Optional[bool]` — If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">upload</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Upload a music file to be later used for inpainting. Only available to enterprise clients with access to the inpainting feature.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.music.upload()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**file:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**extract_composition_plan:** `typing.Optional[bool]` — Whether to generate and return the composition plan for the uploaded song. If True, the response will include the composition_plan but will increase the latency.
     
 </dd>
 </dl>
@@ -12252,6 +12219,22 @@ client.conversational_ai.batch_calls.create(
 <dl>
 <dd>
 
+**branch_id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**environment:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **telephony_call_config:** `typing.Optional[TelephonyCallConfig]` 
     
 </dd>
@@ -14467,11 +14450,10 @@ Create a new draft for an agent
 from elevenlabs import (
     AgentWorkflowRequestModel,
     AgentWorkflowRequestModelNodesValue_End,
-    AstAndOperatorNodeInputChildrenItem_BooleanLiteral,
+    AstNodeInput_AndOperator,
     ElevenLabs,
     WorkflowEdgeModelInput,
     WorkflowEdgeModelInputForwardCondition_Expression,
-    WorkflowExpressionConditionModelInputExpression_AndOperator,
 )
 
 client = ElevenLabs(
@@ -14488,12 +14470,8 @@ client.conversational_ai.agents.drafts.create(
                 source="entry_node",
                 target="tool_node_a",
                 forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                    expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
-                        children=[
-                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
-                                value=True,
-                            )
-                        ],
+                    expression=AstNodeInput_AndOperator(
+                        children=[],
                     ),
                 ),
             ),
@@ -14501,12 +14479,8 @@ client.conversational_ai.agents.drafts.create(
                 source="start_node",
                 target="entry_node",
                 forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                    expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
-                        children=[
-                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
-                                value=True,
-                            )
-                        ],
+                    expression=AstNodeInput_AndOperator(
+                        children=[],
                     ),
                 ),
             ),
@@ -14514,12 +14488,8 @@ client.conversational_ai.agents.drafts.create(
                 source="tool_node_a",
                 target="failure_node",
                 forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                    expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
-                        children=[
-                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
-                                value=True,
-                            )
-                        ],
+                    expression=AstNodeInput_AndOperator(
+                        children=[],
                     ),
                 ),
             ),
@@ -14527,12 +14497,8 @@ client.conversational_ai.agents.drafts.create(
                 source="tool_node_a",
                 target="tool_node_b",
                 forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                    expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
-                        children=[
-                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
-                                value=True,
-                            )
-                        ],
+                    expression=AstNodeInput_AndOperator(
+                        children=[],
                     ),
                 ),
             ),
@@ -14540,12 +14506,8 @@ client.conversational_ai.agents.drafts.create(
                 source="tool_node_b",
                 target="success_transfer",
                 forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                    expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
-                        children=[
-                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
-                                value=True,
-                            )
-                        ],
+                    expression=AstNodeInput_AndOperator(
+                        children=[],
                     ),
                 ),
             ),
@@ -14553,12 +14515,8 @@ client.conversational_ai.agents.drafts.create(
                 source="tool_node_b",
                 target="success_conversation",
                 forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                    expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
-                        children=[
-                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
-                                value=True,
-                            )
-                        ],
+                    expression=AstNodeInput_AndOperator(
+                        children=[],
                     ),
                 ),
             ),
@@ -14566,12 +14524,8 @@ client.conversational_ai.agents.drafts.create(
                 source="tool_node_b",
                 target="success_end",
                 forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                    expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
-                        children=[
-                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
-                                value=True,
-                            )
-                        ],
+                    expression=AstNodeInput_AndOperator(
+                        children=[],
                     ),
                 ),
             ),
@@ -14579,12 +14533,8 @@ client.conversational_ai.agents.drafts.create(
                 source="tool_node_b",
                 target="success_phone",
                 forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                    expression=WorkflowExpressionConditionModelInputExpression_AndOperator(
-                        children=[
-                            AstAndOperatorNodeInputChildrenItem_BooleanLiteral(
-                                value=True,
-                            )
-                        ],
+                    expression=AstNodeInput_AndOperator(
+                        children=[],
                     ),
                 ),
             ),
@@ -15117,6 +15067,7 @@ client.conversational_ai.conversations.messages.text_search(
     summary_mode="exclude",
     conversation_initiation_source="unknown",
     branch_id="branch_id",
+    sort_by="search_score",
     cursor="cursor",
 )
 
@@ -15295,6 +15246,14 @@ client.conversational_ai.conversations.messages.text_search(
 <dd>
 
 **branch_id:** `typing.Optional[str]` — Filter conversations by branch ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[MessageSearchSortBy]` — Sort order for search results. 'search_score' sorts by search score, 'created_at' sorts by conversation start time.
     
 </dd>
 </dl>
@@ -15560,6 +15519,77 @@ client.conversational_ai.conversations.files.delete(
 <dd>
 
 **file_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi Conversations Analysis
+<details><summary><code>client.conversational_ai.conversations.analysis.<a href="src/elevenlabs/conversational_ai/conversations/analysis/client.py">run</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Run the analysis for a conversation using the agent's current evaluation criteria and data collection settings.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.conversations.analysis.run(
+    conversation_id="conversation_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_id:** `str` — ID of the conversation
     
 </dd>
 </dl>

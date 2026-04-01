@@ -13,7 +13,6 @@ from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.additional_formats import AdditionalFormats
-from ..types.http_validation_error import HttpValidationError
 from .types.speech_to_text_convert_request_entity_detection import SpeechToTextConvertRequestEntityDetection
 from .types.speech_to_text_convert_request_entity_redaction import SpeechToTextConvertRequestEntityRedaction
 from .types.speech_to_text_convert_request_file_format import SpeechToTextConvertRequestFileFormat
@@ -45,6 +44,7 @@ class RawSpeechToTextClient:
         additional_formats: typing.Optional[AdditionalFormats] = OMIT,
         file_format: typing.Optional[SpeechToTextConvertRequestFileFormat] = OMIT,
         cloud_storage_url: typing.Optional[str] = OMIT,
+        source_url: typing.Optional[str] = OMIT,
         webhook: typing.Optional[bool] = OMIT,
         webhook_id: typing.Optional[str] = OMIT,
         temperature: typing.Optional[float] = OMIT,
@@ -98,6 +98,9 @@ class RawSpeechToTextClient:
 
         cloud_storage_url : typing.Optional[str]
             The HTTPS URL of the file to transcribe. Exactly one of the file or cloud_storage_url parameters must be provided. The file must be accessible via HTTPS and the file size must be less than 2GB. Any valid HTTPS URL is accepted, including URLs from cloud storage providers (AWS S3, Google Cloud Storage, Cloudflare R2, etc.), CDNs, or any other HTTPS source. URLs can be pre-signed or include authentication tokens in query parameters.
+
+        source_url : typing.Optional[str]
+            The URL of an audio or video file to transcribe. Supports hosted video or audio files, YouTube video URLs, TikTok video URLs, and other video hosting services.
 
         webhook : typing.Optional[bool]
             Whether to send the transcription result to configured speech-to-text webhooks.  If set the request will return early without the transcription, which will be delivered later via webhook.
@@ -156,6 +159,7 @@ class RawSpeechToTextClient:
                 "diarization_threshold": diarization_threshold,
                 "file_format": file_format,
                 "cloud_storage_url": cloud_storage_url,
+                "source_url": source_url,
                 "webhook": webhook,
                 "webhook_id": webhook_id,
                 "temperature": temperature,
@@ -194,9 +198,9 @@ class RawSpeechToTextClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -226,6 +230,7 @@ class AsyncRawSpeechToTextClient:
         additional_formats: typing.Optional[AdditionalFormats] = OMIT,
         file_format: typing.Optional[SpeechToTextConvertRequestFileFormat] = OMIT,
         cloud_storage_url: typing.Optional[str] = OMIT,
+        source_url: typing.Optional[str] = OMIT,
         webhook: typing.Optional[bool] = OMIT,
         webhook_id: typing.Optional[str] = OMIT,
         temperature: typing.Optional[float] = OMIT,
@@ -279,6 +284,9 @@ class AsyncRawSpeechToTextClient:
 
         cloud_storage_url : typing.Optional[str]
             The HTTPS URL of the file to transcribe. Exactly one of the file or cloud_storage_url parameters must be provided. The file must be accessible via HTTPS and the file size must be less than 2GB. Any valid HTTPS URL is accepted, including URLs from cloud storage providers (AWS S3, Google Cloud Storage, Cloudflare R2, etc.), CDNs, or any other HTTPS source. URLs can be pre-signed or include authentication tokens in query parameters.
+
+        source_url : typing.Optional[str]
+            The URL of an audio or video file to transcribe. Supports hosted video or audio files, YouTube video URLs, TikTok video URLs, and other video hosting services.
 
         webhook : typing.Optional[bool]
             Whether to send the transcription result to configured speech-to-text webhooks.  If set the request will return early without the transcription, which will be delivered later via webhook.
@@ -337,6 +345,7 @@ class AsyncRawSpeechToTextClient:
                 "diarization_threshold": diarization_threshold,
                 "file_format": file_format,
                 "cloud_storage_url": cloud_storage_url,
+                "source_url": source_url,
                 "webhook": webhook,
                 "webhook_id": webhook_id,
                 "temperature": temperature,
@@ -375,9 +384,9 @@ class AsyncRawSpeechToTextClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

@@ -19,6 +19,11 @@ class GetLibraryVoicesResponse(UncheckedBaseModel):
     Whether there are more shared voices in subsequent pages.
     """
 
+    total_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The total number of shared voices matching the query.
+    """
+
     last_sort_id: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

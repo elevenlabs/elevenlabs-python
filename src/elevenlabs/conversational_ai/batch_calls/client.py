@@ -41,6 +41,8 @@ class BatchCallsClient:
         agent_phone_number_id: typing.Optional[str] = OMIT,
         whatsapp_params: typing.Optional[BatchCallWhatsAppParams] = OMIT,
         timezone: typing.Optional[str] = OMIT,
+        branch_id: typing.Optional[str] = OMIT,
+        environment: typing.Optional[str] = OMIT,
         telephony_call_config: typing.Optional[TelephonyCallConfig] = OMIT,
         target_concurrency_limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -63,6 +65,10 @@ class BatchCallsClient:
         whatsapp_params : typing.Optional[BatchCallWhatsAppParams]
 
         timezone : typing.Optional[str]
+
+        branch_id : typing.Optional[str]
+
+        environment : typing.Optional[str]
 
         telephony_call_config : typing.Optional[TelephonyCallConfig]
 
@@ -98,6 +104,8 @@ class BatchCallsClient:
             agent_phone_number_id=agent_phone_number_id,
             whatsapp_params=whatsapp_params,
             timezone=timezone,
+            branch_id=branch_id,
+            environment=environment,
             telephony_call_config=telephony_call_config,
             target_concurrency_limit=target_concurrency_limit,
             request_options=request_options,
@@ -290,6 +298,8 @@ class AsyncBatchCallsClient:
         agent_phone_number_id: typing.Optional[str] = OMIT,
         whatsapp_params: typing.Optional[BatchCallWhatsAppParams] = OMIT,
         timezone: typing.Optional[str] = OMIT,
+        branch_id: typing.Optional[str] = OMIT,
+        environment: typing.Optional[str] = OMIT,
         telephony_call_config: typing.Optional[TelephonyCallConfig] = OMIT,
         target_concurrency_limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -312,6 +322,10 @@ class AsyncBatchCallsClient:
         whatsapp_params : typing.Optional[BatchCallWhatsAppParams]
 
         timezone : typing.Optional[str]
+
+        branch_id : typing.Optional[str]
+
+        environment : typing.Optional[str]
 
         telephony_call_config : typing.Optional[TelephonyCallConfig]
 
@@ -355,6 +369,8 @@ class AsyncBatchCallsClient:
             agent_phone_number_id=agent_phone_number_id,
             whatsapp_params=whatsapp_params,
             timezone=timezone,
+            branch_id=branch_id,
+            environment=environment,
             telephony_call_config=telephony_call_config,
             target_concurrency_limit=target_concurrency_limit,
             request_options=request_options,

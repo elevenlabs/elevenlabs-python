@@ -13,6 +13,7 @@ from .agent_successful_response_example import AgentSuccessfulResponseExample
 from .conversation_history_transcript_common_model_output import ConversationHistoryTranscriptCommonModelOutput
 from .response_unit_test_model_dynamic_variables_value import ResponseUnitTestModelDynamicVariablesValue
 from .simulation_test_model_dynamic_variables_value import SimulationTestModelDynamicVariablesValue
+from .simulation_tool_mock_behavior_config import SimulationToolMockBehaviorConfig
 from .test_from_conversation_metadata_output import TestFromConversationMetadataOutput
 from .tool_call_unit_test_model_dynamic_variables_value import ToolCallUnitTestModelDynamicVariablesValue
 from .unit_test_tool_call_evaluation_model_output import UnitTestToolCallEvaluationModelOutput
@@ -50,6 +51,7 @@ class UnitTestRunResponseModelTestInfo_Simulation(UncheckedBaseModel):
     simulation_scenario: typing.Optional[str] = None
     simulation_max_turns: typing.Optional[int] = None
     simulation_environment: typing.Optional[str] = None
+    tool_mock_config: typing.Optional[SimulationToolMockBehaviorConfig] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

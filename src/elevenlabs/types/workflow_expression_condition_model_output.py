@@ -7,7 +7,6 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .workflow_expression_condition_model_output_expression import WorkflowExpressionConditionModelOutputExpression
 
 
 class WorkflowExpressionConditionModelOutput(UncheckedBaseModel):
@@ -16,7 +15,7 @@ class WorkflowExpressionConditionModelOutput(UncheckedBaseModel):
     Optional human-readable label for the condition used throughout the UI.
     """
 
-    expression: WorkflowExpressionConditionModelOutputExpression = pydantic.Field()
+    expression: "AstNodeOutput" = pydantic.Field()
     """
     Expression to evaluate.
     """
@@ -30,5 +29,7 @@ class WorkflowExpressionConditionModelOutput(UncheckedBaseModel):
             smart_union = True
             extra = pydantic.Extra.allow
 
+
+from .ast_node_output import AstNodeOutput  # noqa: E402, I001
 
 update_forward_refs(WorkflowExpressionConditionModelOutput)

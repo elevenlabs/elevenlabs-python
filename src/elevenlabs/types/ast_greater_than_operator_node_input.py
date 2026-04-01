@@ -10,12 +10,12 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class AstGreaterThanOperatorNodeInput(UncheckedBaseModel):
-    left: "AstGreaterThanOperatorNodeInputLeft" = pydantic.Field()
+    left: "AstNodeInput" = pydantic.Field()
     """
     Left operand of the binary operator.
     """
 
-    right: "AstGreaterThanOperatorNodeInputRight" = pydantic.Field()
+    right: "AstNodeInput" = pydantic.Field()
     """
     Right operand of the binary operator.
     """
@@ -30,7 +30,6 @@ class AstGreaterThanOperatorNodeInput(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .ast_greater_than_operator_node_input_left import AstGreaterThanOperatorNodeInputLeft  # noqa: E402, I001
-from .ast_greater_than_operator_node_input_right import AstGreaterThanOperatorNodeInputRight  # noqa: E402, I001
+from .ast_node_input import AstNodeInput  # noqa: E402, I001
 
 update_forward_refs(AstGreaterThanOperatorNodeInput)

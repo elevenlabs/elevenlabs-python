@@ -11,7 +11,6 @@ from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.conversation_initiation_client_data_request_input import ConversationInitiationClientDataRequestInput
-from ...types.http_validation_error import HttpValidationError
 from ...types.whats_app_outbound_call_response import WhatsAppOutboundCallResponse
 from ...types.whats_app_outbound_message_response import WhatsAppOutboundMessageResponse
 from .types.body_send_an_outbound_message_via_whats_app_v_1_convai_whatsapp_outbound_message_post_template_params_item import (
@@ -97,9 +96,9 @@ class RawWhatsappClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -192,9 +191,9 @@ class RawWhatsappClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -280,9 +279,9 @@ class AsyncRawWhatsappClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -375,9 +374,9 @@ class AsyncRawWhatsappClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

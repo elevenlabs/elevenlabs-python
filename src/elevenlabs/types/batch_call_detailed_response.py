@@ -23,6 +23,8 @@ class BatchCallDetailedResponse(UncheckedBaseModel):
     whatsapp_params: typing.Optional[BatchCallWhatsAppParams] = None
     name: str
     agent_id: str
+    branch_id: typing.Optional[str] = None
+    environment: typing.Optional[str] = None
     created_at_unix: int
     scheduled_time_unix: int
     timezone: typing.Optional[str] = None
@@ -39,6 +41,7 @@ class BatchCallDetailedResponse(UncheckedBaseModel):
     """
 
     agent_name: str
+    branch_name: typing.Optional[str] = None
     recipients: typing.List[OutboundCallRecipientResponseModel]
 
     if IS_PYDANTIC_V2:

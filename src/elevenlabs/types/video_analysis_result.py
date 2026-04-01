@@ -5,10 +5,10 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .asset_transcription import AssetTranscription
 from .video_key_moment import VideoKeyMoment
 from .video_segment import VideoSegment
 from .video_subject import VideoSubject
-from .video_transcription import VideoTranscription
 
 
 class VideoAnalysisResult(UncheckedBaseModel):
@@ -19,7 +19,7 @@ class VideoAnalysisResult(UncheckedBaseModel):
     subjects: typing.Optional[typing.List[VideoSubject]] = None
     segments: typing.Optional[typing.List[VideoSegment]] = None
     key_moments: typing.Optional[typing.List[VideoKeyMoment]] = None
-    transcription: typing.Optional[VideoTranscription] = None
+    transcription: typing.Optional[AssetTranscription] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
