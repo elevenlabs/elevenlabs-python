@@ -11,7 +11,6 @@ from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
-from ..types.http_validation_error import HttpValidationError
 from .types.audio_isolation_convert_request_file_format import AudioIsolationConvertRequestFileFormat
 from .types.audio_isolation_stream_request_file_format import AudioIsolationStreamRequestFileFormat
 
@@ -81,9 +80,9 @@ class RawAudioIsolationClient:
                         raise UnprocessableEntityError(
                             headers=dict(_response.headers),
                             body=typing.cast(
-                                HttpValidationError,
+                                typing.Any,
                                 construct_type(
-                                    type_=HttpValidationError,  # type: ignore
+                                    type_=typing.Any,  # type: ignore
                                     object_=_response.json(),
                                 ),
                             ),
@@ -150,9 +149,9 @@ class RawAudioIsolationClient:
                         raise UnprocessableEntityError(
                             headers=dict(_response.headers),
                             body=typing.cast(
-                                HttpValidationError,
+                                typing.Any,
                                 construct_type(
-                                    type_=HttpValidationError,  # type: ignore
+                                    type_=typing.Any,  # type: ignore
                                     object_=_response.json(),
                                 ),
                             ),
@@ -230,9 +229,9 @@ class AsyncRawAudioIsolationClient:
                         raise UnprocessableEntityError(
                             headers=dict(_response.headers),
                             body=typing.cast(
-                                HttpValidationError,
+                                typing.Any,
                                 construct_type(
-                                    type_=HttpValidationError,  # type: ignore
+                                    type_=typing.Any,  # type: ignore
                                     object_=_response.json(),
                                 ),
                             ),
@@ -300,9 +299,9 @@ class AsyncRawAudioIsolationClient:
                         raise UnprocessableEntityError(
                             headers=dict(_response.headers),
                             body=typing.cast(
-                                HttpValidationError,
+                                typing.Any,
                                 construct_type(
-                                    type_=HttpValidationError,  # type: ignore
+                                    type_=typing.Any,  # type: ignore
                                     object_=_response.json(),
                                 ),
                             ),

@@ -7,11 +7,12 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import ConversationsListRequestSummaryMode
-    from . import audio, feedback, files, messages
+    from . import analysis, audio, feedback, files, messages
     from .messages import MessagesTextSearchRequestSummaryMode
 _dynamic_imports: typing.Dict[str, str] = {
     "ConversationsListRequestSummaryMode": ".types",
     "MessagesTextSearchRequestSummaryMode": ".messages",
+    "analysis": ".analysis",
     "audio": ".audio",
     "feedback": ".feedback",
     "files": ".files",
@@ -43,6 +44,7 @@ def __dir__():
 __all__ = [
     "ConversationsListRequestSummaryMode",
     "MessagesTextSearchRequestSummaryMode",
+    "analysis",
     "audio",
     "feedback",
     "files",

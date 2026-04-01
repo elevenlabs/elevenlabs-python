@@ -37,6 +37,11 @@ class AgentConfigApiModelWorkflowOverrideOutput(UncheckedBaseModel):
     If true, the user will not be able to interrupt the agent while the first message is being delivered.
     """
 
+    max_conversation_duration_message: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    If non-empty, the message the agent will send when max conversation duration is reached.
+    """
+
     prompt: typing.Optional[PromptAgentApiModelWorkflowOverrideOutput] = pydantic.Field(default=None)
     """
     The prompt for the agent

@@ -8,6 +8,7 @@ from ..types.allowed_output_formats import AllowedOutputFormats
 from ..types.audio_with_timestamps_and_voice_segments_response_model import (
     AudioWithTimestampsAndVoiceSegmentsResponseModel,
 )
+from ..types.avatar_context_request_model import AvatarContextRequestModel
 from ..types.dialogue_input import DialogueInput
 from ..types.model_settings_response_model import ModelSettingsResponseModel
 from ..types.pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
@@ -66,6 +67,7 @@ class TextToDialogueClient:
         apply_text_normalization: typing.Optional[
             BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization
         ] = OMIT,
+        avatar_context: typing.Optional[AvatarContextRequestModel] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -96,6 +98,9 @@ class TextToDialogueClient:
 
         apply_text_normalization : typing.Optional[BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization]
             This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+
+        avatar_context : typing.Optional[AvatarContextRequestModel]
+            Avatar context when this generation is made from the Avatars video editor.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -134,6 +139,7 @@ class TextToDialogueClient:
             pronunciation_dictionary_locators=pronunciation_dictionary_locators,
             seed=seed,
             apply_text_normalization=apply_text_normalization,
+            avatar_context=avatar_context,
             request_options=request_options,
         ) as r:
             yield from r.data
@@ -153,6 +159,7 @@ class TextToDialogueClient:
         apply_text_normalization: typing.Optional[
             BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization
         ] = OMIT,
+        avatar_context: typing.Optional[AvatarContextRequestModel] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -183,6 +190,9 @@ class TextToDialogueClient:
 
         apply_text_normalization : typing.Optional[BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization]
             This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+
+        avatar_context : typing.Optional[AvatarContextRequestModel]
+            Avatar context when this generation is made from the Avatars video editor.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -221,6 +231,7 @@ class TextToDialogueClient:
             pronunciation_dictionary_locators=pronunciation_dictionary_locators,
             seed=seed,
             apply_text_normalization=apply_text_normalization,
+            avatar_context=avatar_context,
             request_options=request_options,
         ) as r:
             yield from r.data
@@ -430,6 +441,7 @@ class AsyncTextToDialogueClient:
         apply_text_normalization: typing.Optional[
             BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization
         ] = OMIT,
+        avatar_context: typing.Optional[AvatarContextRequestModel] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -460,6 +472,9 @@ class AsyncTextToDialogueClient:
 
         apply_text_normalization : typing.Optional[BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization]
             This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+
+        avatar_context : typing.Optional[AvatarContextRequestModel]
+            Avatar context when this generation is made from the Avatars video editor.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -506,6 +521,7 @@ class AsyncTextToDialogueClient:
             pronunciation_dictionary_locators=pronunciation_dictionary_locators,
             seed=seed,
             apply_text_normalization=apply_text_normalization,
+            avatar_context=avatar_context,
             request_options=request_options,
         ) as r:
             async for _chunk in r.data:
@@ -526,6 +542,7 @@ class AsyncTextToDialogueClient:
         apply_text_normalization: typing.Optional[
             BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization
         ] = OMIT,
+        avatar_context: typing.Optional[AvatarContextRequestModel] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -556,6 +573,9 @@ class AsyncTextToDialogueClient:
 
         apply_text_normalization : typing.Optional[BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization]
             This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+
+        avatar_context : typing.Optional[AvatarContextRequestModel]
+            Avatar context when this generation is made from the Avatars video editor.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -602,6 +622,7 @@ class AsyncTextToDialogueClient:
             pronunciation_dictionary_locators=pronunciation_dictionary_locators,
             seed=seed,
             apply_text_normalization=apply_text_normalization,
+            avatar_context=avatar_context,
             request_options=request_options,
         ) as r:
             async for _chunk in r.data:

@@ -8,13 +8,12 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
-from .workflow_expression_condition_model_input_expression import WorkflowExpressionConditionModelInputExpression
 
 
 class WorkflowEdgeModelInputForwardCondition_Expression(UncheckedBaseModel):
     type: typing.Literal["expression"] = "expression"
     label: typing.Optional[str] = None
-    expression: WorkflowExpressionConditionModelInputExpression
+    expression: "AstNodeInput"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -24,6 +23,9 @@ class WorkflowEdgeModelInputForwardCondition_Expression(UncheckedBaseModel):
             frozen = True
             smart_union = True
             extra = pydantic.Extra.allow
+
+
+from .ast_node_input import AstNodeInput  # noqa: E402, I001
 
 
 class WorkflowEdgeModelInputForwardCondition_Llm(UncheckedBaseModel):

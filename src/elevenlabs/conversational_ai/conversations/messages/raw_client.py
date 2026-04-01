@@ -11,7 +11,7 @@ from ....core.unchecked_base_model import construct_type
 from ....errors.unprocessable_entity_error import UnprocessableEntityError
 from ....types.conversation_initiation_source import ConversationInitiationSource
 from ....types.evaluation_success_result import EvaluationSuccessResult
-from ....types.http_validation_error import HttpValidationError
+from ....types.message_search_sort_by import MessageSearchSortBy
 from ....types.messages_search_response import MessagesSearchResponse
 from .types.messages_text_search_request_summary_mode import MessagesTextSearchRequestSummaryMode
 
@@ -44,6 +44,7 @@ class RawMessagesClient:
         summary_mode: typing.Optional[MessagesTextSearchRequestSummaryMode] = None,
         conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None,
         branch_id: typing.Optional[str] = None,
+        sort_by: typing.Optional[MessageSearchSortBy] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[MessagesSearchResponse]:
@@ -114,6 +115,9 @@ class RawMessagesClient:
         branch_id : typing.Optional[str]
             Filter conversations by branch ID.
 
+        sort_by : typing.Optional[MessageSearchSortBy]
+            Sort order for search results. 'search_score' sorts by search score, 'created_at' sorts by conversation start time.
+
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
 
@@ -150,6 +154,7 @@ class RawMessagesClient:
                 "summary_mode": summary_mode,
                 "conversation_initiation_source": conversation_initiation_source,
                 "branch_id": branch_id,
+                "sort_by": sort_by,
                 "cursor": cursor,
             },
             request_options=request_options,
@@ -168,9 +173,9 @@ class RawMessagesClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -239,9 +244,9 @@ class RawMessagesClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -280,6 +285,7 @@ class AsyncRawMessagesClient:
         summary_mode: typing.Optional[MessagesTextSearchRequestSummaryMode] = None,
         conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None,
         branch_id: typing.Optional[str] = None,
+        sort_by: typing.Optional[MessageSearchSortBy] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[MessagesSearchResponse]:
@@ -350,6 +356,9 @@ class AsyncRawMessagesClient:
         branch_id : typing.Optional[str]
             Filter conversations by branch ID.
 
+        sort_by : typing.Optional[MessageSearchSortBy]
+            Sort order for search results. 'search_score' sorts by search score, 'created_at' sorts by conversation start time.
+
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
 
@@ -386,6 +395,7 @@ class AsyncRawMessagesClient:
                 "summary_mode": summary_mode,
                 "conversation_initiation_source": conversation_initiation_source,
                 "branch_id": branch_id,
+                "sort_by": sort_by,
                 "cursor": cursor,
             },
             request_options=request_options,
@@ -404,9 +414,9 @@ class AsyncRawMessagesClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -475,9 +485,9 @@ class AsyncRawMessagesClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

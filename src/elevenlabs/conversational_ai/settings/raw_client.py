@@ -13,7 +13,6 @@ from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.conv_ai_webhooks import ConvAiWebhooks
 from ...types.conversation_initiation_client_data_webhook import ConversationInitiationClientDataWebhook
 from ...types.get_conv_ai_settings_response_model import GetConvAiSettingsResponseModel
-from ...types.http_validation_error import HttpValidationError
 from ...types.livekit_stack_type import LivekitStackType
 
 # this is used as the default value for optional parameters
@@ -59,9 +58,9 @@ class RawSettingsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -146,9 +145,9 @@ class RawSettingsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -198,9 +197,9 @@ class AsyncRawSettingsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -285,9 +284,9 @@ class AsyncRawSettingsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

@@ -14,7 +14,7 @@ from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.audio_with_timestamps_response import AudioWithTimestampsResponse
-from ..types.http_validation_error import HttpValidationError
+from ..types.avatar_context_request_model import AvatarContextRequestModel
 from ..types.pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
 from ..types.streaming_audio_chunk_with_timestamps_response import StreamingAudioChunkWithTimestampsResponse
 from ..types.voice_settings import VoiceSettings
@@ -66,6 +66,7 @@ class RawTextToSpeechClient:
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToSpeechFullApplyTextNormalization] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
+        avatar_context: typing.Optional[AvatarContextRequestModel] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
         """
@@ -131,6 +132,9 @@ class RawTextToSpeechClient:
         apply_language_text_normalization : typing.Optional[bool]
             This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
+        avatar_context : typing.Optional[AvatarContextRequestModel]
+            Avatar context when this generation is made from the Avatars video editor.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -167,6 +171,9 @@ class RawTextToSpeechClient:
                 "use_pvc_as_ivc": use_pvc_as_ivc,
                 "apply_text_normalization": apply_text_normalization,
                 "apply_language_text_normalization": apply_language_text_normalization,
+                "avatar_context": convert_and_respect_annotation_metadata(
+                    object_=avatar_context, annotation=AvatarContextRequestModel, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -187,9 +194,9 @@ class RawTextToSpeechClient:
                         raise UnprocessableEntityError(
                             headers=dict(_response.headers),
                             body=typing.cast(
-                                HttpValidationError,
+                                typing.Any,
                                 construct_type(
-                                    type_=HttpValidationError,  # type: ignore
+                                    type_=typing.Any,  # type: ignore
                                     object_=_response.json(),
                                 ),
                             ),
@@ -347,9 +354,9 @@ class RawTextToSpeechClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -382,6 +389,7 @@ class RawTextToSpeechClient:
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToSpeechStreamApplyTextNormalization] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
+        avatar_context: typing.Optional[AvatarContextRequestModel] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
         """
@@ -447,6 +455,9 @@ class RawTextToSpeechClient:
         apply_language_text_normalization : typing.Optional[bool]
             This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
+        avatar_context : typing.Optional[AvatarContextRequestModel]
+            Avatar context when this generation is made from the Avatars video editor.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -483,6 +494,9 @@ class RawTextToSpeechClient:
                 "use_pvc_as_ivc": use_pvc_as_ivc,
                 "apply_text_normalization": apply_text_normalization,
                 "apply_language_text_normalization": apply_language_text_normalization,
+                "avatar_context": convert_and_respect_annotation_metadata(
+                    object_=avatar_context, annotation=AvatarContextRequestModel, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -503,9 +517,9 @@ class RawTextToSpeechClient:
                         raise UnprocessableEntityError(
                             headers=dict(_response.headers),
                             body=typing.cast(
-                                HttpValidationError,
+                                typing.Any,
                                 construct_type(
-                                    type_=HttpValidationError,  # type: ignore
+                                    type_=typing.Any,  # type: ignore
                                     object_=_response.json(),
                                 ),
                             ),
@@ -677,9 +691,9 @@ class RawTextToSpeechClient:
                         raise UnprocessableEntityError(
                             headers=dict(_response.headers),
                             body=typing.cast(
-                                HttpValidationError,
+                                typing.Any,
                                 construct_type(
-                                    type_=HttpValidationError,  # type: ignore
+                                    type_=typing.Any,  # type: ignore
                                     object_=_response.json(),
                                 ),
                             ),
@@ -721,6 +735,7 @@ class AsyncRawTextToSpeechClient:
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToSpeechFullApplyTextNormalization] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
+        avatar_context: typing.Optional[AvatarContextRequestModel] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
         """
@@ -786,6 +801,9 @@ class AsyncRawTextToSpeechClient:
         apply_language_text_normalization : typing.Optional[bool]
             This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
+        avatar_context : typing.Optional[AvatarContextRequestModel]
+            Avatar context when this generation is made from the Avatars video editor.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -822,6 +840,9 @@ class AsyncRawTextToSpeechClient:
                 "use_pvc_as_ivc": use_pvc_as_ivc,
                 "apply_text_normalization": apply_text_normalization,
                 "apply_language_text_normalization": apply_language_text_normalization,
+                "avatar_context": convert_and_respect_annotation_metadata(
+                    object_=avatar_context, annotation=AvatarContextRequestModel, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -843,9 +864,9 @@ class AsyncRawTextToSpeechClient:
                         raise UnprocessableEntityError(
                             headers=dict(_response.headers),
                             body=typing.cast(
-                                HttpValidationError,
+                                typing.Any,
                                 construct_type(
-                                    type_=HttpValidationError,  # type: ignore
+                                    type_=typing.Any,  # type: ignore
                                     object_=_response.json(),
                                 ),
                             ),
@@ -1003,9 +1024,9 @@ class AsyncRawTextToSpeechClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -1038,6 +1059,7 @@ class AsyncRawTextToSpeechClient:
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToSpeechStreamApplyTextNormalization] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
+        avatar_context: typing.Optional[AvatarContextRequestModel] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
         """
@@ -1103,6 +1125,9 @@ class AsyncRawTextToSpeechClient:
         apply_language_text_normalization : typing.Optional[bool]
             This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
+        avatar_context : typing.Optional[AvatarContextRequestModel]
+            Avatar context when this generation is made from the Avatars video editor.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -1139,6 +1164,9 @@ class AsyncRawTextToSpeechClient:
                 "use_pvc_as_ivc": use_pvc_as_ivc,
                 "apply_text_normalization": apply_text_normalization,
                 "apply_language_text_normalization": apply_language_text_normalization,
+                "avatar_context": convert_and_respect_annotation_metadata(
+                    object_=avatar_context, annotation=AvatarContextRequestModel, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -1160,9 +1188,9 @@ class AsyncRawTextToSpeechClient:
                         raise UnprocessableEntityError(
                             headers=dict(_response.headers),
                             body=typing.cast(
-                                HttpValidationError,
+                                typing.Any,
                                 construct_type(
-                                    type_=HttpValidationError,  # type: ignore
+                                    type_=typing.Any,  # type: ignore
                                     object_=_response.json(),
                                 ),
                             ),
@@ -1334,9 +1362,9 @@ class AsyncRawTextToSpeechClient:
                         raise UnprocessableEntityError(
                             headers=dict(_response.headers),
                             body=typing.cast(
-                                HttpValidationError,
+                                typing.Any,
                                 construct_type(
-                                    type_=HttpValidationError,  # type: ignore
+                                    type_=typing.Any,  # type: ignore
                                     object_=_response.json(),
                                 ),
                             ),

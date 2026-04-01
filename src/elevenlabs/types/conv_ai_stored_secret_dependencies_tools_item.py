@@ -30,6 +30,7 @@ class ConvAiStoredSecretDependenciesToolsItem_Available(UncheckedBaseModel):
 
 class ConvAiStoredSecretDependenciesToolsItem_Unknown(UncheckedBaseModel):
     type: typing.Literal["unknown"] = "unknown"
+    id: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

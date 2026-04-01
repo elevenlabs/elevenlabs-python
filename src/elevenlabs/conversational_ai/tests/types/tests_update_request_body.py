@@ -11,6 +11,7 @@ from ....core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from ....types.agent_failure_response_example import AgentFailureResponseExample
 from ....types.agent_successful_response_example import AgentSuccessfulResponseExample
 from ....types.conversation_history_transcript_common_model_input import ConversationHistoryTranscriptCommonModelInput
+from ....types.simulation_tool_mock_behavior_config import SimulationToolMockBehaviorConfig
 from ....types.test_from_conversation_metadata_input import TestFromConversationMetadataInput
 from ....types.unit_test_tool_call_evaluation_model_input import UnitTestToolCallEvaluationModelInput
 from ....types.update_response_unit_test_request_dynamic_variables_value import (
@@ -92,6 +93,7 @@ class TestsUpdateRequestBody_Simulation(UncheckedBaseModel):
     simulation_scenario: typing.Optional[str] = None
     simulation_max_turns: typing.Optional[int] = None
     simulation_environment: typing.Optional[str] = None
+    tool_mock_config: typing.Optional[SimulationToolMockBehaviorConfig] = None
     name: str
     parent_folder_id: typing.Optional[str] = None
 

@@ -136,6 +136,29 @@ class AuthConnectionsCreateRequestBody_PrivateKeyJwt(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class AuthConnectionsCreateRequestBody_Mtls(UncheckedBaseModel):
+    """
+    Auth connection to create
+    """
+
+    auth_type: typing.Literal["mtls"] = "mtls"
+    name: str
+    provider: str
+    client_certificate: str
+    client_key: str
+    ca_certificate: typing.Optional[str] = None
+    key_passphrase: typing.Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 AuthConnectionsCreateRequestBody = typing_extensions.Annotated[
     typing.Union[
         AuthConnectionsCreateRequestBody_Oauth2ClientCredentials,
@@ -143,6 +166,7 @@ AuthConnectionsCreateRequestBody = typing_extensions.Annotated[
         AuthConnectionsCreateRequestBody_BasicAuth,
         AuthConnectionsCreateRequestBody_Oauth2Jwt,
         AuthConnectionsCreateRequestBody_PrivateKeyJwt,
+        AuthConnectionsCreateRequestBody_Mtls,
     ],
     UnionMetadata(discriminant="auth_type"),
 ]

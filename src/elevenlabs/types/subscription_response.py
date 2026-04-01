@@ -34,7 +34,7 @@ class SubscriptionResponse(UncheckedBaseModel):
 
     can_extend_character_limit: bool = pydantic.Field()
     """
-    Whether the user can extend their character limit.
+    Whether the workspace is entitled to enter overages (usage-based billing).
     """
 
     allowed_to_extend_character_limit: bool = pydantic.Field()

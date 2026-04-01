@@ -14,7 +14,6 @@ from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.batch_call_detailed_response import BatchCallDetailedResponse
 from ...types.batch_call_response import BatchCallResponse
 from ...types.batch_call_whats_app_params import BatchCallWhatsAppParams
-from ...types.http_validation_error import HttpValidationError
 from ...types.outbound_call_recipient import OutboundCallRecipient
 from ...types.telephony_call_config import TelephonyCallConfig
 from ...types.workspace_batch_calls_response import WorkspaceBatchCallsResponse
@@ -37,6 +36,8 @@ class RawBatchCallsClient:
         agent_phone_number_id: typing.Optional[str] = OMIT,
         whatsapp_params: typing.Optional[BatchCallWhatsAppParams] = OMIT,
         timezone: typing.Optional[str] = OMIT,
+        branch_id: typing.Optional[str] = OMIT,
+        environment: typing.Optional[str] = OMIT,
         telephony_call_config: typing.Optional[TelephonyCallConfig] = OMIT,
         target_concurrency_limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -59,6 +60,10 @@ class RawBatchCallsClient:
         whatsapp_params : typing.Optional[BatchCallWhatsAppParams]
 
         timezone : typing.Optional[str]
+
+        branch_id : typing.Optional[str]
+
+        environment : typing.Optional[str]
 
         telephony_call_config : typing.Optional[TelephonyCallConfig]
 
@@ -88,6 +93,8 @@ class RawBatchCallsClient:
                     object_=whatsapp_params, annotation=BatchCallWhatsAppParams, direction="write"
                 ),
                 "timezone": timezone,
+                "branch_id": branch_id,
+                "environment": environment,
                 "telephony_call_config": convert_and_respect_annotation_metadata(
                     object_=telephony_call_config, annotation=TelephonyCallConfig, direction="write"
                 ),
@@ -113,9 +120,9 @@ class RawBatchCallsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -172,9 +179,9 @@ class RawBatchCallsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -221,9 +228,9 @@ class RawBatchCallsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -260,9 +267,9 @@ class RawBatchCallsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -309,9 +316,9 @@ class RawBatchCallsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -358,9 +365,9 @@ class RawBatchCallsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -385,6 +392,8 @@ class AsyncRawBatchCallsClient:
         agent_phone_number_id: typing.Optional[str] = OMIT,
         whatsapp_params: typing.Optional[BatchCallWhatsAppParams] = OMIT,
         timezone: typing.Optional[str] = OMIT,
+        branch_id: typing.Optional[str] = OMIT,
+        environment: typing.Optional[str] = OMIT,
         telephony_call_config: typing.Optional[TelephonyCallConfig] = OMIT,
         target_concurrency_limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -407,6 +416,10 @@ class AsyncRawBatchCallsClient:
         whatsapp_params : typing.Optional[BatchCallWhatsAppParams]
 
         timezone : typing.Optional[str]
+
+        branch_id : typing.Optional[str]
+
+        environment : typing.Optional[str]
 
         telephony_call_config : typing.Optional[TelephonyCallConfig]
 
@@ -436,6 +449,8 @@ class AsyncRawBatchCallsClient:
                     object_=whatsapp_params, annotation=BatchCallWhatsAppParams, direction="write"
                 ),
                 "timezone": timezone,
+                "branch_id": branch_id,
+                "environment": environment,
                 "telephony_call_config": convert_and_respect_annotation_metadata(
                     object_=telephony_call_config, annotation=TelephonyCallConfig, direction="write"
                 ),
@@ -461,9 +476,9 @@ class AsyncRawBatchCallsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -520,9 +535,9 @@ class AsyncRawBatchCallsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -569,9 +584,9 @@ class AsyncRawBatchCallsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -610,9 +625,9 @@ class AsyncRawBatchCallsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -659,9 +674,9 @@ class AsyncRawBatchCallsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -708,9 +723,9 @@ class AsyncRawBatchCallsClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

@@ -8,6 +8,8 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .fine_tuning_response import FineTuningResponse
 from .verified_voice_language_response_model import VerifiedVoiceLanguageResponseModel
 from .voice_response_model_category import VoiceResponseModelCategory
+from .voice_response_model_labelling_status import VoiceResponseModelLabellingStatus
+from .voice_response_model_recording_quality import VoiceResponseModelRecordingQuality
 from .voice_response_model_safety_control import VoiceResponseModelSafetyControl
 from .voice_sample import VoiceSample
 from .voice_settings import VoiceSettings
@@ -129,6 +131,21 @@ class Voice(UncheckedBaseModel):
     is_bookmarked: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether the voice is bookmarked by the current user. Only relevant for community (library-copied) voices.
+    """
+
+    recording_quality: typing.Optional[VoiceResponseModelRecordingQuality] = pydantic.Field(default=None)
+    """
+    The recording quality of the voice as determined by the review pipeline.
+    """
+
+    labelling_status: typing.Optional[VoiceResponseModelLabellingStatus] = pydantic.Field(default=None)
+    """
+    The review pipeline status of the voice.
+    """
+
+    recording_quality_reason: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The reason for the recording quality assessment, as determined by the review pipeline.
     """
 
     if IS_PYDANTIC_V2:

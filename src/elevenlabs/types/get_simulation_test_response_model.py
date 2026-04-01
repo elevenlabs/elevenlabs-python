@@ -11,6 +11,7 @@ from .conversation_history_transcript_common_model_output import ConversationHis
 from .get_simulation_test_response_model_dynamic_variables_value import (
     GetSimulationTestResponseModelDynamicVariablesValue,
 )
+from .simulation_tool_mock_behavior_config import SimulationToolMockBehaviorConfig
 from .test_from_conversation_metadata_output import TestFromConversationMetadataOutput
 
 
@@ -46,6 +47,11 @@ class GetSimulationTestResponseModel(UncheckedBaseModel):
     simulation_environment: typing.Optional[str] = pydantic.Field(default=None)
     """
     The environment to use when running this simulation test. If not provided, defaults to 'production'.
+    """
+
+    tool_mock_config: typing.Optional[SimulationToolMockBehaviorConfig] = pydantic.Field(default=None)
+    """
+    Configuration for which tools to mock and fallback behavior.
     """
 
     id: str

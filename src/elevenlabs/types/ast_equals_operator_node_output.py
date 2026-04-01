@@ -10,12 +10,12 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class AstEqualsOperatorNodeOutput(UncheckedBaseModel):
-    left: "AstEqualsOperatorNodeOutputLeft" = pydantic.Field()
+    left: "AstNodeOutput" = pydantic.Field()
     """
     Left operand of the binary operator.
     """
 
-    right: "AstEqualsOperatorNodeOutputRight" = pydantic.Field()
+    right: "AstNodeOutput" = pydantic.Field()
     """
     Right operand of the binary operator.
     """
@@ -30,7 +30,6 @@ class AstEqualsOperatorNodeOutput(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .ast_equals_operator_node_output_left import AstEqualsOperatorNodeOutputLeft  # noqa: E402, I001
-from .ast_equals_operator_node_output_right import AstEqualsOperatorNodeOutputRight  # noqa: E402, I001
+from .ast_node_output import AstNodeOutput  # noqa: E402, I001
 
 update_forward_refs(AstEqualsOperatorNodeOutput)

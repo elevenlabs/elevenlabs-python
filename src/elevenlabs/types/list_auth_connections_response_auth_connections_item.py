@@ -13,6 +13,7 @@ from .api_integration_o_auth_2_auth_code_response_scope_separator import (
 )
 from .auth_connection_dependencies import AuthConnectionDependencies
 from .o_auth_2_jwt_response_algorithm import OAuth2JwtResponseAlgorithm
+from .o_auth_connection_status import OAuthConnectionStatus
 from .private_key_jwt_response_algorithm import PrivateKeyJwtResponseAlgorithm
 
 
@@ -30,6 +31,9 @@ class ListAuthConnectionsResponseAuthConnectionsItem_ApiIntegrationOauth2AuthCod
     expires_at: str
     integration_id: str
     credential_id: str
+    status: typing.Optional[OAuthConnectionStatus] = None
+    status_detail: typing.Optional[str] = None
+    status_updated_at: typing.Optional[str] = None
     id: str
     used_by: typing.Optional[AuthConnectionDependencies] = None
 
@@ -95,6 +99,27 @@ class ListAuthConnectionsResponseAuthConnectionsItem_CustomHeaderAuth(UncheckedB
     name: str
     provider: str
     header_name: str
+    id: str
+    used_by: typing.Optional[AuthConnectionDependencies] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class ListAuthConnectionsResponseAuthConnectionsItem_Mtls(UncheckedBaseModel):
+    """
+    The type of auth connection config
+    """
+
+    auth_type: typing.Literal["mtls"] = "mtls"
+    name: str
+    provider: str
     id: str
     used_by: typing.Optional[AuthConnectionDependencies] = None
 
@@ -220,6 +245,7 @@ ListAuthConnectionsResponseAuthConnectionsItem = typing_extensions.Annotated[
         ListAuthConnectionsResponseAuthConnectionsItem_BasicAuth,
         ListAuthConnectionsResponseAuthConnectionsItem_BearerAuth,
         ListAuthConnectionsResponseAuthConnectionsItem_CustomHeaderAuth,
+        ListAuthConnectionsResponseAuthConnectionsItem_Mtls,
         ListAuthConnectionsResponseAuthConnectionsItem_Oauth2ClientCredentials,
         ListAuthConnectionsResponseAuthConnectionsItem_Oauth2Jwt,
         ListAuthConnectionsResponseAuthConnectionsItem_PrivateKeyJwt,

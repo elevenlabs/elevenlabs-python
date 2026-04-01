@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .audio_analysis import AudioAnalysis
 from .pending_clip_task import PendingClipTask
 from .project_external_audio_response_model_source_context import ProjectExternalAudioResponseModelSourceContext
 
@@ -34,6 +35,7 @@ class ProjectExternalAudioResponseModel(UncheckedBaseModel):
     error: typing.Optional[str] = None
     current_snapshot_id: typing.Optional[str] = None
     source_context: typing.Optional[ProjectExternalAudioResponseModelSourceContext] = None
+    analysis: typing.Optional[AudioAnalysis] = None
     import_speech_progress: typing.Optional[float] = None
 
     if IS_PYDANTIC_V2:
