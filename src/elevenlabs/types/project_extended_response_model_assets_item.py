@@ -8,6 +8,7 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
+from .audio_analysis import AudioAnalysis
 from .canvas_placement import CanvasPlacement
 from .clip_animation import ClipAnimation
 from .generation_source_context import GenerationSourceContext
@@ -56,6 +57,7 @@ class ProjectExtendedResponseModelAssetsItem_Video(UncheckedBaseModel):
     canvas_placement: typing.Optional[CanvasPlacement] = None
     animation: typing.Optional[ClipAnimation] = None
     playback_speed: typing.Optional[float] = None
+    opacity: typing.Optional[float] = None
     track_id: typing.Optional[str] = None
     preview_job_progress: typing.Optional[float] = None
     import_speech_progress: typing.Optional[float] = None
@@ -96,6 +98,7 @@ class ProjectExtendedResponseModelAssetsItem_Audio(UncheckedBaseModel):
     error: typing.Optional[str] = None
     current_snapshot_id: typing.Optional[str] = None
     source_context: typing.Optional[ProjectExternalAudioResponseModelSourceContext] = None
+    analysis: typing.Optional[AudioAnalysis] = None
     import_speech_progress: typing.Optional[float] = None
 
     if IS_PYDANTIC_V2:
@@ -124,6 +127,7 @@ class ProjectExtendedResponseModelAssetsItem_Image(UncheckedBaseModel):
     order: str
     canvas_placement: CanvasPlacement
     animation: typing.Optional[ClipAnimation] = None
+    opacity: typing.Optional[float] = None
     created_at_ms: int
     updated_at_ms: int
     current_snapshot_id: typing.Optional[str] = None

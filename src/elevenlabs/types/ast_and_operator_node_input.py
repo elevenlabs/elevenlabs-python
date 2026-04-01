@@ -10,7 +10,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class AstAndOperatorNodeInput(UncheckedBaseModel):
-    children: typing.List["AstAndOperatorNodeInputChildrenItem"] = pydantic.Field()
+    children: typing.List["AstNodeInput"] = pydantic.Field()
     """
     Child nodes of the logical operator.
     """
@@ -25,6 +25,6 @@ class AstAndOperatorNodeInput(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .ast_and_operator_node_input_children_item import AstAndOperatorNodeInputChildrenItem  # noqa: E402, I001
+from .ast_node_input import AstNodeInput  # noqa: E402, I001
 
 update_forward_refs(AstAndOperatorNodeInput)

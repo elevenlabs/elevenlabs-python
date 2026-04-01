@@ -38,6 +38,8 @@ WorkspaceResourceType = typing.Union[
         "content_generations",
         "content_templates",
         "songs",
+        "avatars",
+        "avatar_video_generations",
     ],
     typing.Any,
 ]

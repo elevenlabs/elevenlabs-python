@@ -51,6 +51,7 @@ class ProjectVideoResponseModel(UncheckedBaseModel):
     canvas_placement: typing.Optional[CanvasPlacement] = None
     animation: typing.Optional[ClipAnimation] = None
     playback_speed: typing.Optional[float] = None
+    opacity: typing.Optional[float] = None
     track_id: typing.Optional[str] = None
     preview_job_progress: typing.Optional[float] = None
     import_speech_progress: typing.Optional[float] = None

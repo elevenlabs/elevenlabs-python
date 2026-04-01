@@ -14,7 +14,6 @@ from ...errors.forbidden_error import ForbiddenError
 from ...errors.not_found_error import NotFoundError
 from ...errors.too_early_error import TooEarlyError
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
-from ...types.http_validation_error import HttpValidationError
 
 
 class RawAudioClient:
@@ -84,9 +83,9 @@ class RawAudioClient:
                         raise UnprocessableEntityError(
                             headers=dict(_response.headers),
                             body=typing.cast(
-                                HttpValidationError,
+                                typing.Any,
                                 construct_type(
-                                    type_=HttpValidationError,  # type: ignore
+                                    type_=typing.Any,  # type: ignore
                                     object_=_response.json(),
                                 ),
                             ),
@@ -180,9 +179,9 @@ class AsyncRawAudioClient:
                         raise UnprocessableEntityError(
                             headers=dict(_response.headers),
                             body=typing.cast(
-                                HttpValidationError,
+                                typing.Any,
                                 construct_type(
-                                    type_=HttpValidationError,  # type: ignore
+                                    type_=typing.Any,  # type: ignore
                                     object_=_response.json(),
                                 ),
                             ),

@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .avatar_context_response_model import AvatarContextResponseModel
 from .dialogue_input_response_model import DialogueInputResponseModel
 from .feedback_item import FeedbackItem
 from .history_alignments_response_model import HistoryAlignmentsResponseModel
@@ -102,6 +103,11 @@ class SpeechHistoryItemResponse(UncheckedBaseModel):
     output_format: typing.Optional[str] = pydantic.Field(default=None)
     """
     The output format the audio was originally generated in.
+    """
+
+    avatar_context: typing.Optional[AvatarContextResponseModel] = pydantic.Field(default=None)
+    """
+    Avatar context if this generation was created from the Avatars video editor.
     """
 
     if IS_PYDANTIC_V2:

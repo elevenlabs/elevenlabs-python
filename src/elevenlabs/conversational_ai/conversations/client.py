@@ -16,6 +16,7 @@ from .raw_client import AsyncRawConversationsClient, RawConversationsClient
 from .types.conversations_list_request_summary_mode import ConversationsListRequestSummaryMode
 
 if typing.TYPE_CHECKING:
+    from .analysis.client import AnalysisClient, AsyncAnalysisClient
     from .audio.client import AsyncAudioClient, AudioClient
     from .feedback.client import AsyncFeedbackClient, FeedbackClient
     from .files.client import AsyncFilesClient, FilesClient
@@ -30,6 +31,7 @@ class ConversationsClient:
         self._feedback: typing.Optional[FeedbackClient] = None
         self._messages: typing.Optional[MessagesClient] = None
         self._files: typing.Optional[FilesClient] = None
+        self._analysis: typing.Optional[AnalysisClient] = None
 
     @property
     def with_raw_response(self) -> RawConversationsClient:
@@ -410,6 +412,14 @@ class ConversationsClient:
             self._files = FilesClient(client_wrapper=self._client_wrapper)
         return self._files
 
+    @property
+    def analysis(self):
+        if self._analysis is None:
+            from .analysis.client import AnalysisClient  # noqa: E402
+
+            self._analysis = AnalysisClient(client_wrapper=self._client_wrapper)
+        return self._analysis
+
 
 class AsyncConversationsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -419,6 +429,7 @@ class AsyncConversationsClient:
         self._feedback: typing.Optional[AsyncFeedbackClient] = None
         self._messages: typing.Optional[AsyncMessagesClient] = None
         self._files: typing.Optional[AsyncFilesClient] = None
+        self._analysis: typing.Optional[AsyncAnalysisClient] = None
 
     @property
     def with_raw_response(self) -> AsyncRawConversationsClient:
@@ -840,3 +851,11 @@ class AsyncConversationsClient:
 
             self._files = AsyncFilesClient(client_wrapper=self._client_wrapper)
         return self._files
+
+    @property
+    def analysis(self):
+        if self._analysis is None:
+            from .analysis.client import AsyncAnalysisClient  # noqa: E402
+
+            self._analysis = AsyncAnalysisClient(client_wrapper=self._client_wrapper)
+        return self._analysis

@@ -28,12 +28,7 @@ class ForcedAlignmentClient:
         return self._raw_client
 
     def create(
-        self,
-        *,
-        file: core.File,
-        text: str,
-        enabled_spooled_file: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, file: core.File, text: str, request_options: typing.Optional[RequestOptions] = None
     ) -> ForcedAlignmentResponseModel:
         """
         Force align an audio file to text. Use this endpoint to get the timing information for each character and word in an audio file based on a provided text transcript.
@@ -45,9 +40,6 @@ class ForcedAlignmentClient:
 
         text : str
             The text to align with the audio. The input text can be in any format, however diarization is not supported at this time.
-
-        enabled_spooled_file : typing.Optional[bool]
-            If true, the file will be streamed to the server and processed in chunks. This is useful for large files that cannot be loaded into memory. The default is false.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -68,9 +60,7 @@ class ForcedAlignmentClient:
             text="text",
         )
         """
-        _response = self._raw_client.create(
-            file=file, text=text, enabled_spooled_file=enabled_spooled_file, request_options=request_options
-        )
+        _response = self._raw_client.create(file=file, text=text, request_options=request_options)
         return _response.data
 
 
@@ -90,12 +80,7 @@ class AsyncForcedAlignmentClient:
         return self._raw_client
 
     async def create(
-        self,
-        *,
-        file: core.File,
-        text: str,
-        enabled_spooled_file: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, file: core.File, text: str, request_options: typing.Optional[RequestOptions] = None
     ) -> ForcedAlignmentResponseModel:
         """
         Force align an audio file to text. Use this endpoint to get the timing information for each character and word in an audio file based on a provided text transcript.
@@ -107,9 +92,6 @@ class AsyncForcedAlignmentClient:
 
         text : str
             The text to align with the audio. The input text can be in any format, however diarization is not supported at this time.
-
-        enabled_spooled_file : typing.Optional[bool]
-            If true, the file will be streamed to the server and processed in chunks. This is useful for large files that cannot be loaded into memory. The default is false.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -138,7 +120,5 @@ class AsyncForcedAlignmentClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create(
-            file=file, text=text, enabled_spooled_file=enabled_spooled_file, request_options=request_options
-        )
+        _response = await self._raw_client.create(file=file, text=text, request_options=request_options)
         return _response.data

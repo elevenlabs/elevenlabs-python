@@ -55,6 +55,7 @@ class SpeechToTextClient:
         additional_formats: typing.Optional[AdditionalFormats] = OMIT,
         file_format: typing.Optional[SpeechToTextConvertRequestFileFormat] = OMIT,
         cloud_storage_url: typing.Optional[str] = OMIT,
+        source_url: typing.Optional[str] = OMIT,
         webhook: typing.Optional[bool] = OMIT,
         webhook_id: typing.Optional[str] = OMIT,
         temperature: typing.Optional[float] = OMIT,
@@ -108,6 +109,9 @@ class SpeechToTextClient:
 
         cloud_storage_url : typing.Optional[str]
             The HTTPS URL of the file to transcribe. Exactly one of the file or cloud_storage_url parameters must be provided. The file must be accessible via HTTPS and the file size must be less than 2GB. Any valid HTTPS URL is accepted, including URLs from cloud storage providers (AWS S3, Google Cloud Storage, Cloudflare R2, etc.), CDNs, or any other HTTPS source. URLs can be pre-signed or include authentication tokens in query parameters.
+
+        source_url : typing.Optional[str]
+            The URL of an audio or video file to transcribe. Supports hosted video or audio files, YouTube video URLs, TikTok video URLs, and other video hosting services.
 
         webhook : typing.Optional[bool]
             Whether to send the transcription result to configured speech-to-text webhooks.  If set the request will return early without the transcription, which will be delivered later via webhook.
@@ -175,6 +179,7 @@ class SpeechToTextClient:
             additional_formats=additional_formats,
             file_format=file_format,
             cloud_storage_url=cloud_storage_url,
+            source_url=source_url,
             webhook=webhook,
             webhook_id=webhook_id,
             temperature=temperature,
@@ -231,6 +236,7 @@ class AsyncSpeechToTextClient:
         additional_formats: typing.Optional[AdditionalFormats] = OMIT,
         file_format: typing.Optional[SpeechToTextConvertRequestFileFormat] = OMIT,
         cloud_storage_url: typing.Optional[str] = OMIT,
+        source_url: typing.Optional[str] = OMIT,
         webhook: typing.Optional[bool] = OMIT,
         webhook_id: typing.Optional[str] = OMIT,
         temperature: typing.Optional[float] = OMIT,
@@ -284,6 +290,9 @@ class AsyncSpeechToTextClient:
 
         cloud_storage_url : typing.Optional[str]
             The HTTPS URL of the file to transcribe. Exactly one of the file or cloud_storage_url parameters must be provided. The file must be accessible via HTTPS and the file size must be less than 2GB. Any valid HTTPS URL is accepted, including URLs from cloud storage providers (AWS S3, Google Cloud Storage, Cloudflare R2, etc.), CDNs, or any other HTTPS source. URLs can be pre-signed or include authentication tokens in query parameters.
+
+        source_url : typing.Optional[str]
+            The URL of an audio or video file to transcribe. Supports hosted video or audio files, YouTube video URLs, TikTok video URLs, and other video hosting services.
 
         webhook : typing.Optional[bool]
             Whether to send the transcription result to configured speech-to-text webhooks.  If set the request will return early without the transcription, which will be delivered later via webhook.
@@ -359,6 +368,7 @@ class AsyncSpeechToTextClient:
             additional_formats=additional_formats,
             file_format=file_format,
             cloud_storage_url=cloud_storage_url,
+            source_url=source_url,
             webhook=webhook,
             webhook_id=webhook_id,
             temperature=temperature,

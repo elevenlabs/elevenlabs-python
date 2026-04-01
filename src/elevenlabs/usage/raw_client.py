@@ -10,7 +10,6 @@ from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.breakdown_types import BreakdownTypes
-from ..types.http_validation_error import HttpValidationError
 from ..types.metric_type import MetricType
 from ..types.usage_aggregation_interval import UsageAggregationInterval
 from ..types.usage_characters_response_model import UsageCharactersResponseModel
@@ -94,9 +93,9 @@ class RawUsageClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -185,9 +184,9 @@ class AsyncRawUsageClient:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        HttpValidationError,
+                        typing.Any,
                         construct_type(
-                            type_=HttpValidationError,  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

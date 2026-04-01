@@ -2,4 +2,4 @@
 
 import typing
 
-AgentSortBy = typing.Union[typing.Literal["name", "created_at"], typing.Any]
+AgentSortBy = typing.Union[typing.Literal["name", "created_at", "call_count_7d"], typing.Any]

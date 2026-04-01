@@ -12,21 +12,21 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class AstConditionalOperatorNodeInput(UncheckedBaseModel):
-    condition: "AstConditionalOperatorNodeInputCondition" = pydantic.Field()
+    condition: "AstNodeInput" = pydantic.Field()
     """
     Condition deciding which expression should be selected.
     """
 
-    true_expression: typing_extensions.Annotated[
-        "AstConditionalOperatorNodeInputTrueExpression", FieldMetadata(alias="trueExpression")
-    ] = pydantic.Field()
+    true_expression: typing_extensions.Annotated["AstNodeInput", FieldMetadata(alias="trueExpression")] = (
+        pydantic.Field()
+    )
     """
     Expression selected if the condition is true.
     """
 
-    false_expression: typing_extensions.Annotated[
-        "AstConditionalOperatorNodeInputFalseExpression", FieldMetadata(alias="falseExpression")
-    ] = pydantic.Field()
+    false_expression: typing_extensions.Annotated["AstNodeInput", FieldMetadata(alias="falseExpression")] = (
+        pydantic.Field()
+    )
     """
     Expression selected if the condition is false.
     """
@@ -41,8 +41,6 @@ class AstConditionalOperatorNodeInput(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .ast_conditional_operator_node_input_condition import AstConditionalOperatorNodeInputCondition  # noqa: E402, I001
-from .ast_conditional_operator_node_input_true_expression import AstConditionalOperatorNodeInputTrueExpression  # noqa: E402, I001
-from .ast_conditional_operator_node_input_false_expression import AstConditionalOperatorNodeInputFalseExpression  # noqa: E402, I001
+from .ast_node_input import AstNodeInput  # noqa: E402, I001
 
 update_forward_refs(AstConditionalOperatorNodeInput)

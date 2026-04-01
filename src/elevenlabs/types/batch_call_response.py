@@ -18,6 +18,8 @@ class BatchCallResponse(UncheckedBaseModel):
     whatsapp_params: typing.Optional[BatchCallWhatsAppParams] = None
     name: str
     agent_id: str
+    branch_id: typing.Optional[str] = None
+    environment: typing.Optional[str] = None
     created_at_unix: int
     scheduled_time_unix: int
     timezone: typing.Optional[str] = None
@@ -34,6 +36,7 @@ class BatchCallResponse(UncheckedBaseModel):
     """
 
     agent_name: str
+    branch_name: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
