@@ -3998,7 +3998,6 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.studio.create_podcast(
-    safety_identifier="safety-identifier",
     model_id="eleven_multilingual_v2",
     mode=BodyCreatePodcastV1StudioPodcastsPostMode_Conversation(
         conversation=PodcastConversationModeData(
@@ -9738,6 +9737,84 @@ client.conversational_ai.tests.create(
 <dd>
 
 **request:** `TestsCreateRequestBody` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.tests.<a href="src/elevenlabs/conversational_ai/tests/client.py">move</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Moves multiple tests or folders from one folder to another.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.tests.move(
+    entity_ids=["entity_ids"],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**entity_ids:** `typing.Sequence[str]` — The IDs of tests or folders to move.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**move_to:** `typing.Optional[str]` — The folder to move the entities to. If not set, the entities will be moved to the root folder.
     
 </dd>
 </dl>
@@ -16474,7 +16551,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.knowledge_base.documents.get_content(
-    documentation_id="21m00Tcm4TlvDq8ikWAM",
+    documentation_id="documentation_id",
 )
 
 ```
@@ -17804,6 +17881,313 @@ client.conversational_ai.mcp_servers.tool_configs.update(
         ],
     ]
 ]` — Mapping of json path to input override configuration
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi Tests Folders
+<details><summary><code>client.conversational_ai.tests.folders.<a href="src/elevenlabs/conversational_ai/tests/folders/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a folder for organizing agent tests.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.tests.folders.create(
+    name="name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `str` — The name of the folder to create
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**parent_folder_id:** `typing.Optional[str]` — The ID of the parent folder. If not provided, the folder will be created at the root level.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.tests.folders.<a href="src/elevenlabs/conversational_ai/tests/folders/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets an agent test folder by ID, including its folder path.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.tests.folders.get(
+    folder_id="tfld_7301khxdkycse5f88fzjdtrterzm",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**folder_id:** `str` — The folder ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.tests.folders.<a href="src/elevenlabs/conversational_ai/tests/folders/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes an agent test folder by ID. Use force=true to delete a non-empty folder and all its contents.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.tests.folders.delete(
+    folder_id="tfld_7301khxdkycse5f88fzjdtrterzm",
+    force=True,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**folder_id:** `str` — The folder ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force:** `typing.Optional[bool]` — Force delete. Required for deleting non-empty folders.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.tests.folders.<a href="src/elevenlabs/conversational_ai/tests/folders/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates an agent test folder. Currently only supports updating the folder name.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.tests.folders.update(
+    folder_id="tfld_7301khxdkycse5f88fzjdtrterzm",
+    name="name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**folder_id:** `str` — The folder ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `str` — The new name for the folder
     
 </dd>
 </dl>

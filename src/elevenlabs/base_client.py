@@ -56,7 +56,7 @@ class BaseElevenLabs:
 
 
 
-    api_key : typing.Optional[str]
+    api_key : str
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -83,7 +83,7 @@ class BaseElevenLabs:
         *,
         base_url: typing.Optional[str] = None,
         environment: ElevenLabsEnvironment = ElevenLabsEnvironment.PRODUCTION,
-        api_key: typing.Optional[str] = None,
+        api_key: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -385,7 +385,7 @@ class AsyncBaseElevenLabs:
 
 
 
-    api_key : typing.Optional[str]
+    api_key : str
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -412,7 +412,7 @@ class AsyncBaseElevenLabs:
         *,
         base_url: typing.Optional[str] = None,
         environment: ElevenLabsEnvironment = ElevenLabsEnvironment.PRODUCTION,
-        api_key: typing.Optional[str] = None,
+        api_key: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,

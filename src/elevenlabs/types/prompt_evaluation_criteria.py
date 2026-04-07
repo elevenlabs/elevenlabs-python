@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .analysis_scope import AnalysisScope
 
 
 class PromptEvaluationCriteria(UncheckedBaseModel):
@@ -31,6 +32,11 @@ class PromptEvaluationCriteria(UncheckedBaseModel):
     use_knowledge_base: typing.Optional[bool] = pydantic.Field(default=None)
     """
     When evaluating the prompt, should the agent's knowledge base be used.
+    """
+
+    scope: typing.Optional[AnalysisScope] = pydantic.Field(default=None)
+    """
+    The scope of transcript context used when evaluating this criterion. 'conversation' uses the full transcript; 'agent' uses only the portion where the defining agent was active.
     """
 
     if IS_PYDANTIC_V2:

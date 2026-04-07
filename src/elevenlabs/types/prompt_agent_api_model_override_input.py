@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .knowledge_base_locator import KnowledgeBaseLocator
 from .llm import Llm
 
 
-class PromptAgentApiModelOverride(UncheckedBaseModel):
+class PromptAgentApiModelOverrideInput(UncheckedBaseModel):
     prompt: typing.Optional[str] = pydantic.Field(default=None)
     """
     The prompt for the agent
@@ -19,9 +20,19 @@ class PromptAgentApiModelOverride(UncheckedBaseModel):
     The LLM to query with the prompt and the chat history. If using data residency, the LLM must be supported in the data residency environment
     """
 
+    tool_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    A list of IDs of tools used by the agent
+    """
+
     native_mcp_server_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     A list of Native MCP server ids to be used by the agent
+    """
+
+    knowledge_base: typing.Optional[typing.List[KnowledgeBaseLocator]] = pydantic.Field(default=None)
+    """
+    A list of knowledge bases to be used by the agent
     """
 
     if IS_PYDANTIC_V2:

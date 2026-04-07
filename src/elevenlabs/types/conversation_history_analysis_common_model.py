@@ -10,6 +10,7 @@ from .conversation_history_evaluation_criteria_result_common_model import (
 )
 from .data_collection_result_common_model import DataCollectionResultCommonModel
 from .evaluation_success_result import EvaluationSuccessResult
+from .scoped_analysis_result import ScopedAnalysisResult
 
 
 class ConversationHistoryAnalysisCommonModel(UncheckedBaseModel):
@@ -24,6 +25,7 @@ class ConversationHistoryAnalysisCommonModel(UncheckedBaseModel):
     call_successful: EvaluationSuccessResult
     transcript_summary: str
     call_summary_title: typing.Optional[str] = None
+    scoped: typing.Optional[typing.List[ScopedAnalysisResult]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

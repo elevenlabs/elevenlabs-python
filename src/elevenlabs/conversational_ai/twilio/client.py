@@ -99,7 +99,7 @@ class TwilioClient:
         direction: typing.Optional[TelephonyDirection] = OMIT,
         conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    ) -> str:
         """
         Register a Twilio call and return TwiML to connect the call
 
@@ -120,7 +120,8 @@ class TwilioClient:
 
         Returns
         -------
-        None
+        str
+            Successful Response
 
         Examples
         --------
@@ -239,7 +240,7 @@ class AsyncTwilioClient:
         direction: typing.Optional[TelephonyDirection] = OMIT,
         conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    ) -> str:
         """
         Register a Twilio call and return TwiML to connect the call
 
@@ -260,7 +261,8 @@ class AsyncTwilioClient:
 
         Returns
         -------
-        None
+        str
+            Successful Response
 
         Examples
         --------

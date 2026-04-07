@@ -57,6 +57,11 @@ class SpeechToTextChunkResponseModel(UncheckedBaseModel):
     List of detected entities with their text, type, and character positions in the transcript.
     """
 
+    audio_duration_secs: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    The duration of the audio that was transcribed in seconds.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

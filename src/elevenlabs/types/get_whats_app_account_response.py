@@ -17,6 +17,7 @@ class GetWhatsAppAccountResponse(UncheckedBaseModel):
     enable_messaging: typing.Optional[bool] = None
     enable_audio_message_response: typing.Optional[bool] = None
     assigned_agent_name: typing.Optional[str] = None
+    is_token_expired: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
