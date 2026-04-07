@@ -5,19 +5,19 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .prompt_evaluation_criteria import PromptEvaluationCriteria
 
 
-class GetWhatsAppAccountResponse(UncheckedBaseModel):
-    business_account_id: str
-    phone_number_id: str
-    business_account_name: str
-    phone_number_name: str
-    phone_number: str
-    assigned_agent_id: typing.Optional[str] = None
-    enable_messaging: typing.Optional[bool] = None
-    enable_audio_message_response: typing.Optional[bool] = None
-    assigned_agent_name: typing.Optional[str] = None
-    is_token_expired: typing.Optional[bool] = None
+class EvaluationSettingsInput(UncheckedBaseModel):
+    """
+    Settings to evaluate an agent's performance.
+    Agents are evaluated against a set of criteria, with success being defined as meeting some combination of those criteria.
+    """
+
+    criteria: typing.Optional[typing.List[PromptEvaluationCriteria]] = pydantic.Field(default=None)
+    """
+    Individual criteria that the agent should be evaluated against
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

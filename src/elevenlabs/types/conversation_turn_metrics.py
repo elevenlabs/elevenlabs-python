@@ -12,6 +12,7 @@ class ConversationTurnMetrics(UncheckedBaseModel):
     metrics: typing.Optional[typing.Dict[str, MetricRecord]] = None
     convai_asr_provider: typing.Optional[str] = None
     convai_tts_model: typing.Optional[str] = None
+    convai_tts_cascade: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

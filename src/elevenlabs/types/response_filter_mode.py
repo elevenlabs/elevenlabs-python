@@ -2,4 +2,4 @@
 
 import typing
 
-ResponseFilterMode = typing.Union[typing.Literal["all", "allow"], typing.Any]
+ResponseFilterMode = typing.Union[typing.Literal["all", "allow", "hide_all"], typing.Any]

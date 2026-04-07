@@ -5,7 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .prompt_agent_api_model_override import PromptAgentApiModelOverride
+from .prompt_agent_api_model_override_input import PromptAgentApiModelOverrideInput
 
 
 class AgentConfigOverrideInput(UncheckedBaseModel):
@@ -24,7 +24,7 @@ class AgentConfigOverrideInput(UncheckedBaseModel):
     If non-empty, the message the agent will send when max conversation duration is reached.
     """
 
-    prompt: typing.Optional[PromptAgentApiModelOverride] = pydantic.Field(default=None)
+    prompt: typing.Optional[PromptAgentApiModelOverrideInput] = pydantic.Field(default=None)
     """
     The prompt for the agent
     """

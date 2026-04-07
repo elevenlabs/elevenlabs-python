@@ -18,6 +18,7 @@ from .types.tests_update_request_body import TestsUpdateRequestBody
 from .types.tests_update_response import TestsUpdateResponse
 
 if typing.TYPE_CHECKING:
+    from .folders.client import AsyncFoldersClient, FoldersClient
     from .invocations.client import AsyncInvocationsClient, InvocationsClient
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -27,6 +28,7 @@ class TestsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawTestsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
+        self._folders: typing.Optional[FoldersClient] = None
         self._invocations: typing.Optional[InvocationsClient] = None
 
     @property
@@ -73,6 +75,46 @@ class TestsClient:
         )
         """
         _response = self._raw_client.create(request=request, request_options=request_options)
+        return _response.data
+
+    def move(
+        self,
+        *,
+        entity_ids: typing.Sequence[str],
+        move_to: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Any:
+        """
+        Moves multiple tests or folders from one folder to another.
+
+        Parameters
+        ----------
+        entity_ids : typing.Sequence[str]
+            The IDs of tests or folders to move.
+
+        move_to : typing.Optional[str]
+            The folder to move the entities to. If not set, the entities will be moved to the root folder.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Tests or folders successfully moved to another folder
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.tests.move(
+            entity_ids=["entity_ids"],
+        )
+        """
+        _response = self._raw_client.move(entity_ids=entity_ids, move_to=move_to, request_options=request_options)
         return _response.data
 
     def get(self, test_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> TestsGetResponse:
@@ -284,6 +326,14 @@ class TestsClient:
         return _response.data
 
     @property
+    def folders(self):
+        if self._folders is None:
+            from .folders.client import FoldersClient  # noqa: E402
+
+            self._folders = FoldersClient(client_wrapper=self._client_wrapper)
+        return self._folders
+
+    @property
     def invocations(self):
         if self._invocations is None:
             from .invocations.client import InvocationsClient  # noqa: E402
@@ -296,6 +346,7 @@ class AsyncTestsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawTestsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
+        self._folders: typing.Optional[AsyncFoldersClient] = None
         self._invocations: typing.Optional[AsyncInvocationsClient] = None
 
     @property
@@ -350,6 +401,54 @@ class AsyncTestsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create(request=request, request_options=request_options)
+        return _response.data
+
+    async def move(
+        self,
+        *,
+        entity_ids: typing.Sequence[str],
+        move_to: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Any:
+        """
+        Moves multiple tests or folders from one folder to another.
+
+        Parameters
+        ----------
+        entity_ids : typing.Sequence[str]
+            The IDs of tests or folders to move.
+
+        move_to : typing.Optional[str]
+            The folder to move the entities to. If not set, the entities will be moved to the root folder.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Tests or folders successfully moved to another folder
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.tests.move(
+                entity_ids=["entity_ids"],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.move(entity_ids=entity_ids, move_to=move_to, request_options=request_options)
         return _response.data
 
     async def get(self, test_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> TestsGetResponse:
@@ -599,6 +698,14 @@ class AsyncTestsClient:
             request_options=request_options,
         )
         return _response.data
+
+    @property
+    def folders(self):
+        if self._folders is None:
+            from .folders.client import AsyncFoldersClient  # noqa: E402
+
+            self._folders = AsyncFoldersClient(client_wrapper=self._client_wrapper)
+        return self._folders
 
     @property
     def invocations(self):

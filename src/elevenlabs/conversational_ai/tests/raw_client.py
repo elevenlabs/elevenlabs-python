@@ -85,6 +85,73 @@ class RawTestsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def move(
+        self,
+        *,
+        entity_ids: typing.Sequence[str],
+        move_to: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[typing.Any]:
+        """
+        Moves multiple tests or folders from one folder to another.
+
+        Parameters
+        ----------
+        entity_ids : typing.Sequence[str]
+            The IDs of tests or folders to move.
+
+        move_to : typing.Optional[str]
+            The folder to move the entities to. If not set, the entities will be moved to the root folder.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[typing.Any]
+            Tests or folders successfully moved to another folder
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/convai/agent-testing/bulk-move",
+            method="POST",
+            json={
+                "entity_ids": entity_ids,
+                "move_to": move_to,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if _response is None or not _response.text.strip():
+                return HttpResponse(response=_response, data=None)
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.Any,
+                    construct_type(
+                        type_=typing.Any,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def get(
         self, test_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[TestsGetResponse]:
@@ -430,6 +497,73 @@ class AsyncRawTestsClient:
                     CreateAgentTestResponseModel,
                     construct_type(
                         type_=CreateAgentTestResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def move(
+        self,
+        *,
+        entity_ids: typing.Sequence[str],
+        move_to: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[typing.Any]:
+        """
+        Moves multiple tests or folders from one folder to another.
+
+        Parameters
+        ----------
+        entity_ids : typing.Sequence[str]
+            The IDs of tests or folders to move.
+
+        move_to : typing.Optional[str]
+            The folder to move the entities to. If not set, the entities will be moved to the root folder.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[typing.Any]
+            Tests or folders successfully moved to another folder
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/convai/agent-testing/bulk-move",
+            method="POST",
+            json={
+                "entity_ids": entity_ids,
+                "move_to": move_to,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if _response is None or not _response.text.strip():
+                return AsyncHttpResponse(response=_response, data=None)
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.Any,
+                    construct_type(
+                        type_=typing.Any,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

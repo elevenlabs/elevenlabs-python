@@ -2,4 +2,4 @@
 
 import typing
 
-VoiceResponseModelRecordingQuality = typing.Union[typing.Literal["studio", "ok", "bad"], typing.Any]
+VoiceResponseModelRecordingQuality = typing.Union[typing.Literal["studio", "good", "ok", "poor", "bad"], typing.Any]

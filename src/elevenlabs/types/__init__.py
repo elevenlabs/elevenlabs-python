@@ -79,6 +79,7 @@ if typing.TYPE_CHECKING:
     from .alignment import Alignment
     from .allowed_output_formats import AllowedOutputFormats
     from .allowlist_item import AllowlistItem
+    from .analysis_scope import AnalysisScope
     from .api_integration_o_auth_2_auth_code_response import ApiIntegrationOAuth2AuthCodeResponse
     from .api_integration_o_auth_2_auth_code_response_scope_separator import (
         ApiIntegrationOAuth2AuthCodeResponseScopeSeparator,
@@ -522,14 +523,18 @@ if typing.TYPE_CHECKING:
     from .convert_project_response_model import ConvertProjectResponseModel
     from .create_agent_branch_response_model import CreateAgentBranchResponseModel
     from .create_agent_response_model import CreateAgentResponseModel
+    from .create_agent_rule_params import CreateAgentRuleParams
+    from .create_agent_test_folder_response_model import CreateAgentTestFolderResponseModel
     from .create_agent_test_response_model import CreateAgentTestResponseModel
     from .create_asset_params import CreateAssetParams
     from .create_audio_native_project_request import CreateAudioNativeProjectRequest
     from .create_auth_connection_environment_variable_request import CreateAuthConnectionEnvironmentVariableRequest
     from .create_basic_auth_request import CreateBasicAuthRequest
     from .create_client_appointment_params import CreateClientAppointmentParams
+    from .create_client_interaction_params import CreateClientInteractionParams
     from .create_client_params import CreateClientParams
     from .create_custom_header_auth_request import CreateCustomHeaderAuthRequest
+    from .create_holiday_params import CreateHolidayParams
     from .create_mtls_auth_request import CreateMtlsAuthRequest
     from .create_o_auth_2_client_creds_request import CreateOAuth2ClientCredsRequest
     from .create_o_auth_2_jwt_request import CreateOAuth2JwtRequest
@@ -541,6 +546,7 @@ if typing.TYPE_CHECKING:
     from .create_product_params import CreateProductParams
     from .create_pronunciation_dictionary_response_model import CreatePronunciationDictionaryResponseModel
     from .create_rental_booking_params import CreateRentalBookingParams
+    from .create_rental_service_params import CreateRentalServiceParams
     from .create_response_unit_test_request import CreateResponseUnitTestRequest
     from .create_response_unit_test_request_dynamic_variables_value import (
         CreateResponseUnitTestRequestDynamicVariablesValue,
@@ -581,16 +587,20 @@ if typing.TYPE_CHECKING:
     from .data_collection_result_common_model import DataCollectionResultCommonModel
     from .default_sharing_group_response_model import DefaultSharingGroupResponseModel
     from .default_sharing_group_response_model_permission_level import DefaultSharingGroupResponseModelPermissionLevel
+    from .delete_agent_rule_params import DeleteAgentRuleParams
     from .delete_asset_params import DeleteAssetParams
     from .delete_calendar_event_params import DeleteCalendarEventParams
     from .delete_chapter_request import DeleteChapterRequest
     from .delete_chapter_response_model import DeleteChapterResponseModel
+    from .delete_client_interaction_params import DeleteClientInteractionParams
     from .delete_client_params import DeleteClientParams
     from .delete_dubbing_response_model import DeleteDubbingResponseModel
     from .delete_history_item_response import DeleteHistoryItemResponse
+    from .delete_holiday_params import DeleteHolidayParams
     from .delete_product_params import DeleteProductParams
     from .delete_project_request import DeleteProjectRequest
     from .delete_project_response_model import DeleteProjectResponseModel
+    from .delete_rental_service_params import DeleteRentalServiceParams
     from .delete_sample_response import DeleteSampleResponse
     from .delete_service_params import DeleteServiceParams
     from .delete_staff_params import DeleteStaffParams
@@ -670,7 +680,8 @@ if typing.TYPE_CHECKING:
     from .environment_variable_secret_value import EnvironmentVariableSecretValue
     from .environment_variable_secret_value_request import EnvironmentVariableSecretValueRequest
     from .environment_variables_list_response import EnvironmentVariablesListResponse
-    from .evaluation_settings import EvaluationSettings
+    from .evaluation_settings_input import EvaluationSettingsInput
+    from .evaluation_settings_output import EvaluationSettingsOutput
     from .evaluation_success_result import EvaluationSuccessResult
     from .exact_parameter_evaluation_strategy import ExactParameterEvaluationStrategy
     from .export_options import (
@@ -712,8 +723,12 @@ if typing.TYPE_CHECKING:
         GetAgentResponseModelPhoneNumbersItem_SipTrunk,
         GetAgentResponseModelPhoneNumbersItem_Twilio,
     )
+    from .get_agent_test_folder_response_model import GetAgentTestFolderResponseModel
     from .get_agents_page_response_model import GetAgentsPageResponseModel
+    from .get_analytics_summary_params import GetAnalyticsSummaryParams
     from .get_audio_native_project_settings_response_model import GetAudioNativeProjectSettingsResponseModel
+    from .get_booking_page_settings_params import GetBookingPageSettingsParams
+    from .get_booking_slug_status_params import GetBookingSlugStatusParams
     from .get_chapter_request import GetChapterRequest
     from .get_chapter_snapshots_request import GetChapterSnapshotsRequest
     from .get_chapters_request import GetChaptersRequest
@@ -811,6 +826,7 @@ if typing.TYPE_CHECKING:
     from .get_response_unit_test_response_model_dynamic_variables_value import (
         GetResponseUnitTestResponseModelDynamicVariablesValue,
     )
+    from .get_schedule_params import GetScheduleParams
     from .get_simulation_test_response_model import GetSimulationTestResponseModel
     from .get_simulation_test_response_model_dynamic_variables_value import (
         GetSimulationTestResponseModelDynamicVariablesValue,
@@ -881,6 +897,7 @@ if typing.TYPE_CHECKING:
     from .language_response import LanguageResponse
     from .library_voice_response import LibraryVoiceResponse
     from .library_voice_response_model_category import LibraryVoiceResponseModelCategory
+    from .list_agent_rules_params import ListAgentRulesParams
     from .list_assets_params import ListAssetsParams
     from .list_auth_connections_response import ListAuthConnectionsResponse
     from .list_auth_connections_response_auth_connections_item import (
@@ -896,7 +913,9 @@ if typing.TYPE_CHECKING:
         ListAuthConnectionsResponseAuthConnectionsItem_WhatsappAuth,
     )
     from .list_calendar_events_params import ListCalendarEventsParams
+    from .list_client_interactions_params import ListClientInteractionsParams
     from .list_clients_params import ListClientsParams
+    from .list_holidays_params import ListHolidaysParams
     from .list_mcp_tools_response_model import ListMcpToolsResponseModel
     from .list_products_params import ListProductsParams
     from .list_rental_services_params import ListRentalServicesParams
@@ -1126,8 +1145,9 @@ if typing.TYPE_CHECKING:
         PromptAgentApiModelOutputToolsItem_System,
         PromptAgentApiModelOutputToolsItem_Webhook,
     )
-    from .prompt_agent_api_model_override import PromptAgentApiModelOverride
     from .prompt_agent_api_model_override_config import PromptAgentApiModelOverrideConfig
+    from .prompt_agent_api_model_override_input import PromptAgentApiModelOverrideInput
+    from .prompt_agent_api_model_override_output import PromptAgentApiModelOverrideOutput
     from .prompt_agent_api_model_workflow_override_input import PromptAgentApiModelWorkflowOverrideInput
     from .prompt_agent_api_model_workflow_override_input_backup_llm_config import (
         PromptAgentApiModelWorkflowOverrideInputBackupLlmConfig,
@@ -1226,6 +1246,7 @@ if typing.TYPE_CHECKING:
     from .say_node_literal_message_output import SayNodeLiteralMessageOutput
     from .say_node_prompt_message_input import SayNodePromptMessageInput
     from .say_node_prompt_message_output import SayNodePromptMessageOutput
+    from .scoped_analysis_result import ScopedAnalysisResult
     from .scribe_auth_error_payload import ScribeAuthErrorPayload
     from .scribe_chunk_size_exceeded_error_payload import ScribeChunkSizeExceededErrorPayload
     from .scribe_error_payload import ScribeErrorPayload
@@ -1257,6 +1278,7 @@ if typing.TYPE_CHECKING:
     from .session_started_payload import SessionStartedPayload
     from .session_started_payload_config import SessionStartedPayloadConfig
     from .session_started_payload_config_commit_strategy import SessionStartedPayloadConfigCommitStrategy
+    from .set_booking_slug_params import SetBookingSlugParams
     from .sfx_source_context import SfxSourceContext
     from .share_option_response_model import ShareOptionResponseModel
     from .share_option_response_model_type import ShareOptionResponseModelType
@@ -1367,6 +1389,7 @@ if typing.TYPE_CHECKING:
     from .text_to_speech_with_timestamps_request import TextToSpeechWithTimestampsRequest
     from .threshold_guardrail import ThresholdGuardrail
     from .time_range import TimeRange
+    from .to_dialogue_settings_response_model import ToDialogueSettingsResponseModel
     from .token_response_model import TokenResponseModel
     from .tool import Tool
     from .tool_annotations import ToolAnnotations
@@ -1458,14 +1481,20 @@ if typing.TYPE_CHECKING:
         UnitTestToolCallParameterEval_Regex,
     )
     from .unit_test_workflow_node_transition_evaluation_node_id import UnitTestWorkflowNodeTransitionEvaluationNodeId
+    from .update_agent_rule_params import UpdateAgentRuleParams
     from .update_asset_params import UpdateAssetParams
     from .update_audio_native_project_request import UpdateAudioNativeProjectRequest
+    from .update_booking_page_settings_params import UpdateBookingPageSettingsParams
+    from .update_business_info_params import UpdateBusinessInfoParams
     from .update_calendar_event_params import UpdateCalendarEventParams
     from .update_chapter_request import UpdateChapterRequest
     from .update_client_params import UpdateClientParams
+    from .update_customer_facing_config_params import UpdateCustomerFacingConfigParams
+    from .update_holiday_params import UpdateHolidayParams
     from .update_product_params import UpdateProductParams
     from .update_project_request import UpdateProjectRequest
     from .update_pronunciation_dictionaries_request import UpdatePronunciationDictionariesRequest
+    from .update_rental_service_params import UpdateRentalServiceParams
     from .update_response_unit_test_request import UpdateResponseUnitTestRequest
     from .update_response_unit_test_request_dynamic_variables_value import (
         UpdateResponseUnitTestRequestDynamicVariablesValue,
@@ -1500,6 +1529,7 @@ if typing.TYPE_CHECKING:
     from .video_key_moment import VideoKeyMoment
     from .video_segment import VideoSegment
     from .video_subject import VideoSubject
+    from .visited_agent_ref import VisitedAgentRef
     from .voice import Voice
     from .voice_category import VoiceCategory
     from .voice_design_preview_response import VoiceDesignPreviewResponse
@@ -1794,6 +1824,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Alignment": ".alignment",
     "AllowedOutputFormats": ".allowed_output_formats",
     "AllowlistItem": ".allowlist_item",
+    "AnalysisScope": ".analysis_scope",
     "ApiIntegrationOAuth2AuthCodeResponse": ".api_integration_o_auth_2_auth_code_response",
     "ApiIntegrationOAuth2AuthCodeResponseScopeSeparator": ".api_integration_o_auth_2_auth_code_response_scope_separator",
     "ApiIntegrationWebhookOverrides": ".api_integration_webhook_overrides",
@@ -2145,14 +2176,18 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConvertProjectResponseModel": ".convert_project_response_model",
     "CreateAgentBranchResponseModel": ".create_agent_branch_response_model",
     "CreateAgentResponseModel": ".create_agent_response_model",
+    "CreateAgentRuleParams": ".create_agent_rule_params",
+    "CreateAgentTestFolderResponseModel": ".create_agent_test_folder_response_model",
     "CreateAgentTestResponseModel": ".create_agent_test_response_model",
     "CreateAssetParams": ".create_asset_params",
     "CreateAudioNativeProjectRequest": ".create_audio_native_project_request",
     "CreateAuthConnectionEnvironmentVariableRequest": ".create_auth_connection_environment_variable_request",
     "CreateBasicAuthRequest": ".create_basic_auth_request",
     "CreateClientAppointmentParams": ".create_client_appointment_params",
+    "CreateClientInteractionParams": ".create_client_interaction_params",
     "CreateClientParams": ".create_client_params",
     "CreateCustomHeaderAuthRequest": ".create_custom_header_auth_request",
+    "CreateHolidayParams": ".create_holiday_params",
     "CreateMtlsAuthRequest": ".create_mtls_auth_request",
     "CreateOAuth2ClientCredsRequest": ".create_o_auth_2_client_creds_request",
     "CreateOAuth2JwtRequest": ".create_o_auth_2_jwt_request",
@@ -2164,6 +2199,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateProductParams": ".create_product_params",
     "CreatePronunciationDictionaryResponseModel": ".create_pronunciation_dictionary_response_model",
     "CreateRentalBookingParams": ".create_rental_booking_params",
+    "CreateRentalServiceParams": ".create_rental_service_params",
     "CreateResponseUnitTestRequest": ".create_response_unit_test_request",
     "CreateResponseUnitTestRequestDynamicVariablesValue": ".create_response_unit_test_request_dynamic_variables_value",
     "CreateSecretEnvironmentVariableRequest": ".create_secret_environment_variable_request",
@@ -2198,16 +2234,20 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DataCollectionResultCommonModel": ".data_collection_result_common_model",
     "DefaultSharingGroupResponseModel": ".default_sharing_group_response_model",
     "DefaultSharingGroupResponseModelPermissionLevel": ".default_sharing_group_response_model_permission_level",
+    "DeleteAgentRuleParams": ".delete_agent_rule_params",
     "DeleteAssetParams": ".delete_asset_params",
     "DeleteCalendarEventParams": ".delete_calendar_event_params",
     "DeleteChapterRequest": ".delete_chapter_request",
     "DeleteChapterResponseModel": ".delete_chapter_response_model",
+    "DeleteClientInteractionParams": ".delete_client_interaction_params",
     "DeleteClientParams": ".delete_client_params",
     "DeleteDubbingResponseModel": ".delete_dubbing_response_model",
     "DeleteHistoryItemResponse": ".delete_history_item_response",
+    "DeleteHolidayParams": ".delete_holiday_params",
     "DeleteProductParams": ".delete_product_params",
     "DeleteProjectRequest": ".delete_project_request",
     "DeleteProjectResponseModel": ".delete_project_response_model",
+    "DeleteRentalServiceParams": ".delete_rental_service_params",
     "DeleteSampleResponse": ".delete_sample_response",
     "DeleteServiceParams": ".delete_service_params",
     "DeleteStaffParams": ".delete_staff_params",
@@ -2283,7 +2323,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "EnvironmentVariableSecretValue": ".environment_variable_secret_value",
     "EnvironmentVariableSecretValueRequest": ".environment_variable_secret_value_request",
     "EnvironmentVariablesListResponse": ".environment_variables_list_response",
-    "EvaluationSettings": ".evaluation_settings",
+    "EvaluationSettingsInput": ".evaluation_settings_input",
+    "EvaluationSettingsOutput": ".evaluation_settings_output",
     "EvaluationSuccessResult": ".evaluation_success_result",
     "ExactParameterEvaluationStrategy": ".exact_parameter_evaluation_strategy",
     "ExportOptions": ".export_options",
@@ -2321,8 +2362,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetAgentResponseModelPhoneNumbersItem": ".get_agent_response_model_phone_numbers_item",
     "GetAgentResponseModelPhoneNumbersItem_SipTrunk": ".get_agent_response_model_phone_numbers_item",
     "GetAgentResponseModelPhoneNumbersItem_Twilio": ".get_agent_response_model_phone_numbers_item",
+    "GetAgentTestFolderResponseModel": ".get_agent_test_folder_response_model",
     "GetAgentsPageResponseModel": ".get_agents_page_response_model",
+    "GetAnalyticsSummaryParams": ".get_analytics_summary_params",
     "GetAudioNativeProjectSettingsResponseModel": ".get_audio_native_project_settings_response_model",
+    "GetBookingPageSettingsParams": ".get_booking_page_settings_params",
+    "GetBookingSlugStatusParams": ".get_booking_slug_status_params",
     "GetChapterRequest": ".get_chapter_request",
     "GetChapterSnapshotsRequest": ".get_chapter_snapshots_request",
     "GetChaptersRequest": ".get_chapters_request",
@@ -2392,6 +2437,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetPronunciationDictionaryWithRulesResponseModelRulesItem_Phoneme": ".get_pronunciation_dictionary_with_rules_response_model_rules_item",
     "GetResponseUnitTestResponseModel": ".get_response_unit_test_response_model",
     "GetResponseUnitTestResponseModelDynamicVariablesValue": ".get_response_unit_test_response_model_dynamic_variables_value",
+    "GetScheduleParams": ".get_schedule_params",
     "GetSimulationTestResponseModel": ".get_simulation_test_response_model",
     "GetSimulationTestResponseModelDynamicVariablesValue": ".get_simulation_test_response_model_dynamic_variables_value",
     "GetSpeechHistoryResponse": ".get_speech_history_response",
@@ -2452,6 +2498,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LanguageResponse": ".language_response",
     "LibraryVoiceResponse": ".library_voice_response",
     "LibraryVoiceResponseModelCategory": ".library_voice_response_model_category",
+    "ListAgentRulesParams": ".list_agent_rules_params",
     "ListAssetsParams": ".list_assets_params",
     "ListAuthConnectionsResponse": ".list_auth_connections_response",
     "ListAuthConnectionsResponseAuthConnectionsItem": ".list_auth_connections_response_auth_connections_item",
@@ -2465,7 +2512,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListAuthConnectionsResponseAuthConnectionsItem_PrivateKeyJwt": ".list_auth_connections_response_auth_connections_item",
     "ListAuthConnectionsResponseAuthConnectionsItem_WhatsappAuth": ".list_auth_connections_response_auth_connections_item",
     "ListCalendarEventsParams": ".list_calendar_events_params",
+    "ListClientInteractionsParams": ".list_client_interactions_params",
     "ListClientsParams": ".list_clients_params",
+    "ListHolidaysParams": ".list_holidays_params",
     "ListMcpToolsResponseModel": ".list_mcp_tools_response_model",
     "ListProductsParams": ".list_products_params",
     "ListRentalServicesParams": ".list_rental_services_params",
@@ -2671,8 +2720,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PromptAgentApiModelOutputToolsItem_Smb": ".prompt_agent_api_model_output_tools_item",
     "PromptAgentApiModelOutputToolsItem_System": ".prompt_agent_api_model_output_tools_item",
     "PromptAgentApiModelOutputToolsItem_Webhook": ".prompt_agent_api_model_output_tools_item",
-    "PromptAgentApiModelOverride": ".prompt_agent_api_model_override",
     "PromptAgentApiModelOverrideConfig": ".prompt_agent_api_model_override_config",
+    "PromptAgentApiModelOverrideInput": ".prompt_agent_api_model_override_input",
+    "PromptAgentApiModelOverrideOutput": ".prompt_agent_api_model_override_output",
     "PromptAgentApiModelWorkflowOverrideInput": ".prompt_agent_api_model_workflow_override_input",
     "PromptAgentApiModelWorkflowOverrideInputBackupLlmConfig": ".prompt_agent_api_model_workflow_override_input_backup_llm_config",
     "PromptAgentApiModelWorkflowOverrideInputToolsItem": ".prompt_agent_api_model_workflow_override_input_tools_item",
@@ -2759,6 +2809,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SayNodeLiteralMessageOutput": ".say_node_literal_message_output",
     "SayNodePromptMessageInput": ".say_node_prompt_message_input",
     "SayNodePromptMessageOutput": ".say_node_prompt_message_output",
+    "ScopedAnalysisResult": ".scoped_analysis_result",
     "ScribeAuthErrorPayload": ".scribe_auth_error_payload",
     "ScribeChunkSizeExceededErrorPayload": ".scribe_chunk_size_exceeded_error_payload",
     "ScribeErrorPayload": ".scribe_error_payload",
@@ -2790,6 +2841,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SessionStartedPayload": ".session_started_payload",
     "SessionStartedPayloadConfig": ".session_started_payload_config",
     "SessionStartedPayloadConfigCommitStrategy": ".session_started_payload_config_commit_strategy",
+    "SetBookingSlugParams": ".set_booking_slug_params",
     "SfxSourceContext": ".sfx_source_context",
     "ShareOptionResponseModel": ".share_option_response_model",
     "ShareOptionResponseModelType": ".share_option_response_model_type",
@@ -2894,6 +2946,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TextToSpeechWithTimestampsRequest": ".text_to_speech_with_timestamps_request",
     "ThresholdGuardrail": ".threshold_guardrail",
     "TimeRange": ".time_range",
+    "ToDialogueSettingsResponseModel": ".to_dialogue_settings_response_model",
     "TokenResponseModel": ".token_response_model",
     "Tool": ".tool",
     "ToolAnnotations": ".tool_annotations",
@@ -2975,14 +3028,20 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UnitTestToolCallParameterEval_Llm": ".unit_test_tool_call_parameter_eval",
     "UnitTestToolCallParameterEval_Regex": ".unit_test_tool_call_parameter_eval",
     "UnitTestWorkflowNodeTransitionEvaluationNodeId": ".unit_test_workflow_node_transition_evaluation_node_id",
+    "UpdateAgentRuleParams": ".update_agent_rule_params",
     "UpdateAssetParams": ".update_asset_params",
     "UpdateAudioNativeProjectRequest": ".update_audio_native_project_request",
+    "UpdateBookingPageSettingsParams": ".update_booking_page_settings_params",
+    "UpdateBusinessInfoParams": ".update_business_info_params",
     "UpdateCalendarEventParams": ".update_calendar_event_params",
     "UpdateChapterRequest": ".update_chapter_request",
     "UpdateClientParams": ".update_client_params",
+    "UpdateCustomerFacingConfigParams": ".update_customer_facing_config_params",
+    "UpdateHolidayParams": ".update_holiday_params",
     "UpdateProductParams": ".update_product_params",
     "UpdateProjectRequest": ".update_project_request",
     "UpdatePronunciationDictionariesRequest": ".update_pronunciation_dictionaries_request",
+    "UpdateRentalServiceParams": ".update_rental_service_params",
     "UpdateResponseUnitTestRequest": ".update_response_unit_test_request",
     "UpdateResponseUnitTestRequestDynamicVariablesValue": ".update_response_unit_test_request_dynamic_variables_value",
     "UpdateServiceParams": ".update_service_params",
@@ -3013,6 +3072,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "VideoKeyMoment": ".video_key_moment",
     "VideoSegment": ".video_segment",
     "VideoSubject": ".video_subject",
+    "VisitedAgentRef": ".visited_agent_ref",
     "Voice": ".voice",
     "VoiceCategory": ".voice_category",
     "VoiceDesignPreviewResponse": ".voice_design_preview_response",
@@ -3291,6 +3351,7 @@ __all__ = [
     "Alignment",
     "AllowedOutputFormats",
     "AllowlistItem",
+    "AnalysisScope",
     "ApiIntegrationOAuth2AuthCodeResponse",
     "ApiIntegrationOAuth2AuthCodeResponseScopeSeparator",
     "ApiIntegrationWebhookOverrides",
@@ -3642,14 +3703,18 @@ __all__ = [
     "ConvertProjectResponseModel",
     "CreateAgentBranchResponseModel",
     "CreateAgentResponseModel",
+    "CreateAgentRuleParams",
+    "CreateAgentTestFolderResponseModel",
     "CreateAgentTestResponseModel",
     "CreateAssetParams",
     "CreateAudioNativeProjectRequest",
     "CreateAuthConnectionEnvironmentVariableRequest",
     "CreateBasicAuthRequest",
     "CreateClientAppointmentParams",
+    "CreateClientInteractionParams",
     "CreateClientParams",
     "CreateCustomHeaderAuthRequest",
+    "CreateHolidayParams",
     "CreateMtlsAuthRequest",
     "CreateOAuth2ClientCredsRequest",
     "CreateOAuth2JwtRequest",
@@ -3661,6 +3726,7 @@ __all__ = [
     "CreateProductParams",
     "CreatePronunciationDictionaryResponseModel",
     "CreateRentalBookingParams",
+    "CreateRentalServiceParams",
     "CreateResponseUnitTestRequest",
     "CreateResponseUnitTestRequestDynamicVariablesValue",
     "CreateSecretEnvironmentVariableRequest",
@@ -3695,16 +3761,20 @@ __all__ = [
     "DataCollectionResultCommonModel",
     "DefaultSharingGroupResponseModel",
     "DefaultSharingGroupResponseModelPermissionLevel",
+    "DeleteAgentRuleParams",
     "DeleteAssetParams",
     "DeleteCalendarEventParams",
     "DeleteChapterRequest",
     "DeleteChapterResponseModel",
+    "DeleteClientInteractionParams",
     "DeleteClientParams",
     "DeleteDubbingResponseModel",
     "DeleteHistoryItemResponse",
+    "DeleteHolidayParams",
     "DeleteProductParams",
     "DeleteProjectRequest",
     "DeleteProjectResponseModel",
+    "DeleteRentalServiceParams",
     "DeleteSampleResponse",
     "DeleteServiceParams",
     "DeleteStaffParams",
@@ -3780,7 +3850,8 @@ __all__ = [
     "EnvironmentVariableSecretValue",
     "EnvironmentVariableSecretValueRequest",
     "EnvironmentVariablesListResponse",
-    "EvaluationSettings",
+    "EvaluationSettingsInput",
+    "EvaluationSettingsOutput",
     "EvaluationSuccessResult",
     "ExactParameterEvaluationStrategy",
     "ExportOptions",
@@ -3818,8 +3889,12 @@ __all__ = [
     "GetAgentResponseModelPhoneNumbersItem",
     "GetAgentResponseModelPhoneNumbersItem_SipTrunk",
     "GetAgentResponseModelPhoneNumbersItem_Twilio",
+    "GetAgentTestFolderResponseModel",
     "GetAgentsPageResponseModel",
+    "GetAnalyticsSummaryParams",
     "GetAudioNativeProjectSettingsResponseModel",
+    "GetBookingPageSettingsParams",
+    "GetBookingSlugStatusParams",
     "GetChapterRequest",
     "GetChapterSnapshotsRequest",
     "GetChaptersRequest",
@@ -3889,6 +3964,7 @@ __all__ = [
     "GetPronunciationDictionaryWithRulesResponseModelRulesItem_Phoneme",
     "GetResponseUnitTestResponseModel",
     "GetResponseUnitTestResponseModelDynamicVariablesValue",
+    "GetScheduleParams",
     "GetSimulationTestResponseModel",
     "GetSimulationTestResponseModelDynamicVariablesValue",
     "GetSpeechHistoryResponse",
@@ -3949,6 +4025,7 @@ __all__ = [
     "LanguageResponse",
     "LibraryVoiceResponse",
     "LibraryVoiceResponseModelCategory",
+    "ListAgentRulesParams",
     "ListAssetsParams",
     "ListAuthConnectionsResponse",
     "ListAuthConnectionsResponseAuthConnectionsItem",
@@ -3962,7 +4039,9 @@ __all__ = [
     "ListAuthConnectionsResponseAuthConnectionsItem_PrivateKeyJwt",
     "ListAuthConnectionsResponseAuthConnectionsItem_WhatsappAuth",
     "ListCalendarEventsParams",
+    "ListClientInteractionsParams",
     "ListClientsParams",
+    "ListHolidaysParams",
     "ListMcpToolsResponseModel",
     "ListProductsParams",
     "ListRentalServicesParams",
@@ -4168,8 +4247,9 @@ __all__ = [
     "PromptAgentApiModelOutputToolsItem_Smb",
     "PromptAgentApiModelOutputToolsItem_System",
     "PromptAgentApiModelOutputToolsItem_Webhook",
-    "PromptAgentApiModelOverride",
     "PromptAgentApiModelOverrideConfig",
+    "PromptAgentApiModelOverrideInput",
+    "PromptAgentApiModelOverrideOutput",
     "PromptAgentApiModelWorkflowOverrideInput",
     "PromptAgentApiModelWorkflowOverrideInputBackupLlmConfig",
     "PromptAgentApiModelWorkflowOverrideInputToolsItem",
@@ -4256,6 +4336,7 @@ __all__ = [
     "SayNodeLiteralMessageOutput",
     "SayNodePromptMessageInput",
     "SayNodePromptMessageOutput",
+    "ScopedAnalysisResult",
     "ScribeAuthErrorPayload",
     "ScribeChunkSizeExceededErrorPayload",
     "ScribeErrorPayload",
@@ -4287,6 +4368,7 @@ __all__ = [
     "SessionStartedPayload",
     "SessionStartedPayloadConfig",
     "SessionStartedPayloadConfigCommitStrategy",
+    "SetBookingSlugParams",
     "SfxSourceContext",
     "ShareOptionResponseModel",
     "ShareOptionResponseModelType",
@@ -4391,6 +4473,7 @@ __all__ = [
     "TextToSpeechWithTimestampsRequest",
     "ThresholdGuardrail",
     "TimeRange",
+    "ToDialogueSettingsResponseModel",
     "TokenResponseModel",
     "Tool",
     "ToolAnnotations",
@@ -4472,14 +4555,20 @@ __all__ = [
     "UnitTestToolCallParameterEval_Llm",
     "UnitTestToolCallParameterEval_Regex",
     "UnitTestWorkflowNodeTransitionEvaluationNodeId",
+    "UpdateAgentRuleParams",
     "UpdateAssetParams",
     "UpdateAudioNativeProjectRequest",
+    "UpdateBookingPageSettingsParams",
+    "UpdateBusinessInfoParams",
     "UpdateCalendarEventParams",
     "UpdateChapterRequest",
     "UpdateClientParams",
+    "UpdateCustomerFacingConfigParams",
+    "UpdateHolidayParams",
     "UpdateProductParams",
     "UpdateProjectRequest",
     "UpdatePronunciationDictionariesRequest",
+    "UpdateRentalServiceParams",
     "UpdateResponseUnitTestRequest",
     "UpdateResponseUnitTestRequestDynamicVariablesValue",
     "UpdateServiceParams",
@@ -4510,6 +4599,7 @@ __all__ = [
     "VideoKeyMoment",
     "VideoSegment",
     "VideoSubject",
+    "VisitedAgentRef",
     "Voice",
     "VoiceCategory",
     "VoiceDesignPreviewResponse",
