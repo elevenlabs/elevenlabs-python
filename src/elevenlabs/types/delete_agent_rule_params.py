@@ -7,17 +7,8 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class GetWhatsAppAccountResponse(UncheckedBaseModel):
-    business_account_id: str
-    phone_number_id: str
-    business_account_name: str
-    phone_number_name: str
-    phone_number: str
-    assigned_agent_id: typing.Optional[str] = None
-    enable_messaging: typing.Optional[bool] = None
-    enable_audio_message_response: typing.Optional[bool] = None
-    assigned_agent_name: typing.Optional[str] = None
-    is_token_expired: typing.Optional[bool] = None
+class DeleteAgentRuleParams(UncheckedBaseModel):
+    smb_tool_type: typing.Optional[typing.Literal["delete_agent_rule"]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

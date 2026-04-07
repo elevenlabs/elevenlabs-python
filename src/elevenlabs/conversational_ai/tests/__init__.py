@@ -25,7 +25,7 @@ if typing.TYPE_CHECKING:
         TestsUpdateResponse_Simulation,
         TestsUpdateResponse_Tool,
     )
-    from . import invocations
+    from . import folders, invocations
 _dynamic_imports: typing.Dict[str, str] = {
     "TestsCreateRequestBody": ".types",
     "TestsCreateRequestBody_Llm": ".types",
@@ -44,6 +44,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TestsUpdateResponse_Llm": ".types",
     "TestsUpdateResponse_Simulation": ".types",
     "TestsUpdateResponse_Tool": ".types",
+    "folders": ".folders",
     "invocations": ".invocations",
 }
 
@@ -87,5 +88,6 @@ __all__ = [
     "TestsUpdateResponse_Llm",
     "TestsUpdateResponse_Simulation",
     "TestsUpdateResponse_Tool",
+    "folders",
     "invocations",
 ]

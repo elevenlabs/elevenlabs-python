@@ -12,6 +12,7 @@ from .conversation_history_metadata_common_model import ConversationHistoryMetad
 from .conversation_history_transcript_response_model import ConversationHistoryTranscriptResponseModel
 from .conversation_initiation_client_data_request_output import ConversationInitiationClientDataRequestOutput
 from .get_conversation_response_model_status import GetConversationResponseModelStatus
+from .visited_agent_ref import VisitedAgentRef
 
 
 class GetConversationResponseModel(UncheckedBaseModel):
@@ -27,6 +28,7 @@ class GetConversationResponseModel(UncheckedBaseModel):
 
     metadata: ConversationHistoryMetadataCommonModel
     analysis: typing.Optional[ConversationHistoryAnalysisCommonModel] = None
+    visited_agents: typing.Optional[typing.List[VisitedAgentRef]] = None
     conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestOutput] = None
     environment: typing.Optional[str] = None
     conversation_id: str

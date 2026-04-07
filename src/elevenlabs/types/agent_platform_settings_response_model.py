@@ -8,9 +8,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_call_limits import AgentCallLimits
 from .agent_testing_settings import AgentTestingSettings
 from .agent_workspace_overrides_output import AgentWorkspaceOverridesOutput
+from .analysis_scope import AnalysisScope
 from .auth_settings import AuthSettings
 from .conversation_initiation_client_data_config_output import ConversationInitiationClientDataConfigOutput
-from .evaluation_settings import EvaluationSettings
+from .evaluation_settings_output import EvaluationSettingsOutput
 from .guardrails_v_1_output import GuardrailsV1Output
 from .literal_json_schema_property import LiteralJsonSchemaProperty
 from .privacy_config_output import PrivacyConfigOutput
@@ -19,7 +20,7 @@ from .widget_config import WidgetConfig
 
 
 class AgentPlatformSettingsResponseModel(UncheckedBaseModel):
-    evaluation: typing.Optional[EvaluationSettings] = pydantic.Field(default=None)
+    evaluation: typing.Optional[EvaluationSettingsOutput] = pydantic.Field(default=None)
     """
     Settings for evaluation
     """
@@ -32,6 +33,11 @@ class AgentPlatformSettingsResponseModel(UncheckedBaseModel):
     data_collection: typing.Optional[typing.Dict[str, LiteralJsonSchemaProperty]] = pydantic.Field(default=None)
     """
     Data collection settings
+    """
+
+    data_collection_scopes: typing.Optional[typing.Dict[str, AnalysisScope]] = pydantic.Field(default=None)
+    """
+    Scope per data collection item ID. Missing keys default to conversation scope.
     """
 
     overrides: typing.Optional[ConversationInitiationClientDataConfigOutput] = pydantic.Field(default=None)

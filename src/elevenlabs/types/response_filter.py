@@ -15,7 +15,7 @@ class ResponseFilter(UncheckedBaseModel):
 
     mode: typing.Optional[ResponseFilterMode] = pydantic.Field(default=None)
     """
-    Controls how tool responses are filtered. 'all' returns entire response, 'allow' returns only specified paths.
+    Controls how tool responses are filtered. 'all' returns entire response, 'allow' returns only specified paths, 'hide_all' hides the entire response.
     """
 
     filters: typing.Optional[typing.List[str]] = pydantic.Field(default=None)

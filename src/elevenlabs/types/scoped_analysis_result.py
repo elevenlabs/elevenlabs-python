@@ -5,27 +5,31 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .analysis_scope import AnalysisScope
 from .conversation_history_evaluation_criteria_result_common_model import (
     ConversationHistoryEvaluationCriteriaResultCommonModel,
 )
 from .data_collection_result_common_model import DataCollectionResultCommonModel
 from .evaluation_success_result import EvaluationSuccessResult
-from .scoped_analysis_result import ScopedAnalysisResult
 
 
-class ConversationHistoryAnalysisCommonModel(UncheckedBaseModel):
+class ScopedAnalysisResult(UncheckedBaseModel):
+    scope: AnalysisScope = pydantic.Field()
+    """
+    The scope of the analysis. 'conversation' uses the full transcript; 'agent' uses only the portion where the defining agent was active.
+    """
+
+    source_agent_id: str
+    source_branch_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Branch of the agent for this scoped block; disambiguates repeated agent_id.
+    """
+
     evaluation_criteria_results: typing.Optional[
         typing.Dict[str, ConversationHistoryEvaluationCriteriaResultCommonModel]
     ] = None
     data_collection_results: typing.Optional[typing.Dict[str, DataCollectionResultCommonModel]] = None
-    evaluation_criteria_results_list: typing.Optional[
-        typing.List[ConversationHistoryEvaluationCriteriaResultCommonModel]
-    ] = None
-    data_collection_results_list: typing.Optional[typing.List[DataCollectionResultCommonModel]] = None
-    call_successful: EvaluationSuccessResult
-    transcript_summary: str
-    call_summary_title: typing.Optional[str] = None
-    scoped: typing.Optional[typing.List[ScopedAnalysisResult]] = None
+    successful: EvaluationSuccessResult
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
