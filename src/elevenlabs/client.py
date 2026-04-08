@@ -19,6 +19,15 @@ def get_base_url_host(base_url: str) -> str:
     return httpx.URL(base_url).host
 
 
+def _resolve_api_key(api_key: typing.Optional[str]) -> str:
+    resolved = api_key or os.getenv("ELEVENLABS_API_KEY")
+    if not resolved:
+        raise ValueError(
+            "Please pass in your ElevenLabs API Key or export ELEVENLABS_API_KEY in your environment."
+        )
+    return resolved
+
+
 class ElevenLabs(BaseElevenLabs):
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
@@ -47,14 +56,15 @@ class ElevenLabs(BaseElevenLabs):
         *,
         base_url: typing.Optional[str] = None,
         environment: ElevenLabsEnvironment = ElevenLabsEnvironment.PRODUCTION,
-        api_key: typing.Optional[str] = os.getenv("ELEVENLABS_API_KEY"),
+        api_key: typing.Optional[str] = None,
         timeout: typing.Optional[float] = 240,
         httpx_client: typing.Optional[httpx.Client] = None
     ):
+        resolved_api_key = _resolve_api_key(api_key)
         super().__init__(
             base_url=base_url,
             environment=environment,
-            api_key=api_key,
+            api_key=resolved_api_key,
             timeout=timeout,
             httpx_client=httpx_client
         )
@@ -93,14 +103,15 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
         *,
         base_url: typing.Optional[str] = None,
         environment: ElevenLabsEnvironment = ElevenLabsEnvironment.PRODUCTION,
-        api_key: typing.Optional[str] = os.getenv("ELEVENLABS_API_KEY"),
+        api_key: typing.Optional[str] = None,
         timeout: typing.Optional[float] = 240,
         httpx_client: typing.Optional[httpx.AsyncClient] = None
     ):
+        resolved_api_key = _resolve_api_key(api_key)
         super().__init__(
             base_url=base_url,
             environment=environment,
-            api_key=api_key,
+            api_key=resolved_api_key,
             timeout=timeout,
             httpx_client=httpx_client
         )
