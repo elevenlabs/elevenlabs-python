@@ -58,6 +58,7 @@ class LanguageClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.dubbing.resource.language.add(
             dubbing_id="dubbing_id",
@@ -115,6 +116,7 @@ class AsyncLanguageClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

@@ -49,6 +49,7 @@ class SettingsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.dashboard.settings.get()
         """
@@ -81,6 +82,7 @@ class SettingsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.dashboard.settings.update()
@@ -128,6 +130,7 @@ class AsyncSettingsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -168,6 +171,7 @@ class AsyncSettingsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

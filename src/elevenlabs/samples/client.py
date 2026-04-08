@@ -51,6 +51,7 @@ class SamplesClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.samples.delete(
             voice_id="21m00Tcm4TlvDq8ikWAM",
@@ -105,6 +106,7 @@ class AsyncSamplesClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

@@ -62,6 +62,7 @@ class ResourcesClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.workspace.resources.get(
             resource_id="resource_id",
@@ -118,6 +119,7 @@ class ResourcesClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.workspace.resources.share(
@@ -180,6 +182,7 @@ class ResourcesClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.workspace.resources.unshare(
@@ -247,6 +250,7 @@ class AsyncResourcesClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -313,6 +317,7 @@ class AsyncResourcesClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -383,6 +388,7 @@ class AsyncResourcesClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

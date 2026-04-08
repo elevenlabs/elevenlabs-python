@@ -90,6 +90,7 @@ class HistoryClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.history.list(
             page_size=1,
@@ -142,6 +143,7 @@ class HistoryClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.history.get(
             history_item_id="VW7YKqPnjY4h39yTbx2L",
@@ -175,6 +177,7 @@ class HistoryClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.history.delete(
             history_item_id="VW7YKqPnjY4h39yTbx2L",
@@ -207,6 +210,7 @@ class HistoryClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.history.get_audio(
@@ -247,6 +251,7 @@ class HistoryClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.history.download(
@@ -336,6 +341,7 @@ class AsyncHistoryClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -396,6 +402,7 @@ class AsyncHistoryClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -437,6 +444,7 @@ class AsyncHistoryClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -477,6 +485,7 @@ class AsyncHistoryClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -526,6 +535,7 @@ class AsyncHistoryClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

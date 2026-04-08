@@ -60,6 +60,7 @@ class ChunkClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.knowledge_base.documents.chunk.get(
             documentation_id="21m00Tcm4TlvDq8ikWAM",
@@ -125,6 +126,7 @@ class AsyncChunkClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

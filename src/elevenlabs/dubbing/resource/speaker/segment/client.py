@@ -70,6 +70,7 @@ class SegmentClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.dubbing.resource.speaker.segment.create(
             dubbing_id="dubbing_id",
@@ -150,6 +151,7 @@ class AsyncSegmentClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

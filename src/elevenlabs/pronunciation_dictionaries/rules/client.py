@@ -69,6 +69,7 @@ class RulesClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.pronunciation_dictionaries.rules.set(
             pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
@@ -122,6 +123,7 @@ class RulesClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.pronunciation_dictionaries.rules.add(
             pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
@@ -169,6 +171,7 @@ class RulesClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.pronunciation_dictionaries.rules.remove(
@@ -238,6 +241,7 @@ class AsyncRulesClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -301,6 +305,7 @@ class AsyncRulesClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -358,6 +363,7 @@ class AsyncRulesClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

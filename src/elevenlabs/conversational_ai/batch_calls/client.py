@@ -89,6 +89,7 @@ class BatchCallsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.batch_calls.create(
             call_name="call_name",
@@ -142,6 +143,7 @@ class BatchCallsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.batch_calls.list(
             limit=1,
@@ -175,6 +177,7 @@ class BatchCallsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.batch_calls.get(
             batch_id="batch_id",
@@ -203,6 +206,7 @@ class BatchCallsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.batch_calls.delete(
@@ -234,6 +238,7 @@ class BatchCallsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.batch_calls.cancel(
             batch_id="batch_id",
@@ -263,6 +268,7 @@ class BatchCallsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.batch_calls.retry(
@@ -348,6 +354,7 @@ class AsyncBatchCallsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -409,6 +416,7 @@ class AsyncBatchCallsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -450,6 +458,7 @@ class AsyncBatchCallsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -486,6 +495,7 @@ class AsyncBatchCallsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -527,6 +537,7 @@ class AsyncBatchCallsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -566,6 +577,7 @@ class AsyncBatchCallsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

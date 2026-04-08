@@ -54,6 +54,7 @@ class FilesClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.conversations.files.create(
             conversation_id="conversation_id",
@@ -87,6 +88,7 @@ class FilesClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.conversations.files.delete(
@@ -142,6 +144,7 @@ class AsyncFilesClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -183,6 +186,7 @@ class AsyncFilesClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

@@ -47,6 +47,7 @@ class AudioClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.conversations.audio.get(
             conversation_id="conversation_id",
@@ -97,6 +98,7 @@ class AsyncAudioClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

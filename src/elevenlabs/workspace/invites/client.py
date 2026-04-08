@@ -68,6 +68,7 @@ class InvitesClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.workspace.invites.create(
             email="john.doe@testmail.com",
@@ -118,6 +119,7 @@ class InvitesClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.workspace.invites.create_batch(
             emails=["emails"],
@@ -152,6 +154,7 @@ class InvitesClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.workspace.invites.delete(
@@ -219,6 +222,7 @@ class AsyncInvitesClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -277,6 +281,7 @@ class AsyncInvitesClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -319,6 +324,7 @@ class AsyncInvitesClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

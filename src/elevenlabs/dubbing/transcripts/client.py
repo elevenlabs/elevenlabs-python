@@ -60,6 +60,7 @@ class TranscriptsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.dubbing.transcripts.get(
             dubbing_id="dubbing_id",
@@ -123,6 +124,7 @@ class AsyncTranscriptsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

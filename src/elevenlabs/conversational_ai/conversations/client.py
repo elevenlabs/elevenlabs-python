@@ -84,6 +84,7 @@ class ConversationsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.conversations.get_signed_url(
             agent_id="21m00Tcm4TlvDq8ikWAM",
@@ -140,6 +141,7 @@ class ConversationsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.conversations.get_webrtc_token(
@@ -269,6 +271,7 @@ class ConversationsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.conversations.list(
             cursor="cursor",
@@ -341,6 +344,7 @@ class ConversationsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.conversations.get(
             conversation_id="123",
@@ -371,6 +375,7 @@ class ConversationsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.conversations.delete(
@@ -484,6 +489,7 @@ class AsyncConversationsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -548,6 +554,7 @@ class AsyncConversationsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -685,6 +692,7 @@ class AsyncConversationsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -765,6 +773,7 @@ class AsyncConversationsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -805,6 +814,7 @@ class AsyncConversationsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

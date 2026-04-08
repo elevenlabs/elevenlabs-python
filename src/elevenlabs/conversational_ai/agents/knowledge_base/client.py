@@ -47,6 +47,7 @@ class KnowledgeBaseClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.agents.knowledge_base.size(
             agent_id="agent_id",
@@ -96,6 +97,7 @@ class AsyncKnowledgeBaseClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

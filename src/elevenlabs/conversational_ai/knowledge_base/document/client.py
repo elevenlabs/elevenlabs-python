@@ -53,6 +53,7 @@ class DocumentClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.knowledge_base.document.refresh(
             documentation_id="21m00Tcm4TlvDq8ikWAM",
@@ -91,6 +92,7 @@ class DocumentClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.knowledge_base.document.compute_rag_index(
@@ -144,6 +146,7 @@ class AsyncDocumentClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -190,6 +193,7 @@ class AsyncDocumentClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

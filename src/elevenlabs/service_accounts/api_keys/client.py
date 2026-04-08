@@ -57,6 +57,7 @@ class ApiKeysClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.service_accounts.api_keys.list(
             service_account_user_id="service_account_user_id",
@@ -103,6 +104,7 @@ class ApiKeysClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.service_accounts.api_keys.create(
             service_account_user_id="service_account_user_id",
@@ -143,6 +145,7 @@ class ApiKeysClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.service_accounts.api_keys.delete(
@@ -198,6 +201,7 @@ class ApiKeysClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.service_accounts.api_keys.update(
@@ -260,6 +264,7 @@ class AsyncApiKeysClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -314,6 +319,7 @@ class AsyncApiKeysClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -362,6 +368,7 @@ class AsyncApiKeysClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -425,6 +432,7 @@ class AsyncApiKeysClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

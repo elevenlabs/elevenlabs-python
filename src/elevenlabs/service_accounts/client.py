@@ -52,6 +52,7 @@ class ServiceAccountsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.service_accounts.list()
         """
@@ -107,6 +108,7 @@ class AsyncServiceAccountsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

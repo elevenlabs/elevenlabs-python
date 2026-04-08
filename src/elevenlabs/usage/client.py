@@ -78,6 +78,7 @@ class UsageClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.usage.get(
             start_unix=1,
@@ -170,6 +171,7 @@ class AsyncUsageClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

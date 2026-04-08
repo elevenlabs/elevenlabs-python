@@ -116,6 +116,7 @@ class TextToDialogueClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.text_to_dialogue.convert(
             inputs=[
@@ -208,6 +209,7 @@ class TextToDialogueClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.text_to_dialogue.stream(
             inputs=[
@@ -293,6 +295,7 @@ class TextToDialogueClient:
         from elevenlabs import DialogueInput, ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         response = client.text_to_dialogue.stream_with_timestamps(
@@ -381,6 +384,7 @@ class TextToDialogueClient:
         from elevenlabs import DialogueInput, ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.text_to_dialogue.convert_with_timestamps(
@@ -492,6 +496,7 @@ class AsyncTextToDialogueClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -593,6 +598,7 @@ class AsyncTextToDialogueClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -687,6 +693,7 @@ class AsyncTextToDialogueClient:
         from elevenlabs import AsyncElevenLabs, DialogueInput
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -784,6 +791,7 @@ class AsyncTextToDialogueClient:
         from elevenlabs import AsyncElevenLabs, DialogueInput
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

@@ -48,6 +48,7 @@ class LiveCountClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.analytics.live_count.get(
             agent_id="agent_id",
@@ -98,6 +99,7 @@ class AsyncLiveCountClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

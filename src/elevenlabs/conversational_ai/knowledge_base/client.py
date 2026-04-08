@@ -111,6 +111,7 @@ class KnowledgeBaseClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.knowledge_base.list(
             page_size=1,
@@ -168,6 +169,7 @@ class KnowledgeBaseClient:
         from elevenlabs import ElevenLabs, GetOrCreateRagIndexRequestModel
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.knowledge_base.get_or_create_rag_indexes(
@@ -290,6 +292,7 @@ class AsyncKnowledgeBaseClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -355,6 +358,7 @@ class AsyncKnowledgeBaseClient:
         from elevenlabs import AsyncElevenLabs, GetOrCreateRagIndexRequestModel
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

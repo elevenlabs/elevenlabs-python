@@ -71,6 +71,7 @@ class McpServersClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.mcp_servers.list()
         """
@@ -101,6 +102,7 @@ class McpServersClient:
         from elevenlabs import ElevenLabs, McpServerConfigInput
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.mcp_servers.create(
@@ -138,6 +140,7 @@ class McpServersClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.mcp_servers.get(
             mcp_server_id="mcp_server_id",
@@ -168,6 +171,7 @@ class McpServersClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.mcp_servers.delete(
@@ -246,6 +250,7 @@ class McpServersClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.mcp_servers.update(
@@ -343,6 +348,7 @@ class AsyncMcpServersClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -381,6 +387,7 @@ class AsyncMcpServersClient:
         from elevenlabs import AsyncElevenLabs, McpServerConfigInput
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -426,6 +433,7 @@ class AsyncMcpServersClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -466,6 +474,7 @@ class AsyncMcpServersClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -552,6 +561,7 @@ class AsyncMcpServersClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

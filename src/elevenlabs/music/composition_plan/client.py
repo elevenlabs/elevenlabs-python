@@ -66,6 +66,7 @@ class CompositionPlanClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.music.composition_plan.create(
             prompt="prompt",
@@ -137,6 +138,7 @@ class AsyncCompositionPlanClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

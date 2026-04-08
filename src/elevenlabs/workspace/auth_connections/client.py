@@ -48,6 +48,7 @@ class AuthConnectionsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.workspace.auth_connections.list()
         """
@@ -80,6 +81,7 @@ class AuthConnectionsClient:
         )
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.workspace.auth_connections.create(
@@ -116,6 +118,7 @@ class AuthConnectionsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.workspace.auth_connections.delete(
@@ -163,6 +166,7 @@ class AsyncAuthConnectionsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -203,6 +207,7 @@ class AsyncAuthConnectionsClient:
         )
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -249,6 +254,7 @@ class AsyncAuthConnectionsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

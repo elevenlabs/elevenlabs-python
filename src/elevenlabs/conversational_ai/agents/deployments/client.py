@@ -64,6 +64,7 @@ class DeploymentsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.agents.deployments.create(
             agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
@@ -138,6 +139,7 @@ class AsyncDeploymentsClient:
         )
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

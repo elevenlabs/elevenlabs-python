@@ -84,6 +84,7 @@ class DocumentsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.knowledge_base.documents.create_from_url(
             url="url",
@@ -135,6 +136,7 @@ class DocumentsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.knowledge_base.documents.create_from_file()
         """
@@ -178,6 +180,7 @@ class DocumentsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.knowledge_base.documents.create_from_text(
@@ -229,6 +232,7 @@ class DocumentsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.knowledge_base.documents.create_folder(
             name="name",
@@ -274,6 +278,7 @@ class DocumentsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.knowledge_base.documents.get(
             documentation_id="21m00Tcm4TlvDq8ikWAM",
@@ -315,6 +320,7 @@ class DocumentsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.knowledge_base.documents.delete(
             documentation_id="21m00Tcm4TlvDq8ikWAM",
@@ -351,6 +357,7 @@ class DocumentsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.knowledge_base.documents.update(
@@ -401,6 +408,7 @@ class DocumentsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.knowledge_base.documents.get_agents(
             documentation_id="21m00Tcm4TlvDq8ikWAM",
@@ -418,7 +426,7 @@ class DocumentsClient:
         )
         return _response.data
 
-    def get_content(self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def get_content(self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Get the entire content of a document from the knowledge base
 
@@ -432,7 +440,8 @@ class DocumentsClient:
 
         Returns
         -------
-        None
+        str
+            Streaming document content
 
         Examples
         --------
@@ -440,9 +449,10 @@ class DocumentsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.knowledge_base.documents.get_content(
-            documentation_id="21m00Tcm4TlvDq8ikWAM",
+            documentation_id="documentation_id",
         )
         """
         _response = self._raw_client.get_content(documentation_id, request_options=request_options)
@@ -472,6 +482,7 @@ class DocumentsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.knowledge_base.documents.get_source_file_url(
@@ -512,6 +523,7 @@ class DocumentsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.knowledge_base.documents.move(
             document_id="21m00Tcm4TlvDq8ikWAM",
@@ -550,6 +562,7 @@ class DocumentsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.knowledge_base.documents.bulk_move(
@@ -642,6 +655,7 @@ class AsyncDocumentsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -701,6 +715,7 @@ class AsyncDocumentsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -752,6 +767,7 @@ class AsyncDocumentsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -811,6 +827,7 @@ class AsyncDocumentsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -864,6 +881,7 @@ class AsyncDocumentsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -913,6 +931,7 @@ class AsyncDocumentsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -957,6 +976,7 @@ class AsyncDocumentsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -1015,6 +1035,7 @@ class AsyncDocumentsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -1040,7 +1061,7 @@ class AsyncDocumentsClient:
 
     async def get_content(
         self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    ) -> str:
         """
         Get the entire content of a document from the knowledge base
 
@@ -1054,7 +1075,8 @@ class AsyncDocumentsClient:
 
         Returns
         -------
-        None
+        str
+            Streaming document content
 
         Examples
         --------
@@ -1064,12 +1086,13 @@ class AsyncDocumentsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
         async def main() -> None:
             await client.conversational_ai.knowledge_base.documents.get_content(
-                documentation_id="21m00Tcm4TlvDq8ikWAM",
+                documentation_id="documentation_id",
             )
 
 
@@ -1104,6 +1127,7 @@ class AsyncDocumentsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -1152,6 +1176,7 @@ class AsyncDocumentsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -1198,6 +1223,7 @@ class AsyncDocumentsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

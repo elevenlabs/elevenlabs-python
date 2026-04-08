@@ -72,6 +72,7 @@ class TwilioClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.twilio.outbound_call(
             agent_id="agent_id",
@@ -99,7 +100,7 @@ class TwilioClient:
         direction: typing.Optional[TelephonyDirection] = OMIT,
         conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    ) -> str:
         """
         Register a Twilio call and return TwiML to connect the call
 
@@ -120,13 +121,15 @@ class TwilioClient:
 
         Returns
         -------
-        None
+        str
+            Successful Response
 
         Examples
         --------
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.twilio.register_call(
@@ -206,6 +209,7 @@ class AsyncTwilioClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -239,7 +243,7 @@ class AsyncTwilioClient:
         direction: typing.Optional[TelephonyDirection] = OMIT,
         conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    ) -> str:
         """
         Register a Twilio call and return TwiML to connect the call
 
@@ -260,7 +264,8 @@ class AsyncTwilioClient:
 
         Returns
         -------
-        None
+        str
+            Successful Response
 
         Examples
         --------
@@ -269,6 +274,7 @@ class AsyncTwilioClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

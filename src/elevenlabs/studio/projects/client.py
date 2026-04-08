@@ -70,6 +70,7 @@ class ProjectsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.studio.projects.list()
         """
@@ -288,6 +289,7 @@ class ProjectsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.studio.projects.create(
             name="name",
@@ -359,6 +361,7 @@ class ProjectsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.studio.projects.get(
             project_id="21m00Tcm4TlvDq8ikWAM",
@@ -424,6 +427,7 @@ class ProjectsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.studio.projects.update(
             project_id="21m00Tcm4TlvDq8ikWAM",
@@ -470,6 +474,7 @@ class ProjectsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.studio.projects.delete(
             project_id="21m00Tcm4TlvDq8ikWAM",
@@ -503,6 +508,7 @@ class ProjectsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.studio.projects.convert(
             project_id="21m00Tcm4TlvDq8ikWAM",
@@ -535,6 +541,7 @@ class ProjectsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.studio.projects.get_muted_tracks(
@@ -618,6 +625,7 @@ class AsyncProjectsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -845,6 +853,7 @@ class AsyncProjectsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -924,6 +933,7 @@ class AsyncProjectsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -997,6 +1007,7 @@ class AsyncProjectsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -1051,6 +1062,7 @@ class AsyncProjectsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -1092,6 +1104,7 @@ class AsyncProjectsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -1132,6 +1145,7 @@ class AsyncProjectsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

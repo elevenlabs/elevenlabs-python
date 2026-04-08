@@ -115,6 +115,7 @@ class AudioNativeClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.audio_native.create(
             name="name",
@@ -164,6 +165,7 @@ class AudioNativeClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.audio_native.get_settings(
             project_id="21m00Tcm4TlvDq8ikWAM",
@@ -212,6 +214,7 @@ class AudioNativeClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.audio_native.update(
             project_id="21m00Tcm4TlvDq8ikWAM",
@@ -257,6 +260,7 @@ class AudioNativeClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.audio_native.update_content_from_url(
@@ -371,6 +375,7 @@ class AsyncAudioNativeClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -428,6 +433,7 @@ class AsyncAudioNativeClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -484,6 +490,7 @@ class AsyncAudioNativeClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -537,6 +544,7 @@ class AsyncAudioNativeClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

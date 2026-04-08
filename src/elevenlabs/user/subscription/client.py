@@ -43,6 +43,7 @@ class SubscriptionClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.user.subscription.get()
         """
@@ -86,6 +87,7 @@ class AsyncSubscriptionClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

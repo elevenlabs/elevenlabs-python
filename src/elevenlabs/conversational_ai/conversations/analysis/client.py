@@ -48,6 +48,7 @@ class AnalysisClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.conversations.analysis.run(
             conversation_id="conversation_id",
@@ -98,6 +99,7 @@ class AsyncAnalysisClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

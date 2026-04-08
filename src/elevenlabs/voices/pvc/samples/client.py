@@ -75,6 +75,7 @@ class SamplesClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.voices.pvc.samples.create(
             voice_id="21m00Tcm4TlvDq8ikWAM",
@@ -137,6 +138,7 @@ class SamplesClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.voices.pvc.samples.update(
             voice_id="21m00Tcm4TlvDq8ikWAM",
@@ -182,6 +184,7 @@ class SamplesClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.voices.pvc.samples.delete(
@@ -274,6 +277,7 @@ class AsyncSamplesClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -344,6 +348,7 @@ class AsyncSamplesClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -397,6 +402,7 @@ class AsyncSamplesClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

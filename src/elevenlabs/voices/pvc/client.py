@@ -75,6 +75,7 @@ class PvcClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.voices.pvc.create(
             name="John Smith",
@@ -130,6 +131,7 @@ class PvcClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.voices.pvc.update(
             voice_id="21m00Tcm4TlvDq8ikWAM",
@@ -176,6 +178,7 @@ class PvcClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.voices.pvc.train(
@@ -262,6 +265,7 @@ class AsyncPvcClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -325,6 +329,7 @@ class AsyncPvcClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -379,6 +384,7 @@ class AsyncPvcClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

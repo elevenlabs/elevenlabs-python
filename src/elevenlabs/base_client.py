@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import httpx
+from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.request_options import RequestOptions
 from .environment import ElevenLabsEnvironment
@@ -56,7 +57,8 @@ class BaseElevenLabs:
 
 
 
-    api_key : typing.Optional[str]
+    api_key : str
+    api_key : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -75,6 +77,7 @@ class BaseElevenLabs:
 
     client = ElevenLabs(
         api_key="YOUR_API_KEY",
+        api_key="YOUR_API_KEY",
     )
     """
 
@@ -83,7 +86,7 @@ class BaseElevenLabs:
         *,
         base_url: typing.Optional[str] = None,
         environment: ElevenLabsEnvironment = ElevenLabsEnvironment.PRODUCTION,
-        api_key: typing.Optional[str] = None,
+        api_key: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -92,6 +95,10 @@ class BaseElevenLabs:
         _defaulted_timeout = (
             timeout if timeout is not None else 240 if httpx_client is None else httpx_client.timeout.read
         )
+        if api_key is None:
+            raise ApiError(
+                body="The client must be instantiated be either passing in api_key or setting ELEVEN_API_KEY"
+            )
         self._client_wrapper = SyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
             api_key=api_key,
@@ -159,6 +166,7 @@ class BaseElevenLabs:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.save_a_voice_preview()
@@ -385,7 +393,8 @@ class AsyncBaseElevenLabs:
 
 
 
-    api_key : typing.Optional[str]
+    api_key : str
+    api_key : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -404,6 +413,7 @@ class AsyncBaseElevenLabs:
 
     client = AsyncElevenLabs(
         api_key="YOUR_API_KEY",
+        api_key="YOUR_API_KEY",
     )
     """
 
@@ -412,7 +422,7 @@ class AsyncBaseElevenLabs:
         *,
         base_url: typing.Optional[str] = None,
         environment: ElevenLabsEnvironment = ElevenLabsEnvironment.PRODUCTION,
-        api_key: typing.Optional[str] = None,
+        api_key: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -421,6 +431,10 @@ class AsyncBaseElevenLabs:
         _defaulted_timeout = (
             timeout if timeout is not None else 240 if httpx_client is None else httpx_client.timeout.read
         )
+        if api_key is None:
+            raise ApiError(
+                body="The client must be instantiated be either passing in api_key or setting ELEVEN_API_KEY"
+            )
         self._client_wrapper = AsyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
             api_key=api_key,
@@ -490,6 +504,7 @@ class AsyncBaseElevenLabs:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

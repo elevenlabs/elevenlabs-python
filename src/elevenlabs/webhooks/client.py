@@ -55,6 +55,7 @@ class WebhooksClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.webhooks.list(
             include_usages=False,
@@ -87,6 +88,7 @@ class WebhooksClient:
         from elevenlabs import ElevenLabs, WebhookHmacSettings
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.webhooks.create(
@@ -123,6 +125,7 @@ class WebhooksClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.webhooks.delete(
@@ -171,6 +174,7 @@ class WebhooksClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.webhooks.update(
@@ -227,6 +231,7 @@ class AsyncWebhooksClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -267,6 +272,7 @@ class AsyncWebhooksClient:
         from elevenlabs import AsyncElevenLabs, WebhookHmacSettings
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -311,6 +317,7 @@ class AsyncWebhooksClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -367,6 +374,7 @@ class AsyncWebhooksClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

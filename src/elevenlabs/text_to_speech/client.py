@@ -151,6 +151,7 @@ class TextToSpeechClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.text_to_speech.convert(
             voice_id="JBFqnCBsd6RMkjVDRZzb",
@@ -282,6 +283,7 @@ class TextToSpeechClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.text_to_speech.convert_with_timestamps(
@@ -419,6 +421,7 @@ class TextToSpeechClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.text_to_speech.stream(
             voice_id="JBFqnCBsd6RMkjVDRZzb",
@@ -550,6 +553,7 @@ class TextToSpeechClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         response = client.text_to_speech.stream_with_timestamps(
@@ -706,6 +710,7 @@ class AsyncTextToSpeechClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -846,6 +851,7 @@ class AsyncTextToSpeechClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -991,6 +997,7 @@ class AsyncTextToSpeechClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -1131,6 +1138,7 @@ class AsyncTextToSpeechClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

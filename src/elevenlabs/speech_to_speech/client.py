@@ -101,6 +101,7 @@ class SpeechToSpeechClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.speech_to_speech.convert(
             voice_id="JBFqnCBsd6RMkjVDRZzb",
@@ -193,6 +194,7 @@ class SpeechToSpeechClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.speech_to_speech.stream(
@@ -305,6 +307,7 @@ class AsyncSpeechToSpeechClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -406,6 +409,7 @@ class AsyncSpeechToSpeechClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

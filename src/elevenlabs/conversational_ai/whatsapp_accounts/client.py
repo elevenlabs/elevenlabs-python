@@ -51,6 +51,7 @@ class WhatsappAccountsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.whatsapp_accounts.get(
             phone_number_id="phone_number_id",
@@ -80,6 +81,7 @@ class WhatsappAccountsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.whatsapp_accounts.delete(
@@ -125,6 +127,7 @@ class WhatsappAccountsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.whatsapp_accounts.update(
             phone_number_id="phone_number_id",
@@ -158,6 +161,7 @@ class WhatsappAccountsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.whatsapp_accounts.list()
@@ -207,6 +211,7 @@ class AsyncWhatsappAccountsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -246,6 +251,7 @@ class AsyncWhatsappAccountsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -299,6 +305,7 @@ class AsyncWhatsappAccountsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -340,6 +347,7 @@ class AsyncWhatsappAccountsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

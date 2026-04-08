@@ -10,11 +10,12 @@ class BaseClientWrapper:
     def __init__(
         self,
         *,
-        api_key: typing.Optional[str] = None,
+        api_key: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
     ):
+        self._api_key = api_key
         self._api_key = api_key
         self._headers = headers
         self._base_url = base_url
@@ -22,15 +23,21 @@ class BaseClientWrapper:
 
     def get_headers(self) -> typing.Dict[str, str]:
         headers: typing.Dict[str, str] = {
-            "User-Agent": "elevenlabs/2.42.0",
+            "User-Agent": "elevenlabs/2.42.1",
             "X-Fern-Language": "Python",
             "X-Fern-SDK-Name": "elevenlabs",
-            "X-Fern-SDK-Version": "2.42.0",
+            "X-Fern-SDK-Version": "2.42.1",
             **(self.get_custom_headers() or {}),
         }
-        if self._api_key is not None:
-            headers["xi-api-key"] = self._api_key
+        headers["xi-api-key"] = self._api_key
+        headers["Authorization"] = f"Bearer {self._get_api_key()}"
         return headers
+
+    def _get_api_key(self) -> str:
+        if isinstance(self._api_key, str):
+            return self._api_key
+        else:
+            return self._api_key()
 
     def get_custom_headers(self) -> typing.Optional[typing.Dict[str, str]]:
         return self._headers
@@ -46,7 +53,7 @@ class SyncClientWrapper(BaseClientWrapper):
     def __init__(
         self,
         *,
-        api_key: typing.Optional[str] = None,
+        api_key: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
@@ -65,7 +72,7 @@ class AsyncClientWrapper(BaseClientWrapper):
     def __init__(
         self,
         *,
-        api_key: typing.Optional[str] = None,
+        api_key: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,

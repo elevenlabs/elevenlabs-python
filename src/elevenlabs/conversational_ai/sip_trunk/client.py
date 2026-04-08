@@ -67,6 +67,7 @@ class SipTrunkClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.sip_trunk.outbound_call(
             agent_id="agent_id",
@@ -140,6 +141,7 @@ class AsyncSipTrunkClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

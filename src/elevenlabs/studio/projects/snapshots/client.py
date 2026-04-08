@@ -52,6 +52,7 @@ class SnapshotsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.studio.projects.snapshots.list(
             project_id="21m00Tcm4TlvDq8ikWAM",
@@ -87,6 +88,7 @@ class SnapshotsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.studio.projects.snapshots.get(
@@ -133,6 +135,7 @@ class SnapshotsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.studio.projects.snapshots.stream(
             project_id="project_id",
@@ -171,6 +174,7 @@ class SnapshotsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.studio.projects.snapshots.stream_archive(
@@ -224,6 +228,7 @@ class AsyncSnapshotsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -267,6 +272,7 @@ class AsyncSnapshotsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -321,6 +327,7 @@ class AsyncSnapshotsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -368,6 +375,7 @@ class AsyncSnapshotsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

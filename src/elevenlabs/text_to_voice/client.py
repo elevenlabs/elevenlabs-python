@@ -95,6 +95,7 @@ class TextToVoiceClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.text_to_voice.create_previews(
             output_format="mp3_22050_32",
@@ -158,6 +159,7 @@ class TextToVoiceClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.text_to_voice.create(
@@ -260,6 +262,7 @@ class TextToVoiceClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.text_to_voice.design(
             output_format="mp3_22050_32",
@@ -357,6 +360,7 @@ class TextToVoiceClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.text_to_voice.remix(
@@ -470,6 +474,7 @@ class AsyncTextToVoiceClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -541,6 +546,7 @@ class AsyncTextToVoiceClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -651,6 +657,7 @@ class AsyncTextToVoiceClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -756,6 +763,7 @@ class AsyncTextToVoiceClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

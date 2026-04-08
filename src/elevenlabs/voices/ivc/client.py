@@ -72,6 +72,7 @@ class IvcClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.voices.ivc.create(
             name="name",
@@ -148,6 +149,7 @@ class AsyncIvcClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

@@ -73,6 +73,7 @@ class WhatsappClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.whatsapp.outbound_call(
             whatsapp_phone_number_id="whatsapp_phone_number_id",
@@ -142,6 +143,7 @@ class WhatsappClient:
         )
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.whatsapp.outbound_message(
@@ -233,6 +235,7 @@ class AsyncWhatsappClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -310,6 +313,7 @@ class AsyncWhatsappClient:
         )
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

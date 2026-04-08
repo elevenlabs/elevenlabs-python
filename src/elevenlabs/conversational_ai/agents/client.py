@@ -107,6 +107,7 @@ class AgentsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.agents.create(
             enable_versioning=True,
@@ -160,6 +161,7 @@ class AgentsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.agents.get(
             agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
@@ -193,6 +195,7 @@ class AgentsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.agents.delete(
@@ -261,6 +264,7 @@ class AgentsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.agents.update(
@@ -339,6 +343,7 @@ class AgentsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.agents.list(
             page_size=1,
@@ -396,6 +401,7 @@ class AgentsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.agents.duplicate(
             agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
@@ -447,6 +453,7 @@ class AgentsClient:
         )
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.agents.simulate_conversation(
@@ -512,6 +519,7 @@ class AgentsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.agents.simulate_conversation_stream(
             agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
@@ -572,6 +580,7 @@ class AgentsClient:
         from elevenlabs import ElevenLabs, SingleTestRunRequestModel
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.agents.run_tests(
@@ -731,6 +740,7 @@ class AsyncAgentsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -792,6 +802,7 @@ class AsyncAgentsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -833,6 +844,7 @@ class AsyncAgentsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -909,6 +921,7 @@ class AsyncAgentsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -995,6 +1008,7 @@ class AsyncAgentsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -1060,6 +1074,7 @@ class AsyncAgentsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -1119,6 +1134,7 @@ class AsyncAgentsClient:
         )
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -1192,6 +1208,7 @@ class AsyncAgentsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -1260,6 +1277,7 @@ class AsyncAgentsClient:
         from elevenlabs import AsyncElevenLabs, SingleTestRunRequestModel
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

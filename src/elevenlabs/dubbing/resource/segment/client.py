@@ -72,6 +72,7 @@ class SegmentClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.dubbing.resource.segment.update(
             dubbing_id="dubbing_id",
@@ -117,6 +118,7 @@ class SegmentClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.dubbing.resource.segment.delete(
@@ -190,6 +192,7 @@ class AsyncSegmentClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -243,6 +246,7 @@ class AsyncSegmentClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

@@ -48,6 +48,7 @@ class SingleUseClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.tokens.single_use.create(
             token_type="realtime_scribe",
@@ -97,6 +98,7 @@ class AsyncSingleUseClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

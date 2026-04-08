@@ -58,6 +58,7 @@ class FeedbackClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.conversations.feedback.create(
             conversation_id="21m00Tcm4TlvDq8ikWAM",
@@ -116,6 +117,7 @@ class AsyncFeedbackClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

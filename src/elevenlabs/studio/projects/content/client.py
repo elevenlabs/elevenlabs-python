@@ -76,6 +76,7 @@ class ContentClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.studio.projects.content.update(
             project_id="21m00Tcm4TlvDq8ikWAM",
@@ -157,6 +158,7 @@ class AsyncContentClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

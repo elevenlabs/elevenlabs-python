@@ -74,6 +74,7 @@ class TextToSoundEffectsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.text_to_sound_effects.convert(
             text="Spacious braam suitable for high-impact movie trailer moments",
@@ -155,6 +156,7 @@ class AsyncTextToSoundEffectsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

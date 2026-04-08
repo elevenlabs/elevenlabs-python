@@ -49,6 +49,7 @@ class CaptchaClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.voices.pvc.verification.captcha.get(
             voice_id="21m00Tcm4TlvDq8ikWAM",
@@ -84,6 +85,7 @@ class CaptchaClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.voices.pvc.verification.captcha.verify(
@@ -133,6 +135,7 @@ class AsyncCaptchaClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -176,6 +179,7 @@ class AsyncCaptchaClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

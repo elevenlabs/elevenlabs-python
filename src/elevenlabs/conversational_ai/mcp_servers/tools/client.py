@@ -48,6 +48,7 @@ class ToolsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.mcp_servers.tools.list(
             mcp_server_id="mcp_server_id",
@@ -98,6 +99,7 @@ class AsyncToolsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

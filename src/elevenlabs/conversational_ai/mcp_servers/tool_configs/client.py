@@ -99,6 +99,7 @@ class ToolConfigsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.mcp_servers.tool_configs.create(
             mcp_server_id="mcp_server_id",
@@ -147,6 +148,7 @@ class ToolConfigsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.mcp_servers.tool_configs.get(
             mcp_server_id="mcp_server_id",
@@ -183,6 +185,7 @@ class ToolConfigsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.mcp_servers.tool_configs.delete(
@@ -254,6 +257,7 @@ class ToolConfigsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.mcp_servers.tool_configs.update(
@@ -355,6 +359,7 @@ class AsyncToolConfigsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -411,6 +416,7 @@ class AsyncToolConfigsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -455,6 +461,7 @@ class AsyncToolConfigsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -534,6 +541,7 @@ class AsyncToolConfigsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

@@ -63,6 +63,7 @@ class PronunciationDictionariesClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.studio.projects.pronunciation_dictionaries.create(
             project_id="21m00Tcm4TlvDq8ikWAM",
@@ -134,6 +135,7 @@ class AsyncPronunciationDictionariesClient:
         from elevenlabs import AsyncElevenLabs, PronunciationDictionaryVersionLocator
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

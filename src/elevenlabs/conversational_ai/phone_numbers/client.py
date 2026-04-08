@@ -55,6 +55,7 @@ class PhoneNumbersClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.phone_numbers.list()
         """
@@ -87,6 +88,7 @@ class PhoneNumbersClient:
         )
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.phone_numbers.create(
@@ -126,6 +128,7 @@ class PhoneNumbersClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.phone_numbers.get(
             phone_number_id="TeaqRRdTcIfIu2i7BYfT",
@@ -156,6 +159,7 @@ class PhoneNumbersClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.phone_numbers.delete(
@@ -207,6 +211,7 @@ class PhoneNumbersClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.phone_numbers.update(
@@ -264,6 +269,7 @@ class AsyncPhoneNumbersClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -304,6 +310,7 @@ class AsyncPhoneNumbersClient:
         )
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -351,6 +358,7 @@ class AsyncPhoneNumbersClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -391,6 +399,7 @@ class AsyncPhoneNumbersClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -450,6 +459,7 @@ class AsyncPhoneNumbersClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

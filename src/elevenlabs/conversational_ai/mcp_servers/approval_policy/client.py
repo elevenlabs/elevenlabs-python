@@ -59,6 +59,7 @@ class ApprovalPolicyClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.mcp_servers.approval_policy.update(
             mcp_server_id="mcp_server_id",
@@ -119,6 +120,7 @@ class AsyncApprovalPolicyClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

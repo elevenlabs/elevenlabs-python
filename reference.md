@@ -30,6 +30,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.save_a_voice_preview()
 
@@ -90,6 +91,7 @@ Returns a list of your generated audio.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.history.list(
@@ -233,6 +235,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.history.get(
     history_item_id="VW7YKqPnjY4h39yTbx2L",
@@ -302,6 +305,7 @@ Delete a history item by its ID
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.history.delete(
@@ -373,6 +377,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.history.get_audio(
     history_item_id="history_item_id",
@@ -442,6 +447,7 @@ Download one or more history items. If one history item ID is provided, we will 
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.history.download(
@@ -521,6 +527,7 @@ Turn text into sound effects for your videos, voice-overs or video games using t
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.text_to_sound_effects.convert(
@@ -634,6 +641,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.samples.delete(
     voice_id="21m00Tcm4TlvDq8ikWAM",
@@ -713,6 +721,7 @@ Converts text into speech using a voice of your choice and returns audio.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.text_to_speech.convert(
@@ -932,6 +941,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.text_to_speech.convert_with_timestamps(
     voice_id="21m00Tcm4TlvDq8ikWAM",
@@ -1142,6 +1152,7 @@ Converts text into speech using a voice of your choice and returns audio as an a
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.text_to_speech.stream(
@@ -1361,6 +1372,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 response = client.text_to_speech.stream_with_timestamps(
     voice_id="JBFqnCBsd6RMkjVDRZzb",
@@ -1574,6 +1586,7 @@ from elevenlabs import DialogueInput, ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.text_to_dialogue.convert(
     inputs=[
@@ -1718,6 +1731,7 @@ Converts a list of text and voice ID pairs into speech (dialogue) and returns an
 from elevenlabs import DialogueInput, ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.text_to_dialogue.stream(
@@ -1864,6 +1878,7 @@ from elevenlabs import DialogueInput, ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 response = client.text_to_dialogue.stream_with_timestamps(
     output_format="mp3_22050_32",
@@ -2002,6 +2017,7 @@ from elevenlabs import DialogueInput, ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.text_to_dialogue.convert_with_timestamps(
     output_format="alaw_8000",
@@ -2138,6 +2154,7 @@ Transform audio from one voice to another. Maintain full control over emotion, t
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.speech_to_speech.convert(
@@ -2293,6 +2310,7 @@ Stream audio from one voice to another. Maintain full control over emotion, timi
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.speech_to_speech.stream(
@@ -2450,6 +2468,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.text_to_voice.create_previews(
     output_format="mp3_22050_32",
@@ -2585,6 +2604,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.text_to_voice.create(
     voice_name="Sassy squeaky mouse",
@@ -2688,6 +2708,7 @@ Design a voice via a prompt. This method returns a list of voice previews. Each 
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.text_to_voice.design(
@@ -2872,6 +2893,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.text_to_voice.remix(
     voice_id="21m00Tcm4TlvDq8ikWAM",
@@ -3033,6 +3055,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.user.get()
 
@@ -3093,6 +3116,7 @@ Returns a list of all available voices for a user.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.voices.get_all(
@@ -3163,6 +3187,7 @@ Gets a list of all available voices for a user with search, filtering and pagina
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.voices.search(
@@ -3323,6 +3348,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.voices.get(
     voice_id="21m00Tcm4TlvDq8ikWAM",
@@ -3402,6 +3428,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.voices.delete(
     voice_id="21m00Tcm4TlvDq8ikWAM",
@@ -3471,6 +3498,7 @@ Edit a voice created by you.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.voices.update(
@@ -3585,6 +3613,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.voices.share(
     public_user_id="63e06b7e7cafdc46be4d2e0b3f045940231ae058d508589653d74d1265a574ca",
@@ -3680,6 +3709,7 @@ Retrieves a list of shared voices.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.voices.get_shared(
@@ -3902,6 +3932,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.voices.find_similar_voices()
 
@@ -3996,9 +4027,9 @@ from elevenlabs.studio import (
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.studio.create_podcast(
-    safety_identifier="safety-identifier",
     model_id="eleven_multilingual_v2",
     mode=BodyCreatePodcastV1StudioPodcastsPostMode_Conversation(
         conversation=PodcastConversationModeData(
@@ -4247,6 +4278,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.music.compose()
 
@@ -4386,6 +4418,7 @@ Compose a song from a prompt or a composition plan.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.music.compose_detailed()
@@ -4535,6 +4568,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.music.stream()
 
@@ -4659,6 +4693,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.music.upload()
 
@@ -4737,6 +4772,7 @@ List the dubs you have access to.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.dubbing.list(
@@ -4851,6 +4887,7 @@ Dubs a provided audio or video file into given language.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.dubbing.create()
@@ -5080,6 +5117,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.dubbing.get(
     dubbing_id="dubbing_id",
@@ -5149,6 +5187,7 @@ Deletes a dubbing project.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.dubbing.delete(
@@ -5221,6 +5260,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.models.list()
 
@@ -5281,6 +5321,7 @@ Creates Audio Native enabled project, optionally starts conversion and returns p
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.audio_native.create(
@@ -5465,6 +5506,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.audio_native.get_settings(
     project_id="21m00Tcm4TlvDq8ikWAM",
@@ -5534,6 +5576,7 @@ Updates content for the specific AudioNative Project.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.audio_native.update(
@@ -5631,6 +5674,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.audio_native.update_content_from_url(
     url="https://elevenlabs.io/blog/the_first_ai_that_can_laugh/",
@@ -5717,6 +5761,7 @@ Returns the usage metrics for the current user or the entire workspace they are 
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.usage.get(
@@ -5843,6 +5888,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.pronunciation_dictionaries.create_from_file(
     name="name",
@@ -5941,6 +5987,7 @@ from elevenlabs.pronunciation_dictionaries import (
 )
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.pronunciation_dictionaries.create_from_rules(
@@ -6052,6 +6099,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.pronunciation_dictionaries.get(
     pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
@@ -6121,6 +6169,7 @@ Partially update the pronunciation dictionary without changing the version
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.pronunciation_dictionaries.update(
@@ -6208,6 +6257,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.pronunciation_dictionaries.download(
     dictionary_id="dictionary_id",
@@ -6286,6 +6336,7 @@ Get a list of the pronunciation dictionaries you have access to and their metada
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.pronunciation_dictionaries.list(
@@ -6385,6 +6436,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.service_accounts.list()
 
@@ -6445,6 +6497,7 @@ List all webhooks for a workspace
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.webhooks.list(
@@ -6515,6 +6568,7 @@ Create a new webhook for the workspace with the specified authentication type.
 from elevenlabs import ElevenLabs, WebhookHmacSettings
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.webhooks.create(
@@ -6589,6 +6643,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.webhooks.delete(
     webhook_id="G007vmtq9uWYl7SUW9zGS8GZZa1K",
@@ -6658,6 +6713,7 @@ Update the specified workspace webhook
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.webhooks.update(
@@ -6755,6 +6811,7 @@ Transcribe an audio or video file. If webhook is set to true, the request will b
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.speech_to_text.convert(
@@ -7014,6 +7071,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.forced_alignment.create(
     text="text",
@@ -7094,6 +7152,7 @@ Upload a file or webpage URL to create a knowledge base document. <br> <Note> Af
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.add_to_knowledge_base(
@@ -7191,6 +7250,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.rag_index_overview()
 
@@ -7250,6 +7310,7 @@ Provides information about all RAG indexes of the specified knowledgebase docume
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.get_document_rag_indexes(
@@ -7320,6 +7381,7 @@ Delete RAG index for the knowledgebase document.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.delete_document_rag_index(
@@ -7400,6 +7462,7 @@ List all environment variables for the workspace with optional filtering
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.environment_variables.list(
@@ -7510,6 +7573,7 @@ from elevenlabs.environment_variables import (
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.environment_variables.create(
     request=EnvironmentVariablesCreateRequestBody_String(
@@ -7583,6 +7647,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.environment_variables.get(
     env_var_id="env_var_id",
@@ -7652,6 +7717,7 @@ Replace an environment variable's values. Use null to remove an environment (exc
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.environment_variables.update(
@@ -7732,6 +7798,7 @@ Get a signed url to start a conversation with an agent with an agent that requir
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.conversations.get_signed_url(
@@ -7830,6 +7897,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.conversations.get_webrtc_token(
     agent_id="21m00Tcm4TlvDq8ikWAM",
@@ -7926,6 +7994,7 @@ Get all conversations of agents that user owns. With option to restrict to a spe
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.conversations.list(
@@ -8180,6 +8249,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.conversations.get(
     conversation_id="123",
@@ -8249,6 +8319,7 @@ Delete a particular conversation
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.conversations.delete(
@@ -8320,6 +8391,7 @@ Handle an outbound call via Twilio
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.twilio.outbound_call(
@@ -8433,6 +8505,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.twilio.register_call(
     agent_id="agent_id",
@@ -8537,6 +8610,7 @@ Make an outbound call via WhatsApp
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.whatsapp.outbound_call(
@@ -8654,6 +8728,7 @@ from elevenlabs.conversational_ai.whatsapp import (
 )
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.whatsapp.outbound_message(
@@ -8789,6 +8864,7 @@ from elevenlabs import ConversationalConfig, ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.create(
     enable_versioning=True,
@@ -8900,6 +8976,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.get(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
@@ -8988,6 +9065,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.delete(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
@@ -9057,6 +9135,7 @@ Patches an Agent settings
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.update(
@@ -9194,6 +9273,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.list(
     page_size=1,
@@ -9327,6 +9407,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.duplicate(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
@@ -9408,6 +9489,7 @@ from elevenlabs import (
 )
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.simulate_conversation(
@@ -9514,6 +9596,7 @@ from elevenlabs import (
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.simulate_conversation_stream(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
@@ -9614,6 +9697,7 @@ Run selected tests on the agent with provided configuration. If the agent config
 from elevenlabs import ElevenLabs, SingleTestRunRequestModel
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.run_tests(
@@ -9716,6 +9800,7 @@ from elevenlabs.conversational_ai.tests import TestsCreateRequestBody_Llm
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.tests.create(
     request=TestsCreateRequestBody_Llm(
@@ -9787,6 +9872,7 @@ Moves multiple tests or folders from one folder to another.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.tests.move(
@@ -9866,6 +9952,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.tests.get(
     test_id="TeaqRRdTcIfIu2i7BYfT",
@@ -9936,6 +10023,7 @@ from elevenlabs import ElevenLabs
 from elevenlabs.conversational_ai.tests import TestsUpdateRequestBody_Llm
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.tests.update(
@@ -10018,6 +10106,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.tests.delete(
     test_id="TeaqRRdTcIfIu2i7BYfT",
@@ -10088,6 +10177,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.tests.summaries(
     test_ids=["test_id_1", "test_id_2"],
@@ -10157,6 +10247,7 @@ Lists all agent response tests with pagination support and optional search filte
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.tests.list(
@@ -10281,6 +10372,7 @@ Get distinct users from conversations with pagination.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.users.list(
@@ -10416,6 +10508,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.phone_numbers.list()
 
@@ -10478,6 +10571,7 @@ from elevenlabs.conversational_ai.phone_numbers import (
 )
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.phone_numbers.create(
@@ -10554,6 +10648,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.phone_numbers.get(
     phone_number_id="TeaqRRdTcIfIu2i7BYfT",
@@ -10624,6 +10719,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.phone_numbers.delete(
     phone_number_id="TeaqRRdTcIfIu2i7BYfT",
@@ -10693,6 +10789,7 @@ Update assigned agent of a phone number
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.phone_numbers.update(
@@ -10805,6 +10902,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.llm_usage.calculate(
     prompt_length=1,
@@ -10894,6 +10992,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.llm.list()
 
@@ -10954,6 +11053,7 @@ Get a list of available knowledge base documents
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.knowledge_base.list(
@@ -11118,6 +11218,7 @@ from elevenlabs import ElevenLabs, GetOrCreateRagIndexRequestModel
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.knowledge_base.get_or_create_rag_indexes(
     items=[
@@ -11194,6 +11295,7 @@ Get all available tools in the workspace.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.tools.list(
@@ -11331,6 +11433,7 @@ from elevenlabs import (
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.tools.create(
     request=ToolRequestModel(
@@ -11407,6 +11510,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.tools.get(
     tool_id="tool_id",
@@ -11476,6 +11580,7 @@ Delete tool from the workspace.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.tools.delete(
@@ -11559,6 +11664,7 @@ from elevenlabs import (
 )
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.tools.update(
@@ -11644,6 +11750,7 @@ Get a list of agents depending on this tool
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.tools.get_dependent_agents(
@@ -11734,6 +11841,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.settings.get()
 
@@ -11793,6 +11901,7 @@ Update Convai settings for the workspace
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.settings.update()
@@ -11903,6 +12012,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.secrets.list(
     page_size=1,
@@ -11981,6 +12091,7 @@ Create a new secret for the workspace
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.secrets.create(
@@ -12061,6 +12172,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.secrets.delete(
     secret_id="secret_id",
@@ -12130,6 +12242,7 @@ Update an existing secret for the workspace
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.secrets.update(
@@ -12219,6 +12332,7 @@ Submit a batch call request to schedule calls for multiple recipients.
 from elevenlabs import ElevenLabs, OutboundCallRecipient
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.batch_calls.create(
@@ -12372,6 +12486,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.batch_calls.list(
     limit=1,
@@ -12451,6 +12566,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.batch_calls.get(
     batch_id="batch_id",
@@ -12520,6 +12636,7 @@ Permanently delete a batch call and all recipient records. Conversations remain 
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.batch_calls.delete(
@@ -12591,6 +12708,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.batch_calls.cancel(
     batch_id="batch_id",
@@ -12660,6 +12778,7 @@ Retry a batch call, calling failed and no-response recipients again.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.batch_calls.retry(
@@ -12731,6 +12850,7 @@ Handle an outbound call via SIP trunk
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.sip_trunk.outbound_call(
@@ -12837,6 +12957,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.mcp_servers.list()
 
@@ -12896,6 +13017,7 @@ Create a new MCP server configuration in the workspace.
 from elevenlabs import ElevenLabs, McpServerConfigInput
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.mcp_servers.create(
@@ -12970,6 +13092,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.mcp_servers.get(
     mcp_server_id="mcp_server_id",
@@ -13040,6 +13163,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.mcp_servers.delete(
     mcp_server_id="mcp_server_id",
@@ -13109,6 +13233,7 @@ Update the configuration settings for an MCP server.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.mcp_servers.update(
@@ -13266,6 +13391,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.whatsapp_accounts.get(
     phone_number_id="phone_number_id",
@@ -13336,6 +13462,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.whatsapp_accounts.delete(
     phone_number_id="phone_number_id",
@@ -13405,6 +13532,7 @@ Update a WhatsApp account
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.whatsapp_accounts.update(
@@ -13500,6 +13628,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.whatsapp_accounts.list()
 
@@ -13560,6 +13689,7 @@ Returns summaries for the specified agents.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.summaries.get()
@@ -13629,6 +13759,7 @@ Retrieve the widget configuration for an agent
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.widget.get(
@@ -13710,6 +13841,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.link.get(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
@@ -13781,6 +13913,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.knowledge_base.size(
     agent_id="agent_id",
@@ -13851,6 +13984,7 @@ Calculates expected number of LLM tokens needed for the specified agent.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.llm_usage.calculate(
@@ -13947,6 +14081,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.branches.list(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
@@ -14034,6 +14169,7 @@ Create a new branch from a given version of main branch
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.branches.create(
@@ -14156,6 +14292,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.branches.get(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
@@ -14234,6 +14371,7 @@ Update agent branch properties such as archiving status and protection level
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.branches.update(
@@ -14338,6 +14476,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.branches.merge(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
@@ -14440,6 +14579,7 @@ from elevenlabs import (
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.deployments.create(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
@@ -14535,6 +14675,7 @@ from elevenlabs import (
 )
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.drafts.create(
@@ -14745,6 +14886,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.drafts.delete(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
@@ -14824,6 +14966,7 @@ Sets the avatar for an agent displayed in the widget
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.agents.widget.avatar.create(
@@ -14906,6 +15049,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.analytics.live_count.get(
     agent_id="agent_id",
@@ -14977,6 +15121,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.conversations.audio.get(
     conversation_id="conversation_id",
@@ -15047,6 +15192,7 @@ Send the feedback for the given conversation
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.conversations.feedback.create(
@@ -15127,6 +15273,7 @@ Search through conversation transcript messages by full-text and fuzzy search
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.conversations.messages.text_search(
@@ -15390,6 +15537,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.conversations.messages.search(
     text_query="Customer asking to cancel and get money back",
@@ -15488,6 +15636,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.conversations.files.create(
     conversation_id="conversation_id",
@@ -15567,6 +15716,7 @@ Remove a file upload from a conversation. Only possible if the file hasn't alrea
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.conversations.files.delete(
@@ -15648,6 +15798,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.conversations.analysis.run(
     conversation_id="conversation_id",
@@ -15719,6 +15870,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.dashboard.settings.get()
 
@@ -15778,6 +15930,7 @@ Update Convai dashboard settings for the workspace
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.dashboard.settings.update()
@@ -15847,6 +16000,7 @@ Create a knowledge base document generated by scraping the given webpage.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.knowledge_base.documents.create_from_url(
@@ -15950,6 +16104,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.knowledge_base.documents.create_from_file()
 
@@ -16036,6 +16191,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.knowledge_base.documents.create_from_text(
     text="text",
@@ -16121,6 +16277,7 @@ Create a folder used for grouping documents together.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.knowledge_base.documents.create_folder(
@@ -16216,6 +16373,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.knowledge_base.documents.get(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
@@ -16294,6 +16452,7 @@ Delete a document or folder from the knowledge base.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.knowledge_base.documents.delete(
@@ -16374,6 +16533,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.knowledge_base.documents.update(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
@@ -16452,6 +16612,7 @@ Get a list of agents depending on this knowledge base document
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.knowledge_base.documents.get_agents(
@@ -16550,9 +16711,10 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.knowledge_base.documents.get_content(
-    documentation_id="21m00Tcm4TlvDq8ikWAM",
+    documentation_id="documentation_id",
 )
 
 ```
@@ -16619,6 +16781,7 @@ Get a signed URL to download the original source file of a file-type document fr
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.knowledge_base.documents.get_source_file_url(
@@ -16689,6 +16852,7 @@ Moves the entity from one folder to another.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.knowledge_base.documents.move(
@@ -16767,6 +16931,7 @@ Moves multiple entities from one folder to another.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.knowledge_base.documents.bulk_move(
@@ -16847,6 +17012,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.knowledge_base.document.refresh(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
@@ -16916,6 +17082,7 @@ In case the document is not RAG indexed, it triggers rag indexing task, otherwis
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.knowledge_base.document.compute_rag_index(
@@ -16997,6 +17164,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.knowledge_base.documents.summaries.get()
 
@@ -17065,6 +17233,7 @@ Get details about a specific documentation part used by RAG.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.knowledge_base.documents.chunk.get(
@@ -17155,6 +17324,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.mcp_servers.tools.list(
     mcp_server_id="mcp_server_id",
@@ -17225,6 +17395,7 @@ Update the approval policy configuration for an MCP server. DEPRECATED: Use PATC
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.mcp_servers.approval_policy.update(
@@ -17305,6 +17476,7 @@ Add approval for a specific MCP tool when using per-tool approval mode.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.mcp_servers.tool_approvals.create(
@@ -17410,6 +17582,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.mcp_servers.tool_approvals.delete(
     mcp_server_id="mcp_server_id",
@@ -17489,6 +17662,7 @@ Create configuration overrides for a specific MCP tool.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.mcp_servers.tool_configs.create(
@@ -17632,6 +17806,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.mcp_servers.tool_configs.get(
     mcp_server_id="mcp_server_id",
@@ -17711,6 +17886,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.mcp_servers.tool_configs.delete(
     mcp_server_id="mcp_server_id",
@@ -17789,6 +17965,7 @@ Update configuration overrides for a specific MCP tool.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.mcp_servers.tool_configs.update(
@@ -17933,6 +18110,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.tests.folders.create(
     name="name",
@@ -18011,6 +18189,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.tests.folders.get(
     folder_id="tfld_7301khxdkycse5f88fzjdtrterzm",
@@ -18080,6 +18259,7 @@ Deletes an agent test folder by ID. Use force=true to delete a non-empty folder 
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.tests.folders.delete(
@@ -18160,6 +18340,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.tests.folders.update(
     folder_id="tfld_7301khxdkycse5f88fzjdtrterzm",
@@ -18239,6 +18420,7 @@ Lists all test invocations with pagination support and optional search filtering
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.tests.invocations.list(
@@ -18328,6 +18510,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.conversational_ai.tests.invocations.get(
     test_invocation_id="test_invocation_id",
@@ -18397,6 +18580,7 @@ Resubmits specific test runs from a test invocation.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.tests.invocations.resubmit(
@@ -18503,6 +18687,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.dubbing.resource.get(
     dubbing_id="dubbing_id",
@@ -18572,6 +18757,7 @@ Change the attribution of one or more segments to a different speaker.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.dubbing.resource.migrate_segments(
@@ -18661,6 +18847,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.dubbing.resource.transcribe(
     dubbing_id="dubbing_id",
@@ -18739,6 +18926,7 @@ Regenerate the translations for either the entire resource or the specified segm
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.dubbing.resource.translate(
@@ -18827,6 +19015,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.dubbing.resource.dub(
     dubbing_id="dubbing_id",
@@ -18913,6 +19102,7 @@ Regenerate the output media for a language using the latest Studio state. Please
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.dubbing.resource.render(
@@ -19011,6 +19201,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.dubbing.audio.get(
     dubbing_id="dubbing_id",
@@ -19090,6 +19281,7 @@ Returns transcript for the dub as an SRT or WEBVTT file.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.dubbing.transcript.get_transcript_for_dub(
@@ -19180,6 +19372,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.dubbing.transcripts.get(
     dubbing_id="dubbing_id",
@@ -19269,6 +19462,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.dubbing.resource.language.add(
     dubbing_id="dubbing_id",
@@ -19347,6 +19541,7 @@ Modifies a single segment with new text and/or start/end times. Will update the 
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.dubbing.resource.segment.update(
@@ -19460,6 +19655,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.dubbing.resource.segment.delete(
     dubbing_id="dubbing_id",
@@ -19539,6 +19735,7 @@ Amend the metadata associated with a speaker, such as their voice. Both voice cl
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.dubbing.resource.speaker.update(
@@ -19653,6 +19850,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.dubbing.resource.speaker.create(
     dubbing_id="dubbing_id",
@@ -19763,6 +19961,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.dubbing.resource.speaker.find_similar_voices(
     dubbing_id="dubbing_id",
@@ -19842,6 +20041,7 @@ Creates a new segment in dubbing resource with a start and end time for the spea
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.dubbing.resource.speaker.segment.create(
@@ -19957,6 +20157,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.music.composition_plan.create(
     prompt="prompt",
@@ -20055,6 +20256,7 @@ from elevenlabs.pronunciation_dictionaries.rules import (
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.pronunciation_dictionaries.rules.set(
     pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
@@ -20150,6 +20352,7 @@ from elevenlabs.pronunciation_dictionaries.rules import (
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.pronunciation_dictionaries.rules.add(
     pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
@@ -20240,6 +20443,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.pronunciation_dictionaries.rules.remove(
     pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
@@ -20320,6 +20524,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.service_accounts.api_keys.list(
     service_account_user_id="service_account_user_id",
@@ -20389,6 +20594,7 @@ Create a new API key for a service account
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.service_accounts.api_keys.create(
@@ -20485,6 +20691,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.service_accounts.api_keys.delete(
     service_account_user_id="service_account_user_id",
@@ -20563,6 +20770,7 @@ Update an existing API key for a service account
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.service_accounts.api_keys.update(
@@ -20678,6 +20886,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.speech_to_text.transcripts.get(
     transcription_id="transcription_id",
@@ -20747,6 +20956,7 @@ Delete a previously generated transcript by its ID.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.speech_to_text.transcripts.delete(
@@ -20819,6 +21029,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.studio.projects.list()
 
@@ -20878,6 +21089,7 @@ Creates a new Studio project, it can be either initialized as blank, from a docu
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.studio.projects.create(
@@ -21257,6 +21469,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.studio.projects.get(
     project_id="21m00Tcm4TlvDq8ikWAM",
@@ -21335,6 +21548,7 @@ Updates the specified Studio project by setting the values of the parameters pas
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.studio.projects.update(
@@ -21465,6 +21679,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.studio.projects.delete(
     project_id="21m00Tcm4TlvDq8ikWAM",
@@ -21534,6 +21749,7 @@ Starts conversion of a Studio project and all of its chapters.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.studio.projects.convert(
@@ -21605,6 +21821,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.studio.projects.get_muted_tracks(
     project_id="21m00Tcm4TlvDq8ikWAM",
@@ -21675,6 +21892,7 @@ Create a set of pronunciation dictionaries acting on a project. This will automa
 from elevenlabs import ElevenLabs, PronunciationDictionaryVersionLocator
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.studio.projects.pronunciation_dictionaries.create(
@@ -21767,6 +21985,7 @@ Updates Studio project content.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.studio.projects.content.update(
@@ -21880,6 +22099,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.studio.projects.snapshots.list(
     project_id="21m00Tcm4TlvDq8ikWAM",
@@ -21949,6 +22169,7 @@ Returns the project snapshot.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.studio.projects.snapshots.get(
@@ -22028,6 +22249,7 @@ Stream the audio from a Studio project snapshot.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.studio.projects.snapshots.stream(
@@ -22116,6 +22338,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.studio.projects.snapshots.stream_archive(
     project_id="project_id",
@@ -22196,6 +22419,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.studio.projects.chapters.list(
     project_id="21m00Tcm4TlvDq8ikWAM",
@@ -22265,6 +22489,7 @@ Creates a new chapter either as blank or from a URL.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.studio.projects.chapters.create(
@@ -22353,6 +22578,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.studio.projects.chapters.get(
     project_id="21m00Tcm4TlvDq8ikWAM",
@@ -22431,6 +22657,7 @@ Updates a chapter.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.studio.projects.chapters.update(
@@ -22527,6 +22754,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.studio.projects.chapters.delete(
     project_id="21m00Tcm4TlvDq8ikWAM",
@@ -22605,6 +22833,7 @@ Starts conversion of a specific chapter.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.studio.projects.chapters.convert(
@@ -22686,6 +22915,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.studio.projects.chapters.snapshots.list(
     project_id="21m00Tcm4TlvDq8ikWAM",
@@ -22764,6 +22994,7 @@ Returns the chapter snapshot.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.studio.projects.chapters.snapshots.get(
@@ -22852,6 +23083,7 @@ Stream the audio from a chapter snapshot. Use `GET /v1/studio/projects/{project_
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.studio.projects.chapters.snapshots.stream(
@@ -22950,6 +23182,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.text_to_voice.preview.stream(
     generated_voice_id="generated_voice_id",
@@ -23020,6 +23253,7 @@ Generate a time limited single-use token with embedded authentication for fronte
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.tokens.single_use.create(
@@ -23092,6 +23326,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.user.subscription.get()
 
@@ -23153,6 +23388,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.voices.settings.get_default()
 
@@ -23212,6 +23448,7 @@ Returns the settings for a specific voice. "similarity_boost" corresponds to"Cla
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.voices.settings.get(
@@ -23282,6 +23519,7 @@ Edit your settings for a specific voice. "similarity_boost" corresponds to "Clar
 from elevenlabs import ElevenLabs, VoiceSettings
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.voices.settings.update(
@@ -23368,6 +23606,7 @@ Create a voice clone and add it to your Voices
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.voices.ivc.create(
@@ -23474,6 +23713,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.voices.pvc.create(
     name="John Smith",
@@ -23568,6 +23808,7 @@ Edit PVC voice metadata
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.voices.pvc.update(
@@ -23671,6 +23912,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.voices.pvc.train(
     voice_id="21m00Tcm4TlvDq8ikWAM",
@@ -23749,6 +23991,7 @@ Add audio samples to a PVC voice
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.voices.pvc.samples.create(
@@ -23837,6 +24080,7 @@ Update a PVC voice sample - apply noise removal, select speaker, change trim tim
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.voices.pvc.samples.update(
@@ -23957,6 +24201,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.voices.pvc.samples.delete(
     voice_id="21m00Tcm4TlvDq8ikWAM",
@@ -24036,6 +24281,7 @@ Request manual verification for a PVC voice.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.voices.pvc.verification.request(
@@ -24126,6 +24372,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.voices.pvc.samples.audio.get(
     voice_id="21m00Tcm4TlvDq8ikWAM",
@@ -24215,6 +24462,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.voices.pvc.samples.waveform.get(
     voice_id="21m00Tcm4TlvDq8ikWAM",
@@ -24295,6 +24543,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.voices.pvc.samples.speakers.get(
     voice_id="21m00Tcm4TlvDq8ikWAM",
@@ -24373,6 +24622,7 @@ Start speaker separation process for a sample
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.voices.pvc.samples.speakers.separate(
@@ -24453,6 +24703,7 @@ Retrieve the separated audio for a specific speaker.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.voices.pvc.samples.speakers.audio.get(
@@ -24543,6 +24794,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.voices.pvc.verification.captcha.get(
     voice_id="21m00Tcm4TlvDq8ikWAM",
@@ -24612,6 +24864,7 @@ Submit captcha verification for PVC voice.
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.voices.pvc.verification.captcha.verify(
@@ -24694,6 +24947,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.voices.samples.audio.get(
     voice_id="voice_id",
@@ -24774,6 +25028,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.workspace.auth_connections.list()
 
@@ -24836,6 +25091,7 @@ from elevenlabs.workspace.auth_connections import (
 )
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.workspace.auth_connections.create(
@@ -24913,6 +25169,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.workspace.auth_connections.delete(
     auth_connection_id="auth_connection_id",
@@ -24984,6 +25241,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.workspace.groups.list()
 
@@ -25043,6 +25301,7 @@ Searches for user groups in the workspace. Multiple or no groups may be returned
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.workspace.groups.search(
@@ -25114,6 +25373,7 @@ Sends an email invitation to join your workspace to the provided email. If the u
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.workspace.invites.create(
@@ -25209,6 +25469,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.workspace.invites.create_batch(
     emails=["emails"],
@@ -25295,6 +25556,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.workspace.invites.delete(
     email="john.doe@testmail.com",
@@ -25365,6 +25627,7 @@ Updates attributes of a workspace member. Apart from the email identifier, all p
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.workspace.members.update(
@@ -25461,6 +25724,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.workspace.resources.get(
     resource_id="resource_id",
@@ -25539,6 +25803,7 @@ Grants a role on a workspace resource to a user or a group. It overrides any exi
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.workspace.resources.share(
@@ -25652,6 +25917,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.workspace.resources.unshare(
     resource_id="resource_id",
@@ -25756,6 +26022,7 @@ from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
+    api_key="YOUR_API_KEY",
 )
 client.workspace.groups.members.remove(
     group_id="group_id",
@@ -25834,6 +26101,7 @@ Adds a member of your workspace to the specified group. Requires `group_members_
 from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
+    api_key="YOUR_API_KEY",
     api_key="YOUR_API_KEY",
 )
 client.workspace.groups.members.add(

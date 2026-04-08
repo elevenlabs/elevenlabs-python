@@ -90,6 +90,7 @@ class SpeakerClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.dubbing.resource.speaker.update(
             dubbing_id="dubbing_id",
@@ -155,6 +156,7 @@ class SpeakerClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.dubbing.resource.speaker.create(
             dubbing_id="dubbing_id",
@@ -198,6 +200,7 @@ class SpeakerClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.dubbing.resource.speaker.find_similar_voices(
@@ -292,6 +295,7 @@ class AsyncSpeakerClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -365,6 +369,7 @@ class AsyncSpeakerClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -416,6 +421,7 @@ class AsyncSpeakerClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

@@ -55,6 +55,7 @@ class ForcedAlignmentClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.forced_alignment.create(
             text="text",
@@ -108,6 +109,7 @@ class AsyncForcedAlignmentClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

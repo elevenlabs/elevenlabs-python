@@ -65,6 +65,7 @@ class LlmUsageClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.agents.llm_usage.calculate(
             agent_id="agent_id",
@@ -135,6 +136,7 @@ class AsyncLlmUsageClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

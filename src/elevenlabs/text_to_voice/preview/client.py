@@ -47,6 +47,7 @@ class PreviewClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.text_to_voice.preview.stream(
             generated_voice_id="generated_voice_id",
@@ -97,6 +98,7 @@ class AsyncPreviewClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

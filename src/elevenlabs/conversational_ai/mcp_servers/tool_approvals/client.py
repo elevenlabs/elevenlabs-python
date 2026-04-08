@@ -71,6 +71,7 @@ class ToolApprovalsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.mcp_servers.tool_approvals.create(
             mcp_server_id="mcp_server_id",
@@ -115,6 +116,7 @@ class ToolApprovalsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.mcp_servers.tool_approvals.delete(
@@ -187,6 +189,7 @@ class AsyncToolApprovalsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -239,6 +242,7 @@ class AsyncToolApprovalsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

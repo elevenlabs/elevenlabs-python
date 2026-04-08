@@ -55,6 +55,7 @@ class AvatarClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.conversational_ai.agents.widget.avatar.create(
             agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
@@ -108,6 +109,7 @@ class AsyncAvatarClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

@@ -61,6 +61,7 @@ class ChaptersClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.studio.projects.chapters.list(
             project_id="21m00Tcm4TlvDq8ikWAM",
@@ -105,6 +106,7 @@ class ChaptersClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.studio.projects.chapters.create(
             project_id="21m00Tcm4TlvDq8ikWAM",
@@ -141,6 +143,7 @@ class ChaptersClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.studio.projects.chapters.get(
@@ -191,6 +194,7 @@ class ChaptersClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.studio.projects.chapters.update(
             project_id="21m00Tcm4TlvDq8ikWAM",
@@ -230,6 +234,7 @@ class ChaptersClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.studio.projects.chapters.delete(
             project_id="21m00Tcm4TlvDq8ikWAM",
@@ -266,6 +271,7 @@ class ChaptersClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.studio.projects.chapters.convert(
@@ -329,6 +335,7 @@ class AsyncChaptersClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -381,6 +388,7 @@ class AsyncChaptersClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -427,6 +435,7 @@ class AsyncChaptersClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -485,6 +494,7 @@ class AsyncChaptersClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -532,6 +542,7 @@ class AsyncChaptersClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -576,6 +587,7 @@ class AsyncChaptersClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

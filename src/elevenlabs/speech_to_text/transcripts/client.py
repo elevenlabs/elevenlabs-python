@@ -48,6 +48,7 @@ class TranscriptsClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.speech_to_text.transcripts.get(
             transcription_id="transcription_id",
@@ -78,6 +79,7 @@ class TranscriptsClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.speech_to_text.transcripts.delete(
@@ -130,6 +132,7 @@ class AsyncTranscriptsClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -170,6 +173,7 @@ class AsyncTranscriptsClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

@@ -74,6 +74,7 @@ class EnvironmentVariablesClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.environment_variables.list(
             cursor="cursor",
@@ -120,6 +121,7 @@ class EnvironmentVariablesClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.environment_variables.create(
             request=EnvironmentVariablesCreateRequestBody_String(
@@ -154,6 +156,7 @@ class EnvironmentVariablesClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.environment_variables.get(
@@ -193,6 +196,7 @@ class EnvironmentVariablesClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.environment_variables.update(
@@ -265,6 +269,7 @@ class AsyncEnvironmentVariablesClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -319,6 +324,7 @@ class AsyncEnvironmentVariablesClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -361,6 +367,7 @@ class AsyncEnvironmentVariablesClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -408,6 +415,7 @@ class AsyncEnvironmentVariablesClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 

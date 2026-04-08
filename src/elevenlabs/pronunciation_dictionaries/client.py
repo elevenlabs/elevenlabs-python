@@ -90,6 +90,7 @@ class PronunciationDictionariesClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.pronunciation_dictionaries.create_from_file(
             name="name",
@@ -151,6 +152,7 @@ class PronunciationDictionariesClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.pronunciation_dictionaries.create_from_rules(
             rules=[
@@ -198,6 +200,7 @@ class PronunciationDictionariesClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.pronunciation_dictionaries.get(
             pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
@@ -242,6 +245,7 @@ class PronunciationDictionariesClient:
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
         client.pronunciation_dictionaries.update(
             pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
@@ -279,6 +283,7 @@ class PronunciationDictionariesClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.pronunciation_dictionaries.download(
@@ -328,6 +333,7 @@ class PronunciationDictionariesClient:
         from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
         client.pronunciation_dictionaries.list(
@@ -414,6 +420,7 @@ class AsyncPronunciationDictionariesClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -483,6 +490,7 @@ class AsyncPronunciationDictionariesClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -538,6 +546,7 @@ class AsyncPronunciationDictionariesClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -590,6 +599,7 @@ class AsyncPronunciationDictionariesClient:
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
+            api_key="YOUR_API_KEY",
         )
 
 
@@ -635,6 +645,7 @@ class AsyncPronunciationDictionariesClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
@@ -693,6 +704,7 @@ class AsyncPronunciationDictionariesClient:
         from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
             api_key="YOUR_API_KEY",
         )
 
