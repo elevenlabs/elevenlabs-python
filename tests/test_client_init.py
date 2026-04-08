@@ -23,7 +23,12 @@ class TestResolveApiKey:
             with pytest.raises(ValueError, match="API Key"):
                 _resolve_api_key(None)
 
-    def test_empty_string_key_raises(self):
+    def test_empty_string_does_not_fall_through_to_env(self):
+        with mock.patch.dict(os.environ, {"ELEVENLABS_API_KEY": "env-key"}):
+            with pytest.raises(ValueError, match="API Key"):
+                _resolve_api_key("")
+
+    def test_empty_env_var_raises(self):
         with mock.patch.dict(os.environ, {"ELEVENLABS_API_KEY": ""}, clear=True):
             with pytest.raises(ValueError, match="API Key"):
                 _resolve_api_key(None)

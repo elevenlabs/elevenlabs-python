@@ -20,7 +20,7 @@ def get_base_url_host(base_url: str) -> str:
 
 
 def _resolve_api_key(api_key: typing.Optional[str]) -> str:
-    resolved = api_key or os.getenv("ELEVENLABS_API_KEY")
+    resolved = api_key if api_key is not None else os.getenv("ELEVENLABS_API_KEY")
     if not resolved:
         raise ValueError(
             "Please pass in your ElevenLabs API Key or export ELEVENLABS_API_KEY in your environment."
