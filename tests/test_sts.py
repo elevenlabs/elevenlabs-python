@@ -1,4 +1,4 @@
-from elevenlabs import play
+from elevenlabs.play import play
 from elevenlabs.client import ElevenLabs
 
 from .utils import IN_GITHUB, DEFAULT_VOICE, DEFAULT_VOICE_FILE
