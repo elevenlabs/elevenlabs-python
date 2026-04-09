@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 import typing
 
 import httpx
@@ -83,7 +84,7 @@ class BaseElevenLabs:
         *,
         base_url: typing.Optional[str] = None,
         environment: ElevenLabsEnvironment = ElevenLabsEnvironment.PRODUCTION,
-        api_key: typing.Optional[str] = None,
+        api_key: typing.Optional[str] = os.getenv("ELEVENLABS_API_KEY"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -412,7 +413,7 @@ class AsyncBaseElevenLabs:
         *,
         base_url: typing.Optional[str] = None,
         environment: ElevenLabsEnvironment = ElevenLabsEnvironment.PRODUCTION,
-        api_key: typing.Optional[str] = None,
+        api_key: typing.Optional[str] = os.getenv("ELEVENLABS_API_KEY"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,

@@ -194,7 +194,6 @@ class StudioClient:
             api_key="YOUR_API_KEY",
         )
         client.studio.create_podcast(
-            safety_identifier="safety-identifier",
             model_id="eleven_multilingual_v2",
             mode=BodyCreatePodcastV1StudioPodcastsPostMode_Conversation(
                 conversation=PodcastConversationModeData(
@@ -407,7 +406,6 @@ class AsyncStudioClient:
 
         async def main() -> None:
             await client.studio.create_podcast(
-                safety_identifier="safety-identifier",
                 model_id="eleven_multilingual_v2",
                 mode=BodyCreatePodcastV1StudioPodcastsPostMode_Conversation(
                     conversation=PodcastConversationModeData(

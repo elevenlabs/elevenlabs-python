@@ -418,7 +418,7 @@ class DocumentsClient:
         )
         return _response.data
 
-    def get_content(self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def get_content(self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Get the entire content of a document from the knowledge base
 
@@ -432,7 +432,8 @@ class DocumentsClient:
 
         Returns
         -------
-        None
+        str
+            Streaming document content
 
         Examples
         --------
@@ -442,7 +443,7 @@ class DocumentsClient:
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.knowledge_base.documents.get_content(
-            documentation_id="21m00Tcm4TlvDq8ikWAM",
+            documentation_id="documentation_id",
         )
         """
         _response = self._raw_client.get_content(documentation_id, request_options=request_options)
@@ -1040,7 +1041,7 @@ class AsyncDocumentsClient:
 
     async def get_content(
         self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    ) -> str:
         """
         Get the entire content of a document from the knowledge base
 
@@ -1054,7 +1055,8 @@ class AsyncDocumentsClient:
 
         Returns
         -------
-        None
+        str
+            Streaming document content
 
         Examples
         --------
@@ -1069,7 +1071,7 @@ class AsyncDocumentsClient:
 
         async def main() -> None:
             await client.conversational_ai.knowledge_base.documents.get_content(
-                documentation_id="21m00Tcm4TlvDq8ikWAM",
+                documentation_id="documentation_id",
             )
 
 
