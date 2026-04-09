@@ -118,7 +118,7 @@ class RawTwilioClient:
         direction: typing.Optional[TelephonyDirection] = OMIT,
         conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[None]:
+    ) -> HttpResponse[str]:
         """
         Register a Twilio call and return TwiML to connect the call
 
@@ -139,7 +139,8 @@ class RawTwilioClient:
 
         Returns
         -------
-        HttpResponse[None]
+        HttpResponse[str]
+            Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/twilio/register-call",
@@ -163,7 +164,7 @@ class RawTwilioClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return HttpResponse(response=_response, data=None)
+                return HttpResponse(response=_response, data=_response.text)  # type: ignore
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
@@ -280,7 +281,7 @@ class AsyncRawTwilioClient:
         direction: typing.Optional[TelephonyDirection] = OMIT,
         conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[None]:
+    ) -> AsyncHttpResponse[str]:
         """
         Register a Twilio call and return TwiML to connect the call
 
@@ -301,7 +302,8 @@ class AsyncRawTwilioClient:
 
         Returns
         -------
-        AsyncHttpResponse[None]
+        AsyncHttpResponse[str]
+            Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/twilio/register-call",
@@ -325,7 +327,7 @@ class AsyncRawTwilioClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return AsyncHttpResponse(response=_response, data=None)
+                return AsyncHttpResponse(response=_response, data=_response.text)  # type: ignore
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),

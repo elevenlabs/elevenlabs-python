@@ -3998,7 +3998,6 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.studio.create_podcast(
-    safety_identifier="safety-identifier",
     model_id="eleven_multilingual_v2",
     mode=BodyCreatePodcastV1StudioPodcastsPostMode_Conversation(
         conversation=PodcastConversationModeData(
@@ -16552,7 +16551,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.knowledge_base.documents.get_content(
-    documentation_id="21m00Tcm4TlvDq8ikWAM",
+    documentation_id="documentation_id",
 )
 
 ```
