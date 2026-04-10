@@ -1,6 +1,7 @@
 import asyncio
 
-from elevenlabs import VoiceSettings, play, Voice
+from elevenlabs import VoiceSettings, Voice
+from elevenlabs.play import play
 from elevenlabs.client import AsyncElevenLabs, ElevenLabs
 
 from .utils import IN_GITHUB, DEFAULT_TEXT, DEFAULT_VOICE, DEFAULT_MODEL
