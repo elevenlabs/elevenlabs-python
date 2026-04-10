@@ -15,6 +15,7 @@ src/elevenlabs/realtime/
 .github/
 
 README.md
+AGENTS.md
 assets/
 
 # Ignore custom tests
