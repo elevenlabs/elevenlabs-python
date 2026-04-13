@@ -7,7 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import ConversationsListRequestSummaryMode
-    from . import analysis, audio, feedback, files, messages
+    from . import analysis, audio, feedback, files, messages, topics
     from .messages import MessagesTextSearchRequestSummaryMode
 _dynamic_imports: typing.Dict[str, str] = {
     "ConversationsListRequestSummaryMode": ".types",
@@ -17,6 +17,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "feedback": ".feedback",
     "files": ".files",
     "messages": ".messages",
+    "topics": ".topics",
 }
 
 
@@ -49,4 +50,5 @@ __all__ = [
     "feedback",
     "files",
     "messages",
+    "topics",
 ]

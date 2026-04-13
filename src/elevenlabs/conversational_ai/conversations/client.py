@@ -21,6 +21,7 @@ if typing.TYPE_CHECKING:
     from .feedback.client import AsyncFeedbackClient, FeedbackClient
     from .files.client import AsyncFilesClient, FilesClient
     from .messages.client import AsyncMessagesClient, MessagesClient
+    from .topics.client import AsyncTopicsClient, TopicsClient
 
 
 class ConversationsClient:
@@ -31,6 +32,7 @@ class ConversationsClient:
         self._feedback: typing.Optional[FeedbackClient] = None
         self._messages: typing.Optional[MessagesClient] = None
         self._files: typing.Optional[FilesClient] = None
+        self._topics: typing.Optional[TopicsClient] = None
         self._analysis: typing.Optional[AnalysisClient] = None
 
     @property
@@ -183,6 +185,7 @@ class ConversationsClient:
         search: typing.Optional[str] = None,
         conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None,
         branch_id: typing.Optional[str] = None,
+        topic_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationsPageResponseModel:
         """
@@ -255,6 +258,9 @@ class ConversationsClient:
         branch_id : typing.Optional[str]
             Filter conversations by branch ID.
 
+        topic_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by topic IDs assigned during topic discovery.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -312,6 +318,7 @@ class ConversationsClient:
             search=search,
             conversation_initiation_source=conversation_initiation_source,
             branch_id=branch_id,
+            topic_ids=topic_ids,
             request_options=request_options,
         )
         return _response.data
@@ -413,6 +420,14 @@ class ConversationsClient:
         return self._files
 
     @property
+    def topics(self):
+        if self._topics is None:
+            from .topics.client import TopicsClient  # noqa: E402
+
+            self._topics = TopicsClient(client_wrapper=self._client_wrapper)
+        return self._topics
+
+    @property
     def analysis(self):
         if self._analysis is None:
             from .analysis.client import AnalysisClient  # noqa: E402
@@ -429,6 +444,7 @@ class AsyncConversationsClient:
         self._feedback: typing.Optional[AsyncFeedbackClient] = None
         self._messages: typing.Optional[AsyncMessagesClient] = None
         self._files: typing.Optional[AsyncFilesClient] = None
+        self._topics: typing.Optional[AsyncTopicsClient] = None
         self._analysis: typing.Optional[AsyncAnalysisClient] = None
 
     @property
@@ -597,6 +613,7 @@ class AsyncConversationsClient:
         search: typing.Optional[str] = None,
         conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None,
         branch_id: typing.Optional[str] = None,
+        topic_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationsPageResponseModel:
         """
@@ -669,6 +686,9 @@ class AsyncConversationsClient:
         branch_id : typing.Optional[str]
             Filter conversations by branch ID.
 
+        topic_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by topic IDs assigned during topic discovery.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -734,6 +754,7 @@ class AsyncConversationsClient:
             search=search,
             conversation_initiation_source=conversation_initiation_source,
             branch_id=branch_id,
+            topic_ids=topic_ids,
             request_options=request_options,
         )
         return _response.data
@@ -851,6 +872,14 @@ class AsyncConversationsClient:
 
             self._files = AsyncFilesClient(client_wrapper=self._client_wrapper)
         return self._files
+
+    @property
+    def topics(self):
+        if self._topics is None:
+            from .topics.client import AsyncTopicsClient  # noqa: E402
+
+            self._topics = AsyncTopicsClient(client_wrapper=self._client_wrapper)
+        return self._topics
 
     @property
     def analysis(self):

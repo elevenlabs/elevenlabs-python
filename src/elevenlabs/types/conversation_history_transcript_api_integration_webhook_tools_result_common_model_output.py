@@ -13,6 +13,7 @@ class ConversationHistoryTranscriptApiIntegrationWebhookToolsResultCommonModelOu
     tool_name: str
     result_value: str
     is_error: bool
+    is_blocked: bool
     tool_has_been_called: bool
     tool_latency_secs: float
     error_type: str

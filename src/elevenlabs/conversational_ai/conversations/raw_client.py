@@ -190,6 +190,7 @@ class RawConversationsClient:
         search: typing.Optional[str] = None,
         conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None,
         branch_id: typing.Optional[str] = None,
+        topic_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetConversationsPageResponseModel]:
         """
@@ -262,6 +263,9 @@ class RawConversationsClient:
         branch_id : typing.Optional[str]
             Filter conversations by branch ID.
 
+        topic_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by topic IDs assigned during topic discovery.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -296,6 +300,7 @@ class RawConversationsClient:
                 "search": search,
                 "conversation_initiation_source": conversation_initiation_source,
                 "branch_id": branch_id,
+                "topic_ids": topic_ids,
             },
             request_options=request_options,
         )
@@ -599,6 +604,7 @@ class AsyncRawConversationsClient:
         search: typing.Optional[str] = None,
         conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None,
         branch_id: typing.Optional[str] = None,
+        topic_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetConversationsPageResponseModel]:
         """
@@ -671,6 +677,9 @@ class AsyncRawConversationsClient:
         branch_id : typing.Optional[str]
             Filter conversations by branch ID.
 
+        topic_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by topic IDs assigned during topic discovery.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -705,6 +714,7 @@ class AsyncRawConversationsClient:
                 "search": search,
                 "conversation_initiation_source": conversation_initiation_source,
                 "branch_id": branch_id,
+                "topic_ids": topic_ids,
             },
             request_options=request_options,
         )

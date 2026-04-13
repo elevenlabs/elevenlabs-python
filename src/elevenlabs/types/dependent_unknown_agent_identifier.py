@@ -18,6 +18,8 @@ class DependentUnknownAgentIdentifier(UncheckedBaseModel):
     If the agent is a transitive dependent, contains IDs of the resources that the agent depends on directly.
     """
 
+    id: str
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

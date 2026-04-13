@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .workspace_group_permission import WorkspaceGroupPermission
+from .workspace_group_response_model_group_pvc_limit import WorkspaceGroupResponseModelGroupPvcLimit
 from .workspace_group_response_model_group_usage_limit import WorkspaceGroupResponseModelGroupUsageLimit
 
 
@@ -15,6 +16,7 @@ class WorkspaceGroupResponseModel(UncheckedBaseModel):
     members: typing.List[str]
     permissions: typing.Optional[typing.List[WorkspaceGroupPermission]] = None
     group_usage_limit: typing.Optional[WorkspaceGroupResponseModelGroupUsageLimit] = None
+    group_pvc_limit: typing.Optional[WorkspaceGroupResponseModelGroupPvcLimit] = None
     character_count: typing.Optional[int] = None
     scim_external_id: typing.Optional[str] = None
 

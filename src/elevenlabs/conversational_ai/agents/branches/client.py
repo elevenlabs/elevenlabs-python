@@ -91,7 +91,7 @@ class BranchesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateAgentBranchResponseModel:
         """
-        Create a new branch from a given version of main branch
+        Create a new branch from a given version of any branch
 
         Parameters
         ----------
@@ -254,6 +254,7 @@ class BranchesClient:
         *,
         target_branch_id: str,
         archive_source_branch: typing.Optional[bool] = OMIT,
+        force: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Any:
         """
@@ -268,10 +269,13 @@ class BranchesClient:
             Unique identifier for the source branch to merge from.
 
         target_branch_id : str
-            The ID of the target branch to merge into (must be the main branch).
+            The ID of the target branch to merge into.
 
         archive_source_branch : typing.Optional[bool]
             Whether to archive the source branch after merging
+
+        force : typing.Optional[bool]
+            Force source branch changes onto the target, overriding timestamp-based conflict resolution
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -299,6 +303,7 @@ class BranchesClient:
             source_branch_id,
             target_branch_id=target_branch_id,
             archive_source_branch=archive_source_branch,
+            force=force,
             request_options=request_options,
         )
         return _response.data
@@ -388,7 +393,7 @@ class AsyncBranchesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateAgentBranchResponseModel:
         """
-        Create a new branch from a given version of main branch
+        Create a new branch from a given version of any branch
 
         Parameters
         ----------
@@ -575,6 +580,7 @@ class AsyncBranchesClient:
         *,
         target_branch_id: str,
         archive_source_branch: typing.Optional[bool] = OMIT,
+        force: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Any:
         """
@@ -589,10 +595,13 @@ class AsyncBranchesClient:
             Unique identifier for the source branch to merge from.
 
         target_branch_id : str
-            The ID of the target branch to merge into (must be the main branch).
+            The ID of the target branch to merge into.
 
         archive_source_branch : typing.Optional[bool]
             Whether to archive the source branch after merging
+
+        force : typing.Optional[bool]
+            Force source branch changes onto the target, overriding timestamp-based conflict resolution
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -628,6 +637,7 @@ class AsyncBranchesClient:
             source_branch_id,
             target_branch_id=target_branch_id,
             archive_source_branch=archive_source_branch,
+            force=force,
             request_options=request_options,
         )
         return _response.data

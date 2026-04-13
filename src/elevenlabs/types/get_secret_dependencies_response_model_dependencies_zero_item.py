@@ -8,16 +8,15 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
-from .dependent_available_agent_identifier_access_level import DependentAvailableAgentIdentifierAccessLevel
+from .dependent_available_tool_identifier_access_level import DependentAvailableToolIdentifierAccessLevel
 
 
-class GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem_Available(UncheckedBaseModel):
+class GetSecretDependenciesResponseModelDependenciesZeroItem_Available(UncheckedBaseModel):
     type: typing.Literal["available"] = "available"
-    referenced_resource_ids: typing.Optional[typing.List[str]] = None
     id: str
     name: str
     created_at_unix_secs: int
-    access_level: DependentAvailableAgentIdentifierAccessLevel
+    access_level: DependentAvailableToolIdentifierAccessLevel
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -29,9 +28,8 @@ class GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem_Available(Un
             extra = pydantic.Extra.allow
 
 
-class GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem_Unknown(UncheckedBaseModel):
+class GetSecretDependenciesResponseModelDependenciesZeroItem_Unknown(UncheckedBaseModel):
     type: typing.Literal["unknown"] = "unknown"
-    referenced_resource_ids: typing.Optional[typing.List[str]] = None
     id: str
 
     if IS_PYDANTIC_V2:
@@ -44,10 +42,10 @@ class GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem_Unknown(Unch
             extra = pydantic.Extra.allow
 
 
-GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem = typing_extensions.Annotated[
+GetSecretDependenciesResponseModelDependenciesZeroItem = typing_extensions.Annotated[
     typing.Union[
-        GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem_Available,
-        GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem_Unknown,
+        GetSecretDependenciesResponseModelDependenciesZeroItem_Available,
+        GetSecretDependenciesResponseModelDependenciesZeroItem_Unknown,
     ],
     UnionMetadata(discriminant="type"),
 ]

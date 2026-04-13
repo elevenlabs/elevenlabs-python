@@ -3232,7 +3232,7 @@ client.voices.search(
 <dl>
 <dd>
 
-**voice_type:** `typing.Optional[str]` — Type of the voice to filter by. One of 'personal', 'community', 'default', 'workspace', 'non-default', 'saved'. 'non-default' is equal to all but 'default'. 'saved' is equal to non-default, but includes default voices if they have been added to a collection.
+**voice_type:** `typing.Optional[str]` — Type of the voice to filter by. One of 'personal', 'community', 'default', 'workspace', 'non-default', 'non-community', 'saved'. 'non-default' is equal to all but 'default'. 'non-community' is equal to 'personal' and 'workspace' combined (excludes library copies). 'saved' is equal to non-default, but includes default voices if they have been added to a collection.
     
 </dd>
 </dl>
@@ -3998,7 +3998,6 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.studio.create_podcast(
-    safety_identifier="safety-identifier",
     model_id="eleven_multilingual_v2",
     mode=BodyCreatePodcastV1StudioPodcastsPostMode_Conversation(
         conversation=PodcastConversationModeData(
@@ -4640,7 +4639,7 @@ client.music.stream()
 <dl>
 <dd>
 
-Upload a music file to be later used for inpainting. Only available to enterprise clients with access to the inpainting feature.
+Upload a music file to be later used for inpainting. Only available to enterprise clients with access to the inpainting feature. Price for uploading is the same as the one for song generation. All uploaded content gets inspected for copyright infringement. If copyrighted content is detected, half of the request cost is still charged.
 </dd>
 </dl>
 </dd>
@@ -6914,7 +6913,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**use_multi_channel:** `typing.Optional[bool]` — Whether the audio file contains multiple channels where each channel contains a single speaker. When enabled, each channel will be transcribed independently and the results will be combined. Each word in the response will include a 'channel_index' field indicating which channel it was spoken on. A maximum of 5 channels is supported.
+**use_multi_channel:** `typing.Optional[bool]` — Whether the audio file contains multiple channels where each channel contains a single speaker. When enabled, each channel will be transcribed independently and the results will be combined. Each word in the response will include a 'channel_index' field indicating which channel it was spoken on. A maximum of 5 channels is supported. Each channel is billed independently at the full audio duration, so cost scales linearly with the number of channels.
     
 </dd>
 </dl>
@@ -6930,7 +6929,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**entity_detection:** `typing.Optional[SpeechToTextConvertRequestEntityDetection]` — Detect entities in the transcript. Can be 'all' to detect all entities, a single entity type or category string, or a list of entity types/categories. Categories include 'pii', 'phi', 'pci', 'other', 'offensive_language'. When enabled, detected entities will be returned in the 'entities' field with their text, type, and character positions. Usage of this parameter will incur additional costs.
+**entity_detection:** `typing.Optional[SpeechToTextConvertRequestEntityDetection]` — Detect entities in the transcript. Can be 'all' to detect all entities, a single entity type or category string, or a list of entity types/categories. Categories include 'pii', 'phi', 'pci', 'other', 'offensive_language'. When enabled, detected entities will be returned in the 'entities' field with their text, type, and character positions. Usage of this parameter will incur an additional 30% surcharge on the base transcription cost.
     
 </dd>
 </dl>
@@ -6946,7 +6945,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**entity_redaction:** `typing.Optional[SpeechToTextConvertRequestEntityRedaction]` — Redact entities from the transcript text. Accepts the same format as entity_detection: 'all', a category ('pii', 'phi'), or specific entity types. Must be a subset of entity_detection. When redaction is enabled, the entities field will not be returned.
+**entity_redaction:** `typing.Optional[SpeechToTextConvertRequestEntityRedaction]` — Redact entities from the transcript text. Accepts the same format as entity_detection: 'all', a category ('pii', 'phi'), or specific entity types. Must be a subset of entity_detection. When redaction is enabled, the entities field will not be returned. Usage of this parameter will incur an additional 30% surcharge on the base transcription cost.
     
 </dd>
 </dl>
@@ -6962,7 +6961,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**keyterms:** `typing.Optional[typing.List[str]]` — A list of keyterms to bias the transcription towards.           The keyterms are words or phrases you want the model to recognise more accurately.           The number of keyterms cannot exceed 1000.           The length of each keyterm must be less than 50 characters.           Keyterms can contain at most 5 words (after normalisation).           For example ["hello", "world", "technical term"].           Usage of this parameter will incur additional costs.           When more than 100 keyterms are provided, a minimum billable duration of 20 seconds applies per request.
+**keyterms:** `typing.Optional[typing.List[str]]` — A list of keyterms to bias the transcription towards.           The keyterms are words or phrases you want the model to recognise more accurately.           The number of keyterms cannot exceed 1000.           The length of each keyterm must be less than 50 characters.           Keyterms can contain at most 5 words (after normalisation).           For example ["hello", "world", "technical term"].           Usage of this parameter will incur an additional 20% surcharge on the base transcription cost.           When more than 100 keyterms are provided, a minimum billable duration of 20 seconds applies per request.
     
 </dd>
 </dl>
@@ -8130,6 +8129,14 @@ client.conversational_ai.conversations.list(
 <dd>
 
 **branch_id:** `typing.Optional[str]` — Filter conversations by branch ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**topic_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by topic IDs assigned during topic discovery.
     
 </dd>
 </dl>
@@ -11163,6 +11170,106 @@ client.conversational_ai.knowledge_base.get_or_create_rag_indexes(
 </dl>
 </details>
 
+<details><summary><code>client.conversational_ai.knowledge_base.<a href="src/elevenlabs/conversational_ai/knowledge_base/client.py">search</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Fuzzy text search over knowledge base document content
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.knowledge_base.search(
+    query="query",
+    page_size=1,
+    cursor="cursor",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**query:** `str` — The search query text
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many documents to return at maximum. Can not exceed 100, defaults to 30.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**types:** `typing.Optional[
+    typing.Union[
+        KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]
+    ]
+]` — If present, the endpoint will return only documents of the given types.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ConversationalAi Tools
 <details><summary><code>client.conversational_ai.tools.<a href="src/elevenlabs/conversational_ai/tools/client.py">list</a>(...)</code></summary>
 <dl>
@@ -11906,6 +12013,7 @@ client = ElevenLabs(
 )
 client.conversational_ai.secrets.list(
     page_size=1,
+    dependency_limit=1,
     cursor="cursor",
 )
 
@@ -11924,6 +12032,14 @@ client.conversational_ai.secrets.list(
 <dd>
 
 **page_size:** `typing.Optional[int]` — How many documents to return at maximum. Can not exceed 100. If not provided, returns all secrets.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dependency_limit:** `typing.Optional[int]` — Maximum number of dependent resources (tools, agents, phone numbers) to return per secret. Can not exceed 100.
     
 </dd>
 </dl>
@@ -12169,6 +12285,103 @@ client.conversational_ai.secrets.update(
 <dd>
 
 **value:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.secrets.<a href="src/elevenlabs/conversational_ai/secrets/client.py">get_dependencies</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get paginated list of resources that depend on a specific secret, filtered by resource type.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.secrets.get_dependencies(
+    secret_id="secret_id",
+    resource_type="tools",
+    page_size=1,
+    cursor="cursor",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**secret_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**resource_type:** `SecretDependencyResourceType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many dependency items to return per page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
     
 </dd>
 </dl>
@@ -14016,7 +14229,7 @@ client.conversational_ai.agents.branches.list(
 <dl>
 <dd>
 
-Create a new branch from a given version of main branch
+Create a new branch from a given version of any branch
 </dd>
 </dl>
 </dd>
@@ -14375,7 +14588,7 @@ client.conversational_ai.agents.branches.merge(
 <dl>
 <dd>
 
-**target_branch_id:** `str` — The ID of the target branch to merge into (must be the main branch).
+**target_branch_id:** `str` — The ID of the target branch to merge into.
     
 </dd>
 </dl>
@@ -14384,6 +14597,14 @@ client.conversational_ai.agents.branches.merge(
 <dd>
 
 **archive_source_branch:** `typing.Optional[bool]` — Whether to archive the source branch after merging
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force:** `typing.Optional[bool]` — Force source branch changes onto the target, overriding timestamp-based conflict resolution
     
 </dd>
 </dl>
@@ -15616,6 +15837,77 @@ client.conversational_ai.conversations.files.delete(
 </dl>
 </details>
 
+## ConversationalAi Conversations Topics
+<details><summary><code>client.conversational_ai.conversations.topics.<a href="src/elevenlabs/conversational_ai/conversations/topics/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the latest topic discovery run results for a given agent.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.conversations.topics.get(
+    agent_id="agent_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — ID of the agent
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ConversationalAi Conversations Analysis
 <details><summary><code>client.conversational_ai.conversations.analysis.<a href="src/elevenlabs/conversational_ai/conversations/analysis/client.py">run</a>(...)</code></summary>
 <dl>
@@ -16552,7 +16844,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.knowledge_base.documents.get_content(
-    documentation_id="21m00Tcm4TlvDq8ikWAM",
+    documentation_id="documentation_id",
 )
 
 ```

@@ -574,7 +574,7 @@ class RawDocumentsClient:
 
     def get_content(
         self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[None]:
+    ) -> HttpResponse[str]:
         """
         Get the entire content of a document from the knowledge base
 
@@ -588,7 +588,8 @@ class RawDocumentsClient:
 
         Returns
         -------
-        HttpResponse[None]
+        HttpResponse[str]
+            Streaming document content
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/content",
@@ -597,7 +598,7 @@ class RawDocumentsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return HttpResponse(response=_response, data=None)
+                return HttpResponse(response=_response, data=_response.text)  # type: ignore
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
@@ -1330,7 +1331,7 @@ class AsyncRawDocumentsClient:
 
     async def get_content(
         self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[None]:
+    ) -> AsyncHttpResponse[str]:
         """
         Get the entire content of a document from the knowledge base
 
@@ -1344,7 +1345,8 @@ class AsyncRawDocumentsClient:
 
         Returns
         -------
-        AsyncHttpResponse[None]
+        AsyncHttpResponse[str]
+            Streaming document content
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/content",
@@ -1353,7 +1355,7 @@ class AsyncRawDocumentsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return AsyncHttpResponse(response=_response, data=None)
+                return AsyncHttpResponse(response=_response, data=_response.text)  # type: ignore
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
