@@ -46,6 +46,11 @@ class TurnConfigWorkflowOverride(UncheckedBaseModel):
     When enabled, starts generating LLM responses during silence before full turn confidence is reached, reducing perceived latency. May increase LLM costs.
     """
 
+    retranscribe_on_turn_timeout: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    When enabled, if VAD detects no speech, attempts to re-transcribe accumulated audio at turn timeout. Disables silence discount billing for affected turns.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

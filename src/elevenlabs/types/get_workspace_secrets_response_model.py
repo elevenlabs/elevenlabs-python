@@ -15,11 +15,6 @@ class GetWorkspaceSecretsResponseModel(UncheckedBaseModel):
     Cursor for fetching the next page of secrets
     """
 
-    has_more: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Whether there are more secrets to fetch
-    """
-
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

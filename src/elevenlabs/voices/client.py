@@ -117,7 +117,7 @@ class VoicesClient:
             Which direction to sort the voices in. 'asc' or 'desc'.
 
         voice_type : typing.Optional[str]
-            Type of the voice to filter by. One of 'personal', 'community', 'default', 'workspace', 'non-default', 'saved'. 'non-default' is equal to all but 'default'. 'saved' is equal to non-default, but includes default voices if they have been added to a collection.
+            Type of the voice to filter by. One of 'personal', 'community', 'default', 'workspace', 'non-default', 'non-community', 'saved'. 'non-default' is equal to all but 'default'. 'non-community' is equal to 'personal' and 'workspace' combined (excludes library copies). 'saved' is equal to non-default, but includes default voices if they have been added to a collection.
 
         category : typing.Optional[str]
             Category of the voice to filter by. One of 'premade', 'cloned', 'generated', 'professional'
@@ -684,7 +684,7 @@ class AsyncVoicesClient:
             Which direction to sort the voices in. 'asc' or 'desc'.
 
         voice_type : typing.Optional[str]
-            Type of the voice to filter by. One of 'personal', 'community', 'default', 'workspace', 'non-default', 'saved'. 'non-default' is equal to all but 'default'. 'saved' is equal to non-default, but includes default voices if they have been added to a collection.
+            Type of the voice to filter by. One of 'personal', 'community', 'default', 'workspace', 'non-default', 'non-community', 'saved'. 'non-default' is equal to all but 'default'. 'non-community' is equal to 'personal' and 'workspace' combined (excludes library copies). 'saved' is equal to non-default, but includes default voices if they have been added to a collection.
 
         category : typing.Optional[str]
             Category of the voice to filter by. One of 'premade', 'cloned', 'generated', 'professional'

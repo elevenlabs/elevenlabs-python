@@ -7,12 +7,9 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class AgentVersionParents(UncheckedBaseModel):
-    in_branch_parent_id: typing.Optional[str] = None
-    out_of_branch_parent_id: typing.Optional[str] = None
-    merged_into_branch_id: typing.Optional[str] = None
-    merged_from_branch_id: typing.Optional[str] = None
-    merged_from_version_id: typing.Optional[str] = None
+class SearchHighlightSegment(UncheckedBaseModel):
+    value: str
+    is_hit: bool
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -13,6 +13,11 @@ class ModelRatesResponseModel(UncheckedBaseModel):
     The cost multiplier for characters.
     """
 
+    cost_discount_multiplier: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Discount multiplier applied to cost estimates. Defaults to 1.0 (no discount).
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .conv_ai_stored_secret_dependencies_agents_item import ConvAiStoredSecretDependenciesAgentsItem
+from .conv_ai_stored_secret_dependencies_mcp_servers_item import ConvAiStoredSecretDependenciesMcpServersItem
 from .conv_ai_stored_secret_dependencies_tools_item import ConvAiStoredSecretDependenciesToolsItem
 from .dependent_phone_number_identifier import DependentPhoneNumberIdentifier
 from .secret_dependency_type import SecretDependencyType
@@ -13,9 +14,25 @@ from .secret_dependency_type import SecretDependencyType
 
 class ConvAiStoredSecretDependencies(UncheckedBaseModel):
     tools: typing.List[ConvAiStoredSecretDependenciesToolsItem]
+    tools_has_more: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether there are more tool dependents beyond the returned preview
+    """
+
     agents: typing.List[ConvAiStoredSecretDependenciesAgentsItem]
-    others: typing.List[SecretDependencyType]
+    agents_has_more: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether there are more agent dependents beyond the returned preview
+    """
+
     phone_numbers: typing.Optional[typing.List[DependentPhoneNumberIdentifier]] = None
+    phone_numbers_has_more: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether there are more phone number dependents beyond the returned preview
+    """
+
+    mcp_servers: typing.Optional[typing.List[ConvAiStoredSecretDependenciesMcpServersItem]] = None
+    others: typing.List[SecretDependencyType]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -16,6 +16,7 @@ class ConversationHistoryTranscriptOtherToolsResultCommonModel(UncheckedBaseMode
     tool_name: str
     result_value: str
     is_error: bool
+    is_blocked: typing.Optional[bool] = None
     tool_has_been_called: bool
     tool_latency_secs: typing.Optional[float] = None
     error_type: typing.Optional[str] = None

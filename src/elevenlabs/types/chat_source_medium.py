@@ -2,4 +2,4 @@
 
 import typing
 
-ChatSourceMedium = typing.Union[typing.Literal["audio", "dtmf", "text", "image", "file"], typing.Any]
+ChatSourceMedium = typing.Union[typing.Literal["audio", "text", "image", "file"], typing.Any]

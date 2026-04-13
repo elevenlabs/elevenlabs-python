@@ -32,6 +32,7 @@ class GetToolDependentAgentsResponseModelAgentsItem_Available(UncheckedBaseModel
 class GetToolDependentAgentsResponseModelAgentsItem_Unknown(UncheckedBaseModel):
     type: typing.Literal["unknown"] = "unknown"
     referenced_resource_ids: typing.Optional[typing.List[str]] = None
+    id: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

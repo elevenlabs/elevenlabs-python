@@ -51,6 +51,7 @@ if typing.TYPE_CHECKING:
     from .agent_test_entity_type import AgentTestEntityType
     from .agent_test_folder_path_segment_response_model import AgentTestFolderPathSegmentResponseModel
     from .agent_testing_settings import AgentTestingSettings
+    from .agent_topic_response_model import AgentTopicResponseModel
     from .agent_transfer import AgentTransfer
     from .agent_version_metadata import AgentVersionMetadata
     from .agent_version_parents import AgentVersionParents
@@ -332,6 +333,11 @@ if typing.TYPE_CHECKING:
         ConvAiStoredSecretDependenciesAgentsItem,
         ConvAiStoredSecretDependenciesAgentsItem_Available,
         ConvAiStoredSecretDependenciesAgentsItem_Unknown,
+    )
+    from .conv_ai_stored_secret_dependencies_mcp_servers_item import (
+        ConvAiStoredSecretDependenciesMcpServersItem,
+        ConvAiStoredSecretDependenciesMcpServersItem_Available,
+        ConvAiStoredSecretDependenciesMcpServersItem_Unknown,
     )
     from .conv_ai_stored_secret_dependencies_tools_item import (
         ConvAiStoredSecretDependenciesToolsItem,
@@ -724,6 +730,7 @@ if typing.TYPE_CHECKING:
         GetAgentResponseModelPhoneNumbersItem_Twilio,
     )
     from .get_agent_test_folder_response_model import GetAgentTestFolderResponseModel
+    from .get_agent_topics_response_model import GetAgentTopicsResponseModel
     from .get_agents_page_response_model import GetAgentsPageResponseModel
     from .get_analytics_summary_params import GetAnalyticsSummaryParams
     from .get_audio_native_project_settings_response_model import GetAudioNativeProjectSettingsResponseModel
@@ -827,6 +834,18 @@ if typing.TYPE_CHECKING:
         GetResponseUnitTestResponseModelDynamicVariablesValue,
     )
     from .get_schedule_params import GetScheduleParams
+    from .get_secret_dependencies_response_model import GetSecretDependenciesResponseModel
+    from .get_secret_dependencies_response_model_dependencies import GetSecretDependenciesResponseModelDependencies
+    from .get_secret_dependencies_response_model_dependencies_one_item import (
+        GetSecretDependenciesResponseModelDependenciesOneItem,
+        GetSecretDependenciesResponseModelDependenciesOneItem_Available,
+        GetSecretDependenciesResponseModelDependenciesOneItem_Unknown,
+    )
+    from .get_secret_dependencies_response_model_dependencies_zero_item import (
+        GetSecretDependenciesResponseModelDependenciesZeroItem,
+        GetSecretDependenciesResponseModelDependenciesZeroItem_Available,
+        GetSecretDependenciesResponseModelDependenciesZeroItem_Unknown,
+    )
     from .get_simulation_test_response_model import GetSimulationTestResponseModel
     from .get_simulation_test_response_model_dynamic_variables_value import (
         GetSimulationTestResponseModelDynamicVariablesValue,
@@ -869,6 +888,15 @@ if typing.TYPE_CHECKING:
     from .invoice_response_model_payment_intent_status import InvoiceResponseModelPaymentIntentStatus
     from .invoice_response_model_payment_intent_statusses_item import InvoiceResponseModelPaymentIntentStatussesItem
     from .keep_context_alive import KeepContextAlive
+    from .knowledge_base_content_search_response_model import KnowledgeBaseContentSearchResponseModel
+    from .knowledge_base_content_search_result import KnowledgeBaseContentSearchResult
+    from .knowledge_base_content_search_result_document import (
+        KnowledgeBaseContentSearchResultDocument,
+        KnowledgeBaseContentSearchResultDocument_File,
+        KnowledgeBaseContentSearchResultDocument_Folder,
+        KnowledgeBaseContentSearchResultDocument_Text,
+        KnowledgeBaseContentSearchResultDocument_Url,
+    )
     from .knowledge_base_dependent_type import KnowledgeBaseDependentType
     from .knowledge_base_document_chunk_response_model import KnowledgeBaseDocumentChunkResponseModel
     from .knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
@@ -1261,7 +1289,9 @@ if typing.TYPE_CHECKING:
     from .scribe_transcriber_error_payload import ScribeTranscriberErrorPayload
     from .scribe_unaccepted_terms_error_payload import ScribeUnacceptedTermsErrorPayload
     from .search_clients_params import SearchClientsParams
+    from .search_highlight_segment import SearchHighlightSegment
     from .seat_type import SeatType
+    from .secret_dependency_resource_type import SecretDependencyResourceType
     from .secret_dependency_type import SecretDependencyType
     from .section_source import SectionSource
     from .segment_create_response import SegmentCreateResponse
@@ -1749,6 +1779,7 @@ if typing.TYPE_CHECKING:
     from .workspace_group_by_name_response_model import WorkspaceGroupByNameResponseModel
     from .workspace_group_permission import WorkspaceGroupPermission
     from .workspace_group_response_model import WorkspaceGroupResponseModel
+    from .workspace_group_response_model_group_pvc_limit import WorkspaceGroupResponseModelGroupPvcLimit
     from .workspace_group_response_model_group_usage_limit import WorkspaceGroupResponseModelGroupUsageLimit
     from .workspace_resource_type import WorkspaceResourceType
     from .workspace_service_account_list_response_model import WorkspaceServiceAccountListResponseModel
@@ -1800,6 +1831,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentTestEntityType": ".agent_test_entity_type",
     "AgentTestFolderPathSegmentResponseModel": ".agent_test_folder_path_segment_response_model",
     "AgentTestingSettings": ".agent_testing_settings",
+    "AgentTopicResponseModel": ".agent_topic_response_model",
     "AgentTransfer": ".agent_transfer",
     "AgentVersionMetadata": ".agent_version_metadata",
     "AgentVersionParents": ".agent_version_parents",
@@ -2054,6 +2086,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConvAiStoredSecretDependenciesAgentsItem": ".conv_ai_stored_secret_dependencies_agents_item",
     "ConvAiStoredSecretDependenciesAgentsItem_Available": ".conv_ai_stored_secret_dependencies_agents_item",
     "ConvAiStoredSecretDependenciesAgentsItem_Unknown": ".conv_ai_stored_secret_dependencies_agents_item",
+    "ConvAiStoredSecretDependenciesMcpServersItem": ".conv_ai_stored_secret_dependencies_mcp_servers_item",
+    "ConvAiStoredSecretDependenciesMcpServersItem_Available": ".conv_ai_stored_secret_dependencies_mcp_servers_item",
+    "ConvAiStoredSecretDependenciesMcpServersItem_Unknown": ".conv_ai_stored_secret_dependencies_mcp_servers_item",
     "ConvAiStoredSecretDependenciesToolsItem": ".conv_ai_stored_secret_dependencies_tools_item",
     "ConvAiStoredSecretDependenciesToolsItem_Available": ".conv_ai_stored_secret_dependencies_tools_item",
     "ConvAiStoredSecretDependenciesToolsItem_Unknown": ".conv_ai_stored_secret_dependencies_tools_item",
@@ -2363,6 +2398,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetAgentResponseModelPhoneNumbersItem_SipTrunk": ".get_agent_response_model_phone_numbers_item",
     "GetAgentResponseModelPhoneNumbersItem_Twilio": ".get_agent_response_model_phone_numbers_item",
     "GetAgentTestFolderResponseModel": ".get_agent_test_folder_response_model",
+    "GetAgentTopicsResponseModel": ".get_agent_topics_response_model",
     "GetAgentsPageResponseModel": ".get_agents_page_response_model",
     "GetAnalyticsSummaryParams": ".get_analytics_summary_params",
     "GetAudioNativeProjectSettingsResponseModel": ".get_audio_native_project_settings_response_model",
@@ -2438,6 +2474,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetResponseUnitTestResponseModel": ".get_response_unit_test_response_model",
     "GetResponseUnitTestResponseModelDynamicVariablesValue": ".get_response_unit_test_response_model_dynamic_variables_value",
     "GetScheduleParams": ".get_schedule_params",
+    "GetSecretDependenciesResponseModel": ".get_secret_dependencies_response_model",
+    "GetSecretDependenciesResponseModelDependencies": ".get_secret_dependencies_response_model_dependencies",
+    "GetSecretDependenciesResponseModelDependenciesOneItem": ".get_secret_dependencies_response_model_dependencies_one_item",
+    "GetSecretDependenciesResponseModelDependenciesOneItem_Available": ".get_secret_dependencies_response_model_dependencies_one_item",
+    "GetSecretDependenciesResponseModelDependenciesOneItem_Unknown": ".get_secret_dependencies_response_model_dependencies_one_item",
+    "GetSecretDependenciesResponseModelDependenciesZeroItem": ".get_secret_dependencies_response_model_dependencies_zero_item",
+    "GetSecretDependenciesResponseModelDependenciesZeroItem_Available": ".get_secret_dependencies_response_model_dependencies_zero_item",
+    "GetSecretDependenciesResponseModelDependenciesZeroItem_Unknown": ".get_secret_dependencies_response_model_dependencies_zero_item",
     "GetSimulationTestResponseModel": ".get_simulation_test_response_model",
     "GetSimulationTestResponseModelDynamicVariablesValue": ".get_simulation_test_response_model_dynamic_variables_value",
     "GetSpeechHistoryResponse": ".get_speech_history_response",
@@ -2474,6 +2518,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InvoiceResponseModelPaymentIntentStatus": ".invoice_response_model_payment_intent_status",
     "InvoiceResponseModelPaymentIntentStatussesItem": ".invoice_response_model_payment_intent_statusses_item",
     "KeepContextAlive": ".keep_context_alive",
+    "KnowledgeBaseContentSearchResponseModel": ".knowledge_base_content_search_response_model",
+    "KnowledgeBaseContentSearchResult": ".knowledge_base_content_search_result",
+    "KnowledgeBaseContentSearchResultDocument": ".knowledge_base_content_search_result_document",
+    "KnowledgeBaseContentSearchResultDocument_File": ".knowledge_base_content_search_result_document",
+    "KnowledgeBaseContentSearchResultDocument_Folder": ".knowledge_base_content_search_result_document",
+    "KnowledgeBaseContentSearchResultDocument_Text": ".knowledge_base_content_search_result_document",
+    "KnowledgeBaseContentSearchResultDocument_Url": ".knowledge_base_content_search_result_document",
     "KnowledgeBaseDependentType": ".knowledge_base_dependent_type",
     "KnowledgeBaseDocumentChunkResponseModel": ".knowledge_base_document_chunk_response_model",
     "KnowledgeBaseDocumentMetadataResponseModel": ".knowledge_base_document_metadata_response_model",
@@ -2824,7 +2875,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ScribeTranscriberErrorPayload": ".scribe_transcriber_error_payload",
     "ScribeUnacceptedTermsErrorPayload": ".scribe_unaccepted_terms_error_payload",
     "SearchClientsParams": ".search_clients_params",
+    "SearchHighlightSegment": ".search_highlight_segment",
     "SeatType": ".seat_type",
+    "SecretDependencyResourceType": ".secret_dependency_resource_type",
     "SecretDependencyType": ".secret_dependency_type",
     "SectionSource": ".section_source",
     "SegmentCreateResponse": ".segment_create_response",
@@ -3252,6 +3305,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkspaceGroupByNameResponseModel": ".workspace_group_by_name_response_model",
     "WorkspaceGroupPermission": ".workspace_group_permission",
     "WorkspaceGroupResponseModel": ".workspace_group_response_model",
+    "WorkspaceGroupResponseModelGroupPvcLimit": ".workspace_group_response_model_group_pvc_limit",
     "WorkspaceGroupResponseModelGroupUsageLimit": ".workspace_group_response_model_group_usage_limit",
     "WorkspaceResourceType": ".workspace_resource_type",
     "WorkspaceServiceAccountListResponseModel": ".workspace_service_account_list_response_model",
@@ -3327,6 +3381,7 @@ __all__ = [
     "AgentTestEntityType",
     "AgentTestFolderPathSegmentResponseModel",
     "AgentTestingSettings",
+    "AgentTopicResponseModel",
     "AgentTransfer",
     "AgentVersionMetadata",
     "AgentVersionParents",
@@ -3581,6 +3636,9 @@ __all__ = [
     "ConvAiStoredSecretDependenciesAgentsItem",
     "ConvAiStoredSecretDependenciesAgentsItem_Available",
     "ConvAiStoredSecretDependenciesAgentsItem_Unknown",
+    "ConvAiStoredSecretDependenciesMcpServersItem",
+    "ConvAiStoredSecretDependenciesMcpServersItem_Available",
+    "ConvAiStoredSecretDependenciesMcpServersItem_Unknown",
     "ConvAiStoredSecretDependenciesToolsItem",
     "ConvAiStoredSecretDependenciesToolsItem_Available",
     "ConvAiStoredSecretDependenciesToolsItem_Unknown",
@@ -3890,6 +3948,7 @@ __all__ = [
     "GetAgentResponseModelPhoneNumbersItem_SipTrunk",
     "GetAgentResponseModelPhoneNumbersItem_Twilio",
     "GetAgentTestFolderResponseModel",
+    "GetAgentTopicsResponseModel",
     "GetAgentsPageResponseModel",
     "GetAnalyticsSummaryParams",
     "GetAudioNativeProjectSettingsResponseModel",
@@ -3965,6 +4024,14 @@ __all__ = [
     "GetResponseUnitTestResponseModel",
     "GetResponseUnitTestResponseModelDynamicVariablesValue",
     "GetScheduleParams",
+    "GetSecretDependenciesResponseModel",
+    "GetSecretDependenciesResponseModelDependencies",
+    "GetSecretDependenciesResponseModelDependenciesOneItem",
+    "GetSecretDependenciesResponseModelDependenciesOneItem_Available",
+    "GetSecretDependenciesResponseModelDependenciesOneItem_Unknown",
+    "GetSecretDependenciesResponseModelDependenciesZeroItem",
+    "GetSecretDependenciesResponseModelDependenciesZeroItem_Available",
+    "GetSecretDependenciesResponseModelDependenciesZeroItem_Unknown",
     "GetSimulationTestResponseModel",
     "GetSimulationTestResponseModelDynamicVariablesValue",
     "GetSpeechHistoryResponse",
@@ -4001,6 +4068,13 @@ __all__ = [
     "InvoiceResponseModelPaymentIntentStatus",
     "InvoiceResponseModelPaymentIntentStatussesItem",
     "KeepContextAlive",
+    "KnowledgeBaseContentSearchResponseModel",
+    "KnowledgeBaseContentSearchResult",
+    "KnowledgeBaseContentSearchResultDocument",
+    "KnowledgeBaseContentSearchResultDocument_File",
+    "KnowledgeBaseContentSearchResultDocument_Folder",
+    "KnowledgeBaseContentSearchResultDocument_Text",
+    "KnowledgeBaseContentSearchResultDocument_Url",
     "KnowledgeBaseDependentType",
     "KnowledgeBaseDocumentChunkResponseModel",
     "KnowledgeBaseDocumentMetadataResponseModel",
@@ -4351,7 +4425,9 @@ __all__ = [
     "ScribeTranscriberErrorPayload",
     "ScribeUnacceptedTermsErrorPayload",
     "SearchClientsParams",
+    "SearchHighlightSegment",
     "SeatType",
+    "SecretDependencyResourceType",
     "SecretDependencyType",
     "SectionSource",
     "SegmentCreateResponse",
@@ -4779,6 +4855,7 @@ __all__ = [
     "WorkspaceGroupByNameResponseModel",
     "WorkspaceGroupPermission",
     "WorkspaceGroupResponseModel",
+    "WorkspaceGroupResponseModelGroupPvcLimit",
     "WorkspaceGroupResponseModelGroupUsageLimit",
     "WorkspaceResourceType",
     "WorkspaceServiceAccountListResponseModel",

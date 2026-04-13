@@ -11,7 +11,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .dependent_available_agent_identifier_access_level import DependentAvailableAgentIdentifierAccessLevel
 
 
-class GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem_Available(UncheckedBaseModel):
+class GetSecretDependenciesResponseModelDependenciesOneItem_Available(UncheckedBaseModel):
     type: typing.Literal["available"] = "available"
     referenced_resource_ids: typing.Optional[typing.List[str]] = None
     id: str
@@ -29,7 +29,7 @@ class GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem_Available(Un
             extra = pydantic.Extra.allow
 
 
-class GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem_Unknown(UncheckedBaseModel):
+class GetSecretDependenciesResponseModelDependenciesOneItem_Unknown(UncheckedBaseModel):
     type: typing.Literal["unknown"] = "unknown"
     referenced_resource_ids: typing.Optional[typing.List[str]] = None
     id: str
@@ -44,10 +44,10 @@ class GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem_Unknown(Unch
             extra = pydantic.Extra.allow
 
 
-GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem = typing_extensions.Annotated[
+GetSecretDependenciesResponseModelDependenciesOneItem = typing_extensions.Annotated[
     typing.Union[
-        GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem_Available,
-        GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem_Unknown,
+        GetSecretDependenciesResponseModelDependenciesOneItem_Available,
+        GetSecretDependenciesResponseModelDependenciesOneItem_Unknown,
     ],
     UnionMetadata(discriminant="type"),
 ]

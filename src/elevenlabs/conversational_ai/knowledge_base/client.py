@@ -8,6 +8,7 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.get_knowledge_base_list_response_model import GetKnowledgeBaseListResponseModel
 from ...types.get_or_create_rag_index_request_model import GetOrCreateRagIndexRequestModel
+from ...types.knowledge_base_content_search_response_model import KnowledgeBaseContentSearchResponseModel
 from ...types.knowledge_base_document_type import KnowledgeBaseDocumentType
 from ...types.knowledge_base_sort_by import KnowledgeBaseSortBy
 from ...types.sort_direction import SortDirection
@@ -181,6 +182,60 @@ class KnowledgeBaseClient:
         )
         """
         _response = self._raw_client.get_or_create_rag_indexes(items=items, request_options=request_options)
+        return _response.data
+
+    def search(
+        self,
+        *,
+        query: str,
+        page_size: typing.Optional[int] = None,
+        types: typing.Optional[
+            typing.Union[KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]]
+        ] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> KnowledgeBaseContentSearchResponseModel:
+        """
+        Fuzzy text search over knowledge base document content
+
+        Parameters
+        ----------
+        query : str
+            The search query text
+
+        page_size : typing.Optional[int]
+            How many documents to return at maximum. Can not exceed 100, defaults to 30.
+
+        types : typing.Optional[typing.Union[KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]]]
+            If present, the endpoint will return only documents of the given types.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        KnowledgeBaseContentSearchResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.knowledge_base.search(
+            query="query",
+            page_size=1,
+            cursor="cursor",
+        )
+        """
+        _response = self._raw_client.search(
+            query=query, page_size=page_size, types=types, cursor=cursor, request_options=request_options
+        )
         return _response.data
 
     @property
@@ -374,6 +429,68 @@ class AsyncKnowledgeBaseClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get_or_create_rag_indexes(items=items, request_options=request_options)
+        return _response.data
+
+    async def search(
+        self,
+        *,
+        query: str,
+        page_size: typing.Optional[int] = None,
+        types: typing.Optional[
+            typing.Union[KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]]
+        ] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> KnowledgeBaseContentSearchResponseModel:
+        """
+        Fuzzy text search over knowledge base document content
+
+        Parameters
+        ----------
+        query : str
+            The search query text
+
+        page_size : typing.Optional[int]
+            How many documents to return at maximum. Can not exceed 100, defaults to 30.
+
+        types : typing.Optional[typing.Union[KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]]]
+            If present, the endpoint will return only documents of the given types.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        KnowledgeBaseContentSearchResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.knowledge_base.search(
+                query="query",
+                page_size=1,
+                cursor="cursor",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.search(
+            query=query, page_size=page_size, types=types, cursor=cursor, request_options=request_options
+        )
         return _response.data
 
     @property

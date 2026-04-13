@@ -28,6 +28,11 @@ class AgentBranchSummary(UncheckedBaseModel):
     Percentage of traffic live on the branch
     """
 
+    parent_branch_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    ID of the parent branch
+    """
+
     draft_exists: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether a draft exists for the branch

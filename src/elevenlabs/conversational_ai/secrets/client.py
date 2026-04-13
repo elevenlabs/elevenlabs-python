@@ -4,8 +4,10 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...types.get_secret_dependencies_response_model import GetSecretDependenciesResponseModel
 from ...types.get_workspace_secrets_response_model import GetWorkspaceSecretsResponseModel
 from ...types.post_workspace_secret_response_model import PostWorkspaceSecretResponseModel
+from ...types.secret_dependency_resource_type import SecretDependencyResourceType
 from .raw_client import AsyncRawSecretsClient, RawSecretsClient
 
 # this is used as the default value for optional parameters
@@ -31,6 +33,7 @@ class SecretsClient:
         self,
         *,
         page_size: typing.Optional[int] = None,
+        dependency_limit: typing.Optional[int] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetWorkspaceSecretsResponseModel:
@@ -41,6 +44,9 @@ class SecretsClient:
         ----------
         page_size : typing.Optional[int]
             How many documents to return at maximum. Can not exceed 100. If not provided, returns all secrets.
+
+        dependency_limit : typing.Optional[int]
+            Maximum number of dependent resources (tools, agents, phone numbers) to return per secret. Can not exceed 100.
 
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
@@ -62,10 +68,13 @@ class SecretsClient:
         )
         client.conversational_ai.secrets.list(
             page_size=1,
+            dependency_limit=1,
             cursor="cursor",
         )
         """
-        _response = self._raw_client.list(page_size=page_size, cursor=cursor, request_options=request_options)
+        _response = self._raw_client.list(
+            page_size=page_size, dependency_limit=dependency_limit, cursor=cursor, request_options=request_options
+        )
         return _response.data
 
     def create(
@@ -170,6 +179,57 @@ class SecretsClient:
         _response = self._raw_client.update(secret_id, name=name, value=value, request_options=request_options)
         return _response.data
 
+    def get_dependencies(
+        self,
+        secret_id: str,
+        resource_type: SecretDependencyResourceType,
+        *,
+        page_size: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetSecretDependenciesResponseModel:
+        """
+        Get paginated list of resources that depend on a specific secret, filtered by resource type.
+
+        Parameters
+        ----------
+        secret_id : str
+
+        resource_type : SecretDependencyResourceType
+
+        page_size : typing.Optional[int]
+            How many dependency items to return per page.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetSecretDependenciesResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.secrets.get_dependencies(
+            secret_id="secret_id",
+            resource_type="tools",
+            page_size=1,
+            cursor="cursor",
+        )
+        """
+        _response = self._raw_client.get_dependencies(
+            secret_id, resource_type, page_size=page_size, cursor=cursor, request_options=request_options
+        )
+        return _response.data
+
 
 class AsyncSecretsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -190,6 +250,7 @@ class AsyncSecretsClient:
         self,
         *,
         page_size: typing.Optional[int] = None,
+        dependency_limit: typing.Optional[int] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetWorkspaceSecretsResponseModel:
@@ -200,6 +261,9 @@ class AsyncSecretsClient:
         ----------
         page_size : typing.Optional[int]
             How many documents to return at maximum. Can not exceed 100. If not provided, returns all secrets.
+
+        dependency_limit : typing.Optional[int]
+            Maximum number of dependent resources (tools, agents, phone numbers) to return per secret. Can not exceed 100.
 
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
@@ -226,13 +290,16 @@ class AsyncSecretsClient:
         async def main() -> None:
             await client.conversational_ai.secrets.list(
                 page_size=1,
+                dependency_limit=1,
                 cursor="cursor",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.list(page_size=page_size, cursor=cursor, request_options=request_options)
+        _response = await self._raw_client.list(
+            page_size=page_size, dependency_limit=dependency_limit, cursor=cursor, request_options=request_options
+        )
         return _response.data
 
     async def create(
@@ -359,4 +426,63 @@ class AsyncSecretsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.update(secret_id, name=name, value=value, request_options=request_options)
+        return _response.data
+
+    async def get_dependencies(
+        self,
+        secret_id: str,
+        resource_type: SecretDependencyResourceType,
+        *,
+        page_size: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetSecretDependenciesResponseModel:
+        """
+        Get paginated list of resources that depend on a specific secret, filtered by resource type.
+
+        Parameters
+        ----------
+        secret_id : str
+
+        resource_type : SecretDependencyResourceType
+
+        page_size : typing.Optional[int]
+            How many dependency items to return per page.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetSecretDependenciesResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.secrets.get_dependencies(
+                secret_id="secret_id",
+                resource_type="tools",
+                page_size=1,
+                cursor="cursor",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_dependencies(
+            secret_id, resource_type, page_size=page_size, cursor=cursor, request_options=request_options
+        )
         return _response.data

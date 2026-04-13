@@ -34,6 +34,7 @@ WorkspaceGroupPermission = typing.Union[
         "workspace_members_remove",
         "terms_of_service_accept",
         "audit_log_read",
+        "copy_resources_cross_workspace",
     ],
     typing.Any,
 ]

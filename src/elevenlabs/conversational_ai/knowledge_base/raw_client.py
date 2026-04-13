@@ -12,6 +12,7 @@ from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.get_knowledge_base_list_response_model import GetKnowledgeBaseListResponseModel
 from ...types.get_or_create_rag_index_request_model import GetOrCreateRagIndexRequestModel
+from ...types.knowledge_base_content_search_response_model import KnowledgeBaseContentSearchResponseModel
 from ...types.knowledge_base_document_type import KnowledgeBaseDocumentType
 from ...types.knowledge_base_sort_by import KnowledgeBaseSortBy
 from ...types.sort_direction import SortDirection
@@ -197,6 +198,79 @@ class RawKnowledgeBaseClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def search(
+        self,
+        *,
+        query: str,
+        page_size: typing.Optional[int] = None,
+        types: typing.Optional[
+            typing.Union[KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]]
+        ] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[KnowledgeBaseContentSearchResponseModel]:
+        """
+        Fuzzy text search over knowledge base document content
+
+        Parameters
+        ----------
+        query : str
+            The search query text
+
+        page_size : typing.Optional[int]
+            How many documents to return at maximum. Can not exceed 100, defaults to 30.
+
+        types : typing.Optional[typing.Union[KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]]]
+            If present, the endpoint will return only documents of the given types.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[KnowledgeBaseContentSearchResponseModel]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/convai/knowledge-base/search",
+            method="GET",
+            params={
+                "query": query,
+                "page_size": page_size,
+                "types": types,
+                "cursor": cursor,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    KnowledgeBaseContentSearchResponseModel,
+                    construct_type(
+                        type_=KnowledgeBaseContentSearchResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawKnowledgeBaseClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -352,6 +426,79 @@ class AsyncRawKnowledgeBaseClient:
                     typing.Dict[str, KnowledgeBaseGetOrCreateRagIndexesResponseValue],
                     construct_type(
                         type_=typing.Dict[str, KnowledgeBaseGetOrCreateRagIndexesResponseValue],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def search(
+        self,
+        *,
+        query: str,
+        page_size: typing.Optional[int] = None,
+        types: typing.Optional[
+            typing.Union[KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]]
+        ] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[KnowledgeBaseContentSearchResponseModel]:
+        """
+        Fuzzy text search over knowledge base document content
+
+        Parameters
+        ----------
+        query : str
+            The search query text
+
+        page_size : typing.Optional[int]
+            How many documents to return at maximum. Can not exceed 100, defaults to 30.
+
+        types : typing.Optional[typing.Union[KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]]]
+            If present, the endpoint will return only documents of the given types.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[KnowledgeBaseContentSearchResponseModel]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/convai/knowledge-base/search",
+            method="GET",
+            params={
+                "query": query,
+                "page_size": page_size,
+                "types": types,
+                "cursor": cursor,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    KnowledgeBaseContentSearchResponseModel,
+                    construct_type(
+                        type_=KnowledgeBaseContentSearchResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
