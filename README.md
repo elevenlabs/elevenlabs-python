@@ -283,7 +283,7 @@ openai_client = AsyncOpenAI()
 elevenlabs = AsyncElevenLabs()
 
 async def main():
-    engine = await elevenlabs.speech_engine.get("veng_123")
+    engine = await elevenlabs.speech_engine.get("seng_123")
 
     async def on_transcript(transcript, session):
         stream = await openai_client.responses.create(
