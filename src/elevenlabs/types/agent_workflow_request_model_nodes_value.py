@@ -60,11 +60,11 @@ class AgentWorkflowRequestModelNodesValue_OverrideAgent(UncheckedBaseModel):
 class AgentWorkflowRequestModelNodesValue_PhoneNumber(UncheckedBaseModel):
     type: typing.Literal["phone_number"] = "phone_number"
     custom_sip_headers: typing.Optional[typing.List[WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem]] = None
-    position: typing.Optional[PositionInput] = None
-    edge_order: typing.Optional[typing.List[str]] = None
     transfer_destination: WorkflowPhoneNumberNodeModelInputTransferDestination
     transfer_type: typing.Optional[TransferTypeEnum] = None
     post_dial_digits: typing.Optional[WorkflowPhoneNumberNodeModelInputPostDialDigits] = None
+    position: typing.Optional[PositionInput] = None
+    edge_order: typing.Optional[typing.List[str]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .api_integration_webhook_overrides import ApiIntegrationWebhookOverrides
 from .dynamic_variable_assignment import DynamicVariableAssignment
-from .dynamic_variables_config import DynamicVariablesConfig
+from .dynamic_variables_config_output import DynamicVariablesConfigOutput
 from .tool_call_sound_behavior import ToolCallSoundBehavior
 from .tool_call_sound_type import ToolCallSoundType
 from .tool_error_handling_mode import ToolErrorHandlingMode
@@ -56,7 +56,7 @@ class ApiIntegrationWebhookToolConfigOutput(UncheckedBaseModel):
     Controls how tool errors are processed before being shared with the agent. 'auto' determines handling based on tool type (summarized for native integrations, hide for others), 'summarized' sends an LLM-generated summary, 'passthrough' sends the raw error, 'hide' does not share the error with the agent.
     """
 
-    dynamic_variables: DynamicVariablesConfig = pydantic.Field()
+    dynamic_variables: DynamicVariablesConfigOutput = pydantic.Field()
     """
     Configuration for dynamic variables
     """

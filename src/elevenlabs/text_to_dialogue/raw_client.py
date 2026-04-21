@@ -16,7 +16,6 @@ from ..types.allowed_output_formats import AllowedOutputFormats
 from ..types.audio_with_timestamps_and_voice_segments_response_model import (
     AudioWithTimestampsAndVoiceSegmentsResponseModel,
 )
-from ..types.avatar_context_request_model import AvatarContextRequestModel
 from ..types.dialogue_input import DialogueInput
 from ..types.model_settings_response_model import ModelSettingsResponseModel
 from ..types.pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
@@ -64,7 +63,6 @@ class RawTextToDialogueClient:
         apply_text_normalization: typing.Optional[
             BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization
         ] = OMIT,
-        avatar_context: typing.Optional[AvatarContextRequestModel] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
         """
@@ -73,7 +71,7 @@ class RawTextToDialogueClient:
         Parameters
         ----------
         inputs : typing.Sequence[DialogueInput]
-            A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10.
+            A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10. For reliable generation, keep the total character count across all `inputs[].text` values at or below 2,000 characters per request. Longer requests can terminate early in streaming responses or return a validation error.
 
         output_format : typing.Optional[TextToDialogueConvertRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
@@ -95,9 +93,6 @@ class RawTextToDialogueClient:
 
         apply_text_normalization : typing.Optional[BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization]
             This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
-
-        avatar_context : typing.Optional[AvatarContextRequestModel]
-            Avatar context when this generation is made from the Avatars video editor.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -129,9 +124,6 @@ class RawTextToDialogueClient:
                 ),
                 "seed": seed,
                 "apply_text_normalization": apply_text_normalization,
-                "avatar_context": convert_and_respect_annotation_metadata(
-                    object_=avatar_context, annotation=AvatarContextRequestModel, direction="write"
-                ),
             },
             headers={
                 "content-type": "application/json",
@@ -184,7 +176,6 @@ class RawTextToDialogueClient:
         apply_text_normalization: typing.Optional[
             BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization
         ] = OMIT,
-        avatar_context: typing.Optional[AvatarContextRequestModel] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
         """
@@ -193,7 +184,7 @@ class RawTextToDialogueClient:
         Parameters
         ----------
         inputs : typing.Sequence[DialogueInput]
-            A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10.
+            A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10. For reliable generation, keep the total character count across all `inputs[].text` values at or below 2,000 characters per request. Longer requests can terminate early in streaming responses or return a validation error.
 
         output_format : typing.Optional[AllowedOutputFormats]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
@@ -215,9 +206,6 @@ class RawTextToDialogueClient:
 
         apply_text_normalization : typing.Optional[BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization]
             This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
-
-        avatar_context : typing.Optional[AvatarContextRequestModel]
-            Avatar context when this generation is made from the Avatars video editor.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -249,9 +237,6 @@ class RawTextToDialogueClient:
                 ),
                 "seed": seed,
                 "apply_text_normalization": apply_text_normalization,
-                "avatar_context": convert_and_respect_annotation_metadata(
-                    object_=avatar_context, annotation=AvatarContextRequestModel, direction="write"
-                ),
             },
             headers={
                 "content-type": "application/json",
@@ -310,7 +295,7 @@ class RawTextToDialogueClient:
         Parameters
         ----------
         inputs : typing.Sequence[DialogueInput]
-            A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10.
+            A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10. For reliable generation, keep the total character count across all `inputs[].text` values at or below 2,000 characters per request. Longer requests can terminate early in streaming responses or return a validation error.
 
         output_format : typing.Optional[AllowedOutputFormats]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
@@ -436,7 +421,7 @@ class RawTextToDialogueClient:
         Parameters
         ----------
         inputs : typing.Sequence[DialogueInput]
-            A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10.
+            A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10. For reliable generation, keep the total character count across all `inputs[].text` values at or below 2,000 characters per request. Longer requests can terminate early in streaming responses or return a validation error.
 
         output_format : typing.Optional[TextToDialogueConvertWithTimestampsRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
@@ -543,7 +528,6 @@ class AsyncRawTextToDialogueClient:
         apply_text_normalization: typing.Optional[
             BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization
         ] = OMIT,
-        avatar_context: typing.Optional[AvatarContextRequestModel] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
         """
@@ -552,7 +536,7 @@ class AsyncRawTextToDialogueClient:
         Parameters
         ----------
         inputs : typing.Sequence[DialogueInput]
-            A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10.
+            A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10. For reliable generation, keep the total character count across all `inputs[].text` values at or below 2,000 characters per request. Longer requests can terminate early in streaming responses or return a validation error.
 
         output_format : typing.Optional[TextToDialogueConvertRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
@@ -574,9 +558,6 @@ class AsyncRawTextToDialogueClient:
 
         apply_text_normalization : typing.Optional[BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization]
             This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
-
-        avatar_context : typing.Optional[AvatarContextRequestModel]
-            Avatar context when this generation is made from the Avatars video editor.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -608,9 +589,6 @@ class AsyncRawTextToDialogueClient:
                 ),
                 "seed": seed,
                 "apply_text_normalization": apply_text_normalization,
-                "avatar_context": convert_and_respect_annotation_metadata(
-                    object_=avatar_context, annotation=AvatarContextRequestModel, direction="write"
-                ),
             },
             headers={
                 "content-type": "application/json",
@@ -664,7 +642,6 @@ class AsyncRawTextToDialogueClient:
         apply_text_normalization: typing.Optional[
             BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization
         ] = OMIT,
-        avatar_context: typing.Optional[AvatarContextRequestModel] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
         """
@@ -673,7 +650,7 @@ class AsyncRawTextToDialogueClient:
         Parameters
         ----------
         inputs : typing.Sequence[DialogueInput]
-            A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10.
+            A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10. For reliable generation, keep the total character count across all `inputs[].text` values at or below 2,000 characters per request. Longer requests can terminate early in streaming responses or return a validation error.
 
         output_format : typing.Optional[AllowedOutputFormats]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
@@ -695,9 +672,6 @@ class AsyncRawTextToDialogueClient:
 
         apply_text_normalization : typing.Optional[BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization]
             This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
-
-        avatar_context : typing.Optional[AvatarContextRequestModel]
-            Avatar context when this generation is made from the Avatars video editor.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -729,9 +703,6 @@ class AsyncRawTextToDialogueClient:
                 ),
                 "seed": seed,
                 "apply_text_normalization": apply_text_normalization,
-                "avatar_context": convert_and_respect_annotation_metadata(
-                    object_=avatar_context, annotation=AvatarContextRequestModel, direction="write"
-                ),
             },
             headers={
                 "content-type": "application/json",
@@ -793,7 +764,7 @@ class AsyncRawTextToDialogueClient:
         Parameters
         ----------
         inputs : typing.Sequence[DialogueInput]
-            A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10.
+            A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10. For reliable generation, keep the total character count across all `inputs[].text` values at or below 2,000 characters per request. Longer requests can terminate early in streaming responses or return a validation error.
 
         output_format : typing.Optional[AllowedOutputFormats]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
@@ -919,7 +890,7 @@ class AsyncRawTextToDialogueClient:
         Parameters
         ----------
         inputs : typing.Sequence[DialogueInput]
-            A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10.
+            A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10. For reliable generation, keep the total character count across all `inputs[].text` values at or below 2,000 characters per request. Longer requests can terminate early in streaming responses or return a validation error.
 
         output_format : typing.Optional[TextToDialogueConvertWithTimestampsRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.

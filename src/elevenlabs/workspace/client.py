@@ -13,6 +13,7 @@ if typing.TYPE_CHECKING:
     from .invites.client import AsyncInvitesClient, InvitesClient
     from .members.client import AsyncMembersClient, MembersClient
     from .resources.client import AsyncResourcesClient, ResourcesClient
+    from .usage.client import AsyncUsageClient, UsageClient
 
 
 class WorkspaceClient:
@@ -24,6 +25,7 @@ class WorkspaceClient:
         self._invites: typing.Optional[InvitesClient] = None
         self._members: typing.Optional[MembersClient] = None
         self._resources: typing.Optional[ResourcesClient] = None
+        self._usage: typing.Optional[UsageClient] = None
 
     @property
     def with_raw_response(self) -> RawWorkspaceClient:
@@ -76,6 +78,14 @@ class WorkspaceClient:
             self._resources = ResourcesClient(client_wrapper=self._client_wrapper)
         return self._resources
 
+    @property
+    def usage(self):
+        if self._usage is None:
+            from .usage.client import UsageClient  # noqa: E402
+
+            self._usage = UsageClient(client_wrapper=self._client_wrapper)
+        return self._usage
+
 
 class AsyncWorkspaceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -86,6 +96,7 @@ class AsyncWorkspaceClient:
         self._invites: typing.Optional[AsyncInvitesClient] = None
         self._members: typing.Optional[AsyncMembersClient] = None
         self._resources: typing.Optional[AsyncResourcesClient] = None
+        self._usage: typing.Optional[AsyncUsageClient] = None
 
     @property
     def with_raw_response(self) -> AsyncRawWorkspaceClient:
@@ -137,3 +148,11 @@ class AsyncWorkspaceClient:
 
             self._resources = AsyncResourcesClient(client_wrapper=self._client_wrapper)
         return self._resources
+
+    @property
+    def usage(self):
+        if self._usage is None:
+            from .usage.client import AsyncUsageClient  # noqa: E402
+
+            self._usage = AsyncUsageClient(client_wrapper=self._client_wrapper)
+        return self._usage

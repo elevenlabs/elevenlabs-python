@@ -2,4 +2,8 @@
 
 import typing
 
-GetResponseUnitTestResponseModelDynamicVariablesValue = typing.Union[str, float, int, bool]
+from .dynamic_variable_container_value_type_output import DynamicVariableContainerValueTypeOutput
+
+GetResponseUnitTestResponseModelDynamicVariablesValue = typing.Union[
+    str, float, int, bool, DynamicVariableContainerValueTypeOutput
+]

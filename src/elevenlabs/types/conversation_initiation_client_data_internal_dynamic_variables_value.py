@@ -2,4 +2,8 @@
 
 import typing
 
-ConversationInitiationClientDataInternalDynamicVariablesValue = typing.Union[str, float, int, bool]
+from .dynamic_variable_container_value_type_output import DynamicVariableContainerValueTypeOutput
+
+ConversationInitiationClientDataInternalDynamicVariablesValue = typing.Union[
+    str, float, int, bool, DynamicVariableContainerValueTypeOutput
+]

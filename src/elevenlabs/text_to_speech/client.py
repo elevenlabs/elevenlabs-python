@@ -5,7 +5,6 @@ import typing
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.audio_with_timestamps_response import AudioWithTimestampsResponse
-from ..types.avatar_context_request_model import AvatarContextRequestModel
 from ..types.pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
 from ..types.streaming_audio_chunk_with_timestamps_response import StreamingAudioChunkWithTimestampsResponse
 from ..types.voice_settings import VoiceSettings
@@ -68,7 +67,6 @@ class TextToSpeechClient:
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToSpeechFullApplyTextNormalization] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
-        avatar_context: typing.Optional[AvatarContextRequestModel] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -134,9 +132,6 @@ class TextToSpeechClient:
         apply_language_text_normalization : typing.Optional[bool]
             This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
-        avatar_context : typing.Optional[AvatarContextRequestModel]
-            Avatar context when this generation is made from the Avatars video editor.
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -177,7 +172,6 @@ class TextToSpeechClient:
             use_pvc_as_ivc=use_pvc_as_ivc,
             apply_text_normalization=apply_text_normalization,
             apply_language_text_normalization=apply_language_text_normalization,
-            avatar_context=avatar_context,
             request_options=request_options,
         ) as r:
             yield from r.data
@@ -336,7 +330,6 @@ class TextToSpeechClient:
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToSpeechStreamApplyTextNormalization] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
-        avatar_context: typing.Optional[AvatarContextRequestModel] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -402,9 +395,6 @@ class TextToSpeechClient:
         apply_language_text_normalization : typing.Optional[bool]
             This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
-        avatar_context : typing.Optional[AvatarContextRequestModel]
-            Avatar context when this generation is made from the Avatars video editor.
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -445,7 +435,6 @@ class TextToSpeechClient:
             use_pvc_as_ivc=use_pvc_as_ivc,
             apply_text_normalization=apply_text_normalization,
             apply_language_text_normalization=apply_language_text_normalization,
-            avatar_context=avatar_context,
             request_options=request_options,
         ) as r:
             yield from r.data
@@ -621,7 +610,6 @@ class AsyncTextToSpeechClient:
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToSpeechFullApplyTextNormalization] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
-        avatar_context: typing.Optional[AvatarContextRequestModel] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -687,9 +675,6 @@ class AsyncTextToSpeechClient:
         apply_language_text_normalization : typing.Optional[bool]
             This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
-        avatar_context : typing.Optional[AvatarContextRequestModel]
-            Avatar context when this generation is made from the Avatars video editor.
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -738,7 +723,6 @@ class AsyncTextToSpeechClient:
             use_pvc_as_ivc=use_pvc_as_ivc,
             apply_text_normalization=apply_text_normalization,
             apply_language_text_normalization=apply_language_text_normalization,
-            avatar_context=avatar_context,
             request_options=request_options,
         ) as r:
             async for _chunk in r.data:
@@ -906,7 +890,6 @@ class AsyncTextToSpeechClient:
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToSpeechStreamApplyTextNormalization] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
-        avatar_context: typing.Optional[AvatarContextRequestModel] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -972,9 +955,6 @@ class AsyncTextToSpeechClient:
         apply_language_text_normalization : typing.Optional[bool]
             This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
-        avatar_context : typing.Optional[AvatarContextRequestModel]
-            Avatar context when this generation is made from the Avatars video editor.
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -1023,7 +1003,6 @@ class AsyncTextToSpeechClient:
             use_pvc_as_ivc=use_pvc_as_ivc,
             apply_text_normalization=apply_text_normalization,
             apply_language_text_normalization=apply_language_text_normalization,
-            avatar_context=avatar_context,
             request_options=request_options,
         ) as r:
             async for _chunk in r.data:

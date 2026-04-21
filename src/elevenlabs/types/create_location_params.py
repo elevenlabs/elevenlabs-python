@@ -5,18 +5,10 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .dynamic_variables_config_dynamic_variable_placeholders_value import (
-    DynamicVariablesConfigDynamicVariablePlaceholdersValue,
-)
 
 
-class DynamicVariablesConfig(UncheckedBaseModel):
-    dynamic_variable_placeholders: typing.Optional[
-        typing.Dict[str, DynamicVariablesConfigDynamicVariablePlaceholdersValue]
-    ] = pydantic.Field(default=None)
-    """
-    A dictionary of dynamic variable placeholders and their values
-    """
+class CreateLocationParams(UncheckedBaseModel):
+    smb_tool_type: typing.Optional[typing.Literal["create_location"]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

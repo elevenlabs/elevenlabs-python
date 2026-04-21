@@ -8,7 +8,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .dynamic_variable_assignment import DynamicVariableAssignment
-from .dynamic_variables_config import DynamicVariablesConfig
+from .dynamic_variables_config_input import DynamicVariablesConfigInput
 from .tool_call_sound_behavior import ToolCallSoundBehavior
 from .tool_call_sound_type import ToolCallSoundType
 from .tool_error_handling_mode import ToolErrorHandlingMode
@@ -71,7 +71,7 @@ class ClientToolConfigInput(UncheckedBaseModel):
     If true, calling this tool should block the conversation until the client responds with some response which is passed to the llm. If false then we will continue the conversation without waiting for the client to respond, this is useful to show content to a user but not block the conversation
     """
 
-    dynamic_variables: typing.Optional[DynamicVariablesConfig] = pydantic.Field(default=None)
+    dynamic_variables: typing.Optional[DynamicVariablesConfigInput] = pydantic.Field(default=None)
     """
     Configuration for dynamic variables
     """

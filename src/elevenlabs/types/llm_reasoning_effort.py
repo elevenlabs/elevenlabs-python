@@ -2,4 +2,4 @@
 
 import typing
 
-LlmReasoningEffort = typing.Union[typing.Literal["none", "minimal", "low", "medium", "high"], typing.Any]
+LlmReasoningEffort = typing.Union[typing.Literal["none", "minimal", "low", "medium", "high", "xhigh"], typing.Any]

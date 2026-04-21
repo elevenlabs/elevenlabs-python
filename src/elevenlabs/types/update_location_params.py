@@ -5,13 +5,10 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .asset_transcription_word import AssetTranscriptionWord
 
 
-class AssetTranscription(UncheckedBaseModel):
-    language_code: str
-    text: str
-    words: typing.List[AssetTranscriptionWord]
+class UpdateLocationParams(UncheckedBaseModel):
+    smb_tool_type: typing.Optional[typing.Literal["update_location"]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

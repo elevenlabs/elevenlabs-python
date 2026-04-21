@@ -26,6 +26,11 @@ class ConversationInitiationClientDataConfigInput(UncheckedBaseModel):
     Whether to enable conversation initiation client data from webhooks
     """
 
+    enable_starting_workflow_node_id_from_client: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether clients may pass starting_workflow_node_id in initiation client data; if false, sending it fails conversation start.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

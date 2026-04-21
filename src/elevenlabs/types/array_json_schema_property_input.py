@@ -7,12 +7,28 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .array_json_schema_property_input_constant_value_item import ArrayJsonSchemaPropertyInputConstantValueItem
 
 
 class ArrayJsonSchemaPropertyInput(UncheckedBaseModel):
     type: typing.Optional[typing.Literal["array"]] = None
     description: typing.Optional[str] = None
-    items: "ArrayJsonSchemaPropertyInputItems"
+    items: typing.Optional["ArrayJsonSchemaPropertyInputItems"] = pydantic.Field(default=None)
+    """
+    Schema for array elements.
+    """
+
+    dynamic_variable: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    When set, the entire array is populated from this dynamic variable at runtime. Mutually exclusive with description (LLM-provided array) and constant_value.
+    """
+
+    constant_value: typing.Optional[typing.List[ArrayJsonSchemaPropertyInputConstantValueItem]] = pydantic.Field(
+        default=None
+    )
+    """
+    When set, the entire array uses this constant value at runtime. Mutually exclusive with description (LLM-provided array) and dynamic_variable.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
