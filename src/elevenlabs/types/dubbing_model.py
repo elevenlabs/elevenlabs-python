@@ -2,4 +2,6 @@
 
 import typing
 
-DubbingModel = typing.Union[typing.Literal["dubbing_v2", "dubbing_v3", "dubbing_e2e_v1"], typing.Any]
+DubbingModel = typing.Union[
+    typing.Literal["dubbing_v1_tts_v3", "dubbing_v2", "dubbing_v3", "dubbing_e2e_v1"], typing.Any
+]

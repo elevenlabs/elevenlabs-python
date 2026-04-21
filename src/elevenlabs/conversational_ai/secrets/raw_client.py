@@ -10,6 +10,7 @@ from ...core.jsonable_encoder import jsonable_encoder
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
+from ...types.conv_ai_workspace_stored_secret_config import ConvAiWorkspaceStoredSecretConfig
 from ...types.get_secret_dependencies_response_model import GetSecretDependenciesResponseModel
 from ...types.get_workspace_secrets_response_model import GetWorkspaceSecretsResponseModel
 from ...types.post_workspace_secret_response_model import PostWorkspaceSecretResponseModel
@@ -28,6 +29,7 @@ class RawSecretsClient:
         *,
         page_size: typing.Optional[int] = None,
         dependency_limit: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetWorkspaceSecretsResponseModel]:
@@ -41,6 +43,9 @@ class RawSecretsClient:
 
         dependency_limit : typing.Optional[int]
             Maximum number of dependent resources (tools, agents, phone numbers) to return per secret. Can not exceed 100.
+
+        search : typing.Optional[str]
+            If specified, returns only secrets whose names start with this string.
 
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
@@ -59,6 +64,7 @@ class RawSecretsClient:
             params={
                 "page_size": page_size,
                 "dependency_limit": dependency_limit,
+                "search": search,
                 "cursor": cursor,
             },
             request_options=request_options,
@@ -129,6 +135,55 @@ class RawSecretsClient:
                     PostWorkspaceSecretResponseModel,
                     construct_type(
                         type_=PostWorkspaceSecretResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def get(
+        self, secret_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[ConvAiWorkspaceStoredSecretConfig]:
+        """
+        Get a workspace secret by ID
+
+        Parameters
+        ----------
+        secret_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[ConvAiWorkspaceStoredSecretConfig]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/convai/secrets/{jsonable_encoder(secret_id)}",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ConvAiWorkspaceStoredSecretConfig,
+                    construct_type(
+                        type_=ConvAiWorkspaceStoredSecretConfig,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -327,6 +382,7 @@ class AsyncRawSecretsClient:
         *,
         page_size: typing.Optional[int] = None,
         dependency_limit: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetWorkspaceSecretsResponseModel]:
@@ -340,6 +396,9 @@ class AsyncRawSecretsClient:
 
         dependency_limit : typing.Optional[int]
             Maximum number of dependent resources (tools, agents, phone numbers) to return per secret. Can not exceed 100.
+
+        search : typing.Optional[str]
+            If specified, returns only secrets whose names start with this string.
 
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
@@ -358,6 +417,7 @@ class AsyncRawSecretsClient:
             params={
                 "page_size": page_size,
                 "dependency_limit": dependency_limit,
+                "search": search,
                 "cursor": cursor,
             },
             request_options=request_options,
@@ -428,6 +488,55 @@ class AsyncRawSecretsClient:
                     PostWorkspaceSecretResponseModel,
                     construct_type(
                         type_=PostWorkspaceSecretResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get(
+        self, secret_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[ConvAiWorkspaceStoredSecretConfig]:
+        """
+        Get a workspace secret by ID
+
+        Parameters
+        ----------
+        secret_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ConvAiWorkspaceStoredSecretConfig]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/convai/secrets/{jsonable_encoder(secret_id)}",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ConvAiWorkspaceStoredSecretConfig,
+                    construct_type(
+                        type_=ConvAiWorkspaceStoredSecretConfig,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

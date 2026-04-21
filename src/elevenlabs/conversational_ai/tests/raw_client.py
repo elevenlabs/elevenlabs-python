@@ -14,6 +14,7 @@ from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.create_agent_test_response_model import CreateAgentTestResponseModel
 from ...types.get_tests_page_response_model import GetTestsPageResponseModel
 from ...types.get_tests_summaries_by_ids_response_model import GetTestsSummariesByIdsResponseModel
+from ...types.test_sharing_mode import TestSharingMode
 from ...types.test_type import TestType
 from .types.tests_create_request_body import TestsCreateRequestBody
 from .types.tests_get_response import TestsGetResponse
@@ -380,6 +381,7 @@ class RawTestsClient:
         types: typing.Optional[typing.Union[TestType, typing.Sequence[TestType]]] = None,
         include_folders: typing.Optional[bool] = None,
         sort_mode: typing.Optional[TestsListRequestSortMode] = None,
+        sharing_mode: typing.Optional[TestSharingMode] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetTestsPageResponseModel]:
         """
@@ -408,6 +410,9 @@ class RawTestsClient:
         sort_mode : typing.Optional[TestsListRequestSortMode]
             Sort mode for listing tests. Use 'folders_first' to place folders before tests.
 
+        sharing_mode : typing.Optional[TestSharingMode]
+            Filter test visibility. Use `shared_with_me` to return only tests/folders shared with the current user that they did not create.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -427,6 +432,7 @@ class RawTestsClient:
                 "types": types,
                 "include_folders": include_folders,
                 "sort_mode": sort_mode,
+                "sharing_mode": sharing_mode,
             },
             request_options=request_options,
         )
@@ -812,6 +818,7 @@ class AsyncRawTestsClient:
         types: typing.Optional[typing.Union[TestType, typing.Sequence[TestType]]] = None,
         include_folders: typing.Optional[bool] = None,
         sort_mode: typing.Optional[TestsListRequestSortMode] = None,
+        sharing_mode: typing.Optional[TestSharingMode] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetTestsPageResponseModel]:
         """
@@ -840,6 +847,9 @@ class AsyncRawTestsClient:
         sort_mode : typing.Optional[TestsListRequestSortMode]
             Sort mode for listing tests. Use 'folders_first' to place folders before tests.
 
+        sharing_mode : typing.Optional[TestSharingMode]
+            Filter test visibility. Use `shared_with_me` to return only tests/folders shared with the current user that they did not create.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -859,6 +869,7 @@ class AsyncRawTestsClient:
                 "types": types,
                 "include_folders": include_folders,
                 "sort_mode": sort_mode,
+                "sharing_mode": sharing_mode,
             },
             request_options=request_options,
         )

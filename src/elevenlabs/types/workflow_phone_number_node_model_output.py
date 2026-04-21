@@ -22,6 +22,13 @@ class WorkflowPhoneNumberNodeModelOutput(UncheckedBaseModel):
     Custom SIP headers to include when transferring the call. Each header can be either a static value or a dynamic variable reference.
     """
 
+    transfer_destination: WorkflowPhoneNumberNodeModelOutputTransferDestination
+    transfer_type: TransferTypeEnum
+    post_dial_digits: typing.Optional[WorkflowPhoneNumberNodeModelOutputPostDialDigits] = pydantic.Field(default=None)
+    """
+    DTMF digits to send after call connects (e.g., 'ww1234' for extension). Can be either a static value or a dynamic variable reference. Use 'w' for 0.5s pause. Only supported for Twilio transfers.
+    """
+
     position: PositionOutput = pydantic.Field()
     """
     Position of the node in the workflow.
@@ -30,13 +37,6 @@ class WorkflowPhoneNumberNodeModelOutput(UncheckedBaseModel):
     edge_order: typing.List[str] = pydantic.Field()
     """
     The ids of outgoing edges in the order they should be evaluated.
-    """
-
-    transfer_destination: WorkflowPhoneNumberNodeModelOutputTransferDestination
-    transfer_type: TransferTypeEnum
-    post_dial_digits: typing.Optional[WorkflowPhoneNumberNodeModelOutputPostDialDigits] = pydantic.Field(default=None)
-    """
-    DTMF digits to send after call connects (e.g., 'ww1234' for extension). Can be either a static value or a dynamic variable reference. Use 'w' for 0.5s pause.
     """
 
     if IS_PYDANTIC_V2:

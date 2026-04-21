@@ -10,7 +10,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .api_integration_webhook_overrides import ApiIntegrationWebhookOverrides
 from .dynamic_variable_assignment import DynamicVariableAssignment
-from .dynamic_variables_config import DynamicVariablesConfig
+from .dynamic_variables_config_input import DynamicVariablesConfigInput
 from .system_tool_config_input_params import SystemToolConfigInputParams
 from .tool_call_sound_behavior import ToolCallSoundBehavior
 from .tool_call_sound_type import ToolCallSoundType
@@ -34,7 +34,7 @@ class PromptAgentApiModelWorkflowOverrideInputToolsItem_ApiIntegrationWebhook(Un
     tool_call_sound: typing.Optional[ToolCallSoundType] = None
     tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = None
     tool_error_handling_mode: typing.Optional[ToolErrorHandlingMode] = None
-    dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
+    dynamic_variables: typing.Optional[DynamicVariablesConfigInput] = None
     execution_mode: typing.Optional[ToolExecutionMode] = None
     tool_version: typing.Optional[str] = None
     api_integration_id: str
@@ -68,7 +68,7 @@ class PromptAgentApiModelWorkflowOverrideInputToolsItem_Client(UncheckedBaseMode
     tool_error_handling_mode: typing.Optional[ToolErrorHandlingMode] = None
     parameters: typing.Optional["ObjectJsonSchemaPropertyInput"] = None
     expects_response: typing.Optional[bool] = None
-    dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
+    dynamic_variables: typing.Optional[DynamicVariablesConfigInput] = None
     execution_mode: typing.Optional[ToolExecutionMode] = None
 
     if IS_PYDANTIC_V2:
@@ -149,7 +149,7 @@ class PromptAgentApiModelWorkflowOverrideInputToolsItem_Webhook(UncheckedBaseMod
     tool_call_sound: typing.Optional[ToolCallSoundType] = None
     tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = None
     tool_error_handling_mode: typing.Optional[ToolErrorHandlingMode] = None
-    dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
+    dynamic_variables: typing.Optional[DynamicVariablesConfigInput] = None
     execution_mode: typing.Optional[ToolExecutionMode] = None
     api_schema: WebhookToolApiSchemaConfigInput
 

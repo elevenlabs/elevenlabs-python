@@ -32,6 +32,11 @@ class ConversationInitiationClientDataInternal(UncheckedBaseModel):
     Environment to use for resolving environment variables
     """
 
+    starting_workflow_node_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    If set, start the workflow at this node id instead of the default entry
+    """
+
     dynamic_variables: typing.Optional[
         typing.Dict[str, typing.Optional[ConversationInitiationClientDataInternalDynamicVariablesValue]]
     ] = None

@@ -4,6 +4,7 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...types.conv_ai_workspace_stored_secret_config import ConvAiWorkspaceStoredSecretConfig
 from ...types.get_secret_dependencies_response_model import GetSecretDependenciesResponseModel
 from ...types.get_workspace_secrets_response_model import GetWorkspaceSecretsResponseModel
 from ...types.post_workspace_secret_response_model import PostWorkspaceSecretResponseModel
@@ -34,6 +35,7 @@ class SecretsClient:
         *,
         page_size: typing.Optional[int] = None,
         dependency_limit: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetWorkspaceSecretsResponseModel:
@@ -47,6 +49,9 @@ class SecretsClient:
 
         dependency_limit : typing.Optional[int]
             Maximum number of dependent resources (tools, agents, phone numbers) to return per secret. Can not exceed 100.
+
+        search : typing.Optional[str]
+            If specified, returns only secrets whose names start with this string.
 
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
@@ -69,11 +74,16 @@ class SecretsClient:
         client.conversational_ai.secrets.list(
             page_size=1,
             dependency_limit=1,
+            search="search",
             cursor="cursor",
         )
         """
         _response = self._raw_client.list(
-            page_size=page_size, dependency_limit=dependency_limit, cursor=cursor, request_options=request_options
+            page_size=page_size,
+            dependency_limit=dependency_limit,
+            search=search,
+            cursor=cursor,
+            request_options=request_options,
         )
         return _response.data
 
@@ -110,6 +120,38 @@ class SecretsClient:
         )
         """
         _response = self._raw_client.create(name=name, value=value, request_options=request_options)
+        return _response.data
+
+    def get(
+        self, secret_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ConvAiWorkspaceStoredSecretConfig:
+        """
+        Get a workspace secret by ID
+
+        Parameters
+        ----------
+        secret_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ConvAiWorkspaceStoredSecretConfig
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.secrets.get(
+            secret_id="secret_id",
+        )
+        """
+        _response = self._raw_client.get(secret_id, request_options=request_options)
         return _response.data
 
     def delete(self, secret_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
@@ -251,6 +293,7 @@ class AsyncSecretsClient:
         *,
         page_size: typing.Optional[int] = None,
         dependency_limit: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetWorkspaceSecretsResponseModel:
@@ -264,6 +307,9 @@ class AsyncSecretsClient:
 
         dependency_limit : typing.Optional[int]
             Maximum number of dependent resources (tools, agents, phone numbers) to return per secret. Can not exceed 100.
+
+        search : typing.Optional[str]
+            If specified, returns only secrets whose names start with this string.
 
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
@@ -291,6 +337,7 @@ class AsyncSecretsClient:
             await client.conversational_ai.secrets.list(
                 page_size=1,
                 dependency_limit=1,
+                search="search",
                 cursor="cursor",
             )
 
@@ -298,7 +345,11 @@ class AsyncSecretsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
-            page_size=page_size, dependency_limit=dependency_limit, cursor=cursor, request_options=request_options
+            page_size=page_size,
+            dependency_limit=dependency_limit,
+            search=search,
+            cursor=cursor,
+            request_options=request_options,
         )
         return _response.data
 
@@ -343,6 +394,46 @@ class AsyncSecretsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create(name=name, value=value, request_options=request_options)
+        return _response.data
+
+    async def get(
+        self, secret_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ConvAiWorkspaceStoredSecretConfig:
+        """
+        Get a workspace secret by ID
+
+        Parameters
+        ----------
+        secret_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ConvAiWorkspaceStoredSecretConfig
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.secrets.get(
+                secret_id="secret_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get(secret_id, request_options=request_options)
         return _response.data
 
     async def delete(self, secret_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:

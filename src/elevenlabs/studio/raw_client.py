@@ -11,6 +11,7 @@ from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.podcast_project_response_model import PodcastProjectResponseModel
+from ..types.quality_preset_type import QualityPresetType
 from .types.body_create_podcast_v_1_studio_podcasts_post_apply_text_normalization import (
     BodyCreatePodcastV1StudioPodcastsPostApplyTextNormalization,
 )
@@ -18,9 +19,6 @@ from .types.body_create_podcast_v_1_studio_podcasts_post_duration_scale import (
     BodyCreatePodcastV1StudioPodcastsPostDurationScale,
 )
 from .types.body_create_podcast_v_1_studio_podcasts_post_mode import BodyCreatePodcastV1StudioPodcastsPostMode
-from .types.body_create_podcast_v_1_studio_podcasts_post_quality_preset import (
-    BodyCreatePodcastV1StudioPodcastsPostQualityPreset,
-)
 from .types.body_create_podcast_v_1_studio_podcasts_post_source import BodyCreatePodcastV1StudioPodcastsPostSource
 
 # this is used as the default value for optional parameters
@@ -38,7 +36,7 @@ class RawStudioClient:
         mode: BodyCreatePodcastV1StudioPodcastsPostMode,
         source: BodyCreatePodcastV1StudioPodcastsPostSource,
         safety_identifier: typing.Optional[str] = None,
-        quality_preset: typing.Optional[BodyCreatePodcastV1StudioPodcastsPostQualityPreset] = OMIT,
+        quality_preset: typing.Optional[QualityPresetType] = OMIT,
         duration_scale: typing.Optional[BodyCreatePodcastV1StudioPodcastsPostDurationScale] = OMIT,
         language: typing.Optional[str] = OMIT,
         intro: typing.Optional[str] = OMIT,
@@ -66,7 +64,7 @@ class RawStudioClient:
         safety_identifier : typing.Optional[str]
             Used for moderation. Your workspace must be allowlisted to use this feature.
 
-        quality_preset : typing.Optional[BodyCreatePodcastV1StudioPodcastsPostQualityPreset]
+        quality_preset : typing.Optional[QualityPresetType]
             Output quality of the generated audio. Must be one of:
             'standard' - standard output format, 128kbps with 44.1kHz sample rate.
             'high' - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side.
@@ -233,7 +231,7 @@ class AsyncRawStudioClient:
         mode: BodyCreatePodcastV1StudioPodcastsPostMode,
         source: BodyCreatePodcastV1StudioPodcastsPostSource,
         safety_identifier: typing.Optional[str] = None,
-        quality_preset: typing.Optional[BodyCreatePodcastV1StudioPodcastsPostQualityPreset] = OMIT,
+        quality_preset: typing.Optional[QualityPresetType] = OMIT,
         duration_scale: typing.Optional[BodyCreatePodcastV1StudioPodcastsPostDurationScale] = OMIT,
         language: typing.Optional[str] = OMIT,
         intro: typing.Optional[str] = OMIT,
@@ -261,7 +259,7 @@ class AsyncRawStudioClient:
         safety_identifier : typing.Optional[str]
             Used for moderation. Your workspace must be allowlisted to use this feature.
 
-        quality_preset : typing.Optional[BodyCreatePodcastV1StudioPodcastsPostQualityPreset]
+        quality_preset : typing.Optional[QualityPresetType]
             Output quality of the generated audio. Must be one of:
             'standard' - standard output format, 128kbps with 44.1kHz sample rate.
             'high' - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side.

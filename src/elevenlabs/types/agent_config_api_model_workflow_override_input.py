@@ -7,7 +7,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .dynamic_variables_config_workflow_override import DynamicVariablesConfigWorkflowOverride
+from .dynamic_variables_config_workflow_override_input import DynamicVariablesConfigWorkflowOverrideInput
 from .prompt_agent_api_model_workflow_override_input import PromptAgentApiModelWorkflowOverrideInput
 
 
@@ -27,7 +27,7 @@ class AgentConfigApiModelWorkflowOverrideInput(UncheckedBaseModel):
     When enabled and language is Hindi, the agent will respond in Hinglish
     """
 
-    dynamic_variables: typing.Optional[DynamicVariablesConfigWorkflowOverride] = pydantic.Field(default=None)
+    dynamic_variables: typing.Optional[DynamicVariablesConfigWorkflowOverrideInput] = pydantic.Field(default=None)
     """
     Configuration for dynamic variables
     """

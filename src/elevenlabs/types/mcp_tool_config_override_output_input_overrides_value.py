@@ -11,7 +11,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .constant_schema_override_constant_value import ConstantSchemaOverrideConstantValue
 
 
-class McpToolConfigOverrideInputOverridesValue_Constant(UncheckedBaseModel):
+class McpToolConfigOverrideOutputInputOverridesValue_Constant(UncheckedBaseModel):
     source: typing.Literal["constant"] = "constant"
     constant_value: ConstantSchemaOverrideConstantValue
 
@@ -25,7 +25,7 @@ class McpToolConfigOverrideInputOverridesValue_Constant(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-class McpToolConfigOverrideInputOverridesValue_DynamicVariable(UncheckedBaseModel):
+class McpToolConfigOverrideOutputInputOverridesValue_DynamicVariable(UncheckedBaseModel):
     source: typing.Literal["dynamic_variable"] = "dynamic_variable"
     dynamic_variable: str
 
@@ -39,7 +39,7 @@ class McpToolConfigOverrideInputOverridesValue_DynamicVariable(UncheckedBaseMode
             extra = pydantic.Extra.allow
 
 
-class McpToolConfigOverrideInputOverridesValue_Llm(UncheckedBaseModel):
+class McpToolConfigOverrideOutputInputOverridesValue_Llm(UncheckedBaseModel):
     source: typing.Literal["llm"] = "llm"
     prompt: typing.Optional[str] = None
 
@@ -53,11 +53,11 @@ class McpToolConfigOverrideInputOverridesValue_Llm(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-McpToolConfigOverrideInputOverridesValue = typing_extensions.Annotated[
+McpToolConfigOverrideOutputInputOverridesValue = typing_extensions.Annotated[
     typing.Union[
-        McpToolConfigOverrideInputOverridesValue_Constant,
-        McpToolConfigOverrideInputOverridesValue_DynamicVariable,
-        McpToolConfigOverrideInputOverridesValue_Llm,
+        McpToolConfigOverrideOutputInputOverridesValue_Constant,
+        McpToolConfigOverrideOutputInputOverridesValue_DynamicVariable,
+        McpToolConfigOverrideOutputInputOverridesValue_Llm,
     ],
     UnionMetadata(discriminant="source"),
 ]
