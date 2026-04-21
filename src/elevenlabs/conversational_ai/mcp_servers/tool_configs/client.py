@@ -6,10 +6,11 @@ from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.request_options import RequestOptions
 from ....types.dynamic_variable_assignment import DynamicVariableAssignment
 from ....types.mcp_server_response_model import McpServerResponseModel
-from ....types.mcp_tool_config_override import McpToolConfigOverride
+from ....types.mcp_tool_config_override_output import McpToolConfigOverrideOutput
 from ....types.tool_call_sound_behavior import ToolCallSoundBehavior
 from ....types.tool_call_sound_type import ToolCallSoundType
 from ....types.tool_execution_mode import ToolExecutionMode
+from ....types.tool_response_mock_config_input import ToolResponseMockConfigInput
 from .raw_client import AsyncRawToolConfigsClient, RawToolConfigsClient
 from .types.mcp_tool_config_override_create_request_model_input_overrides_value import (
     McpToolConfigOverrideCreateRequestModelInputOverridesValue,
@@ -51,6 +52,7 @@ class ToolConfigsClient:
         input_overrides: typing.Optional[
             typing.Dict[str, typing.Optional[McpToolConfigOverrideCreateRequestModelInputOverridesValue]]
         ] = OMIT,
+        response_mocks: typing.Optional[typing.Sequence[ToolResponseMockConfigInput]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> McpServerResponseModel:
         """
@@ -85,6 +87,9 @@ class ToolConfigsClient:
         input_overrides : typing.Optional[typing.Dict[str, typing.Optional[McpToolConfigOverrideCreateRequestModelInputOverridesValue]]]
             Mapping of json path to input override configuration
 
+        response_mocks : typing.Optional[typing.Sequence[ToolResponseMockConfigInput]]
+            Mock responses with optional parameter conditions. Evaluated top-to-bottom; first match wins.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -115,13 +120,14 @@ class ToolConfigsClient:
             execution_mode=execution_mode,
             assignments=assignments,
             input_overrides=input_overrides,
+            response_mocks=response_mocks,
             request_options=request_options,
         )
         return _response.data
 
     def get(
         self, mcp_server_id: str, tool_name: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> McpToolConfigOverride:
+    ) -> McpToolConfigOverrideOutput:
         """
         Retrieve configuration overrides for a specific MCP tool.
 
@@ -138,7 +144,7 @@ class ToolConfigsClient:
 
         Returns
         -------
-        McpToolConfigOverride
+        McpToolConfigOverrideOutput
             Successful Response
 
         Examples
@@ -207,6 +213,7 @@ class ToolConfigsClient:
         input_overrides: typing.Optional[
             typing.Dict[str, typing.Optional[McpToolConfigOverrideUpdateRequestModelInputOverridesValue]]
         ] = OMIT,
+        response_mocks: typing.Optional[typing.Sequence[ToolResponseMockConfigInput]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> McpServerResponseModel:
         """
@@ -241,6 +248,9 @@ class ToolConfigsClient:
         input_overrides : typing.Optional[typing.Dict[str, typing.Optional[McpToolConfigOverrideUpdateRequestModelInputOverridesValue]]]
             Mapping of json path to input override configuration
 
+        response_mocks : typing.Optional[typing.Sequence[ToolResponseMockConfigInput]]
+            Mock responses with optional parameter conditions. Evaluated top-to-bottom; first match wins.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -271,6 +281,7 @@ class ToolConfigsClient:
             execution_mode=execution_mode,
             assignments=assignments,
             input_overrides=input_overrides,
+            response_mocks=response_mocks,
             request_options=request_options,
         )
         return _response.data
@@ -305,6 +316,7 @@ class AsyncToolConfigsClient:
         input_overrides: typing.Optional[
             typing.Dict[str, typing.Optional[McpToolConfigOverrideCreateRequestModelInputOverridesValue]]
         ] = OMIT,
+        response_mocks: typing.Optional[typing.Sequence[ToolResponseMockConfigInput]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> McpServerResponseModel:
         """
@@ -338,6 +350,9 @@ class AsyncToolConfigsClient:
 
         input_overrides : typing.Optional[typing.Dict[str, typing.Optional[McpToolConfigOverrideCreateRequestModelInputOverridesValue]]]
             Mapping of json path to input override configuration
+
+        response_mocks : typing.Optional[typing.Sequence[ToolResponseMockConfigInput]]
+            Mock responses with optional parameter conditions. Evaluated top-to-bottom; first match wins.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -377,13 +392,14 @@ class AsyncToolConfigsClient:
             execution_mode=execution_mode,
             assignments=assignments,
             input_overrides=input_overrides,
+            response_mocks=response_mocks,
             request_options=request_options,
         )
         return _response.data
 
     async def get(
         self, mcp_server_id: str, tool_name: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> McpToolConfigOverride:
+    ) -> McpToolConfigOverrideOutput:
         """
         Retrieve configuration overrides for a specific MCP tool.
 
@@ -400,7 +416,7 @@ class AsyncToolConfigsClient:
 
         Returns
         -------
-        McpToolConfigOverride
+        McpToolConfigOverrideOutput
             Successful Response
 
         Examples
@@ -485,6 +501,7 @@ class AsyncToolConfigsClient:
         input_overrides: typing.Optional[
             typing.Dict[str, typing.Optional[McpToolConfigOverrideUpdateRequestModelInputOverridesValue]]
         ] = OMIT,
+        response_mocks: typing.Optional[typing.Sequence[ToolResponseMockConfigInput]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> McpServerResponseModel:
         """
@@ -518,6 +535,9 @@ class AsyncToolConfigsClient:
 
         input_overrides : typing.Optional[typing.Dict[str, typing.Optional[McpToolConfigOverrideUpdateRequestModelInputOverridesValue]]]
             Mapping of json path to input override configuration
+
+        response_mocks : typing.Optional[typing.Sequence[ToolResponseMockConfigInput]]
+            Mock responses with optional parameter conditions. Evaluated top-to-bottom; first match wins.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -557,6 +577,7 @@ class AsyncToolConfigsClient:
             execution_mode=execution_mode,
             assignments=assignments,
             input_overrides=input_overrides,
+            response_mocks=response_mocks,
             request_options=request_options,
         )
         return _response.data

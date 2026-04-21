@@ -881,14 +881,6 @@ Defaults to None.
 <dl>
 <dd>
 
-**avatar_context:** `typing.Optional[AvatarContextRequestModel]` — Avatar context when this generation is made from the Avatars video editor.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
     
 </dd>
@@ -1310,14 +1302,6 @@ Defaults to None.
 <dl>
 <dd>
 
-**avatar_context:** `typing.Optional[AvatarContextRequestModel]` — Avatar context when this generation is made from the Avatars video editor.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
     
 </dd>
@@ -1602,7 +1586,7 @@ client.text_to_dialogue.convert(
 <dl>
 <dd>
 
-**inputs:** `typing.Sequence[DialogueInput]` — A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10.
+**inputs:** `typing.Sequence[DialogueInput]` — A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10. For reliable generation, keep the total character count across all `inputs[].text` values at or below 2,000 characters per request. Longer requests can terminate early in streaming responses or return a validation error.
     
 </dd>
 </dl>
@@ -1661,14 +1645,6 @@ client.text_to_dialogue.convert(
 **apply_text_normalization:** `typing.Optional[
     BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization
 ]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**avatar_context:** `typing.Optional[AvatarContextRequestModel]` — Avatar context when this generation is made from the Avatars video editor.
     
 </dd>
 </dl>
@@ -1747,7 +1723,7 @@ client.text_to_dialogue.stream(
 <dl>
 <dd>
 
-**inputs:** `typing.Sequence[DialogueInput]` — A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10.
+**inputs:** `typing.Sequence[DialogueInput]` — A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10. For reliable generation, keep the total character count across all `inputs[].text` values at or below 2,000 characters per request. Longer requests can terminate early in streaming responses or return a validation error.
     
 </dd>
 </dl>
@@ -1806,14 +1782,6 @@ client.text_to_dialogue.stream(
 **apply_text_normalization:** `typing.Optional[
     BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization
 ]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**avatar_context:** `typing.Optional[AvatarContextRequestModel]` — Avatar context when this generation is made from the Avatars video editor.
     
 </dd>
 </dl>
@@ -1895,7 +1863,7 @@ for chunk in response.data:
 <dl>
 <dd>
 
-**inputs:** `typing.Sequence[DialogueInput]` — A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10.
+**inputs:** `typing.Sequence[DialogueInput]` — A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10. For reliable generation, keep the total character count across all `inputs[].text` values at or below 2,000 characters per request. Longer requests can terminate early in streaming responses or return a validation error.
     
 </dd>
 </dl>
@@ -2031,7 +1999,7 @@ client.text_to_dialogue.convert_with_timestamps(
 <dl>
 <dd>
 
-**inputs:** `typing.Sequence[DialogueInput]` — A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10.
+**inputs:** `typing.Sequence[DialogueInput]` — A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10. For reliable generation, keep the total character count across all `inputs[].text` values at or below 2,000 characters per request. Longer requests can terminate early in streaming responses or return a validation error.
     
 </dd>
 </dl>
@@ -4056,7 +4024,7 @@ client.studio.create_podcast(
 <dl>
 <dd>
 
-**quality_preset:** `typing.Optional[BodyCreatePodcastV1StudioPodcastsPostQualityPreset]` 
+**quality_preset:** `typing.Optional[QualityPresetType]` 
 
 Output quality of the generated audio. Must be one of:
 'standard' - standard output format, 128kbps with 44.1kHz sample rate.
@@ -5698,7 +5666,7 @@ client.audio_native.update_content_from_url(
 <dl>
 <dd>
 
-Returns the usage metrics for the current user or the entire workspace they are part of. The response provides a time axis based on the specified aggregation interval (default: day), with usage values for each interval along that axis. Usage is broken down by the selected breakdown type. For example, breakdown type "voice" will return the usage of each voice for each interval along the time axis.
+(Deprecated) This endpoint is deprecated. Use /v1/workspace/analytics/query/usage-by-product-over-time instead. Returns the usage metrics for the current user or the entire workspace they are part of. The response provides a time axis based on the specified aggregation interval (default: day), with usage values for each interval along that axis. Usage is broken down by the selected breakdown type. For example, breakdown type "voice" will return the usage of each voice for each interval along the time axis.
 </dd>
 </dl>
 </dd>
@@ -6938,6 +6906,14 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dd>
 
 **no_verbatim:** `typing.Optional[bool]` — If true, the transcription will not have any filler words, false starts and non-speech sounds. Only supported with scribe_v2 model.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**detect_speaker_roles:** `typing.Optional[bool]` — Whether to detect speaker roles (agent vs customer). Requires diarize=true. Cannot be used with use_multi_channel=true. When enabled, speaker_id values will be 'agent' and 'customer' instead of 'speaker_0', 'speaker_1', etc. Usage incurs an additional 10% surcharge on base transcription cost.
     
 </dd>
 </dl>
@@ -10173,6 +10149,7 @@ client.conversational_ai.tests.list(
     parent_folder_id="parent_folder_id",
     include_folders=True,
     sort_mode="default",
+    sharing_mode="all",
 )
 
 ```
@@ -10238,6 +10215,14 @@ client.conversational_ai.tests.list(
 <dd>
 
 **sort_mode:** `typing.Optional[TestsListRequestSortMode]` — Sort mode for listing tests. Use 'folders_first' to place folders before tests.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sharing_mode:** `typing.Optional[TestSharingMode]` — Filter test visibility. Use `shared_with_me` to return only tests/folders shared with the current user that they did not create.
     
 </dd>
 </dl>
@@ -12014,6 +11999,7 @@ client = ElevenLabs(
 client.conversational_ai.secrets.list(
     page_size=1,
     dependency_limit=1,
+    search="search",
     cursor="cursor",
 )
 
@@ -12040,6 +12026,14 @@ client.conversational_ai.secrets.list(
 <dd>
 
 **dependency_limit:** `typing.Optional[int]` — Maximum number of dependent resources (tools, agents, phone numbers) to return per secret. Can not exceed 100.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — If specified, returns only secrets whose names start with this string.
     
 </dd>
 </dl>
@@ -12127,6 +12121,76 @@ client.conversational_ai.secrets.create(
 <dd>
 
 **value:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.secrets.<a href="src/elevenlabs/conversational_ai/secrets/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a workspace secret by ID
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.secrets.get(
+    secret_id="secret_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**secret_id:** `str` 
     
 </dd>
 </dl>
@@ -17881,6 +17945,14 @@ client.conversational_ai.mcp_servers.tool_configs.create(
 <dl>
 <dd>
 
+**response_mocks:** `typing.Optional[typing.Sequence[ToolResponseMockConfigInput]]` — Mock responses with optional parameter conditions. Evaluated top-to-bottom; first match wins.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -18174,6 +18246,14 @@ client.conversational_ai.mcp_servers.tool_configs.update(
         ],
     ]
 ]` — Mapping of json path to input override configuration
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**response_mocks:** `typing.Optional[typing.Sequence[ToolResponseMockConfigInput]]` — Mock responses with optional parameter conditions. Evaluated top-to-bottom; first match wins.
     
 </dd>
 </dl>
@@ -18744,6 +18824,140 @@ client.conversational_ai.tests.invocations.resubmit(
 <dd>
 
 **branch_id:** `typing.Optional[str]` — ID of the branch to run the tests on. If not provided, the tests will be run on the agent default configuration.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi Tools Executions
+<details><summary><code>client.conversational_ai.tools.executions.<a href="src/elevenlabs/conversational_ai/tools/executions/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get paginated list of tool executions for a specific tool.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.tools.executions.get(
+    tool_id="tool_id",
+    cursor="cursor",
+    page_size=1,
+    is_error=True,
+    agent_id="agent_id",
+    branch_id="branch_id",
+    start_time=1.1,
+    end_time=1.1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tool_id:** `str` — ID of the requested tool.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many documents to return at maximum. Can not exceed 100, defaults to 30.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_error:** `typing.Optional[bool]` — Filter by error status. If not provided, returns all executions.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agent_id:** `typing.Optional[str]` — Filter by agent ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `typing.Optional[str]` — Filter by agent branch ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**start_time:** `typing.Optional[float]` — Filter executions from this Unix timestamp (inclusive).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end_time:** `typing.Optional[float]` — Filter executions until this Unix timestamp (inclusive).
     
 </dd>
 </dl>
@@ -21255,7 +21469,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**quality_preset:** `typing.Optional[ProjectsCreateRequestQualityPreset]` 
+**quality_preset:** `typing.Optional[QualityPresetType]` 
 
 Output quality of the generated audio. Must be one of:
 'standard' - standard output format, 128kbps with 44.1kHz sample rate.
@@ -25997,6 +26211,114 @@ client.workspace.resources.unshare(
 <dd>
 
 **workspace_api_key_id:** `typing.Optional[str]` — The ID of the target workspace API key. This isn't the same as the key itself that would you pass in the header for authentication. Workspace admins can find this in the workspace settings UI.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Workspace Usage
+<details><summary><code>client.workspace.usage.<a href="src/elevenlabs/workspace/usage/client.py">get_usage_by_product_over_time</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns credit usage broken down by product type over time. Timestamps are Unix milliseconds. The response is a tabular structure with columns, column_types, column_units, and rows.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.workspace.usage.get_usage_by_product_over_time(
+    start_time=1,
+    end_time=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**start_time:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end_time:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**interval_seconds:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**group_by:** `typing.Optional[
+    typing.Sequence[
+        BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePostGroupByItem
+    ]
+]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filters:** `typing.Optional[typing.Sequence[ColumnFilter]]` 
     
 </dd>
 </dl>

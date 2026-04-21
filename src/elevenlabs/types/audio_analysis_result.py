@@ -5,7 +5,6 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .asset_transcription import AssetTranscription
 from .audio_key_moment import AudioKeyMoment
 from .audio_segment import AudioSegment
 
@@ -17,7 +16,6 @@ class AudioAnalysisResult(UncheckedBaseModel):
     overall_pacing: typing.Optional[str] = None
     segments: typing.Optional[typing.List[AudioSegment]] = None
     key_moments: typing.Optional[typing.List[AudioKeyMoment]] = None
-    transcription: typing.Optional[AssetTranscription] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

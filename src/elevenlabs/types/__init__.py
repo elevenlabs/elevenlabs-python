@@ -80,6 +80,9 @@ if typing.TYPE_CHECKING:
     from .alignment import Alignment
     from .allowed_output_formats import AllowedOutputFormats
     from .allowlist_item import AllowlistItem
+    from .analysis_property import AnalysisProperty
+    from .analysis_property_constant_value import AnalysisPropertyConstantValue
+    from .analysis_property_type import AnalysisPropertyType
     from .analysis_scope import AnalysisScope
     from .api_integration_o_auth_2_auth_code_response import ApiIntegrationOAuth2AuthCodeResponse
     from .api_integration_o_auth_2_auth_code_response_scope_separator import (
@@ -98,16 +101,16 @@ if typing.TYPE_CHECKING:
     from .api_integration_webhook_tool_config_input import ApiIntegrationWebhookToolConfigInput
     from .api_integration_webhook_tool_config_output import ApiIntegrationWebhookToolConfigOutput
     from .array_json_schema_property_input import ArrayJsonSchemaPropertyInput
+    from .array_json_schema_property_input_constant_value_item import ArrayJsonSchemaPropertyInputConstantValueItem
     from .array_json_schema_property_input_items import ArrayJsonSchemaPropertyInputItems
     from .array_json_schema_property_output import ArrayJsonSchemaPropertyOutput
+    from .array_json_schema_property_output_constant_value_item import ArrayJsonSchemaPropertyOutputConstantValueItem
     from .array_json_schema_property_output_items import ArrayJsonSchemaPropertyOutputItems
     from .asr_conversational_config import AsrConversationalConfig
     from .asr_conversational_config_workflow_override import AsrConversationalConfigWorkflowOverride
     from .asr_input_format import AsrInputFormat
     from .asr_provider import AsrProvider
     from .asr_quality import AsrQuality
-    from .asset_transcription import AssetTranscription
-    from .asset_transcription_word import AssetTranscriptionWord
     from .ast_addition_operator_node_input import AstAdditionOperatorNodeInput
     from .ast_addition_operator_node_output import AstAdditionOperatorNodeOutput
     from .ast_and_operator_node_input import AstAndOperatorNodeInput
@@ -148,6 +151,7 @@ if typing.TYPE_CHECKING:
         AstNodeInput_LteOperator,
         AstNodeInput_MulOperator,
         AstNodeInput_NeqOperator,
+        AstNodeInput_NullLiteral,
         AstNodeInput_NumberLiteral,
         AstNodeInput_OrOperator,
         AstNodeInput_StringLiteral,
@@ -169,6 +173,7 @@ if typing.TYPE_CHECKING:
         AstNodeOutput_LteOperator,
         AstNodeOutput_MulOperator,
         AstNodeOutput_NeqOperator,
+        AstNodeOutput_NullLiteral,
         AstNodeOutput_NumberLiteral,
         AstNodeOutput_OrOperator,
         AstNodeOutput_StringLiteral,
@@ -176,6 +181,8 @@ if typing.TYPE_CHECKING:
     )
     from .ast_not_equals_operator_node_input import AstNotEqualsOperatorNodeInput
     from .ast_not_equals_operator_node_output import AstNotEqualsOperatorNodeOutput
+    from .ast_null_node_input import AstNullNodeInput
+    from .ast_null_node_output import AstNullNodeOutput
     from .ast_number_node_input import AstNumberNodeInput
     from .ast_number_node_output import AstNumberNodeOutput
     from .ast_or_operator_node_input import AstOrOperatorNodeInput
@@ -222,8 +229,6 @@ if typing.TYPE_CHECKING:
     from .auth_settings import AuthSettings
     from .authorization_method import AuthorizationMethod
     from .auto_sync_info import AutoSyncInfo
-    from .avatar_context_request_model import AvatarContextRequestModel
-    from .avatar_context_response_model import AvatarContextResponseModel
     from .backup_llm_default import BackupLlmDefault
     from .backup_llm_disabled import BackupLlmDisabled
     from .backup_llm_override import BackupLlmOverride
@@ -303,6 +308,10 @@ if typing.TYPE_CHECKING:
     from .close_socket import CloseSocket
     from .coached_agent_settings import CoachedAgentSettings
     from .coaching_agent_settings import CoachingAgentSettings
+    from .column_filter import ColumnFilter
+    from .column_filter_operation import ColumnFilterOperation
+    from .column_filter_values_item import ColumnFilterValuesItem
+    from .column_unit import ColumnUnit
     from .committed_transcript_payload import CommittedTranscriptPayload
     from .committed_transcript_with_timestamps_payload import CommittedTranscriptWithTimestampsPayload
     from .config_entity_type import ConfigEntityType
@@ -541,6 +550,7 @@ if typing.TYPE_CHECKING:
     from .create_client_params import CreateClientParams
     from .create_custom_header_auth_request import CreateCustomHeaderAuthRequest
     from .create_holiday_params import CreateHolidayParams
+    from .create_location_params import CreateLocationParams
     from .create_mtls_auth_request import CreateMtlsAuthRequest
     from .create_o_auth_2_client_creds_request import CreateOAuth2ClientCredsRequest
     from .create_o_auth_2_jwt_request import CreateOAuth2JwtRequest
@@ -603,6 +613,7 @@ if typing.TYPE_CHECKING:
     from .delete_dubbing_response_model import DeleteDubbingResponseModel
     from .delete_history_item_response import DeleteHistoryItemResponse
     from .delete_holiday_params import DeleteHolidayParams
+    from .delete_location_params import DeleteLocationParams
     from .delete_product_params import DeleteProductParams
     from .delete_project_request import DeleteProjectRequest
     from .delete_project_response_model import DeleteProjectResponseModel
@@ -657,15 +668,27 @@ if typing.TYPE_CHECKING:
     from .dubbing_transcripts_response_model import DubbingTranscriptsResponseModel
     from .dubbing_transcripts_response_model_transcript_format import DubbingTranscriptsResponseModelTranscriptFormat
     from .dynamic_variable_assignment import DynamicVariableAssignment
+    from .dynamic_variable_container_value_type_input import DynamicVariableContainerValueTypeInput
+    from .dynamic_variable_container_value_type_output import DynamicVariableContainerValueTypeOutput
+    from .dynamic_variable_nested_value_type_input import DynamicVariableNestedValueTypeInput
+    from .dynamic_variable_nested_value_type_output import DynamicVariableNestedValueTypeOutput
     from .dynamic_variable_schema_override import DynamicVariableSchemaOverride
     from .dynamic_variable_update_common_model import DynamicVariableUpdateCommonModel
-    from .dynamic_variables_config import DynamicVariablesConfig
-    from .dynamic_variables_config_dynamic_variable_placeholders_value import (
-        DynamicVariablesConfigDynamicVariablePlaceholdersValue,
+    from .dynamic_variables_config_input import DynamicVariablesConfigInput
+    from .dynamic_variables_config_input_dynamic_variable_placeholders_value import (
+        DynamicVariablesConfigInputDynamicVariablePlaceholdersValue,
     )
-    from .dynamic_variables_config_workflow_override import DynamicVariablesConfigWorkflowOverride
-    from .dynamic_variables_config_workflow_override_dynamic_variable_placeholders_value import (
-        DynamicVariablesConfigWorkflowOverrideDynamicVariablePlaceholdersValue,
+    from .dynamic_variables_config_output import DynamicVariablesConfigOutput
+    from .dynamic_variables_config_output_dynamic_variable_placeholders_value import (
+        DynamicVariablesConfigOutputDynamicVariablePlaceholdersValue,
+    )
+    from .dynamic_variables_config_workflow_override_input import DynamicVariablesConfigWorkflowOverrideInput
+    from .dynamic_variables_config_workflow_override_input_dynamic_variable_placeholders_value import (
+        DynamicVariablesConfigWorkflowOverrideInputDynamicVariablePlaceholdersValue,
+    )
+    from .dynamic_variables_config_workflow_override_output import DynamicVariablesConfigWorkflowOverrideOutput
+    from .dynamic_variables_config_workflow_override_output_dynamic_variable_placeholders_value import (
+        DynamicVariablesConfigWorkflowOverrideOutputDynamicVariablePlaceholdersValue,
     )
     from .edit_chapter_response_model import EditChapterResponseModel
     from .edit_project_response_model import EditProjectResponseModel
@@ -700,6 +723,9 @@ if typing.TYPE_CHECKING:
         ExportOptions_Txt,
     )
     from .extended_subscription_response_model_currency import ExtendedSubscriptionResponseModelCurrency
+    from .extended_subscription_response_model_max_credit_limit_extension import (
+        ExtendedSubscriptionResponseModelMaxCreditLimitExtension,
+    )
     from .extended_subscription_response_model_pending_change import ExtendedSubscriptionResponseModelPendingChange
     from .feature_status_common_model import FeatureStatusCommonModel
     from .features_usage_common_model import FeaturesUsageCommonModel
@@ -865,6 +891,7 @@ if typing.TYPE_CHECKING:
         GetToolDependentAgentsResponseModelAgentsItem_Available,
         GetToolDependentAgentsResponseModelAgentsItem_Unknown,
     )
+    from .get_tool_executions_page_response_model import GetToolExecutionsPageResponseModel
     from .get_voices_response import GetVoicesResponse
     from .get_voices_v_2_response import GetVoicesV2Response
     from .get_whats_app_account_response import GetWhatsAppAccountResponse
@@ -944,6 +971,7 @@ if typing.TYPE_CHECKING:
     from .list_client_interactions_params import ListClientInteractionsParams
     from .list_clients_params import ListClientsParams
     from .list_holidays_params import ListHolidaysParams
+    from .list_locations_params import ListLocationsParams
     from .list_mcp_tools_response_model import ListMcpToolsResponseModel
     from .list_products_params import ListProductsParams
     from .list_rental_services_params import ListRentalServicesParams
@@ -1000,12 +1028,19 @@ if typing.TYPE_CHECKING:
     from .mcp_servers_response_model import McpServersResponseModel
     from .mcp_tool_approval_hash import McpToolApprovalHash
     from .mcp_tool_approval_policy import McpToolApprovalPolicy
-    from .mcp_tool_config_override import McpToolConfigOverride
-    from .mcp_tool_config_override_input_overrides_value import (
-        McpToolConfigOverrideInputOverridesValue,
-        McpToolConfigOverrideInputOverridesValue_Constant,
-        McpToolConfigOverrideInputOverridesValue_DynamicVariable,
-        McpToolConfigOverrideInputOverridesValue_Llm,
+    from .mcp_tool_config_override_input import McpToolConfigOverrideInput
+    from .mcp_tool_config_override_input_input_overrides_value import (
+        McpToolConfigOverrideInputInputOverridesValue,
+        McpToolConfigOverrideInputInputOverridesValue_Constant,
+        McpToolConfigOverrideInputInputOverridesValue_DynamicVariable,
+        McpToolConfigOverrideInputInputOverridesValue_Llm,
+    )
+    from .mcp_tool_config_override_output import McpToolConfigOverrideOutput
+    from .mcp_tool_config_override_output_input_overrides_value import (
+        McpToolConfigOverrideOutputInputOverridesValue,
+        McpToolConfigOverrideOutputInputOverridesValue_Constant,
+        McpToolConfigOverrideOutputInputOverridesValue_DynamicVariable,
+        McpToolConfigOverrideOutputInputOverridesValue_Llm,
     )
     from .merging_strategy import MergingStrategy
     from .message_search_sort_by import MessageSearchSortBy
@@ -1115,7 +1150,6 @@ if typing.TYPE_CHECKING:
         ProjectExtendedResponseModelAssetsItem_Video,
     )
     from .project_extended_response_model_fiction import ProjectExtendedResponseModelFiction
-    from .project_extended_response_model_quality_preset import ProjectExtendedResponseModelQualityPreset
     from .project_extended_response_model_source_type import ProjectExtendedResponseModelSourceType
     from .project_extended_response_model_target_audience import ProjectExtendedResponseModelTargetAudience
     from .project_external_audio_response_model import ProjectExternalAudioResponseModel
@@ -1218,6 +1252,7 @@ if typing.TYPE_CHECKING:
         PronunciationDictionaryVersionResponseModelPermissionOnResource,
     )
     from .pydantic_pronunciation_dictionary_version_locator import PydanticPronunciationDictionaryVersionLocator
+    from .quality_preset_type import QualityPresetType
     from .query_params_json_schema import QueryParamsJsonSchema
     from .rag_chunk_metadata import RagChunkMetadata
     from .rag_config import RagConfig
@@ -1371,6 +1406,7 @@ if typing.TYPE_CHECKING:
     from .subscription import Subscription
     from .subscription_response import SubscriptionResponse
     from .subscription_response_model_currency import SubscriptionResponseModelCurrency
+    from .subscription_response_model_max_credit_limit_extension import SubscriptionResponseModelMaxCreditLimitExtension
     from .subscription_status_type import SubscriptionStatusType
     from .suggested_audio_tag import SuggestedAudioTag
     from .supported_voice import SupportedVoice
@@ -1407,6 +1443,7 @@ if typing.TYPE_CHECKING:
     from .test_run_metadata import TestRunMetadata
     from .test_run_metadata_test_type import TestRunMetadataTestType
     from .test_run_status import TestRunStatus
+    from .test_sharing_mode import TestSharingMode
     from .test_tool_result_model import TestToolResultModel
     from .test_type import TestType
     from .tests_feature_usage_common_model import TestsFeatureUsageCommonModel
@@ -1429,6 +1466,14 @@ if typing.TYPE_CHECKING:
     from .tool_call_unit_test_model_dynamic_variables_value import ToolCallUnitTestModelDynamicVariablesValue
     from .tool_error_handling_mode import ToolErrorHandlingMode
     from .tool_execution_mode import ToolExecutionMode
+    from .tool_execution_response_model import ToolExecutionResponseModel
+    from .tool_execution_response_model_tool_call_details import (
+        ToolExecutionResponseModelToolCallDetails,
+        ToolExecutionResponseModelToolCallDetails_ApiIntegrationWebhook,
+        ToolExecutionResponseModelToolCallDetails_Client,
+        ToolExecutionResponseModelToolCallDetails_Mcp,
+        ToolExecutionResponseModelToolCallDetails_Webhook,
+    )
     from .tool_mock_config import ToolMockConfig
     from .tool_request_model import ToolRequestModel
     from .tool_request_model_tool_config import (
@@ -1521,6 +1566,7 @@ if typing.TYPE_CHECKING:
     from .update_client_params import UpdateClientParams
     from .update_customer_facing_config_params import UpdateCustomerFacingConfigParams
     from .update_holiday_params import UpdateHolidayParams
+    from .update_location_params import UpdateLocationParams
     from .update_product_params import UpdateProductParams
     from .update_project_request import UpdateProjectRequest
     from .update_pronunciation_dictionaries_request import UpdatePronunciationDictionariesRequest
@@ -1771,6 +1817,13 @@ if typing.TYPE_CHECKING:
     )
     from .workflow_unconditional_model_input import WorkflowUnconditionalModelInput
     from .workflow_unconditional_model_output import WorkflowUnconditionalModelOutput
+    from .workspace_analytics_query_response_model import WorkspaceAnalyticsQueryResponseModel
+    from .workspace_analytics_query_response_model_column_types_item import (
+        WorkspaceAnalyticsQueryResponseModelColumnTypesItem,
+    )
+    from .workspace_analytics_query_response_model_rows_item_item import (
+        WorkspaceAnalyticsQueryResponseModelRowsItemItem,
+    )
     from .workspace_api_key_list_response_model import WorkspaceApiKeyListResponseModel
     from .workspace_api_key_response_model import WorkspaceApiKeyResponseModel
     from .workspace_batch_calls_response import WorkspaceBatchCallsResponse
@@ -1856,6 +1909,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Alignment": ".alignment",
     "AllowedOutputFormats": ".allowed_output_formats",
     "AllowlistItem": ".allowlist_item",
+    "AnalysisProperty": ".analysis_property",
+    "AnalysisPropertyConstantValue": ".analysis_property_constant_value",
+    "AnalysisPropertyType": ".analysis_property_type",
     "AnalysisScope": ".analysis_scope",
     "ApiIntegrationOAuth2AuthCodeResponse": ".api_integration_o_auth_2_auth_code_response",
     "ApiIntegrationOAuth2AuthCodeResponseScopeSeparator": ".api_integration_o_auth_2_auth_code_response_scope_separator",
@@ -1868,16 +1924,16 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ApiIntegrationWebhookToolConfigInput": ".api_integration_webhook_tool_config_input",
     "ApiIntegrationWebhookToolConfigOutput": ".api_integration_webhook_tool_config_output",
     "ArrayJsonSchemaPropertyInput": ".array_json_schema_property_input",
+    "ArrayJsonSchemaPropertyInputConstantValueItem": ".array_json_schema_property_input_constant_value_item",
     "ArrayJsonSchemaPropertyInputItems": ".array_json_schema_property_input_items",
     "ArrayJsonSchemaPropertyOutput": ".array_json_schema_property_output",
+    "ArrayJsonSchemaPropertyOutputConstantValueItem": ".array_json_schema_property_output_constant_value_item",
     "ArrayJsonSchemaPropertyOutputItems": ".array_json_schema_property_output_items",
     "AsrConversationalConfig": ".asr_conversational_config",
     "AsrConversationalConfigWorkflowOverride": ".asr_conversational_config_workflow_override",
     "AsrInputFormat": ".asr_input_format",
     "AsrProvider": ".asr_provider",
     "AsrQuality": ".asr_quality",
-    "AssetTranscription": ".asset_transcription",
-    "AssetTranscriptionWord": ".asset_transcription_word",
     "AstAdditionOperatorNodeInput": ".ast_addition_operator_node_input",
     "AstAdditionOperatorNodeOutput": ".ast_addition_operator_node_output",
     "AstAndOperatorNodeInput": ".ast_and_operator_node_input",
@@ -1917,6 +1973,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstNodeInput_LteOperator": ".ast_node_input",
     "AstNodeInput_MulOperator": ".ast_node_input",
     "AstNodeInput_NeqOperator": ".ast_node_input",
+    "AstNodeInput_NullLiteral": ".ast_node_input",
     "AstNodeInput_NumberLiteral": ".ast_node_input",
     "AstNodeInput_OrOperator": ".ast_node_input",
     "AstNodeInput_StringLiteral": ".ast_node_input",
@@ -1936,12 +1993,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstNodeOutput_LteOperator": ".ast_node_output",
     "AstNodeOutput_MulOperator": ".ast_node_output",
     "AstNodeOutput_NeqOperator": ".ast_node_output",
+    "AstNodeOutput_NullLiteral": ".ast_node_output",
     "AstNodeOutput_NumberLiteral": ".ast_node_output",
     "AstNodeOutput_OrOperator": ".ast_node_output",
     "AstNodeOutput_StringLiteral": ".ast_node_output",
     "AstNodeOutput_SubOperator": ".ast_node_output",
     "AstNotEqualsOperatorNodeInput": ".ast_not_equals_operator_node_input",
     "AstNotEqualsOperatorNodeOutput": ".ast_not_equals_operator_node_output",
+    "AstNullNodeInput": ".ast_null_node_input",
+    "AstNullNodeOutput": ".ast_null_node_output",
     "AstNumberNodeInput": ".ast_number_node_input",
     "AstNumberNodeOutput": ".ast_number_node_output",
     "AstOrOperatorNodeInput": ".ast_or_operator_node_input",
@@ -1982,8 +2042,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AuthSettings": ".auth_settings",
     "AuthorizationMethod": ".authorization_method",
     "AutoSyncInfo": ".auto_sync_info",
-    "AvatarContextRequestModel": ".avatar_context_request_model",
-    "AvatarContextResponseModel": ".avatar_context_response_model",
     "BackupLlmDefault": ".backup_llm_default",
     "BackupLlmDisabled": ".backup_llm_disabled",
     "BackupLlmOverride": ".backup_llm_override",
@@ -2061,6 +2119,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CloseSocket": ".close_socket",
     "CoachedAgentSettings": ".coached_agent_settings",
     "CoachingAgentSettings": ".coaching_agent_settings",
+    "ColumnFilter": ".column_filter",
+    "ColumnFilterOperation": ".column_filter_operation",
+    "ColumnFilterValuesItem": ".column_filter_values_item",
+    "ColumnUnit": ".column_unit",
     "CommittedTranscriptPayload": ".committed_transcript_payload",
     "CommittedTranscriptWithTimestampsPayload": ".committed_transcript_with_timestamps_payload",
     "ConfigEntityType": ".config_entity_type",
@@ -2223,6 +2285,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateClientParams": ".create_client_params",
     "CreateCustomHeaderAuthRequest": ".create_custom_header_auth_request",
     "CreateHolidayParams": ".create_holiday_params",
+    "CreateLocationParams": ".create_location_params",
     "CreateMtlsAuthRequest": ".create_mtls_auth_request",
     "CreateOAuth2ClientCredsRequest": ".create_o_auth_2_client_creds_request",
     "CreateOAuth2JwtRequest": ".create_o_auth_2_jwt_request",
@@ -2279,6 +2342,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DeleteDubbingResponseModel": ".delete_dubbing_response_model",
     "DeleteHistoryItemResponse": ".delete_history_item_response",
     "DeleteHolidayParams": ".delete_holiday_params",
+    "DeleteLocationParams": ".delete_location_params",
     "DeleteProductParams": ".delete_product_params",
     "DeleteProjectRequest": ".delete_project_request",
     "DeleteProjectResponseModel": ".delete_project_response_model",
@@ -2333,12 +2397,20 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DubbingTranscriptsResponseModel": ".dubbing_transcripts_response_model",
     "DubbingTranscriptsResponseModelTranscriptFormat": ".dubbing_transcripts_response_model_transcript_format",
     "DynamicVariableAssignment": ".dynamic_variable_assignment",
+    "DynamicVariableContainerValueTypeInput": ".dynamic_variable_container_value_type_input",
+    "DynamicVariableContainerValueTypeOutput": ".dynamic_variable_container_value_type_output",
+    "DynamicVariableNestedValueTypeInput": ".dynamic_variable_nested_value_type_input",
+    "DynamicVariableNestedValueTypeOutput": ".dynamic_variable_nested_value_type_output",
     "DynamicVariableSchemaOverride": ".dynamic_variable_schema_override",
     "DynamicVariableUpdateCommonModel": ".dynamic_variable_update_common_model",
-    "DynamicVariablesConfig": ".dynamic_variables_config",
-    "DynamicVariablesConfigDynamicVariablePlaceholdersValue": ".dynamic_variables_config_dynamic_variable_placeholders_value",
-    "DynamicVariablesConfigWorkflowOverride": ".dynamic_variables_config_workflow_override",
-    "DynamicVariablesConfigWorkflowOverrideDynamicVariablePlaceholdersValue": ".dynamic_variables_config_workflow_override_dynamic_variable_placeholders_value",
+    "DynamicVariablesConfigInput": ".dynamic_variables_config_input",
+    "DynamicVariablesConfigInputDynamicVariablePlaceholdersValue": ".dynamic_variables_config_input_dynamic_variable_placeholders_value",
+    "DynamicVariablesConfigOutput": ".dynamic_variables_config_output",
+    "DynamicVariablesConfigOutputDynamicVariablePlaceholdersValue": ".dynamic_variables_config_output_dynamic_variable_placeholders_value",
+    "DynamicVariablesConfigWorkflowOverrideInput": ".dynamic_variables_config_workflow_override_input",
+    "DynamicVariablesConfigWorkflowOverrideInputDynamicVariablePlaceholdersValue": ".dynamic_variables_config_workflow_override_input_dynamic_variable_placeholders_value",
+    "DynamicVariablesConfigWorkflowOverrideOutput": ".dynamic_variables_config_workflow_override_output",
+    "DynamicVariablesConfigWorkflowOverrideOutputDynamicVariablePlaceholdersValue": ".dynamic_variables_config_workflow_override_output_dynamic_variable_placeholders_value",
     "EditChapterResponseModel": ".edit_chapter_response_model",
     "EditProjectResponseModel": ".edit_project_response_model",
     "EditVoiceResponseModel": ".edit_voice_response_model",
@@ -2370,6 +2442,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ExportOptions_Srt": ".export_options",
     "ExportOptions_Txt": ".export_options",
     "ExtendedSubscriptionResponseModelCurrency": ".extended_subscription_response_model_currency",
+    "ExtendedSubscriptionResponseModelMaxCreditLimitExtension": ".extended_subscription_response_model_max_credit_limit_extension",
     "ExtendedSubscriptionResponseModelPendingChange": ".extended_subscription_response_model_pending_change",
     "FeatureStatusCommonModel": ".feature_status_common_model",
     "FeaturesUsageCommonModel": ".features_usage_common_model",
@@ -2495,6 +2568,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetToolDependentAgentsResponseModelAgentsItem": ".get_tool_dependent_agents_response_model_agents_item",
     "GetToolDependentAgentsResponseModelAgentsItem_Available": ".get_tool_dependent_agents_response_model_agents_item",
     "GetToolDependentAgentsResponseModelAgentsItem_Unknown": ".get_tool_dependent_agents_response_model_agents_item",
+    "GetToolExecutionsPageResponseModel": ".get_tool_executions_page_response_model",
     "GetVoicesResponse": ".get_voices_response",
     "GetVoicesV2Response": ".get_voices_v_2_response",
     "GetWhatsAppAccountResponse": ".get_whats_app_account_response",
@@ -2566,6 +2640,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListClientInteractionsParams": ".list_client_interactions_params",
     "ListClientsParams": ".list_clients_params",
     "ListHolidaysParams": ".list_holidays_params",
+    "ListLocationsParams": ".list_locations_params",
     "ListMcpToolsResponseModel": ".list_mcp_tools_response_model",
     "ListProductsParams": ".list_products_params",
     "ListRentalServicesParams": ".list_rental_services_params",
@@ -2620,11 +2695,16 @@ _dynamic_imports: typing.Dict[str, str] = {
     "McpServersResponseModel": ".mcp_servers_response_model",
     "McpToolApprovalHash": ".mcp_tool_approval_hash",
     "McpToolApprovalPolicy": ".mcp_tool_approval_policy",
-    "McpToolConfigOverride": ".mcp_tool_config_override",
-    "McpToolConfigOverrideInputOverridesValue": ".mcp_tool_config_override_input_overrides_value",
-    "McpToolConfigOverrideInputOverridesValue_Constant": ".mcp_tool_config_override_input_overrides_value",
-    "McpToolConfigOverrideInputOverridesValue_DynamicVariable": ".mcp_tool_config_override_input_overrides_value",
-    "McpToolConfigOverrideInputOverridesValue_Llm": ".mcp_tool_config_override_input_overrides_value",
+    "McpToolConfigOverrideInput": ".mcp_tool_config_override_input",
+    "McpToolConfigOverrideInputInputOverridesValue": ".mcp_tool_config_override_input_input_overrides_value",
+    "McpToolConfigOverrideInputInputOverridesValue_Constant": ".mcp_tool_config_override_input_input_overrides_value",
+    "McpToolConfigOverrideInputInputOverridesValue_DynamicVariable": ".mcp_tool_config_override_input_input_overrides_value",
+    "McpToolConfigOverrideInputInputOverridesValue_Llm": ".mcp_tool_config_override_input_input_overrides_value",
+    "McpToolConfigOverrideOutput": ".mcp_tool_config_override_output",
+    "McpToolConfigOverrideOutputInputOverridesValue": ".mcp_tool_config_override_output_input_overrides_value",
+    "McpToolConfigOverrideOutputInputOverridesValue_Constant": ".mcp_tool_config_override_output_input_overrides_value",
+    "McpToolConfigOverrideOutputInputOverridesValue_DynamicVariable": ".mcp_tool_config_override_output_input_overrides_value",
+    "McpToolConfigOverrideOutputInputOverridesValue_Llm": ".mcp_tool_config_override_output_input_overrides_value",
     "MergingStrategy": ".merging_strategy",
     "MessageSearchSortBy": ".message_search_sort_by",
     "MessagesSearchResponse": ".messages_search_response",
@@ -2723,7 +2803,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ProjectExtendedResponseModelAssetsItem_Image": ".project_extended_response_model_assets_item",
     "ProjectExtendedResponseModelAssetsItem_Video": ".project_extended_response_model_assets_item",
     "ProjectExtendedResponseModelFiction": ".project_extended_response_model_fiction",
-    "ProjectExtendedResponseModelQualityPreset": ".project_extended_response_model_quality_preset",
     "ProjectExtendedResponseModelSourceType": ".project_extended_response_model_source_type",
     "ProjectExtendedResponseModelTargetAudience": ".project_extended_response_model_target_audience",
     "ProjectExternalAudioResponseModel": ".project_external_audio_response_model",
@@ -2806,6 +2885,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PronunciationDictionaryVersionResponseModel": ".pronunciation_dictionary_version_response_model",
     "PronunciationDictionaryVersionResponseModelPermissionOnResource": ".pronunciation_dictionary_version_response_model_permission_on_resource",
     "PydanticPronunciationDictionaryVersionLocator": ".pydantic_pronunciation_dictionary_version_locator",
+    "QualityPresetType": ".quality_preset_type",
     "QueryParamsJsonSchema": ".query_params_json_schema",
     "RagChunkMetadata": ".rag_chunk_metadata",
     "RagConfig": ".rag_config",
@@ -2955,6 +3035,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Subscription": ".subscription",
     "SubscriptionResponse": ".subscription_response",
     "SubscriptionResponseModelCurrency": ".subscription_response_model_currency",
+    "SubscriptionResponseModelMaxCreditLimitExtension": ".subscription_response_model_max_credit_limit_extension",
     "SubscriptionStatusType": ".subscription_status_type",
     "SuggestedAudioTag": ".suggested_audio_tag",
     "SupportedVoice": ".supported_voice",
@@ -2987,6 +3068,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TestRunMetadata": ".test_run_metadata",
     "TestRunMetadataTestType": ".test_run_metadata_test_type",
     "TestRunStatus": ".test_run_status",
+    "TestSharingMode": ".test_sharing_mode",
     "TestToolResultModel": ".test_tool_result_model",
     "TestType": ".test_type",
     "TestsFeatureUsageCommonModel": ".tests_feature_usage_common_model",
@@ -3009,6 +3091,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ToolCallUnitTestModelDynamicVariablesValue": ".tool_call_unit_test_model_dynamic_variables_value",
     "ToolErrorHandlingMode": ".tool_error_handling_mode",
     "ToolExecutionMode": ".tool_execution_mode",
+    "ToolExecutionResponseModel": ".tool_execution_response_model",
+    "ToolExecutionResponseModelToolCallDetails": ".tool_execution_response_model_tool_call_details",
+    "ToolExecutionResponseModelToolCallDetails_ApiIntegrationWebhook": ".tool_execution_response_model_tool_call_details",
+    "ToolExecutionResponseModelToolCallDetails_Client": ".tool_execution_response_model_tool_call_details",
+    "ToolExecutionResponseModelToolCallDetails_Mcp": ".tool_execution_response_model_tool_call_details",
+    "ToolExecutionResponseModelToolCallDetails_Webhook": ".tool_execution_response_model_tool_call_details",
     "ToolMockConfig": ".tool_mock_config",
     "ToolRequestModel": ".tool_request_model",
     "ToolRequestModelToolConfig": ".tool_request_model_tool_config",
@@ -3091,6 +3179,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateClientParams": ".update_client_params",
     "UpdateCustomerFacingConfigParams": ".update_customer_facing_config_params",
     "UpdateHolidayParams": ".update_holiday_params",
+    "UpdateLocationParams": ".update_location_params",
     "UpdateProductParams": ".update_product_params",
     "UpdateProjectRequest": ".update_project_request",
     "UpdatePronunciationDictionariesRequest": ".update_pronunciation_dictionaries_request",
@@ -3297,6 +3386,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkflowToolResponseModelOutputStepsItem_NestedTools": ".workflow_tool_response_model_output_steps_item",
     "WorkflowUnconditionalModelInput": ".workflow_unconditional_model_input",
     "WorkflowUnconditionalModelOutput": ".workflow_unconditional_model_output",
+    "WorkspaceAnalyticsQueryResponseModel": ".workspace_analytics_query_response_model",
+    "WorkspaceAnalyticsQueryResponseModelColumnTypesItem": ".workspace_analytics_query_response_model_column_types_item",
+    "WorkspaceAnalyticsQueryResponseModelRowsItemItem": ".workspace_analytics_query_response_model_rows_item_item",
     "WorkspaceApiKeyListResponseModel": ".workspace_api_key_list_response_model",
     "WorkspaceApiKeyResponseModel": ".workspace_api_key_response_model",
     "WorkspaceBatchCallsResponse": ".workspace_batch_calls_response",
@@ -3406,6 +3498,9 @@ __all__ = [
     "Alignment",
     "AllowedOutputFormats",
     "AllowlistItem",
+    "AnalysisProperty",
+    "AnalysisPropertyConstantValue",
+    "AnalysisPropertyType",
     "AnalysisScope",
     "ApiIntegrationOAuth2AuthCodeResponse",
     "ApiIntegrationOAuth2AuthCodeResponseScopeSeparator",
@@ -3418,16 +3513,16 @@ __all__ = [
     "ApiIntegrationWebhookToolConfigInput",
     "ApiIntegrationWebhookToolConfigOutput",
     "ArrayJsonSchemaPropertyInput",
+    "ArrayJsonSchemaPropertyInputConstantValueItem",
     "ArrayJsonSchemaPropertyInputItems",
     "ArrayJsonSchemaPropertyOutput",
+    "ArrayJsonSchemaPropertyOutputConstantValueItem",
     "ArrayJsonSchemaPropertyOutputItems",
     "AsrConversationalConfig",
     "AsrConversationalConfigWorkflowOverride",
     "AsrInputFormat",
     "AsrProvider",
     "AsrQuality",
-    "AssetTranscription",
-    "AssetTranscriptionWord",
     "AstAdditionOperatorNodeInput",
     "AstAdditionOperatorNodeOutput",
     "AstAndOperatorNodeInput",
@@ -3467,6 +3562,7 @@ __all__ = [
     "AstNodeInput_LteOperator",
     "AstNodeInput_MulOperator",
     "AstNodeInput_NeqOperator",
+    "AstNodeInput_NullLiteral",
     "AstNodeInput_NumberLiteral",
     "AstNodeInput_OrOperator",
     "AstNodeInput_StringLiteral",
@@ -3486,12 +3582,15 @@ __all__ = [
     "AstNodeOutput_LteOperator",
     "AstNodeOutput_MulOperator",
     "AstNodeOutput_NeqOperator",
+    "AstNodeOutput_NullLiteral",
     "AstNodeOutput_NumberLiteral",
     "AstNodeOutput_OrOperator",
     "AstNodeOutput_StringLiteral",
     "AstNodeOutput_SubOperator",
     "AstNotEqualsOperatorNodeInput",
     "AstNotEqualsOperatorNodeOutput",
+    "AstNullNodeInput",
+    "AstNullNodeOutput",
     "AstNumberNodeInput",
     "AstNumberNodeOutput",
     "AstOrOperatorNodeInput",
@@ -3532,8 +3631,6 @@ __all__ = [
     "AuthSettings",
     "AuthorizationMethod",
     "AutoSyncInfo",
-    "AvatarContextRequestModel",
-    "AvatarContextResponseModel",
     "BackupLlmDefault",
     "BackupLlmDisabled",
     "BackupLlmOverride",
@@ -3611,6 +3708,10 @@ __all__ = [
     "CloseSocket",
     "CoachedAgentSettings",
     "CoachingAgentSettings",
+    "ColumnFilter",
+    "ColumnFilterOperation",
+    "ColumnFilterValuesItem",
+    "ColumnUnit",
     "CommittedTranscriptPayload",
     "CommittedTranscriptWithTimestampsPayload",
     "ConfigEntityType",
@@ -3773,6 +3874,7 @@ __all__ = [
     "CreateClientParams",
     "CreateCustomHeaderAuthRequest",
     "CreateHolidayParams",
+    "CreateLocationParams",
     "CreateMtlsAuthRequest",
     "CreateOAuth2ClientCredsRequest",
     "CreateOAuth2JwtRequest",
@@ -3829,6 +3931,7 @@ __all__ = [
     "DeleteDubbingResponseModel",
     "DeleteHistoryItemResponse",
     "DeleteHolidayParams",
+    "DeleteLocationParams",
     "DeleteProductParams",
     "DeleteProjectRequest",
     "DeleteProjectResponseModel",
@@ -3883,12 +3986,20 @@ __all__ = [
     "DubbingTranscriptsResponseModel",
     "DubbingTranscriptsResponseModelTranscriptFormat",
     "DynamicVariableAssignment",
+    "DynamicVariableContainerValueTypeInput",
+    "DynamicVariableContainerValueTypeOutput",
+    "DynamicVariableNestedValueTypeInput",
+    "DynamicVariableNestedValueTypeOutput",
     "DynamicVariableSchemaOverride",
     "DynamicVariableUpdateCommonModel",
-    "DynamicVariablesConfig",
-    "DynamicVariablesConfigDynamicVariablePlaceholdersValue",
-    "DynamicVariablesConfigWorkflowOverride",
-    "DynamicVariablesConfigWorkflowOverrideDynamicVariablePlaceholdersValue",
+    "DynamicVariablesConfigInput",
+    "DynamicVariablesConfigInputDynamicVariablePlaceholdersValue",
+    "DynamicVariablesConfigOutput",
+    "DynamicVariablesConfigOutputDynamicVariablePlaceholdersValue",
+    "DynamicVariablesConfigWorkflowOverrideInput",
+    "DynamicVariablesConfigWorkflowOverrideInputDynamicVariablePlaceholdersValue",
+    "DynamicVariablesConfigWorkflowOverrideOutput",
+    "DynamicVariablesConfigWorkflowOverrideOutputDynamicVariablePlaceholdersValue",
     "EditChapterResponseModel",
     "EditProjectResponseModel",
     "EditVoiceResponseModel",
@@ -3920,6 +4031,7 @@ __all__ = [
     "ExportOptions_Srt",
     "ExportOptions_Txt",
     "ExtendedSubscriptionResponseModelCurrency",
+    "ExtendedSubscriptionResponseModelMaxCreditLimitExtension",
     "ExtendedSubscriptionResponseModelPendingChange",
     "FeatureStatusCommonModel",
     "FeaturesUsageCommonModel",
@@ -4045,6 +4157,7 @@ __all__ = [
     "GetToolDependentAgentsResponseModelAgentsItem",
     "GetToolDependentAgentsResponseModelAgentsItem_Available",
     "GetToolDependentAgentsResponseModelAgentsItem_Unknown",
+    "GetToolExecutionsPageResponseModel",
     "GetVoicesResponse",
     "GetVoicesV2Response",
     "GetWhatsAppAccountResponse",
@@ -4116,6 +4229,7 @@ __all__ = [
     "ListClientInteractionsParams",
     "ListClientsParams",
     "ListHolidaysParams",
+    "ListLocationsParams",
     "ListMcpToolsResponseModel",
     "ListProductsParams",
     "ListRentalServicesParams",
@@ -4170,11 +4284,16 @@ __all__ = [
     "McpServersResponseModel",
     "McpToolApprovalHash",
     "McpToolApprovalPolicy",
-    "McpToolConfigOverride",
-    "McpToolConfigOverrideInputOverridesValue",
-    "McpToolConfigOverrideInputOverridesValue_Constant",
-    "McpToolConfigOverrideInputOverridesValue_DynamicVariable",
-    "McpToolConfigOverrideInputOverridesValue_Llm",
+    "McpToolConfigOverrideInput",
+    "McpToolConfigOverrideInputInputOverridesValue",
+    "McpToolConfigOverrideInputInputOverridesValue_Constant",
+    "McpToolConfigOverrideInputInputOverridesValue_DynamicVariable",
+    "McpToolConfigOverrideInputInputOverridesValue_Llm",
+    "McpToolConfigOverrideOutput",
+    "McpToolConfigOverrideOutputInputOverridesValue",
+    "McpToolConfigOverrideOutputInputOverridesValue_Constant",
+    "McpToolConfigOverrideOutputInputOverridesValue_DynamicVariable",
+    "McpToolConfigOverrideOutputInputOverridesValue_Llm",
     "MergingStrategy",
     "MessageSearchSortBy",
     "MessagesSearchResponse",
@@ -4273,7 +4392,6 @@ __all__ = [
     "ProjectExtendedResponseModelAssetsItem_Image",
     "ProjectExtendedResponseModelAssetsItem_Video",
     "ProjectExtendedResponseModelFiction",
-    "ProjectExtendedResponseModelQualityPreset",
     "ProjectExtendedResponseModelSourceType",
     "ProjectExtendedResponseModelTargetAudience",
     "ProjectExternalAudioResponseModel",
@@ -4356,6 +4474,7 @@ __all__ = [
     "PronunciationDictionaryVersionResponseModel",
     "PronunciationDictionaryVersionResponseModelPermissionOnResource",
     "PydanticPronunciationDictionaryVersionLocator",
+    "QualityPresetType",
     "QueryParamsJsonSchema",
     "RagChunkMetadata",
     "RagConfig",
@@ -4505,6 +4624,7 @@ __all__ = [
     "Subscription",
     "SubscriptionResponse",
     "SubscriptionResponseModelCurrency",
+    "SubscriptionResponseModelMaxCreditLimitExtension",
     "SubscriptionStatusType",
     "SuggestedAudioTag",
     "SupportedVoice",
@@ -4537,6 +4657,7 @@ __all__ = [
     "TestRunMetadata",
     "TestRunMetadataTestType",
     "TestRunStatus",
+    "TestSharingMode",
     "TestToolResultModel",
     "TestType",
     "TestsFeatureUsageCommonModel",
@@ -4559,6 +4680,12 @@ __all__ = [
     "ToolCallUnitTestModelDynamicVariablesValue",
     "ToolErrorHandlingMode",
     "ToolExecutionMode",
+    "ToolExecutionResponseModel",
+    "ToolExecutionResponseModelToolCallDetails",
+    "ToolExecutionResponseModelToolCallDetails_ApiIntegrationWebhook",
+    "ToolExecutionResponseModelToolCallDetails_Client",
+    "ToolExecutionResponseModelToolCallDetails_Mcp",
+    "ToolExecutionResponseModelToolCallDetails_Webhook",
     "ToolMockConfig",
     "ToolRequestModel",
     "ToolRequestModelToolConfig",
@@ -4641,6 +4768,7 @@ __all__ = [
     "UpdateClientParams",
     "UpdateCustomerFacingConfigParams",
     "UpdateHolidayParams",
+    "UpdateLocationParams",
     "UpdateProductParams",
     "UpdateProjectRequest",
     "UpdatePronunciationDictionariesRequest",
@@ -4847,6 +4975,9 @@ __all__ = [
     "WorkflowToolResponseModelOutputStepsItem_NestedTools",
     "WorkflowUnconditionalModelInput",
     "WorkflowUnconditionalModelOutput",
+    "WorkspaceAnalyticsQueryResponseModel",
+    "WorkspaceAnalyticsQueryResponseModelColumnTypesItem",
+    "WorkspaceAnalyticsQueryResponseModelRowsItemItem",
     "WorkspaceApiKeyListResponseModel",
     "WorkspaceApiKeyResponseModel",
     "WorkspaceBatchCallsResponse",

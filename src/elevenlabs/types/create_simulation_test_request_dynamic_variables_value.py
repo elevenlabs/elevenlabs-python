@@ -2,4 +2,8 @@
 
 import typing
 
-CreateSimulationTestRequestDynamicVariablesValue = typing.Union[str, float, int, bool]
+from .dynamic_variable_container_value_type_input import DynamicVariableContainerValueTypeInput
+
+CreateSimulationTestRequestDynamicVariablesValue = typing.Union[
+    str, float, int, bool, DynamicVariableContainerValueTypeInput
+]

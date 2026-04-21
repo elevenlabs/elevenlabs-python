@@ -8,12 +8,13 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_call_limits import AgentCallLimits
 from .agent_testing_settings import AgentTestingSettings
 from .agent_workspace_overrides_input import AgentWorkspaceOverridesInput
+from .analysis_property import AnalysisProperty
 from .analysis_scope import AnalysisScope
 from .auth_settings import AuthSettings
 from .conversation_initiation_client_data_config_input import ConversationInitiationClientDataConfigInput
 from .evaluation_settings_input import EvaluationSettingsInput
 from .guardrails_v_1_input import GuardrailsV1Input
-from .literal_json_schema_property import LiteralJsonSchemaProperty
+from .llm import Llm
 from .privacy_config_input import PrivacyConfigInput
 from .widget_config import WidgetConfig
 
@@ -29,7 +30,7 @@ class AgentPlatformSettingsRequestModel(UncheckedBaseModel):
     Configuration for the widget
     """
 
-    data_collection: typing.Optional[typing.Dict[str, LiteralJsonSchemaProperty]] = pydantic.Field(default=None)
+    data_collection: typing.Optional[typing.Dict[str, AnalysisProperty]] = pydantic.Field(default=None)
     """
     Data collection settings
     """
@@ -82,6 +83,11 @@ class AgentPlatformSettingsRequestModel(UncheckedBaseModel):
     privacy: typing.Optional[PrivacyConfigInput] = pydantic.Field(default=None)
     """
     Privacy settings for the agent
+    """
+
+    analysis_llm: typing.Optional[Llm] = pydantic.Field(default=None)
+    """
+    Default LLM model for post-call analysis (evaluation and data collection)
     """
 
     if IS_PYDANTIC_V2:

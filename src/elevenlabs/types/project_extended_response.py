@@ -14,13 +14,13 @@ from .project_extended_response_model_apply_text_normalization import ProjectExt
 from .project_extended_response_model_aspect_ratio import ProjectExtendedResponseModelAspectRatio
 from .project_extended_response_model_assets_item import ProjectExtendedResponseModelAssetsItem
 from .project_extended_response_model_fiction import ProjectExtendedResponseModelFiction
-from .project_extended_response_model_quality_preset import ProjectExtendedResponseModelQualityPreset
 from .project_extended_response_model_source_type import ProjectExtendedResponseModelSourceType
 from .project_extended_response_model_target_audience import ProjectExtendedResponseModelTargetAudience
 from .project_state import ProjectState
 from .project_voice_response_model import ProjectVoiceResponseModel
 from .pronunciation_dictionary_locator_response_model import PronunciationDictionaryLocatorResponseModel
 from .pronunciation_dictionary_version_response_model import PronunciationDictionaryVersionResponseModel
+from .quality_preset_type import QualityPresetType
 from .studio_agent_settings_model import StudioAgentSettingsModel
 from .voice import Voice
 
@@ -203,7 +203,7 @@ class ProjectExtendedResponse(UncheckedBaseModel):
     Agent-related settings for the project
     """
 
-    quality_preset: ProjectExtendedResponseModelQualityPreset = pydantic.Field()
+    quality_preset: QualityPresetType = pydantic.Field()
     """
     The quality preset level of the project.
     """

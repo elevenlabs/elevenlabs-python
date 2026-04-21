@@ -8,8 +8,8 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class PreviewAudioDbModel(UncheckedBaseModel):
-    voice_id: str
-    text: str
+    voice_id: typing.Optional[str] = None
+    text: typing.Optional[str] = None
     audio_url: str
     hls_manifest_url: typing.Optional[str] = None
     dash_manifest_url: typing.Optional[str] = None

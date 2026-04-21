@@ -32,6 +32,11 @@ class DynamicVariableAssignment(UncheckedBaseModel):
     If true, this assignment's value will be removed from the tool response before sending to the LLM and transcript, but still processed for variable assignment.
     """
 
+    preserve_native_type: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If true, non-scalar values (lists, objects) extracted from the tool response are stored as their native type instead of being stringified to JSON. Enable this to use extracted arrays directly as list dynamic variables.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

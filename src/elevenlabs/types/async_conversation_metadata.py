@@ -18,6 +18,7 @@ class AsyncConversationMetadata(UncheckedBaseModel):
     delivery_error: typing.Optional[str] = None
     external_system: str
     external_id: str
+    external_link: typing.Optional[str] = None
     retry_count: typing.Optional[int] = None
     last_retry_timestamp: typing.Optional[int] = None
     last_processed_external_message_id: typing.Optional[str] = None

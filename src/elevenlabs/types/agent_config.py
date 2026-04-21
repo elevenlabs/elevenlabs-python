@@ -7,7 +7,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .dynamic_variables_config import DynamicVariablesConfig
+from .dynamic_variables_config_output import DynamicVariablesConfigOutput
 from .prompt_agent_api_model_output import PromptAgentApiModelOutput
 
 
@@ -27,7 +27,7 @@ class AgentConfig(UncheckedBaseModel):
     When enabled and language is Hindi, the agent will respond in Hinglish
     """
 
-    dynamic_variables: typing.Optional[DynamicVariablesConfig] = pydantic.Field(default=None)
+    dynamic_variables: typing.Optional[DynamicVariablesConfigOutput] = pydantic.Field(default=None)
     """
     Configuration for dynamic variables
     """

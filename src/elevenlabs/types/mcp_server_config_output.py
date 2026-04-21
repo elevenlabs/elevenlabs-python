@@ -12,7 +12,7 @@ from .mcp_server_config_output_secret_token import McpServerConfigOutputSecretTo
 from .mcp_server_config_output_url import McpServerConfigOutputUrl
 from .mcp_server_transport import McpServerTransport
 from .mcp_tool_approval_hash import McpToolApprovalHash
-from .mcp_tool_config_override import McpToolConfigOverride
+from .mcp_tool_config_override_output import McpToolConfigOverrideOutput
 from .tool_call_sound_behavior import ToolCallSoundBehavior
 from .tool_call_sound_type import ToolCallSoundType
 from .tool_execution_mode import ToolExecutionMode
@@ -79,7 +79,7 @@ class McpServerConfigOutput(UncheckedBaseModel):
     Determines when and how all tools from this MCP server execute: 'immediate' executes the tool right away when requested by the LLM, 'post_tool_speech' waits for the agent to finish speaking before executing, 'async' runs the tool in the background without blocking - best for long-running operations.
     """
 
-    tool_config_overrides: typing.Optional[typing.List[McpToolConfigOverride]] = pydantic.Field(default=None)
+    tool_config_overrides: typing.Optional[typing.List[McpToolConfigOverrideOutput]] = pydantic.Field(default=None)
     """
     List of per-tool configuration overrides that override the server-level defaults for specific tools
     """
