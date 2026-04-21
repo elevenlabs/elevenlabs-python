@@ -5,27 +5,17 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .dynamic_variables_config_output_dynamic_variable_placeholders_value import (
+    DynamicVariablesConfigOutputDynamicVariablePlaceholdersValue,
+)
 
 
-class AvatarContextResponseModel(UncheckedBaseModel):
-    avatar_id: typing.Optional[str] = pydantic.Field(default=None)
+class DynamicVariablesConfigOutput(UncheckedBaseModel):
+    dynamic_variable_placeholders: typing.Optional[
+        typing.Dict[str, DynamicVariablesConfigOutputDynamicVariablePlaceholdersValue]
+    ] = pydantic.Field(default=None)
     """
-    The ID of the avatar.
-    """
-
-    avatar_style_id: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    The ID of the avatar style.
-    """
-
-    avatar_name: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    The name of the avatar.
-    """
-
-    avatar_style_name: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    The name of the avatar style.
+    A dictionary of dynamic variable placeholders and their values
     """
 
     if IS_PYDANTIC_V2:

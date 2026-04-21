@@ -6,13 +6,14 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .dynamic_variable_assignment import DynamicVariableAssignment
-from .mcp_tool_config_override_input_overrides_value import McpToolConfigOverrideInputOverridesValue
+from .mcp_tool_config_override_input_input_overrides_value import McpToolConfigOverrideInputInputOverridesValue
 from .tool_call_sound_behavior import ToolCallSoundBehavior
 from .tool_call_sound_type import ToolCallSoundType
 from .tool_execution_mode import ToolExecutionMode
+from .tool_response_mock_config_input import ToolResponseMockConfigInput
 
 
-class McpToolConfigOverride(UncheckedBaseModel):
+class McpToolConfigOverrideInput(UncheckedBaseModel):
     tool_name: str = pydantic.Field()
     """
     The name of the MCP tool
@@ -48,11 +49,16 @@ class McpToolConfigOverride(UncheckedBaseModel):
     Dynamic variable assignments for this MCP tool
     """
 
-    input_overrides: typing.Optional[typing.Dict[str, typing.Optional[McpToolConfigOverrideInputOverridesValue]]] = (
-        pydantic.Field(default=None)
-    )
+    input_overrides: typing.Optional[
+        typing.Dict[str, typing.Optional[McpToolConfigOverrideInputInputOverridesValue]]
+    ] = pydantic.Field(default=None)
     """
     Mapping of json path to input override configuration
+    """
+
+    response_mocks: typing.Optional[typing.List[ToolResponseMockConfigInput]] = pydantic.Field(default=None)
+    """
+    Mock responses with optional parameter conditions. Evaluated top-to-bottom; first match wins.
     """
 
     if IS_PYDANTIC_V2:

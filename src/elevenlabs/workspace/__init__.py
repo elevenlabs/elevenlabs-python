@@ -7,7 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .resources import BodyShareWorkspaceResourceV1WorkspaceResourcesResourceIdSharePostRole
-    from . import auth_connections, groups, invites, members, resources
+    from . import auth_connections, groups, invites, members, resources, usage
     from .auth_connections import (
         AuthConnectionsCreateRequestBody,
         AuthConnectionsCreateRequestBody_BasicAuth,
@@ -27,6 +27,7 @@ if typing.TYPE_CHECKING:
         AuthConnectionsCreateResponse_PrivateKeyJwt,
         AuthConnectionsCreateResponse_WhatsappAuth,
     )
+    from .usage import BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePostGroupByItem
 _dynamic_imports: typing.Dict[str, str] = {
     "AuthConnectionsCreateRequestBody": ".auth_connections",
     "AuthConnectionsCreateRequestBody_BasicAuth": ".auth_connections",
@@ -45,12 +46,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AuthConnectionsCreateResponse_Oauth2Jwt": ".auth_connections",
     "AuthConnectionsCreateResponse_PrivateKeyJwt": ".auth_connections",
     "AuthConnectionsCreateResponse_WhatsappAuth": ".auth_connections",
+    "BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePostGroupByItem": ".usage",
     "BodyShareWorkspaceResourceV1WorkspaceResourcesResourceIdSharePostRole": ".resources",
     "auth_connections": ".auth_connections",
     "groups": ".groups",
     "invites": ".invites",
     "members": ".members",
     "resources": ".resources",
+    "usage": ".usage",
 }
 
 
@@ -93,10 +96,12 @@ __all__ = [
     "AuthConnectionsCreateResponse_Oauth2Jwt",
     "AuthConnectionsCreateResponse_PrivateKeyJwt",
     "AuthConnectionsCreateResponse_WhatsappAuth",
+    "BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePostGroupByItem",
     "BodyShareWorkspaceResourceV1WorkspaceResourcesResourceIdSharePostRole",
     "auth_connections",
     "groups",
     "invites",
     "members",
     "resources",
+    "usage",
 ]

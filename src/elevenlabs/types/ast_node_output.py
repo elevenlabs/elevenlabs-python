@@ -220,6 +220,19 @@ class AstNodeOutput_NeqOperator(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class AstNodeOutput_NullLiteral(UncheckedBaseModel):
+    type: typing.Literal["null_literal"] = "null_literal"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class AstNodeOutput_NumberLiteral(UncheckedBaseModel):
     type: typing.Literal["number_literal"] = "number_literal"
     value: float
@@ -293,6 +306,7 @@ AstNodeOutput = typing_extensions.Annotated[
         AstNodeOutput_LteOperator,
         AstNodeOutput_MulOperator,
         AstNodeOutput_NeqOperator,
+        AstNodeOutput_NullLiteral,
         AstNodeOutput_NumberLiteral,
         AstNodeOutput_OrOperator,
         AstNodeOutput_StringLiteral,

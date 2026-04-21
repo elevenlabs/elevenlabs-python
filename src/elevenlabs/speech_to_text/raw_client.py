@@ -53,6 +53,7 @@ class RawSpeechToTextClient:
         webhook_metadata: typing.Optional[SpeechToTextConvertRequestWebhookMetadata] = OMIT,
         entity_detection: typing.Optional[SpeechToTextConvertRequestEntityDetection] = OMIT,
         no_verbatim: typing.Optional[bool] = OMIT,
+        detect_speaker_roles: typing.Optional[bool] = OMIT,
         entity_redaction: typing.Optional[SpeechToTextConvertRequestEntityRedaction] = OMIT,
         entity_redaction_mode: typing.Optional[str] = OMIT,
         keyterms: typing.Optional[typing.List[str]] = OMIT,
@@ -126,6 +127,9 @@ class RawSpeechToTextClient:
         no_verbatim : typing.Optional[bool]
             If true, the transcription will not have any filler words, false starts and non-speech sounds. Only supported with scribe_v2 model.
 
+        detect_speaker_roles : typing.Optional[bool]
+            Whether to detect speaker roles (agent vs customer). Requires diarize=true. Cannot be used with use_multi_channel=true. When enabled, speaker_id values will be 'agent' and 'customer' instead of 'speaker_0', 'speaker_1', etc. Usage incurs an additional 10% surcharge on base transcription cost.
+
         entity_redaction : typing.Optional[SpeechToTextConvertRequestEntityRedaction]
             Redact entities from the transcript text. Accepts the same format as entity_detection: 'all', a category ('pii', 'phi'), or specific entity types. Must be a subset of entity_detection. When redaction is enabled, the entities field will not be returned. Usage of this parameter will incur an additional 30% surcharge on the base transcription cost.
 
@@ -168,6 +172,7 @@ class RawSpeechToTextClient:
                 "webhook_metadata": webhook_metadata,
                 "entity_detection": entity_detection,
                 "no_verbatim": no_verbatim,
+                "detect_speaker_roles": detect_speaker_roles,
                 "entity_redaction": entity_redaction,
                 "entity_redaction_mode": entity_redaction_mode,
                 "keyterms": keyterms,
@@ -239,6 +244,7 @@ class AsyncRawSpeechToTextClient:
         webhook_metadata: typing.Optional[SpeechToTextConvertRequestWebhookMetadata] = OMIT,
         entity_detection: typing.Optional[SpeechToTextConvertRequestEntityDetection] = OMIT,
         no_verbatim: typing.Optional[bool] = OMIT,
+        detect_speaker_roles: typing.Optional[bool] = OMIT,
         entity_redaction: typing.Optional[SpeechToTextConvertRequestEntityRedaction] = OMIT,
         entity_redaction_mode: typing.Optional[str] = OMIT,
         keyterms: typing.Optional[typing.List[str]] = OMIT,
@@ -312,6 +318,9 @@ class AsyncRawSpeechToTextClient:
         no_verbatim : typing.Optional[bool]
             If true, the transcription will not have any filler words, false starts and non-speech sounds. Only supported with scribe_v2 model.
 
+        detect_speaker_roles : typing.Optional[bool]
+            Whether to detect speaker roles (agent vs customer). Requires diarize=true. Cannot be used with use_multi_channel=true. When enabled, speaker_id values will be 'agent' and 'customer' instead of 'speaker_0', 'speaker_1', etc. Usage incurs an additional 10% surcharge on base transcription cost.
+
         entity_redaction : typing.Optional[SpeechToTextConvertRequestEntityRedaction]
             Redact entities from the transcript text. Accepts the same format as entity_detection: 'all', a category ('pii', 'phi'), or specific entity types. Must be a subset of entity_detection. When redaction is enabled, the entities field will not be returned. Usage of this parameter will incur an additional 30% surcharge on the base transcription cost.
 
@@ -354,6 +363,7 @@ class AsyncRawSpeechToTextClient:
                 "webhook_metadata": webhook_metadata,
                 "entity_detection": entity_detection,
                 "no_verbatim": no_verbatim,
+                "detect_speaker_roles": detect_speaker_roles,
                 "entity_redaction": entity_redaction,
                 "entity_redaction_mode": entity_redaction_mode,
                 "keyterms": keyterms,

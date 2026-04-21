@@ -9,7 +9,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .dynamic_variable_assignment import DynamicVariableAssignment
-from .dynamic_variables_config import DynamicVariablesConfig
+from .dynamic_variables_config_output import DynamicVariablesConfigOutput
 from .system_tool_config_output_params import SystemToolConfigOutputParams
 from .tool_call_sound_behavior import ToolCallSoundBehavior
 from .tool_call_sound_type import ToolCallSoundType
@@ -35,7 +35,7 @@ class ToolResponseModelToolConfig_Client(UncheckedBaseModel):
     tool_error_handling_mode: typing.Optional[ToolErrorHandlingMode] = None
     parameters: typing.Optional["ObjectJsonSchemaPropertyOutput"] = None
     expects_response: typing.Optional[bool] = None
-    dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
+    dynamic_variables: typing.Optional[DynamicVariablesConfigOutput] = None
     execution_mode: typing.Optional[ToolExecutionMode] = None
 
     if IS_PYDANTIC_V2:
@@ -103,7 +103,7 @@ class ToolResponseModelToolConfig_Webhook(UncheckedBaseModel):
     tool_call_sound: typing.Optional[ToolCallSoundType] = None
     tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = None
     tool_error_handling_mode: typing.Optional[ToolErrorHandlingMode] = None
-    dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
+    dynamic_variables: typing.Optional[DynamicVariablesConfigOutput] = None
     execution_mode: typing.Optional[ToolExecutionMode] = None
     api_schema: WebhookToolApiSchemaConfigOutput
 

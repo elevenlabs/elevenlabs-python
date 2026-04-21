@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .analysis_scope import AnalysisScope
+from .llm import Llm
 
 
 class PromptEvaluationCriteria(UncheckedBaseModel):
@@ -37,6 +38,11 @@ class PromptEvaluationCriteria(UncheckedBaseModel):
     scope: typing.Optional[AnalysisScope] = pydantic.Field(default=None)
     """
     The scope of transcript context used when evaluating this criterion. 'conversation' uses the full transcript; 'agent' uses only the portion where the defining agent was active.
+    """
+
+    llm: typing.Optional[Llm] = pydantic.Field(default=None)
+    """
+    LLM model to use for this evaluation criteria. If not set, uses agent's analysis_llm default.
     """
 
     if IS_PYDANTIC_V2:

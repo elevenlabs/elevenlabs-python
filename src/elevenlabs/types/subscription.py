@@ -8,6 +8,9 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .billing_period import BillingPeriod
 from .character_refresh_period import CharacterRefreshPeriod
 from .extended_subscription_response_model_currency import ExtendedSubscriptionResponseModelCurrency
+from .extended_subscription_response_model_max_credit_limit_extension import (
+    ExtendedSubscriptionResponseModelMaxCreditLimitExtension,
+)
 from .extended_subscription_response_model_pending_change import ExtendedSubscriptionResponseModelPendingChange
 from .invoice_response import InvoiceResponse
 from .subscription_status_type import SubscriptionStatusType
@@ -31,7 +34,12 @@ class Subscription(UncheckedBaseModel):
 
     max_character_limit_extension: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Maximum number of characters that the character limit can be exceeded by. Managed by the workspace admin.
+    Deprecated: use `max_credit_limit_extension`. Maximum number of characters that the character limit can be exceeded by. Managed by the workspace admin.
+    """
+
+    max_credit_limit_extension: ExtendedSubscriptionResponseModelMaxCreditLimitExtension = pydantic.Field()
+    """
+    Maximum number of credits that the credit limit can be exceeded by. Managed by the workspace admin. `"unlimited"` means no cap, `0` means usage-based billing is disabled.
     """
 
     can_extend_character_limit: bool = pydantic.Field()
@@ -41,7 +49,7 @@ class Subscription(UncheckedBaseModel):
 
     allowed_to_extend_character_limit: bool = pydantic.Field()
     """
-    Whether the user is allowed to extend their character limit.
+    Deprecated: use `max_credit_limit_extension != 0`. Whether the user is allowed to extend their character limit.
     """
 
     next_character_count_reset_unix: typing.Optional[int] = pydantic.Field(default=None)

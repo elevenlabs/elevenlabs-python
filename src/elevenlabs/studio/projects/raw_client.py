@@ -18,9 +18,9 @@ from ...types.edit_project_response_model import EditProjectResponseModel
 from ...types.get_projects_response import GetProjectsResponse
 from ...types.project_extended_response import ProjectExtendedResponse
 from ...types.project_muted_tracks_response_model import ProjectMutedTracksResponseModel
+from ...types.quality_preset_type import QualityPresetType
 from .types.projects_create_request_apply_text_normalization import ProjectsCreateRequestApplyTextNormalization
 from .types.projects_create_request_fiction import ProjectsCreateRequestFiction
-from .types.projects_create_request_quality_preset import ProjectsCreateRequestQualityPreset
 from .types.projects_create_request_source_type import ProjectsCreateRequestSourceType
 from .types.projects_create_request_target_audience import ProjectsCreateRequestTargetAudience
 
@@ -87,7 +87,7 @@ class RawProjectsClient:
         from_url: typing.Optional[str] = OMIT,
         from_document: typing.Optional[core.File] = OMIT,
         from_content_json: typing.Optional[str] = OMIT,
-        quality_preset: typing.Optional[ProjectsCreateRequestQualityPreset] = OMIT,
+        quality_preset: typing.Optional[QualityPresetType] = OMIT,
         title: typing.Optional[str] = OMIT,
         author: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
@@ -142,7 +142,7 @@ class RawProjectsClient:
                 [{"name": "Chapter A", "blocks": [{"sub_type": "p", "nodes": [{"voice_id": "6lCwbsX1yVjD49QmpkT0", "text": "A", "type": "tts_node"}, {"voice_id": "6lCwbsX1yVjD49QmpkT1", "text": "B", "type": "tts_node"}]}, {"sub_type": "h1", "nodes": [{"voice_id": "6lCwbsX1yVjD49QmpkT0", "text": "C", "type": "tts_node"}, {"voice_id": "6lCwbsX1yVjD49QmpkT1", "text": "D", "type": "tts_node"}]}]}, {"name": "Chapter B", "blocks": [{"sub_type": "p", "nodes": [{"voice_id": "6lCwbsX1yVjD49QmpkT0", "text": "E", "type": "tts_node"}, {"voice_id": "6lCwbsX1yVjD49QmpkT1", "text": "F", "type": "tts_node"}]}, {"sub_type": "h2", "nodes": [{"voice_id": "6lCwbsX1yVjD49QmpkT0", "text": "G", "type": "tts_node"}, {"voice_id": "6lCwbsX1yVjD49QmpkT1", "text": "H", "type": "tts_node"}]}]}]
 
 
-        quality_preset : typing.Optional[ProjectsCreateRequestQualityPreset]
+        quality_preset : typing.Optional[QualityPresetType]
             Output quality of the generated audio. Must be one of:
             'standard' - standard output format, 128kbps with 44.1kHz sample rate.
             'high' - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side.
@@ -715,7 +715,7 @@ class AsyncRawProjectsClient:
         from_url: typing.Optional[str] = OMIT,
         from_document: typing.Optional[core.File] = OMIT,
         from_content_json: typing.Optional[str] = OMIT,
-        quality_preset: typing.Optional[ProjectsCreateRequestQualityPreset] = OMIT,
+        quality_preset: typing.Optional[QualityPresetType] = OMIT,
         title: typing.Optional[str] = OMIT,
         author: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
@@ -770,7 +770,7 @@ class AsyncRawProjectsClient:
                 [{"name": "Chapter A", "blocks": [{"sub_type": "p", "nodes": [{"voice_id": "6lCwbsX1yVjD49QmpkT0", "text": "A", "type": "tts_node"}, {"voice_id": "6lCwbsX1yVjD49QmpkT1", "text": "B", "type": "tts_node"}]}, {"sub_type": "h1", "nodes": [{"voice_id": "6lCwbsX1yVjD49QmpkT0", "text": "C", "type": "tts_node"}, {"voice_id": "6lCwbsX1yVjD49QmpkT1", "text": "D", "type": "tts_node"}]}]}, {"name": "Chapter B", "blocks": [{"sub_type": "p", "nodes": [{"voice_id": "6lCwbsX1yVjD49QmpkT0", "text": "E", "type": "tts_node"}, {"voice_id": "6lCwbsX1yVjD49QmpkT1", "text": "F", "type": "tts_node"}]}, {"sub_type": "h2", "nodes": [{"voice_id": "6lCwbsX1yVjD49QmpkT0", "text": "G", "type": "tts_node"}, {"voice_id": "6lCwbsX1yVjD49QmpkT1", "text": "H", "type": "tts_node"}]}]}]
 
 
-        quality_preset : typing.Optional[ProjectsCreateRequestQualityPreset]
+        quality_preset : typing.Optional[QualityPresetType]
             Output quality of the generated audio. Must be one of:
             'standard' - standard output format, 128kbps with 44.1kHz sample rate.
             'high' - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side.
