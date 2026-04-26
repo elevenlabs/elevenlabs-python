@@ -22,7 +22,7 @@ def play(
             from IPython.display import Audio, display  # type: ignore
         except ModuleNotFoundError:
             message = (
-                "`pip install ipython` required when `notebook=False` "
+                "`pip install ipython` required when `notebook=True` "
             )
             raise ValueError(message)
 
