@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_call_limits import AgentCallLimits
 from .agent_testing_settings import AgentTestingSettings
+from .agent_trust_context import AgentTrustContext
 from .agent_workspace_overrides_output import AgentWorkspaceOverridesOutput
 from .analysis_property import AnalysisProperty
 from .analysis_scope import AnalysisScope
@@ -84,6 +85,11 @@ class AgentPlatformSettingsResponseModel(UncheckedBaseModel):
     privacy: typing.Optional[PrivacyConfigOutput] = pydantic.Field(default=None)
     """
     Privacy settings for the agent
+    """
+
+    trust_context: typing.Optional[AgentTrustContext] = pydantic.Field(default=None)
+    """
+    The trust context in which the agent operates.
     """
 
     analysis_llm: typing.Optional[Llm] = pydantic.Field(default=None)

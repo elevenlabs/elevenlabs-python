@@ -8,9 +8,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .conversation_history_transcript_common_model_output import ConversationHistoryTranscriptCommonModelOutput
-from .get_tool_call_unit_test_response_model_dynamic_variables_value import (
-    GetToolCallUnitTestResponseModelDynamicVariablesValue,
-)
+from .dynamic_variable_value_type_output import DynamicVariableValueTypeOutput
 from .test_from_conversation_metadata_output import TestFromConversationMetadataOutput
 from .unit_test_tool_call_evaluation_model_output import UnitTestToolCallEvaluationModelOutput
 
@@ -21,9 +19,9 @@ class GetToolCallUnitTestResponseModel(UncheckedBaseModel):
     Metadata of a conversation this test was created from (if applicable).
     """
 
-    dynamic_variables: typing.Optional[
-        typing.Dict[str, typing.Optional[GetToolCallUnitTestResponseModelDynamicVariablesValue]]
-    ] = pydantic.Field(default=None)
+    dynamic_variables: typing.Optional[typing.Dict[str, typing.Optional[DynamicVariableValueTypeOutput]]] = (
+        pydantic.Field(default=None)
+    )
     """
     Dynamic variables to replace in the agent config during testing
     """

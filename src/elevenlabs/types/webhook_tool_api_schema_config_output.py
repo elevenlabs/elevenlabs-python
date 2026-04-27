@@ -50,6 +50,11 @@ class WebhookToolApiSchemaConfigOutput(UncheckedBaseModel):
     Schema for the body parameters, if any. Used for POST/PATCH/PUT requests. The schema should be an object which will be sent as the json body
     """
 
+    response_body_schema: typing.Optional["ObjectJsonSchemaPropertyOutput"] = pydantic.Field(default=None)
+    """
+    Schema describing the expected response body structure. For documentation only; not surfaced to the LLM.
+    """
+
     content_type: typing.Optional[WebhookToolApiSchemaConfigOutputContentType] = pydantic.Field(default=None)
     """
     Content type for the request body. Only applies to POST/PUT/PATCH requests.

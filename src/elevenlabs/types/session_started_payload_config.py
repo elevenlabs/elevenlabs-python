@@ -70,6 +70,16 @@ class SessionStartedPayloadConfig(UncheckedBaseModel):
     Whether the session will include language detection in the committed transcript.
     """
 
+    keyterms: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    List of keyterms the model is biased towards.
+    """
+
+    no_verbatim: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether filler words and disfluencies are removed from the transcript.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

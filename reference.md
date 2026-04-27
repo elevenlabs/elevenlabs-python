@@ -602,6 +602,164 @@ client.text_to_sound_effects.convert(
 </details>
 
 ## AudioIsolation
+<details><summary><code>client.audio_isolation.<a href="src/elevenlabs/audio_isolation/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of all your audio isolation generations.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.audio_isolation.list(
+    page_size=1,
+    page=1,
+    search="search",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many history items to return at maximum. Defaults to 100.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[int]` — Page number for search pagination (1-based). Only used when search is provided.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Optional search term used for filtering audio isolation history (title/text).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.audio_isolation.<a href="src/elevenlabs/audio_isolation/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes a specific audio isolation history item and the associated media files.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.audio_isolation.delete(
+    history_item_id="history_item_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**history_item_id:** `str` — Identifier of the audio isolation history item.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Samples
 <details><summary><code>client.samples.<a href="src/elevenlabs/samples/client.py">delete</a>(...)</code></summary>
 <dl>
@@ -6937,7 +7095,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**keyterms:** `typing.Optional[typing.List[str]]` — A list of keyterms to bias the transcription towards.           The keyterms are words or phrases you want the model to recognise more accurately.           The number of keyterms cannot exceed 1000.           The length of each keyterm must be less than 50 characters.           Keyterms can contain at most 5 words (after normalisation).           For example ["hello", "world", "technical term"].           Usage of this parameter will incur an additional 20% surcharge on the base transcription cost.           When more than 100 keyterms are provided, a minimum billable duration of 20 seconds applies per request.
+**keyterms:** `typing.Optional[typing.List[str]]` — A list of keyterms to bias the transcription towards.           The keyterms are words or phrases you want the model to recognise more accurately.           The number of keyterms cannot exceed 1000.           The length of each keyterm must be less than 50 characters.           Keyterms can contain at most 5 words (after normalisation).           For example ["hello", "world", "technical term"].           The following characters are not supported: `<`, `>`, `{`, `}`, `[`, `]`, `\`.           Usage of this parameter will incur an additional 20% surcharge on the base transcription cost.           When more than 100 keyterms are provided, a minimum billable duration of 20 seconds applies per request.
     
 </dd>
 </dl>
@@ -13422,7 +13580,15 @@ client.conversational_ai.mcp_servers.update(
 <dl>
 <dd>
 
-**force_pre_tool_speech:** `typing.Optional[bool]` — If set, overrides the server's force_pre_tool_speech setting for this tool
+**force_pre_tool_speech:** `typing.Optional[bool]` — DEPRECATED: use `pre_tool_speech` instead. If set, overrides the server's force_pre_tool_speech setting for this tool.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pre_tool_speech:** `typing.Optional[PreToolSpeechMode]` — If set, overrides the server's pre_tool_speech setting for this tool.
     
 </dd>
 </dl>
@@ -13455,6 +13621,14 @@ client.conversational_ai.mcp_servers.update(
 <dd>
 
 **execution_mode:** `typing.Optional[ToolExecutionMode]` — If set, overrides the server's execution_mode setting for this tool
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**response_timeout_secs:** `typing.Optional[int]` — The maximum time in seconds to wait for each MCP tool call to complete.
     
 </dd>
 </dl>
@@ -17882,7 +18056,15 @@ client.conversational_ai.mcp_servers.tool_configs.create(
 <dl>
 <dd>
 
-**force_pre_tool_speech:** `typing.Optional[bool]` — If set, overrides the server's force_pre_tool_speech setting for this tool
+**force_pre_tool_speech:** `typing.Optional[bool]` — DEPRECATED: use `pre_tool_speech` instead. If set, overrides the server's force_pre_tool_speech setting for this tool.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pre_tool_speech:** `typing.Optional[PreToolSpeechMode]` — If set, overrides the server's pre_tool_speech setting for this tool.
     
 </dd>
 </dl>
@@ -17915,6 +18097,14 @@ client.conversational_ai.mcp_servers.tool_configs.create(
 <dd>
 
 **execution_mode:** `typing.Optional[ToolExecutionMode]` — If set, overrides the server's execution_mode setting for this tool
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**response_timeout_secs:** `typing.Optional[int]` — If set, overrides the server's response timeout for this MCP tool.
     
 </dd>
 </dl>
@@ -18190,7 +18380,15 @@ client.conversational_ai.mcp_servers.tool_configs.update(
 <dl>
 <dd>
 
-**force_pre_tool_speech:** `typing.Optional[bool]` — If set, overrides the server's force_pre_tool_speech setting for this tool
+**force_pre_tool_speech:** `typing.Optional[bool]` — DEPRECATED: use `pre_tool_speech` instead. If set, overrides the server's force_pre_tool_speech setting for this tool.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pre_tool_speech:** `typing.Optional[PreToolSpeechMode]` — If set, overrides the server's pre_tool_speech setting for this tool.
     
 </dd>
 </dl>
@@ -18223,6 +18421,14 @@ client.conversational_ai.mcp_servers.tool_configs.update(
 <dd>
 
 **execution_mode:** `typing.Optional[ToolExecutionMode]` — If set, overrides the server's execution_mode setting for this tool
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**response_timeout_secs:** `typing.Optional[int]` — If set, overrides the server's response timeout for this MCP tool.
     
 </dd>
 </dl>
@@ -26243,7 +26449,7 @@ client.workspace.resources.unshare(
 <dl>
 <dd>
 
-Returns credit usage broken down by product type over time. Timestamps are Unix milliseconds. The response is a tabular structure with columns, column_types, column_units, and rows.
+Returns credit usage broken down by product type over time. The response is a tabular structure with columns, column_types, column_units, and rows.
 </dd>
 </dl>
 </dd>
@@ -26282,7 +26488,7 @@ client.workspace.usage.get_usage_by_product_over_time(
 <dl>
 <dd>
 
-**start_time:** `int` 
+**start_time:** `int` — Start of the time range as a Unix timestamp in milliseconds. Must be at least 2020-01-01.
     
 </dd>
 </dl>
@@ -26290,7 +26496,7 @@ client.workspace.usage.get_usage_by_product_over_time(
 <dl>
 <dd>
 
-**end_time:** `int` 
+**end_time:** `int` — End of the time range as a Unix timestamp in milliseconds. Must be at least 2020-01-01.
     
 </dd>
 </dl>

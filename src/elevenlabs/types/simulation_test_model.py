@@ -8,7 +8,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .conversation_history_transcript_common_model_output import ConversationHistoryTranscriptCommonModelOutput
-from .simulation_test_model_dynamic_variables_value import SimulationTestModelDynamicVariablesValue
+from .dynamic_variable_value_type_output import DynamicVariableValueTypeOutput
 from .simulation_tool_mock_behavior_config import SimulationToolMockBehaviorConfig
 from .test_from_conversation_metadata_output import TestFromConversationMetadataOutput
 
@@ -19,7 +19,7 @@ class SimulationTestModel(UncheckedBaseModel):
     Metadata of a conversation this test was created from (if applicable).
     """
 
-    dynamic_variables: typing.Optional[typing.Dict[str, typing.Optional[SimulationTestModelDynamicVariablesValue]]] = (
+    dynamic_variables: typing.Optional[typing.Dict[str, typing.Optional[DynamicVariableValueTypeOutput]]] = (
         pydantic.Field(default=None)
     )
     """

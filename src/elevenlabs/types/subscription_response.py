@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .billing_period import BillingPeriod
 from .character_refresh_period import CharacterRefreshPeriod
-from .subscription_response_model_currency import SubscriptionResponseModelCurrency
+from .currency import Currency
 from .subscription_response_model_max_credit_limit_extension import SubscriptionResponseModelMaxCreditLimitExtension
 from .subscription_status_type import SubscriptionStatusType
 
@@ -98,7 +98,7 @@ class SubscriptionResponse(UncheckedBaseModel):
     Whether the user can use professional voice cloning.
     """
 
-    currency: typing.Optional[SubscriptionResponseModelCurrency] = pydantic.Field(default=None)
+    currency: typing.Optional[Currency] = pydantic.Field(default=None)
     """
     The currency of the user's subscription.
     """

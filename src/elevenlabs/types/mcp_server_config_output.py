@@ -13,6 +13,7 @@ from .mcp_server_config_output_url import McpServerConfigOutputUrl
 from .mcp_server_transport import McpServerTransport
 from .mcp_tool_approval_hash import McpToolApprovalHash
 from .mcp_tool_config_override_output import McpToolConfigOverrideOutput
+from .pre_tool_speech_mode import PreToolSpeechMode
 from .tool_call_sound_behavior import ToolCallSoundBehavior
 from .tool_call_sound_type import ToolCallSoundType
 from .tool_execution_mode import ToolExecutionMode
@@ -56,7 +57,12 @@ class McpServerConfigOutput(UncheckedBaseModel):
     description: typing.Optional[str] = None
     force_pre_tool_speech: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    If true, all tools from this MCP server will require pre-tool execution speech
+    DEPRECATED: use `pre_tool_speech` instead. If true, all tools from this MCP server will require pre-tool execution speech.
+    """
+
+    pre_tool_speech: typing.Optional[PreToolSpeechMode] = pydantic.Field(default=None)
+    """
+    Controls whether the agent speaks before this tool is called. 'auto' (default) decides based on recent tool latency, 'force' always asks the agent to speak, 'off' fully opts out regardless of latency. Applies to every tool from this MCP server unless overridden per tool.
     """
 
     disable_interruptions: typing.Optional[bool] = pydantic.Field(default=None)
@@ -77,6 +83,11 @@ class McpServerConfigOutput(UncheckedBaseModel):
     execution_mode: typing.Optional[ToolExecutionMode] = pydantic.Field(default=None)
     """
     Determines when and how all tools from this MCP server execute: 'immediate' executes the tool right away when requested by the LLM, 'post_tool_speech' waits for the agent to finish speaking before executing, 'async' runs the tool in the background without blocking - best for long-running operations.
+    """
+
+    response_timeout_secs: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The maximum time in seconds to wait for each MCP tool call to complete. Must be between 5 and 120 seconds (inclusive).
     """
 
     tool_config_overrides: typing.Optional[typing.List[McpToolConfigOverrideOutput]] = pydantic.Field(default=None)

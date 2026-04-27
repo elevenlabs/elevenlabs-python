@@ -8,9 +8,9 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .conversation_history_transcript_common_model_input import ConversationHistoryTranscriptCommonModelInput
+from .dynamic_variable_value_type_input import DynamicVariableValueTypeInput
 from .simulation_tool_mock_behavior_config import SimulationToolMockBehaviorConfig
 from .test_from_conversation_metadata_input import TestFromConversationMetadataInput
-from .update_simulation_test_request_dynamic_variables_value import UpdateSimulationTestRequestDynamicVariablesValue
 
 
 class UpdateSimulationTestRequest(UncheckedBaseModel):
@@ -19,9 +19,9 @@ class UpdateSimulationTestRequest(UncheckedBaseModel):
     Metadata of a conversation this test was created from (if applicable).
     """
 
-    dynamic_variables: typing.Optional[
-        typing.Dict[str, typing.Optional[UpdateSimulationTestRequestDynamicVariablesValue]]
-    ] = pydantic.Field(default=None)
+    dynamic_variables: typing.Optional[typing.Dict[str, typing.Optional[DynamicVariableValueTypeInput]]] = (
+        pydantic.Field(default=None)
+    )
     """
     Dynamic variables to replace in the agent config during testing
     """

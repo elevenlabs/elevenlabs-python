@@ -8,9 +8,11 @@ from .. import core
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
+from ..core.jsonable_encoder import jsonable_encoder
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
+from ..types.get_audio_isolation_history_response_model import GetAudioIsolationHistoryResponseModel
 from .types.audio_isolation_convert_request_file_format import AudioIsolationConvertRequestFileFormat
 from .types.audio_isolation_stream_request_file_format import AudioIsolationStreamRequestFileFormat
 
@@ -95,6 +97,114 @@ class RawAudioIsolationClient:
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
             yield _stream()
+
+    def list(
+        self,
+        *,
+        page_size: typing.Optional[int] = None,
+        page: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[GetAudioIsolationHistoryResponseModel]:
+        """
+        Returns a list of all your audio isolation generations.
+
+        Parameters
+        ----------
+        page_size : typing.Optional[int]
+            How many history items to return at maximum. Defaults to 100.
+
+        page : typing.Optional[int]
+            Page number for search pagination (1-based). Only used when search is provided.
+
+        search : typing.Optional[str]
+            Optional search term used for filtering audio isolation history (title/text).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetAudioIsolationHistoryResponseModel]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/audio-isolation/history",
+            method="GET",
+            params={
+                "page_size": page_size,
+                "page": page,
+                "search": search,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetAudioIsolationHistoryResponseModel,
+                    construct_type(
+                        type_=GetAudioIsolationHistoryResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def delete(
+        self, history_item_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[None]:
+        """
+        Deletes a specific audio isolation history item and the associated media files.
+
+        Parameters
+        ----------
+        history_item_id : str
+            Identifier of the audio isolation history item.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[None]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/audio-isolation/history/{jsonable_encoder(history_item_id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     @contextlib.contextmanager
     def stream(
@@ -244,6 +354,114 @@ class AsyncRawAudioIsolationClient:
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
             yield await _stream()
+
+    async def list(
+        self,
+        *,
+        page_size: typing.Optional[int] = None,
+        page: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[GetAudioIsolationHistoryResponseModel]:
+        """
+        Returns a list of all your audio isolation generations.
+
+        Parameters
+        ----------
+        page_size : typing.Optional[int]
+            How many history items to return at maximum. Defaults to 100.
+
+        page : typing.Optional[int]
+            Page number for search pagination (1-based). Only used when search is provided.
+
+        search : typing.Optional[str]
+            Optional search term used for filtering audio isolation history (title/text).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GetAudioIsolationHistoryResponseModel]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/audio-isolation/history",
+            method="GET",
+            params={
+                "page_size": page_size,
+                "page": page,
+                "search": search,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetAudioIsolationHistoryResponseModel,
+                    construct_type(
+                        type_=GetAudioIsolationHistoryResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def delete(
+        self, history_item_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[None]:
+        """
+        Deletes a specific audio isolation history item and the associated media files.
+
+        Parameters
+        ----------
+        history_item_id : str
+            Identifier of the audio isolation history item.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[None]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/audio-isolation/history/{jsonable_encoder(history_item_id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     @contextlib.asynccontextmanager
     async def stream(

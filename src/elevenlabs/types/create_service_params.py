@@ -9,7 +9,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 class CreateServiceParams(UncheckedBaseModel):
     """
-    Create a new service in the system.
+    Create a new service (classic or rental) in the system.
     """
 
     smb_tool_type: typing.Optional[typing.Literal["create_service"]] = None
