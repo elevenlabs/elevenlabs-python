@@ -5,7 +5,7 @@ import json
 import logging
 import typing
 
-from .types import ConversationMessage, WebSocketLike
+from .types import ConversationMessage, WebSocketLike, wrap_websocket
 
 logger = logging.getLogger("elevenlabs.speech_engine")
 
@@ -159,11 +159,11 @@ class SpeechEngineSession:
 
     def __init__(
         self,
-        ws: WebSocketLike,
+        ws: typing.Any,
         *,
         debug: bool = False,
     ) -> None:
-        self._ws = ws
+        self._ws = wrap_websocket(ws)
         self._conversation_id = None  # type: typing.Optional[str]
         self._current_task = None  # type: typing.Optional[asyncio.Task]  # type: ignore[type-arg]
         self._current_event_id = None  # type: typing.Optional[int]
@@ -173,6 +173,12 @@ class SpeechEngineSession:
 
         if debug:
             logger.setLevel(logging.DEBUG)
+            if not logger.handlers:
+                handler = logging.StreamHandler()
+                handler.setFormatter(
+                    logging.Formatter("[SpeechEngine] %(message)s")
+                )
+                logger.addHandler(handler)
 
     # ------------------------------------------------------------------
     # Event emitter interface
@@ -232,8 +238,7 @@ class SpeechEngineSession:
                 except asyncio.CancelledError:
                     raise
                 except Exception:
-                    # Connection closed or errored — exit the loop and
-                    # let the finally block emit "disconnected".
+                    logger.debug("WebSocket connection lost")
                     break
 
                 try:
@@ -275,10 +280,19 @@ class SpeechEngineSession:
         if self._closed:
             raise RuntimeError("Cannot send response: session is closed")
 
+        if self._current_event_id is None:
+            logger.warning(
+                "sendResponse() called outside of an on_transcript handler. "
+                "Responses can only be sent in reply to a user transcript. "
+                "To have the agent speak first, set a first message in your "
+                "Speech Engine conversation config on the client."
+            )
+            return
+
         if isinstance(response, str):
             logger.debug(
-                "sending string response (%d chars), event_id=%s",
-                len(response),
+                'sending string response: "%s", event_id=%s',
+                response,
                 self._current_event_id,
             )
             await self._send_agent_response(response, False)
@@ -318,6 +332,19 @@ class SpeechEngineSession:
             await self._emit("init", self._conversation_id)
 
         elif msg_type == "user_transcript":
+            incoming_event_id = msg.get("event_id")
+
+            if (
+                incoming_event_id == self._current_event_id
+                and self._current_task is not None
+                and not self._current_task.done()
+            ):
+                logger.debug(
+                    "skipping duplicate transcript, event_id=%s",
+                    incoming_event_id,
+                )
+                return
+
             was_active = (
                 self._current_task is not None
                 and not self._current_task.done()
@@ -328,10 +355,10 @@ class SpeechEngineSession:
                     "interrupted: cancelling previous response "
                     "(event_id=%s) for new transcript (event_id=%s)",
                     self._current_event_id,
-                    msg.get("event_id"),
+                    incoming_event_id,
                 )
 
-            self._current_event_id = msg.get("event_id")
+            self._current_event_id = incoming_event_id
             transcript_data = msg.get("user_transcript", [])
             logger.debug(
                 "received transcript, event_id=%s, messages=%d",

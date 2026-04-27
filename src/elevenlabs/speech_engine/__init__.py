@@ -23,6 +23,7 @@ __all__ = [
     "SpeechEngineServer",
     "SpeechEngineSession",
     "WebSocketLike",
+    "verify_speech_engine_jwt",
     "CLOSE",
     "DISCONNECTED",
     "ERROR",
