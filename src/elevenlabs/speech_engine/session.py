@@ -338,7 +338,8 @@ class SpeechEngineSession:
             incoming_event_id = msg.get("event_id")
 
             if (
-                incoming_event_id == self._current_event_id
+                incoming_event_id is not None
+                and incoming_event_id == self._current_event_id
                 and self._current_task is not None
                 and not self._current_task.done()
             ):
