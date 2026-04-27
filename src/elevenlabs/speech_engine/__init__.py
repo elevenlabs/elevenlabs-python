@@ -1,6 +1,6 @@
 """ElevenLabs Speech Engine SDK module."""
 
-from .resource import SpeechEngineResource
+from .resource import SpeechEngineResource, verify_speech_engine_jwt
 from .server import SpeechEngineServer
 from .session import SpeechEngineSession
 from .types import (
@@ -19,6 +19,7 @@ __all__ = [
     "SpeechEngineServer",
     "SpeechEngineSession",
     "WebSocketLike",
+    "verify_speech_engine_jwt",
     "CLOSE",
     "DISCONNECTED",
     "ERROR",

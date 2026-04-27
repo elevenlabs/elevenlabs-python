@@ -782,3 +782,72 @@ async def test_once_fires_only_once(
     await _run_until_idle(session, ws)
 
     assert calls == ["conv_1"]
+
+
+# ---------------------------------------------------------------------------
+# Transcript deduplication
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.asyncio
+async def test_skips_duplicate_event_id(
+    ws: MockWebSocket, session: SpeechEngineSession
+) -> None:
+    """Duplicate transcripts with the same event_id are ignored."""
+    call_count = 0
+
+    async def handler(transcript: typing.List[ConversationMessage]) -> None:
+        nonlocal call_count
+        call_count += 1
+        await asyncio.sleep(0.5)
+
+    session.on(USER_TRANSCRIPT, handler)
+    ws.receive_message(
+        {"type": "user_transcript", "user_transcript": TRANSCRIPT, "event_id": 30}
+    )
+    ws.receive_message(
+        {"type": "user_transcript", "user_transcript": TRANSCRIPT, "event_id": 30}
+    )
+    ws.receive_message(
+        {"type": "user_transcript", "user_transcript": TRANSCRIPT, "event_id": 30}
+    )
+    await _run_until_idle(session, ws)
+
+    assert call_count == 1
+
+
+@pytest.mark.asyncio
+async def test_does_not_skip_different_event_id(
+    ws: MockWebSocket, session: SpeechEngineSession
+) -> None:
+    """Different event_ids are processed normally."""
+    call_count = 0
+
+    async def handler(transcript: typing.List[ConversationMessage]) -> None:
+        nonlocal call_count
+        call_count += 1
+
+    session.on(USER_TRANSCRIPT, handler)
+    ws.receive_message(
+        {"type": "user_transcript", "user_transcript": TRANSCRIPT, "event_id": 1}
+    )
+    ws.receive_message(
+        {"type": "user_transcript", "user_transcript": TRANSCRIPT_2, "event_id": 2}
+    )
+    await _run_until_idle(session, ws)
+
+    assert call_count == 2
+
+
+# ---------------------------------------------------------------------------
+# send_response outside on_transcript
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.asyncio
+async def test_send_response_warns_outside_transcript(
+    ws: MockWebSocket, session: SpeechEngineSession
+) -> None:
+    """send_response before any transcript should warn and not send."""
+    await session.send_response("hello")
+    assert len(ws.sent) == 0
