@@ -18,7 +18,7 @@ _CLOSE_SENTINEL = object()
 
 class MockWebSocket:
     def __init__(self) -> None:
-        self._inbox = asyncio.Queue()  # type: asyncio.Queue[str]
+        self._inbox = asyncio.Queue()  # type: asyncio.Queue[typing.Any]
         self.sent = []  # type: typing.List[str]
         self.closed = False
 

@@ -1,14 +1,11 @@
 """SpeechEngineServer — standalone WebSocket server for Speech Engine."""
 
 import asyncio
-import logging
 import os
 import typing
 
-from .session import SpeechEngineSession, _wire_handlers
+from .session import SpeechEngineSession, _make_log, _wire_handlers
 from .types import WebSocketLike
-
-logger = logging.getLogger("elevenlabs.speech_engine")
 
 
 class SpeechEngineServer:
@@ -44,17 +41,9 @@ class SpeechEngineServer:
         self._api_key = api_key
         self._debug = debug
         self._handlers = handlers
-        self._stop_event = asyncio.Event()
+        self._stop_event = None  # type: typing.Optional[asyncio.Event]
         self._server = None  # type: typing.Any
-
-        if debug:
-            logger.setLevel(logging.DEBUG)
-            if not logger.handlers:
-                handler = logging.StreamHandler()
-                handler.setFormatter(
-                    logging.Formatter("[SpeechEngine] %(message)s")
-                )
-                logger.addHandler(handler)
+        self._log = _make_log(debug)
 
     def handle_connection(self, ws: WebSocketLike) -> SpeechEngineSession:
         """Wrap *ws* in a :class:`SpeechEngineSession` with the server's
@@ -64,7 +53,7 @@ class SpeechEngineServer:
         individual connections.  The returned session's :meth:`run` must
         still be awaited by the caller.
         """
-        logger.debug("creating new session")
+        self._log("creating new session")
         session = SpeechEngineSession(ws, debug=self._debug)
         _wire_handlers(session, self._handlers)
         return session
@@ -83,6 +72,8 @@ class SpeechEngineServer:
                 "environment variable."
             )
 
+        self._stop_event = asyncio.Event()
+
         async def _handler(websocket: typing.Any, *_args: typing.Any) -> None:
             if self._path is not None and websocket.request.path != self._path:
                 await websocket.close(4000, "not found")
@@ -92,7 +83,7 @@ class SpeechEngineServer:
                 "x-elevenlabs-speech-engine-authorization"
             )
             if not header_value:
-                logger.debug(
+                self._log(
                     "rejected connection — missing "
                     "X-Elevenlabs-Speech-Engine-Authorization header"
                 )
@@ -104,11 +95,11 @@ class SpeechEngineServer:
             try:
                 verify_speech_engine_jwt(header_value, api_key)
             except ValueError as e:
-                logger.debug("rejected connection — %s", e)
+                self._log("rejected connection — %s", e)
                 await websocket.close(4001, str(e))
                 return
 
-            logger.debug("verified connection, accepting WebSocket")
+            self._log("verified connection, accepting WebSocket")
             session = self.handle_connection(websocket)
             await session.run()
 
@@ -117,7 +108,7 @@ class SpeechEngineServer:
             "",
             self._port,
         )
-        logger.debug("speech engine server listening on port %d", self._port)
+        self._log("speech engine server listening on port %d", self._port)
         try:
             await self._stop_event.wait()
         finally:
@@ -126,4 +117,5 @@ class SpeechEngineServer:
 
     async def stop(self) -> None:
         """Signal the server to shut down gracefully."""
-        self._stop_event.set()
+        if self._stop_event is not None:
+            self._stop_event.set()
