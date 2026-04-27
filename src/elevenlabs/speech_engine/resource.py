@@ -57,19 +57,10 @@ def verify_speech_engine_jwt(value: str, api_key: str) -> typing.Dict[str, typin
     actual_sig = _base64url_decode(signature_b64)
 
     if not hmac.compare_digest(expected_sig, actual_sig):
-        key_prefix = (
-            f"{trimmed_key[:4]}...{trimmed_key[-4:]}"
-            if len(trimmed_key) > 8
-            else "****"
-        )
-        whitespace_note = (
-            " — key had trailing whitespace that was trimmed"
-            if len(trimmed_key) != len(api_key)
-            else ""
-        )
         raise ValueError(
-            f"Invalid JWT: signature mismatch "
-            f"(API key: {key_prefix}, {len(trimmed_key)} chars{whitespace_note})"
+            "Invalid JWT: signature mismatch — make sure the API key used "
+            "by your Speech Engine server matches the one used to create "
+            "the engine."
         )
 
     if payload.get("iss") != _ISSUER:

@@ -839,6 +839,29 @@ async def test_does_not_skip_different_event_id(
     assert call_count == 2
 
 
+@pytest.mark.asyncio
+async def test_does_not_deduplicate_when_event_id_is_none(
+    ws: MockWebSocket, session: SpeechEngineSession
+) -> None:
+    """Transcripts without event_id should never be deduplicated."""
+    call_count = 0
+
+    async def handler(transcript: typing.List[ConversationMessage]) -> None:
+        nonlocal call_count
+        call_count += 1
+
+    session.on(USER_TRANSCRIPT, handler)
+    ws.receive_message(
+        {"type": "user_transcript", "user_transcript": TRANSCRIPT}
+    )
+    ws.receive_message(
+        {"type": "user_transcript", "user_transcript": TRANSCRIPT_2}
+    )
+    await _run_until_idle(session, ws)
+
+    assert call_count == 2
+
+
 # ---------------------------------------------------------------------------
 # send_response outside on_transcript
 # ---------------------------------------------------------------------------

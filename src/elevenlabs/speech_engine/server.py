@@ -96,7 +96,7 @@ class SpeechEngineServer:
                 verify_speech_engine_jwt(header_value, api_key)
             except ValueError as e:
                 self._log("rejected connection — %s", e)
-                await websocket.close(4001, str(e))
+                await websocket.close(4001, "authorization failed")
                 return
 
             self._log("verified connection, accepting WebSocket")
