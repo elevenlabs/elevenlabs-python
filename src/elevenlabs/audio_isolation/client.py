@@ -5,6 +5,7 @@ import typing
 from .. import core
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.get_audio_isolation_history_response_model import GetAudioIsolationHistoryResponseModel
 from .raw_client import AsyncRawAudioIsolationClient, RawAudioIsolationClient
 from .types.audio_isolation_convert_request_file_format import AudioIsolationConvertRequestFileFormat
 from .types.audio_isolation_stream_request_file_format import AudioIsolationStreamRequestFileFormat
@@ -62,6 +63,84 @@ class AudioIsolationClient:
             audio=audio, file_format=file_format, preview_b_64=preview_b_64, request_options=request_options
         ) as r:
             yield from r.data
+
+    def list(
+        self,
+        *,
+        page_size: typing.Optional[int] = None,
+        page: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetAudioIsolationHistoryResponseModel:
+        """
+        Returns a list of all your audio isolation generations.
+
+        Parameters
+        ----------
+        page_size : typing.Optional[int]
+            How many history items to return at maximum. Defaults to 100.
+
+        page : typing.Optional[int]
+            Page number for search pagination (1-based). Only used when search is provided.
+
+        search : typing.Optional[str]
+            Optional search term used for filtering audio isolation history (title/text).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetAudioIsolationHistoryResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.audio_isolation.list(
+            page_size=1,
+            page=1,
+            search="search",
+        )
+        """
+        _response = self._raw_client.list(
+            page_size=page_size, page=page, search=search, request_options=request_options
+        )
+        return _response.data
+
+    def delete(self, history_item_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Deletes a specific audio isolation history item and the associated media files.
+
+        Parameters
+        ----------
+        history_item_id : str
+            Identifier of the audio isolation history item.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.audio_isolation.delete(
+            history_item_id="history_item_id",
+        )
+        """
+        _response = self._raw_client.delete(history_item_id, request_options=request_options)
+        return _response.data
 
     def stream(
         self,
@@ -143,6 +222,100 @@ class AsyncAudioIsolationClient:
         ) as r:
             async for _chunk in r.data:
                 yield _chunk
+
+    async def list(
+        self,
+        *,
+        page_size: typing.Optional[int] = None,
+        page: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetAudioIsolationHistoryResponseModel:
+        """
+        Returns a list of all your audio isolation generations.
+
+        Parameters
+        ----------
+        page_size : typing.Optional[int]
+            How many history items to return at maximum. Defaults to 100.
+
+        page : typing.Optional[int]
+            Page number for search pagination (1-based). Only used when search is provided.
+
+        search : typing.Optional[str]
+            Optional search term used for filtering audio isolation history (title/text).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetAudioIsolationHistoryResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.audio_isolation.list(
+                page_size=1,
+                page=1,
+                search="search",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.list(
+            page_size=page_size, page=page, search=search, request_options=request_options
+        )
+        return _response.data
+
+    async def delete(self, history_item_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Deletes a specific audio isolation history item and the associated media files.
+
+        Parameters
+        ----------
+        history_item_id : str
+            Identifier of the audio isolation history item.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.audio_isolation.delete(
+                history_item_id="history_item_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete(history_item_id, request_options=request_options)
+        return _response.data
 
     async def stream(
         self,

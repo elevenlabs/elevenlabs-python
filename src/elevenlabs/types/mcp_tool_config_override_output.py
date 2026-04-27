@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .dynamic_variable_assignment import DynamicVariableAssignment
 from .mcp_tool_config_override_output_input_overrides_value import McpToolConfigOverrideOutputInputOverridesValue
+from .pre_tool_speech_mode import PreToolSpeechMode
 from .tool_call_sound_behavior import ToolCallSoundBehavior
 from .tool_call_sound_type import ToolCallSoundType
 from .tool_execution_mode import ToolExecutionMode
@@ -21,7 +22,12 @@ class McpToolConfigOverrideOutput(UncheckedBaseModel):
 
     force_pre_tool_speech: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    If set, overrides the server's force_pre_tool_speech setting for this tool
+    DEPRECATED: use `pre_tool_speech` instead. If set, overrides the server's force_pre_tool_speech setting for this tool.
+    """
+
+    pre_tool_speech: typing.Optional[PreToolSpeechMode] = pydantic.Field(default=None)
+    """
+    If set, overrides the server's pre_tool_speech setting for this tool.
     """
 
     disable_interruptions: typing.Optional[bool] = pydantic.Field(default=None)
@@ -42,6 +48,11 @@ class McpToolConfigOverrideOutput(UncheckedBaseModel):
     execution_mode: typing.Optional[ToolExecutionMode] = pydantic.Field(default=None)
     """
     If set, overrides the server's execution_mode setting for this tool
+    """
+
+    response_timeout_secs: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    If set, overrides the server's response timeout for this MCP tool (seconds).
     """
 
     assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = pydantic.Field(default=None)

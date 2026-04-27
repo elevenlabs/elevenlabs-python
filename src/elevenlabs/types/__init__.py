@@ -53,6 +53,7 @@ if typing.TYPE_CHECKING:
     from .agent_testing_settings import AgentTestingSettings
     from .agent_topic_response_model import AgentTopicResponseModel
     from .agent_transfer import AgentTransfer
+    from .agent_trust_context import AgentTrustContext
     from .agent_version_metadata import AgentVersionMetadata
     from .agent_version_parents import AgentVersionParents
     from .agent_workflow_request_model import AgentWorkflowRequestModel
@@ -111,6 +112,9 @@ if typing.TYPE_CHECKING:
     from .asr_input_format import AsrInputFormat
     from .asr_provider import AsrProvider
     from .asr_quality import AsrQuality
+    from .asset_transcription import AssetTranscription
+    from .asset_transcription_data import AssetTranscriptionData
+    from .asset_transcription_status import AssetTranscriptionStatus
     from .ast_addition_operator_node_input import AstAdditionOperatorNodeInput
     from .ast_addition_operator_node_output import AstAdditionOperatorNodeOutput
     from .ast_and_operator_node_input import AstAndOperatorNodeInput
@@ -202,6 +206,7 @@ if typing.TYPE_CHECKING:
     from .audio_analysis_result import AudioAnalysisResult
     from .audio_analysis_status import AudioAnalysisStatus
     from .audio_format_enum import AudioFormatEnum
+    from .audio_isolation_history_item_response_model import AudioIsolationHistoryItemResponseModel
     from .audio_key_moment import AudioKeyMoment
     from .audio_native_create_project_response_model import AudioNativeCreateProjectResponseModel
     from .audio_native_edit_content_response_model import AudioNativeEditContentResponseModel
@@ -295,7 +300,6 @@ if typing.TYPE_CHECKING:
     from .character_refresh_period import CharacterRefreshPeriod
     from .character_usage_response import CharacterUsageResponse
     from .chat_source_medium import ChatSourceMedium
-    from .check_rental_availability_params import CheckRentalAvailabilityParams
     from .check_service_availability_params import CheckServiceAvailabilityParams
     from .client_event import ClientEvent
     from .client_tool_config_input import ClientToolConfigInput
@@ -499,17 +503,8 @@ if typing.TYPE_CHECKING:
     from .conversation_initiation_client_data_config_input import ConversationInitiationClientDataConfigInput
     from .conversation_initiation_client_data_config_output import ConversationInitiationClientDataConfigOutput
     from .conversation_initiation_client_data_internal import ConversationInitiationClientDataInternal
-    from .conversation_initiation_client_data_internal_dynamic_variables_value import (
-        ConversationInitiationClientDataInternalDynamicVariablesValue,
-    )
     from .conversation_initiation_client_data_request_input import ConversationInitiationClientDataRequestInput
-    from .conversation_initiation_client_data_request_input_dynamic_variables_value import (
-        ConversationInitiationClientDataRequestInputDynamicVariablesValue,
-    )
     from .conversation_initiation_client_data_request_output import ConversationInitiationClientDataRequestOutput
-    from .conversation_initiation_client_data_request_output_dynamic_variables_value import (
-        ConversationInitiationClientDataRequestOutputDynamicVariablesValue,
-    )
     from .conversation_initiation_client_data_webhook import ConversationInitiationClientDataWebhook
     from .conversation_initiation_client_data_webhook_request_headers_value import (
         ConversationInitiationClientDataWebhookRequestHeadersValue,
@@ -518,9 +513,7 @@ if typing.TYPE_CHECKING:
     from .conversation_initiation_source_info import ConversationInitiationSourceInfo
     from .conversation_signed_url_response_model import ConversationSignedUrlResponseModel
     from .conversation_simulation_specification import ConversationSimulationSpecification
-    from .conversation_simulation_specification_dynamic_variables_value import (
-        ConversationSimulationSpecificationDynamicVariablesValue,
-    )
+    from .conversation_source import ConversationSource
     from .conversation_summary_response_model import ConversationSummaryResponseModel
     from .conversation_summary_response_model_status import ConversationSummaryResponseModelStatus
     from .conversation_token_db_model import ConversationTokenDbModel
@@ -561,25 +554,17 @@ if typing.TYPE_CHECKING:
     from .create_private_key_jwt_request_algorithm import CreatePrivateKeyJwtRequestAlgorithm
     from .create_product_params import CreateProductParams
     from .create_pronunciation_dictionary_response_model import CreatePronunciationDictionaryResponseModel
-    from .create_rental_booking_params import CreateRentalBookingParams
-    from .create_rental_service_params import CreateRentalServiceParams
     from .create_response_unit_test_request import CreateResponseUnitTestRequest
-    from .create_response_unit_test_request_dynamic_variables_value import (
-        CreateResponseUnitTestRequestDynamicVariablesValue,
-    )
     from .create_secret_environment_variable_request import CreateSecretEnvironmentVariableRequest
     from .create_service_params import CreateServiceParams
     from .create_simulation_test_request import CreateSimulationTestRequest
-    from .create_simulation_test_request_dynamic_variables_value import CreateSimulationTestRequestDynamicVariablesValue
     from .create_sip_trunk_phone_number_request import CreateSipTrunkPhoneNumberRequest
     from .create_staff_params import CreateStaffParams
     from .create_string_environment_variable_request import CreateStringEnvironmentVariableRequest
     from .create_tool_call_unit_test_request import CreateToolCallUnitTestRequest
-    from .create_tool_call_unit_test_request_dynamic_variables_value import (
-        CreateToolCallUnitTestRequestDynamicVariablesValue,
-    )
     from .create_transcript_request import CreateTranscriptRequest
     from .create_twilio_phone_number_request import CreateTwilioPhoneNumberRequest
+    from .currency import Currency
     from .custom_guardrail_config import CustomGuardrailConfig
     from .custom_guardrail_config_trigger_action import (
         CustomGuardrailConfigTriggerAction,
@@ -617,7 +602,6 @@ if typing.TYPE_CHECKING:
     from .delete_product_params import DeleteProductParams
     from .delete_project_request import DeleteProjectRequest
     from .delete_project_response_model import DeleteProjectResponseModel
-    from .delete_rental_service_params import DeleteRentalServiceParams
     from .delete_sample_response import DeleteSampleResponse
     from .delete_service_params import DeleteServiceParams
     from .delete_staff_params import DeleteStaffParams
@@ -642,6 +626,7 @@ if typing.TYPE_CHECKING:
     from .detected_entity import DetectedEntity
     from .dialogue_input import DialogueInput
     from .dialogue_input_response_model import DialogueInputResponseModel
+    from .dialogue_text_alignment import DialogueTextAlignment
     from .direct_publishing_read_response_model import DirectPublishingReadResponseModel
     from .direct_publishing_read_response_model_display_mode import DirectPublishingReadResponseModelDisplayMode
     from .direct_publishing_read_response_model_genre_item import DirectPublishingReadResponseModelGenreItem
@@ -668,28 +653,16 @@ if typing.TYPE_CHECKING:
     from .dubbing_transcripts_response_model import DubbingTranscriptsResponseModel
     from .dubbing_transcripts_response_model_transcript_format import DubbingTranscriptsResponseModelTranscriptFormat
     from .dynamic_variable_assignment import DynamicVariableAssignment
-    from .dynamic_variable_container_value_type_input import DynamicVariableContainerValueTypeInput
-    from .dynamic_variable_container_value_type_output import DynamicVariableContainerValueTypeOutput
     from .dynamic_variable_nested_value_type_input import DynamicVariableNestedValueTypeInput
     from .dynamic_variable_nested_value_type_output import DynamicVariableNestedValueTypeOutput
     from .dynamic_variable_schema_override import DynamicVariableSchemaOverride
     from .dynamic_variable_update_common_model import DynamicVariableUpdateCommonModel
+    from .dynamic_variable_value_type_input import DynamicVariableValueTypeInput
+    from .dynamic_variable_value_type_output import DynamicVariableValueTypeOutput
     from .dynamic_variables_config_input import DynamicVariablesConfigInput
-    from .dynamic_variables_config_input_dynamic_variable_placeholders_value import (
-        DynamicVariablesConfigInputDynamicVariablePlaceholdersValue,
-    )
     from .dynamic_variables_config_output import DynamicVariablesConfigOutput
-    from .dynamic_variables_config_output_dynamic_variable_placeholders_value import (
-        DynamicVariablesConfigOutputDynamicVariablePlaceholdersValue,
-    )
     from .dynamic_variables_config_workflow_override_input import DynamicVariablesConfigWorkflowOverrideInput
-    from .dynamic_variables_config_workflow_override_input_dynamic_variable_placeholders_value import (
-        DynamicVariablesConfigWorkflowOverrideInputDynamicVariablePlaceholdersValue,
-    )
     from .dynamic_variables_config_workflow_override_output import DynamicVariablesConfigWorkflowOverrideOutput
-    from .dynamic_variables_config_workflow_override_output_dynamic_variable_placeholders_value import (
-        DynamicVariablesConfigWorkflowOverrideOutputDynamicVariablePlaceholdersValue,
-    )
     from .edit_chapter_response_model import EditChapterResponseModel
     from .edit_project_response_model import EditProjectResponseModel
     from .edit_voice_response_model import EditVoiceResponseModel
@@ -722,7 +695,6 @@ if typing.TYPE_CHECKING:
         ExportOptions_Srt,
         ExportOptions_Txt,
     )
-    from .extended_subscription_response_model_currency import ExtendedSubscriptionResponseModelCurrency
     from .extended_subscription_response_model_max_credit_limit_extension import (
         ExtendedSubscriptionResponseModelMaxCreditLimitExtension,
     )
@@ -759,6 +731,8 @@ if typing.TYPE_CHECKING:
     from .get_agent_topics_response_model import GetAgentTopicsResponseModel
     from .get_agents_page_response_model import GetAgentsPageResponseModel
     from .get_analytics_summary_params import GetAnalyticsSummaryParams
+    from .get_appointment_by_confirmation_number_params import GetAppointmentByConfirmationNumberParams
+    from .get_audio_isolation_history_response_model import GetAudioIsolationHistoryResponseModel
     from .get_audio_native_project_settings_response_model import GetAudioNativeProjectSettingsResponseModel
     from .get_booking_page_settings_params import GetBookingPageSettingsParams
     from .get_booking_slug_status_params import GetBookingSlugStatusParams
@@ -856,9 +830,6 @@ if typing.TYPE_CHECKING:
         GetPronunciationDictionaryWithRulesResponseModelRulesItem_Phoneme,
     )
     from .get_response_unit_test_response_model import GetResponseUnitTestResponseModel
-    from .get_response_unit_test_response_model_dynamic_variables_value import (
-        GetResponseUnitTestResponseModelDynamicVariablesValue,
-    )
     from .get_schedule_params import GetScheduleParams
     from .get_secret_dependencies_response_model import GetSecretDependenciesResponseModel
     from .get_secret_dependencies_response_model_dependencies import GetSecretDependenciesResponseModelDependencies
@@ -873,18 +844,12 @@ if typing.TYPE_CHECKING:
         GetSecretDependenciesResponseModelDependenciesZeroItem_Unknown,
     )
     from .get_simulation_test_response_model import GetSimulationTestResponseModel
-    from .get_simulation_test_response_model_dynamic_variables_value import (
-        GetSimulationTestResponseModelDynamicVariablesValue,
-    )
     from .get_speech_history_response import GetSpeechHistoryResponse
     from .get_test_invocations_page_response_model import GetTestInvocationsPageResponseModel
     from .get_test_suite_invocation_response_model import GetTestSuiteInvocationResponseModel
     from .get_tests_page_response_model import GetTestsPageResponseModel
     from .get_tests_summaries_by_ids_response_model import GetTestsSummariesByIdsResponseModel
     from .get_tool_call_unit_test_response_model import GetToolCallUnitTestResponseModel
-    from .get_tool_call_unit_test_response_model_dynamic_variables_value import (
-        GetToolCallUnitTestResponseModelDynamicVariablesValue,
-    )
     from .get_tool_dependent_agents_response_model import GetToolDependentAgentsResponseModel
     from .get_tool_dependent_agents_response_model_agents_item import (
         GetToolDependentAgentsResponseModelAgentsItem,
@@ -904,6 +869,7 @@ if typing.TYPE_CHECKING:
     from .history_item_response import HistoryItemResponse
     from .html_export_options import HtmlExportOptions
     from .http_validation_error import HttpValidationError
+    from .icon import Icon
     from .image_avatar import ImageAvatar
     from .inbound_sip_trunk_config_request_model import InboundSipTrunkConfigRequestModel
     from .initialise_context import InitialiseContext
@@ -974,7 +940,6 @@ if typing.TYPE_CHECKING:
     from .list_locations_params import ListLocationsParams
     from .list_mcp_tools_response_model import ListMcpToolsResponseModel
     from .list_products_params import ListProductsParams
-    from .list_rental_services_params import ListRentalServicesParams
     from .list_response_agent_branch_summary import ListResponseAgentBranchSummary
     from .list_response_meta import ListResponseMeta
     from .list_services_params import ListServicesParams
@@ -1003,6 +968,7 @@ if typing.TYPE_CHECKING:
     from .llm_usage_calculator_response_model import LlmUsageCalculatorResponseModel
     from .llm_usage_input import LlmUsageInput
     from .llm_usage_output import LlmUsageOutput
+    from .manual_source import ManualSource
     from .manual_verification_file_response import ManualVerificationFileResponse
     from .manual_verification_response import ManualVerificationResponse
     from .match_anything_parameter_evaluation_strategy import MatchAnythingParameterEvaluationStrategy
@@ -1042,7 +1008,8 @@ if typing.TYPE_CHECKING:
         McpToolConfigOverrideOutputInputOverridesValue_DynamicVariable,
         McpToolConfigOverrideOutputInputOverridesValue_Llm,
     )
-    from .merging_strategy import MergingStrategy
+    from .memory_entry_search_result import MemoryEntrySearchResult
+    from .memory_entry_search_result_source import MemoryEntrySearchResultSource
     from .message_search_sort_by import MessageSearchSortBy
     from .messages_search_response import MessagesSearchResponse
     from .messages_search_result import MessagesSearchResult
@@ -1057,7 +1024,6 @@ if typing.TYPE_CHECKING:
     from .moderation_guardrail_input import ModerationGuardrailInput
     from .moderation_guardrail_output import ModerationGuardrailOutput
     from .mtls_auth_response import MtlsAuthResponse
-    from .multi_source_config_json import MultiSourceConfigJson
     from .multichannel_speech_to_text_response_model import MultichannelSpeechToTextResponseModel
     from .multipart_music_response import MultipartMusicResponse
     from .music_explore_song_source_context import MusicExploreSongSourceContext
@@ -1083,9 +1049,11 @@ if typing.TYPE_CHECKING:
     from .partial_transcript_payload import PartialTranscriptPayload
     from .patch_workspace_webhook_response_model import PatchWorkspaceWebhookResponseModel
     from .pdf_export_options import PdfExportOptions
+    from .pending_blocks_metadata_model import PendingBlocksMetadataModel
     from .pending_cancellation_response_model import PendingCancellationResponseModel
     from .pending_clip_task import PendingClipTask
     from .pending_clip_task_type import PendingClipTaskType
+    from .pending_external_audios_metadata_model import PendingExternalAudiosMetadataModel
     from .pending_subscription_switch_response_model import PendingSubscriptionSwitchResponseModel
     from .pending_subscription_switch_response_model_next_tier import PendingSubscriptionSwitchResponseModelNextTier
     from .permission_type import PermissionType
@@ -1126,6 +1094,7 @@ if typing.TYPE_CHECKING:
     from .post_dial_digits_dynamic_variable import PostDialDigitsDynamicVariable
     from .post_dial_digits_static import PostDialDigitsStatic
     from .post_workspace_secret_response_model import PostWorkspaceSecretResponseModel
+    from .pre_tool_speech_mode import PreToolSpeechMode
     from .preview_audio_db_model import PreviewAudioDbModel
     from .privacy_config_input import PrivacyConfigInput
     from .privacy_config_output import PrivacyConfigOutput
@@ -1292,7 +1261,6 @@ if typing.TYPE_CHECKING:
     from .response_filter import ResponseFilter
     from .response_filter_mode import ResponseFilterMode
     from .response_unit_test_model import ResponseUnitTestModel
-    from .response_unit_test_model_dynamic_variables_value import ResponseUnitTestModelDynamicVariablesValue
     from .retry_trigger_action import RetryTriggerAction
     from .review_response_model import ReviewResponseModel
     from .review_response_model_reject_reasons_item import ReviewResponseModelRejectReasonsItem
@@ -1350,7 +1318,6 @@ if typing.TYPE_CHECKING:
     from .similar_voice import SimilarVoice
     from .similar_voices_for_speaker_response import SimilarVoicesForSpeakerResponse
     from .simulation_test_model import SimulationTestModel
-    from .simulation_test_model_dynamic_variables_value import SimulationTestModelDynamicVariablesValue
     from .simulation_tool_mock_behavior_config import SimulationToolMockBehaviorConfig
     from .single_test_run_request_model import SingleTestRunRequestModel
     from .single_use_token_response_model import SingleUseTokenResponseModel
@@ -1371,8 +1338,6 @@ if typing.TYPE_CHECKING:
     from .song_section import SongSection
     from .song_source_context import SongSourceContext
     from .sort_direction import SortDirection
-    from .source_config_json import SourceConfigJson
-    from .source_retrieval_config import SourceRetrievalConfig
     from .speaker_audio_response_model import SpeakerAudioResponseModel
     from .speaker_created_response import SpeakerCreatedResponse
     from .speaker_response_model import SpeakerResponseModel
@@ -1405,7 +1370,6 @@ if typing.TYPE_CHECKING:
     from .studio_text_style_shadow_model import StudioTextStyleShadowModel
     from .subscription import Subscription
     from .subscription_response import SubscriptionResponse
-    from .subscription_response_model_currency import SubscriptionResponseModelCurrency
     from .subscription_response_model_max_credit_limit_extension import SubscriptionResponseModelMaxCreditLimitExtension
     from .subscription_status_type import SubscriptionStatusType
     from .suggested_audio_tag import SuggestedAudioTag
@@ -1448,6 +1412,15 @@ if typing.TYPE_CHECKING:
     from .test_type import TestType
     from .tests_feature_usage_common_model import TestsFeatureUsageCommonModel
     from .text_normalisation_type import TextNormalisationType
+    from .text_to_dialogue_websocket_apply_text_normalization_enum import (
+        TextToDialogueWebsocketApplyTextNormalizationEnum,
+    )
+    from .text_to_dialogue_websocket_audio_chunk import TextToDialogueWebsocketAudioChunk
+    from .text_to_dialogue_websocket_client_message import TextToDialogueWebsocketClientMessage
+    from .text_to_dialogue_websocket_error import TextToDialogueWebsocketError
+    from .text_to_dialogue_websocket_final import TextToDialogueWebsocketFinal
+    from .text_to_dialogue_websocket_output_format_enum import TextToDialogueWebsocketOutputFormatEnum
+    from .text_to_dialogue_websocket_voice_input import TextToDialogueWebsocketVoiceInput
     from .text_to_speech_apply_text_normalization_enum import TextToSpeechApplyTextNormalizationEnum
     from .text_to_speech_output_format_enum import TextToSpeechOutputFormatEnum
     from .text_to_speech_request import TextToSpeechRequest
@@ -1463,8 +1436,8 @@ if typing.TYPE_CHECKING:
     from .tool_call_sound_behavior import ToolCallSoundBehavior
     from .tool_call_sound_type import ToolCallSoundType
     from .tool_call_unit_test_model import ToolCallUnitTestModel
-    from .tool_call_unit_test_model_dynamic_variables_value import ToolCallUnitTestModelDynamicVariablesValue
     from .tool_error_handling_mode import ToolErrorHandlingMode
+    from .tool_execution import ToolExecution
     from .tool_execution_mode import ToolExecutionMode
     from .tool_execution_response_model import ToolExecutionResponseModel
     from .tool_execution_response_model_tool_call_details import (
@@ -1474,6 +1447,7 @@ if typing.TYPE_CHECKING:
         ToolExecutionResponseModelToolCallDetails_Mcp,
         ToolExecutionResponseModelToolCallDetails_Webhook,
     )
+    from .tool_execution_task_support import ToolExecutionTaskSupport
     from .tool_mock_config import ToolMockConfig
     from .tool_request_model import ToolRequestModel
     from .tool_request_model_tool_config import (
@@ -1570,19 +1544,11 @@ if typing.TYPE_CHECKING:
     from .update_product_params import UpdateProductParams
     from .update_project_request import UpdateProjectRequest
     from .update_pronunciation_dictionaries_request import UpdatePronunciationDictionariesRequest
-    from .update_rental_service_params import UpdateRentalServiceParams
     from .update_response_unit_test_request import UpdateResponseUnitTestRequest
-    from .update_response_unit_test_request_dynamic_variables_value import (
-        UpdateResponseUnitTestRequestDynamicVariablesValue,
-    )
     from .update_service_params import UpdateServiceParams
     from .update_simulation_test_request import UpdateSimulationTestRequest
-    from .update_simulation_test_request_dynamic_variables_value import UpdateSimulationTestRequestDynamicVariablesValue
     from .update_staff_params import UpdateStaffParams
     from .update_tool_call_unit_test_request import UpdateToolCallUnitTestRequest
-    from .update_tool_call_unit_test_request_dynamic_variables_value import (
-        UpdateToolCallUnitTestRequestDynamicVariablesValue,
-    )
     from .update_workspace_member_response_model import UpdateWorkspaceMemberResponseModel
     from .url_avatar import UrlAvatar
     from .usage_aggregation_interval import UsageAggregationInterval
@@ -1886,6 +1852,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentTestingSettings": ".agent_testing_settings",
     "AgentTopicResponseModel": ".agent_topic_response_model",
     "AgentTransfer": ".agent_transfer",
+    "AgentTrustContext": ".agent_trust_context",
     "AgentVersionMetadata": ".agent_version_metadata",
     "AgentVersionParents": ".agent_version_parents",
     "AgentWorkflowRequestModel": ".agent_workflow_request_model",
@@ -1934,6 +1901,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AsrInputFormat": ".asr_input_format",
     "AsrProvider": ".asr_provider",
     "AsrQuality": ".asr_quality",
+    "AssetTranscription": ".asset_transcription",
+    "AssetTranscriptionData": ".asset_transcription_data",
+    "AssetTranscriptionStatus": ".asset_transcription_status",
     "AstAdditionOperatorNodeInput": ".ast_addition_operator_node_input",
     "AstAdditionOperatorNodeOutput": ".ast_addition_operator_node_output",
     "AstAndOperatorNodeInput": ".ast_and_operator_node_input",
@@ -2021,6 +1991,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AudioAnalysisResult": ".audio_analysis_result",
     "AudioAnalysisStatus": ".audio_analysis_status",
     "AudioFormatEnum": ".audio_format_enum",
+    "AudioIsolationHistoryItemResponseModel": ".audio_isolation_history_item_response_model",
     "AudioKeyMoment": ".audio_key_moment",
     "AudioNativeCreateProjectResponseModel": ".audio_native_create_project_response_model",
     "AudioNativeEditContentResponseModel": ".audio_native_edit_content_response_model",
@@ -2106,7 +2077,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CharacterRefreshPeriod": ".character_refresh_period",
     "CharacterUsageResponse": ".character_usage_response",
     "ChatSourceMedium": ".chat_source_medium",
-    "CheckRentalAvailabilityParams": ".check_rental_availability_params",
     "CheckServiceAvailabilityParams": ".check_service_availability_params",
     "ClientEvent": ".client_event",
     "ClientToolConfigInput": ".client_tool_config_input",
@@ -2248,18 +2218,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationInitiationClientDataConfigInput": ".conversation_initiation_client_data_config_input",
     "ConversationInitiationClientDataConfigOutput": ".conversation_initiation_client_data_config_output",
     "ConversationInitiationClientDataInternal": ".conversation_initiation_client_data_internal",
-    "ConversationInitiationClientDataInternalDynamicVariablesValue": ".conversation_initiation_client_data_internal_dynamic_variables_value",
     "ConversationInitiationClientDataRequestInput": ".conversation_initiation_client_data_request_input",
-    "ConversationInitiationClientDataRequestInputDynamicVariablesValue": ".conversation_initiation_client_data_request_input_dynamic_variables_value",
     "ConversationInitiationClientDataRequestOutput": ".conversation_initiation_client_data_request_output",
-    "ConversationInitiationClientDataRequestOutputDynamicVariablesValue": ".conversation_initiation_client_data_request_output_dynamic_variables_value",
     "ConversationInitiationClientDataWebhook": ".conversation_initiation_client_data_webhook",
     "ConversationInitiationClientDataWebhookRequestHeadersValue": ".conversation_initiation_client_data_webhook_request_headers_value",
     "ConversationInitiationSource": ".conversation_initiation_source",
     "ConversationInitiationSourceInfo": ".conversation_initiation_source_info",
     "ConversationSignedUrlResponseModel": ".conversation_signed_url_response_model",
     "ConversationSimulationSpecification": ".conversation_simulation_specification",
-    "ConversationSimulationSpecificationDynamicVariablesValue": ".conversation_simulation_specification_dynamic_variables_value",
+    "ConversationSource": ".conversation_source",
     "ConversationSummaryResponseModel": ".conversation_summary_response_model",
     "ConversationSummaryResponseModelStatus": ".conversation_summary_response_model_status",
     "ConversationTokenDbModel": ".conversation_token_db_model",
@@ -2296,21 +2263,17 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreatePrivateKeyJwtRequestAlgorithm": ".create_private_key_jwt_request_algorithm",
     "CreateProductParams": ".create_product_params",
     "CreatePronunciationDictionaryResponseModel": ".create_pronunciation_dictionary_response_model",
-    "CreateRentalBookingParams": ".create_rental_booking_params",
-    "CreateRentalServiceParams": ".create_rental_service_params",
     "CreateResponseUnitTestRequest": ".create_response_unit_test_request",
-    "CreateResponseUnitTestRequestDynamicVariablesValue": ".create_response_unit_test_request_dynamic_variables_value",
     "CreateSecretEnvironmentVariableRequest": ".create_secret_environment_variable_request",
     "CreateServiceParams": ".create_service_params",
     "CreateSimulationTestRequest": ".create_simulation_test_request",
-    "CreateSimulationTestRequestDynamicVariablesValue": ".create_simulation_test_request_dynamic_variables_value",
     "CreateSipTrunkPhoneNumberRequest": ".create_sip_trunk_phone_number_request",
     "CreateStaffParams": ".create_staff_params",
     "CreateStringEnvironmentVariableRequest": ".create_string_environment_variable_request",
     "CreateToolCallUnitTestRequest": ".create_tool_call_unit_test_request",
-    "CreateToolCallUnitTestRequestDynamicVariablesValue": ".create_tool_call_unit_test_request_dynamic_variables_value",
     "CreateTranscriptRequest": ".create_transcript_request",
     "CreateTwilioPhoneNumberRequest": ".create_twilio_phone_number_request",
+    "Currency": ".currency",
     "CustomGuardrailConfig": ".custom_guardrail_config",
     "CustomGuardrailConfigTriggerAction": ".custom_guardrail_config_trigger_action",
     "CustomGuardrailConfigTriggerAction_EndCall": ".custom_guardrail_config_trigger_action",
@@ -2346,7 +2309,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DeleteProductParams": ".delete_product_params",
     "DeleteProjectRequest": ".delete_project_request",
     "DeleteProjectResponseModel": ".delete_project_response_model",
-    "DeleteRentalServiceParams": ".delete_rental_service_params",
     "DeleteSampleResponse": ".delete_sample_response",
     "DeleteServiceParams": ".delete_service_params",
     "DeleteStaffParams": ".delete_staff_params",
@@ -2371,6 +2333,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DetectedEntity": ".detected_entity",
     "DialogueInput": ".dialogue_input",
     "DialogueInputResponseModel": ".dialogue_input_response_model",
+    "DialogueTextAlignment": ".dialogue_text_alignment",
     "DirectPublishingReadResponseModel": ".direct_publishing_read_response_model",
     "DirectPublishingReadResponseModelDisplayMode": ".direct_publishing_read_response_model_display_mode",
     "DirectPublishingReadResponseModelGenreItem": ".direct_publishing_read_response_model_genre_item",
@@ -2397,20 +2360,16 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DubbingTranscriptsResponseModel": ".dubbing_transcripts_response_model",
     "DubbingTranscriptsResponseModelTranscriptFormat": ".dubbing_transcripts_response_model_transcript_format",
     "DynamicVariableAssignment": ".dynamic_variable_assignment",
-    "DynamicVariableContainerValueTypeInput": ".dynamic_variable_container_value_type_input",
-    "DynamicVariableContainerValueTypeOutput": ".dynamic_variable_container_value_type_output",
     "DynamicVariableNestedValueTypeInput": ".dynamic_variable_nested_value_type_input",
     "DynamicVariableNestedValueTypeOutput": ".dynamic_variable_nested_value_type_output",
     "DynamicVariableSchemaOverride": ".dynamic_variable_schema_override",
     "DynamicVariableUpdateCommonModel": ".dynamic_variable_update_common_model",
+    "DynamicVariableValueTypeInput": ".dynamic_variable_value_type_input",
+    "DynamicVariableValueTypeOutput": ".dynamic_variable_value_type_output",
     "DynamicVariablesConfigInput": ".dynamic_variables_config_input",
-    "DynamicVariablesConfigInputDynamicVariablePlaceholdersValue": ".dynamic_variables_config_input_dynamic_variable_placeholders_value",
     "DynamicVariablesConfigOutput": ".dynamic_variables_config_output",
-    "DynamicVariablesConfigOutputDynamicVariablePlaceholdersValue": ".dynamic_variables_config_output_dynamic_variable_placeholders_value",
     "DynamicVariablesConfigWorkflowOverrideInput": ".dynamic_variables_config_workflow_override_input",
-    "DynamicVariablesConfigWorkflowOverrideInputDynamicVariablePlaceholdersValue": ".dynamic_variables_config_workflow_override_input_dynamic_variable_placeholders_value",
     "DynamicVariablesConfigWorkflowOverrideOutput": ".dynamic_variables_config_workflow_override_output",
-    "DynamicVariablesConfigWorkflowOverrideOutputDynamicVariablePlaceholdersValue": ".dynamic_variables_config_workflow_override_output_dynamic_variable_placeholders_value",
     "EditChapterResponseModel": ".edit_chapter_response_model",
     "EditProjectResponseModel": ".edit_project_response_model",
     "EditVoiceResponseModel": ".edit_voice_response_model",
@@ -2441,7 +2400,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ExportOptions_SegmentedJson": ".export_options",
     "ExportOptions_Srt": ".export_options",
     "ExportOptions_Txt": ".export_options",
-    "ExtendedSubscriptionResponseModelCurrency": ".extended_subscription_response_model_currency",
     "ExtendedSubscriptionResponseModelMaxCreditLimitExtension": ".extended_subscription_response_model_max_credit_limit_extension",
     "ExtendedSubscriptionResponseModelPendingChange": ".extended_subscription_response_model_pending_change",
     "FeatureStatusCommonModel": ".feature_status_common_model",
@@ -2474,6 +2432,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetAgentTopicsResponseModel": ".get_agent_topics_response_model",
     "GetAgentsPageResponseModel": ".get_agents_page_response_model",
     "GetAnalyticsSummaryParams": ".get_analytics_summary_params",
+    "GetAppointmentByConfirmationNumberParams": ".get_appointment_by_confirmation_number_params",
+    "GetAudioIsolationHistoryResponseModel": ".get_audio_isolation_history_response_model",
     "GetAudioNativeProjectSettingsResponseModel": ".get_audio_native_project_settings_response_model",
     "GetBookingPageSettingsParams": ".get_booking_page_settings_params",
     "GetBookingSlugStatusParams": ".get_booking_slug_status_params",
@@ -2545,7 +2505,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetPronunciationDictionaryWithRulesResponseModelRulesItem_Alias": ".get_pronunciation_dictionary_with_rules_response_model_rules_item",
     "GetPronunciationDictionaryWithRulesResponseModelRulesItem_Phoneme": ".get_pronunciation_dictionary_with_rules_response_model_rules_item",
     "GetResponseUnitTestResponseModel": ".get_response_unit_test_response_model",
-    "GetResponseUnitTestResponseModelDynamicVariablesValue": ".get_response_unit_test_response_model_dynamic_variables_value",
     "GetScheduleParams": ".get_schedule_params",
     "GetSecretDependenciesResponseModel": ".get_secret_dependencies_response_model",
     "GetSecretDependenciesResponseModelDependencies": ".get_secret_dependencies_response_model_dependencies",
@@ -2556,14 +2515,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetSecretDependenciesResponseModelDependenciesZeroItem_Available": ".get_secret_dependencies_response_model_dependencies_zero_item",
     "GetSecretDependenciesResponseModelDependenciesZeroItem_Unknown": ".get_secret_dependencies_response_model_dependencies_zero_item",
     "GetSimulationTestResponseModel": ".get_simulation_test_response_model",
-    "GetSimulationTestResponseModelDynamicVariablesValue": ".get_simulation_test_response_model_dynamic_variables_value",
     "GetSpeechHistoryResponse": ".get_speech_history_response",
     "GetTestInvocationsPageResponseModel": ".get_test_invocations_page_response_model",
     "GetTestSuiteInvocationResponseModel": ".get_test_suite_invocation_response_model",
     "GetTestsPageResponseModel": ".get_tests_page_response_model",
     "GetTestsSummariesByIdsResponseModel": ".get_tests_summaries_by_ids_response_model",
     "GetToolCallUnitTestResponseModel": ".get_tool_call_unit_test_response_model",
-    "GetToolCallUnitTestResponseModelDynamicVariablesValue": ".get_tool_call_unit_test_response_model_dynamic_variables_value",
     "GetToolDependentAgentsResponseModel": ".get_tool_dependent_agents_response_model",
     "GetToolDependentAgentsResponseModelAgentsItem": ".get_tool_dependent_agents_response_model_agents_item",
     "GetToolDependentAgentsResponseModelAgentsItem_Available": ".get_tool_dependent_agents_response_model_agents_item",
@@ -2581,6 +2538,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "HistoryItemResponse": ".history_item_response",
     "HtmlExportOptions": ".html_export_options",
     "HttpValidationError": ".http_validation_error",
+    "Icon": ".icon",
     "ImageAvatar": ".image_avatar",
     "InboundSipTrunkConfigRequestModel": ".inbound_sip_trunk_config_request_model",
     "InitialiseContext": ".initialise_context",
@@ -2643,7 +2601,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListLocationsParams": ".list_locations_params",
     "ListMcpToolsResponseModel": ".list_mcp_tools_response_model",
     "ListProductsParams": ".list_products_params",
-    "ListRentalServicesParams": ".list_rental_services_params",
     "ListResponseAgentBranchSummary": ".list_response_agent_branch_summary",
     "ListResponseMeta": ".list_response_meta",
     "ListServicesParams": ".list_services_params",
@@ -2672,6 +2629,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LlmUsageCalculatorResponseModel": ".llm_usage_calculator_response_model",
     "LlmUsageInput": ".llm_usage_input",
     "LlmUsageOutput": ".llm_usage_output",
+    "ManualSource": ".manual_source",
     "ManualVerificationFileResponse": ".manual_verification_file_response",
     "ManualVerificationResponse": ".manual_verification_response",
     "MatchAnythingParameterEvaluationStrategy": ".match_anything_parameter_evaluation_strategy",
@@ -2705,7 +2663,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "McpToolConfigOverrideOutputInputOverridesValue_Constant": ".mcp_tool_config_override_output_input_overrides_value",
     "McpToolConfigOverrideOutputInputOverridesValue_DynamicVariable": ".mcp_tool_config_override_output_input_overrides_value",
     "McpToolConfigOverrideOutputInputOverridesValue_Llm": ".mcp_tool_config_override_output_input_overrides_value",
-    "MergingStrategy": ".merging_strategy",
+    "MemoryEntrySearchResult": ".memory_entry_search_result",
+    "MemoryEntrySearchResultSource": ".memory_entry_search_result_source",
     "MessageSearchSortBy": ".message_search_sort_by",
     "MessagesSearchResponse": ".messages_search_response",
     "MessagesSearchResult": ".messages_search_result",
@@ -2720,7 +2679,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ModerationGuardrailInput": ".moderation_guardrail_input",
     "ModerationGuardrailOutput": ".moderation_guardrail_output",
     "MtlsAuthResponse": ".mtls_auth_response",
-    "MultiSourceConfigJson": ".multi_source_config_json",
     "MultichannelSpeechToTextResponseModel": ".multichannel_speech_to_text_response_model",
     "MultipartMusicResponse": ".multipart_music_response",
     "MusicExploreSongSourceContext": ".music_explore_song_source_context",
@@ -2746,9 +2704,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PartialTranscriptPayload": ".partial_transcript_payload",
     "PatchWorkspaceWebhookResponseModel": ".patch_workspace_webhook_response_model",
     "PdfExportOptions": ".pdf_export_options",
+    "PendingBlocksMetadataModel": ".pending_blocks_metadata_model",
     "PendingCancellationResponseModel": ".pending_cancellation_response_model",
     "PendingClipTask": ".pending_clip_task",
     "PendingClipTaskType": ".pending_clip_task_type",
+    "PendingExternalAudiosMetadataModel": ".pending_external_audios_metadata_model",
     "PendingSubscriptionSwitchResponseModel": ".pending_subscription_switch_response_model",
     "PendingSubscriptionSwitchResponseModelNextTier": ".pending_subscription_switch_response_model_next_tier",
     "PermissionType": ".permission_type",
@@ -2783,6 +2743,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PostDialDigitsDynamicVariable": ".post_dial_digits_dynamic_variable",
     "PostDialDigitsStatic": ".post_dial_digits_static",
     "PostWorkspaceSecretResponseModel": ".post_workspace_secret_response_model",
+    "PreToolSpeechMode": ".pre_tool_speech_mode",
     "PreviewAudioDbModel": ".preview_audio_db_model",
     "PrivacyConfigInput": ".privacy_config_input",
     "PrivacyConfigOutput": ".privacy_config_output",
@@ -2923,7 +2884,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ResponseFilter": ".response_filter",
     "ResponseFilterMode": ".response_filter_mode",
     "ResponseUnitTestModel": ".response_unit_test_model",
-    "ResponseUnitTestModelDynamicVariablesValue": ".response_unit_test_model_dynamic_variables_value",
     "RetryTriggerAction": ".retry_trigger_action",
     "ReviewResponseModel": ".review_response_model",
     "ReviewResponseModelRejectReasonsItem": ".review_response_model_reject_reasons_item",
@@ -2981,7 +2941,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SimilarVoice": ".similar_voice",
     "SimilarVoicesForSpeakerResponse": ".similar_voices_for_speaker_response",
     "SimulationTestModel": ".simulation_test_model",
-    "SimulationTestModelDynamicVariablesValue": ".simulation_test_model_dynamic_variables_value",
     "SimulationToolMockBehaviorConfig": ".simulation_tool_mock_behavior_config",
     "SingleTestRunRequestModel": ".single_test_run_request_model",
     "SingleUseTokenResponseModel": ".single_use_token_response_model",
@@ -3002,8 +2961,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SongSection": ".song_section",
     "SongSourceContext": ".song_source_context",
     "SortDirection": ".sort_direction",
-    "SourceConfigJson": ".source_config_json",
-    "SourceRetrievalConfig": ".source_retrieval_config",
     "SpeakerAudioResponseModel": ".speaker_audio_response_model",
     "SpeakerCreatedResponse": ".speaker_created_response",
     "SpeakerResponseModel": ".speaker_response_model",
@@ -3034,7 +2991,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "StudioTextStyleShadowModel": ".studio_text_style_shadow_model",
     "Subscription": ".subscription",
     "SubscriptionResponse": ".subscription_response",
-    "SubscriptionResponseModelCurrency": ".subscription_response_model_currency",
     "SubscriptionResponseModelMaxCreditLimitExtension": ".subscription_response_model_max_credit_limit_extension",
     "SubscriptionStatusType": ".subscription_status_type",
     "SuggestedAudioTag": ".suggested_audio_tag",
@@ -3073,6 +3029,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TestType": ".test_type",
     "TestsFeatureUsageCommonModel": ".tests_feature_usage_common_model",
     "TextNormalisationType": ".text_normalisation_type",
+    "TextToDialogueWebsocketApplyTextNormalizationEnum": ".text_to_dialogue_websocket_apply_text_normalization_enum",
+    "TextToDialogueWebsocketAudioChunk": ".text_to_dialogue_websocket_audio_chunk",
+    "TextToDialogueWebsocketClientMessage": ".text_to_dialogue_websocket_client_message",
+    "TextToDialogueWebsocketError": ".text_to_dialogue_websocket_error",
+    "TextToDialogueWebsocketFinal": ".text_to_dialogue_websocket_final",
+    "TextToDialogueWebsocketOutputFormatEnum": ".text_to_dialogue_websocket_output_format_enum",
+    "TextToDialogueWebsocketVoiceInput": ".text_to_dialogue_websocket_voice_input",
     "TextToSpeechApplyTextNormalizationEnum": ".text_to_speech_apply_text_normalization_enum",
     "TextToSpeechOutputFormatEnum": ".text_to_speech_output_format_enum",
     "TextToSpeechRequest": ".text_to_speech_request",
@@ -3088,8 +3051,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ToolCallSoundBehavior": ".tool_call_sound_behavior",
     "ToolCallSoundType": ".tool_call_sound_type",
     "ToolCallUnitTestModel": ".tool_call_unit_test_model",
-    "ToolCallUnitTestModelDynamicVariablesValue": ".tool_call_unit_test_model_dynamic_variables_value",
     "ToolErrorHandlingMode": ".tool_error_handling_mode",
+    "ToolExecution": ".tool_execution",
     "ToolExecutionMode": ".tool_execution_mode",
     "ToolExecutionResponseModel": ".tool_execution_response_model",
     "ToolExecutionResponseModelToolCallDetails": ".tool_execution_response_model_tool_call_details",
@@ -3097,6 +3060,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ToolExecutionResponseModelToolCallDetails_Client": ".tool_execution_response_model_tool_call_details",
     "ToolExecutionResponseModelToolCallDetails_Mcp": ".tool_execution_response_model_tool_call_details",
     "ToolExecutionResponseModelToolCallDetails_Webhook": ".tool_execution_response_model_tool_call_details",
+    "ToolExecutionTaskSupport": ".tool_execution_task_support",
     "ToolMockConfig": ".tool_mock_config",
     "ToolRequestModel": ".tool_request_model",
     "ToolRequestModelToolConfig": ".tool_request_model_tool_config",
@@ -3183,15 +3147,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateProductParams": ".update_product_params",
     "UpdateProjectRequest": ".update_project_request",
     "UpdatePronunciationDictionariesRequest": ".update_pronunciation_dictionaries_request",
-    "UpdateRentalServiceParams": ".update_rental_service_params",
     "UpdateResponseUnitTestRequest": ".update_response_unit_test_request",
-    "UpdateResponseUnitTestRequestDynamicVariablesValue": ".update_response_unit_test_request_dynamic_variables_value",
     "UpdateServiceParams": ".update_service_params",
     "UpdateSimulationTestRequest": ".update_simulation_test_request",
-    "UpdateSimulationTestRequestDynamicVariablesValue": ".update_simulation_test_request_dynamic_variables_value",
     "UpdateStaffParams": ".update_staff_params",
     "UpdateToolCallUnitTestRequest": ".update_tool_call_unit_test_request",
-    "UpdateToolCallUnitTestRequestDynamicVariablesValue": ".update_tool_call_unit_test_request_dynamic_variables_value",
     "UpdateWorkspaceMemberResponseModel": ".update_workspace_member_response_model",
     "UrlAvatar": ".url_avatar",
     "UsageAggregationInterval": ".usage_aggregation_interval",
@@ -3475,6 +3435,7 @@ __all__ = [
     "AgentTestingSettings",
     "AgentTopicResponseModel",
     "AgentTransfer",
+    "AgentTrustContext",
     "AgentVersionMetadata",
     "AgentVersionParents",
     "AgentWorkflowRequestModel",
@@ -3523,6 +3484,9 @@ __all__ = [
     "AsrInputFormat",
     "AsrProvider",
     "AsrQuality",
+    "AssetTranscription",
+    "AssetTranscriptionData",
+    "AssetTranscriptionStatus",
     "AstAdditionOperatorNodeInput",
     "AstAdditionOperatorNodeOutput",
     "AstAndOperatorNodeInput",
@@ -3610,6 +3574,7 @@ __all__ = [
     "AudioAnalysisResult",
     "AudioAnalysisStatus",
     "AudioFormatEnum",
+    "AudioIsolationHistoryItemResponseModel",
     "AudioKeyMoment",
     "AudioNativeCreateProjectResponseModel",
     "AudioNativeEditContentResponseModel",
@@ -3695,7 +3660,6 @@ __all__ = [
     "CharacterRefreshPeriod",
     "CharacterUsageResponse",
     "ChatSourceMedium",
-    "CheckRentalAvailabilityParams",
     "CheckServiceAvailabilityParams",
     "ClientEvent",
     "ClientToolConfigInput",
@@ -3837,18 +3801,15 @@ __all__ = [
     "ConversationInitiationClientDataConfigInput",
     "ConversationInitiationClientDataConfigOutput",
     "ConversationInitiationClientDataInternal",
-    "ConversationInitiationClientDataInternalDynamicVariablesValue",
     "ConversationInitiationClientDataRequestInput",
-    "ConversationInitiationClientDataRequestInputDynamicVariablesValue",
     "ConversationInitiationClientDataRequestOutput",
-    "ConversationInitiationClientDataRequestOutputDynamicVariablesValue",
     "ConversationInitiationClientDataWebhook",
     "ConversationInitiationClientDataWebhookRequestHeadersValue",
     "ConversationInitiationSource",
     "ConversationInitiationSourceInfo",
     "ConversationSignedUrlResponseModel",
     "ConversationSimulationSpecification",
-    "ConversationSimulationSpecificationDynamicVariablesValue",
+    "ConversationSource",
     "ConversationSummaryResponseModel",
     "ConversationSummaryResponseModelStatus",
     "ConversationTokenDbModel",
@@ -3885,21 +3846,17 @@ __all__ = [
     "CreatePrivateKeyJwtRequestAlgorithm",
     "CreateProductParams",
     "CreatePronunciationDictionaryResponseModel",
-    "CreateRentalBookingParams",
-    "CreateRentalServiceParams",
     "CreateResponseUnitTestRequest",
-    "CreateResponseUnitTestRequestDynamicVariablesValue",
     "CreateSecretEnvironmentVariableRequest",
     "CreateServiceParams",
     "CreateSimulationTestRequest",
-    "CreateSimulationTestRequestDynamicVariablesValue",
     "CreateSipTrunkPhoneNumberRequest",
     "CreateStaffParams",
     "CreateStringEnvironmentVariableRequest",
     "CreateToolCallUnitTestRequest",
-    "CreateToolCallUnitTestRequestDynamicVariablesValue",
     "CreateTranscriptRequest",
     "CreateTwilioPhoneNumberRequest",
+    "Currency",
     "CustomGuardrailConfig",
     "CustomGuardrailConfigTriggerAction",
     "CustomGuardrailConfigTriggerAction_EndCall",
@@ -3935,7 +3892,6 @@ __all__ = [
     "DeleteProductParams",
     "DeleteProjectRequest",
     "DeleteProjectResponseModel",
-    "DeleteRentalServiceParams",
     "DeleteSampleResponse",
     "DeleteServiceParams",
     "DeleteStaffParams",
@@ -3960,6 +3916,7 @@ __all__ = [
     "DetectedEntity",
     "DialogueInput",
     "DialogueInputResponseModel",
+    "DialogueTextAlignment",
     "DirectPublishingReadResponseModel",
     "DirectPublishingReadResponseModelDisplayMode",
     "DirectPublishingReadResponseModelGenreItem",
@@ -3986,20 +3943,16 @@ __all__ = [
     "DubbingTranscriptsResponseModel",
     "DubbingTranscriptsResponseModelTranscriptFormat",
     "DynamicVariableAssignment",
-    "DynamicVariableContainerValueTypeInput",
-    "DynamicVariableContainerValueTypeOutput",
     "DynamicVariableNestedValueTypeInput",
     "DynamicVariableNestedValueTypeOutput",
     "DynamicVariableSchemaOverride",
     "DynamicVariableUpdateCommonModel",
+    "DynamicVariableValueTypeInput",
+    "DynamicVariableValueTypeOutput",
     "DynamicVariablesConfigInput",
-    "DynamicVariablesConfigInputDynamicVariablePlaceholdersValue",
     "DynamicVariablesConfigOutput",
-    "DynamicVariablesConfigOutputDynamicVariablePlaceholdersValue",
     "DynamicVariablesConfigWorkflowOverrideInput",
-    "DynamicVariablesConfigWorkflowOverrideInputDynamicVariablePlaceholdersValue",
     "DynamicVariablesConfigWorkflowOverrideOutput",
-    "DynamicVariablesConfigWorkflowOverrideOutputDynamicVariablePlaceholdersValue",
     "EditChapterResponseModel",
     "EditProjectResponseModel",
     "EditVoiceResponseModel",
@@ -4030,7 +3983,6 @@ __all__ = [
     "ExportOptions_SegmentedJson",
     "ExportOptions_Srt",
     "ExportOptions_Txt",
-    "ExtendedSubscriptionResponseModelCurrency",
     "ExtendedSubscriptionResponseModelMaxCreditLimitExtension",
     "ExtendedSubscriptionResponseModelPendingChange",
     "FeatureStatusCommonModel",
@@ -4063,6 +4015,8 @@ __all__ = [
     "GetAgentTopicsResponseModel",
     "GetAgentsPageResponseModel",
     "GetAnalyticsSummaryParams",
+    "GetAppointmentByConfirmationNumberParams",
+    "GetAudioIsolationHistoryResponseModel",
     "GetAudioNativeProjectSettingsResponseModel",
     "GetBookingPageSettingsParams",
     "GetBookingSlugStatusParams",
@@ -4134,7 +4088,6 @@ __all__ = [
     "GetPronunciationDictionaryWithRulesResponseModelRulesItem_Alias",
     "GetPronunciationDictionaryWithRulesResponseModelRulesItem_Phoneme",
     "GetResponseUnitTestResponseModel",
-    "GetResponseUnitTestResponseModelDynamicVariablesValue",
     "GetScheduleParams",
     "GetSecretDependenciesResponseModel",
     "GetSecretDependenciesResponseModelDependencies",
@@ -4145,14 +4098,12 @@ __all__ = [
     "GetSecretDependenciesResponseModelDependenciesZeroItem_Available",
     "GetSecretDependenciesResponseModelDependenciesZeroItem_Unknown",
     "GetSimulationTestResponseModel",
-    "GetSimulationTestResponseModelDynamicVariablesValue",
     "GetSpeechHistoryResponse",
     "GetTestInvocationsPageResponseModel",
     "GetTestSuiteInvocationResponseModel",
     "GetTestsPageResponseModel",
     "GetTestsSummariesByIdsResponseModel",
     "GetToolCallUnitTestResponseModel",
-    "GetToolCallUnitTestResponseModelDynamicVariablesValue",
     "GetToolDependentAgentsResponseModel",
     "GetToolDependentAgentsResponseModelAgentsItem",
     "GetToolDependentAgentsResponseModelAgentsItem_Available",
@@ -4170,6 +4121,7 @@ __all__ = [
     "HistoryItemResponse",
     "HtmlExportOptions",
     "HttpValidationError",
+    "Icon",
     "ImageAvatar",
     "InboundSipTrunkConfigRequestModel",
     "InitialiseContext",
@@ -4232,7 +4184,6 @@ __all__ = [
     "ListLocationsParams",
     "ListMcpToolsResponseModel",
     "ListProductsParams",
-    "ListRentalServicesParams",
     "ListResponseAgentBranchSummary",
     "ListResponseMeta",
     "ListServicesParams",
@@ -4261,6 +4212,7 @@ __all__ = [
     "LlmUsageCalculatorResponseModel",
     "LlmUsageInput",
     "LlmUsageOutput",
+    "ManualSource",
     "ManualVerificationFileResponse",
     "ManualVerificationResponse",
     "MatchAnythingParameterEvaluationStrategy",
@@ -4294,7 +4246,8 @@ __all__ = [
     "McpToolConfigOverrideOutputInputOverridesValue_Constant",
     "McpToolConfigOverrideOutputInputOverridesValue_DynamicVariable",
     "McpToolConfigOverrideOutputInputOverridesValue_Llm",
-    "MergingStrategy",
+    "MemoryEntrySearchResult",
+    "MemoryEntrySearchResultSource",
     "MessageSearchSortBy",
     "MessagesSearchResponse",
     "MessagesSearchResult",
@@ -4309,7 +4262,6 @@ __all__ = [
     "ModerationGuardrailInput",
     "ModerationGuardrailOutput",
     "MtlsAuthResponse",
-    "MultiSourceConfigJson",
     "MultichannelSpeechToTextResponseModel",
     "MultipartMusicResponse",
     "MusicExploreSongSourceContext",
@@ -4335,9 +4287,11 @@ __all__ = [
     "PartialTranscriptPayload",
     "PatchWorkspaceWebhookResponseModel",
     "PdfExportOptions",
+    "PendingBlocksMetadataModel",
     "PendingCancellationResponseModel",
     "PendingClipTask",
     "PendingClipTaskType",
+    "PendingExternalAudiosMetadataModel",
     "PendingSubscriptionSwitchResponseModel",
     "PendingSubscriptionSwitchResponseModelNextTier",
     "PermissionType",
@@ -4372,6 +4326,7 @@ __all__ = [
     "PostDialDigitsDynamicVariable",
     "PostDialDigitsStatic",
     "PostWorkspaceSecretResponseModel",
+    "PreToolSpeechMode",
     "PreviewAudioDbModel",
     "PrivacyConfigInput",
     "PrivacyConfigOutput",
@@ -4512,7 +4467,6 @@ __all__ = [
     "ResponseFilter",
     "ResponseFilterMode",
     "ResponseUnitTestModel",
-    "ResponseUnitTestModelDynamicVariablesValue",
     "RetryTriggerAction",
     "ReviewResponseModel",
     "ReviewResponseModelRejectReasonsItem",
@@ -4570,7 +4524,6 @@ __all__ = [
     "SimilarVoice",
     "SimilarVoicesForSpeakerResponse",
     "SimulationTestModel",
-    "SimulationTestModelDynamicVariablesValue",
     "SimulationToolMockBehaviorConfig",
     "SingleTestRunRequestModel",
     "SingleUseTokenResponseModel",
@@ -4591,8 +4544,6 @@ __all__ = [
     "SongSection",
     "SongSourceContext",
     "SortDirection",
-    "SourceConfigJson",
-    "SourceRetrievalConfig",
     "SpeakerAudioResponseModel",
     "SpeakerCreatedResponse",
     "SpeakerResponseModel",
@@ -4623,7 +4574,6 @@ __all__ = [
     "StudioTextStyleShadowModel",
     "Subscription",
     "SubscriptionResponse",
-    "SubscriptionResponseModelCurrency",
     "SubscriptionResponseModelMaxCreditLimitExtension",
     "SubscriptionStatusType",
     "SuggestedAudioTag",
@@ -4662,6 +4612,13 @@ __all__ = [
     "TestType",
     "TestsFeatureUsageCommonModel",
     "TextNormalisationType",
+    "TextToDialogueWebsocketApplyTextNormalizationEnum",
+    "TextToDialogueWebsocketAudioChunk",
+    "TextToDialogueWebsocketClientMessage",
+    "TextToDialogueWebsocketError",
+    "TextToDialogueWebsocketFinal",
+    "TextToDialogueWebsocketOutputFormatEnum",
+    "TextToDialogueWebsocketVoiceInput",
     "TextToSpeechApplyTextNormalizationEnum",
     "TextToSpeechOutputFormatEnum",
     "TextToSpeechRequest",
@@ -4677,8 +4634,8 @@ __all__ = [
     "ToolCallSoundBehavior",
     "ToolCallSoundType",
     "ToolCallUnitTestModel",
-    "ToolCallUnitTestModelDynamicVariablesValue",
     "ToolErrorHandlingMode",
+    "ToolExecution",
     "ToolExecutionMode",
     "ToolExecutionResponseModel",
     "ToolExecutionResponseModelToolCallDetails",
@@ -4686,6 +4643,7 @@ __all__ = [
     "ToolExecutionResponseModelToolCallDetails_Client",
     "ToolExecutionResponseModelToolCallDetails_Mcp",
     "ToolExecutionResponseModelToolCallDetails_Webhook",
+    "ToolExecutionTaskSupport",
     "ToolMockConfig",
     "ToolRequestModel",
     "ToolRequestModelToolConfig",
@@ -4772,15 +4730,11 @@ __all__ = [
     "UpdateProductParams",
     "UpdateProjectRequest",
     "UpdatePronunciationDictionariesRequest",
-    "UpdateRentalServiceParams",
     "UpdateResponseUnitTestRequest",
-    "UpdateResponseUnitTestRequestDynamicVariablesValue",
     "UpdateServiceParams",
     "UpdateSimulationTestRequest",
-    "UpdateSimulationTestRequestDynamicVariablesValue",
     "UpdateStaffParams",
     "UpdateToolCallUnitTestRequest",
-    "UpdateToolCallUnitTestRequestDynamicVariablesValue",
     "UpdateWorkspaceMemberResponseModel",
     "UrlAvatar",
     "UsageAggregationInterval",

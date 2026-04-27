@@ -11,6 +11,7 @@ from ...types.mcp_approval_policy import McpApprovalPolicy
 from ...types.mcp_server_config_input import McpServerConfigInput
 from ...types.mcp_server_response_model import McpServerResponseModel
 from ...types.mcp_servers_response_model import McpServersResponseModel
+from ...types.pre_tool_speech_mode import PreToolSpeechMode
 from ...types.tool_call_sound_behavior import ToolCallSoundBehavior
 from ...types.tool_call_sound_type import ToolCallSoundType
 from ...types.tool_execution_mode import ToolExecutionMode
@@ -183,10 +184,12 @@ class McpServersClient:
         *,
         approval_policy: typing.Optional[McpApprovalPolicy] = OMIT,
         force_pre_tool_speech: typing.Optional[bool] = OMIT,
+        pre_tool_speech: typing.Optional[PreToolSpeechMode] = OMIT,
         disable_interruptions: typing.Optional[bool] = OMIT,
         tool_call_sound: typing.Optional[ToolCallSoundType] = OMIT,
         tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = OMIT,
         execution_mode: typing.Optional[ToolExecutionMode] = OMIT,
+        response_timeout_secs: typing.Optional[int] = OMIT,
         request_headers: typing.Optional[
             typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]
         ] = OMIT,
@@ -207,7 +210,10 @@ class McpServersClient:
             The approval mode to set for the MCP server
 
         force_pre_tool_speech : typing.Optional[bool]
-            If set, overrides the server's force_pre_tool_speech setting for this tool
+            DEPRECATED: use `pre_tool_speech` instead. If set, overrides the server's force_pre_tool_speech setting for this tool.
+
+        pre_tool_speech : typing.Optional[PreToolSpeechMode]
+            If set, overrides the server's pre_tool_speech setting for this tool.
 
         disable_interruptions : typing.Optional[bool]
             If set, overrides the server's disable_interruptions setting for this tool
@@ -220,6 +226,9 @@ class McpServersClient:
 
         execution_mode : typing.Optional[ToolExecutionMode]
             If set, overrides the server's execution_mode setting for this tool
+
+        response_timeout_secs : typing.Optional[int]
+            The maximum time in seconds to wait for each MCP tool call to complete.
 
         request_headers : typing.Optional[typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]]
             The headers to include in requests to the MCP server
@@ -256,10 +265,12 @@ class McpServersClient:
             mcp_server_id,
             approval_policy=approval_policy,
             force_pre_tool_speech=force_pre_tool_speech,
+            pre_tool_speech=pre_tool_speech,
             disable_interruptions=disable_interruptions,
             tool_call_sound=tool_call_sound,
             tool_call_sound_behavior=tool_call_sound_behavior,
             execution_mode=execution_mode,
+            response_timeout_secs=response_timeout_secs,
             request_headers=request_headers,
             disable_compression=disable_compression,
             secret_token=secret_token,
@@ -487,10 +498,12 @@ class AsyncMcpServersClient:
         *,
         approval_policy: typing.Optional[McpApprovalPolicy] = OMIT,
         force_pre_tool_speech: typing.Optional[bool] = OMIT,
+        pre_tool_speech: typing.Optional[PreToolSpeechMode] = OMIT,
         disable_interruptions: typing.Optional[bool] = OMIT,
         tool_call_sound: typing.Optional[ToolCallSoundType] = OMIT,
         tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = OMIT,
         execution_mode: typing.Optional[ToolExecutionMode] = OMIT,
+        response_timeout_secs: typing.Optional[int] = OMIT,
         request_headers: typing.Optional[
             typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]
         ] = OMIT,
@@ -511,7 +524,10 @@ class AsyncMcpServersClient:
             The approval mode to set for the MCP server
 
         force_pre_tool_speech : typing.Optional[bool]
-            If set, overrides the server's force_pre_tool_speech setting for this tool
+            DEPRECATED: use `pre_tool_speech` instead. If set, overrides the server's force_pre_tool_speech setting for this tool.
+
+        pre_tool_speech : typing.Optional[PreToolSpeechMode]
+            If set, overrides the server's pre_tool_speech setting for this tool.
 
         disable_interruptions : typing.Optional[bool]
             If set, overrides the server's disable_interruptions setting for this tool
@@ -524,6 +540,9 @@ class AsyncMcpServersClient:
 
         execution_mode : typing.Optional[ToolExecutionMode]
             If set, overrides the server's execution_mode setting for this tool
+
+        response_timeout_secs : typing.Optional[int]
+            The maximum time in seconds to wait for each MCP tool call to complete.
 
         request_headers : typing.Optional[typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]]
             The headers to include in requests to the MCP server
@@ -568,10 +587,12 @@ class AsyncMcpServersClient:
             mcp_server_id,
             approval_policy=approval_policy,
             force_pre_tool_speech=force_pre_tool_speech,
+            pre_tool_speech=pre_tool_speech,
             disable_interruptions=disable_interruptions,
             tool_call_sound=tool_call_sound,
             tool_call_sound_behavior=tool_call_sound_behavior,
             execution_mode=execution_mode,
+            response_timeout_secs=response_timeout_secs,
             request_headers=request_headers,
             disable_compression=disable_compression,
             secret_token=secret_token,

@@ -10,6 +10,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .dynamic_variable_assignment import DynamicVariableAssignment
 from .dynamic_variables_config_input import DynamicVariablesConfigInput
+from .pre_tool_speech_mode import PreToolSpeechMode
 from .system_tool_config_input_params import SystemToolConfigInputParams
 from .tool_call_sound_behavior import ToolCallSoundBehavior
 from .tool_call_sound_type import ToolCallSoundType
@@ -29,6 +30,7 @@ class ToolRequestModelToolConfig_Client(UncheckedBaseModel):
     response_timeout_secs: typing.Optional[int] = None
     disable_interruptions: typing.Optional[bool] = None
     force_pre_tool_speech: typing.Optional[bool] = None
+    pre_tool_speech: typing.Optional[PreToolSpeechMode] = None
     assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = None
     tool_call_sound: typing.Optional[ToolCallSoundType] = None
     tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = None
@@ -72,6 +74,7 @@ class ToolRequestModelToolConfig_System(UncheckedBaseModel):
     response_timeout_secs: typing.Optional[int] = None
     disable_interruptions: typing.Optional[bool] = None
     force_pre_tool_speech: typing.Optional[bool] = None
+    pre_tool_speech: typing.Optional[PreToolSpeechMode] = None
     assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = None
     tool_call_sound: typing.Optional[ToolCallSoundType] = None
     tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = None
@@ -99,6 +102,7 @@ class ToolRequestModelToolConfig_Webhook(UncheckedBaseModel):
     response_timeout_secs: typing.Optional[int] = None
     disable_interruptions: typing.Optional[bool] = None
     force_pre_tool_speech: typing.Optional[bool] = None
+    pre_tool_speech: typing.Optional[PreToolSpeechMode] = None
     assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = None
     tool_call_sound: typing.Optional[ToolCallSoundType] = None
     tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = None

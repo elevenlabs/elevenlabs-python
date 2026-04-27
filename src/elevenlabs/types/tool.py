@@ -7,7 +7,9 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .icon import Icon
 from .tool_annotations import ToolAnnotations
+from .tool_execution import ToolExecution
 
 
 class Tool(UncheckedBaseModel):
@@ -22,10 +24,12 @@ class Tool(UncheckedBaseModel):
     output_schema: typing_extensions.Annotated[
         typing.Optional[typing.Dict[str, typing.Any]], FieldMetadata(alias="outputSchema")
     ] = None
+    icons: typing.Optional[typing.List[Icon]] = None
     annotations: typing.Optional[ToolAnnotations] = None
     meta: typing_extensions.Annotated[typing.Optional[typing.Dict[str, typing.Any]], FieldMetadata(alias="_meta")] = (
         None
     )
+    execution: typing.Optional[ToolExecution] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

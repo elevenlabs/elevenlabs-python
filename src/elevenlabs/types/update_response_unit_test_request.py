@@ -10,10 +10,8 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_failure_response_example import AgentFailureResponseExample
 from .agent_successful_response_example import AgentSuccessfulResponseExample
 from .conversation_history_transcript_common_model_input import ConversationHistoryTranscriptCommonModelInput
+from .dynamic_variable_value_type_input import DynamicVariableValueTypeInput
 from .test_from_conversation_metadata_input import TestFromConversationMetadataInput
-from .update_response_unit_test_request_dynamic_variables_value import (
-    UpdateResponseUnitTestRequestDynamicVariablesValue,
-)
 
 
 class UpdateResponseUnitTestRequest(UncheckedBaseModel):
@@ -22,9 +20,9 @@ class UpdateResponseUnitTestRequest(UncheckedBaseModel):
     Metadata of a conversation this test was created from (if applicable).
     """
 
-    dynamic_variables: typing.Optional[
-        typing.Dict[str, typing.Optional[UpdateResponseUnitTestRequestDynamicVariablesValue]]
-    ] = pydantic.Field(default=None)
+    dynamic_variables: typing.Optional[typing.Dict[str, typing.Optional[DynamicVariableValueTypeInput]]] = (
+        pydantic.Field(default=None)
+    )
     """
     Dynamic variables to replace in the agent config during testing
     """

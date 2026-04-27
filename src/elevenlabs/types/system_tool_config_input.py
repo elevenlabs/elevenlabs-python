@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .dynamic_variable_assignment import DynamicVariableAssignment
+from .pre_tool_speech_mode import PreToolSpeechMode
 from .system_tool_config_input_params import SystemToolConfigInputParams
 from .tool_call_sound_behavior import ToolCallSoundBehavior
 from .tool_call_sound_type import ToolCallSoundType
@@ -40,7 +41,12 @@ class SystemToolConfigInput(UncheckedBaseModel):
 
     force_pre_tool_speech: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    If true, the agent will speak before the tool call.
+    DEPRECATED: use `pre_tool_speech` instead. If true, the agent will speak before the tool call.
+    """
+
+    pre_tool_speech: typing.Optional[PreToolSpeechMode] = pydantic.Field(default=None)
+    """
+    Controls whether the agent speaks before this tool is called. 'auto' (default) decides based on recent tool latency, 'force' always asks the agent to speak, 'off' fully opts out regardless of latency.
     """
 
     assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = pydantic.Field(default=None)

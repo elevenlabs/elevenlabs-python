@@ -8,6 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .api_integration_webhook_overrides import ApiIntegrationWebhookOverrides
 from .dynamic_variable_assignment import DynamicVariableAssignment
 from .dynamic_variables_config_output import DynamicVariablesConfigOutput
+from .pre_tool_speech_mode import PreToolSpeechMode
 from .tool_call_sound_behavior import ToolCallSoundBehavior
 from .tool_call_sound_type import ToolCallSoundType
 from .tool_error_handling_mode import ToolErrorHandlingMode
@@ -33,7 +34,12 @@ class ApiIntegrationWebhookToolConfigOutput(UncheckedBaseModel):
 
     force_pre_tool_speech: bool = pydantic.Field()
     """
-    If true, the agent will speak before the tool call.
+    DEPRECATED: use `pre_tool_speech` instead. If true, the agent will speak before the tool call.
+    """
+
+    pre_tool_speech: PreToolSpeechMode = pydantic.Field()
+    """
+    Controls whether the agent speaks before this tool is called. 'auto' (default) decides based on recent tool latency, 'force' always asks the agent to speak, 'off' fully opts out regardless of latency.
     """
 
     assignments: typing.List[DynamicVariableAssignment] = pydantic.Field()

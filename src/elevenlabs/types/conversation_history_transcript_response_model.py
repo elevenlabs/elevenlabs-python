@@ -43,6 +43,7 @@ class ConversationHistoryTranscriptResponseModel(UncheckedBaseModel):
     original_message: typing.Optional[str] = None
     source_medium: typing.Optional[ChatSourceMedium] = None
     source_event_id: typing.Optional[int] = None
+    used_static_kb_document_ids: typing.Optional[typing.List[str]] = None
     file_input: typing.Optional[ConversationHistoryTranscriptFileInputResponseModel] = None
 
     if IS_PYDANTIC_V2:

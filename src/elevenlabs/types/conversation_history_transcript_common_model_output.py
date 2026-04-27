@@ -40,6 +40,7 @@ class ConversationHistoryTranscriptCommonModelOutput(UncheckedBaseModel):
     original_message: typing.Optional[str] = None
     source_medium: typing.Optional[ChatSourceMedium] = None
     source_event_id: typing.Optional[int] = None
+    used_static_kb_document_ids: typing.Optional[typing.List[str]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -11,15 +11,7 @@ from ....core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from ....types.agent_failure_response_example import AgentFailureResponseExample
 from ....types.agent_successful_response_example import AgentSuccessfulResponseExample
 from ....types.conversation_history_transcript_common_model_output import ConversationHistoryTranscriptCommonModelOutput
-from ....types.get_response_unit_test_response_model_dynamic_variables_value import (
-    GetResponseUnitTestResponseModelDynamicVariablesValue,
-)
-from ....types.get_simulation_test_response_model_dynamic_variables_value import (
-    GetSimulationTestResponseModelDynamicVariablesValue,
-)
-from ....types.get_tool_call_unit_test_response_model_dynamic_variables_value import (
-    GetToolCallUnitTestResponseModelDynamicVariablesValue,
-)
+from ....types.dynamic_variable_value_type_output import DynamicVariableValueTypeOutput
 from ....types.simulation_tool_mock_behavior_config import SimulationToolMockBehaviorConfig
 from ....types.test_from_conversation_metadata_output import TestFromConversationMetadataOutput
 from ....types.unit_test_tool_call_evaluation_model_output import UnitTestToolCallEvaluationModelOutput
@@ -28,9 +20,7 @@ from ....types.unit_test_tool_call_evaluation_model_output import UnitTestToolCa
 class TestsGetResponse_Llm(UncheckedBaseModel):
     type: typing.Literal["llm"] = "llm"
     from_conversation_metadata: typing.Optional[TestFromConversationMetadataOutput] = None
-    dynamic_variables: typing.Optional[
-        typing.Dict[str, typing.Optional[GetResponseUnitTestResponseModelDynamicVariablesValue]]
-    ] = None
+    dynamic_variables: typing.Optional[typing.Dict[str, typing.Optional[DynamicVariableValueTypeOutput]]] = None
     chat_history: typing.Optional[typing.List[ConversationHistoryTranscriptCommonModelOutput]] = None
     success_condition: typing.Optional[str] = None
     success_examples: typing.Optional[typing.List[AgentSuccessfulResponseExample]] = None
@@ -51,9 +41,7 @@ class TestsGetResponse_Llm(UncheckedBaseModel):
 class TestsGetResponse_Tool(UncheckedBaseModel):
     type: typing.Literal["tool"] = "tool"
     from_conversation_metadata: typing.Optional[TestFromConversationMetadataOutput] = None
-    dynamic_variables: typing.Optional[
-        typing.Dict[str, typing.Optional[GetToolCallUnitTestResponseModelDynamicVariablesValue]]
-    ] = None
+    dynamic_variables: typing.Optional[typing.Dict[str, typing.Optional[DynamicVariableValueTypeOutput]]] = None
     chat_history: typing.Optional[typing.List[ConversationHistoryTranscriptCommonModelOutput]] = None
     tool_call_parameters: typing.Optional[UnitTestToolCallEvaluationModelOutput] = None
     check_any_tool_matches: typing.Optional[bool] = None
@@ -73,9 +61,7 @@ class TestsGetResponse_Tool(UncheckedBaseModel):
 class TestsGetResponse_Simulation(UncheckedBaseModel):
     type: typing.Literal["simulation"] = "simulation"
     from_conversation_metadata: typing.Optional[TestFromConversationMetadataOutput] = None
-    dynamic_variables: typing.Optional[
-        typing.Dict[str, typing.Optional[GetSimulationTestResponseModelDynamicVariablesValue]]
-    ] = None
+    dynamic_variables: typing.Optional[typing.Dict[str, typing.Optional[DynamicVariableValueTypeOutput]]] = None
     chat_history: typing.Optional[typing.List[ConversationHistoryTranscriptCommonModelOutput]] = None
     success_condition: typing.Optional[str] = None
     simulation_scenario: typing.Optional[str] = None

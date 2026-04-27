@@ -24,6 +24,7 @@ ClientEvent = typing.Union[
         "client_error",
         "guardrail_triggered",
         "dtmf_request",
+        "agent_response_complete",
         "internal_turn_probability",
         "internal_tentative_agent_response",
     ],

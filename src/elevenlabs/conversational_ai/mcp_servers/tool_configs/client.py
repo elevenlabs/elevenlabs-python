@@ -7,6 +7,7 @@ from ....core.request_options import RequestOptions
 from ....types.dynamic_variable_assignment import DynamicVariableAssignment
 from ....types.mcp_server_response_model import McpServerResponseModel
 from ....types.mcp_tool_config_override_output import McpToolConfigOverrideOutput
+from ....types.pre_tool_speech_mode import PreToolSpeechMode
 from ....types.tool_call_sound_behavior import ToolCallSoundBehavior
 from ....types.tool_call_sound_type import ToolCallSoundType
 from ....types.tool_execution_mode import ToolExecutionMode
@@ -44,10 +45,12 @@ class ToolConfigsClient:
         *,
         tool_name: str,
         force_pre_tool_speech: typing.Optional[bool] = OMIT,
+        pre_tool_speech: typing.Optional[PreToolSpeechMode] = OMIT,
         disable_interruptions: typing.Optional[bool] = OMIT,
         tool_call_sound: typing.Optional[ToolCallSoundType] = OMIT,
         tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = OMIT,
         execution_mode: typing.Optional[ToolExecutionMode] = OMIT,
+        response_timeout_secs: typing.Optional[int] = OMIT,
         assignments: typing.Optional[typing.Sequence[DynamicVariableAssignment]] = OMIT,
         input_overrides: typing.Optional[
             typing.Dict[str, typing.Optional[McpToolConfigOverrideCreateRequestModelInputOverridesValue]]
@@ -67,7 +70,10 @@ class ToolConfigsClient:
             The name of the MCP tool
 
         force_pre_tool_speech : typing.Optional[bool]
-            If set, overrides the server's force_pre_tool_speech setting for this tool
+            DEPRECATED: use `pre_tool_speech` instead. If set, overrides the server's force_pre_tool_speech setting for this tool.
+
+        pre_tool_speech : typing.Optional[PreToolSpeechMode]
+            If set, overrides the server's pre_tool_speech setting for this tool.
 
         disable_interruptions : typing.Optional[bool]
             If set, overrides the server's disable_interruptions setting for this tool
@@ -80,6 +86,9 @@ class ToolConfigsClient:
 
         execution_mode : typing.Optional[ToolExecutionMode]
             If set, overrides the server's execution_mode setting for this tool
+
+        response_timeout_secs : typing.Optional[int]
+            If set, overrides the server's response timeout for this MCP tool.
 
         assignments : typing.Optional[typing.Sequence[DynamicVariableAssignment]]
             Dynamic variable assignments for this MCP tool
@@ -114,10 +123,12 @@ class ToolConfigsClient:
             mcp_server_id,
             tool_name=tool_name,
             force_pre_tool_speech=force_pre_tool_speech,
+            pre_tool_speech=pre_tool_speech,
             disable_interruptions=disable_interruptions,
             tool_call_sound=tool_call_sound,
             tool_call_sound_behavior=tool_call_sound_behavior,
             execution_mode=execution_mode,
+            response_timeout_secs=response_timeout_secs,
             assignments=assignments,
             input_overrides=input_overrides,
             response_mocks=response_mocks,
@@ -205,10 +216,12 @@ class ToolConfigsClient:
         tool_name: str,
         *,
         force_pre_tool_speech: typing.Optional[bool] = OMIT,
+        pre_tool_speech: typing.Optional[PreToolSpeechMode] = OMIT,
         disable_interruptions: typing.Optional[bool] = OMIT,
         tool_call_sound: typing.Optional[ToolCallSoundType] = OMIT,
         tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = OMIT,
         execution_mode: typing.Optional[ToolExecutionMode] = OMIT,
+        response_timeout_secs: typing.Optional[int] = OMIT,
         assignments: typing.Optional[typing.Sequence[DynamicVariableAssignment]] = OMIT,
         input_overrides: typing.Optional[
             typing.Dict[str, typing.Optional[McpToolConfigOverrideUpdateRequestModelInputOverridesValue]]
@@ -228,7 +241,10 @@ class ToolConfigsClient:
             Name of the MCP tool to update config overrides for.
 
         force_pre_tool_speech : typing.Optional[bool]
-            If set, overrides the server's force_pre_tool_speech setting for this tool
+            DEPRECATED: use `pre_tool_speech` instead. If set, overrides the server's force_pre_tool_speech setting for this tool.
+
+        pre_tool_speech : typing.Optional[PreToolSpeechMode]
+            If set, overrides the server's pre_tool_speech setting for this tool.
 
         disable_interruptions : typing.Optional[bool]
             If set, overrides the server's disable_interruptions setting for this tool
@@ -241,6 +257,9 @@ class ToolConfigsClient:
 
         execution_mode : typing.Optional[ToolExecutionMode]
             If set, overrides the server's execution_mode setting for this tool
+
+        response_timeout_secs : typing.Optional[int]
+            If set, overrides the server's response timeout for this MCP tool.
 
         assignments : typing.Optional[typing.Sequence[DynamicVariableAssignment]]
             Dynamic variable assignments for this MCP tool
@@ -275,10 +294,12 @@ class ToolConfigsClient:
             mcp_server_id,
             tool_name,
             force_pre_tool_speech=force_pre_tool_speech,
+            pre_tool_speech=pre_tool_speech,
             disable_interruptions=disable_interruptions,
             tool_call_sound=tool_call_sound,
             tool_call_sound_behavior=tool_call_sound_behavior,
             execution_mode=execution_mode,
+            response_timeout_secs=response_timeout_secs,
             assignments=assignments,
             input_overrides=input_overrides,
             response_mocks=response_mocks,
@@ -308,10 +329,12 @@ class AsyncToolConfigsClient:
         *,
         tool_name: str,
         force_pre_tool_speech: typing.Optional[bool] = OMIT,
+        pre_tool_speech: typing.Optional[PreToolSpeechMode] = OMIT,
         disable_interruptions: typing.Optional[bool] = OMIT,
         tool_call_sound: typing.Optional[ToolCallSoundType] = OMIT,
         tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = OMIT,
         execution_mode: typing.Optional[ToolExecutionMode] = OMIT,
+        response_timeout_secs: typing.Optional[int] = OMIT,
         assignments: typing.Optional[typing.Sequence[DynamicVariableAssignment]] = OMIT,
         input_overrides: typing.Optional[
             typing.Dict[str, typing.Optional[McpToolConfigOverrideCreateRequestModelInputOverridesValue]]
@@ -331,7 +354,10 @@ class AsyncToolConfigsClient:
             The name of the MCP tool
 
         force_pre_tool_speech : typing.Optional[bool]
-            If set, overrides the server's force_pre_tool_speech setting for this tool
+            DEPRECATED: use `pre_tool_speech` instead. If set, overrides the server's force_pre_tool_speech setting for this tool.
+
+        pre_tool_speech : typing.Optional[PreToolSpeechMode]
+            If set, overrides the server's pre_tool_speech setting for this tool.
 
         disable_interruptions : typing.Optional[bool]
             If set, overrides the server's disable_interruptions setting for this tool
@@ -344,6 +370,9 @@ class AsyncToolConfigsClient:
 
         execution_mode : typing.Optional[ToolExecutionMode]
             If set, overrides the server's execution_mode setting for this tool
+
+        response_timeout_secs : typing.Optional[int]
+            If set, overrides the server's response timeout for this MCP tool.
 
         assignments : typing.Optional[typing.Sequence[DynamicVariableAssignment]]
             Dynamic variable assignments for this MCP tool
@@ -386,10 +415,12 @@ class AsyncToolConfigsClient:
             mcp_server_id,
             tool_name=tool_name,
             force_pre_tool_speech=force_pre_tool_speech,
+            pre_tool_speech=pre_tool_speech,
             disable_interruptions=disable_interruptions,
             tool_call_sound=tool_call_sound,
             tool_call_sound_behavior=tool_call_sound_behavior,
             execution_mode=execution_mode,
+            response_timeout_secs=response_timeout_secs,
             assignments=assignments,
             input_overrides=input_overrides,
             response_mocks=response_mocks,
@@ -493,10 +524,12 @@ class AsyncToolConfigsClient:
         tool_name: str,
         *,
         force_pre_tool_speech: typing.Optional[bool] = OMIT,
+        pre_tool_speech: typing.Optional[PreToolSpeechMode] = OMIT,
         disable_interruptions: typing.Optional[bool] = OMIT,
         tool_call_sound: typing.Optional[ToolCallSoundType] = OMIT,
         tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = OMIT,
         execution_mode: typing.Optional[ToolExecutionMode] = OMIT,
+        response_timeout_secs: typing.Optional[int] = OMIT,
         assignments: typing.Optional[typing.Sequence[DynamicVariableAssignment]] = OMIT,
         input_overrides: typing.Optional[
             typing.Dict[str, typing.Optional[McpToolConfigOverrideUpdateRequestModelInputOverridesValue]]
@@ -516,7 +549,10 @@ class AsyncToolConfigsClient:
             Name of the MCP tool to update config overrides for.
 
         force_pre_tool_speech : typing.Optional[bool]
-            If set, overrides the server's force_pre_tool_speech setting for this tool
+            DEPRECATED: use `pre_tool_speech` instead. If set, overrides the server's force_pre_tool_speech setting for this tool.
+
+        pre_tool_speech : typing.Optional[PreToolSpeechMode]
+            If set, overrides the server's pre_tool_speech setting for this tool.
 
         disable_interruptions : typing.Optional[bool]
             If set, overrides the server's disable_interruptions setting for this tool
@@ -529,6 +565,9 @@ class AsyncToolConfigsClient:
 
         execution_mode : typing.Optional[ToolExecutionMode]
             If set, overrides the server's execution_mode setting for this tool
+
+        response_timeout_secs : typing.Optional[int]
+            If set, overrides the server's response timeout for this MCP tool.
 
         assignments : typing.Optional[typing.Sequence[DynamicVariableAssignment]]
             Dynamic variable assignments for this MCP tool
@@ -571,10 +610,12 @@ class AsyncToolConfigsClient:
             mcp_server_id,
             tool_name,
             force_pre_tool_speech=force_pre_tool_speech,
+            pre_tool_speech=pre_tool_speech,
             disable_interruptions=disable_interruptions,
             tool_call_sound=tool_call_sound,
             tool_call_sound_behavior=tool_call_sound_behavior,
             execution_mode=execution_mode,
+            response_timeout_secs=response_timeout_secs,
             assignments=assignments,
             input_overrides=input_overrides,
             response_mocks=response_mocks,

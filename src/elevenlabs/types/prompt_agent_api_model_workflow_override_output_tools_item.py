@@ -11,6 +11,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .api_integration_webhook_overrides import ApiIntegrationWebhookOverrides
 from .dynamic_variable_assignment import DynamicVariableAssignment
 from .dynamic_variables_config_output import DynamicVariablesConfigOutput
+from .pre_tool_speech_mode import PreToolSpeechMode
 from .system_tool_config_output_params import SystemToolConfigOutputParams
 from .tool_call_sound_behavior import ToolCallSoundBehavior
 from .tool_call_sound_type import ToolCallSoundType
@@ -30,6 +31,7 @@ class PromptAgentApiModelWorkflowOverrideOutputToolsItem_ApiIntegrationWebhook(U
     response_timeout_secs: int
     disable_interruptions: bool
     force_pre_tool_speech: bool
+    pre_tool_speech: PreToolSpeechMode
     assignments: typing.List[DynamicVariableAssignment]
     tool_call_sound: typing.Optional[ToolCallSoundType] = None
     tool_call_sound_behavior: ToolCallSoundBehavior
@@ -62,6 +64,7 @@ class PromptAgentApiModelWorkflowOverrideOutputToolsItem_Client(UncheckedBaseMod
     response_timeout_secs: typing.Optional[int] = None
     disable_interruptions: typing.Optional[bool] = None
     force_pre_tool_speech: typing.Optional[bool] = None
+    pre_tool_speech: typing.Optional[PreToolSpeechMode] = None
     assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = None
     tool_call_sound: typing.Optional[ToolCallSoundType] = None
     tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = None
@@ -118,6 +121,7 @@ class PromptAgentApiModelWorkflowOverrideOutputToolsItem_System(UncheckedBaseMod
     response_timeout_secs: typing.Optional[int] = None
     disable_interruptions: typing.Optional[bool] = None
     force_pre_tool_speech: typing.Optional[bool] = None
+    pre_tool_speech: typing.Optional[PreToolSpeechMode] = None
     assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = None
     tool_call_sound: typing.Optional[ToolCallSoundType] = None
     tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = None
@@ -145,6 +149,7 @@ class PromptAgentApiModelWorkflowOverrideOutputToolsItem_Webhook(UncheckedBaseMo
     response_timeout_secs: typing.Optional[int] = None
     disable_interruptions: typing.Optional[bool] = None
     force_pre_tool_speech: typing.Optional[bool] = None
+    pre_tool_speech: typing.Optional[PreToolSpeechMode] = None
     assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = None
     tool_call_sound: typing.Optional[ToolCallSoundType] = None
     tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = None

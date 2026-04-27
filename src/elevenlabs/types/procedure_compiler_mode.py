@@ -2,4 +2,4 @@
 
 import typing
 
-ProcedureCompilerMode = typing.Union[typing.Literal["llm", "deterministic", "append"], typing.Any]
+ProcedureCompilerMode = typing.Union[typing.Literal["deterministic", "append"], typing.Any]

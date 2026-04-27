@@ -40,6 +40,11 @@ class ConversationConfigWorkflowOverride(UncheckedBaseModel):
     The events that will be sent to monitoring connections.
     """
 
+    source_attribution: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    When enabled and knowledge base content is present, the LLM is instructed to report which sources it used.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

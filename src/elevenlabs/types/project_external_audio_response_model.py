@@ -5,8 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .asset_transcription import AssetTranscription
 from .audio_analysis import AudioAnalysis
+from .pending_blocks_metadata_model import PendingBlocksMetadataModel
 from .pending_clip_task import PendingClipTask
+from .pending_external_audios_metadata_model import PendingExternalAudiosMetadataModel
 from .project_external_audio_response_model_source_context import ProjectExternalAudioResponseModelSourceContext
 
 
@@ -30,12 +33,15 @@ class ProjectExternalAudioResponseModel(UncheckedBaseModel):
     source_asset_id: typing.Optional[str] = None
     pending_block_ids: typing.List[str]
     pending_external_audio_ids: typing.List[str]
+    pending_blocks_metadata: typing.Optional[PendingBlocksMetadataModel] = None
+    pending_external_audios_metadata: typing.Optional[PendingExternalAudiosMetadataModel] = None
     speech_imported: typing.Optional[bool] = None
     pending_task: typing.Optional[PendingClipTask] = None
     error: typing.Optional[str] = None
     current_snapshot_id: typing.Optional[str] = None
     source_context: typing.Optional[ProjectExternalAudioResponseModelSourceContext] = None
     analysis: typing.Optional[AudioAnalysis] = None
+    transcription: typing.Optional[AssetTranscription] = None
     import_speech_progress: typing.Optional[float] = None
 
     if IS_PYDANTIC_V2:

@@ -37,13 +37,15 @@ class RawUsageClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[WorkspaceAnalyticsQueryResponseModel]:
         """
-        Returns credit usage broken down by product type over time. Timestamps are Unix milliseconds. The response is a tabular structure with columns, column_types, column_units, and rows.
+        Returns credit usage broken down by product type over time. The response is a tabular structure with columns, column_types, column_units, and rows.
 
         Parameters
         ----------
         start_time : int
+            Start of the time range as a Unix timestamp in milliseconds. Must be at least 2020-01-01.
 
         end_time : int
+            End of the time range as a Unix timestamp in milliseconds. Must be at least 2020-01-01.
 
         interval_seconds : typing.Optional[int]
 
@@ -121,13 +123,15 @@ class AsyncRawUsageClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[WorkspaceAnalyticsQueryResponseModel]:
         """
-        Returns credit usage broken down by product type over time. Timestamps are Unix milliseconds. The response is a tabular structure with columns, column_types, column_units, and rows.
+        Returns credit usage broken down by product type over time. The response is a tabular structure with columns, column_types, column_units, and rows.
 
         Parameters
         ----------
         start_time : int
+            Start of the time range as a Unix timestamp in milliseconds. Must be at least 2020-01-01.
 
         end_time : int
+            End of the time range as a Unix timestamp in milliseconds. Must be at least 2020-01-01.
 
         interval_seconds : typing.Optional[int]
 
