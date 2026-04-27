@@ -95,6 +95,51 @@ class TestBuildWebsocketUrl:
 
         assert url.startswith("ws://localhost:8080")
 
+    def test_includes_keyterms_as_repeated_query_params(self):
+        """Test that keyterms are included as repeated query params"""
+        url = self.scribe._build_websocket_url(
+            model_id="scribe_v2_realtime",
+            audio_format="pcm_16000",
+            commit_strategy="manual",
+            keyterms=["ElevenLabs", "Scribe"],
+        )
+
+        assert "keyterms=ElevenLabs" in url
+        assert "keyterms=Scribe" in url
+
+    def test_includes_no_verbatim_true(self):
+        """Test that no_verbatim=true is included when set to True"""
+        url = self.scribe._build_websocket_url(
+            model_id="scribe_v2_realtime",
+            audio_format="pcm_16000",
+            commit_strategy="manual",
+            no_verbatim=True,
+        )
+
+        assert "no_verbatim=true" in url
+
+    def test_includes_no_verbatim_false(self):
+        """Test that no_verbatim=false is included when set to False"""
+        url = self.scribe._build_websocket_url(
+            model_id="scribe_v2_realtime",
+            audio_format="pcm_16000",
+            commit_strategy="manual",
+            no_verbatim=False,
+        )
+
+        assert "no_verbatim=false" in url
+
+    def test_omits_keyterms_and_no_verbatim_when_not_specified(self):
+        """Test that keyterms and no_verbatim are omitted when not specified"""
+        url = self.scribe._build_websocket_url(
+            model_id="scribe_v2_realtime",
+            audio_format="pcm_16000",
+            commit_strategy="manual",
+        )
+
+        assert "keyterms" not in url
+        assert "no_verbatim" not in url
+
 
 class TestConnectValidation:
     """Tests for connect method validation"""
