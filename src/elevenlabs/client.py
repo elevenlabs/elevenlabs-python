@@ -73,7 +73,7 @@ class _AsyncSpeechEngineAccessor:
     def __init__(self, client_wrapper: typing.Any) -> None:
         self._client_wrapper = client_wrapper
 
-    async def get(self, engine_id: str) -> "SpeechEngineResource":
+    async def get(self, engine_id: str) -> typing.Any:
         from .speech_engine.resource import SpeechEngineResource  # noqa: E402
 
         return SpeechEngineResource(

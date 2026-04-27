@@ -9,6 +9,17 @@ from .types import ConversationMessage, WebSocketLike, wrap_websocket
 
 logger = logging.getLogger("elevenlabs.speech_engine")
 
+
+def _make_log(
+    debug: bool,
+) -> typing.Callable[..., None]:
+    """Return a per-instance log function, mirroring the JS SDK pattern."""
+    if debug:
+        def _log(msg: str, *args: typing.Any) -> None:
+            print("[SpeechEngine]", msg % args if args else msg)
+        return _log
+    return lambda *_args, **_kw: None
+
 Callback = typing.Callable[..., typing.Any]
 
 
@@ -170,15 +181,7 @@ class SpeechEngineSession:
         self._closed = False
         self._event_handlers = {}  # type: typing.Dict[str, typing.List[Callback]]
         self._once_handlers = {}  # type: typing.Dict[str, typing.List[Callback]]
-
-        if debug:
-            logger.setLevel(logging.DEBUG)
-            if not logger.handlers:
-                handler = logging.StreamHandler()
-                handler.setFormatter(
-                    logging.Formatter("[SpeechEngine] %(message)s")
-                )
-                logger.addHandler(handler)
+        self._log = _make_log(debug)
 
     # ------------------------------------------------------------------
     # Event emitter interface
@@ -238,7 +241,7 @@ class SpeechEngineSession:
                 except asyncio.CancelledError:
                     raise
                 except Exception:
-                    logger.debug("WebSocket connection lost")
+                    self._log("WebSocket connection lost")
                     break
 
                 try:
@@ -290,7 +293,7 @@ class SpeechEngineSession:
             return
 
         if isinstance(response, str):
-            logger.debug(
+            self._log(
                 'sending string response: "%s", event_id=%s',
                 response,
                 self._current_event_id,
@@ -298,7 +301,7 @@ class SpeechEngineSession:
             await self._send_agent_response(response, False)
             await self._send_agent_response("", True)
         else:
-            logger.debug(
+            self._log(
                 "starting streamed response, event_id=%s",
                 self._current_event_id,
             )
@@ -325,7 +328,7 @@ class SpeechEngineSession:
 
         if msg_type == "init":
             self._conversation_id = msg.get("conversation_id")
-            logger.debug(
+            self._log(
                 "session initialized, conversation_id=%s",
                 self._conversation_id,
             )
@@ -339,7 +342,7 @@ class SpeechEngineSession:
                 and self._current_task is not None
                 and not self._current_task.done()
             ):
-                logger.debug(
+                self._log(
                     "skipping duplicate transcript, event_id=%s",
                     incoming_event_id,
                 )
@@ -351,7 +354,7 @@ class SpeechEngineSession:
             )
             await self._cancel_current_and_wait()
             if was_active:
-                logger.debug(
+                self._log(
                     "interrupted: cancelling previous response "
                     "(event_id=%s) for new transcript (event_id=%s)",
                     self._current_event_id,
@@ -360,16 +363,20 @@ class SpeechEngineSession:
 
             self._current_event_id = incoming_event_id
             transcript_data = msg.get("user_transcript", [])
-            logger.debug(
+            self._log(
                 "received transcript, event_id=%s, messages=%d",
                 self._current_event_id,
                 len(transcript_data),
             )
 
-            transcript = [
-                ConversationMessage(role=m["role"], content=m["content"])
-                for m in transcript_data
-            ]
+            try:
+                transcript = [
+                    ConversationMessage(role=m["role"], content=m["content"])
+                    for m in transcript_data
+                ]
+            except (KeyError, TypeError) as e:
+                await self._emit("error", e)
+                return
 
             handlers = list(
                 self._event_handlers.get("user_transcript", [])
@@ -419,7 +426,7 @@ class SpeechEngineSession:
         try:
             async for chunk in stream:
                 if self._closed:
-                    logger.debug(
+                    self._log(
                         "stream stopped: session closed after %d chunks, "
                         "event_id=%s",
                         chunks,
@@ -431,7 +438,7 @@ class SpeechEngineSession:
                     chunks += 1
                     await self._send_agent_response(text, False, event_id)
             if not self._closed:
-                logger.debug(
+                self._log(
                     "stream complete: %d chunks sent, event_id=%s",
                     chunks,
                     event_id,
