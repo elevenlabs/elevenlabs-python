@@ -15,6 +15,7 @@ from websockets.exceptions import ConnectionClosedOK
 from websockets.sync.client import Connection, connect
 
 from ..base_client import BaseElevenLabs
+from ..url_utils import build_ws_url
 from ..version import __version__
 
 
@@ -422,18 +423,14 @@ class BaseConversation:
             return self.on_prem_config.on_prem_conversation_url
 
         base_http_url = self.client._client_wrapper.get_base_url()
-        base_ws_url = (
-            urllib.parse.urlparse(base_http_url)
-            ._replace(scheme="wss" if base_http_url.startswith("https") else "ws")
-            .geturl()
-        )
-        # Ensure base URL ends with '/' for proper joining
-        if not base_ws_url.endswith("/"):
-            base_ws_url += "/"
-        url = f"{base_ws_url}v1/convai/conversation?agent_id={self.agent_id}&source=python_sdk&version={__version__}"
+        params = [
+            ("agent_id", self.agent_id),
+            ("source", "python_sdk"),
+            ("version", __version__),
+        ]
         if self.environment:
-            url += f"&environment={self.environment}"
-        return url
+            params.append(("environment", self.environment))
+        return build_ws_url(base_http_url, ["v1", "convai", "conversation"], params)
 
     def _get_signed_url(self):
         response = self.client.conversational_ai.conversations.get_signed_url(
@@ -442,8 +439,10 @@ class BaseConversation:
         )
         signed_url = response.signed_url
         # Append source and version query parameters to the signed URL
-        separator = "&" if "?" in signed_url else "?"
-        return f"{signed_url}{separator}source=python_sdk&version={__version__}"
+        parsed = urllib.parse.urlparse(signed_url)
+        existing_params = urllib.parse.parse_qsl(parsed.query)
+        existing_params.extend([("source", "python_sdk"), ("version", __version__)])
+        return urllib.parse.urlunparse(parsed._replace(query=urllib.parse.urlencode(existing_params)))
 
     def _create_on_prem_initiation_message(self):
         return json.dumps(
