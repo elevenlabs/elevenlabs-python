@@ -15,6 +15,7 @@ except ImportError:
         "Install it with: pip install websockets"
     )
 
+from ..url_utils import build_ws_url
 from .connection import RealtimeConnection
 
 
@@ -367,30 +368,22 @@ class ScribeRealtime:
         include_timestamps: typing.Optional[bool] = None
     ) -> str:
         """Build the WebSocket URL with query parameters"""
-        # Extract base domain
-        base = self.base_url.replace("https://", "wss://").replace("http://", "ws://")
-
-        # Build query parameters
         params = [
-            f"model_id={model_id}",
-            f"audio_format={audio_format}",
-            f"commit_strategy={commit_strategy}"
+            ("model_id", model_id),
+            ("audio_format", audio_format),
+            ("commit_strategy", commit_strategy),
         ]
-
-        # Add optional VAD parameters
-        if vad_silence_threshold_secs is not None:
-            params.append(f"vad_silence_threshold_secs={vad_silence_threshold_secs}")
-        if vad_threshold is not None:
-            params.append(f"vad_threshold={vad_threshold}")
-        if min_speech_duration_ms is not None:
-            params.append(f"min_speech_duration_ms={min_speech_duration_ms}")
-        if min_silence_duration_ms is not None:
-            params.append(f"min_silence_duration_ms={min_silence_duration_ms}")
-        if language_code is not None:
-            params.append(f"language_code={language_code}")
+        for key, value in [
+            ("vad_silence_threshold_secs", vad_silence_threshold_secs),
+            ("vad_threshold", vad_threshold),
+            ("min_speech_duration_ms", min_speech_duration_ms),
+            ("min_silence_duration_ms", min_silence_duration_ms),
+            ("language_code", language_code),
+        ]:
+            if value is not None:
+                params.append((key, str(value)))
         if include_timestamps is not None:
-            params.append(f"include_timestamps={str(include_timestamps).lower()}")
+            params.append(("include_timestamps", str(include_timestamps).lower()))
 
-        query_string = "&".join(params)
-        return f"{base}/v1/speech-to-text/realtime?{query_string}"
+        return build_ws_url(self.base_url, ["v1", "speech-to-text", "realtime"], params)
 

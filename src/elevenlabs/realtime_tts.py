@@ -16,6 +16,7 @@ from .core.request_options import RequestOptions
 from .types.voice_settings import VoiceSettings
 from .text_to_speech.client import TextToSpeechClient
 from .types import OutputFormat
+from .url_utils import build_ws_url
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -92,9 +93,10 @@ class RealtimeTextToSpeechClient(TextToSpeechClient):
         )
         """
         with connect(
-            urllib.parse.urljoin(
-              self._ws_base_url,
-              f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream-input?model_id={model_id}&output_format={output_format}"
+            build_ws_url(
+                self._ws_base_url,
+                ["v1", "text-to-speech", voice_id, "stream-input"],
+                {"model_id": model_id, "output_format": output_format},
             ),
             additional_headers=jsonable_encoder(
                 remove_none_from_dict(
