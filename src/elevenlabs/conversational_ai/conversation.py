@@ -442,7 +442,7 @@ class BaseConversation:
         parsed = urllib.parse.urlparse(signed_url)
         existing_params = urllib.parse.parse_qsl(parsed.query, keep_blank_values=True)
         existing_params.extend([("source", "python_sdk"), ("version", __version__)])
-        return urllib.parse.urlunparse(parsed._replace(query=urllib.parse.urlencode(existing_params)))
+        return urllib.parse.urlunparse(parsed._replace(query=urllib.parse.urlencode(existing_params, quote_via=urllib.parse.quote)))
 
     def _create_on_prem_initiation_message(self):
         return json.dumps(

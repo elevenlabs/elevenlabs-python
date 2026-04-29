@@ -23,6 +23,6 @@ def build_ws_url(
         parsed.netloc,
         parsed.path.rstrip("/") + "/" + path,
         "",
-        urllib.parse.urlencode(params),
+        urllib.parse.urlencode(params, quote_via=urllib.parse.quote),
         "",
     ))

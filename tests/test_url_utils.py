@@ -62,7 +62,7 @@ class TestQueryParams:
 
     def test_params_percent_encoded(self):
         url = build_ws_url("wss://api.example.com", ["v1"], {"term": "hello world"})
-        assert "term=hello+world" in url
+        assert "term=hello%20world" in url
 
     def test_repeated_keys(self):
         url = build_ws_url("wss://api.example.com", ["v1"], [("k", "a"), ("k", "b")])
