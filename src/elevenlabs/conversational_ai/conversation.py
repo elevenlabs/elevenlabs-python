@@ -440,7 +440,7 @@ class BaseConversation:
         signed_url = response.signed_url
         # Append source and version query parameters to the signed URL
         parsed = urllib.parse.urlparse(signed_url)
-        existing_params = urllib.parse.parse_qsl(parsed.query)
+        existing_params = urllib.parse.parse_qsl(parsed.query, keep_blank_values=True)
         existing_params.extend([("source", "python_sdk"), ("version", __version__)])
         return urllib.parse.urlunparse(parsed._replace(query=urllib.parse.urlencode(existing_params)))
 
