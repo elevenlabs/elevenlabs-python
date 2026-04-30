@@ -78,7 +78,7 @@ class _AsyncSpeechEngineAccessor:
 
         return SpeechEngineResource(
             engine_id=engine_id,
-            client_options=self._client_wrapper,
+            client_wrapper=self._client_wrapper,
         )
 
 

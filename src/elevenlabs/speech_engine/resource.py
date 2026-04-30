@@ -115,15 +115,16 @@ class SpeechEngineResource:
     def __init__(
         self,
         engine_id: str,
-        client_options: typing.Any = None,
+        client_wrapper: typing.Any = None,
     ) -> None:
         self.engine_id = engine_id
-        self._options = client_options
+        self._client_wrapper = client_wrapper
 
     def _get_api_key(self) -> typing.Optional[str]:
-        if self._options is not None and hasattr(self._options, "_api_key"):
-            return self._options._api_key
-        return None
+        if self._client_wrapper is None:
+            return None
+        headers = self._client_wrapper.get_headers()
+        return headers.get("xi-api-key")
 
     def verify_request(
         self, headers: typing.Dict[str, typing.Any]
