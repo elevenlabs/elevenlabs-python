@@ -67,6 +67,8 @@ class RealtimeAudioOptions(typing.TypedDict, total=False):
     min_silence_duration_ms: int
     language_code: str
     include_timestamps: bool
+    keyterms: typing.List[str]
+    no_verbatim: bool
 
 
 class RealtimeUrlOptions(typing.TypedDict, total=False):
@@ -93,6 +95,8 @@ class RealtimeUrlOptions(typing.TypedDict, total=False):
     min_silence_duration_ms: int
     language_code: str
     include_timestamps: bool
+    keyterms: typing.List[str]
+    no_verbatim: bool
 
 
 class ScribeRealtime:
@@ -197,6 +201,8 @@ class ScribeRealtime:
         min_silence_duration_ms = options.get("min_silence_duration_ms")
         language_code = options.get("language_code")
         include_timestamps = options.get("include_timestamps", False)
+        keyterms = options.get("keyterms")
+        no_verbatim = options.get("no_verbatim")
 
         if not audio_format or not sample_rate:
             raise ValueError("audio_format and sample_rate are required for manual audio mode")
@@ -212,6 +218,8 @@ class ScribeRealtime:
             min_silence_duration_ms=min_silence_duration_ms,
             language_code=language_code,
             include_timestamps=include_timestamps,
+            keyterms=keyterms,
+            no_verbatim=no_verbatim,
         )
 
         # Connect to WebSocket
@@ -244,6 +252,8 @@ class ScribeRealtime:
         min_silence_duration_ms = options.get("min_silence_duration_ms")
         language_code = options.get("language_code")
         include_timestamps = options.get("include_timestamps", False)
+        keyterms = options.get("keyterms")
+        no_verbatim = options.get("no_verbatim")
 
         if not url:
             raise ValueError("url is required for URL mode")
@@ -263,6 +273,8 @@ class ScribeRealtime:
             min_silence_duration_ms=min_silence_duration_ms,
             language_code=language_code,
             include_timestamps=include_timestamps,
+            keyterms=keyterms,
+            no_verbatim=no_verbatim,
         )
 
         # Connect to WebSocket
@@ -365,7 +377,9 @@ class ScribeRealtime:
         min_speech_duration_ms: typing.Optional[int] = None,
         min_silence_duration_ms: typing.Optional[int] = None,
         language_code: typing.Optional[str] = None,
-        include_timestamps: typing.Optional[bool] = None
+        include_timestamps: typing.Optional[bool] = None,
+        keyterms: typing.Optional[typing.List[str]] = None,
+        no_verbatim: typing.Optional[bool] = None,
     ) -> str:
         """Build the WebSocket URL with query parameters"""
         params = [
@@ -384,6 +398,11 @@ class ScribeRealtime:
                 params.append((key, str(value)))
         if include_timestamps is not None:
             params.append(("include_timestamps", str(include_timestamps).lower()))
+        if keyterms is not None:
+            for term in keyterms:
+                params.append(("keyterms", term))
+        if no_verbatim is not None:
+            params.append(("no_verbatim", str(no_verbatim).lower()))
 
         return build_ws_url(self.base_url, ["v1", "speech-to-text", "realtime"], params)
 
