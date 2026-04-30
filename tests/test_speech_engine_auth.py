@@ -145,11 +145,14 @@ class _FakeClientWrapper:
     def __init__(self, api_key: str) -> None:
         self._api_key = api_key
 
+    def get_headers(self) -> dict:
+        return {"xi-api-key": self._api_key}
+
 
 class TestVerifyRequest:
     def test_valid_header(self) -> None:
         resource = SpeechEngineResource(
-            "seng_test", client_options=_FakeClientWrapper(TEST_API_KEY)
+            "seng_test", client_wrapper=_FakeClientWrapper(TEST_API_KEY)
         )
         token = _create_test_jwt(_valid_payload())
         assert resource.verify_request(
@@ -158,7 +161,7 @@ class TestVerifyRequest:
 
     def test_missing_header(self) -> None:
         resource = SpeechEngineResource(
-            "seng_test", client_options=_FakeClientWrapper(TEST_API_KEY)
+            "seng_test", client_wrapper=_FakeClientWrapper(TEST_API_KEY)
         )
         assert not resource.verify_request({})
 
@@ -171,7 +174,7 @@ class TestVerifyRequest:
 
     def test_invalid_token(self) -> None:
         resource = SpeechEngineResource(
-            "seng_test", client_options=_FakeClientWrapper(TEST_API_KEY)
+            "seng_test", client_wrapper=_FakeClientWrapper(TEST_API_KEY)
         )
         assert not resource.verify_request(
             {"x-elevenlabs-speech-engine-authorization": "bad-token"}
