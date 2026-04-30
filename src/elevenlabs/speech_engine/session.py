@@ -400,6 +400,8 @@ class SpeechEngineSession:
             await self._send({"type": "pong"})
 
         elif msg_type == "close":
+            self._closed = True
+            self._in_transcript_handler = False
             await self._cancel_current_and_wait()
             await self._emit("close")
 
