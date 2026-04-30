@@ -178,6 +178,7 @@ class SpeechEngineSession:
         self._conversation_id = None  # type: typing.Optional[str]
         self._current_task = None  # type: typing.Optional[asyncio.Task]  # type: ignore[type-arg]
         self._current_event_id = None  # type: typing.Optional[int]
+        self._in_transcript_handler = False
         self._closed = False
         self._event_handlers = {}  # type: typing.Dict[str, typing.List[Callback]]
         self._once_handlers = {}  # type: typing.Dict[str, typing.List[Callback]]
@@ -283,9 +284,9 @@ class SpeechEngineSession:
         if self._closed:
             raise RuntimeError("Cannot send response: session is closed")
 
-        if self._current_event_id is None:
+        if not self._in_transcript_handler:
             logger.warning(
-                "sendResponse() called outside of an on_transcript handler. "
+                "send_response() called outside of an on_transcript handler. "
                 "Responses can only be sent in reply to a user transcript. "
                 "To have the agent speak first, set a first message in your "
                 "Speech Engine conversation config on the client."
@@ -411,6 +412,7 @@ class SpeechEngineSession:
         handlers: typing.List[Callback],
         transcript: typing.List[ConversationMessage],
     ) -> None:
+        self._in_transcript_handler = True
         try:
             for handler in handlers:
                 result = handler(transcript)
@@ -420,6 +422,8 @@ class SpeechEngineSession:
             raise
         except Exception as e:
             await self._emit("error", e)
+        finally:
+            self._in_transcript_handler = False
 
     async def _stream_response(self, stream: typing.Any) -> None:
         event_id = self._current_event_id
