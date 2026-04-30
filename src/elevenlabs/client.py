@@ -64,6 +64,24 @@ class ElevenLabs(BaseElevenLabs):
         self._speech_to_text = SpeechToTextClient(client_wrapper=self._client_wrapper)
 
 
+class _AsyncSpeechEngineAccessor:
+    """Stub accessor for speech engine resources.
+
+    Will be replaced with a Fern-generated client once CRUD endpoints exist.
+    """
+
+    def __init__(self, client_wrapper: typing.Any) -> None:
+        self._client_wrapper = client_wrapper
+
+    async def get(self, engine_id: str) -> typing.Any:
+        from .speech_engine.resource import SpeechEngineResource  # noqa: E402
+
+        return SpeechEngineResource(
+            engine_id=engine_id,
+            client_wrapper=self._client_wrapper,
+        )
+
+
 class AsyncElevenLabs(AsyncBaseElevenLabs):
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
@@ -107,3 +125,10 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
         self._webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
         self._music = AsyncMusicClient(client_wrapper=self._client_wrapper)
         self._speech_to_text = AsyncSpeechToTextClient(client_wrapper=self._client_wrapper)
+        self._speech_engine = None  # type: typing.Optional[_AsyncSpeechEngineAccessor]
+
+    @property
+    def speech_engine(self) -> _AsyncSpeechEngineAccessor:
+        if self._speech_engine is None:
+            self._speech_engine = _AsyncSpeechEngineAccessor(self._client_wrapper)
+        return self._speech_engine
