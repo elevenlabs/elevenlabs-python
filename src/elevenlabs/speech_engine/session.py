@@ -364,12 +364,7 @@ class SpeechEngineSession:
                 )
 
             self._current_event_id = incoming_event_id
-            transcript_data = msg.get("user_transcript", [])
-            self._log(
-                "received transcript, event_id=%s, messages=%d",
-                self._current_event_id,
-                len(transcript_data),
-            )
+            transcript_data = msg.get("user_transcript") or []
 
             try:
                 transcript = [
@@ -379,6 +374,12 @@ class SpeechEngineSession:
             except (KeyError, TypeError) as e:
                 await self._emit("error", e)
                 return
+
+            self._log(
+                "received transcript, event_id=%s, messages=%d",
+                self._current_event_id,
+                len(transcript),
+            )
 
             handlers = list(
                 self._event_handlers.get("user_transcript", [])
