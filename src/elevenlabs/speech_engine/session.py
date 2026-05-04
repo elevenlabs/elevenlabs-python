@@ -501,7 +501,7 @@ class SpeechEngineSession:
                 if event != "error":
                     await self._emit("error", e)
                 else:
-                    logger.exception("unhandled error in error handler")
+                    logger.exception("unhandled error in error handler: %s", e)
 
     async def _cancel_current_and_wait(self) -> None:
         """Cancel the current handler task and wait for cleanup."""

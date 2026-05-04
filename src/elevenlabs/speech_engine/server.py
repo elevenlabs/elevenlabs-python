@@ -1,6 +1,7 @@
 """SpeechEngineServer — standalone WebSocket server for Speech Engine."""
 
 import asyncio
+import http
 import os
 import typing
 
@@ -74,12 +75,21 @@ class SpeechEngineServer:
 
         self._stop_event = asyncio.Event()
 
-        async def _handler(websocket: typing.Any, *_args: typing.Any) -> None:
-            if self._path is not None and websocket.request.path != self._path:
-                await websocket.close(4000, "not found")
-                return
+        def _process_request(
+            connection: typing.Any, request: typing.Any
+        ) -> typing.Any:
+            if self._path is not None and request.path != self._path:
+                self._log(
+                    "rejected connection — path mismatch: "
+                    "expected %s, got %s",
+                    self._path,
+                    request.path,
+                )
+                return connection.respond(
+                    http.HTTPStatus.NOT_FOUND, "not found\n"
+                )
 
-            header_value = websocket.request.headers.get(
+            header_value = request.headers.get(
                 "x-elevenlabs-speech-engine-authorization"
             )
             if not header_value:
@@ -87,18 +97,23 @@ class SpeechEngineServer:
                     "rejected connection — missing "
                     "X-Elevenlabs-Speech-Engine-Authorization header"
                 )
-                await websocket.close(
-                    4001, "missing authorization header"
+                return connection.respond(
+                    http.HTTPStatus.UNAUTHORIZED,
+                    "missing authorization header\n",
                 )
-                return
 
             try:
                 verify_speech_engine_jwt(header_value, api_key)
             except ValueError as e:
                 self._log("rejected connection — %s", e)
-                await websocket.close(4001, "authorization failed")
-                return
+                return connection.respond(
+                    http.HTTPStatus.UNAUTHORIZED,
+                    "authorization failed\n",
+                )
 
+            return None
+
+        async def _handler(websocket: typing.Any) -> None:
             self._log("verified connection, accepting WebSocket")
             session = self.handle_connection(websocket)
             await session.run()
@@ -107,6 +122,7 @@ class SpeechEngineServer:
             _handler,
             "",
             self._port,
+            process_request=_process_request,
         )
         self._log("speech engine server listening on port %d", self._port)
         try:
