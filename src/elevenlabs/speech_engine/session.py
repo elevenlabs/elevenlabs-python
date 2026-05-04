@@ -253,6 +253,13 @@ class SpeechEngineSession:
                     await self._emit("error", e)
                     continue
 
+                if not isinstance(msg, dict):
+                    await self._emit(
+                        "error",
+                        ValueError(f"expected JSON object, got {type(msg).__name__}"),
+                    )
+                    continue
+
                 await self._handle_message(msg)
         except asyncio.CancelledError:
             raise
