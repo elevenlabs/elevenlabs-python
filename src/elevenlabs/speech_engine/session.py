@@ -300,20 +300,22 @@ class SpeechEngineSession:
             )
             return
 
+        event_id = self._current_event_id
+
         if isinstance(response, str):
             self._log(
                 'sending string response: "%s", event_id=%s',
                 response,
-                self._current_event_id,
+                event_id,
             )
-            await self._send_agent_response(response, False)
-            await self._send_agent_response("", True)
+            await self._send_agent_response(response, False, event_id)
+            await self._send_agent_response("", True, event_id)
         else:
             self._log(
                 "starting streamed response, event_id=%s",
-                self._current_event_id,
+                event_id,
             )
-            await self._stream_response(response)
+            await self._stream_response(response, event_id)
 
     def close(self) -> None:
         """Close the session and the underlying WebSocket connection."""
@@ -435,8 +437,9 @@ class SpeechEngineSession:
         finally:
             self._in_transcript_handler = False
 
-    async def _stream_response(self, stream: typing.Any) -> None:
-        event_id = self._current_event_id
+    async def _stream_response(
+        self, stream: typing.Any, event_id: typing.Optional[int] = None
+    ) -> None:
         chunks = 0
         try:
             async for chunk in stream:
