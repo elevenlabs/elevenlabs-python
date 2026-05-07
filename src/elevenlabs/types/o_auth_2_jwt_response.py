@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .auth_connection_dependencies import AuthConnectionDependencies
 from .o_auth_2_jwt_response_algorithm import OAuth2JwtResponseAlgorithm
+from .o_auth_2_jwt_response_token_response_field import OAuth2JwtResponseTokenResponseField
 
 
 class OAuth2JwtResponse(UncheckedBaseModel):
@@ -59,6 +60,11 @@ class OAuth2JwtResponse(UncheckedBaseModel):
     scopes: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     OAuth2 scopes to request when exchanging JWT for access token
+    """
+
+    token_response_field: typing.Optional[OAuth2JwtResponseTokenResponseField] = pydantic.Field(default=None)
+    """
+    Token field to extract from the token endpoint response.
     """
 
     id: str

@@ -9,7 +9,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_config import AgentConfig
 from .asr_conversational_config import AsrConversationalConfig
-from .conversation_config import ConversationConfig
+from .conversation_config_output import ConversationConfigOutput
 from .language_preset_output import LanguagePresetOutput
 from .tts_conversational_config_output import TtsConversationalConfigOutput
 from .turn_config import TurnConfig
@@ -32,7 +32,7 @@ class ConversationalConfig(UncheckedBaseModel):
     Configuration for conversational text to speech
     """
 
-    conversation: typing.Optional[ConversationConfig] = pydantic.Field(default=None)
+    conversation: typing.Optional[ConversationConfigOutput] = pydantic.Field(default=None)
     """
     Configuration for conversational events
     """

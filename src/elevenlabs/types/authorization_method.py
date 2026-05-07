@@ -13,6 +13,7 @@ AuthorizationMethod = typing.Union[
         "livekit_token_website",
         "genesys_api_key",
         "whatsapp",
+        "sms",
     ],
     typing.Any,
 ]

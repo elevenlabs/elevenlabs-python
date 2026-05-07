@@ -15,7 +15,9 @@ from ...types.conversation_signed_url_response_model import ConversationSignedUr
 from ...types.evaluation_success_result import EvaluationSuccessResult
 from ...types.get_conversation_response_model import GetConversationResponseModel
 from ...types.get_conversations_page_response_model import GetConversationsPageResponseModel
+from ...types.get_sip_log_messages_response import GetSipLogMessagesResponse
 from ...types.token_response_model import TokenResponseModel
+from .types.conversations_list_request_exclude_statuses_item import ConversationsListRequestExcludeStatusesItem
 from .types.conversations_list_request_summary_mode import ConversationsListRequestSummaryMode
 
 
@@ -191,6 +193,13 @@ class RawConversationsClient:
         conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None,
         branch_id: typing.Optional[str] = None,
         topic_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        exclude_statuses: typing.Optional[
+            typing.Union[
+                ConversationsListRequestExcludeStatusesItem,
+                typing.Sequence[ConversationsListRequestExcludeStatusesItem],
+            ]
+        ] = None,
+        tag_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetConversationsPageResponseModel]:
         """
@@ -266,6 +275,12 @@ class RawConversationsClient:
         topic_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by topic IDs assigned during topic discovery.
 
+        exclude_statuses : typing.Optional[typing.Union[ConversationsListRequestExcludeStatusesItem, typing.Sequence[ConversationsListRequestExcludeStatusesItem]]]
+            Exclude conversations with the given statuses. Useful for hiding in-progress / processing conversations from list views.
+
+        tag_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by conversation tag IDs assigned via the conversation-tags endpoints.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -301,6 +316,8 @@ class RawConversationsClient:
                 "conversation_initiation_source": conversation_initiation_source,
                 "branch_id": branch_id,
                 "topic_ids": topic_ids,
+                "exclude_statuses": exclude_statuses,
+                "tag_ids": tag_ids,
             },
             request_options=request_options,
         )
@@ -412,6 +429,70 @@ class RawConversationsClient:
                     typing.Any,
                     construct_type(
                         type_=typing.Any,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def get_sip_messages(
+        self,
+        conversation_id: str,
+        *,
+        page_size: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[GetSipLogMessagesResponse]:
+        """
+        Get SIP messages associated with a conversation's phone call
+
+        Parameters
+        ----------
+        conversation_id : str
+            The id of the conversation you're taking the action on.
+
+        page_size : typing.Optional[int]
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetSipLogMessagesResponse]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/convai/conversations/{jsonable_encoder(conversation_id)}/sip-messages",
+            method="GET",
+            params={
+                "page_size": page_size,
+                "cursor": cursor,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetSipLogMessagesResponse,
+                    construct_type(
+                        type_=GetSipLogMessagesResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -605,6 +686,13 @@ class AsyncRawConversationsClient:
         conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None,
         branch_id: typing.Optional[str] = None,
         topic_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        exclude_statuses: typing.Optional[
+            typing.Union[
+                ConversationsListRequestExcludeStatusesItem,
+                typing.Sequence[ConversationsListRequestExcludeStatusesItem],
+            ]
+        ] = None,
+        tag_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetConversationsPageResponseModel]:
         """
@@ -680,6 +768,12 @@ class AsyncRawConversationsClient:
         topic_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by topic IDs assigned during topic discovery.
 
+        exclude_statuses : typing.Optional[typing.Union[ConversationsListRequestExcludeStatusesItem, typing.Sequence[ConversationsListRequestExcludeStatusesItem]]]
+            Exclude conversations with the given statuses. Useful for hiding in-progress / processing conversations from list views.
+
+        tag_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by conversation tag IDs assigned via the conversation-tags endpoints.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -715,6 +809,8 @@ class AsyncRawConversationsClient:
                 "conversation_initiation_source": conversation_initiation_source,
                 "branch_id": branch_id,
                 "topic_ids": topic_ids,
+                "exclude_statuses": exclude_statuses,
+                "tag_ids": tag_ids,
             },
             request_options=request_options,
         )
@@ -826,6 +922,70 @@ class AsyncRawConversationsClient:
                     typing.Any,
                     construct_type(
                         type_=typing.Any,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_sip_messages(
+        self,
+        conversation_id: str,
+        *,
+        page_size: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[GetSipLogMessagesResponse]:
+        """
+        Get SIP messages associated with a conversation's phone call
+
+        Parameters
+        ----------
+        conversation_id : str
+            The id of the conversation you're taking the action on.
+
+        page_size : typing.Optional[int]
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GetSipLogMessagesResponse]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/convai/conversations/{jsonable_encoder(conversation_id)}/sip-messages",
+            method="GET",
+            params={
+                "page_size": page_size,
+                "cursor": cursor,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetSipLogMessagesResponse,
+                    construct_type(
+                        type_=GetSipLogMessagesResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

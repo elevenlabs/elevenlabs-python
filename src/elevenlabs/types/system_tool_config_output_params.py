@@ -25,6 +25,19 @@ class SystemToolConfigOutputParams_EndCall(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class SystemToolConfigOutputParams_KnowledgeBaseRag(UncheckedBaseModel):
+    system_tool_type: typing.Literal["knowledge_base_rag"] = "knowledge_base_rag"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class SystemToolConfigOutputParams_LanguageDetection(UncheckedBaseModel):
     system_tool_type: typing.Literal["language_detection"] = "language_detection"
 
@@ -112,6 +125,7 @@ class SystemToolConfigOutputParams_VoicemailDetection(UncheckedBaseModel):
 SystemToolConfigOutputParams = typing_extensions.Annotated[
     typing.Union[
         SystemToolConfigOutputParams_EndCall,
+        SystemToolConfigOutputParams_KnowledgeBaseRag,
         SystemToolConfigOutputParams_LanguageDetection,
         SystemToolConfigOutputParams_PlayKeypadTouchTone,
         SystemToolConfigOutputParams_SkipTurn,

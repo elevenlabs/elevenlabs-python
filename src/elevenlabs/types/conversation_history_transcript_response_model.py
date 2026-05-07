@@ -9,6 +9,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_metadata import AgentMetadata
 from .chat_source_medium import ChatSourceMedium
+from .contextual_update_info import ContextualUpdateInfo
 from .conversation_history_multivoice_message_model import ConversationHistoryMultivoiceMessageModel
 from .conversation_history_transcript_file_input_response_model import (
     ConversationHistoryTranscriptFileInputResponseModel,
@@ -45,6 +46,7 @@ class ConversationHistoryTranscriptResponseModel(UncheckedBaseModel):
     source_event_id: typing.Optional[int] = None
     used_static_kb_document_ids: typing.Optional[typing.List[str]] = None
     file_input: typing.Optional[ConversationHistoryTranscriptFileInputResponseModel] = None
+    contextual_update_info: typing.Optional[ContextualUpdateInfo] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

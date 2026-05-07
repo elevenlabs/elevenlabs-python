@@ -5,6 +5,7 @@ import typing
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.create_phone_number_response_model import CreatePhoneNumberResponseModel
+from ...types.get_sip_log_messages_response import GetSipLogMessagesResponse
 from ...types.inbound_sip_trunk_config_request_model import InboundSipTrunkConfigRequestModel
 from ...types.livekit_stack_type import LivekitStackType
 from ...types.outbound_sip_trunk_config_request_model import OutboundSipTrunkConfigRequestModel
@@ -174,6 +175,7 @@ class PhoneNumbersClient:
         inbound_trunk_config: typing.Optional[InboundSipTrunkConfigRequestModel] = OMIT,
         outbound_trunk_config: typing.Optional[OutboundSipTrunkConfigRequestModel] = OMIT,
         livekit_stack: typing.Optional[LivekitStackType] = OMIT,
+        store_sip_messages: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PhoneNumbersUpdateResponse:
         """
@@ -193,6 +195,8 @@ class PhoneNumbersClient:
         outbound_trunk_config : typing.Optional[OutboundSipTrunkConfigRequestModel]
 
         livekit_stack : typing.Optional[LivekitStackType]
+
+        store_sip_messages : typing.Optional[bool]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -220,7 +224,55 @@ class PhoneNumbersClient:
             inbound_trunk_config=inbound_trunk_config,
             outbound_trunk_config=outbound_trunk_config,
             livekit_stack=livekit_stack,
+            store_sip_messages=store_sip_messages,
             request_options=request_options,
+        )
+        return _response.data
+
+    def get_sip_messages(
+        self,
+        phone_number_id: str,
+        *,
+        page_size: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetSipLogMessagesResponse:
+        """
+        Get SIP messages for a phone number
+
+        Parameters
+        ----------
+        phone_number_id : str
+            The id of an agent. This is returned on agent creation.
+
+        page_size : typing.Optional[int]
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetSipLogMessagesResponse
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.phone_numbers.get_sip_messages(
+            phone_number_id="TeaqRRdTcIfIu2i7BYfT",
+            page_size=1,
+            cursor="cursor",
+        )
+        """
+        _response = self._raw_client.get_sip_messages(
+            phone_number_id, page_size=page_size, cursor=cursor, request_options=request_options
         )
         return _response.data
 
@@ -415,6 +467,7 @@ class AsyncPhoneNumbersClient:
         inbound_trunk_config: typing.Optional[InboundSipTrunkConfigRequestModel] = OMIT,
         outbound_trunk_config: typing.Optional[OutboundSipTrunkConfigRequestModel] = OMIT,
         livekit_stack: typing.Optional[LivekitStackType] = OMIT,
+        store_sip_messages: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PhoneNumbersUpdateResponse:
         """
@@ -434,6 +487,8 @@ class AsyncPhoneNumbersClient:
         outbound_trunk_config : typing.Optional[OutboundSipTrunkConfigRequestModel]
 
         livekit_stack : typing.Optional[LivekitStackType]
+
+        store_sip_messages : typing.Optional[bool]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -469,6 +524,62 @@ class AsyncPhoneNumbersClient:
             inbound_trunk_config=inbound_trunk_config,
             outbound_trunk_config=outbound_trunk_config,
             livekit_stack=livekit_stack,
+            store_sip_messages=store_sip_messages,
             request_options=request_options,
+        )
+        return _response.data
+
+    async def get_sip_messages(
+        self,
+        phone_number_id: str,
+        *,
+        page_size: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetSipLogMessagesResponse:
+        """
+        Get SIP messages for a phone number
+
+        Parameters
+        ----------
+        phone_number_id : str
+            The id of an agent. This is returned on agent creation.
+
+        page_size : typing.Optional[int]
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetSipLogMessagesResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.phone_numbers.get_sip_messages(
+                phone_number_id="TeaqRRdTcIfIu2i7BYfT",
+                page_size=1,
+                cursor="cursor",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_sip_messages(
+            phone_number_id, page_size=page_size, cursor=cursor, request_options=request_options
         )
         return _response.data

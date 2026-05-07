@@ -118,6 +118,7 @@ class KnowledgeBaseClient:
             search="search",
             show_only_owned_documents=True,
             created_by_user_id="created_by_user_id",
+            types=["file"],
             parent_folder_id="parent_folder_id",
             ancestor_folder_id="ancestor_folder_id",
             folders_first=True,
@@ -230,6 +231,7 @@ class KnowledgeBaseClient:
         client.conversational_ai.knowledge_base.search(
             query="query",
             page_size=1,
+            types=["file"],
             cursor="cursor",
         )
         """
@@ -354,6 +356,7 @@ class AsyncKnowledgeBaseClient:
                 search="search",
                 show_only_owned_documents=True,
                 created_by_user_id="created_by_user_id",
+                types=["file"],
                 parent_folder_id="parent_folder_id",
                 ancestor_folder_id="ancestor_folder_id",
                 folders_first=True,
@@ -482,6 +485,7 @@ class AsyncKnowledgeBaseClient:
             await client.conversational_ai.knowledge_base.search(
                 query="query",
                 page_size=1,
+                types=["file"],
                 cursor="cursor",
             )
 

@@ -11,8 +11,10 @@ from ...types.conversation_signed_url_response_model import ConversationSignedUr
 from ...types.evaluation_success_result import EvaluationSuccessResult
 from ...types.get_conversation_response_model import GetConversationResponseModel
 from ...types.get_conversations_page_response_model import GetConversationsPageResponseModel
+from ...types.get_sip_log_messages_response import GetSipLogMessagesResponse
 from ...types.token_response_model import TokenResponseModel
 from .raw_client import AsyncRawConversationsClient, RawConversationsClient
+from .types.conversations_list_request_exclude_statuses_item import ConversationsListRequestExcludeStatusesItem
 from .types.conversations_list_request_summary_mode import ConversationsListRequestSummaryMode
 
 if typing.TYPE_CHECKING:
@@ -21,6 +23,7 @@ if typing.TYPE_CHECKING:
     from .feedback.client import AsyncFeedbackClient, FeedbackClient
     from .files.client import AsyncFilesClient, FilesClient
     from .messages.client import AsyncMessagesClient, MessagesClient
+    from .tags.client import AsyncTagsClient, TagsClient
     from .topics.client import AsyncTopicsClient, TopicsClient
 
 
@@ -31,6 +34,7 @@ class ConversationsClient:
         self._audio: typing.Optional[AudioClient] = None
         self._feedback: typing.Optional[FeedbackClient] = None
         self._messages: typing.Optional[MessagesClient] = None
+        self._tags: typing.Optional[TagsClient] = None
         self._files: typing.Optional[FilesClient] = None
         self._topics: typing.Optional[TopicsClient] = None
         self._analysis: typing.Optional[AnalysisClient] = None
@@ -186,6 +190,13 @@ class ConversationsClient:
         conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None,
         branch_id: typing.Optional[str] = None,
         topic_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        exclude_statuses: typing.Optional[
+            typing.Union[
+                ConversationsListRequestExcludeStatusesItem,
+                typing.Sequence[ConversationsListRequestExcludeStatusesItem],
+            ]
+        ] = None,
+        tag_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationsPageResponseModel:
         """
@@ -261,6 +272,12 @@ class ConversationsClient:
         topic_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by topic IDs assigned during topic discovery.
 
+        exclude_statuses : typing.Optional[typing.Union[ConversationsListRequestExcludeStatusesItem, typing.Sequence[ConversationsListRequestExcludeStatusesItem]]]
+            Exclude conversations with the given statuses. Useful for hiding in-progress / processing conversations from list views.
+
+        tag_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by conversation tag IDs assigned via the conversation-tags endpoints.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -288,11 +305,20 @@ class ConversationsClient:
             rating_min=1,
             has_feedback_comment=True,
             user_id="user_id",
+            evaluation_params=["evaluation_params"],
+            data_collection_params=["data_collection_params"],
+            tool_names=["tool_names"],
+            tool_names_successful=["tool_names_successful"],
+            tool_names_errored=["tool_names_errored"],
+            main_languages=["main_languages"],
             page_size=1,
             summary_mode="exclude",
             search="search",
             conversation_initiation_source="unknown",
             branch_id="branch_id",
+            topic_ids=["topic_ids"],
+            exclude_statuses=["initiated"],
+            tag_ids=["tag_ids"],
         )
         """
         _response = self._raw_client.list(
@@ -319,6 +345,8 @@ class ConversationsClient:
             conversation_initiation_source=conversation_initiation_source,
             branch_id=branch_id,
             topic_ids=topic_ids,
+            exclude_statuses=exclude_statuses,
+            tag_ids=tag_ids,
             request_options=request_options,
         )
         return _response.data
@@ -387,6 +415,53 @@ class ConversationsClient:
         _response = self._raw_client.delete(conversation_id, request_options=request_options)
         return _response.data
 
+    def get_sip_messages(
+        self,
+        conversation_id: str,
+        *,
+        page_size: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetSipLogMessagesResponse:
+        """
+        Get SIP messages associated with a conversation's phone call
+
+        Parameters
+        ----------
+        conversation_id : str
+            The id of the conversation you're taking the action on.
+
+        page_size : typing.Optional[int]
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetSipLogMessagesResponse
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.conversations.get_sip_messages(
+            conversation_id="21m00Tcm4TlvDq8ikWAM",
+            page_size=1,
+            cursor="cursor",
+        )
+        """
+        _response = self._raw_client.get_sip_messages(
+            conversation_id, page_size=page_size, cursor=cursor, request_options=request_options
+        )
+        return _response.data
+
     @property
     def audio(self):
         if self._audio is None:
@@ -410,6 +485,14 @@ class ConversationsClient:
 
             self._messages = MessagesClient(client_wrapper=self._client_wrapper)
         return self._messages
+
+    @property
+    def tags(self):
+        if self._tags is None:
+            from .tags.client import TagsClient  # noqa: E402
+
+            self._tags = TagsClient(client_wrapper=self._client_wrapper)
+        return self._tags
 
     @property
     def files(self):
@@ -443,6 +526,7 @@ class AsyncConversationsClient:
         self._audio: typing.Optional[AsyncAudioClient] = None
         self._feedback: typing.Optional[AsyncFeedbackClient] = None
         self._messages: typing.Optional[AsyncMessagesClient] = None
+        self._tags: typing.Optional[AsyncTagsClient] = None
         self._files: typing.Optional[AsyncFilesClient] = None
         self._topics: typing.Optional[AsyncTopicsClient] = None
         self._analysis: typing.Optional[AsyncAnalysisClient] = None
@@ -614,6 +698,13 @@ class AsyncConversationsClient:
         conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None,
         branch_id: typing.Optional[str] = None,
         topic_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        exclude_statuses: typing.Optional[
+            typing.Union[
+                ConversationsListRequestExcludeStatusesItem,
+                typing.Sequence[ConversationsListRequestExcludeStatusesItem],
+            ]
+        ] = None,
+        tag_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationsPageResponseModel:
         """
@@ -689,6 +780,12 @@ class AsyncConversationsClient:
         topic_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by topic IDs assigned during topic discovery.
 
+        exclude_statuses : typing.Optional[typing.Union[ConversationsListRequestExcludeStatusesItem, typing.Sequence[ConversationsListRequestExcludeStatusesItem]]]
+            Exclude conversations with the given statuses. Useful for hiding in-progress / processing conversations from list views.
+
+        tag_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by conversation tag IDs assigned via the conversation-tags endpoints.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -721,11 +818,20 @@ class AsyncConversationsClient:
                 rating_min=1,
                 has_feedback_comment=True,
                 user_id="user_id",
+                evaluation_params=["evaluation_params"],
+                data_collection_params=["data_collection_params"],
+                tool_names=["tool_names"],
+                tool_names_successful=["tool_names_successful"],
+                tool_names_errored=["tool_names_errored"],
+                main_languages=["main_languages"],
                 page_size=1,
                 summary_mode="exclude",
                 search="search",
                 conversation_initiation_source="unknown",
                 branch_id="branch_id",
+                topic_ids=["topic_ids"],
+                exclude_statuses=["initiated"],
+                tag_ids=["tag_ids"],
             )
 
 
@@ -755,6 +861,8 @@ class AsyncConversationsClient:
             conversation_initiation_source=conversation_initiation_source,
             branch_id=branch_id,
             topic_ids=topic_ids,
+            exclude_statuses=exclude_statuses,
+            tag_ids=tag_ids,
             request_options=request_options,
         )
         return _response.data
@@ -841,6 +949,61 @@ class AsyncConversationsClient:
         _response = await self._raw_client.delete(conversation_id, request_options=request_options)
         return _response.data
 
+    async def get_sip_messages(
+        self,
+        conversation_id: str,
+        *,
+        page_size: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetSipLogMessagesResponse:
+        """
+        Get SIP messages associated with a conversation's phone call
+
+        Parameters
+        ----------
+        conversation_id : str
+            The id of the conversation you're taking the action on.
+
+        page_size : typing.Optional[int]
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetSipLogMessagesResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.conversations.get_sip_messages(
+                conversation_id="21m00Tcm4TlvDq8ikWAM",
+                page_size=1,
+                cursor="cursor",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_sip_messages(
+            conversation_id, page_size=page_size, cursor=cursor, request_options=request_options
+        )
+        return _response.data
+
     @property
     def audio(self):
         if self._audio is None:
@@ -864,6 +1027,14 @@ class AsyncConversationsClient:
 
             self._messages = AsyncMessagesClient(client_wrapper=self._client_wrapper)
         return self._messages
+
+    @property
+    def tags(self):
+        if self._tags is None:
+            from .tags.client import AsyncTagsClient  # noqa: E402
+
+            self._tags = AsyncTagsClient(client_wrapper=self._client_wrapper)
+        return self._tags
 
     @property
     def files(self):

@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .create_o_auth_2_jwt_request_algorithm import CreateOAuth2JwtRequestAlgorithm
+from .create_o_auth_2_jwt_request_token_response_field import CreateOAuth2JwtRequestTokenResponseField
 
 
 class CreateOAuth2JwtRequest(UncheckedBaseModel):
@@ -58,6 +59,11 @@ class CreateOAuth2JwtRequest(UncheckedBaseModel):
     scopes: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     OAuth2 scopes to request when exchanging JWT for access token
+    """
+
+    token_response_field: typing.Optional[CreateOAuth2JwtRequestTokenResponseField] = pydantic.Field(default=None)
+    """
+    Token field to extract from the token endpoint response.
     """
 
     secret_key: str

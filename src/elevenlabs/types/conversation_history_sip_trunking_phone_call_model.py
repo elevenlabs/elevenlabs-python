@@ -13,6 +13,7 @@ class ConversationHistorySipTrunkingPhoneCallModel(UncheckedBaseModel):
     phone_number_id: str
     agent_number: str
     external_number: str
+    call_id: typing.Optional[str] = None
     call_sid: str
     sip_header_dynamic_variables: typing.Optional[typing.Dict[str, str]] = None
 

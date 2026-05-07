@@ -11,8 +11,12 @@ from ....core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from ....types.api_integration_o_auth_2_auth_code_response_scope_separator import (
     ApiIntegrationOAuth2AuthCodeResponseScopeSeparator,
 )
+from ....types.api_integration_o_auth_2_custom_app_response_scope_separator import (
+    ApiIntegrationOAuth2CustomAppResponseScopeSeparator,
+)
 from ....types.auth_connection_dependencies import AuthConnectionDependencies
 from ....types.o_auth_2_jwt_response_algorithm import OAuth2JwtResponseAlgorithm
+from ....types.o_auth_2_jwt_response_token_response_field import OAuth2JwtResponseTokenResponseField
 from ....types.o_auth_connection_status import OAuthConnectionStatus
 from ....types.private_key_jwt_response_algorithm import PrivateKeyJwtResponseAlgorithm
 
@@ -103,6 +107,7 @@ class AuthConnectionsCreateResponse_Oauth2Jwt(UncheckedBaseModel):
     extra_params: typing.Optional[typing.Dict[str, str]] = None
     token_url: str
     scopes: typing.Optional[typing.List[str]] = None
+    token_response_field: typing.Optional[OAuth2JwtResponseTokenResponseField] = None
     id: str
     used_by: typing.Optional[AuthConnectionDependencies] = None
 
@@ -217,6 +222,37 @@ class AuthConnectionsCreateResponse_ApiIntegrationOauth2AuthCode(UncheckedBaseMo
             extra = pydantic.Extra.allow
 
 
+class AuthConnectionsCreateResponse_ApiIntegrationOauth2CustomApp(UncheckedBaseModel):
+    """
+    The type of auth connection config
+    """
+
+    auth_type: typing.Literal["api_integration_oauth2_custom_app"] = "api_integration_oauth2_custom_app"
+    name: str
+    provider: str
+    token_url: str
+    scopes: typing.Optional[typing.List[str]] = None
+    scope_separator: typing.Optional[ApiIntegrationOAuth2CustomAppResponseScopeSeparator] = None
+    expires_at: str
+    integration_id: str
+    credential_id: str
+    status: typing.Optional[OAuthConnectionStatus] = None
+    status_detail: typing.Optional[str] = None
+    status_updated_at: typing.Optional[str] = None
+    client_id: str
+    id: str
+    used_by: typing.Optional[AuthConnectionDependencies] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class AuthConnectionsCreateResponse_WhatsappAuth(UncheckedBaseModel):
     """
     The type of auth connection config
@@ -249,6 +285,7 @@ AuthConnectionsCreateResponse = typing_extensions.Annotated[
         AuthConnectionsCreateResponse_Mtls,
         AuthConnectionsCreateResponse_CustomHeaderAuth,
         AuthConnectionsCreateResponse_ApiIntegrationOauth2AuthCode,
+        AuthConnectionsCreateResponse_ApiIntegrationOauth2CustomApp,
         AuthConnectionsCreateResponse_WhatsappAuth,
     ],
     UnionMetadata(discriminant="auth_type"),

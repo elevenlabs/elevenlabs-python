@@ -9,7 +9,7 @@ from .client_event import ClientEvent
 from .file_input_config_workflow_override import FileInputConfigWorkflowOverride
 
 
-class ConversationConfigWorkflowOverride(UncheckedBaseModel):
+class ConversationConfigWorkflowOverrideInput(UncheckedBaseModel):
     text_only: typing.Optional[bool] = pydantic.Field(default=None)
     """
     If enabled audio will not be processed and only text will be used, use to avoid audio pricing.

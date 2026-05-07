@@ -49,6 +49,7 @@ class PhoneNumbersGetResponse_SipTrunk(UncheckedBaseModel):
     outbound_trunk: typing.Optional[GetPhoneNumberOutboundSipTrunkConfigResponseModel] = None
     inbound_trunk: typing.Optional[GetPhoneNumberInboundSipTrunkConfigResponseModel] = None
     livekit_stack: LivekitStackType
+    store_sip_messages: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

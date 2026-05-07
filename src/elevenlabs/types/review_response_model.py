@@ -16,6 +16,7 @@ class ReviewResponseModel(UncheckedBaseModel):
     reject_reasons: typing.Optional[typing.List[ReviewResponseModelRejectReasonsItem]] = None
     scores_breakdown: typing.Optional[typing.Dict[str, typing.Optional[int]]] = None
     rejected_details: typing.Optional[str] = None
+    explanation: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

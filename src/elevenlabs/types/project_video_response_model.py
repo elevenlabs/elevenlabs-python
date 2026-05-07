@@ -38,14 +38,13 @@ class ProjectVideoResponseModel(UncheckedBaseModel):
     thumbnail_size: typing.List[int]
     thumbnail_sheets: typing.List[ProjectVideoThumbnailSheetResponseModel]
     start_time_ms: int
-    end_time_ms: int
+    end_time_ms: typing.Optional[int] = None
     asset_preview_signed_url: typing.Optional[str] = None
     source_video_id: typing.Optional[str] = None
     source_asset_id: typing.Optional[str] = None
+    source_platform_asset_id: typing.Optional[str] = None
     pending_blocks_metadata: typing.Optional[PendingBlocksMetadataModel] = None
     pending_external_audios_metadata: typing.Optional[PendingExternalAudiosMetadataModel] = None
-    pending_block_ids: typing.List[str]
-    pending_external_audio_ids: typing.List[str]
     speech_imported: typing.Optional[bool] = None
     pending_task: typing.Optional[PendingClipTask] = None
     audio_track_ready: typing.Optional[bool] = None

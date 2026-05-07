@@ -117,6 +117,7 @@ class BatchCallsClient:
         *,
         limit: typing.Optional[int] = None,
         last_doc: typing.Optional[str] = None,
+        agent_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> WorkspaceBatchCallsResponse:
         """
@@ -127,6 +128,9 @@ class BatchCallsClient:
         limit : typing.Optional[int]
 
         last_doc : typing.Optional[str]
+
+        agent_id : typing.Optional[str]
+            Filter batch calls to a single agent.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -146,9 +150,12 @@ class BatchCallsClient:
         client.conversational_ai.batch_calls.list(
             limit=1,
             last_doc="last_doc",
+            agent_id="agent_id",
         )
         """
-        _response = self._raw_client.list(limit=limit, last_doc=last_doc, request_options=request_options)
+        _response = self._raw_client.list(
+            limit=limit, last_doc=last_doc, agent_id=agent_id, request_options=request_options
+        )
         return _response.data
 
     def get(
@@ -382,6 +389,7 @@ class AsyncBatchCallsClient:
         *,
         limit: typing.Optional[int] = None,
         last_doc: typing.Optional[str] = None,
+        agent_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> WorkspaceBatchCallsResponse:
         """
@@ -392,6 +400,9 @@ class AsyncBatchCallsClient:
         limit : typing.Optional[int]
 
         last_doc : typing.Optional[str]
+
+        agent_id : typing.Optional[str]
+            Filter batch calls to a single agent.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -416,12 +427,15 @@ class AsyncBatchCallsClient:
             await client.conversational_ai.batch_calls.list(
                 limit=1,
                 last_doc="last_doc",
+                agent_id="agent_id",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.list(limit=limit, last_doc=last_doc, request_options=request_options)
+        _response = await self._raw_client.list(
+            limit=limit, last_doc=last_doc, agent_id=agent_id, request_options=request_options
+        )
         return _response.data
 
     async def get(

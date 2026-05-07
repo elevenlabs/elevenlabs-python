@@ -18,6 +18,7 @@ if typing.TYPE_CHECKING:
     from .auth_connections_create_response import (
         AuthConnectionsCreateResponse,
         AuthConnectionsCreateResponse_ApiIntegrationOauth2AuthCode,
+        AuthConnectionsCreateResponse_ApiIntegrationOauth2CustomApp,
         AuthConnectionsCreateResponse_BasicAuth,
         AuthConnectionsCreateResponse_BearerAuth,
         AuthConnectionsCreateResponse_CustomHeaderAuth,
@@ -37,6 +38,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AuthConnectionsCreateRequestBody_PrivateKeyJwt": ".auth_connections_create_request_body",
     "AuthConnectionsCreateResponse": ".auth_connections_create_response",
     "AuthConnectionsCreateResponse_ApiIntegrationOauth2AuthCode": ".auth_connections_create_response",
+    "AuthConnectionsCreateResponse_ApiIntegrationOauth2CustomApp": ".auth_connections_create_response",
     "AuthConnectionsCreateResponse_BasicAuth": ".auth_connections_create_response",
     "AuthConnectionsCreateResponse_BearerAuth": ".auth_connections_create_response",
     "AuthConnectionsCreateResponse_CustomHeaderAuth": ".auth_connections_create_response",
@@ -79,6 +81,7 @@ __all__ = [
     "AuthConnectionsCreateRequestBody_PrivateKeyJwt",
     "AuthConnectionsCreateResponse",
     "AuthConnectionsCreateResponse_ApiIntegrationOauth2AuthCode",
+    "AuthConnectionsCreateResponse_ApiIntegrationOauth2CustomApp",
     "AuthConnectionsCreateResponse_BasicAuth",
     "AuthConnectionsCreateResponse_BearerAuth",
     "AuthConnectionsCreateResponse_CustomHeaderAuth",

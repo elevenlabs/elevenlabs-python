@@ -17,7 +17,9 @@ from .conversation_history_feedback_common_model import ConversationHistoryFeedb
 from .conversation_history_metadata_common_model_phone_call import ConversationHistoryMetadataCommonModelPhoneCall
 from .conversation_history_rag_usage_common_model import ConversationHistoryRagUsageCommonModel
 from .conversation_initiation_source import ConversationInitiationSource
+from .conversation_voice_reward_model import ConversationVoiceRewardModel
 from .features_usage_common_model import FeaturesUsageCommonModel
+from .sms_conversation_info import SmsConversationInfo
 from .whats_app_conversation_info import WhatsAppConversationInfo
 
 
@@ -46,8 +48,10 @@ class ConversationHistoryMetadataCommonModel(UncheckedBaseModel):
     timezone: typing.Optional[str] = None
     async_metadata: typing.Optional[AsyncConversationMetadata] = None
     whatsapp: typing.Optional[WhatsAppConversationInfo] = None
+    sms: typing.Optional[SmsConversationInfo] = None
     agent_created_from: typing.Optional[AgentDefinitionSource] = None
     agent_last_updated_from: typing.Optional[AgentDefinitionSource] = None
+    voice_rewards: typing.Optional[typing.List[ConversationVoiceRewardModel]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

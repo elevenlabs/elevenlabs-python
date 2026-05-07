@@ -12,6 +12,7 @@ from ....types.agent_failure_response_example import AgentFailureResponseExample
 from ....types.agent_successful_response_example import AgentSuccessfulResponseExample
 from ....types.conversation_history_transcript_common_model_output import ConversationHistoryTranscriptCommonModelOutput
 from ....types.dynamic_variable_value_type_output import DynamicVariableValueTypeOutput
+from ....types.llm import Llm
 from ....types.simulation_tool_mock_behavior_config import SimulationToolMockBehaviorConfig
 from ....types.test_from_conversation_metadata_output import TestFromConversationMetadataOutput
 from ....types.unit_test_tool_call_evaluation_model_output import UnitTestToolCallEvaluationModelOutput
@@ -68,6 +69,8 @@ class TestsUpdateResponse_Simulation(UncheckedBaseModel):
     simulation_max_turns: typing.Optional[int] = None
     simulation_environment: typing.Optional[str] = None
     tool_mock_config: typing.Optional[SimulationToolMockBehaviorConfig] = None
+    evaluation_model: typing.Optional[Llm] = None
+    simulated_user_model: typing.Optional[Llm] = None
     id: str
     name: str
 
