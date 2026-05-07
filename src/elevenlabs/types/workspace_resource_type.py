@@ -40,6 +40,7 @@ WorkspaceResourceType = typing.Union[
         "songs",
         "avatars",
         "avatar_video_generations",
+        "resource_collection",
     ],
     typing.Any,
 ]

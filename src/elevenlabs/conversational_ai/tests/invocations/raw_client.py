@@ -26,7 +26,7 @@ class RawInvocationsClient:
     def list(
         self,
         *,
-        agent_id: str,
+        agent_id: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -36,7 +36,7 @@ class RawInvocationsClient:
 
         Parameters
         ----------
-        agent_id : str
+        agent_id : typing.Optional[str]
             Filter by agent ID
 
         page_size : typing.Optional[int]
@@ -232,7 +232,7 @@ class AsyncRawInvocationsClient:
     async def list(
         self,
         *,
-        agent_id: str,
+        agent_id: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -242,7 +242,7 @@ class AsyncRawInvocationsClient:
 
         Parameters
         ----------
-        agent_id : str
+        agent_id : typing.Optional[str]
             Filter by agent ID
 
         page_size : typing.Optional[int]

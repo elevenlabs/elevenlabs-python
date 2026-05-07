@@ -33,7 +33,7 @@ class RawVoicesClient:
         self, *, show_legacy: typing.Optional[bool] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetVoicesResponse]:
         """
-        Returns a list of all available voices for a user.
+        Returns a list of all available voices for a user. Stops working once the user's workspace exceeds 500 voices.
 
         Parameters
         ----------
@@ -673,7 +673,7 @@ class AsyncRawVoicesClient:
         self, *, show_legacy: typing.Optional[bool] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetVoicesResponse]:
         """
-        Returns a list of all available voices for a user.
+        Returns a list of all available voices for a user. Stops working once the user's workspace exceeds 500 voices.
 
         Parameters
         ----------

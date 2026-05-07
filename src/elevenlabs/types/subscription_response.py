@@ -8,6 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .billing_period import BillingPeriod
 from .character_refresh_period import CharacterRefreshPeriod
 from .currency import Currency
+from .price import Price
 from .subscription_response_model_max_credit_limit_extension import SubscriptionResponseModelMaxCreditLimitExtension
 from .subscription_status_type import SubscriptionStatusType
 
@@ -101,6 +102,11 @@ class SubscriptionResponse(UncheckedBaseModel):
     currency: typing.Optional[Currency] = pydantic.Field(default=None)
     """
     The currency of the user's subscription.
+    """
+
+    current_overage: Price = pydantic.Field()
+    """
+    The current usage-based overage cost.
     """
 
     status: SubscriptionStatusType = pydantic.Field()

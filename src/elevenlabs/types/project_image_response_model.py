@@ -7,13 +7,15 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .canvas_placement import CanvasPlacement
 from .clip_animation import ClipAnimation
+from .image_analysis import ImageAnalysis
+from .pending_clip_task import PendingClipTask
 
 
 class ProjectImageResponseModel(UncheckedBaseModel):
     image_id: str
     filename: str
-    signed_url: str
-    thumbnail_signed_url: str
+    signed_url: typing.Optional[str] = None
+    thumbnail_signed_url: typing.Optional[str] = None
     source: typing.Optional[typing.Literal["upload"]] = None
     file_size_bytes: int
     width: int
@@ -29,6 +31,10 @@ class ProjectImageResponseModel(UncheckedBaseModel):
     updated_at_ms: int
     current_snapshot_id: typing.Optional[str] = None
     source_asset_id: typing.Optional[str] = None
+    source_platform_asset_id: typing.Optional[str] = None
+    error: typing.Optional[str] = None
+    pending_task: typing.Optional[PendingClipTask] = None
+    analysis: typing.Optional[ImageAnalysis] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

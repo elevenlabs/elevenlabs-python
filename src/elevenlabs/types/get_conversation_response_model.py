@@ -36,6 +36,10 @@ class GetConversationResponseModel(UncheckedBaseModel):
     has_user_audio: bool
     has_response_audio: bool
     transcript: typing.List[ConversationHistoryTranscriptResponseModel]
+    tag_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Conversation tag ids assigned to this conversation.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

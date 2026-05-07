@@ -87,7 +87,7 @@ class McpServerConfigInput(UncheckedBaseModel):
 
     response_timeout_secs: typing.Optional[int] = pydantic.Field(default=None)
     """
-    The maximum time in seconds to wait for each MCP tool call to complete. Must be between 5 and 120 seconds (inclusive).
+    The maximum time in seconds to wait for each MCP tool call to complete. Must be between 5 and 300 seconds (inclusive).
     """
 
     tool_config_overrides: typing.Optional[typing.List[McpToolConfigOverrideInput]] = pydantic.Field(default=None)

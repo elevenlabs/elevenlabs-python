@@ -8,6 +8,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .raw_client import AsyncRawWorkspaceClient, RawWorkspaceClient
 
 if typing.TYPE_CHECKING:
+    from .audit_logs.client import AsyncAuditLogsClient, AuditLogsClient
     from .auth_connections.client import AsyncAuthConnectionsClient, AuthConnectionsClient
     from .groups.client import AsyncGroupsClient, GroupsClient
     from .invites.client import AsyncInvitesClient, InvitesClient
@@ -20,6 +21,7 @@ class WorkspaceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawWorkspaceClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
+        self._audit_logs: typing.Optional[AuditLogsClient] = None
         self._auth_connections: typing.Optional[AuthConnectionsClient] = None
         self._groups: typing.Optional[GroupsClient] = None
         self._invites: typing.Optional[InvitesClient] = None
@@ -37,6 +39,14 @@ class WorkspaceClient:
         RawWorkspaceClient
         """
         return self._raw_client
+
+    @property
+    def audit_logs(self):
+        if self._audit_logs is None:
+            from .audit_logs.client import AuditLogsClient  # noqa: E402
+
+            self._audit_logs = AuditLogsClient(client_wrapper=self._client_wrapper)
+        return self._audit_logs
 
     @property
     def auth_connections(self):
@@ -91,6 +101,7 @@ class AsyncWorkspaceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawWorkspaceClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
+        self._audit_logs: typing.Optional[AsyncAuditLogsClient] = None
         self._auth_connections: typing.Optional[AsyncAuthConnectionsClient] = None
         self._groups: typing.Optional[AsyncGroupsClient] = None
         self._invites: typing.Optional[AsyncInvitesClient] = None
@@ -108,6 +119,14 @@ class AsyncWorkspaceClient:
         AsyncRawWorkspaceClient
         """
         return self._raw_client
+
+    @property
+    def audit_logs(self):
+        if self._audit_logs is None:
+            from .audit_logs.client import AsyncAuditLogsClient  # noqa: E402
+
+            self._audit_logs = AsyncAuditLogsClient(client_wrapper=self._client_wrapper)
+        return self._audit_logs
 
     @property
     def auth_connections(self):

@@ -9,7 +9,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_config_api_model_workflow_override_input import AgentConfigApiModelWorkflowOverrideInput
 from .asr_conversational_config_workflow_override import AsrConversationalConfigWorkflowOverride
-from .conversation_config_workflow_override import ConversationConfigWorkflowOverride
+from .conversation_config_workflow_override_input import ConversationConfigWorkflowOverrideInput
 from .language_preset_input import LanguagePresetInput
 from .tts_conversational_config_workflow_override_input import TtsConversationalConfigWorkflowOverrideInput
 from .turn_config_workflow_override import TurnConfigWorkflowOverride
@@ -32,7 +32,7 @@ class ConversationalConfigApiModelWorkflowOverrideInput(UncheckedBaseModel):
     Configuration for conversational text to speech
     """
 
-    conversation: typing.Optional[ConversationConfigWorkflowOverride] = pydantic.Field(default=None)
+    conversation: typing.Optional[ConversationConfigWorkflowOverrideInput] = pydantic.Field(default=None)
     """
     Configuration for conversational events
     """

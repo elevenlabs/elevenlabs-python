@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .resource_access_info_anonymous_access_level_override import ResourceAccessInfoAnonymousAccessLevelOverride
 from .resource_access_info_role import ResourceAccessInfoRole
 
 
@@ -27,6 +28,13 @@ class ResourceAccessInfo(UncheckedBaseModel):
     role: ResourceAccessInfoRole = pydantic.Field()
     """
     The role of the user making the request
+    """
+
+    anonymous_access_level_override: typing.Optional[ResourceAccessInfoAnonymousAccessLevelOverride] = pydantic.Field(
+        default=None
+    )
+    """
+    The access level for anonymous users. If None, the resource is not shared publicly.
     """
 
     if IS_PYDANTIC_V2:

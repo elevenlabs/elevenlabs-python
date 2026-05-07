@@ -51,7 +51,7 @@ class VoicesClient:
         self, *, show_legacy: typing.Optional[bool] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> GetVoicesResponse:
         """
-        Returns a list of all available voices for a user.
+        Returns a list of all available voices for a user. Stops working once the user's workspace exceeds 500 voices.
 
         Parameters
         ----------
@@ -160,6 +160,7 @@ class VoicesClient:
             fine_tuning_state="fine_tuning_state",
             collection_id="collection_id",
             include_total_count=True,
+            voice_ids=["voice_ids"],
         )
         """
         _response = self._raw_client.search(
@@ -473,6 +474,8 @@ class VoicesClient:
             language="language",
             locale="locale",
             search="search",
+            use_cases=["use_cases"],
+            descriptives=["descriptives"],
             featured=True,
             min_notice_period_days=1,
             include_custom_rates=True,
@@ -610,7 +613,7 @@ class AsyncVoicesClient:
         self, *, show_legacy: typing.Optional[bool] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> GetVoicesResponse:
         """
-        Returns a list of all available voices for a user.
+        Returns a list of all available voices for a user. Stops working once the user's workspace exceeds 500 voices.
 
         Parameters
         ----------
@@ -732,6 +735,7 @@ class AsyncVoicesClient:
                 fine_tuning_state="fine_tuning_state",
                 collection_id="collection_id",
                 include_total_count=True,
+                voice_ids=["voice_ids"],
             )
 
 
@@ -1085,6 +1089,8 @@ class AsyncVoicesClient:
                 language="language",
                 locale="locale",
                 search="search",
+                use_cases=["use_cases"],
+                descriptives=["descriptives"],
                 featured=True,
                 min_notice_period_days=1,
                 include_custom_rates=True,

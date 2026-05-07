@@ -6,6 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .account_change_activity_id import AccountChangeActivityId
+    from .actor_model import ActorModel
     from .add_chapter_response_model import AddChapterResponseModel
     from .add_knowledge_base_response_model import AddKnowledgeBaseResponseModel
     from .add_project_request import AddProjectRequest
@@ -85,9 +87,14 @@ if typing.TYPE_CHECKING:
     from .analysis_property_constant_value import AnalysisPropertyConstantValue
     from .analysis_property_type import AnalysisPropertyType
     from .analysis_scope import AnalysisScope
+    from .api_integration_doc_response import ApiIntegrationDocResponse
     from .api_integration_o_auth_2_auth_code_response import ApiIntegrationOAuth2AuthCodeResponse
     from .api_integration_o_auth_2_auth_code_response_scope_separator import (
         ApiIntegrationOAuth2AuthCodeResponseScopeSeparator,
+    )
+    from .api_integration_o_auth_2_custom_app_response import ApiIntegrationOAuth2CustomAppResponse
+    from .api_integration_o_auth_2_custom_app_response_scope_separator import (
+        ApiIntegrationOAuth2CustomAppResponseScopeSeparator,
     )
     from .api_integration_webhook_overrides import ApiIntegrationWebhookOverrides
     from .api_integration_webhook_overrides_request_headers_value import (
@@ -232,8 +239,13 @@ if typing.TYPE_CHECKING:
     )
     from .auth_connection_locator import AuthConnectionLocator
     from .auth_settings import AuthSettings
+    from .authentication_activity_id import AuthenticationActivityId
     from .authorization_method import AuthorizationMethod
     from .auto_sync_info import AutoSyncInfo
+    from .background_music_config import BackgroundMusicConfig
+    from .background_music_config_workflow_override import BackgroundMusicConfigWorkflowOverride
+    from .background_music_preset_id import BackgroundMusicPresetId
+    from .background_music_source_type import BackgroundMusicSourceType
     from .backup_llm_default import BackupLlmDefault
     from .backup_llm_disabled import BackupLlmDisabled
     from .backup_llm_override import BackupLlmOverride
@@ -253,6 +265,9 @@ if typing.TYPE_CHECKING:
     from .built_in_tools_output import BuiltInToolsOutput
     from .built_in_tools_workflow_override_input import BuiltInToolsWorkflowOverrideInput
     from .built_in_tools_workflow_override_output import BuiltInToolsWorkflowOverrideOutput
+    from .cancel_calendar_event_params import CancelCalendarEventParams
+    from .cancel_group_session_for_all_params import CancelGroupSessionForAllParams
+    from .cancel_group_session_registration_params import CancelGroupSessionRegistrationParams
     from .canvas_placement import CanvasPlacement
     from .caption_style_character_animation_model import CaptionStyleCharacterAnimationModel
     from .caption_style_character_animation_model_enter_type import CaptionStyleCharacterAnimationModelEnterType
@@ -336,6 +351,7 @@ if typing.TYPE_CHECKING:
     )
     from .content_threshold_guardrail import ContentThresholdGuardrail
     from .content_threshold_guardrail_threshold import ContentThresholdGuardrailThreshold
+    from .contextual_update_info import ContextualUpdateInfo
     from .contributor import Contributor
     from .conv_ai_dynamic_variable import ConvAiDynamicVariable
     from .conv_ai_env_var_locator import ConvAiEnvVarLocator
@@ -360,15 +376,18 @@ if typing.TYPE_CHECKING:
     from .conv_ai_user_secret_db_model import ConvAiUserSecretDbModel
     from .conv_ai_webhooks import ConvAiWebhooks
     from .conv_ai_workspace_stored_secret_config import ConvAiWorkspaceStoredSecretConfig
+    from .conversation_asr_usage_model import ConversationAsrUsageModel
     from .conversation_charging_common_model import ConversationChargingCommonModel
-    from .conversation_config import ConversationConfig
     from .conversation_config_client_override_config_input import ConversationConfigClientOverrideConfigInput
     from .conversation_config_client_override_config_output import ConversationConfigClientOverrideConfigOutput
     from .conversation_config_client_override_input import ConversationConfigClientOverrideInput
     from .conversation_config_client_override_output import ConversationConfigClientOverrideOutput
+    from .conversation_config_input import ConversationConfigInput
+    from .conversation_config_output import ConversationConfigOutput
     from .conversation_config_override import ConversationConfigOverride
     from .conversation_config_override_config import ConversationConfigOverrideConfig
-    from .conversation_config_workflow_override import ConversationConfigWorkflowOverride
+    from .conversation_config_workflow_override_input import ConversationConfigWorkflowOverrideInput
+    from .conversation_config_workflow_override_output import ConversationConfigWorkflowOverrideOutput
     from .conversation_deletion_settings import ConversationDeletionSettings
     from .conversation_feedback_type import ConversationFeedbackType
     from .conversation_history_analysis_common_model import ConversationHistoryAnalysisCommonModel
@@ -430,6 +449,7 @@ if typing.TYPE_CHECKING:
     from .conversation_history_transcript_system_tool_result_common_model_input_result import (
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_EndCallSuccess,
+        ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_KnowledgeBaseRagSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_LanguageDetectionSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfError,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfSuccess,
@@ -448,6 +468,7 @@ if typing.TYPE_CHECKING:
     from .conversation_history_transcript_system_tool_result_common_model_output_result import (
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndCallSuccess,
+        ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_KnowledgeBaseRagSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_LanguageDetectionSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfError,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfSuccess,
@@ -516,10 +537,14 @@ if typing.TYPE_CHECKING:
     from .conversation_source import ConversationSource
     from .conversation_summary_response_model import ConversationSummaryResponseModel
     from .conversation_summary_response_model_status import ConversationSummaryResponseModelStatus
+    from .conversation_tag_response_model import ConversationTagResponseModel
     from .conversation_token_db_model import ConversationTokenDbModel
     from .conversation_token_purpose import ConversationTokenPurpose
+    from .conversation_tts_usage_model import ConversationTtsUsageModel
     from .conversation_turn_metrics import ConversationTurnMetrics
     from .conversation_user_response_model import ConversationUserResponseModel
+    from .conversation_voice_reward_model import ConversationVoiceRewardModel
+    from .conversation_voice_usage_model import ConversationVoiceUsageModel
     from .conversational_config import ConversationalConfig
     from .conversational_config_api_model_workflow_override_input import (
         ConversationalConfigApiModelWorkflowOverrideInput,
@@ -548,6 +573,7 @@ if typing.TYPE_CHECKING:
     from .create_o_auth_2_client_creds_request import CreateOAuth2ClientCredsRequest
     from .create_o_auth_2_jwt_request import CreateOAuth2JwtRequest
     from .create_o_auth_2_jwt_request_algorithm import CreateOAuth2JwtRequestAlgorithm
+    from .create_o_auth_2_jwt_request_token_response_field import CreateOAuth2JwtRequestTokenResponseField
     from .create_phone_number_response_model import CreatePhoneNumberResponseModel
     from .create_previously_generated_voice_request import CreatePreviouslyGeneratedVoiceRequest
     from .create_private_key_jwt_request import CreatePrivateKeyJwtRequest
@@ -596,6 +622,7 @@ if typing.TYPE_CHECKING:
     from .delete_client_interaction_params import DeleteClientInteractionParams
     from .delete_client_params import DeleteClientParams
     from .delete_dubbing_response_model import DeleteDubbingResponseModel
+    from .delete_group_session_params import DeleteGroupSessionParams
     from .delete_history_item_response import DeleteHistoryItemResponse
     from .delete_holiday_params import DeleteHolidayParams
     from .delete_location_params import DeleteLocationParams
@@ -624,6 +651,7 @@ if typing.TYPE_CHECKING:
     from .dependent_unknown_tool_identifier import DependentUnknownToolIdentifier
     from .detailed_music_response import DetailedMusicResponse
     from .detected_entity import DetectedEntity
+    from .device_model import DeviceModel
     from .dialogue_input import DialogueInput
     from .dialogue_input_response_model import DialogueInputResponseModel
     from .dialogue_text_alignment import DialogueTextAlignment
@@ -642,7 +670,6 @@ if typing.TYPE_CHECKING:
     from .dubbing_media_reference import DubbingMediaReference
     from .dubbing_metadata_page_response_model import DubbingMetadataPageResponseModel
     from .dubbing_metadata_response import DubbingMetadataResponse
-    from .dubbing_model import DubbingModel
     from .dubbing_render_response_model import DubbingRenderResponseModel
     from .dubbing_resource import DubbingResource
     from .dubbing_transcript import DubbingTranscript
@@ -673,6 +700,7 @@ if typing.TYPE_CHECKING:
     from .end_call_tool_config import EndCallToolConfig
     from .end_call_tool_result_model import EndCallToolResultModel
     from .end_call_trigger_action import EndCallTriggerAction
+    from .entity_management_activity_id import EntityManagementActivityId
     from .environment_auth_connection_locator import EnvironmentAuthConnectionLocator
     from .environment_variable_auth_connection_value import EnvironmentVariableAuthConnectionValue
     from .environment_variable_auth_connection_value_request import EnvironmentVariableAuthConnectionValueRequest
@@ -752,6 +780,7 @@ if typing.TYPE_CHECKING:
     from .get_conv_ai_settings_response_model import GetConvAiSettingsResponseModel
     from .get_conversation_response_model import GetConversationResponseModel
     from .get_conversation_response_model_status import GetConversationResponseModelStatus
+    from .get_conversation_tags_page_response_model import GetConversationTagsPageResponseModel
     from .get_conversation_users_page_response_model import GetConversationUsersPageResponseModel
     from .get_conversations_page_response_model import GetConversationsPageResponseModel
     from .get_knowledge_base_dependent_agents_response_model import GetKnowledgeBaseDependentAgentsResponseModel
@@ -844,6 +873,7 @@ if typing.TYPE_CHECKING:
         GetSecretDependenciesResponseModelDependenciesZeroItem_Unknown,
     )
     from .get_simulation_test_response_model import GetSimulationTestResponseModel
+    from .get_sip_log_messages_response import GetSipLogMessagesResponse
     from .get_speech_history_response import GetSpeechHistoryResponse
     from .get_test_invocations_page_response_model import GetTestInvocationsPageResponseModel
     from .get_test_suite_invocation_response_model import GetTestSuiteInvocationResponseModel
@@ -861,6 +891,7 @@ if typing.TYPE_CHECKING:
     from .get_voices_v_2_response import GetVoicesV2Response
     from .get_whats_app_account_response import GetWhatsAppAccountResponse
     from .get_workspace_secrets_response_model import GetWorkspaceSecretsResponseModel
+    from .group_management_activity_id import GroupManagementActivityId
     from .guardrail_execution_mode import GuardrailExecutionMode
     from .guardrails_v_1_input import GuardrailsV1Input
     from .guardrails_v_1_output import GuardrailsV1Output
@@ -868,9 +899,14 @@ if typing.TYPE_CHECKING:
     from .history_alignments_response_model import HistoryAlignmentsResponseModel
     from .history_item_response import HistoryItemResponse
     from .html_export_options import HtmlExportOptions
+    from .http_request_model import HttpRequestModel
     from .http_validation_error import HttpValidationError
     from .icon import Icon
+    from .image_analysis import ImageAnalysis
+    from .image_analysis_result import ImageAnalysisResult
+    from .image_analysis_status import ImageAnalysisStatus
     from .image_avatar import ImageAvatar
+    from .image_subject import ImageSubject
     from .inbound_sip_trunk_config_request_model import InboundSipTrunkConfigRequestModel
     from .initialise_context import InitialiseContext
     from .initialize_connection import InitializeConnection
@@ -899,6 +935,9 @@ if typing.TYPE_CHECKING:
         KnowledgeBaseFolderPathSegmentSummaryResponseModel,
     )
     from .knowledge_base_locator import KnowledgeBaseLocator
+    from .knowledge_base_rag_tool_config import KnowledgeBaseRagToolConfig
+    from .knowledge_base_rag_tool_result_model import KnowledgeBaseRagToolResultModel
+    from .knowledge_base_rag_tool_status import KnowledgeBaseRagToolStatus
     from .knowledge_base_sort_by import KnowledgeBaseSortBy
     from .knowledge_base_source_file_url_response_model import KnowledgeBaseSourceFileUrlResponseModel
     from .knowledge_base_summary_batch_successful_response_model import KnowledgeBaseSummaryBatchSuccessfulResponseModel
@@ -916,6 +955,7 @@ if typing.TYPE_CHECKING:
     from .language_preset_output import LanguagePresetOutput
     from .language_preset_translation import LanguagePresetTranslation
     from .language_response import LanguageResponse
+    from .leave_message_params import LeaveMessageParams
     from .library_voice_response import LibraryVoiceResponse
     from .library_voice_response_model_category import LibraryVoiceResponseModelCategory
     from .list_agent_rules_params import ListAgentRulesParams
@@ -924,6 +964,7 @@ if typing.TYPE_CHECKING:
     from .list_auth_connections_response_auth_connections_item import (
         ListAuthConnectionsResponseAuthConnectionsItem,
         ListAuthConnectionsResponseAuthConnectionsItem_ApiIntegrationOauth2AuthCode,
+        ListAuthConnectionsResponseAuthConnectionsItem_ApiIntegrationOauth2CustomApp,
         ListAuthConnectionsResponseAuthConnectionsItem_BasicAuth,
         ListAuthConnectionsResponseAuthConnectionsItem_BearerAuth,
         ListAuthConnectionsResponseAuthConnectionsItem_CustomHeaderAuth,
@@ -936,11 +977,13 @@ if typing.TYPE_CHECKING:
     from .list_calendar_events_params import ListCalendarEventsParams
     from .list_client_interactions_params import ListClientInteractionsParams
     from .list_clients_params import ListClientsParams
+    from .list_group_sessions_params import ListGroupSessionsParams
     from .list_holidays_params import ListHolidaysParams
     from .list_locations_params import ListLocationsParams
     from .list_mcp_tools_response_model import ListMcpToolsResponseModel
     from .list_products_params import ListProductsParams
     from .list_response_agent_branch_summary import ListResponseAgentBranchSummary
+    from .list_response_api_integration_doc_response import ListResponseApiIntegrationDocResponse
     from .list_response_meta import ListResponseMeta
     from .list_services_params import ListServicesParams
     from .list_staff_params import ListStaffParams
@@ -1035,6 +1078,7 @@ if typing.TYPE_CHECKING:
     from .o_auth_2_client_creds_response import OAuth2ClientCredsResponse
     from .o_auth_2_jwt_response import OAuth2JwtResponse
     from .o_auth_2_jwt_response_algorithm import OAuth2JwtResponseAlgorithm
+    from .o_auth_2_jwt_response_token_response_field import OAuth2JwtResponseTokenResponseField
     from .o_auth_connection_status import OAuthConnectionStatus
     from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput
     from .object_json_schema_property_input_properties_value import ObjectJsonSchemaPropertyInputPropertiesValue
@@ -1096,6 +1140,7 @@ if typing.TYPE_CHECKING:
     from .post_workspace_secret_response_model import PostWorkspaceSecretResponseModel
     from .pre_tool_speech_mode import PreToolSpeechMode
     from .preview_audio_db_model import PreviewAudioDbModel
+    from .price import Price
     from .privacy_config_input import PrivacyConfigInput
     from .privacy_config_output import PrivacyConfigOutput
     from .private_key_jwt_response import PrivateKeyJwtResponse
@@ -1245,6 +1290,7 @@ if typing.TYPE_CHECKING:
     from .referenced_tool_common_model_type import ReferencedToolCommonModelType
     from .regex_parameter_evaluation_strategy import RegexParameterEvaluationStrategy
     from .region_config_request import RegionConfigRequest
+    from .register_for_group_session_params import RegisterForGroupSessionParams
     from .remove_member_from_group_request import RemoveMemberFromGroupRequest
     from .render import Render
     from .render_status import RenderStatus
@@ -1253,6 +1299,7 @@ if typing.TYPE_CHECKING:
     from .required_constraint import RequiredConstraint
     from .required_constraints import RequiredConstraints
     from .resource_access_info import ResourceAccessInfo
+    from .resource_access_info_anonymous_access_level_override import ResourceAccessInfoAnonymousAccessLevelOverride
     from .resource_access_info_role import ResourceAccessInfoRole
     from .resource_metadata_response_model import ResourceMetadataResponseModel
     from .resource_metadata_response_model_anonymous_access_level_override import (
@@ -1277,6 +1324,7 @@ if typing.TYPE_CHECKING:
     from .say_node_literal_message_output import SayNodeLiteralMessageOutput
     from .say_node_prompt_message_input import SayNodePromptMessageInput
     from .say_node_prompt_message_output import SayNodePromptMessageOutput
+    from .schedule_group_session_params import ScheduleGroupSessionParams
     from .scoped_analysis_result import ScopedAnalysisResult
     from .scribe_auth_error_payload import ScribeAuthErrorPayload
     from .scribe_chunk_size_exceeded_error_payload import ScribeChunkSizeExceededErrorPayload
@@ -1312,6 +1360,7 @@ if typing.TYPE_CHECKING:
     from .session_started_payload_config import SessionStartedPayloadConfig
     from .session_started_payload_config_commit_strategy import SessionStartedPayloadConfigCommitStrategy
     from .set_booking_slug_params import SetBookingSlugParams
+    from .severity_id import SeverityId
     from .sfx_source_context import SfxSourceContext
     from .share_option_response_model import ShareOptionResponseModel
     from .share_option_response_model_type import ShareOptionResponseModelType
@@ -1322,6 +1371,8 @@ if typing.TYPE_CHECKING:
     from .single_test_run_request_model import SingleTestRunRequestModel
     from .single_use_token_response_model import SingleUseTokenResponseModel
     from .single_use_token_type import SingleUseTokenType
+    from .sip_log_message import SipLogMessage
+    from .sip_log_message_direction import SipLogMessageDirection
     from .sip_media_encryption_enum import SipMediaEncryptionEnum
     from .sip_trunk_credentials_request_model import SipTrunkCredentialsRequestModel
     from .sip_trunk_outbound_call_response import SipTrunkOutboundCallResponse
@@ -1330,6 +1381,8 @@ if typing.TYPE_CHECKING:
     from .sip_uri_transfer_destination import SipUriTransferDestination
     from .skip_turn_tool_config import SkipTurnToolConfig
     from .skip_turn_tool_response_model import SkipTurnToolResponseModel
+    from .sms_conversation_info import SmsConversationInfo
+    from .sms_conversation_info_direction import SmsConversationInfoDirection
     from .soft_timeout_config import SoftTimeoutConfig
     from .soft_timeout_config_override import SoftTimeoutConfigOverride
     from .soft_timeout_config_override_config import SoftTimeoutConfigOverrideConfig
@@ -1346,6 +1399,8 @@ if typing.TYPE_CHECKING:
     from .speaker_separation_response_model_status import SpeakerSeparationResponseModelStatus
     from .speaker_track import SpeakerTrack
     from .speaker_updated_response import SpeakerUpdatedResponse
+    from .speech_engine_config import SpeechEngineConfig
+    from .speech_engine_config_request_headers_value import SpeechEngineConfigRequestHeadersValue
     from .speech_history_item_response import SpeechHistoryItemResponse
     from .speech_history_item_response_model_source import SpeechHistoryItemResponseModelSource
     from .speech_history_item_response_model_voice_category import SpeechHistoryItemResponseModelVoiceCategory
@@ -1358,6 +1413,7 @@ if typing.TYPE_CHECKING:
     from .srt_export_options import SrtExportOptions
     from .start_pvc_voice_training_response_model import StartPvcVoiceTrainingResponseModel
     from .start_speaker_separation_response_model import StartSpeakerSeparationResponseModel
+    from .status_id import StatusId
     from .streaming_audio_chunk_with_timestamps_and_voice_segments_response_model import (
         StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel,
     )
@@ -1378,6 +1434,7 @@ if typing.TYPE_CHECKING:
     from .system_tool_config_input_params import (
         SystemToolConfigInputParams,
         SystemToolConfigInputParams_EndCall,
+        SystemToolConfigInputParams_KnowledgeBaseRag,
         SystemToolConfigInputParams_LanguageDetection,
         SystemToolConfigInputParams_PlayKeypadTouchTone,
         SystemToolConfigInputParams_SkipTurn,
@@ -1389,6 +1446,7 @@ if typing.TYPE_CHECKING:
     from .system_tool_config_output_params import (
         SystemToolConfigOutputParams,
         SystemToolConfigOutputParams_EndCall,
+        SystemToolConfigOutputParams_KnowledgeBaseRag,
         SystemToolConfigOutputParams_LanguageDetection,
         SystemToolConfigOutputParams_PlayKeypadTouchTone,
         SystemToolConfigOutputParams_SkipTurn,
@@ -1539,6 +1597,7 @@ if typing.TYPE_CHECKING:
     from .update_chapter_request import UpdateChapterRequest
     from .update_client_params import UpdateClientParams
     from .update_customer_facing_config_params import UpdateCustomerFacingConfigParams
+    from .update_group_session_seats_params import UpdateGroupSessionSeatsParams
     from .update_holiday_params import UpdateHolidayParams
     from .update_location_params import UpdateLocationParams
     from .update_product_params import UpdateProductParams
@@ -1551,11 +1610,15 @@ if typing.TYPE_CHECKING:
     from .update_tool_call_unit_test_request import UpdateToolCallUnitTestRequest
     from .update_workspace_member_response_model import UpdateWorkspaceMemberResponseModel
     from .url_avatar import UrlAvatar
+    from .url_model import UrlModel
     from .usage_aggregation_interval import UsageAggregationInterval
     from .usage_characters_response_model import UsageCharactersResponseModel
     from .user import User
+    from .user_access_management_activity_id import UserAccessManagementActivityId
     from .user_feedback import UserFeedback
     from .user_feedback_score import UserFeedbackScore
+    from .user_model import UserModel
+    from .user_type_id import UserTypeId
     from .users_sort_by import UsersSortBy
     from .utterance_response_model import UtteranceResponseModel
     from .vad_config import VadConfig
@@ -1614,6 +1677,7 @@ if typing.TYPE_CHECKING:
     )
     from .webhook_tool_config_input import WebhookToolConfigInput
     from .webhook_tool_config_output import WebhookToolConfigOutput
+    from .webhook_transcript_format import WebhookTranscriptFormat
     from .webhook_usage_type import WebhookUsageType
     from .websocket_tts_client_message_multi import WebsocketTtsClientMessageMulti
     from .websocket_tts_server_message_multi import WebsocketTtsServerMessageMulti
@@ -1792,6 +1856,9 @@ if typing.TYPE_CHECKING:
     )
     from .workspace_api_key_list_response_model import WorkspaceApiKeyListResponseModel
     from .workspace_api_key_response_model import WorkspaceApiKeyResponseModel
+    from .workspace_audit_log_entry_response import WorkspaceAuditLogEntryResponse
+    from .workspace_audit_log_entry_response_activity_id import WorkspaceAuditLogEntryResponseActivityId
+    from .workspace_audit_logs_page_response import WorkspaceAuditLogsPageResponse
     from .workspace_batch_calls_response import WorkspaceBatchCallsResponse
     from .workspace_create_api_key_response_model import WorkspaceCreateApiKeyResponseModel
     from .workspace_create_webhook_response_model import WorkspaceCreateWebhookResponseModel
@@ -1807,6 +1874,8 @@ if typing.TYPE_CHECKING:
     from .workspace_webhook_response_model import WorkspaceWebhookResponseModel
     from .workspace_webhook_usage_response_model import WorkspaceWebhookUsageResponseModel
 _dynamic_imports: typing.Dict[str, str] = {
+    "AccountChangeActivityId": ".account_change_activity_id",
+    "ActorModel": ".actor_model",
     "AddChapterResponseModel": ".add_chapter_response_model",
     "AddKnowledgeBaseResponseModel": ".add_knowledge_base_response_model",
     "AddProjectRequest": ".add_project_request",
@@ -1880,8 +1949,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AnalysisPropertyConstantValue": ".analysis_property_constant_value",
     "AnalysisPropertyType": ".analysis_property_type",
     "AnalysisScope": ".analysis_scope",
+    "ApiIntegrationDocResponse": ".api_integration_doc_response",
     "ApiIntegrationOAuth2AuthCodeResponse": ".api_integration_o_auth_2_auth_code_response",
     "ApiIntegrationOAuth2AuthCodeResponseScopeSeparator": ".api_integration_o_auth_2_auth_code_response_scope_separator",
+    "ApiIntegrationOAuth2CustomAppResponse": ".api_integration_o_auth_2_custom_app_response",
+    "ApiIntegrationOAuth2CustomAppResponseScopeSeparator": ".api_integration_o_auth_2_custom_app_response_scope_separator",
     "ApiIntegrationWebhookOverrides": ".api_integration_webhook_overrides",
     "ApiIntegrationWebhookOverridesRequestHeadersValue": ".api_integration_webhook_overrides_request_headers_value",
     "ApiIntegrationWebhookOverridesSchemaOverridesValue": ".api_integration_webhook_overrides_schema_overrides_value",
@@ -2011,8 +2083,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AuthConnectionDependenciesToolsItem_Unknown": ".auth_connection_dependencies_tools_item",
     "AuthConnectionLocator": ".auth_connection_locator",
     "AuthSettings": ".auth_settings",
+    "AuthenticationActivityId": ".authentication_activity_id",
     "AuthorizationMethod": ".authorization_method",
     "AutoSyncInfo": ".auto_sync_info",
+    "BackgroundMusicConfig": ".background_music_config",
+    "BackgroundMusicConfigWorkflowOverride": ".background_music_config_workflow_override",
+    "BackgroundMusicPresetId": ".background_music_preset_id",
+    "BackgroundMusicSourceType": ".background_music_source_type",
     "BackupLlmDefault": ".backup_llm_default",
     "BackupLlmDisabled": ".backup_llm_disabled",
     "BackupLlmOverride": ".backup_llm_override",
@@ -2032,6 +2109,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BuiltInToolsOutput": ".built_in_tools_output",
     "BuiltInToolsWorkflowOverrideInput": ".built_in_tools_workflow_override_input",
     "BuiltInToolsWorkflowOverrideOutput": ".built_in_tools_workflow_override_output",
+    "CancelCalendarEventParams": ".cancel_calendar_event_params",
+    "CancelGroupSessionForAllParams": ".cancel_group_session_for_all_params",
+    "CancelGroupSessionRegistrationParams": ".cancel_group_session_registration_params",
     "CanvasPlacement": ".canvas_placement",
     "CaptionStyleCharacterAnimationModel": ".caption_style_character_animation_model",
     "CaptionStyleCharacterAnimationModelEnterType": ".caption_style_character_animation_model_enter_type",
@@ -2109,6 +2189,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ContentGuardrailOutputTriggerAction_Retry": ".content_guardrail_output_trigger_action",
     "ContentThresholdGuardrail": ".content_threshold_guardrail",
     "ContentThresholdGuardrailThreshold": ".content_threshold_guardrail_threshold",
+    "ContextualUpdateInfo": ".contextual_update_info",
     "Contributor": ".contributor",
     "ConvAiDynamicVariable": ".conv_ai_dynamic_variable",
     "ConvAiEnvVarLocator": ".conv_ai_env_var_locator",
@@ -2127,15 +2208,18 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConvAiUserSecretDbModel": ".conv_ai_user_secret_db_model",
     "ConvAiWebhooks": ".conv_ai_webhooks",
     "ConvAiWorkspaceStoredSecretConfig": ".conv_ai_workspace_stored_secret_config",
+    "ConversationAsrUsageModel": ".conversation_asr_usage_model",
     "ConversationChargingCommonModel": ".conversation_charging_common_model",
-    "ConversationConfig": ".conversation_config",
     "ConversationConfigClientOverrideConfigInput": ".conversation_config_client_override_config_input",
     "ConversationConfigClientOverrideConfigOutput": ".conversation_config_client_override_config_output",
     "ConversationConfigClientOverrideInput": ".conversation_config_client_override_input",
     "ConversationConfigClientOverrideOutput": ".conversation_config_client_override_output",
+    "ConversationConfigInput": ".conversation_config_input",
+    "ConversationConfigOutput": ".conversation_config_output",
     "ConversationConfigOverride": ".conversation_config_override",
     "ConversationConfigOverrideConfig": ".conversation_config_override_config",
-    "ConversationConfigWorkflowOverride": ".conversation_config_workflow_override",
+    "ConversationConfigWorkflowOverrideInput": ".conversation_config_workflow_override_input",
+    "ConversationConfigWorkflowOverrideOutput": ".conversation_config_workflow_override_output",
     "ConversationDeletionSettings": ".conversation_deletion_settings",
     "ConversationFeedbackType": ".conversation_feedback_type",
     "ConversationHistoryAnalysisCommonModel": ".conversation_history_analysis_common_model",
@@ -2170,6 +2254,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationHistoryTranscriptSystemToolResultCommonModelInput": ".conversation_history_transcript_system_tool_result_common_model_input",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_EndCallSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_KnowledgeBaseRagSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_LanguageDetectionSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfError": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
@@ -2184,6 +2269,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutput": ".conversation_history_transcript_system_tool_result_common_model_output",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndCallSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_KnowledgeBaseRagSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_LanguageDetectionSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfError": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
@@ -2229,10 +2315,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationSource": ".conversation_source",
     "ConversationSummaryResponseModel": ".conversation_summary_response_model",
     "ConversationSummaryResponseModelStatus": ".conversation_summary_response_model_status",
+    "ConversationTagResponseModel": ".conversation_tag_response_model",
     "ConversationTokenDbModel": ".conversation_token_db_model",
     "ConversationTokenPurpose": ".conversation_token_purpose",
+    "ConversationTtsUsageModel": ".conversation_tts_usage_model",
     "ConversationTurnMetrics": ".conversation_turn_metrics",
     "ConversationUserResponseModel": ".conversation_user_response_model",
+    "ConversationVoiceRewardModel": ".conversation_voice_reward_model",
+    "ConversationVoiceUsageModel": ".conversation_voice_usage_model",
     "ConversationalConfig": ".conversational_config",
     "ConversationalConfigApiModelWorkflowOverrideInput": ".conversational_config_api_model_workflow_override_input",
     "ConversationalConfigApiModelWorkflowOverrideOutput": ".conversational_config_api_model_workflow_override_output",
@@ -2257,6 +2347,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateOAuth2ClientCredsRequest": ".create_o_auth_2_client_creds_request",
     "CreateOAuth2JwtRequest": ".create_o_auth_2_jwt_request",
     "CreateOAuth2JwtRequestAlgorithm": ".create_o_auth_2_jwt_request_algorithm",
+    "CreateOAuth2JwtRequestTokenResponseField": ".create_o_auth_2_jwt_request_token_response_field",
     "CreatePhoneNumberResponseModel": ".create_phone_number_response_model",
     "CreatePreviouslyGeneratedVoiceRequest": ".create_previously_generated_voice_request",
     "CreatePrivateKeyJwtRequest": ".create_private_key_jwt_request",
@@ -2303,6 +2394,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DeleteClientInteractionParams": ".delete_client_interaction_params",
     "DeleteClientParams": ".delete_client_params",
     "DeleteDubbingResponseModel": ".delete_dubbing_response_model",
+    "DeleteGroupSessionParams": ".delete_group_session_params",
     "DeleteHistoryItemResponse": ".delete_history_item_response",
     "DeleteHolidayParams": ".delete_holiday_params",
     "DeleteLocationParams": ".delete_location_params",
@@ -2331,6 +2423,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DependentUnknownToolIdentifier": ".dependent_unknown_tool_identifier",
     "DetailedMusicResponse": ".detailed_music_response",
     "DetectedEntity": ".detected_entity",
+    "DeviceModel": ".device_model",
     "DialogueInput": ".dialogue_input",
     "DialogueInputResponseModel": ".dialogue_input_response_model",
     "DialogueTextAlignment": ".dialogue_text_alignment",
@@ -2349,7 +2442,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DubbingMediaReference": ".dubbing_media_reference",
     "DubbingMetadataPageResponseModel": ".dubbing_metadata_page_response_model",
     "DubbingMetadataResponse": ".dubbing_metadata_response",
-    "DubbingModel": ".dubbing_model",
     "DubbingRenderResponseModel": ".dubbing_render_response_model",
     "DubbingResource": ".dubbing_resource",
     "DubbingTranscript": ".dubbing_transcript",
@@ -2380,6 +2472,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "EndCallToolConfig": ".end_call_tool_config",
     "EndCallToolResultModel": ".end_call_tool_result_model",
     "EndCallTriggerAction": ".end_call_trigger_action",
+    "EntityManagementActivityId": ".entity_management_activity_id",
     "EnvironmentAuthConnectionLocator": ".environment_auth_connection_locator",
     "EnvironmentVariableAuthConnectionValue": ".environment_variable_auth_connection_value",
     "EnvironmentVariableAuthConnectionValueRequest": ".environment_variable_auth_connection_value_request",
@@ -2451,6 +2544,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetConvAiSettingsResponseModel": ".get_conv_ai_settings_response_model",
     "GetConversationResponseModel": ".get_conversation_response_model",
     "GetConversationResponseModelStatus": ".get_conversation_response_model_status",
+    "GetConversationTagsPageResponseModel": ".get_conversation_tags_page_response_model",
     "GetConversationUsersPageResponseModel": ".get_conversation_users_page_response_model",
     "GetConversationsPageResponseModel": ".get_conversations_page_response_model",
     "GetKnowledgeBaseDependentAgentsResponseModel": ".get_knowledge_base_dependent_agents_response_model",
@@ -2515,6 +2609,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetSecretDependenciesResponseModelDependenciesZeroItem_Available": ".get_secret_dependencies_response_model_dependencies_zero_item",
     "GetSecretDependenciesResponseModelDependenciesZeroItem_Unknown": ".get_secret_dependencies_response_model_dependencies_zero_item",
     "GetSimulationTestResponseModel": ".get_simulation_test_response_model",
+    "GetSipLogMessagesResponse": ".get_sip_log_messages_response",
     "GetSpeechHistoryResponse": ".get_speech_history_response",
     "GetTestInvocationsPageResponseModel": ".get_test_invocations_page_response_model",
     "GetTestSuiteInvocationResponseModel": ".get_test_suite_invocation_response_model",
@@ -2530,6 +2625,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetVoicesV2Response": ".get_voices_v_2_response",
     "GetWhatsAppAccountResponse": ".get_whats_app_account_response",
     "GetWorkspaceSecretsResponseModel": ".get_workspace_secrets_response_model",
+    "GroupManagementActivityId": ".group_management_activity_id",
     "GuardrailExecutionMode": ".guardrail_execution_mode",
     "GuardrailsV1Input": ".guardrails_v_1_input",
     "GuardrailsV1Output": ".guardrails_v_1_output",
@@ -2537,9 +2633,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "HistoryAlignmentsResponseModel": ".history_alignments_response_model",
     "HistoryItemResponse": ".history_item_response",
     "HtmlExportOptions": ".html_export_options",
+    "HttpRequestModel": ".http_request_model",
     "HttpValidationError": ".http_validation_error",
     "Icon": ".icon",
+    "ImageAnalysis": ".image_analysis",
+    "ImageAnalysisResult": ".image_analysis_result",
+    "ImageAnalysisStatus": ".image_analysis_status",
     "ImageAvatar": ".image_avatar",
+    "ImageSubject": ".image_subject",
     "InboundSipTrunkConfigRequestModel": ".inbound_sip_trunk_config_request_model",
     "InitialiseContext": ".initialise_context",
     "InitializeConnection": ".initialize_connection",
@@ -2564,6 +2665,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "KnowledgeBaseFolderPathSegmentResponseModel": ".knowledge_base_folder_path_segment_response_model",
     "KnowledgeBaseFolderPathSegmentSummaryResponseModel": ".knowledge_base_folder_path_segment_summary_response_model",
     "KnowledgeBaseLocator": ".knowledge_base_locator",
+    "KnowledgeBaseRagToolConfig": ".knowledge_base_rag_tool_config",
+    "KnowledgeBaseRagToolResultModel": ".knowledge_base_rag_tool_result_model",
+    "KnowledgeBaseRagToolStatus": ".knowledge_base_rag_tool_status",
     "KnowledgeBaseSortBy": ".knowledge_base_sort_by",
     "KnowledgeBaseSourceFileUrlResponseModel": ".knowledge_base_source_file_url_response_model",
     "KnowledgeBaseSummaryBatchSuccessfulResponseModel": ".knowledge_base_summary_batch_successful_response_model",
@@ -2579,6 +2683,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LanguagePresetOutput": ".language_preset_output",
     "LanguagePresetTranslation": ".language_preset_translation",
     "LanguageResponse": ".language_response",
+    "LeaveMessageParams": ".leave_message_params",
     "LibraryVoiceResponse": ".library_voice_response",
     "LibraryVoiceResponseModelCategory": ".library_voice_response_model_category",
     "ListAgentRulesParams": ".list_agent_rules_params",
@@ -2586,6 +2691,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListAuthConnectionsResponse": ".list_auth_connections_response",
     "ListAuthConnectionsResponseAuthConnectionsItem": ".list_auth_connections_response_auth_connections_item",
     "ListAuthConnectionsResponseAuthConnectionsItem_ApiIntegrationOauth2AuthCode": ".list_auth_connections_response_auth_connections_item",
+    "ListAuthConnectionsResponseAuthConnectionsItem_ApiIntegrationOauth2CustomApp": ".list_auth_connections_response_auth_connections_item",
     "ListAuthConnectionsResponseAuthConnectionsItem_BasicAuth": ".list_auth_connections_response_auth_connections_item",
     "ListAuthConnectionsResponseAuthConnectionsItem_BearerAuth": ".list_auth_connections_response_auth_connections_item",
     "ListAuthConnectionsResponseAuthConnectionsItem_CustomHeaderAuth": ".list_auth_connections_response_auth_connections_item",
@@ -2597,11 +2703,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListCalendarEventsParams": ".list_calendar_events_params",
     "ListClientInteractionsParams": ".list_client_interactions_params",
     "ListClientsParams": ".list_clients_params",
+    "ListGroupSessionsParams": ".list_group_sessions_params",
     "ListHolidaysParams": ".list_holidays_params",
     "ListLocationsParams": ".list_locations_params",
     "ListMcpToolsResponseModel": ".list_mcp_tools_response_model",
     "ListProductsParams": ".list_products_params",
     "ListResponseAgentBranchSummary": ".list_response_agent_branch_summary",
+    "ListResponseApiIntegrationDocResponse": ".list_response_api_integration_doc_response",
     "ListResponseMeta": ".list_response_meta",
     "ListServicesParams": ".list_services_params",
     "ListStaffParams": ".list_staff_params",
@@ -2690,6 +2798,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OAuth2ClientCredsResponse": ".o_auth_2_client_creds_response",
     "OAuth2JwtResponse": ".o_auth_2_jwt_response",
     "OAuth2JwtResponseAlgorithm": ".o_auth_2_jwt_response_algorithm",
+    "OAuth2JwtResponseTokenResponseField": ".o_auth_2_jwt_response_token_response_field",
     "OAuthConnectionStatus": ".o_auth_connection_status",
     "ObjectJsonSchemaPropertyInput": ".object_json_schema_property_input",
     "ObjectJsonSchemaPropertyInputPropertiesValue": ".object_json_schema_property_input_properties_value",
@@ -2745,6 +2854,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PostWorkspaceSecretResponseModel": ".post_workspace_secret_response_model",
     "PreToolSpeechMode": ".pre_tool_speech_mode",
     "PreviewAudioDbModel": ".preview_audio_db_model",
+    "Price": ".price",
     "PrivacyConfigInput": ".privacy_config_input",
     "PrivacyConfigOutput": ".privacy_config_output",
     "PrivateKeyJwtResponse": ".private_key_jwt_response",
@@ -2870,6 +2980,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ReferencedToolCommonModelType": ".referenced_tool_common_model_type",
     "RegexParameterEvaluationStrategy": ".regex_parameter_evaluation_strategy",
     "RegionConfigRequest": ".region_config_request",
+    "RegisterForGroupSessionParams": ".register_for_group_session_params",
     "RemoveMemberFromGroupRequest": ".remove_member_from_group_request",
     "Render": ".render",
     "RenderStatus": ".render_status",
@@ -2878,6 +2989,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RequiredConstraint": ".required_constraint",
     "RequiredConstraints": ".required_constraints",
     "ResourceAccessInfo": ".resource_access_info",
+    "ResourceAccessInfoAnonymousAccessLevelOverride": ".resource_access_info_anonymous_access_level_override",
     "ResourceAccessInfoRole": ".resource_access_info_role",
     "ResourceMetadataResponseModel": ".resource_metadata_response_model",
     "ResourceMetadataResponseModelAnonymousAccessLevelOverride": ".resource_metadata_response_model_anonymous_access_level_override",
@@ -2900,6 +3012,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SayNodeLiteralMessageOutput": ".say_node_literal_message_output",
     "SayNodePromptMessageInput": ".say_node_prompt_message_input",
     "SayNodePromptMessageOutput": ".say_node_prompt_message_output",
+    "ScheduleGroupSessionParams": ".schedule_group_session_params",
     "ScopedAnalysisResult": ".scoped_analysis_result",
     "ScribeAuthErrorPayload": ".scribe_auth_error_payload",
     "ScribeChunkSizeExceededErrorPayload": ".scribe_chunk_size_exceeded_error_payload",
@@ -2935,6 +3048,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SessionStartedPayloadConfig": ".session_started_payload_config",
     "SessionStartedPayloadConfigCommitStrategy": ".session_started_payload_config_commit_strategy",
     "SetBookingSlugParams": ".set_booking_slug_params",
+    "SeverityId": ".severity_id",
     "SfxSourceContext": ".sfx_source_context",
     "ShareOptionResponseModel": ".share_option_response_model",
     "ShareOptionResponseModelType": ".share_option_response_model_type",
@@ -2945,6 +3059,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SingleTestRunRequestModel": ".single_test_run_request_model",
     "SingleUseTokenResponseModel": ".single_use_token_response_model",
     "SingleUseTokenType": ".single_use_token_type",
+    "SipLogMessage": ".sip_log_message",
+    "SipLogMessageDirection": ".sip_log_message_direction",
     "SipMediaEncryptionEnum": ".sip_media_encryption_enum",
     "SipTrunkCredentialsRequestModel": ".sip_trunk_credentials_request_model",
     "SipTrunkOutboundCallResponse": ".sip_trunk_outbound_call_response",
@@ -2953,6 +3069,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SipUriTransferDestination": ".sip_uri_transfer_destination",
     "SkipTurnToolConfig": ".skip_turn_tool_config",
     "SkipTurnToolResponseModel": ".skip_turn_tool_response_model",
+    "SmsConversationInfo": ".sms_conversation_info",
+    "SmsConversationInfoDirection": ".sms_conversation_info_direction",
     "SoftTimeoutConfig": ".soft_timeout_config",
     "SoftTimeoutConfigOverride": ".soft_timeout_config_override",
     "SoftTimeoutConfigOverrideConfig": ".soft_timeout_config_override_config",
@@ -2969,6 +3087,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SpeakerSeparationResponseModelStatus": ".speaker_separation_response_model_status",
     "SpeakerTrack": ".speaker_track",
     "SpeakerUpdatedResponse": ".speaker_updated_response",
+    "SpeechEngineConfig": ".speech_engine_config",
+    "SpeechEngineConfigRequestHeadersValue": ".speech_engine_config_request_headers_value",
     "SpeechHistoryItemResponse": ".speech_history_item_response",
     "SpeechHistoryItemResponseModelSource": ".speech_history_item_response_model_source",
     "SpeechHistoryItemResponseModelVoiceCategory": ".speech_history_item_response_model_voice_category",
@@ -2981,6 +3101,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SrtExportOptions": ".srt_export_options",
     "StartPvcVoiceTrainingResponseModel": ".start_pvc_voice_training_response_model",
     "StartSpeakerSeparationResponseModel": ".start_speaker_separation_response_model",
+    "StatusId": ".status_id",
     "StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel": ".streaming_audio_chunk_with_timestamps_and_voice_segments_response_model",
     "StreamingAudioChunkWithTimestampsResponse": ".streaming_audio_chunk_with_timestamps_response",
     "StudioAgentSettingsModel": ".studio_agent_settings_model",
@@ -2998,6 +3119,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SystemToolConfigInput": ".system_tool_config_input",
     "SystemToolConfigInputParams": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_EndCall": ".system_tool_config_input_params",
+    "SystemToolConfigInputParams_KnowledgeBaseRag": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_LanguageDetection": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_PlayKeypadTouchTone": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_SkipTurn": ".system_tool_config_input_params",
@@ -3007,6 +3129,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SystemToolConfigOutput": ".system_tool_config_output",
     "SystemToolConfigOutputParams": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_EndCall": ".system_tool_config_output_params",
+    "SystemToolConfigOutputParams_KnowledgeBaseRag": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_LanguageDetection": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_PlayKeypadTouchTone": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_SkipTurn": ".system_tool_config_output_params",
@@ -3142,6 +3265,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateChapterRequest": ".update_chapter_request",
     "UpdateClientParams": ".update_client_params",
     "UpdateCustomerFacingConfigParams": ".update_customer_facing_config_params",
+    "UpdateGroupSessionSeatsParams": ".update_group_session_seats_params",
     "UpdateHolidayParams": ".update_holiday_params",
     "UpdateLocationParams": ".update_location_params",
     "UpdateProductParams": ".update_product_params",
@@ -3154,11 +3278,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateToolCallUnitTestRequest": ".update_tool_call_unit_test_request",
     "UpdateWorkspaceMemberResponseModel": ".update_workspace_member_response_model",
     "UrlAvatar": ".url_avatar",
+    "UrlModel": ".url_model",
     "UsageAggregationInterval": ".usage_aggregation_interval",
     "UsageCharactersResponseModel": ".usage_characters_response_model",
     "User": ".user",
+    "UserAccessManagementActivityId": ".user_access_management_activity_id",
     "UserFeedback": ".user_feedback",
     "UserFeedbackScore": ".user_feedback_score",
+    "UserModel": ".user_model",
+    "UserTypeId": ".user_type_id",
     "UsersSortBy": ".users_sort_by",
     "UtteranceResponseModel": ".utterance_response_model",
     "VadConfig": ".vad_config",
@@ -3213,6 +3341,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WebhookToolApiSchemaConfigOutputRequestHeadersValue": ".webhook_tool_api_schema_config_output_request_headers_value",
     "WebhookToolConfigInput": ".webhook_tool_config_input",
     "WebhookToolConfigOutput": ".webhook_tool_config_output",
+    "WebhookTranscriptFormat": ".webhook_transcript_format",
     "WebhookUsageType": ".webhook_usage_type",
     "WebsocketTtsClientMessageMulti": ".websocket_tts_client_message_multi",
     "WebsocketTtsServerMessageMulti": ".websocket_tts_server_message_multi",
@@ -3351,6 +3480,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkspaceAnalyticsQueryResponseModelRowsItemItem": ".workspace_analytics_query_response_model_rows_item_item",
     "WorkspaceApiKeyListResponseModel": ".workspace_api_key_list_response_model",
     "WorkspaceApiKeyResponseModel": ".workspace_api_key_response_model",
+    "WorkspaceAuditLogEntryResponse": ".workspace_audit_log_entry_response",
+    "WorkspaceAuditLogEntryResponseActivityId": ".workspace_audit_log_entry_response_activity_id",
+    "WorkspaceAuditLogsPageResponse": ".workspace_audit_logs_page_response",
     "WorkspaceBatchCallsResponse": ".workspace_batch_calls_response",
     "WorkspaceCreateApiKeyResponseModel": ".workspace_create_api_key_response_model",
     "WorkspaceCreateWebhookResponseModel": ".workspace_create_webhook_response_model",
@@ -3390,6 +3522,8 @@ def __dir__():
 
 
 __all__ = [
+    "AccountChangeActivityId",
+    "ActorModel",
     "AddChapterResponseModel",
     "AddKnowledgeBaseResponseModel",
     "AddProjectRequest",
@@ -3463,8 +3597,11 @@ __all__ = [
     "AnalysisPropertyConstantValue",
     "AnalysisPropertyType",
     "AnalysisScope",
+    "ApiIntegrationDocResponse",
     "ApiIntegrationOAuth2AuthCodeResponse",
     "ApiIntegrationOAuth2AuthCodeResponseScopeSeparator",
+    "ApiIntegrationOAuth2CustomAppResponse",
+    "ApiIntegrationOAuth2CustomAppResponseScopeSeparator",
     "ApiIntegrationWebhookOverrides",
     "ApiIntegrationWebhookOverridesRequestHeadersValue",
     "ApiIntegrationWebhookOverridesSchemaOverridesValue",
@@ -3594,8 +3731,13 @@ __all__ = [
     "AuthConnectionDependenciesToolsItem_Unknown",
     "AuthConnectionLocator",
     "AuthSettings",
+    "AuthenticationActivityId",
     "AuthorizationMethod",
     "AutoSyncInfo",
+    "BackgroundMusicConfig",
+    "BackgroundMusicConfigWorkflowOverride",
+    "BackgroundMusicPresetId",
+    "BackgroundMusicSourceType",
     "BackupLlmDefault",
     "BackupLlmDisabled",
     "BackupLlmOverride",
@@ -3615,6 +3757,9 @@ __all__ = [
     "BuiltInToolsOutput",
     "BuiltInToolsWorkflowOverrideInput",
     "BuiltInToolsWorkflowOverrideOutput",
+    "CancelCalendarEventParams",
+    "CancelGroupSessionForAllParams",
+    "CancelGroupSessionRegistrationParams",
     "CanvasPlacement",
     "CaptionStyleCharacterAnimationModel",
     "CaptionStyleCharacterAnimationModelEnterType",
@@ -3692,6 +3837,7 @@ __all__ = [
     "ContentGuardrailOutputTriggerAction_Retry",
     "ContentThresholdGuardrail",
     "ContentThresholdGuardrailThreshold",
+    "ContextualUpdateInfo",
     "Contributor",
     "ConvAiDynamicVariable",
     "ConvAiEnvVarLocator",
@@ -3710,15 +3856,18 @@ __all__ = [
     "ConvAiUserSecretDbModel",
     "ConvAiWebhooks",
     "ConvAiWorkspaceStoredSecretConfig",
+    "ConversationAsrUsageModel",
     "ConversationChargingCommonModel",
-    "ConversationConfig",
     "ConversationConfigClientOverrideConfigInput",
     "ConversationConfigClientOverrideConfigOutput",
     "ConversationConfigClientOverrideInput",
     "ConversationConfigClientOverrideOutput",
+    "ConversationConfigInput",
+    "ConversationConfigOutput",
     "ConversationConfigOverride",
     "ConversationConfigOverrideConfig",
-    "ConversationConfigWorkflowOverride",
+    "ConversationConfigWorkflowOverrideInput",
+    "ConversationConfigWorkflowOverrideOutput",
     "ConversationDeletionSettings",
     "ConversationFeedbackType",
     "ConversationHistoryAnalysisCommonModel",
@@ -3753,6 +3902,7 @@ __all__ = [
     "ConversationHistoryTranscriptSystemToolResultCommonModelInput",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_EndCallSuccess",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_KnowledgeBaseRagSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_LanguageDetectionSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfError",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfSuccess",
@@ -3767,6 +3917,7 @@ __all__ = [
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutput",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndCallSuccess",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_KnowledgeBaseRagSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_LanguageDetectionSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfError",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfSuccess",
@@ -3812,10 +3963,14 @@ __all__ = [
     "ConversationSource",
     "ConversationSummaryResponseModel",
     "ConversationSummaryResponseModelStatus",
+    "ConversationTagResponseModel",
     "ConversationTokenDbModel",
     "ConversationTokenPurpose",
+    "ConversationTtsUsageModel",
     "ConversationTurnMetrics",
     "ConversationUserResponseModel",
+    "ConversationVoiceRewardModel",
+    "ConversationVoiceUsageModel",
     "ConversationalConfig",
     "ConversationalConfigApiModelWorkflowOverrideInput",
     "ConversationalConfigApiModelWorkflowOverrideOutput",
@@ -3840,6 +3995,7 @@ __all__ = [
     "CreateOAuth2ClientCredsRequest",
     "CreateOAuth2JwtRequest",
     "CreateOAuth2JwtRequestAlgorithm",
+    "CreateOAuth2JwtRequestTokenResponseField",
     "CreatePhoneNumberResponseModel",
     "CreatePreviouslyGeneratedVoiceRequest",
     "CreatePrivateKeyJwtRequest",
@@ -3886,6 +4042,7 @@ __all__ = [
     "DeleteClientInteractionParams",
     "DeleteClientParams",
     "DeleteDubbingResponseModel",
+    "DeleteGroupSessionParams",
     "DeleteHistoryItemResponse",
     "DeleteHolidayParams",
     "DeleteLocationParams",
@@ -3914,6 +4071,7 @@ __all__ = [
     "DependentUnknownToolIdentifier",
     "DetailedMusicResponse",
     "DetectedEntity",
+    "DeviceModel",
     "DialogueInput",
     "DialogueInputResponseModel",
     "DialogueTextAlignment",
@@ -3932,7 +4090,6 @@ __all__ = [
     "DubbingMediaReference",
     "DubbingMetadataPageResponseModel",
     "DubbingMetadataResponse",
-    "DubbingModel",
     "DubbingRenderResponseModel",
     "DubbingResource",
     "DubbingTranscript",
@@ -3963,6 +4120,7 @@ __all__ = [
     "EndCallToolConfig",
     "EndCallToolResultModel",
     "EndCallTriggerAction",
+    "EntityManagementActivityId",
     "EnvironmentAuthConnectionLocator",
     "EnvironmentVariableAuthConnectionValue",
     "EnvironmentVariableAuthConnectionValueRequest",
@@ -4034,6 +4192,7 @@ __all__ = [
     "GetConvAiSettingsResponseModel",
     "GetConversationResponseModel",
     "GetConversationResponseModelStatus",
+    "GetConversationTagsPageResponseModel",
     "GetConversationUsersPageResponseModel",
     "GetConversationsPageResponseModel",
     "GetKnowledgeBaseDependentAgentsResponseModel",
@@ -4098,6 +4257,7 @@ __all__ = [
     "GetSecretDependenciesResponseModelDependenciesZeroItem_Available",
     "GetSecretDependenciesResponseModelDependenciesZeroItem_Unknown",
     "GetSimulationTestResponseModel",
+    "GetSipLogMessagesResponse",
     "GetSpeechHistoryResponse",
     "GetTestInvocationsPageResponseModel",
     "GetTestSuiteInvocationResponseModel",
@@ -4113,6 +4273,7 @@ __all__ = [
     "GetVoicesV2Response",
     "GetWhatsAppAccountResponse",
     "GetWorkspaceSecretsResponseModel",
+    "GroupManagementActivityId",
     "GuardrailExecutionMode",
     "GuardrailsV1Input",
     "GuardrailsV1Output",
@@ -4120,9 +4281,14 @@ __all__ = [
     "HistoryAlignmentsResponseModel",
     "HistoryItemResponse",
     "HtmlExportOptions",
+    "HttpRequestModel",
     "HttpValidationError",
     "Icon",
+    "ImageAnalysis",
+    "ImageAnalysisResult",
+    "ImageAnalysisStatus",
     "ImageAvatar",
+    "ImageSubject",
     "InboundSipTrunkConfigRequestModel",
     "InitialiseContext",
     "InitializeConnection",
@@ -4147,6 +4313,9 @@ __all__ = [
     "KnowledgeBaseFolderPathSegmentResponseModel",
     "KnowledgeBaseFolderPathSegmentSummaryResponseModel",
     "KnowledgeBaseLocator",
+    "KnowledgeBaseRagToolConfig",
+    "KnowledgeBaseRagToolResultModel",
+    "KnowledgeBaseRagToolStatus",
     "KnowledgeBaseSortBy",
     "KnowledgeBaseSourceFileUrlResponseModel",
     "KnowledgeBaseSummaryBatchSuccessfulResponseModel",
@@ -4162,6 +4331,7 @@ __all__ = [
     "LanguagePresetOutput",
     "LanguagePresetTranslation",
     "LanguageResponse",
+    "LeaveMessageParams",
     "LibraryVoiceResponse",
     "LibraryVoiceResponseModelCategory",
     "ListAgentRulesParams",
@@ -4169,6 +4339,7 @@ __all__ = [
     "ListAuthConnectionsResponse",
     "ListAuthConnectionsResponseAuthConnectionsItem",
     "ListAuthConnectionsResponseAuthConnectionsItem_ApiIntegrationOauth2AuthCode",
+    "ListAuthConnectionsResponseAuthConnectionsItem_ApiIntegrationOauth2CustomApp",
     "ListAuthConnectionsResponseAuthConnectionsItem_BasicAuth",
     "ListAuthConnectionsResponseAuthConnectionsItem_BearerAuth",
     "ListAuthConnectionsResponseAuthConnectionsItem_CustomHeaderAuth",
@@ -4180,11 +4351,13 @@ __all__ = [
     "ListCalendarEventsParams",
     "ListClientInteractionsParams",
     "ListClientsParams",
+    "ListGroupSessionsParams",
     "ListHolidaysParams",
     "ListLocationsParams",
     "ListMcpToolsResponseModel",
     "ListProductsParams",
     "ListResponseAgentBranchSummary",
+    "ListResponseApiIntegrationDocResponse",
     "ListResponseMeta",
     "ListServicesParams",
     "ListStaffParams",
@@ -4273,6 +4446,7 @@ __all__ = [
     "OAuth2ClientCredsResponse",
     "OAuth2JwtResponse",
     "OAuth2JwtResponseAlgorithm",
+    "OAuth2JwtResponseTokenResponseField",
     "OAuthConnectionStatus",
     "ObjectJsonSchemaPropertyInput",
     "ObjectJsonSchemaPropertyInputPropertiesValue",
@@ -4328,6 +4502,7 @@ __all__ = [
     "PostWorkspaceSecretResponseModel",
     "PreToolSpeechMode",
     "PreviewAudioDbModel",
+    "Price",
     "PrivacyConfigInput",
     "PrivacyConfigOutput",
     "PrivateKeyJwtResponse",
@@ -4453,6 +4628,7 @@ __all__ = [
     "ReferencedToolCommonModelType",
     "RegexParameterEvaluationStrategy",
     "RegionConfigRequest",
+    "RegisterForGroupSessionParams",
     "RemoveMemberFromGroupRequest",
     "Render",
     "RenderStatus",
@@ -4461,6 +4637,7 @@ __all__ = [
     "RequiredConstraint",
     "RequiredConstraints",
     "ResourceAccessInfo",
+    "ResourceAccessInfoAnonymousAccessLevelOverride",
     "ResourceAccessInfoRole",
     "ResourceMetadataResponseModel",
     "ResourceMetadataResponseModelAnonymousAccessLevelOverride",
@@ -4483,6 +4660,7 @@ __all__ = [
     "SayNodeLiteralMessageOutput",
     "SayNodePromptMessageInput",
     "SayNodePromptMessageOutput",
+    "ScheduleGroupSessionParams",
     "ScopedAnalysisResult",
     "ScribeAuthErrorPayload",
     "ScribeChunkSizeExceededErrorPayload",
@@ -4518,6 +4696,7 @@ __all__ = [
     "SessionStartedPayloadConfig",
     "SessionStartedPayloadConfigCommitStrategy",
     "SetBookingSlugParams",
+    "SeverityId",
     "SfxSourceContext",
     "ShareOptionResponseModel",
     "ShareOptionResponseModelType",
@@ -4528,6 +4707,8 @@ __all__ = [
     "SingleTestRunRequestModel",
     "SingleUseTokenResponseModel",
     "SingleUseTokenType",
+    "SipLogMessage",
+    "SipLogMessageDirection",
     "SipMediaEncryptionEnum",
     "SipTrunkCredentialsRequestModel",
     "SipTrunkOutboundCallResponse",
@@ -4536,6 +4717,8 @@ __all__ = [
     "SipUriTransferDestination",
     "SkipTurnToolConfig",
     "SkipTurnToolResponseModel",
+    "SmsConversationInfo",
+    "SmsConversationInfoDirection",
     "SoftTimeoutConfig",
     "SoftTimeoutConfigOverride",
     "SoftTimeoutConfigOverrideConfig",
@@ -4552,6 +4735,8 @@ __all__ = [
     "SpeakerSeparationResponseModelStatus",
     "SpeakerTrack",
     "SpeakerUpdatedResponse",
+    "SpeechEngineConfig",
+    "SpeechEngineConfigRequestHeadersValue",
     "SpeechHistoryItemResponse",
     "SpeechHistoryItemResponseModelSource",
     "SpeechHistoryItemResponseModelVoiceCategory",
@@ -4564,6 +4749,7 @@ __all__ = [
     "SrtExportOptions",
     "StartPvcVoiceTrainingResponseModel",
     "StartSpeakerSeparationResponseModel",
+    "StatusId",
     "StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel",
     "StreamingAudioChunkWithTimestampsResponse",
     "StudioAgentSettingsModel",
@@ -4581,6 +4767,7 @@ __all__ = [
     "SystemToolConfigInput",
     "SystemToolConfigInputParams",
     "SystemToolConfigInputParams_EndCall",
+    "SystemToolConfigInputParams_KnowledgeBaseRag",
     "SystemToolConfigInputParams_LanguageDetection",
     "SystemToolConfigInputParams_PlayKeypadTouchTone",
     "SystemToolConfigInputParams_SkipTurn",
@@ -4590,6 +4777,7 @@ __all__ = [
     "SystemToolConfigOutput",
     "SystemToolConfigOutputParams",
     "SystemToolConfigOutputParams_EndCall",
+    "SystemToolConfigOutputParams_KnowledgeBaseRag",
     "SystemToolConfigOutputParams_LanguageDetection",
     "SystemToolConfigOutputParams_PlayKeypadTouchTone",
     "SystemToolConfigOutputParams_SkipTurn",
@@ -4725,6 +4913,7 @@ __all__ = [
     "UpdateChapterRequest",
     "UpdateClientParams",
     "UpdateCustomerFacingConfigParams",
+    "UpdateGroupSessionSeatsParams",
     "UpdateHolidayParams",
     "UpdateLocationParams",
     "UpdateProductParams",
@@ -4737,11 +4926,15 @@ __all__ = [
     "UpdateToolCallUnitTestRequest",
     "UpdateWorkspaceMemberResponseModel",
     "UrlAvatar",
+    "UrlModel",
     "UsageAggregationInterval",
     "UsageCharactersResponseModel",
     "User",
+    "UserAccessManagementActivityId",
     "UserFeedback",
     "UserFeedbackScore",
+    "UserModel",
+    "UserTypeId",
     "UsersSortBy",
     "UtteranceResponseModel",
     "VadConfig",
@@ -4796,6 +4989,7 @@ __all__ = [
     "WebhookToolApiSchemaConfigOutputRequestHeadersValue",
     "WebhookToolConfigInput",
     "WebhookToolConfigOutput",
+    "WebhookTranscriptFormat",
     "WebhookUsageType",
     "WebsocketTtsClientMessageMulti",
     "WebsocketTtsServerMessageMulti",
@@ -4934,6 +5128,9 @@ __all__ = [
     "WorkspaceAnalyticsQueryResponseModelRowsItemItem",
     "WorkspaceApiKeyListResponseModel",
     "WorkspaceApiKeyResponseModel",
+    "WorkspaceAuditLogEntryResponse",
+    "WorkspaceAuditLogEntryResponseActivityId",
+    "WorkspaceAuditLogsPageResponse",
     "WorkspaceBatchCallsResponse",
     "WorkspaceCreateApiKeyResponseModel",
     "WorkspaceCreateWebhookResponseModel",

@@ -27,7 +27,7 @@ if typing.TYPE_CHECKING:
         whatsapp,
         whatsapp_accounts,
     )
-    from .conversations import ConversationsListRequestSummaryMode
+    from .conversations import ConversationsListRequestExcludeStatusesItem, ConversationsListRequestSummaryMode
     from .knowledge_base import (
         KnowledgeBaseGetOrCreateRagIndexesResponseValue,
         KnowledgeBaseGetOrCreateRagIndexesResponseValue_Failure,
@@ -81,6 +81,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Body": ".whatsapp",
     "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Button": ".whatsapp",
     "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Header": ".whatsapp",
+    "ConversationsListRequestExcludeStatusesItem": ".conversations",
     "ConversationsListRequestSummaryMode": ".conversations",
     "KnowledgeBaseGetOrCreateRagIndexesResponseValue": ".knowledge_base",
     "KnowledgeBaseGetOrCreateRagIndexesResponseValue_Failure": ".knowledge_base",
@@ -164,6 +165,7 @@ __all__ = [
     "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Body",
     "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Button",
     "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Header",
+    "ConversationsListRequestExcludeStatusesItem",
     "ConversationsListRequestSummaryMode",
     "KnowledgeBaseGetOrCreateRagIndexesResponseValue",
     "KnowledgeBaseGetOrCreateRagIndexesResponseValue_Failure",

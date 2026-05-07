@@ -7,7 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .resources import BodyShareWorkspaceResourceV1WorkspaceResourcesResourceIdSharePostRole
-    from . import auth_connections, groups, invites, members, resources, usage
+    from . import audit_logs, auth_connections, groups, invites, members, resources, usage
     from .auth_connections import (
         AuthConnectionsCreateRequestBody,
         AuthConnectionsCreateRequestBody_BasicAuth,
@@ -18,6 +18,7 @@ if typing.TYPE_CHECKING:
         AuthConnectionsCreateRequestBody_PrivateKeyJwt,
         AuthConnectionsCreateResponse,
         AuthConnectionsCreateResponse_ApiIntegrationOauth2AuthCode,
+        AuthConnectionsCreateResponse_ApiIntegrationOauth2CustomApp,
         AuthConnectionsCreateResponse_BasicAuth,
         AuthConnectionsCreateResponse_BearerAuth,
         AuthConnectionsCreateResponse_CustomHeaderAuth,
@@ -38,6 +39,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AuthConnectionsCreateRequestBody_PrivateKeyJwt": ".auth_connections",
     "AuthConnectionsCreateResponse": ".auth_connections",
     "AuthConnectionsCreateResponse_ApiIntegrationOauth2AuthCode": ".auth_connections",
+    "AuthConnectionsCreateResponse_ApiIntegrationOauth2CustomApp": ".auth_connections",
     "AuthConnectionsCreateResponse_BasicAuth": ".auth_connections",
     "AuthConnectionsCreateResponse_BearerAuth": ".auth_connections",
     "AuthConnectionsCreateResponse_CustomHeaderAuth": ".auth_connections",
@@ -48,6 +50,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AuthConnectionsCreateResponse_WhatsappAuth": ".auth_connections",
     "BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePostGroupByItem": ".usage",
     "BodyShareWorkspaceResourceV1WorkspaceResourcesResourceIdSharePostRole": ".resources",
+    "audit_logs": ".audit_logs",
     "auth_connections": ".auth_connections",
     "groups": ".groups",
     "invites": ".invites",
@@ -88,6 +91,7 @@ __all__ = [
     "AuthConnectionsCreateRequestBody_PrivateKeyJwt",
     "AuthConnectionsCreateResponse",
     "AuthConnectionsCreateResponse_ApiIntegrationOauth2AuthCode",
+    "AuthConnectionsCreateResponse_ApiIntegrationOauth2CustomApp",
     "AuthConnectionsCreateResponse_BasicAuth",
     "AuthConnectionsCreateResponse_BearerAuth",
     "AuthConnectionsCreateResponse_CustomHeaderAuth",
@@ -98,6 +102,7 @@ __all__ = [
     "AuthConnectionsCreateResponse_WhatsappAuth",
     "BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePostGroupByItem",
     "BodyShareWorkspaceResourceV1WorkspaceResourcesResourceIdSharePostRole",
+    "audit_logs",
     "auth_connections",
     "groups",
     "invites",

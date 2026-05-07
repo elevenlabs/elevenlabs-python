@@ -17,6 +17,7 @@ ConversationInitiationSource = typing.Union[
         "genesys",
         "swift_sdk",
         "whatsapp",
+        "twilio_sms",
         "flutter_sdk",
         "zendesk_integration",
         "slack_integration",

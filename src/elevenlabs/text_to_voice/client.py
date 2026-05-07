@@ -137,7 +137,7 @@ class TextToVoiceClient:
             Description to use for the created voice.
 
         generated_voice_id : str
-            The generated_voice_id to create, call POST /v1/text-to-voice/create-previews and fetch the generated_voice_id from the response header if don't have one yet.
+            The generated_voice_id to create; obtain it from POST /v1/text-to-voice/design, POST /v1/text-to-voice/:voice_id/remix, or the response headers when generating previews.
 
         labels : typing.Optional[typing.Dict[str, typing.Optional[str]]]
             Optional, metadata to add to the created voice. Defaults to None.
@@ -518,7 +518,7 @@ class AsyncTextToVoiceClient:
             Description to use for the created voice.
 
         generated_voice_id : str
-            The generated_voice_id to create, call POST /v1/text-to-voice/create-previews and fetch the generated_voice_id from the response header if don't have one yet.
+            The generated_voice_id to create; obtain it from POST /v1/text-to-voice/design, POST /v1/text-to-voice/:voice_id/remix, or the response headers when generating previews.
 
         labels : typing.Optional[typing.Dict[str, typing.Optional[str]]]
             Optional, metadata to add to the created voice. Defaults to None.

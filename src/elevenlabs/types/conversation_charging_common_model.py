@@ -5,6 +5,8 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .conversation_asr_usage_model import ConversationAsrUsageModel
+from .conversation_tts_usage_model import ConversationTtsUsageModel
 from .llm_category_usage import LlmCategoryUsage
 
 
@@ -18,6 +20,8 @@ class ConversationChargingCommonModel(UncheckedBaseModel):
     call_charge: typing.Optional[int] = None
     free_minutes_consumed: typing.Optional[float] = None
     free_llm_dollars_consumed: typing.Optional[float] = None
+    tts_usage: typing.Optional[ConversationTtsUsageModel] = None
+    asr_usage: typing.Optional[ConversationAsrUsageModel] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
