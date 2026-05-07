@@ -9,6 +9,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .conversation_history_transcript_common_model_output import ConversationHistoryTranscriptCommonModelOutput
 from .dynamic_variable_value_type_output import DynamicVariableValueTypeOutput
+from .llm import Llm
 from .simulation_tool_mock_behavior_config import SimulationToolMockBehaviorConfig
 from .test_from_conversation_metadata_output import TestFromConversationMetadataOutput
 
@@ -50,6 +51,16 @@ class GetSimulationTestResponseModel(UncheckedBaseModel):
     tool_mock_config: typing.Optional[SimulationToolMockBehaviorConfig] = pydantic.Field(default=None)
     """
     Configuration for which tools to mock and fallback behavior.
+    """
+
+    evaluation_model: typing.Optional[Llm] = pydantic.Field(default=None)
+    """
+    LLM model to use for evaluating simulation results. Defaults to Claude Sonnet 4.6.
+    """
+
+    simulated_user_model: typing.Optional[Llm] = pydantic.Field(default=None)
+    """
+    LLM model for the simulated user. Defaults to Claude Sonnet 4.6.
     """
 
     id: str

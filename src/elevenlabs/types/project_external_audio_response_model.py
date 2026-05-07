@@ -20,7 +20,7 @@ class ProjectExternalAudioResponseModel(UncheckedBaseModel):
     offset_ms: int
     duration_ms: int
     start_time_ms: int
-    end_time_ms: int
+    end_time_ms: typing.Optional[int] = None
     order: str
     track_id: str
     created_at_ms: int
@@ -31,8 +31,7 @@ class ProjectExternalAudioResponseModel(UncheckedBaseModel):
     fade_out_ms: typing.Optional[int] = None
     source_external_audio_id: typing.Optional[str] = None
     source_asset_id: typing.Optional[str] = None
-    pending_block_ids: typing.List[str]
-    pending_external_audio_ids: typing.List[str]
+    source_platform_asset_id: typing.Optional[str] = None
     pending_blocks_metadata: typing.Optional[PendingBlocksMetadataModel] = None
     pending_external_audios_metadata: typing.Optional[PendingExternalAudiosMetadataModel] = None
     speech_imported: typing.Optional[bool] = None

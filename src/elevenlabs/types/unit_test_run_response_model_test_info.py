@@ -12,6 +12,7 @@ from .agent_failure_response_example import AgentFailureResponseExample
 from .agent_successful_response_example import AgentSuccessfulResponseExample
 from .conversation_history_transcript_common_model_output import ConversationHistoryTranscriptCommonModelOutput
 from .dynamic_variable_value_type_output import DynamicVariableValueTypeOutput
+from .llm import Llm
 from .simulation_tool_mock_behavior_config import SimulationToolMockBehaviorConfig
 from .test_from_conversation_metadata_output import TestFromConversationMetadataOutput
 from .unit_test_tool_call_evaluation_model_output import UnitTestToolCallEvaluationModelOutput
@@ -46,6 +47,8 @@ class UnitTestRunResponseModelTestInfo_Simulation(UncheckedBaseModel):
     simulation_max_turns: typing.Optional[int] = None
     simulation_environment: typing.Optional[str] = None
     tool_mock_config: typing.Optional[SimulationToolMockBehaviorConfig] = None
+    evaluation_model: typing.Optional[Llm] = None
+    simulated_user_model: typing.Optional[Llm] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

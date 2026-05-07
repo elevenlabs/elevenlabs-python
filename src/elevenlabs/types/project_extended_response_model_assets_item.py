@@ -13,6 +13,7 @@ from .audio_analysis import AudioAnalysis
 from .canvas_placement import CanvasPlacement
 from .clip_animation import ClipAnimation
 from .generation_source_context import GenerationSourceContext
+from .image_analysis import ImageAnalysis
 from .pending_blocks_metadata_model import PendingBlocksMetadataModel
 from .pending_clip_task import PendingClipTask
 from .pending_external_audios_metadata_model import PendingExternalAudiosMetadataModel
@@ -44,14 +45,13 @@ class ProjectExtendedResponseModelAssetsItem_Video(UncheckedBaseModel):
     thumbnail_size: typing.List[int]
     thumbnail_sheets: typing.List[ProjectVideoThumbnailSheetResponseModel]
     start_time_ms: int
-    end_time_ms: int
+    end_time_ms: typing.Optional[int] = None
     asset_preview_signed_url: typing.Optional[str] = None
     source_video_id: typing.Optional[str] = None
     source_asset_id: typing.Optional[str] = None
+    source_platform_asset_id: typing.Optional[str] = None
     pending_blocks_metadata: typing.Optional[PendingBlocksMetadataModel] = None
     pending_external_audios_metadata: typing.Optional[PendingExternalAudiosMetadataModel] = None
-    pending_block_ids: typing.List[str]
-    pending_external_audio_ids: typing.List[str]
     speech_imported: typing.Optional[bool] = None
     pending_task: typing.Optional[PendingClipTask] = None
     audio_track_ready: typing.Optional[bool] = None
@@ -86,7 +86,7 @@ class ProjectExtendedResponseModelAssetsItem_Audio(UncheckedBaseModel):
     offset_ms: int
     duration_ms: int
     start_time_ms: int
-    end_time_ms: int
+    end_time_ms: typing.Optional[int] = None
     order: str
     track_id: str
     created_at_ms: int
@@ -97,8 +97,7 @@ class ProjectExtendedResponseModelAssetsItem_Audio(UncheckedBaseModel):
     fade_out_ms: typing.Optional[int] = None
     source_external_audio_id: typing.Optional[str] = None
     source_asset_id: typing.Optional[str] = None
-    pending_block_ids: typing.List[str]
-    pending_external_audio_ids: typing.List[str]
+    source_platform_asset_id: typing.Optional[str] = None
     pending_blocks_metadata: typing.Optional[PendingBlocksMetadataModel] = None
     pending_external_audios_metadata: typing.Optional[PendingExternalAudiosMetadataModel] = None
     speech_imported: typing.Optional[bool] = None
@@ -124,8 +123,8 @@ class ProjectExtendedResponseModelAssetsItem_Image(UncheckedBaseModel):
     type: typing.Literal["image"] = "image"
     image_id: str
     filename: str
-    signed_url: str
-    thumbnail_signed_url: str
+    signed_url: typing.Optional[str] = None
+    thumbnail_signed_url: typing.Optional[str] = None
     source: typing.Optional[typing.Literal["upload"]] = None
     file_size_bytes: int
     width: int
@@ -141,6 +140,10 @@ class ProjectExtendedResponseModelAssetsItem_Image(UncheckedBaseModel):
     updated_at_ms: int
     current_snapshot_id: typing.Optional[str] = None
     source_asset_id: typing.Optional[str] = None
+    source_platform_asset_id: typing.Optional[str] = None
+    error: typing.Optional[str] = None
+    pending_task: typing.Optional[PendingClipTask] = None
+    analysis: typing.Optional[ImageAnalysis] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

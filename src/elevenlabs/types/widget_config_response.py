@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .allowlist_item import AllowlistItem
 from .embed_variant import EmbedVariant
+from .file_input_config import FileInputConfig
 from .widget_config_response_model_avatar import WidgetConfigResponseModelAvatar
 from .widget_config_response_model_syntax_highlight_theme import WidgetConfigResponseModelSyntaxHighlightTheme
 from .widget_end_feedback_config import WidgetEndFeedbackConfig
@@ -262,6 +263,11 @@ class WidgetConfigResponse(UncheckedBaseModel):
     use_rtc: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether to use WebRTC for conversation connections
+    """
+
+    file_input_config: typing.Optional[FileInputConfig] = pydantic.Field(default=None)
+    """
+    Configuration for file upload in the widget
     """
 
     if IS_PYDANTIC_V2:

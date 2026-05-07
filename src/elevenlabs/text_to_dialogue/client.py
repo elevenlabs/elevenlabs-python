@@ -115,11 +115,11 @@ class TextToDialogueClient:
         client.text_to_dialogue.convert(
             inputs=[
                 DialogueInput(
-                    text="Knock knock",
+                    text="[giggling] Knock knock",
                     voice_id="JBFqnCBsd6RMkjVDRZzb",
                 ),
                 DialogueInput(
-                    text="Who is there?",
+                    text="[curious] Who is there?",
                     voice_id="Aw4FAjKCGjjNkVhN1Xmq",
                 ),
             ],
@@ -202,11 +202,11 @@ class TextToDialogueClient:
         client.text_to_dialogue.stream(
             inputs=[
                 DialogueInput(
-                    text="Knock knock",
+                    text="[giggling] Knock knock",
                     voice_id="JBFqnCBsd6RMkjVDRZzb",
                 ),
                 DialogueInput(
-                    text="Who is there?",
+                    text="[curious] Who is there?",
                     voice_id="Aw4FAjKCGjjNkVhN1Xmq",
                 ),
             ],
@@ -484,11 +484,11 @@ class AsyncTextToDialogueClient:
             await client.text_to_dialogue.convert(
                 inputs=[
                     DialogueInput(
-                        text="Knock knock",
+                        text="[giggling] Knock knock",
                         voice_id="JBFqnCBsd6RMkjVDRZzb",
                     ),
                     DialogueInput(
-                        text="Who is there?",
+                        text="[curious] Who is there?",
                         voice_id="Aw4FAjKCGjjNkVhN1Xmq",
                     ),
                 ],
@@ -580,11 +580,11 @@ class AsyncTextToDialogueClient:
             await client.text_to_dialogue.stream(
                 inputs=[
                     DialogueInput(
-                        text="Knock knock",
+                        text="[giggling] Knock knock",
                         voice_id="JBFqnCBsd6RMkjVDRZzb",
                     ),
                     DialogueInput(
-                        text="Who is there?",
+                        text="[curious] Who is there?",
                         voice_id="Aw4FAjKCGjjNkVhN1Xmq",
                     ),
                 ],

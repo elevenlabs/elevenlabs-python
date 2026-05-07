@@ -12,6 +12,7 @@ from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.create_phone_number_response_model import CreatePhoneNumberResponseModel
+from ...types.get_sip_log_messages_response import GetSipLogMessagesResponse
 from ...types.inbound_sip_trunk_config_request_model import InboundSipTrunkConfigRequestModel
 from ...types.livekit_stack_type import LivekitStackType
 from ...types.outbound_sip_trunk_config_request_model import OutboundSipTrunkConfigRequestModel
@@ -242,6 +243,7 @@ class RawPhoneNumbersClient:
         inbound_trunk_config: typing.Optional[InboundSipTrunkConfigRequestModel] = OMIT,
         outbound_trunk_config: typing.Optional[OutboundSipTrunkConfigRequestModel] = OMIT,
         livekit_stack: typing.Optional[LivekitStackType] = OMIT,
+        store_sip_messages: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PhoneNumbersUpdateResponse]:
         """
@@ -261,6 +263,8 @@ class RawPhoneNumbersClient:
         outbound_trunk_config : typing.Optional[OutboundSipTrunkConfigRequestModel]
 
         livekit_stack : typing.Optional[LivekitStackType]
+
+        store_sip_messages : typing.Optional[bool]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -283,6 +287,7 @@ class RawPhoneNumbersClient:
                     object_=outbound_trunk_config, annotation=OutboundSipTrunkConfigRequestModel, direction="write"
                 ),
                 "livekit_stack": livekit_stack,
+                "store_sip_messages": store_sip_messages,
             },
             headers={
                 "content-type": "application/json",
@@ -296,6 +301,70 @@ class RawPhoneNumbersClient:
                     PhoneNumbersUpdateResponse,
                     construct_type(
                         type_=PhoneNumbersUpdateResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def get_sip_messages(
+        self,
+        phone_number_id: str,
+        *,
+        page_size: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[GetSipLogMessagesResponse]:
+        """
+        Get SIP messages for a phone number
+
+        Parameters
+        ----------
+        phone_number_id : str
+            The id of an agent. This is returned on agent creation.
+
+        page_size : typing.Optional[int]
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetSipLogMessagesResponse]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}/sip-messages",
+            method="GET",
+            params={
+                "page_size": page_size,
+                "cursor": cursor,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetSipLogMessagesResponse,
+                    construct_type(
+                        type_=GetSipLogMessagesResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -535,6 +604,7 @@ class AsyncRawPhoneNumbersClient:
         inbound_trunk_config: typing.Optional[InboundSipTrunkConfigRequestModel] = OMIT,
         outbound_trunk_config: typing.Optional[OutboundSipTrunkConfigRequestModel] = OMIT,
         livekit_stack: typing.Optional[LivekitStackType] = OMIT,
+        store_sip_messages: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PhoneNumbersUpdateResponse]:
         """
@@ -554,6 +624,8 @@ class AsyncRawPhoneNumbersClient:
         outbound_trunk_config : typing.Optional[OutboundSipTrunkConfigRequestModel]
 
         livekit_stack : typing.Optional[LivekitStackType]
+
+        store_sip_messages : typing.Optional[bool]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -576,6 +648,7 @@ class AsyncRawPhoneNumbersClient:
                     object_=outbound_trunk_config, annotation=OutboundSipTrunkConfigRequestModel, direction="write"
                 ),
                 "livekit_stack": livekit_stack,
+                "store_sip_messages": store_sip_messages,
             },
             headers={
                 "content-type": "application/json",
@@ -589,6 +662,70 @@ class AsyncRawPhoneNumbersClient:
                     PhoneNumbersUpdateResponse,
                     construct_type(
                         type_=PhoneNumbersUpdateResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_sip_messages(
+        self,
+        phone_number_id: str,
+        *,
+        page_size: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[GetSipLogMessagesResponse]:
+        """
+        Get SIP messages for a phone number
+
+        Parameters
+        ----------
+        phone_number_id : str
+            The id of an agent. This is returned on agent creation.
+
+        page_size : typing.Optional[int]
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GetSipLogMessagesResponse]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/convai/phone-numbers/{jsonable_encoder(phone_number_id)}/sip-messages",
+            method="GET",
+            params={
+                "page_size": page_size,
+                "cursor": cursor,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetSipLogMessagesResponse,
+                    construct_type(
+                        type_=GetSipLogMessagesResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

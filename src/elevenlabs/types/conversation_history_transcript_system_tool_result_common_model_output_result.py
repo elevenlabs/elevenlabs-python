@@ -8,6 +8,7 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
+from .knowledge_base_rag_tool_status import KnowledgeBaseRagToolStatus
 from .transfer_to_agent_tool_result_success_model_branch_info import TransferToAgentToolResultSuccessModelBranchInfo
 
 
@@ -15,6 +16,22 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndCa
     result_type: typing.Literal["end_call_success"] = "end_call_success"
     status: typing.Optional[typing.Literal["success"]] = None
     reason: typing.Optional[str] = None
+    message: typing.Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_KnowledgeBaseRagSuccess(UncheckedBaseModel):
+    result_type: typing.Literal["knowledge_base_rag_success"] = "knowledge_base_rag_success"
+    status: typing.Optional[KnowledgeBaseRagToolStatus] = None
+    chunk_count: typing.Optional[int] = None
     message: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
@@ -221,6 +238,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Voice
 ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult = typing_extensions.Annotated[
     typing.Union[
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndCallSuccess,
+        ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_KnowledgeBaseRagSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_LanguageDetectionSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfError,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfSuccess,

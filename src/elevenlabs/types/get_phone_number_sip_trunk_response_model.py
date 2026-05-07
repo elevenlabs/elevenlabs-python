@@ -58,6 +58,11 @@ class GetPhoneNumberSipTrunkResponseModel(UncheckedBaseModel):
     Type of Livekit stack used for this number.
     """
 
+    store_sip_messages: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to store SIP messages for this phone number.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

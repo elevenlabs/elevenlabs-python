@@ -137,6 +137,7 @@ class RawBatchCallsClient:
         *,
         limit: typing.Optional[int] = None,
         last_doc: typing.Optional[str] = None,
+        agent_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[WorkspaceBatchCallsResponse]:
         """
@@ -147,6 +148,9 @@ class RawBatchCallsClient:
         limit : typing.Optional[int]
 
         last_doc : typing.Optional[str]
+
+        agent_id : typing.Optional[str]
+            Filter batch calls to a single agent.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -162,6 +166,7 @@ class RawBatchCallsClient:
             params={
                 "limit": limit,
                 "last_doc": last_doc,
+                "agent_id": agent_id,
             },
             request_options=request_options,
         )
@@ -493,6 +498,7 @@ class AsyncRawBatchCallsClient:
         *,
         limit: typing.Optional[int] = None,
         last_doc: typing.Optional[str] = None,
+        agent_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[WorkspaceBatchCallsResponse]:
         """
@@ -503,6 +509,9 @@ class AsyncRawBatchCallsClient:
         limit : typing.Optional[int]
 
         last_doc : typing.Optional[str]
+
+        agent_id : typing.Optional[str]
+            Filter batch calls to a single agent.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -518,6 +527,7 @@ class AsyncRawBatchCallsClient:
             params={
                 "limit": limit,
                 "last_doc": last_doc,
+                "agent_id": agent_id,
             },
             request_options=request_options,
         )

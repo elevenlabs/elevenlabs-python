@@ -16,11 +16,6 @@ class GenerationSourceContext(UncheckedBaseModel):
     model_provider: typing.Optional[str] = None
     generation_session_id: typing.Optional[str] = None
     session_iteration_id: typing.Optional[str] = None
-    altered_prompt: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Modified/enhanced prompt if different from original
-    """
-
     model_parameters: typing.Optional[typing.Dict[str, typing.Any]] = None
     extend_video: typing.Optional[ReferenceVideo] = None
 

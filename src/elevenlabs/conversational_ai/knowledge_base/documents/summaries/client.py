@@ -52,7 +52,9 @@ class SummariesClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.conversational_ai.knowledge_base.documents.summaries.get()
+        client.conversational_ai.knowledge_base.documents.summaries.get(
+            document_ids=["21m00Tcm4TlvDq8ikWAM", "31n11Udm5UmwEr9jkXBN"],
+        )
         """
         _response = self._raw_client.get(document_ids=document_ids, request_options=request_options)
         return _response.data
@@ -107,7 +109,9 @@ class AsyncSummariesClient:
 
 
         async def main() -> None:
-            await client.conversational_ai.knowledge_base.documents.summaries.get()
+            await client.conversational_ai.knowledge_base.documents.summaries.get(
+                document_ids=["21m00Tcm4TlvDq8ikWAM", "31n11Udm5UmwEr9jkXBN"],
+            )
 
 
         asyncio.run(main())

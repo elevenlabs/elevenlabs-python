@@ -1720,11 +1720,11 @@ client = ElevenLabs(
 client.text_to_dialogue.convert(
     inputs=[
         DialogueInput(
-            text="Knock knock",
+            text="[giggling] Knock knock",
             voice_id="JBFqnCBsd6RMkjVDRZzb",
         ),
         DialogueInput(
-            text="Who is there?",
+            text="[curious] Who is there?",
             voice_id="Aw4FAjKCGjjNkVhN1Xmq",
         ),
     ],
@@ -1857,11 +1857,11 @@ client = ElevenLabs(
 client.text_to_dialogue.stream(
     inputs=[
         DialogueInput(
-            text="Knock knock",
+            text="[giggling] Knock knock",
             voice_id="JBFqnCBsd6RMkjVDRZzb",
         ),
         DialogueInput(
-            text="Who is there?",
+            text="[curious] Who is there?",
             voice_id="Aw4FAjKCGjjNkVhN1Xmq",
         ),
     ],
@@ -2748,7 +2748,7 @@ client.text_to_voice.create(
 <dl>
 <dd>
 
-**generated_voice_id:** `str` — The generated_voice_id to create, call POST /v1/text-to-voice/create-previews and fetch the generated_voice_id from the response header if don't have one yet.
+**generated_voice_id:** `str` — The generated_voice_id to create; obtain it from POST /v1/text-to-voice/design, POST /v1/text-to-voice/:voice_id/remix, or the response headers when generating previews.
     
 </dd>
 </dl>
@@ -3201,7 +3201,7 @@ client.user.get()
 <dl>
 <dd>
 
-Returns a list of all available voices for a user.
+Returns a list of all available voices for a user. Stops working once the user's workspace exceeds 500 voices.
 </dd>
 </dl>
 </dd>
@@ -3302,6 +3302,7 @@ client.voices.search(
     fine_tuning_state="fine_tuning_state",
     collection_id="collection_id",
     include_total_count=True,
+    voice_ids=["voice_ids"],
 )
 
 ```
@@ -3817,6 +3818,8 @@ client.voices.get_shared(
     language="language",
     locale="locale",
     search="search",
+    use_cases=["use_cases"],
+    descriptives=["descriptives"],
     featured=True,
     min_notice_period_days=1,
     include_custom_rates=True,
@@ -8073,11 +8076,20 @@ client.conversational_ai.conversations.list(
     rating_min=1,
     has_feedback_comment=True,
     user_id="user_id",
+    evaluation_params=["evaluation_params"],
+    data_collection_params=["data_collection_params"],
+    tool_names=["tool_names"],
+    tool_names_successful=["tool_names_successful"],
+    tool_names_errored=["tool_names_errored"],
+    main_languages=["main_languages"],
     page_size=1,
     summary_mode="exclude",
     search="search",
     conversation_initiation_source="unknown",
     branch_id="branch_id",
+    topic_ids=["topic_ids"],
+    exclude_statuses=["initiated"],
+    tag_ids=["tag_ids"],
 )
 
 ```
@@ -8278,6 +8290,27 @@ client.conversational_ai.conversations.list(
 <dl>
 <dd>
 
+**exclude_statuses:** `typing.Optional[
+    typing.Union[
+        ConversationsListRequestExcludeStatusesItem,
+        typing.Sequence[ConversationsListRequestExcludeStatusesItem],
+    ]
+]` — Exclude conversations with the given statuses. Useful for hiding in-progress / processing conversations from list views.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tag_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by conversation tag IDs assigned via the conversation-tags endpoints.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -8411,6 +8444,94 @@ client.conversational_ai.conversations.delete(
 <dd>
 
 **conversation_id:** `str` — The id of the conversation you're taking the action on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">get_sip_messages</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get SIP messages associated with a conversation's phone call
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.conversations.get_sip_messages(
+    conversation_id="21m00Tcm4TlvDq8ikWAM",
+    page_size=1,
+    cursor="cursor",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_id:** `str` — The id of the conversation you're taking the action on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
     
 </dd>
 </dl>
@@ -10305,6 +10426,7 @@ client.conversational_ai.tests.list(
     page_size=1,
     search="search",
     parent_folder_id="parent_folder_id",
+    types=["llm"],
     include_folders=True,
     sort_mode="default",
     sharing_mode="all",
@@ -10911,6 +11033,102 @@ client.conversational_ai.phone_numbers.update(
 <dl>
 <dd>
 
+**store_sip_messages:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.phone_numbers.<a href="src/elevenlabs/conversational_ai/phone_numbers/client.py">get_sip_messages</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get SIP messages for a phone number
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.phone_numbers.get_sip_messages(
+    phone_number_id="TeaqRRdTcIfIu2i7BYfT",
+    page_size=1,
+    cursor="cursor",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**phone_number_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -11111,6 +11329,7 @@ client.conversational_ai.knowledge_base.list(
     search="search",
     show_only_owned_documents=True,
     created_by_user_id="created_by_user_id",
+    types=["file"],
     parent_folder_id="parent_folder_id",
     ancestor_folder_id="ancestor_folder_id",
     folders_first=True,
@@ -11348,6 +11567,7 @@ client = ElevenLabs(
 client.conversational_ai.knowledge_base.search(
     query="query",
     page_size=1,
+    types=["file"],
     cursor="cursor",
 )
 
@@ -11451,6 +11671,7 @@ client.conversational_ai.tools.list(
     page_size=1,
     show_only_owned_documents=True,
     created_by_user_id="created_by_user_id",
+    types=["webhook"],
     sort_direction="asc",
     sort_by="name",
     cursor="cursor",
@@ -12811,6 +13032,7 @@ client = ElevenLabs(
 client.conversational_ai.batch_calls.list(
     limit=1,
     last_doc="last_doc",
+    agent_id="agent_id",
 )
 
 ```
@@ -12836,6 +13058,14 @@ client.conversational_ai.batch_calls.list(
 <dd>
 
 **last_doc:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agent_id:** `typing.Optional[str]` — Filter batch calls to a single agent.
     
 </dd>
 </dl>
@@ -14013,7 +14243,9 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.conversational_ai.agents.summaries.get()
+client.conversational_ai.agents.summaries.get(
+    agent_ids=["agent_ids"],
+)
 
 ```
 </dd>
@@ -15600,6 +15832,12 @@ client.conversational_ai.conversations.messages.text_search(
     rating_min=1,
     has_feedback_comment=True,
     user_id="user_id",
+    evaluation_params=["evaluation_params"],
+    data_collection_params=["data_collection_params"],
+    tool_names=["tool_names"],
+    tool_names_successful=["tool_names_successful"],
+    tool_names_errored=["tool_names_errored"],
+    main_languages=["main_languages"],
     page_size=1,
     summary_mode="exclude",
     conversation_initiation_source="unknown",
@@ -15896,6 +16134,548 @@ client.conversational_ai.conversations.messages.search(
 <dd>
 
 **cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi Conversations Tags
+<details><summary><code>client.conversational_ai.conversations.tags.<a href="src/elevenlabs/conversational_ai/conversations/tags/client.py">assign</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Assign one or more conversation tags to a conversation. Tags that are already assigned are ignored. Tags must belong to the same workspace.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.conversations.tags.assign(
+    conversation_id="conversation_id",
+    tag_ids=["tag_ids"],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tag_ids:** `typing.Sequence[str]` — Tag IDs to add to the conversation. Re-assigning an existing tag is a no-op.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.conversations.tags.<a href="src/elevenlabs/conversational_ai/conversations/tags/client.py">unassign</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove a single conversation tag from a conversation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.conversations.tags.unassign(
+    conversation_id="conversation_id",
+    tag_id="tag_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tag_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.conversations.tags.<a href="src/elevenlabs/conversational_ai/conversations/tags/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List conversation tags for the workspace, ordered by most recently created first.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.conversations.tags.list(
+    page_size=1,
+    cursor="cursor",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many conversation tags to return. Can not exceed 100.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.conversations.tags.<a href="src/elevenlabs/conversational_ai/conversations/tags/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new conversation tag for the workspace.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.conversations.tags.create(
+    title="title",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**title:** `str` — Display title of the tag.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Optional free-text description.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.conversations.tags.<a href="src/elevenlabs/conversational_ai/conversations/tags/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a conversation tag by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.conversations.tags.get(
+    tag_id="tag_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tag_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.conversations.tags.<a href="src/elevenlabs/conversational_ai/conversations/tags/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a conversation tag. Restricted to the tag owner or a workspace admin.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.conversations.tags.delete(
+    tag_id="tag_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tag_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.conversations.tags.<a href="src/elevenlabs/conversational_ai/conversations/tags/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a conversation tag's title and/or description. Restricted to the tag owner or a workspace admin.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.conversations.tags.update(
+    tag_id="tag_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tag_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — If provided, replaces the tag title. Omit to leave unchanged.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — If provided, replaces the tag description. Omit to leave unchanged.
     
 </dd>
 </dl>
@@ -17528,7 +18308,9 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.conversational_ai.knowledge_base.documents.summaries.get()
+client.conversational_ai.knowledge_base.documents.summaries.get(
+    document_ids=["21m00Tcm4TlvDq8ikWAM", "31n11Udm5UmwEr9jkXBN"],
+)
 
 ```
 </dd>
@@ -18839,7 +19621,7 @@ client.conversational_ai.tests.invocations.list(
 <dl>
 <dd>
 
-**agent_id:** `str` — Filter by agent ID
+**agent_id:** `typing.Optional[str]` — Filter by agent ID
     
 </dd>
 </dl>
@@ -25443,6 +26225,131 @@ client.voices.samples.audio.get(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Workspace AuditLogs
+<details><summary><code>client.workspace.audit_logs.<a href="src/elevenlabs/workspace/audit_logs/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the audit log for the workspace. Requires enterprise tier and the audit_log_read permission.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.workspace.audit_logs.list(
+    limit=1,
+    cursor="cursor",
+    time_from_unix_ms=1,
+    time_to_unix_ms=1,
+    actor_uid="actor_uid",
+    class_name="class_name",
+    activity_name="activity_name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[int]` — Maximum number of entries per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Cursor for the next page (from previous response)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**time_from_unix_ms:** `typing.Optional[int]` — Only include entries at or after this time (ms since epoch)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**time_to_unix_ms:** `typing.Optional[int]` — Only include entries at or before this time (ms since epoch)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**actor_uid:** `typing.Optional[str]` — Filter by actor user ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**class_name:** `typing.Optional[str]` — Filter by OCSF event class name (e.g. Account Change)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**activity_name:** `typing.Optional[str]` — Filter by audit activity name (e.g. Subscription Creation)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>
