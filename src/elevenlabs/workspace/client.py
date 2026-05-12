@@ -8,6 +8,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .raw_client import AsyncRawWorkspaceClient, RawWorkspaceClient
 
 if typing.TYPE_CHECKING:
+    from .analytics.client import AnalyticsClient, AsyncAnalyticsClient
     from .audit_logs.client import AsyncAuditLogsClient, AuditLogsClient
     from .auth_connections.client import AsyncAuthConnectionsClient, AuthConnectionsClient
     from .groups.client import AsyncGroupsClient, GroupsClient
@@ -28,6 +29,7 @@ class WorkspaceClient:
         self._members: typing.Optional[MembersClient] = None
         self._resources: typing.Optional[ResourcesClient] = None
         self._usage: typing.Optional[UsageClient] = None
+        self._analytics: typing.Optional[AnalyticsClient] = None
 
     @property
     def with_raw_response(self) -> RawWorkspaceClient:
@@ -96,6 +98,14 @@ class WorkspaceClient:
             self._usage = UsageClient(client_wrapper=self._client_wrapper)
         return self._usage
 
+    @property
+    def analytics(self):
+        if self._analytics is None:
+            from .analytics.client import AnalyticsClient  # noqa: E402
+
+            self._analytics = AnalyticsClient(client_wrapper=self._client_wrapper)
+        return self._analytics
+
 
 class AsyncWorkspaceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -108,6 +118,7 @@ class AsyncWorkspaceClient:
         self._members: typing.Optional[AsyncMembersClient] = None
         self._resources: typing.Optional[AsyncResourcesClient] = None
         self._usage: typing.Optional[AsyncUsageClient] = None
+        self._analytics: typing.Optional[AsyncAnalyticsClient] = None
 
     @property
     def with_raw_response(self) -> AsyncRawWorkspaceClient:
@@ -175,3 +186,11 @@ class AsyncWorkspaceClient:
 
             self._usage = AsyncUsageClient(client_wrapper=self._client_wrapper)
         return self._usage
+
+    @property
+    def analytics(self):
+        if self._analytics is None:
+            from .analytics.client import AsyncAnalyticsClient  # noqa: E402
+
+            self._analytics = AsyncAnalyticsClient(client_wrapper=self._client_wrapper)
+        return self._analytics

@@ -2329,7 +2329,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[SpeechToSpeechConvertRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[SpeechToSpeechConvertRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -3662,6 +3662,14 @@ typing.Optional[typing.List[core.File]]` — See core.File for more documentatio
 <dd>
 
 **labels:** `typing.Optional[VoicesUpdateRequestLabels]` — Labels for the voice. Keys can be language, accent, gender, or age.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**moderate_metadata:** `typing.Optional[bool]` — Run synchronous LLM moderation over the voice name and description when they change. Has no effect unless the voice_library_metadata_moderation feature flag is enabled for the user.
     
 </dd>
 </dl>
@@ -6840,6 +6848,14 @@ client.webhooks.update(
 <dl>
 <dd>
 
+**request_headers:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` — A list of request headers to include with the webhook delivery (optional)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -7505,6 +7521,547 @@ client.conversational_ai.delete_document_rag_index(
 </dl>
 </details>
 
+## SpeechEngine
+<details><summary><code>client.speech_engine.<a href="src/elevenlabs/speech_engine/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a paginated list of Speech Engine resources.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.speech_engine.list(
+    page_size=1,
+    search="search",
+    sort_direction="asc",
+    sort_by="name",
+    cursor="cursor",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many Speech Engines to return at maximum. Can not exceed 100, defaults to 30.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Search term to filter Speech Engines by name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_direction:** `typing.Optional[SortDirection]` — The direction to sort the results
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[AgentSortBy]` — The field to sort the results by
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.speech_engine.<a href="src/elevenlabs/speech_engine/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new Speech Engine resource
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs, SpeechEngineConfig
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.speech_engine.create(
+    speech_engine=SpeechEngineConfig(
+        ws_url="ws_url",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**speech_engine:** `SpeechEngineConfig` — Speech engine WebSocket configuration
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — Name of the speech engine
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**asr:** `typing.Optional[AsrConversationalConfig]` — ASR configuration
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tts:** `typing.Optional[TtsConversationalConfigInput]` — TTS configuration
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**turn:** `typing.Optional[BaseTurnConfig]` — Turn detection configuration
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**conversation:** `typing.Optional[ConversationConfigInput]` — Conversation configuration (client events, etc.)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**privacy:** `typing.Optional[PrivacyConfigInput]` — Privacy settings (recording, retention, zero retention mode)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**call_limits:** `typing.Optional[AgentCallLimits]` — Concurrency and daily conversation limits for this speech engine
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language:** `typing.Optional[str]` — Language for the speech engine
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tags:** `typing.Optional[typing.Sequence[str]]` — Tags for categorization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.speech_engine.<a href="src/elevenlabs/speech_engine/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a Speech Engine resource
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.speech_engine.get(
+    speech_engine_id="seng_3701k3ttaq12ewp8b7qv5rfyszkz",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**speech_engine_id:** `str` — The speech engine ID (accepts seng_ or agent_ prefix)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.speech_engine.<a href="src/elevenlabs/speech_engine/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a Speech Engine resource
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.speech_engine.delete(
+    speech_engine_id="seng_3701k3ttaq12ewp8b7qv5rfyszkz",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**speech_engine_id:** `str` — The speech engine ID (accepts seng_ or agent_ prefix)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.speech_engine.<a href="src/elevenlabs/speech_engine/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a Speech Engine resource (partial update)
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.speech_engine.update(
+    speech_engine_id="seng_3701k3ttaq12ewp8b7qv5rfyszkz",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**speech_engine_id:** `str` — The speech engine ID (accepts seng_ or agent_ prefix)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**speech_engine:** `typing.Optional[SpeechEngineConfig]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**asr:** `typing.Optional[AsrConversationalConfig]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tts:** `typing.Optional[TtsConversationalConfigInput]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**turn:** `typing.Optional[BaseTurnConfig]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**conversation:** `typing.Optional[ConversationConfigInput]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**privacy:** `typing.Optional[PrivacyConfigInput]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**call_limits:** `typing.Optional[AgentCallLimits]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tags:** `typing.Optional[typing.Sequence[str]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## EnvironmentVariables
 <details><summary><code>client.environment_variables.<a href="src/elevenlabs/environment_variables/client.py">list</a>(...)</code></summary>
 <dl>
@@ -7871,7 +8428,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.conversations.get_signed_url(
-    agent_id="21m00Tcm4TlvDq8ikWAM",
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     include_conversation_id=True,
     branch_id="branch_id",
     environment="environment",
@@ -7891,7 +8448,7 @@ client.conversational_ai.conversations.get_signed_url(
 <dl>
 <dd>
 
-**agent_id:** `str` — The id of the agent you're taking the action on.
+**agent_id:** `str` — Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
     
 </dd>
 </dl>
@@ -7968,7 +8525,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.conversations.get_webrtc_token(
-    agent_id="21m00Tcm4TlvDq8ikWAM",
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     participant_name="participant_name",
     branch_id="branch_id",
     environment="environment",
@@ -7988,7 +8545,7 @@ client.conversational_ai.conversations.get_webrtc_token(
 <dl>
 <dd>
 
-**agent_id:** `str` — The id of the agent you're taking the action on.
+**agent_id:** `str` — Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
     
 </dd>
 </dl>
@@ -8114,7 +8671,7 @@ client.conversational_ai.conversations.list(
 <dl>
 <dd>
 
-**agent_id:** `typing.Optional[str]` — The id of the agent you're taking the action on.
+**agent_id:** `typing.Optional[str]` — Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
     
 </dd>
 </dl>
@@ -10580,7 +11137,7 @@ client.conversational_ai.users.list(
 <dl>
 <dd>
 
-**agent_id:** `typing.Optional[str]` — The id of the agent you're taking the action on.
+**agent_id:** `typing.Optional[str]` — Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
     
 </dd>
 </dl>
@@ -11034,6 +11591,22 @@ client.conversational_ai.phone_numbers.update(
 <dd>
 
 **store_sip_messages:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**environment:** `typing.Optional[str]` — Environment to use for resolving environment variables on calls to this number.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `typing.Optional[str]` — Agent branch to use for calls to this number.
     
 </dd>
 </dl>
@@ -15868,7 +16441,7 @@ client.conversational_ai.conversations.messages.text_search(
 <dl>
 <dd>
 
-**agent_id:** `typing.Optional[str]` — The id of the agent you're taking the action on.
+**agent_id:** `typing.Optional[str]` — Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
     
 </dd>
 </dl>
@@ -16117,7 +16690,7 @@ client.conversational_ai.conversations.messages.search(
 <dl>
 <dd>
 
-**agent_id:** `typing.Optional[str]` — The id of the agent you're taking the action on.
+**agent_id:** `typing.Optional[str]` — Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
     
 </dd>
 </dl>
@@ -17665,7 +18238,7 @@ client.conversational_ai.knowledge_base.documents.delete(
 <dl>
 <dd>
 
-Update the name of a document
+Update the name and/or content of a document.
 </dd>
 </dl>
 </dd>
@@ -17687,7 +18260,6 @@ client = ElevenLabs(
 )
 client.conversational_ai.knowledge_base.documents.update(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
-    name="name",
 )
 
 ```
@@ -17712,7 +18284,15 @@ client.conversational_ai.knowledge_base.documents.update(
 <dl>
 <dd>
 
-**name:** `str` — A custom, human-readable name for the document.
+**name:** `typing.Optional[str]` — A custom, human-readable name for the document.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**content:** `typing.Optional[str]` — Updated content for the document. Only supported for text documents, URL documents with auto-sync disabled, and file documents.
     
 </dd>
 </dl>
@@ -18126,6 +18706,86 @@ client.conversational_ai.knowledge_base.documents.bulk_move(
 </details>
 
 ## ConversationalAi KnowledgeBase Document
+<details><summary><code>client.conversational_ai.knowledge_base.document.<a href="src/elevenlabs/conversational_ai/knowledge_base/document/client.py">update_file</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the source file of a file document. The document name, content, and metadata are updated to reflect the new file. Any manual content edits will be overwritten.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.knowledge_base.document.update_file(
+    documentation_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**documentation_id:** `str` — The id of a document from the knowledge base. This is returned on document addition.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file:** `from __future__ import annotations
+
+core.File` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.conversational_ai.knowledge_base.document.<a href="src/elevenlabs/conversational_ai/knowledge_base/document/client.py">refresh</a>(...)</code></summary>
 <dl>
 <dd>
@@ -18416,6 +19076,104 @@ client.conversational_ai.knowledge_base.documents.chunk.get(
 <dd>
 
 **embedding_model:** `typing.Optional[EmbeddingModelEnum]` — The embedding model used to retrieve the chunk.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi KnowledgeBase Documents Chunks
+<details><summary><code>client.conversational_ai.knowledge_base.documents.chunks.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/chunks/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all RAG chunks for a specific knowledge base document.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.knowledge_base.documents.chunks.list(
+    documentation_id="21m00Tcm4TlvDq8ikWAM",
+    embedding_model="e5_mistral_7b_instruct",
+    page_size=1,
+    cursor="cursor",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**documentation_id:** `str` — The id of a document from the knowledge base. This is returned on document addition.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**embedding_model:** `EmbeddingModelEnum` — The embedding model used to retrieve the chunk.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many documents to return at maximum. Can not exceed 100, defaults to 30.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
     
 </dd>
 </dl>
@@ -21936,6 +22694,14 @@ client.service_accounts.api_keys.create(
 <dl>
 <dd>
 
+**allowed_ips:** `typing.Optional[typing.Sequence[str]]` — List of IP addresses or CIDR ranges allowed to use this API key. Each entry may be a CIDR range (e.g. '10.0.0.0/24') or a bare IP address (normalized to /32 or /128). On create, omit or pass null to allow all IPs. On update, omit to leave the whitelist unchanged, or pass "clear" to remove it.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -22121,6 +22887,16 @@ client.service_accounts.api_keys.update(
 <dd>
 
 **character_limit:** `typing.Optional[int]` — The character limit of the XI API key. If provided this will limit the usage of this api key to n characters per month where n is the chosen value. Requests that incur charges will fail after reaching this monthly limit.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**allowed_ips:** `typing.Optional[
+    BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchAllowedIps
+]` — List of IP addresses or CIDR ranges allowed to use this API key. Each entry may be a CIDR range (e.g. '10.0.0.0/24') or a bare IP address (normalized to /32 or /128). On create, omit or pass null to allow all IPs. On update, omit to leave the whitelist unchanged, or pass "clear" to remove it.
     
 </dd>
 </dl>
@@ -27432,6 +28208,115 @@ client.workspace.usage.get_usage_by_product_over_time(
 <dd>
 
 **filters:** `typing.Optional[typing.Sequence[ColumnFilter]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Workspace Analytics Requests
+<details><summary><code>client.workspace.analytics.requests.<a href="src/elevenlabs/workspace/analytics/requests/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of API requests. Supports filtering by time range, column filters, and search terms. At least one of start_time or end_time must be provided. An optional sort parameter controls timestamp ordering. Results are ordered by timestamp. Descending if end_time is used, ascending if start_time is used. The response is a tabular structure with columns, column_types, column_units, and rows.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.workspace.analytics.requests.get()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**start_time:** `typing.Optional[int]` — Start of the time range as a Unix timestamp in milliseconds.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end_time:** `typing.Optional[int]` — End of the time range as a Unix timestamp in milliseconds.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort:** `typing.Optional[BodyListApiRequestsV1WorkspaceAnalyticsRequestsPostSort]` — Optional timestamp sort direction. If omitted, defaults to desc when end_time is provided, otherwise asc.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filters:** `typing.Optional[typing.Sequence[ColumnFilter]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` 
     
 </dd>
 </dl>

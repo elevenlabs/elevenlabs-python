@@ -19,6 +19,7 @@ class WorkspaceApiKeyResponseModel(UncheckedBaseModel):
     character_limit: typing.Optional[int] = None
     character_count: typing.Optional[int] = None
     hashed_xi_api_key: str
+    allowed_ips: typing.Optional[typing.List[str]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

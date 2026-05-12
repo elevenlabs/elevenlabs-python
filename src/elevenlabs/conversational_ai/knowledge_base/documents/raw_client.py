@@ -443,18 +443,26 @@ class RawDocumentsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update(
-        self, documentation_id: str, *, name: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        documentation_id: str,
+        *,
+        name: typing.Optional[str] = OMIT,
+        content: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DocumentsUpdateResponse]:
         """
-        Update the name of a document
+        Update the name and/or content of a document.
 
         Parameters
         ----------
         documentation_id : str
             The id of a document from the knowledge base. This is returned on document addition.
 
-        name : str
+        name : typing.Optional[str]
             A custom, human-readable name for the document.
+
+        content : typing.Optional[str]
+            Updated content for the document. Only supported for text documents, URL documents with auto-sync disabled, and file documents.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -469,6 +477,7 @@ class RawDocumentsClient:
             method="PATCH",
             json={
                 "name": name,
+                "content": content,
             },
             headers={
                 "content-type": "application/json",
@@ -1200,18 +1209,26 @@ class AsyncRawDocumentsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update(
-        self, documentation_id: str, *, name: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        documentation_id: str,
+        *,
+        name: typing.Optional[str] = OMIT,
+        content: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DocumentsUpdateResponse]:
         """
-        Update the name of a document
+        Update the name and/or content of a document.
 
         Parameters
         ----------
         documentation_id : str
             The id of a document from the knowledge base. This is returned on document addition.
 
-        name : str
+        name : typing.Optional[str]
             A custom, human-readable name for the document.
+
+        content : typing.Optional[str]
+            Updated content for the document. Only supported for text documents, URL documents with auto-sync disabled, and file documents.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1226,6 +1243,7 @@ class AsyncRawDocumentsClient:
             method="PATCH",
             json={
                 "name": name,
+                "content": content,
             },
             headers={
                 "content-type": "application/json",

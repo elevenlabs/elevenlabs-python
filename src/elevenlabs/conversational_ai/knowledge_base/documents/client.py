@@ -17,6 +17,7 @@ from .types.documents_update_response import DocumentsUpdateResponse
 
 if typing.TYPE_CHECKING:
     from .chunk.client import AsyncChunkClient, ChunkClient
+    from .chunks.client import AsyncChunksClient, ChunksClient
     from .summaries.client import AsyncSummariesClient, SummariesClient
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -28,6 +29,7 @@ class DocumentsClient:
         self._client_wrapper = client_wrapper
         self._summaries: typing.Optional[SummariesClient] = None
         self._chunk: typing.Optional[ChunkClient] = None
+        self._chunks: typing.Optional[ChunksClient] = None
 
     @property
     def with_raw_response(self) -> RawDocumentsClient:
@@ -325,18 +327,26 @@ class DocumentsClient:
         return _response.data
 
     def update(
-        self, documentation_id: str, *, name: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        documentation_id: str,
+        *,
+        name: typing.Optional[str] = OMIT,
+        content: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> DocumentsUpdateResponse:
         """
-        Update the name of a document
+        Update the name and/or content of a document.
 
         Parameters
         ----------
         documentation_id : str
             The id of a document from the knowledge base. This is returned on document addition.
 
-        name : str
+        name : typing.Optional[str]
             A custom, human-readable name for the document.
+
+        content : typing.Optional[str]
+            Updated content for the document. Only supported for text documents, URL documents with auto-sync disabled, and file documents.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -355,10 +365,11 @@ class DocumentsClient:
         )
         client.conversational_ai.knowledge_base.documents.update(
             documentation_id="21m00Tcm4TlvDq8ikWAM",
-            name="name",
         )
         """
-        _response = self._raw_client.update(documentation_id, name=name, request_options=request_options)
+        _response = self._raw_client.update(
+            documentation_id, name=name, content=content, request_options=request_options
+        )
         return _response.data
 
     def get_agents(
@@ -578,6 +589,14 @@ class DocumentsClient:
             self._chunk = ChunkClient(client_wrapper=self._client_wrapper)
         return self._chunk
 
+    @property
+    def chunks(self):
+        if self._chunks is None:
+            from .chunks.client import ChunksClient  # noqa: E402
+
+            self._chunks = ChunksClient(client_wrapper=self._client_wrapper)
+        return self._chunks
+
 
 class AsyncDocumentsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -585,6 +604,7 @@ class AsyncDocumentsClient:
         self._client_wrapper = client_wrapper
         self._summaries: typing.Optional[AsyncSummariesClient] = None
         self._chunk: typing.Optional[AsyncChunkClient] = None
+        self._chunks: typing.Optional[AsyncChunksClient] = None
 
     @property
     def with_raw_response(self) -> AsyncRawDocumentsClient:
@@ -930,18 +950,26 @@ class AsyncDocumentsClient:
         return _response.data
 
     async def update(
-        self, documentation_id: str, *, name: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        documentation_id: str,
+        *,
+        name: typing.Optional[str] = OMIT,
+        content: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> DocumentsUpdateResponse:
         """
-        Update the name of a document
+        Update the name and/or content of a document.
 
         Parameters
         ----------
         documentation_id : str
             The id of a document from the knowledge base. This is returned on document addition.
 
-        name : str
+        name : typing.Optional[str]
             A custom, human-readable name for the document.
+
+        content : typing.Optional[str]
+            Updated content for the document. Only supported for text documents, URL documents with auto-sync disabled, and file documents.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -965,13 +993,14 @@ class AsyncDocumentsClient:
         async def main() -> None:
             await client.conversational_ai.knowledge_base.documents.update(
                 documentation_id="21m00Tcm4TlvDq8ikWAM",
-                name="name",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.update(documentation_id, name=name, request_options=request_options)
+        _response = await self._raw_client.update(
+            documentation_id, name=name, content=content, request_options=request_options
+        )
         return _response.data
 
     async def get_agents(
@@ -1232,3 +1261,11 @@ class AsyncDocumentsClient:
 
             self._chunk = AsyncChunkClient(client_wrapper=self._client_wrapper)
         return self._chunk
+
+    @property
+    def chunks(self):
+        if self._chunks is None:
+            from .chunks.client import AsyncChunksClient  # noqa: E402
+
+            self._chunks = AsyncChunksClient(client_wrapper=self._client_wrapper)
+        return self._chunks

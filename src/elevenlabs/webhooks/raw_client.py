@@ -194,6 +194,7 @@ class RawWebhooksClient:
         is_disabled: bool,
         name: str,
         retry_enabled: typing.Optional[bool] = OMIT,
+        request_headers: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PatchWorkspaceWebhookResponseModel]:
         """
@@ -213,6 +214,9 @@ class RawWebhooksClient:
         retry_enabled : typing.Optional[bool]
             Whether to enable automatic retries for transient failures (5xx, 429, timeout)
 
+        request_headers : typing.Optional[typing.Dict[str, typing.Optional[str]]]
+            A list of request headers to include with the webhook delivery (optional)
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -228,6 +232,7 @@ class RawWebhooksClient:
                 "is_disabled": is_disabled,
                 "name": name,
                 "retry_enabled": retry_enabled,
+                "request_headers": request_headers,
             },
             headers={
                 "content-type": "application/json",
@@ -435,6 +440,7 @@ class AsyncRawWebhooksClient:
         is_disabled: bool,
         name: str,
         retry_enabled: typing.Optional[bool] = OMIT,
+        request_headers: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PatchWorkspaceWebhookResponseModel]:
         """
@@ -454,6 +460,9 @@ class AsyncRawWebhooksClient:
         retry_enabled : typing.Optional[bool]
             Whether to enable automatic retries for transient failures (5xx, 429, timeout)
 
+        request_headers : typing.Optional[typing.Dict[str, typing.Optional[str]]]
+            A list of request headers to include with the webhook delivery (optional)
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -469,6 +478,7 @@ class AsyncRawWebhooksClient:
                 "is_disabled": is_disabled,
                 "name": name,
                 "retry_enabled": retry_enabled,
+                "request_headers": request_headers,
             },
             headers={
                 "content-type": "application/json",

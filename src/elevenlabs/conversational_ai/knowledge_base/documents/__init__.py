@@ -18,7 +18,7 @@ if typing.TYPE_CHECKING:
         DocumentsUpdateResponse_Text,
         DocumentsUpdateResponse_Url,
     )
-    from . import chunk, summaries
+    from . import chunk, chunks, summaries
     from .summaries import (
         SummariesGetResponseValue,
         SummariesGetResponseValue_Failure,
@@ -39,6 +39,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SummariesGetResponseValue_Failure": ".summaries",
     "SummariesGetResponseValue_Success": ".summaries",
     "chunk": ".chunk",
+    "chunks": ".chunks",
     "summaries": ".summaries",
 }
 
@@ -79,5 +80,6 @@ __all__ = [
     "SummariesGetResponseValue_Failure",
     "SummariesGetResponseValue_Success",
     "chunk",
+    "chunks",
     "summaries",
 ]

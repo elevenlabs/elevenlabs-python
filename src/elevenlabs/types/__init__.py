@@ -25,6 +25,8 @@ if typing.TYPE_CHECKING:
     from .additional_formats import AdditionalFormats
     from .adhoc_agent_config_override_for_test_request_model import AdhocAgentConfigOverrideForTestRequestModel
     from .age import Age
+    from .agent_alerting_monitor_config import AgentAlertingMonitorConfig
+    from .agent_alerting_settings import AgentAlertingSettings
     from .agent_branch_basic_info import AgentBranchBasicInfo
     from .agent_branch_response import AgentBranchResponse
     from .agent_branch_summary import AgentBranchSummary
@@ -42,6 +44,7 @@ if typing.TYPE_CHECKING:
     from .agent_deployment_response import AgentDeploymentResponse
     from .agent_failure_response_example import AgentFailureResponseExample
     from .agent_metadata import AgentMetadata
+    from .agent_metadata_db_model import AgentMetadataDbModel
     from .agent_metadata_response_model import AgentMetadataResponseModel
     from .agent_platform_settings_request_model import AgentPlatformSettingsRequestModel
     from .agent_platform_settings_response_model import AgentPlatformSettingsResponseModel
@@ -250,6 +253,7 @@ if typing.TYPE_CHECKING:
     from .backup_llm_disabled import BackupLlmDisabled
     from .backup_llm_override import BackupLlmOverride
     from .bad_request_error_body import BadRequestErrorBody
+    from .base_turn_config import BaseTurnConfig
     from .basic_auth_response import BasicAuthResponse
     from .batch_call_detailed_response import BatchCallDetailedResponse
     from .batch_call_recipient_status import BatchCallRecipientStatus
@@ -327,6 +331,7 @@ if typing.TYPE_CHECKING:
     from .close_socket import CloseSocket
     from .coached_agent_settings import CoachedAgentSettings
     from .coaching_agent_settings import CoachingAgentSettings
+    from .code_tool_allowed_domain import CodeToolAllowedDomain
     from .column_filter import ColumnFilter
     from .column_filter_operation import ColumnFilterOperation
     from .column_filter_values_item import ColumnFilterValuesItem
@@ -538,8 +543,8 @@ if typing.TYPE_CHECKING:
     from .conversation_summary_response_model import ConversationSummaryResponseModel
     from .conversation_summary_response_model_status import ConversationSummaryResponseModelStatus
     from .conversation_tag_response_model import ConversationTagResponseModel
-    from .conversation_token_db_model import ConversationTokenDbModel
     from .conversation_token_purpose import ConversationTokenPurpose
+    from .conversation_token_response_model import ConversationTokenResponseModel
     from .conversation_tts_usage_model import ConversationTtsUsageModel
     from .conversation_turn_metrics import ConversationTurnMetrics
     from .conversation_user_response_model import ConversationUserResponseModel
@@ -585,6 +590,7 @@ if typing.TYPE_CHECKING:
     from .create_service_params import CreateServiceParams
     from .create_simulation_test_request import CreateSimulationTestRequest
     from .create_sip_trunk_phone_number_request import CreateSipTrunkPhoneNumberRequest
+    from .create_speech_engine_response import CreateSpeechEngineResponse
     from .create_staff_params import CreateStaffParams
     from .create_string_environment_variable_request import CreateStringEnvironmentVariableRequest
     from .create_tool_call_unit_test_request import CreateToolCallUnitTestRequest
@@ -928,6 +934,7 @@ if typing.TYPE_CHECKING:
     )
     from .knowledge_base_dependent_type import KnowledgeBaseDependentType
     from .knowledge_base_document_chunk_response_model import KnowledgeBaseDocumentChunkResponseModel
+    from .knowledge_base_document_chunks_response_model import KnowledgeBaseDocumentChunksResponseModel
     from .knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
     from .knowledge_base_document_type import KnowledgeBaseDocumentType
     from .knowledge_base_folder_path_segment_response_model import KnowledgeBaseFolderPathSegmentResponseModel
@@ -986,6 +993,7 @@ if typing.TYPE_CHECKING:
     from .list_response_api_integration_doc_response import ListResponseApiIntegrationDocResponse
     from .list_response_meta import ListResponseMeta
     from .list_services_params import ListServicesParams
+    from .list_speech_engines_response import ListSpeechEnginesResponse
     from .list_staff_params import ListStaffParams
     from .list_whats_app_accounts_response import ListWhatsAppAccountsResponse
     from .literal_json_schema_property import LiteralJsonSchemaProperty
@@ -1066,6 +1074,7 @@ if typing.TYPE_CHECKING:
     from .moderation_config import ModerationConfig
     from .moderation_guardrail_input import ModerationGuardrailInput
     from .moderation_guardrail_output import ModerationGuardrailOutput
+    from .monitor import Monitor
     from .mtls_auth_response import MtlsAuthResponse
     from .multichannel_speech_to_text_response_model import MultichannelSpeechToTextResponseModel
     from .multipart_music_response import MultipartMusicResponse
@@ -1290,11 +1299,13 @@ if typing.TYPE_CHECKING:
     from .referenced_tool_common_model_type import ReferencedToolCommonModelType
     from .regex_parameter_evaluation_strategy import RegexParameterEvaluationStrategy
     from .region_config_request import RegionConfigRequest
+    from .regional_processing_surcharge_info import RegionalProcessingSurchargeInfo
     from .register_for_group_session_params import RegisterForGroupSessionParams
     from .remove_member_from_group_request import RemoveMemberFromGroupRequest
     from .render import Render
     from .render_status import RenderStatus
     from .render_type import RenderType
+    from .report_knowledge_gap_params import ReportKnowledgeGapParams
     from .request_pvc_manual_verification_response_model import RequestPvcManualVerificationResponseModel
     from .required_constraint import RequiredConstraint
     from .required_constraints import RequiredConstraints
@@ -1401,6 +1412,8 @@ if typing.TYPE_CHECKING:
     from .speaker_updated_response import SpeakerUpdatedResponse
     from .speech_engine_config import SpeechEngineConfig
     from .speech_engine_config_request_headers_value import SpeechEngineConfigRequestHeadersValue
+    from .speech_engine_response import SpeechEngineResponse
+    from .speech_engine_summary_response import SpeechEngineSummaryResponse
     from .speech_history_item_response import SpeechHistoryItemResponse
     from .speech_history_item_response_model_source import SpeechHistoryItemResponseModelSource
     from .speech_history_item_response_model_voice_category import SpeechHistoryItemResponseModelVoiceCategory
@@ -1891,6 +1904,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AdditionalFormats": ".additional_formats",
     "AdhocAgentConfigOverrideForTestRequestModel": ".adhoc_agent_config_override_for_test_request_model",
     "Age": ".age",
+    "AgentAlertingMonitorConfig": ".agent_alerting_monitor_config",
+    "AgentAlertingSettings": ".agent_alerting_settings",
     "AgentBranchBasicInfo": ".agent_branch_basic_info",
     "AgentBranchResponse": ".agent_branch_response",
     "AgentBranchSummary": ".agent_branch_summary",
@@ -1908,6 +1923,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentDeploymentResponse": ".agent_deployment_response",
     "AgentFailureResponseExample": ".agent_failure_response_example",
     "AgentMetadata": ".agent_metadata",
+    "AgentMetadataDbModel": ".agent_metadata_db_model",
     "AgentMetadataResponseModel": ".agent_metadata_response_model",
     "AgentPlatformSettingsRequestModel": ".agent_platform_settings_request_model",
     "AgentPlatformSettingsResponseModel": ".agent_platform_settings_response_model",
@@ -2094,6 +2110,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BackupLlmDisabled": ".backup_llm_disabled",
     "BackupLlmOverride": ".backup_llm_override",
     "BadRequestErrorBody": ".bad_request_error_body",
+    "BaseTurnConfig": ".base_turn_config",
     "BasicAuthResponse": ".basic_auth_response",
     "BatchCallDetailedResponse": ".batch_call_detailed_response",
     "BatchCallRecipientStatus": ".batch_call_recipient_status",
@@ -2169,6 +2186,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CloseSocket": ".close_socket",
     "CoachedAgentSettings": ".coached_agent_settings",
     "CoachingAgentSettings": ".coaching_agent_settings",
+    "CodeToolAllowedDomain": ".code_tool_allowed_domain",
     "ColumnFilter": ".column_filter",
     "ColumnFilterOperation": ".column_filter_operation",
     "ColumnFilterValuesItem": ".column_filter_values_item",
@@ -2316,8 +2334,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationSummaryResponseModel": ".conversation_summary_response_model",
     "ConversationSummaryResponseModelStatus": ".conversation_summary_response_model_status",
     "ConversationTagResponseModel": ".conversation_tag_response_model",
-    "ConversationTokenDbModel": ".conversation_token_db_model",
     "ConversationTokenPurpose": ".conversation_token_purpose",
+    "ConversationTokenResponseModel": ".conversation_token_response_model",
     "ConversationTtsUsageModel": ".conversation_tts_usage_model",
     "ConversationTurnMetrics": ".conversation_turn_metrics",
     "ConversationUserResponseModel": ".conversation_user_response_model",
@@ -2359,6 +2377,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateServiceParams": ".create_service_params",
     "CreateSimulationTestRequest": ".create_simulation_test_request",
     "CreateSipTrunkPhoneNumberRequest": ".create_sip_trunk_phone_number_request",
+    "CreateSpeechEngineResponse": ".create_speech_engine_response",
     "CreateStaffParams": ".create_staff_params",
     "CreateStringEnvironmentVariableRequest": ".create_string_environment_variable_request",
     "CreateToolCallUnitTestRequest": ".create_tool_call_unit_test_request",
@@ -2660,6 +2679,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "KnowledgeBaseContentSearchResultDocument_Url": ".knowledge_base_content_search_result_document",
     "KnowledgeBaseDependentType": ".knowledge_base_dependent_type",
     "KnowledgeBaseDocumentChunkResponseModel": ".knowledge_base_document_chunk_response_model",
+    "KnowledgeBaseDocumentChunksResponseModel": ".knowledge_base_document_chunks_response_model",
     "KnowledgeBaseDocumentMetadataResponseModel": ".knowledge_base_document_metadata_response_model",
     "KnowledgeBaseDocumentType": ".knowledge_base_document_type",
     "KnowledgeBaseFolderPathSegmentResponseModel": ".knowledge_base_folder_path_segment_response_model",
@@ -2712,6 +2732,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListResponseApiIntegrationDocResponse": ".list_response_api_integration_doc_response",
     "ListResponseMeta": ".list_response_meta",
     "ListServicesParams": ".list_services_params",
+    "ListSpeechEnginesResponse": ".list_speech_engines_response",
     "ListStaffParams": ".list_staff_params",
     "ListWhatsAppAccountsResponse": ".list_whats_app_accounts_response",
     "LiteralJsonSchemaProperty": ".literal_json_schema_property",
@@ -2786,6 +2807,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ModerationConfig": ".moderation_config",
     "ModerationGuardrailInput": ".moderation_guardrail_input",
     "ModerationGuardrailOutput": ".moderation_guardrail_output",
+    "Monitor": ".monitor",
     "MtlsAuthResponse": ".mtls_auth_response",
     "MultichannelSpeechToTextResponseModel": ".multichannel_speech_to_text_response_model",
     "MultipartMusicResponse": ".multipart_music_response",
@@ -2980,11 +3002,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ReferencedToolCommonModelType": ".referenced_tool_common_model_type",
     "RegexParameterEvaluationStrategy": ".regex_parameter_evaluation_strategy",
     "RegionConfigRequest": ".region_config_request",
+    "RegionalProcessingSurchargeInfo": ".regional_processing_surcharge_info",
     "RegisterForGroupSessionParams": ".register_for_group_session_params",
     "RemoveMemberFromGroupRequest": ".remove_member_from_group_request",
     "Render": ".render",
     "RenderStatus": ".render_status",
     "RenderType": ".render_type",
+    "ReportKnowledgeGapParams": ".report_knowledge_gap_params",
     "RequestPvcManualVerificationResponseModel": ".request_pvc_manual_verification_response_model",
     "RequiredConstraint": ".required_constraint",
     "RequiredConstraints": ".required_constraints",
@@ -3089,6 +3113,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SpeakerUpdatedResponse": ".speaker_updated_response",
     "SpeechEngineConfig": ".speech_engine_config",
     "SpeechEngineConfigRequestHeadersValue": ".speech_engine_config_request_headers_value",
+    "SpeechEngineResponse": ".speech_engine_response",
+    "SpeechEngineSummaryResponse": ".speech_engine_summary_response",
     "SpeechHistoryItemResponse": ".speech_history_item_response",
     "SpeechHistoryItemResponseModelSource": ".speech_history_item_response_model_source",
     "SpeechHistoryItemResponseModelVoiceCategory": ".speech_history_item_response_model_voice_category",
@@ -3539,6 +3565,8 @@ __all__ = [
     "AdditionalFormats",
     "AdhocAgentConfigOverrideForTestRequestModel",
     "Age",
+    "AgentAlertingMonitorConfig",
+    "AgentAlertingSettings",
     "AgentBranchBasicInfo",
     "AgentBranchResponse",
     "AgentBranchSummary",
@@ -3556,6 +3584,7 @@ __all__ = [
     "AgentDeploymentResponse",
     "AgentFailureResponseExample",
     "AgentMetadata",
+    "AgentMetadataDbModel",
     "AgentMetadataResponseModel",
     "AgentPlatformSettingsRequestModel",
     "AgentPlatformSettingsResponseModel",
@@ -3742,6 +3771,7 @@ __all__ = [
     "BackupLlmDisabled",
     "BackupLlmOverride",
     "BadRequestErrorBody",
+    "BaseTurnConfig",
     "BasicAuthResponse",
     "BatchCallDetailedResponse",
     "BatchCallRecipientStatus",
@@ -3817,6 +3847,7 @@ __all__ = [
     "CloseSocket",
     "CoachedAgentSettings",
     "CoachingAgentSettings",
+    "CodeToolAllowedDomain",
     "ColumnFilter",
     "ColumnFilterOperation",
     "ColumnFilterValuesItem",
@@ -3964,8 +3995,8 @@ __all__ = [
     "ConversationSummaryResponseModel",
     "ConversationSummaryResponseModelStatus",
     "ConversationTagResponseModel",
-    "ConversationTokenDbModel",
     "ConversationTokenPurpose",
+    "ConversationTokenResponseModel",
     "ConversationTtsUsageModel",
     "ConversationTurnMetrics",
     "ConversationUserResponseModel",
@@ -4007,6 +4038,7 @@ __all__ = [
     "CreateServiceParams",
     "CreateSimulationTestRequest",
     "CreateSipTrunkPhoneNumberRequest",
+    "CreateSpeechEngineResponse",
     "CreateStaffParams",
     "CreateStringEnvironmentVariableRequest",
     "CreateToolCallUnitTestRequest",
@@ -4308,6 +4340,7 @@ __all__ = [
     "KnowledgeBaseContentSearchResultDocument_Url",
     "KnowledgeBaseDependentType",
     "KnowledgeBaseDocumentChunkResponseModel",
+    "KnowledgeBaseDocumentChunksResponseModel",
     "KnowledgeBaseDocumentMetadataResponseModel",
     "KnowledgeBaseDocumentType",
     "KnowledgeBaseFolderPathSegmentResponseModel",
@@ -4360,6 +4393,7 @@ __all__ = [
     "ListResponseApiIntegrationDocResponse",
     "ListResponseMeta",
     "ListServicesParams",
+    "ListSpeechEnginesResponse",
     "ListStaffParams",
     "ListWhatsAppAccountsResponse",
     "LiteralJsonSchemaProperty",
@@ -4434,6 +4468,7 @@ __all__ = [
     "ModerationConfig",
     "ModerationGuardrailInput",
     "ModerationGuardrailOutput",
+    "Monitor",
     "MtlsAuthResponse",
     "MultichannelSpeechToTextResponseModel",
     "MultipartMusicResponse",
@@ -4628,11 +4663,13 @@ __all__ = [
     "ReferencedToolCommonModelType",
     "RegexParameterEvaluationStrategy",
     "RegionConfigRequest",
+    "RegionalProcessingSurchargeInfo",
     "RegisterForGroupSessionParams",
     "RemoveMemberFromGroupRequest",
     "Render",
     "RenderStatus",
     "RenderType",
+    "ReportKnowledgeGapParams",
     "RequestPvcManualVerificationResponseModel",
     "RequiredConstraint",
     "RequiredConstraints",
@@ -4737,6 +4774,8 @@ __all__ = [
     "SpeakerUpdatedResponse",
     "SpeechEngineConfig",
     "SpeechEngineConfigRequestHeadersValue",
+    "SpeechEngineResponse",
+    "SpeechEngineSummaryResponse",
     "SpeechHistoryItemResponse",
     "SpeechHistoryItemResponseModelSource",
     "SpeechHistoryItemResponseModelVoiceCategory",

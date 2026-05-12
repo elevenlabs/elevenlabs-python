@@ -307,6 +307,7 @@ class RawVoicesClient:
         remove_background_noise: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
         labels: typing.Optional[VoicesUpdateRequestLabels] = OMIT,
+        moderate_metadata: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[EditVoiceResponseModel]:
         """
@@ -332,6 +333,9 @@ class RawVoicesClient:
         labels : typing.Optional[VoicesUpdateRequestLabels]
             Labels for the voice. Keys can be language, accent, gender, or age.
 
+        moderate_metadata : typing.Optional[bool]
+            Run synchronous LLM moderation over the voice name and description when they change. Has no effect unless the voice_library_metadata_moderation feature flag is enabled for the user.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -348,6 +352,7 @@ class RawVoicesClient:
                 "remove_background_noise": remove_background_noise,
                 "description": description,
                 "labels": labels,
+                "moderate_metadata": moderate_metadata,
             },
             files={
                 **({"files": files} if files is not None else {}),
@@ -947,6 +952,7 @@ class AsyncRawVoicesClient:
         remove_background_noise: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
         labels: typing.Optional[VoicesUpdateRequestLabels] = OMIT,
+        moderate_metadata: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[EditVoiceResponseModel]:
         """
@@ -972,6 +978,9 @@ class AsyncRawVoicesClient:
         labels : typing.Optional[VoicesUpdateRequestLabels]
             Labels for the voice. Keys can be language, accent, gender, or age.
 
+        moderate_metadata : typing.Optional[bool]
+            Run synchronous LLM moderation over the voice name and description when they change. Has no effect unless the voice_library_metadata_moderation feature flag is enabled for the user.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -988,6 +997,7 @@ class AsyncRawVoicesClient:
                 "remove_background_noise": remove_background_noise,
                 "description": description,
                 "labels": labels,
+                "moderate_metadata": moderate_metadata,
             },
             files={
                 **({"files": files} if files is not None else {}),

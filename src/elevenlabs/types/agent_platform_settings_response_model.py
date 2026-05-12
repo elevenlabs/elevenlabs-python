@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .agent_alerting_settings import AgentAlertingSettings
 from .agent_call_limits import AgentCallLimits
 from .agent_testing_settings import AgentTestingSettings
 from .agent_trust_context import AgentTrustContext
@@ -97,6 +98,7 @@ class AgentPlatformSettingsResponseModel(UncheckedBaseModel):
     Default LLM model for post-call analysis (evaluation and data collection)
     """
 
+    alerting: typing.Optional[AgentAlertingSettings] = None
     safety: typing.Optional[SafetyResponseModel] = None
 
     if IS_PYDANTIC_V2:

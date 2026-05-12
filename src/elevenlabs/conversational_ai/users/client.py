@@ -43,7 +43,7 @@ class UsersClient:
         Parameters
         ----------
         agent_id : typing.Optional[str]
-            The id of the agent you're taking the action on.
+            Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
 
         branch_id : typing.Optional[str]
             Filter conversations by branch ID.
@@ -140,7 +140,7 @@ class AsyncUsersClient:
         Parameters
         ----------
         agent_id : typing.Optional[str]
-            The id of the agent you're taking the action on.
+            Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
 
         branch_id : typing.Optional[str]
             Filter conversations by branch ID.

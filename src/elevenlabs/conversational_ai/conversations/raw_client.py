@@ -40,7 +40,7 @@ class RawConversationsClient:
         Parameters
         ----------
         agent_id : str
-            The id of the agent you're taking the action on.
+            Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
 
         include_conversation_id : typing.Optional[bool]
             Whether to include a conversation_id with the response. If included, the conversation_signature cannot be used again.
@@ -111,7 +111,7 @@ class RawConversationsClient:
         Parameters
         ----------
         agent_id : str
-            The id of the agent you're taking the action on.
+            Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
 
         participant_name : typing.Optional[str]
             Optional custom participant name. If not provided, user ID will be used
@@ -211,7 +211,7 @@ class RawConversationsClient:
             Used for fetching next page. Cursor is returned in the response.
 
         agent_id : typing.Optional[str]
-            The id of the agent you're taking the action on.
+            Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
 
         call_successful : typing.Optional[EvaluationSuccessResult]
             The result of the success evaluation
@@ -533,7 +533,7 @@ class AsyncRawConversationsClient:
         Parameters
         ----------
         agent_id : str
-            The id of the agent you're taking the action on.
+            Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
 
         include_conversation_id : typing.Optional[bool]
             Whether to include a conversation_id with the response. If included, the conversation_signature cannot be used again.
@@ -604,7 +604,7 @@ class AsyncRawConversationsClient:
         Parameters
         ----------
         agent_id : str
-            The id of the agent you're taking the action on.
+            Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
 
         participant_name : typing.Optional[str]
             Optional custom participant name. If not provided, user ID will be used
@@ -704,7 +704,7 @@ class AsyncRawConversationsClient:
             Used for fetching next page. Cursor is returned in the response.
 
         agent_id : typing.Optional[str]
-            The id of the agent you're taking the action on.
+            Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
 
         call_successful : typing.Optional[EvaluationSuccessResult]
             The result of the success evaluation

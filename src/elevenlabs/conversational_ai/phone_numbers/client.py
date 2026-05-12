@@ -176,6 +176,8 @@ class PhoneNumbersClient:
         outbound_trunk_config: typing.Optional[OutboundSipTrunkConfigRequestModel] = OMIT,
         livekit_stack: typing.Optional[LivekitStackType] = OMIT,
         store_sip_messages: typing.Optional[bool] = OMIT,
+        environment: typing.Optional[str] = OMIT,
+        branch_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PhoneNumbersUpdateResponse:
         """
@@ -197,6 +199,12 @@ class PhoneNumbersClient:
         livekit_stack : typing.Optional[LivekitStackType]
 
         store_sip_messages : typing.Optional[bool]
+
+        environment : typing.Optional[str]
+            Environment to use for resolving environment variables on calls to this number.
+
+        branch_id : typing.Optional[str]
+            Agent branch to use for calls to this number.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -225,6 +233,8 @@ class PhoneNumbersClient:
             outbound_trunk_config=outbound_trunk_config,
             livekit_stack=livekit_stack,
             store_sip_messages=store_sip_messages,
+            environment=environment,
+            branch_id=branch_id,
             request_options=request_options,
         )
         return _response.data
@@ -468,6 +478,8 @@ class AsyncPhoneNumbersClient:
         outbound_trunk_config: typing.Optional[OutboundSipTrunkConfigRequestModel] = OMIT,
         livekit_stack: typing.Optional[LivekitStackType] = OMIT,
         store_sip_messages: typing.Optional[bool] = OMIT,
+        environment: typing.Optional[str] = OMIT,
+        branch_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PhoneNumbersUpdateResponse:
         """
@@ -489,6 +501,12 @@ class AsyncPhoneNumbersClient:
         livekit_stack : typing.Optional[LivekitStackType]
 
         store_sip_messages : typing.Optional[bool]
+
+        environment : typing.Optional[str]
+            Environment to use for resolving environment variables on calls to this number.
+
+        branch_id : typing.Optional[str]
+            Agent branch to use for calls to this number.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -525,6 +543,8 @@ class AsyncPhoneNumbersClient:
             outbound_trunk_config=outbound_trunk_config,
             livekit_stack=livekit_stack,
             store_sip_messages=store_sip_messages,
+            environment=environment,
+            branch_id=branch_id,
             request_options=request_options,
         )
         return _response.data

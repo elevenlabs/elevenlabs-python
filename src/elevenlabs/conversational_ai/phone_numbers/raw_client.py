@@ -244,6 +244,8 @@ class RawPhoneNumbersClient:
         outbound_trunk_config: typing.Optional[OutboundSipTrunkConfigRequestModel] = OMIT,
         livekit_stack: typing.Optional[LivekitStackType] = OMIT,
         store_sip_messages: typing.Optional[bool] = OMIT,
+        environment: typing.Optional[str] = OMIT,
+        branch_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PhoneNumbersUpdateResponse]:
         """
@@ -265,6 +267,12 @@ class RawPhoneNumbersClient:
         livekit_stack : typing.Optional[LivekitStackType]
 
         store_sip_messages : typing.Optional[bool]
+
+        environment : typing.Optional[str]
+            Environment to use for resolving environment variables on calls to this number.
+
+        branch_id : typing.Optional[str]
+            Agent branch to use for calls to this number.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -288,6 +296,8 @@ class RawPhoneNumbersClient:
                 ),
                 "livekit_stack": livekit_stack,
                 "store_sip_messages": store_sip_messages,
+                "environment": environment,
+                "branch_id": branch_id,
             },
             headers={
                 "content-type": "application/json",
@@ -605,6 +615,8 @@ class AsyncRawPhoneNumbersClient:
         outbound_trunk_config: typing.Optional[OutboundSipTrunkConfigRequestModel] = OMIT,
         livekit_stack: typing.Optional[LivekitStackType] = OMIT,
         store_sip_messages: typing.Optional[bool] = OMIT,
+        environment: typing.Optional[str] = OMIT,
+        branch_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PhoneNumbersUpdateResponse]:
         """
@@ -626,6 +638,12 @@ class AsyncRawPhoneNumbersClient:
         livekit_stack : typing.Optional[LivekitStackType]
 
         store_sip_messages : typing.Optional[bool]
+
+        environment : typing.Optional[str]
+            Environment to use for resolving environment variables on calls to this number.
+
+        branch_id : typing.Optional[str]
+            Agent branch to use for calls to this number.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -649,6 +667,8 @@ class AsyncRawPhoneNumbersClient:
                 ),
                 "livekit_stack": livekit_stack,
                 "store_sip_messages": store_sip_messages,
+                "environment": environment,
+                "branch_id": branch_id,
             },
             headers={
                 "content-type": "application/json",

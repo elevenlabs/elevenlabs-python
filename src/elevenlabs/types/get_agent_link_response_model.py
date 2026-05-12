@@ -5,7 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .conversation_token_db_model import ConversationTokenDbModel
+from .conversation_token_response_model import ConversationTokenResponseModel
 
 
 class GetAgentLinkResponseModel(UncheckedBaseModel):
@@ -14,7 +14,7 @@ class GetAgentLinkResponseModel(UncheckedBaseModel):
     The ID of the agent
     """
 
-    token: typing.Optional[ConversationTokenDbModel] = pydantic.Field(default=None)
+    token: typing.Optional[ConversationTokenResponseModel] = pydantic.Field(default=None)
     """
     The token data for the agent
     """

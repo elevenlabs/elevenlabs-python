@@ -8,7 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .conversation_token_purpose import ConversationTokenPurpose
 
 
-class ConversationTokenDbModel(UncheckedBaseModel):
+class ConversationTokenResponseModel(UncheckedBaseModel):
     agent_id: str = pydantic.Field()
     """
     The ID of the agent
@@ -29,7 +29,7 @@ class ConversationTokenDbModel(UncheckedBaseModel):
     The ID of the conversation
     """
 
-    purpose: typing.Optional[ConversationTokenPurpose] = pydantic.Field(default=None)
+    purpose: ConversationTokenPurpose = pydantic.Field()
     """
     The purpose of the token
     """
