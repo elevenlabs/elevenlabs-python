@@ -67,7 +67,7 @@ class ElevenLabs(BaseElevenLabs):
 
     @property
     def speech_engine(self) -> SpeechEngineClient:
-        return self._speech_engine
+        return typing.cast(SpeechEngineClient, self._speech_engine)
 
 
 class AsyncElevenLabs(AsyncBaseElevenLabs):
@@ -117,4 +117,4 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
 
     @property
     def speech_engine(self) -> AsyncSpeechEngineClient:
-        return self._speech_engine
+        return typing.cast(AsyncSpeechEngineClient, self._speech_engine)
