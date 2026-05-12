@@ -29,5 +29,4 @@ __all__ = [
     "ERROR",
     "INIT",
     "USER_TRANSCRIPT",
-    "verify_speech_engine_jwt",
 ]

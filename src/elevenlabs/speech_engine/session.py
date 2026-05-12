@@ -466,6 +466,8 @@ class SpeechEngineSession:
             raise
         except Exception as e:
             await self._emit("error", e)
+            if not self._closed:
+                await self._send_agent_response("", True, event_id)
 
     async def _send_agent_response(
         self,
