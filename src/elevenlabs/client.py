@@ -7,6 +7,7 @@ from .base_client import AsyncBaseElevenLabs, BaseElevenLabs
 from .environment import ElevenLabsEnvironment
 from .music_custom import AsyncMusicClient, MusicClient
 from .realtime_tts import RealtimeTextToSpeechClient
+from .speech_engine_custom import AsyncSpeechEngineClient, SpeechEngineClient
 from .speech_to_text_custom import AsyncSpeechToTextClient, SpeechToTextClient
 from .webhooks_custom import AsyncWebhooksClient, WebhooksClient
 
@@ -62,24 +63,11 @@ class ElevenLabs(BaseElevenLabs):
         self._webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
         self._music = MusicClient(client_wrapper=self._client_wrapper)
         self._speech_to_text = SpeechToTextClient(client_wrapper=self._client_wrapper)
+        self._speech_engine = SpeechEngineClient(client_wrapper=self._client_wrapper)
 
-
-class _AsyncSpeechEngineAccessor:
-    """Stub accessor for speech engine resources.
-
-    Will be replaced with a Fern-generated client once CRUD endpoints exist.
-    """
-
-    def __init__(self, client_wrapper: typing.Any) -> None:
-        self._client_wrapper = client_wrapper
-
-    async def get(self, engine_id: str) -> typing.Any:
-        from .speech_engine.resource import SpeechEngineResource  # noqa: E402
-
-        return SpeechEngineResource(
-            engine_id=engine_id,
-            client_wrapper=self._client_wrapper,
-        )
+    @property
+    def speech_engine(self) -> SpeechEngineClient:
+        return self._speech_engine
 
 
 class AsyncElevenLabs(AsyncBaseElevenLabs):
@@ -125,10 +113,8 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
         self._webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
         self._music = AsyncMusicClient(client_wrapper=self._client_wrapper)
         self._speech_to_text = AsyncSpeechToTextClient(client_wrapper=self._client_wrapper)
-        self._speech_engine = None  # type: typing.Optional[_AsyncSpeechEngineAccessor]
+        self._speech_engine = AsyncSpeechEngineClient(client_wrapper=self._client_wrapper)
 
     @property
-    def speech_engine(self) -> _AsyncSpeechEngineAccessor:
-        if self._speech_engine is None:
-            self._speech_engine = _AsyncSpeechEngineAccessor(self._client_wrapper)
+    def speech_engine(self) -> AsyncSpeechEngineClient:
         return self._speech_engine
