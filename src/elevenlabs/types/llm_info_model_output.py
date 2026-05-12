@@ -8,6 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .llm import Llm
 from .llm_deprecation_info_model import LlmDeprecationInfoModel
 from .llm_reasoning_effort import LlmReasoningEffort
+from .regional_processing_surcharge_info import RegionalProcessingSurchargeInfo
 
 
 class LlmInfoModelOutput(UncheckedBaseModel):
@@ -54,6 +55,11 @@ class LlmInfoModelOutput(UncheckedBaseModel):
     deprecation_info: typing.Optional[LlmDeprecationInfoModel] = pydantic.Field(default=None)
     """
     Deprecation information if this model is deprecated or scheduled for deprecation. Null if the model is not affected.
+    """
+
+    regional_processing_surcharge: typing.Optional[RegionalProcessingSurchargeInfo] = pydantic.Field(default=None)
+    """
+    Regional processing surcharge details if this model has additional costs in the current deployment region. Null if no surcharge applies.
     """
 
     if IS_PYDANTIC_V2:

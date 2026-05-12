@@ -12,6 +12,11 @@ if typing.TYPE_CHECKING:
         DocumentRefreshResponse_Folder,
         DocumentRefreshResponse_Text,
         DocumentRefreshResponse_Url,
+        DocumentUpdateFileResponse,
+        DocumentUpdateFileResponse_File,
+        DocumentUpdateFileResponse_Folder,
+        DocumentUpdateFileResponse_Text,
+        DocumentUpdateFileResponse_Url,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "DocumentRefreshResponse": ".types",
@@ -19,6 +24,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DocumentRefreshResponse_Folder": ".types",
     "DocumentRefreshResponse_Text": ".types",
     "DocumentRefreshResponse_Url": ".types",
+    "DocumentUpdateFileResponse": ".types",
+    "DocumentUpdateFileResponse_File": ".types",
+    "DocumentUpdateFileResponse_Folder": ".types",
+    "DocumentUpdateFileResponse_Text": ".types",
+    "DocumentUpdateFileResponse_Url": ".types",
 }
 
 
@@ -49,4 +59,9 @@ __all__ = [
     "DocumentRefreshResponse_Folder",
     "DocumentRefreshResponse_Text",
     "DocumentRefreshResponse_Url",
+    "DocumentUpdateFileResponse",
+    "DocumentUpdateFileResponse_File",
+    "DocumentUpdateFileResponse_Folder",
+    "DocumentUpdateFileResponse_Text",
+    "DocumentUpdateFileResponse_Url",
 ]

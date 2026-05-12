@@ -2,12 +2,14 @@
 
 import typing
 
+from .... import core
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.request_options import RequestOptions
 from ....types.embedding_model_enum import EmbeddingModelEnum
 from ....types.rag_document_index_response_model import RagDocumentIndexResponseModel
 from .raw_client import AsyncRawDocumentClient, RawDocumentClient
 from .types.document_refresh_response import DocumentRefreshResponse
+from .types.document_update_file_response import DocumentUpdateFileResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -27,6 +29,42 @@ class DocumentClient:
         RawDocumentClient
         """
         return self._raw_client
+
+    def update_file(
+        self, documentation_id: str, *, file: core.File, request_options: typing.Optional[RequestOptions] = None
+    ) -> DocumentUpdateFileResponse:
+        """
+        Update the source file of a file document. The document name, content, and metadata are updated to reflect the new file. Any manual content edits will be overwritten.
+
+        Parameters
+        ----------
+        documentation_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        file : core.File
+            See core.File for more documentation
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DocumentUpdateFileResponse
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.knowledge_base.document.update_file(
+            documentation_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._raw_client.update_file(documentation_id, file=file, request_options=request_options)
+        return _response.data
 
     def refresh(
         self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -116,6 +154,50 @@ class AsyncDocumentClient:
         AsyncRawDocumentClient
         """
         return self._raw_client
+
+    async def update_file(
+        self, documentation_id: str, *, file: core.File, request_options: typing.Optional[RequestOptions] = None
+    ) -> DocumentUpdateFileResponse:
+        """
+        Update the source file of a file document. The document name, content, and metadata are updated to reflect the new file. Any manual content edits will be overwritten.
+
+        Parameters
+        ----------
+        documentation_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        file : core.File
+            See core.File for more documentation
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DocumentUpdateFileResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.knowledge_base.document.update_file(
+                documentation_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update_file(documentation_id, file=file, request_options=request_options)
+        return _response.data
 
     async def refresh(
         self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None

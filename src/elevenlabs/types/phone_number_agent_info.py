@@ -18,6 +18,16 @@ class PhoneNumberAgentInfo(UncheckedBaseModel):
     The name of the agent
     """
 
+    environment: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Environment to use for resolving environment variables on calls to this number.
+    """
+
+    branch_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Agent branch to use for calls to this number.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

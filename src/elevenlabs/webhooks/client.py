@@ -139,6 +139,7 @@ class WebhooksClient:
         is_disabled: bool,
         name: str,
         retry_enabled: typing.Optional[bool] = OMIT,
+        request_headers: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PatchWorkspaceWebhookResponseModel:
         """
@@ -157,6 +158,9 @@ class WebhooksClient:
 
         retry_enabled : typing.Optional[bool]
             Whether to enable automatic retries for transient failures (5xx, 429, timeout)
+
+        request_headers : typing.Optional[typing.Dict[str, typing.Optional[str]]]
+            A list of request headers to include with the webhook delivery (optional)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -180,7 +184,12 @@ class WebhooksClient:
         )
         """
         _response = self._raw_client.update(
-            webhook_id, is_disabled=is_disabled, name=name, retry_enabled=retry_enabled, request_options=request_options
+            webhook_id,
+            is_disabled=is_disabled,
+            name=name,
+            retry_enabled=retry_enabled,
+            request_headers=request_headers,
+            request_options=request_options,
         )
         return _response.data
 
@@ -333,6 +342,7 @@ class AsyncWebhooksClient:
         is_disabled: bool,
         name: str,
         retry_enabled: typing.Optional[bool] = OMIT,
+        request_headers: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PatchWorkspaceWebhookResponseModel:
         """
@@ -351,6 +361,9 @@ class AsyncWebhooksClient:
 
         retry_enabled : typing.Optional[bool]
             Whether to enable automatic retries for transient failures (5xx, 429, timeout)
+
+        request_headers : typing.Optional[typing.Dict[str, typing.Optional[str]]]
+            A list of request headers to include with the webhook delivery (optional)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -382,6 +395,11 @@ class AsyncWebhooksClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.update(
-            webhook_id, is_disabled=is_disabled, name=name, retry_enabled=retry_enabled, request_options=request_options
+            webhook_id,
+            is_disabled=is_disabled,
+            name=name,
+            retry_enabled=retry_enabled,
+            request_headers=request_headers,
+            request_options=request_options,
         )
         return _response.data

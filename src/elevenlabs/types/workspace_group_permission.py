@@ -14,6 +14,7 @@ WorkspaceGroupPermission = typing.Union[
         "dubbing",
         "audio_native",
         "conversational_ai",
+        "conversational_ai_read",
         "voice_isolator",
         "ai_speech_classifier",
         "add_voice_from_voice_library",
@@ -35,6 +36,7 @@ WorkspaceGroupPermission = typing.Union[
         "terms_of_service_accept",
         "audit_log_read",
         "copy_resources_cross_workspace",
+        "voice_design",
     ],
     typing.Any,
 ]

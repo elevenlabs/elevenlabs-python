@@ -10,6 +10,9 @@ from .raw_client import AsyncRawApiKeysClient, RawApiKeysClient
 from .types.body_create_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_post_permissions import (
     BodyCreateServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysPostPermissions,
 )
+from .types.body_edit_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_api_key_id_patch_allowed_ips import (
+    BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchAllowedIps,
+)
 from .types.body_edit_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_api_key_id_patch_permissions import (
     BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissions,
 )
@@ -72,6 +75,7 @@ class ApiKeysClient:
         name: str,
         permissions: BodyCreateServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysPostPermissions,
         character_limit: typing.Optional[int] = OMIT,
+        allowed_ips: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> WorkspaceCreateApiKeyResponseModel:
         """
@@ -88,6 +92,9 @@ class ApiKeysClient:
 
         character_limit : typing.Optional[int]
             The character limit of the XI API key. If provided this will limit the usage of this api key to n characters per month where n is the chosen value. Requests that incur charges will fail after reaching this monthly limit.
+
+        allowed_ips : typing.Optional[typing.Sequence[str]]
+            List of IP addresses or CIDR ranges allowed to use this API key. Each entry may be a CIDR range (e.g. '10.0.0.0/24') or a bare IP address (normalized to /32 or /128). On create, omit or pass null to allow all IPs. On update, omit to leave the whitelist unchanged, or pass "clear" to remove it.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -114,6 +121,7 @@ class ApiKeysClient:
             name=name,
             permissions=permissions,
             character_limit=character_limit,
+            allowed_ips=allowed_ips,
             request_options=request_options,
         )
         return _response.data
@@ -162,6 +170,9 @@ class ApiKeysClient:
         name: str,
         permissions: BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissions,
         character_limit: typing.Optional[int] = OMIT,
+        allowed_ips: typing.Optional[
+            BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchAllowedIps
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Any:
         """
@@ -184,6 +195,9 @@ class ApiKeysClient:
 
         character_limit : typing.Optional[int]
             The character limit of the XI API key. If provided this will limit the usage of this api key to n characters per month where n is the chosen value. Requests that incur charges will fail after reaching this monthly limit.
+
+        allowed_ips : typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchAllowedIps]
+            List of IP addresses or CIDR ranges allowed to use this API key. Each entry may be a CIDR range (e.g. '10.0.0.0/24') or a bare IP address (normalized to /32 or /128). On create, omit or pass null to allow all IPs. On update, omit to leave the whitelist unchanged, or pass "clear" to remove it.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -214,6 +228,7 @@ class ApiKeysClient:
             name=name,
             permissions=permissions,
             character_limit=character_limit,
+            allowed_ips=allowed_ips,
             request_options=request_options,
         )
         return _response.data
@@ -281,6 +296,7 @@ class AsyncApiKeysClient:
         name: str,
         permissions: BodyCreateServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysPostPermissions,
         character_limit: typing.Optional[int] = OMIT,
+        allowed_ips: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> WorkspaceCreateApiKeyResponseModel:
         """
@@ -297,6 +313,9 @@ class AsyncApiKeysClient:
 
         character_limit : typing.Optional[int]
             The character limit of the XI API key. If provided this will limit the usage of this api key to n characters per month where n is the chosen value. Requests that incur charges will fail after reaching this monthly limit.
+
+        allowed_ips : typing.Optional[typing.Sequence[str]]
+            List of IP addresses or CIDR ranges allowed to use this API key. Each entry may be a CIDR range (e.g. '10.0.0.0/24') or a bare IP address (normalized to /32 or /128). On create, omit or pass null to allow all IPs. On update, omit to leave the whitelist unchanged, or pass "clear" to remove it.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -331,6 +350,7 @@ class AsyncApiKeysClient:
             name=name,
             permissions=permissions,
             character_limit=character_limit,
+            allowed_ips=allowed_ips,
             request_options=request_options,
         )
         return _response.data
@@ -387,6 +407,9 @@ class AsyncApiKeysClient:
         name: str,
         permissions: BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissions,
         character_limit: typing.Optional[int] = OMIT,
+        allowed_ips: typing.Optional[
+            BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchAllowedIps
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Any:
         """
@@ -409,6 +432,9 @@ class AsyncApiKeysClient:
 
         character_limit : typing.Optional[int]
             The character limit of the XI API key. If provided this will limit the usage of this api key to n characters per month where n is the chosen value. Requests that incur charges will fail after reaching this monthly limit.
+
+        allowed_ips : typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchAllowedIps]
+            List of IP addresses or CIDR ranges allowed to use this API key. Each entry may be a CIDR range (e.g. '10.0.0.0/24') or a bare IP address (normalized to /32 or /128). On create, omit or pass null to allow all IPs. On update, omit to leave the whitelist unchanged, or pass "clear" to remove it.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -447,6 +473,7 @@ class AsyncApiKeysClient:
             name=name,
             permissions=permissions,
             character_limit=character_limit,
+            allowed_ips=allowed_ips,
             request_options=request_options,
         )
         return _response.data

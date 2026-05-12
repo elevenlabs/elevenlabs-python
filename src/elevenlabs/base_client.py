@@ -24,6 +24,7 @@ if typing.TYPE_CHECKING:
     from .pronunciation_dictionaries.client import AsyncPronunciationDictionariesClient, PronunciationDictionariesClient
     from .samples.client import AsyncSamplesClient, SamplesClient
     from .service_accounts.client import AsyncServiceAccountsClient, ServiceAccountsClient
+    from .speech_engine.client import AsyncSpeechEngineClient, SpeechEngineClient
     from .speech_to_speech.client import AsyncSpeechToSpeechClient, SpeechToSpeechClient
     from .speech_to_text.client import AsyncSpeechToTextClient, SpeechToTextClient
     from .studio.client import AsyncStudioClient, StudioClient
@@ -127,6 +128,7 @@ class BaseElevenLabs:
         self._speech_to_text: typing.Optional[SpeechToTextClient] = None
         self._forced_alignment: typing.Optional[ForcedAlignmentClient] = None
         self._conversational_ai: typing.Optional[ConversationalAiClient] = None
+        self._speech_engine: typing.Optional[SpeechEngineClient] = None
         self._environment_variables: typing.Optional[EnvironmentVariablesClient] = None
         self._tokens: typing.Optional[TokensClient] = None
         self._workspace: typing.Optional[WorkspaceClient] = None
@@ -344,6 +346,14 @@ class BaseElevenLabs:
         return self._conversational_ai
 
     @property
+    def speech_engine(self):
+        if self._speech_engine is None:
+            from .speech_engine.client import SpeechEngineClient  # noqa: E402
+
+            self._speech_engine = SpeechEngineClient(client_wrapper=self._client_wrapper)
+        return self._speech_engine
+
+    @property
     def environment_variables(self):
         if self._environment_variables is None:
             from .environment_variables.client import EnvironmentVariablesClient  # noqa: E402
@@ -456,6 +466,7 @@ class AsyncBaseElevenLabs:
         self._speech_to_text: typing.Optional[AsyncSpeechToTextClient] = None
         self._forced_alignment: typing.Optional[AsyncForcedAlignmentClient] = None
         self._conversational_ai: typing.Optional[AsyncConversationalAiClient] = None
+        self._speech_engine: typing.Optional[AsyncSpeechEngineClient] = None
         self._environment_variables: typing.Optional[AsyncEnvironmentVariablesClient] = None
         self._tokens: typing.Optional[AsyncTokensClient] = None
         self._workspace: typing.Optional[AsyncWorkspaceClient] = None
@@ -679,6 +690,14 @@ class AsyncBaseElevenLabs:
 
             self._conversational_ai = AsyncConversationalAiClient(client_wrapper=self._client_wrapper)
         return self._conversational_ai
+
+    @property
+    def speech_engine(self):
+        if self._speech_engine is None:
+            from .speech_engine.client import AsyncSpeechEngineClient  # noqa: E402
+
+            self._speech_engine = AsyncSpeechEngineClient(client_wrapper=self._client_wrapper)
+        return self._speech_engine
 
     @property
     def environment_variables(self):

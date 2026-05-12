@@ -26,11 +26,6 @@ class TurnConfig(UncheckedBaseModel):
     Maximum wait time since the user last spoke before terminating the call
     """
 
-    soft_timeout_config: typing.Optional[SoftTimeoutConfig] = pydantic.Field(default=None)
-    """
-    Configuration for soft timeout functionality. Provides immediate feedback during longer LLM responses.
-    """
-
     turn_eagerness: typing.Optional[TurnEagerness] = pydantic.Field(default=None)
     """
     Controls how eager the agent is to respond. Low = less eager (waits longer), Standard = default eagerness, High = more eager (responds sooner)
@@ -49,6 +44,11 @@ class TurnConfig(UncheckedBaseModel):
     retranscribe_on_turn_timeout: typing.Optional[bool] = pydantic.Field(default=None)
     """
     When enabled, if VAD detects no speech, attempts to re-transcribe accumulated audio at turn timeout. Disables silence discount billing for affected turns.
+    """
+
+    soft_timeout_config: typing.Optional[SoftTimeoutConfig] = pydantic.Field(default=None)
+    """
+    Configuration for soft timeout functionality. Provides immediate feedback during longer LLM responses.
     """
 
     if IS_PYDANTIC_V2:

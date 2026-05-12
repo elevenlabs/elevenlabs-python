@@ -27,6 +27,11 @@ class WebhookHmacSettings(UncheckedBaseModel):
     The HTTPS callback URL that will be called when this webhook is triggered
     """
 
+    request_headers: typing.Optional[typing.Dict[str, typing.Optional[str]]] = pydantic.Field(default=None)
+    """
+    Optional custom request headers to include with each webhook delivery
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

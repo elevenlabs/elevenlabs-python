@@ -3,7 +3,9 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
@@ -12,6 +14,9 @@ class AgentTopicResponseModel(UncheckedBaseModel):
     label: str
     description: str
     conversation_count: int
+    parent_topic_id: typing.Optional[str] = None
+    x_2_d: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="x_2d")] = None
+    y_2_d: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="y_2d")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

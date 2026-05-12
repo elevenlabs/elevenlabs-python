@@ -13,12 +13,24 @@ if typing.TYPE_CHECKING:
         DocumentRefreshResponse_Text,
         DocumentRefreshResponse_Url,
     )
+    from .document_update_file_response import (
+        DocumentUpdateFileResponse,
+        DocumentUpdateFileResponse_File,
+        DocumentUpdateFileResponse_Folder,
+        DocumentUpdateFileResponse_Text,
+        DocumentUpdateFileResponse_Url,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
     "DocumentRefreshResponse": ".document_refresh_response",
     "DocumentRefreshResponse_File": ".document_refresh_response",
     "DocumentRefreshResponse_Folder": ".document_refresh_response",
     "DocumentRefreshResponse_Text": ".document_refresh_response",
     "DocumentRefreshResponse_Url": ".document_refresh_response",
+    "DocumentUpdateFileResponse": ".document_update_file_response",
+    "DocumentUpdateFileResponse_File": ".document_update_file_response",
+    "DocumentUpdateFileResponse_Folder": ".document_update_file_response",
+    "DocumentUpdateFileResponse_Text": ".document_update_file_response",
+    "DocumentUpdateFileResponse_Url": ".document_update_file_response",
 }
 
 
@@ -49,4 +61,9 @@ __all__ = [
     "DocumentRefreshResponse_Folder",
     "DocumentRefreshResponse_Text",
     "DocumentRefreshResponse_Url",
+    "DocumentUpdateFileResponse",
+    "DocumentUpdateFileResponse_File",
+    "DocumentUpdateFileResponse_Folder",
+    "DocumentUpdateFileResponse_Text",
+    "DocumentUpdateFileResponse_Url",
 ]

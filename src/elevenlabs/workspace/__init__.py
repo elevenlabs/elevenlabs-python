@@ -7,7 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .resources import BodyShareWorkspaceResourceV1WorkspaceResourcesResourceIdSharePostRole
-    from . import audit_logs, auth_connections, groups, invites, members, resources, usage
+    from . import analytics, audit_logs, auth_connections, groups, invites, members, resources, usage
     from .auth_connections import (
         AuthConnectionsCreateRequestBody,
         AuthConnectionsCreateRequestBody_BasicAuth,
@@ -50,6 +50,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AuthConnectionsCreateResponse_WhatsappAuth": ".auth_connections",
     "BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePostGroupByItem": ".usage",
     "BodyShareWorkspaceResourceV1WorkspaceResourcesResourceIdSharePostRole": ".resources",
+    "analytics": ".analytics",
     "audit_logs": ".audit_logs",
     "auth_connections": ".auth_connections",
     "groups": ".groups",
@@ -102,6 +103,7 @@ __all__ = [
     "AuthConnectionsCreateResponse_WhatsappAuth",
     "BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePostGroupByItem",
     "BodyShareWorkspaceResourceV1WorkspaceResourcesResourceIdSharePostRole",
+    "analytics",
     "audit_logs",
     "auth_connections",
     "groups",

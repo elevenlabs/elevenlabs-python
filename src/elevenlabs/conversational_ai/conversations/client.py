@@ -65,7 +65,7 @@ class ConversationsClient:
         Parameters
         ----------
         agent_id : str
-            The id of the agent you're taking the action on.
+            Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
 
         include_conversation_id : typing.Optional[bool]
             Whether to include a conversation_id with the response. If included, the conversation_signature cannot be used again.
@@ -92,7 +92,7 @@ class ConversationsClient:
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.conversations.get_signed_url(
-            agent_id="21m00Tcm4TlvDq8ikWAM",
+            agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
             include_conversation_id=True,
             branch_id="branch_id",
             environment="environment",
@@ -122,7 +122,7 @@ class ConversationsClient:
         Parameters
         ----------
         agent_id : str
-            The id of the agent you're taking the action on.
+            Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
 
         participant_name : typing.Optional[str]
             Optional custom participant name. If not provided, user ID will be used
@@ -149,7 +149,7 @@ class ConversationsClient:
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.conversations.get_webrtc_token(
-            agent_id="21m00Tcm4TlvDq8ikWAM",
+            agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
             participant_name="participant_name",
             branch_id="branch_id",
             environment="environment",
@@ -208,7 +208,7 @@ class ConversationsClient:
             Used for fetching next page. Cursor is returned in the response.
 
         agent_id : typing.Optional[str]
-            The id of the agent you're taking the action on.
+            Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
 
         call_successful : typing.Optional[EvaluationSuccessResult]
             The result of the success evaluation
@@ -557,7 +557,7 @@ class AsyncConversationsClient:
         Parameters
         ----------
         agent_id : str
-            The id of the agent you're taking the action on.
+            Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
 
         include_conversation_id : typing.Optional[bool]
             Whether to include a conversation_id with the response. If included, the conversation_signature cannot be used again.
@@ -589,7 +589,7 @@ class AsyncConversationsClient:
 
         async def main() -> None:
             await client.conversational_ai.conversations.get_signed_url(
-                agent_id="21m00Tcm4TlvDq8ikWAM",
+                agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
                 include_conversation_id=True,
                 branch_id="branch_id",
                 environment="environment",
@@ -622,7 +622,7 @@ class AsyncConversationsClient:
         Parameters
         ----------
         agent_id : str
-            The id of the agent you're taking the action on.
+            Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
 
         participant_name : typing.Optional[str]
             Optional custom participant name. If not provided, user ID will be used
@@ -654,7 +654,7 @@ class AsyncConversationsClient:
 
         async def main() -> None:
             await client.conversational_ai.conversations.get_webrtc_token(
-                agent_id="21m00Tcm4TlvDq8ikWAM",
+                agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
                 participant_name="participant_name",
                 branch_id="branch_id",
                 environment="environment",
@@ -716,7 +716,7 @@ class AsyncConversationsClient:
             Used for fetching next page. Cursor is returned in the response.
 
         agent_id : typing.Optional[str]
-            The id of the agent you're taking the action on.
+            Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
 
         call_successful : typing.Optional[EvaluationSuccessResult]
             The result of the success evaluation

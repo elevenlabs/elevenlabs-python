@@ -64,7 +64,7 @@ class MessagesClient:
             The search query text for full-text and fuzzy matching
 
         agent_id : typing.Optional[str]
-            The id of the agent you're taking the action on.
+            Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
 
         call_successful : typing.Optional[EvaluationSuccessResult]
             The result of the success evaluation
@@ -215,7 +215,7 @@ class MessagesClient:
             The search query text for semantic similarity matching
 
         agent_id : typing.Optional[str]
-            The id of the agent you're taking the action on.
+            Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
 
         page_size : typing.Optional[int]
             Number of results per page. Max 50.
@@ -307,7 +307,7 @@ class AsyncMessagesClient:
             The search query text for full-text and fuzzy matching
 
         agent_id : typing.Optional[str]
-            The id of the agent you're taking the action on.
+            Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
 
         call_successful : typing.Optional[EvaluationSuccessResult]
             The result of the success evaluation
@@ -466,7 +466,7 @@ class AsyncMessagesClient:
             The search query text for semantic similarity matching
 
         agent_id : typing.Optional[str]
-            The id of the agent you're taking the action on.
+            Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
 
         page_size : typing.Optional[int]
             Number of results per page. Max 50.
