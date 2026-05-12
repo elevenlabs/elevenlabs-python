@@ -188,7 +188,8 @@ class TestVerifyRequest:
 
 class TestServerApiKeyRequirement:
     @pytest.mark.asyncio
-    async def test_raises_without_api_key(self) -> None:
+    async def test_raises_without_api_key(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        monkeypatch.delenv("ELEVENLABS_API_KEY", raising=False)
         from elevenlabs.speech_engine import SpeechEngineServer
 
         server = SpeechEngineServer(port=0)
