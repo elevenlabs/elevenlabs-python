@@ -266,6 +266,141 @@ client_tools.register("calculate_sum", calculate_sum, is_async=False)
 client_tools.register("fetch_data", fetch_data, is_async=True)
 ```
 
+## Speech Engine
+
+Speech Engine lets you build server-side voice agents that receive real-time transcripts from the ElevenLabs API and stream LLM responses back for text-to-speech synthesis. Your server acts as a WebSocket endpoint — ElevenLabs connects to it, sends user transcripts, and your code decides how to respond.
+
+Speech Engine is async-only and available on `AsyncElevenLabs`.
+
+### Quick Start
+
+```python
+import asyncio
+from openai import AsyncOpenAI
+from elevenlabs import AsyncElevenLabs
+
+openai_client = AsyncOpenAI()
+elevenlabs = AsyncElevenLabs()
+
+async def main():
+    engine = await elevenlabs.speech_engine.get("seng_123")
+
+    async def on_transcript(transcript, session):
+        stream = await openai_client.responses.create(
+            model="gpt-4o",
+            input=[
+                {"role": "assistant" if m.role == "agent" else m.role, "content": m.content}
+                for m in transcript
+            ],
+            stream=True,
+        )
+        await session.send_response(stream)
+
+    async def on_init(conversation_id, session):
+        print(f"Session started: {conversation_id}")
+
+    async def on_close(session):
+        print(f"Session ended: {session.conversation_id}")
+
+    async def on_error(err, session):
+        print(f"Error: {err}")
+
+    await engine.serve(
+        port=3001,
+        debug=True,
+        on_init=on_init,
+        on_transcript=on_transcript,
+        on_close=on_close,
+        on_error=on_error,
+    )
+
+asyncio.run(main())
+```
+
+### How It Works
+
+When `engine.serve()` starts, it opens a WebSocket server on the specified port. For each incoming connection from the ElevenLabs API:
+
+1. An `init` message arrives with a `conversation_id`
+2. As the user speaks, `user_transcript` messages arrive with the full conversation history
+3. Your `on_transcript` handler generates a response (using any LLM) and calls `session.send_response()`
+4. If the user interrupts (speaks again mid-response), the previous handler is automatically cancelled
+
+### Sending Responses
+
+`send_response()` accepts strings or async iterators. LLM stream formats from OpenAI, Anthropic, and Google Gemini are auto-detected:
+
+```python
+# Plain string
+await session.send_response("Hello world")
+
+# OpenAI stream (auto-parsed)
+stream = await openai_client.responses.create(model="gpt-4o", ..., stream=True)
+await session.send_response(stream)
+
+# Anthropic stream (auto-parsed)
+stream = anthropic_client.messages.stream(model="claude-sonnet-4-20250514", ...)
+await session.send_response(stream)
+
+# Any async iterator of strings
+async def my_generator():
+    yield "Hello "
+    yield "world"
+await session.send_response(my_generator())
+```
+
+### Interruption Handling
+
+When a new transcript arrives while a previous response is still streaming, the previous handler's `asyncio.Task` is cancelled automatically. Any `await` in your handler (including LLM SDK calls) will raise `asyncio.CancelledError`, which cleanly aborts the in-flight request. No manual signal handling needed.
+
+### Custom Server Integration (FastAPI, Starlette)
+
+For integrating with an existing web server, use `create_session()` instead of `serve()`:
+
+```python
+from fastapi import FastAPI, WebSocket
+
+app = FastAPI()
+engine = ...  # SpeechEngineResource from await client.speech_engine.get(...)
+
+@app.websocket("/api/speech-engine/ws")
+async def speech_engine_ws(ws: WebSocket):
+    await ws.accept()
+    session = engine.create_session(ws, debug=True)
+    session.on("user_transcript", handle_transcript)
+    await session.run()
+```
+
+When using `session.on()` directly, handlers receive just the event data (no `session` argument, since you already have the reference):
+
+| Event | Handler signature |
+|---|---|
+| `"init"` | `async (conversation_id: str) -> None` |
+| `"user_transcript"` | `async (transcript: list[ConversationMessage]) -> None` |
+| `"close"` | `async () -> None` |
+| `"disconnected"` | `async () -> None` |
+| `"error"` | `async (error: Exception) -> None` |
+
+### Standalone Server
+
+For full control over the server lifecycle, use `SpeechEngineServer` directly:
+
+```python
+from elevenlabs.speech_engine import SpeechEngineServer
+
+server = SpeechEngineServer(
+    port=3001,
+    debug=True,
+    on_transcript=handle_transcript,
+)
+
+# In one task:
+await server.serve()
+
+# In another task (e.g. signal handler):
+await server.stop()
+```
+
 ## Languages Supported
 
 Explore [all models & languages](https://elevenlabs.io/docs/models).
