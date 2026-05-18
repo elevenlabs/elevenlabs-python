@@ -26,6 +26,10 @@ class OAuth2ClientCredsResponse(UncheckedBaseModel):
 
     id: str
     used_by: typing.Optional[AuthConnectionDependencies] = None
+    custom_headers: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
+    """
+    Custom headers configured for OAuth2 token requests
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

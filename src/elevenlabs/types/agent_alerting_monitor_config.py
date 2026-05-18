@@ -13,6 +13,11 @@ class AgentAlertingMonitorConfig(UncheckedBaseModel):
     Failure rate threshold at which this monitor can notify.
     """
 
+    auto_resolve_after_inactive_minutes: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    How many minutes an alert can stay inactive before it is auto-resolved.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

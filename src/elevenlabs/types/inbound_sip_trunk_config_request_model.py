@@ -35,6 +35,11 @@ class InboundSipTrunkConfigRequestModel(UncheckedBaseModel):
     Domains of remote SIP servers used to validate TLS certificates.
     """
 
+    attributes_to_headers: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
+    """
+    Map of dynamic variable name to header name for attributes_to_headers
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

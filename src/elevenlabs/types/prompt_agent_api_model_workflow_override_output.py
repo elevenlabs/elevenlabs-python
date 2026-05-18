@@ -44,7 +44,7 @@ class PromptAgentApiModelWorkflowOverrideOutput(UncheckedBaseModel):
 
     temperature: typing.Optional[float] = pydantic.Field(default=None)
     """
-    The temperature for the LLM
+    The temperature for the LLM. Defaults to 0. Set to null to omit the parameter from the LLM request entirely (useful for custom LLMs that reject the temperature field).
     """
 
     max_tokens: typing.Optional[int] = pydantic.Field(default=None)

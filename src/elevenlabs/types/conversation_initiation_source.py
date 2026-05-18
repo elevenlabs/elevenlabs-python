@@ -22,6 +22,7 @@ ConversationInitiationSource = typing.Union[
         "zendesk_integration",
         "slack_integration",
         "template_preview",
+        "genesys_bot_connector",
     ],
     typing.Any,
 ]
