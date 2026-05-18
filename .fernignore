@@ -12,6 +12,7 @@ src/elevenlabs/speech_to_text_custom.py
 src/elevenlabs/url_utils.py
 src/elevenlabs/realtime/
 src/elevenlabs/speech_engine/
+src/elevenlabs/speech_engine_custom.py
 
 # Ignore CI files
 .github/
