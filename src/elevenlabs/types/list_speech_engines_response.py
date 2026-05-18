@@ -9,7 +9,11 @@ from .speech_engine_summary_response import SpeechEngineSummaryResponse
 
 
 class ListSpeechEnginesResponse(UncheckedBaseModel):
-    speech_engines: typing.List[SpeechEngineSummaryResponse]
+    speech_engines: typing.List[SpeechEngineSummaryResponse] = pydantic.Field()
+    """
+    The speech engines matching the query
+    """
+
     next_cursor: typing.Optional[str] = pydantic.Field(default=None)
     """
     Cursor for fetching the next page

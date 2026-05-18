@@ -188,6 +188,7 @@ class ConversationsClient:
         summary_mode: typing.Optional[ConversationsListRequestSummaryMode] = None,
         search: typing.Optional[str] = None,
         conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None,
+        text_only: typing.Optional[bool] = None,
         branch_id: typing.Optional[str] = None,
         topic_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         exclude_statuses: typing.Optional[
@@ -266,6 +267,8 @@ class ConversationsClient:
 
         conversation_initiation_source : typing.Optional[ConversationInitiationSource]
 
+        text_only : typing.Optional[bool]
+
         branch_id : typing.Optional[str]
             Filter conversations by branch ID.
 
@@ -315,6 +318,7 @@ class ConversationsClient:
             summary_mode="exclude",
             search="search",
             conversation_initiation_source="unknown",
+            text_only=True,
             branch_id="branch_id",
             topic_ids=["topic_ids"],
             exclude_statuses=["initiated"],
@@ -343,6 +347,7 @@ class ConversationsClient:
             summary_mode=summary_mode,
             search=search,
             conversation_initiation_source=conversation_initiation_source,
+            text_only=text_only,
             branch_id=branch_id,
             topic_ids=topic_ids,
             exclude_statuses=exclude_statuses,
@@ -696,6 +701,7 @@ class AsyncConversationsClient:
         summary_mode: typing.Optional[ConversationsListRequestSummaryMode] = None,
         search: typing.Optional[str] = None,
         conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None,
+        text_only: typing.Optional[bool] = None,
         branch_id: typing.Optional[str] = None,
         topic_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         exclude_statuses: typing.Optional[
@@ -774,6 +780,8 @@ class AsyncConversationsClient:
 
         conversation_initiation_source : typing.Optional[ConversationInitiationSource]
 
+        text_only : typing.Optional[bool]
+
         branch_id : typing.Optional[str]
             Filter conversations by branch ID.
 
@@ -828,6 +836,7 @@ class AsyncConversationsClient:
                 summary_mode="exclude",
                 search="search",
                 conversation_initiation_source="unknown",
+                text_only=True,
                 branch_id="branch_id",
                 topic_ids=["topic_ids"],
                 exclude_statuses=["initiated"],
@@ -859,6 +868,7 @@ class AsyncConversationsClient:
             summary_mode=summary_mode,
             search=search,
             conversation_initiation_source=conversation_initiation_source,
+            text_only=text_only,
             branch_id=branch_id,
             topic_ids=topic_ids,
             exclude_statuses=exclude_statuses,

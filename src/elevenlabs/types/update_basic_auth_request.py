@@ -7,26 +7,10 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class SpeechEngineSummaryResponse(UncheckedBaseModel):
-    speech_engine_id: str = pydantic.Field()
-    """
-    The speech engine resource ID
-    """
-
-    name: str = pydantic.Field()
-    """
-    Human-readable name for the speech engine
-    """
-
-    created_at_unix_secs: int = pydantic.Field()
-    """
-    Creation time in Unix seconds
-    """
-
-    tags: typing.List[str] = pydantic.Field()
-    """
-    Arbitrary tags for categorization and filtering
-    """
+class UpdateBasicAuthRequest(UncheckedBaseModel):
+    provider: typing.Optional[str] = None
+    username: typing.Optional[str] = None
+    password: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

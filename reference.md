@@ -8643,6 +8643,7 @@ client.conversational_ai.conversations.list(
     summary_mode="exclude",
     search="search",
     conversation_initiation_source="unknown",
+    text_only=True,
     branch_id="branch_id",
     topic_ids=["topic_ids"],
     exclude_statuses=["initiated"],
@@ -8824,6 +8825,14 @@ client.conversational_ai.conversations.list(
 <dd>
 
 **conversation_initiation_source:** `typing.Optional[ConversationInitiationSource]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**text_only:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -15667,6 +15676,86 @@ client.conversational_ai.agents.branches.merge(
 </dl>
 </details>
 
+## ConversationalAi Agents Versions
+<details><summary><code>client.conversational_ai.agents.versions.<a href="src/elevenlabs/conversational_ai/agents/versions/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get metadata for a specific agent version
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.agents.versions.get(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    version_id="agtvrsn_0901k4aafjxxfxt93gd841r7tv5t",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version_id:** `str` — Unique identifier for the version.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ConversationalAi Agents Deployments
 <details><summary><code>client.conversational_ai.agents.deployments.<a href="src/elevenlabs/conversational_ai/agents/deployments/client.py">create</a>(...)</code></summary>
 <dl>
@@ -16414,6 +16503,7 @@ client.conversational_ai.conversations.messages.text_search(
     page_size=1,
     summary_mode="exclude",
     conversation_initiation_source="unknown",
+    text_only=True,
     branch_id="branch_id",
     sort_by="search_score",
     cursor="cursor",
@@ -16586,6 +16676,14 @@ client.conversational_ai.conversations.messages.text_search(
 <dd>
 
 **conversation_initiation_source:** `typing.Optional[ConversationInitiationSource]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**text_only:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -27328,6 +27426,88 @@ client.workspace.auth_connections.delete(
 <dd>
 
 **auth_connection_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workspace.auth_connections.<a href="src/elevenlabs/workspace/auth_connections/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update an auth connection
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.workspace.auth_connections import (
+    AuthConnectionsUpdateRequestBody_Oauth2ClientCredentials,
+)
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.workspace.auth_connections.update(
+    auth_connection_id="auth_connection_id",
+    request=AuthConnectionsUpdateRequestBody_Oauth2ClientCredentials(),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**auth_connection_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AuthConnectionsUpdateRequestBody` 
     
 </dd>
 </dl>

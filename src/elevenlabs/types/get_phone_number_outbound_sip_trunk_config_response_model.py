@@ -34,6 +34,11 @@ class GetPhoneNumberOutboundSipTrunkConfigResponseModel(UncheckedBaseModel):
     SIP headers for INVITE request
     """
 
+    attributes_to_headers: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
+    """
+    Map of dynamic variable name to header name for attributes_to_headers
+    """
+
     has_auth_credentials: bool = pydantic.Field()
     """
     Whether authentication credentials are configured

@@ -5,28 +5,18 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .auth_connection_dependencies import AuthConnectionDependencies
 
 
-class SpeechEngineSummaryResponse(UncheckedBaseModel):
-    speech_engine_id: str = pydantic.Field()
+class SlackBotAuthResponse(UncheckedBaseModel):
     """
-    The speech engine resource ID
-    """
-
-    name: str = pydantic.Field()
-    """
-    Human-readable name for the speech engine
+    Response model for the internal Slack BYO bot auth connection.
     """
 
-    created_at_unix_secs: int = pydantic.Field()
-    """
-    Creation time in Unix seconds
-    """
-
-    tags: typing.List[str] = pydantic.Field()
-    """
-    Arbitrary tags for categorization and filtering
-    """
+    name: str
+    provider: typing.Optional[typing.Literal["Slack"]] = None
+    id: str
+    used_by: typing.Optional[AuthConnectionDependencies] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

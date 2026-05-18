@@ -10,6 +10,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .agent_transfer import AgentTransfer
 from .phone_number_transfer import PhoneNumberTransfer
+from .procedure_at_version import ProcedureAtVersion
 
 
 class SystemToolConfigInputParams_EndCall(UncheckedBaseModel):
@@ -40,6 +41,20 @@ class SystemToolConfigInputParams_KnowledgeBaseRag(UncheckedBaseModel):
 
 class SystemToolConfigInputParams_LanguageDetection(UncheckedBaseModel):
     system_tool_type: typing.Literal["language_detection"] = "language_detection"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class SystemToolConfigInputParams_LoadProcedure(UncheckedBaseModel):
+    system_tool_type: typing.Literal["load_procedure"] = "load_procedure"
+    procedures: typing.Optional[typing.Dict[str, ProcedureAtVersion]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -127,6 +142,7 @@ SystemToolConfigInputParams = typing_extensions.Annotated[
         SystemToolConfigInputParams_EndCall,
         SystemToolConfigInputParams_KnowledgeBaseRag,
         SystemToolConfigInputParams_LanguageDetection,
+        SystemToolConfigInputParams_LoadProcedure,
         SystemToolConfigInputParams_PlayKeypadTouchTone,
         SystemToolConfigInputParams_SkipTurn,
         SystemToolConfigInputParams_TransferToAgent,

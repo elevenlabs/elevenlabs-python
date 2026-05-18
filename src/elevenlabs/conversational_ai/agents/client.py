@@ -30,6 +30,7 @@ if typing.TYPE_CHECKING:
     from .link.client import AsyncLinkClient, LinkClient
     from .llm_usage.client import AsyncLlmUsageClient, LlmUsageClient
     from .summaries.client import AsyncSummariesClient, SummariesClient
+    from .versions.client import AsyncVersionsClient, VersionsClient
     from .widget.client import AsyncWidgetClient, WidgetClient
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -45,6 +46,7 @@ class AgentsClient:
         self._knowledge_base: typing.Optional[KnowledgeBaseClient] = None
         self._llm_usage: typing.Optional[LlmUsageClient] = None
         self._branches: typing.Optional[BranchesClient] = None
+        self._versions: typing.Optional[VersionsClient] = None
         self._deployments: typing.Optional[DeploymentsClient] = None
         self._drafts: typing.Optional[DraftsClient] = None
 
@@ -641,6 +643,14 @@ class AgentsClient:
         return self._branches
 
     @property
+    def versions(self):
+        if self._versions is None:
+            from .versions.client import VersionsClient  # noqa: E402
+
+            self._versions = VersionsClient(client_wrapper=self._client_wrapper)
+        return self._versions
+
+    @property
     def deployments(self):
         if self._deployments is None:
             from .deployments.client import DeploymentsClient  # noqa: E402
@@ -667,6 +677,7 @@ class AsyncAgentsClient:
         self._knowledge_base: typing.Optional[AsyncKnowledgeBaseClient] = None
         self._llm_usage: typing.Optional[AsyncLlmUsageClient] = None
         self._branches: typing.Optional[AsyncBranchesClient] = None
+        self._versions: typing.Optional[AsyncVersionsClient] = None
         self._deployments: typing.Optional[AsyncDeploymentsClient] = None
         self._drafts: typing.Optional[AsyncDraftsClient] = None
 
@@ -1333,6 +1344,14 @@ class AsyncAgentsClient:
 
             self._branches = AsyncBranchesClient(client_wrapper=self._client_wrapper)
         return self._branches
+
+    @property
+    def versions(self):
+        if self._versions is None:
+            from .versions.client import AsyncVersionsClient  # noqa: E402
+
+            self._versions = AsyncVersionsClient(client_wrapper=self._client_wrapper)
+        return self._versions
 
     @property
     def deployments(self):

@@ -36,6 +36,7 @@ class AuthConnectionsCreateResponse_Oauth2ClientCredentials(UncheckedBaseModel):
     basic_auth_in_header: typing.Optional[bool] = None
     id: str
     used_by: typing.Optional[AuthConnectionDependencies] = None
+    custom_headers: typing.Optional[typing.Dict[str, str]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -275,6 +276,27 @@ class AuthConnectionsCreateResponse_WhatsappAuth(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class AuthConnectionsCreateResponse_SlackBotAuth(UncheckedBaseModel):
+    """
+    The type of auth connection config
+    """
+
+    auth_type: typing.Literal["slack_bot_auth"] = "slack_bot_auth"
+    name: str
+    provider: typing.Optional[typing.Literal["Slack"]] = None
+    id: str
+    used_by: typing.Optional[AuthConnectionDependencies] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 AuthConnectionsCreateResponse = typing_extensions.Annotated[
     typing.Union[
         AuthConnectionsCreateResponse_Oauth2ClientCredentials,
@@ -287,6 +309,7 @@ AuthConnectionsCreateResponse = typing_extensions.Annotated[
         AuthConnectionsCreateResponse_ApiIntegrationOauth2AuthCode,
         AuthConnectionsCreateResponse_ApiIntegrationOauth2CustomApp,
         AuthConnectionsCreateResponse_WhatsappAuth,
+        AuthConnectionsCreateResponse_SlackBotAuth,
     ],
     UnionMetadata(discriminant="auth_type"),
 ]
