@@ -7,25 +7,30 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class SpeechEngineSummaryResponse(UncheckedBaseModel):
-    speech_engine_id: str = pydantic.Field()
+class ProcedureAtVersion(UncheckedBaseModel):
+    procedure_id: str = pydantic.Field()
     """
-    The speech engine resource ID
+    Procedure ID
     """
 
     name: str = pydantic.Field()
     """
-    Human-readable name for the speech engine
+    Procedure name
     """
 
-    created_at_unix_secs: int = pydantic.Field()
+    content: str = pydantic.Field()
     """
-    Creation time in Unix seconds
+    Procedure content
     """
 
-    tags: typing.List[str] = pydantic.Field()
+    agent_id: str = pydantic.Field()
     """
-    Arbitrary tags for categorization and filtering
+    Agent ID of the procedure
+    """
+
+    version_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Version ID of a version of the procedure. None for a procedure never versioned.
     """
 
     if IS_PYDANTIC_V2:

@@ -21,17 +21,60 @@ class SpeechEngineResponse(UncheckedBaseModel):
     The speech engine resource ID
     """
 
-    name: str
-    speech_engine: SpeechEngineConfig
-    asr: AsrConversationalConfig
-    tts: TtsConversationalConfigOutput
-    turn: BaseTurnConfig
-    conversation: ConversationConfigOutput
-    privacy: PrivacyConfigOutput
-    call_limits: AgentCallLimits
-    language: str
-    tags: typing.List[str]
-    metadata: AgentMetadataDbModel
+    name: str = pydantic.Field()
+    """
+    Human-readable name for the speech engine
+    """
+
+    speech_engine: SpeechEngineConfig = pydantic.Field()
+    """
+    WebSocket connection settings for the upstream transcript server
+    """
+
+    asr: AsrConversationalConfig = pydantic.Field()
+    """
+    Automatic speech recognition configuration
+    """
+
+    tts: TtsConversationalConfigOutput = pydantic.Field()
+    """
+    Text-to-speech output configuration
+    """
+
+    turn: BaseTurnConfig = pydantic.Field()
+    """
+    Turn detection configuration
+    """
+
+    conversation: ConversationConfigOutput = pydantic.Field()
+    """
+    Conversation-level settings including client events and duration limits
+    """
+
+    privacy: PrivacyConfigOutput = pydantic.Field()
+    """
+    Privacy settings controlling recording, retention, and PII handling
+    """
+
+    call_limits: AgentCallLimits = pydantic.Field()
+    """
+    Concurrency and daily conversation limits for this speech engine
+    """
+
+    language: str = pydantic.Field()
+    """
+    ISO language code used by the speech engine (e.g. 'en')
+    """
+
+    tags: typing.List[str] = pydantic.Field()
+    """
+    Arbitrary tags for categorization and filtering
+    """
+
+    metadata: AgentMetadataDbModel = pydantic.Field()
+    """
+    Creation and update timestamps with source information
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

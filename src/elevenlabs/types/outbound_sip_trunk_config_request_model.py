@@ -31,6 +31,11 @@ class OutboundSipTrunkConfigRequestModel(UncheckedBaseModel):
     SIP X-* headers for INVITE request. These headers are sent as-is and may help identify this call.
     """
 
+    attributes_to_headers: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
+    """
+    Map of dynamic variable name to header name for attributes_to_headers
+    """
+
     credentials: typing.Optional[SipTrunkCredentialsRequestModel] = pydantic.Field(default=None)
     """
     Optional digest authentication credentials (username/password). If not provided, ACL authentication is assumed.

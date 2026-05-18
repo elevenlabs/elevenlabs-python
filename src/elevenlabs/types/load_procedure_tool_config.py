@@ -5,28 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .procedure_at_version import ProcedureAtVersion
 
 
-class SpeechEngineSummaryResponse(UncheckedBaseModel):
-    speech_engine_id: str = pydantic.Field()
-    """
-    The speech engine resource ID
-    """
-
-    name: str = pydantic.Field()
-    """
-    Human-readable name for the speech engine
-    """
-
-    created_at_unix_secs: int = pydantic.Field()
-    """
-    Creation time in Unix seconds
-    """
-
-    tags: typing.List[str] = pydantic.Field()
-    """
-    Arbitrary tags for categorization and filtering
-    """
+class LoadProcedureToolConfig(UncheckedBaseModel):
+    procedures: typing.Optional[typing.Dict[str, ProcedureAtVersion]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -8,6 +8,8 @@ from ...types.list_auth_connections_response import ListAuthConnectionsResponse
 from .raw_client import AsyncRawAuthConnectionsClient, RawAuthConnectionsClient
 from .types.auth_connections_create_request_body import AuthConnectionsCreateRequestBody
 from .types.auth_connections_create_response import AuthConnectionsCreateResponse
+from .types.auth_connections_update_request_body import AuthConnectionsUpdateRequestBody
+from .types.auth_connections_update_response import AuthConnectionsUpdateResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -123,6 +125,48 @@ class AuthConnectionsClient:
         )
         """
         _response = self._raw_client.delete(auth_connection_id, request_options=request_options)
+        return _response.data
+
+    def update(
+        self,
+        auth_connection_id: str,
+        *,
+        request: AuthConnectionsUpdateRequestBody,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AuthConnectionsUpdateResponse:
+        """
+        Update an auth connection
+
+        Parameters
+        ----------
+        auth_connection_id : str
+
+        request : AuthConnectionsUpdateRequestBody
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AuthConnectionsUpdateResponse
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+        from elevenlabs.workspace.auth_connections import (
+            AuthConnectionsUpdateRequestBody_Oauth2ClientCredentials,
+        )
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.workspace.auth_connections.update(
+            auth_connection_id="auth_connection_id",
+            request=AuthConnectionsUpdateRequestBody_Oauth2ClientCredentials(),
+        )
+        """
+        _response = self._raw_client.update(auth_connection_id, request=request, request_options=request_options)
         return _response.data
 
 
@@ -262,4 +306,54 @@ class AsyncAuthConnectionsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(auth_connection_id, request_options=request_options)
+        return _response.data
+
+    async def update(
+        self,
+        auth_connection_id: str,
+        *,
+        request: AuthConnectionsUpdateRequestBody,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AuthConnectionsUpdateResponse:
+        """
+        Update an auth connection
+
+        Parameters
+        ----------
+        auth_connection_id : str
+
+        request : AuthConnectionsUpdateRequestBody
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AuthConnectionsUpdateResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+        from elevenlabs.workspace.auth_connections import (
+            AuthConnectionsUpdateRequestBody_Oauth2ClientCredentials,
+        )
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.workspace.auth_connections.update(
+                auth_connection_id="auth_connection_id",
+                request=AuthConnectionsUpdateRequestBody_Oauth2ClientCredentials(),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update(auth_connection_id, request=request, request_options=request_options)
         return _response.data

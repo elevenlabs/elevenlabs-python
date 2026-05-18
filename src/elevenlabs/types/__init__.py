@@ -568,6 +568,7 @@ if typing.TYPE_CHECKING:
     from .create_audio_native_project_request import CreateAudioNativeProjectRequest
     from .create_auth_connection_environment_variable_request import CreateAuthConnectionEnvironmentVariableRequest
     from .create_basic_auth_request import CreateBasicAuthRequest
+    from .create_bearer_auth_request import CreateBearerAuthRequest
     from .create_client_appointment_params import CreateClientAppointmentParams
     from .create_client_interaction_params import CreateClientInteractionParams
     from .create_client_params import CreateClientParams
@@ -979,11 +980,13 @@ if typing.TYPE_CHECKING:
         ListAuthConnectionsResponseAuthConnectionsItem_Oauth2ClientCredentials,
         ListAuthConnectionsResponseAuthConnectionsItem_Oauth2Jwt,
         ListAuthConnectionsResponseAuthConnectionsItem_PrivateKeyJwt,
+        ListAuthConnectionsResponseAuthConnectionsItem_SlackBotAuth,
         ListAuthConnectionsResponseAuthConnectionsItem_WhatsappAuth,
     )
     from .list_calendar_events_params import ListCalendarEventsParams
     from .list_client_interactions_params import ListClientInteractionsParams
     from .list_clients_params import ListClientsParams
+    from .list_customer_facing_agents_params import ListCustomerFacingAgentsParams
     from .list_group_sessions_params import ListGroupSessionsParams
     from .list_holidays_params import ListHolidaysParams
     from .list_locations_params import ListLocationsParams
@@ -1019,6 +1022,8 @@ if typing.TYPE_CHECKING:
     from .llm_usage_calculator_response_model import LlmUsageCalculatorResponseModel
     from .llm_usage_input import LlmUsageInput
     from .llm_usage_output import LlmUsageOutput
+    from .load_procedure_tool_config import LoadProcedureToolConfig
+    from .load_procedure_tool_error_status import LoadProcedureToolErrorStatus
     from .manual_source import ManualSource
     from .manual_verification_file_response import ManualVerificationFileResponse
     from .manual_verification_response import ManualVerificationResponse
@@ -1154,6 +1159,7 @@ if typing.TYPE_CHECKING:
     from .privacy_config_output import PrivacyConfigOutput
     from .private_key_jwt_response import PrivateKeyJwtResponse
     from .private_key_jwt_response_algorithm import PrivateKeyJwtResponseAlgorithm
+    from .procedure_at_version import ProcedureAtVersion
     from .procedure_compiler_mode import ProcedureCompilerMode
     from .procedure_ref_response_model import ProcedureRefResponseModel
     from .procedure_settings import ProcedureSettings
@@ -1392,6 +1398,7 @@ if typing.TYPE_CHECKING:
     from .sip_uri_transfer_destination import SipUriTransferDestination
     from .skip_turn_tool_config import SkipTurnToolConfig
     from .skip_turn_tool_response_model import SkipTurnToolResponseModel
+    from .slack_bot_auth_response import SlackBotAuthResponse
     from .sms_conversation_info import SmsConversationInfo
     from .sms_conversation_info_direction import SmsConversationInfoDirection
     from .soft_timeout_config import SoftTimeoutConfig
@@ -1449,6 +1456,7 @@ if typing.TYPE_CHECKING:
         SystemToolConfigInputParams_EndCall,
         SystemToolConfigInputParams_KnowledgeBaseRag,
         SystemToolConfigInputParams_LanguageDetection,
+        SystemToolConfigInputParams_LoadProcedure,
         SystemToolConfigInputParams_PlayKeypadTouchTone,
         SystemToolConfigInputParams_SkipTurn,
         SystemToolConfigInputParams_TransferToAgent,
@@ -1461,6 +1469,7 @@ if typing.TYPE_CHECKING:
         SystemToolConfigOutputParams_EndCall,
         SystemToolConfigOutputParams_KnowledgeBaseRag,
         SystemToolConfigOutputParams_LanguageDetection,
+        SystemToolConfigOutputParams_LoadProcedure,
         SystemToolConfigOutputParams_PlayKeypadTouchTone,
         SystemToolConfigOutputParams_SkipTurn,
         SystemToolConfigOutputParams_TransferToAgent,
@@ -1604,6 +1613,7 @@ if typing.TYPE_CHECKING:
     from .update_agent_rule_params import UpdateAgentRuleParams
     from .update_asset_params import UpdateAssetParams
     from .update_audio_native_project_request import UpdateAudioNativeProjectRequest
+    from .update_basic_auth_request import UpdateBasicAuthRequest
     from .update_booking_page_settings_params import UpdateBookingPageSettingsParams
     from .update_business_info_params import UpdateBusinessInfoParams
     from .update_calendar_event_params import UpdateCalendarEventParams
@@ -1613,6 +1623,10 @@ if typing.TYPE_CHECKING:
     from .update_group_session_seats_params import UpdateGroupSessionSeatsParams
     from .update_holiday_params import UpdateHolidayParams
     from .update_location_params import UpdateLocationParams
+    from .update_o_auth_2_client_creds_request import UpdateOAuth2ClientCredsRequest
+    from .update_o_auth_2_jwt_request import UpdateOAuth2JwtRequest
+    from .update_o_auth_2_jwt_request_algorithm import UpdateOAuth2JwtRequestAlgorithm
+    from .update_o_auth_2_jwt_request_token_response_field import UpdateOAuth2JwtRequestTokenResponseField
     from .update_product_params import UpdateProductParams
     from .update_project_request import UpdateProjectRequest
     from .update_pronunciation_dictionaries_request import UpdatePronunciationDictionariesRequest
@@ -2355,6 +2369,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateAudioNativeProjectRequest": ".create_audio_native_project_request",
     "CreateAuthConnectionEnvironmentVariableRequest": ".create_auth_connection_environment_variable_request",
     "CreateBasicAuthRequest": ".create_basic_auth_request",
+    "CreateBearerAuthRequest": ".create_bearer_auth_request",
     "CreateClientAppointmentParams": ".create_client_appointment_params",
     "CreateClientInteractionParams": ".create_client_interaction_params",
     "CreateClientParams": ".create_client_params",
@@ -2719,10 +2734,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListAuthConnectionsResponseAuthConnectionsItem_Oauth2ClientCredentials": ".list_auth_connections_response_auth_connections_item",
     "ListAuthConnectionsResponseAuthConnectionsItem_Oauth2Jwt": ".list_auth_connections_response_auth_connections_item",
     "ListAuthConnectionsResponseAuthConnectionsItem_PrivateKeyJwt": ".list_auth_connections_response_auth_connections_item",
+    "ListAuthConnectionsResponseAuthConnectionsItem_SlackBotAuth": ".list_auth_connections_response_auth_connections_item",
     "ListAuthConnectionsResponseAuthConnectionsItem_WhatsappAuth": ".list_auth_connections_response_auth_connections_item",
     "ListCalendarEventsParams": ".list_calendar_events_params",
     "ListClientInteractionsParams": ".list_client_interactions_params",
     "ListClientsParams": ".list_clients_params",
+    "ListCustomerFacingAgentsParams": ".list_customer_facing_agents_params",
     "ListGroupSessionsParams": ".list_group_sessions_params",
     "ListHolidaysParams": ".list_holidays_params",
     "ListLocationsParams": ".list_locations_params",
@@ -2758,6 +2775,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LlmUsageCalculatorResponseModel": ".llm_usage_calculator_response_model",
     "LlmUsageInput": ".llm_usage_input",
     "LlmUsageOutput": ".llm_usage_output",
+    "LoadProcedureToolConfig": ".load_procedure_tool_config",
+    "LoadProcedureToolErrorStatus": ".load_procedure_tool_error_status",
     "ManualSource": ".manual_source",
     "ManualVerificationFileResponse": ".manual_verification_file_response",
     "ManualVerificationResponse": ".manual_verification_response",
@@ -2881,6 +2900,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PrivacyConfigOutput": ".privacy_config_output",
     "PrivateKeyJwtResponse": ".private_key_jwt_response",
     "PrivateKeyJwtResponseAlgorithm": ".private_key_jwt_response_algorithm",
+    "ProcedureAtVersion": ".procedure_at_version",
     "ProcedureCompilerMode": ".procedure_compiler_mode",
     "ProcedureRefResponseModel": ".procedure_ref_response_model",
     "ProcedureSettings": ".procedure_settings",
@@ -3093,6 +3113,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SipUriTransferDestination": ".sip_uri_transfer_destination",
     "SkipTurnToolConfig": ".skip_turn_tool_config",
     "SkipTurnToolResponseModel": ".skip_turn_tool_response_model",
+    "SlackBotAuthResponse": ".slack_bot_auth_response",
     "SmsConversationInfo": ".sms_conversation_info",
     "SmsConversationInfoDirection": ".sms_conversation_info_direction",
     "SoftTimeoutConfig": ".soft_timeout_config",
@@ -3147,6 +3168,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SystemToolConfigInputParams_EndCall": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_KnowledgeBaseRag": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_LanguageDetection": ".system_tool_config_input_params",
+    "SystemToolConfigInputParams_LoadProcedure": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_PlayKeypadTouchTone": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_SkipTurn": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_TransferToAgent": ".system_tool_config_input_params",
@@ -3157,6 +3179,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SystemToolConfigOutputParams_EndCall": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_KnowledgeBaseRag": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_LanguageDetection": ".system_tool_config_output_params",
+    "SystemToolConfigOutputParams_LoadProcedure": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_PlayKeypadTouchTone": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_SkipTurn": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_TransferToAgent": ".system_tool_config_output_params",
@@ -3285,6 +3308,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateAgentRuleParams": ".update_agent_rule_params",
     "UpdateAssetParams": ".update_asset_params",
     "UpdateAudioNativeProjectRequest": ".update_audio_native_project_request",
+    "UpdateBasicAuthRequest": ".update_basic_auth_request",
     "UpdateBookingPageSettingsParams": ".update_booking_page_settings_params",
     "UpdateBusinessInfoParams": ".update_business_info_params",
     "UpdateCalendarEventParams": ".update_calendar_event_params",
@@ -3294,6 +3318,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateGroupSessionSeatsParams": ".update_group_session_seats_params",
     "UpdateHolidayParams": ".update_holiday_params",
     "UpdateLocationParams": ".update_location_params",
+    "UpdateOAuth2ClientCredsRequest": ".update_o_auth_2_client_creds_request",
+    "UpdateOAuth2JwtRequest": ".update_o_auth_2_jwt_request",
+    "UpdateOAuth2JwtRequestAlgorithm": ".update_o_auth_2_jwt_request_algorithm",
+    "UpdateOAuth2JwtRequestTokenResponseField": ".update_o_auth_2_jwt_request_token_response_field",
     "UpdateProductParams": ".update_product_params",
     "UpdateProjectRequest": ".update_project_request",
     "UpdatePronunciationDictionariesRequest": ".update_pronunciation_dictionaries_request",
@@ -4016,6 +4044,7 @@ __all__ = [
     "CreateAudioNativeProjectRequest",
     "CreateAuthConnectionEnvironmentVariableRequest",
     "CreateBasicAuthRequest",
+    "CreateBearerAuthRequest",
     "CreateClientAppointmentParams",
     "CreateClientInteractionParams",
     "CreateClientParams",
@@ -4380,10 +4409,12 @@ __all__ = [
     "ListAuthConnectionsResponseAuthConnectionsItem_Oauth2ClientCredentials",
     "ListAuthConnectionsResponseAuthConnectionsItem_Oauth2Jwt",
     "ListAuthConnectionsResponseAuthConnectionsItem_PrivateKeyJwt",
+    "ListAuthConnectionsResponseAuthConnectionsItem_SlackBotAuth",
     "ListAuthConnectionsResponseAuthConnectionsItem_WhatsappAuth",
     "ListCalendarEventsParams",
     "ListClientInteractionsParams",
     "ListClientsParams",
+    "ListCustomerFacingAgentsParams",
     "ListGroupSessionsParams",
     "ListHolidaysParams",
     "ListLocationsParams",
@@ -4419,6 +4450,8 @@ __all__ = [
     "LlmUsageCalculatorResponseModel",
     "LlmUsageInput",
     "LlmUsageOutput",
+    "LoadProcedureToolConfig",
+    "LoadProcedureToolErrorStatus",
     "ManualSource",
     "ManualVerificationFileResponse",
     "ManualVerificationResponse",
@@ -4542,6 +4575,7 @@ __all__ = [
     "PrivacyConfigOutput",
     "PrivateKeyJwtResponse",
     "PrivateKeyJwtResponseAlgorithm",
+    "ProcedureAtVersion",
     "ProcedureCompilerMode",
     "ProcedureRefResponseModel",
     "ProcedureSettings",
@@ -4754,6 +4788,7 @@ __all__ = [
     "SipUriTransferDestination",
     "SkipTurnToolConfig",
     "SkipTurnToolResponseModel",
+    "SlackBotAuthResponse",
     "SmsConversationInfo",
     "SmsConversationInfoDirection",
     "SoftTimeoutConfig",
@@ -4808,6 +4843,7 @@ __all__ = [
     "SystemToolConfigInputParams_EndCall",
     "SystemToolConfigInputParams_KnowledgeBaseRag",
     "SystemToolConfigInputParams_LanguageDetection",
+    "SystemToolConfigInputParams_LoadProcedure",
     "SystemToolConfigInputParams_PlayKeypadTouchTone",
     "SystemToolConfigInputParams_SkipTurn",
     "SystemToolConfigInputParams_TransferToAgent",
@@ -4818,6 +4854,7 @@ __all__ = [
     "SystemToolConfigOutputParams_EndCall",
     "SystemToolConfigOutputParams_KnowledgeBaseRag",
     "SystemToolConfigOutputParams_LanguageDetection",
+    "SystemToolConfigOutputParams_LoadProcedure",
     "SystemToolConfigOutputParams_PlayKeypadTouchTone",
     "SystemToolConfigOutputParams_SkipTurn",
     "SystemToolConfigOutputParams_TransferToAgent",
@@ -4946,6 +4983,7 @@ __all__ = [
     "UpdateAgentRuleParams",
     "UpdateAssetParams",
     "UpdateAudioNativeProjectRequest",
+    "UpdateBasicAuthRequest",
     "UpdateBookingPageSettingsParams",
     "UpdateBusinessInfoParams",
     "UpdateCalendarEventParams",
@@ -4955,6 +4993,10 @@ __all__ = [
     "UpdateGroupSessionSeatsParams",
     "UpdateHolidayParams",
     "UpdateLocationParams",
+    "UpdateOAuth2ClientCredsRequest",
+    "UpdateOAuth2JwtRequest",
+    "UpdateOAuth2JwtRequestAlgorithm",
+    "UpdateOAuth2JwtRequestTokenResponseField",
     "UpdateProductParams",
     "UpdateProjectRequest",
     "UpdatePronunciationDictionariesRequest",

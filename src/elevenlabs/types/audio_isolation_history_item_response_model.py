@@ -20,6 +20,7 @@ class AudioIsolationHistoryItemResponseModel(UncheckedBaseModel):
     source_video_url: typing.Optional[str] = None
     supports_video: bool
     processing: bool
+    video_processing_failed: bool
     preview_b_64: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="preview_b64")] = None
 
     if IS_PYDANTIC_V2:

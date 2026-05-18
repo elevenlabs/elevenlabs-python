@@ -81,6 +81,26 @@ class AuthConnectionsCreateRequestBody_BasicAuth(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class AuthConnectionsCreateRequestBody_BearerAuth(UncheckedBaseModel):
+    """
+    Auth connection to create
+    """
+
+    auth_type: typing.Literal["bearer_auth"] = "bearer_auth"
+    name: str
+    provider: str
+    token: str
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class AuthConnectionsCreateRequestBody_Oauth2Jwt(UncheckedBaseModel):
     """
     Auth connection to create
@@ -166,6 +186,7 @@ AuthConnectionsCreateRequestBody = typing_extensions.Annotated[
         AuthConnectionsCreateRequestBody_Oauth2ClientCredentials,
         AuthConnectionsCreateRequestBody_CustomHeaderAuth,
         AuthConnectionsCreateRequestBody_BasicAuth,
+        AuthConnectionsCreateRequestBody_BearerAuth,
         AuthConnectionsCreateRequestBody_Oauth2Jwt,
         AuthConnectionsCreateRequestBody_PrivateKeyJwt,
         AuthConnectionsCreateRequestBody_Mtls,

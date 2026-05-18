@@ -7,26 +7,17 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class SpeechEngineSummaryResponse(UncheckedBaseModel):
-    speech_engine_id: str = pydantic.Field()
+class ListCustomerFacingAgentsParams(UncheckedBaseModel):
     """
-    The speech engine resource ID
+    List every customer-facing agent on the workspace.
+
+    The assistant uses this whenever it needs to act on a specific customer-facing
+    agent (rules, config edits, etc.) so it can pick the right ``agent_id`` to pass
+    to mutating tools. Mirrors the ``list_services`` / ``list_clients``
+    pattern: read once, then mutate by id.
     """
 
-    name: str = pydantic.Field()
-    """
-    Human-readable name for the speech engine
-    """
-
-    created_at_unix_secs: int = pydantic.Field()
-    """
-    Creation time in Unix seconds
-    """
-
-    tags: typing.List[str] = pydantic.Field()
-    """
-    Arbitrary tags for categorization and filtering
-    """
+    smb_tool_type: typing.Optional[typing.Literal["list_customer_facing_agents"]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

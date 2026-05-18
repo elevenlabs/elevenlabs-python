@@ -2,4 +2,4 @@
 
 import typing
 
-ProcedureCompilerMode = typing.Literal["append"]
+ProcedureCompilerMode = typing.Union[typing.Literal["append", "skills"], typing.Any]
