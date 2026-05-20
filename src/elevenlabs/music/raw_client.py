@@ -34,6 +34,7 @@ class RawMusicClient:
         output_format: typing.Optional[AllowedOutputFormats] = None,
         description: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.List[str]] = OMIT,
+        model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
         sign_with_c_2_pa: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
@@ -53,6 +54,9 @@ class RawMusicClient:
 
         tags : typing.Optional[typing.List[str]]
             Optional list of style tags (e.g. ['upbeat', 'cinematic']). A maximum of 10 tags is allowed.
+
+        model_id : typing.Optional[typing.Literal["music_v1"]]
+            The model to use for the generation.
 
         sign_with_c_2_pa : typing.Optional[bool]
             Whether to sign the generated song with C2PA. Applicable only for mp3 files.
@@ -74,6 +78,7 @@ class RawMusicClient:
             data={
                 "description": description,
                 "tags": tags,
+                "model_id": model_id,
                 "sign_with_c2pa": sign_with_c_2_pa,
             },
             files={
@@ -616,6 +621,7 @@ class AsyncRawMusicClient:
         output_format: typing.Optional[AllowedOutputFormats] = None,
         description: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.List[str]] = OMIT,
+        model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
         sign_with_c_2_pa: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
@@ -635,6 +641,9 @@ class AsyncRawMusicClient:
 
         tags : typing.Optional[typing.List[str]]
             Optional list of style tags (e.g. ['upbeat', 'cinematic']). A maximum of 10 tags is allowed.
+
+        model_id : typing.Optional[typing.Literal["music_v1"]]
+            The model to use for the generation.
 
         sign_with_c_2_pa : typing.Optional[bool]
             Whether to sign the generated song with C2PA. Applicable only for mp3 files.
@@ -656,6 +665,7 @@ class AsyncRawMusicClient:
             data={
                 "description": description,
                 "tags": tags,
+                "model_id": model_id,
                 "sign_with_c2pa": sign_with_c_2_pa,
             },
             files={

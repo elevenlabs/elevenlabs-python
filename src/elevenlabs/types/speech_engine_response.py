@@ -12,6 +12,7 @@ from .base_turn_config import BaseTurnConfig
 from .conversation_config_output import ConversationConfigOutput
 from .privacy_config_output import PrivacyConfigOutput
 from .speech_engine_config import SpeechEngineConfig
+from .speech_engine_conversation_initiation_client_data_config import SpeechEngineConversationInitiationClientDataConfig
 from .tts_conversational_config_output import TtsConversationalConfigOutput
 
 
@@ -69,6 +70,11 @@ class SpeechEngineResponse(UncheckedBaseModel):
     tags: typing.List[str] = pydantic.Field()
     """
     Arbitrary tags for categorization and filtering
+    """
+
+    overrides: SpeechEngineConversationInitiationClientDataConfig = pydantic.Field()
+    """
+    Override settings the client may set during conversation initiation
     """
 
     metadata: AgentMetadataDbModel = pydantic.Field()

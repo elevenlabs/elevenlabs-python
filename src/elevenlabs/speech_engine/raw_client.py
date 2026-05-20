@@ -16,7 +16,6 @@ from ..types.agent_sort_by import AgentSortBy
 from ..types.asr_conversational_config import AsrConversationalConfig
 from ..types.base_turn_config import BaseTurnConfig
 from ..types.conversation_config_input import ConversationConfigInput
-from ..types.create_speech_engine_response import CreateSpeechEngineResponse
 from ..types.list_speech_engines_response import ListSpeechEnginesResponse
 from ..types.privacy_config_input import PrivacyConfigInput
 from ..types.sort_direction import SortDirection
@@ -122,7 +121,7 @@ class RawSpeechEngineClient:
         language: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[CreateSpeechEngineResponse]:
+    ) -> HttpResponse[SpeechEngineResponse]:
         """
         Create a new Speech Engine resource
 
@@ -163,7 +162,7 @@ class RawSpeechEngineClient:
 
         Returns
         -------
-        HttpResponse[CreateSpeechEngineResponse]
+        HttpResponse[SpeechEngineResponse]
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -204,9 +203,9 @@ class RawSpeechEngineClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    CreateSpeechEngineResponse,
+                    SpeechEngineResponse,
                     construct_type(
-                        type_=CreateSpeechEngineResponse,  # type: ignore
+                        type_=SpeechEngineResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -527,7 +526,7 @@ class AsyncRawSpeechEngineClient:
         language: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[CreateSpeechEngineResponse]:
+    ) -> AsyncHttpResponse[SpeechEngineResponse]:
         """
         Create a new Speech Engine resource
 
@@ -568,7 +567,7 @@ class AsyncRawSpeechEngineClient:
 
         Returns
         -------
-        AsyncHttpResponse[CreateSpeechEngineResponse]
+        AsyncHttpResponse[SpeechEngineResponse]
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -609,9 +608,9 @@ class AsyncRawSpeechEngineClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    CreateSpeechEngineResponse,
+                    SpeechEngineResponse,
                     construct_type(
-                        type_=CreateSpeechEngineResponse,  # type: ignore
+                        type_=SpeechEngineResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

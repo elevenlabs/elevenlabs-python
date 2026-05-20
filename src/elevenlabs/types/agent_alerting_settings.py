@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_alerting_monitor_config import AgentAlertingMonitorConfig
+from .agent_alerting_webhook_notifier import AgentAlertingWebhookNotifier
 
 
 class AgentAlertingSettings(UncheckedBaseModel):
@@ -17,6 +18,11 @@ class AgentAlertingSettings(UncheckedBaseModel):
     auto_resolve_after_inactive_minutes: typing.Optional[int] = pydantic.Field(default=None)
     """
     How many minutes an alert can stay inactive before it is auto-resolved.
+    """
+
+    notifiers: typing.Optional[typing.List[AgentAlertingWebhookNotifier]] = pydantic.Field(default=None)
+    """
+    Delivery channels for alert lifecycle notifications. Currently supports webhook notifiers.
     """
 
     if IS_PYDANTIC_V2:

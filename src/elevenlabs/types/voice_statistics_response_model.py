@@ -23,6 +23,11 @@ class VoiceStatisticsResponseModel(UncheckedBaseModel):
     The number of converted characters for this voice.
     """
 
+    credits_needed_to_convert: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The number of credits needed to convert the remaining audio for this voice.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

@@ -6,10 +6,15 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import ConversationsListRequestExcludeStatusesItem, ConversationsListRequestSummaryMode
+    from .types import (
+        ConversationsGetRequestFormat,
+        ConversationsListRequestExcludeStatusesItem,
+        ConversationsListRequestSummaryMode,
+    )
     from . import analysis, audio, feedback, files, messages, tags, topics
     from .messages import MessagesTextSearchRequestSummaryMode
 _dynamic_imports: typing.Dict[str, str] = {
+    "ConversationsGetRequestFormat": ".types",
     "ConversationsListRequestExcludeStatusesItem": ".types",
     "ConversationsListRequestSummaryMode": ".types",
     "MessagesTextSearchRequestSummaryMode": ".messages",
@@ -45,6 +50,7 @@ def __dir__():
 
 
 __all__ = [
+    "ConversationsGetRequestFormat",
     "ConversationsListRequestExcludeStatusesItem",
     "ConversationsListRequestSummaryMode",
     "MessagesTextSearchRequestSummaryMode",

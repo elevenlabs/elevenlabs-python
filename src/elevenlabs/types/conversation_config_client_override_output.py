@@ -6,12 +6,18 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_config_override_output import AgentConfigOverrideOutput
+from .asr_conversational_config_override import AsrConversationalConfigOverride
 from .conversation_config_override import ConversationConfigOverride
 from .tts_conversational_config_override import TtsConversationalConfigOverride
 from .turn_config_override import TurnConfigOverride
 
 
 class ConversationConfigClientOverrideOutput(UncheckedBaseModel):
+    asr: typing.Optional[AsrConversationalConfigOverride] = pydantic.Field(default=None)
+    """
+    Configuration for conversational transcription
+    """
+
     turn: typing.Optional[TurnConfigOverride] = pydantic.Field(default=None)
     """
     Configuration for turn detection
