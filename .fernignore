@@ -23,3 +23,6 @@ assets/
 
 # Ignore custom tests
 tests/
+.fern/replay.lock
+.fern/replay.yml
+.gitattributes

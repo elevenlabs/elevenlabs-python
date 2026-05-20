@@ -21,6 +21,7 @@ if typing.TYPE_CHECKING:
     from .history.client import AsyncHistoryClient, HistoryClient
     from .models.client import AsyncModelsClient, ModelsClient
     from .music.client import AsyncMusicClient, MusicClient
+    from .productions.client import AsyncProductionsClient, ProductionsClient
     from .pronunciation_dictionaries.client import AsyncPronunciationDictionariesClient, PronunciationDictionariesClient
     from .samples.client import AsyncSamplesClient, SamplesClient
     from .service_accounts.client import AsyncServiceAccountsClient, ServiceAccountsClient
@@ -130,6 +131,7 @@ class BaseElevenLabs:
         self._conversational_ai: typing.Optional[ConversationalAiClient] = None
         self._speech_engine: typing.Optional[SpeechEngineClient] = None
         self._environment_variables: typing.Optional[EnvironmentVariablesClient] = None
+        self._productions: typing.Optional[ProductionsClient] = None
         self._tokens: typing.Optional[TokensClient] = None
         self._workspace: typing.Optional[WorkspaceClient] = None
 
@@ -362,6 +364,14 @@ class BaseElevenLabs:
         return self._environment_variables
 
     @property
+    def productions(self):
+        if self._productions is None:
+            from .productions.client import ProductionsClient  # noqa: E402
+
+            self._productions = ProductionsClient(client_wrapper=self._client_wrapper)
+        return self._productions
+
+    @property
     def tokens(self):
         if self._tokens is None:
             from .tokens.client import TokensClient  # noqa: E402
@@ -468,6 +478,7 @@ class AsyncBaseElevenLabs:
         self._conversational_ai: typing.Optional[AsyncConversationalAiClient] = None
         self._speech_engine: typing.Optional[AsyncSpeechEngineClient] = None
         self._environment_variables: typing.Optional[AsyncEnvironmentVariablesClient] = None
+        self._productions: typing.Optional[AsyncProductionsClient] = None
         self._tokens: typing.Optional[AsyncTokensClient] = None
         self._workspace: typing.Optional[AsyncWorkspaceClient] = None
 
@@ -706,6 +717,14 @@ class AsyncBaseElevenLabs:
 
             self._environment_variables = AsyncEnvironmentVariablesClient(client_wrapper=self._client_wrapper)
         return self._environment_variables
+
+    @property
+    def productions(self):
+        if self._productions is None:
+            from .productions.client import AsyncProductionsClient  # noqa: E402
+
+            self._productions = AsyncProductionsClient(client_wrapper=self._client_wrapper)
+        return self._productions
 
     @property
     def tokens(self):

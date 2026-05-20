@@ -7,20 +7,14 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class ApiIntegrationDocResponse(UncheckedBaseModel):
-    id: str = pydantic.Field()
+class RttEndOfStreamPayload(UncheckedBaseModel):
     """
-    Integration identifier
-    """
-
-    name: str = pydantic.Field()
-    """
-    Display name of the integration
+    Signal that the client has finished sending audio.
     """
 
-    doc_mdx: str = pydantic.Field()
+    message_type: typing.Literal["end_of_stream"] = pydantic.Field(default="end_of_stream")
     """
-    Full MDX documentation content for the integration
+    The message type identifier.
     """
 
     if IS_PYDANTIC_V2:

@@ -29,6 +29,11 @@ class ChapterStatisticsResponse(UncheckedBaseModel):
     The number of unconverted paragraphs.
     """
 
+    credits_needed_to_convert: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The number of credits needed to convert the remaining paragraphs.
+    """
+
     voice_statistics: typing.Optional[typing.List[VoiceStatisticsResponseModel]] = pydantic.Field(default=None)
     """
     Per-voice breakdown of character counts.

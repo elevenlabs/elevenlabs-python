@@ -48,6 +48,7 @@ class RawUsageClient:
             End of the time range as a Unix timestamp in milliseconds. Must be at least 2020-01-01.
 
         interval_seconds : typing.Optional[int]
+            Bucket size in seconds. Each row in the response covers this many seconds of usage. For example, pass 3600 for hourly buckets or 86400 for daily buckets.
 
         group_by : typing.Optional[typing.Sequence[BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePostGroupByItem]]
 
@@ -134,6 +135,7 @@ class AsyncRawUsageClient:
             End of the time range as a Unix timestamp in milliseconds. Must be at least 2020-01-01.
 
         interval_seconds : typing.Optional[int]
+            Bucket size in seconds. Each row in the response covers this many seconds of usage. For example, pass 3600 for hourly buckets or 86400 for daily buckets.
 
         group_by : typing.Optional[typing.Sequence[BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePostGroupByItem]]
 

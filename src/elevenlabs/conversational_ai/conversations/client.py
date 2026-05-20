@@ -14,6 +14,7 @@ from ...types.get_conversations_page_response_model import GetConversationsPageR
 from ...types.get_sip_log_messages_response import GetSipLogMessagesResponse
 from ...types.token_response_model import TokenResponseModel
 from .raw_client import AsyncRawConversationsClient, RawConversationsClient
+from .types.conversations_get_request_format import ConversationsGetRequestFormat
 from .types.conversations_list_request_exclude_statuses_item import ConversationsListRequestExcludeStatusesItem
 from .types.conversations_list_request_summary_mode import ConversationsListRequestSummaryMode
 
@@ -357,7 +358,11 @@ class ConversationsClient:
         return _response.data
 
     def get(
-        self, conversation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        conversation_id: str,
+        *,
+        format: typing.Optional[ConversationsGetRequestFormat] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationResponseModel:
         """
         Get the details of a particular conversation
@@ -366,6 +371,9 @@ class ConversationsClient:
         ----------
         conversation_id : str
             The id of the conversation you're taking the action on.
+
+        format : typing.Optional[ConversationsGetRequestFormat]
+            Response format. Defaults to 'json'. Set to 'opentelemetry' for an OTLP-compatible trace payload using the same structure as the post-call webhook.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -386,7 +394,7 @@ class ConversationsClient:
             conversation_id="123",
         )
         """
-        _response = self._raw_client.get(conversation_id, request_options=request_options)
+        _response = self._raw_client.get(conversation_id, format=format, request_options=request_options)
         return _response.data
 
     def delete(self, conversation_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
@@ -878,7 +886,11 @@ class AsyncConversationsClient:
         return _response.data
 
     async def get(
-        self, conversation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        conversation_id: str,
+        *,
+        format: typing.Optional[ConversationsGetRequestFormat] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationResponseModel:
         """
         Get the details of a particular conversation
@@ -887,6 +899,9 @@ class AsyncConversationsClient:
         ----------
         conversation_id : str
             The id of the conversation you're taking the action on.
+
+        format : typing.Optional[ConversationsGetRequestFormat]
+            Response format. Defaults to 'json'. Set to 'opentelemetry' for an OTLP-compatible trace payload using the same structure as the post-call webhook.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -915,7 +930,7 @@ class AsyncConversationsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get(conversation_id, request_options=request_options)
+        _response = await self._raw_client.get(conversation_id, format=format, request_options=request_options)
         return _response.data
 
     async def delete(

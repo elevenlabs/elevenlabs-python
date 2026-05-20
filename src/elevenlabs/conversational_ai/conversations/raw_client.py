@@ -17,6 +17,7 @@ from ...types.get_conversation_response_model import GetConversationResponseMode
 from ...types.get_conversations_page_response_model import GetConversationsPageResponseModel
 from ...types.get_sip_log_messages_response import GetSipLogMessagesResponse
 from ...types.token_response_model import TokenResponseModel
+from .types.conversations_get_request_format import ConversationsGetRequestFormat
 from .types.conversations_list_request_exclude_statuses_item import ConversationsListRequestExcludeStatusesItem
 from .types.conversations_list_request_summary_mode import ConversationsListRequestSummaryMode
 
@@ -352,7 +353,11 @@ class RawConversationsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
-        self, conversation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        conversation_id: str,
+        *,
+        format: typing.Optional[ConversationsGetRequestFormat] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetConversationResponseModel]:
         """
         Get the details of a particular conversation
@@ -361,6 +366,9 @@ class RawConversationsClient:
         ----------
         conversation_id : str
             The id of the conversation you're taking the action on.
+
+        format : typing.Optional[ConversationsGetRequestFormat]
+            Response format. Defaults to 'json'. Set to 'opentelemetry' for an OTLP-compatible trace payload using the same structure as the post-call webhook.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -373,6 +381,9 @@ class RawConversationsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}",
             method="GET",
+            params={
+                "format": format,
+            },
             request_options=request_options,
         )
         try:
@@ -849,7 +860,11 @@ class AsyncRawConversationsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
-        self, conversation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        conversation_id: str,
+        *,
+        format: typing.Optional[ConversationsGetRequestFormat] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetConversationResponseModel]:
         """
         Get the details of a particular conversation
@@ -858,6 +873,9 @@ class AsyncRawConversationsClient:
         ----------
         conversation_id : str
             The id of the conversation you're taking the action on.
+
+        format : typing.Optional[ConversationsGetRequestFormat]
+            Response format. Defaults to 'json'. Set to 'opentelemetry' for an OTLP-compatible trace payload using the same structure as the post-call webhook.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -870,6 +888,9 @@ class AsyncRawConversationsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}",
             method="GET",
+            params={
+                "format": format,
+            },
             request_options=request_options,
         )
         try:

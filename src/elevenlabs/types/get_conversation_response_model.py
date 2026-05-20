@@ -41,6 +41,11 @@ class GetConversationResponseModel(UncheckedBaseModel):
     Conversation tag ids assigned to this conversation.
     """
 
+    otlp_traces: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    """
+    OpenTelemetry trace payload when the request uses format=opentelemetry; otherwise omitted.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

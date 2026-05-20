@@ -7,10 +7,10 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class CreateSpeechEngineResponse(UncheckedBaseModel):
-    speech_engine_id: str = pydantic.Field()
+class AsrConversationalConfigOverride(UncheckedBaseModel):
+    keywords: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    The speech engine resource ID
+    Keywords to boost prediction probability for
     """
 
     if IS_PYDANTIC_V2:

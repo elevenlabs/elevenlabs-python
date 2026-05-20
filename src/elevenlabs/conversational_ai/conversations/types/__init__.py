@@ -6,9 +6,11 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .conversations_get_request_format import ConversationsGetRequestFormat
     from .conversations_list_request_exclude_statuses_item import ConversationsListRequestExcludeStatusesItem
     from .conversations_list_request_summary_mode import ConversationsListRequestSummaryMode
 _dynamic_imports: typing.Dict[str, str] = {
+    "ConversationsGetRequestFormat": ".conversations_get_request_format",
     "ConversationsListRequestExcludeStatusesItem": ".conversations_list_request_exclude_statuses_item",
     "ConversationsListRequestSummaryMode": ".conversations_list_request_summary_mode",
 }
@@ -35,4 +37,8 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["ConversationsListRequestExcludeStatusesItem", "ConversationsListRequestSummaryMode"]
+__all__ = [
+    "ConversationsGetRequestFormat",
+    "ConversationsListRequestExcludeStatusesItem",
+    "ConversationsListRequestSummaryMode",
+]
