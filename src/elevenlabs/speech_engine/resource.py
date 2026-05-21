@@ -115,11 +115,11 @@ class SpeechEngineResource:
 
     def __init__(
         self,
-        id: str,
+        engine_id: str,
         client_wrapper: typing.Any = None,
         response: typing.Optional[SpeechEngineResponse] = None,
     ) -> None:
-        self.id = id
+        self.engine_id = engine_id
         self._client_wrapper = client_wrapper
 
         # Full API response, accessible as engine.config.asr, engine.config.overrides, etc.
