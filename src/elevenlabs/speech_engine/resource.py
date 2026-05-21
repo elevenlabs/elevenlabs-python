@@ -11,6 +11,7 @@ import typing
 from .server import SpeechEngineServer
 from .session import SpeechEngineSession
 from .types import WebSocketLike
+from ..types.speech_engine_response import SpeechEngineResponse
 
 logger = logging.getLogger("elevenlabs.speech_engine")
 
@@ -114,11 +115,16 @@ class SpeechEngineResource:
 
     def __init__(
         self,
-        engine_id: str,
+        id: str,
         client_wrapper: typing.Any = None,
+        response: typing.Optional[SpeechEngineResponse] = None,
     ) -> None:
-        self.engine_id = engine_id
+        self.id = id
         self._client_wrapper = client_wrapper
+
+        # Full API response, accessible as engine.config.asr, engine.config.overrides, etc.
+        # None when the resource is constructed directly without an API call.
+        self.config: typing.Optional[SpeechEngineResponse] = response
 
     def _get_api_key(self) -> typing.Optional[str]:
         if self._client_wrapper is None:
