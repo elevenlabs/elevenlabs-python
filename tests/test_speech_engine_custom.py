@@ -33,7 +33,7 @@ def test_create_returns_resource() -> None:
         result = client.create(speech_engine=SpeechEngineConfig(ws_url="wss://test"))
 
     assert isinstance(result, SpeechEngineResource)
-    assert result.engine_id == "seng_abc"
+    assert result.id == "seng_abc"
 
 
 def test_get_returns_resource() -> None:
@@ -43,7 +43,7 @@ def test_get_returns_resource() -> None:
         result = client.get("seng_abc")
 
     assert isinstance(result, SpeechEngineResource)
-    assert result.engine_id == "seng_abc"
+    assert result.id == "seng_abc"
 
 
 def test_update_returns_resource() -> None:
@@ -53,7 +53,7 @@ def test_update_returns_resource() -> None:
         result = client.update("seng_abc", name="Renamed")
 
     assert isinstance(result, SpeechEngineResource)
-    assert result.engine_id == "seng_abc"
+    assert result.id == "seng_abc"
 
 
 # ---------------------------------------------------------------------------
@@ -70,7 +70,7 @@ async def test_async_create_returns_resource() -> None:
         result = await client.create(speech_engine=SpeechEngineConfig(ws_url="wss://test"))
 
     assert isinstance(result, SpeechEngineResource)
-    assert result.engine_id == "seng_abc"
+    assert result.id == "seng_abc"
 
 
 @pytest.mark.asyncio
@@ -81,7 +81,7 @@ async def test_async_get_returns_resource() -> None:
         result = await client.get("seng_abc")
 
     assert isinstance(result, SpeechEngineResource)
-    assert result.engine_id == "seng_abc"
+    assert result.id == "seng_abc"
 
 
 @pytest.mark.asyncio
@@ -92,4 +92,4 @@ async def test_async_update_returns_resource() -> None:
         result = await client.update("seng_abc", name="Renamed")
 
     assert isinstance(result, SpeechEngineResource)
-    assert result.engine_id == "seng_abc"
+    assert result.id == "seng_abc"
