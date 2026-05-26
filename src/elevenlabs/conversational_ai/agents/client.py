@@ -81,7 +81,7 @@ class AgentsClient:
             Conversation configuration for an agent
 
         enable_versioning : typing.Optional[bool]
-            Enable versioning for the agent
+            Deprecated: all agents are versioned. This parameter is ignored.
 
         platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
             Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
@@ -227,7 +227,7 @@ class AgentsClient:
             The id of an agent. This is returned on agent creation.
 
         enable_versioning_if_not_enabled : typing.Optional[bool]
-            Enable versioning for the agent, if not already enabled
+            Deprecated: all agents are versioned. This parameter is ignored.
 
         branch_id : typing.Optional[str]
             The ID of the branch to use
@@ -542,6 +542,7 @@ class AgentsClient:
         tests: typing.Sequence[SingleTestRunRequestModel],
         agent_config_override: typing.Optional[AdhocAgentConfigOverrideForTestRequestModel] = OMIT,
         branch_id: typing.Optional[str] = OMIT,
+        repeat_count: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetTestSuiteInvocationResponseModel:
         """
@@ -560,6 +561,9 @@ class AgentsClient:
 
         branch_id : typing.Optional[str]
             ID of the branch to run the tests on. If not provided, the tests will be run on the agent default configuration.
+
+        repeat_count : typing.Optional[int]
+            Number of times to run each test. When greater than 1, results are grouped and summarized.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -590,6 +594,7 @@ class AgentsClient:
             tests=tests,
             agent_config_override=agent_config_override,
             branch_id=branch_id,
+            repeat_count=repeat_count,
             request_options=request_options,
         )
         return _response.data
@@ -712,7 +717,7 @@ class AsyncAgentsClient:
             Conversation configuration for an agent
 
         enable_versioning : typing.Optional[bool]
-            Enable versioning for the agent
+            Deprecated: all agents are versioned. This parameter is ignored.
 
         platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
             Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
@@ -882,7 +887,7 @@ class AsyncAgentsClient:
             The id of an agent. This is returned on agent creation.
 
         enable_versioning_if_not_enabled : typing.Optional[bool]
-            Enable versioning for the agent, if not already enabled
+            Deprecated: all agents are versioned. This parameter is ignored.
 
         branch_id : typing.Optional[str]
             The ID of the branch to use
@@ -1237,6 +1242,7 @@ class AsyncAgentsClient:
         tests: typing.Sequence[SingleTestRunRequestModel],
         agent_config_override: typing.Optional[AdhocAgentConfigOverrideForTestRequestModel] = OMIT,
         branch_id: typing.Optional[str] = OMIT,
+        repeat_count: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetTestSuiteInvocationResponseModel:
         """
@@ -1255,6 +1261,9 @@ class AsyncAgentsClient:
 
         branch_id : typing.Optional[str]
             ID of the branch to run the tests on. If not provided, the tests will be run on the agent default configuration.
+
+        repeat_count : typing.Optional[int]
+            Number of times to run each test. When greater than 1, results are grouped and summarized.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1293,6 +1302,7 @@ class AsyncAgentsClient:
             tests=tests,
             agent_config_override=agent_config_override,
             branch_id=branch_id,
+            repeat_count=repeat_count,
             request_options=request_options,
         )
         return _response.data

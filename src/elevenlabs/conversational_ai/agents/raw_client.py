@@ -54,7 +54,7 @@ class RawAgentsClient:
             Conversation configuration for an agent
 
         enable_versioning : typing.Optional[bool]
-            Enable versioning for the agent
+            Deprecated: all agents are versioned. This parameter is ignored.
 
         platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
             Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
@@ -255,7 +255,7 @@ class RawAgentsClient:
             The id of an agent. This is returned on agent creation.
 
         enable_versioning_if_not_enabled : typing.Optional[bool]
-            Enable versioning for the agent, if not already enabled
+            Deprecated: all agents are versioned. This parameter is ignored.
 
         branch_id : typing.Optional[str]
             The ID of the branch to use
@@ -653,6 +653,7 @@ class RawAgentsClient:
         tests: typing.Sequence[SingleTestRunRequestModel],
         agent_config_override: typing.Optional[AdhocAgentConfigOverrideForTestRequestModel] = OMIT,
         branch_id: typing.Optional[str] = OMIT,
+        repeat_count: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetTestSuiteInvocationResponseModel]:
         """
@@ -671,6 +672,9 @@ class RawAgentsClient:
 
         branch_id : typing.Optional[str]
             ID of the branch to run the tests on. If not provided, the tests will be run on the agent default configuration.
+
+        repeat_count : typing.Optional[int]
+            Number of times to run each test. When greater than 1, results are grouped and summarized.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -693,6 +697,7 @@ class RawAgentsClient:
                     direction="write",
                 ),
                 "branch_id": branch_id,
+                "repeat_count": repeat_count,
             },
             headers={
                 "content-type": "application/json",
@@ -751,7 +756,7 @@ class AsyncRawAgentsClient:
             Conversation configuration for an agent
 
         enable_versioning : typing.Optional[bool]
-            Enable versioning for the agent
+            Deprecated: all agents are versioned. This parameter is ignored.
 
         platform_settings : typing.Optional[AgentPlatformSettingsRequestModel]
             Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
@@ -954,7 +959,7 @@ class AsyncRawAgentsClient:
             The id of an agent. This is returned on agent creation.
 
         enable_versioning_if_not_enabled : typing.Optional[bool]
-            Enable versioning for the agent, if not already enabled
+            Deprecated: all agents are versioned. This parameter is ignored.
 
         branch_id : typing.Optional[str]
             The ID of the branch to use
@@ -1352,6 +1357,7 @@ class AsyncRawAgentsClient:
         tests: typing.Sequence[SingleTestRunRequestModel],
         agent_config_override: typing.Optional[AdhocAgentConfigOverrideForTestRequestModel] = OMIT,
         branch_id: typing.Optional[str] = OMIT,
+        repeat_count: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetTestSuiteInvocationResponseModel]:
         """
@@ -1370,6 +1376,9 @@ class AsyncRawAgentsClient:
 
         branch_id : typing.Optional[str]
             ID of the branch to run the tests on. If not provided, the tests will be run on the agent default configuration.
+
+        repeat_count : typing.Optional[int]
+            Number of times to run each test. When greater than 1, results are grouped and summarized.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1392,6 +1401,7 @@ class AsyncRawAgentsClient:
                     direction="write",
                 ),
                 "branch_id": branch_id,
+                "repeat_count": repeat_count,
             },
             headers={
                 "content-type": "application/json",

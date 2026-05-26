@@ -11,6 +11,25 @@ from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .telephony_direction import TelephonyDirection
 
 
+class ConversationHistoryMetadataCommonModelPhoneCall_Exotel(UncheckedBaseModel):
+    type: typing.Literal["exotel"] = "exotel"
+    direction: TelephonyDirection
+    phone_number_id: str
+    agent_number: str
+    external_number: str
+    stream_sid: str
+    call_sid: str
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class ConversationHistoryMetadataCommonModelPhoneCall_SipTrunking(UncheckedBaseModel):
     type: typing.Literal["sip_trunking"] = "sip_trunking"
     direction: TelephonyDirection
@@ -52,6 +71,7 @@ class ConversationHistoryMetadataCommonModelPhoneCall_Twilio(UncheckedBaseModel)
 
 ConversationHistoryMetadataCommonModelPhoneCall = typing_extensions.Annotated[
     typing.Union[
+        ConversationHistoryMetadataCommonModelPhoneCall_Exotel,
         ConversationHistoryMetadataCommonModelPhoneCall_SipTrunking,
         ConversationHistoryMetadataCommonModelPhoneCall_Twilio,
     ],

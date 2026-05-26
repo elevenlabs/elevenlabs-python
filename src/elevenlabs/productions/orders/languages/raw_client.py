@@ -10,10 +10,8 @@ from ....core.jsonable_encoder import jsonable_encoder
 from ....core.request_options import RequestOptions
 from ....core.unchecked_base_model import construct_type
 from ....errors.unprocessable_entity_error import UnprocessableEntityError
+from ....types.languages_response import LanguagesResponse
 from ....types.order_item_kind import OrderItemKind
-from ....types.root_model_annotated_union_paired_languages_response_single_languages_response_field_info_annotation_none_type_required_true_discriminator_kind import (
-    RootModelAnnotatedUnionPairedLanguagesResponseSingleLanguagesResponseFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKind,
-)
 
 
 class RawLanguagesClient:
@@ -22,9 +20,7 @@ class RawLanguagesClient:
 
     def list(
         self, order_item_kind: OrderItemKind, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[
-        RootModelAnnotatedUnionPairedLanguagesResponseSingleLanguagesResponseFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKind
-    ]:
+    ) -> HttpResponse[LanguagesResponse]:
         """
         Returns the available languages for a given order item kind.
 
@@ -38,7 +34,7 @@ class RawLanguagesClient:
 
         Returns
         -------
-        HttpResponse[RootModelAnnotatedUnionPairedLanguagesResponseSingleLanguagesResponseFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKind]
+        HttpResponse[LanguagesResponse]
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -49,9 +45,9 @@ class RawLanguagesClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    RootModelAnnotatedUnionPairedLanguagesResponseSingleLanguagesResponseFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKind,
+                    LanguagesResponse,
                     construct_type(
-                        type_=RootModelAnnotatedUnionPairedLanguagesResponseSingleLanguagesResponseFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKind,  # type: ignore
+                        type_=LanguagesResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -79,9 +75,7 @@ class AsyncRawLanguagesClient:
 
     async def list(
         self, order_item_kind: OrderItemKind, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[
-        RootModelAnnotatedUnionPairedLanguagesResponseSingleLanguagesResponseFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKind
-    ]:
+    ) -> AsyncHttpResponse[LanguagesResponse]:
         """
         Returns the available languages for a given order item kind.
 
@@ -95,7 +89,7 @@ class AsyncRawLanguagesClient:
 
         Returns
         -------
-        AsyncHttpResponse[RootModelAnnotatedUnionPairedLanguagesResponseSingleLanguagesResponseFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKind]
+        AsyncHttpResponse[LanguagesResponse]
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -106,9 +100,9 @@ class AsyncRawLanguagesClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    RootModelAnnotatedUnionPairedLanguagesResponseSingleLanguagesResponseFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKind,
+                    LanguagesResponse,
                     construct_type(
-                        type_=RootModelAnnotatedUnionPairedLanguagesResponseSingleLanguagesResponseFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKind,  # type: ignore
+                        type_=LanguagesResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

@@ -8,35 +8,43 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .phone_numbers_create_request_body import (
         PhoneNumbersCreateRequestBody,
+        PhoneNumbersCreateRequestBody_Exotel,
         PhoneNumbersCreateRequestBody_SipTrunk,
         PhoneNumbersCreateRequestBody_Twilio,
     )
     from .phone_numbers_get_response import (
         PhoneNumbersGetResponse,
+        PhoneNumbersGetResponse_Exotel,
         PhoneNumbersGetResponse_SipTrunk,
         PhoneNumbersGetResponse_Twilio,
     )
     from .phone_numbers_list_response_item import (
         PhoneNumbersListResponseItem,
+        PhoneNumbersListResponseItem_Exotel,
         PhoneNumbersListResponseItem_SipTrunk,
         PhoneNumbersListResponseItem_Twilio,
     )
     from .phone_numbers_update_response import (
         PhoneNumbersUpdateResponse,
+        PhoneNumbersUpdateResponse_Exotel,
         PhoneNumbersUpdateResponse_SipTrunk,
         PhoneNumbersUpdateResponse_Twilio,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "PhoneNumbersCreateRequestBody": ".phone_numbers_create_request_body",
+    "PhoneNumbersCreateRequestBody_Exotel": ".phone_numbers_create_request_body",
     "PhoneNumbersCreateRequestBody_SipTrunk": ".phone_numbers_create_request_body",
     "PhoneNumbersCreateRequestBody_Twilio": ".phone_numbers_create_request_body",
     "PhoneNumbersGetResponse": ".phone_numbers_get_response",
+    "PhoneNumbersGetResponse_Exotel": ".phone_numbers_get_response",
     "PhoneNumbersGetResponse_SipTrunk": ".phone_numbers_get_response",
     "PhoneNumbersGetResponse_Twilio": ".phone_numbers_get_response",
     "PhoneNumbersListResponseItem": ".phone_numbers_list_response_item",
+    "PhoneNumbersListResponseItem_Exotel": ".phone_numbers_list_response_item",
     "PhoneNumbersListResponseItem_SipTrunk": ".phone_numbers_list_response_item",
     "PhoneNumbersListResponseItem_Twilio": ".phone_numbers_list_response_item",
     "PhoneNumbersUpdateResponse": ".phone_numbers_update_response",
+    "PhoneNumbersUpdateResponse_Exotel": ".phone_numbers_update_response",
     "PhoneNumbersUpdateResponse_SipTrunk": ".phone_numbers_update_response",
     "PhoneNumbersUpdateResponse_Twilio": ".phone_numbers_update_response",
 }
@@ -65,15 +73,19 @@ def __dir__():
 
 __all__ = [
     "PhoneNumbersCreateRequestBody",
+    "PhoneNumbersCreateRequestBody_Exotel",
     "PhoneNumbersCreateRequestBody_SipTrunk",
     "PhoneNumbersCreateRequestBody_Twilio",
     "PhoneNumbersGetResponse",
+    "PhoneNumbersGetResponse_Exotel",
     "PhoneNumbersGetResponse_SipTrunk",
     "PhoneNumbersGetResponse_Twilio",
     "PhoneNumbersListResponseItem",
+    "PhoneNumbersListResponseItem_Exotel",
     "PhoneNumbersListResponseItem_SipTrunk",
     "PhoneNumbersListResponseItem_Twilio",
     "PhoneNumbersUpdateResponse",
+    "PhoneNumbersUpdateResponse_Exotel",
     "PhoneNumbersUpdateResponse_SipTrunk",
     "PhoneNumbersUpdateResponse_Twilio",
 ]

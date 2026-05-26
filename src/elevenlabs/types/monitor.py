@@ -2,4 +2,7 @@
 
 import typing
 
-Monitor = typing.Union[typing.Literal["elevated_conversation_failure_rate", "elevated_tool_failure_rate"], typing.Any]
+Monitor = typing.Union[
+    typing.Literal["elevated_conversation_failure_rate", "elevated_tool_failure_rate", "webhook_error_spike"],
+    typing.Any,
+]

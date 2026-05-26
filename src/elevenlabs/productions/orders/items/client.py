@@ -59,7 +59,7 @@ class ItemsClient:
         --------
         from elevenlabs import (
             ElevenLabs,
-            RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindInput_Dub,
+            OrderItemRequestInput_Dub,
             UpsertOrderItemRequest,
         )
 
@@ -69,7 +69,7 @@ class ItemsClient:
         client.productions.orders.items.upsert(
             order_id="order_id",
             request=UpsertOrderItemRequest(
-                item=RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindInput_Dub(
+                item=OrderItemRequestInput_Dub(
                     media_id="prodmedia_01jgatk6h0fwxrtbjade61yqhx",
                     source_language="en",
                     destination_languages=["hi", "fr-FR", "de"],
@@ -168,7 +168,7 @@ class AsyncItemsClient:
 
         from elevenlabs import (
             AsyncElevenLabs,
-            RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindInput_Dub,
+            OrderItemRequestInput_Dub,
             UpsertOrderItemRequest,
         )
 
@@ -181,7 +181,7 @@ class AsyncItemsClient:
             await client.productions.orders.items.upsert(
                 order_id="order_id",
                 request=UpsertOrderItemRequest(
-                    item=RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindInput_Dub(
+                    item=OrderItemRequestInput_Dub(
                         media_id="prodmedia_01jgatk6h0fwxrtbjade61yqhx",
                         source_language="en",
                         destination_languages=["hi", "fr-FR", "de"],

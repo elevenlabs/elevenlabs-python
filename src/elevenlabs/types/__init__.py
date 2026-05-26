@@ -264,9 +264,11 @@ if typing.TYPE_CHECKING:
     from .batch_call_whats_app_params import BatchCallWhatsAppParams
     from .batch_failure_response_model import BatchFailureResponseModel
     from .bearer_auth_response import BearerAuthResponse
+    from .behavior_override import BehaviorOverride
     from .billing_period import BillingPeriod
     from .branch_protection_status import BranchProtectionStatus
     from .breakdown_types import BreakdownTypes
+    from .bucketing_status import BucketingStatus
     from .built_in_tools_input import BuiltInToolsInput
     from .built_in_tools_output import BuiltInToolsOutput
     from .built_in_tools_workflow_override_input import BuiltInToolsWorkflowOverrideInput
@@ -404,10 +406,12 @@ if typing.TYPE_CHECKING:
     from .conversation_history_evaluation_criteria_result_common_model import (
         ConversationHistoryEvaluationCriteriaResultCommonModel,
     )
+    from .conversation_history_exotel_phone_call_model import ConversationHistoryExotelPhoneCallModel
     from .conversation_history_feedback_common_model import ConversationHistoryFeedbackCommonModel
     from .conversation_history_metadata_common_model import ConversationHistoryMetadataCommonModel
     from .conversation_history_metadata_common_model_phone_call import (
         ConversationHistoryMetadataCommonModelPhoneCall,
+        ConversationHistoryMetadataCommonModelPhoneCall_Exotel,
         ConversationHistoryMetadataCommonModelPhoneCall_SipTrunking,
         ConversationHistoryMetadataCommonModelPhoneCall_Twilio,
     )
@@ -465,6 +469,7 @@ if typing.TYPE_CHECKING:
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToAgentError,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToAgentSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToNumberError,
+        ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToNumberExotelSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToNumberSipSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToNumberTwilioSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_VoicemailDetectionSuccess,
@@ -484,6 +489,7 @@ if typing.TYPE_CHECKING:
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentError,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberError,
+        ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberExotelSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberSipSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberTwilioSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_VoicemailDetectionSuccess,
@@ -575,6 +581,7 @@ if typing.TYPE_CHECKING:
     from .create_client_interaction_params import CreateClientInteractionParams
     from .create_client_params import CreateClientParams
     from .create_custom_header_auth_request import CreateCustomHeaderAuthRequest
+    from .create_exotel_phone_number_request import CreateExotelPhoneNumberRequest
     from .create_holiday_params import CreateHolidayParams
     from .create_location_params import CreateLocationParams
     from .create_mtls_auth_request import CreateMtlsAuthRequest
@@ -582,6 +589,7 @@ if typing.TYPE_CHECKING:
     from .create_o_auth_2_jwt_request import CreateOAuth2JwtRequest
     from .create_o_auth_2_jwt_request_algorithm import CreateOAuth2JwtRequestAlgorithm
     from .create_o_auth_2_jwt_request_token_response_field import CreateOAuth2JwtRequestTokenResponseField
+    from .create_order_request import CreateOrderRequest
     from .create_order_response import CreateOrderResponse
     from .create_phone_number_response_model import CreatePhoneNumberResponseModel
     from .create_previously_generated_voice_request import CreatePreviouslyGeneratedVoiceRequest
@@ -726,6 +734,8 @@ if typing.TYPE_CHECKING:
     from .evaluation_settings_output import EvaluationSettingsOutput
     from .evaluation_success_result import EvaluationSuccessResult
     from .exact_parameter_evaluation_strategy import ExactParameterEvaluationStrategy
+    from .exotel_api_subdomain import ExotelApiSubdomain
+    from .exotel_outbound_call_response import ExotelOutboundCallResponse
     from .export_options import (
         ExportOptions,
         ExportOptions_Docx,
@@ -764,6 +774,7 @@ if typing.TYPE_CHECKING:
     from .get_agent_response_model import GetAgentResponseModel
     from .get_agent_response_model_phone_numbers_item import (
         GetAgentResponseModelPhoneNumbersItem,
+        GetAgentResponseModelPhoneNumbersItem_Exotel,
         GetAgentResponseModelPhoneNumbersItem_SipTrunk,
         GetAgentResponseModelPhoneNumbersItem_Twilio,
     )
@@ -840,6 +851,7 @@ if typing.TYPE_CHECKING:
     from .get_library_voices_response import GetLibraryVoicesResponse
     from .get_live_count_response import GetLiveCountResponse
     from .get_or_create_rag_index_request_model import GetOrCreateRagIndexRequestModel
+    from .get_phone_number_exotel_response_model import GetPhoneNumberExotelResponseModel
     from .get_phone_number_inbound_sip_trunk_config_response_model import (
         GetPhoneNumberInboundSipTrunkConfigResponseModel,
     )
@@ -925,6 +937,7 @@ if typing.TYPE_CHECKING:
     from .initialize_connection_multi import InitializeConnectionMulti
     from .input_audio_chunk_payload import InputAudioChunkPayload
     from .integration_type import IntegrationType
+    from .interaction_budget import InteractionBudget
     from .invoice_response import InvoiceResponse
     from .invoice_response_model_payment_intent_status import InvoiceResponseModelPaymentIntentStatus
     from .invoice_response_model_payment_intent_statusses_item import InvoiceResponseModelPaymentIntentStatussesItem
@@ -971,6 +984,7 @@ if typing.TYPE_CHECKING:
     from .language_preset_output import LanguagePresetOutput
     from .language_preset_translation import LanguagePresetTranslation
     from .language_response import LanguageResponse
+    from .languages_response import LanguagesResponse, LanguagesResponse_Pair, LanguagesResponse_Single
     from .leave_message_params import LeaveMessageParams
     from .library_voice_response import LibraryVoiceResponse
     from .library_voice_response_model_category import LibraryVoiceResponseModelCategory
@@ -1093,6 +1107,7 @@ if typing.TYPE_CHECKING:
     from .multichannel_speech_to_text_response_model import MultichannelSpeechToTextResponseModel
     from .multipart_music_response import MultipartMusicResponse
     from .music_explore_song_source_context import MusicExploreSongSourceContext
+    from .music_generation_mode import MusicGenerationMode
     from .music_prompt import MusicPrompt
     from .music_upload_response import MusicUploadResponse
     from .no_coaching_settings import NoCoachingSettings
@@ -1113,6 +1128,16 @@ if typing.TYPE_CHECKING:
     from .order_id import OrderId
     from .order_item_info import OrderItemInfo
     from .order_item_kind import OrderItemKind
+    from .order_item_request_input import (
+        OrderItemRequestInput,
+        OrderItemRequestInput_Dub,
+        OrderItemRequestInput_Subtitles,
+    )
+    from .order_item_request_output import (
+        OrderItemRequestOutput,
+        OrderItemRequestOutput_Dub,
+        OrderItemRequestOutput_Subtitles,
+    )
     from .order_media_response import OrderMediaResponse
     from .order_request_state import OrderRequestState
     from .order_response import OrderResponse
@@ -1234,6 +1259,7 @@ if typing.TYPE_CHECKING:
         PromptAgentApiModelInputToolsItem,
         PromptAgentApiModelInputToolsItem_ApiIntegrationWebhook,
         PromptAgentApiModelInputToolsItem_Client,
+        PromptAgentApiModelInputToolsItem_Code,
         PromptAgentApiModelInputToolsItem_Mcp,
         PromptAgentApiModelInputToolsItem_Smb,
         PromptAgentApiModelInputToolsItem_System,
@@ -1250,6 +1276,7 @@ if typing.TYPE_CHECKING:
         PromptAgentApiModelOutputToolsItem,
         PromptAgentApiModelOutputToolsItem_ApiIntegrationWebhook,
         PromptAgentApiModelOutputToolsItem_Client,
+        PromptAgentApiModelOutputToolsItem_Code,
         PromptAgentApiModelOutputToolsItem_Mcp,
         PromptAgentApiModelOutputToolsItem_Smb,
         PromptAgentApiModelOutputToolsItem_System,
@@ -1266,6 +1293,7 @@ if typing.TYPE_CHECKING:
         PromptAgentApiModelWorkflowOverrideInputToolsItem,
         PromptAgentApiModelWorkflowOverrideInputToolsItem_ApiIntegrationWebhook,
         PromptAgentApiModelWorkflowOverrideInputToolsItem_Client,
+        PromptAgentApiModelWorkflowOverrideInputToolsItem_Code,
         PromptAgentApiModelWorkflowOverrideInputToolsItem_Mcp,
         PromptAgentApiModelWorkflowOverrideInputToolsItem_Smb,
         PromptAgentApiModelWorkflowOverrideInputToolsItem_System,
@@ -1279,6 +1307,7 @@ if typing.TYPE_CHECKING:
         PromptAgentApiModelWorkflowOverrideOutputToolsItem,
         PromptAgentApiModelWorkflowOverrideOutputToolsItem_ApiIntegrationWebhook,
         PromptAgentApiModelWorkflowOverrideOutputToolsItem_Client,
+        PromptAgentApiModelWorkflowOverrideOutputToolsItem_Code,
         PromptAgentApiModelWorkflowOverrideOutputToolsItem_Mcp,
         PromptAgentApiModelWorkflowOverrideOutputToolsItem_Smb,
         PromptAgentApiModelWorkflowOverrideOutputToolsItem_System,
@@ -1352,21 +1381,6 @@ if typing.TYPE_CHECKING:
     from .review_response_model_reject_reasons_item import ReviewResponseModelRejectReasonsItem
     from .review_response_model_review_status import ReviewResponseModelReviewStatus
     from .review_status import ReviewStatus
-    from .root_model_annotated_union_dub_order_item_request_subtitle_order_item_request_field_info_annotation_none_type_required_true_discriminator_kind_input import (
-        RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindInput,
-        RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindInput_Dub,
-        RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindInput_Subtitles,
-    )
-    from .root_model_annotated_union_dub_order_item_request_subtitle_order_item_request_field_info_annotation_none_type_required_true_discriminator_kind_output import (
-        RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindOutput,
-        RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindOutput_Dub,
-        RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindOutput_Subtitles,
-    )
-    from .root_model_annotated_union_paired_languages_response_single_languages_response_field_info_annotation_none_type_required_true_discriminator_kind import (
-        RootModelAnnotatedUnionPairedLanguagesResponseSingleLanguagesResponseFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKind,
-        RootModelAnnotatedUnionPairedLanguagesResponseSingleLanguagesResponseFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKind_Pair,
-        RootModelAnnotatedUnionPairedLanguagesResponseSingleLanguagesResponseFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKind_Single,
-    )
     from .rtt_audio_payload import RttAudioPayload
     from .rtt_end_of_stream_payload import RttEndOfStreamPayload
     from .rtt_error_payload import RttErrorPayload
@@ -1540,6 +1554,8 @@ if typing.TYPE_CHECKING:
     from .test_invocation_summary_response_model import TestInvocationSummaryResponseModel
     from .test_run_metadata import TestRunMetadata
     from .test_run_metadata_test_type import TestRunMetadataTestType
+    from .test_run_result_bucket import TestRunResultBucket
+    from .test_run_result_summary import TestRunResultSummary
     from .test_run_status import TestRunStatus
     from .test_sharing_mode import TestSharingMode
     from .test_tool_result_model import TestToolResultModel
@@ -1587,6 +1603,7 @@ if typing.TYPE_CHECKING:
     from .tool_request_model_tool_config import (
         ToolRequestModelToolConfig,
         ToolRequestModelToolConfig_Client,
+        ToolRequestModelToolConfig_Code,
         ToolRequestModelToolConfig_Mcp,
         ToolRequestModelToolConfig_System,
         ToolRequestModelToolConfig_Webhook,
@@ -1597,6 +1614,7 @@ if typing.TYPE_CHECKING:
     from .tool_response_model_tool_config import (
         ToolResponseModelToolConfig,
         ToolResponseModelToolConfig_Client,
+        ToolResponseModelToolConfig_Code,
         ToolResponseModelToolConfig_Mcp,
         ToolResponseModelToolConfig_System,
         ToolResponseModelToolConfig_Webhook,
@@ -1619,6 +1637,7 @@ if typing.TYPE_CHECKING:
         TransferToAgentToolResultSuccessModelBranchInfo_TrafficSplit,
     )
     from .transfer_to_number_result_error_model import TransferToNumberResultErrorModel
+    from .transfer_to_number_result_exotel_success_model import TransferToNumberResultExotelSuccessModel
     from .transfer_to_number_result_sip_success_model import TransferToNumberResultSipSuccessModel
     from .transfer_to_number_result_twilio_success_model import TransferToNumberResultTwilioSuccessModel
     from .transfer_to_number_tool_config_input import TransferToNumberToolConfigInput
@@ -1710,6 +1729,7 @@ if typing.TYPE_CHECKING:
     from .vad_config_workflow_override import VadConfigWorkflowOverride
     from .validation_error import ValidationError
     from .validation_error_loc_item import ValidationErrorLocItem
+    from .verbosity import Verbosity
     from .verification_attempt_response import VerificationAttemptResponse
     from .verified_voice_language_response_model import VerifiedVoiceLanguageResponseModel
     from .verify_pvc_voice_captcha_response_model import VerifyPvcVoiceCaptchaResponseModel
@@ -2193,9 +2213,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BatchCallWhatsAppParams": ".batch_call_whats_app_params",
     "BatchFailureResponseModel": ".batch_failure_response_model",
     "BearerAuthResponse": ".bearer_auth_response",
+    "BehaviorOverride": ".behavior_override",
     "BillingPeriod": ".billing_period",
     "BranchProtectionStatus": ".branch_protection_status",
     "BreakdownTypes": ".breakdown_types",
+    "BucketingStatus": ".bucketing_status",
     "BuiltInToolsInput": ".built_in_tools_input",
     "BuiltInToolsOutput": ".built_in_tools_output",
     "BuiltInToolsWorkflowOverrideInput": ".built_in_tools_workflow_override_input",
@@ -2319,9 +2341,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationHistoryElevenAssistantCommonModel": ".conversation_history_eleven_assistant_common_model",
     "ConversationHistoryErrorCommonModel": ".conversation_history_error_common_model",
     "ConversationHistoryEvaluationCriteriaResultCommonModel": ".conversation_history_evaluation_criteria_result_common_model",
+    "ConversationHistoryExotelPhoneCallModel": ".conversation_history_exotel_phone_call_model",
     "ConversationHistoryFeedbackCommonModel": ".conversation_history_feedback_common_model",
     "ConversationHistoryMetadataCommonModel": ".conversation_history_metadata_common_model",
     "ConversationHistoryMetadataCommonModelPhoneCall": ".conversation_history_metadata_common_model_phone_call",
+    "ConversationHistoryMetadataCommonModelPhoneCall_Exotel": ".conversation_history_metadata_common_model_phone_call",
     "ConversationHistoryMetadataCommonModelPhoneCall_SipTrunking": ".conversation_history_metadata_common_model_phone_call",
     "ConversationHistoryMetadataCommonModelPhoneCall_Twilio": ".conversation_history_metadata_common_model_phone_call",
     "ConversationHistoryMultivoiceMessageModel": ".conversation_history_multivoice_message_model",
@@ -2355,6 +2379,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToAgentError": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToAgentSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToNumberError": ".conversation_history_transcript_system_tool_result_common_model_input_result",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToNumberExotelSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToNumberSipSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToNumberTwilioSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_VoicemailDetectionSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
@@ -2370,6 +2395,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentError": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberError": ".conversation_history_transcript_system_tool_result_common_model_output_result",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberExotelSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberSipSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberTwilioSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_VoicemailDetectionSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
@@ -2434,6 +2460,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateClientInteractionParams": ".create_client_interaction_params",
     "CreateClientParams": ".create_client_params",
     "CreateCustomHeaderAuthRequest": ".create_custom_header_auth_request",
+    "CreateExotelPhoneNumberRequest": ".create_exotel_phone_number_request",
     "CreateHolidayParams": ".create_holiday_params",
     "CreateLocationParams": ".create_location_params",
     "CreateMtlsAuthRequest": ".create_mtls_auth_request",
@@ -2441,6 +2468,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateOAuth2JwtRequest": ".create_o_auth_2_jwt_request",
     "CreateOAuth2JwtRequestAlgorithm": ".create_o_auth_2_jwt_request_algorithm",
     "CreateOAuth2JwtRequestTokenResponseField": ".create_o_auth_2_jwt_request_token_response_field",
+    "CreateOrderRequest": ".create_order_request",
     "CreateOrderResponse": ".create_order_response",
     "CreatePhoneNumberResponseModel": ".create_phone_number_response_model",
     "CreatePreviouslyGeneratedVoiceRequest": ".create_previously_generated_voice_request",
@@ -2583,6 +2611,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "EvaluationSettingsOutput": ".evaluation_settings_output",
     "EvaluationSuccessResult": ".evaluation_success_result",
     "ExactParameterEvaluationStrategy": ".exact_parameter_evaluation_strategy",
+    "ExotelApiSubdomain": ".exotel_api_subdomain",
+    "ExotelOutboundCallResponse": ".exotel_outbound_call_response",
     "ExportOptions": ".export_options",
     "ExportOptions_Docx": ".export_options",
     "ExportOptions_Html": ".export_options",
@@ -2616,6 +2646,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetAgentLinkResponseModel": ".get_agent_link_response_model",
     "GetAgentResponseModel": ".get_agent_response_model",
     "GetAgentResponseModelPhoneNumbersItem": ".get_agent_response_model_phone_numbers_item",
+    "GetAgentResponseModelPhoneNumbersItem_Exotel": ".get_agent_response_model_phone_numbers_item",
     "GetAgentResponseModelPhoneNumbersItem_SipTrunk": ".get_agent_response_model_phone_numbers_item",
     "GetAgentResponseModelPhoneNumbersItem_Twilio": ".get_agent_response_model_phone_numbers_item",
     "GetAgentTestFolderResponseModel": ".get_agent_test_folder_response_model",
@@ -2677,6 +2708,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetLibraryVoicesResponse": ".get_library_voices_response",
     "GetLiveCountResponse": ".get_live_count_response",
     "GetOrCreateRagIndexRequestModel": ".get_or_create_rag_index_request_model",
+    "GetPhoneNumberExotelResponseModel": ".get_phone_number_exotel_response_model",
     "GetPhoneNumberInboundSipTrunkConfigResponseModel": ".get_phone_number_inbound_sip_trunk_config_response_model",
     "GetPhoneNumberOutboundSipTrunkConfigResponseModel": ".get_phone_number_outbound_sip_trunk_config_response_model",
     "GetPhoneNumberResponse": ".get_phone_number_response",
@@ -2744,6 +2776,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InitializeConnectionMulti": ".initialize_connection_multi",
     "InputAudioChunkPayload": ".input_audio_chunk_payload",
     "IntegrationType": ".integration_type",
+    "InteractionBudget": ".interaction_budget",
     "InvoiceResponse": ".invoice_response",
     "InvoiceResponseModelPaymentIntentStatus": ".invoice_response_model_payment_intent_status",
     "InvoiceResponseModelPaymentIntentStatussesItem": ".invoice_response_model_payment_intent_statusses_item",
@@ -2784,6 +2817,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LanguagePresetOutput": ".language_preset_output",
     "LanguagePresetTranslation": ".language_preset_translation",
     "LanguageResponse": ".language_response",
+    "LanguagesResponse": ".languages_response",
+    "LanguagesResponse_Pair": ".languages_response",
+    "LanguagesResponse_Single": ".languages_response",
     "LeaveMessageParams": ".leave_message_params",
     "LibraryVoiceResponse": ".library_voice_response",
     "LibraryVoiceResponseModelCategory": ".library_voice_response_model_category",
@@ -2898,6 +2934,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MultichannelSpeechToTextResponseModel": ".multichannel_speech_to_text_response_model",
     "MultipartMusicResponse": ".multipart_music_response",
     "MusicExploreSongSourceContext": ".music_explore_song_source_context",
+    "MusicGenerationMode": ".music_generation_mode",
     "MusicPrompt": ".music_prompt",
     "MusicUploadResponse": ".music_upload_response",
     "NoCoachingSettings": ".no_coaching_settings",
@@ -2918,6 +2955,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OrderId": ".order_id",
     "OrderItemInfo": ".order_item_info",
     "OrderItemKind": ".order_item_kind",
+    "OrderItemRequestInput": ".order_item_request_input",
+    "OrderItemRequestInput_Dub": ".order_item_request_input",
+    "OrderItemRequestInput_Subtitles": ".order_item_request_input",
+    "OrderItemRequestOutput": ".order_item_request_output",
+    "OrderItemRequestOutput_Dub": ".order_item_request_output",
+    "OrderItemRequestOutput_Subtitles": ".order_item_request_output",
     "OrderMediaResponse": ".order_media_response",
     "OrderRequestState": ".order_request_state",
     "OrderResponse": ".order_response",
@@ -3024,6 +3067,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PromptAgentApiModelInputToolsItem": ".prompt_agent_api_model_input_tools_item",
     "PromptAgentApiModelInputToolsItem_ApiIntegrationWebhook": ".prompt_agent_api_model_input_tools_item",
     "PromptAgentApiModelInputToolsItem_Client": ".prompt_agent_api_model_input_tools_item",
+    "PromptAgentApiModelInputToolsItem_Code": ".prompt_agent_api_model_input_tools_item",
     "PromptAgentApiModelInputToolsItem_Mcp": ".prompt_agent_api_model_input_tools_item",
     "PromptAgentApiModelInputToolsItem_Smb": ".prompt_agent_api_model_input_tools_item",
     "PromptAgentApiModelInputToolsItem_System": ".prompt_agent_api_model_input_tools_item",
@@ -3036,6 +3080,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PromptAgentApiModelOutputToolsItem": ".prompt_agent_api_model_output_tools_item",
     "PromptAgentApiModelOutputToolsItem_ApiIntegrationWebhook": ".prompt_agent_api_model_output_tools_item",
     "PromptAgentApiModelOutputToolsItem_Client": ".prompt_agent_api_model_output_tools_item",
+    "PromptAgentApiModelOutputToolsItem_Code": ".prompt_agent_api_model_output_tools_item",
     "PromptAgentApiModelOutputToolsItem_Mcp": ".prompt_agent_api_model_output_tools_item",
     "PromptAgentApiModelOutputToolsItem_Smb": ".prompt_agent_api_model_output_tools_item",
     "PromptAgentApiModelOutputToolsItem_System": ".prompt_agent_api_model_output_tools_item",
@@ -3048,6 +3093,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PromptAgentApiModelWorkflowOverrideInputToolsItem": ".prompt_agent_api_model_workflow_override_input_tools_item",
     "PromptAgentApiModelWorkflowOverrideInputToolsItem_ApiIntegrationWebhook": ".prompt_agent_api_model_workflow_override_input_tools_item",
     "PromptAgentApiModelWorkflowOverrideInputToolsItem_Client": ".prompt_agent_api_model_workflow_override_input_tools_item",
+    "PromptAgentApiModelWorkflowOverrideInputToolsItem_Code": ".prompt_agent_api_model_workflow_override_input_tools_item",
     "PromptAgentApiModelWorkflowOverrideInputToolsItem_Mcp": ".prompt_agent_api_model_workflow_override_input_tools_item",
     "PromptAgentApiModelWorkflowOverrideInputToolsItem_Smb": ".prompt_agent_api_model_workflow_override_input_tools_item",
     "PromptAgentApiModelWorkflowOverrideInputToolsItem_System": ".prompt_agent_api_model_workflow_override_input_tools_item",
@@ -3057,6 +3103,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem": ".prompt_agent_api_model_workflow_override_output_tools_item",
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem_ApiIntegrationWebhook": ".prompt_agent_api_model_workflow_override_output_tools_item",
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem_Client": ".prompt_agent_api_model_workflow_override_output_tools_item",
+    "PromptAgentApiModelWorkflowOverrideOutputToolsItem_Code": ".prompt_agent_api_model_workflow_override_output_tools_item",
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem_Mcp": ".prompt_agent_api_model_workflow_override_output_tools_item",
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem_Smb": ".prompt_agent_api_model_workflow_override_output_tools_item",
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem_System": ".prompt_agent_api_model_workflow_override_output_tools_item",
@@ -3125,15 +3172,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ReviewResponseModelRejectReasonsItem": ".review_response_model_reject_reasons_item",
     "ReviewResponseModelReviewStatus": ".review_response_model_review_status",
     "ReviewStatus": ".review_status",
-    "RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindInput": ".root_model_annotated_union_dub_order_item_request_subtitle_order_item_request_field_info_annotation_none_type_required_true_discriminator_kind_input",
-    "RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindInput_Dub": ".root_model_annotated_union_dub_order_item_request_subtitle_order_item_request_field_info_annotation_none_type_required_true_discriminator_kind_input",
-    "RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindInput_Subtitles": ".root_model_annotated_union_dub_order_item_request_subtitle_order_item_request_field_info_annotation_none_type_required_true_discriminator_kind_input",
-    "RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindOutput": ".root_model_annotated_union_dub_order_item_request_subtitle_order_item_request_field_info_annotation_none_type_required_true_discriminator_kind_output",
-    "RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindOutput_Dub": ".root_model_annotated_union_dub_order_item_request_subtitle_order_item_request_field_info_annotation_none_type_required_true_discriminator_kind_output",
-    "RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindOutput_Subtitles": ".root_model_annotated_union_dub_order_item_request_subtitle_order_item_request_field_info_annotation_none_type_required_true_discriminator_kind_output",
-    "RootModelAnnotatedUnionPairedLanguagesResponseSingleLanguagesResponseFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKind": ".root_model_annotated_union_paired_languages_response_single_languages_response_field_info_annotation_none_type_required_true_discriminator_kind",
-    "RootModelAnnotatedUnionPairedLanguagesResponseSingleLanguagesResponseFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKind_Pair": ".root_model_annotated_union_paired_languages_response_single_languages_response_field_info_annotation_none_type_required_true_discriminator_kind",
-    "RootModelAnnotatedUnionPairedLanguagesResponseSingleLanguagesResponseFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKind_Single": ".root_model_annotated_union_paired_languages_response_single_languages_response_field_info_annotation_none_type_required_true_discriminator_kind",
     "RttAudioPayload": ".rtt_audio_payload",
     "RttEndOfStreamPayload": ".rtt_end_of_stream_payload",
     "RttErrorPayload": ".rtt_error_payload",
@@ -3299,6 +3337,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TestInvocationSummaryResponseModel": ".test_invocation_summary_response_model",
     "TestRunMetadata": ".test_run_metadata",
     "TestRunMetadataTestType": ".test_run_metadata_test_type",
+    "TestRunResultBucket": ".test_run_result_bucket",
+    "TestRunResultSummary": ".test_run_result_summary",
     "TestRunStatus": ".test_run_status",
     "TestSharingMode": ".test_sharing_mode",
     "TestToolResultModel": ".test_tool_result_model",
@@ -3341,6 +3381,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ToolRequestModel": ".tool_request_model",
     "ToolRequestModelToolConfig": ".tool_request_model_tool_config",
     "ToolRequestModelToolConfig_Client": ".tool_request_model_tool_config",
+    "ToolRequestModelToolConfig_Code": ".tool_request_model_tool_config",
     "ToolRequestModelToolConfig_Mcp": ".tool_request_model_tool_config",
     "ToolRequestModelToolConfig_System": ".tool_request_model_tool_config",
     "ToolRequestModelToolConfig_Webhook": ".tool_request_model_tool_config",
@@ -3349,6 +3390,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ToolResponseModel": ".tool_response_model",
     "ToolResponseModelToolConfig": ".tool_response_model_tool_config",
     "ToolResponseModelToolConfig_Client": ".tool_response_model_tool_config",
+    "ToolResponseModelToolConfig_Code": ".tool_response_model_tool_config",
     "ToolResponseModelToolConfig_Mcp": ".tool_response_model_tool_config",
     "ToolResponseModelToolConfig_System": ".tool_response_model_tool_config",
     "ToolResponseModelToolConfig_Webhook": ".tool_response_model_tool_config",
@@ -3368,6 +3410,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TransferToAgentToolResultSuccessModelBranchInfo_DefaultingToMain": ".transfer_to_agent_tool_result_success_model_branch_info",
     "TransferToAgentToolResultSuccessModelBranchInfo_TrafficSplit": ".transfer_to_agent_tool_result_success_model_branch_info",
     "TransferToNumberResultErrorModel": ".transfer_to_number_result_error_model",
+    "TransferToNumberResultExotelSuccessModel": ".transfer_to_number_result_exotel_success_model",
     "TransferToNumberResultSipSuccessModel": ".transfer_to_number_result_sip_success_model",
     "TransferToNumberResultTwilioSuccessModel": ".transfer_to_number_result_twilio_success_model",
     "TransferToNumberToolConfigInput": ".transfer_to_number_tool_config_input",
@@ -3455,6 +3498,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "VadConfigWorkflowOverride": ".vad_config_workflow_override",
     "ValidationError": ".validation_error",
     "ValidationErrorLocItem": ".validation_error_loc_item",
+    "Verbosity": ".verbosity",
     "VerificationAttemptResponse": ".verification_attempt_response",
     "VerifiedVoiceLanguageResponseModel": ".verified_voice_language_response_model",
     "VerifyPvcVoiceCaptchaResponseModel": ".verify_pvc_voice_captcha_response_model",
@@ -3918,9 +3962,11 @@ __all__ = [
     "BatchCallWhatsAppParams",
     "BatchFailureResponseModel",
     "BearerAuthResponse",
+    "BehaviorOverride",
     "BillingPeriod",
     "BranchProtectionStatus",
     "BreakdownTypes",
+    "BucketingStatus",
     "BuiltInToolsInput",
     "BuiltInToolsOutput",
     "BuiltInToolsWorkflowOverrideInput",
@@ -4044,9 +4090,11 @@ __all__ = [
     "ConversationHistoryElevenAssistantCommonModel",
     "ConversationHistoryErrorCommonModel",
     "ConversationHistoryEvaluationCriteriaResultCommonModel",
+    "ConversationHistoryExotelPhoneCallModel",
     "ConversationHistoryFeedbackCommonModel",
     "ConversationHistoryMetadataCommonModel",
     "ConversationHistoryMetadataCommonModelPhoneCall",
+    "ConversationHistoryMetadataCommonModelPhoneCall_Exotel",
     "ConversationHistoryMetadataCommonModelPhoneCall_SipTrunking",
     "ConversationHistoryMetadataCommonModelPhoneCall_Twilio",
     "ConversationHistoryMultivoiceMessageModel",
@@ -4080,6 +4128,7 @@ __all__ = [
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToAgentError",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToAgentSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToNumberError",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToNumberExotelSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToNumberSipSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToNumberTwilioSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_VoicemailDetectionSuccess",
@@ -4095,6 +4144,7 @@ __all__ = [
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentError",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberError",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberExotelSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberSipSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberTwilioSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_VoicemailDetectionSuccess",
@@ -4159,6 +4209,7 @@ __all__ = [
     "CreateClientInteractionParams",
     "CreateClientParams",
     "CreateCustomHeaderAuthRequest",
+    "CreateExotelPhoneNumberRequest",
     "CreateHolidayParams",
     "CreateLocationParams",
     "CreateMtlsAuthRequest",
@@ -4166,6 +4217,7 @@ __all__ = [
     "CreateOAuth2JwtRequest",
     "CreateOAuth2JwtRequestAlgorithm",
     "CreateOAuth2JwtRequestTokenResponseField",
+    "CreateOrderRequest",
     "CreateOrderResponse",
     "CreatePhoneNumberResponseModel",
     "CreatePreviouslyGeneratedVoiceRequest",
@@ -4308,6 +4360,8 @@ __all__ = [
     "EvaluationSettingsOutput",
     "EvaluationSuccessResult",
     "ExactParameterEvaluationStrategy",
+    "ExotelApiSubdomain",
+    "ExotelOutboundCallResponse",
     "ExportOptions",
     "ExportOptions_Docx",
     "ExportOptions_Html",
@@ -4341,6 +4395,7 @@ __all__ = [
     "GetAgentLinkResponseModel",
     "GetAgentResponseModel",
     "GetAgentResponseModelPhoneNumbersItem",
+    "GetAgentResponseModelPhoneNumbersItem_Exotel",
     "GetAgentResponseModelPhoneNumbersItem_SipTrunk",
     "GetAgentResponseModelPhoneNumbersItem_Twilio",
     "GetAgentTestFolderResponseModel",
@@ -4402,6 +4457,7 @@ __all__ = [
     "GetLibraryVoicesResponse",
     "GetLiveCountResponse",
     "GetOrCreateRagIndexRequestModel",
+    "GetPhoneNumberExotelResponseModel",
     "GetPhoneNumberInboundSipTrunkConfigResponseModel",
     "GetPhoneNumberOutboundSipTrunkConfigResponseModel",
     "GetPhoneNumberResponse",
@@ -4469,6 +4525,7 @@ __all__ = [
     "InitializeConnectionMulti",
     "InputAudioChunkPayload",
     "IntegrationType",
+    "InteractionBudget",
     "InvoiceResponse",
     "InvoiceResponseModelPaymentIntentStatus",
     "InvoiceResponseModelPaymentIntentStatussesItem",
@@ -4509,6 +4566,9 @@ __all__ = [
     "LanguagePresetOutput",
     "LanguagePresetTranslation",
     "LanguageResponse",
+    "LanguagesResponse",
+    "LanguagesResponse_Pair",
+    "LanguagesResponse_Single",
     "LeaveMessageParams",
     "LibraryVoiceResponse",
     "LibraryVoiceResponseModelCategory",
@@ -4623,6 +4683,7 @@ __all__ = [
     "MultichannelSpeechToTextResponseModel",
     "MultipartMusicResponse",
     "MusicExploreSongSourceContext",
+    "MusicGenerationMode",
     "MusicPrompt",
     "MusicUploadResponse",
     "NoCoachingSettings",
@@ -4643,6 +4704,12 @@ __all__ = [
     "OrderId",
     "OrderItemInfo",
     "OrderItemKind",
+    "OrderItemRequestInput",
+    "OrderItemRequestInput_Dub",
+    "OrderItemRequestInput_Subtitles",
+    "OrderItemRequestOutput",
+    "OrderItemRequestOutput_Dub",
+    "OrderItemRequestOutput_Subtitles",
     "OrderMediaResponse",
     "OrderRequestState",
     "OrderResponse",
@@ -4749,6 +4816,7 @@ __all__ = [
     "PromptAgentApiModelInputToolsItem",
     "PromptAgentApiModelInputToolsItem_ApiIntegrationWebhook",
     "PromptAgentApiModelInputToolsItem_Client",
+    "PromptAgentApiModelInputToolsItem_Code",
     "PromptAgentApiModelInputToolsItem_Mcp",
     "PromptAgentApiModelInputToolsItem_Smb",
     "PromptAgentApiModelInputToolsItem_System",
@@ -4761,6 +4829,7 @@ __all__ = [
     "PromptAgentApiModelOutputToolsItem",
     "PromptAgentApiModelOutputToolsItem_ApiIntegrationWebhook",
     "PromptAgentApiModelOutputToolsItem_Client",
+    "PromptAgentApiModelOutputToolsItem_Code",
     "PromptAgentApiModelOutputToolsItem_Mcp",
     "PromptAgentApiModelOutputToolsItem_Smb",
     "PromptAgentApiModelOutputToolsItem_System",
@@ -4773,6 +4842,7 @@ __all__ = [
     "PromptAgentApiModelWorkflowOverrideInputToolsItem",
     "PromptAgentApiModelWorkflowOverrideInputToolsItem_ApiIntegrationWebhook",
     "PromptAgentApiModelWorkflowOverrideInputToolsItem_Client",
+    "PromptAgentApiModelWorkflowOverrideInputToolsItem_Code",
     "PromptAgentApiModelWorkflowOverrideInputToolsItem_Mcp",
     "PromptAgentApiModelWorkflowOverrideInputToolsItem_Smb",
     "PromptAgentApiModelWorkflowOverrideInputToolsItem_System",
@@ -4782,6 +4852,7 @@ __all__ = [
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem",
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem_ApiIntegrationWebhook",
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem_Client",
+    "PromptAgentApiModelWorkflowOverrideOutputToolsItem_Code",
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem_Mcp",
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem_Smb",
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem_System",
@@ -4850,15 +4921,6 @@ __all__ = [
     "ReviewResponseModelRejectReasonsItem",
     "ReviewResponseModelReviewStatus",
     "ReviewStatus",
-    "RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindInput",
-    "RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindInput_Dub",
-    "RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindInput_Subtitles",
-    "RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindOutput",
-    "RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindOutput_Dub",
-    "RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindOutput_Subtitles",
-    "RootModelAnnotatedUnionPairedLanguagesResponseSingleLanguagesResponseFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKind",
-    "RootModelAnnotatedUnionPairedLanguagesResponseSingleLanguagesResponseFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKind_Pair",
-    "RootModelAnnotatedUnionPairedLanguagesResponseSingleLanguagesResponseFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKind_Single",
     "RttAudioPayload",
     "RttEndOfStreamPayload",
     "RttErrorPayload",
@@ -5024,6 +5086,8 @@ __all__ = [
     "TestInvocationSummaryResponseModel",
     "TestRunMetadata",
     "TestRunMetadataTestType",
+    "TestRunResultBucket",
+    "TestRunResultSummary",
     "TestRunStatus",
     "TestSharingMode",
     "TestToolResultModel",
@@ -5066,6 +5130,7 @@ __all__ = [
     "ToolRequestModel",
     "ToolRequestModelToolConfig",
     "ToolRequestModelToolConfig_Client",
+    "ToolRequestModelToolConfig_Code",
     "ToolRequestModelToolConfig_Mcp",
     "ToolRequestModelToolConfig_System",
     "ToolRequestModelToolConfig_Webhook",
@@ -5074,6 +5139,7 @@ __all__ = [
     "ToolResponseModel",
     "ToolResponseModelToolConfig",
     "ToolResponseModelToolConfig_Client",
+    "ToolResponseModelToolConfig_Code",
     "ToolResponseModelToolConfig_Mcp",
     "ToolResponseModelToolConfig_System",
     "ToolResponseModelToolConfig_Webhook",
@@ -5093,6 +5159,7 @@ __all__ = [
     "TransferToAgentToolResultSuccessModelBranchInfo_DefaultingToMain",
     "TransferToAgentToolResultSuccessModelBranchInfo_TrafficSplit",
     "TransferToNumberResultErrorModel",
+    "TransferToNumberResultExotelSuccessModel",
     "TransferToNumberResultSipSuccessModel",
     "TransferToNumberResultTwilioSuccessModel",
     "TransferToNumberToolConfigInput",
@@ -5180,6 +5247,7 @@ __all__ = [
     "VadConfigWorkflowOverride",
     "ValidationError",
     "ValidationErrorLocItem",
+    "Verbosity",
     "VerificationAttemptResponse",
     "VerifiedVoiceLanguageResponseModel",
     "VerifyPvcVoiceCaptchaResponseModel",

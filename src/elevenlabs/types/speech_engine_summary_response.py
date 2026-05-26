@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .resource_access_info import ResourceAccessInfo
 
 
 class SpeechEngineSummaryResponse(UncheckedBaseModel):
@@ -26,6 +27,11 @@ class SpeechEngineSummaryResponse(UncheckedBaseModel):
     tags: typing.List[str] = pydantic.Field()
     """
     Arbitrary tags for categorization and filtering
+    """
+
+    access_info: ResourceAccessInfo = pydantic.Field()
+    """
+    The access information of the speech engine for the user
     """
 
     if IS_PYDANTIC_V2:

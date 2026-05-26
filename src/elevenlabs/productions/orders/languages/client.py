@@ -4,10 +4,8 @@ import typing
 
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.request_options import RequestOptions
+from ....types.languages_response import LanguagesResponse
 from ....types.order_item_kind import OrderItemKind
-from ....types.root_model_annotated_union_paired_languages_response_single_languages_response_field_info_annotation_none_type_required_true_discriminator_kind import (
-    RootModelAnnotatedUnionPairedLanguagesResponseSingleLanguagesResponseFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKind,
-)
 from .raw_client import AsyncRawLanguagesClient, RawLanguagesClient
 
 
@@ -28,7 +26,7 @@ class LanguagesClient:
 
     def list(
         self, order_item_kind: OrderItemKind, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> RootModelAnnotatedUnionPairedLanguagesResponseSingleLanguagesResponseFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKind:
+    ) -> LanguagesResponse:
         """
         Returns the available languages for a given order item kind.
 
@@ -42,7 +40,7 @@ class LanguagesClient:
 
         Returns
         -------
-        RootModelAnnotatedUnionPairedLanguagesResponseSingleLanguagesResponseFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKind
+        LanguagesResponse
             Successful Response
 
         Examples
@@ -77,7 +75,7 @@ class AsyncLanguagesClient:
 
     async def list(
         self, order_item_kind: OrderItemKind, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> RootModelAnnotatedUnionPairedLanguagesResponseSingleLanguagesResponseFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKind:
+    ) -> LanguagesResponse:
         """
         Returns the available languages for a given order item kind.
 
@@ -91,7 +89,7 @@ class AsyncLanguagesClient:
 
         Returns
         -------
-        RootModelAnnotatedUnionPairedLanguagesResponseSingleLanguagesResponseFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKind
+        LanguagesResponse
             Successful Response
 
         Examples

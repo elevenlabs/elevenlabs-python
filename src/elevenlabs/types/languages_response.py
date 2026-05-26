@@ -12,9 +12,7 @@ from .language_info import LanguageInfo
 from .language_pair_info import LanguagePairInfo
 
 
-class RootModelAnnotatedUnionPairedLanguagesResponseSingleLanguagesResponseFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKind_Pair(
-    UncheckedBaseModel
-):
+class LanguagesResponse_Pair(UncheckedBaseModel):
     kind: typing.Literal["pair"] = "pair"
     language_pairs: typing.List[LanguagePairInfo]
 
@@ -28,9 +26,7 @@ class RootModelAnnotatedUnionPairedLanguagesResponseSingleLanguagesResponseField
             extra = pydantic.Extra.allow
 
 
-class RootModelAnnotatedUnionPairedLanguagesResponseSingleLanguagesResponseFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKind_Single(
-    UncheckedBaseModel
-):
+class LanguagesResponse_Single(UncheckedBaseModel):
     kind: typing.Literal["single"] = "single"
     languages: typing.List[LanguageInfo]
 
@@ -44,10 +40,6 @@ class RootModelAnnotatedUnionPairedLanguagesResponseSingleLanguagesResponseField
             extra = pydantic.Extra.allow
 
 
-RootModelAnnotatedUnionPairedLanguagesResponseSingleLanguagesResponseFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKind = typing_extensions.Annotated[
-    typing.Union[
-        RootModelAnnotatedUnionPairedLanguagesResponseSingleLanguagesResponseFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKind_Pair,
-        RootModelAnnotatedUnionPairedLanguagesResponseSingleLanguagesResponseFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKind_Single,
-    ],
-    UnionMetadata(discriminant="kind"),
+LanguagesResponse = typing_extensions.Annotated[
+    typing.Union[LanguagesResponse_Pair, LanguagesResponse_Single], UnionMetadata(discriminant="kind")
 ]

@@ -37,6 +37,11 @@ class OrderResponse(UncheckedBaseModel):
     The total price for all items in USD. Excluded from response until quotes are available.
     """
 
+    sandbox: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether this is a sandbox order that auto-progresses without producer intervention.
+    """
+
     created_at: dt.datetime = pydantic.Field()
     """
     The timestamp when the order was created.

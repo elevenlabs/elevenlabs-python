@@ -13,6 +13,7 @@ from ...core.request_options import RequestOptions
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
+from ...types.create_order_request import CreateOrderRequest
 from ...types.create_order_response import CreateOrderResponse
 from ...types.list_orders_response import ListOrdersResponse
 from ...types.order_id import OrderId
@@ -106,12 +107,19 @@ class RawOrdersClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def create(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[CreateOrderResponse]:
+    def create(
+        self,
+        *,
+        request: typing.Optional[CreateOrderRequest] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[CreateOrderResponse]:
         """
         Creates a new Productions order in the workspace. The order starts in the open state and can be configured with items before submission.
 
         Parameters
         ----------
+        request : typing.Optional[CreateOrderRequest]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -123,7 +131,14 @@ class RawOrdersClient:
         _response = self._client_wrapper.httpx_client.request(
             "v1/productions/orders",
             method="POST",
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=CreateOrderRequest, direction="write"
+            ),
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -398,13 +413,18 @@ class AsyncRawOrdersClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
-        self, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        request: typing.Optional[CreateOrderRequest] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[CreateOrderResponse]:
         """
         Creates a new Productions order in the workspace. The order starts in the open state and can be configured with items before submission.
 
         Parameters
         ----------
+        request : typing.Optional[CreateOrderRequest]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -416,7 +436,14 @@ class AsyncRawOrdersClient:
         _response = await self._client_wrapper.httpx_client.request(
             "v1/productions/orders",
             method="POST",
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=CreateOrderRequest, direction="write"
+            ),
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:

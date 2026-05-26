@@ -7,6 +7,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .behavior_override import BehaviorOverride
 from .dynamic_variables_config_workflow_override_input import DynamicVariablesConfigWorkflowOverrideInput
 from .prompt_agent_api_model_workflow_override_input import PromptAgentApiModelWorkflowOverrideInput
 
@@ -40,6 +41,13 @@ class AgentConfigApiModelWorkflowOverrideInput(UncheckedBaseModel):
     max_conversation_duration_message: typing.Optional[str] = pydantic.Field(default=None)
     """
     If non-empty, the message the agent will send when max conversation duration is reached.
+    """
+
+    text_behavior_overrides: typing.Optional[typing.Dict[str, typing.Optional[BehaviorOverride]]] = pydantic.Field(
+        default=None
+    )
+    """
+    Per-channel response behavior overrides for text conversations. Built-in channel defaults apply when unset.
     """
 
     prompt: typing.Optional[PromptAgentApiModelWorkflowOverrideInput] = pydantic.Field(default=None)
