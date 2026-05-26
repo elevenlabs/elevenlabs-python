@@ -6,10 +6,8 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .item_id import ItemId
+from .order_item_request_output import OrderItemRequestOutput
 from .quote_info import QuoteInfo
-from .root_model_annotated_union_dub_order_item_request_subtitle_order_item_request_field_info_annotation_none_type_required_true_discriminator_kind_output import (
-    RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindOutput,
-)
 
 
 class OrderItemInfo(UncheckedBaseModel):
@@ -18,7 +16,7 @@ class OrderItemInfo(UncheckedBaseModel):
     The ID of the order item.
     """
 
-    item: RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindOutput = pydantic.Field()
+    item: OrderItemRequestOutput = pydantic.Field()
     """
     The item configuration details.
     """

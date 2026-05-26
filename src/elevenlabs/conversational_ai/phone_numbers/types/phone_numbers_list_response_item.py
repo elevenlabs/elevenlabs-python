@@ -37,6 +37,25 @@ class PhoneNumbersListResponseItem_Twilio(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class PhoneNumbersListResponseItem_Exotel(UncheckedBaseModel):
+    provider: typing.Literal["exotel"] = "exotel"
+    phone_number: str
+    label: str
+    supports_inbound: typing.Optional[bool] = None
+    supports_outbound: typing.Optional[bool] = None
+    phone_number_id: str
+    assigned_agent: typing.Optional[PhoneNumberAgentInfo] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class PhoneNumbersListResponseItem_SipTrunk(UncheckedBaseModel):
     provider: typing.Literal["sip_trunk"] = "sip_trunk"
     phone_number: str
@@ -62,6 +81,8 @@ class PhoneNumbersListResponseItem_SipTrunk(UncheckedBaseModel):
 
 
 PhoneNumbersListResponseItem = typing_extensions.Annotated[
-    typing.Union[PhoneNumbersListResponseItem_Twilio, PhoneNumbersListResponseItem_SipTrunk],
+    typing.Union[
+        PhoneNumbersListResponseItem_Twilio, PhoneNumbersListResponseItem_Exotel, PhoneNumbersListResponseItem_SipTrunk
+    ],
     UnionMetadata(discriminant="provider"),
 ]

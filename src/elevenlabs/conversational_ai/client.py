@@ -19,6 +19,7 @@ if typing.TYPE_CHECKING:
     from .batch_calls.client import AsyncBatchCallsClient, BatchCallsClient
     from .conversations.client import AsyncConversationsClient, ConversationsClient
     from .dashboard.client import AsyncDashboardClient, DashboardClient
+    from .exotel.client import AsyncExotelClient, ExotelClient
     from .knowledge_base.client import AsyncKnowledgeBaseClient, KnowledgeBaseClient
     from .llm.client import AsyncLlmClient, LlmClient
     from .llm_usage.client import AsyncLlmUsageClient, LlmUsageClient
@@ -43,6 +44,7 @@ class ConversationalAiClient:
         self._client_wrapper = client_wrapper
         self._conversations: typing.Optional[ConversationsClient] = None
         self._twilio: typing.Optional[TwilioClient] = None
+        self._exotel: typing.Optional[ExotelClient] = None
         self._whatsapp: typing.Optional[WhatsappClient] = None
         self._agents: typing.Optional[AgentsClient] = None
         self._tests: typing.Optional[TestsClient] = None
@@ -238,6 +240,14 @@ class ConversationalAiClient:
         return self._twilio
 
     @property
+    def exotel(self):
+        if self._exotel is None:
+            from .exotel.client import ExotelClient  # noqa: E402
+
+            self._exotel = ExotelClient(client_wrapper=self._client_wrapper)
+        return self._exotel
+
+    @property
     def whatsapp(self):
         if self._whatsapp is None:
             from .whatsapp.client import WhatsappClient  # noqa: E402
@@ -380,6 +390,7 @@ class AsyncConversationalAiClient:
         self._client_wrapper = client_wrapper
         self._conversations: typing.Optional[AsyncConversationsClient] = None
         self._twilio: typing.Optional[AsyncTwilioClient] = None
+        self._exotel: typing.Optional[AsyncExotelClient] = None
         self._whatsapp: typing.Optional[AsyncWhatsappClient] = None
         self._agents: typing.Optional[AsyncAgentsClient] = None
         self._tests: typing.Optional[AsyncTestsClient] = None
@@ -605,6 +616,14 @@ class AsyncConversationalAiClient:
 
             self._twilio = AsyncTwilioClient(client_wrapper=self._client_wrapper)
         return self._twilio
+
+    @property
+    def exotel(self):
+        if self._exotel is None:
+            from .exotel.client import AsyncExotelClient  # noqa: E402
+
+            self._exotel = AsyncExotelClient(client_wrapper=self._client_wrapper)
+        return self._exotel
 
     @property
     def whatsapp(self):

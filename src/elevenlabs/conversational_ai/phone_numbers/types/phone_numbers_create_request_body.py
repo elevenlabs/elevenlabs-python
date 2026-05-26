@@ -8,6 +8,7 @@ import pydantic
 import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
+from ....types.exotel_api_subdomain import ExotelApiSubdomain
 from ....types.inbound_sip_trunk_config_request_model import InboundSipTrunkConfigRequestModel
 from ....types.outbound_sip_trunk_config_request_model import OutboundSipTrunkConfigRequestModel
 from ....types.region_config_request import RegionConfigRequest
@@ -26,6 +27,33 @@ class PhoneNumbersCreateRequestBody_Twilio(UncheckedBaseModel):
     sid: str
     token: str
     region_config: typing.Optional[RegionConfigRequest] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class PhoneNumbersCreateRequestBody_Exotel(UncheckedBaseModel):
+    """
+    Create Phone Request Information
+    """
+
+    provider: typing.Literal["exotel"] = "exotel"
+    phone_number: str
+    label: str
+    supports_inbound: typing.Optional[bool] = None
+    supports_outbound: typing.Optional[bool] = None
+    account_sid: str
+    api_key: str
+    api_token: str
+    api_subdomain: ExotelApiSubdomain
+    app_id: str
+    applet_url: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -61,6 +89,10 @@ class PhoneNumbersCreateRequestBody_SipTrunk(UncheckedBaseModel):
 
 
 PhoneNumbersCreateRequestBody = typing_extensions.Annotated[
-    typing.Union[PhoneNumbersCreateRequestBody_Twilio, PhoneNumbersCreateRequestBody_SipTrunk],
+    typing.Union[
+        PhoneNumbersCreateRequestBody_Twilio,
+        PhoneNumbersCreateRequestBody_Exotel,
+        PhoneNumbersCreateRequestBody_SipTrunk,
+    ],
     UnionMetadata(discriminant="provider"),
 ]

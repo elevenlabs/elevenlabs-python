@@ -8,6 +8,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .conversation_history_transcript_common_model_output import ConversationHistoryTranscriptCommonModelOutput
+from .conversation_initiation_source import ConversationInitiationSource
 from .dynamic_variable_value_type_output import DynamicVariableValueTypeOutput
 from .llm import Llm
 from .simulation_tool_mock_behavior_config import SimulationToolMockBehaviorConfig
@@ -28,6 +29,11 @@ class GetSimulationTestResponseModel(UncheckedBaseModel):
     """
 
     chat_history: typing.Optional[typing.List[ConversationHistoryTranscriptCommonModelOutput]] = None
+    conversation_initiation_source: typing.Optional[ConversationInitiationSource] = pydantic.Field(default=None)
+    """
+    Simulate the test as if the conversation originated from this channel.
+    """
+
     success_condition: typing.Optional[str] = pydantic.Field(default=None)
     """
     A prompt that evaluates whether the agent's response is successful. Should return True or False.

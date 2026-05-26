@@ -7,6 +7,7 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...types.create_order_request import CreateOrderRequest
 from ...types.create_order_response import CreateOrderResponse
 from ...types.list_orders_response import ListOrdersResponse
 from ...types.order_id import OrderId
@@ -115,12 +116,19 @@ class OrdersClient:
         )
         return _response.data
 
-    def create(self, *, request_options: typing.Optional[RequestOptions] = None) -> CreateOrderResponse:
+    def create(
+        self,
+        *,
+        request: typing.Optional[CreateOrderRequest] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> CreateOrderResponse:
         """
         Creates a new Productions order in the workspace. The order starts in the open state and can be configured with items before submission.
 
         Parameters
         ----------
+        request : typing.Optional[CreateOrderRequest]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -131,14 +139,18 @@ class OrdersClient:
 
         Examples
         --------
-        from elevenlabs import ElevenLabs
+        from elevenlabs import CreateOrderRequest, ElevenLabs
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.productions.orders.create()
+        client.productions.orders.create(
+            request=CreateOrderRequest(
+                sandbox=False,
+            ),
+        )
         """
-        _response = self._raw_client.create(request_options=request_options)
+        _response = self._raw_client.create(request=request, request_options=request_options)
         return _response.data
 
     def get(self, order_id: OrderId, *, request_options: typing.Optional[RequestOptions] = None) -> OrderResponse:
@@ -376,12 +388,19 @@ class AsyncOrdersClient:
         )
         return _response.data
 
-    async def create(self, *, request_options: typing.Optional[RequestOptions] = None) -> CreateOrderResponse:
+    async def create(
+        self,
+        *,
+        request: typing.Optional[CreateOrderRequest] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> CreateOrderResponse:
         """
         Creates a new Productions order in the workspace. The order starts in the open state and can be configured with items before submission.
 
         Parameters
         ----------
+        request : typing.Optional[CreateOrderRequest]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -394,7 +413,7 @@ class AsyncOrdersClient:
         --------
         import asyncio
 
-        from elevenlabs import AsyncElevenLabs
+        from elevenlabs import AsyncElevenLabs, CreateOrderRequest
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
@@ -402,12 +421,16 @@ class AsyncOrdersClient:
 
 
         async def main() -> None:
-            await client.productions.orders.create()
+            await client.productions.orders.create(
+                request=CreateOrderRequest(
+                    sandbox=False,
+                ),
+            )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create(request_options=request_options)
+        _response = await self._raw_client.create(request=request, request_options=request_options)
         return _response.data
 
     async def get(self, order_id: OrderId, *, request_options: typing.Optional[RequestOptions] = None) -> OrderResponse:

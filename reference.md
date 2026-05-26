@@ -9358,6 +9358,111 @@ client.conversational_ai.twilio.register_call(
 </dl>
 </details>
 
+## ConversationalAi Exotel
+<details><summary><code>client.conversational_ai.exotel.<a href="src/elevenlabs/conversational_ai/exotel/client.py">outbound_call</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Handle an outbound call via Exotel Connect API
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.exotel.outbound_call(
+    agent_id="agent_id",
+    agent_phone_number_id="agent_phone_number_id",
+    to_number="to_number",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agent_phone_number_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**to_number:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**conversation_initiation_client_data:** `typing.Optional[ConversationInitiationClientDataRequestInput]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**telephony_call_config:** `typing.Optional[TelephonyCallConfig]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ConversationalAi Whatsapp
 <details><summary><code>client.conversational_ai.whatsapp.<a href="src/elevenlabs/conversational_ai/whatsapp/client.py">outbound_call</a>(...)</code></summary>
 <dl>
@@ -9669,7 +9774,7 @@ client.conversational_ai.agents.create(
 <dl>
 <dd>
 
-**enable_versioning:** `typing.Optional[bool]` — Enable versioning for the agent
+**enable_versioning:** `typing.Optional[bool]` — Deprecated: all agents are versioned. This parameter is ignored.
     
 </dd>
 </dl>
@@ -9939,7 +10044,7 @@ client.conversational_ai.agents.update(
 <dl>
 <dd>
 
-**enable_versioning_if_not_enabled:** `typing.Optional[bool]` — Enable versioning for the agent, if not already enabled
+**enable_versioning_if_not_enabled:** `typing.Optional[bool]` — Deprecated: all agents are versioned. This parameter is ignored.
     
 </dd>
 </dl>
@@ -10516,6 +10621,14 @@ client.conversational_ai.agents.run_tests(
 <dd>
 
 **branch_id:** `typing.Optional[str]` — ID of the branch to run the tests on. If not provided, the tests will be run on the agent default configuration.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**repeat_count:** `typing.Optional[int]` — Number of times to run each test. When greater than 1, results are grouped and summarized.
     
 </dd>
 </dl>
@@ -11319,7 +11432,7 @@ client.conversational_ai.phone_numbers.list()
 <dl>
 <dd>
 
-Import Phone Number from provider configuration (Twilio or SIP trunk)
+Import Phone Number from provider configuration (Twilio, Exotel, or SIP trunk)
 </dd>
 </dl>
 </dd>
@@ -22509,7 +22622,7 @@ client.productions.orders.list(
 </dl>
 </details>
 
-<details><summary><code>client.productions.orders.<a href="src/elevenlabs/productions/orders/client.py">create</a>()</code></summary>
+<details><summary><code>client.productions.orders.<a href="src/elevenlabs/productions/orders/client.py">create</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -22536,12 +22649,16 @@ Creates a new Productions order in the workspace. The order starts in the open s
 <dd>
 
 ```python
-from elevenlabs import ElevenLabs
+from elevenlabs import CreateOrderRequest, ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.productions.orders.create()
+client.productions.orders.create(
+    request=CreateOrderRequest(
+        sandbox=False,
+    ),
+)
 
 ```
 </dd>
@@ -22553,6 +22670,14 @@ client.productions.orders.create()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**request:** `typing.Optional[CreateOrderRequest]` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -23017,7 +23142,7 @@ Adds or updates an order item on an open order. Returns the item ID and the quot
 ```python
 from elevenlabs import (
     ElevenLabs,
-    RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindInput_Dub,
+    OrderItemRequestInput_Dub,
     UpsertOrderItemRequest,
 )
 
@@ -23027,7 +23152,7 @@ client = ElevenLabs(
 client.productions.orders.items.upsert(
     order_id="order_id",
     request=UpsertOrderItemRequest(
-        item=RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindInput_Dub(
+        item=OrderItemRequestInput_Dub(
             media_id="prodmedia_01jgatk6h0fwxrtbjade61yqhx",
             source_language="en",
             destination_languages=["hi", "fr-FR", "de"],

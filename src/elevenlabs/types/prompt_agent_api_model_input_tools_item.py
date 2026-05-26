@@ -84,6 +84,19 @@ class PromptAgentApiModelInputToolsItem_Client(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class PromptAgentApiModelInputToolsItem_Code(UncheckedBaseModel):
+    value: typing.Any
+    type: typing.Literal["code"] = "code"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+
+
 class PromptAgentApiModelInputToolsItem_Mcp(UncheckedBaseModel):
     value: typing.Any
     type: typing.Literal["mcp"] = "mcp"
@@ -174,6 +187,7 @@ PromptAgentApiModelInputToolsItem = typing_extensions.Annotated[
     typing.Union[
         PromptAgentApiModelInputToolsItem_ApiIntegrationWebhook,
         PromptAgentApiModelInputToolsItem_Client,
+        PromptAgentApiModelInputToolsItem_Code,
         PromptAgentApiModelInputToolsItem_Mcp,
         PromptAgentApiModelInputToolsItem_Smb,
         PromptAgentApiModelInputToolsItem_System,

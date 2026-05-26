@@ -14,6 +14,11 @@ class CreateOrderResponse(UncheckedBaseModel):
     The ID of the newly created order.
     """
 
+    sandbox: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether this is a sandbox order.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

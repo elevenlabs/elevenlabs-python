@@ -11,6 +11,7 @@ from ....core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from ....types.agent_failure_response_example import AgentFailureResponseExample
 from ....types.agent_successful_response_example import AgentSuccessfulResponseExample
 from ....types.conversation_history_transcript_common_model_input import ConversationHistoryTranscriptCommonModelInput
+from ....types.conversation_initiation_source import ConversationInitiationSource
 from ....types.dynamic_variable_value_type_input import DynamicVariableValueTypeInput
 from ....types.llm import Llm
 from ....types.simulation_tool_mock_behavior_config import SimulationToolMockBehaviorConfig
@@ -27,6 +28,7 @@ class TestsUpdateRequestBody_Llm(UncheckedBaseModel):
     from_conversation_metadata: typing.Optional[TestFromConversationMetadataInput] = None
     dynamic_variables: typing.Optional[typing.Dict[str, typing.Optional[DynamicVariableValueTypeInput]]] = None
     chat_history: typing.Optional[typing.List[ConversationHistoryTranscriptCommonModelInput]] = None
+    conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None
     success_condition: typing.Optional[str] = None
     success_examples: typing.Optional[typing.List[AgentSuccessfulResponseExample]] = None
     failure_examples: typing.Optional[typing.List[AgentFailureResponseExample]] = None
@@ -52,6 +54,7 @@ class TestsUpdateRequestBody_Tool(UncheckedBaseModel):
     from_conversation_metadata: typing.Optional[TestFromConversationMetadataInput] = None
     dynamic_variables: typing.Optional[typing.Dict[str, typing.Optional[DynamicVariableValueTypeInput]]] = None
     chat_history: typing.Optional[typing.List[ConversationHistoryTranscriptCommonModelInput]] = None
+    conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None
     tool_call_parameters: typing.Optional[UnitTestToolCallEvaluationModelInput] = None
     check_any_tool_matches: typing.Optional[bool] = None
     name: str
@@ -76,6 +79,7 @@ class TestsUpdateRequestBody_Simulation(UncheckedBaseModel):
     from_conversation_metadata: typing.Optional[TestFromConversationMetadataInput] = None
     dynamic_variables: typing.Optional[typing.Dict[str, typing.Optional[DynamicVariableValueTypeInput]]] = None
     chat_history: typing.Optional[typing.List[ConversationHistoryTranscriptCommonModelInput]] = None
+    conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None
     success_condition: typing.Optional[str] = None
     simulation_scenario: typing.Optional[str] = None
     simulation_max_turns: typing.Optional[int] = None

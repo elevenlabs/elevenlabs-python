@@ -12,9 +12,7 @@ from .cue_options_request import CueOptionsRequest
 from .media_id import MediaId
 
 
-class RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindOutput_Dub(
-    UncheckedBaseModel
-):
+class OrderItemRequestInput_Dub(UncheckedBaseModel):
     kind: typing.Literal["dub"] = "dub"
     media_id: MediaId
     source_language: str
@@ -34,9 +32,7 @@ class RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInf
             extra = pydantic.Extra.allow
 
 
-class RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindOutput_Subtitles(
-    UncheckedBaseModel
-):
+class OrderItemRequestInput_Subtitles(UncheckedBaseModel):
     kind: typing.Literal["subtitles"] = "subtitles"
     media_ids: typing.List[MediaId]
     source_language: str
@@ -55,10 +51,6 @@ class RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInf
             extra = pydantic.Extra.allow
 
 
-RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindOutput = typing_extensions.Annotated[
-    typing.Union[
-        RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindOutput_Dub,
-        RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindOutput_Subtitles,
-    ],
-    UnionMetadata(discriminant="kind"),
+OrderItemRequestInput = typing_extensions.Annotated[
+    typing.Union[OrderItemRequestInput_Dub, OrderItemRequestInput_Subtitles], UnionMetadata(discriminant="kind")
 ]

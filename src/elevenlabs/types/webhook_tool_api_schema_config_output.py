@@ -60,6 +60,11 @@ class WebhookToolApiSchemaConfigOutput(UncheckedBaseModel):
     Content type for the request body. Only applies to POST/PUT/PATCH requests.
     """
 
+    auth_resolved_params: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    URL placeholders resolved from the auth connection (e.g. secrets injected via UrlSecretAuthConnection) rather than from path_params_schema.
+    """
+
     auth_connection: typing.Optional[WebhookToolApiSchemaConfigOutputAuthConnection] = pydantic.Field(default=None)
     """
     Optional auth connection to use for authentication with this webhook

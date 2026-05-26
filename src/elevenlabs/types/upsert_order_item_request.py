@@ -6,13 +6,11 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .item_id import ItemId
-from .root_model_annotated_union_dub_order_item_request_subtitle_order_item_request_field_info_annotation_none_type_required_true_discriminator_kind_input import (
-    RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindInput,
-)
+from .order_item_request_input import OrderItemRequestInput
 
 
 class UpsertOrderItemRequest(UncheckedBaseModel):
-    item: RootModelAnnotatedUnionDubOrderItemRequestSubtitleOrderItemRequestFieldInfoAnnotationNoneTypeRequiredTrueDiscriminatorKindInput = pydantic.Field()
+    item: OrderItemRequestInput = pydantic.Field()
     """
     The order item to add or update.
     """
