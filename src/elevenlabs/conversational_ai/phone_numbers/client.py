@@ -66,7 +66,7 @@ class PhoneNumbersClient:
         self, *, request: PhoneNumbersCreateRequestBody, request_options: typing.Optional[RequestOptions] = None
     ) -> CreatePhoneNumberResponseModel:
         """
-        Import Phone Number from provider configuration (Twilio or SIP trunk)
+        Import Phone Number from provider configuration (Twilio, Exotel, or SIP trunk)
 
         Parameters
         ----------
@@ -342,7 +342,7 @@ class AsyncPhoneNumbersClient:
         self, *, request: PhoneNumbersCreateRequestBody, request_options: typing.Optional[RequestOptions] = None
     ) -> CreatePhoneNumberResponseModel:
         """
-        Import Phone Number from provider configuration (Twilio or SIP trunk)
+        Import Phone Number from provider configuration (Twilio, Exotel, or SIP trunk)
 
         Parameters
         ----------

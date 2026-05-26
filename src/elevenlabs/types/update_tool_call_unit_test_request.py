@@ -8,6 +8,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .conversation_history_transcript_common_model_input import ConversationHistoryTranscriptCommonModelInput
+from .conversation_initiation_source import ConversationInitiationSource
 from .dynamic_variable_value_type_input import DynamicVariableValueTypeInput
 from .test_from_conversation_metadata_input import TestFromConversationMetadataInput
 from .unit_test_tool_call_evaluation_model_input import UnitTestToolCallEvaluationModelInput
@@ -27,6 +28,11 @@ class UpdateToolCallUnitTestRequest(UncheckedBaseModel):
     """
 
     chat_history: typing.Optional[typing.List[ConversationHistoryTranscriptCommonModelInput]] = None
+    conversation_initiation_source: typing.Optional[ConversationInitiationSource] = pydantic.Field(default=None)
+    """
+    Simulate the test as if the conversation originated from this channel.
+    """
+
     tool_call_parameters: typing.Optional[UnitTestToolCallEvaluationModelInput] = pydantic.Field(default=None)
     """
     How to evaluate the agent's tool call (if any). If empty, the tool call is not evaluated.

@@ -11,7 +11,9 @@ from .asr_conversational_config import AsrConversationalConfig
 from .base_turn_config import BaseTurnConfig
 from .conversation_config_output import ConversationConfigOutput
 from .privacy_config_output import PrivacyConfigOutput
+from .resource_access_info import ResourceAccessInfo
 from .speech_engine_config import SpeechEngineConfig
+from .speech_engine_conversation_initiation_client_data_config import SpeechEngineConversationInitiationClientDataConfig
 from .tts_conversational_config_output import TtsConversationalConfigOutput
 
 
@@ -71,9 +73,19 @@ class SpeechEngineResponse(UncheckedBaseModel):
     Arbitrary tags for categorization and filtering
     """
 
+    overrides: SpeechEngineConversationInitiationClientDataConfig = pydantic.Field()
+    """
+    Override settings the client may set during conversation initiation
+    """
+
     metadata: AgentMetadataDbModel = pydantic.Field()
     """
     Creation and update timestamps with source information
+    """
+
+    access_info: typing.Optional[ResourceAccessInfo] = pydantic.Field(default=None)
+    """
+    The access information of the speech engine for the user
     """
 
     if IS_PYDANTIC_V2:

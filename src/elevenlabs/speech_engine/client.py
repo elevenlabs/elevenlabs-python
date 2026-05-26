@@ -9,11 +9,11 @@ from ..types.agent_sort_by import AgentSortBy
 from ..types.asr_conversational_config import AsrConversationalConfig
 from ..types.base_turn_config import BaseTurnConfig
 from ..types.conversation_config_input import ConversationConfigInput
-from ..types.create_speech_engine_response import CreateSpeechEngineResponse
 from ..types.list_speech_engines_response import ListSpeechEnginesResponse
 from ..types.privacy_config_input import PrivacyConfigInput
 from ..types.sort_direction import SortDirection
 from ..types.speech_engine_config import SpeechEngineConfig
+from ..types.speech_engine_conversation_initiation_client_data_config import SpeechEngineConversationInitiationClientDataConfig
 from ..types.speech_engine_response import SpeechEngineResponse
 from ..types.tts_conversational_config_input import TtsConversationalConfigInput
 from .raw_client import AsyncRawSpeechEngineClient, RawSpeechEngineClient
@@ -113,8 +113,9 @@ class SpeechEngineClient:
         call_limits: typing.Optional[AgentCallLimits] = OMIT,
         language: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
+        overrides: typing.Optional[SpeechEngineConversationInitiationClientDataConfig] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> CreateSpeechEngineResponse:
+    ) -> SpeechEngineResponse:
         """
         Create a new Speech Engine resource
 
@@ -155,7 +156,7 @@ class SpeechEngineClient:
 
         Returns
         -------
-        CreateSpeechEngineResponse
+        SpeechEngineResponse
             Successful Response
 
         Examples
@@ -182,6 +183,7 @@ class SpeechEngineClient:
             call_limits=call_limits,
             language=language,
             tags=tags,
+            overrides=overrides,
             request_options=request_options,
         )
         return _response.data
@@ -428,8 +430,9 @@ class AsyncSpeechEngineClient:
         call_limits: typing.Optional[AgentCallLimits] = OMIT,
         language: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
+        overrides: typing.Optional[SpeechEngineConversationInitiationClientDataConfig] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> CreateSpeechEngineResponse:
+    ) -> SpeechEngineResponse:
         """
         Create a new Speech Engine resource
 
@@ -470,7 +473,7 @@ class AsyncSpeechEngineClient:
 
         Returns
         -------
-        CreateSpeechEngineResponse
+        SpeechEngineResponse
             Successful Response
 
         Examples
@@ -505,6 +508,7 @@ class AsyncSpeechEngineClient:
             call_limits=call_limits,
             language=language,
             tags=tags,
+            overrides=overrides,
             request_options=request_options,
         )
         return _response.data

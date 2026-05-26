@@ -10,6 +10,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_failure_response_example import AgentFailureResponseExample
 from .agent_successful_response_example import AgentSuccessfulResponseExample
 from .conversation_history_transcript_common_model_input import ConversationHistoryTranscriptCommonModelInput
+from .conversation_initiation_source import ConversationInitiationSource
 from .dynamic_variable_value_type_input import DynamicVariableValueTypeInput
 from .test_from_conversation_metadata_input import TestFromConversationMetadataInput
 
@@ -28,6 +29,11 @@ class UpdateResponseUnitTestRequest(UncheckedBaseModel):
     """
 
     chat_history: typing.Optional[typing.List[ConversationHistoryTranscriptCommonModelInput]] = None
+    conversation_initiation_source: typing.Optional[ConversationInitiationSource] = pydantic.Field(default=None)
+    """
+    Simulate the test as if the conversation originated from this channel.
+    """
+
     success_condition: typing.Optional[str] = pydantic.Field(default=None)
     """
     A prompt that evaluates whether the agent's response is successful. Should return True or False.

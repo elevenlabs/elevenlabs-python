@@ -7,6 +7,8 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .bucketing_status import BucketingStatus
+from .test_run_result_summary import TestRunResultSummary
 from .unit_test_run_response_model import UnitTestRunResponseModel
 
 
@@ -16,6 +18,13 @@ class GetTestSuiteInvocationResponseModel(UncheckedBaseModel):
     branch_id: typing.Optional[str] = None
     created_at: typing.Optional[int] = None
     folder_id: typing.Optional[str] = None
+    repeat_count: typing.Optional[int] = None
+    bucketing_status: typing.Optional[BucketingStatus] = pydantic.Field(default=None)
+    """
+    None when repeat_count==1 (no bucketing). Otherwise tracks bucketing lifecycle.
+    """
+
+    result_groups: typing.Optional[typing.List[TestRunResultSummary]] = None
     test_runs: typing.List[UnitTestRunResponseModel]
 
     if IS_PYDANTIC_V2:

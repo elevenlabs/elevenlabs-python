@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_test_entity_type import AgentTestEntityType
 from .agent_test_folder_path_segment_response_model import AgentTestFolderPathSegmentResponseModel
+from .conversation_initiation_source import ConversationInitiationSource
 from .resource_access_info import ResourceAccessInfo
 from .test_type import TestType
 
@@ -60,6 +61,11 @@ class UnitTestSummaryResponseModel(UncheckedBaseModel):
     children_count: typing.Optional[int] = pydantic.Field(default=None)
     """
     Number of direct children (tests and subfolders) for folders only
+    """
+
+    conversation_initiation_source: typing.Optional[ConversationInitiationSource] = pydantic.Field(default=None)
+    """
+    Channel the test simulates the conversation as. Null for folders or default behavior.
     """
 
     if IS_PYDANTIC_V2:

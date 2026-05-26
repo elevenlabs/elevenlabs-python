@@ -175,6 +175,25 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Trans
             extra = pydantic.Extra.allow
 
 
+class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberExotelSuccess(
+    UncheckedBaseModel
+):
+    result_type: typing.Literal["transfer_to_number_exotel_success"] = "transfer_to_number_exotel_success"
+    status: typing.Optional[typing.Literal["success"]] = None
+    transfer_number: str
+    reason: typing.Optional[str] = None
+    note: typing.Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberSipSuccess(
     UncheckedBaseModel
 ):
@@ -247,6 +266,7 @@ ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult = typing_ex
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentError,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberError,
+        ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberExotelSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberSipSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberTwilioSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_VoicemailDetectionSuccess,

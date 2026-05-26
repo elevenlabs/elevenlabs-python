@@ -14,6 +14,25 @@ from .livekit_stack_type import LivekitStackType
 from .phone_number_agent_info import PhoneNumberAgentInfo
 
 
+class GetAgentResponseModelPhoneNumbersItem_Exotel(UncheckedBaseModel):
+    provider: typing.Literal["exotel"] = "exotel"
+    phone_number: str
+    label: str
+    supports_inbound: typing.Optional[bool] = None
+    supports_outbound: typing.Optional[bool] = None
+    phone_number_id: str
+    assigned_agent: typing.Optional[PhoneNumberAgentInfo] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class GetAgentResponseModelPhoneNumbersItem_SipTrunk(UncheckedBaseModel):
     provider: typing.Literal["sip_trunk"] = "sip_trunk"
     phone_number: str
@@ -58,6 +77,10 @@ class GetAgentResponseModelPhoneNumbersItem_Twilio(UncheckedBaseModel):
 
 
 GetAgentResponseModelPhoneNumbersItem = typing_extensions.Annotated[
-    typing.Union[GetAgentResponseModelPhoneNumbersItem_SipTrunk, GetAgentResponseModelPhoneNumbersItem_Twilio],
+    typing.Union[
+        GetAgentResponseModelPhoneNumbersItem_Exotel,
+        GetAgentResponseModelPhoneNumbersItem_SipTrunk,
+        GetAgentResponseModelPhoneNumbersItem_Twilio,
+    ],
     UnionMetadata(discriminant="provider"),
 ]
