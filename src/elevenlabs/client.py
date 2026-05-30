@@ -33,7 +33,11 @@ class ElevenLabs(BaseElevenLabs):
 
         - api_key: typing.Optional[str].
 
+        - headers: typing.Optional[typing.Dict[str, str]]. Additional headers to send with every request.
+
         - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 240 seconds.
+
+        - follow_redirects: typing.Optional[bool]. Whether the default httpx client should follow redirects. Defaults to True. Ignored when a custom `httpx_client` is supplied.
 
         - httpx_client: typing.Optional[httpx.Client]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
     ---
@@ -49,14 +53,18 @@ class ElevenLabs(BaseElevenLabs):
         base_url: typing.Optional[str] = None,
         environment: ElevenLabsEnvironment = ElevenLabsEnvironment.PRODUCTION,
         api_key: typing.Optional[str] = os.getenv("ELEVENLABS_API_KEY"),
+        headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = 240,
+        follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None
     ):
         super().__init__(
             base_url=base_url,
             environment=environment,
             api_key=api_key,
+            headers=headers,
             timeout=timeout,
+            follow_redirects=follow_redirects,
             httpx_client=httpx_client
         )
         self._text_to_speech = RealtimeTextToSpeechClient(client_wrapper=self._client_wrapper)
@@ -83,7 +91,11 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
 
         - api_key: typing.Optional[str].
 
+        - headers: typing.Optional[typing.Dict[str, str]]. Additional headers to send with every request.
+
         - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 240 seconds.
+
+        - follow_redirects: typing.Optional[bool]. Whether the default httpx client should follow redirects. Defaults to True. Ignored when a custom `httpx_client` is supplied.
 
         - httpx_client: typing.Optional[httpx.AsyncClient]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
     ---
@@ -100,14 +112,18 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
         base_url: typing.Optional[str] = None,
         environment: ElevenLabsEnvironment = ElevenLabsEnvironment.PRODUCTION,
         api_key: typing.Optional[str] = os.getenv("ELEVENLABS_API_KEY"),
+        headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = 240,
+        follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None
     ):
         super().__init__(
             base_url=base_url,
             environment=environment,
             api_key=api_key,
+            headers=headers,
             timeout=timeout,
+            follow_redirects=follow_redirects,
             httpx_client=httpx_client
         )
         self._webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
