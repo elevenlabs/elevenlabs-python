@@ -2,4 +2,4 @@
 
 import typing
 
-ToolTypeFilter = typing.Union[typing.Literal["webhook", "client", "api_integration_webhook", "code"], typing.Any]
+ToolTypeFilter = typing.Union[typing.Literal["webhook", "client", "api_integration_webhook"], typing.Any]

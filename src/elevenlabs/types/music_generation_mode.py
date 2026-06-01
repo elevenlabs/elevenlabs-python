@@ -2,4 +2,4 @@
 
 import typing
 
-MusicGenerationMode = typing.Union[typing.Literal["track", "loop", "ambience"], typing.Any]
+MusicGenerationMode = typing.Union[typing.Literal["track", "loop", "ambience", "video_to_music"], typing.Any]

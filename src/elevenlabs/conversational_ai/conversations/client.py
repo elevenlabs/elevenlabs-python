@@ -199,6 +199,7 @@ class ConversationsClient:
             ]
         ] = None,
         tag_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        workflow_node_entered_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationsPageResponseModel:
         """
@@ -282,6 +283,9 @@ class ConversationsClient:
         tag_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by conversation tag IDs assigned via the conversation-tags endpoints.
 
+        workflow_node_entered_id : typing.Optional[str]
+            Filter conversations to only those that entered the given node.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -324,6 +328,7 @@ class ConversationsClient:
             topic_ids=["topic_ids"],
             exclude_statuses=["initiated"],
             tag_ids=["tag_ids"],
+            workflow_node_entered_id="workflow_node_entered_id",
         )
         """
         _response = self._raw_client.list(
@@ -353,6 +358,7 @@ class ConversationsClient:
             topic_ids=topic_ids,
             exclude_statuses=exclude_statuses,
             tag_ids=tag_ids,
+            workflow_node_entered_id=workflow_node_entered_id,
             request_options=request_options,
         )
         return _response.data
@@ -719,6 +725,7 @@ class AsyncConversationsClient:
             ]
         ] = None,
         tag_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        workflow_node_entered_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationsPageResponseModel:
         """
@@ -802,6 +809,9 @@ class AsyncConversationsClient:
         tag_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by conversation tag IDs assigned via the conversation-tags endpoints.
 
+        workflow_node_entered_id : typing.Optional[str]
+            Filter conversations to only those that entered the given node.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -849,6 +859,7 @@ class AsyncConversationsClient:
                 topic_ids=["topic_ids"],
                 exclude_statuses=["initiated"],
                 tag_ids=["tag_ids"],
+                workflow_node_entered_id="workflow_node_entered_id",
             )
 
 
@@ -881,6 +892,7 @@ class AsyncConversationsClient:
             topic_ids=topic_ids,
             exclude_statuses=exclude_statuses,
             tag_ids=tag_ids,
+            workflow_node_entered_id=workflow_node_entered_id,
             request_options=request_options,
         )
         return _response.data

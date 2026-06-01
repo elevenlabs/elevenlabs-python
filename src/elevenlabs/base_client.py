@@ -39,6 +39,7 @@ if typing.TYPE_CHECKING:
     from .voices.client import AsyncVoicesClient, VoicesClient
     from .webhooks.client import AsyncWebhooksClient, WebhooksClient
     from .workspace.client import AsyncWorkspaceClient, WorkspaceClient
+    from .workspaces.client import AsyncWorkspacesClient, WorkspacesClient
 
 
 class BaseElevenLabs:
@@ -134,6 +135,7 @@ class BaseElevenLabs:
         self._productions: typing.Optional[ProductionsClient] = None
         self._tokens: typing.Optional[TokensClient] = None
         self._workspace: typing.Optional[WorkspaceClient] = None
+        self._workspaces: typing.Optional[WorkspacesClient] = None
 
     @property
     def with_raw_response(self) -> RawBaseElevenLabs:
@@ -387,6 +389,14 @@ class BaseElevenLabs:
             self._workspace = WorkspaceClient(client_wrapper=self._client_wrapper)
         return self._workspace
 
+    @property
+    def workspaces(self):
+        if self._workspaces is None:
+            from .workspaces.client import WorkspacesClient  # noqa: E402
+
+            self._workspaces = WorkspacesClient(client_wrapper=self._client_wrapper)
+        return self._workspaces
+
 
 class AsyncBaseElevenLabs:
     """
@@ -481,6 +491,7 @@ class AsyncBaseElevenLabs:
         self._productions: typing.Optional[AsyncProductionsClient] = None
         self._tokens: typing.Optional[AsyncTokensClient] = None
         self._workspace: typing.Optional[AsyncWorkspaceClient] = None
+        self._workspaces: typing.Optional[AsyncWorkspacesClient] = None
 
     @property
     def with_raw_response(self) -> AsyncRawBaseElevenLabs:
@@ -741,6 +752,14 @@ class AsyncBaseElevenLabs:
 
             self._workspace = AsyncWorkspaceClient(client_wrapper=self._client_wrapper)
         return self._workspace
+
+    @property
+    def workspaces(self):
+        if self._workspaces is None:
+            from .workspaces.client import AsyncWorkspacesClient  # noqa: E402
+
+            self._workspaces = AsyncWorkspacesClient(client_wrapper=self._client_wrapper)
+        return self._workspaces
 
 
 def _get_base_url(*, base_url: typing.Optional[str] = None, environment: ElevenLabsEnvironment) -> str:

@@ -5,11 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .procedure_compiler_mode import ProcedureCompilerMode
 
 
-class ProcedureSettings(UncheckedBaseModel):
-    compiler_mode: typing.Optional[ProcedureCompilerMode] = None
+class SystemEvaluationCriteria(UncheckedBaseModel):
+    user_sentiment_score: float
+    user_frustration_score: float
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

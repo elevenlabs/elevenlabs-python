@@ -80,7 +80,8 @@ class AgentWorkflowRequestModelNodesValue_StandaloneAgent(UncheckedBaseModel):
     type: typing.Literal["standalone_agent"] = "standalone_agent"
     position: typing.Optional[PositionInput] = None
     edge_order: typing.Optional[typing.List[str]] = None
-    agent_id: str
+    agent_id: typing.Optional[str] = None
+    node_id: typing.Optional[str] = None
     delay_ms: typing.Optional[int] = None
     transfer_message: typing.Optional[str] = None
     enable_transferred_agent_first_message: typing.Optional[bool] = None

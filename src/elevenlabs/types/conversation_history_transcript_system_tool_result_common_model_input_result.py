@@ -143,6 +143,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_Transf
     status: typing.Optional[typing.Literal["success"]] = None
     from_agent: str
     to_agent: str
+    to_node: typing.Optional[str] = None
     condition: str
     delay_ms: typing.Optional[int] = None
     transfer_message: typing.Optional[str] = None

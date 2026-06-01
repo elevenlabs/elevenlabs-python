@@ -50,19 +50,6 @@ class ToolRequestModelToolConfig_Client(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-class ToolRequestModelToolConfig_Code(UncheckedBaseModel):
-    value: typing.Any
-    type: typing.Literal["code"] = "code"
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-
-
 class ToolRequestModelToolConfig_Mcp(UncheckedBaseModel):
     value: typing.Any
     type: typing.Literal["mcp"] = "mcp"
@@ -139,7 +126,6 @@ from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput  # 
 ToolRequestModelToolConfig = typing_extensions.Annotated[
     typing.Union[
         ToolRequestModelToolConfig_Client,
-        ToolRequestModelToolConfig_Code,
         ToolRequestModelToolConfig_Mcp,
         ToolRequestModelToolConfig_System,
         ToolRequestModelToolConfig_Webhook,

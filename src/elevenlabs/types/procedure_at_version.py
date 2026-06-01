@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .procedure_type import ProcedureType
 
 
 class ProcedureAtVersion(UncheckedBaseModel):
@@ -23,6 +24,7 @@ class ProcedureAtVersion(UncheckedBaseModel):
     Procedure content
     """
 
+    type: typing.Optional[ProcedureType] = None
     agent_id: str = pydantic.Field()
     """
     Agent ID of the procedure

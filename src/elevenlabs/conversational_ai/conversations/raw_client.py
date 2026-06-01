@@ -202,6 +202,7 @@ class RawConversationsClient:
             ]
         ] = None,
         tag_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        workflow_node_entered_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetConversationsPageResponseModel]:
         """
@@ -285,6 +286,9 @@ class RawConversationsClient:
         tag_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by conversation tag IDs assigned via the conversation-tags endpoints.
 
+        workflow_node_entered_id : typing.Optional[str]
+            Filter conversations to only those that entered the given node.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -323,6 +327,7 @@ class RawConversationsClient:
                 "topic_ids": topic_ids,
                 "exclude_statuses": exclude_statuses,
                 "tag_ids": tag_ids,
+                "workflow_node_entered_id": workflow_node_entered_id,
             },
             request_options=request_options,
         )
@@ -709,6 +714,7 @@ class AsyncRawConversationsClient:
             ]
         ] = None,
         tag_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        workflow_node_entered_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetConversationsPageResponseModel]:
         """
@@ -792,6 +798,9 @@ class AsyncRawConversationsClient:
         tag_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by conversation tag IDs assigned via the conversation-tags endpoints.
 
+        workflow_node_entered_id : typing.Optional[str]
+            Filter conversations to only those that entered the given node.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -830,6 +839,7 @@ class AsyncRawConversationsClient:
                 "topic_ids": topic_ids,
                 "exclude_statuses": exclude_statuses,
                 "tag_ids": tag_ids,
+                "workflow_node_entered_id": workflow_node_entered_id,
             },
             request_options=request_options,
         )
