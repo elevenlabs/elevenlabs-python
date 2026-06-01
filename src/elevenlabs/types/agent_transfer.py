@@ -8,7 +8,8 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class AgentTransfer(UncheckedBaseModel):
-    agent_id: str
+    agent_id: typing.Optional[str] = None
+    node_id: typing.Optional[str] = None
     condition: str
     delay_ms: typing.Optional[int] = None
     transfer_message: typing.Optional[str] = None

@@ -7,12 +7,8 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class DeleteClientParams(UncheckedBaseModel):
-    """
-    Delete a client, cascading deletion of all their appointments first.
-    """
-
-    smb_tool_type: typing.Optional[typing.Literal["delete_client"]] = None
+class RestoreCalendarEventParams(UncheckedBaseModel):
+    smb_tool_type: typing.Optional[typing.Literal["restore_calendar_event"]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

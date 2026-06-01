@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .procedure_type import ProcedureType
 
 
 class ProcedureRefResponseModel(UncheckedBaseModel):
@@ -21,6 +22,11 @@ class ProcedureRefResponseModel(UncheckedBaseModel):
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     Procedure name
+    """
+
+    type: typing.Optional[ProcedureType] = pydantic.Field(default=None)
+    """
+    Procedure type
     """
 
     if IS_PYDANTIC_V2:

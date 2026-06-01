@@ -5,14 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .procedure_at_version import ProcedureAtVersion
 
 
-class DeleteClientParams(UncheckedBaseModel):
-    """
-    Delete a client, cascading deletion of all their appointments first.
-    """
-
-    smb_tool_type: typing.Optional[typing.Literal["delete_client"]] = None
+class LoadProcedureToolConfigOutput(UncheckedBaseModel):
+    procedures: typing.Optional[typing.Dict[str, ProcedureAtVersion]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

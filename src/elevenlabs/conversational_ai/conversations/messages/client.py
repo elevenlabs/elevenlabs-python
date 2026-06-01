@@ -52,6 +52,7 @@ class MessagesClient:
         conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None,
         text_only: typing.Optional[bool] = None,
         branch_id: typing.Optional[str] = None,
+        topic_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         sort_by: typing.Optional[MessageSearchSortBy] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -125,6 +126,9 @@ class MessagesClient:
         branch_id : typing.Optional[str]
             Filter conversations by branch ID.
 
+        topic_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by topic IDs assigned during topic discovery.
+
         sort_by : typing.Optional[MessageSearchSortBy]
             Sort order for search results. 'search_score' sorts by search score, 'created_at' sorts by conversation start time.
 
@@ -169,6 +173,7 @@ class MessagesClient:
             conversation_initiation_source="unknown",
             text_only=True,
             branch_id="branch_id",
+            topic_ids=["topic_ids"],
             sort_by="search_score",
             cursor="cursor",
         )
@@ -196,6 +201,7 @@ class MessagesClient:
             conversation_initiation_source=conversation_initiation_source,
             text_only=text_only,
             branch_id=branch_id,
+            topic_ids=topic_ids,
             sort_by=sort_by,
             cursor=cursor,
             request_options=request_options,
@@ -300,6 +306,7 @@ class AsyncMessagesClient:
         conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None,
         text_only: typing.Optional[bool] = None,
         branch_id: typing.Optional[str] = None,
+        topic_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         sort_by: typing.Optional[MessageSearchSortBy] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -373,6 +380,9 @@ class AsyncMessagesClient:
         branch_id : typing.Optional[str]
             Filter conversations by branch ID.
 
+        topic_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by topic IDs assigned during topic discovery.
+
         sort_by : typing.Optional[MessageSearchSortBy]
             Sort order for search results. 'search_score' sorts by search score, 'created_at' sorts by conversation start time.
 
@@ -422,6 +432,7 @@ class AsyncMessagesClient:
                 conversation_initiation_source="unknown",
                 text_only=True,
                 branch_id="branch_id",
+                topic_ids=["topic_ids"],
                 sort_by="search_score",
                 cursor="cursor",
             )
@@ -452,6 +463,7 @@ class AsyncMessagesClient:
             conversation_initiation_source=conversation_initiation_source,
             text_only=text_only,
             branch_id=branch_id,
+            topic_ids=topic_ids,
             sort_by=sort_by,
             cursor=cursor,
             request_options=request_options,

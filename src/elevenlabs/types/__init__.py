@@ -545,6 +545,8 @@ if typing.TYPE_CHECKING:
     )
     from .conversation_initiation_source import ConversationInitiationSource
     from .conversation_initiation_source_info import ConversationInitiationSourceInfo
+    from .conversation_sentiment_analysis import ConversationSentimentAnalysis
+    from .conversation_sentiment_analysis_overall_label import ConversationSentimentAnalysisOverallLabel
     from .conversation_signed_url_response_model import ConversationSignedUrlResponseModel
     from .conversation_simulation_specification import ConversationSimulationSpecification
     from .conversation_source import ConversationSource
@@ -622,6 +624,7 @@ if typing.TYPE_CHECKING:
     from .custom_header_auth_response import CustomHeaderAuthResponse
     from .custom_llm import CustomLlm
     from .custom_llm_api_key import CustomLlmApiKey
+    from .custom_llm_auth_connection import CustomLlmAuthConnection
     from .custom_llm_request_headers_value import CustomLlmRequestHeadersValue
     from .custom_llmapi_type import CustomLlmapiType
     from .custom_sip_header import CustomSipHeader
@@ -1044,7 +1047,8 @@ if typing.TYPE_CHECKING:
     from .llm_usage_calculator_response_model import LlmUsageCalculatorResponseModel
     from .llm_usage_input import LlmUsageInput
     from .llm_usage_output import LlmUsageOutput
-    from .load_procedure_tool_config import LoadProcedureToolConfig
+    from .load_procedure_tool_config_input import LoadProcedureToolConfigInput
+    from .load_procedure_tool_config_output import LoadProcedureToolConfigOutput
     from .load_procedure_tool_error_status import LoadProcedureToolErrorStatus
     from .manual_source import ManualSource
     from .manual_verification_file_response import ManualVerificationFileResponse
@@ -1122,6 +1126,8 @@ if typing.TYPE_CHECKING:
     from .object_json_schema_property_input_properties_value import ObjectJsonSchemaPropertyInputPropertiesValue
     from .object_json_schema_property_output import ObjectJsonSchemaPropertyOutput
     from .object_json_schema_property_output_properties_value import ObjectJsonSchemaPropertyOutputPropertiesValue
+    from .opt_in_sms_reminder_params import OptInSmsReminderParams
+    from .opt_out_sms_reminder_params import OptOutSmsReminderParams
     from .orb_avatar import OrbAvatar
     from .orchestrator_tool_mock_behavior_config import OrchestratorToolMockBehaviorConfig
     from .order_deliverables_response import OrderDeliverablesResponse
@@ -1204,9 +1210,8 @@ if typing.TYPE_CHECKING:
     from .private_key_jwt_response import PrivateKeyJwtResponse
     from .private_key_jwt_response_algorithm import PrivateKeyJwtResponseAlgorithm
     from .procedure_at_version import ProcedureAtVersion
-    from .procedure_compiler_mode import ProcedureCompilerMode
     from .procedure_ref_response_model import ProcedureRefResponseModel
-    from .procedure_settings import ProcedureSettings
+    from .procedure_type import ProcedureType
     from .project_creation_meta_response_model import ProjectCreationMetaResponseModel
     from .project_creation_meta_response_model_status import ProjectCreationMetaResponseModelStatus
     from .project_creation_meta_response_model_type import ProjectCreationMetaResponseModelType
@@ -1259,7 +1264,6 @@ if typing.TYPE_CHECKING:
         PromptAgentApiModelInputToolsItem,
         PromptAgentApiModelInputToolsItem_ApiIntegrationWebhook,
         PromptAgentApiModelInputToolsItem_Client,
-        PromptAgentApiModelInputToolsItem_Code,
         PromptAgentApiModelInputToolsItem_Mcp,
         PromptAgentApiModelInputToolsItem_Smb,
         PromptAgentApiModelInputToolsItem_System,
@@ -1276,7 +1280,6 @@ if typing.TYPE_CHECKING:
         PromptAgentApiModelOutputToolsItem,
         PromptAgentApiModelOutputToolsItem_ApiIntegrationWebhook,
         PromptAgentApiModelOutputToolsItem_Client,
-        PromptAgentApiModelOutputToolsItem_Code,
         PromptAgentApiModelOutputToolsItem_Mcp,
         PromptAgentApiModelOutputToolsItem_Smb,
         PromptAgentApiModelOutputToolsItem_System,
@@ -1293,7 +1296,6 @@ if typing.TYPE_CHECKING:
         PromptAgentApiModelWorkflowOverrideInputToolsItem,
         PromptAgentApiModelWorkflowOverrideInputToolsItem_ApiIntegrationWebhook,
         PromptAgentApiModelWorkflowOverrideInputToolsItem_Client,
-        PromptAgentApiModelWorkflowOverrideInputToolsItem_Code,
         PromptAgentApiModelWorkflowOverrideInputToolsItem_Mcp,
         PromptAgentApiModelWorkflowOverrideInputToolsItem_Smb,
         PromptAgentApiModelWorkflowOverrideInputToolsItem_System,
@@ -1307,7 +1309,6 @@ if typing.TYPE_CHECKING:
         PromptAgentApiModelWorkflowOverrideOutputToolsItem,
         PromptAgentApiModelWorkflowOverrideOutputToolsItem_ApiIntegrationWebhook,
         PromptAgentApiModelWorkflowOverrideOutputToolsItem_Client,
-        PromptAgentApiModelWorkflowOverrideOutputToolsItem_Code,
         PromptAgentApiModelWorkflowOverrideOutputToolsItem_Mcp,
         PromptAgentApiModelWorkflowOverrideOutputToolsItem_Smb,
         PromptAgentApiModelWorkflowOverrideOutputToolsItem_System,
@@ -1367,6 +1368,7 @@ if typing.TYPE_CHECKING:
     from .required_constraint import RequiredConstraint
     from .required_constraints import RequiredConstraints
     from .resource_access_info import ResourceAccessInfo
+    from .resource_access_info_access_source import ResourceAccessInfoAccessSource
     from .resource_access_info_anonymous_access_level_override import ResourceAccessInfoAnonymousAccessLevelOverride
     from .resource_access_info_role import ResourceAccessInfoRole
     from .resource_metadata_response_model import ResourceMetadataResponseModel
@@ -1376,6 +1378,7 @@ if typing.TYPE_CHECKING:
     from .response_filter import ResponseFilter
     from .response_filter_mode import ResponseFilterMode
     from .response_unit_test_model import ResponseUnitTestModel
+    from .restore_calendar_event_params import RestoreCalendarEventParams
     from .retry_trigger_action import RetryTriggerAction
     from .review_response_model import ReviewResponseModel
     from .review_response_model_reject_reasons_item import ReviewResponseModelRejectReasonsItem
@@ -1518,6 +1521,7 @@ if typing.TYPE_CHECKING:
     from .subtitle_order_item_request import SubtitleOrderItemRequest
     from .suggested_audio_tag import SuggestedAudioTag
     from .supported_voice import SupportedVoice
+    from .system_evaluation_criteria import SystemEvaluationCriteria
     from .system_tool_config_input import SystemToolConfigInput
     from .system_tool_config_input_params import (
         SystemToolConfigInputParams,
@@ -1603,7 +1607,6 @@ if typing.TYPE_CHECKING:
     from .tool_request_model_tool_config import (
         ToolRequestModelToolConfig,
         ToolRequestModelToolConfig_Client,
-        ToolRequestModelToolConfig_Code,
         ToolRequestModelToolConfig_Mcp,
         ToolRequestModelToolConfig_System,
         ToolRequestModelToolConfig_Webhook,
@@ -1614,7 +1617,6 @@ if typing.TYPE_CHECKING:
     from .tool_response_model_tool_config import (
         ToolResponseModelToolConfig,
         ToolResponseModelToolConfig_Client,
-        ToolResponseModelToolConfig_Code,
         ToolResponseModelToolConfig_Mcp,
         ToolResponseModelToolConfig_System,
         ToolResponseModelToolConfig_Webhook,
@@ -2428,6 +2430,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationInitiationClientDataWebhookRequestHeadersValue": ".conversation_initiation_client_data_webhook_request_headers_value",
     "ConversationInitiationSource": ".conversation_initiation_source",
     "ConversationInitiationSourceInfo": ".conversation_initiation_source_info",
+    "ConversationSentimentAnalysis": ".conversation_sentiment_analysis",
+    "ConversationSentimentAnalysisOverallLabel": ".conversation_sentiment_analysis_overall_label",
     "ConversationSignedUrlResponseModel": ".conversation_signed_url_response_model",
     "ConversationSimulationSpecification": ".conversation_simulation_specification",
     "ConversationSource": ".conversation_source",
@@ -2499,6 +2503,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CustomHeaderAuthResponse": ".custom_header_auth_response",
     "CustomLlm": ".custom_llm",
     "CustomLlmApiKey": ".custom_llm_api_key",
+    "CustomLlmAuthConnection": ".custom_llm_auth_connection",
     "CustomLlmRequestHeadersValue": ".custom_llm_request_headers_value",
     "CustomLlmapiType": ".custom_llmapi_type",
     "CustomSipHeader": ".custom_sip_header",
@@ -2877,7 +2882,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LlmUsageCalculatorResponseModel": ".llm_usage_calculator_response_model",
     "LlmUsageInput": ".llm_usage_input",
     "LlmUsageOutput": ".llm_usage_output",
-    "LoadProcedureToolConfig": ".load_procedure_tool_config",
+    "LoadProcedureToolConfigInput": ".load_procedure_tool_config_input",
+    "LoadProcedureToolConfigOutput": ".load_procedure_tool_config_output",
     "LoadProcedureToolErrorStatus": ".load_procedure_tool_error_status",
     "ManualSource": ".manual_source",
     "ManualVerificationFileResponse": ".manual_verification_file_response",
@@ -2949,6 +2955,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ObjectJsonSchemaPropertyInputPropertiesValue": ".object_json_schema_property_input_properties_value",
     "ObjectJsonSchemaPropertyOutput": ".object_json_schema_property_output",
     "ObjectJsonSchemaPropertyOutputPropertiesValue": ".object_json_schema_property_output_properties_value",
+    "OptInSmsReminderParams": ".opt_in_sms_reminder_params",
+    "OptOutSmsReminderParams": ".opt_out_sms_reminder_params",
     "OrbAvatar": ".orb_avatar",
     "OrchestratorToolMockBehaviorConfig": ".orchestrator_tool_mock_behavior_config",
     "OrderDeliverablesResponse": ".order_deliverables_response",
@@ -3021,9 +3029,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PrivateKeyJwtResponse": ".private_key_jwt_response",
     "PrivateKeyJwtResponseAlgorithm": ".private_key_jwt_response_algorithm",
     "ProcedureAtVersion": ".procedure_at_version",
-    "ProcedureCompilerMode": ".procedure_compiler_mode",
     "ProcedureRefResponseModel": ".procedure_ref_response_model",
-    "ProcedureSettings": ".procedure_settings",
+    "ProcedureType": ".procedure_type",
     "ProjectCreationMetaResponseModel": ".project_creation_meta_response_model",
     "ProjectCreationMetaResponseModelStatus": ".project_creation_meta_response_model_status",
     "ProjectCreationMetaResponseModelType": ".project_creation_meta_response_model_type",
@@ -3067,7 +3074,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PromptAgentApiModelInputToolsItem": ".prompt_agent_api_model_input_tools_item",
     "PromptAgentApiModelInputToolsItem_ApiIntegrationWebhook": ".prompt_agent_api_model_input_tools_item",
     "PromptAgentApiModelInputToolsItem_Client": ".prompt_agent_api_model_input_tools_item",
-    "PromptAgentApiModelInputToolsItem_Code": ".prompt_agent_api_model_input_tools_item",
     "PromptAgentApiModelInputToolsItem_Mcp": ".prompt_agent_api_model_input_tools_item",
     "PromptAgentApiModelInputToolsItem_Smb": ".prompt_agent_api_model_input_tools_item",
     "PromptAgentApiModelInputToolsItem_System": ".prompt_agent_api_model_input_tools_item",
@@ -3080,7 +3086,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PromptAgentApiModelOutputToolsItem": ".prompt_agent_api_model_output_tools_item",
     "PromptAgentApiModelOutputToolsItem_ApiIntegrationWebhook": ".prompt_agent_api_model_output_tools_item",
     "PromptAgentApiModelOutputToolsItem_Client": ".prompt_agent_api_model_output_tools_item",
-    "PromptAgentApiModelOutputToolsItem_Code": ".prompt_agent_api_model_output_tools_item",
     "PromptAgentApiModelOutputToolsItem_Mcp": ".prompt_agent_api_model_output_tools_item",
     "PromptAgentApiModelOutputToolsItem_Smb": ".prompt_agent_api_model_output_tools_item",
     "PromptAgentApiModelOutputToolsItem_System": ".prompt_agent_api_model_output_tools_item",
@@ -3093,7 +3098,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PromptAgentApiModelWorkflowOverrideInputToolsItem": ".prompt_agent_api_model_workflow_override_input_tools_item",
     "PromptAgentApiModelWorkflowOverrideInputToolsItem_ApiIntegrationWebhook": ".prompt_agent_api_model_workflow_override_input_tools_item",
     "PromptAgentApiModelWorkflowOverrideInputToolsItem_Client": ".prompt_agent_api_model_workflow_override_input_tools_item",
-    "PromptAgentApiModelWorkflowOverrideInputToolsItem_Code": ".prompt_agent_api_model_workflow_override_input_tools_item",
     "PromptAgentApiModelWorkflowOverrideInputToolsItem_Mcp": ".prompt_agent_api_model_workflow_override_input_tools_item",
     "PromptAgentApiModelWorkflowOverrideInputToolsItem_Smb": ".prompt_agent_api_model_workflow_override_input_tools_item",
     "PromptAgentApiModelWorkflowOverrideInputToolsItem_System": ".prompt_agent_api_model_workflow_override_input_tools_item",
@@ -3103,7 +3107,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem": ".prompt_agent_api_model_workflow_override_output_tools_item",
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem_ApiIntegrationWebhook": ".prompt_agent_api_model_workflow_override_output_tools_item",
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem_Client": ".prompt_agent_api_model_workflow_override_output_tools_item",
-    "PromptAgentApiModelWorkflowOverrideOutputToolsItem_Code": ".prompt_agent_api_model_workflow_override_output_tools_item",
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem_Mcp": ".prompt_agent_api_model_workflow_override_output_tools_item",
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem_Smb": ".prompt_agent_api_model_workflow_override_output_tools_item",
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem_System": ".prompt_agent_api_model_workflow_override_output_tools_item",
@@ -3160,6 +3163,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RequiredConstraint": ".required_constraint",
     "RequiredConstraints": ".required_constraints",
     "ResourceAccessInfo": ".resource_access_info",
+    "ResourceAccessInfoAccessSource": ".resource_access_info_access_source",
     "ResourceAccessInfoAnonymousAccessLevelOverride": ".resource_access_info_anonymous_access_level_override",
     "ResourceAccessInfoRole": ".resource_access_info_role",
     "ResourceMetadataResponseModel": ".resource_metadata_response_model",
@@ -3167,6 +3171,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ResponseFilter": ".response_filter",
     "ResponseFilterMode": ".response_filter_mode",
     "ResponseUnitTestModel": ".response_unit_test_model",
+    "RestoreCalendarEventParams": ".restore_calendar_event_params",
     "RetryTriggerAction": ".retry_trigger_action",
     "ReviewResponseModel": ".review_response_model",
     "ReviewResponseModelRejectReasonsItem": ".review_response_model_reject_reasons_item",
@@ -3305,6 +3310,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SubtitleOrderItemRequest": ".subtitle_order_item_request",
     "SuggestedAudioTag": ".suggested_audio_tag",
     "SupportedVoice": ".supported_voice",
+    "SystemEvaluationCriteria": ".system_evaluation_criteria",
     "SystemToolConfigInput": ".system_tool_config_input",
     "SystemToolConfigInputParams": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_EndCall": ".system_tool_config_input_params",
@@ -3381,7 +3387,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ToolRequestModel": ".tool_request_model",
     "ToolRequestModelToolConfig": ".tool_request_model_tool_config",
     "ToolRequestModelToolConfig_Client": ".tool_request_model_tool_config",
-    "ToolRequestModelToolConfig_Code": ".tool_request_model_tool_config",
     "ToolRequestModelToolConfig_Mcp": ".tool_request_model_tool_config",
     "ToolRequestModelToolConfig_System": ".tool_request_model_tool_config",
     "ToolRequestModelToolConfig_Webhook": ".tool_request_model_tool_config",
@@ -3390,7 +3395,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ToolResponseModel": ".tool_response_model",
     "ToolResponseModelToolConfig": ".tool_response_model_tool_config",
     "ToolResponseModelToolConfig_Client": ".tool_response_model_tool_config",
-    "ToolResponseModelToolConfig_Code": ".tool_response_model_tool_config",
     "ToolResponseModelToolConfig_Mcp": ".tool_response_model_tool_config",
     "ToolResponseModelToolConfig_System": ".tool_response_model_tool_config",
     "ToolResponseModelToolConfig_Webhook": ".tool_response_model_tool_config",
@@ -4177,6 +4181,8 @@ __all__ = [
     "ConversationInitiationClientDataWebhookRequestHeadersValue",
     "ConversationInitiationSource",
     "ConversationInitiationSourceInfo",
+    "ConversationSentimentAnalysis",
+    "ConversationSentimentAnalysisOverallLabel",
     "ConversationSignedUrlResponseModel",
     "ConversationSimulationSpecification",
     "ConversationSource",
@@ -4248,6 +4254,7 @@ __all__ = [
     "CustomHeaderAuthResponse",
     "CustomLlm",
     "CustomLlmApiKey",
+    "CustomLlmAuthConnection",
     "CustomLlmRequestHeadersValue",
     "CustomLlmapiType",
     "CustomSipHeader",
@@ -4626,7 +4633,8 @@ __all__ = [
     "LlmUsageCalculatorResponseModel",
     "LlmUsageInput",
     "LlmUsageOutput",
-    "LoadProcedureToolConfig",
+    "LoadProcedureToolConfigInput",
+    "LoadProcedureToolConfigOutput",
     "LoadProcedureToolErrorStatus",
     "ManualSource",
     "ManualVerificationFileResponse",
@@ -4698,6 +4706,8 @@ __all__ = [
     "ObjectJsonSchemaPropertyInputPropertiesValue",
     "ObjectJsonSchemaPropertyOutput",
     "ObjectJsonSchemaPropertyOutputPropertiesValue",
+    "OptInSmsReminderParams",
+    "OptOutSmsReminderParams",
     "OrbAvatar",
     "OrchestratorToolMockBehaviorConfig",
     "OrderDeliverablesResponse",
@@ -4770,9 +4780,8 @@ __all__ = [
     "PrivateKeyJwtResponse",
     "PrivateKeyJwtResponseAlgorithm",
     "ProcedureAtVersion",
-    "ProcedureCompilerMode",
     "ProcedureRefResponseModel",
-    "ProcedureSettings",
+    "ProcedureType",
     "ProjectCreationMetaResponseModel",
     "ProjectCreationMetaResponseModelStatus",
     "ProjectCreationMetaResponseModelType",
@@ -4816,7 +4825,6 @@ __all__ = [
     "PromptAgentApiModelInputToolsItem",
     "PromptAgentApiModelInputToolsItem_ApiIntegrationWebhook",
     "PromptAgentApiModelInputToolsItem_Client",
-    "PromptAgentApiModelInputToolsItem_Code",
     "PromptAgentApiModelInputToolsItem_Mcp",
     "PromptAgentApiModelInputToolsItem_Smb",
     "PromptAgentApiModelInputToolsItem_System",
@@ -4829,7 +4837,6 @@ __all__ = [
     "PromptAgentApiModelOutputToolsItem",
     "PromptAgentApiModelOutputToolsItem_ApiIntegrationWebhook",
     "PromptAgentApiModelOutputToolsItem_Client",
-    "PromptAgentApiModelOutputToolsItem_Code",
     "PromptAgentApiModelOutputToolsItem_Mcp",
     "PromptAgentApiModelOutputToolsItem_Smb",
     "PromptAgentApiModelOutputToolsItem_System",
@@ -4842,7 +4849,6 @@ __all__ = [
     "PromptAgentApiModelWorkflowOverrideInputToolsItem",
     "PromptAgentApiModelWorkflowOverrideInputToolsItem_ApiIntegrationWebhook",
     "PromptAgentApiModelWorkflowOverrideInputToolsItem_Client",
-    "PromptAgentApiModelWorkflowOverrideInputToolsItem_Code",
     "PromptAgentApiModelWorkflowOverrideInputToolsItem_Mcp",
     "PromptAgentApiModelWorkflowOverrideInputToolsItem_Smb",
     "PromptAgentApiModelWorkflowOverrideInputToolsItem_System",
@@ -4852,7 +4858,6 @@ __all__ = [
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem",
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem_ApiIntegrationWebhook",
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem_Client",
-    "PromptAgentApiModelWorkflowOverrideOutputToolsItem_Code",
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem_Mcp",
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem_Smb",
     "PromptAgentApiModelWorkflowOverrideOutputToolsItem_System",
@@ -4909,6 +4914,7 @@ __all__ = [
     "RequiredConstraint",
     "RequiredConstraints",
     "ResourceAccessInfo",
+    "ResourceAccessInfoAccessSource",
     "ResourceAccessInfoAnonymousAccessLevelOverride",
     "ResourceAccessInfoRole",
     "ResourceMetadataResponseModel",
@@ -4916,6 +4922,7 @@ __all__ = [
     "ResponseFilter",
     "ResponseFilterMode",
     "ResponseUnitTestModel",
+    "RestoreCalendarEventParams",
     "RetryTriggerAction",
     "ReviewResponseModel",
     "ReviewResponseModelRejectReasonsItem",
@@ -5054,6 +5061,7 @@ __all__ = [
     "SubtitleOrderItemRequest",
     "SuggestedAudioTag",
     "SupportedVoice",
+    "SystemEvaluationCriteria",
     "SystemToolConfigInput",
     "SystemToolConfigInputParams",
     "SystemToolConfigInputParams_EndCall",
@@ -5130,7 +5138,6 @@ __all__ = [
     "ToolRequestModel",
     "ToolRequestModelToolConfig",
     "ToolRequestModelToolConfig_Client",
-    "ToolRequestModelToolConfig_Code",
     "ToolRequestModelToolConfig_Mcp",
     "ToolRequestModelToolConfig_System",
     "ToolRequestModelToolConfig_Webhook",
@@ -5139,7 +5146,6 @@ __all__ = [
     "ToolResponseModel",
     "ToolResponseModelToolConfig",
     "ToolResponseModelToolConfig_Client",
-    "ToolResponseModelToolConfig_Code",
     "ToolResponseModelToolConfig_Mcp",
     "ToolResponseModelToolConfig_System",
     "ToolResponseModelToolConfig_Webhook",
