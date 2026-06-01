@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .custom_llm_api_key import CustomLlmApiKey
+from .custom_llm_auth_connection import CustomLlmAuthConnection
 from .custom_llm_request_headers_value import CustomLlmRequestHeadersValue
 from .custom_llmapi_type import CustomLlmapiType
 
@@ -24,6 +25,11 @@ class CustomLlm(UncheckedBaseModel):
     api_key: typing.Optional[CustomLlmApiKey] = pydantic.Field(default=None)
     """
     The API key for authentication. Either a workspace secret reference {'secret_id': '...'} or an environment variable reference {'env_var_label': '...'}.
+    """
+
+    auth_connection: typing.Optional[CustomLlmAuthConnection] = pydantic.Field(default=None)
+    """
+    Optional workspace auth connection for authentication. Only auth connections that produce an Authorization Bearer token are supported; Basic auth, mTLS, custom header, and URL secret auth connections are not supported.
     """
 
     request_headers: typing.Optional[typing.Dict[str, CustomLlmRequestHeadersValue]] = pydantic.Field(default=None)

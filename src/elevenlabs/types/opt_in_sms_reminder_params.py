@@ -7,12 +7,8 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class DeleteClientParams(UncheckedBaseModel):
-    """
-    Delete a client, cascading deletion of all their appointments first.
-    """
-
-    smb_tool_type: typing.Optional[typing.Literal["delete_client"]] = None
+class OptInSmsReminderParams(UncheckedBaseModel):
+    smb_tool_type: typing.Optional[typing.Literal["opt_in_sms_reminder"]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

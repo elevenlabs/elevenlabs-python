@@ -2,4 +2,6 @@
 
 import typing
 
-RenderType = typing.Union[typing.Literal["mp4", "aac", "mp3", "wav", "aaf", "tracks_zip", "clips_zip"], typing.Any]
+RenderType = typing.Union[
+    typing.Literal["mp4", "aac", "mp3", "wav", "aaf", "tracks_zip", "clips_zip", "zip"], typing.Any
+]

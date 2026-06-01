@@ -84,19 +84,6 @@ class PromptAgentApiModelWorkflowOverrideOutputToolsItem_Client(UncheckedBaseMod
             extra = pydantic.Extra.allow
 
 
-class PromptAgentApiModelWorkflowOverrideOutputToolsItem_Code(UncheckedBaseModel):
-    value: typing.Any
-    type: typing.Literal["code"] = "code"
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-
-
 class PromptAgentApiModelWorkflowOverrideOutputToolsItem_Mcp(UncheckedBaseModel):
     value: typing.Any
     type: typing.Literal["mcp"] = "mcp"
@@ -187,7 +174,6 @@ PromptAgentApiModelWorkflowOverrideOutputToolsItem = typing_extensions.Annotated
     typing.Union[
         PromptAgentApiModelWorkflowOverrideOutputToolsItem_ApiIntegrationWebhook,
         PromptAgentApiModelWorkflowOverrideOutputToolsItem_Client,
-        PromptAgentApiModelWorkflowOverrideOutputToolsItem_Code,
         PromptAgentApiModelWorkflowOverrideOutputToolsItem_Mcp,
         PromptAgentApiModelWorkflowOverrideOutputToolsItem_Smb,
         PromptAgentApiModelWorkflowOverrideOutputToolsItem_System,

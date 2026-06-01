@@ -5,12 +5,15 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .search_highlight_segment import SearchHighlightSegment
 
 
 class MessagesSearchResult(UncheckedBaseModel):
     """
     transcript_index: index of the message in the conversation transcript
     chunk_text: text of the transcript; transcript messages if very long could have several chunks.
+    chunk_highlights: chunk_text split into matched/unmatched segments for highlighting.
+        Only populated for keyword/text search, not semantic search.
     score: similarity score of the message to the search query
     """
 
@@ -19,6 +22,7 @@ class MessagesSearchResult(UncheckedBaseModel):
     agent_name: typing.Optional[str] = None
     transcript_index: int
     chunk_text: str
+    chunk_highlights: typing.Optional[typing.List[SearchHighlightSegment]] = None
     score: float
     conversation_start_time_unix_secs: int
 

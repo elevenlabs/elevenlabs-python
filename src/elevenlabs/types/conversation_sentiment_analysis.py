@@ -5,11 +5,16 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .procedure_at_version import ProcedureAtVersion
+from .conversation_sentiment_analysis_overall_label import ConversationSentimentAnalysisOverallLabel
 
 
-class LoadProcedureToolConfig(UncheckedBaseModel):
-    procedures: typing.Optional[typing.Dict[str, ProcedureAtVersion]] = None
+class ConversationSentimentAnalysis(UncheckedBaseModel):
+    overall_label: ConversationSentimentAnalysisOverallLabel
+    overall_sentiment_score: float
+    overall_frustration_score: float
+    min_user_sentiment_score: float
+    max_user_frustration_score: float
+    num_scored_user_turns: int
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

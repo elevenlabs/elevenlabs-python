@@ -19,9 +19,14 @@ class WorkflowStandaloneAgentNodeModelInput(UncheckedBaseModel):
     The ids of outgoing edges in the order they should be evaluated.
     """
 
-    agent_id: str = pydantic.Field()
+    agent_id: typing.Optional[str] = pydantic.Field(default=None)
     """
-    The ID of the agent to transfer the conversation to.
+    The ID of the agent to transfer the conversation to. None means transfer within the current agent.
+    """
+
+    node_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Optional target node ID in the destination agent's workflow. When set, the transfer starts at this node instead of the default entry node.
     """
 
     delay_ms: typing.Optional[int] = pydantic.Field(default=None)

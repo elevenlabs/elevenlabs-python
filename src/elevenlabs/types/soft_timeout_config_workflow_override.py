@@ -23,6 +23,11 @@ class SoftTimeoutConfigWorkflowOverride(UncheckedBaseModel):
     If enabled, the soft timeout message will be generated dynamically instead of using the static message.
     """
 
+    llm_generated_message_prompt_override: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Custom prompt for generating the soft timeout filler message when use_llm_generated_message is enabled. Recent conversation context is provided as a separate user message. If not set, the default prompt will be used.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
