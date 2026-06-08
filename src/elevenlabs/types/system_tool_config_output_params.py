@@ -10,7 +10,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .agent_transfer import AgentTransfer
 from .phone_number_transfer import PhoneNumberTransfer
-from .procedure_at_version import ProcedureAtVersion
+from .procedure_at_version_output import ProcedureAtVersionOutput
 
 
 class SystemToolConfigOutputParams_EndCall(UncheckedBaseModel):
@@ -52,20 +52,6 @@ class SystemToolConfigOutputParams_LanguageDetection(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-class SystemToolConfigOutputParams_LoadProcedure(UncheckedBaseModel):
-    system_tool_type: typing.Literal["load_procedure"] = "load_procedure"
-    procedures: typing.Optional[typing.Dict[str, ProcedureAtVersion]] = None
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
-
-
 class SystemToolConfigOutputParams_PlayKeypadTouchTone(UncheckedBaseModel):
     system_tool_type: typing.Literal["play_keypad_touch_tone"] = "play_keypad_touch_tone"
     use_out_of_band_dtmf: typing.Optional[bool] = None
@@ -83,6 +69,20 @@ class SystemToolConfigOutputParams_PlayKeypadTouchTone(UncheckedBaseModel):
 
 class SystemToolConfigOutputParams_SkipTurn(UncheckedBaseModel):
     system_tool_type: typing.Literal["skip_turn"] = "skip_turn"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class SystemToolConfigOutputParams_StartProcedure(UncheckedBaseModel):
+    system_tool_type: typing.Literal["start_procedure"] = "start_procedure"
+    procedures: typing.Optional[typing.Dict[str, ProcedureAtVersionOutput]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -142,9 +142,9 @@ SystemToolConfigOutputParams = typing_extensions.Annotated[
         SystemToolConfigOutputParams_EndCall,
         SystemToolConfigOutputParams_KnowledgeBaseRag,
         SystemToolConfigOutputParams_LanguageDetection,
-        SystemToolConfigOutputParams_LoadProcedure,
         SystemToolConfigOutputParams_PlayKeypadTouchTone,
         SystemToolConfigOutputParams_SkipTurn,
+        SystemToolConfigOutputParams_StartProcedure,
         SystemToolConfigOutputParams_TransferToAgent,
         SystemToolConfigOutputParams_TransferToNumber,
         SystemToolConfigOutputParams_VoicemailDetection,

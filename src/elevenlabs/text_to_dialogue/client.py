@@ -56,6 +56,7 @@ class TextToDialogueClient:
         *,
         inputs: typing.Sequence[DialogueInput],
         output_format: typing.Optional[TextToDialogueConvertRequestOutputFormat] = None,
+        enable_logging: typing.Optional[bool] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         settings: typing.Optional[ModelSettingsResponseModel] = OMIT,
@@ -78,6 +79,9 @@ class TextToDialogueClient:
 
         output_format : typing.Optional[TextToDialogueConvertRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        enable_logging : typing.Optional[bool]
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
 
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
@@ -128,6 +132,7 @@ class TextToDialogueClient:
         with self._raw_client.convert(
             inputs=inputs,
             output_format=output_format,
+            enable_logging=enable_logging,
             model_id=model_id,
             language_code=language_code,
             settings=settings,
@@ -143,6 +148,7 @@ class TextToDialogueClient:
         *,
         inputs: typing.Sequence[DialogueInput],
         output_format: typing.Optional[AllowedOutputFormats] = None,
+        enable_logging: typing.Optional[bool] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         settings: typing.Optional[ModelSettingsResponseModel] = OMIT,
@@ -165,6 +171,9 @@ class TextToDialogueClient:
 
         output_format : typing.Optional[AllowedOutputFormats]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        enable_logging : typing.Optional[bool]
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
 
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
@@ -215,6 +224,7 @@ class TextToDialogueClient:
         with self._raw_client.stream(
             inputs=inputs,
             output_format=output_format,
+            enable_logging=enable_logging,
             model_id=model_id,
             language_code=language_code,
             settings=settings,
@@ -230,6 +240,7 @@ class TextToDialogueClient:
         *,
         inputs: typing.Sequence[DialogueInput],
         output_format: typing.Optional[AllowedOutputFormats] = None,
+        enable_logging: typing.Optional[bool] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         settings: typing.Optional[ModelSettingsResponseModel] = OMIT,
@@ -250,6 +261,9 @@ class TextToDialogueClient:
 
         output_format : typing.Optional[AllowedOutputFormats]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        enable_logging : typing.Optional[bool]
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
 
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
@@ -286,6 +300,7 @@ class TextToDialogueClient:
         )
         response = client.text_to_dialogue.stream_with_timestamps(
             output_format="mp3_22050_32",
+            enable_logging=True,
             inputs=[
                 DialogueInput(
                     text="Hello, how are you?",
@@ -303,6 +318,7 @@ class TextToDialogueClient:
         with self._raw_client.stream_with_timestamps(
             inputs=inputs,
             output_format=output_format,
+            enable_logging=enable_logging,
             model_id=model_id,
             language_code=language_code,
             settings=settings,
@@ -318,6 +334,7 @@ class TextToDialogueClient:
         *,
         inputs: typing.Sequence[DialogueInput],
         output_format: typing.Optional[TextToDialogueConvertWithTimestampsRequestOutputFormat] = None,
+        enable_logging: typing.Optional[bool] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         settings: typing.Optional[ModelSettingsResponseModel] = OMIT,
@@ -338,6 +355,9 @@ class TextToDialogueClient:
 
         output_format : typing.Optional[TextToDialogueConvertWithTimestampsRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        enable_logging : typing.Optional[bool]
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
 
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
@@ -374,6 +394,7 @@ class TextToDialogueClient:
         )
         client.text_to_dialogue.convert_with_timestamps(
             output_format="alaw_8000",
+            enable_logging=True,
             inputs=[
                 DialogueInput(
                     text="Hello, how are you?",
@@ -389,6 +410,7 @@ class TextToDialogueClient:
         _response = self._raw_client.convert_with_timestamps(
             inputs=inputs,
             output_format=output_format,
+            enable_logging=enable_logging,
             model_id=model_id,
             language_code=language_code,
             settings=settings,
@@ -420,6 +442,7 @@ class AsyncTextToDialogueClient:
         *,
         inputs: typing.Sequence[DialogueInput],
         output_format: typing.Optional[TextToDialogueConvertRequestOutputFormat] = None,
+        enable_logging: typing.Optional[bool] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         settings: typing.Optional[ModelSettingsResponseModel] = OMIT,
@@ -442,6 +465,9 @@ class AsyncTextToDialogueClient:
 
         output_format : typing.Optional[TextToDialogueConvertRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        enable_logging : typing.Optional[bool]
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
 
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
@@ -500,6 +526,7 @@ class AsyncTextToDialogueClient:
         async with self._raw_client.convert(
             inputs=inputs,
             output_format=output_format,
+            enable_logging=enable_logging,
             model_id=model_id,
             language_code=language_code,
             settings=settings,
@@ -516,6 +543,7 @@ class AsyncTextToDialogueClient:
         *,
         inputs: typing.Sequence[DialogueInput],
         output_format: typing.Optional[AllowedOutputFormats] = None,
+        enable_logging: typing.Optional[bool] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         settings: typing.Optional[ModelSettingsResponseModel] = OMIT,
@@ -538,6 +566,9 @@ class AsyncTextToDialogueClient:
 
         output_format : typing.Optional[AllowedOutputFormats]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        enable_logging : typing.Optional[bool]
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
 
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
@@ -596,6 +627,7 @@ class AsyncTextToDialogueClient:
         async with self._raw_client.stream(
             inputs=inputs,
             output_format=output_format,
+            enable_logging=enable_logging,
             model_id=model_id,
             language_code=language_code,
             settings=settings,
@@ -612,6 +644,7 @@ class AsyncTextToDialogueClient:
         *,
         inputs: typing.Sequence[DialogueInput],
         output_format: typing.Optional[AllowedOutputFormats] = None,
+        enable_logging: typing.Optional[bool] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         settings: typing.Optional[ModelSettingsResponseModel] = OMIT,
@@ -632,6 +665,9 @@ class AsyncTextToDialogueClient:
 
         output_format : typing.Optional[AllowedOutputFormats]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        enable_logging : typing.Optional[bool]
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
 
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
@@ -673,6 +709,7 @@ class AsyncTextToDialogueClient:
         async def main() -> None:
             response = await client.text_to_dialogue.stream_with_timestamps(
                 output_format="mp3_22050_32",
+                enable_logging=True,
                 inputs=[
                     DialogueInput(
                         text="Hello, how are you?",
@@ -693,6 +730,7 @@ class AsyncTextToDialogueClient:
         async with self._raw_client.stream_with_timestamps(
             inputs=inputs,
             output_format=output_format,
+            enable_logging=enable_logging,
             model_id=model_id,
             language_code=language_code,
             settings=settings,
@@ -709,6 +747,7 @@ class AsyncTextToDialogueClient:
         *,
         inputs: typing.Sequence[DialogueInput],
         output_format: typing.Optional[TextToDialogueConvertWithTimestampsRequestOutputFormat] = None,
+        enable_logging: typing.Optional[bool] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         settings: typing.Optional[ModelSettingsResponseModel] = OMIT,
@@ -729,6 +768,9 @@ class AsyncTextToDialogueClient:
 
         output_format : typing.Optional[TextToDialogueConvertWithTimestampsRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        enable_logging : typing.Optional[bool]
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
 
         model_id : typing.Optional[str]
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
@@ -770,6 +812,7 @@ class AsyncTextToDialogueClient:
         async def main() -> None:
             await client.text_to_dialogue.convert_with_timestamps(
                 output_format="alaw_8000",
+                enable_logging=True,
                 inputs=[
                     DialogueInput(
                         text="Hello, how are you?",
@@ -788,6 +831,7 @@ class AsyncTextToDialogueClient:
         _response = await self._raw_client.convert_with_timestamps(
             inputs=inputs,
             output_format=output_format,
+            enable_logging=enable_logging,
             model_id=model_id,
             language_code=language_code,
             settings=settings,

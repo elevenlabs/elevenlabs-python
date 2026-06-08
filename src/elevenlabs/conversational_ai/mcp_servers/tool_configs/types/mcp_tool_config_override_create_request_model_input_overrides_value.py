@@ -53,11 +53,25 @@ class McpToolConfigOverrideCreateRequestModelInputOverridesValue_Llm(UncheckedBa
             extra = pydantic.Extra.allow
 
 
+class McpToolConfigOverrideCreateRequestModelInputOverridesValue_Omit(UncheckedBaseModel):
+    source: typing.Literal["omit"] = "omit"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 McpToolConfigOverrideCreateRequestModelInputOverridesValue = typing_extensions.Annotated[
     typing.Union[
         McpToolConfigOverrideCreateRequestModelInputOverridesValue_Constant,
         McpToolConfigOverrideCreateRequestModelInputOverridesValue_DynamicVariable,
         McpToolConfigOverrideCreateRequestModelInputOverridesValue_Llm,
+        McpToolConfigOverrideCreateRequestModelInputOverridesValue_Omit,
     ],
     UnionMetadata(discriminant="source"),
 ]

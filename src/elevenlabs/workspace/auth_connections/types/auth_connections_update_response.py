@@ -297,6 +297,27 @@ class AuthConnectionsUpdateResponse_SlackBotAuth(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class AuthConnectionsUpdateResponse_UrlSecret(UncheckedBaseModel):
+    """
+    The type of auth connection config
+    """
+
+    auth_type: typing.Literal["url_secret"] = "url_secret"
+    name: str
+    provider: str
+    id: str
+    used_by: typing.Optional[AuthConnectionDependencies] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 AuthConnectionsUpdateResponse = typing_extensions.Annotated[
     typing.Union[
         AuthConnectionsUpdateResponse_Oauth2ClientCredentials,
@@ -310,6 +331,7 @@ AuthConnectionsUpdateResponse = typing_extensions.Annotated[
         AuthConnectionsUpdateResponse_ApiIntegrationOauth2CustomApp,
         AuthConnectionsUpdateResponse_WhatsappAuth,
         AuthConnectionsUpdateResponse_SlackBotAuth,
+        AuthConnectionsUpdateResponse_UrlSecret,
     ],
     UnionMetadata(discriminant="auth_type"),
 ]

@@ -275,6 +275,27 @@ class ListAuthConnectionsResponseAuthConnectionsItem_SlackBotAuth(UncheckedBaseM
             extra = pydantic.Extra.allow
 
 
+class ListAuthConnectionsResponseAuthConnectionsItem_UrlSecret(UncheckedBaseModel):
+    """
+    The type of auth connection config
+    """
+
+    auth_type: typing.Literal["url_secret"] = "url_secret"
+    name: str
+    provider: str
+    id: str
+    used_by: typing.Optional[AuthConnectionDependencies] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class ListAuthConnectionsResponseAuthConnectionsItem_WhatsappAuth(UncheckedBaseModel):
     """
     The type of auth connection config
@@ -309,6 +330,7 @@ ListAuthConnectionsResponseAuthConnectionsItem = typing_extensions.Annotated[
         ListAuthConnectionsResponseAuthConnectionsItem_Oauth2Jwt,
         ListAuthConnectionsResponseAuthConnectionsItem_PrivateKeyJwt,
         ListAuthConnectionsResponseAuthConnectionsItem_SlackBotAuth,
+        ListAuthConnectionsResponseAuthConnectionsItem_UrlSecret,
         ListAuthConnectionsResponseAuthConnectionsItem_WhatsappAuth,
     ],
     UnionMetadata(discriminant="auth_type"),

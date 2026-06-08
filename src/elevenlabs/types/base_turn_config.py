@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .spelling_patience import SpellingPatience
 from .turn_eagerness import TurnEagerness
+from .turn_model import TurnModel
 
 
 class BaseTurnConfig(UncheckedBaseModel):
@@ -44,6 +45,8 @@ class BaseTurnConfig(UncheckedBaseModel):
     """
     When enabled, if VAD detects no speech, attempts to re-transcribe accumulated audio at turn timeout. Disables silence discount billing for affected turns.
     """
+
+    turn_model: typing.Optional[TurnModel] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

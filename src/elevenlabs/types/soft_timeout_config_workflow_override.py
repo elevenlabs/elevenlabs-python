@@ -15,12 +15,22 @@ class SoftTimeoutConfigWorkflowOverride(UncheckedBaseModel):
 
     message: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Message to show when soft timeout is reached while waiting for LLM response
+    Message to show when the first soft timeout is reached while waiting for LLM response
+    """
+
+    additional_soft_timeout_messages: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Extra static filler messages for subsequent soft timeouts in the same LLM generation. The first timeout uses `message`. If fewer messages are configured than `max_soft_timeouts_per_generation`, the last configured message is repeated; otherwise a built-in filler is used.
     """
 
     use_llm_generated_message: typing.Optional[bool] = pydantic.Field(default=None)
     """
     If enabled, the soft timeout message will be generated dynamically instead of using the static message.
+    """
+
+    max_soft_timeouts_per_generation: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Maximum filler messages while waiting for a single LLM response. Fires every timeout_seconds until the LLM streams content or this limit is reached.
     """
 
     llm_generated_message_prompt_override: typing.Optional[str] = pydantic.Field(default=None)

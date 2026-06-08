@@ -1760,6 +1760,14 @@ client.text_to_dialogue.convert(
 <dl>
 <dd>
 
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **model_id:** `typing.Optional[str]` — Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
     
 </dd>
@@ -1897,6 +1905,14 @@ client.text_to_dialogue.stream(
 <dl>
 <dd>
 
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **model_id:** `typing.Optional[str]` — Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
     
 </dd>
@@ -1993,6 +2009,7 @@ client = ElevenLabs(
 )
 response = client.text_to_dialogue.stream_with_timestamps(
     output_format="mp3_22050_32",
+    enable_logging=True,
     inputs=[
         DialogueInput(
             text="Hello, how are you?",
@@ -2030,6 +2047,14 @@ for chunk in response.data:
 <dd>
 
 **output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -2131,6 +2156,7 @@ client = ElevenLabs(
 )
 client.text_to_dialogue.convert_with_timestamps(
     output_format="alaw_8000",
+    enable_logging=True,
     inputs=[
         DialogueInput(
             text="Hello, how are you?",
@@ -2166,6 +2192,14 @@ client.text_to_dialogue.convert_with_timestamps(
 <dd>
 
 **output_format:** `typing.Optional[TextToDialogueConvertWithTimestampsRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -3189,6 +3223,155 @@ client.user.get()
 </details>
 
 ## Voices
+<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns metadata about a specific voice.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.voices.get(
+    voice_id="21m00Tcm4TlvDq8ikWAM",
+    with_settings=True,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**voice_id:** `str` — ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**with_settings:** `typing.Optional[bool]` — This parameter is now deprecated. It is ignored and will be removed in a future version.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes a voice by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.voices.delete(
+    voice_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**voice_id:** `str` — ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">get_all</a>(...)</code></summary>
 <dl>
 <dd>
@@ -3400,155 +3583,6 @@ client.voices.search(
 <dd>
 
 **voice_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Voice IDs to lookup by. Maximum 100 voice IDs.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">get</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Returns metadata about a specific voice.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.voices.get(
-    voice_id="21m00Tcm4TlvDq8ikWAM",
-    with_settings=True,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**voice_id:** `str` — ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**with_settings:** `typing.Optional[bool]` — This parameter is now deprecated. It is ignored and will be removed in a future version.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">delete</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Deletes a voice by its ID.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.voices.delete(
-    voice_id="21m00Tcm4TlvDq8ikWAM",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**voice_id:** `str` — ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
     
 </dd>
 </dl>
@@ -5166,14 +5200,6 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dd>
 
 **csv_fps:** `typing.Optional[float]` — Frames per second to use when parsing a CSV file for dubbing. If not provided, FPS will be inferred from timecodes.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**hcaptcha_token:** `typing.Optional[str]` — HCaptcha token used to prevent spam, generated on the frontend either automatically or when the client solves the hCaptcha challenge.
     
 </dd>
 </dl>
@@ -11565,7 +11591,7 @@ client.conversational_ai.phone_numbers.get(
 <dl>
 <dd>
 
-**phone_number_id:** `str` — The id of an agent. This is returned on agent creation.
+**phone_number_id:** `str` — The phone number ID. This is returned when a phone number is imported.
     
 </dd>
 </dl>
@@ -11635,7 +11661,7 @@ client.conversational_ai.phone_numbers.delete(
 <dl>
 <dd>
 
-**phone_number_id:** `str` — The id of an agent. This is returned on agent creation.
+**phone_number_id:** `str` — The phone number ID. This is returned when a phone number is imported.
     
 </dd>
 </dl>
@@ -11705,7 +11731,7 @@ client.conversational_ai.phone_numbers.update(
 <dl>
 <dd>
 
-**phone_number_id:** `str` — The id of an agent. This is returned on agent creation.
+**phone_number_id:** `str` — The phone number ID. This is returned when a phone number is imported.
     
 </dd>
 </dl>
@@ -11841,7 +11867,7 @@ client.conversational_ai.phone_numbers.get_sip_messages(
 <dl>
 <dd>
 
-**phone_number_id:** `str` — The id of an agent. This is returned on agent creation.
+**phone_number_id:** `str` — The phone number ID. This is returned when a phone number is imported.
     
 </dd>
 </dl>
@@ -29771,7 +29797,7 @@ client.workspace.groups.members.add(
 <dl>
 <dd>
 
-Revoke the API key used to authenticate this request. Requires the query parameter `api_key_name=self` as an explicit confirmation.
+Revoke the API key used to authenticate this request. Requires the query parameter `api_key_name=self` as an explicit confirmation. This endpoint requires additional permissions and is not enabled by default. Reach out to your ElevenLabs contact to request access.
 </dd>
 </dl>
 </dd>

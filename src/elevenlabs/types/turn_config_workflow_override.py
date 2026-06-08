@@ -8,6 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .soft_timeout_config_workflow_override import SoftTimeoutConfigWorkflowOverride
 from .spelling_patience import SpellingPatience
 from .turn_eagerness import TurnEagerness
+from .turn_model import TurnModel
 
 
 class TurnConfigWorkflowOverride(UncheckedBaseModel):
@@ -44,6 +45,11 @@ class TurnConfigWorkflowOverride(UncheckedBaseModel):
     retranscribe_on_turn_timeout: typing.Optional[bool] = pydantic.Field(default=None)
     """
     When enabled, if VAD detects no speech, attempts to re-transcribe accumulated audio at turn timeout. Disables silence discount billing for affected turns.
+    """
+
+    turn_model: typing.Optional[TurnModel] = pydantic.Field(default=None)
+    """
+    Version of the turn detection model to use.
     """
 
     soft_timeout_config: typing.Optional[SoftTimeoutConfigWorkflowOverride] = pydantic.Field(default=None)

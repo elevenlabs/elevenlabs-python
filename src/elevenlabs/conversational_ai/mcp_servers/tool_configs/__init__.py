@@ -11,20 +11,24 @@ if typing.TYPE_CHECKING:
         McpToolConfigOverrideCreateRequestModelInputOverridesValue_Constant,
         McpToolConfigOverrideCreateRequestModelInputOverridesValue_DynamicVariable,
         McpToolConfigOverrideCreateRequestModelInputOverridesValue_Llm,
+        McpToolConfigOverrideCreateRequestModelInputOverridesValue_Omit,
         McpToolConfigOverrideUpdateRequestModelInputOverridesValue,
         McpToolConfigOverrideUpdateRequestModelInputOverridesValue_Constant,
         McpToolConfigOverrideUpdateRequestModelInputOverridesValue_DynamicVariable,
         McpToolConfigOverrideUpdateRequestModelInputOverridesValue_Llm,
+        McpToolConfigOverrideUpdateRequestModelInputOverridesValue_Omit,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "McpToolConfigOverrideCreateRequestModelInputOverridesValue": ".types",
     "McpToolConfigOverrideCreateRequestModelInputOverridesValue_Constant": ".types",
     "McpToolConfigOverrideCreateRequestModelInputOverridesValue_DynamicVariable": ".types",
     "McpToolConfigOverrideCreateRequestModelInputOverridesValue_Llm": ".types",
+    "McpToolConfigOverrideCreateRequestModelInputOverridesValue_Omit": ".types",
     "McpToolConfigOverrideUpdateRequestModelInputOverridesValue": ".types",
     "McpToolConfigOverrideUpdateRequestModelInputOverridesValue_Constant": ".types",
     "McpToolConfigOverrideUpdateRequestModelInputOverridesValue_DynamicVariable": ".types",
     "McpToolConfigOverrideUpdateRequestModelInputOverridesValue_Llm": ".types",
+    "McpToolConfigOverrideUpdateRequestModelInputOverridesValue_Omit": ".types",
 }
 
 
@@ -54,8 +58,10 @@ __all__ = [
     "McpToolConfigOverrideCreateRequestModelInputOverridesValue_Constant",
     "McpToolConfigOverrideCreateRequestModelInputOverridesValue_DynamicVariable",
     "McpToolConfigOverrideCreateRequestModelInputOverridesValue_Llm",
+    "McpToolConfigOverrideCreateRequestModelInputOverridesValue_Omit",
     "McpToolConfigOverrideUpdateRequestModelInputOverridesValue",
     "McpToolConfigOverrideUpdateRequestModelInputOverridesValue_Constant",
     "McpToolConfigOverrideUpdateRequestModelInputOverridesValue_DynamicVariable",
     "McpToolConfigOverrideUpdateRequestModelInputOverridesValue_Llm",
+    "McpToolConfigOverrideUpdateRequestModelInputOverridesValue_Omit",
 ]

@@ -53,11 +53,25 @@ class ApiIntegrationWebhookOverridesSchemaOverridesValue_Llm(UncheckedBaseModel)
             extra = pydantic.Extra.allow
 
 
+class ApiIntegrationWebhookOverridesSchemaOverridesValue_Omit(UncheckedBaseModel):
+    source: typing.Literal["omit"] = "omit"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 ApiIntegrationWebhookOverridesSchemaOverridesValue = typing_extensions.Annotated[
     typing.Union[
         ApiIntegrationWebhookOverridesSchemaOverridesValue_Constant,
         ApiIntegrationWebhookOverridesSchemaOverridesValue_DynamicVariable,
         ApiIntegrationWebhookOverridesSchemaOverridesValue_Llm,
+        ApiIntegrationWebhookOverridesSchemaOverridesValue_Omit,
     ],
     UnionMetadata(discriminant="source"),
 ]

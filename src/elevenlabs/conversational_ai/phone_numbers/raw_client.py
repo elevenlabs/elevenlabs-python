@@ -141,7 +141,7 @@ class RawPhoneNumbersClient:
         Parameters
         ----------
         phone_number_id : str
-            The id of an agent. This is returned on agent creation.
+            The phone number ID. This is returned when a phone number is imported.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -191,7 +191,7 @@ class RawPhoneNumbersClient:
         Parameters
         ----------
         phone_number_id : str
-            The id of an agent. This is returned on agent creation.
+            The phone number ID. This is returned when a phone number is imported.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -254,7 +254,7 @@ class RawPhoneNumbersClient:
         Parameters
         ----------
         phone_number_id : str
-            The id of an agent. This is returned on agent creation.
+            The phone number ID. This is returned when a phone number is imported.
 
         agent_id : typing.Optional[str]
 
@@ -345,7 +345,7 @@ class RawPhoneNumbersClient:
         Parameters
         ----------
         phone_number_id : str
-            The id of an agent. This is returned on agent creation.
+            The phone number ID. This is returned when a phone number is imported.
 
         page_size : typing.Optional[int]
 
@@ -512,7 +512,7 @@ class AsyncRawPhoneNumbersClient:
         Parameters
         ----------
         phone_number_id : str
-            The id of an agent. This is returned on agent creation.
+            The phone number ID. This is returned when a phone number is imported.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -562,7 +562,7 @@ class AsyncRawPhoneNumbersClient:
         Parameters
         ----------
         phone_number_id : str
-            The id of an agent. This is returned on agent creation.
+            The phone number ID. This is returned when a phone number is imported.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -625,7 +625,7 @@ class AsyncRawPhoneNumbersClient:
         Parameters
         ----------
         phone_number_id : str
-            The id of an agent. This is returned on agent creation.
+            The phone number ID. This is returned when a phone number is imported.
 
         agent_id : typing.Optional[str]
 
@@ -716,7 +716,7 @@ class AsyncRawPhoneNumbersClient:
         Parameters
         ----------
         phone_number_id : str
-            The id of an agent. This is returned on agent creation.
+            The phone number ID. This is returned when a phone number is imported.
 
         page_size : typing.Optional[int]
 

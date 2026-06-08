@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .document_usage_mode_enum import DocumentUsageModeEnum
+from .external_file_sync_info import ExternalFileSyncInfo
 from .knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
 from .knowledge_base_folder_path_segment_response_model import KnowledgeBaseFolderPathSegmentResponseModel
 from .resource_access_info import ResourceAccessInfo
@@ -31,6 +32,8 @@ class GetKnowledgeBaseFileResponseModel(UncheckedBaseModel):
 
     extracted_inner_html: str
     filename: str
+    external_sync_info: typing.Optional[ExternalFileSyncInfo] = None
+    is_frozen: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

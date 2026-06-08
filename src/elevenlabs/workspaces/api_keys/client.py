@@ -24,7 +24,7 @@ class ApiKeysClient:
 
     def revoke(self, *, api_key_name: str, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
         """
-        Revoke the API key used to authenticate this request. Requires the query parameter `api_key_name=self` as an explicit confirmation.
+        Revoke the API key used to authenticate this request. Requires the query parameter `api_key_name=self` as an explicit confirmation. This endpoint requires additional permissions and is not enabled by default. Reach out to your ElevenLabs contact to request access.
 
         Parameters
         ----------
@@ -71,7 +71,7 @@ class AsyncApiKeysClient:
 
     async def revoke(self, *, api_key_name: str, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
         """
-        Revoke the API key used to authenticate this request. Requires the query parameter `api_key_name=self` as an explicit confirmation.
+        Revoke the API key used to authenticate this request. Requires the query parameter `api_key_name=self` as an explicit confirmation. This endpoint requires additional permissions and is not enabled by default. Reach out to your ElevenLabs contact to request access.
 
         Parameters
         ----------

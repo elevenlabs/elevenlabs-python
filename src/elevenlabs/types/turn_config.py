@@ -8,6 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .soft_timeout_config import SoftTimeoutConfig
 from .spelling_patience import SpellingPatience
 from .turn_eagerness import TurnEagerness
+from .turn_model import TurnModel
 
 
 class TurnConfig(UncheckedBaseModel):
@@ -46,6 +47,7 @@ class TurnConfig(UncheckedBaseModel):
     When enabled, if VAD detects no speech, attempts to re-transcribe accumulated audio at turn timeout. Disables silence discount billing for affected turns.
     """
 
+    turn_model: typing.Optional[TurnModel] = None
     soft_timeout_config: typing.Optional[SoftTimeoutConfig] = pydantic.Field(default=None)
     """
     Configuration for soft timeout functionality. Provides immediate feedback during longer LLM responses.

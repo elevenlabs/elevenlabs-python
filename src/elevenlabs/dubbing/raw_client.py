@@ -132,7 +132,6 @@ class RawDubbingClient:
         disable_voice_cloning: typing.Optional[bool] = OMIT,
         mode: typing.Optional[DubbingCreateRequestMode] = OMIT,
         csv_fps: typing.Optional[float] = OMIT,
-        hcaptcha_token: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DoDubbingResponse]:
         """
@@ -200,9 +199,6 @@ class RawDubbingClient:
         csv_fps : typing.Optional[float]
             Frames per second to use when parsing a CSV file for dubbing. If not provided, FPS will be inferred from timecodes.
 
-        hcaptcha_token : typing.Optional[str]
-            HCaptcha token used to prevent spam, generated on the frontend either automatically or when the client solves the hCaptcha challenge.
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -231,7 +227,6 @@ class RawDubbingClient:
                 "disable_voice_cloning": disable_voice_cloning,
                 "mode": mode,
                 "csv_fps": csv_fps,
-                "hcaptcha_token": hcaptcha_token,
             },
             files={
                 **({"file": file} if file is not None else {}),
@@ -478,7 +473,6 @@ class AsyncRawDubbingClient:
         disable_voice_cloning: typing.Optional[bool] = OMIT,
         mode: typing.Optional[DubbingCreateRequestMode] = OMIT,
         csv_fps: typing.Optional[float] = OMIT,
-        hcaptcha_token: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DoDubbingResponse]:
         """
@@ -546,9 +540,6 @@ class AsyncRawDubbingClient:
         csv_fps : typing.Optional[float]
             Frames per second to use when parsing a CSV file for dubbing. If not provided, FPS will be inferred from timecodes.
 
-        hcaptcha_token : typing.Optional[str]
-            HCaptcha token used to prevent spam, generated on the frontend either automatically or when the client solves the hCaptcha challenge.
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -577,7 +568,6 @@ class AsyncRawDubbingClient:
                 "disable_voice_cloning": disable_voice_cloning,
                 "mode": mode,
                 "csv_fps": csv_fps,
-                "hcaptcha_token": hcaptcha_token,
             },
             files={
                 **({"file": file} if file is not None else {}),

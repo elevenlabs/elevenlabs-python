@@ -10,6 +10,8 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .auto_sync_info import AutoSyncInfo
 from .document_usage_mode_enum import DocumentUsageModeEnum
+from .external_file_sync_info import ExternalFileSyncInfo
+from .external_folder_sync_info import ExternalFolderSyncInfo
 from .get_knowledge_base_summary_file_response_model_dependent_agents_item import (
     GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem,
 )
@@ -39,6 +41,8 @@ class GetKnowledgeBaseListResponseModelDocumentsItem_File(UncheckedBaseModel):
     folder_parent_id: typing.Optional[str] = None
     folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentSummaryResponseModel]] = None
     dependent_agents: typing.List[GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem]
+    external_sync_info: typing.Optional[ExternalFileSyncInfo] = None
+    is_frozen: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -62,6 +66,8 @@ class GetKnowledgeBaseListResponseModelDocumentsItem_Folder(UncheckedBaseModel):
     dependent_agents: typing.List[GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem]
     children_count: int
     auto_sync_info: typing.Optional[AutoSyncInfo] = None
+    external_sync_info: typing.Optional[ExternalFolderSyncInfo] = None
+    is_frozen: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -18,6 +18,7 @@ from .visited_agent_ref import VisitedAgentRef
 class GetConversationResponseModel(UncheckedBaseModel):
     agent_id: str
     agent_name: typing.Optional[str] = None
+    conversation_product: typing.Optional[str] = None
     status: GetConversationResponseModelStatus
     user_id: typing.Optional[str] = None
     branch_id: typing.Optional[str] = None
