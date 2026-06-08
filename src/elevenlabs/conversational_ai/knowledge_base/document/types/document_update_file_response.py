@@ -10,6 +10,8 @@ from .....core.pydantic_utilities import IS_PYDANTIC_V2
 from .....core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .....types.auto_sync_info import AutoSyncInfo
 from .....types.document_usage_mode_enum import DocumentUsageModeEnum
+from .....types.external_file_sync_info import ExternalFileSyncInfo
+from .....types.external_folder_sync_info import ExternalFolderSyncInfo
 from .....types.knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
 from .....types.knowledge_base_folder_path_segment_response_model import KnowledgeBaseFolderPathSegmentResponseModel
 from .....types.resource_access_info import ResourceAccessInfo
@@ -49,6 +51,8 @@ class DocumentUpdateFileResponse_File(UncheckedBaseModel):
     folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentResponseModel]] = None
     extracted_inner_html: str
     filename: str
+    external_sync_info: typing.Optional[ExternalFileSyncInfo] = None
+    is_frozen: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -92,6 +96,8 @@ class DocumentUpdateFileResponse_Folder(UncheckedBaseModel):
     folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentResponseModel]] = None
     children_count: int
     auto_sync_info: typing.Optional[AutoSyncInfo] = None
+    external_sync_info: typing.Optional[ExternalFolderSyncInfo] = None
+    is_frozen: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

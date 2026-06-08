@@ -47,6 +47,80 @@ class VoicesClient:
         """
         return self._raw_client
 
+    def get(
+        self,
+        voice_id: str,
+        *,
+        with_settings: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Voice:
+        """
+        Returns metadata about a specific voice.
+
+        Parameters
+        ----------
+        voice_id : str
+            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
+
+        with_settings : typing.Optional[bool]
+            This parameter is now deprecated. It is ignored and will be removed in a future version.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Voice
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.voices.get(
+            voice_id="21m00Tcm4TlvDq8ikWAM",
+            with_settings=True,
+        )
+        """
+        _response = self._raw_client.get(voice_id, with_settings=with_settings, request_options=request_options)
+        return _response.data
+
+    def delete(
+        self, voice_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> DeleteVoiceResponseModel:
+        """
+        Deletes a voice by its ID.
+
+        Parameters
+        ----------
+        voice_id : str
+            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DeleteVoiceResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.voices.delete(
+            voice_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._raw_client.delete(voice_id, request_options=request_options)
+        return _response.data
+
     def get_all(
         self, *, show_legacy: typing.Optional[bool] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> GetVoicesResponse:
@@ -177,80 +251,6 @@ class VoicesClient:
             voice_ids=voice_ids,
             request_options=request_options,
         )
-        return _response.data
-
-    def get(
-        self,
-        voice_id: str,
-        *,
-        with_settings: typing.Optional[bool] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> Voice:
-        """
-        Returns metadata about a specific voice.
-
-        Parameters
-        ----------
-        voice_id : str
-            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
-
-        with_settings : typing.Optional[bool]
-            This parameter is now deprecated. It is ignored and will be removed in a future version.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        Voice
-            Successful Response
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.voices.get(
-            voice_id="21m00Tcm4TlvDq8ikWAM",
-            with_settings=True,
-        )
-        """
-        _response = self._raw_client.get(voice_id, with_settings=with_settings, request_options=request_options)
-        return _response.data
-
-    def delete(
-        self, voice_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> DeleteVoiceResponseModel:
-        """
-        Deletes a voice by its ID.
-
-        Parameters
-        ----------
-        voice_id : str
-            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        DeleteVoiceResponseModel
-            Successful Response
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.voices.delete(
-            voice_id="21m00Tcm4TlvDq8ikWAM",
-        )
-        """
-        _response = self._raw_client.delete(voice_id, request_options=request_options)
         return _response.data
 
     def update(
@@ -614,6 +614,96 @@ class AsyncVoicesClient:
         """
         return self._raw_client
 
+    async def get(
+        self,
+        voice_id: str,
+        *,
+        with_settings: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Voice:
+        """
+        Returns metadata about a specific voice.
+
+        Parameters
+        ----------
+        voice_id : str
+            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
+
+        with_settings : typing.Optional[bool]
+            This parameter is now deprecated. It is ignored and will be removed in a future version.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Voice
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.voices.get(
+                voice_id="21m00Tcm4TlvDq8ikWAM",
+                with_settings=True,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get(voice_id, with_settings=with_settings, request_options=request_options)
+        return _response.data
+
+    async def delete(
+        self, voice_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> DeleteVoiceResponseModel:
+        """
+        Deletes a voice by its ID.
+
+        Parameters
+        ----------
+        voice_id : str
+            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DeleteVoiceResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.voices.delete(
+                voice_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete(voice_id, request_options=request_options)
+        return _response.data
+
     async def get_all(
         self, *, show_legacy: typing.Optional[bool] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> GetVoicesResponse:
@@ -760,96 +850,6 @@ class AsyncVoicesClient:
             voice_ids=voice_ids,
             request_options=request_options,
         )
-        return _response.data
-
-    async def get(
-        self,
-        voice_id: str,
-        *,
-        with_settings: typing.Optional[bool] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> Voice:
-        """
-        Returns metadata about a specific voice.
-
-        Parameters
-        ----------
-        voice_id : str
-            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
-
-        with_settings : typing.Optional[bool]
-            This parameter is now deprecated. It is ignored and will be removed in a future version.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        Voice
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.voices.get(
-                voice_id="21m00Tcm4TlvDq8ikWAM",
-                with_settings=True,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.get(voice_id, with_settings=with_settings, request_options=request_options)
-        return _response.data
-
-    async def delete(
-        self, voice_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> DeleteVoiceResponseModel:
-        """
-        Deletes a voice by its ID.
-
-        Parameters
-        ----------
-        voice_id : str
-            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        DeleteVoiceResponseModel
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.voices.delete(
-                voice_id="21m00Tcm4TlvDq8ikWAM",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.delete(voice_id, request_options=request_options)
         return _response.data
 
     async def update(

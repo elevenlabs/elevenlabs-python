@@ -5,7 +5,11 @@ import typing
 from ...types.text_to_dialogue_websocket_audio_chunk import TextToDialogueWebsocketAudioChunk
 from ...types.text_to_dialogue_websocket_error import TextToDialogueWebsocketError
 from ...types.text_to_dialogue_websocket_final import TextToDialogueWebsocketFinal
+from ...types.text_to_dialogue_websocket_final_audio_for_turn import TextToDialogueWebsocketFinalAudioForTurn
 
 ReceiveTextToDialogueWebsocketMessage = typing.Union[
-    TextToDialogueWebsocketAudioChunk, TextToDialogueWebsocketFinal, TextToDialogueWebsocketError
+    TextToDialogueWebsocketAudioChunk,
+    TextToDialogueWebsocketFinalAudioForTurn,
+    TextToDialogueWebsocketFinal,
+    TextToDialogueWebsocketError,
 ]

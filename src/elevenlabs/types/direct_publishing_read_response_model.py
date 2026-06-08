@@ -37,6 +37,7 @@ class DirectPublishingReadResponseModel(UncheckedBaseModel):
     original_file_type: typing.Optional[str] = None
     target_audience: typing.Optional[DirectPublishingReadResponseModelTargetAudience] = None
     mature_content: typing.Optional[bool] = None
+    safesearch_adult: typing.Optional[bool] = None
     origin: typing.Optional[str] = None
     publication_date: typing.Optional[str] = None
     isbn: typing.Optional[str] = None

@@ -5,34 +5,22 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .procedure_type import ProcedureType
+from .transcript_message_role import TranscriptMessageRole
 
 
-class ProcedureAtVersion(UncheckedBaseModel):
-    procedure_id: str = pydantic.Field()
+class TranscriptMessage(UncheckedBaseModel):
     """
-    Procedure ID
+    A single turn in the conversation history.
     """
 
-    name: str = pydantic.Field()
+    role: TranscriptMessageRole = pydantic.Field()
     """
-    Procedure name
+    The speaker for this turn.
     """
 
     content: str = pydantic.Field()
     """
-    Procedure content
-    """
-
-    type: typing.Optional[ProcedureType] = None
-    agent_id: str = pydantic.Field()
-    """
-    Agent ID of the procedure
-    """
-
-    version_id: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Version ID of a version of the procedure. None for a procedure never versioned.
+    The transcript text for this turn.
     """
 
     if IS_PYDANTIC_V2:

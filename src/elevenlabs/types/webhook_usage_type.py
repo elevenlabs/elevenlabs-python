@@ -3,6 +3,12 @@
 import typing
 
 WebhookUsageType = typing.Union[
-    typing.Literal["ConvAI Agent Settings", "ConvAI Settings", "Voice Library Removal Notices", "Speech to Text"],
+    typing.Literal[
+        "ConvAI Agent Settings",
+        "ConvAI Settings",
+        "Voice Library Removal Notices",
+        "Speech to Text",
+        "Agent QA Evaluations",
+    ],
     typing.Any,
 ]

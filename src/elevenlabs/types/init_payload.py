@@ -5,11 +5,22 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .procedure_at_version import ProcedureAtVersion
 
 
-class LoadProcedureToolConfigOutput(UncheckedBaseModel):
-    procedures: typing.Optional[typing.Dict[str, ProcedureAtVersion]] = None
+class InitPayload(UncheckedBaseModel):
+    """
+    Payload for the session initialisation message sent by ElevenLabs.
+    """
+
+    type: typing.Literal["init"] = pydantic.Field(default="init")
+    """
+    The message type identifier.
+    """
+
+    conversation_id: str = pydantic.Field()
+    """
+    Unique identifier for this conversation session.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -26,6 +26,7 @@ if typing.TYPE_CHECKING:
         AuthConnectionsCreateResponse_Oauth2Jwt,
         AuthConnectionsCreateResponse_PrivateKeyJwt,
         AuthConnectionsCreateResponse_SlackBotAuth,
+        AuthConnectionsCreateResponse_UrlSecret,
         AuthConnectionsCreateResponse_WhatsappAuth,
         AuthConnectionsUpdateRequestBody,
         AuthConnectionsUpdateRequestBody_BasicAuth,
@@ -42,6 +43,7 @@ if typing.TYPE_CHECKING:
         AuthConnectionsUpdateResponse_Oauth2Jwt,
         AuthConnectionsUpdateResponse_PrivateKeyJwt,
         AuthConnectionsUpdateResponse_SlackBotAuth,
+        AuthConnectionsUpdateResponse_UrlSecret,
         AuthConnectionsUpdateResponse_WhatsappAuth,
     )
 _dynamic_imports: typing.Dict[str, str] = {
@@ -64,6 +66,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AuthConnectionsCreateResponse_Oauth2Jwt": ".types",
     "AuthConnectionsCreateResponse_PrivateKeyJwt": ".types",
     "AuthConnectionsCreateResponse_SlackBotAuth": ".types",
+    "AuthConnectionsCreateResponse_UrlSecret": ".types",
     "AuthConnectionsCreateResponse_WhatsappAuth": ".types",
     "AuthConnectionsUpdateRequestBody": ".types",
     "AuthConnectionsUpdateRequestBody_BasicAuth": ".types",
@@ -80,6 +83,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AuthConnectionsUpdateResponse_Oauth2Jwt": ".types",
     "AuthConnectionsUpdateResponse_PrivateKeyJwt": ".types",
     "AuthConnectionsUpdateResponse_SlackBotAuth": ".types",
+    "AuthConnectionsUpdateResponse_UrlSecret": ".types",
     "AuthConnectionsUpdateResponse_WhatsappAuth": ".types",
 }
 
@@ -125,6 +129,7 @@ __all__ = [
     "AuthConnectionsCreateResponse_Oauth2Jwt",
     "AuthConnectionsCreateResponse_PrivateKeyJwt",
     "AuthConnectionsCreateResponse_SlackBotAuth",
+    "AuthConnectionsCreateResponse_UrlSecret",
     "AuthConnectionsCreateResponse_WhatsappAuth",
     "AuthConnectionsUpdateRequestBody",
     "AuthConnectionsUpdateRequestBody_BasicAuth",
@@ -141,5 +146,6 @@ __all__ = [
     "AuthConnectionsUpdateResponse_Oauth2Jwt",
     "AuthConnectionsUpdateResponse_PrivateKeyJwt",
     "AuthConnectionsUpdateResponse_SlackBotAuth",
+    "AuthConnectionsUpdateResponse_UrlSecret",
     "AuthConnectionsUpdateResponse_WhatsappAuth",
 ]

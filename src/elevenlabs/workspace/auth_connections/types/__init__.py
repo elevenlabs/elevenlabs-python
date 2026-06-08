@@ -28,6 +28,7 @@ if typing.TYPE_CHECKING:
         AuthConnectionsCreateResponse_Oauth2Jwt,
         AuthConnectionsCreateResponse_PrivateKeyJwt,
         AuthConnectionsCreateResponse_SlackBotAuth,
+        AuthConnectionsCreateResponse_UrlSecret,
         AuthConnectionsCreateResponse_WhatsappAuth,
     )
     from .auth_connections_update_request_body import (
@@ -48,6 +49,7 @@ if typing.TYPE_CHECKING:
         AuthConnectionsUpdateResponse_Oauth2Jwt,
         AuthConnectionsUpdateResponse_PrivateKeyJwt,
         AuthConnectionsUpdateResponse_SlackBotAuth,
+        AuthConnectionsUpdateResponse_UrlSecret,
         AuthConnectionsUpdateResponse_WhatsappAuth,
     )
 _dynamic_imports: typing.Dict[str, str] = {
@@ -70,6 +72,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AuthConnectionsCreateResponse_Oauth2Jwt": ".auth_connections_create_response",
     "AuthConnectionsCreateResponse_PrivateKeyJwt": ".auth_connections_create_response",
     "AuthConnectionsCreateResponse_SlackBotAuth": ".auth_connections_create_response",
+    "AuthConnectionsCreateResponse_UrlSecret": ".auth_connections_create_response",
     "AuthConnectionsCreateResponse_WhatsappAuth": ".auth_connections_create_response",
     "AuthConnectionsUpdateRequestBody": ".auth_connections_update_request_body",
     "AuthConnectionsUpdateRequestBody_BasicAuth": ".auth_connections_update_request_body",
@@ -86,6 +89,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AuthConnectionsUpdateResponse_Oauth2Jwt": ".auth_connections_update_response",
     "AuthConnectionsUpdateResponse_PrivateKeyJwt": ".auth_connections_update_response",
     "AuthConnectionsUpdateResponse_SlackBotAuth": ".auth_connections_update_response",
+    "AuthConnectionsUpdateResponse_UrlSecret": ".auth_connections_update_response",
     "AuthConnectionsUpdateResponse_WhatsappAuth": ".auth_connections_update_response",
 }
 
@@ -131,6 +135,7 @@ __all__ = [
     "AuthConnectionsCreateResponse_Oauth2Jwt",
     "AuthConnectionsCreateResponse_PrivateKeyJwt",
     "AuthConnectionsCreateResponse_SlackBotAuth",
+    "AuthConnectionsCreateResponse_UrlSecret",
     "AuthConnectionsCreateResponse_WhatsappAuth",
     "AuthConnectionsUpdateRequestBody",
     "AuthConnectionsUpdateRequestBody_BasicAuth",
@@ -147,5 +152,6 @@ __all__ = [
     "AuthConnectionsUpdateResponse_Oauth2Jwt",
     "AuthConnectionsUpdateResponse_PrivateKeyJwt",
     "AuthConnectionsUpdateResponse_SlackBotAuth",
+    "AuthConnectionsUpdateResponse_UrlSecret",
     "AuthConnectionsUpdateResponse_WhatsappAuth",
 ]

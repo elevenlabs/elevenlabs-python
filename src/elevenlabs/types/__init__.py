@@ -49,6 +49,7 @@ if typing.TYPE_CHECKING:
     from .agent_metadata_response_model import AgentMetadataResponseModel
     from .agent_platform_settings_request_model import AgentPlatformSettingsRequestModel
     from .agent_platform_settings_response_model import AgentPlatformSettingsResponseModel
+    from .agent_response_payload import AgentResponsePayload
     from .agent_simulated_chat_test_response_model import AgentSimulatedChatTestResponseModel
     from .agent_sort_by import AgentSortBy
     from .agent_successful_response_example import AgentSuccessfulResponseExample
@@ -108,6 +109,7 @@ if typing.TYPE_CHECKING:
         ApiIntegrationWebhookOverridesSchemaOverridesValue_Constant,
         ApiIntegrationWebhookOverridesSchemaOverridesValue_DynamicVariable,
         ApiIntegrationWebhookOverridesSchemaOverridesValue_Llm,
+        ApiIntegrationWebhookOverridesSchemaOverridesValue_Omit,
     )
     from .api_integration_webhook_tool_config_input import ApiIntegrationWebhookToolConfigInput
     from .api_integration_webhook_tool_config_output import ApiIntegrationWebhookToolConfigOutput
@@ -332,6 +334,7 @@ if typing.TYPE_CHECKING:
     from .clip_animation_exit_effect import ClipAnimationExitEffect
     from .close_connection import CloseConnection
     from .close_context import CloseContext
+    from .close_payload import ClosePayload
     from .close_socket import CloseSocket
     from .coached_agent_settings import CoachedAgentSettings
     from .coaching_agent_settings import CoachingAgentSettings
@@ -733,6 +736,7 @@ if typing.TYPE_CHECKING:
     from .environment_variable_secret_value import EnvironmentVariableSecretValue
     from .environment_variable_secret_value_request import EnvironmentVariableSecretValueRequest
     from .environment_variables_list_response import EnvironmentVariablesListResponse
+    from .error_payload import ErrorPayload
     from .evaluation_settings_input import EvaluationSettingsInput
     from .evaluation_settings_output import EvaluationSettingsOutput
     from .evaluation_success_result import EvaluationSuccessResult
@@ -752,6 +756,9 @@ if typing.TYPE_CHECKING:
         ExtendedSubscriptionResponseModelMaxCreditLimitExtension,
     )
     from .extended_subscription_response_model_pending_change import ExtendedSubscriptionResponseModelPendingChange
+    from .external_file_sync_info import ExternalFileSyncInfo
+    from .external_folder_sync_info import ExternalFolderSyncInfo
+    from .external_sync_type import ExternalSyncType
     from .feature_status_common_model import FeatureStatusCommonModel
     from .features_usage_common_model import FeaturesUsageCommonModel
     from .feedback_item import FeedbackItem
@@ -935,6 +942,7 @@ if typing.TYPE_CHECKING:
     from .image_avatar import ImageAvatar
     from .image_subject import ImageSubject
     from .inbound_sip_trunk_config_request_model import InboundSipTrunkConfigRequestModel
+    from .init_payload import InitPayload
     from .initialise_context import InitialiseContext
     from .initialize_connection import InitializeConnection
     from .initialize_connection_multi import InitializeConnectionMulti
@@ -1006,6 +1014,7 @@ if typing.TYPE_CHECKING:
         ListAuthConnectionsResponseAuthConnectionsItem_Oauth2Jwt,
         ListAuthConnectionsResponseAuthConnectionsItem_PrivateKeyJwt,
         ListAuthConnectionsResponseAuthConnectionsItem_SlackBotAuth,
+        ListAuthConnectionsResponseAuthConnectionsItem_UrlSecret,
         ListAuthConnectionsResponseAuthConnectionsItem_WhatsappAuth,
     )
     from .list_calendar_events_params import ListCalendarEventsParams
@@ -1047,9 +1056,6 @@ if typing.TYPE_CHECKING:
     from .llm_usage_calculator_response_model import LlmUsageCalculatorResponseModel
     from .llm_usage_input import LlmUsageInput
     from .llm_usage_output import LlmUsageOutput
-    from .load_procedure_tool_config_input import LoadProcedureToolConfigInput
-    from .load_procedure_tool_config_output import LoadProcedureToolConfigOutput
-    from .load_procedure_tool_error_status import LoadProcedureToolErrorStatus
     from .manual_source import ManualSource
     from .manual_verification_file_response import ManualVerificationFileResponse
     from .manual_verification_response import ManualVerificationResponse
@@ -1082,6 +1088,7 @@ if typing.TYPE_CHECKING:
         McpToolConfigOverrideInputInputOverridesValue_Constant,
         McpToolConfigOverrideInputInputOverridesValue_DynamicVariable,
         McpToolConfigOverrideInputInputOverridesValue_Llm,
+        McpToolConfigOverrideInputInputOverridesValue_Omit,
     )
     from .mcp_tool_config_override_output import McpToolConfigOverrideOutput
     from .mcp_tool_config_override_output_input_overrides_value import (
@@ -1089,6 +1096,7 @@ if typing.TYPE_CHECKING:
         McpToolConfigOverrideOutputInputOverridesValue_Constant,
         McpToolConfigOverrideOutputInputOverridesValue_DynamicVariable,
         McpToolConfigOverrideOutputInputOverridesValue_Llm,
+        McpToolConfigOverrideOutputInputOverridesValue_Omit,
     )
     from .media_id import MediaId
     from .memory_entry_search_result import MemoryEntrySearchResult
@@ -1126,6 +1134,7 @@ if typing.TYPE_CHECKING:
     from .object_json_schema_property_input_properties_value import ObjectJsonSchemaPropertyInputPropertiesValue
     from .object_json_schema_property_output import ObjectJsonSchemaPropertyOutput
     from .object_json_schema_property_output_properties_value import ObjectJsonSchemaPropertyOutputPropertiesValue
+    from .omit_schema_override import OmitSchemaOverride
     from .opt_in_sms_reminder_params import OptInSmsReminderParams
     from .opt_out_sms_reminder_params import OptOutSmsReminderParams
     from .orb_avatar import OrbAvatar
@@ -1186,6 +1195,7 @@ if typing.TYPE_CHECKING:
         PhoneNumberTransferTransferDestination_SipUri,
         PhoneNumberTransferTransferDestination_SipUriDynamicVariable,
     )
+    from .ping_payload import PingPayload
     from .play_dtmf_result_error_model import PlayDtmfResultErrorModel
     from .play_dtmf_result_success_model import PlayDtmfResultSuccessModel
     from .play_dtmf_tool_config import PlayDtmfToolConfig
@@ -1196,6 +1206,7 @@ if typing.TYPE_CHECKING:
     from .podcast_project_response_model import PodcastProjectResponseModel
     from .podcast_text_source import PodcastTextSource
     from .podcast_url_source import PodcastUrlSource
+    from .pong_payload import PongPayload
     from .position_input import PositionInput
     from .position_output import PositionOutput
     from .post_agent_avatar_response_model import PostAgentAvatarResponseModel
@@ -1209,7 +1220,8 @@ if typing.TYPE_CHECKING:
     from .privacy_config_output import PrivacyConfigOutput
     from .private_key_jwt_response import PrivateKeyJwtResponse
     from .private_key_jwt_response_algorithm import PrivateKeyJwtResponseAlgorithm
-    from .procedure_at_version import ProcedureAtVersion
+    from .procedure_at_version_input import ProcedureAtVersionInput
+    from .procedure_at_version_output import ProcedureAtVersionOutput
     from .procedure_ref_response_model import ProcedureRefResponseModel
     from .procedure_type import ProcedureType
     from .project_creation_meta_response_model import ProjectCreationMetaResponseModel
@@ -1500,6 +1512,9 @@ if typing.TYPE_CHECKING:
     from .speech_to_text_word_response_model_type import SpeechToTextWordResponseModelType
     from .spelling_patience import SpellingPatience
     from .srt_export_options import SrtExportOptions
+    from .start_procedure_tool_config_input import StartProcedureToolConfigInput
+    from .start_procedure_tool_config_output import StartProcedureToolConfigOutput
+    from .start_procedure_tool_error_status import StartProcedureToolErrorStatus
     from .start_pvc_voice_training_response_model import StartPvcVoiceTrainingResponseModel
     from .start_speaker_separation_response_model import StartSpeakerSeparationResponseModel
     from .status_id import StatusId
@@ -1528,9 +1543,9 @@ if typing.TYPE_CHECKING:
         SystemToolConfigInputParams_EndCall,
         SystemToolConfigInputParams_KnowledgeBaseRag,
         SystemToolConfigInputParams_LanguageDetection,
-        SystemToolConfigInputParams_LoadProcedure,
         SystemToolConfigInputParams_PlayKeypadTouchTone,
         SystemToolConfigInputParams_SkipTurn,
+        SystemToolConfigInputParams_StartProcedure,
         SystemToolConfigInputParams_TransferToAgent,
         SystemToolConfigInputParams_TransferToNumber,
         SystemToolConfigInputParams_VoicemailDetection,
@@ -1541,9 +1556,9 @@ if typing.TYPE_CHECKING:
         SystemToolConfigOutputParams_EndCall,
         SystemToolConfigOutputParams_KnowledgeBaseRag,
         SystemToolConfigOutputParams_LanguageDetection,
-        SystemToolConfigOutputParams_LoadProcedure,
         SystemToolConfigOutputParams_PlayKeypadTouchTone,
         SystemToolConfigOutputParams_SkipTurn,
+        SystemToolConfigOutputParams_StartProcedure,
         SystemToolConfigOutputParams_TransferToAgent,
         SystemToolConfigOutputParams_TransferToNumber,
         SystemToolConfigOutputParams_VoicemailDetection,
@@ -1573,6 +1588,7 @@ if typing.TYPE_CHECKING:
     from .text_to_dialogue_websocket_client_message import TextToDialogueWebsocketClientMessage
     from .text_to_dialogue_websocket_error import TextToDialogueWebsocketError
     from .text_to_dialogue_websocket_final import TextToDialogueWebsocketFinal
+    from .text_to_dialogue_websocket_final_audio_for_turn import TextToDialogueWebsocketFinalAudioForTurn
     from .text_to_dialogue_websocket_output_format_enum import TextToDialogueWebsocketOutputFormatEnum
     from .text_to_dialogue_websocket_voice_input import TextToDialogueWebsocketVoiceInput
     from .text_to_speech_apply_text_normalization_enum import TextToSpeechApplyTextNormalizationEnum
@@ -1626,6 +1642,8 @@ if typing.TYPE_CHECKING:
     from .tool_type_filter import ToolTypeFilter
     from .tool_usage_stats_response_model import ToolUsageStatsResponseModel
     from .tools_response_model import ToolsResponseModel
+    from .transcript_message import TranscriptMessage
+    from .transcript_message_role import TranscriptMessageRole
     from .transcription_word import TranscriptionWord
     from .transcription_word_type import TranscriptionWordType
     from .transfer_branch_info_defaulting_to_main import TransferBranchInfoDefaultingToMain
@@ -1689,6 +1707,7 @@ if typing.TYPE_CHECKING:
     from .update_asset_params import UpdateAssetParams
     from .update_audio_native_project_request import UpdateAudioNativeProjectRequest
     from .update_basic_auth_request import UpdateBasicAuthRequest
+    from .update_booking_page_appearance_params import UpdateBookingPageAppearanceParams
     from .update_booking_page_settings_params import UpdateBookingPageSettingsParams
     from .update_business_info_params import UpdateBusinessInfoParams
     from .update_calendar_event_params import UpdateCalendarEventParams
@@ -1717,6 +1736,7 @@ if typing.TYPE_CHECKING:
     from .upsert_order_item_response import UpsertOrderItemResponse
     from .url_avatar import UrlAvatar
     from .url_model import UrlModel
+    from .url_secret_auth_response import UrlSecretAuthResponse
     from .usage_aggregation_interval import UsageAggregationInterval
     from .usage_characters_response_model import UsageCharactersResponseModel
     from .user import User
@@ -1724,6 +1744,7 @@ if typing.TYPE_CHECKING:
     from .user_feedback import UserFeedback
     from .user_feedback_score import UserFeedbackScore
     from .user_model import UserModel
+    from .user_transcript_payload import UserTranscriptPayload
     from .user_type_id import UserTypeId
     from .users_sort_by import UsersSortBy
     from .utterance_response_model import UtteranceResponseModel
@@ -2022,6 +2043,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentMetadataResponseModel": ".agent_metadata_response_model",
     "AgentPlatformSettingsRequestModel": ".agent_platform_settings_request_model",
     "AgentPlatformSettingsResponseModel": ".agent_platform_settings_response_model",
+    "AgentResponsePayload": ".agent_response_payload",
     "AgentSimulatedChatTestResponseModel": ".agent_simulated_chat_test_response_model",
     "AgentSortBy": ".agent_sort_by",
     "AgentSuccessfulResponseExample": ".agent_successful_response_example",
@@ -2070,6 +2092,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ApiIntegrationWebhookOverridesSchemaOverridesValue_Constant": ".api_integration_webhook_overrides_schema_overrides_value",
     "ApiIntegrationWebhookOverridesSchemaOverridesValue_DynamicVariable": ".api_integration_webhook_overrides_schema_overrides_value",
     "ApiIntegrationWebhookOverridesSchemaOverridesValue_Llm": ".api_integration_webhook_overrides_schema_overrides_value",
+    "ApiIntegrationWebhookOverridesSchemaOverridesValue_Omit": ".api_integration_webhook_overrides_schema_overrides_value",
     "ApiIntegrationWebhookToolConfigInput": ".api_integration_webhook_tool_config_input",
     "ApiIntegrationWebhookToolConfigOutput": ".api_integration_webhook_tool_config_output",
     "ArrayJsonSchemaPropertyInput": ".array_json_schema_property_input",
@@ -2281,6 +2304,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ClipAnimationExitEffect": ".clip_animation_exit_effect",
     "CloseConnection": ".close_connection",
     "CloseContext": ".close_context",
+    "ClosePayload": ".close_payload",
     "CloseSocket": ".close_socket",
     "CoachedAgentSettings": ".coached_agent_settings",
     "CoachingAgentSettings": ".coaching_agent_settings",
@@ -2612,6 +2636,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "EnvironmentVariableSecretValue": ".environment_variable_secret_value",
     "EnvironmentVariableSecretValueRequest": ".environment_variable_secret_value_request",
     "EnvironmentVariablesListResponse": ".environment_variables_list_response",
+    "ErrorPayload": ".error_payload",
     "EvaluationSettingsInput": ".evaluation_settings_input",
     "EvaluationSettingsOutput": ".evaluation_settings_output",
     "EvaluationSuccessResult": ".evaluation_success_result",
@@ -2627,6 +2652,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ExportOptions_Txt": ".export_options",
     "ExtendedSubscriptionResponseModelMaxCreditLimitExtension": ".extended_subscription_response_model_max_credit_limit_extension",
     "ExtendedSubscriptionResponseModelPendingChange": ".extended_subscription_response_model_pending_change",
+    "ExternalFileSyncInfo": ".external_file_sync_info",
+    "ExternalFolderSyncInfo": ".external_folder_sync_info",
+    "ExternalSyncType": ".external_sync_type",
     "FeatureStatusCommonModel": ".feature_status_common_model",
     "FeaturesUsageCommonModel": ".features_usage_common_model",
     "FeedbackItem": ".feedback_item",
@@ -2776,6 +2804,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ImageAvatar": ".image_avatar",
     "ImageSubject": ".image_subject",
     "InboundSipTrunkConfigRequestModel": ".inbound_sip_trunk_config_request_model",
+    "InitPayload": ".init_payload",
     "InitialiseContext": ".initialise_context",
     "InitializeConnection": ".initialize_connection",
     "InitializeConnectionMulti": ".initialize_connection_multi",
@@ -2842,6 +2871,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListAuthConnectionsResponseAuthConnectionsItem_Oauth2Jwt": ".list_auth_connections_response_auth_connections_item",
     "ListAuthConnectionsResponseAuthConnectionsItem_PrivateKeyJwt": ".list_auth_connections_response_auth_connections_item",
     "ListAuthConnectionsResponseAuthConnectionsItem_SlackBotAuth": ".list_auth_connections_response_auth_connections_item",
+    "ListAuthConnectionsResponseAuthConnectionsItem_UrlSecret": ".list_auth_connections_response_auth_connections_item",
     "ListAuthConnectionsResponseAuthConnectionsItem_WhatsappAuth": ".list_auth_connections_response_auth_connections_item",
     "ListCalendarEventsParams": ".list_calendar_events_params",
     "ListClientInteractionsParams": ".list_client_interactions_params",
@@ -2882,9 +2912,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LlmUsageCalculatorResponseModel": ".llm_usage_calculator_response_model",
     "LlmUsageInput": ".llm_usage_input",
     "LlmUsageOutput": ".llm_usage_output",
-    "LoadProcedureToolConfigInput": ".load_procedure_tool_config_input",
-    "LoadProcedureToolConfigOutput": ".load_procedure_tool_config_output",
-    "LoadProcedureToolErrorStatus": ".load_procedure_tool_error_status",
     "ManualSource": ".manual_source",
     "ManualVerificationFileResponse": ".manual_verification_file_response",
     "ManualVerificationResponse": ".manual_verification_response",
@@ -2914,11 +2941,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "McpToolConfigOverrideInputInputOverridesValue_Constant": ".mcp_tool_config_override_input_input_overrides_value",
     "McpToolConfigOverrideInputInputOverridesValue_DynamicVariable": ".mcp_tool_config_override_input_input_overrides_value",
     "McpToolConfigOverrideInputInputOverridesValue_Llm": ".mcp_tool_config_override_input_input_overrides_value",
+    "McpToolConfigOverrideInputInputOverridesValue_Omit": ".mcp_tool_config_override_input_input_overrides_value",
     "McpToolConfigOverrideOutput": ".mcp_tool_config_override_output",
     "McpToolConfigOverrideOutputInputOverridesValue": ".mcp_tool_config_override_output_input_overrides_value",
     "McpToolConfigOverrideOutputInputOverridesValue_Constant": ".mcp_tool_config_override_output_input_overrides_value",
     "McpToolConfigOverrideOutputInputOverridesValue_DynamicVariable": ".mcp_tool_config_override_output_input_overrides_value",
     "McpToolConfigOverrideOutputInputOverridesValue_Llm": ".mcp_tool_config_override_output_input_overrides_value",
+    "McpToolConfigOverrideOutputInputOverridesValue_Omit": ".mcp_tool_config_override_output_input_overrides_value",
     "MediaId": ".media_id",
     "MemoryEntrySearchResult": ".memory_entry_search_result",
     "MemoryEntrySearchResultSource": ".memory_entry_search_result_source",
@@ -2955,6 +2984,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ObjectJsonSchemaPropertyInputPropertiesValue": ".object_json_schema_property_input_properties_value",
     "ObjectJsonSchemaPropertyOutput": ".object_json_schema_property_output",
     "ObjectJsonSchemaPropertyOutputPropertiesValue": ".object_json_schema_property_output_properties_value",
+    "OmitSchemaOverride": ".omit_schema_override",
     "OptInSmsReminderParams": ".opt_in_sms_reminder_params",
     "OptOutSmsReminderParams": ".opt_out_sms_reminder_params",
     "OrbAvatar": ".orb_avatar",
@@ -3005,6 +3035,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PhoneNumberTransferTransferDestination_PhoneDynamicVariable": ".phone_number_transfer_transfer_destination",
     "PhoneNumberTransferTransferDestination_SipUri": ".phone_number_transfer_transfer_destination",
     "PhoneNumberTransferTransferDestination_SipUriDynamicVariable": ".phone_number_transfer_transfer_destination",
+    "PingPayload": ".ping_payload",
     "PlayDtmfResultErrorModel": ".play_dtmf_result_error_model",
     "PlayDtmfResultSuccessModel": ".play_dtmf_result_success_model",
     "PlayDtmfToolConfig": ".play_dtmf_tool_config",
@@ -3015,6 +3046,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PodcastProjectResponseModel": ".podcast_project_response_model",
     "PodcastTextSource": ".podcast_text_source",
     "PodcastUrlSource": ".podcast_url_source",
+    "PongPayload": ".pong_payload",
     "PositionInput": ".position_input",
     "PositionOutput": ".position_output",
     "PostAgentAvatarResponseModel": ".post_agent_avatar_response_model",
@@ -3028,7 +3060,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PrivacyConfigOutput": ".privacy_config_output",
     "PrivateKeyJwtResponse": ".private_key_jwt_response",
     "PrivateKeyJwtResponseAlgorithm": ".private_key_jwt_response_algorithm",
-    "ProcedureAtVersion": ".procedure_at_version",
+    "ProcedureAtVersionInput": ".procedure_at_version_input",
+    "ProcedureAtVersionOutput": ".procedure_at_version_output",
     "ProcedureRefResponseModel": ".procedure_ref_response_model",
     "ProcedureType": ".procedure_type",
     "ProjectCreationMetaResponseModel": ".project_creation_meta_response_model",
@@ -3291,6 +3324,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SpeechToTextWordResponseModelType": ".speech_to_text_word_response_model_type",
     "SpellingPatience": ".spelling_patience",
     "SrtExportOptions": ".srt_export_options",
+    "StartProcedureToolConfigInput": ".start_procedure_tool_config_input",
+    "StartProcedureToolConfigOutput": ".start_procedure_tool_config_output",
+    "StartProcedureToolErrorStatus": ".start_procedure_tool_error_status",
     "StartPvcVoiceTrainingResponseModel": ".start_pvc_voice_training_response_model",
     "StartSpeakerSeparationResponseModel": ".start_speaker_separation_response_model",
     "StatusId": ".status_id",
@@ -3316,9 +3352,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SystemToolConfigInputParams_EndCall": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_KnowledgeBaseRag": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_LanguageDetection": ".system_tool_config_input_params",
-    "SystemToolConfigInputParams_LoadProcedure": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_PlayKeypadTouchTone": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_SkipTurn": ".system_tool_config_input_params",
+    "SystemToolConfigInputParams_StartProcedure": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_TransferToAgent": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_TransferToNumber": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_VoicemailDetection": ".system_tool_config_input_params",
@@ -3327,9 +3363,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SystemToolConfigOutputParams_EndCall": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_KnowledgeBaseRag": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_LanguageDetection": ".system_tool_config_output_params",
-    "SystemToolConfigOutputParams_LoadProcedure": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_PlayKeypadTouchTone": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_SkipTurn": ".system_tool_config_output_params",
+    "SystemToolConfigOutputParams_StartProcedure": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_TransferToAgent": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_TransferToNumber": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_VoicemailDetection": ".system_tool_config_output_params",
@@ -3356,6 +3392,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TextToDialogueWebsocketClientMessage": ".text_to_dialogue_websocket_client_message",
     "TextToDialogueWebsocketError": ".text_to_dialogue_websocket_error",
     "TextToDialogueWebsocketFinal": ".text_to_dialogue_websocket_final",
+    "TextToDialogueWebsocketFinalAudioForTurn": ".text_to_dialogue_websocket_final_audio_for_turn",
     "TextToDialogueWebsocketOutputFormatEnum": ".text_to_dialogue_websocket_output_format_enum",
     "TextToDialogueWebsocketVoiceInput": ".text_to_dialogue_websocket_voice_input",
     "TextToSpeechApplyTextNormalizationEnum": ".text_to_speech_apply_text_normalization_enum",
@@ -3403,6 +3440,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ToolTypeFilter": ".tool_type_filter",
     "ToolUsageStatsResponseModel": ".tool_usage_stats_response_model",
     "ToolsResponseModel": ".tools_response_model",
+    "TranscriptMessage": ".transcript_message",
+    "TranscriptMessageRole": ".transcript_message_role",
     "TranscriptionWord": ".transcription_word",
     "TranscriptionWordType": ".transcription_word_type",
     "TransferBranchInfoDefaultingToMain": ".transfer_branch_info_defaulting_to_main",
@@ -3460,6 +3499,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateAssetParams": ".update_asset_params",
     "UpdateAudioNativeProjectRequest": ".update_audio_native_project_request",
     "UpdateBasicAuthRequest": ".update_basic_auth_request",
+    "UpdateBookingPageAppearanceParams": ".update_booking_page_appearance_params",
     "UpdateBookingPageSettingsParams": ".update_booking_page_settings_params",
     "UpdateBusinessInfoParams": ".update_business_info_params",
     "UpdateCalendarEventParams": ".update_calendar_event_params",
@@ -3488,6 +3528,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpsertOrderItemResponse": ".upsert_order_item_response",
     "UrlAvatar": ".url_avatar",
     "UrlModel": ".url_model",
+    "UrlSecretAuthResponse": ".url_secret_auth_response",
     "UsageAggregationInterval": ".usage_aggregation_interval",
     "UsageCharactersResponseModel": ".usage_characters_response_model",
     "User": ".user",
@@ -3495,6 +3536,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UserFeedback": ".user_feedback",
     "UserFeedbackScore": ".user_feedback_score",
     "UserModel": ".user_model",
+    "UserTranscriptPayload": ".user_transcript_payload",
     "UserTypeId": ".user_type_id",
     "UsersSortBy": ".users_sort_by",
     "UtteranceResponseModel": ".utterance_response_model",
@@ -3773,6 +3815,7 @@ __all__ = [
     "AgentMetadataResponseModel",
     "AgentPlatformSettingsRequestModel",
     "AgentPlatformSettingsResponseModel",
+    "AgentResponsePayload",
     "AgentSimulatedChatTestResponseModel",
     "AgentSortBy",
     "AgentSuccessfulResponseExample",
@@ -3821,6 +3864,7 @@ __all__ = [
     "ApiIntegrationWebhookOverridesSchemaOverridesValue_Constant",
     "ApiIntegrationWebhookOverridesSchemaOverridesValue_DynamicVariable",
     "ApiIntegrationWebhookOverridesSchemaOverridesValue_Llm",
+    "ApiIntegrationWebhookOverridesSchemaOverridesValue_Omit",
     "ApiIntegrationWebhookToolConfigInput",
     "ApiIntegrationWebhookToolConfigOutput",
     "ArrayJsonSchemaPropertyInput",
@@ -4032,6 +4076,7 @@ __all__ = [
     "ClipAnimationExitEffect",
     "CloseConnection",
     "CloseContext",
+    "ClosePayload",
     "CloseSocket",
     "CoachedAgentSettings",
     "CoachingAgentSettings",
@@ -4363,6 +4408,7 @@ __all__ = [
     "EnvironmentVariableSecretValue",
     "EnvironmentVariableSecretValueRequest",
     "EnvironmentVariablesListResponse",
+    "ErrorPayload",
     "EvaluationSettingsInput",
     "EvaluationSettingsOutput",
     "EvaluationSuccessResult",
@@ -4378,6 +4424,9 @@ __all__ = [
     "ExportOptions_Txt",
     "ExtendedSubscriptionResponseModelMaxCreditLimitExtension",
     "ExtendedSubscriptionResponseModelPendingChange",
+    "ExternalFileSyncInfo",
+    "ExternalFolderSyncInfo",
+    "ExternalSyncType",
     "FeatureStatusCommonModel",
     "FeaturesUsageCommonModel",
     "FeedbackItem",
@@ -4527,6 +4576,7 @@ __all__ = [
     "ImageAvatar",
     "ImageSubject",
     "InboundSipTrunkConfigRequestModel",
+    "InitPayload",
     "InitialiseContext",
     "InitializeConnection",
     "InitializeConnectionMulti",
@@ -4593,6 +4643,7 @@ __all__ = [
     "ListAuthConnectionsResponseAuthConnectionsItem_Oauth2Jwt",
     "ListAuthConnectionsResponseAuthConnectionsItem_PrivateKeyJwt",
     "ListAuthConnectionsResponseAuthConnectionsItem_SlackBotAuth",
+    "ListAuthConnectionsResponseAuthConnectionsItem_UrlSecret",
     "ListAuthConnectionsResponseAuthConnectionsItem_WhatsappAuth",
     "ListCalendarEventsParams",
     "ListClientInteractionsParams",
@@ -4633,9 +4684,6 @@ __all__ = [
     "LlmUsageCalculatorResponseModel",
     "LlmUsageInput",
     "LlmUsageOutput",
-    "LoadProcedureToolConfigInput",
-    "LoadProcedureToolConfigOutput",
-    "LoadProcedureToolErrorStatus",
     "ManualSource",
     "ManualVerificationFileResponse",
     "ManualVerificationResponse",
@@ -4665,11 +4713,13 @@ __all__ = [
     "McpToolConfigOverrideInputInputOverridesValue_Constant",
     "McpToolConfigOverrideInputInputOverridesValue_DynamicVariable",
     "McpToolConfigOverrideInputInputOverridesValue_Llm",
+    "McpToolConfigOverrideInputInputOverridesValue_Omit",
     "McpToolConfigOverrideOutput",
     "McpToolConfigOverrideOutputInputOverridesValue",
     "McpToolConfigOverrideOutputInputOverridesValue_Constant",
     "McpToolConfigOverrideOutputInputOverridesValue_DynamicVariable",
     "McpToolConfigOverrideOutputInputOverridesValue_Llm",
+    "McpToolConfigOverrideOutputInputOverridesValue_Omit",
     "MediaId",
     "MemoryEntrySearchResult",
     "MemoryEntrySearchResultSource",
@@ -4706,6 +4756,7 @@ __all__ = [
     "ObjectJsonSchemaPropertyInputPropertiesValue",
     "ObjectJsonSchemaPropertyOutput",
     "ObjectJsonSchemaPropertyOutputPropertiesValue",
+    "OmitSchemaOverride",
     "OptInSmsReminderParams",
     "OptOutSmsReminderParams",
     "OrbAvatar",
@@ -4756,6 +4807,7 @@ __all__ = [
     "PhoneNumberTransferTransferDestination_PhoneDynamicVariable",
     "PhoneNumberTransferTransferDestination_SipUri",
     "PhoneNumberTransferTransferDestination_SipUriDynamicVariable",
+    "PingPayload",
     "PlayDtmfResultErrorModel",
     "PlayDtmfResultSuccessModel",
     "PlayDtmfToolConfig",
@@ -4766,6 +4818,7 @@ __all__ = [
     "PodcastProjectResponseModel",
     "PodcastTextSource",
     "PodcastUrlSource",
+    "PongPayload",
     "PositionInput",
     "PositionOutput",
     "PostAgentAvatarResponseModel",
@@ -4779,7 +4832,8 @@ __all__ = [
     "PrivacyConfigOutput",
     "PrivateKeyJwtResponse",
     "PrivateKeyJwtResponseAlgorithm",
-    "ProcedureAtVersion",
+    "ProcedureAtVersionInput",
+    "ProcedureAtVersionOutput",
     "ProcedureRefResponseModel",
     "ProcedureType",
     "ProjectCreationMetaResponseModel",
@@ -5042,6 +5096,9 @@ __all__ = [
     "SpeechToTextWordResponseModelType",
     "SpellingPatience",
     "SrtExportOptions",
+    "StartProcedureToolConfigInput",
+    "StartProcedureToolConfigOutput",
+    "StartProcedureToolErrorStatus",
     "StartPvcVoiceTrainingResponseModel",
     "StartSpeakerSeparationResponseModel",
     "StatusId",
@@ -5067,9 +5124,9 @@ __all__ = [
     "SystemToolConfigInputParams_EndCall",
     "SystemToolConfigInputParams_KnowledgeBaseRag",
     "SystemToolConfigInputParams_LanguageDetection",
-    "SystemToolConfigInputParams_LoadProcedure",
     "SystemToolConfigInputParams_PlayKeypadTouchTone",
     "SystemToolConfigInputParams_SkipTurn",
+    "SystemToolConfigInputParams_StartProcedure",
     "SystemToolConfigInputParams_TransferToAgent",
     "SystemToolConfigInputParams_TransferToNumber",
     "SystemToolConfigInputParams_VoicemailDetection",
@@ -5078,9 +5135,9 @@ __all__ = [
     "SystemToolConfigOutputParams_EndCall",
     "SystemToolConfigOutputParams_KnowledgeBaseRag",
     "SystemToolConfigOutputParams_LanguageDetection",
-    "SystemToolConfigOutputParams_LoadProcedure",
     "SystemToolConfigOutputParams_PlayKeypadTouchTone",
     "SystemToolConfigOutputParams_SkipTurn",
+    "SystemToolConfigOutputParams_StartProcedure",
     "SystemToolConfigOutputParams_TransferToAgent",
     "SystemToolConfigOutputParams_TransferToNumber",
     "SystemToolConfigOutputParams_VoicemailDetection",
@@ -5107,6 +5164,7 @@ __all__ = [
     "TextToDialogueWebsocketClientMessage",
     "TextToDialogueWebsocketError",
     "TextToDialogueWebsocketFinal",
+    "TextToDialogueWebsocketFinalAudioForTurn",
     "TextToDialogueWebsocketOutputFormatEnum",
     "TextToDialogueWebsocketVoiceInput",
     "TextToSpeechApplyTextNormalizationEnum",
@@ -5154,6 +5212,8 @@ __all__ = [
     "ToolTypeFilter",
     "ToolUsageStatsResponseModel",
     "ToolsResponseModel",
+    "TranscriptMessage",
+    "TranscriptMessageRole",
     "TranscriptionWord",
     "TranscriptionWordType",
     "TransferBranchInfoDefaultingToMain",
@@ -5211,6 +5271,7 @@ __all__ = [
     "UpdateAssetParams",
     "UpdateAudioNativeProjectRequest",
     "UpdateBasicAuthRequest",
+    "UpdateBookingPageAppearanceParams",
     "UpdateBookingPageSettingsParams",
     "UpdateBusinessInfoParams",
     "UpdateCalendarEventParams",
@@ -5239,6 +5300,7 @@ __all__ = [
     "UpsertOrderItemResponse",
     "UrlAvatar",
     "UrlModel",
+    "UrlSecretAuthResponse",
     "UsageAggregationInterval",
     "UsageCharactersResponseModel",
     "User",
@@ -5246,6 +5308,7 @@ __all__ = [
     "UserFeedback",
     "UserFeedbackScore",
     "UserModel",
+    "UserTranscriptPayload",
     "UserTypeId",
     "UsersSortBy",
     "UtteranceResponseModel",

@@ -5,11 +5,14 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .procedure_at_version import ProcedureAtVersion
+from .auth_connection_dependencies import AuthConnectionDependencies
 
 
-class LoadProcedureToolConfigInput(UncheckedBaseModel):
-    procedures: typing.Optional[typing.Dict[str, ProcedureAtVersion]] = None
+class UrlSecretAuthResponse(UncheckedBaseModel):
+    name: str
+    provider: str
+    id: str
+    used_by: typing.Optional[AuthConnectionDependencies] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
