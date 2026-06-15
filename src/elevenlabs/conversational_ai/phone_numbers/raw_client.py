@@ -16,6 +16,7 @@ from ...types.get_sip_log_messages_response import GetSipLogMessagesResponse
 from ...types.inbound_sip_trunk_config_request_model import InboundSipTrunkConfigRequestModel
 from ...types.livekit_stack_type import LivekitStackType
 from ...types.outbound_sip_trunk_config_request_model import OutboundSipTrunkConfigRequestModel
+from ...types.telephony_provider import TelephonyProvider
 from .types.phone_numbers_create_request_body import PhoneNumbersCreateRequestBody
 from .types.phone_numbers_get_response import PhoneNumbersGetResponse
 from .types.phone_numbers_list_response_item import PhoneNumbersListResponseItem
@@ -30,13 +31,27 @@ class RawPhoneNumbersClient:
         self._client_wrapper = client_wrapper
 
     def list(
-        self, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        provider: typing.Optional[TelephonyProvider] = None,
+        agent_id: typing.Optional[str] = None,
+        branch_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[typing.List[PhoneNumbersListResponseItem]]:
         """
         Retrieve all Phone Numbers
 
         Parameters
         ----------
+        provider : typing.Optional[TelephonyProvider]
+            Filter by telephony provider
+
+        agent_id : typing.Optional[str]
+            Filter by assigned agent ID
+
+        branch_id : typing.Optional[str]
+            Filter by assigned branch ID
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -48,6 +63,11 @@ class RawPhoneNumbersClient:
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/phone-numbers",
             method="GET",
+            params={
+                "provider": provider,
+                "agent_id": agent_id,
+                "branch_id": branch_id,
+            },
             request_options=request_options,
         )
         try:
@@ -401,13 +421,27 @@ class AsyncRawPhoneNumbersClient:
         self._client_wrapper = client_wrapper
 
     async def list(
-        self, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        provider: typing.Optional[TelephonyProvider] = None,
+        agent_id: typing.Optional[str] = None,
+        branch_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[typing.List[PhoneNumbersListResponseItem]]:
         """
         Retrieve all Phone Numbers
 
         Parameters
         ----------
+        provider : typing.Optional[TelephonyProvider]
+            Filter by telephony provider
+
+        agent_id : typing.Optional[str]
+            Filter by assigned agent ID
+
+        branch_id : typing.Optional[str]
+            Filter by assigned branch ID
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -419,6 +453,11 @@ class AsyncRawPhoneNumbersClient:
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/phone-numbers",
             method="GET",
+            params={
+                "provider": provider,
+                "agent_id": agent_id,
+                "branch_id": branch_id,
+            },
             request_options=request_options,
         )
         try:

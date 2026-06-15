@@ -2,4 +2,4 @@
 
 import typing
 
-StartProcedureToolErrorStatus = typing.Union[typing.Literal["not_found", "invalid_name"], typing.Any]
+StartProcedureToolErrorStatus = typing.Union[typing.Literal["not_found", "invalid_name", "already_active"], typing.Any]

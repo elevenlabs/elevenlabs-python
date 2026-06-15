@@ -9,6 +9,10 @@ from .song_section import SongSection
 
 
 class MusicPrompt(UncheckedBaseModel):
+    """
+    Composition plan for the `music_v1` model. Using this field with any other model will result in an error.
+    """
+
     positive_global_styles: typing.List[str] = pydantic.Field()
     """
     The styles and musical directions that should be present in the entire song. Use English language for best result.

@@ -13,6 +13,12 @@ from .types.body_create_service_account_api_key_v_1_service_accounts_service_acc
 from .types.body_edit_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_api_key_id_patch_allowed_ips import (
     BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchAllowedIps,
 )
+from .types.body_edit_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_api_key_id_patch_character_limit import (
+    BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchCharacterLimit,
+)
+from .types.body_edit_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_api_key_id_patch_is_enabled import (
+    BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchIsEnabled,
+)
 from .types.body_edit_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_api_key_id_patch_permissions import (
     BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissions,
 )
@@ -166,10 +172,16 @@ class ApiKeysClient:
         service_account_user_id: str,
         api_key_id: str,
         *,
-        is_enabled: bool,
-        name: str,
-        permissions: BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissions,
-        character_limit: typing.Optional[int] = OMIT,
+        is_enabled: typing.Optional[
+            BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchIsEnabled
+        ] = OMIT,
+        name: typing.Optional[str] = OMIT,
+        permissions: typing.Optional[
+            BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissions
+        ] = OMIT,
+        character_limit: typing.Optional[
+            BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchCharacterLimit
+        ] = OMIT,
         allowed_ips: typing.Optional[
             BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchAllowedIps
         ] = OMIT,
@@ -184,16 +196,16 @@ class ApiKeysClient:
 
         api_key_id : str
 
-        is_enabled : bool
+        is_enabled : typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchIsEnabled]
             Whether to enable or disable the API key.
 
-        name : str
+        name : typing.Optional[str]
             The name of the XI API key to use (used for identification purposes only).
 
-        permissions : BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissions
+        permissions : typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissions]
             The permissions of the XI API.
 
-        character_limit : typing.Optional[int]
+        character_limit : typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchCharacterLimit]
             The character limit of the XI API key. If provided this will limit the usage of this api key to n characters per month where n is the chosen value. Requests that incur charges will fail after reaching this monthly limit.
 
         allowed_ips : typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchAllowedIps]
@@ -217,8 +229,6 @@ class ApiKeysClient:
         client.service_accounts.api_keys.update(
             service_account_user_id="service_account_user_id",
             api_key_id="api_key_id",
-            is_enabled=True,
-            name="Sneaky Fox",
         )
         """
         _response = self._raw_client.update(
@@ -403,10 +413,16 @@ class AsyncApiKeysClient:
         service_account_user_id: str,
         api_key_id: str,
         *,
-        is_enabled: bool,
-        name: str,
-        permissions: BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissions,
-        character_limit: typing.Optional[int] = OMIT,
+        is_enabled: typing.Optional[
+            BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchIsEnabled
+        ] = OMIT,
+        name: typing.Optional[str] = OMIT,
+        permissions: typing.Optional[
+            BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissions
+        ] = OMIT,
+        character_limit: typing.Optional[
+            BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchCharacterLimit
+        ] = OMIT,
         allowed_ips: typing.Optional[
             BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchAllowedIps
         ] = OMIT,
@@ -421,16 +437,16 @@ class AsyncApiKeysClient:
 
         api_key_id : str
 
-        is_enabled : bool
+        is_enabled : typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchIsEnabled]
             Whether to enable or disable the API key.
 
-        name : str
+        name : typing.Optional[str]
             The name of the XI API key to use (used for identification purposes only).
 
-        permissions : BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissions
+        permissions : typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissions]
             The permissions of the XI API.
 
-        character_limit : typing.Optional[int]
+        character_limit : typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchCharacterLimit]
             The character limit of the XI API key. If provided this will limit the usage of this api key to n characters per month where n is the chosen value. Requests that incur charges will fail after reaching this monthly limit.
 
         allowed_ips : typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchAllowedIps]
@@ -459,8 +475,6 @@ class AsyncApiKeysClient:
             await client.service_accounts.api_keys.update(
                 service_account_user_id="service_account_user_id",
                 api_key_id="api_key_id",
-                is_enabled=True,
-                name="Sneaky Fox",
             )
 
 

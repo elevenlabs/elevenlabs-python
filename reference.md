@@ -3868,7 +3868,7 @@ client.voices.get_shared(
     include_live_moderated=True,
     reader_app_enabled=True,
     owner_id="owner_id",
-    sort="sort",
+    sort="created_date",
     page=1,
 )
 
@@ -4014,7 +4014,7 @@ client.voices.get_shared(
 <dl>
 <dd>
 
-**sort:** `typing.Optional[str]` — Sort criteria
+**sort:** `typing.Optional[VoicesGetSharedRequestSort]` — Sort criteria. Must be one of: created_date, usage_character_count_1y, trending, cloned_by_count.
     
 </dd>
 </dl>
@@ -4450,7 +4450,7 @@ client.music.compose()
 <dl>
 <dd>
 
-**composition_plan:** `typing.Optional[MusicPrompt]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
+**composition_plan:** `typing.Optional[BodyComposeMusicV1MusicPostCompositionPlan]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
     
 </dd>
 </dl>
@@ -4466,7 +4466,7 @@ client.music.compose()
 <dl>
 <dd>
 
-**model_id:** `typing.Optional[typing.Literal["music_v1"]]` — The model to use for the generation.
+**model_id:** `typing.Optional[BodyComposeMusicV1MusicPostModelId]` — The model to use for the generation.
     
 </dd>
 </dl>
@@ -4590,7 +4590,9 @@ client.music.compose_detailed()
 <dl>
 <dd>
 
-**composition_plan:** `typing.Optional[MusicPrompt]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
+**composition_plan:** `typing.Optional[
+    BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan
+]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
     
 </dd>
 </dl>
@@ -4606,7 +4608,7 @@ client.music.compose_detailed()
 <dl>
 <dd>
 
-**model_id:** `typing.Optional[typing.Literal["music_v1"]]` — The model to use for the generation.
+**model_id:** `typing.Optional[BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId]` — The model to use for the generation.
     
 </dd>
 </dl>
@@ -4738,7 +4740,7 @@ client.music.stream()
 <dl>
 <dd>
 
-**composition_plan:** `typing.Optional[MusicPrompt]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
+**composition_plan:** `typing.Optional[BodyStreamComposedMusicV1MusicStreamPostCompositionPlan]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
     
 </dd>
 </dl>
@@ -4754,7 +4756,7 @@ client.music.stream()
 <dl>
 <dd>
 
-**model_id:** `typing.Optional[typing.Literal["music_v1"]]` — The model to use for the generation.
+**model_id:** `typing.Optional[BodyStreamComposedMusicV1MusicStreamPostModelId]` — The model to use for the generation.
     
 </dd>
 </dl>
@@ -4856,7 +4858,15 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**extract_composition_plan:** `typing.Optional[bool]` — Whether to generate and return the composition plan for the uploaded song. If True, the response will include the composition_plan but will increase the latency.
+**extract_composition_plan:** `typing.Optional[str]` — Whether to generate and return the composition plan for the uploaded song. Pass a model id (`music_v1` or `music_v2`) to control which composition plan format is returned. Passing `true`/`false` is deprecated; `true` defaults to the `music_v1` plan format. Enabling this will increase the latency.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**with_timestamps:** `typing.Optional[bool]` — Whether to transcribe the uploaded song and return word-level timestamps. If True, the response will include words_timestamps but will increase the latency.
     
 </dd>
 </dl>
@@ -7117,6 +7127,14 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dd>
 
 **no_verbatim:** `typing.Optional[bool]` — If true, the transcription will not have any filler words, false starts and non-speech sounds. Only supported with scribe_v2 model.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_speaker_library:** `typing.Optional[bool]` — Whether to use the speaker library for identifying known speakers during diarization. When enabled and diarize is true, detected speakers will be matched against registered speakers in the workspace's speaker library.
     
 </dd>
 </dl>
@@ -11403,7 +11421,7 @@ client.conversational_ai.users.list(
 </details>
 
 ## ConversationalAi PhoneNumbers
-<details><summary><code>client.conversational_ai.phone_numbers.<a href="src/elevenlabs/conversational_ai/phone_numbers/client.py">list</a>()</code></summary>
+<details><summary><code>client.conversational_ai.phone_numbers.<a href="src/elevenlabs/conversational_ai/phone_numbers/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -11435,7 +11453,11 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.conversational_ai.phone_numbers.list()
+client.conversational_ai.phone_numbers.list(
+    provider="twilio",
+    agent_id="agent_id",
+    branch_id="branch_id",
+)
 
 ```
 </dd>
@@ -11447,6 +11469,30 @@ client.conversational_ai.phone_numbers.list()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**provider:** `typing.Optional[TelephonyProvider]` — Filter by telephony provider
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agent_id:** `typing.Optional[str]` — Filter by assigned agent ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `typing.Optional[str]` — Filter by assigned branch ID
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -14912,7 +14958,7 @@ client.conversational_ai.whatsapp_accounts.update(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.whatsapp_accounts.<a href="src/elevenlabs/conversational_ai/whatsapp_accounts/client.py">list</a>()</code></summary>
+<details><summary><code>client.conversational_ai.whatsapp_accounts.<a href="src/elevenlabs/conversational_ai/whatsapp_accounts/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -14944,7 +14990,9 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.conversational_ai.whatsapp_accounts.list()
+client.conversational_ai.whatsapp_accounts.list(
+    agent_id="agent_id",
+)
 
 ```
 </dd>
@@ -14956,6 +15004,14 @@ client.conversational_ai.whatsapp_accounts.list()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**agent_id:** `typing.Optional[str]` — Filter by assigned agent ID
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -17838,6 +17894,93 @@ client.conversational_ai.conversations.analysis.run(
 <dd>
 
 **conversation_id:** `str` — ID of the conversation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.conversations.analysis.<a href="src/elevenlabs/conversational_ai/conversations/analysis/client.py">run_evaluation</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Rerun a specific evaluation for a conversation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.conversations.analysis.run_evaluation(
+    conversation_id="conversation_id",
+    evaluation_id="evaluation_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_id:** `str` — ID of the conversation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**evaluation_id:** `str` — ID of the single evaluation criterion to rerun.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scope:** `typing.Optional[AnalysisScope]` 
     
 </dd>
 </dl>
@@ -22531,7 +22674,7 @@ client.music.composition_plan.create(
 <dl>
 <dd>
 
-**source_composition_plan:** `typing.Optional[MusicPrompt]` — An optional composition plan to use as a source for the new composition plan.
+**source_composition_plan:** `typing.Optional[BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan]` — An optional composition plan to use as a source for the new composition plan.
     
 </dd>
 </dl>
@@ -22539,7 +22682,7 @@ client.music.composition_plan.create(
 <dl>
 <dd>
 
-**model_id:** `typing.Optional[typing.Literal["music_v1"]]` — The model to use for the generation.
+**model_id:** `typing.Optional[BodyGenerateCompositionPlanV1MusicPlanPostModelId]` — The model to use for the generation.
     
 </dd>
 </dl>
@@ -24035,8 +24178,6 @@ client = ElevenLabs(
 client.service_accounts.api_keys.update(
     service_account_user_id="service_account_user_id",
     api_key_id="api_key_id",
-    is_enabled=True,
-    name="Sneaky Fox",
 )
 
 ```
@@ -24069,7 +24210,9 @@ client.service_accounts.api_keys.update(
 <dl>
 <dd>
 
-**is_enabled:** `bool` — Whether to enable or disable the API key.
+**is_enabled:** `typing.Optional[
+    BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchIsEnabled
+]` — Whether to enable or disable the API key.
     
 </dd>
 </dl>
@@ -24077,7 +24220,7 @@ client.service_accounts.api_keys.update(
 <dl>
 <dd>
 
-**name:** `str` — The name of the XI API key to use (used for identification purposes only).
+**name:** `typing.Optional[str]` — The name of the XI API key to use (used for identification purposes only).
     
 </dd>
 </dl>
@@ -24085,7 +24228,9 @@ client.service_accounts.api_keys.update(
 <dl>
 <dd>
 
-**permissions:** `BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissions` — The permissions of the XI API.
+**permissions:** `typing.Optional[
+    BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissions
+]` — The permissions of the XI API.
     
 </dd>
 </dl>
@@ -24093,7 +24238,9 @@ client.service_accounts.api_keys.update(
 <dl>
 <dd>
 
-**character_limit:** `typing.Optional[int]` — The character limit of the XI API key. If provided this will limit the usage of this api key to n characters per month where n is the chosen value. Requests that incur charges will fail after reaching this monthly limit.
+**character_limit:** `typing.Optional[
+    BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchCharacterLimit
+]` — The character limit of the XI API key. If provided this will limit the usage of this api key to n characters per month where n is the chosen value. Requests that incur charges will fail after reaching this monthly limit.
     
 </dd>
 </dl>
@@ -29476,7 +29623,7 @@ client.workspace.usage.get_usage_by_product_over_time(
 <dl>
 <dd>
 
-**interval_seconds:** `typing.Optional[int]` — Bucket size in seconds. Each row in the response covers this many seconds of usage. For example, pass 3600 for hourly buckets or 86400 for daily buckets.
+**interval_seconds:** `typing.Optional[int]` — Bucket size in seconds. Each row in the response covers this many seconds of the selected time range. For example, pass 3600 for hourly buckets or 86400 for daily buckets. Whether `time_zone` shifts bucket boundaries depends on this value: whole-day multiples (e.g. 86400) align to local midnight; whole-hour multiples up to 24 hours (e.g. 3600, 14400) align to local hour boundaries from midnight; sub-hour values and other sizes remain UTC-anchored regardless of `time_zone`.
     
 </dd>
 </dl>
@@ -29497,6 +29644,14 @@ client.workspace.usage.get_usage_by_product_over_time(
 <dd>
 
 **filters:** `typing.Optional[typing.Sequence[ColumnFilter]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**time_zone:** `typing.Optional[str]` — IANA time zone identifier (e.g. 'America/New_York', 'Europe/London', 'UTC') used to align bucket boundaries for eligible `interval_seconds` values. Whole-day multiples start at local midnight; whole-hour multiples up to 24 hours align to local hour boundaries from midnight. Sub-hour intervals and other bucket sizes remain UTC-anchored regardless of this setting. Defaults to UTC.
     
 </dd>
 </dl>
@@ -29785,7 +29940,7 @@ client.workspace.groups.members.add(
 </details>
 
 ## Workspaces ApiKeys
-<details><summary><code>client.workspaces.api_keys.<a href="src/elevenlabs/workspaces/api_keys/client.py">revoke</a>(...)</code></summary>
+<details><summary><code>client.workspaces.api_keys.<a href="src/elevenlabs/workspaces/api_keys/client.py">disable</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -29797,7 +29952,7 @@ client.workspace.groups.members.add(
 <dl>
 <dd>
 
-Revoke the API key used to authenticate this request. Requires the query parameter `api_key_name=self` as an explicit confirmation. This endpoint requires additional permissions and is not enabled by default. Reach out to your ElevenLabs contact to request access.
+Disable the API key used to authenticate this request. Requires the query parameter `api_key_name=self` as an explicit confirmation. This endpoint requires additional permissions and is not enabled by default. Reach out to your ElevenLabs contact to request access.
 </dd>
 </dl>
 </dd>
@@ -29817,7 +29972,7 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.workspaces.api_keys.revoke(
+client.workspaces.api_keys.disable(
     api_key_name="self",
 )
 
@@ -29835,7 +29990,7 @@ client.workspaces.api_keys.revoke(
 <dl>
 <dd>
 
-**api_key_name:** `str` — Must be set to `self` to revoke the API key used to authenticate this request. Required as an explicit confirmation to avoid accidental revocation.
+**api_key_name:** `str` — Must be set to `self` to disable the API key used to authenticate this request. Required as an explicit confirmation to avoid accidentally disabling the wrong key.
     
 </dd>
 </dl>

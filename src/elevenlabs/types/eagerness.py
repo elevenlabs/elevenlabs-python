@@ -2,4 +2,4 @@
 
 import typing
 
-BackgroundMusicSourceType = typing.Literal["preset"]
+Eagerness = typing.Union[typing.Literal["low", "medium", "high"], typing.Any]

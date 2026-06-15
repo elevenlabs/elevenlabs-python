@@ -149,6 +149,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Trans
     transfer_message: typing.Optional[str] = None
     enable_transferred_agent_first_message: typing.Optional[bool] = None
     branch_info: typing.Optional[TransferToAgentToolResultSuccessModelBranchInfo] = None
+    preserve_client_tts_overrides: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -183,6 +184,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Trans
     status: typing.Optional[typing.Literal["success"]] = None
     transfer_number: str
     reason: typing.Optional[str] = None
+    agent_message: typing.Optional[str] = None
     note: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

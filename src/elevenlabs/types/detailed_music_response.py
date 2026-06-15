@@ -5,7 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .music_prompt import MusicPrompt
+from .detailed_music_response_composition_plan import DetailedMusicResponseCompositionPlan
 from .song_metadata import SongMetadata
 from .word_timestamp import WordTimestamp
 
@@ -15,7 +15,7 @@ class DetailedMusicResponse(UncheckedBaseModel):
     Response model for structured music generation endpoint
     """
 
-    composition_plan: MusicPrompt = pydantic.Field()
+    composition_plan: DetailedMusicResponseCompositionPlan = pydantic.Field()
     """
     The composition plan used to generate the song
     """

@@ -8,3 +8,4 @@ class ElevenLabsEnvironment(enum.Enum):
     PRODUCTION_US = "https://api.us.elevenlabs.io"
     PRODUCTION_EU = "https://api.eu.residency.elevenlabs.io"
     PRODUCTION_INDIA = "https://api.in.residency.elevenlabs.io"
+    PRODUCTION_SINGAPORE = "https://api.sg.residency.elevenlabs.io"

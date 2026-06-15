@@ -139,12 +139,17 @@ class WhatsappAccountsClient:
         )
         return _response.data
 
-    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> ListWhatsAppAccountsResponse:
+    def list(
+        self, *, agent_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> ListWhatsAppAccountsResponse:
         """
         List all WhatsApp accounts
 
         Parameters
         ----------
+        agent_id : typing.Optional[str]
+            Filter by assigned agent ID
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -160,9 +165,11 @@ class WhatsappAccountsClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.conversational_ai.whatsapp_accounts.list()
+        client.conversational_ai.whatsapp_accounts.list(
+            agent_id="agent_id",
+        )
         """
-        _response = self._raw_client.list(request_options=request_options)
+        _response = self._raw_client.list(agent_id=agent_id, request_options=request_options)
         return _response.data
 
 
@@ -319,12 +326,17 @@ class AsyncWhatsappAccountsClient:
         )
         return _response.data
 
-    async def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> ListWhatsAppAccountsResponse:
+    async def list(
+        self, *, agent_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> ListWhatsAppAccountsResponse:
         """
         List all WhatsApp accounts
 
         Parameters
         ----------
+        agent_id : typing.Optional[str]
+            Filter by assigned agent ID
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -345,10 +357,12 @@ class AsyncWhatsappAccountsClient:
 
 
         async def main() -> None:
-            await client.conversational_ai.whatsapp_accounts.list()
+            await client.conversational_ai.whatsapp_accounts.list(
+                agent_id="agent_id",
+            )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.list(request_options=request_options)
+        _response = await self._raw_client.list(agent_id=agent_id, request_options=request_options)
         return _response.data

@@ -5,16 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .safety_evaluation import SafetyEvaluation
 
 
-class SafetyCommonModel(UncheckedBaseModel):
-    """
-    Safety object that has the information of safety evaluations based on used voice.
-    """
-
-    ivc: typing.Optional[SafetyEvaluation] = None
-    non_ivc: typing.Optional[SafetyEvaluation] = None
+class CodeToolContextVariable(UncheckedBaseModel):
+    name: str
+    env_var_label: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

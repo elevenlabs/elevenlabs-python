@@ -5,29 +5,29 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .background_music_preset_id import BackgroundMusicPresetId
-from .background_music_source_type import BackgroundMusicSourceType
+from .background_sound_preset_id import BackgroundSoundPresetId
+from .background_sound_source_type import BackgroundSoundSourceType
 
 
-class BackgroundMusicConfig(UncheckedBaseModel):
-    source_type: typing.Optional[BackgroundMusicSourceType] = pydantic.Field(default=None)
+class BackgroundSoundConfig(UncheckedBaseModel):
+    source_type: typing.Optional[BackgroundSoundSourceType] = pydantic.Field(default=None)
     """
-    The type of background music source.
+    The type of background sound source.
     """
 
-    source_id: typing.Optional[BackgroundMusicPresetId] = pydantic.Field(default=None)
+    source_id: typing.Optional[BackgroundSoundPresetId] = pydantic.Field(default=None)
     """
-    Identifier for the music source.
+    Identifier for the sound source.
     """
 
     volume: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Volume level for background music (0.01 to 1.0).
+    Volume level for background sound (0.01 to 1.0).
     """
 
     crossfade_loop: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Apply a crossfade at the loop boundary to avoid audible pops when the music loops.
+    Apply a crossfade at the loop boundary to avoid audible pops when the sound loops.
     """
 
     if IS_PYDANTIC_V2:

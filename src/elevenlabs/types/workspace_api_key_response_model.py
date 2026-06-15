@@ -16,8 +16,16 @@ class WorkspaceApiKeyResponseModel(UncheckedBaseModel):
     created_at_unix: typing.Optional[int] = None
     is_disabled: typing.Optional[bool] = None
     permissions: typing.Optional[typing.List[PermissionType]] = None
-    character_limit: typing.Optional[int] = None
-    character_count: typing.Optional[int] = None
+    character_limit: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Maximum number of credits allowed in the current billing period.
+    """
+
+    character_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Credits already used in the current billing period.
+    """
+
     hashed_xi_api_key: str
     allowed_ips: typing.Optional[typing.List[str]] = None
 

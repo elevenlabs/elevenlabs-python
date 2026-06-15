@@ -5,7 +5,8 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .music_prompt import MusicPrompt
+from .music_upload_response_composition_plan import MusicUploadResponseCompositionPlan
+from .word_timestamp import WordTimestamp
 
 
 class MusicUploadResponse(UncheckedBaseModel):
@@ -18,9 +19,14 @@ class MusicUploadResponse(UncheckedBaseModel):
     Unique identifier for the uploaded song
     """
 
-    composition_plan: typing.Optional[MusicPrompt] = pydantic.Field(default=None)
+    composition_plan: typing.Optional[MusicUploadResponseCompositionPlan] = pydantic.Field(default=None)
     """
-    The composition plan extracted from the uploaded song. Only present if `extract_composition_plan` was True in the request body
+    The composition plan extracted from the uploaded song. Only present if `extract_composition_plan` was provided in the request body.
+    """
+
+    words_timestamps: typing.Optional[typing.List[WordTimestamp]] = pydantic.Field(default=None)
+    """
+    Word-level timestamps transcribed from the uploaded song. Only present if `with_timestamps` was True in the request body
     """
 
     if IS_PYDANTIC_V2:

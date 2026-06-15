@@ -15,6 +15,10 @@ class AgentTransfer(UncheckedBaseModel):
     transfer_message: typing.Optional[str] = None
     enable_transferred_agent_first_message: typing.Optional[bool] = None
     is_workflow_node_transfer: typing.Optional[bool] = None
+    preserve_client_tts_overrides: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Defines whether TTS client overrides should be carried over to the transferred agent.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

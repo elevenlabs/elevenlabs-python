@@ -2,4 +2,8 @@
 
 import typing
 
-ConstantSchemaOverrideConstantValue = typing.Union[str, int, float, bool]
+from .constant_schema_override_constant_value_four_item import ConstantSchemaOverrideConstantValueFourItem
+
+ConstantSchemaOverrideConstantValue = typing.Union[
+    str, int, float, bool, typing.List[ConstantSchemaOverrideConstantValueFourItem]
+]
