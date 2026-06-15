@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .pronunciation_dictionary_locator import PronunciationDictionaryLocator
 from .text_to_dialogue_websocket_voice_input import TextToDialogueWebsocketVoiceInput
+from .text_to_dialogue_websocket_voice_settings import TextToDialogueWebsocketVoiceSettings
 
 
 class TextToDialogueWebsocketClientMessage(UncheckedBaseModel):
@@ -61,9 +62,9 @@ class TextToDialogueWebsocketClientMessage(UncheckedBaseModel):
     Voice IDs to load for the session (first message only, required on first message).
     """
 
-    voice_settings: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    voice_settings: typing.Optional[TextToDialogueWebsocketVoiceSettings] = pydantic.Field(default=None)
     """
-    Optional voice settings object; same shape as `voice_settings` on [Create dialogue](/docs/api-reference/text-to-dialogue/convert).
+    Optional voice settings (first message only).
     """
 
     pronunciation_dictionary_locators: typing.Optional[typing.List[PronunciationDictionaryLocator]] = pydantic.Field(

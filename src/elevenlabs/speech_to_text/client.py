@@ -64,6 +64,7 @@ class SpeechToTextClient:
         webhook_metadata: typing.Optional[SpeechToTextConvertRequestWebhookMetadata] = OMIT,
         entity_detection: typing.Optional[SpeechToTextConvertRequestEntityDetection] = OMIT,
         no_verbatim: typing.Optional[bool] = OMIT,
+        use_speaker_library: typing.Optional[bool] = OMIT,
         detect_speaker_roles: typing.Optional[bool] = OMIT,
         entity_redaction: typing.Optional[SpeechToTextConvertRequestEntityRedaction] = OMIT,
         entity_redaction_mode: typing.Optional[str] = OMIT,
@@ -138,6 +139,9 @@ class SpeechToTextClient:
         no_verbatim : typing.Optional[bool]
             If true, the transcription will not have any filler words, false starts and non-speech sounds. Only supported with scribe_v2 model.
 
+        use_speaker_library : typing.Optional[bool]
+            Whether to use the speaker library for identifying known speakers during diarization. When enabled and diarize is true, detected speakers will be matched against registered speakers in the workspace's speaker library.
+
         detect_speaker_roles : typing.Optional[bool]
             Whether to detect speaker roles (agent vs customer). Requires diarize=true. Cannot be used with use_multi_channel=true. When enabled, speaker_id values will be 'agent' and 'customer' instead of 'speaker_0', 'speaker_1', etc. Usage incurs an additional 10% surcharge on base transcription cost.
 
@@ -192,6 +196,7 @@ class SpeechToTextClient:
             webhook_metadata=webhook_metadata,
             entity_detection=entity_detection,
             no_verbatim=no_verbatim,
+            use_speaker_library=use_speaker_library,
             detect_speaker_roles=detect_speaker_roles,
             entity_redaction=entity_redaction,
             entity_redaction_mode=entity_redaction_mode,
@@ -250,6 +255,7 @@ class AsyncSpeechToTextClient:
         webhook_metadata: typing.Optional[SpeechToTextConvertRequestWebhookMetadata] = OMIT,
         entity_detection: typing.Optional[SpeechToTextConvertRequestEntityDetection] = OMIT,
         no_verbatim: typing.Optional[bool] = OMIT,
+        use_speaker_library: typing.Optional[bool] = OMIT,
         detect_speaker_roles: typing.Optional[bool] = OMIT,
         entity_redaction: typing.Optional[SpeechToTextConvertRequestEntityRedaction] = OMIT,
         entity_redaction_mode: typing.Optional[str] = OMIT,
@@ -323,6 +329,9 @@ class AsyncSpeechToTextClient:
 
         no_verbatim : typing.Optional[bool]
             If true, the transcription will not have any filler words, false starts and non-speech sounds. Only supported with scribe_v2 model.
+
+        use_speaker_library : typing.Optional[bool]
+            Whether to use the speaker library for identifying known speakers during diarization. When enabled and diarize is true, detected speakers will be matched against registered speakers in the workspace's speaker library.
 
         detect_speaker_roles : typing.Optional[bool]
             Whether to detect speaker roles (agent vs customer). Requires diarize=true. Cannot be used with use_multi_channel=true. When enabled, speaker_id values will be 'agent' and 'customer' instead of 'speaker_0', 'speaker_1', etc. Usage incurs an additional 10% surcharge on base transcription cost.
@@ -386,6 +395,7 @@ class AsyncSpeechToTextClient:
             webhook_metadata=webhook_metadata,
             entity_detection=entity_detection,
             no_verbatim=no_verbatim,
+            use_speaker_library=use_speaker_library,
             detect_speaker_roles=detect_speaker_roles,
             entity_redaction=entity_redaction,
             entity_redaction_mode=entity_redaction_mode,

@@ -19,6 +19,7 @@ from ..types.get_voices_response import GetVoicesResponse
 from ..types.get_voices_v_2_response import GetVoicesV2Response
 from ..types.voice import Voice
 from .types.voices_get_shared_request_category import VoicesGetSharedRequestCategory
+from .types.voices_get_shared_request_sort import VoicesGetSharedRequestSort
 from .types.voices_update_request_labels import VoicesUpdateRequestLabels
 
 # this is used as the default value for optional parameters
@@ -478,7 +479,7 @@ class RawVoicesClient:
         include_live_moderated: typing.Optional[bool] = None,
         reader_app_enabled: typing.Optional[bool] = None,
         owner_id: typing.Optional[str] = None,
-        sort: typing.Optional[str] = None,
+        sort: typing.Optional[VoicesGetSharedRequestSort] = None,
         page: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetLibraryVoicesResponse]:
@@ -535,8 +536,8 @@ class RawVoicesClient:
         owner_id : typing.Optional[str]
             Filter voices by public owner ID
 
-        sort : typing.Optional[str]
-            Sort criteria
+        sort : typing.Optional[VoicesGetSharedRequestSort]
+            Sort criteria. Must be one of: created_date, usage_character_count_1y, trending, cloned_by_count.
 
         page : typing.Optional[int]
 
@@ -1123,7 +1124,7 @@ class AsyncRawVoicesClient:
         include_live_moderated: typing.Optional[bool] = None,
         reader_app_enabled: typing.Optional[bool] = None,
         owner_id: typing.Optional[str] = None,
-        sort: typing.Optional[str] = None,
+        sort: typing.Optional[VoicesGetSharedRequestSort] = None,
         page: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetLibraryVoicesResponse]:
@@ -1180,8 +1181,8 @@ class AsyncRawVoicesClient:
         owner_id : typing.Optional[str]
             Filter voices by public owner ID
 
-        sort : typing.Optional[str]
-            Sort criteria
+        sort : typing.Optional[VoicesGetSharedRequestSort]
+            Sort criteria. Must be one of: created_date, usage_character_count_1y, trending, cloned_by_count.
 
         page : typing.Optional[int]
 

@@ -2,4 +2,4 @@
 
 import typing
 
-HistoryListRequestSource = typing.Union[typing.Literal["TTS", "STS"], typing.Any]
+HistoryListRequestSource = typing.Union[typing.Literal["TTS", "STS", "Flows"], typing.Any]

@@ -9,6 +9,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .conversational_config_api_model_workflow_override_input import ConversationalConfigApiModelWorkflowOverrideInput
+from .entry_behavior import EntryBehavior
 from .knowledge_base_locator import KnowledgeBaseLocator
 from .position_input import PositionInput
 from .transfer_type_enum import TransferTypeEnum
@@ -46,6 +47,7 @@ class AgentWorkflowRequestModelNodesValue_OverrideAgent(UncheckedBaseModel):
     position: typing.Optional[PositionInput] = None
     edge_order: typing.Optional[typing.List[str]] = None
     label: str
+    entry_behavior: typing.Optional[EntryBehavior] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -85,6 +87,7 @@ class AgentWorkflowRequestModelNodesValue_StandaloneAgent(UncheckedBaseModel):
     delay_ms: typing.Optional[int] = None
     transfer_message: typing.Optional[str] = None
     enable_transferred_agent_first_message: typing.Optional[bool] = None
+    preserve_client_tts_overrides: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

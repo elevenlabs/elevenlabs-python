@@ -2,7 +2,7 @@
 
 import typing
 
-BackgroundMusicPresetId = typing.Union[
+BackgroundSoundPresetId = typing.Union[
     typing.Literal[
         "office2", "office1", "restaurant", "city", "typing", "elevator1", "elevator2", "elevator3", "elevator4"
     ],

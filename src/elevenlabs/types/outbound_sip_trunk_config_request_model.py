@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .media_codec import MediaCodec
 from .sip_media_encryption_enum import SipMediaEncryptionEnum
 from .sip_trunk_credentials_request_model import SipTrunkCredentialsRequestModel
 from .sip_trunk_transport_enum import SipTrunkTransportEnum
@@ -39,6 +40,11 @@ class OutboundSipTrunkConfigRequestModel(UncheckedBaseModel):
     credentials: typing.Optional[SipTrunkCredentialsRequestModel] = pydantic.Field(default=None)
     """
     Optional digest authentication credentials (username/password). If not provided, ACL authentication is assumed.
+    """
+
+    enabled_codecs: typing.Optional[typing.List[MediaCodec]] = pydantic.Field(default=None)
+    """
+    Media codecs that should be offered in the SDP for outbound calls. If empty, all supported codecs are offered.
     """
 
     if IS_PYDANTIC_V2:

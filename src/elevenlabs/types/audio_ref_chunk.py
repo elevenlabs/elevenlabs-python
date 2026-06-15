@@ -5,17 +5,18 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .time_range import TimeRange
 
 
-class AgentAlertingMonitorConfig(UncheckedBaseModel):
-    threshold: typing.Optional[float] = pydantic.Field(default=None)
+class AudioRefChunk(UncheckedBaseModel):
+    song_id: str = pydantic.Field()
     """
-    Failure rate threshold at which this monitor can notify.
+    The ID of the song to source the chunk from. You can find the song ID in the response headers when you generate a song.
     """
 
-    auto_resolve_after_inactive_minutes: typing.Optional[int] = pydantic.Field(default=None)
+    range: TimeRange = pydantic.Field()
     """
-    How many minutes an alert can stay inactive before it is auto-resolved.
+    The time range to extract from the song.
     """
 
     if IS_PYDANTIC_V2:

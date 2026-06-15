@@ -22,14 +22,14 @@ class ApiKeysClient:
         """
         return self._raw_client
 
-    def revoke(self, *, api_key_name: str, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+    def disable(self, *, api_key_name: str, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
         """
-        Revoke the API key used to authenticate this request. Requires the query parameter `api_key_name=self` as an explicit confirmation. This endpoint requires additional permissions and is not enabled by default. Reach out to your ElevenLabs contact to request access.
+        Disable the API key used to authenticate this request. Requires the query parameter `api_key_name=self` as an explicit confirmation. This endpoint requires additional permissions and is not enabled by default. Reach out to your ElevenLabs contact to request access.
 
         Parameters
         ----------
         api_key_name : str
-            Must be set to `self` to revoke the API key used to authenticate this request. Required as an explicit confirmation to avoid accidental revocation.
+            Must be set to `self` to disable the API key used to authenticate this request. Required as an explicit confirmation to avoid accidentally disabling the wrong key.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -46,11 +46,11 @@ class ApiKeysClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.workspaces.api_keys.revoke(
+        client.workspaces.api_keys.disable(
             api_key_name="self",
         )
         """
-        _response = self._raw_client.revoke(api_key_name=api_key_name, request_options=request_options)
+        _response = self._raw_client.disable(api_key_name=api_key_name, request_options=request_options)
         return _response.data
 
 
@@ -69,14 +69,16 @@ class AsyncApiKeysClient:
         """
         return self._raw_client
 
-    async def revoke(self, *, api_key_name: str, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+    async def disable(
+        self, *, api_key_name: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Any:
         """
-        Revoke the API key used to authenticate this request. Requires the query parameter `api_key_name=self` as an explicit confirmation. This endpoint requires additional permissions and is not enabled by default. Reach out to your ElevenLabs contact to request access.
+        Disable the API key used to authenticate this request. Requires the query parameter `api_key_name=self` as an explicit confirmation. This endpoint requires additional permissions and is not enabled by default. Reach out to your ElevenLabs contact to request access.
 
         Parameters
         ----------
         api_key_name : str
-            Must be set to `self` to revoke the API key used to authenticate this request. Required as an explicit confirmation to avoid accidental revocation.
+            Must be set to `self` to disable the API key used to authenticate this request. Required as an explicit confirmation to avoid accidentally disabling the wrong key.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -98,12 +100,12 @@ class AsyncApiKeysClient:
 
 
         async def main() -> None:
-            await client.workspaces.api_keys.revoke(
+            await client.workspaces.api_keys.disable(
                 api_key_name="self",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.revoke(api_key_name=api_key_name, request_options=request_options)
+        _response = await self._raw_client.disable(api_key_name=api_key_name, request_options=request_options)
         return _response.data

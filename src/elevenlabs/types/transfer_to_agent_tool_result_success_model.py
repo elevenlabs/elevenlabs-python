@@ -18,6 +18,7 @@ class TransferToAgentToolResultSuccessModel(UncheckedBaseModel):
     transfer_message: typing.Optional[str] = None
     enable_transferred_agent_first_message: typing.Optional[bool] = None
     branch_info: typing.Optional[TransferToAgentToolResultSuccessModelBranchInfo] = None
+    preserve_client_tts_overrides: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

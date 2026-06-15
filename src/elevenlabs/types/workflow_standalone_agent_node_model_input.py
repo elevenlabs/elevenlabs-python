@@ -44,6 +44,11 @@ class WorkflowStandaloneAgentNodeModelInput(UncheckedBaseModel):
     Whether to enable the transferred agent to send its configured first message after the transfer.
     """
 
+    preserve_client_tts_overrides: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Defines whether TTS client overrides should be carried over to the transferred agent.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

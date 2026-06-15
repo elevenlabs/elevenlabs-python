@@ -9,6 +9,7 @@ from ...types.get_sip_log_messages_response import GetSipLogMessagesResponse
 from ...types.inbound_sip_trunk_config_request_model import InboundSipTrunkConfigRequestModel
 from ...types.livekit_stack_type import LivekitStackType
 from ...types.outbound_sip_trunk_config_request_model import OutboundSipTrunkConfigRequestModel
+from ...types.telephony_provider import TelephonyProvider
 from .raw_client import AsyncRawPhoneNumbersClient, RawPhoneNumbersClient
 from .types.phone_numbers_create_request_body import PhoneNumbersCreateRequestBody
 from .types.phone_numbers_get_response import PhoneNumbersGetResponse
@@ -35,13 +36,27 @@ class PhoneNumbersClient:
         return self._raw_client
 
     def list(
-        self, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        provider: typing.Optional[TelephonyProvider] = None,
+        agent_id: typing.Optional[str] = None,
+        branch_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[PhoneNumbersListResponseItem]:
         """
         Retrieve all Phone Numbers
 
         Parameters
         ----------
+        provider : typing.Optional[TelephonyProvider]
+            Filter by telephony provider
+
+        agent_id : typing.Optional[str]
+            Filter by assigned agent ID
+
+        branch_id : typing.Optional[str]
+            Filter by assigned branch ID
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -57,9 +72,15 @@ class PhoneNumbersClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.conversational_ai.phone_numbers.list()
+        client.conversational_ai.phone_numbers.list(
+            provider="twilio",
+            agent_id="agent_id",
+            branch_id="branch_id",
+        )
         """
-        _response = self._raw_client.list(request_options=request_options)
+        _response = self._raw_client.list(
+            provider=provider, agent_id=agent_id, branch_id=branch_id, request_options=request_options
+        )
         return _response.data
 
     def create(
@@ -303,13 +324,27 @@ class AsyncPhoneNumbersClient:
         return self._raw_client
 
     async def list(
-        self, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        provider: typing.Optional[TelephonyProvider] = None,
+        agent_id: typing.Optional[str] = None,
+        branch_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[PhoneNumbersListResponseItem]:
         """
         Retrieve all Phone Numbers
 
         Parameters
         ----------
+        provider : typing.Optional[TelephonyProvider]
+            Filter by telephony provider
+
+        agent_id : typing.Optional[str]
+            Filter by assigned agent ID
+
+        branch_id : typing.Optional[str]
+            Filter by assigned branch ID
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -330,12 +365,18 @@ class AsyncPhoneNumbersClient:
 
 
         async def main() -> None:
-            await client.conversational_ai.phone_numbers.list()
+            await client.conversational_ai.phone_numbers.list(
+                provider="twilio",
+                agent_id="agent_id",
+                branch_id="branch_id",
+            )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.list(request_options=request_options)
+        _response = await self._raw_client.list(
+            provider=provider, agent_id=agent_id, branch_id=branch_id, request_options=request_options
+        )
         return _response.data
 
     async def create(

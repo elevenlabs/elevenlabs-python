@@ -16,6 +16,7 @@ from ..types.get_voices_v_2_response import GetVoicesV2Response
 from ..types.voice import Voice
 from .raw_client import AsyncRawVoicesClient, RawVoicesClient
 from .types.voices_get_shared_request_category import VoicesGetSharedRequestCategory
+from .types.voices_get_shared_request_sort import VoicesGetSharedRequestSort
 from .types.voices_update_request_labels import VoicesUpdateRequestLabels
 
 if typing.TYPE_CHECKING:
@@ -393,7 +394,7 @@ class VoicesClient:
         include_live_moderated: typing.Optional[bool] = None,
         reader_app_enabled: typing.Optional[bool] = None,
         owner_id: typing.Optional[str] = None,
-        sort: typing.Optional[str] = None,
+        sort: typing.Optional[VoicesGetSharedRequestSort] = None,
         page: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetLibraryVoicesResponse:
@@ -450,8 +451,8 @@ class VoicesClient:
         owner_id : typing.Optional[str]
             Filter voices by public owner ID
 
-        sort : typing.Optional[str]
-            Sort criteria
+        sort : typing.Optional[VoicesGetSharedRequestSort]
+            Sort criteria. Must be one of: created_date, usage_character_count_1y, trending, cloned_by_count.
 
         page : typing.Optional[int]
 
@@ -487,7 +488,7 @@ class VoicesClient:
             include_live_moderated=True,
             reader_app_enabled=True,
             owner_id="owner_id",
-            sort="sort",
+            sort="created_date",
             page=1,
         )
         """
@@ -1008,7 +1009,7 @@ class AsyncVoicesClient:
         include_live_moderated: typing.Optional[bool] = None,
         reader_app_enabled: typing.Optional[bool] = None,
         owner_id: typing.Optional[str] = None,
-        sort: typing.Optional[str] = None,
+        sort: typing.Optional[VoicesGetSharedRequestSort] = None,
         page: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetLibraryVoicesResponse:
@@ -1065,8 +1066,8 @@ class AsyncVoicesClient:
         owner_id : typing.Optional[str]
             Filter voices by public owner ID
 
-        sort : typing.Optional[str]
-            Sort criteria
+        sort : typing.Optional[VoicesGetSharedRequestSort]
+            Sort criteria. Must be one of: created_date, usage_character_count_1y, trending, cloned_by_count.
 
         page : typing.Optional[int]
 
@@ -1107,7 +1108,7 @@ class AsyncVoicesClient:
                 include_live_moderated=True,
                 reader_app_enabled=True,
                 owner_id="owner_id",
-                sort="sort",
+                sort="created_date",
                 page=1,
             )
 

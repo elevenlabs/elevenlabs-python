@@ -7,17 +7,8 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class AgentAlertingWebhookNotifier(UncheckedBaseModel):
-    type: typing.Optional[typing.Literal["webhook"]] = None
-    url: str = pydantic.Field()
-    """
-    The URL to send alert lifecycle notifications to.
-    """
-
-    request_headers: typing.Optional[typing.Dict[str, typing.Optional[str]]] = pydantic.Field(default=None)
-    """
-    Optional static request headers sent with each alert webhook call, for example to authenticate with the receiving endpoint.
-    """
+class OpenAiToolChoiceFunctionInner(UncheckedBaseModel):
+    name: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

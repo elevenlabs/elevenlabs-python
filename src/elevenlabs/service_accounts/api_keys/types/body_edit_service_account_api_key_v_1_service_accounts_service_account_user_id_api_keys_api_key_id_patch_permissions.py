@@ -5,5 +5,5 @@ import typing
 from ....types.permission_type import PermissionType
 
 BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissions = typing.Union[
-    typing.List[PermissionType], typing.Literal["all"]
+    typing.List[PermissionType], typing.Literal["all"], typing.Literal["no_update"]
 ]
