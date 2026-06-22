@@ -3,6 +3,6 @@
 import typing
 
 from .audio_ref_chunk import AudioRefChunk
-from .generation_chunk import GenerationChunk
+from .generation_chunk_input import GenerationChunkInput
 
-CompositionPlanChunksItem = typing.Union[GenerationChunk, AudioRefChunk]
+CompositionPlanChunksItem = typing.Union[GenerationChunkInput, AudioRefChunk]

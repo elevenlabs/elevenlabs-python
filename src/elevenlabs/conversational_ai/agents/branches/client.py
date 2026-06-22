@@ -308,6 +308,43 @@ class BranchesClient:
         )
         return _response.data
 
+    def rebase(
+        self, agent_id: str, branch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Any:
+        """
+        Rebase a branch onto the latest main branch, incorporating main's changes while preserving the branch's own changes.
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of an agent. This is returned on agent creation.
+
+        branch_id : str
+            Unique identifier for the source branch to merge from.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.agents.branches.rebase(
+            agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+            branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+        )
+        """
+        _response = self._raw_client.rebase(agent_id, branch_id, request_options=request_options)
+        return _response.data
+
 
 class AsyncBranchesClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -640,4 +677,49 @@ class AsyncBranchesClient:
             force=force,
             request_options=request_options,
         )
+        return _response.data
+
+    async def rebase(
+        self, agent_id: str, branch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Any:
+        """
+        Rebase a branch onto the latest main branch, incorporating main's changes while preserving the branch's own changes.
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of an agent. This is returned on agent creation.
+
+        branch_id : str
+            Unique identifier for the source branch to merge from.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.agents.branches.rebase(
+                agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+                branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.rebase(agent_id, branch_id, request_options=request_options)
         return _response.data

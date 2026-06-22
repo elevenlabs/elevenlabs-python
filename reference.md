@@ -3223,6 +3223,76 @@ client.user.get()
 </details>
 
 ## Voices
+<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">get_all</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of all available voices for a user. Stops working once the user's workspace exceeds 500 voices.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.voices.get_all(
+    show_legacy=True,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**show_legacy:** `typing.Optional[bool]` — If set to true, legacy premade voices will be included in responses from /v1/voices
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
@@ -3353,76 +3423,6 @@ client.voices.delete(
 <dd>
 
 **voice_id:** `str` — ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">get_all</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Returns a list of all available voices for a user. Stops working once the user's workspace exceeds 500 voices.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.voices.get_all(
-    show_legacy=True,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**show_legacy:** `typing.Optional[bool]` — If set to true, legacy premade voices will be included in responses from /v1/voices
     
 </dd>
 </dl>
@@ -4434,7 +4434,7 @@ client.music.compose()
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[MusicComposeRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
     
 </dd>
 </dl>
@@ -4490,7 +4490,7 @@ client.music.compose()
 <dl>
 <dd>
 
-**respect_sections_durations:** `typing.Optional[bool]` — Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan`. When set to true, the model will precisely respect each section's `duration_ms` from the plan. When set to false, the model may adjust individual section durations which will generally lead to better generation quality and improved latency, while always preserving the total song duration from the plan.
+**respect_sections_durations:** `typing.Optional[bool]` — Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
     
 </dd>
 </dl>
@@ -4498,7 +4498,7 @@ client.music.compose()
 <dl>
 <dd>
 
-**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
+**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting.
     
 </dd>
 </dl>
@@ -4574,7 +4574,7 @@ client.music.compose_detailed()
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[MusicComposeDetailedRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
     
 </dd>
 </dl>
@@ -4632,7 +4632,7 @@ client.music.compose_detailed()
 <dl>
 <dd>
 
-**respect_sections_durations:** `typing.Optional[bool]` — Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan`. When set to true, the model will precisely respect each section's `duration_ms` from the plan. When set to false, the model may adjust individual section durations which will generally lead to better generation quality and improved latency, while always preserving the total song duration from the plan.
+**respect_sections_durations:** `typing.Optional[bool]` — Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
     
 </dd>
 </dl>
@@ -4640,7 +4640,7 @@ client.music.compose_detailed()
 <dl>
 <dd>
 
-**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
+**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting.
     
 </dd>
 </dl>
@@ -4724,7 +4724,7 @@ client.music.stream()
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[MusicStreamRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
     
 </dd>
 </dl>
@@ -4780,7 +4780,7 @@ client.music.stream()
 <dl>
 <dd>
 
-**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
+**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting.
     
 </dd>
 </dl>
@@ -4812,7 +4812,7 @@ client.music.stream()
 <dl>
 <dd>
 
-Upload a music file to be later used for inpainting. Only available to enterprise clients with access to the inpainting feature. Price for uploading is the same as the one for song generation. All uploaded content gets inspected for copyright infringement. If copyrighted content is detected, half of the request cost is still charged.
+Upload a music file to be later used for inpainting. Price for uploading is the same as the one for song generation. All uploaded content gets inspected for copyright infringement. If copyrighted content is detected, half of the request cost is still charged.
 </dd>
 </dl>
 </dd>
@@ -4923,7 +4923,12 @@ client.dubbing.list(
     cursor="cursor",
     page_size=1,
     dubbing_status="dubbing",
+    dubbing_statuses=["queued"],
+    dubbing_models=["dubbing_v1"],
+    target_language_codes=["target_language_codes"],
+    creation_sources=["flow_node"],
     filter_by_creator="personal",
+    order_by="created_at",
     order_direction="DESCENDING",
 )
 
@@ -4965,6 +4970,53 @@ client.dubbing.list(
 <dl>
 <dd>
 
+**dubbing_statuses:** `typing.Optional[
+    typing.Union[
+        DubbingListRequestDubbingStatusesItem,
+        typing.Sequence[DubbingListRequestDubbingStatusesItem],
+    ]
+]` — Filter by dubbing status.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dubbing_models:** `typing.Optional[
+    typing.Union[
+        DubbingListRequestDubbingModelsItem,
+        typing.Sequence[DubbingListRequestDubbingModelsItem],
+    ]
+]` — Filter by dubbing model generation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**target_language_codes:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter by target language code.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**creation_sources:** `typing.Optional[
+    typing.Union[
+        DubbingListRequestCreationSourcesItem,
+        typing.Sequence[DubbingListRequestCreationSourcesItem],
+    ]
+]` — Filter by dubbing creation source.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **filter_by_creator:** `typing.Optional[DubbingListRequestFilterByCreator]` — Filters who created the resources being listed, whether it was the user running the request or someone else that shared the resource with them.
     
 </dd>
@@ -4973,7 +5025,7 @@ client.dubbing.list(
 <dl>
 <dd>
 
-**order_by:** `typing.Optional[typing.Literal["created_at"]]` — The field to use for ordering results from this query.
+**order_by:** `typing.Optional[DubbingListRequestOrderBy]` — The field to use for ordering results from this query.
     
 </dd>
 </dl>
@@ -8712,11 +8764,13 @@ client.conversational_ai.conversations.list(
     search="search",
     conversation_initiation_source="unknown",
     text_only=True,
+    conversation_product_type="agents",
     branch_id="branch_id",
     topic_ids=["topic_ids"],
     exclude_statuses=["initiated"],
     tag_ids=["tag_ids"],
     workflow_node_entered_id="workflow_node_entered_id",
+    termination_reasons=["termination_reasons"],
 )
 
 ```
@@ -8909,6 +8963,14 @@ client.conversational_ai.conversations.list(
 <dl>
 <dd>
 
+**conversation_product_type:** `typing.Optional[ConversationProduct]` — Restrict results to a single conversation product surface.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **branch_id:** `typing.Optional[str]` — Filter conversations by branch ID.
     
 </dd>
@@ -8947,6 +9009,14 @@ client.conversational_ai.conversations.list(
 <dd>
 
 **workflow_node_entered_id:** `typing.Optional[str]` — Filter conversations to only those that entered the given node.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**termination_reasons:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by their stored termination_reason (metadata.termination_reason). Repeat param to match any of several.
     
 </dd>
 </dl>
@@ -15159,7 +15229,7 @@ client.conversational_ai.agents.widget.get(
 <dl>
 <dd>
 
-**conversation_signature:** `typing.Optional[str]` — An expiring token that enables a websocket conversation to start. These can be generated for an agent using the /v1/convai/conversation/get-signed-url endpoint
+**conversation_signature:** `typing.Optional[str]` — An expiring token that enables a websocket conversation to start. These can be generated for an agent using the /v1/convai/conversation/get_signed_url endpoint
     
 </dd>
 </dl>
@@ -15893,6 +15963,85 @@ client.conversational_ai.agents.branches.merge(
 <dd>
 
 **force:** `typing.Optional[bool]` — Force source branch changes onto the target, overriding timestamp-based conflict resolution
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">rebase</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Rebase a branch onto the latest main branch, incorporating main's changes while preserving the branch's own changes.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.agents.branches.rebase(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `str` — Unique identifier for the source branch to merge from.
     
 </dd>
 </dl>
@@ -16740,6 +16889,7 @@ client.conversational_ai.conversations.messages.text_search(
     summary_mode="exclude",
     conversation_initiation_source="unknown",
     text_only=True,
+    conversation_product_type="agents",
     branch_id="branch_id",
     topic_ids=["topic_ids"],
     sort_by="search_score",
@@ -16921,6 +17071,14 @@ client.conversational_ai.conversations.messages.text_search(
 <dd>
 
 **text_only:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**conversation_product_type:** `typing.Optional[ConversationProduct]` — Restrict results to a single conversation product surface.
     
 </dd>
 </dl>
@@ -17806,6 +17964,8 @@ client = ElevenLabs(
 )
 client.conversational_ai.conversations.topics.get(
     agent_id="agent_id",
+    from_unix_secs=1,
+    to_unix_secs=1,
 )
 
 ```
@@ -17823,6 +17983,22 @@ client.conversational_ai.conversations.topics.get(
 <dd>
 
 **agent_id:** `str` — ID of the agent
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from_unix_secs:** `typing.Optional[int]` — Start of the window to view topics for. When set with to_unix_secs, per-day topics in the range are aggregated together.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**to_unix_secs:** `typing.Optional[int]` — End of the window to view topics for.
     
 </dd>
 </dl>

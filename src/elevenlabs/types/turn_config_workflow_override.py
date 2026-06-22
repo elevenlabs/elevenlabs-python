@@ -52,6 +52,11 @@ class TurnConfigWorkflowOverride(UncheckedBaseModel):
     Version of the turn detection model to use.
     """
 
+    interruption_ignore_terms: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    List of terms that should not trigger an interruption when spoken by the user (e.g. 'gotcha', 'understood'). Uses case-insensitive exact matching.
+    """
+
     soft_timeout_config: typing.Optional[SoftTimeoutConfigWorkflowOverride] = pydantic.Field(default=None)
     """
     Configuration for soft timeout functionality. Provides immediate feedback during longer LLM responses.

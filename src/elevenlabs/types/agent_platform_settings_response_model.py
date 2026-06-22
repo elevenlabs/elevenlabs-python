@@ -18,6 +18,7 @@ from .guardrails_v_1_output import GuardrailsV1Output
 from .llm import Llm
 from .privacy_config_output import PrivacyConfigOutput
 from .safety_response_model import SafetyResponseModel
+from .topic_discovery_settings import TopicDiscoverySettings
 from .widget_config import WidgetConfig
 
 
@@ -95,6 +96,11 @@ class AgentPlatformSettingsResponseModel(UncheckedBaseModel):
     analysis_llm: typing.Optional[Llm] = pydantic.Field(default=None)
     """
     Default LLM model for post-call analysis (evaluation and data collection)
+    """
+
+    topic_discovery: typing.Optional[TopicDiscoverySettings] = pydantic.Field(default=None)
+    """
+    Per-agent topic discovery configuration
     """
 
     safety: typing.Optional[SafetyResponseModel] = None

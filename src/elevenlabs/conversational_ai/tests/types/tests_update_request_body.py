@@ -81,6 +81,7 @@ class TestsUpdateRequestBody_Simulation(UncheckedBaseModel):
     chat_history: typing.Optional[typing.List[ConversationHistoryTranscriptCommonModelInput]] = None
     conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None
     success_condition: typing.Optional[str] = None
+    success_conditions: typing.Optional[typing.List[str]] = None
     simulation_scenario: typing.Optional[str] = None
     simulation_max_turns: typing.Optional[int] = None
     simulation_environment: typing.Optional[str] = None

@@ -48,6 +48,39 @@ class VoicesClient:
         """
         return self._raw_client
 
+    def get_all(
+        self, *, show_legacy: typing.Optional[bool] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetVoicesResponse:
+        """
+        Returns a list of all available voices for a user. Stops working once the user's workspace exceeds 500 voices.
+
+        Parameters
+        ----------
+        show_legacy : typing.Optional[bool]
+            If set to true, legacy premade voices will be included in responses from /v1/voices
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetVoicesResponse
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.voices.get_all(
+            show_legacy=True,
+        )
+        """
+        _response = self._raw_client.get_all(show_legacy=show_legacy, request_options=request_options)
+        return _response.data
+
     def get(
         self,
         voice_id: str,
@@ -120,39 +153,6 @@ class VoicesClient:
         )
         """
         _response = self._raw_client.delete(voice_id, request_options=request_options)
-        return _response.data
-
-    def get_all(
-        self, *, show_legacy: typing.Optional[bool] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetVoicesResponse:
-        """
-        Returns a list of all available voices for a user. Stops working once the user's workspace exceeds 500 voices.
-
-        Parameters
-        ----------
-        show_legacy : typing.Optional[bool]
-            If set to true, legacy premade voices will be included in responses from /v1/voices
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetVoicesResponse
-            Successful Response
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.voices.get_all(
-            show_legacy=True,
-        )
-        """
-        _response = self._raw_client.get_all(show_legacy=show_legacy, request_options=request_options)
         return _response.data
 
     def search(
@@ -615,6 +615,47 @@ class AsyncVoicesClient:
         """
         return self._raw_client
 
+    async def get_all(
+        self, *, show_legacy: typing.Optional[bool] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetVoicesResponse:
+        """
+        Returns a list of all available voices for a user. Stops working once the user's workspace exceeds 500 voices.
+
+        Parameters
+        ----------
+        show_legacy : typing.Optional[bool]
+            If set to true, legacy premade voices will be included in responses from /v1/voices
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetVoicesResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.voices.get_all(
+                show_legacy=True,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_all(show_legacy=show_legacy, request_options=request_options)
+        return _response.data
+
     async def get(
         self,
         voice_id: str,
@@ -703,47 +744,6 @@ class AsyncVoicesClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(voice_id, request_options=request_options)
-        return _response.data
-
-    async def get_all(
-        self, *, show_legacy: typing.Optional[bool] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetVoicesResponse:
-        """
-        Returns a list of all available voices for a user. Stops working once the user's workspace exceeds 500 voices.
-
-        Parameters
-        ----------
-        show_legacy : typing.Optional[bool]
-            If set to true, legacy premade voices will be included in responses from /v1/voices
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetVoicesResponse
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.voices.get_all(
-                show_legacy=True,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.get_all(show_legacy=show_legacy, request_options=request_options)
         return _response.data
 
     async def search(

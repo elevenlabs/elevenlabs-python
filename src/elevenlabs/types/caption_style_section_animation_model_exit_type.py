@@ -2,4 +2,6 @@
 
 import typing
 
-CaptionStyleSectionAnimationModelExitType = typing.Union[typing.Literal["none", "fade", "scale"], typing.Any]
+CaptionStyleSectionAnimationModelExitType = typing.Union[
+    typing.Literal["none", "fade", "scale", "pop", "slide_up", "slide_down"], typing.Any
+]

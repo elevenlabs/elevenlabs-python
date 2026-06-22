@@ -7,6 +7,7 @@ import typing
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.conversation_initiation_source import ConversationInitiationSource
+from ...types.conversation_product import ConversationProduct
 from ...types.conversation_signed_url_response_model import ConversationSignedUrlResponseModel
 from ...types.evaluation_success_result import EvaluationSuccessResult
 from ...types.get_conversation_response_model import GetConversationResponseModel
@@ -190,6 +191,7 @@ class ConversationsClient:
         search: typing.Optional[str] = None,
         conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None,
         text_only: typing.Optional[bool] = None,
+        conversation_product_type: typing.Optional[ConversationProduct] = None,
         branch_id: typing.Optional[str] = None,
         topic_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         exclude_statuses: typing.Optional[
@@ -200,6 +202,7 @@ class ConversationsClient:
         ] = None,
         tag_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         workflow_node_entered_id: typing.Optional[str] = None,
+        termination_reasons: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationsPageResponseModel:
         """
@@ -271,6 +274,9 @@ class ConversationsClient:
 
         text_only : typing.Optional[bool]
 
+        conversation_product_type : typing.Optional[ConversationProduct]
+            Restrict results to a single conversation product surface.
+
         branch_id : typing.Optional[str]
             Filter conversations by branch ID.
 
@@ -285,6 +291,9 @@ class ConversationsClient:
 
         workflow_node_entered_id : typing.Optional[str]
             Filter conversations to only those that entered the given node.
+
+        termination_reasons : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by their stored termination_reason (metadata.termination_reason). Repeat param to match any of several.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -324,11 +333,13 @@ class ConversationsClient:
             search="search",
             conversation_initiation_source="unknown",
             text_only=True,
+            conversation_product_type="agents",
             branch_id="branch_id",
             topic_ids=["topic_ids"],
             exclude_statuses=["initiated"],
             tag_ids=["tag_ids"],
             workflow_node_entered_id="workflow_node_entered_id",
+            termination_reasons=["termination_reasons"],
         )
         """
         _response = self._raw_client.list(
@@ -354,11 +365,13 @@ class ConversationsClient:
             search=search,
             conversation_initiation_source=conversation_initiation_source,
             text_only=text_only,
+            conversation_product_type=conversation_product_type,
             branch_id=branch_id,
             topic_ids=topic_ids,
             exclude_statuses=exclude_statuses,
             tag_ids=tag_ids,
             workflow_node_entered_id=workflow_node_entered_id,
+            termination_reasons=termination_reasons,
             request_options=request_options,
         )
         return _response.data
@@ -716,6 +729,7 @@ class AsyncConversationsClient:
         search: typing.Optional[str] = None,
         conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None,
         text_only: typing.Optional[bool] = None,
+        conversation_product_type: typing.Optional[ConversationProduct] = None,
         branch_id: typing.Optional[str] = None,
         topic_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         exclude_statuses: typing.Optional[
@@ -726,6 +740,7 @@ class AsyncConversationsClient:
         ] = None,
         tag_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         workflow_node_entered_id: typing.Optional[str] = None,
+        termination_reasons: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationsPageResponseModel:
         """
@@ -797,6 +812,9 @@ class AsyncConversationsClient:
 
         text_only : typing.Optional[bool]
 
+        conversation_product_type : typing.Optional[ConversationProduct]
+            Restrict results to a single conversation product surface.
+
         branch_id : typing.Optional[str]
             Filter conversations by branch ID.
 
@@ -811,6 +829,9 @@ class AsyncConversationsClient:
 
         workflow_node_entered_id : typing.Optional[str]
             Filter conversations to only those that entered the given node.
+
+        termination_reasons : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by their stored termination_reason (metadata.termination_reason). Repeat param to match any of several.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -855,11 +876,13 @@ class AsyncConversationsClient:
                 search="search",
                 conversation_initiation_source="unknown",
                 text_only=True,
+                conversation_product_type="agents",
                 branch_id="branch_id",
                 topic_ids=["topic_ids"],
                 exclude_statuses=["initiated"],
                 tag_ids=["tag_ids"],
                 workflow_node_entered_id="workflow_node_entered_id",
+                termination_reasons=["termination_reasons"],
             )
 
 
@@ -888,11 +911,13 @@ class AsyncConversationsClient:
             search=search,
             conversation_initiation_source=conversation_initiation_source,
             text_only=text_only,
+            conversation_product_type=conversation_product_type,
             branch_id=branch_id,
             topic_ids=topic_ids,
             exclude_statuses=exclude_statuses,
             tag_ids=tag_ids,
             workflow_node_entered_id=workflow_node_entered_id,
+            termination_reasons=termination_reasons,
             request_options=request_options,
         )
         return _response.data

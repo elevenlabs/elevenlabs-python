@@ -13,7 +13,10 @@ if typing.TYPE_CHECKING:
         BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId,
         BodyStreamComposedMusicV1MusicStreamPostCompositionPlan,
         BodyStreamComposedMusicV1MusicStreamPostModelId,
+        MusicComposeDetailedRequestOutputFormat,
+        MusicComposeRequestOutputFormat,
         MusicSeparateStemsRequestStemVariationId,
+        MusicStreamRequestOutputFormat,
         MusicVideoToMusicRequestModelId,
     )
     from . import composition_plan
@@ -32,7 +35,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BodyStreamComposedMusicV1MusicStreamPostCompositionPlan": ".types",
     "BodyStreamComposedMusicV1MusicStreamPostModelId": ".types",
     "CompositionPlanCreateResponse": ".composition_plan",
+    "MusicComposeDetailedRequestOutputFormat": ".types",
+    "MusicComposeRequestOutputFormat": ".types",
     "MusicSeparateStemsRequestStemVariationId": ".types",
+    "MusicStreamRequestOutputFormat": ".types",
     "MusicVideoToMusicRequestModelId": ".types",
     "composition_plan": ".composition_plan",
 }
@@ -69,7 +75,10 @@ __all__ = [
     "BodyStreamComposedMusicV1MusicStreamPostCompositionPlan",
     "BodyStreamComposedMusicV1MusicStreamPostModelId",
     "CompositionPlanCreateResponse",
+    "MusicComposeDetailedRequestOutputFormat",
+    "MusicComposeRequestOutputFormat",
     "MusicSeparateStemsRequestStemVariationId",
+    "MusicStreamRequestOutputFormat",
     "MusicVideoToMusicRequestModelId",
     "composition_plan",
 ]

@@ -47,6 +47,10 @@ class BaseTurnConfig(UncheckedBaseModel):
     """
 
     turn_model: typing.Optional[TurnModel] = None
+    interruption_ignore_terms: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    List of terms that should not trigger an interruption when spoken by the user (e.g. 'gotcha', 'understood'). Uses case-insensitive exact matching.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

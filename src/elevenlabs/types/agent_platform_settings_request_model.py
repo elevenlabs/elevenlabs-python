@@ -17,6 +17,7 @@ from .evaluation_settings_input import EvaluationSettingsInput
 from .guardrails_v_1_input import GuardrailsV1Input
 from .llm import Llm
 from .privacy_config_input import PrivacyConfigInput
+from .topic_discovery_settings import TopicDiscoverySettings
 from .widget_config import WidgetConfig
 
 
@@ -94,6 +95,11 @@ class AgentPlatformSettingsRequestModel(UncheckedBaseModel):
     analysis_llm: typing.Optional[Llm] = pydantic.Field(default=None)
     """
     Default LLM model for post-call analysis (evaluation and data collection)
+    """
+
+    topic_discovery: typing.Optional[TopicDiscoverySettings] = pydantic.Field(default=None)
+    """
+    Per-agent topic discovery configuration
     """
 
     if IS_PYDANTIC_V2:

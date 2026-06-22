@@ -20,6 +20,7 @@ class WorkspaceGroupResponseModel(UncheckedBaseModel):
     character_count: typing.Optional[int] = None
     scim_external_id: typing.Optional[str] = None
     is_scim_synced: typing.Optional[bool] = None
+    scim_frozen: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

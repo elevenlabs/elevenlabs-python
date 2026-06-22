@@ -18,7 +18,12 @@ class RawTopicsClient:
         self._client_wrapper = client_wrapper
 
     def get(
-        self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        agent_id: str,
+        *,
+        from_unix_secs: typing.Optional[int] = None,
+        to_unix_secs: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetAgentTopicsResponseModel]:
         """
         Returns the latest topic discovery run results for a given agent.
@@ -27,6 +32,12 @@ class RawTopicsClient:
         ----------
         agent_id : str
             ID of the agent
+
+        from_unix_secs : typing.Optional[int]
+            Start of the window to view topics for. When set with to_unix_secs, per-day topics in the range are aggregated together.
+
+        to_unix_secs : typing.Optional[int]
+            End of the window to view topics for.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -39,6 +50,10 @@ class RawTopicsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/topics",
             method="GET",
+            params={
+                "from_unix_secs": from_unix_secs,
+                "to_unix_secs": to_unix_secs,
+            },
             request_options=request_options,
         )
         try:
@@ -73,7 +88,12 @@ class AsyncRawTopicsClient:
         self._client_wrapper = client_wrapper
 
     async def get(
-        self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        agent_id: str,
+        *,
+        from_unix_secs: typing.Optional[int] = None,
+        to_unix_secs: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetAgentTopicsResponseModel]:
         """
         Returns the latest topic discovery run results for a given agent.
@@ -82,6 +102,12 @@ class AsyncRawTopicsClient:
         ----------
         agent_id : str
             ID of the agent
+
+        from_unix_secs : typing.Optional[int]
+            Start of the window to view topics for. When set with to_unix_secs, per-day topics in the range are aggregated together.
+
+        to_unix_secs : typing.Optional[int]
+            End of the window to view topics for.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -94,6 +120,10 @@ class AsyncRawTopicsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/topics",
             method="GET",
+            params={
+                "from_unix_secs": from_unix_secs,
+                "to_unix_secs": to_unix_secs,
+            },
             request_options=request_options,
         )
         try:
