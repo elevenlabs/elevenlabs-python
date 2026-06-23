@@ -337,10 +337,6 @@ if typing.TYPE_CHECKING:
     from .close_context import CloseContext
     from .close_payload import ClosePayload
     from .close_socket import CloseSocket
-    from .coached_agent_settings import CoachedAgentSettings
-    from .coaching_agent_settings import CoachingAgentSettings
-    from .code_tool_allowed_domain import CodeToolAllowedDomain
-    from .code_tool_context_variable import CodeToolContextVariable
     from .column_filter import ColumnFilter
     from .column_filter_operation import ColumnFilterOperation
     from .column_filter_values_item import ColumnFilterValuesItem
@@ -553,6 +549,7 @@ if typing.TYPE_CHECKING:
     )
     from .conversation_initiation_source import ConversationInitiationSource
     from .conversation_initiation_source_info import ConversationInitiationSourceInfo
+    from .conversation_product import ConversationProduct
     from .conversation_sentiment_analysis import ConversationSentimentAnalysis
     from .conversation_sentiment_analysis_overall_label import ConversationSentimentAnalysisOverallLabel
     from .conversation_signed_url_response_model import ConversationSignedUrlResponseModel
@@ -787,9 +784,12 @@ if typing.TYPE_CHECKING:
     from .forced_alignment_word_response_model import ForcedAlignmentWordResponseModel
     from .gender import Gender
     from .generate_voice_request import GenerateVoiceRequest
-    from .generation_chunk import GenerationChunk
-    from .generation_chunk_condition_strength import GenerationChunkConditionStrength
-    from .generation_chunk_context_adherence import GenerationChunkContextAdherence
+    from .generation_chunk_input import GenerationChunkInput
+    from .generation_chunk_input_condition_strength import GenerationChunkInputConditionStrength
+    from .generation_chunk_input_context_adherence import GenerationChunkInputContextAdherence
+    from .generation_chunk_output import GenerationChunkOutput
+    from .generation_chunk_output_condition_strength import GenerationChunkOutputConditionStrength
+    from .generation_chunk_output_context_adherence import GenerationChunkOutputContextAdherence
     from .generation_config import GenerationConfig
     from .generation_source_context import GenerationSourceContext
     from .genesys_region import GenesysRegion
@@ -1073,6 +1073,7 @@ if typing.TYPE_CHECKING:
     from .llm_usage_output import LlmUsageOutput
     from .load_memory_entry_tool_error_status import LoadMemoryEntryToolErrorStatus
     from .loadable_memory_entry import LoadableMemoryEntry
+    from .lock_reason import LockReason
     from .manual_source import ManualSource
     from .manual_verification_file_response import ManualVerificationFileResponse
     from .manual_verification_response import ManualVerificationResponse
@@ -1135,12 +1136,14 @@ if typing.TYPE_CHECKING:
     from .mtls_auth_response import MtlsAuthResponse
     from .multichannel_speech_to_text_response_model import MultichannelSpeechToTextResponseModel
     from .multipart_music_response import MultipartMusicResponse
+    from .music_allowed_output_formats import MusicAllowedOutputFormats
     from .music_explore_song_source_context import MusicExploreSongSourceContext
     from .music_generation_mode import MusicGenerationMode
+    from .music_only_output_formats import MusicOnlyOutputFormats
+    from .music_output_format import MusicOutputFormat
     from .music_prompt import MusicPrompt
     from .music_upload_response import MusicUploadResponse
     from .music_upload_response_composition_plan import MusicUploadResponseCompositionPlan
-    from .no_coaching_settings import NoCoachingSettings
     from .non_streaming_output_formats import NonStreamingOutputFormats
     from .normalized_alignment import NormalizedAlignment
     from .o_auth_2_client_creds_response import OAuth2ClientCredsResponse
@@ -1687,6 +1690,7 @@ if typing.TYPE_CHECKING:
     from .tool_type_filter import ToolTypeFilter
     from .tool_usage_stats_response_model import ToolUsageStatsResponseModel
     from .tools_response_model import ToolsResponseModel
+    from .topic_discovery_settings import TopicDiscoverySettings
     from .transcript_message import TranscriptMessage
     from .transcript_message_role import TranscriptMessageRole
     from .transcription_word import TranscriptionWord
@@ -2353,10 +2357,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CloseContext": ".close_context",
     "ClosePayload": ".close_payload",
     "CloseSocket": ".close_socket",
-    "CoachedAgentSettings": ".coached_agent_settings",
-    "CoachingAgentSettings": ".coaching_agent_settings",
-    "CodeToolAllowedDomain": ".code_tool_allowed_domain",
-    "CodeToolContextVariable": ".code_tool_context_variable",
     "ColumnFilter": ".column_filter",
     "ColumnFilterOperation": ".column_filter_operation",
     "ColumnFilterValuesItem": ".column_filter_values_item",
@@ -2505,6 +2505,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationInitiationClientDataWebhookRequestHeadersValue": ".conversation_initiation_client_data_webhook_request_headers_value",
     "ConversationInitiationSource": ".conversation_initiation_source",
     "ConversationInitiationSourceInfo": ".conversation_initiation_source_info",
+    "ConversationProduct": ".conversation_product",
     "ConversationSentimentAnalysis": ".conversation_sentiment_analysis",
     "ConversationSentimentAnalysisOverallLabel": ".conversation_sentiment_analysis_overall_label",
     "ConversationSignedUrlResponseModel": ".conversation_signed_url_response_model",
@@ -2729,9 +2730,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ForcedAlignmentWordResponseModel": ".forced_alignment_word_response_model",
     "Gender": ".gender",
     "GenerateVoiceRequest": ".generate_voice_request",
-    "GenerationChunk": ".generation_chunk",
-    "GenerationChunkConditionStrength": ".generation_chunk_condition_strength",
-    "GenerationChunkContextAdherence": ".generation_chunk_context_adherence",
+    "GenerationChunkInput": ".generation_chunk_input",
+    "GenerationChunkInputConditionStrength": ".generation_chunk_input_condition_strength",
+    "GenerationChunkInputContextAdherence": ".generation_chunk_input_context_adherence",
+    "GenerationChunkOutput": ".generation_chunk_output",
+    "GenerationChunkOutputConditionStrength": ".generation_chunk_output_condition_strength",
+    "GenerationChunkOutputContextAdherence": ".generation_chunk_output_context_adherence",
     "GenerationConfig": ".generation_config",
     "GenerationSourceContext": ".generation_source_context",
     "GenesysRegion": ".genesys_region",
@@ -2975,6 +2979,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LlmUsageOutput": ".llm_usage_output",
     "LoadMemoryEntryToolErrorStatus": ".load_memory_entry_tool_error_status",
     "LoadableMemoryEntry": ".loadable_memory_entry",
+    "LockReason": ".lock_reason",
     "ManualSource": ".manual_source",
     "ManualVerificationFileResponse": ".manual_verification_file_response",
     "ManualVerificationResponse": ".manual_verification_response",
@@ -3031,12 +3036,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MtlsAuthResponse": ".mtls_auth_response",
     "MultichannelSpeechToTextResponseModel": ".multichannel_speech_to_text_response_model",
     "MultipartMusicResponse": ".multipart_music_response",
+    "MusicAllowedOutputFormats": ".music_allowed_output_formats",
     "MusicExploreSongSourceContext": ".music_explore_song_source_context",
     "MusicGenerationMode": ".music_generation_mode",
+    "MusicOnlyOutputFormats": ".music_only_output_formats",
+    "MusicOutputFormat": ".music_output_format",
     "MusicPrompt": ".music_prompt",
     "MusicUploadResponse": ".music_upload_response",
     "MusicUploadResponseCompositionPlan": ".music_upload_response_composition_plan",
-    "NoCoachingSettings": ".no_coaching_settings",
     "NonStreamingOutputFormats": ".non_streaming_output_formats",
     "NormalizedAlignment": ".normalized_alignment",
     "OAuth2ClientCredsResponse": ".o_auth_2_client_creds_response",
@@ -3529,6 +3536,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ToolTypeFilter": ".tool_type_filter",
     "ToolUsageStatsResponseModel": ".tool_usage_stats_response_model",
     "ToolsResponseModel": ".tools_response_model",
+    "TopicDiscoverySettings": ".topic_discovery_settings",
     "TranscriptMessage": ".transcript_message",
     "TranscriptMessageRole": ".transcript_message_role",
     "TranscriptionWord": ".transcription_word",
@@ -4169,10 +4177,6 @@ __all__ = [
     "CloseContext",
     "ClosePayload",
     "CloseSocket",
-    "CoachedAgentSettings",
-    "CoachingAgentSettings",
-    "CodeToolAllowedDomain",
-    "CodeToolContextVariable",
     "ColumnFilter",
     "ColumnFilterOperation",
     "ColumnFilterValuesItem",
@@ -4321,6 +4325,7 @@ __all__ = [
     "ConversationInitiationClientDataWebhookRequestHeadersValue",
     "ConversationInitiationSource",
     "ConversationInitiationSourceInfo",
+    "ConversationProduct",
     "ConversationSentimentAnalysis",
     "ConversationSentimentAnalysisOverallLabel",
     "ConversationSignedUrlResponseModel",
@@ -4545,9 +4550,12 @@ __all__ = [
     "ForcedAlignmentWordResponseModel",
     "Gender",
     "GenerateVoiceRequest",
-    "GenerationChunk",
-    "GenerationChunkConditionStrength",
-    "GenerationChunkContextAdherence",
+    "GenerationChunkInput",
+    "GenerationChunkInputConditionStrength",
+    "GenerationChunkInputContextAdherence",
+    "GenerationChunkOutput",
+    "GenerationChunkOutputConditionStrength",
+    "GenerationChunkOutputContextAdherence",
     "GenerationConfig",
     "GenerationSourceContext",
     "GenesysRegion",
@@ -4791,6 +4799,7 @@ __all__ = [
     "LlmUsageOutput",
     "LoadMemoryEntryToolErrorStatus",
     "LoadableMemoryEntry",
+    "LockReason",
     "ManualSource",
     "ManualVerificationFileResponse",
     "ManualVerificationResponse",
@@ -4847,12 +4856,14 @@ __all__ = [
     "MtlsAuthResponse",
     "MultichannelSpeechToTextResponseModel",
     "MultipartMusicResponse",
+    "MusicAllowedOutputFormats",
     "MusicExploreSongSourceContext",
     "MusicGenerationMode",
+    "MusicOnlyOutputFormats",
+    "MusicOutputFormat",
     "MusicPrompt",
     "MusicUploadResponse",
     "MusicUploadResponseCompositionPlan",
-    "NoCoachingSettings",
     "NonStreamingOutputFormats",
     "NormalizedAlignment",
     "OAuth2ClientCredsResponse",
@@ -5345,6 +5356,7 @@ __all__ = [
     "ToolTypeFilter",
     "ToolUsageStatsResponseModel",
     "ToolsResponseModel",
+    "TopicDiscoverySettings",
     "TranscriptMessage",
     "TranscriptMessageRole",
     "TranscriptionWord",

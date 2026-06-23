@@ -20,7 +20,10 @@ if typing.TYPE_CHECKING:
     from .body_stream_composed_music_v_1_music_stream_post_model_id import (
         BodyStreamComposedMusicV1MusicStreamPostModelId,
     )
+    from .music_compose_detailed_request_output_format import MusicComposeDetailedRequestOutputFormat
+    from .music_compose_request_output_format import MusicComposeRequestOutputFormat
     from .music_separate_stems_request_stem_variation_id import MusicSeparateStemsRequestStemVariationId
+    from .music_stream_request_output_format import MusicStreamRequestOutputFormat
     from .music_video_to_music_request_model_id import MusicVideoToMusicRequestModelId
 _dynamic_imports: typing.Dict[str, str] = {
     "BodyComposeMusicV1MusicPostCompositionPlan": ".body_compose_music_v_1_music_post_composition_plan",
@@ -29,7 +32,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId": ".body_compose_music_with_a_detailed_response_v_1_music_detailed_post_model_id",
     "BodyStreamComposedMusicV1MusicStreamPostCompositionPlan": ".body_stream_composed_music_v_1_music_stream_post_composition_plan",
     "BodyStreamComposedMusicV1MusicStreamPostModelId": ".body_stream_composed_music_v_1_music_stream_post_model_id",
+    "MusicComposeDetailedRequestOutputFormat": ".music_compose_detailed_request_output_format",
+    "MusicComposeRequestOutputFormat": ".music_compose_request_output_format",
     "MusicSeparateStemsRequestStemVariationId": ".music_separate_stems_request_stem_variation_id",
+    "MusicStreamRequestOutputFormat": ".music_stream_request_output_format",
     "MusicVideoToMusicRequestModelId": ".music_video_to_music_request_model_id",
 }
 
@@ -62,6 +68,9 @@ __all__ = [
     "BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId",
     "BodyStreamComposedMusicV1MusicStreamPostCompositionPlan",
     "BodyStreamComposedMusicV1MusicStreamPostModelId",
+    "MusicComposeDetailedRequestOutputFormat",
+    "MusicComposeRequestOutputFormat",
     "MusicSeparateStemsRequestStemVariationId",
+    "MusicStreamRequestOutputFormat",
     "MusicVideoToMusicRequestModelId",
 ]

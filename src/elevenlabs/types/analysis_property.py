@@ -39,6 +39,11 @@ class AnalysisProperty(UncheckedBaseModel):
     The name of the dynamic variable to use for this property's value. Mutually exclusive with description, is_system_provided, constant_value, and is_omitted.
     """
 
+    allowed_values_dynamic_variable: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    When set, the LLM provides the value but the runtime rejects any value not present in the list held by this dynamic variable. Use to let the LLM pick from a server-verified set (e.g. the IDs the current user is allowed to access). Requires description; mutually exclusive with dynamic_variable, is_system_provided, constant_value, and is_omitted.
+    """
+
     constant_value: typing.Optional[AnalysisPropertyConstantValue] = pydantic.Field(default=None)
     """
     A constant value to use for this property. Mutually exclusive with description, dynamic_variable, is_system_provided, and is_omitted.

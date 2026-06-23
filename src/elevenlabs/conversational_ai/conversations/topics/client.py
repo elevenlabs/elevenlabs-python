@@ -24,7 +24,12 @@ class TopicsClient:
         return self._raw_client
 
     def get(
-        self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        agent_id: str,
+        *,
+        from_unix_secs: typing.Optional[int] = None,
+        to_unix_secs: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> GetAgentTopicsResponseModel:
         """
         Returns the latest topic discovery run results for a given agent.
@@ -33,6 +38,12 @@ class TopicsClient:
         ----------
         agent_id : str
             ID of the agent
+
+        from_unix_secs : typing.Optional[int]
+            Start of the window to view topics for. When set with to_unix_secs, per-day topics in the range are aggregated together.
+
+        to_unix_secs : typing.Optional[int]
+            End of the window to view topics for.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -51,9 +62,13 @@ class TopicsClient:
         )
         client.conversational_ai.conversations.topics.get(
             agent_id="agent_id",
+            from_unix_secs=1,
+            to_unix_secs=1,
         )
         """
-        _response = self._raw_client.get(agent_id, request_options=request_options)
+        _response = self._raw_client.get(
+            agent_id, from_unix_secs=from_unix_secs, to_unix_secs=to_unix_secs, request_options=request_options
+        )
         return _response.data
 
 
@@ -73,7 +88,12 @@ class AsyncTopicsClient:
         return self._raw_client
 
     async def get(
-        self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        agent_id: str,
+        *,
+        from_unix_secs: typing.Optional[int] = None,
+        to_unix_secs: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> GetAgentTopicsResponseModel:
         """
         Returns the latest topic discovery run results for a given agent.
@@ -82,6 +102,12 @@ class AsyncTopicsClient:
         ----------
         agent_id : str
             ID of the agent
+
+        from_unix_secs : typing.Optional[int]
+            Start of the window to view topics for. When set with to_unix_secs, per-day topics in the range are aggregated together.
+
+        to_unix_secs : typing.Optional[int]
+            End of the window to view topics for.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -105,10 +131,14 @@ class AsyncTopicsClient:
         async def main() -> None:
             await client.conversational_ai.conversations.topics.get(
                 agent_id="agent_id",
+                from_unix_secs=1,
+                to_unix_secs=1,
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get(agent_id, request_options=request_options)
+        _response = await self._raw_client.get(
+            agent_id, from_unix_secs=from_unix_secs, to_unix_secs=to_unix_secs, request_options=request_options
+        )
         return _response.data

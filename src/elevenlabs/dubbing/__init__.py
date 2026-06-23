@@ -8,8 +8,12 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .types import (
         DubbingCreateRequestMode,
+        DubbingListRequestCreationSourcesItem,
+        DubbingListRequestDubbingModelsItem,
         DubbingListRequestDubbingStatus,
+        DubbingListRequestDubbingStatusesItem,
         DubbingListRequestFilterByCreator,
+        DubbingListRequestOrderBy,
         DubbingListRequestOrderDirection,
     )
     from . import audio, resource, transcript, transcripts
@@ -17,8 +21,12 @@ if typing.TYPE_CHECKING:
     from .transcripts import TranscriptsGetRequestFormatType
 _dynamic_imports: typing.Dict[str, str] = {
     "DubbingCreateRequestMode": ".types",
+    "DubbingListRequestCreationSourcesItem": ".types",
+    "DubbingListRequestDubbingModelsItem": ".types",
     "DubbingListRequestDubbingStatus": ".types",
+    "DubbingListRequestDubbingStatusesItem": ".types",
     "DubbingListRequestFilterByCreator": ".types",
+    "DubbingListRequestOrderBy": ".types",
     "DubbingListRequestOrderDirection": ".types",
     "TranscriptGetTranscriptForDubRequestFormatType": ".transcript",
     "TranscriptGetTranscriptForDubResponse": ".transcript",
@@ -53,8 +61,12 @@ def __dir__():
 
 __all__ = [
     "DubbingCreateRequestMode",
+    "DubbingListRequestCreationSourcesItem",
+    "DubbingListRequestDubbingModelsItem",
     "DubbingListRequestDubbingStatus",
+    "DubbingListRequestDubbingStatusesItem",
     "DubbingListRequestFilterByCreator",
+    "DubbingListRequestOrderBy",
     "DubbingListRequestOrderDirection",
     "TranscriptGetTranscriptForDubRequestFormatType",
     "TranscriptGetTranscriptForDubResponse",

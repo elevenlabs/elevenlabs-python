@@ -48,6 +48,11 @@ class TurnConfig(UncheckedBaseModel):
     """
 
     turn_model: typing.Optional[TurnModel] = None
+    interruption_ignore_terms: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    List of terms that should not trigger an interruption when spoken by the user (e.g. 'gotcha', 'understood'). Uses case-insensitive exact matching.
+    """
+
     soft_timeout_config: typing.Optional[SoftTimeoutConfig] = pydantic.Field(default=None)
     """
     Configuration for soft timeout functionality. Provides immediate feedback during longer LLM responses.

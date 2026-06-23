@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .lock_reason import LockReason
 from .permission_type import PermissionType
 
 
@@ -16,6 +17,7 @@ class WorkspaceApiKeyResponseModel(UncheckedBaseModel):
     created_at_unix: typing.Optional[int] = None
     is_disabled: typing.Optional[bool] = None
     permissions: typing.Optional[typing.List[PermissionType]] = None
+    disable_reason: typing.Optional[LockReason] = None
     character_limit: typing.Optional[int] = pydantic.Field(default=None)
     """
     Maximum number of credits allowed in the current billing period.

@@ -13,8 +13,12 @@ from ..types.dubbing_metadata_page_response_model import DubbingMetadataPageResp
 from ..types.dubbing_metadata_response import DubbingMetadataResponse
 from .raw_client import AsyncRawDubbingClient, RawDubbingClient
 from .types.dubbing_create_request_mode import DubbingCreateRequestMode
+from .types.dubbing_list_request_creation_sources_item import DubbingListRequestCreationSourcesItem
+from .types.dubbing_list_request_dubbing_models_item import DubbingListRequestDubbingModelsItem
 from .types.dubbing_list_request_dubbing_status import DubbingListRequestDubbingStatus
+from .types.dubbing_list_request_dubbing_statuses_item import DubbingListRequestDubbingStatusesItem
 from .types.dubbing_list_request_filter_by_creator import DubbingListRequestFilterByCreator
+from .types.dubbing_list_request_order_by import DubbingListRequestOrderBy
 from .types.dubbing_list_request_order_direction import DubbingListRequestOrderDirection
 
 if typing.TYPE_CHECKING:
@@ -52,8 +56,18 @@ class DubbingClient:
         cursor: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
         dubbing_status: typing.Optional[DubbingListRequestDubbingStatus] = None,
+        dubbing_statuses: typing.Optional[
+            typing.Union[DubbingListRequestDubbingStatusesItem, typing.Sequence[DubbingListRequestDubbingStatusesItem]]
+        ] = None,
+        dubbing_models: typing.Optional[
+            typing.Union[DubbingListRequestDubbingModelsItem, typing.Sequence[DubbingListRequestDubbingModelsItem]]
+        ] = None,
+        target_language_codes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        creation_sources: typing.Optional[
+            typing.Union[DubbingListRequestCreationSourcesItem, typing.Sequence[DubbingListRequestCreationSourcesItem]]
+        ] = None,
         filter_by_creator: typing.Optional[DubbingListRequestFilterByCreator] = None,
-        order_by: typing.Optional[typing.Literal["created_at"]] = None,
+        order_by: typing.Optional[DubbingListRequestOrderBy] = None,
         order_direction: typing.Optional[DubbingListRequestOrderDirection] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingMetadataPageResponseModel:
@@ -71,10 +85,22 @@ class DubbingClient:
         dubbing_status : typing.Optional[DubbingListRequestDubbingStatus]
             What state the dub is currently in.
 
+        dubbing_statuses : typing.Optional[typing.Union[DubbingListRequestDubbingStatusesItem, typing.Sequence[DubbingListRequestDubbingStatusesItem]]]
+            Filter by dubbing status.
+
+        dubbing_models : typing.Optional[typing.Union[DubbingListRequestDubbingModelsItem, typing.Sequence[DubbingListRequestDubbingModelsItem]]]
+            Filter by dubbing model generation.
+
+        target_language_codes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter by target language code.
+
+        creation_sources : typing.Optional[typing.Union[DubbingListRequestCreationSourcesItem, typing.Sequence[DubbingListRequestCreationSourcesItem]]]
+            Filter by dubbing creation source.
+
         filter_by_creator : typing.Optional[DubbingListRequestFilterByCreator]
             Filters who created the resources being listed, whether it was the user running the request or someone else that shared the resource with them.
 
-        order_by : typing.Optional[typing.Literal["created_at"]]
+        order_by : typing.Optional[DubbingListRequestOrderBy]
             The field to use for ordering results from this query.
 
         order_direction : typing.Optional[DubbingListRequestOrderDirection]
@@ -99,7 +125,12 @@ class DubbingClient:
             cursor="cursor",
             page_size=1,
             dubbing_status="dubbing",
+            dubbing_statuses=["queued"],
+            dubbing_models=["dubbing_v1"],
+            target_language_codes=["target_language_codes"],
+            creation_sources=["flow_node"],
             filter_by_creator="personal",
+            order_by="created_at",
             order_direction="DESCENDING",
         )
         """
@@ -107,6 +138,10 @@ class DubbingClient:
             cursor=cursor,
             page_size=page_size,
             dubbing_status=dubbing_status,
+            dubbing_statuses=dubbing_statuses,
+            dubbing_models=dubbing_models,
+            target_language_codes=target_language_codes,
+            creation_sources=creation_sources,
             filter_by_creator=filter_by_creator,
             order_by=order_by,
             order_direction=order_direction,
@@ -371,8 +406,18 @@ class AsyncDubbingClient:
         cursor: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
         dubbing_status: typing.Optional[DubbingListRequestDubbingStatus] = None,
+        dubbing_statuses: typing.Optional[
+            typing.Union[DubbingListRequestDubbingStatusesItem, typing.Sequence[DubbingListRequestDubbingStatusesItem]]
+        ] = None,
+        dubbing_models: typing.Optional[
+            typing.Union[DubbingListRequestDubbingModelsItem, typing.Sequence[DubbingListRequestDubbingModelsItem]]
+        ] = None,
+        target_language_codes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        creation_sources: typing.Optional[
+            typing.Union[DubbingListRequestCreationSourcesItem, typing.Sequence[DubbingListRequestCreationSourcesItem]]
+        ] = None,
         filter_by_creator: typing.Optional[DubbingListRequestFilterByCreator] = None,
-        order_by: typing.Optional[typing.Literal["created_at"]] = None,
+        order_by: typing.Optional[DubbingListRequestOrderBy] = None,
         order_direction: typing.Optional[DubbingListRequestOrderDirection] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingMetadataPageResponseModel:
@@ -390,10 +435,22 @@ class AsyncDubbingClient:
         dubbing_status : typing.Optional[DubbingListRequestDubbingStatus]
             What state the dub is currently in.
 
+        dubbing_statuses : typing.Optional[typing.Union[DubbingListRequestDubbingStatusesItem, typing.Sequence[DubbingListRequestDubbingStatusesItem]]]
+            Filter by dubbing status.
+
+        dubbing_models : typing.Optional[typing.Union[DubbingListRequestDubbingModelsItem, typing.Sequence[DubbingListRequestDubbingModelsItem]]]
+            Filter by dubbing model generation.
+
+        target_language_codes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter by target language code.
+
+        creation_sources : typing.Optional[typing.Union[DubbingListRequestCreationSourcesItem, typing.Sequence[DubbingListRequestCreationSourcesItem]]]
+            Filter by dubbing creation source.
+
         filter_by_creator : typing.Optional[DubbingListRequestFilterByCreator]
             Filters who created the resources being listed, whether it was the user running the request or someone else that shared the resource with them.
 
-        order_by : typing.Optional[typing.Literal["created_at"]]
+        order_by : typing.Optional[DubbingListRequestOrderBy]
             The field to use for ordering results from this query.
 
         order_direction : typing.Optional[DubbingListRequestOrderDirection]
@@ -423,7 +480,12 @@ class AsyncDubbingClient:
                 cursor="cursor",
                 page_size=1,
                 dubbing_status="dubbing",
+                dubbing_statuses=["queued"],
+                dubbing_models=["dubbing_v1"],
+                target_language_codes=["target_language_codes"],
+                creation_sources=["flow_node"],
                 filter_by_creator="personal",
+                order_by="created_at",
                 order_direction="DESCENDING",
             )
 
@@ -434,6 +496,10 @@ class AsyncDubbingClient:
             cursor=cursor,
             page_size=page_size,
             dubbing_status=dubbing_status,
+            dubbing_statuses=dubbing_statuses,
+            dubbing_models=dubbing_models,
+            target_language_codes=target_language_codes,
+            creation_sources=creation_sources,
             filter_by_creator=filter_by_creator,
             order_by=order_by,
             order_direction=order_direction,

@@ -6,11 +6,11 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .audio_ref_chunk import AudioRefChunk
-from .generation_chunk_condition_strength import GenerationChunkConditionStrength
-from .generation_chunk_context_adherence import GenerationChunkContextAdherence
+from .generation_chunk_input_condition_strength import GenerationChunkInputConditionStrength
+from .generation_chunk_input_context_adherence import GenerationChunkInputContextAdherence
 
 
-class GenerationChunk(UncheckedBaseModel):
+class GenerationChunkInput(UncheckedBaseModel):
     text: str = pydantic.Field()
     """
     The text config to be generated for this chunk. Can contain section name in square brackets, e.g. [Verse 1], lyrics lines, and inline directions in curly braces, e.g. {scratching}.
@@ -31,7 +31,7 @@ class GenerationChunk(UncheckedBaseModel):
     The styles and musical directions that should not be present in this chunk. Use English language for best results. Leaving empty is a good default, only use this field if you want to explicitly avoid a particular style or direction.
     """
 
-    context_adherence: typing.Optional[GenerationChunkContextAdherence] = pydantic.Field(default=None)
+    context_adherence: typing.Optional[GenerationChunkInputContextAdherence] = pydantic.Field(default=None)
     """
     How much the model adheres to the context of its surrounding chunks. Low adherence means the model can deviate from the context and be more creative. High adherence means the model will be more consistent with the context.
     """
@@ -41,7 +41,7 @@ class GenerationChunk(UncheckedBaseModel):
     The audio reference to condition the generation on. The first chunk is the most important as it will influence the generation of all subsequent chunks. Thus, if you want to apply conditioning to the entire song, start conditioning from the first chunk.
     """
 
-    condition_strength: typing.Optional[GenerationChunkConditionStrength] = pydantic.Field(default=None)
+    condition_strength: typing.Optional[GenerationChunkInputConditionStrength] = pydantic.Field(default=None)
     """
     How strongly the model adheres to the conditioning reference. Low strength means the model will be more creative and deviate from the reference. High strength means the model will be more consistent with the reference.
     """

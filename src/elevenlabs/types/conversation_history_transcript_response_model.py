@@ -45,6 +45,7 @@ class ConversationHistoryTranscriptResponseModel(UncheckedBaseModel):
     source_medium: typing.Optional[ChatSourceMedium] = None
     source_event_id: typing.Optional[int] = None
     used_static_kb_document_ids: typing.Optional[typing.List[str]] = None
+    user_identifier: typing.Optional[str] = None
     file_input: typing.Optional[ConversationHistoryTranscriptFileInputResponseModel] = None
     contextual_update_info: typing.Optional[ContextualUpdateInfo] = None
 
