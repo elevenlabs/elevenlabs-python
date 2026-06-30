@@ -9,7 +9,7 @@ from .api_integration_o_auth_2_custom_app_response_scope_separator import (
     ApiIntegrationOAuth2CustomAppResponseScopeSeparator,
 )
 from .auth_connection_dependencies import AuthConnectionDependencies
-from .o_auth_connection_status import OAuthConnectionStatus
+from .auth_connection_status import AuthConnectionStatus
 
 
 class ApiIntegrationOAuth2CustomAppResponse(UncheckedBaseModel):
@@ -33,21 +33,6 @@ class ApiIntegrationOAuth2CustomAppResponse(UncheckedBaseModel):
 
     integration_id: str
     credential_id: str
-    status: typing.Optional[OAuthConnectionStatus] = pydantic.Field(default=None)
-    """
-    Current health status of the OAuth connection
-    """
-
-    status_detail: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Human-readable detail about the current status, e.g. the error message on refresh failure
-    """
-
-    status_updated_at: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    ISO 8601 timestamp of the last status change
-    """
-
     client_id: str = pydantic.Field()
     """
     OAuth client ID (rendered from template if credential uses templated credentials, None for legacy connections)
@@ -55,6 +40,9 @@ class ApiIntegrationOAuth2CustomAppResponse(UncheckedBaseModel):
 
     id: str
     used_by: typing.Optional[AuthConnectionDependencies] = None
+    status: typing.Optional[AuthConnectionStatus] = None
+    status_detail: typing.Optional[str] = None
+    status_updated_at: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

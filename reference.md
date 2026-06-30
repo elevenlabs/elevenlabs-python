@@ -951,7 +951,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
     
 </dd>
 </dl>
@@ -1162,7 +1162,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
     
 </dd>
 </dl>
@@ -1372,7 +1372,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
     
 </dd>
 </dl>
@@ -1584,7 +1584,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
     
 </dd>
 </dl>
@@ -1776,7 +1776,7 @@ client.text_to_dialogue.convert(
 <dl>
 <dd>
 
-**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
     
 </dd>
 </dl>
@@ -1921,7 +1921,7 @@ client.text_to_dialogue.stream(
 <dl>
 <dd>
 
-**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
     
 </dd>
 </dl>
@@ -2070,7 +2070,7 @@ for chunk in response.data:
 <dl>
 <dd>
 
-**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
     
 </dd>
 </dl>
@@ -2215,7 +2215,7 @@ client.text_to_dialogue.convert_with_timestamps(
 <dl>
 <dd>
 
-**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
     
 </dd>
 </dl>
@@ -6585,6 +6585,75 @@ client.pronunciation_dictionaries.list(
 </dl>
 </details>
 
+## Workspace
+<details><summary><code>client.workspace.<a href="src/elevenlabs/workspace/client.py">set_third_party_disabling_policy</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Set the workspace-wide Third-Party Disabling policy. When set, it forces, for every API key in the workspace, whether the holder of a key (potentially a third party who found it) may disable it via the self-disable endpoint or when it leaks publicly — overriding each key's own setting. Pass `true` to allow it for all keys, `false` to forbid it for all keys, or `null` to clear the override so per-key values and the plan default apply again. Workspace admins only; requires self-disable access.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.workspace.set_third_party_disabling_policy()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**third_party_disable_allowed:** `typing.Optional[bool]` — `true` forces every key in the workspace to be disable-able by its holder; `false` forbids it for every key; `null` clears the override (per-key values and the plan default apply).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ServiceAccounts
 <details><summary><code>client.service_accounts.<a href="src/elevenlabs/service_accounts/client.py">list</a>()</code></summary>
 <dl>
@@ -6977,7 +7046,7 @@ client.webhooks.update(
 <dl>
 <dd>
 
-Transcribe an audio or video file. If webhook is set to true, the request will be processed asynchronously and results sent to configured webhooks. When use_multi_channel is true and the provided audio has multiple channels, a 'transcripts' object with separate transcripts for each channel is returned. Otherwise, returns a single transcript. The optional webhook_metadata parameter allows you to attach custom data that will be included in webhook responses for request correlation and tracking.
+Transcribe an audio or video file. If webhook is set to true, the request will be processed asynchronously and results sent to configured webhooks. When use_multi_channel is true and the provided audio has multiple channels, a 'transcripts' object with separate transcripts for each channel is returned; set multichannel_output_style='combined' to instead receive a single transcript with all channels merged and sorted by time. Otherwise, returns a single transcript. The optional webhook_metadata parameter allows you to attach custom data that will be included in webhook responses for request correlation and tracking.
 </dd>
 </dl>
 </dd>
@@ -7154,7 +7223,15 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**use_multi_channel:** `typing.Optional[bool]` — Whether the audio file contains multiple channels where each channel contains a single speaker. When enabled, each channel will be transcribed independently and the results will be combined. Each word in the response will include a 'channel_index' field indicating which channel it was spoken on. A maximum of 5 channels is supported. Each channel is billed independently at the full audio duration, so cost scales linearly with the number of channels.
+**use_multi_channel:** `typing.Optional[bool]` — Whether the audio file contains multiple channels where each channel contains a single speaker. When enabled, each channel is transcribed independently. By default a separate transcript is returned per channel; set multichannel_output_style='combined' to instead receive a single transcript with all channels merged and sorted by time. Each word in the response includes a 'channel_index' field indicating which channel it was spoken on. A maximum of 5 channels is supported. Each channel is billed independently at the full audio duration, so cost scales linearly with the number of channels.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**multichannel_output_style:** `typing.Optional[SpeechToTextConvertRequestMultichannelOutputStyle]` — Controls the response shape when use_multi_channel is enabled. 'separate' (default) returns one transcript per channel under 'transcripts'. 'combined' merges all channels into a single transcript whose words are sorted by start time, each carrying a 'channel_index' - matching the single-channel response shape. 'combined' requires timestamps (timestamps_granularity must not be 'none') and does not support entity detection or redaction.
     
 </dd>
 </dl>
@@ -10474,7 +10551,7 @@ client.conversational_ai.agents.duplicate(
 <dl>
 <dd>
 
-Run a conversation between the agent and a simulated user.
+Deprecated. Use the `/v1/convai/agent-testing/create` and `/v1/convai/agents/:agent_id/run-tests` endpoints to create and run simulations. Run a conversation between the agent and a simulated user.
 </dd>
 </dl>
 </dd>
@@ -10579,7 +10656,7 @@ client.conversational_ai.agents.simulate_conversation(
 <dl>
 <dd>
 
-Run a conversation between the agent and a simulated user and stream back the response. Response is streamed back as partial lists of messages that should be concatenated and once the conversation has complete a single final message with the conversation analysis will be sent.
+Deprecated. Use the `/v1/convai/agent-testing/create` and `/v1/convai/agents/:agent_id/run-tests` endpoints to create and run simulations. Run a conversation between the agent and a simulated user and stream back the response. Response is streamed back as partial lists of messages that should be concatenated and once the conversation has complete a single final message with the conversation analysis will be sent.
 </dd>
 </dl>
 </dd>
@@ -15878,6 +15955,103 @@ client.conversational_ai.agents.branches.update(
 </dl>
 </details>
 
+<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">preview_merge</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the result of merging the source branch into the target branch without performing the merge. Useful for showing an accurate diff before confirming.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.agents.branches.preview_merge(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    source_branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+    target_branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+    force=True,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**source_branch_id:** `str` — Unique identifier for the source branch to merge from.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**target_branch_id:** `str` — The ID of the target branch to merge into.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force:** `typing.Optional[bool]` — When true, source branch changes always win conflicts regardless of timestamps
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">merge</a>(...)</code></summary>
 <dl>
 <dd>
@@ -15963,6 +16137,85 @@ client.conversational_ai.agents.branches.merge(
 <dd>
 
 **force:** `typing.Optional[bool]` — Force source branch changes onto the target, overriding timestamp-based conflict resolution
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">preview_rebase</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the result of rebasing the branch onto main without performing the rebase. Useful for showing an accurate diff before confirming.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.agents.branches.preview_rebase(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `str` — Unique identifier for the source branch to merge from.
     
 </dd>
 </dl>
@@ -24228,6 +24481,14 @@ client.service_accounts.api_keys.create(
 <dl>
 <dd>
 
+**third_party_disable_allowed:** `typing.Optional[bool]` — Whether the holder of this key may disable it via the self-disable endpoint. On create, omit or pass null to use the workspace's default (enabled for non-Enterprise plans, disabled for Enterprise plans). On update, omit to leave it unchanged, or pass "clear" to reset it to the workspace default. Only honored for workspaces with self-disable access enabled.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -24427,6 +24688,16 @@ client.service_accounts.api_keys.update(
 **allowed_ips:** `typing.Optional[
     BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchAllowedIps
 ]` — List of IP addresses or CIDR ranges allowed to use this API key. Each entry may be a CIDR range (e.g. '10.0.0.0/24') or a bare IP address (normalized to /32 or /128). On create, omit or pass null to allow all IPs. On update, omit to leave the whitelist unchanged, or pass "clear" to remove it.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**third_party_disable_allowed:** `typing.Optional[
+    BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchThirdPartyDisableAllowed
+]` — Whether the holder of this key may disable it via the self-disable endpoint. On create, omit or pass null to use the workspace's default (enabled for non-Enterprise plans, disabled for Enterprise plans). On update, omit to leave it unchanged, or pass "clear" to reset it to the workspace default. Only honored for workspaces with self-disable access enabled.
     
 </dd>
 </dl>

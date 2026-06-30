@@ -13,6 +13,7 @@ from .entry_behavior import EntryBehavior
 from .knowledge_base_locator import KnowledgeBaseLocator
 from .position_output import PositionOutput
 from .transfer_type_enum import TransferTypeEnum
+from .uui_transfer_config import UuiTransferConfig
 from .workflow_phone_number_node_model_output_custom_sip_headers_item import (
     WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem,
 )
@@ -40,12 +41,12 @@ class AgentWorkflowResponseModelNodesValue_End(UncheckedBaseModel):
 
 class AgentWorkflowResponseModelNodesValue_OverrideAgent(UncheckedBaseModel):
     type: typing.Literal["override_agent"] = "override_agent"
+    position: PositionOutput
+    edge_order: typing.List[str]
     conversation_config: ConversationalConfigApiModelWorkflowOverrideOutput
     additional_prompt: str
     additional_knowledge_base: typing.List[KnowledgeBaseLocator]
     additional_tool_ids: typing.List[str]
-    position: PositionOutput
-    edge_order: typing.List[str]
     label: str
     entry_behavior: EntryBehavior
 
@@ -64,6 +65,7 @@ class AgentWorkflowResponseModelNodesValue_PhoneNumber(UncheckedBaseModel):
     custom_sip_headers: typing.List[WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem]
     transfer_destination: WorkflowPhoneNumberNodeModelOutputTransferDestination
     transfer_type: TransferTypeEnum
+    uui: typing.Optional[UuiTransferConfig] = None
     post_dial_digits: typing.Optional[WorkflowPhoneNumberNodeModelOutputPostDialDigits] = None
     position: PositionOutput
     edge_order: typing.List[str]

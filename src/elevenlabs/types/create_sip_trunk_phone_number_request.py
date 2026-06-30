@@ -30,6 +30,11 @@ class CreateSipTrunkPhoneNumberRequest(UncheckedBaseModel):
     This field is deprecated and will be removed in the future. Whether this phone number supports outbound calls
     """
 
+    agent_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Agent ID to assign the phone number to
+    """
+
     inbound_trunk_config: typing.Optional[InboundSipTrunkConfigRequestModel] = None
     outbound_trunk_config: typing.Optional[OutboundSipTrunkConfigRequestModel] = None
 

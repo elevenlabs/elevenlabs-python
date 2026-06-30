@@ -48,7 +48,9 @@ PermissionType = typing.Union[
         "workspace_members_remove",
         "terms_of_service_accept",
         "audit_log_read",
+        "conversation_privacy_manage",
         "copy_resources_cross_workspace",
+        "synthid_detector",
     ],
     typing.Any,
 ]

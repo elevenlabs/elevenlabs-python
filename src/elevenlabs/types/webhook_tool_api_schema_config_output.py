@@ -9,6 +9,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .literal_json_schema_property import LiteralJsonSchemaProperty
 from .query_params_json_schema import QueryParamsJsonSchema
+from .response_filter import ResponseFilter
 from .webhook_tool_api_schema_config_output_auth_connection import WebhookToolApiSchemaConfigOutputAuthConnection
 from .webhook_tool_api_schema_config_output_content_type import WebhookToolApiSchemaConfigOutputContentType
 from .webhook_tool_api_schema_config_output_method import WebhookToolApiSchemaConfigOutputMethod
@@ -53,6 +54,11 @@ class WebhookToolApiSchemaConfigOutput(UncheckedBaseModel):
     response_body_schema: typing.Optional["ObjectJsonSchemaPropertyOutput"] = pydantic.Field(default=None)
     """
     Schema describing the expected response body structure. For documentation only; not surfaced to the LLM.
+    """
+
+    response_filter: typing.Optional[ResponseFilter] = pydantic.Field(default=None)
+    """
+    Optional allow-list filter applied to the response before the LLM sees it, so large responses don't pollute the context. Defaults to the full response.
     """
 
     content_type: typing.Optional[WebhookToolApiSchemaConfigOutputContentType] = pydantic.Field(default=None)

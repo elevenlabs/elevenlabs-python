@@ -23,6 +23,7 @@ class ConversationHistoryAnalysisCommonModel(UncheckedBaseModel):
     ] = None
     data_collection_results_list: typing.Optional[typing.List[DataCollectionResultCommonModel]] = None
     call_successful: EvaluationSuccessResult
+    call_success_score: typing.Optional[float] = None
     transcript_summary: str
     call_summary_title: typing.Optional[str] = None
     scoped: typing.Optional[typing.List[ScopedAnalysisResult]] = None

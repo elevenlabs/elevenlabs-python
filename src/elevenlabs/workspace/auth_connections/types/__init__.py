@@ -34,6 +34,7 @@ if typing.TYPE_CHECKING:
     from .auth_connections_update_request_body import (
         AuthConnectionsUpdateRequestBody,
         AuthConnectionsUpdateRequestBody_BasicAuth,
+        AuthConnectionsUpdateRequestBody_BearerAuth,
         AuthConnectionsUpdateRequestBody_Oauth2ClientCredentials,
         AuthConnectionsUpdateRequestBody_Oauth2Jwt,
     )
@@ -76,6 +77,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AuthConnectionsCreateResponse_WhatsappAuth": ".auth_connections_create_response",
     "AuthConnectionsUpdateRequestBody": ".auth_connections_update_request_body",
     "AuthConnectionsUpdateRequestBody_BasicAuth": ".auth_connections_update_request_body",
+    "AuthConnectionsUpdateRequestBody_BearerAuth": ".auth_connections_update_request_body",
     "AuthConnectionsUpdateRequestBody_Oauth2ClientCredentials": ".auth_connections_update_request_body",
     "AuthConnectionsUpdateRequestBody_Oauth2Jwt": ".auth_connections_update_request_body",
     "AuthConnectionsUpdateResponse": ".auth_connections_update_response",
@@ -139,6 +141,7 @@ __all__ = [
     "AuthConnectionsCreateResponse_WhatsappAuth",
     "AuthConnectionsUpdateRequestBody",
     "AuthConnectionsUpdateRequestBody_BasicAuth",
+    "AuthConnectionsUpdateRequestBody_BearerAuth",
     "AuthConnectionsUpdateRequestBody_Oauth2ClientCredentials",
     "AuthConnectionsUpdateRequestBody_Oauth2Jwt",
     "AuthConnectionsUpdateResponse",

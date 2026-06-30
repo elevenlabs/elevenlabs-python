@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .position_output import PositionOutput
 from .transfer_type_enum import TransferTypeEnum
+from .uui_transfer_config import UuiTransferConfig
 from .workflow_phone_number_node_model_output_custom_sip_headers_item import (
     WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem,
 )
@@ -24,6 +25,11 @@ class WorkflowPhoneNumberNodeModelOutput(UncheckedBaseModel):
 
     transfer_destination: WorkflowPhoneNumberNodeModelOutputTransferDestination
     transfer_type: TransferTypeEnum
+    uui: typing.Optional[UuiTransferConfig] = pydantic.Field(default=None)
+    """
+    User-to-User Information (RFC 7433) to attach to SIP REFER transfers. Carries call context such as CRM identifiers or escalation reason across the transfer boundary.
+    """
+
     post_dial_digits: typing.Optional[WorkflowPhoneNumberNodeModelOutputPostDialDigits] = pydantic.Field(default=None)
     """
     DTMF digits to send after call connects (e.g., 'ww1234' for extension). Can be either a static value or a dynamic variable reference. Use 'w' for 0.5s pause. Only supported for Twilio transfers.

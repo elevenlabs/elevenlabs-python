@@ -416,7 +416,7 @@ class AgentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AgentSimulatedChatTestResponseModel:
         """
-        Run a conversation between the agent and a simulated user.
+        Deprecated. Use the `/v1/convai/agent-testing/create` and `/v1/convai/agents/:agent_id/run-tests` endpoints to create and run simulations. Run a conversation between the agent and a simulated user.
 
         Parameters
         ----------
@@ -481,7 +481,7 @@ class AgentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Run a conversation between the agent and a simulated user and stream back the response. Response is streamed back as partial lists of messages that should be concatenated and once the conversation has complete a single final message with the conversation analysis will be sent.
+        Deprecated. Use the `/v1/convai/agent-testing/create` and `/v1/convai/agents/:agent_id/run-tests` endpoints to create and run simulations. Run a conversation between the agent and a simulated user and stream back the response. Response is streamed back as partial lists of messages that should be concatenated and once the conversation has complete a single final message with the conversation analysis will be sent.
 
         Parameters
         ----------
@@ -1100,7 +1100,7 @@ class AsyncAgentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AgentSimulatedChatTestResponseModel:
         """
-        Run a conversation between the agent and a simulated user.
+        Deprecated. Use the `/v1/convai/agent-testing/create` and `/v1/convai/agents/:agent_id/run-tests` endpoints to create and run simulations. Run a conversation between the agent and a simulated user.
 
         Parameters
         ----------
@@ -1173,7 +1173,7 @@ class AsyncAgentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Run a conversation between the agent and a simulated user and stream back the response. Response is streamed back as partial lists of messages that should be concatenated and once the conversation has complete a single final message with the conversation analysis will be sent.
+        Deprecated. Use the `/v1/convai/agent-testing/create` and `/v1/convai/agents/:agent_id/run-tests` endpoints to create and run simulations. Run a conversation between the agent and a simulated user and stream back the response. Response is streamed back as partial lists of messages that should be concatenated and once the conversation has complete a single final message with the conversation analysis will be sent.
 
         Parameters
         ----------

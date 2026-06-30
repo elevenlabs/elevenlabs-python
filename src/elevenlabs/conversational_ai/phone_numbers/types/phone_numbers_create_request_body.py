@@ -24,6 +24,7 @@ class PhoneNumbersCreateRequestBody_Twilio(UncheckedBaseModel):
     label: str
     supports_inbound: typing.Optional[bool] = None
     supports_outbound: typing.Optional[bool] = None
+    agent_id: typing.Optional[str] = None
     sid: str
     token: str
     region_config: typing.Optional[RegionConfigRequest] = None
@@ -48,6 +49,7 @@ class PhoneNumbersCreateRequestBody_Exotel(UncheckedBaseModel):
     label: str
     supports_inbound: typing.Optional[bool] = None
     supports_outbound: typing.Optional[bool] = None
+    agent_id: typing.Optional[str] = None
     account_sid: str
     api_key: str
     api_token: str
@@ -75,6 +77,7 @@ class PhoneNumbersCreateRequestBody_SipTrunk(UncheckedBaseModel):
     label: str
     supports_inbound: typing.Optional[bool] = None
     supports_outbound: typing.Optional[bool] = None
+    agent_id: typing.Optional[str] = None
     inbound_trunk_config: typing.Optional[InboundSipTrunkConfigRequestModel] = None
     outbound_trunk_config: typing.Optional[OutboundSipTrunkConfigRequestModel] = None
 

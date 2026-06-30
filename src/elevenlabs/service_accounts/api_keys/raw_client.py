@@ -28,6 +28,9 @@ from .types.body_edit_service_account_api_key_v_1_service_accounts_service_accou
 from .types.body_edit_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_api_key_id_patch_permissions import (
     BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissions,
 )
+from .types.body_edit_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_api_key_id_patch_third_party_disable_allowed import (
+    BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchThirdPartyDisableAllowed,
+)
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -94,6 +97,7 @@ class RawApiKeysClient:
         permissions: BodyCreateServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysPostPermissions,
         character_limit: typing.Optional[int] = OMIT,
         allowed_ips: typing.Optional[typing.Sequence[str]] = OMIT,
+        third_party_disable_allowed: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[WorkspaceCreateApiKeyResponseModel]:
         """
@@ -113,6 +117,9 @@ class RawApiKeysClient:
 
         allowed_ips : typing.Optional[typing.Sequence[str]]
             List of IP addresses or CIDR ranges allowed to use this API key. Each entry may be a CIDR range (e.g. '10.0.0.0/24') or a bare IP address (normalized to /32 or /128). On create, omit or pass null to allow all IPs. On update, omit to leave the whitelist unchanged, or pass "clear" to remove it.
+
+        third_party_disable_allowed : typing.Optional[bool]
+            Whether the holder of this key may disable it via the self-disable endpoint. On create, omit or pass null to use the workspace's default (enabled for non-Enterprise plans, disabled for Enterprise plans). On update, omit to leave it unchanged, or pass "clear" to reset it to the workspace default. Only honored for workspaces with self-disable access enabled.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -134,6 +141,7 @@ class RawApiKeysClient:
                 ),
                 "character_limit": character_limit,
                 "allowed_ips": allowed_ips,
+                "third_party_disable_allowed": third_party_disable_allowed,
             },
             headers={
                 "content-type": "application/json",
@@ -238,6 +246,9 @@ class RawApiKeysClient:
         allowed_ips: typing.Optional[
             BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchAllowedIps
         ] = OMIT,
+        third_party_disable_allowed: typing.Optional[
+            BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchThirdPartyDisableAllowed
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[typing.Any]:
         """
@@ -263,6 +274,9 @@ class RawApiKeysClient:
 
         allowed_ips : typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchAllowedIps]
             List of IP addresses or CIDR ranges allowed to use this API key. Each entry may be a CIDR range (e.g. '10.0.0.0/24') or a bare IP address (normalized to /32 or /128). On create, omit or pass null to allow all IPs. On update, omit to leave the whitelist unchanged, or pass "clear" to remove it.
+
+        third_party_disable_allowed : typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchThirdPartyDisableAllowed]
+            Whether the holder of this key may disable it via the self-disable endpoint. On create, omit or pass null to use the workspace's default (enabled for non-Enterprise plans, disabled for Enterprise plans). On update, omit to leave it unchanged, or pass "clear" to reset it to the workspace default. Only honored for workspaces with self-disable access enabled.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -295,6 +309,11 @@ class RawApiKeysClient:
                 "allowed_ips": convert_and_respect_annotation_metadata(
                     object_=allowed_ips,
                     annotation=BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchAllowedIps,
+                    direction="write",
+                ),
+                "third_party_disable_allowed": convert_and_respect_annotation_metadata(
+                    object_=third_party_disable_allowed,
+                    annotation=BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchThirdPartyDisableAllowed,
                     direction="write",
                 ),
             },
@@ -394,6 +413,7 @@ class AsyncRawApiKeysClient:
         permissions: BodyCreateServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysPostPermissions,
         character_limit: typing.Optional[int] = OMIT,
         allowed_ips: typing.Optional[typing.Sequence[str]] = OMIT,
+        third_party_disable_allowed: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[WorkspaceCreateApiKeyResponseModel]:
         """
@@ -413,6 +433,9 @@ class AsyncRawApiKeysClient:
 
         allowed_ips : typing.Optional[typing.Sequence[str]]
             List of IP addresses or CIDR ranges allowed to use this API key. Each entry may be a CIDR range (e.g. '10.0.0.0/24') or a bare IP address (normalized to /32 or /128). On create, omit or pass null to allow all IPs. On update, omit to leave the whitelist unchanged, or pass "clear" to remove it.
+
+        third_party_disable_allowed : typing.Optional[bool]
+            Whether the holder of this key may disable it via the self-disable endpoint. On create, omit or pass null to use the workspace's default (enabled for non-Enterprise plans, disabled for Enterprise plans). On update, omit to leave it unchanged, or pass "clear" to reset it to the workspace default. Only honored for workspaces with self-disable access enabled.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -434,6 +457,7 @@ class AsyncRawApiKeysClient:
                 ),
                 "character_limit": character_limit,
                 "allowed_ips": allowed_ips,
+                "third_party_disable_allowed": third_party_disable_allowed,
             },
             headers={
                 "content-type": "application/json",
@@ -538,6 +562,9 @@ class AsyncRawApiKeysClient:
         allowed_ips: typing.Optional[
             BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchAllowedIps
         ] = OMIT,
+        third_party_disable_allowed: typing.Optional[
+            BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchThirdPartyDisableAllowed
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[typing.Any]:
         """
@@ -563,6 +590,9 @@ class AsyncRawApiKeysClient:
 
         allowed_ips : typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchAllowedIps]
             List of IP addresses or CIDR ranges allowed to use this API key. Each entry may be a CIDR range (e.g. '10.0.0.0/24') or a bare IP address (normalized to /32 or /128). On create, omit or pass null to allow all IPs. On update, omit to leave the whitelist unchanged, or pass "clear" to remove it.
+
+        third_party_disable_allowed : typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchThirdPartyDisableAllowed]
+            Whether the holder of this key may disable it via the self-disable endpoint. On create, omit or pass null to use the workspace's default (enabled for non-Enterprise plans, disabled for Enterprise plans). On update, omit to leave it unchanged, or pass "clear" to reset it to the workspace default. Only honored for workspaces with self-disable access enabled.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -595,6 +625,11 @@ class AsyncRawApiKeysClient:
                 "allowed_ips": convert_and_respect_annotation_metadata(
                     object_=allowed_ips,
                     annotation=BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchAllowedIps,
+                    direction="write",
+                ),
+                "third_party_disable_allowed": convert_and_respect_annotation_metadata(
+                    object_=third_party_disable_allowed,
+                    annotation=BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchThirdPartyDisableAllowed,
                     direction="write",
                 ),
             },

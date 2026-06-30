@@ -57,6 +57,11 @@ class TurnConfigWorkflowOverride(UncheckedBaseModel):
     List of terms that should not trigger an interruption when spoken by the user (e.g. 'gotcha', 'understood'). Uses case-insensitive exact matching.
     """
 
+    transcribe_on_disabled_interruptions: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    When interruptions are disabled, still transcribe what the user says so it can carry into the next turn. When off, user speech during a non-interruptible turn is ignored and won't trigger a turn.
+    """
+
     soft_timeout_config: typing.Optional[SoftTimeoutConfigWorkflowOverride] = pydantic.Field(default=None)
     """
     Configuration for soft timeout functionality. Provides immediate feedback during longer LLM responses.

@@ -13,7 +13,7 @@ class ConvAiWebhooks(UncheckedBaseModel):
     post_call_webhook_id: typing.Optional[str] = None
     events: typing.Optional[typing.List[WebhookEventType]] = pydantic.Field(default=None)
     """
-    List of event types to send via webhook. Options: transcript, audio, call_initiation_failure.
+    List of event types to send via webhook. Options: transcript, audio, call_initiation_failure, unredacted_transcript, unredacted_audio.
     """
 
     transcript_format: typing.Optional[WebhookTranscriptFormat] = pydantic.Field(default=None)
