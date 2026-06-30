@@ -30,6 +30,7 @@ class WorkspaceApiKeyResponseModel(UncheckedBaseModel):
 
     hashed_xi_api_key: str
     allowed_ips: typing.Optional[typing.List[str]] = None
+    third_party_disable_allowed: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

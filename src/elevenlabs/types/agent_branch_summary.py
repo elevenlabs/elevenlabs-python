@@ -3,7 +3,9 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .branch_protection_status import BranchProtectionStatus
 from .resource_access_info import ResourceAccessInfo
@@ -36,6 +38,13 @@ class AgentBranchSummary(UncheckedBaseModel):
     draft_exists: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether a draft exists for the branch
+    """
+
+    calls_7_d: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="calls_7d")] = pydantic.Field(
+        default=None
+    )
+    """
+    Number of calls in the last 7 days
     """
 
     if IS_PYDANTIC_V2:

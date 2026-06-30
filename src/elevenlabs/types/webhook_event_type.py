@@ -2,4 +2,7 @@
 
 import typing
 
-WebhookEventType = typing.Union[typing.Literal["transcript", "audio", "call_initiation_failure"], typing.Any]
+WebhookEventType = typing.Union[
+    typing.Literal["transcript", "audio", "call_initiation_failure", "unredacted_transcript", "unredacted_audio"],
+    typing.Any,
+]

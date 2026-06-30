@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .conversation_initiation_source import ConversationInitiationSource
+from .conversation_sentiment_analysis import ConversationSentimentAnalysis
 from .conversation_summary_response_model_status import ConversationSummaryResponseModelStatus
 from .evaluation_success_result import EvaluationSuccessResult
 from .telephony_direction import TelephonyDirection
@@ -23,6 +24,7 @@ class ConversationSummaryResponseModel(UncheckedBaseModel):
     status: ConversationSummaryResponseModelStatus
     termination_reason: typing.Optional[str] = None
     call_successful: EvaluationSuccessResult
+    call_success_score: typing.Optional[float] = None
     transcript_summary: typing.Optional[str] = None
     call_summary_title: typing.Optional[str] = None
     main_language: typing.Optional[str] = None
@@ -30,6 +32,7 @@ class ConversationSummaryResponseModel(UncheckedBaseModel):
     tool_names: typing.Optional[typing.List[str]] = None
     direction: typing.Optional[TelephonyDirection] = None
     rating: typing.Optional[float] = None
+    sentiment_analysis: typing.Optional[ConversationSentimentAnalysis] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

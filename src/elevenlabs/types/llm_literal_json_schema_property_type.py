@@ -2,4 +2,10 @@
 
 import typing
 
-LlmLiteralJsonSchemaPropertyType = typing.Union[typing.Literal["boolean", "string", "integer", "number"], typing.Any]
+LlmLiteralJsonSchemaPropertyType = typing.Union[
+    typing.Literal["boolean"],
+    typing.Literal["string"],
+    typing.Literal["integer"],
+    typing.Literal["number"],
+    typing.List[str],
+]

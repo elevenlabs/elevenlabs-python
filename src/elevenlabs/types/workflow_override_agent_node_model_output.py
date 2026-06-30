@@ -14,6 +14,16 @@ from .position_output import PositionOutput
 
 
 class WorkflowOverrideAgentNodeModelOutput(UncheckedBaseModel):
+    position: PositionOutput = pydantic.Field()
+    """
+    Position of the node in the workflow.
+    """
+
+    edge_order: typing.List[str] = pydantic.Field()
+    """
+    The ids of outgoing edges in the order they should be evaluated.
+    """
+
     conversation_config: ConversationalConfigApiModelWorkflowOverrideOutput = pydantic.Field()
     """
     Configuration overrides applied while the subagent is conducting the conversation.
@@ -32,16 +42,6 @@ class WorkflowOverrideAgentNodeModelOutput(UncheckedBaseModel):
     additional_tool_ids: typing.List[str] = pydantic.Field()
     """
     IDs of additional tools that the subagent has access to. These will be used in addition to the main agent's tools.
-    """
-
-    position: PositionOutput = pydantic.Field()
-    """
-    Position of the node in the workflow.
-    """
-
-    edge_order: typing.List[str] = pydantic.Field()
-    """
-    The ids of outgoing edges in the order they should be evaluated.
     """
 
     label: str = pydantic.Field()

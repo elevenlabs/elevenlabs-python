@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .auth_connection_dependencies import AuthConnectionDependencies
+from .auth_connection_status import AuthConnectionStatus
 
 
 class OAuth2ClientCredsResponse(UncheckedBaseModel):
@@ -26,6 +27,9 @@ class OAuth2ClientCredsResponse(UncheckedBaseModel):
 
     id: str
     used_by: typing.Optional[AuthConnectionDependencies] = None
+    status: typing.Optional[AuthConnectionStatus] = None
+    status_detail: typing.Optional[str] = None
+    status_updated_at: typing.Optional[str] = None
     custom_headers: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
     """
     Custom headers configured for OAuth2 token requests

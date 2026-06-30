@@ -9,6 +9,7 @@ from .phone_number_transfer_custom_sip_headers_item import PhoneNumberTransferCu
 from .phone_number_transfer_post_dial_digits import PhoneNumberTransferPostDialDigits
 from .phone_number_transfer_transfer_destination import PhoneNumberTransferTransferDestination
 from .transfer_type_enum import TransferTypeEnum
+from .uui_transfer_config import UuiTransferConfig
 
 
 class PhoneNumberTransfer(UncheckedBaseModel):
@@ -21,6 +22,11 @@ class PhoneNumberTransfer(UncheckedBaseModel):
 
     transfer_destination: PhoneNumberTransferTransferDestination
     transfer_type: typing.Optional[TransferTypeEnum] = None
+    uui: typing.Optional[UuiTransferConfig] = pydantic.Field(default=None)
+    """
+    User-to-User Information (RFC 7433) to attach to SIP REFER transfers. Carries call context such as CRM identifiers or escalation reason across the transfer boundary.
+    """
+
     post_dial_digits: typing.Optional[PhoneNumberTransferPostDialDigits] = pydantic.Field(default=None)
     """
     DTMF digits to send after call connects (e.g., 'ww1234' for extension). Can be either a static value or a dynamic variable reference. Use 'w' for 0.5s pause. Only supported for Twilio transfers.

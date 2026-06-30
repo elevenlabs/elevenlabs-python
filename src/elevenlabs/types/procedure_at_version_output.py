@@ -20,12 +20,12 @@ class ProcedureAtVersionOutput(UncheckedBaseModel):
     Procedure name
     """
 
+    type: typing.Optional[ProcedureType] = None
     content: str = pydantic.Field()
     """
     Procedure content
     """
 
-    type: typing.Optional[ProcedureType] = None
     guardrails: typing.Optional[typing.List[CustomGuardrailConfig]] = None
     agent_id: str = pydantic.Field()
     """

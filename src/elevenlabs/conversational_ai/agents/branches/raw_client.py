@@ -16,6 +16,7 @@ from ....types.agent_workflow_request_model import AgentWorkflowRequestModel
 from ....types.branch_protection_status import BranchProtectionStatus
 from ....types.create_agent_branch_response_model import CreateAgentBranchResponseModel
 from ....types.list_response_agent_branch_summary import ListResponseAgentBranchSummary
+from ....types.merge_preview_response_model import MergePreviewResponseModel
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -312,6 +313,75 @@ class RawBranchesClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def preview_merge(
+        self,
+        agent_id: str,
+        source_branch_id: str,
+        *,
+        target_branch_id: str,
+        force: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[MergePreviewResponseModel]:
+        """
+        Returns the result of merging the source branch into the target branch without performing the merge. Useful for showing an accurate diff before confirming.
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of an agent. This is returned on agent creation.
+
+        source_branch_id : str
+            Unique identifier for the source branch to merge from.
+
+        target_branch_id : str
+            The ID of the target branch to merge into.
+
+        force : typing.Optional[bool]
+            When true, source branch changes always win conflicts regardless of timestamps
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[MergePreviewResponseModel]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/convai/agents/{jsonable_encoder(agent_id)}/branches/{jsonable_encoder(source_branch_id)}/merge-preview",
+            method="GET",
+            params={
+                "target_branch_id": target_branch_id,
+                "force": force,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    MergePreviewResponseModel,
+                    construct_type(
+                        type_=MergePreviewResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def merge(
         self,
         agent_id: str,
@@ -374,6 +444,59 @@ class RawBranchesClient:
                     typing.Any,
                     construct_type(
                         type_=typing.Any,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def preview_rebase(
+        self, agent_id: str, branch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[MergePreviewResponseModel]:
+        """
+        Returns the result of rebasing the branch onto main without performing the rebase. Useful for showing an accurate diff before confirming.
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of an agent. This is returned on agent creation.
+
+        branch_id : str
+            Unique identifier for the source branch to merge from.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[MergePreviewResponseModel]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/convai/agents/{jsonable_encoder(agent_id)}/branches/{jsonable_encoder(branch_id)}/rebase-preview",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    MergePreviewResponseModel,
+                    construct_type(
+                        type_=MergePreviewResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -741,6 +864,75 @@ class AsyncRawBranchesClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    async def preview_merge(
+        self,
+        agent_id: str,
+        source_branch_id: str,
+        *,
+        target_branch_id: str,
+        force: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[MergePreviewResponseModel]:
+        """
+        Returns the result of merging the source branch into the target branch without performing the merge. Useful for showing an accurate diff before confirming.
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of an agent. This is returned on agent creation.
+
+        source_branch_id : str
+            Unique identifier for the source branch to merge from.
+
+        target_branch_id : str
+            The ID of the target branch to merge into.
+
+        force : typing.Optional[bool]
+            When true, source branch changes always win conflicts regardless of timestamps
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[MergePreviewResponseModel]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/convai/agents/{jsonable_encoder(agent_id)}/branches/{jsonable_encoder(source_branch_id)}/merge-preview",
+            method="GET",
+            params={
+                "target_branch_id": target_branch_id,
+                "force": force,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    MergePreviewResponseModel,
+                    construct_type(
+                        type_=MergePreviewResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     async def merge(
         self,
         agent_id: str,
@@ -803,6 +995,59 @@ class AsyncRawBranchesClient:
                     typing.Any,
                     construct_type(
                         type_=typing.Any,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def preview_rebase(
+        self, agent_id: str, branch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[MergePreviewResponseModel]:
+        """
+        Returns the result of rebasing the branch onto main without performing the rebase. Useful for showing an accurate diff before confirming.
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of an agent. This is returned on agent creation.
+
+        branch_id : str
+            Unique identifier for the source branch to merge from.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[MergePreviewResponseModel]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/convai/agents/{jsonable_encoder(agent_id)}/branches/{jsonable_encoder(branch_id)}/rebase-preview",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    MergePreviewResponseModel,
+                    construct_type(
+                        type_=MergePreviewResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

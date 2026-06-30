@@ -35,10 +35,14 @@ class CaptionStyleModel(UncheckedBaseModel):
     background_enabled: typing.Optional[bool] = None
     background_color: typing.Optional[str] = None
     background_opacity: typing.Optional[float] = None
+    background_blur: typing.Optional[float] = None
+    background_border_radius: typing.Optional[float] = None
     word_highlights_enabled: typing.Optional[bool] = None
     word_highlights_color: typing.Optional[str] = None
     word_highlights_background_color: typing.Optional[str] = None
     word_highlights_opacity: typing.Optional[float] = None
+    word_highlights_border_radius: typing.Optional[float] = None
+    word_highlights_blur: typing.Optional[float] = None
     section_animation: typing.Optional[CaptionStyleSectionAnimationModel] = None
     word_animation: typing.Optional[CaptionStyleWordAnimationModel] = None
     character_animation: typing.Optional[CaptionStyleCharacterAnimationModel] = None

@@ -17,6 +17,7 @@ from .conversation_history_transcript_common_model_input_tool_results_item impor
 from .conversation_history_transcript_tool_call_common_model_input import (
     ConversationHistoryTranscriptToolCallCommonModelInput,
 )
+from .conversation_reasoning_model import ConversationReasoningModel
 from .conversation_turn_metrics import ConversationTurnMetrics
 from .llm_usage_input import LlmUsageInput
 from .rag_retrieval_info import RagRetrievalInfo
@@ -38,6 +39,7 @@ class ConversationHistoryTranscriptCommonModelInput(UncheckedBaseModel):
     llm_usage: typing.Optional[LlmUsageInput] = None
     interrupted: typing.Optional[bool] = None
     original_message: typing.Optional[str] = None
+    reasoning: typing.Optional[typing.List[ConversationReasoningModel]] = None
     source_medium: typing.Optional[ChatSourceMedium] = None
     source_event_id: typing.Optional[int] = None
     used_static_kb_document_ids: typing.Optional[typing.List[str]] = None

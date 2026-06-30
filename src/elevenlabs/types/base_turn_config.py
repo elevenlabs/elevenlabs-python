@@ -52,6 +52,11 @@ class BaseTurnConfig(UncheckedBaseModel):
     List of terms that should not trigger an interruption when spoken by the user (e.g. 'gotcha', 'understood'). Uses case-insensitive exact matching.
     """
 
+    transcribe_on_disabled_interruptions: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    When interruptions are disabled, still transcribe what the user says so it can carry into the next turn. When off, user speech during a non-interruptible turn is ignored and won't trigger a turn.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
