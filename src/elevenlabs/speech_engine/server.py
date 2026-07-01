@@ -76,7 +76,11 @@ class SpeechEngineServer:
         """Start the WebSocket server.  Blocks until :meth:`stop` is called."""
         from .resource import verify_speech_engine_jwt  # noqa: E402
 
-        import websockets  # noqa: E402 — keep import lazy
+        # Use the new asyncio API explicitly: `websockets.serve` was still
+        # the legacy server on websockets 13.x and only became the asyncio
+        # one in 14.0. The process_request callback below relies on the
+        # asyncio signature (connection, request) and connection.respond().
+        from websockets.asyncio.server import serve as _ws_serve  # noqa: E402
 
         api_key = self._api_key or os.environ.get("ELEVENLABS_API_KEY")
         if not api_key and not self._disable_auth:
@@ -91,8 +95,8 @@ class SpeechEngineServer:
             warnings.warn(
                 "SpeechEngineServer: authentication is disabled — incoming "
                 "connections will NOT be verified. Make sure the server is "
-                "protected by an IP allowlist restricting traffic to "
-                "ElevenLabs.",
+                "protected by either IP allowlist restricting traffic to "
+                "ElevenLabs or custom header values.",
                 UserWarning,
                 stacklevel=2,
             )
@@ -145,7 +149,7 @@ class SpeechEngineServer:
             session = self.handle_connection(websocket)
             await session.run()
 
-        self._server = await websockets.serve(  # type: ignore[attr-defined]
+        self._server = await _ws_serve(
             _handler,
             "",
             self._port,

@@ -10,7 +10,8 @@ import typing
 import warnings
 
 import pytest
-import websockets
+from websockets.asyncio.client import connect as ws_connect
+from websockets.exceptions import InvalidStatus
 
 from elevenlabs.speech_engine import SpeechEngineServer
 from elevenlabs.speech_engine.resource import (
@@ -286,7 +287,7 @@ class TestServerDisableAuth:
                 warnings.simplefilter("ignore")
                 task = await _run_server_briefly(server)
             port = _server_port(server)
-            async with websockets.connect(f"ws://127.0.0.1:{port}") as ws:  # type: ignore[attr-defined]
+            async with ws_connect(f"ws://127.0.0.1:{port}") as ws:
                 await ws.send(
                     json.dumps({"type": "init", "conversation_id": "conv_1"})
                 )
@@ -304,8 +305,8 @@ class TestServerDisableAuth:
         try:
             task = await _run_server_briefly(server)
             port = _server_port(server)
-            with pytest.raises(websockets.exceptions.InvalidStatus) as exc:  # type: ignore[attr-defined]
-                async with websockets.connect(f"ws://127.0.0.1:{port}"):  # type: ignore[attr-defined]
+            with pytest.raises(InvalidStatus) as exc:
+                async with ws_connect(f"ws://127.0.0.1:{port}"):
                     pass
             assert exc.value.response.status_code == 401
         finally:
@@ -320,8 +321,8 @@ class TestServerDisableAuth:
         try:
             task = await _run_server_briefly(server)
             port = _server_port(server)
-            with pytest.raises(websockets.exceptions.InvalidStatus) as exc:  # type: ignore[attr-defined]
-                async with websockets.connect(  # type: ignore[attr-defined]
+            with pytest.raises(InvalidStatus) as exc:
+                async with ws_connect(
                     f"ws://127.0.0.1:{port}",
                     additional_headers={
                         "X-Elevenlabs-Speech-Engine-Authorization": "not.a.jwt"
