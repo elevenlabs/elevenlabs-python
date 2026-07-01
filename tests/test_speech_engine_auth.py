@@ -1,14 +1,18 @@
 """Tests for Speech Engine JWT verification."""
 
+import asyncio
 import base64
 import hashlib
 import hmac
 import json
 import time
 import typing
+import warnings
 
 import pytest
+import websockets
 
+from elevenlabs.speech_engine import SpeechEngineServer
 from elevenlabs.speech_engine.resource import (
     SpeechEngineResource,
     verify_speech_engine_jwt,
@@ -195,3 +199,137 @@ class TestServerApiKeyRequirement:
         server = SpeechEngineServer(port=0)
         with pytest.raises(RuntimeError, match="API key"):
             await server.serve()
+
+
+# ---------------------------------------------------------------------------
+# SpeechEngineServer — disable_auth
+# ---------------------------------------------------------------------------
+
+
+async def _run_server_briefly(server: SpeechEngineServer) -> asyncio.Task:
+    """Start ``server`` in a background task and wait until it's listening."""
+    task = asyncio.create_task(server.serve())
+    # Give the server loop a moment to reach `await self._stop_event.wait()`.
+    for _ in range(50):
+        await asyncio.sleep(0.02)
+        if server._server is not None:
+            break
+    return task
+
+
+def _server_port(server: SpeechEngineServer) -> int:
+    import socket as _socket
+
+    # websockets.serve(host="") binds both IPv4 and IPv6; on macOS the first
+    # socket is often IPv6. Prefer an IPv4 socket so the client can connect
+    # via 127.0.0.1 reliably.
+    ipv4 = [
+        s for s in server._server.sockets if s.family == _socket.AF_INET
+    ]
+    chosen = ipv4[0] if ipv4 else next(iter(server._server.sockets), None)
+    if chosen is None:
+        raise RuntimeError("server has no sockets")
+    return int(chosen.getsockname()[1])
+
+
+class TestServerDisableAuth:
+    @pytest.mark.asyncio
+    async def test_serves_without_api_key_when_disable_auth(
+        self, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        monkeypatch.delenv("ELEVENLABS_API_KEY", raising=False)
+        server = SpeechEngineServer(port=0, disable_auth=True)
+        task = None
+        try:
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                task = await _run_server_briefly(server)
+                assert server._server is not None
+        finally:
+            await server.stop()
+            if task is not None:
+                await task
+
+    @pytest.mark.asyncio
+    async def test_emits_warning_when_disable_auth(
+        self, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        monkeypatch.delenv("ELEVENLABS_API_KEY", raising=False)
+        server = SpeechEngineServer(port=0, disable_auth=True)
+        task = None
+        try:
+            with warnings.catch_warnings(record=True) as caught:
+                warnings.simplefilter("always")
+                task = await _run_server_briefly(server)
+                messages = [str(w.message) for w in caught]
+                assert any("authentication is disabled" in m for m in messages)
+        finally:
+            await server.stop()
+            if task is not None:
+                await task
+
+    @pytest.mark.asyncio
+    async def test_accepts_unauthenticated_connection(
+        self, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        monkeypatch.delenv("ELEVENLABS_API_KEY", raising=False)
+
+        init_ids: typing.List[str] = []
+
+        async def on_init(conversation_id: str, session: typing.Any) -> None:
+            init_ids.append(conversation_id)
+
+        server = SpeechEngineServer(port=0, disable_auth=True, on_init=on_init)
+        task = None
+        try:
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                task = await _run_server_briefly(server)
+            port = _server_port(server)
+            async with websockets.connect(f"ws://127.0.0.1:{port}") as ws:  # type: ignore[attr-defined]
+                await ws.send(
+                    json.dumps({"type": "init", "conversation_id": "conv_1"})
+                )
+                await asyncio.sleep(0.1)
+            assert init_ids == ["conv_1"]
+        finally:
+            await server.stop()
+            if task is not None:
+                await task
+
+    @pytest.mark.asyncio
+    async def test_rejects_missing_header_when_auth_enabled(self) -> None:
+        server = SpeechEngineServer(port=0, api_key=TEST_API_KEY)
+        task = None
+        try:
+            task = await _run_server_briefly(server)
+            port = _server_port(server)
+            with pytest.raises(websockets.exceptions.InvalidStatus) as exc:  # type: ignore[attr-defined]
+                async with websockets.connect(f"ws://127.0.0.1:{port}"):  # type: ignore[attr-defined]
+                    pass
+            assert exc.value.response.status_code == 401
+        finally:
+            await server.stop()
+            if task is not None:
+                await task
+
+    @pytest.mark.asyncio
+    async def test_rejects_invalid_jwt_when_auth_enabled(self) -> None:
+        server = SpeechEngineServer(port=0, api_key=TEST_API_KEY)
+        task = None
+        try:
+            task = await _run_server_briefly(server)
+            port = _server_port(server)
+            with pytest.raises(websockets.exceptions.InvalidStatus) as exc:  # type: ignore[attr-defined]
+                async with websockets.connect(  # type: ignore[attr-defined]
+                    f"ws://127.0.0.1:{port}",
+                    additional_headers={
+                        "X-Elevenlabs-Speech-Engine-Authorization": "not.a.jwt"
+                    },
+                ):
+                    pass
+            assert exc.value.response.status_code == 401
+        finally:
+            await server.stop()
+            if task is not None:
+                await task

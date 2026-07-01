@@ -4,6 +4,7 @@ import asyncio
 import http
 import os
 import typing
+import warnings
 
 from .session import SpeechEngineSession, _make_log, _wire_handlers
 from .types import WebSocketLike
@@ -15,7 +16,8 @@ class SpeechEngineServer:
     API.
 
     Every incoming connection is verified against the ElevenLabs API using
-    the configured API key before being accepted.
+    the configured API key before being accepted, unless ``disable_auth`` is
+    set to ``True``.
 
     Example::
 
@@ -35,12 +37,23 @@ class SpeechEngineServer:
         path: typing.Optional[str] = None,
         api_key: typing.Optional[str] = None,
         debug: bool = False,
+        disable_auth: bool = False,
         **handlers: typing.Any,
     ) -> None:
+        """Initialize a Speech Engine server.
+
+        :param disable_auth: If ``True``, skip verification of the
+            ``X-Elevenlabs-Speech-Engine-Authorization`` JWT on incoming
+            connections. **Insecure** — only enable this if the server is
+            protected by an IP allowlist scoped to ElevenLabs' egress
+            ranges. Without one, anyone on the internet can open a session
+            and consume your compute and downstream LLM quota.
+        """
         self._port = port
         self._path = path
         self._api_key = api_key
         self._debug = debug
+        self._disable_auth = disable_auth
         self._handlers = handlers
         self._stop_event = None  # type: typing.Optional[asyncio.Event]
         self._server = None  # type: typing.Any
@@ -66,11 +79,22 @@ class SpeechEngineServer:
         import websockets  # noqa: E402 — keep import lazy
 
         api_key = self._api_key or os.environ.get("ELEVENLABS_API_KEY")
-        if not api_key:
+        if not api_key and not self._disable_auth:
             raise RuntimeError(
                 "SpeechEngineServer requires an API key to verify incoming "
                 "connections. Pass api_key= or set the ELEVENLABS_API_KEY "
-                "environment variable."
+                "environment variable. To run without authentication, pass "
+                "disable_auth=True — but only behind an IP allowlist."
+            )
+
+        if self._disable_auth:
+            warnings.warn(
+                "SpeechEngineServer: authentication is disabled — incoming "
+                "connections will NOT be verified. Make sure the server is "
+                "protected by an IP allowlist restricting traffic to "
+                "ElevenLabs.",
+                UserWarning,
+                stacklevel=2,
             )
 
         self._stop_event = asyncio.Event()
@@ -89,6 +113,9 @@ class SpeechEngineServer:
                     http.HTTPStatus.NOT_FOUND, "not found\n"
                 )
 
+            if self._disable_auth:
+                return None
+
             header_value = request.headers.get(
                 "x-elevenlabs-speech-engine-authorization"
             )
@@ -103,7 +130,7 @@ class SpeechEngineServer:
                 )
 
             try:
-                verify_speech_engine_jwt(header_value, api_key)
+                verify_speech_engine_jwt(header_value, typing.cast(str, api_key))
             except ValueError as e:
                 self._log("rejected connection — %s", e)
                 return connection.respond(

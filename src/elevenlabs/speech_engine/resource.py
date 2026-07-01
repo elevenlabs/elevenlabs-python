@@ -163,12 +163,26 @@ class SpeechEngineResource:
         port: int = 3001,
         path: typing.Optional[str] = None,
         debug: bool = False,
+        disable_auth: bool = False,
         **handlers: typing.Any,
     ) -> None:
-        """Start a standalone WebSocket server.  Blocks until stopped."""
+        """Start a standalone WebSocket server.  Blocks until stopped.
+
+        :param disable_auth: If ``True``, skip verification of the
+            ``X-Elevenlabs-Speech-Engine-Authorization`` JWT on incoming
+            connections. **Insecure** — only enable this if the server is
+            protected by an IP allowlist scoped to ElevenLabs' egress
+            ranges. Without one, anyone on the internet can open a session
+            and consume your compute and downstream LLM quota.
+        """
         api_key = self._get_api_key()
         server = SpeechEngineServer(
-            port=port, path=path, debug=debug, api_key=api_key, **handlers
+            port=port,
+            path=path,
+            debug=debug,
+            api_key=api_key,
+            disable_auth=disable_auth,
+            **handlers,
         )
         await server.serve()
 
